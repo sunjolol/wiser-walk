@@ -87,7 +87,9 @@ a { color: var(--accent); }
   font-family: var(--sans); font-size: 0.72rem; letter-spacing: 0.12em;
   text-transform: uppercase; color: var(--ink-3); margin: 0 0 0.5rem;
 }
-.page { padding: 2.5rem 0 0; }
+/* padding-top only: the shorthand would reset the side padding .wrap sets on the same
+   element, which left every page's main content flush against both edges of a phone. */
+.page { padding-top: 2.5rem; }
 
 /* ---------- cards ---------- */
 .cards { display: grid; gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: var(--radius); grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); margin: 1.5rem 0; }
