@@ -1,7 +1,10 @@
 User-agent: *
 Allow: /
 
-# Result pages are per-person and thin by nature; they carry noindex too.
-Disallow: /r/
+# Result pages carry `noindex, follow` in the page itself, which is what keeps them out of
+# the index. They are deliberately NOT disallowed here: a crawler blocked by robots.txt never
+# fetches the page, so it never reads the noindex and never follows the links out of it to the
+# axis and tradition pages. Those pages are the real search surface, and result links are how
+# authority reaches them.
 
 Sitemap: https://wiserwalk.com/sitemap-index.xml

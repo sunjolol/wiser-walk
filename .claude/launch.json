@@ -4,14 +4,72 @@
     {
       "name": "compass",
       "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "8766", "--bind", "127.0.0.1", "--directory", "_test"],
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8766",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "_test"
+      ],
       "port": 8766
     },
     {
       "name": "site",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev", "--prefix", "site", "--", "--port", "4321"],
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--prefix",
+        "site",
+        "--",
+        "--port",
+        "4321"
+      ],
       "port": 4321
+    },
+    {
+      "name": "themes",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8767",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "C:/Users/Light/Desktop/claude/design and theme examples"
+      ],
+      "port": 8767
+    },
+    {
+      "name": "scratch",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8768",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "C:/Users/Light/AppData/Local/Temp/claude/C--Users-Light-Desktop-claude-theology-compass/7f84bc29-ac09-4d86-b465-92a35b6304ca/scratchpad"
+      ],
+      "port": 8768
+    },
+    {
+      "name": "repo",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8769",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "C:/Users/Light/Desktop/claude/theology compass"
+      ],
+      "port": 8769
     }
   ]
 }
