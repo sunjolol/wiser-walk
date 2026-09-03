@@ -1,5 +1,8 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import Icon from '../../../components/Icon.astro';
+import HistoryTimeline from '../../../components/HistoryTimeline.astro';
+import PassagePills from '../../../components/PassagePills.astro';
 import { QUIZZES, getQuiz, quizHref } from '../../../lib/engine/registry';
 import { isSplitReadMore, readMoreAll } from '../../../lib/engine/types';
 
@@ -48,8 +51,8 @@ const jsonLd = {
   jsonLd={jsonLd}
 >
   <div class="prose">
-    <p class="eyebrow">{quiz.emoji} {quiz.title}</p>
-    <h1>{group.emoji} {group.name}</h1>
+    <p class="eyebrow"><Icon name={quiz.icon} size={15} /> {quiz.title}</p>
+    <h1>{group.name}</h1>
     {bipolar && <p class="lede">{group.left} ↔ {group.right}</p>}
   </div>
 
@@ -78,21 +81,12 @@ const jsonLd = {
 
   <div class="prose">
 
-    {group.history && group.history.length > 0 && (
-      <>
-        <h2>{bipolar ? 'How the question arose' : 'How this has been understood'}</h2>
-        <ol>
-          {group.history.map(h => <li><strong>{h.when}</strong> — {h.what}</li>)}
-        </ol>
-      </>
+    {group.passages && group.passages.length > 0 && (
+      <PassagePills refs={group.passages} heading="h3" />
     )}
 
-    {group.passages && group.passages.length > 0 && (
-      <>
-        {/* "Both sides" is a bipolar claim. A category has no second side to argue back. */}
-        <h2>{bipolar ? 'Passages both sides argue from' : 'Passages'}</h2>
-        <p>{group.passages.join(' · ')}</p>
-      </>
+    {group.history && group.history.length > 0 && (
+      <HistoryTimeline history={group.history} heading="h3" />
     )}
 
     {reading.length > 0 && (

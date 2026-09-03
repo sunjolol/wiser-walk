@@ -97,7 +97,6 @@ export const category: ScoringStrategy = {
       key: g.key,
       slug: g.slug,
       name: g.name,
-      emoji: g.emoji,
       value: values[i] ?? 50,
       rank: place.get(g.slug) ?? i + 1,
       below: (values[i] ?? 50) < 50,
@@ -136,6 +135,8 @@ export const category: ScoringStrategy = {
       quizSlug: quiz.slug,
       code: this.encode(quiz, values),
       headline,
+      // A ranking has no side to colour by; the clause is the whole headline.
+      headlineParts: [{ text: headline, side: 'centre' as const }],
       summary,
       rows,
       ranked
@@ -165,7 +166,7 @@ export const category: ScoringStrategy = {
       const filled = Math.max(0, Math.min(CELLS, Math.round(((v - 50) / 50) * CELLS)));
       let bar = '';
       for (let k = 0; k < CELLS; k++) bar += k < filled ? '█' : '░';
-      lines.push(`${g.emoji ?? '·'} ${bar} ${g.name}`);
+      lines.push(`${bar} ${g.name}`);
     });
     lines.push(`${origin}/r/${quiz.slug}/${this.encode(quiz, values)}`);
     return lines.join('\n');

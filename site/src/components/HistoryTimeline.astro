@@ -1,0 +1,69 @@
+---
+/**
+ * "How the argument unfolded" — the axis's chronology.
+ *
+ * This is the part of the instrument that does the most educational work: it shows that
+ * these are not internet opinions but arguments with addresses, running from the fathers to
+ * the confessions. So it gets a real timeline rather than a bulleted list.
+ *
+ * The entries are NOT annotated by pole. Several describe one side's move and several the
+ * other's, and deciding which belongs to whom would be inference — and inference is
+ * invention. The chronology is shared, and it is drawn as shared: one rule, one colour.
+ *
+ * The only thing added to the audited data is a span line ("nine moments, from the 5th
+ * century to the 18th"), and that is computed from the dates rather than written. A date
+ * that cannot be parsed is still displayed exactly as the audit wrote it; parsing only ever
+ * affects the summary line, never the label.
+ */
+interface Props {
+  history: Array<{ when: string; what: string }>;
+  /** Heading level, so this sits correctly inside a disclosure or a page. */
+  heading?: 'h3' | 'h4';
+}
+
+const { history, heading = 'h4' } = Astro.props;
+const Heading = heading;
+
+/**
+ * A representative year, for the span line only. Handles the four shapes the audited data
+ * actually uses: "1525", "c. 411–430", "1610–19", "late 2nd c.".
+ */
+function year(when: string): number | null {
+  const century = when.match(/(\d+)(?:st|nd|rd|th)\s*c\./i);
+  if (century) {
+    const c = Number(century[1]);
+    // A century's midpoint, nudged by "early"/"late" so ordering stays sensible.
+    const base = (c - 1) * 100;
+    if (/early/i.test(when)) return base + 20;
+    if (/late/i.test(when)) return base + 80;
+    return base + 50;
+  }
+  const first = when.match(/\d{3,4}/);
+  return first ? Number(first[0]) : null;
+}
+
+const ordinal = (c: number) =>
+  c + (c % 10 === 1 && c % 100 !== 11 ? 'st' : c % 10 === 2 && c % 100 !== 12 ? 'nd' : c % 10 === 3 && c % 100 !== 13 ? 'rd' : 'th');
+
+const years = history.map(h => year(h.when)).filter((y): y is number => y !== null);
+const span =
+  years.length >= 2
+    ? `${history.length} moments, from the ${ordinal(Math.floor(Math.min(...years) / 100) + 1)} century to the ${ordinal(Math.floor(Math.max(...years) / 100) + 1)}`
+    : `${history.length} moments`;
+---
+<div class="tl">
+  <div class="tl-head">
+    <Heading>How the argument unfolded</Heading>
+    <p class="tl-span">{span}</p>
+  </div>
+
+  <ol class="tl-list">
+    {history.map(h => (
+      <li class="tl-item">
+        <span class="tl-node" aria-hidden="true"></span>
+        <span class="tl-when">{h.when}</span>
+        <span class="tl-what">{h.what}</span>
+      </li>
+    ))}
+  </ol>
+</div>

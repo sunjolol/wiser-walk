@@ -199,6 +199,11 @@ a { color: var(--accent); text-underline-offset: 2px; }
 }
 .tags { font-family: var(--text); font-size: .82rem; color: var(--ink-mute); }
 
+/* line marks, sized to sit on the text baseline they follow */
+.icon { display: inline-block; vertical-align: -.18em; flex: none; }
+.eyebrow .icon { vertical-align: -.22em; margin-right: .15rem; }
+.card h3 .icon { color: var(--ink-mute); vertical-align: -.2em; margin-right: .1rem; }
+
 /* ------------------------------------------------------- header / footer */
 
 .site-head { background: var(--panel); box-shadow: var(--lift-soft); position: relative; z-index: 5; }
@@ -329,6 +334,94 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .note strong { color: var(--ink); }
 .note.draft strong { color: inherit; }
 
+/* ------------------------------------------------------- the compass */
+/*
+ * One graphic for all six axes. Three encodings, none of them competing: direction is
+ * which axis, length is how strongly, colour is which pole. The wedge fill blends between
+ * neighbouring rays' own colours, so the shape's hue is the reader's own mix.
+ */
+
+.wheel { margin: 0; }
+.wheel-plot { position: relative; width: 100%; max-width: 21rem; margin: 0 auto; }
+@media (min-width: 40rem) { .wheel-plot { max-width: 25rem; } }
+.wheel-svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+.wheel-ring { fill: none; stroke: var(--zone-edge); stroke-width: 1; opacity: .5; }
+.wheel-ring--edge { opacity: .85; }
+.wheel-spoke { stroke: var(--zone-edge); stroke-width: 1; opacity: .45; }
+.wheel-pin { fill: var(--ink-mute); }
+
+.wheel-hatch-line { stroke: var(--zone-hatch); stroke-width: 3; }
+.wheel-zone {
+  fill: url(#wheel-hatch); stroke: var(--zone-edge); stroke-width: 1;
+}
+
+/* the two poles, and the grey that means neither */
+.stop--left { stop-color: var(--blue); }
+.stop--right { stop-color: var(--orange); }
+.stop--centre { stop-color: var(--ink-mute); }
+
+.wheel-shape { opacity: calc(var(--tint-op) + .22); }
+.wheel-outline { fill: none; stroke: var(--ink-soft); stroke-width: 1.5; stroke-linejoin: round; opacity: .55; }
+
+.wheel-ray { stroke-width: 4; stroke-linecap: round; }
+.wheel-ray--left { stroke: var(--blue); }
+.wheel-ray--right { stroke: var(--orange); }
+.wheel-ray--centre { stroke: var(--ink-mute); }
+
+/* the same knob as the rails: solid, with a card-coloured ring */
+.wheel-knob { stroke: var(--panel); stroke-width: 3; }
+.wheel-knob--left { fill: var(--blue); }
+.wheel-knob--right { fill: var(--orange); }
+.wheel-knob--centre { fill: var(--ink-mute); }
+
+/* rim labels are HTML, not SVG text: real type, real wrapping, real scaling */
+/*
+ * Sized so the longest real pole name fits.
+ *
+ * Six axes 60° apart put four labels near the horizontal, where the room left beside the
+ * circle is the tightest on the page. Measured at a 390px phone: about 88px. "Continuationist"
+ * is the longest of the twelve pole names, and it sets the type size — Poppins at .7rem
+ * rather than the display face, which is too wide to fit and would have to break mid-word.
+ */
+.wheel-label {
+  position: absolute; transform: translateY(-50%);
+  display: flex; flex-direction: column; line-height: 1.2;
+  width: 4.4rem; pointer-events: none;
+}
+@media (min-width: 34rem) { .wheel-label { width: 5.9rem; } }
+.wheel-label--start { text-align: left; }
+.wheel-label--end { text-align: right; transform: translate(-100%, -50%); }
+.wheel-label--middle { text-align: center; transform: translate(-50%, -50%); width: 8rem !important; }
+.wheel-label b {
+  font-family: var(--ui); font-size: .66rem; font-weight: 700; letter-spacing: .09em;
+  text-transform: uppercase; color: var(--ink-mute);
+}
+/*
+ * The pole name is hidden on a phone.
+ *
+ * Four of the six labels sit near the horizontal, where the room beside the circle is
+ * tightest: about 81px at 390px wide, against 93px for "Continuationist", which is one word
+ * and cannot wrap. The choice was a much smaller circle or a clipped word. Neither is worth
+ * it, because the rails directly below already print both pole names and the exact lean for
+ * every axis, at every width, unconditionally. On a phone the wheel's job is the shape and
+ * the colour; the rails do the naming.
+ */
+.wheel-label i {
+  display: none;
+  font-family: var(--ui); font-style: normal; font-weight: 600; font-size: .7rem;
+  color: var(--ink); text-wrap: balance; letter-spacing: -.005em;
+}
+@media (min-width: 34rem) { .wheel-label i { display: block; } }
+.wheel-label--left i { color: var(--accent); }
+.wheel-label--right i { color: var(--warn-ink); }
+.wheel-label--centre i { color: var(--ink-mute); font-style: italic; font-weight: 500; }
+
+.wheel-cap {
+  font-size: .78rem; color: var(--ink-mute); margin: 1rem auto 0; max-width: 34em;
+  text-align: center; text-wrap: pretty;
+}
+
 /* -------------------------------------------------------- the rails ---- */
 /*
  * The hero visual and the axis rows are ONE component: full-width diverging rails on a
@@ -337,6 +430,9 @@ a { color: var(--accent); text-underline-offset: 2px; }
  */
 
 .rails-block { margin: 1.5rem 0 0; }
+/* the compass caption already explains the hatched band; saying it twice reads as padding */
+.wheel + .rails-block .rails-legend { display: none; }
+.wheel + .rails-block { margin-top: 2rem; }
 .rails { display: flex; flex-direction: column; gap: 1.15rem; }
 .rails-legend {
   display: flex; align-items: center; gap: .5rem; margin: 0 0 1.1rem;
@@ -439,6 +535,14 @@ a { color: var(--accent); text-underline-offset: 2px; }
   padding: .85rem 1rem; min-height: 44px;
 }
 .depth > summary::-webkit-details-marker { display: none; }
+/* a dot in the axis's own colour, which carries the same meaning the rail's knob does */
+.depth-dot {
+  width: 9px; height: 9px; border-radius: 50%; flex: none; align-self: center;
+  background: var(--tone, var(--ink-mute));
+}
+.depth--left { --tone: var(--blue); }
+.depth--right { --tone: var(--orange); }
+.depth--centre { --tone: var(--ink-mute); }
 .depth-name { font-family: var(--ui); font-weight: 700; font-size: .95rem; color: var(--ink); }
 .depth-poles {
   font-family: var(--ui); font-size: .72rem; font-weight: 600; letter-spacing: .04em;
@@ -466,8 +570,11 @@ a { color: var(--accent); text-underline-offset: 2px; }
   font-family: var(--ui); font-size: .68rem; font-weight: 700; letter-spacing: .1em;
   text-transform: uppercase; color: var(--ink-mute); margin: 0 0 .4rem;
 }
+/* Each heading takes its OWN pole's colour, never the reader's. Colouring by "your side"
+   painted the right pole blue — the left pole's colour — on any reader who leaned right. */
+.pole-panel--left h4 { color: var(--accent); }
+.pole-panel--right h4 { color: var(--warn-ink); }
 /* the reader's own side is marked, but the other is never dimmed or shortened */
-.pole-panel.is-yours h4 { color: var(--accent); }
 .pole-panel.is-yours::after {
   content: "your side"; display: block; margin-top: .5rem;
   font-family: var(--ui); font-size: .62rem; font-weight: 700; letter-spacing: .1em;
@@ -496,6 +603,98 @@ a { color: var(--accent); text-underline-offset: 2px; }
 
 .depth-more { margin: 1rem 0 0; font-size: .85rem; }
 
+/* ------------------------------------------- history and passages */
+/*
+ * The chronology is the instrument's strongest educational surface: it shows the positions
+ * have addresses. One rule, one colour, no annotation by pole — several entries describe
+ * one side's move and several the other's, and deciding which belongs to whom is inference.
+ */
+
+.tl { margin: 1.1rem 0 0; }
+.tl-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem; margin: 0 0 .7rem; }
+.tl-head h3, .tl-head h4, .pg-head h3, .pg-head h4 {
+  font-family: var(--ui); font-size: .68rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--ink-mute); margin: 0;
+}
+.tl-span, .pg-note {
+  font-size: .72rem; color: var(--ink-mute); margin: 0 0 0 auto; font-variant-numeric: tabular-nums;
+}
+
+.tl-list { list-style: none; margin: 0; padding: 0 0 0 .1rem; }
+.tl-item {
+  position: relative; display: grid; gap: .1rem .8rem;
+  grid-template-columns: 1fr; padding: .65rem 0 .65rem 1.1rem;
+  border-top: 1px dashed var(--zone-edge); font-size: .86rem; color: var(--ink-soft);
+}
+.tl-item:first-child { border-top: 0; padding-top: .1rem; }
+/* one continuous rule down the gutter, broken at neither end of the list */
+.tl-item::before {
+  content: ""; position: absolute; left: 2px; top: 0; bottom: 0; width: 1px;
+  background: var(--zone-edge);
+}
+.tl-item:first-child::before { top: .55rem; }
+.tl-item:last-child::before { bottom: calc(100% - 1.15rem); }
+.tl-node {
+  position: absolute; left: 0; top: .95rem; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--ink-mute); box-shadow: 0 0 0 3px var(--panel);
+}
+.tl-item:first-child .tl-node { top: .4rem; }
+.tl-when {
+  font-family: var(--ui); font-size: .7rem; font-weight: 700; letter-spacing: .04em;
+  color: var(--accent); font-variant-numeric: tabular-nums;
+}
+.tl-what { text-wrap: pretty; }
+/* from the tablet up the date sits in its own gutter and the entries align down a column */
+@media (min-width: 34rem) {
+  .tl-item { grid-template-columns: 6.5rem 1fr; align-items: baseline; }
+  .tl-when { padding-top: .05rem; }
+}
+
+/* ---- passages ---- */
+.pg { margin: 1.2rem 0 0; }
+.pg-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .4rem; margin: 0 0 .6rem; }
+.pg-row { display: flex; flex-wrap: wrap; gap: .4rem; }
+
+.pill-wrap { display: contents; }
+.pill {
+  display: inline-flex; align-items: center; gap: .35rem; list-style: none;
+  font-family: var(--ui); font-size: .74rem; font-weight: 600;
+  color: var(--ink-soft); background: var(--shell); border-radius: var(--r-pill);
+  padding: .45rem .8rem; min-height: 34px; cursor: pointer;
+  box-shadow: inset 0 0 0 1px var(--zone-edge); transition: color .15s, box-shadow .15s;
+}
+.pill::-webkit-details-marker { display: none; }
+.pill:hover { color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.pill:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.pill--flat { cursor: default; opacity: .7; }
+.pill-mark {
+  width: 5px; height: 5px; border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor; transform: rotate(45deg) translate(-1px, -1px);
+  transition: transform .2s;
+}
+[open] > .pill { color: var(--accent); box-shadow: inset 0 0 0 1.5px var(--accent); }
+[open] > .pill .pill-mark { transform: rotate(-135deg); }
+
+/* an opened passage takes the whole row rather than squeezing between two pills */
+.pg-text {
+  flex: 1 0 100%; order: 99;
+  background: var(--shell); border-radius: var(--r-sm); padding: .85rem .95rem .8rem;
+  margin: .2rem 0 .3rem;
+}
+.pg-ref {
+  font-family: var(--ui); font-size: .66rem; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--accent); margin: 0 0 .55rem;
+}
+.pg-more { color: var(--ink-mute); font-weight: 600; }
+.pg-verses { list-style: none; margin: 0; padding: 0; display: grid; gap: .45rem; }
+.pg-verses li { display: grid; grid-template-columns: 1.6rem 1fr; gap: .3rem; }
+.pg-verses b {
+  font-family: var(--ui); font-size: .66rem; font-weight: 700; color: var(--ink-mute);
+  font-variant-numeric: tabular-nums; padding-top: .18rem;
+}
+.pg-verses span { font-size: .9rem; color: var(--ink); line-height: 1.55; text-wrap: pretty; }
+.pg-cite { font-size: .68rem; color: var(--ink-mute); margin: .7rem 0 0; }
+
 /* --------------------------------------------------- the unipolar stack */
 /*
  * Ranked categories. No spine, no diverging tint, no no-claim zone: a ranking has none of
@@ -518,7 +717,6 @@ a { color: var(--accent); text-underline-offset: 2px; }
 }
 .tier-name a { color: inherit; text-decoration: none; }
 .tier-name a:hover { text-decoration: underline; }
-.tier-emoji { margin-right: .3rem; }
 .tier-strength {
   margin-left: auto; font-family: var(--ui); font-size: .74rem; font-weight: 600;
   color: var(--ink-mute); text-align: right;
@@ -595,6 +793,17 @@ a { color: var(--accent); text-underline-offset: 2px; }
 /* -------------------------------------------------- result page furniture */
 
 .result-head { margin-bottom: 1.25rem; }
+
+/*
+ * The verdict. Each clause takes the colour of the pole it names, so the headline, the
+ * compass and the rails all say the same thing in the same two colours and the reader is
+ * never asked to hold a legend in their head.
+ */
+.verdict { line-height: 1.08; }
+.verdict-part--left { color: var(--accent); }
+.verdict-part--right { color: var(--warn-ink); }
+.verdict-part--centre { color: var(--ink); }
+.verdict-sep { color: var(--ink-mute); }
 .result-panel { margin: 0 0 2rem; }
 .outcomes, .depth-section, .share-block, .capture { margin: 2.5rem 0 0; }
 .depth-section > .tags, .outcomes > .tags { margin: 0 0 1rem; max-width: var(--measure); }

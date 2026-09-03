@@ -1,0 +1,145 @@
+---
+/**
+ * "Your compass" — all six axes in one graphic.
+ *
+ * The demo's version drew each axis as a full DIAMETER and joined the six signed positions
+ * into a polygon. That is what made it unreadable: the polygon spans six unrelated
+ * diameters, so its shape carries no meaning and it flips inside out around the centre; and
+ * twelve spoke-ends each needing an axis name and a pole name is how the old version ended
+ * up with a named pole facing a blank sector.
+ *
+ * This one collapses each axis onto a single RAY and splits the reading three ways:
+ *
+ *   direction — which axis (six rays, 60° apart, named at the rim)
+ *   length    — how strongly you lean, as a share of the half-axis
+ *   colour    — which pole, blue for left and orange for right, the same two colours the
+ *               rails use, so the two graphics teach each other
+ *
+ * Every ray is now a magnitude from the same origin, so the polygon over the six tips IS
+ * meaningful: a wide shape is a reader with convictions, a small one is a reader who
+ * mostly did not commit. The fill is a blend of the six ray colours, so a reader who leans
+ * left throughout gets a blue bloom and one who leans right gets an orange one — the shape
+ * says how much and the colour says which way, at a glance and without reading a word.
+ *
+ * The hatched disc at the centre is the same audited band the rails hatch, at the same
+ * proportion of the scale. A small shape sitting inside it is not an empty result; it is
+ * the answer, and it looks like one.
+ *
+ * Rendered server-side. No JavaScript, no canvas, no library.
+ */
+import type { BipolarView } from '../lib/engine/types';
+
+interface Props {
+  view: BipolarView;
+  /** Rendered smaller and without labels, for a share card. */
+  bare?: boolean;
+}
+
+const { view, bare = false } = Astro.props;
+
+const SIZE = 320;
+const C = SIZE / 2;
+const R = bare ? 128 : 104;
+
+/** The no-claim band as a share of the half-axis — the same number the rails draw. */
+const zoneT = (view.noClaimSpan[1] - 50) / 50;
+
+const rays = view.rows.map((row, i) => {
+  // Straight up, then clockwise. Six axes at 60°.
+  const deg = -90 + i * 60;
+  const rad = (deg * Math.PI) / 180;
+  const t = Math.abs(row.step - row.steps / 2) / (row.steps / 2);
+  const side = row.noClaim ? 'centre' : row.value < 50 ? 'left' : 'right';
+  return {
+    row,
+    deg,
+    t,
+    side,
+    pole: row.noClaim ? null : row.value < 50 ? row.left : row.right,
+    x: C + R * t * Math.cos(rad),
+    y: C + R * t * Math.sin(rad),
+    // Where a rim label sits, as a percentage of the box, so HTML can be placed on it.
+    lx: 50 + ((R + 12) / SIZE) * 100 * Math.cos(rad),
+    ly: 50 + ((R + 12) / SIZE) * 100 * Math.sin(rad),
+    anchor: Math.cos(rad) > 0.2 ? 'start' : Math.cos(rad) < -0.2 ? 'end' : 'middle'
+  };
+});
+
+const f = (n: number) => n.toFixed(1);
+const points = rays.map(r => `${f(r.x)},${f(r.y)}`).join(' ');
+
+/** One wedge per adjacent pair, so the fill blends between the two rays' own colours. */
+const wedges = rays.map((r, i) => {
+  const next = rays[(i + 1) % rays.length]!;
+  return { a: r, b: next, id: `w${i}` };
+});
+
+const label = (a: string) => `${a} compass`;
+---
+<figure class="wheel" role="group" aria-labelledby="wheel-cap">
+  <div class="wheel-plot">
+    <svg viewBox={`0 0 ${SIZE} ${SIZE}`} class="wheel-svg" role="img"
+         aria-label={`Six axes. ${rays.map(r =>
+           r.pole ? `${r.row.name}, ${r.row.lean}` : `${r.row.name}, ${r.row.band}, naming neither pole`
+         ).join('. ')}.`}>
+      <defs>
+        {wedges.map(w => (
+          <linearGradient id={w.id} gradientUnits="userSpaceOnUse"
+                          x1={f(w.a.x)} y1={f(w.a.y)} x2={f(w.b.x)} y2={f(w.b.y)}>
+            <stop offset="0%" class={`stop stop--${w.a.side}`} />
+            <stop offset="100%" class={`stop stop--${w.b.side}`} />
+          </linearGradient>
+        ))}
+        <pattern id="wheel-hatch" width="6" height="6" patternUnits="userSpaceOnUse"
+                 patternTransform="rotate(45)">
+          <line x1="0" y1="0" x2="0" y2="6" class="wheel-hatch-line" />
+        </pattern>
+      </defs>
+
+      {/* the reachable rings: half-conviction and full */}
+      <circle cx={C} cy={C} r={R} class="wheel-ring wheel-ring--edge" />
+      <circle cx={C} cy={C} r={R * 0.5} class="wheel-ring" />
+
+      {/* the spokes, drawn full length so an empty direction still reads as an axis */}
+      {rays.map(r => (
+        <line x1={C} y1={C}
+              x2={f(C + R * Math.cos((r.deg * Math.PI) / 180))}
+              y2={f(C + R * Math.sin((r.deg * Math.PI) / 180))}
+              class="wheel-spoke" />
+      ))}
+
+      {/* the band in which no pole is named — the same hatch the rails use */}
+      <circle cx={C} cy={C} r={f(R * zoneT)} class="wheel-zone" />
+
+      {/* the shape of the reader's convictions, blended between its own rays' colours */}
+      <g class="wheel-shape">
+        {wedges.map(w => (
+          <polygon points={`${C},${C} ${f(w.a.x)},${f(w.a.y)} ${f(w.b.x)},${f(w.b.y)}`}
+                   fill={`url(#${w.id})`} />
+        ))}
+      </g>
+      <polygon points={points} class="wheel-outline" />
+
+      {rays.map(r => (
+        <>
+          <line x1={C} y1={C} x2={f(r.x)} y2={f(r.y)} class={`wheel-ray wheel-ray--${r.side}`} />
+          <circle cx={f(r.x)} cy={f(r.y)} r="7" class={`wheel-knob wheel-knob--${r.side}`} />
+        </>
+      ))}
+      <circle cx={C} cy={C} r="2.5" class="wheel-pin" />
+    </svg>
+
+    {!bare && rays.map(r => (
+      <span class={`wheel-label wheel-label--${r.anchor} wheel-label--${r.side}`}
+            style={`left:${f(r.lx)}%;top:${f(r.ly)}%`}>
+        <b>{r.row.name}</b>
+        <i>{r.pole ?? 'no lean'}</i>
+      </span>
+    ))}
+  </div>
+
+  <figcaption class="wheel-cap" id="wheel-cap">
+    Each arm is one axis: how far out you sit is how strongly you lean, and the colour is
+    which way. The hatched middle is the band where the quiz names neither pole.
+  </figcaption>
+</figure>

@@ -28,7 +28,6 @@ export interface QuizGroup {
   key: string;
   slug: string;
   name: string;
-  emoji?: string;
   /** Bipolar axes: the two poles, and the band adjectives across the scale. */
   left?: string;
   right?: string;
@@ -106,7 +105,6 @@ export interface ResultRowBase {
   /** The URL identity. Never `key` — on the Compass they differ on two of six axes. */
   slug: string;
   name: string;
-  emoji?: string;
   /** 0..100. For bipolar this is a POSITION; for unipolar a MAGNITUDE. */
   value: number;
 }
@@ -149,10 +147,22 @@ export interface Ranked {
   score: number;
 }
 
+/** One clause of the headline, with the side it leans to, so it can be coloured. */
+export interface HeadlinePart {
+  text: string;
+  side: 'left' | 'right' | 'centre';
+}
+
 interface ViewBase {
   quizSlug: string;
   code: string;
   headline: string;
+  /**
+   * The headline broken into its clauses. The first thing a reader sees should say where
+   * they lean in the same two colours the compass and the rails use, so the three agree
+   * without anyone having to be told they do.
+   */
+  headlineParts: HeadlinePart[];
   /** The one-line verdict: nearest outcome, dominant category, or an honest hedge. */
   summary: string;
   ranked: Ranked[];
@@ -225,7 +235,8 @@ export interface Quiz {
   /** One line under the title on the hub. */
   tagline: string;
   description: string;
-  emoji: string;
+  /** A line mark from components/Icon.astro. Never an emoji — see that file. */
+  icon: 'compass' | 'flame' | 'scroll' | 'book';
   minutes: number;
   /** 'live' appears on the hub and is indexable; 'draft' is reachable but noindex. */
   status: 'live' | 'draft';

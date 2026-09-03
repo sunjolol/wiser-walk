@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
 import { getCollection, render } from 'astro:content';
 import { getQuiz } from '../../lib/engine/registry';
 
@@ -45,7 +46,7 @@ const jsonLd = {
       <div class="cards">
         {related.map(q => (
           <div class="card">
-            <h3><a href={`/q/${q!.slug}/`}>{q!.emoji} {q!.title}</a></h3>
+            <h3><a href={`/q/${q!.slug}/`}><Icon name={q!.icon} size={17} /> {q!.title}</a></h3>
             <p>{q!.tagline}</p>
             <p class="meta">
               {q!.items.length} statements

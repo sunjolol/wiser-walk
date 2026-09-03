@@ -4,7 +4,7 @@
  * fairness audit — see audit/fairness-report.md before changing any of them.
  */
 import { makeCodec } from '../engine/codec';
-import type { BipolarRow, BipolarView, Quiz, ScoringStrategy, Sheet } from '../engine/types';
+import type { BipolarRow, BipolarView, HeadlinePart, Quiz, ScoringStrategy, Sheet } from '../engine/types';
 
 /** Items per group fixes the raw range, so a group with more items still maps to 0..100. */
 function spanOf(quiz: Quiz, group: number): number {
@@ -79,6 +79,34 @@ function strongCount(quiz: Quiz, sheet: Sheet | null, group: number): number {
     if (item.group === group && Math.abs(sheet[i] ?? 0) === 2) n++;
   });
   return n;
+}
+
+/**
+ * The headline's clauses, strongest lean first, each carrying the side it leans to.
+ * Same ordering rule as headline(); that function is now a join of these.
+ */
+export function headlineParts(
+  quiz: Quiz,
+  values: number[],
+  sheet: Sheet | null = null
+): HeadlinePart[] {
+  const out = values
+    .map((s, i) => ({ i, d: Math.abs(s - 50), b: band(s) }))
+    .filter(x => x.b !== MIDDLE_BAND);
+  if (!out.length) return [{ text: 'Near the center on every axis', side: 'centre' }];
+  out.sort(
+    (a, b) =>
+      b.d - a.d ||
+      strongCount(quiz, sheet, b.i) - strongCount(quiz, sheet, a.i) ||
+      a.i - b.i
+  );
+  return out.slice(0, 3).map((x, n) => {
+    const raw = quiz.groups[x.i]!.bands?.[x.b] ?? quiz.groups[x.i]!.name;
+    return {
+      text: n === 0 ? raw.charAt(0).toUpperCase() + raw.slice(1) : raw,
+      side: (values[x.i] ?? 50) < 50 ? 'left' : 'right'
+    };
+  });
 }
 
 /** Only axes outside the middle band name a position. */
@@ -183,7 +211,6 @@ export const bipolar: ScoringStrategy = {
         key: g.key,
         slug: g.slug,
         name: g.name,
-        emoji: g.emoji,
         value,
         // A bipolar group without both poles is a data error, not a rendering variant.
         // The registry rejects it at build time; this keeps the type honest meanwhile.
@@ -200,6 +227,7 @@ export const bipolar: ScoringStrategy = {
       quizSlug: quiz.slug,
       code: this.encode(quiz, values),
       headline: headline(quiz, values),
+      headlineParts: headlineParts(quiz, values),
       summary: nearestLine(quiz, values, near),
       rows,
       noClaimRange: noClaimRange(),
@@ -218,7 +246,7 @@ export const bipolar: ScoringStrategy = {
       const at = Math.max(0, Math.min(10, Math.round((values[i] ?? 50) / 10)));
       let bar = '';
       for (let k = 0; k < 11; k++) bar += k === at ? '●' : '○';
-      lines.push(`${g.emoji ?? '·'} ${bar} ${g.name}: ${g.left} → ${g.right}`);
+      lines.push(`${bar} ${g.name}: ${g.left} → ${g.right}`);
     });
     const near = nearest(quiz, values);
     const st = nearestState(quiz, values, near);

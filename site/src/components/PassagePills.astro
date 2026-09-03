@@ -1,0 +1,86 @@
+---
+/**
+ * "Passages both sides argue from" — references that open to the text.
+ *
+ * The point of letting a reader open one is the point of the whole instrument: the positions
+ * on this map rest on texts, and a reader should be able to check that in one tap rather
+ * than take it on trust. So the text is real — the Berean Standard Bible, fetched by
+ * scripts/fetch-passages.mjs and bundled — and the panel says exactly which verses it is
+ * showing and how many are in the range, so it never implies it has given you the whole
+ * argument.
+ *
+ * Verses are the opening ones of whatever range the audited data names, taken mechanically.
+ * Four of the references are whole chapters, and picking "the key verses" of Romans 9 would
+ * be taking a side: a monergist and a synergist would pick differently and each would be
+ * right that the other had loaded the excerpt.
+ *
+ * NOT split by pole. Romans 9 and 1 Timothy 2:3–4 are claimed by both camps, and assigning
+ * either to a side would be invented editorial content.
+ *
+ * Opens with no JavaScript: each pill is a <details>, and an open one takes the full row.
+ */
+import passages from '../data/passages.json';
+
+interface Props {
+  refs: string[];
+  heading?: 'h3' | 'h4';
+}
+
+const { refs, heading = 'h4' } = Astro.props;
+const Heading = heading;
+
+const lib = passages.passages as Record<
+  string,
+  {
+    book: string;
+    chapter: number;
+    verses: Array<{ n: number; text: string }>;
+    inRange: number;
+    chapterVerses: number;
+    truncated: boolean;
+    spansChapters: string | null;
+  }
+>;
+---
+<div class="pg">
+  <div class="pg-head">
+    <Heading>Passages both sides argue from</Heading>
+    <p class="pg-note">Tap one to read it. {passages.abbreviation}, {passages.licence.toLowerCase()}</p>
+  </div>
+
+  <div class="pg-row">
+    {refs.map(ref => {
+      const p = lib[ref];
+      // A reference with no text simply does not open, rather than opening onto nothing.
+      if (!p) return <span class="pill pill--flat">{ref}</span>;
+
+      const shown = p.verses.map(v => v.n);
+      const range =
+        shown.length === 1
+          ? `verse ${shown[0]}`
+          : `verses ${shown[0]}–${shown[shown.length - 1]}`;
+
+      return (
+        <details class="pill-wrap">
+          <summary class="pill">
+            <span>{ref}</span>
+            <span class="pill-mark" aria-hidden="true"></span>
+          </summary>
+          <div class="pg-text">
+            <p class="pg-ref">
+              {p.book} {p.chapter} &middot; {range}
+              {p.truncated && <span class="pg-more"> of {p.inRange} in the passage</span>}
+              {p.spansChapters && <span class="pg-more"> &middot; the reference spans chapters {p.spansChapters}</span>}
+            </p>
+            <ol class="pg-verses">
+              {p.verses.map(v => (
+                <li><b>{v.n}</b><span>{v.text}</span></li>
+              ))}
+            </ol>
+            <p class="pg-cite">{passages.translation} ({passages.abbreviation})</p>
+          </div>
+        </details>
+      );
+    })}
+  </div>
+</div>

@@ -1,5 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import Icon from '../../../components/Icon.astro';
+import CompassWheel from '../../../components/CompassWheel.astro';
 import RailStack from '../../../components/RailStack.astro';
 import CategoryStack from '../../../components/CategoryStack.astro';
 import AxisDepth from '../../../components/AxisDepth.astro';
@@ -58,8 +60,17 @@ const outcomeHeading =
     ogType="article"
   >
     <div class="prose result-head">
-      <p class="eyebrow">{quiz.emoji} {quiz.title}</p>
-      <h1>{view.headline}</h1>
+      <p class="eyebrow"><Icon name={quiz.icon} size={15} /> {quiz.title}</p>
+      {/* The first thing a reader sees, in the same two colours as the compass and rails. */}
+      <h1 class="verdict">
+        {view.headlineParts.map((part, i) => (
+          <>
+            <span class={`verdict-part verdict-part--${part.side}`}>{part.text}</span>
+            {i < view.headlineParts.length - 1 && <span class="verdict-sep">,</span>}
+            {i < view.headlineParts.length - 1 && ' '}
+          </>
+        ))}
+      </h1>
       <p class="lede">{view.summary}</p>
       {quiz.status === 'draft' && (
         <div class="note draft"><p><strong>Unaudited draft.</strong>{" " + quiz.draftNote}</p></div>
@@ -70,9 +81,14 @@ const outcomeHeading =
       <div class="wash" aria-hidden="true"></div>
       <div class="veil" aria-hidden="true"></div>
 
-      {view.shape === 'bipolar'
-        ? <RailStack quiz={quiz} view={view} />
-        : <CategoryStack quiz={quiz} view={view} />}
+      {view.shape === 'bipolar' ? (
+        <>
+          <CompassWheel view={view} />
+          <RailStack quiz={quiz} view={view} />
+        </>
+      ) : (
+        <CategoryStack quiz={quiz} view={view} />
+      )}
     </div>
 
     {/*

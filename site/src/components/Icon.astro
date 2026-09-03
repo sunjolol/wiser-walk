@@ -1,0 +1,69 @@
+---
+/**
+ * The site's line marks.
+ *
+ * Emoji are out: they render at a different size and weight in every font stack, they carry
+ * a vendor's cartoon styling into a page that has none, and in the share card their varying
+ * widths broke the very column alignment the audit's eleven-slot bar was specified to fix.
+ *
+ * These are drawn in the same language as the theme's bulb toggle — a 1.6 stroke, round
+ * caps and joins, on a 24 grid — so a mark beside a quiz title reads as part of the page
+ * rather than as something pasted onto it.
+ *
+ * There is deliberately no per-axis icon. Six little pictures beside six axis names would
+ * be decoration standing in for information: the rails already carry the axis name, both
+ * pole names and a colour that means something. A mark earns its place where it does real
+ * work — telling two quizzes apart on the hub.
+ */
+interface Props {
+  name: 'compass' | 'flame' | 'scroll' | 'book' | 'arrow';
+  size?: number;
+  class?: string;
+}
+
+const { name, size = 20, class: cls = '' } = Astro.props;
+---
+<svg
+  class:list={['icon', cls]}
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+>
+  {name === 'compass' && (
+    <>
+      <circle cx="12" cy="12" r="8.4" />
+      <path d="M15.1 8.9 13.5 13.5 8.9 15.1 10.5 10.5Z" />
+      <path d="M12 2.6v1.5M12 19.9v1.5M2.6 12h1.5M19.9 12h1.5" />
+    </>
+  )}
+  {name === 'flame' && (
+    <>
+      <path d="M12 2.8c2.6 3 3.9 5.3 3.9 7a3.9 3.9 0 0 1-7.8 0c0-1 .4-2 1.2-3" />
+      <path d="M12 21.4c-2.4 0-4.3-1.7-4.3-4 0-2.6 2.4-3.8 4.3-7 1.9 3.2 4.3 4.4 4.3 7 0 2.3-1.9 4-4.3 4Z" />
+    </>
+  )}
+  {name === 'scroll' && (
+    <>
+      <path d="M6.5 3.5h11a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2h-11" />
+      <path d="M6.5 3.5a2 2 0 0 0-2 2v1.6h2" />
+      <path d="M6.5 20.5a2 2 0 0 0 2-2V5.5a2 2 0 0 0-2-2" />
+      <path d="M11 8.5h5M11 12h5M11 15.5h3" />
+    </>
+  )}
+  {name === 'book' && (
+    <>
+      <path d="M4.5 4.6v13.2a1.8 1.8 0 0 0 1.8 1.8H19" />
+      <path d="M6.3 4.6H19v15" />
+      <path d="M4.5 4.6a1.8 1.8 0 0 1 1.8-1.8" />
+      <path d="M9.5 8.6h6M9.5 12h6" />
+    </>
+  )}
+  {name === 'arrow' && <path d="M4.5 12h14M13 6.5l5.5 5.5L13 17.5" />}
+</svg>

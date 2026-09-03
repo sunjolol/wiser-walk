@@ -23,6 +23,8 @@
 import type { BipolarRow, Quiz } from '../lib/engine/types';
 import { isSplitReadMore } from '../lib/engine/types';
 import { groupHref } from '../lib/engine/registry';
+import HistoryTimeline from './HistoryTimeline.astro';
+import PassagePills from './PassagePills.astro';
 
 interface Props {
   quiz: Quiz;
@@ -46,9 +48,10 @@ const more = (text: string) => text.trim().split(/(?<=\.)\s+/).length > 1;
 const split = isSplitReadMore(group.readMore) ? group.readMore : null;
 const href = groupHref(quiz, row);
 ---
-<details class="depth" open={open}>
+<details class:list={['depth', `depth--${row.noClaim ? 'centre' : row.value < 50 ? 'left' : 'right'}`]} open={open}>
   <summary>
-    <span class="depth-name">{row.emoji} {row.name}</span>
+    <span class="depth-dot" aria-hidden="true"></span>
+    <span class="depth-name">{row.name}</span>
     <span class="depth-poles">{row.left} <span aria-hidden="true">↔</span> {row.right}</span>
     <span class="chev" aria-hidden="true"></span>
   </summary>
@@ -83,10 +86,11 @@ const href = groupHref(quiz, row);
     )}
 
     {group.passages && group.passages.length > 0 && (
-      <div class="passages">
-        <h4>Passages both sides argue from</h4>
-        <p>{group.passages.join(' · ')}</p>
-      </div>
+      <PassagePills refs={group.passages} />
+    )}
+
+    {group.history && group.history.length > 0 && (
+      <HistoryTimeline history={group.history} />
     )}
 
     {split && (

@@ -9,24 +9,10 @@ import data from '../../data/compass.json';
 import { bipolar } from '../strategies/bipolar';
 import type { Quiz, QuizGroup, QuizItem, Outcome } from '../engine/types';
 
-/**
- * Axis emoji live here rather than in the audited data: they are presentation, not
- * doctrine. Keyed by axis key so reordering the axes upstream cannot mis-assign them.
- */
-const EMOJI: Record<string, string> = {
-  grace: '⚖️',
-  table: '🍞',
-  spirit: '🔥',
-  kingdom: '👑',
-  tradition: '📜',
-  worship: '🎵'
-};
-
 const groups: QuizGroup[] = data.axes.map(a => ({
   key: a.key,
   slug: a.slug,
   name: a.name,
-  emoji: EMOJI[a.key],
   left: a.left,
   right: a.right,
   bands: a.bands,
@@ -58,7 +44,7 @@ export const theologyCompass: Quiz = {
     'Eighteen statements place you on six axes of Christian belief, then show which ' +
     'traditions sit nearest. Every position is described in words its own holders ' +
     'would accept, and the whole instrument has been through an adversarial fairness audit.',
-  emoji: '🧭',
+  icon: 'compass',
   minutes: 3,
   status: 'live',
   items,

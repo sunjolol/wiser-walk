@@ -14,19 +14,19 @@ import { category } from '../strategies/category';
 import type { Quiz, QuizGroup, QuizItem } from '../engine/types';
 
 const groups: QuizGroup[] = [
-  { key: 'pride', slug: 'pride', name: 'pride', emoji: '👑',
+  { key: 'pride', slug: 'pride', name: 'pride',
     summary: 'Gregory placed pride first, as the root the other six grow from: the refusal to be under anything.' },
-  { key: 'envy', slug: 'envy', name: 'envy', emoji: '🙄',
+  { key: 'envy', slug: 'envy', name: 'envy',
     summary: 'Sorrow at another’s good — the one sin, Aquinas noted, that offers its owner no pleasure at all.' },
-  { key: 'wrath', slug: 'wrath', name: 'wrath', emoji: '🔥',
+  { key: 'wrath', slug: 'wrath', name: 'wrath',
     summary: 'Anger held past its usefulness, until it hardens into the desire to see someone pay.' },
-  { key: 'sloth', slug: 'sloth', name: 'sloth', emoji: '🥱',
+  { key: 'sloth', slug: 'sloth', name: 'sloth',
     summary: 'Acedia: not idleness so much as the listlessness that will not do the good it knows.' },
-  { key: 'greed', slug: 'greed', name: 'greed', emoji: '💰',
+  { key: 'greed', slug: 'greed', name: 'greed',
     summary: 'Avarice: wanting more than you need, and measuring yourself by what you have gathered.' },
-  { key: 'gluttony', slug: 'gluttony', name: 'gluttony', emoji: '🍰',
+  { key: 'gluttony', slug: 'gluttony', name: 'gluttony',
     summary: 'Taking comfort in consumption — reaching for the thing that dulls rather than the thing that feeds.' },
-  { key: 'lust', slug: 'lust', name: 'lust', emoji: '💔',
+  { key: 'lust', slug: 'lust', name: 'lust',
     summary: 'Desire detached from love, treating a person as something to be used.' }
 ];
 
@@ -65,7 +65,7 @@ export const sevenDeadlySins: Quiz = {
     'The seven capital vices as Gregory the Great fixed them around 590 — pride, envy, ' +
     'wrath, sloth, greed, gluttony, lust. Fourteen statements, and an honest look at which ' +
     'one has the most pull on you.',
-  emoji: '🕯️',
+  icon: 'flame',
   minutes: 2,
   status: 'draft',
   draftNote:

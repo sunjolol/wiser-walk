@@ -41,7 +41,6 @@ const leading = view.state === 'flat' ? 0 : view.state === 'tie' ? 2 : 1;
         <div class="tier-head">
           <span class="tier-rank" aria-hidden="true">{row.rank}</span>
           <span class="tier-name">
-            {row.emoji && <span class="tier-emoji" aria-hidden="true">{row.emoji}</span>}
             {linked ? <a href={groupHref(quiz, row)}>{row.name}</a> : row.name}
           </span>
           <span class="tier-strength">{row.strength}</span>

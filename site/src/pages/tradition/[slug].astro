@@ -44,7 +44,7 @@ const jsonLd = {
     {quiz.groups.map((g, i) => (
       <li>
         <div class="bar-head">
-          <span class="name">{g.emoji} <a href={groupHref(quiz, g)}>{g.name}</a></span>
+          <span class="name"><a href={groupHref(quiz, g)}>{g.name}</a></span>
           <span class="lean">{lean(g, position[i] ?? 50)}</span>
         </div>
         <div class="track"><span class="dot" style={`left:${position[i] ?? 50}%`}></span></div>

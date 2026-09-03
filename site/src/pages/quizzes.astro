@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
 import { QUIZZES } from '../lib/engine/registry';
 
 const live = QUIZZES.filter(q => q.status === 'live');
@@ -33,7 +34,7 @@ const jsonLd = {
   <div class="cards">
     {live.map(q => (
       <div class="card">
-        <h3><a href={`/q/${q.slug}/`}>{q.emoji} {q.title}</a></h3>
+        <h3><a href={`/q/${q.slug}/`}><Icon name={q.icon} size={17} /> {q.title}</a></h3>
         <p>{q.tagline}</p>
         <p class="meta">{q.items.length} statements · about {q.minutes} minutes</p>
       </div>
@@ -50,7 +51,7 @@ const jsonLd = {
       <div class="cards">
         {drafts.map(q => (
           <div class="card">
-            <h3><a href={`/q/${q.slug}/`}>{q.emoji} {q.title}</a></h3>
+            <h3><a href={`/q/${q.slug}/`}><Icon name={q.icon} size={17} /> {q.title}</a></h3>
             <p>{q.tagline}</p>
             <p class="meta">{q.items.length} statements · unaudited draft</p>
           </div>
