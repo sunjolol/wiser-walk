@@ -1,0 +1,122 @@
+{
+ "target": "scoring",
+ "findings": [
+  {
+   "id": "anglican-2",
+   "lens": "Anglican (broad, Thirty-Nine Articles / Book of Common Prayer)",
+   "category": "scoring",
+   "severity": "major",
+   "claim": "The three Table statements only separate credobaptist-memorial from paedobaptist-real-presence, so every real-presence paedobaptist scores 0-8 and the graded coordinates RC 5 / EO 5 / Lutheran 15 / Anglican 25 / Presbyterian 35 encode a ranking (transubstantiation to memorial) that the quiz never asks about.",
+   "evidence": "Westminster Presbyterian: S4 +1 (WCF 29.7 'really, but spiritually, present'), S5 -2, S6 +2 -> raw -5 -> 8, not 35. Confessional Lutheran: -6 -> 0, not 15. Anglican: -5 or -6 -> 0-8, not 25. S5 and S6 are both baptism questions and both credo-versus-paedo, so one is redundant and the axis has no statement on the mode of presence, which is the only thing that distinguishes these five traditions.",
+   "fix": "Replace S5 with: 'After consecration the bread and wine are the body and blood of Christ in substance, and may rightly be reserved and adored.' (direction -1). Article XXVIII ('The Sacrament of the Lord's Supper was not by Christ's ordinance reserved, carried about, lifted up, or worshipped') gives Anglican -1, Lutheran 0 to -1, Roman Catholic and Orthodox +2, Reformed -2, Baptist -2, yielding Table roughly RC 0, Lutheran 17-25, Anglican 25, Presbyterian 42, Baptist 100, i.e. the coordinates already in the file. Memorialists still reach 100 through S4 and S6. If the statement is kept, compress the coordinates instead: RC 5, EO 5, Lutheran 8, Anglican 10, Presbyterian 20."
+  },
+  {
+   "id": "churchofchrist-14",
+   "lens": "Church of Christ / Restoration Movement (Stone-Campbell)",
+   "category": "scoring",
+   "severity": "major",
+   "claim": "There is no floor on the nearest-tradition match: a Church of Christ member's best fit is 70% (distance 74 of a possible 245) yet the result heading, card, and share text assert 'Closest traditions: Anabaptist / Mennonite, Wesleyan / Methodist' with the same confidence as a 95% fit.",
+   "evidence": "nearest() sorts and returns the top two unconditionally; renderResult() prints 'Closest traditions: ' + near[0].name + ', ' + near[1].name. Any tradition not in the list (Churches of Christ, Brethren, Adventist, Free Will Baptist, Nazarene) produces a confident wrong answer.",
+   "fix": "If near[0].d > 60 (match < 76%), render the sub-line as 'No listed tradition is a close fit. Nearest, loosely: X, Y' and use the same hedge in shareText and on the card."
+  },
+  {
+   "id": "churchofchrist-15",
+   "lens": "Church of Christ / Restoration Movement (Stone-Campbell)",
+   "category": "scoring",
+   "severity": "minor",
+   "claim": "Headline ties are broken by axis index, so a member with four axes at maximum deviation (grace 100, spirit 100, kingdom 0, tradition 100) has Tradition, the axis where 'no creed but Christ' lives and arguably his most defining answer, dropped from the label simply because it is fourth in the array.",
+   "evidence": "headline(): d.sort((a,b) => (b.d - a.d) || (a.i - b.i)); simulation |s-50| = 50,8,50,50,50,8 -> label 'Firmly synergist, cessationist, covenantal', no Tradition adjective.",
+   "fix": "When more than three axes tie at the top deviation, show all tied adjectives (up to four), or break ties by the axis whose answers had no 'Unsure'."
+  },
+  {
+   "id": "copy-7",
+   "lens": "copy editor",
+   "category": "scoring",
+   "severity": "major",
+   "claim": "The permalink code rounds each score to a multiple of 4, so a shared link reproduces a different result from the one the sharer saw; the deep-link hint \"opening the page with #r=CODE loads this same result\" is false.",
+   "evidence": "encode() stores round(score/4); decode() returns that ×4. The only reachable scores are 0, 8, 17, 25, 33, 42, 50, 58, 67, 75, 83, 92, 100. Round-trip: 17→16, 25→24, 33→32, 42→44, 50→52, 58→60, 67→68, 75→76, 83→84 (JS Math.round rounds .5 up). 58→60 crosses the 59/60 band boundary, so a Table score of 58 shows \"centered on the sacraments\" to the sharer and \"memorial-leaning\" to anyone opening the link; 50→52 turns \"50% · centered\" into \"52% toward Memorial\"; every shifted score also nudges the match percentages.",
+   "fix": "Encode the per-axis raw sum instead of the rounded score: encode: q = Math.round(scores[i] * 12 / 100) (0..12), n = n * 13 + q; decode: q = n % 13, score = Math.round(q / 12 * 100), n = Math.floor(n / 13). 13^6 = 4,826,809 < 36^6, so the six-character code still fits and every reachable score round-trips exactly. Add to the JSON scoring block: \"permalink\": \"each axis stored as raw+6 (0..12), base 13, rendered base 36 in 6 chars\"."
+  },
+  {
+   "id": "lutheran-6",
+   "lens": "confessional Lutheran (LCMS / WELS / Book of Concord)",
+   "category": "scoring",
+   "severity": "major",
+   "claim": "The Table coordinates spread Roman Catholic 5, Eastern Orthodox 5, Lutheran 15, Anglican 25, Presbyterian 35, but the three Table statements are answered identically (+2, -2, +2 -> 0) by informed members of all five, so the spread is noise that penalizes the Lutheran match by 15 points for a difference (transubstantiation vs sacramental union vs spiritual presence) the instrument never asks about. The same is true of Kingdom (RC 15, EO 15, Lutheran 15, Anglican 20, Presbyterian 15 vs an honest 0-8 for all).",
+   "evidence": "S4 \"truly present in a way that goes beyond a symbol\" is affirmed by Calvin (Inst. IV.17) as readily as by AC X and Trent; S5 and S6 are both baptism questions all five answer the same way. Nothing in the axis separates FC SD VII.54-60 (oral reception by all communicants, 1 Cor 10:16) from Reformed reception by faith alone.",
+   "fix": "Either set all five paedobaptist, real-presence traditions to Table 5-10 and Kingdom 5-10, or add the statement that actually divides them: \"In the Supper, Christ's body and blood are received with the mouth by every communicant, believing or not.\" (Lutheran, Catholic, Orthodox +2; Reformed -2; memorialist -2)."
+  },
+  {
+   "id": "mockery-15",
+   "lens": "mockery critic",
+   "category": "scoring",
+   "severity": "major",
+   "claim": "Match percentages are inflated, ties are hidden, and the note describing the formula is wrong. An all-Unsure answer set gets 'Wesleyan / Methodist 83%' — screenshot: 'Know nothing about theology? Congratulations, you're a Methodist.' My Catholic answer set shows Orthodox 91%, Catholic 86%; my PCA set shows two traditions at 87% with the wrong one first.",
+   "evidence": "match = 100 − d/245·100, where 245 is corner-to-corner; the all-Unsure vector [50]*6 is 42.1 from Wesleyan/Methodist → 83%. PCA set: 31.4 vs 31.6, both round to 87%, order decided by 0.2 units — less than one answer step on one axis (8.3). The permalink encoder rounds scores to multiples of 4, so a reopened link can reorder such near-ties. The on-page note 'Match is 100 minus your distance across all six axes' omits the scaling.",
+   "fix": "match = max(0, round(100 − d/140·100)) (all-Unsure → 70%, Catholic set → 84%/75%). If d2 − d1 < 8, show the pair as 'tied'. Note: 'Match is 100 minus your distance from that tradition's position, scaled so that a wholly different set of answers scores near 0.'"
+  },
+  {
+   "id": "progressive-24",
+   "lens": "progressive mainline Protestant (PCUSA, ELCA, Episcopal, UMC progressive wing)",
+   "category": "scoring",
+   "severity": "minor",
+   "claim": "Headline ties are broken by axis index in the code but not in the documented rule, and with only 13 possible scores per axis ties are common; the index rule privileges Grace, Table, and Spirit over Kingdom, Tradition, and Worship.",
+   "evidence": "JSON headline rule: 'take the three axes with the largest |score - 50|'; code: sort by (b.d - a.d) || (a.i - b.i). Simulation: a three-way tie at 17 between spirit, kingdom, and tradition put 'open to the gifts' in a Presbyterian pastor's headline rather than 'covenantal-leaning' or 'tradition-friendly'.",
+   "fix": "Document the tie-break in the JSON, and prefer a tie-break that does not depend on axis order (for example, the axis whose score is farther from the nearest tradition's mean, or simply drop tied axes and use two adjectives)."
+  },
+  {
+   "id": "reformedcharismatic-18",
+   "lens": "Reformed charismatic (John Piper, Wayne Grudem, Sam Storms, Sovereign Grace Churches, Acts 29 continuationists)",
+   "category": "scoring",
+   "severity": "minor",
+   "claim": "With twelve sparse points, second place is often decided by fractions of a distance unit, yet the headline, subtitle and share text print both names as if equally meaningful.",
+   "evidence": "Simulation: Presbyterian 87.87 vs Charismatic non-denominational 88.30; one answer change (S17 Unsure -> Agree) reorders the top three. renderResult writes 'Closest traditions: A, B' and shareText 'Closest: A · B' with no match % in the shared text.",
+   "fix": "Include the match % in the share line ('Closest: Reformed Baptist 66% · Presbyterian / Reformed 64%'), and show only one name when the second is within 2 distance units of the third."
+  },
+  {
+   "id": "survey-1",
+   "lens": "survey methodologist",
+   "category": "scoring",
+   "severity": "blocker",
+   "claim": "\"Unsure\" is scored as 0, the exact midpoint, so \"I don't know\" is indistinguishable from \"I hold a deliberate middle position\"; a respondent who answers Unsure to all eighteen items receives a confident result.",
+   "evidence": "computeScores: raw[s.a] += s.d * (ans[i] || 0). Eighteen Unsures -> scores [50,50,50,50,50,50] -> headline \"A theological centrist\" -> Closest traditions \"Wesleyan / Methodist 83% match\", \"Anabaptist / Mennonite 78%\". All-Agree and all-Disagree respondents also get \"A theological centrist\" (scores 42/58 on every axis). Standard practice (Krosnick & Presser, Handbook of Survey Research ch. 9) is to separate the scale midpoint from a no-opinion option and exclude the latter from the score.",
+   "fix": "Rename option 3 \"Neither agree nor disagree\" (scored 0) and add a sixth, unscored \"Skip / don't know\". Axis score = 50 + 25 x mean(direction x response) over answered items. Require at least 2 of 3 (3 of 4) answered; otherwise show the axis as \"not enough answers\" and exclude it from the headline and from the tradition distance (distance over the k scored axes, scaled by sqrt(6/k)). Show \"A theological centrist\" only when at least four axes are scored and all are centered; if fewer, say \"No clear lean yet\"."
+  },
+  {
+   "id": "survey-22",
+   "lens": "survey methodologist",
+   "category": "scoring",
+   "severity": "major",
+   "claim": "The permalink code quantizes scores to multiples of 4, so a shared link can show a different band and headline from the one the taker saw; the band edge at 59/60 sits 1.7 points from a reachable score.",
+   "evidence": "encode: Math.round(score/4), decode: q*4. Raw +1 -> 58 (\"centered\", band 2) -> code 15 -> decoded 60 -> band 3 (\"memorial-leaning\", \"Scripture-first\", etc.). Raw 0 -> 50 (\"50% centered\") -> decoded 52 -> \"52% toward [right pole]\". Also 42->44, 17->16, 25->24, 33->32, 67->68, 75->76, 83->84. The thresholds themselves are sound: in raw terms bands are [-6..-4], [-3,-2], [-1..1], [2,3], [4..6], and the same cutpoints (mean of direction x response at +/-0.36 and +/-1.2) stay sensible for 4 to 6 items.",
+   "fix": "Encode the exact raw sums: n = sum over axes of (raw_i + 6) x 13^i (max 13^6 - 1 = 4,826,808, five base-36 characters), decode back to the identical score; or encode the eighteen answers (5^18, nine base-36 characters). Document the bands in raw/mean terms: centered = |mean| <= 0.36, leaning = 0.36 < |mean| < 1.2, firm = |mean| >= 1.2."
+  },
+  {
+   "id": "survey-23",
+   "lens": "survey methodologist",
+   "category": "scoring",
+   "severity": "major",
+   "claim": "The headline takes the three largest deviations even when only one or two axes deviate, so \"no position\" adjectives appear as if they were positions, and ties are broken by axis index so Grace, Table, and Spirit are over-represented.",
+   "evidence": "[8,50,50,50,50,58] -> \"Firmly monergist, flexible in worship, centered on the sacraments\". [33,67,50,50,50,50] -> \"Reformed-leaning, memorial-leaning, undecided on the gifts\". Tie rule (b.d - a.d) || (a.i - b.i): with 13 discrete values, |d| in {8,17,25,33,42,50} ties constantly; [50,50,50,67,50,33] -> \"Dispensational-leaning, liturgy-leaning, balanced on grace\".",
+   "fix": "Candidates = axes with band != 2, sorted by |score - 50| descending, ties broken by the number of Strongly answers on that axis, then by index; take at most three. Zero candidates -> \"A theological centrist\"; one or two -> those adjectives followed by \"centered elsewhere\" (e.g. \"Firmly monergist, centered elsewhere\")."
+  },
+  {
+   "id": "survey-24",
+   "lens": "survey methodologist",
+   "category": "scoring",
+   "severity": "major",
+   "claim": "The nearest-tradition percentage is distance over a 245-point diagonal nobody spans, so all matches cluster at 75-95%, first and second places can show identical percentages, the second slot is usually a fixed twin, and a single-answer change on one unreliable axis decides the ranking.",
+   "evidence": "MAXD = sqrt(6 x 100^2) = 244.9. Person at the exact Roman Catholic coordinates: 100% Catholic, 95% Orthodox; Thomist Catholic: 89% / 89%; all-Unsure: 83% Wesleyan. Closest tradition pairs: Roman Catholic-Eastern Orthodox 13.2, Pentecostal-Charismatic 18.7, Southern Baptist-Dispensational 30.8. Largest inter-tradition distance is 171.5 (Dispensational Bible church vs Eastern Orthodox), so even the farthest possible real profile reads about 30%. Axis tradition spreads are 70-85 points, so equal weighting is defensible for v1; the problem is reliability (one step = 8.3 points, one flip = 33), not weighting.",
+   "fix": "match = max(0, round(100 - 100 x d / 170)) with 170 = largest distance between listed traditions; show the primary result as \"N of 6 axes within one band of this tradition\"; if the two nearest are under 20 apart, present them as one family and use the unscored tie-break items (see general finding) to pick the name; never display equal percentages for different ranks without the distance-ordered rank being visible."
+  },
+  {
+   "id": "wesleyan-1",
+   "lens": "Wesleyan / Methodist (Wesley's sermons, Articles of Religion, Global Methodist / UMC evangelical wing)",
+   "category": "unfairness",
+   "severity": "blocker",
+   "claim": "A person who answers 'Unsure' to all eighteen statements is told their closest tradition is 'Wesleyan / Methodist' at 83% match (second: Anabaptist / Mennonite). The Wesleyan entry sits nearest the six-dimensional center, so it becomes the default label for people with no convictions, which caricatures Methodism as the tradition that believes nothing in particular.",
+   "evidence": "All-Unsure scores are (50,50,50,50,50,50). Distance to Wesleyan / Methodist (80,40,45,25,45,40): 900+100+25+625+25+100 = 1775, sqrt = 42.1, match = round(100 - 42.1/244.9*100) = 83%. Anabaptist: 625+1225+25+400+400+100 = 2775, sqrt 52.7. Anglican (broad): 2950, sqrt 54.3. The headline correctly says 'A theological centrist' but the result subtitle, the card, and the share text still say 'Closest traditions: Wesleyan / Methodist, Anabaptist / Mennonite'.",
+   "fix": "Two changes together: (1) when the headline rule fires (all six axes within 10 of 50), replace the 'Closest traditions' list with 'Your answers sit too close to the center to name a nearest tradition' and omit the 'Closest:' line from the share text and card; (2) move the Wesleyan entry off the median to (grace 85, table 25, spirit 35, kingdom 25, tradition 45, worship 35), which makes its all-Unsure distance 54.3 (no longer first). Also consider normalizing match % by a realistic maximum (e.g. 150) rather than sqrt(6)*100 = 244.9, which currently turns a 42-point miss into '83% match'."
+  }
+ ]
+}

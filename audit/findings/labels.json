@@ -1,0 +1,149 @@
+{
+ "target": "labels",
+ "findings": [
+  {
+   "id": "anabaptist-2",
+   "lens": "Anabaptist / Mennonite (Schleitheim Confession, Confession of Faith in a Mennonite Perspective 1995)",
+   "category": "unfairness",
+   "severity": "blocker",
+   "claim": "The headline system names Mennonites with other traditions' vocabulary: at the quiz's own Anabaptist coordinate the headline reads 'Memorialist, Arminian-leaning, covenantal-leaning', and my simulation reads 'Firmly synergist, memorialist, covenantal'.",
+   "evidence": "Coordinate (75,85,55,30,70,60): deviations 25, 35, 5, 20, 20, 10; top three = table 85 -> 'memorialist', grace 75 -> band 3 'Arminian-leaning', kingdom 30 -> band 1 'covenantal-leaning' (tie with tradition 20 broken by index). Arminius was born in 1560, the year before Menno Simons died; Hubmaier's free-will treatises are 1527. 'Covenantal' is the Reformed federal system (Zwingli, Of Baptism 1525; Bullinger, De testamento 1534; Westminster 1646, which the quiz's own Kingdom history uses to define the pole) built to justify infant baptism against the Anabaptists. 'Synergist' is the term Formula of Concord Art. II rejects by name; CFMP 1995 never uses it, and the quiz's own cited author Olson (Arminian Theology, 2006) accepts it only as 'evangelical synergism'. The grace bands are inconsistent as a system: the outer bands are technical terms, the inner bands ('Reformed-leaning', 'Arminian-leaning') are denominational names, so anyone not in those denominations is filed under them.",
+   "fix": "Use position words, never denomination names, in the bands. Grace: 'firmly sovereign-grace', 'leaning sovereign grace', 'balanced on grace', 'leaning free response', 'firmly free-response'. Kingdom (with the pole renamed, see axis:kingdom:poles): 'one people of God', 'leaning one people of God', 'middle on Israel and the church', 'leaning Israel distinct', 'dispensational'. With these, the same Mennonite coordinate reads 'Memorialist, leaning free response, leaning one people of God', which a Mennonite would accept."
+  },
+  {
+   "id": "catholic-29",
+   "lens": "Roman Catholic",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "The middle bands 'centered on the sacraments' (Table 41-59) and 'centered on the kingdom' (Kingdom 41-59) describe a score of 50 with words that mean a strong position; as headline adjectives they misrepresent the person and slight both poles.",
+   "evidence": "Table bands[2] = \"centered on the sacraments\"; Kingdom bands[2] = \"centered on the kingdom\". The person at Table 50 is not centered on the sacraments; the Catholic at 0 is (LG 11, the Eucharist as 'source and summit').",
+   "fix": "Table bands[2] = \"mixed on the sacraments\"; Kingdom bands[2] = \"mixed on Israel and the church\"."
+  },
+  {
+   "id": "charismatic-2",
+   "lens": "charismatic non-denominational (Vineyard, Bethel, Hillsong, Third Wave)",
+   "category": "inaccuracy",
+   "severity": "blocker",
+   "claim": "The middle-band adjectives 'centered on the sacraments' (table 41-59) and 'centered on the kingdom' (kingdom 41-59) assert a positive commitment that a score of 50 does not represent; they appear in the headline.",
+   "evidence": "The code gives 50 to anyone who answers Unsure to all three statements, or who splits (e.g. my Q10 Unsure / Q11 Disagree / Q12 Disagree = kingdom 50). A Baptist at table 50 would be headlined 'centered on the sacraments'; a respondent torn between Israel-has-a-future and no-pre-trib-rapture is headlined 'centered on the kingdom', which in Vineyard vocabulary is a doctrinal claim (Ladd's kingdom theology), not a midpoint. Every other axis uses a genuine midpoint word ('balanced on grace', 'undecided on the gifts', 'balanced on authority', 'flexible in worship').",
+   "fix": "table bands[2]: 'between sacrament and symbol'; kingdom bands[2]: 'undecided on Israel and the church'."
+  },
+  {
+   "id": "lutheran-26",
+   "lens": "confessional Lutheran (LCMS / WELS / Book of Concord)",
+   "category": "tone",
+   "severity": "major",
+   "claim": "As a system the band adjectives are inconsistent and several are loaded: two name rival traditions (\"Reformed-leaning\", \"Arminian-leaning\"), \"balanced on grace\" and \"balanced on authority\" imply the poles are unbalanced, \"centered on the sacraments\" for the Table midpoint reads as more sacramental than \"sacramental-leaning\", and \"undecided on the gifts\" mislabels the deliberate open-but-cautious position (LCMS CTCR 1977, many Anglicans) as indecision.",
+   "evidence": "Compare the six band arrays: only Grace uses tradition names; the Kingdom and Table midpoints (\"centered on the kingdom\", \"centered on the sacraments\") describe an emphasis, not a midpoint.",
+   "fix": "Grace: [\"firmly monergist\", \"mostly monergist\", \"mixed on grace\", \"mostly synergist\", \"firmly synergist\"]; Table midpoint: \"between sacrament and symbol\"; Spirit midpoint: \"open but cautious on the gifts\"; Tradition midpoint: \"mixed on authority\"; Kingdom midpoint: \"between the two on Israel and the church\"."
+  },
+  {
+   "id": "mockery-2",
+   "lens": "mockery critic",
+   "category": "unfairness",
+   "severity": "blocker",
+   "claim": "The Grace bands name parties, not positions: 'Reformed-leaning' and 'Arminian-leaning' on an axis whose poles are Monergist/Synergist. The Orthodox convert screenshots 'Arminian-leaning' with 'lol, this quiz thinks St John Cassian was a Dutch Remonstrant'; the confessional Lutheran screenshots 'Reformed-leaning' with 'written by a Presbyterian'. The quiz's own map already does this to them.",
+   "evidence": "The Eastern Orthodox coordinate grace=65 sits in band 3, i.e. the quiz labels the Orthodox Church 'Arminian-leaning'. A Lutheran answering per Formula of Concord SD XI (election cannot fail: Strongly agree on 1 and 3; grace resistible: Strongly agree on 2) scores 33, band 1 'Reformed-leaning'; the Formula of Concord explicitly rejects the Reformed doctrine of predestination. A Catholic Molinist who is Unsure on 1 scores 67, 'Arminian-leaning'.",
+   "fix": "bands: ['firmly monergist', 'monergist-leaning', 'balanced on grace', 'synergist-leaning', 'firmly synergist']. Keep 'firmly' — it is symmetric and nobody minds it."
+  },
+  {
+   "id": "mockery-13",
+   "lens": "mockery critic",
+   "category": "tone",
+   "severity": "major",
+   "claim": "The six midpoint bands use four different words for the same thing — 'balanced on grace', 'centered on the sacraments', 'undecided on the gifts', 'centered on the kingdom', 'balanced on authority', 'flexible in worship' — and only one of them is a put-down. 'Undecided on the gifts' is screenshotted by the Baptist who holds the 'open but cautious' view as a settled position: 'lol, I've had this view for twenty years and the quiz calls it undecided.'",
+   "evidence": "'Open but cautious' is the named middle view (Saucy) in Grudem, ed., Are Miraculous Gifts for Today? Four Views (1996); it is a position, not an absence of one. The band 3 label 'cautious about the gifts' borrows half of that name for the cessationist lean, which muddles it further.",
+   "fix": "spirit bands: ['continuationist', 'continuationist-leaning', 'open but cautious on the gifts', 'cessationist-leaning', 'cessationist']. Across axes, use one pattern for the midpoint: 'balanced on grace', 'between sacramental and memorial', 'open but cautious on the gifts', 'between covenantal and dispensational', 'balanced on authority', 'between liturgical and free'."
+  },
+  {
+   "id": "mockery-14",
+   "lens": "mockery critic",
+   "category": "tone",
+   "severity": "major",
+   "claim": "'A theological centrist' is the Reformed blogger's easiest screenshot: 'Centrist = answered Unsure eighteen times. Rev 3:16.' It has a political ring and presents the middle as a party, which is exactly what discernment readers accuse the middle of.",
+   "evidence": "headline(): all six within 10 of 50 → only scores 42/50/58 are possible there, i.e. raw −1..+1 on every axis, which an all-Unsure answer set produces; that answer set then shows 'Wesleyan / Methodist 83%' (see scoring).",
+   "fix": "'Near the center on every axis' as the headline, with the sub-line 'Your answers sit close to the midpoint on all six axes, so read the nearest traditions loosely.'"
+  },
+  {
+   "id": "orthodox-28",
+   "lens": "Eastern Orthodox",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "The middle-band names \"centered on the sacraments\" and \"centered on the kingdom\" read as substantive positions rather than midpoints; a 50 on Table is told they are \"centered on the sacraments\", which is what the 0 end believes.",
+   "evidence": "Table bands[2] = \"centered on the sacraments\"; Kingdom bands[2] = \"centered on the kingdom\"; the other four axes use genuinely neutral midpoints (\"balanced on grace\", \"undecided on the gifts\", \"balanced on authority\", \"flexible in worship\").",
+   "fix": "Table bands[2]: \"between sacrament and symbol\"; Kingdom bands[2]: \"mixed on Israel and the church\"."
+  },
+  {
+   "id": "pentecostal-21",
+   "lens": "Pentecostal (Assemblies of God Statement of Fundamental Truths)",
+   "category": "tone",
+   "severity": "minor",
+   "claim": "'firmly synergist' as a headline adjective for an Arminian uses a term that entered theology as a Lutheran and Reformed charge (the 'synergistic controversy'); AG members self-describe as Arminian or Wesleyan, and the lower band already says 'Arminian-leaning'.",
+   "evidence": "Formula of Concord, Art. II, condemns 'synergism'; Olson, Arminian Theology: Myths and Realities, accepts only the qualified phrase 'evangelical synergism' and warns the bare word is usually pejorative. The pole names may stay ('Monergist'/'Synergist' is the neutral academic pairing), but the headline is what gets screenshotted.",
+   "fix": "grace bands[4]: 'firmly Arminian' (mirrors 'Reformed-leaning' / 'Arminian-leaning'); keep 'firmly monergist' or change to 'firmly Reformed' for symmetry."
+  },
+  {
+   "id": "progressive-8",
+   "lens": "progressive mainline Protestant (PCUSA, ELCA, Episcopal, UMC progressive wing)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "The middle bands 'centered on the sacraments' and 'centered on the kingdom' read as maximal positions, not midpoints, and 'centered on the kingdom' is the progressive mainline's own self-description handed to the undecided.",
+   "evidence": "table bands[2] \"centered on the sacraments\" is what a Catholic at 5 would say of herself; kingdom bands[2] \"centered on the kingdom\" is Rauschenbusch's and every mainline mission statement's phrase. A user at 50 on Table who answered Unsure three times is told they are 'centered on the sacraments'.",
+   "fix": "table bands[2]: \"between sacrament and memorial\"; kingdom bands[2]: \"undecided on Israel and the church\". Rule for the system: the midpoint band must name the two poles or say 'undecided', never a positive emphasis."
+  },
+  {
+   "id": "reformedcharismatic-17",
+   "lens": "Reformed charismatic (John Piper, Wayne Grudem, Sam Storms, Sovereign Grace Churches, Acts 29 continuationists)",
+   "category": "tone",
+   "severity": "minor",
+   "claim": "The three middle-band labels 'balanced on grace', 'centered on the sacraments', 'centered on the kingdom' are evaluative or false: 'balanced' implies the poles are unbalanced, and a 50 on Table is not sacrament-centered (the typical mid-scorer is a Calvinistic credobaptist).",
+   "evidence": "bands[2] for grace, table, kingdom; contrast 'undecided on the gifts', 'balanced on authority', 'flexible in worship', which are at least descriptive. A five-point Calvinist would object to a scheme that calls the midpoint 'balanced'.",
+   "fix": "\"mixed on grace\", \"mixed on the sacraments\", \"mixed on the kingdom\"."
+  },
+  {
+   "id": "sbc-29",
+   "lens": "Southern Baptist (Baptist Faith & Message 2000)",
+   "category": "tone",
+   "severity": "major",
+   "claim": "The headline system produces 'Memorialist, Scripture alone, firmly synergist' for a typical Southern Baptist, and three of the six midpoint bands ('centered on the sacraments', 'centered on the kingdom', 'undecided on the gifts') are either one pole's vocabulary or not a position at all.",
+   "evidence": "Simulation: Table 100, Tradition 92, Grace 83 -> those three adjectives. The SBC's 'open but cautious' stance on the gifts is a position, not indecision; 'centered on the sacraments' at a memorial/sacramental midpoint is the left pole's word; 'centered on the kingdom' is content-free. The share bar also prints the pole name 'Synergist' at the end of every Grace bar.",
+   "fix": "Adopt the band replacements proposed per axis (grace, table, kingdom, worship) and rename spirit bands[2] 'open but cautious on the gifts'; rename the Grace poles 'Effectual grace / Resistible grace' so the share bar and card carry names both sides accept."
+  },
+  {
+   "id": "survey-26",
+   "lens": "survey methodologist",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "The 41-59 adjectives \"centered on the sacraments\" and \"centered on the kingdom\" read as substantive theological positions (sacrament-centred, kingdom-centred), not as \"in the middle of this axis\", and can appear in the headline.",
+   "evidence": "headline() joins band adjectives directly: a memorialist-leaning respondent at Table 58 can be headlined \"centered on the sacraments\"; Table 42 rows show \"58% toward Sacramental\" next to \"centered on the sacraments\". Other axes use unambiguous middle labels (\"balanced on grace\", \"balanced on authority\", \"flexible in worship\").",
+   "fix": "table bands[2]: \"between sacramental and memorial\"; kingdom bands[2]: \"between covenantal and dispensational\"."
+  },
+  {
+   "id": "survey-27",
+   "lens": "survey methodologist",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "The per-axis lean text \"N% toward <pole>\" contradicts the band adjective shown beside it: a score of 42, banded \"balanced on grace\", is printed as \"58% toward Monergist\", and 50 prints as \"50% · centered\".",
+   "evidence": "lean(): s < 50 ? (100 - s) + '% toward ' + left : s + '% toward ' + right; s === 50 -> '50% · centered'. Raw -1 (one net Agree) becomes a \"58%\" majority-sounding lean in the Axis-by-axis rows and the history accordion headers.",
+   "fix": "lean() -> |score - 50| + \" points toward \" + pole + \" · \" + band adjective (e.g. \"8 points toward Monergist · balanced on grace\"); at 50: \"at the center\"; at 0/100: \"at the Monergist pole\"."
+  },
+  {
+   "id": "wesleyan-4",
+   "lens": "Wesleyan / Methodist (Wesley's sermons, Articles of Religion, Global Methodist / UMC evangelical wing)",
+   "category": "tone",
+   "severity": "major",
+   "claim": "The top synergist band is 'firmly synergist', while the band below it is 'Arminian-leaning'. Methodists happily accept 'Arminian' (Wesley named his magazine after it) but do not call themselves 'synergists'; in Reformed polemics 'synergism' is the standard pejorative for semi-Pelagianism, so a fully committed Wesleyan gets the one label on the axis their critics use and their own theologians avoid.",
+   "evidence": "Wesley, 'The Question, What Is an Arminian? Answered by a Lover of Free Grace' (1770); The Arminian Magazine (founded 1778). Randy Maddox, 'Responsible Grace' (1994), coins that phrase precisely to avoid 'synergism'; Kenneth Collins, 'The Theology of John Wesley' (2007), argues the new birth and entire sanctification are God's work alone and resists the unqualified 'synergist' label. Roger Olson ('Arminian Theology: Myths and Realities') is the one major voice who embraces 'evangelical synergism', and he always qualifies it. The band system is symmetric ('firmly monergist' / 'Reformed-leaning' vs 'Arminian-leaning' / 'firmly synergist'), so the asymmetry is in the acceptability of the words, not the structure.",
+   "fix": "bands: ['firmly monergist', 'Reformed-leaning', 'balanced on grace', 'Arminian-leaning', 'firmly Arminian']. Keep 'Monergist / Synergist' as the pole names (the Orthodox use 'synergy' as their own word, and their coordinate 65 already lands on 'Arminian-leaning', so nothing gets worse for them), and add one clause to the fair summary naming both vocabularies: 'called Arminian or Wesleyan among Protestants and synergy in the Christian East'."
+  },
+  {
+   "id": "wesleyan-6",
+   "lens": "Wesleyan / Methodist (Wesley's sermons, Articles of Religion, Global Methodist / UMC evangelical wing)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "The middle bands 'centered on the sacraments' (table 41-59) and 'centered on the kingdom' (kingdom 41-59) read as strong positive claims, not as 'in between'. A Baptist at 50 is told his life is 'centered on the sacraments'; a Methodist at 50 on kingdom is told he is 'centered on the kingdom', which sounds like an eschatological position rather than indecision between covenantal and dispensational.",
+   "evidence": "Every other axis uses a genuinely neutral middle label ('balanced on grace', 'undecided on the gifts', 'balanced on authority', 'flexible in worship'). 'Centered on X' is the pun on 'center' failing: in ordinary English it means 'X is central to me'. The headline joins these adjectives with commas, so 'Firmly synergist, centered on the sacraments, open to the gifts' will be read literally and screenshotted.",
+   "fix": "table bands[2]: 'mixed on the sacraments'; kingdom bands[2]: 'mixed on Israel and the church' (or 'between covenantal and dispensational')."
+  }
+ ]
+}

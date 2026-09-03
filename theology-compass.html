@@ -1,0 +1,1366 @@
+<title>Theology Compass</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,400..900,0..100,0..1&amp;family=Instrument+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+<style>
+  :root {
+    --ground: #F3F4EE;
+    --card: #FFFFFF;
+    --ink: #1B1D22;
+    --muted: #5E6470;
+    --line: #D9DCD2;
+    --focus: #1B1D22;
+    --soft: #E9EBE3;
+    --grace: #2F4FCB;
+    --table: #9E2A3B;
+    --spirit: #E2582B;
+    --kingdom: #2E7D4F;
+    --tradition: #C98A12;
+    --worship: #6A4BC0;
+    --shadow: 0 1px 2px rgba(27, 29, 34, .05), 0 10px 30px rgba(27, 29, 34, .07);
+    --overlay: rgba(20, 22, 27, .62);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #14161B;
+      --card: #1E2128;
+      --ink: #EEF0F3;
+      --muted: #A2A8B4;
+      --line: #2E323B;
+      --focus: #EEF0F3;
+      --soft: #262A32;
+      --grace: #7C93FF;
+      --table: #E0637A;
+      --spirit: #FF8A5B;
+      --kingdom: #5FC48A;
+      --tradition: #F2B84B;
+      --worship: #A88BFF;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .35), 0 10px 30px rgba(0, 0, 0, .4);
+      --overlay: rgba(0, 0, 0, .72);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #14161B;
+    --card: #1E2128;
+    --ink: #EEF0F3;
+    --muted: #A2A8B4;
+    --line: #2E323B;
+    --focus: #EEF0F3;
+    --soft: #262A32;
+    --grace: #7C93FF;
+    --table: #E0637A;
+    --spirit: #FF8A5B;
+    --kingdom: #5FC48A;
+    --tradition: #F2B84B;
+    --worship: #A88BFF;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .35), 0 10px 30px rgba(0, 0, 0, .4);
+    --overlay: rgba(0, 0, 0, .72);
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.5;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  [hidden] { display: none !important; }
+  a { color: inherit; }
+  button { font: inherit; color: inherit; }
+  p { margin: 0 0 1em; }
+  .mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  .display {
+    font-family: "Fraunces", Georgia, "Times New Roman", serif;
+    font-variation-settings: "SOFT" 100, "WONK" 1;
+    font-optical-sizing: auto;
+  }
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+  .statement:focus { outline: none; }
+  .result-label:focus { outline: none; }
+
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px 72px; }
+  .stripes { display: flex; height: 6px; overflow: hidden; }
+  .stripes span { flex: 1; }
+  .stripes span:nth-child(1), .c-stripes span:nth-child(1) { background: var(--grace); }
+  .stripes span:nth-child(2), .c-stripes span:nth-child(2) { background: var(--table); }
+  .stripes span:nth-child(3), .c-stripes span:nth-child(3) { background: var(--spirit); }
+  .stripes span:nth-child(4), .c-stripes span:nth-child(4) { background: var(--kingdom); }
+  .stripes span:nth-child(5), .c-stripes span:nth-child(5) { background: var(--tradition); }
+  .stripes span:nth-child(6), .c-stripes span:nth-child(6) { background: var(--worship); }
+
+  .top { display: flex; align-items: center; gap: 12px; padding: 16px 0 6px; min-height: 58px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 700; }
+  .logo { width: 30px; height: 30px; flex: none; }
+  .badge {
+    font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+    border: 1px solid var(--line); border-radius: 999px; padding: 3px 9px; color: var(--muted);
+    background: var(--card);
+  }
+  .theme-btn {
+    margin-left: auto; background: var(--card); border: 1px solid var(--line); border-radius: 999px;
+    padding: 6px 12px; font-size: 13px; font-weight: 600; color: var(--muted); cursor: pointer;
+  }
+  .theme-btn:hover { color: var(--ink); border-color: var(--ink); }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    border-radius: 999px; border: 1.5px solid transparent; padding: 12px 22px;
+    font-weight: 600; font-size: 16px; line-height: 1.2; cursor: pointer; text-decoration: none;
+    transition: transform .12s ease, background .15s ease, border-color .15s ease, opacity .15s ease;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn:disabled { opacity: .6; cursor: default; }
+  .btn-primary { background: var(--ink); color: var(--ground); }
+  .btn-primary:hover { opacity: .9; }
+  .btn-big { font-size: 20px; padding: 18px 36px; }
+  .btn-secondary { background: var(--card); border-color: var(--line); color: var(--ink); }
+  .btn-secondary:hover { border-color: var(--ink); }
+  .btn-accent { background: var(--grace); color: var(--ground); }
+  .btn-accent:hover { opacity: .9; }
+  .linkbtn {
+    background: none; border: 0; padding: 11px 12px; margin: -11px -12px; color: var(--muted); cursor: pointer;
+    text-decoration: underline; text-underline-offset: 3px; font-weight: 600; white-space: nowrap;
+  }
+  .linkbtn:hover { color: var(--ink); }
+  .linkbtn:disabled { opacity: .4; cursor: default; text-decoration: none; }
+
+  /* Intro */
+  .hero { padding: 36px 0 12px; }
+  .hero-mark { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+  .hero-mark .logo { width: 44px; height: 44px; }
+  .hero h1 {
+    font-size: clamp(50px, 11vw, 92px); line-height: .96; letter-spacing: -.025em;
+    margin: 0 0 22px; font-weight: 900; text-wrap: balance;
+  }
+  .lede { font-size: clamp(18px, 2.7vw, 22px); line-height: 1.4; max-width: 34ch; margin: 0 0 26px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 22px; }
+  .chip {
+    --c: var(--ink);
+    display: inline-flex; align-items: center; gap: 6px;
+    border: 1.5px solid var(--c); color: var(--c); border-radius: 999px; padding: 6px 12px;
+    font-size: 14px; font-weight: 600; background: color-mix(in srgb, var(--c) 9%, transparent);
+  }
+  .meta { font-size: 14px; color: var(--muted); margin: 0 0 8px; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 26px; }
+  .intro-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 40px; }
+  .intro-cell { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 16px; font-size: 14px; }
+  .intro-cell b { display: block; font-size: 16px; margin-bottom: 4px; }
+  .intro-cell span { color: var(--muted); }
+  @media (max-width: 560px) { .intro-grid { grid-template-columns: 1fr; } }
+
+  /* Quiz */
+  .quiz-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 10px 0 10px; font-size: 14px; color: var(--muted); }
+  .quiz-head .q-axis { font-weight: 700; color: var(--axis, var(--ink)); }
+  .progress { display: flex; gap: 3px; height: 8px; }
+  .seg { flex: 1; border-radius: 4px; background: var(--c, var(--ink)); opacity: .18; transition: opacity .2s ease; }
+  .seg.done { opacity: 1; }
+  .seg.cur { opacity: .6; }
+  .qcard {
+    --axis: var(--ink);
+    margin-top: 28px; background: var(--card); border: 1px solid var(--line); border-top: 7px solid var(--axis);
+    border-radius: 24px; padding: 34px 32px 28px; box-shadow: var(--shadow);
+    transition: opacity .17s ease, transform .17s ease;
+  }
+  .qcard.is-leaving { opacity: 0; transform: translateY(8px); }
+  .axis-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--axis); font-weight: 600; margin-bottom: 14px;
+  }
+  .axis-tag::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--axis); }
+  .scale-hint { font-size: 14px; line-height: 1.45; color: var(--muted); margin: 0 0 14px; max-width: 52ch; }
+  .trad-note { font-size: 14px; line-height: 1.5; color: var(--muted); background: var(--soft); border-radius: 12px; padding: 12px 14px; margin: 0 0 14px; }
+  .statement {
+    font-size: clamp(26px, 5vw, 38px); line-height: 1.15; font-weight: 700; margin: 0 0 30px;
+    text-wrap: balance; letter-spacing: -.01em;
+  }
+  .answers { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+  .ans {
+    border: 1.5px solid var(--line); background: var(--card); border-radius: 999px; padding: 12px 8px;
+    font-weight: 600; font-size: 14px; line-height: 1.2; cursor: pointer;
+    transition: background .15s ease, border-color .15s ease, color .15s ease;
+  }
+  .ans .key { display: block; font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; font-size: 11px; opacity: .65; margin-bottom: 3px; }
+  .ans:hover { border-color: var(--axis); color: var(--axis); background: color-mix(in srgb, var(--axis) 9%, var(--card)); }
+  .ans[aria-pressed="true"] { background: var(--axis); border-color: var(--axis); color: var(--card); }
+  .quiz-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 18px; font-size: 14px; color: var(--muted); }
+  @media (max-width: 600px) {
+    .qcard { padding: 26px 20px 22px; }
+    .answers { grid-template-columns: 1fr; }
+    .ans { display: flex; align-items: center; gap: 12px; text-align: left; padding: 12px 16px; }
+    .ans .key { margin: 0; }
+  }
+
+  /* Result */
+  .result-head { padding: 26px 0 6px; }
+  .eyebrow {
+    font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px;
+  }
+  .result-label {
+    font-size: clamp(31px, 6vw, 50px); line-height: 1.06; font-weight: 800; margin: 0 0 12px;
+    letter-spacing: -.015em; text-wrap: balance;
+  }
+  .result-sub { font-size: 18px; color: var(--muted); margin: 0; }
+  .panel {
+    background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 24px;
+    margin-top: 20px; box-shadow: var(--shadow);
+  }
+  .panel h3 { margin: 0 0 6px; font-size: 24px; font-weight: 700; letter-spacing: -.01em; }
+  .panel .note { font-size: 14px; color: var(--muted); margin: 0 0 16px; }
+  .radar-wrap svg { width: 100%; height: auto; display: block; }
+  .legend { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 16px; margin-top: 10px; font-size: 13px; color: var(--muted); }
+  .legend div { --c: var(--ink); }
+  .legend b { color: var(--c); font-weight: 700; }
+  .toggles { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 18px; font-size: 14px; color: var(--muted); }
+  .tog {
+    border: 1.5px dashed var(--line); background: transparent; border-radius: 999px; padding: 6px 12px;
+    font-size: 14px; font-weight: 600; cursor: pointer; color: var(--muted);
+  }
+  .tog:hover { border-color: var(--ink); color: var(--ink); }
+  .tog[aria-pressed="true"] { border-style: solid; border-color: var(--ink); color: var(--ink); background: var(--soft); }
+  @media (max-width: 480px) { .legend { grid-template-columns: 1fr; } .panel { padding: 20px 16px; border-radius: 18px; } }
+
+  .rows .row { padding: 14px 0; border-top: 1px solid var(--line); }
+  .rows .row:first-child { border-top: 0; padding-top: 4px; }
+  .row { --c: var(--ink); }
+  .row-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 10px; }
+  .row-name { font-weight: 700; color: var(--c); font-size: 17px; }
+  .row-pct { font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; font-size: 13px; color: var(--muted); text-align: right; }
+  .track { position: relative; height: 10px; border-radius: 5px; background: var(--soft); }
+  .tick { position: absolute; left: 50%; top: -4px; width: 1px; height: 18px; background: var(--line); }
+  .fill { position: absolute; top: 0; height: 100%; background: var(--c); opacity: .35; border-radius: 5px; }
+  .marker {
+    position: absolute; top: 50%; width: 18px; height: 18px; border-radius: 50%;
+    background: var(--c); border: 3px solid var(--card); box-shadow: 0 0 0 1.5px var(--c); transform: translate(-50%, -50%);
+  }
+  .poles { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; color: var(--muted); margin-top: 8px; }
+
+  .trad { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); color: var(--muted); }
+  .trad:first-child { border-top: 0; }
+  .trad.top { color: var(--ink); }
+  .trad-name { font-weight: 600; }
+  .trad-pct { font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; font-size: 13px; }
+  .trad-bar { grid-column: 1 / -1; height: 6px; border-radius: 3px; background: var(--soft); position: relative; overflow: hidden; }
+  .trad-bar span { position: absolute; left: 0; top: 0; bottom: 0; background: var(--muted); border-radius: 3px; }
+  .trad.top .trad-bar span { background: var(--ink); }
+
+  .acc { --c: var(--ink); border-top: 1px solid var(--line); }
+  .acc:first-of-type { border-top: 0; }
+  .acc summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 12px; padding: 16px 0; font-weight: 600; font-size: 17px; }
+  .acc summary::-webkit-details-marker { display: none; }
+  .acc summary:hover .acc-title { text-decoration: underline; text-underline-offset: 3px; }
+  .acc .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--c); flex: none; }
+  .acc .acc-title { color: var(--c); }
+  .acc .acc-sub { color: var(--muted); font-weight: 500; font-size: 14px; flex: 1; }
+  .acc .acc-pos { font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; font-size: 12px; color: var(--muted); white-space: nowrap; }
+  .acc .chev { width: 9px; height: 9px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(45deg); transition: transform .2s ease; flex: none; margin: 0 4px 4px 0; }
+  .acc[open] .chev { transform: rotate(-135deg); margin: 4px 4px 0 0; }
+  .acc-body { padding: 0 0 24px; }
+  .acc-body h4 {
+    font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 22px 0 8px; font-weight: 600;
+  }
+  .fair { margin: 0; font-size: 16px; }
+  .hist { list-style: none; margin: 0; padding: 0; }
+  .hist li { display: grid; grid-template-columns: 92px 1fr; gap: 12px; padding: 7px 0; font-size: 15px; border-top: 1px dashed var(--line); }
+  .hist li:first-child { border-top: 0; }
+  .hist .when { font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; font-size: 12px; color: var(--c); padding-top: 3px; font-weight: 600; }
+  .passages { display: flex; flex-wrap: wrap; gap: 8px; }
+  .passage {
+    display: inline-flex; flex-direction: column; align-items: flex-start;
+    border: 1.5px solid var(--line); border-radius: 12px; padding: 8px 12px; text-decoration: none;
+    font-weight: 600; font-size: 15px; transition: border-color .15s ease; background: var(--card);
+  }
+  .passage:hover { border-color: var(--c); }
+  .passage-cta { font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; font-size: 11px; color: var(--c); font-weight: 500; margin-top: 2px; }
+  .more { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 15px; }
+  .more-pole { display: block; font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; font-size: 12px; color: var(--c); margin-bottom: 4px; text-transform: uppercase; letter-spacing: .1em; }
+  @media (max-width: 520px) {
+    .more { grid-template-columns: 1fr; }
+    .hist li { grid-template-columns: 74px 1fr; }
+    .acc .acc-sub { display: none; }
+  }
+
+  .share-text {
+    font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 13.5px; line-height: 1.65; background: var(--soft); border-radius: 14px; padding: 16px;
+    white-space: pre-wrap; overflow-x: auto; margin: 0; color: var(--ink);
+  }
+  .caption { font-size: 13px; color: var(--muted); margin: 8px 0 0; }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+  .linkrow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--line); }
+  .permalink { font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; font-size: 14px; background: var(--soft); padding: 8px 12px; border-radius: 10px; word-break: break-all; }
+  .deep-hint { font-size: 13px; color: var(--muted); margin: 10px 0 0; }
+  .final { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 26px; }
+
+  /* Result card preview (native 1080px, scaled) */
+  .card-preview { position: relative; width: 100%; aspect-ratio: 1 / 1; overflow: hidden; border-radius: 18px; margin-top: 18px; background: #F3F4EE; border: 1px solid var(--line); }
+  .card1080 {
+    position: absolute; left: 0; top: 0; width: 1080px; height: 1080px; transform-origin: 0 0; transform: scale(.5);
+    background: #F3F4EE; color: #1B1D22; font-family: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+    display: flex; flex-direction: column; padding: 52px 64px 44px;
+  }
+  .c-stripes { display: flex; height: 14px; border-radius: 7px; overflow: hidden; margin-bottom: 34px; }
+  .c-stripes span { flex: 1; }
+  .c-brand { font-family: "Fraunces", Georgia, serif; font-variation-settings: "SOFT" 100, "WONK" 1; font-size: 27px; font-weight: 700; letter-spacing: -.01em; display: flex; align-items: center; gap: 14px; margin-bottom: 14px; color: #1B1D22; }
+  .c-demo { font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; font-size: 14px; letter-spacing: .12em; text-transform: uppercase; color: #5E6470; border: 1.5px solid #D9DCD2; border-radius: 999px; padding: 4px 11px; font-weight: 500; }
+  .c-label { font-family: "Fraunces", Georgia, serif; font-variation-settings: "SOFT" 100, "WONK" 1; font-size: 54px; font-weight: 900; line-height: 1.04; letter-spacing: -.02em; margin: 0 0 12px; color: #1B1D22; }
+  .c-closest { font-size: 24px; color: #5E6470; margin: 0; }
+  .c-body { display: flex; gap: 24px; align-items: center; flex: 1; margin-top: 8px; }
+  .c-radar { position: relative; width: 630px; height: 440px; flex: none; }
+  .c-radar svg { display: block; }
+  .c-lab { position: absolute; white-space: nowrap; line-height: 1.15; }
+  .c-lab-mid { text-align: center; }
+  .c-lab-start { text-align: left; }
+  .c-lab-end { text-align: right; }
+  .c-lab-name { display: block; font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; }
+  .c-lab-pole { display: block; font-family: "Fraunces", Georgia, serif; font-variation-settings: "SOFT" 100, "WONK" 1; font-size: 18px; font-weight: 700; color: #1B1D22; }
+  .c-bars { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 14px; min-width: 0; }
+  .c-row-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; margin-bottom: 9px; white-space: nowrap; }
+  .c-row-pct { color: #5E6470; letter-spacing: 0; text-transform: none; font-weight: 500; font-size: 12px; }
+  .c-track { position: relative; height: 12px; border-radius: 6px; background: #E4E6DE; }
+  .c-tick { position: absolute; left: 50%; top: -4px; width: 2px; height: 20px; background: #D9DCD2; margin-left: -1px; }
+  .c-fill { position: absolute; top: 0; height: 12px; border-radius: 6px; opacity: .35; }
+  .c-marker { position: absolute; top: -5px; width: 22px; height: 22px; border-radius: 50%; border: 4px solid #FFFFFF; margin-left: -11px; }
+  .c-poles { display: flex; justify-content: space-between; font-size: 15px; color: #5E6470; margin-top: 7px; }
+  .c-foot { display: flex; justify-content: space-between; align-items: baseline; border-top: 2px solid #1B1D22; padding-top: 18px; margin-top: 14px; }
+  .c-take { font-family: "Fraunces", Georgia, serif; font-variation-settings: "SOFT" 100, "WONK" 1; font-size: 28px; font-weight: 700; color: #1B1D22; }
+  .c-code { font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; font-size: 20px; color: #5E6470; }
+
+  /* Modal and toast */
+  .modal { position: fixed; inset: 0; background: var(--overlay); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 50; }
+  .modal-box { background: var(--card); border-radius: 20px; padding: 16px; width: 100%; max-width: 640px; box-shadow: var(--shadow); max-height: 92vh; overflow: auto; }
+  .modal-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 12px; font-weight: 700; }
+  .modal img { display: block; width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--line); }
+  .modal-hint { font-size: 14px; color: var(--muted); margin: 12px 0 0; text-align: center; }
+  .toast {
+    position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 16px);
+    background: var(--ink); color: var(--ground); padding: 10px 18px; border-radius: 999px;
+    font-size: 14px; font-weight: 600; opacity: 0; pointer-events: none; z-index: 60; max-width: 90vw; text-align: center;
+    transition: opacity .2s ease, transform .2s ease;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  .foot { margin-top: 44px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+  }
+</style>
+
+<div class="stripes" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand display" id="brand" hidden>
+      <svg class="logo" viewBox="0 0 40 40" aria-hidden="true"><polygon points="20,4 33.9,12 33.9,28 20,36 6.1,28 6.1,12" fill="none" stroke="var(--ink)" stroke-width="2"/><circle cx="20" cy="4" r="3.2" fill="var(--grace)"/><circle cx="33.9" cy="12" r="3.2" fill="var(--table)"/><circle cx="33.9" cy="28" r="3.2" fill="var(--spirit)"/><circle cx="20" cy="36" r="3.2" fill="var(--kingdom)"/><circle cx="6.1" cy="28" r="3.2" fill="var(--tradition)"/><circle cx="6.1" cy="12" r="3.2" fill="var(--worship)"/><circle cx="20" cy="20" r="2.2" fill="var(--ink)"/></svg>
+      <span>Theology Compass</span>
+      <span class="badge">Demo</span>
+    </div>
+    <button class="theme-btn" id="theme-btn" type="button" aria-label="Switch color theme">Theme: Auto</button>
+  </header>
+
+  <!-- Screen 1: Intro -->
+  <section id="screen-intro" class="screen" aria-label="Introduction">
+    <div class="hero">
+      <div class="hero-mark">
+        <svg class="logo" viewBox="0 0 40 40" aria-hidden="true"><polygon points="20,4 33.9,12 33.9,28 20,36 6.1,28 6.1,12" fill="none" stroke="var(--ink)" stroke-width="2"/><circle cx="20" cy="4" r="3.2" fill="var(--grace)"/><circle cx="33.9" cy="12" r="3.2" fill="var(--table)"/><circle cx="33.9" cy="28" r="3.2" fill="var(--spirit)"/><circle cx="20" cy="36" r="3.2" fill="var(--kingdom)"/><circle cx="6.1" cy="28" r="3.2" fill="var(--tradition)"/><circle cx="6.1" cy="12" r="3.2" fill="var(--worship)"/><circle cx="20" cy="20" r="2.2" fill="var(--ink)"/></svg>
+        <span class="badge">Demo</span>
+      </div>
+      <h1 class="display">Theology Compass</h1>
+      <p class="lede">Eighteen statements place you on six axes of Christian belief, name the traditions nearest to you, and show where each view came from.</p>
+      <div class="chips" id="axis-chips"></div>
+      <p class="meta"><span class="mono">18 statements · about 3 minutes</span></p>
+      <p class="meta">Tradition-neutral: every position is described in words its holders would accept, and both sides of every axis get a fair hearing.</p>
+      <div class="cta">
+        <button class="btn btn-primary btn-big" id="start-btn" type="button">Start</button>
+        <button class="btn btn-secondary" id="last-btn" type="button" hidden>See your last result</button>
+      </div>
+    </div>
+    <div class="intro-grid">
+      <div class="intro-cell"><b>A map, not a grade</b><span>Six axes, two fair poles each. No answer is the right one.</span></div>
+      <div class="intro-cell"><b>Your nearest traditions</b><span>See which church families sit closest to your answers.</span></div>
+      <div class="intro-cell"><b>Where it came from</b><span>A dated history and the key passages behind every axis.</span></div>
+    </div>
+  </section>
+
+  <!-- Screen 2: Quiz -->
+  <section id="screen-quiz" class="screen" aria-label="Quiz" hidden>
+    <div class="quiz-head">
+      <span class="mono" id="q-count">1 of 18</span>
+      <span class="q-axis" id="q-axis"></span>
+    </div>
+    <div class="progress" id="progress" role="progressbar" aria-valuemin="1" aria-valuemax="18" aria-valuenow="1" aria-label="Quiz progress"></div>
+    <div class="qcard" id="qcard">
+      <div class="axis-tag" id="axis-tag"></div>
+      <p class="scale-hint" id="scale-hint" hidden>If a statement is not the way your tradition frames the question, or you hold part of it and not the rest, choose Unsure / neither.</p>
+      <h2 class="statement display" id="statement" tabindex="-1"></h2>
+      <div class="answers" id="answers" role="group" aria-label="Your response">
+        <button class="ans" type="button" data-v="-2" aria-pressed="false"><span class="key">1</span>Strongly disagree</button>
+        <button class="ans" type="button" data-v="-1" aria-pressed="false"><span class="key">2</span>Disagree</button>
+        <button class="ans" type="button" data-v="0" aria-pressed="false"><span class="key">3</span>Unsure / neither</button>
+        <button class="ans" type="button" data-v="1" aria-pressed="false"><span class="key">4</span>Agree</button>
+        <button class="ans" type="button" data-v="2" aria-pressed="false"><span class="key">5</span>Strongly agree</button>
+      </div>
+    </div>
+    <div class="quiz-foot">
+      <button class="linkbtn" id="back-btn" type="button">← Back</button>
+      <span>Keys <span class="mono">1–5</span> answer · <span class="mono">Backspace</span> goes back</span>
+    </div>
+  </section>
+
+  <!-- Screen 3: Result -->
+  <section id="screen-result" class="screen" aria-label="Your result" hidden>
+    <div class="result-head">
+      <div class="eyebrow">Your result · <span id="result-code">------</span></div>
+      <h1 class="result-label display" id="result-label" tabindex="-1"></h1>
+      <p class="result-sub" id="result-sub"></p>
+    </div>
+
+    <div class="panel">
+      <h3 class="display">Your compass</h3>
+      <p class="note">Each axis runs straight across the compass from one pole to the other, with the center as the midpoint. Both pole names are printed at the ends of each axis; your dot sits toward the pole you lean to.</p>
+      <div class="radar-wrap" id="radar"></div>
+      <div class="legend" id="legend"></div>
+      <div class="toggles" id="toggles"></div>
+    </div>
+
+    <div class="panel">
+      <h3 class="display">Axis by axis</h3>
+      <p class="note">The marker shows where your answers landed between the two poles. The small tick is the midpoint.</p>
+      <div class="rows" id="breakdown"></div>
+    </div>
+
+    <div class="panel">
+      <h3 class="display">Closest traditions</h3>
+      <p class="note">Approximate positions of typical adherents, not official teaching. Match is 100% minus your distance from that tradition, as a share of the largest distance between any two traditions on this map. These six axes are the questions that split the Western churches at the Reformation: they do not measure church government, the papacy, or the peace-church convictions, so families that differ on those can sit close together here. Broad churches (Anglican, Methodist, mainline) are placed at their center; their wings sit nearer other entries.</p>
+      <div id="traditions"></div>
+    </div>
+
+    <div class="panel">
+      <h3 class="display">Where your view came from</h3>
+      <p class="note">A fair summary of both poles, a short dated history, and the passages each side reaches for.</p>
+      <div id="history"></div>
+    </div>
+
+    <div class="panel">
+      <h3 class="display">Share your compass</h3>
+      <p class="note">Copy the text, save the card as an image, or share it directly.</p>
+      <pre class="share-text" id="share-text"></pre>
+      <p class="caption">The filled circle marks where you sit between the two poles named on each line.</p>
+      <div class="actions">
+        <button class="btn btn-primary" id="copy-btn" type="button">Copy result</button>
+        <button class="btn btn-secondary" id="save-btn" type="button">Save card</button>
+        <button class="btn btn-secondary" id="share-btn" type="button">Share</button>
+      </div>
+
+      <div class="card-preview" id="card-preview" aria-label="Preview of your result card">
+        <div class="card1080" id="card1080">
+          <div class="c-stripes" aria-hidden="true"><span style="background:#2F4FCB"></span><span style="background:#9E2A3B"></span><span style="background:#E2582B"></span><span style="background:#2E7D4F"></span><span style="background:#C98A12"></span><span style="background:#6A4BC0"></span></div>
+          <div class="c-head">
+            <div class="c-brand"><span>Theology Compass</span><span class="c-demo">Demo</span></div>
+            <div class="c-label" id="c-label"></div>
+            <p class="c-closest" id="c-closest"></p>
+          </div>
+          <div class="c-body">
+            <div class="c-radar" id="c-radar"></div>
+            <div class="c-bars" id="c-bars"></div>
+          </div>
+          <div class="c-foot">
+            <span class="c-take">Take it: theologycompass.app</span>
+            <span class="c-code" id="c-code"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="linkrow">
+        <span class="permalink" id="permalink"></span>
+        <button class="btn btn-secondary" id="copylink-btn" type="button">Copy link</button>
+      </div>
+      <p class="deep-hint" id="deep-hint"></p>
+
+      <div class="final">
+        <a class="btn btn-accent btn-big ph" id="explore-btn" href="#" data-toast="Scripture Web is the sister demo. This link is a placeholder.">Explore your positions in Scripture Web</a>
+        <button class="btn btn-secondary" id="retake-btn" type="button">Retake</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">Demo build. Tradition positions are approximate sketches of typical adherents, not official teaching.</footer>
+</div>
+
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-box">
+    <div class="modal-head">
+      <span id="modal-title">Your result card</span>
+      <button class="btn btn-secondary" id="modal-close" type="button">Close</button>
+    </div>
+    <img id="modal-img" alt="Theology Compass result card" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+    <p class="modal-hint">Right-click or long-press to save.</p>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- Palettes ---------- */
+  var LIGHT = {
+    ground: '#F3F4EE', card: '#FFFFFF', ink: '#1B1D22', muted: '#5E6470', line: '#D9DCD2',
+    axes: ['#2F4FCB', '#9E2A3B', '#E2582B', '#2E7D4F', '#C98A12', '#6A4BC0']
+  };
+  var TOKENS = {
+    ground: 'var(--ground)', card: 'var(--card)', ink: 'var(--ink)', muted: 'var(--muted)', line: 'var(--line)',
+    axes: ['var(--grace)', 'var(--table)', 'var(--spirit)', 'var(--kingdom)', 'var(--tradition)', 'var(--worship)']
+  };
+
+  /* ---------- Data ---------- */
+  var AXES = [
+    {
+      key: "grace", name: "Grace", emoji: "⚖️", left: "Monergist", right: "Synergist", token: "--grace",
+      bands: ["firmly monergist","monergist-leaning","balanced on grace","synergist-leaning","firmly synergist"],
+      fair: "Monergists (God alone brings a person to faith) hold that salvation is God's work from beginning to end: God chooses his people, calls them, and works faith in them; the sinner contributes nothing to conversion, not even the decision to believe. Monergists differ on whether that grace can be resisted: the Reformed hold that it makes the unwilling willing and cannot finally be refused, and that God keeps his people to the end; Lutherans hold that it can be refused, even to the end, so that the lost are lost by their own resistance and not by God's decree. Synergists (the person freely cooperates with the grace God gives) hold that God's grace always comes first and makes faith possible, but that each person must freely respond and can decline, so that election follows God's foreknowledge of faith or rests on his choice of a people in Christ. Many synergists, including most Baptists, nonetheless hold that God keeps every true believer to the end. Protestants on this side usually call themselves Arminian or Wesleyan; the Christian East speaks of synergy. One caution about how this axis is built: statement 2 scores resistible grace toward the synergist pole, because resistibility is the question that separates the Reformed from every other tradition on the map. A confessional Lutheran who answers his own confession honestly therefore lands in the monergist-leaning band rather than at the pole; that is a deliberate cost of a three-item axis, not a verdict on his monergism. A four-item version separates the two questions (see candidate_statements).",
+      history: [
+        ["c. 411–430", "Augustine argues against Pelagius that grace must precede and enable every good will."],
+        ["c. 428", "John Cassian, Conferences XIII, teaches that grace and free will cooperate at every step; the Christian East still calls this synergy."],
+        ["529", "Second Council of Orange: even the beginning of faith is God's gift, yet it condemns any predestination to evil and says the baptized can, with Christ's help, do what salvation requires."],
+        ["1525", "Luther, The Bondage of the Will, answers Erasmus's defense of free choice."],
+        ["1547", "Council of Trent, Decree on Justification: grace comes first and enables, yet the will freely cooperates and can refuse."],
+        ["1577", "Formula of Concord (arts. II, XI): conversion is God's work alone, yet grace can be resisted and no one is predestined to damnation."],
+        ["1610–19", "The Remonstrance sets out five Arminian articles; the Synod of Dort replies with five points."],
+        ["1672", "Synod of Jerusalem condemns the Calvinist confession published under Patriarch Cyril Lucaris's name: God predestines according to his foreknowledge of each person's free use of the will."],
+        ["1739–41", "Wesley's sermon Free Grace and Whitefield's printed reply divide the evangelical revival over predestination."]
+      ],
+      passages: ["Romans 9","Romans 8:28–30","Ephesians 1:3–14","John 6:37–44","1 Timothy 2:3–4","2 Peter 3:9","Acts 7:51","Philippians 2:12–13"],
+      more: { left: ["Luther, The Bondage of the Will","Calvin, Institutes III","Sproul, Chosen by God"], right: ["John of Damascus, Exact Exposition II.29–30","Arminius, Declaration of Sentiments","Wesley, Predestination Calmly Considered","Olson, Arminian Theology"] }
+    },
+    {
+      key: "table", name: "Table", emoji: "🍞", left: "Sacramental", right: "Memorial", token: "--table",
+      bands: ["sacramental","sacramental-leaning","between sacramental and memorial","memorial-leaning","memorialist"],
+      fair: "The sacramental view holds that God really gives grace through the sacraments: Christ is truly present in the Supper, and baptism is a means by which God joins a person to Christ and his church; most churches on this side also baptize infants, whether as children of the covenant or for the washing of new birth. The memorial view holds that the Supper is a remembrance and proclamation of Christ's death until he comes, and baptism a believer's public confession of faith, so both are ordinances that believers keep in obedience rather than channels of grace: whatever blessing comes with them comes by the faith of those who take part, not through the elements themselves. Many stand between the poles, baptizing believers only while holding that Christ spiritually feeds his people at the Table (Reformed Baptists) or that God forgives sins in baptism (Churches of Christ).",
+      history: [
+        ["c. 110", "Ignatius of Antioch calls the Eucharist the flesh of our Savior Jesus Christ."],
+        ["c. 743", "John of Damascus, Exact Exposition IV.13: the bread and wine are changed into Christ's body and blood by the invocation and presence of the Holy Spirit, 'not merely figures'."],
+        ["1215", "Fourth Lateran Council affirms transubstantiation in its profession of faith; Trent defines it in 1551."],
+        ["1525–26", "Zwingli argues that 'is' in 'this is my body' means 'signifies': the Supper is a memorial of thanksgiving."],
+        ["1525–27", "First believers' baptisms in Zurich begin the Anabaptist movement; the Schleitheim Confession sets out believers' baptism and a memorial Supper."],
+        ["1529", "Marburg Colloquy: Luther and Zwingli agree on fourteen of fifteen articles but not on whether Christ's body is bodily present in the bread and wine: Luther affirms, Zwingli denies."],
+        ["1559", "Calvin's final Institutes (IV.17): a real spiritual presence, received by faith through the Spirit."],
+        ["1609–89", "English Baptists, out of Separatism rather than Anabaptism: John Smyth's Amsterdam congregation baptizes believers, and the Particular Baptists' London Confessions specify immersion and confess Christ 'spiritually present to the faith of believers' at the Supper."]
+      ],
+      passages: ["John 6:51–63","Matthew 26:26–28","1 Corinthians 11:23–29","1 Corinthians 10:16–17","Acts 2:38–41","Colossians 2:11–12","Romans 6:3–4","Matthew 28:19–20","Acts 8:36–38","1 Peter 3:21"],
+      more: { left: ["Schmemann, For the Life of the World","Ratzinger, God Is Near Us","Bromiley, Children of Promise"], right: ["Hubmaier, On the Christian Baptism of Believers","Schreiner & Crawford, The Lord's Supper","Schreiner & Wright, Believer's Baptism"] }
+    },
+    {
+      key: "spirit", name: "Gifts", emoji: "🔥", left: "Continuationist", right: "Cessationist", token: "--spirit",
+      bands: ["continuationist","continuationist-leaning","open but cautious on the gifts","cessationist-leaning","cessationist"],
+      fair: "Continuationists hold that the gifts of 1 Corinthians 12, including tongues, prophecy, and healing, remain available to the church until Christ returns and are to be welcomed and tested, though they differ on how eagerly to seek them: Pentecostals and charismatics seek them openly, while Catholic and Orthodox teaching receives them with gratitude and warns against seeking them rashly. Cessationists hold that those sign gifts authenticated the apostles and their message and passed away once the apostolic foundation was laid; many add that the completed Scriptures now do the work those gifts once did. They affirm that God still heals and answers prayer, but hold that the Spirit's ordinary work is now through the Word and providence rather than through the sign gifts.",
+      history: [
+        ["late 2nd c.", "Irenaeus (Against Heresies II.32; V.6) reports prophecy, tongues, and healings in the churches; Montanist 'new prophecy' in Phrygia leaves the wider church wary of prophetic claims."],
+        ["c. 390", "Chrysostom, Homily 29 on 1 Corinthians, says the gifts Paul lists there 'used to occur but now no longer take place'."],
+        ["c. 426", "Augustine, City of God XXII.8, records recent miracles at Hippo, many at martyrs' shrines, and in his Retractations withdraws his earlier claim that miracles had ceased."],
+        ["1646", "Westminster Confession 1.1, repeated in the 1689 Baptist Confession: God's former ways of revealing his will are 'now ceased'."],
+        ["1749–1867", "Wesley argues the gifts faded through the church's decline, not God's withdrawal; the holiness movement's 'baptism with the Holy Spirit' prepares the ground for Pentecostalism."],
+        ["1901–06", "Charles Parham's Topeka school and William Seymour's Azusa Street revival in Los Angeles launch modern Pentecostalism, with tongues as the initial evidence of Spirit baptism."],
+        ["1918", "B. B. Warfield, Counterfeit Miracles, ties the gifts to the apostles."],
+        ["1960s", "Charismatic renewal brings Pentecostal-style tongues, prophecy, and healing into mainline Protestant (Van Nuys, 1960) and Catholic (Duquesne, 1967) congregations."],
+        ["1980s–90s", "The 'third wave' (Wimber's Vineyard; Grudem, Storms) brings the gifts into evangelical and some Reformed churches without the Pentecostal doctrine of a subsequent Spirit baptism."],
+        ["1996", "Are Miraculous Gifts for Today? Four Views sets the cessationist (Gaffin), open-but-cautious (Saucy), and continuationist (Storms, Oss) cases side by side."]
+      ],
+      passages: ["1 Corinthians 14:1–5","1 Corinthians 13:8–12","Acts 2:17–18","1 Thessalonians 5:19–21","Ephesians 2:20","Hebrews 2:3–4","2 Corinthians 12:12"],
+      more: { left: ["Grudem, The Gift of Prophecy","Fee, Paul, the Spirit, and the People of God"], right: ["Warfield, Counterfeit Miracles","Gaffin, Perspectives on Pentecost"] }
+    },
+    {
+      key: "kingdom", name: "Kingdom", emoji: "👑", left: "One people", right: "Dispensational", token: "--kingdom",
+      bands: ["one-people-of-God","one-people-leaning","balanced on Israel and the church","dispensational-leaning","dispensational"],
+      fair: "The one-people-of-God view holds that there is a single people of God across both testaments: in Christ, the church, Jew and Gentile together, inherits the promises to Abraham, and Christ's kingdom is present now; his return brings the new creation, for some after a millennial reign on earth. The dispensational view keeps Israel and the church distinct: God's promises to national Israel will be fulfilled literally in a future earthly kingdom, and most on this side expect the church to be caught up before a seven-year tribulation. Progressive dispensationalists add that Christ's kingdom has already begun, and many Pentecostals hold the rapture and the hope for Israel without the whole system.",
+      history: [
+        ["c. 155–180", "Justin Martyr calls Christians 'the true spiritual Israel', yet he and Irenaeus expect a thousand-year reign of Christ on earth in a rebuilt Jerusalem."],
+        ["c. 413–426", "Augustine, City of God, reads the thousand years of Revelation 20 as the present church age."],
+        ["1530", "Augsburg Confession XVII condemns the teaching that the saints will possess an earthly kingdom before the resurrection of the dead."],
+        ["1646", "Westminster Confession ch. 7: not two covenants of grace but one and the same, differently administered under law and gospel."],
+        ["1830s", "J. N. Darby, a leader of the Plymouth Brethren, teaches a distinct Israel and a pretribulational rapture."],
+        ["1909", "Scofield Reference Bible carries dispensationalism into the pews."],
+        ["1924–65", "Lewis Sperry Chafer founds Dallas Theological Seminary; his Systematic Theology (1947–48) and Ryrie's Dispensationalism Today (1965) give the system its classic form."],
+        ["1950s", "George Eldon Ladd's historic premillennialism: a future millennium, one people of God, the church through the tribulation."],
+        ["1965–96", "Vatican II, Nostra Aetate: the Jews are not rejected by God (Romans 11:28–29); Presbyterian (1987) and Methodist (1996) statements add that the church has not replaced them."],
+        ["1990s", "Progressive dispensationalism (Blaising, Bock, Saucy) holds that the church already shares in the new covenant and kingdom blessings, while national Israel keeps a distinct future."]
+      ],
+      passages: ["Genesis 17:7–8","Daniel 9:24–27","Matthew 24","Romans 11","Galatians 3:26–29","Ephesians 2:11–22","1 Thessalonians 4:13–18","Hebrews 8:6–13","Revelation 20:1–6"],
+      more: { left: ["Riddlebarger, A Case for Amillennialism","Ladd, The Gospel of the Kingdom"], right: ["Ryrie, Dispensationalism","Blaising & Bock, Progressive Dispensationalism"] }
+    },
+    {
+      key: "tradition", name: "Authority", emoji: "📜", left: "Bible & tradition", right: "Scripture alone", token: "--tradition",
+      bands: ["rooted in Scripture and tradition","Scripture with tradition","balanced on authority","Scripture over tradition","Scripture alone"],
+      fair: "Those who read Scripture within the church's tradition hold that the creeds, the ecumenical councils, the consensus of the Fathers, and the church's living teaching (for Catholics, the teaching office of pope and bishops) are God's appointed means of guarding and interpreting his Word, and so carry real authority. Those who hold to Scripture alone may grant creeds and confessions real but subordinate authority, yet insist that only Scripture is infallible: any council may err, nothing may be required as an article of faith that cannot be proved from Scripture, and no council or teacher can bind the conscience against it.",
+      history: [
+        ["c. 375", "Basil the Great, On the Holy Spirit 27: some of what the church holds comes from written teaching, some from the unwritten tradition of the apostles, and both have the same force."],
+        ["434", "Vincent of Lérins: hold what has been believed 'everywhere, always, by all.'"],
+        ["787", "Second Council of Nicaea: 'we keep unchanged all the ecclesiastical traditions handed down to us, whether in writing or verbally.'"],
+        ["1521", "Luther at Worms: unless convinced by Scripture or clear reason he will not recant; his conscience is captive to the Word of God."],
+        ["1546", "Council of Trent: the gospel is preserved in written books and in unwritten traditions."],
+        ["1577", "Formula of Concord: Scripture is 'the only rule and norm' by which all teachers and teachings are judged; the ancient creeds are received as witnesses to it."],
+        ["1646", "Westminster Confession ch. 1: Scripture is the supreme judge of all controversies, and councils may err."],
+        ["1965", "Vatican II, Dei Verbum: Scripture and Tradition flow from the same divine wellspring."]
+      ],
+      passages: ["2 Thessalonians 2:15","2 Timothy 3:16–17","1 Timothy 3:15","Acts 17:11","Acts 15:6–29","Matthew 15:3–9","John 16:13","Galatians 1:8–9"],
+      more: { left: ["Newman, Development of Doctrine","Florovsky, Bible, Church, Tradition"], right: ["Mathison, The Shape of Sola Scriptura","T. Campbell, Declaration and Address"] }
+    },
+    {
+      key: "worship", name: "Worship", emoji: "🎵", left: "Liturgical", right: "Free", token: "--worship",
+      bands: ["liturgical","liturgy-leaning","between liturgical and free","free-leaning in worship","free in worship"],
+      fair: "Liturgical worship follows a set order and the church calendar, usually with the Eucharist at the center of the Lord's Day service, so that the whole congregation prays and sings with the historic church, in words tested over centuries, and joins the worship of heaven. Free worship holds that Scripture prescribes no fixed liturgy, so each congregation orders its own service around the Word read and preached, prayer, song, and the ordinances; some keep a plain, settled pattern and others leave the shape open for the Spirit to lead in the moment, with room for any member to contribute.",
+      history: [
+        ["late 1st c.", "The Didache gives set Eucharistic prayers, while letting prophets give thanks as they wish."],
+        ["c. 155", "Justin Martyr's First Apology 67: Sunday readings, a sermon, prayers, and the Eucharist, the presider giving thanks 'according to his ability'."],
+        ["4th–6th c.", "The eucharistic prayers of East and West take their lasting shape: the Liturgies of St Basil and St John Chrysostom, and the Roman Canon."],
+        ["1525–26", "Zwingli's Zurich centers Sunday worship on sermon and prayer, without singing; Luther's German Mass keeps the Mass's order in German with congregational hymns."],
+        ["1549", "Thomas Cranmer's first Book of Common Prayer gives the English church a single vernacular liturgy."],
+        ["1572–1645", "Puritans, following Calvin, hold that only what Scripture commands belongs in worship (the regulative principle); Hooker replies that the church may order what Scripture does not forbid; Westminster's Directory replaces the Prayer Book."],
+        ["1830s", "Charles Finney's revivalist 'new measures' reshape Protestant services."],
+        ["1906", "Azusa Street revival under William Seymour: spontaneous singing, tongues and interpretation, and open testimony spread with Pentecostalism worldwide."],
+        ["1963", "Vatican II, Sacrosanctum Concilium: reform of the Mass and the 'full, conscious, and active participation' of all the faithful; Anglican, Lutheran, and Presbyterian service books (1978–93) follow its lead."],
+        ["1970s–", "Jesus movement and the contemporary worship movement (Calvary Chapel, Vineyard, Hillsong)."]
+      ],
+      passages: ["Acts 2:42","Acts 20:7","John 4:23–24","1 Corinthians 14:26–40","Colossians 3:16","Hebrews 12:28","Revelation 4–5","Psalm 150"],
+      more: { left: ["Schmemann, Introduction to Liturgical Theology","Ratzinger, The Spirit of the Liturgy"], right: ["Hayford, Worship His Majesty","Kauflin, Worship Matters"] }
+    }
+  ];
+
+  /* a = axis index; d = +1 agreeing pushes toward the right pole, -1 toward the left pole */
+  var STATEMENTS = [
+    { a: 0, d: -1, t: "God's choice of who will be saved is not based on anything he foresaw they would do." },
+    { a: 0, d: 1, t: "A person whom God is drawing to salvation can still finally refuse him and be lost." },
+    { a: 0, d: -1, t: "God alone works saving faith in a person; the sinner contributes nothing to conversion, not even the decision to believe." },
+    { a: 1, d: -1, t: "In the Lord's Supper, Christ himself is given through the bread and wine, not only remembered." },
+    { a: 1, d: 1, t: "Baptism is a public testimony to a faith already held, not a means by which God gives grace." },
+    { a: 1, d: -1, t: "Infants should be baptized, not only those who profess faith for themselves." },
+    { a: 2, d: -1, t: "The gifts of tongues, prophecy, and healing are still given to the church today." },
+    { a: 2, d: 1, t: "The miraculous gifts of tongues, prophecy, and healing ended with the apostles or the completion of the New Testament." },
+    { a: 2, d: -1, t: "The Spirit still gives some Christians specific prophetic words for the church today." },
+    { a: 3, d: 1, t: "God will yet give national Israel its promised land and kingdom on this earth." },
+    { a: 3, d: -1, t: "There is one people of God across both testaments: the church, Jew and Gentile together, inherits the promises to Abraham." },
+    { a: 3, d: 1, t: "The church is a new body begun at Pentecost, not the continuation of Old Testament Israel." },
+    { a: 4, d: -1, t: "The early creeds and councils carry an authority of their own, not only as faithful summaries of what Scripture teaches." },
+    { a: 4, d: 1, t: "Only Scripture is infallible; every creed, council, and teacher can err and must be tested by it." },
+    { a: 4, d: -1, t: "When Christians disagree about a passage, the church's teaching office (bishops, councils, or a magisterium) has the final say." },
+    { a: 5, d: -1, t: "Worship should follow a fixed written liturgy, with set prayers used week by week." },
+    { a: 5, d: 1, t: "Each congregation should shape its own order of service rather than follow a prescribed liturgy." },
+    { a: 5, d: -1, t: "The church year, with Advent, Lent, and Easter, should shape what a congregation reads, sings, and prays." }
+  ];
+
+  var TRADITIONS = [
+    { name: "Catholic (Roman and Eastern)", pos: [72,5,15,8,5,5] },
+    { name: "Eastern Orthodox", pos: [90,5,20,8,5,5] },
+    { name: "Lutheran (confessional)", pos: [33,5,82,8,88,10] },
+    { name: "Anglican (broad)", pos: [42,5,35,22,65,5] },
+    { name: "Presbyterian / Reformed (confessional)", pos: [5,10,90,5,88,67] },
+    { name: "Reformed Baptist (1689)", pos: [5,50,95,5,90,88] },
+    { name: "Reformed charismatic (Sovereign Grace, Newfrontiers)", pos: [5,58,5,25,88,85] },
+    { name: "Southern Baptist (Calvinist)", pos: [8,95,75,58,95,95] },
+    { name: "Southern Baptist (non-Calvinist)", pos: [80,95,75,72,95,95] },
+    { name: "National Baptist (NBC USA / historically Black Baptist)", pos: [75,95,35,72,95,92] },
+    { name: "Bible church (independent, dispensational)", pos: [48,95,95,95,95,95] },
+    { name: "Calvary Chapel", pos: [55,95,25,95,95,95] },
+    { name: "Churches of Christ / Christian Churches", pos: [95,58,95,30,95,95] },
+    { name: "Wesleyan / Methodist", pos: [88,8,30,20,67,28] },
+    { name: "Mainline Protestant (PCUSA / ELCA / UMC)", pos: [50,5,35,10,55,25] },
+    { name: "Pentecostal (Assemblies of God, Church of God, COGIC)", pos: [90,90,5,75,85,95] },
+    { name: "Charismatic non-denominational", pos: [75,90,5,55,80,92] },
+    { name: "Anabaptist / Mennonite (peace church)", pos: [90,90,30,25,90,82] }
+  ];
+
+  var TOTAL = STATEMENTS.length;
+  /* Largest distance between any two listed traditions (Eastern Orthodox to Bible church, 198.1). */
+  var MAXD = 198;
+  var TIE_UNITS = 10;      /* two traditions this close are shown as jointly nearest */
+  var HEDGE_UNITS = 45;    /* beyond this, no tradition is a close fit */
+  var CENTER_UNITS = 10;   /* every axis this close to 50 means no tradition is named */
+  var LS_RESULT = 'theologyCompass.result';
+  var LS_THEME = 'theologyCompass.theme';
+
+  /* ---------- Helpers ---------- */
+  function $(id) { return document.getElementById(id); }
+  function esc(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+  function reduced() {
+    try { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; }
+  }
+  function debounce(fn, ms) {
+    var t = null;
+    return function () { clearTimeout(t); t = setTimeout(fn, ms); };
+  }
+  function band(s) { return s <= 20 ? 0 : s <= 40 ? 1 : s <= 59 ? 2 : s <= 79 ? 3 : 4; }
+  /* Distance from the midpoint as a share of the half-axis, so one net Agree out of six reads as 17%, not 58%. */
+  function lean(a, s) {
+    if (s === 50) return 'at the center';
+    if (s === 0) return 'at the ' + a.left + ' pole';
+    if (s === 100) return 'at the ' + a.right + ' pole';
+    return Math.round(Math.abs(s - 50) / 50 * 100) + '% toward ' + (s < 50 ? a.left : a.right);
+  }
+  /* How many Strongly answers a respondent gave on one axis; used only to break headline ties. */
+  function strongCount(answers, axisIndex) {
+    if (!answers) return 0;
+    var n = 0;
+    STATEMENTS.forEach(function (st, i) { if (st.a === axisIndex && Math.abs(answers[i] || 0) === 2) n++; });
+    return n;
+  }
+  /* Only axes outside the middle band can name a position; a midpoint is not a conviction. */
+  function headline(scores, answers) {
+    var out = scores.map(function (s, i) { return { i: i, d: Math.abs(s - 50), s: s, b: band(s) }; })
+      .filter(function (x) { return x.b !== 2; });
+    if (!out.length) return 'Near the center on every axis';
+    out.sort(function (a, b) {
+      return (b.d - a.d) || (strongCount(answers, b.i) - strongCount(answers, a.i)) || (a.i - b.i);
+    });
+    var str = out.slice(0, 3).map(function (x) { return AXES[x.i].bands[x.b]; }).join(', ');
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+  function computeScores(ans) {
+    var raw = [0, 0, 0, 0, 0, 0];
+    STATEMENTS.forEach(function (s, i) { raw[s.a] += s.d * (ans[i] || 0); });
+    return raw.map(function (r) { return Math.round((r + 6) / 12 * 100); });
+  }
+  /* Base 13: the eighteen statements can only produce thirteen scores per axis, so every
+     reachable score round-trips exactly and a shared link reopens the band the sharer saw. */
+  function encode(scores) {
+    var n = 0;
+    for (var i = 0; i < 6; i++) n = n * 13 + Math.max(0, Math.min(12, Math.round(scores[i] * 12 / 100)));
+    var s = n.toString(36).toUpperCase();
+    while (s.length < 6) s = '0' + s;
+    return s;
+  }
+  function decode(code) {
+    if (!/^[0-9A-Z]{6}$/i.test(code)) return null;
+    var n = parseInt(code, 36);
+    if (!isFinite(n) || n < 0 || n >= Math.pow(13, 6)) return null;
+    var out = [];
+    for (var i = 0; i < 6; i++) {
+      var q = n % 13;
+      out.unshift(Math.round(q * 100 / 12));
+      n = Math.floor(n / 13);
+    }
+    if (n !== 0) return null;
+    return out;
+  }
+  function nearest(scores) {
+    return TRADITIONS.map(function (t) {
+      var sum = 0;
+      for (var i = 0; i < 6; i++) sum += (t.pos[i] - scores[i]) * (t.pos[i] - scores[i]);
+      var d = Math.sqrt(sum);
+      return { name: t.name, pos: t.pos, d: d, match: Math.max(0, Math.round(100 - d / MAXD * 100)) };
+    }).sort(function (a, b) { return a.d - b.d; });
+  }
+  /* An answer set near the middle on every axis names no tradition, and one far from every
+     entry says so, rather than handing out a confident label the numbers do not support. */
+  function isAllCentral(scores) {
+    return scores.every(function (s) { return Math.abs(s - 50) <= CENTER_UNITS; });
+  }
+  function nearestState(scores, near) {
+    if (isAllCentral(scores)) return { kind: 'central' };
+    if (near[0].d > HEDGE_UNITS) return { kind: 'loose', names: [near[0].name, near[1].name] };
+    if (Math.abs(near[1].d - near[0].d) <= TIE_UNITS) return { kind: 'tie', names: [near[0].name, near[1].name] };
+    return { kind: 'near', names: [near[0].name, near[1].name] };
+  }
+  function nearestLine(scores, near, prefix) {
+    var st = nearestState(scores, near);
+    if (st.kind === 'central') return 'Near the center on every axis, so no tradition is named';
+    if (st.kind === 'loose') return 'No listed tradition is a close fit. Nearest, loosely: ' + st.names.join(', ');
+    return (prefix || 'Nearest on the map') + (st.kind === 'tie' ? ' (jointly): ' : ': ') + st.names.join(' · ');
+  }
+  /* Bar first so the six lines align, with one filled slot marking the position between the
+     poles named after it. A fill gauge read as a score of the virtue in the axis name. */
+  function shareText(scores, code, near) {
+    var lines = ['My Theology Compass'];
+    AXES.forEach(function (a, i) {
+      var at = Math.max(0, Math.min(10, Math.round(scores[i] / 10)));
+      var bar = '';
+      for (var k = 0; k < 11; k++) bar += k === at ? '●' : '○';
+      lines.push(a.emoji + ' ' + bar + ' ' + a.name + ': ' + a.left + ' → ' + a.right);
+    });
+    lines.push(nearestLine(scores, near) + (isAllCentral(scores) || near[0].d > HEDGE_UNITS ? '' : ' (approximate)'));
+    lines.push('theologycompass.app/r/' + code);
+    return lines.join('\n');
+  }
+  function describe(scores) {
+    return 'Compass of six axes, each running straight across from one pole to the other with the center as the midpoint. ' +
+      AXES.map(function (a, i) { return a.name + ': ' + lean(a, scores[i]); }).join('. ') + '.';
+  }
+
+  /* ---------- Compass geometry and SVG ----------
+     Twelve spokes at 30-degree steps. Axis i has its right pole at -90 + i*30 degrees
+     and its left pole on the opposite spoke, so each axis is one diameter of the rose.
+     A score of 50 sits at the center; 0 at the left-pole end; 100 at the right-pole end. */
+  function spokes() {
+    var out = [];
+    AXES.forEach(function (a, i) {
+      var deg = -90 + i * 30;
+      out.push({ i: i, deg: deg, pole: a.right });
+      out.push({ i: i, deg: deg + 180, pole: a.left });
+    });
+    return out;
+  }
+  function geometry(o) {
+    var W = o.width, H = o.height, R = o.radius, pad = o.pad || 16;
+    var cx = W / 2, cy = o.cy || H / 2;
+    function rad(deg) { return deg * Math.PI / 180; }
+    function spokePt(deg, t) { var r = rad(deg); return [cx + R * t * Math.cos(r), cy + R * t * Math.sin(r)]; }
+    function axisPt(i, score) { return spokePt(-90 + i * 30, (score - 50) / 50); }
+    function label(deg) {
+      var r = rad(deg), c = Math.cos(r), sn = Math.sin(r);
+      return {
+        x: cx + (R + pad) * c, y: cy + (R + pad) * sn,
+        anchor: c > 0.1 ? 'start' : c < -0.1 ? 'end' : 'middle',
+        v: sn < -0.1 ? 'above' : sn > 0.1 ? 'below' : 'middle'
+      };
+    }
+    return { W: W, H: H, R: R, cx: cx, cy: cy, pad: pad, spokePt: spokePt, axisPt: axisPt, label: label };
+  }
+  function radarSVG(scores, o) {
+    var g = geometry(o);
+    var C = o.colors;
+    function f(n) { return n.toFixed(1); }
+    function poly(pts) { return pts.map(function (p) { return f(p[0]) + ',' + f(p[1]); }).join(' '); }
+    var s = '';
+    [0.25, 0.5, 0.75, 1].forEach(function (t) {
+      s += '<circle cx="' + f(g.cx) + '" cy="' + f(g.cy) + '" r="' + f(g.R * t) + '" fill="none" stroke="' + C.line + '" stroke-width="' + (t === 1 ? 1.5 : 1) + '"' + (t === 0.5 ? ' stroke-dasharray="4 4"' : '') + '/>';
+    });
+    AXES.forEach(function (_, i) {
+      var deg = -90 + i * 30, p1 = g.spokePt(deg, 1), p2 = g.spokePt(deg + 180, 1);
+      s += '<line x1="' + f(p1[0]) + '" y1="' + f(p1[1]) + '" x2="' + f(p2[0]) + '" y2="' + f(p2[1]) + '" stroke="' + C.axes[i] + '" stroke-opacity="0.4" stroke-width="1.2"/>';
+    });
+    (o.ghosts || []).forEach(function (gh, gi) {
+      var pts = AXES.map(function (_, i) { return g.axisPt(i, gh.pos[i]); });
+      s += '<polygon points="' + poly(pts) + '" fill="' + C.muted + '" fill-opacity="0.07" stroke="' + C.muted + '" stroke-width="1.8" stroke-dasharray="' + (gi === 0 ? '8 5' : '2 5') + '" stroke-linejoin="round"/>';
+    });
+    var u = AXES.map(function (_, i) { return g.axisPt(i, scores[i]); });
+    s += '<polygon points="' + poly(u) + '" fill="' + C.ink + '" fill-opacity="0.08" stroke="' + C.ink + '" stroke-width="2.5" stroke-linejoin="round"/>';
+    AXES.forEach(function (_, i) {
+      s += '<line x1="' + f(g.cx) + '" y1="' + f(g.cy) + '" x2="' + f(u[i][0]) + '" y2="' + f(u[i][1]) + '" stroke="' + C.axes[i] + '" stroke-opacity="0.6" stroke-width="4" stroke-linecap="round"/>';
+    });
+    s += '<circle cx="' + f(g.cx) + '" cy="' + f(g.cy) + '" r="3.5" fill="' + C.muted + '"/>';
+    AXES.forEach(function (_, i) {
+      s += '<circle cx="' + f(u[i][0]) + '" cy="' + f(u[i][1]) + '" r="15" fill="' + C.axes[i] + '" fill-opacity="0.2"/>';
+    });
+    AXES.forEach(function (_, i) {
+      s += '<circle cx="' + f(u[i][0]) + '" cy="' + f(u[i][1]) + '" r="7" fill="' + C.axes[i] + '" stroke="' + C.card + '" stroke-width="2.5"/>';
+    });
+    if (o.labels !== false) {
+      var fn = o.nameSize || 11, fp = o.poleSize || 16;
+      spokes().forEach(function (sp) {
+        var L = g.label(sp.deg), y1, y2;
+        if (L.v === 'above') { y2 = L.y; y1 = y2 - fp - 2; }
+        else if (L.v === 'below') { y1 = L.y + fn; y2 = y1 + fp + 2; }
+        else { y1 = L.y - 4; y2 = L.y + fp - 2; }
+        s += '<text x="' + f(L.x) + '" y="' + f(y1) + '" text-anchor="' + L.anchor + '" font-family="\'JetBrains Mono\',ui-monospace,Menlo,Consolas,monospace" font-size="' + fn + '" font-weight="600" letter-spacing="1.5" fill="' + C.axes[sp.i] + '">' + esc(AXES[sp.i].name.toUpperCase()) + '</text>';
+        s += '<text x="' + f(L.x) + '" y="' + f(y2) + '" text-anchor="' + L.anchor + '" font-family="\'Fraunces\',Georgia,serif" font-size="' + fp + '" font-weight="700" fill="' + C.ink + '" style="font-variation-settings:\'SOFT\' 100,\'WONK\' 1">' + esc(sp.pole) + '</text>';
+      });
+    }
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + g.W + ' ' + g.H + '" width="' + g.W + '" height="' + g.H + '" role="img" aria-label="' + esc(o.label || 'Theology compass') + '">' + s + '</svg>';
+  }
+
+  /* ---------- State ---------- */
+  var answers = [];
+  var idx = 0;
+  var busy = false;
+  var advanceTimer = 0;
+  var transitionTimer = 0;
+  var current = null;
+  var ghosts = {};
+  var radarCompact = null;
+  var lastFocus = null;
+
+  function loadSaved() {
+    try {
+      var raw = localStorage.getItem(LS_RESULT);
+      if (!raw) return null;
+      var o = JSON.parse(raw);
+      if (o && Array.isArray(o.scores) && o.scores.length === 6) return o;
+    } catch (e) { /* storage unavailable */ }
+    return null;
+  }
+  function saveResult(o) {
+    try { localStorage.setItem(LS_RESULT, JSON.stringify(o)); } catch (e) { /* ignore */ }
+  }
+
+  /* ---------- Screens ---------- */
+  function showScreen(name) {
+    $('screen-intro').hidden = name !== 'intro';
+    $('screen-quiz').hidden = name !== 'quiz';
+    $('screen-result').hidden = name !== 'result';
+    $('brand').hidden = name === 'intro';
+    window.scrollTo(0, 0);
+  }
+  function renderIntro() {
+    $('axis-chips').innerHTML = AXES.map(function (a) {
+      return '<span class="chip" style="--c:var(' + a.token + ')">' + esc(a.name) + ' · ' + esc(a.left) + ' ↔ ' + esc(a.right) + '</span>';
+    }).join('');
+    $('last-btn').hidden = !loadSaved();
+  }
+
+  /* ---------- Quiz ---------- */
+  function buildProgress() {
+    $('progress').innerHTML = STATEMENTS.map(function (s) {
+      return '<span class="seg" style="--c:var(' + AXES[s.a].token + ')"></span>';
+    }).join('');
+  }
+  function startQuiz() {
+    answers = [];
+    for (var i = 0; i < TOTAL; i++) answers.push(null);
+    idx = 0;
+    busy = false;
+    clearHash();
+    showScreen('quiz');
+    renderQuestion();
+  }
+  function renderQuestion() {
+    var st = STATEMENTS[idx], ax = AXES[st.a];
+    var axisVar = 'var(' + ax.token + ')';
+    $('qcard').style.setProperty('--axis', axisVar);
+    $('q-axis').style.setProperty('--axis', axisVar);
+    var segs = $('progress').children;
+    for (var i = 0; i < segs.length; i++) segs[i].className = 'seg' + (i < idx ? ' done' : i === idx ? ' cur' : '');
+    $('progress').setAttribute('aria-valuenow', String(idx + 1));
+    $('q-count').textContent = (idx + 1) + ' of ' + TOTAL;
+    $('q-axis').textContent = ax.name;
+    $('axis-tag').textContent = ax.left + ' ↔ ' + ax.right;
+    $('scale-hint').hidden = idx !== 0;
+    $('statement').textContent = st.t;
+    var btns = $('answers').querySelectorAll('.ans');
+    for (var k = 0; k < btns.length; k++) {
+      btns[k].setAttribute('aria-pressed', String(answers[idx] === Number(btns[k].getAttribute('data-v'))));
+    }
+    $('back-btn').textContent = idx === 0 ? '← Leave the quiz' : '← Back';
+    try { $('statement').focus({ preventScroll: true }); } catch (e) { /* ignore */ }
+  }
+  /* Back has to work the moment it is clicked, including during the pause after an answer,
+     so both pending timers are cancellable. */
+  function clearPending() {
+    if (advanceTimer) { clearTimeout(advanceTimer); advanceTimer = 0; }
+    if (transitionTimer) { clearTimeout(transitionTimer); transitionTimer = 0; }
+    busy = false;
+    $('qcard').classList.remove('is-leaving');
+  }
+  function goTo(i) {
+    idx = i;
+    if (transitionTimer) { clearTimeout(transitionTimer); transitionTimer = 0; }
+    if (reduced()) { renderQuestion(); return; }
+    var card = $('qcard');
+    card.classList.add('is-leaving');
+    transitionTimer = setTimeout(function () {
+      transitionTimer = 0;
+      renderQuestion();
+      card.classList.remove('is-leaving');
+    }, 170);
+  }
+  function answer(v) {
+    if (busy) return;
+    busy = true;
+    answers[idx] = v;
+    var btns = $('answers').querySelectorAll('.ans');
+    for (var k = 0; k < btns.length; k++) {
+      btns[k].setAttribute('aria-pressed', String(v === Number(btns[k].getAttribute('data-v'))));
+    }
+    advanceTimer = setTimeout(function () {
+      advanceTimer = 0;
+      busy = false;
+      if (idx < TOTAL - 1) goTo(idx + 1);
+      else finishQuiz();
+    }, reduced() ? 0 : 220);
+  }
+  /* From the first statement, Back leaves the quiz rather than doing nothing. */
+  function goBack() {
+    clearPending();
+    if (idx === 0) { showScreen('intro'); return; }
+    goTo(idx - 1);
+  }
+  function finishQuiz() {
+    var scores = computeScores(answers);
+    showResult(scores, true, answers.slice());
+  }
+
+  /* ---------- Result ---------- */
+  function showResult(scores, setHash, sheet) {
+    var code = encode(scores);
+    var near = nearest(scores);
+    current = { scores: scores, code: code, near: near, answers: sheet || null };
+    ghosts = {};
+    saveResult({ scores: scores, code: code, at: Date.now() });
+    renderResult();
+    showScreen('result');
+    fitCard();
+    try { $('result-label').focus({ preventScroll: true }); } catch (e) { /* ignore */ }
+    if (setHash) {
+      try { history.replaceState(null, '', '#r=' + code); }
+      catch (e) { try { location.hash = 'r=' + code; } catch (e2) { /* ignore */ } }
+    }
+  }
+  function clearHash() {
+    if (!location.hash) return;
+    try { history.replaceState(null, '', location.pathname + location.search); }
+    catch (e) { try { location.hash = ''; } catch (e2) { /* ignore */ } }
+  }
+  function renderResult() {
+    var scores = current.scores, code = current.code, near = current.near;
+    $('result-code').textContent = code;
+    $('result-label').textContent = headline(scores, current.answers);
+    $('result-sub').textContent = nearestLine(scores, near);
+    renderRadar();
+    renderLegend();
+    renderToggles();
+    renderBreakdown();
+    renderTraditions();
+    renderHistory();
+    renderShare();
+    renderCard();
+  }
+  function isCompact() { return window.innerWidth < 560; }
+  function renderRadar() {
+    if (!current) return;
+    var compact = isCompact();
+    radarCompact = compact;
+    var ghostList = current.near.slice(0, 2).filter(function (t) { return ghosts[t.name]; });
+    var o = compact
+      ? { width: 560, height: 330, cy: 165, radius: 105, pad: 16, nameSize: 14, poleSize: 19 }
+      : { width: 640, height: 410, cy: 205, radius: 150, pad: 18, nameSize: 11, poleSize: 16 };
+    o.colors = TOKENS; o.ghosts = ghostList; o.label = describe(current.scores);
+    $('radar').innerHTML = radarSVG(current.scores, o);
+  }
+  function renderLegend() {
+    $('legend').innerHTML = AXES.map(function (a) {
+      return '<div style="--c:var(' + a.token + ')"><b>' + esc(a.name) + '</b> · ' + esc(a.left) + ' ↔ ' + esc(a.right) + '</div>';
+    }).join('');
+  }
+  function renderToggles() {
+    var top = current.near.slice(0, 2);
+    $('toggles').innerHTML = '<span>Overlay a tradition:</span>' + top.map(function (t) {
+      return '<button class="tog" type="button" data-name="' + esc(t.name) + '" aria-pressed="' + (ghosts[t.name] ? 'true' : 'false') + '">' + esc(t.name) + '</button>';
+    }).join('');
+  }
+  function renderBreakdown() {
+    var scores = current.scores;
+    $('breakdown').innerHTML = AXES.map(function (a, i) {
+      var s = scores[i];
+      var left = s < 50 ? s : 50, width = Math.abs(s - 50);
+      return '<div class="row" style="--c:var(' + a.token + ')">' +
+        '<div class="row-head"><span class="row-name">' + esc(a.name) + '</span><span class="row-pct">' + esc(lean(a, s)) + '</span></div>' +
+        '<div class="track"><span class="tick"></span><span class="fill" style="left:' + left + '%;width:' + width + '%"></span><span class="marker" style="left:' + s + '%"></span></div>' +
+        '<div class="poles"><span>' + esc(a.left) + '</span><span>' + esc(a.right) + '</span></div>' +
+        '</div>';
+    }).join('');
+  }
+  function renderTraditions() {
+    var st = nearestState(current.scores, current.near);
+    var note = '';
+    if (st.kind === 'central') note = '<div class="trad-note">Your answers sit near the center on every axis, so no tradition is named. The list below is only what the arithmetic returns.</div>';
+    else if (st.kind === 'loose') note = '<div class="trad-note">No listed tradition is a close fit: your nearest is ' + Math.round(current.near[0].d) + ' units away, and an informed adherent normally lands within 26. Read the list as loose neighbours.</div>';
+    else if (st.kind === 'tie') note = '<div class="trad-note">The first two are jointly nearest: they sit within ' + TIE_UNITS + ' units of each other, which is closer than the quiz can tell apart.</div>';
+    $('traditions').innerHTML = note + current.near.slice(0, 5).map(function (t, i) {
+      var top = st.kind !== 'central' && st.kind !== 'loose' && i < 2;
+      return '<div class="trad' + (top ? ' top' : '') + '"><span class="trad-name">' + esc(t.name) + '</span><span class="trad-pct">' + t.match + '% match</span><div class="trad-bar"><span style="width:' + t.match + '%"></span></div></div>';
+    }).join('');
+  }
+  function renderHistory() {
+    var scores = current.scores;
+    $('history').innerHTML = AXES.map(function (a, i) {
+      var s = scores[i];
+      return '<details class="acc" style="--c:var(' + a.token + ')">' +
+        '<summary><span class="dot"></span><span class="acc-title">' + esc(a.name) + '</span><span class="acc-sub">' + esc(a.left) + ' ↔ ' + esc(a.right) + '</span><span class="acc-pos">' + esc(lean(a, s)) + '</span><span class="chev"></span></summary>' +
+        '<div class="acc-body">' +
+        '<p class="fair">' + esc(a.fair) + '</p>' +
+        '<h4>A short history</h4>' +
+        '<ol class="hist">' + a.history.map(function (h) { return '<li><span class="when">' + esc(h[0]) + '</span><span>' + esc(h[1]) + '</span></li>'; }).join('') + '</ol>' +
+        '<h4>Key passages</h4>' +
+        '<div class="passages">' + a.passages.map(function (p) {
+          return '<a class="passage ph" href="#" data-toast="Would open ' + esc(p) + ' in Scripture Web (sister demo).">' + esc(p) + '<span class="passage-cta">Read in Scripture Web →</span></a>';
+        }).join('') + '</div>' +
+        '<h4>Read more</h4>' +
+        '<div class="more">' +
+        '<div><span class="more-pole">' + esc(a.left) + '</span>' + a.more.left.map(function (m) { return esc(m); }).join(' · ') + '</div>' +
+        '<div><span class="more-pole">' + esc(a.right) + '</span>' + a.more.right.map(function (m) { return esc(m); }).join(' · ') + '</div>' +
+        '</div>' +
+        '</div>' +
+        '</details>';
+    }).join('');
+  }
+  function renderShare() {
+    var scores = current.scores, code = current.code;
+    $('share-text').textContent = shareText(scores, code, current.near);
+    $('permalink').textContent = 'theologycompass.app/r/' + code;
+    $('deep-hint').textContent = 'The link above is the product concept. In this demo, opening the page with #r=' + code + ' loads this same result.';
+  }
+
+  /* ---------- Result card ---------- */
+  function cardLabelsHTML(g) {
+    var w = 220, h = 35;
+    return spokes().map(function (sp) {
+      var L = g.label(sp.deg), left, top, cls;
+      if (L.anchor === 'start') { left = L.x; cls = 'c-lab-start'; }
+      else if (L.anchor === 'end') { left = L.x - w; cls = 'c-lab-end'; }
+      else { left = L.x - w / 2; cls = 'c-lab-mid'; }
+      top = L.v === 'above' ? L.y - h : L.v === 'below' ? L.y : L.y - h / 2;
+      return '<div class="c-lab ' + cls + '" style="left:' + left.toFixed(1) + 'px;top:' + top.toFixed(1) + 'px;width:' + w + 'px;"><span class="c-lab-name" style="color:' + LIGHT.axes[sp.i] + '">' + esc(AXES[sp.i].name) + '</span><span class="c-lab-pole">' + esc(sp.pole) + '</span></div>';
+    }).join('');
+  }
+  function cardBarsHTML(scores) {
+    return AXES.map(function (a, i) {
+      var s = scores[i], c = LIGHT.axes[i];
+      var left = s < 50 ? s : 50, width = Math.abs(s - 50);
+      return '<div class="c-row">' +
+        '<div class="c-row-head"><span style="color:' + c + '">' + esc(a.name) + '</span><span class="c-row-pct">' + esc(lean(a, s)) + '</span></div>' +
+        '<div class="c-track"><span class="c-tick"></span><span class="c-fill" style="left:' + left + '%;width:' + width + '%;background:' + c + '"></span><span class="c-marker" style="left:' + s + '%;background:' + c + '"></span></div>' +
+        '<div class="c-poles"><span>' + esc(a.left) + '</span><span>' + esc(a.right) + '</span></div>' +
+        '</div>';
+    }).join('');
+  }
+  function renderCard() {
+    var scores = current.scores, code = current.code, near = current.near;
+    var label = headline(scores, current.answers);
+    $('c-label').textContent = label;
+    $('c-label').style.fontSize = label.length > 52 ? '44px' : '54px';
+    $('c-closest').textContent = nearestLine(scores, near);
+    var o = { width: 630, height: 440, radius: 160, cy: 220, pad: 16, colors: LIGHT, labels: false, label: 'Compass' };
+    $('c-radar').innerHTML = radarSVG(scores, o) + cardLabelsHTML(geometry(o));
+    $('c-bars').innerHTML = cardBarsHTML(scores);
+    $('c-code').textContent = 'theologycompass.app/r/' + code;
+  }
+  function fitCard() {
+    var pv = $('card-preview');
+    var w = pv.clientWidth;
+    if (w > 0) $('card1080').style.transform = 'scale(' + (w / 1080) + ')';
+  }
+
+  /* ---------- Copy, share, save ---------- */
+  function toast(msg) {
+    var t = $('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toast.timer);
+    toast.timer = setTimeout(function () { t.classList.remove('show'); }, 2000);
+  }
+  function copyText(text, okMsg) {
+    var done = function (ok) { toast(ok ? (okMsg || 'Copied') : 'Copy failed. Select the text and copy it by hand.'); };
+    var fallback = function () {
+      var ok = false;
+      try {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        ok = document.execCommand('copy');
+        document.body.removeChild(ta);
+      } catch (e) { ok = false; }
+      done(ok);
+    };
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { done(true); }, fallback);
+      } else {
+        fallback();
+      }
+    } catch (e) { fallback(); }
+  }
+  function shareResult() {
+    if (!current) return;
+    var text = shareText(current.scores, current.code, current.near);
+    if (navigator.share) {
+      try {
+        navigator.share({ title: 'My Theology Compass', text: text }).then(function () {
+          toast('Shared');
+        }, function (err) {
+          if (err && err.name === 'AbortError') return;
+          copyText(text, 'Sharing is not available here. Copied the text instead.');
+        });
+        return;
+      } catch (e) { /* fall through to copy */ }
+    }
+    copyText(text, 'Copied your result. Paste it anywhere.');
+  }
+  function openModal(src) {
+    lastFocus = document.activeElement;
+    $('modal-img').src = src;
+    $('modal').hidden = false;
+    try { $('modal-close').focus(); } catch (e) { /* ignore */ }
+  }
+  function closeModal() {
+    $('modal').hidden = true;
+    if (lastFocus && lastFocus.focus) { try { lastFocus.focus(); } catch (e) { /* ignore */ } }
+  }
+  function saveCard() {
+    var btn = $('save-btn');
+    if (!window.html2canvas) { toast('The card renderer did not load.'); return; }
+    if (btn.disabled) return;
+    var oldText = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Rendering…';
+    var holder = null;
+    var cleanup = function () {
+      if (holder && holder.parentNode) holder.parentNode.removeChild(holder);
+      btn.disabled = false;
+      btn.textContent = oldText;
+    };
+    var fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+    fontsReady.then(function () { return null; }, function () { return null; }).then(function () {
+      var src = $('card1080');
+      var clone = src.cloneNode(true);
+      clone.removeAttribute('id');
+      var ided = clone.querySelectorAll('[id]');
+      for (var i = 0; i < ided.length; i++) ided[i].removeAttribute('id');
+      clone.style.transform = 'none';
+      clone.style.position = 'relative';
+      clone.style.left = '0';
+      clone.style.top = '0';
+      holder = document.createElement('div');
+      holder.setAttribute('aria-hidden', 'true');
+      holder.style.cssText = 'position:fixed;left:-20000px;top:0;width:1080px;height:1080px;overflow:hidden;';
+      holder.appendChild(clone);
+      document.body.appendChild(holder);
+      return window.html2canvas(clone, {
+        scale: 1, width: 1080, height: 1080, backgroundColor: '#F3F4EE', logging: false, useCORS: false
+      });
+    }).then(function (canvas) {
+      var url = canvas.toDataURL('image/png');
+      cleanup();
+      openModal(url);
+    }, function () {
+      cleanup();
+      toast('Could not render the card in this browser.');
+    });
+  }
+
+  /* ---------- Theme ---------- */
+  function themeLabel() {
+    var v = document.documentElement.getAttribute('data-theme');
+    $('theme-btn').textContent = 'Theme: ' + (v === 'light' ? 'Light' : v === 'dark' ? 'Dark' : 'Auto');
+  }
+  function applyTheme(v) {
+    var root = document.documentElement;
+    if (v === 'light' || v === 'dark') root.setAttribute('data-theme', v);
+    else root.removeAttribute('data-theme');
+    themeLabel();
+  }
+  function cycleTheme() {
+    var v = document.documentElement.getAttribute('data-theme');
+    var next = v === 'light' ? 'dark' : v === 'dark' ? 'auto' : 'light';
+    applyTheme(next);
+    try { localStorage.setItem(LS_THEME, next); } catch (e) { /* ignore */ }
+  }
+  function initTheme() {
+    var stored = null;
+    try { stored = localStorage.getItem(LS_THEME); } catch (e) { stored = null; }
+    if (stored === 'light' || stored === 'dark') applyTheme(stored);
+    else themeLabel();
+    try {
+      new MutationObserver(themeLabel).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    } catch (e) { /* ignore */ }
+  }
+
+  /* ---------- Deep link ---------- */
+  function checkHash() {
+    var m = (location.hash || '').match(/^#r=([0-9a-z]{6})$/i);
+    if (!m) return false;
+    var code = m[1].toUpperCase();
+    if (current && current.code === code && !$('screen-result').hidden) return true;
+    var scores = decode(code);
+    if (!scores) return false;
+    showResult(scores, false);
+    return true;
+  }
+
+  /* ---------- Events ---------- */
+  function bind() {
+    $('start-btn').addEventListener('click', startQuiz);
+    $('last-btn').addEventListener('click', function () {
+      var saved = loadSaved();
+      if (saved) showResult(saved.scores, true);
+    });
+    $('answers').addEventListener('click', function (e) {
+      var b = e.target.closest('.ans');
+      if (b) answer(Number(b.getAttribute('data-v')));
+    });
+    $('back-btn').addEventListener('click', goBack);
+    $('copy-btn').addEventListener('click', function () {
+      if (current) copyText(shareText(current.scores, current.code, current.near), 'Copied your result. Paste it anywhere.');
+    });
+    $('save-btn').addEventListener('click', saveCard);
+    $('share-btn').addEventListener('click', shareResult);
+    $('copylink-btn').addEventListener('click', function () {
+      if (current) copyText('theologycompass.app/r/' + current.code, 'Link copied');
+    });
+    $('retake-btn').addEventListener('click', startQuiz);
+    $('toggles').addEventListener('click', function (e) {
+      var b = e.target.closest('.tog');
+      if (!b) return;
+      var name = b.getAttribute('data-name');
+      ghosts[name] = !ghosts[name];
+      b.setAttribute('aria-pressed', ghosts[name] ? 'true' : 'false');
+      renderRadar();
+    });
+    $('modal-close').addEventListener('click', closeModal);
+    $('modal').addEventListener('click', function (e) { if (e.target === $('modal')) closeModal(); });
+    $('theme-btn').addEventListener('click', cycleTheme);
+
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest('a.ph');
+      if (!a) return;
+      e.preventDefault();
+      toast(a.getAttribute('data-toast') || 'Opens in Scripture Web, the sister demo.');
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (!$('modal').hidden) {
+        if (e.key === 'Escape') { e.preventDefault(); closeModal(); }
+        return;
+      }
+      if ($('screen-quiz').hidden) return;
+      if (e.altKey || e.ctrlKey || e.metaKey) return;
+      var t = e.target;
+      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+      if (e.key >= '1' && e.key <= '5' && e.key.length === 1) {
+        e.preventDefault();
+        answer(Number(e.key) - 3);
+      } else if (e.key === 'Backspace') {
+        e.preventDefault();
+        goBack();
+      }
+    });
+
+    window.addEventListener('resize', debounce(function () {
+      if (current && !$('screen-result').hidden && isCompact() !== radarCompact) renderRadar();
+      fitCard();
+    }, 120));
+    try {
+      new ResizeObserver(function () { fitCard(); }).observe($('card-preview'));
+    } catch (e) { /* resize fallback above */ }
+
+    window.addEventListener('hashchange', function () { checkHash(); });
+  }
+
+  /* ---------- Init ---------- */
+  function init() {
+    initTheme();
+    buildProgress();
+    renderIntro();
+    bind();
+    if (!checkHash()) showScreen('intro');
+  }
+  init();
+})();
+</script>

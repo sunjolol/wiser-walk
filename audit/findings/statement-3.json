@@ -1,0 +1,77 @@
+{
+ "target": "statement:3",
+ "findings": [
+  {
+   "id": "anabaptist-7",
+   "lens": "Anabaptist / Mennonite (Schleitheim Confession, Confession of Faith in a Mennonite Perspective 1995)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "Double-barreled: Anabaptists (with Arminians and Catholics) affirm the first clause, that saving faith is God's gift, and deny only the election clause.",
+   "evidence": "CFMP Art. 8 speaks of salvation as God's gift received by repentance and faith; Hubmaier's two free-will treatises (1527) insist the will is dead until grace restores it. A Mennonite who answers 'Agree' for the gift clause is scored monergist; one who answers 'Unsure' is pulled to the centre. The direction is right only if the respondent reads the second clause as controlling.",
+   "fix": "'God gives saving faith only to those he has already chosen; faith is the result of his election, not the reason for it.'"
+  },
+  {
+   "id": "catholic-5",
+   "lens": "Roman Catholic",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "\"Saving faith is itself a gift God gives to those he has chosen, not the reason he chose them\" is double-barreled: 'faith is a gift' is affirmed by everyone on the axis; only 'not the reason he chose them' discriminates. Molinist Catholics (and classical Arminians) must answer Yes to the first clause and No to the second.",
+   "evidence": "Trent Sess. VI ch. 8 (faith 'the beginning of human salvation, the foundation and root of all justification', given by grace), Orange canon 5 (the beginning of faith is a gift), and Arminius's Declaration of Sentiments all say faith is a gift. Molina's Concordia and most Catholic apologists today hold election post praevisa merita; Aquinas ST I q.23 a.5 holds ante praevisa merita. The Catholic Church deliberately left both open (Paul V, 1607).",
+   "fix": "\"God chose who will be saved without regard to any faith or merit he foresaw in them.\""
+  },
+  {
+   "id": "charismatic-5",
+   "lens": "charismatic non-denominational (Vineyard, Bethel, Hillsong, Third Wave)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "'Saving faith is itself a gift God gives to those he has chosen, not the reason he chose them.' is double-barreled: synergists affirm the first clause and deny the second.",
+   "evidence": "Arminius: faith is 'a gracious and gratuitous gift of God' (Works, Declaration of Sentiments); Olson, Arminian Theology, ch. 'Arminianism is not a theology of grace' (prevenient grace makes faith God's gift). Charismatics say 'faith comes by hearing' and is given. An honest Arminian can answer Agree (faith is a gift) or Disagree (election is conditional), and the direction (-1) rewards the wrong reading with a monergist push.",
+   "fix": "'God chose whom he would save without regard to any faith or response he foresaw in them.'"
+  },
+  {
+   "id": "dispensational-9",
+   "lens": "Dispensationalist (Dallas / classic and progressive dispensationalism)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "\"Saving faith is itself a gift God gives to those he has chosen, not the reason he chose them.\" bundles two claims that dispensationalists split: election not based on foreseen faith (affirmed) and faith itself as the gift (widely denied).",
+   "evidence": "The DTS/Ryrie stream holds unconditional election (Chafer, Systematic Theology, vol. 3) but argues from the neuter touto in Ephesians 2:8 that the 'gift' is salvation by grace through faith, not faith itself (Ryrie, Basic Theology, 1986, on Eph 2:8–9; Hodges, Absolutely Free!, 1989; Geisler, Chosen But Free, 1999). The Lordship-salvation controversy of 1988–1994 turned on exactly this wording. An informed member is forced to 'Unsure', pulling him toward the middle of an axis where he has a clear position on the election question the item is supposed to measure.",
+   "fix": "\"God chose his people before the world began, and his choice was not based on the faith he foresaw in them.\" (direction -1). That isolates the Remonstrance Article 1 / Dort crux."
+  },
+  {
+   "id": "orthodox-1",
+   "lens": "Eastern Orthodox",
+   "category": "ambiguity",
+   "severity": "blocker",
+   "claim": "Double-barreled: an informed Orthodox agrees with the first clause (faith is God's gift) and rejects the second (election without regard to foreseen faith); agreeing is scored monergist, and that alone can flip the nearest tradition to Roman Catholic.",
+   "evidence": "Text: \"Saving faith is itself a gift God gives to those he has chosen, not the reason he chose them.\" Eph 2:8 and Chrysostom, Hom. 4 on Ephesians, call faith God's gift; the Confession of Dositheus (Synod of Jerusalem 1672), Decree 3, says God predestined \"since He foreknew the one would make a right use of their free-will\" and anathematizes election without regard to that. Arithmetic: S1 Unsure, S2 Agree, S3 Agree gives Grace 50; with S7/S9/S12 Unsure the vector is [50,0,33,17,0,0]; distance to Roman Catholic sqrt(303)=17.41, to Eastern Orthodox sqrt(308)=17.55, so the card lists Roman Catholic first.",
+   "fix": "Faith is the result of God's choice, not the reason for it."
+  },
+  {
+   "id": "sbc-5",
+   "lens": "Southern Baptist (Baptist Faith & Message 2000)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "'Saving faith is itself a gift God gives to those he has chosen, not the reason he chose them' is double-barreled: a non-Calvinist Baptist agrees with the first clause in the loose sense preached from Ephesians 2:8 every week and disagrees with the second, which is the only clause that actually discriminates.",
+   "evidence": "Traditional Statement Art. 4 says grace takes 'all of the initiative' and unites the believer to Christ 'through the Holy Spirit by faith' (faith as grace-enabled gift) while Art. 6 denies that God 'predestined certain people for salvation' apart from their faith (faith as the ground of election). The two clauses pull a Traditionalist in opposite directions.",
+   "fix": "'God's choice of who will be saved was not based on anything, including faith, that he foresaw in them.' (direction -1)"
+  },
+  {
+   "id": "survey-7",
+   "lens": "survey methodologist",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "\"Saving faith is itself a gift God gives to those he has chosen, not the reason he chose them\" is double-barreled: the first clause is affirmed by every synergist tradition, so synergists are torn between Agree and Disagree.",
+   "evidence": "Trent Sess. 6 ch. 8 and canon 3: faith is the beginning of salvation and impossible without prevenient grace; Arminius, Declaration of Sentiments: faith is \"a gift of God\"; Wesley on prevenient grace. Only \"not the reason he chose them\" discriminates.",
+   "fix": "Replace with: \"God's choice of who will be saved was not based on foreseeing who would believe.\" (15 words, direction -1)."
+  },
+  {
+   "id": "wesleyan-3",
+   "lens": "Wesleyan / Methodist (Wesley's sermons, Articles of Religion, Global Methodist / UMC evangelical wing)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "'Saving faith is itself a gift God gives to those he has chosen, not the reason he chose them' is double-barreled. Wesleyans affirm the first clause (faith is God's gift, given through prevenient grace) and deny the second (election rests on foreseen faith). A Methodist who answers the clause they hear first is pushed 17 points toward monergism and loses the 'firmly synergist' headline.",
+   "evidence": "Wesley, 'Salvation by Faith' (Sermon 1): faith 'is the gift of God'; Art. IX 'Of the Justification of Man'; Wesley, 'Predestination Calmly Considered' (1752): election 'according to the foreknowledge of God' (1 Pet 1:2). With the other grace answers fixed at -2 and +2, S3 = -1 gives grace 92 ('firmly synergist'); S3 = +1 gives grace 75 and headline 'Sacramental, covenantal, Arminian-leaning'. A statement that a real adherent can honestly answer either way on a 17-point swing is not measuring what it claims.",
+   "fix": "Replace with a single-barreled monergism-of-conversion statement that Wesleyans, Catholics and Orthodox will disagree with and Reformed and Lutherans will agree with: 'God alone creates saving faith in a person; the sinner contributes nothing to conversion, not even the decision to believe.' (direction -1). Move the election content into statement 1 (see statement:1)."
+  }
+ ]
+}

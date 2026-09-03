@@ -1,0 +1,50 @@
+{
+ "target": "axis:grace:history:4",
+ "findings": [
+  {
+   "id": "anglican-17",
+   "lens": "Anglican (broad, Thirty-Nine Articles / Book of Common Prayer)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "'Wesley and Whitefield divide the evangelical revival over predestination' omits that both were Church of England clergy, which is the point for this axis: Article XVII was read both ways inside one church.",
+   "evidence": "Both were ordained in the Church of England and died in its communion; Wesley's Predestination Calmly Considered (1752) and Whitefield's Letter to Wesley (1740) are intra-Anglican documents.",
+   "fix": "'Wesley and Whitefield, both Church of England clergy, divide the evangelical revival over predestination.'"
+  },
+  {
+   "id": "historian-6",
+   "lens": "church historian",
+   "category": "inaccuracy",
+   "severity": "minor",
+   "claim": "'1740s' is the wrong decade for the Wesley–Whitefield breach; it opened in 1739 and was complete by 1741.",
+   "evidence": "Wesley preached Free Grace at Bristol on 29 April 1739 and printed it that summer; Whitefield's reply letter is dated Bethesda, 24 December 1740, and was printed in London in 1741, the year Whitefield's separate Tabernacle opened (Dallimore, George Whitefield, vol. 2; Rack, Reasonable Enthusiast).",
+   "fix": "{when: '1739–41', what: \"Wesley's sermon Free Grace and Whitefield's printed reply divide the evangelical revival over predestination.\"}"
+  },
+  {
+   "id": "mockery-21",
+   "lens": "mockery critic",
+   "category": "inaccuracy",
+   "severity": "minor",
+   "claim": "'1740s' is loose for the Wesley–Whitefield split.",
+   "evidence": "Wesley's sermon 'Free Grace' was preached and printed in 1739; Whitefield's public reply, 'A Letter to the Rev. Mr John Wesley', is dated December 1740 and published 1741.",
+   "fix": "when: '1739–41'"
+  },
+  {
+   "id": "progressive-23",
+   "lens": "progressive mainline Protestant (PCUSA, ELCA, Episcopal, UMC progressive wing)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The history ends in the 1740s; the most consequential modern reworking of election, which is how the Reformed mainline actually holds the doctrine, is absent.",
+   "evidence": "History: Augustine, Orange, Luther 1525, Dort 1610-19, Wesley/Whitefield 1740s. Barth, Church Dogmatics II/2 (1942), reworks election christologically and is the reason a PCUSA reader cannot answer S1 as written.",
+   "fix": "Append: {\"when\": \"1942\", \"what\": \"Barth, Church Dogmatics II/2: Jesus Christ is both the electing God and the elected man, and humanity is chosen in him.\"}"
+  },
+  {
+   "id": "wesleyan-14",
+   "lens": "Wesleyan / Methodist (Wesley's sermons, Articles of Religion, Global Methodist / UMC evangelical wing)",
+   "category": "inaccuracy",
+   "severity": "minor",
+   "claim": "'1740s: Wesley and Whitefield divide the evangelical revival over predestination' is a decade late and omits the document a Methodist would name.",
+   "evidence": "Wesley preached and published 'Free Grace' in 1739 (Bristol, April 1739); Whitefield's 'A Letter to the Rev. Mr. John Wesley in Answer to His Sermon Entitled Free Grace' is dated 24 December 1740 and was published in 1741.",
+   "fix": "1739–41: Wesley's sermon 'Free Grace' and Whitefield's reply divide the evangelical revival over predestination."
+  }
+ ]
+}

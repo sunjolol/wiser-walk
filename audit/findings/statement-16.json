@@ -1,0 +1,41 @@
+{
+ "target": "statement:16",
+ "findings": [
+  {
+   "id": "presbyterian-18",
+   "lens": "Presbyterian / Reformed (Westminster Standards, Three Forms of Unity)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'A set liturgy that connects us to the historic church' is ambiguous for the Reformed: a Presbyterian with a fixed order of worship but no prayer book, or a Continental church with set forms for baptism and the Supper but free prayer, cannot tell whether to agree.",
+   "evidence": "The Westminster Directory (1645) prescribes the order and content of worship while forbidding an imposed liturgy; the URCNA/CRC Church Order requires set liturgical forms for the sacraments. Simulation answers range from -1 to +1 on identical convictions, a 17-point swing.",
+   "fix": "\"Worship should follow a fixed liturgy with set prayers shared with the historic church.\" The Reformed then answer Disagree with confidence and land where the axis intends."
+  },
+  {
+   "id": "reformedbaptist-11",
+   "lens": "Reformed Baptist (1689 London Baptist Confession)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "'Worship should follow a set liturgy that connects us to the historic church' is loaded: disagreeing implies wanting no connection to the historic church. Regulative-principle churches disagree with the set liturgy and would object to the implication.",
+   "evidence": "LBC 22.1 limits worship to what is 'prescribed in the Holy Scriptures', and the Puritans rejected the Book of Common Prayer on precisely that ground while claiming continuity with the apostolic church; Reformed Baptist congregations sing psalms and recite the creeds.",
+   "fix": "'Worship should follow a fixed written liturgy, such as a prayer book, used week by week.' (direction -1)"
+  },
+  {
+   "id": "reformedcharismatic-23",
+   "lens": "Reformed charismatic (John Piper, Wayne Grudem, Sam Storms, Sovereign Grace Churches, Acts 29 continuationists)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'a set liturgy that connects us to the historic church' bakes the argument into the statement; non-liturgical Reformed churches claim the historic connection too.",
+   "evidence": "Kauflin, Worship Matters, 'Rooted and Relevant'; Sovereign Grace and Bethlehem sing Watts, Newton and Wesley and recite the creeds. A member disagrees with the first clause while affirming the second.",
+   "fix": "Worship should follow a set liturgy shared with the wider church."
+  },
+  {
+   "id": "survey-18",
+   "lens": "survey methodologist",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "\"Worship should follow a set liturgy that connects us to the historic church\" attaches a rationale to the claim, so regulative-principle churches with a fixed order but no prayer book answer Unsure.",
+   "evidence": "Westminster Directory for Public Worship (1645) prescribes a fixed order while rejecting set forms; such respondents agree with \"set\" and disagree with \"liturgy that connects us to the historic church\".",
+   "fix": "Replace with: \"Sunday worship should follow a fixed, historic order of service, not one planned fresh each week.\" (16 words, direction -1)."
+  }
+ ]
+}

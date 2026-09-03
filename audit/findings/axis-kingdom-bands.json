@@ -1,0 +1,86 @@
+{
+ "target": "axis:kingdom:bands",
+ "findings": [
+  {
+   "id": "anabaptist-16",
+   "lens": "Anabaptist / Mennonite (Schleitheim Confession, Confession of Faith in a Mennonite Perspective 1995)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'Centered on the kingdom' as the 41-59 band sounds like a doctrinal position (kingdom-centred theology), not a midpoint.",
+   "evidence": "Same defect as the Table midpoint; for Anabaptists 'kingdom-centred' is a description of their whole theology (Schleitheim's two kingdoms, CFMP Art. 24), and it would be given to people who are simply undecided about the rapture.",
+   "fix": "Band 2: 'middle on Israel and the church'."
+  },
+  {
+   "id": "anglican-11",
+   "lens": "Anglican (broad, Thirty-Nine Articles / Book of Common Prayer)",
+   "category": "inaccuracy",
+   "severity": "major",
+   "claim": "The middle band 'centered on the kingdom' is not a position between covenantal and dispensational; both poles claim to be centred on the kingdom, so the label is meaningless in a headline.",
+   "evidence": "Same pattern as the Table axis; compare 'balanced on grace' / 'balanced on authority'.",
+   "fix": "Middle band: 'balanced on Israel and the church' (or, if length matters, 'balanced on the kingdom')."
+  },
+  {
+   "id": "copy-3",
+   "lens": "copy editor",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "Middle band \"centered on the kingdom\" has the same collision: it reads as \"kingdom-centred\" (a theological emphasis) rather than \"midway between covenantal and dispensational\".",
+   "evidence": "Same headline mechanism as the Table band: any result with a Kingdom score of 42–58 and fewer than three strong axes prints \"centered on the kingdom\" as a description of the person. Progressive dispensationalists and historic premillennialists (both in this axis's history) are the people who land here, and neither would recognise \"centered on the kingdom\" as the name of their position.",
+   "fix": "\"balanced on the kingdom\""
+  },
+  {
+   "id": "dispensational-7",
+   "lens": "Dispensationalist (Dallas / classic and progressive dispensationalism)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "The middle band \"centered on the kingdom\" describes neither pole and implies the poles are not kingdom-centred; it would appear in headlines as a non-position.",
+   "evidence": "Both poles claim the kingdom as their organising centre (McClain, The Greatness of the Kingdom; Blaising & Bock; Ladd, The Gospel of the Kingdom; Vos, The Teaching of Jesus Concerning the Kingdom). A headline such as 'Memorialist, cessationist, centered on the kingdom' tells the reader nothing about Israel and the church, which is what the statements measured. Other axes use honest mid-band phrasing ('balanced on grace', 'undecided on the gifts').",
+   "fix": "\"balanced on Israel and the church\" (or, if the axis is renamed 'Israel', \"balanced on Israel\"). The outer bands 'covenantal' and 'dispensational' are the self-names and are acceptable."
+  },
+  {
+   "id": "mockery-4",
+   "lens": "mockery critic",
+   "category": "unfairness",
+   "severity": "blocker",
+   "claim": "Two problems. 'centered on the kingdom' for the midpoint reads as a position (kingdom-centered, i.e. Ladd's 'already/not yet', which is the left pole). And 'covenantal' is stamped on every non-dispensationalist: the Catholic apologist gets 'Sacramental, liturgical, covenantal' and screenshots 'lol, written by a Presbyterian — I'm apparently a Westminster federalist'; the Lutheran and the Mennonite get the same word and both reject covenant theology by name.",
+   "evidence": "Quiz coordinates: Roman Catholic kingdom=15 and Lutheran (confessional) kingdom=15 are band 0 'covenantal'; Anabaptist / Mennonite kingdom=30 is 'covenantal-leaning' — the Anabaptists split from Zwingli precisely over his covenant argument for infant baptism. My Lutheran and Anglo-Catholic answer sets both produced headlines ending in 'covenantal'. The fair summary already has the neutral phrase: 'one people of God'.",
+   "fix": "bands: ['one people of God', 'leaning to one people of God', 'between covenantal and dispensational', 'dispensational-leaning', 'dispensational']. Pole names can stay ('covenant theology' is the antonym dispensationalists themselves use) once the bands stop branding Catholics and Lutherans."
+  },
+  {
+   "id": "pentecostal-7",
+   "lens": "Pentecostal (Assemblies of God Statement of Fundamental Truths)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "An informed AG member scores 75–92 on this axis and is labelled 'dispensational-leaning' or 'dispensational' in the headline, a system name the AG Statement never uses and which many Pentecostal theologians expressly reject, because classical dispensationalism confines Joel 2 / Acts 2 to Israel and treats the gifts as belonging to a past dispensation -- the opposite of Pentecostal hermeneutics.",
+   "evidence": "AG Statement of Fundamental Truths art. 13–14 confess the rapture, the earthly millennial reign and 'the salvation of national Israel' without the word 'dispensation'; the AG requires its credentialed ministers to hold a pretribulational rapture (General Council Bylaws Art. IX.B, 'Eschatological Errors'). Sheppard, 'Pentecostals and the Hermeneutics of Dispensationalism: The Anatomy of an Uneasy Relationship', Pneuma 6 (1984); Scofield's Acts 2 note and the Dallas Seminary doctrinal statement (art. XII) treat the sign gifts as temporary. Simulation: kingdom 83 -> 'dispensational'.",
+   "fix": "bands: ['covenantal', 'covenantal-leaning', 'centered on the kingdom', 'premillennial-leaning', 'dispensational'] and add to the fair_summary: 'Pentecostal bodies such as the Assemblies of God hold the pretribulational, premillennial hope of this pole without the wider dispensational system.' Optionally lower the AoG kingdom coordinate to 80 so the entry itself sits at the band boundary, and keep 'dispensational' only for those who also affirm the Israel–church distinction (statements 10 and 11) at full strength."
+  },
+  {
+   "id": "presbyterian-17",
+   "lens": "Presbyterian / Reformed (Westminster Standards, Three Forms of Unity)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "The middle band 'centered on the kingdom' describes no position; a score of 41-59 is a historic premillennialist or progressive dispensationalist with mixed answers, and both poles claim to be 'centered on the kingdom'.",
+   "evidence": "Ladd (history entry 4) answers S10 0 or +1, S11 +1, S12 -2 -> raw -2 to -1 -> 33-42, so the quiz's own example of the middle position gets 'covenantal-leaning' or 'centered on the kingdom', neither of which is a thing anyone calls themselves.",
+   "fix": "bands: [\"covenantal\", \"covenantal-leaning\", \"mixed on Israel and the church\", \"dispensational-leaning\", \"dispensational\"]."
+  },
+  {
+   "id": "reformedbaptist-23",
+   "lens": "Reformed Baptist (1689 London Baptist Confession)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'centered on the kingdom' (41-59) says nothing about where a person stands between covenantal and dispensational readings.",
+   "evidence": "All five bands should describe a position on the axis; this one describes neither pole and is not a midpoint.",
+   "fix": "bands[2]: 'mixed on Israel and the church'"
+  },
+  {
+   "id": "sbc-19",
+   "lens": "Southern Baptist (Baptist Faith & Message 2000)",
+   "category": "inaccuracy",
+   "severity": "major",
+   "claim": "'Centered on the kingdom' is the band a historic-premillennial Southern Baptist receives (score 50), and it describes no eschatological position; every Christian is 'centered on the kingdom'.",
+   "evidence": "S10 +1, S11 -1, S12 -2 -> raw 0 -> 50 for a Ladd-type premillennialist; the phrase would be the first word of that person's headline.",
+   "fix": "bands[2]: 'between covenant and dispensation'."
+  }
+ ]
+}

@@ -1,0 +1,23 @@
+{
+ "target": "axis:kingdom:history:0",
+ "findings": [
+  {
+   "id": "dispensational-4",
+   "lens": "Dispensationalist (Dallas / classic and progressive dispensationalism)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The history gives the left pole Augustine (413) and starts the right pole at Darby (1830s), which reproduces the standard polemic that a future earthly kingdom for Israel is a nineteenth-century novelty.",
+   "evidence": "Chiliasm with a literal earthly reign and a restored Jerusalem is the earliest attested view: Justin Martyr, Dialogue with Trypho 80–81 (a thousand years in a rebuilt Jerusalem, held by 'right-minded Christians'); Irenaeus, Against Heresies 5.32–36 (the promise of the land to Abraham fulfilled in the resurrection kingdom); Papias (in Eusebius, HE 3.39). A national restoration of the Jews was Puritan teaching long before Darby: Increase Mather, The Mystery of Israel's Salvation (1669). A dispensational reader who sees 'Augustine ... 1646 Westminster ... 1830s Darby' will screenshot it.",
+   "fix": "Insert before Augustine: \"c. 155–180: Justin Martyr and Irenaeus expect Christ to reign a thousand years on earth from a rebuilt Jerusalem, with the promises to Abraham fulfilled in the land (Dialogue 80–81; Against Heresies 5.32).\" Optionally add \"1669: Increase Mather, The Mystery of Israel's Salvation, expects a national restoration of the Jews.\""
+  },
+  {
+   "id": "orthodox-16",
+   "lens": "Eastern Orthodox",
+   "category": "missing",
+   "severity": "major",
+   "claim": "The one-people side begins with Augustine (413) and jumps to Westminster (1646), making the ancient consensus look Augustinian-Reformed; the second-century witness that the Church is Israel is absent.",
+   "evidence": "Justin Martyr, Dialogue with Trypho 11 and 135 (c. 155-160): Christians are \"the true spiritual Israel\" and \"the true Israelite race\"; this is the reading the Orthodox liturgy assumes.",
+   "fix": "Insert before the Augustine entry: {\"when\": \"c. 160\", \"what\": \"Justin Martyr, Dialogue with Trypho: the church of Jews and Gentiles is 'the true, spiritual Israel'.\"}"
+  }
+ ]
+}

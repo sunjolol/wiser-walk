@@ -1,0 +1,68 @@
+{
+ "target": "statement:1",
+ "findings": [
+  {
+   "id": "lutheran-18",
+   "lens": "confessional Lutheran (LCMS / WELS / Book of Concord)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "\"God has already chosen who will be saved\" can be read as a symmetrical decree over the saved and the lost; a Lutheran affirms election unto salvation strongly but confesses no decree of reprobation, so some informed Lutherans will soften to Agree, dropping Grace from 33 to 42 (\"balanced on grace\").",
+   "evidence": "FC SD XI.5 (election \"a cause which procures, works, helps and promotes our salvation\") supports Strongly agree; FC SD XI's rejection of predestination to damnation is what makes the wording pause-worthy.",
+   "fix": "Before the world began God chose his people in Christ, and none of them will finally be lost."
+  },
+  {
+   "id": "orthodox-2",
+   "lens": "Eastern Orthodox",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "\"Before anyone does anything, God has already chosen who will be saved\" asserts eternal priority, which the Orthodox affirm (predestination according to foreknowledge), so a synergist can honestly answer Unsure or Agree; only \"his choice cannot fail\" carries the monergist content.",
+   "evidence": "Rom 8:29 (\"those whom he foreknew he also predestined\"); John of Damascus, Exact Exposition II.30: God foreknows all things but does not predestine all things; Dositheus, Decree 3, affirms that God \"from eternity predestinated unto glory\" those he foreknew.",
+   "fix": "God's choice of who will be saved does not rest on anything he foresaw in them, and it cannot fail."
+  },
+  {
+   "id": "pentecostal-2",
+   "lens": "Pentecostal (Assemblies of God Statement of Fundamental Truths)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "'Before anyone does anything, God has already chosen who will be saved, and his choice cannot fail' is affirmable by a foreknowledge Arminian, which is the AG position, so a convinced Arminian who agrees is scored toward the monergist pole.",
+   "evidence": "Arminius, Declaration of Sentiments (1608), fourth decree: God decreed to save 'certain particular persons' on the basis of his foreknowledge of faith; AG position paper 'The Security of the Believer' and standard AG teaching ground election in foreknowledge (Rom 8:29; 1 Pet 1:2). Such a person believes God chose from eternity and that his foreknowledge cannot fail. Arithmetic: S1=+1 with S3=0 gives grace raw 1 -> 58, 'balanced on grace', for someone who is firmly Arminian.",
+   "fix": "'God chose who will be saved without regard to anything he foresaw they would do, and his choice cannot fail.'"
+  },
+  {
+   "id": "progressive-5",
+   "lens": "progressive mainline Protestant (PCUSA, ELCA, Episcopal, UMC progressive wing)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "Double-barreled: 'chosen who will be saved' (particular election) and 'his choice cannot fail' (perseverance) are separate questions, and a Barthian Reformed reader, which is the default in PCUSA seminaries, affirms the second and denies the first.",
+   "evidence": "Text: \"Before anyone does anything, God has already chosen who will be saved, and his choice cannot fail.\" Barth, Church Dogmatics II/2 s.33: Jesus Christ is the electing God and the elected man; humanity is elected in him. Such a reader can only answer Unsure, which nulls the axis's central item (my simulation: S1 = 0).",
+   "fix": "\"God's choice of who will be saved does not depend on anything he foresees in them.\" (Direction -1; unconditional election alone.)"
+  },
+  {
+   "id": "sbc-3",
+   "lens": "Southern Baptist (Baptist Faith & Message 2000)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "A foreknowledge-election Baptist can honestly agree with every word of 'Before anyone does anything, God has already chosen who will be saved, and his choice cannot fail', so the statement fails to separate conditional from unconditional election and pushes non-Calvinists toward the monergist pole.",
+   "evidence": "Traditional Statement Art. 6: election is 'God's eternal, gracious, and certain plan in Christ to have a people who are His by repentance and faith'. Romans 8:29 ('those whom he foreknew he also predestined') is the Traditionalist proof text: the choice is made in eternity ('before anyone does anything'), it is certain ('cannot fail'), and it is conditioned on foreseen faith. Nothing in the statement excludes that reading. Only open theists and pure corporate-election holders are actually filtered out.",
+   "fix": "Make S1 carry the effectual-calling question, leaving unconditional election to a repaired S3: 'When God sets out to save a particular person, that person will certainly come to faith.' (direction -1)"
+  },
+  {
+   "id": "survey-5",
+   "lens": "survey methodologist",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "\"Before anyone does anything, God has already chosen who will be saved, and his choice cannot fail\" is double-barreled (election + certainty) and is affirmed by many synergists, so it does not discriminate monergism.",
+   "evidence": "Arminius, Declaration of Sentiments, fourth decree: God decreed \"to save and damn certain particular persons\" founded on foreknowledge, from eternity, so a foreknowledge-Arminian can agree that God \"has already chosen\" and that his choice \"cannot fail\". Aquinas, ST I q.23 a.5 (predestination not on foreseen merits) and Formula of Concord SD XI (unconditional election with resistible grace) both agree while sitting at Grace 55 and 20 respectively.",
+   "fix": "Replace with: \"When God sets out to save a particular person, that person will certainly come to faith.\" (16 words, direction -1). Calvinists agree; Lutherans (universal grace, 1 Tim 2:4), Arminians, and Orthodox disagree."
+  },
+  {
+   "id": "wesleyan-7",
+   "lens": "Wesleyan / Methodist (Wesley's sermons, Articles of Religion, Global Methodist / UMC evangelical wing)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'Before anyone does anything, God has already chosen who will be saved, and his choice cannot fail' can be read temporally. A careful Wesleyan holds that God did choose before the foundation of the world (Eph 1:4), according to foreknowledge of faith, and that this choice cannot fail, so the statement does not cleanly isolate unconditional election.",
+   "evidence": "Wesley, 'Predestination Calmly Considered' §§ 17-20 and Explanatory Notes on Rom 8:29 and 1 Pet 1:2: God elects those he foreknows will believe; the elect are certainly saved. The phrase 'before anyone does anything' is meant to signal 'not because of anything they do' but says only 'earlier than'.",
+   "fix": "God chose who will be saved without regard to anything he foresaw in them, and his choice cannot fail. (direction -1, unchanged)"
+  }
+ ]
+}

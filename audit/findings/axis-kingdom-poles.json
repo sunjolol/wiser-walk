@@ -1,0 +1,86 @@
+{
+ "target": "axis:kingdom:poles",
+ "findings": [
+  {
+   "id": "anabaptist-3",
+   "lens": "Anabaptist / Mennonite (Schleitheim Confession, Confession of Faith in a Mennonite Perspective 1995)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "'Covenantal' as the left pole files Anabaptists under Reformed covenant theology, the very system used to argue for infant baptism against them.",
+   "evidence": "The pole's own history line 1 ('1646 Westminster Confession sets out the covenant of works and the covenant of grace') and read-more (Horton, Introducing Covenant Theology) define the pole as Reformed federalism. Anabaptists hold one people of God and a present reign of God (CFMP Art. 9: 'the new community of disciples'; Art. 24 'The Reign of God') while rejecting the covenant-continuity argument (Schleitheim Art. I excludes infant baptism; the Anabaptist hermeneutic reads the Old Testament through the New). A Mennonite scoring 17 on this axis is told he is 'covenantal'.",
+   "fix": "Left pole: 'One people of God'. Keep 'Dispensational' as the right pole (its holders accept the name). Fair summary opening: 'The one-people view sees a single people of God across both testaments...'."
+  },
+  {
+   "id": "anglican-16",
+   "lens": "Anglican (broad, Thirty-Nine Articles / Book of Common Prayer)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'Covenantal' is Westminster vocabulary; Roman Catholics, Orthodox, Lutherans, Anglicans and Methodists share the one-people-of-God position but none would call themselves covenantal, and the word is printed in their headline (the simulation headline reads 'Sacramental, liturgical, covenantal').",
+   "evidence": "The Thirty-Nine Articles contain no covenant of works or covenant of grace; Article VII simply says the Old Testament 'is not contrary to the New'. The history array itself dates 'covenant of works and covenant of grace' to Westminster 1646.",
+   "fix": "In the accordion sub-label and share line show 'Covenantal (one people of God) <-> Dispensational (Israel distinct)'; or rename the left pole 'One people of God' and the bands 'one people of God' / 'leaning one people of God'."
+  },
+  {
+   "id": "catholic-18",
+   "lens": "Roman Catholic",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "'Covenantal' is the name of Reformed federal theology. Catholic, Orthodox, Lutheran, and Anglican adherents at the left pole are amillennial but not 'covenant theologians', and the headline adjective 'covenantal' will strike them as another tradition's vocabulary; the 1646 Westminster history entry reinforces that reading.",
+   "evidence": "Covenant theology means the covenant of works and covenant of grace (WCF ch. 7; Cocceius). The Catholic position is Augustine's reading of Revelation 20 (City of God XX.7-9) and the formal rejection of millenarianism (CCC 676; Holy Office 1944), stated with no federal framework. Scott Hahn's Catholic covenant theology is the exception that proves the rule.",
+   "fix": "Either rename the left pole \"One people of God\" (bands: \"one people of God\", \"one-people-leaning\", ...) or add to the fair summary: \"This is the amillennial reading shared by Catholic, Orthodox, Lutheran, Anglican, and Reformed churches, whether or not they use the word 'covenantal'.\""
+  },
+  {
+   "id": "churchofchrist-8",
+   "lens": "Church of Christ / Restoration Movement (Stone-Campbell)",
+   "category": "inaccuracy",
+   "severity": "major",
+   "claim": "The left pole and extreme band are named 'Covenantal', and a Church of Christ member scores 0 and is headlined 'covenantal', but the Restoration Movement rejects covenant theology outright and its founder divided history into three 'dispensations'; the name imports Westminster's system onto everyone who is merely amillennial with one people of God.",
+   "evidence": "Campbell, 'Sermon on the Law' (1816): the Christian is under the New Covenant alone, the Old having been 'nailed to the cross' (Col 2:14; Heb 8:13); the kingdom began at Pentecost (Acts 2; Mark 9:1; Col 1:13). Campbell's Christian System names the Patriarchal, Jewish, and Christian 'dispensations'. The Boll controversy (1915-1930s) and Foy E. Wallace Jr., God's Prophetic Word (1946) fixed the tradition as amillennial without any covenant of works or grace. The summary's 'one people of God across both testaments' is also federal vocabulary (WCF 25.2's Old Testament church); the tradition would say the church began at Pentecost and inherits the promises. Catholics, Orthodox, and Lutherans are in the same position: at this pole without being covenant theologians. Headline output for the simulation: 'Firmly synergist, cessationist, covenantal'.",
+   "fix": "Either rename the left pole 'One people of God' with bands 'one people of God / leaning one-people / centered on the kingdom / leaning two-peoples / Israel and church distinct', or keep 'Covenantal' and add to the fair summary: ''Covenantal' here means one people of God and a present kingdom, not the Westminster system of covenants; Catholics, Orthodox, Lutherans, and Churches of Christ sit at this pole without being covenant theologians.'"
+  },
+  {
+   "id": "dispensational-2",
+   "lens": "Dispensationalist (Dallas / classic and progressive dispensationalism)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The axis name \"Kingdom\" and the poles \"Covenantal / Dispensational\" are not neutral and do not describe what the three statements measure; the axis has no place for a historic premillennialist, who is mis-scored as 'covenantal-leaning'.",
+   "evidence": "(1) 'Covenantal' as our opposite implies dispensationalists are non-covenantal, when the system is built on the biblical covenants: Pentecost, Things to Come (1958), Part II 'The Biblical Covenants' (Abrahamic, Palestinian, Davidic, New); Walvoord, The Millennial Kingdom (1959). (2) 'Kingdom' distinguishes nothing: McClain, The Greatness of the Kingdom (1959) and Blaising & Bock's kingdom-centred progressive dispensationalism are as kingdom-centred as Ladd's The Gospel of the Kingdom (1959) or Vos. (3) S10/S11 ask about Israel and the church, S12 about rapture timing; nothing asks about the millennium, though the axis apparatus (Augustine, Rev 20, Ladd, Riddlebarger) is millennial. Result: amillennialists and postmillennialists both score 0, while a Ladd-type historic premillennialist (S10 +1, S11 +1 since Ladd called the church 'spiritual Israel' in Clouse ed., The Meaning of the Millennium, 1977, p. 27, S12 -2) scores raw (1)(1)+(-1)(1)+(1)(-2) = -2 -> 33 'covenantal-leaning'. Ladd wrote The Blessed Hope (1956) and Crucial Questions about the Kingdom of God (1952) precisely to reject both dispensationalism and covenantal amillennialism; he was a Baptist, not a covenant theologian. He is not mis-scored as dispensational, but he is mislabelled just as badly in the other direction.",
+   "fix": "Rename the axis \"Israel\" (or \"Israel & church\") and use the pole pair both sides accepted in Feinberg, ed., Continuity and Discontinuity (Crossway, 1988): left \"Continuity\", right \"Discontinuity\". Keep the band self-names 'covenantal' / 'dispensational'. With the S12 replacement above, Ladd lands at 42 in the middle band, which is accurate. If the team wants to keep 'Kingdom', the millennium must be asked (\"After Christ returns he will reign on earth for a thousand years before the final judgment\", +1) and Augustine/Riddlebarger can stay; otherwise drop them."
+  },
+  {
+   "id": "lutheran-19",
+   "lens": "confessional Lutheran (LCMS / WELS / Book of Concord)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "\"Covenantal\" is Reformed federal-theology vocabulary (covenant of works / covenant of grace); Lutherans, Catholics and Orthodox, three of the five traditions placed at 15-20 on this axis, do not hold covenant theology. A confessional Lutheran's headline reads \"Sacramental, covenantal, liturgical\", another tradition's name in his own label.",
+   "evidence": "Lutheran dogmatics organizes Scripture by Law and Gospel, not by covenants (FC V; Walther, Law and Gospel); the Lutheran stake in this axis is amillennialism, AC XVII.5 rejecting the opinion \"that before the resurrection of the dead the godly shall take possession of the kingdom of the world\". The three statements actually test one people of God, promises fulfilled in Christ, and no pretribulation rapture, none of which requires covenant theology.",
+   "fix": "Minimal: keep the pole name but define it in the summary as \"one covenant people of God across both testaments (a view Lutherans, Catholics and Orthodox hold without the Reformed covenant-of-works framework)\". Better: rename the left pole \"One people of God\" with bands [\"one people of God\", \"leaning to one people of God\", \"centered on the kingdom\", \"dispensational-leaning\", \"dispensational\"]."
+  },
+  {
+   "id": "orthodox-15",
+   "lens": "Eastern Orthodox",
+   "category": "inaccuracy",
+   "severity": "blocker",
+   "claim": "\"Covenantal\" is the Reformed technical term for federal theology (covenant of works / covenant of grace), which the Orthodox do not hold; because Kingdom sits at maximum distance and ties break by axis index, every Orthodox and Catholic headline and share card reads \"Sacramental, covenantal, rooted in tradition\".",
+   "evidence": "Simulation headline above. Westminster Confession ch. 7 defines the covenants of works and grace; Orthodox theology has neither and simply calls the Church the New Israel (Justin, Dialogue with Trypho 11; the Paschal hymnography). \"Theology Compass says the Orthodox are covenantal\" is the screenshot this product is trying to avoid. The share text likewise prints \"Covenantal ○○○○○○○○○○ Dispensational\".",
+   "fix": "Rename left pole \"One people of God\" and bands to [\"one people of God\", \"leaning to one people of God\", \"centered on the kingdom\", \"dispensational-leaning\", \"dispensational\"]. Minimal alternative: keep the name and append to the fair summary: \"Though the name comes from Reformed covenant theology, this is also the historic reading of the Orthodox, Catholic, Lutheran, and Anglican churches.\""
+  },
+  {
+   "id": "progressive-7",
+   "lens": "progressive mainline Protestant (PCUSA, ELCA, Episcopal, UMC progressive wing)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "'Covenantal' is Westminster's vocabulary, imposed as the name and band label for every non-dispensationalist: Catholics, Orthodox, Lutherans, Methodists, and mainliners do not call their eschatology 'covenantal' and Lutherans explicitly decline covenant-of-works theology.",
+   "evidence": "left_pole \"Covenantal\", bands \"covenantal\", \"covenantal-leaning\"; history:1 \"Westminster Confession sets out the covenant of works and the covenant of grace\" is the only content given the pole's name. Six of twelve traditions are coded 15-25 on this axis, so the label is stamped on half the list.",
+   "fix": "left_pole: \"One people of God\"; right_pole: \"Israel and church distinct\". Bands: [\"one people of God\", \"leaning to one people of God\", \"undecided on Israel and the church\", \"dispensational-leaning\", \"dispensational\"]. Keep 'Dispensational' as the right-pole name if preferred; it is that side's own word."
+  },
+  {
+   "id": "sbc-17",
+   "lens": "Southern Baptist (Baptist Faith & Message 2000)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The axis conflates two questions, Israel-and-church and rapture-timing, and names the left pole after paedobaptist covenant theology, so the two positions most common among informed Southern Baptists, historic premillennialism and progressive covenantalism, fall off the axis entirely.",
+   "evidence": "BF&M 2000 Art. X deliberately says only that Christ 'will return personally and visibly in glory'. A historic premillennialist (Ladd; SEBTS president Danny Akin; the SBC's Broadus tradition) answers S10 +1, S11 -1, S12 -2 -> raw 0 -> 50, i.e. 'centered on the kingdom', a label that means nothing for a convinced premillennialist. Progressive covenantalism (Gentry & Wellum, Southern Seminary) rejects both the Westminster covenant of works/grace scheme and dispensationalism. The left pole's history line (1646 Westminster) and read-more (Horton) make 'covenantal' mean specifically the framework Baptists reject.",
+   "fix": "Either (a) rename the poles 'One people of God' / 'Israel and church distinct' and drop the rapture statement (S12) for a second Israel/church statement, or (b) at minimum add historic premillennialism to the covenantal summary, add Gentry & Wellum to read-more, and rename bands[2] as proposed under axis:kingdom:bands."
+  }
+ ]
+}

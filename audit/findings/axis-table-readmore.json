@@ -1,0 +1,59 @@
+{
+ "target": "axis:table:readmore",
+ "findings": [
+  {
+   "id": "anabaptist-12",
+   "lens": "Anabaptist / Mennonite (Schleitheim Confession, Confession of Faith in a Mennonite Perspective 1995)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The memorial pole's reading list is headed by Zwingli, under whose influence Zurich drowned the first Anabaptists, and contains no Anabaptist author for a pole on which Anabaptists sit at 85.",
+   "evidence": "Quoted: 'Zwingli, On the Lord's Supper' / 'Schreiner & Wright, Believer's Baptism'. Zurich made rebaptism a capital offence on 7 March 1526; Felix Manz was drowned in the Limmat on 5 January 1527; Zwingli's Elenchus (1527) is a polemic against Anabaptism, and he was a paedobaptist, so he represents only half the pole. The axis's own history credits '1525 First believer's baptisms in Zurich; the Anabaptist movement begins' and then hands the reader the man who suppressed them.",
+   "fix": "Right: 'Hubmaier, On the Christian Baptism of Believers (1525)' and 'Rempel, The Lord's Supper in Anabaptism' (or keep Schreiner & Wright as the second). If Zwingli is kept, move him to the history array, not read-more."
+  },
+  {
+   "id": "catholic-11",
+   "lens": "Roman Catholic",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The 'Sacramental' reading list has no Catholic author on an axis where Catholics sit at 5. Mathison's Given for You argues Calvin's spiritual presence, which is the 35 position, not the pole.",
+   "evidence": "read_more.left = [\"Schmemann, For the Life of the World\", \"Mathison, Given for You\"]. Mathison's subtitle is 'Reclaiming Calvin's Doctrine of the Lord's Supper'.",
+   "fix": "left: [\"Schmemann, For the Life of the World\", \"Ratzinger, God Is Near Us\"] (or \"Pitre, Jesus and the Jewish Roots of the Eucharist\"). Move Mathison to a middle slot if you add one."
+  },
+  {
+   "id": "churchofchrist-19",
+   "lens": "Church of Christ / Restoration Movement (Stone-Campbell)",
+   "category": "citation",
+   "severity": "minor",
+   "claim": "No reading covers the mixed position; the standard scholarly reference on early baptism, written by the Restoration tradition's leading patristics scholar, is the natural addition.",
+   "evidence": "Everett Ferguson, Baptism in the Early Church (Eerdmans, 2009), argues from the sources that believers' immersion for forgiveness was the early norm; cited by both sides.",
+   "fix": "Add 'Ferguson, Baptism in the Early Church' to the right-pole list (or a third 'mixed' line if the summary is amended)."
+  },
+  {
+   "id": "historian-13",
+   "lens": "church historian",
+   "category": "unfairness",
+   "severity": "minor",
+   "claim": "Half the axis is about baptism, and the right pole gets a baptism title (Believer's Baptism) while the left gets none: Schmemann and Mathison are both about the Eucharist. A paedobaptist reader has nowhere to go.",
+   "evidence": "All four listed books exist as titled (Schmemann 1963; Mathison, Given for You, 2002; Zwingli 1526; Schreiner & Wright 2006). Geoffrey Bromiley, Children of Promise: The Case for Baptizing Infants (Eerdmans, 1979) is the standard short defense.",
+   "fix": "left: ['Schmemann, For the Life of the World', 'Bromiley, Children of Promise'] (or keep Mathison and add Bromiley as a third)."
+  },
+  {
+   "id": "lutheran-14",
+   "lens": "confessional Lutheran (LCMS / WELS / Book of Concord)",
+   "category": "citation",
+   "severity": "minor",
+   "claim": "The sacramental reading list is Orthodox (Schmemann) plus Reformed (Mathison); no Lutheran, although the history's hinge event (Marburg) is Luther's.",
+   "evidence": "Standard Lutheran references: Sasse, This Is My Body (1959); Luther, Large Catechism V; Chemnitz, The Lord's Supper.",
+   "fix": "left: [\"Schmemann, For the Life of the World\", \"Sasse, This Is My Body\"]"
+  },
+  {
+   "id": "reformedbaptist-20",
+   "lens": "Reformed Baptist (1689 London Baptist Confession)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "No read-more title represents believer's baptism with a Reformed view of the Supper; the credobaptist shelf is Zwingli plus a baptism monograph, and the spiritual-presence title (Mathison) is filed under the paedobaptist pole.",
+   "evidence": "Waldron, A Modern Exposition of the 1689 Baptist Confession of Faith (ch. 30); Hercules Collins, An Orthodox Catechism (1680), a Baptist edition of the Heidelberg Catechism with its Supper doctrine intact.",
+   "fix": "right: ['Schreiner & Wright, Believer\\'s Baptism', 'Waldron, A Modern Exposition of the 1689 Baptist Confession'] and keep Zwingli if a third slot exists."
+  }
+ ]
+}

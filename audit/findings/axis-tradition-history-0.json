@@ -1,0 +1,23 @@
+{
+ "target": "axis:tradition:history:0",
+ "findings": [
+  {
+   "id": "copy-13",
+   "lens": "copy editor",
+   "category": "citation",
+   "severity": "minor",
+   "claim": "\"Vincent of Lérins: hold what has been believed 'everywhere, always, by all'.\" drops the conjunction from the Vincentian canon and puts the full stop outside the quotation, unlike the American conventions used everywhere else on the page (\"Savior\", \"center\", \"defense\").",
+   "evidence": "Commonitorium 2.6: \"quod ubique, quod semper, quod ab omnibus creditum est\", standardly rendered \"what has been believed everywhere, always, and by all\".",
+   "fix": "\"Vincent of Lérins: hold what has been believed 'everywhere, always, and by all.'\""
+  },
+  {
+   "id": "orthodox-19",
+   "lens": "Eastern Orthodox",
+   "category": "missing",
+   "severity": "major",
+   "claim": "Three of the five entries are Roman (Trent, Newman, Dei Verbum) and none is Eastern, so an Orthodox at \"rooted in tradition\" sees the pole defined by councils and theologians the Orthodox Church does not accept; the two classic Eastern statements are missing.",
+   "evidence": "Basil the Great, On the Holy Spirit 27.66 (c. 375): some teachings come from written teaching, others \"from the tradition of the apostles... in a mystery\" (facing east, the sign of the cross, the words of the epiclesis). Second Council of Nicaea (787), the last council received by both East and West: \"we keep unchanged all the ecclesiastical traditions handed down to us, whether in writing or unwritten.\"",
+   "fix": "Insert before Vincent: {\"when\": \"c. 375\", \"what\": \"Basil the Great, On the Holy Spirit 27: some teachings come from Scripture, others from unwritten apostolic tradition (facing east, the sign of the cross, the epiclesis).\"} and after Vincent: {\"when\": \"787\", \"what\": \"Second Council of Nicaea: 'we keep the ecclesiastical traditions handed down to us, whether written or unwritten.'\"}"
+  }
+ ]
+}

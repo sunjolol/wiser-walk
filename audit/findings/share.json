@@ -1,0 +1,104 @@
+{
+ "target": "share",
+ "findings": [
+  {
+   "id": "anglican-24",
+   "lens": "Anglican (broad, Thirty-Nine Articles / Book of Common Prayer)",
+   "category": "unfairness",
+   "severity": "minor",
+   "claim": "The share text and result card carry 'Closest: Roman Catholic · Anglican (broad)' with no trace of the on-page caveat 'Approximate positions of typical adherents, not official teaching', so the screenshot that circulates loses the one line that would defend it.",
+   "evidence": "shareText() emits only the axis bars, the two names and the link; the card shows 'Closest traditions · name · name'.",
+   "fix": "Change the share line to 'Closest (typical adherents, approximate): name · name' and add the same qualifier under the card's closest-traditions line."
+  },
+  {
+   "id": "churchofchrist-16",
+   "lens": "Church of Christ / Restoration Movement (Stone-Campbell)",
+   "category": "unfairness",
+   "severity": "minor",
+   "claim": "The share text and card carry 'Closest: Anabaptist / Mennonite · Wesleyan / Methodist' without the caveat that appears on the result page ('Approximate positions of typical adherents, not official teaching'), so the screenshot that circulates is the unhedged wrong match.",
+   "evidence": "shareText() pushes 'Closest: ' + near[0].name + ' · ' + near[1].name; renderCard() sets 'Closest traditions · ...'; the note text at line 443 of the HTML is not included in either.",
+   "fix": "Add the hedge from the scoring fix to shareText and the card ('Nearest, loosely: ...' when the fit is poor), and add the Churches of Christ entry so the line is not wrong in the first place."
+  },
+  {
+   "id": "copy-8",
+   "lens": "copy editor",
+   "category": "tone",
+   "severity": "minor",
+   "claim": "In the share text the ten circles start at a different column on every line (21, 23, 28, 24, 30, 24), so the bars the caption asks readers to compare never line up; the leading emoji make it worse because ⚖️ (U+2696 U+FE0F) renders one column wide in most monospace fonts while 🍞 🔥 👑 📜 🎵 render two.",
+   "evidence": "shareText() builds emoji + name + ' · ' + left pole + ' ' + bar + ' ' + right pole; name lengths run 5–9 characters and left poles 9–15, so nothing pads to a common width. Sample output for [25,0,75,17,58,42]:\n⚖️ Grace · Monergist ●●●○○○○○○○ Synergist\n🍞 Table · Sacramental ○○○○○○○○○○ Memorial\n🔥 Spirit · Continuationist ●●●●●●●●○○ Cessationist\n📜 Tradition · With tradition ●●●●●●○○○○ Scripture alone\nThe scales emoji also reads as law/judgment on the one axis called Grace.",
+   "fix": "Lead each line with the bar so the column is fixed: lines.push(bar + '  ' + a.name + ' · ' + a.left + ' → ' + a.right); drop the emoji (or append it after the right pole). Then change the caption to: \"Filled circles run toward the second pole named on each line: a monergist shows few filled circles on Grace, a memorialist shows many on Table.\""
+  },
+  {
+   "id": "copy-9",
+   "lens": "copy editor",
+   "category": "inaccuracy",
+   "severity": "minor",
+   "claim": "Closest-traditions note \"Match is 100 minus your distance across all six axes.\" is not what the code computes; the distance can be up to 245, and 100 minus it would be negative.",
+   "evidence": "nearest(): match = round(100 − d / sqrt(6·100²) × 100), i.e. 100% minus the distance expressed as a share of the farthest possible distance (244.9). A reader who checks \"Presbyterian / Reformed 84% match\" against a distance of 39 gets 61, not 84.",
+   "fix": "\"Match is 100% minus your distance from that tradition, measured as a share of the farthest possible distance across all six axes.\""
+  },
+  {
+   "id": "mockery-5",
+   "lens": "mockery critic",
+   "category": "unfairness",
+   "severity": "blocker",
+   "claim": "The share bar is a fill gauge under the axis name, so it reads as a score of the virtue named. The Orthodox convert's text says '📜 Tradition · With tradition ○○○○○○○○○○ Scripture alone' (zero Tradition); the Pentecostal pastor's says '🔥 Spirit ○○○○○○○○○○'; the Reformed blogger's says '⚖️ Grace ●●○○○○○○○○'. Caption writes itself: 'The Calvinist scored 2/10 on Grace and the Pentecostal 0/10 on Spirit.' The page's own caption admits it: 'a monergist shows few filled circles on Grace'.",
+   "evidence": "shareText(): f = round(score/10) filled circles from the left, so the left-pole holder on every axis gets an empty bar, and on Grace, Table, Spirit, Tradition, and Worship the left pole is the group most likely to read the axis name as their own virtue. The emoji compound it: 🎵 for Worship (worship = music, the exact thing liturgical and Reformed readers mock), ⚖️ scales for Grace, 🍞 a loaf for the Eucharist.",
+   "fix": "Replace the gauge with a position marker: 'Monergist ━━●━━━━━━━ Synergist' (one ● at the score position, box-drawing dashes elsewhere). Rewrite the caption: 'The dot marks where you sit between the two poles.' Replace the emoji with the six axis-colour squares already on the card (🟦 🟥 🟧 🟩 🟨 🟪) or drop them."
+  },
+  {
+   "id": "orthodox-29",
+   "lens": "Eastern Orthodox",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "The share bar fills from the left pole, so a fully sacramental Orthodox posts \"Sacramental ○○○○○○○○○○ Memorial\", which reads at a glance as zero on sacramental; four of my six lines render as empty bars.",
+   "evidence": "shareText(): f = round(score/10) filled circles, so a score of 0 prints ten empty circles next to the pole the person holds most strongly.",
+   "fix": "Mark position instead of filling: place ● at slot round(score/100*9) and ○ elsewhere, so 0 renders \"Sacramental ●○○○○○○○○○ Memorial\" and 100 renders \"Sacramental ○○○○○○○○○● Memorial\"."
+  },
+  {
+   "id": "pentecostal-20",
+   "lens": "Pentecostal (Assemblies of God Statement of Fundamental Truths)",
+   "category": "tone",
+   "severity": "minor",
+   "claim": "The share text fills circles only toward the right pole, so a Pentecostal's Spirit line prints as 'Spirit · Continuationist ○○○○○○○○○○ Cessationist' -- ten empty circles on the axis named 'Spirit' -- and the same 'empty' look hits every left-pole conviction (monergist, sacramental, covenantal, liturgical). The caption ('a monergist shows few filled circles on Grace') confirms the design rather than fixing it.",
+   "evidence": "shareText(): 'bar += k < f ? \"●\" : \"○\"' with f = round(score/10); a score of 0 yields no filled circle. The result card and radar avoid this by plotting a dot, but the copied text, which is what gets pasted, does not.",
+   "fix": "Render a single marker at the score position, e.g. 'Continuationist ●○○○○○○○○○ Cessationist' via 'bar += (k === Math.min(9, f) ? \"●\" : \"○\")', and change the caption to 'The filled circle marks where you sit between the two poles.'"
+  },
+  {
+   "id": "progressive-25",
+   "lens": "progressive mainline Protestant (PCUSA, ELCA, Episcopal, UMC progressive wing)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "The shareable card and share text carry 'Closest traditions' with no trace of the page's caveat, so the card a PCUSA pastor posts reads 'Closest traditions - Anglican (broad) - Roman Catholic' as a flat verdict.",
+   "evidence": "HTML: card text 'Closest traditions · ' + near[0].name + ' · ' + near[1].name; share text 'Closest: ' + ...; the caveat 'Approximate positions of typical adherents, not official teaching' appears only in the on-page note.",
+   "fix": "On the card and in the share text use 'Nearest on the map:' instead of 'Closest traditions', which reads as a description of the person rather than a distance."
+  },
+  {
+   "id": "reformedcharismatic-16",
+   "lens": "Reformed charismatic (John Piper, Wayne Grudem, Sam Storms, Sovereign Grace Churches, Acts 29 continuationists)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The share text renders the left pole as an empty bar, so a Reformed charismatic's card shows Grace and Spirit as ten empty circles, which screenshots as 'no grace, no Spirit'.",
+   "evidence": "shareText: f = round(score/10); circle k is filled only if k < f, so score 0 yields '○○○○○○○○○○'. My card reads '⚖️ Grace · Monergist ○○○○○○○○○○ Synergist' and '🔥 Spirit · Continuationist ○○○○○○○○○○ Cessationist'. The explanatory caption at line 457 is not part of the copied text.",
+   "fix": "Use one filled marker among eleven slots at position round(score/10): 'Continuationist ●○○○○○○○○○○ Cessationist', 'Monergist ●○○○○○○○○○○ Synergist'."
+  },
+  {
+   "id": "sbc-31",
+   "lens": "Southern Baptist (Baptist Faith & Message 2000)",
+   "category": "tone",
+   "severity": "minor",
+   "claim": "The shared line 'Closest: Southern Baptist (typical) · ...' carries the '(typical)' qualifier into the one place it will be seen without context, and the result card and share text omit the on-page caveat that positions are 'approximate positions of typical adherents, not official teaching'.",
+   "evidence": "shareText() prints near[0].name verbatim; renderCard() prints 'Closest traditions · ' + names with no caveat, while the result page note only appears in the 'Closest traditions' panel.",
+   "fix": "Rename the entry as proposed and add a short caveat line to the card ('Traditions are approximate positions, not official teaching')."
+  },
+  {
+   "id": "survey-25",
+   "lens": "survey methodologist",
+   "category": "inaccuracy",
+   "severity": "major",
+   "claim": "The result copy \"Match is 100 minus your distance across all six axes\" describes a formula the page does not use; a reader who checks the arithmetic will find it false.",
+   "evidence": "Code: match = round(100 - d / MAXD * 100). Worked Lutheran case: d = 25.8, displayed match 89%, whereas \"100 minus your distance\" gives 74.",
+   "fix": "Replace with: \"Match is 100 minus your distance from that tradition, taken as a share of the longest possible distance across all six axes.\" (or, after the formula change above: \"...as a share of the distance between the two farthest-apart traditions\")."
+  }
+ ]
+}

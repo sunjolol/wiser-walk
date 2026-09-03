@@ -1,0 +1,14 @@
+{
+ "target": "axis:kingdom:history:4",
+ "findings": [
+  {
+   "id": "progressive-11",
+   "lens": "progressive mainline Protestant (PCUSA, ELCA, Episcopal, UMC progressive wing)",
+   "category": "missing",
+   "severity": "major",
+   "claim": "Five of six history lines are dispensationalism's internal story or Westminster; the 20th-century rethinking of Israel and church that defines the mainline (and Catholic) 'one people of God' view, and that keeps it from being replacement theology, is absent.",
+   "evidence": "History runs Augustine 413, Westminster 1646, Darby 1830s, Scofield 1909, Ladd 1950s, Blaising/Bock 1990s. Nothing on Nostra Aetate (1965), PCUSA (1987), ELCA (1994), UMC (1996), or Barth CD II/2 on Israel and the church. Combined with S11 the reader is left thinking 'one people of God' means the church replaced Israel.",
+   "fix": "Insert after the 1950s entry: {\"when\": \"1965-96\", \"what\": \"Nostra Aetate and later Presbyterian, Lutheran, and Methodist statements affirm that God's covenant with the Jewish people is unrevoked: one people of God, but not by replacement.\"}"
+  }
+ ]
+}

@@ -1,0 +1,32 @@
+{
+ "target": "tradition:Wesleyan / Methodist",
+ "findings": [
+  {
+   "id": "mockery-25",
+   "lens": "mockery critic",
+   "category": "inaccuracy",
+   "severity": "minor",
+   "claim": "table=40 puts Methodists nearly halfway to memorialism. A United Methodist who baptizes infants and holds Wesley's means-of-grace view lands 17 and still matches, but the coordinate itself is a screenshot for the Methodist: 'Wesley preached The Duty of Constant Communion and the quiz put him next to Zwingli.'",
+   "evidence": "Wesley, 'The Duty of Constant Communion' (1732/1787); Methodist Articles of Religion XVIII (the Supper is 'a sacrament of our redemption'); UMC 'This Holy Mystery' (2004) affirms real presence and infant baptism.",
+   "fix": "table 40 → 25 (all-Unsure still lands Methodist first; nothing else reorders)."
+  },
+  {
+   "id": "progressive-15",
+   "lens": "progressive mainline Protestant (PCUSA, ELCA, Episcopal, UMC progressive wing)",
+   "category": "scoring",
+   "severity": "major",
+   "claim": "Table 40 places the United Methodist Church, the largest body under this name, 32 points from where its own doctrinal statements put a member.",
+   "evidence": "UMC, This Holy Mystery (2004): real presence affirmed, weekly celebration encouraged; By Water and the Spirit (1996): infant baptism normative, baptism God's act, not a sign of a prior decision. A UMC member answers S4 +1, S5 -2, S6 +2 -> raw -5 -> 8. Coded 40 is 'centered on the sacraments', which mislabels them as near the memorial midpoint.",
+   "fix": "table 25 (a compromise if the entry must also cover Nazarene/Wesleyan Church members who allow believer's baptism); a UMC progressive then lands 31.8 from the entry instead of 41.8."
+  },
+  {
+   "id": "wesleyan-2",
+   "lens": "Wesleyan / Methodist (Wesley's sermons, Articles of Religion, Global Methodist / UMC evangelical wing)",
+   "category": "inaccuracy",
+   "severity": "major",
+   "claim": "table: 40 places Methodists in the 'sacramental-leaning' band, only ten points from the midpoint toward memorialism. Methodist doctrinal standards are firmly sacramental: infant baptism, baptismal regeneration language, and a real spiritual presence. spirit: 45 and worship: 40 are also slightly too high for a tradition whose founder was a soft continuationist and a weekly communicant.",
+   "evidence": "Articles of Religion (Methodist), Art. XVI: sacraments are 'certain signs of grace, and God's good will toward us, by the which he doth work invisibly in us'; Art. XVII: baptism is 'a sign of regeneration or the new birth. The Baptism of young children is to be retained in the Church'; Art. XVIII: 'the body of Christ is given, taken, and eaten in the Supper, only after an heavenly and spiritual manner.' Wesley, 'A Treatise on Baptism' (1756); 'The Duty of Constant Communion' (Sermon 101). UMC 'By Water and the Spirit' (1996) and 'This Holy Mystery' (2004, recommends weekly communion); the Global Methodist Book of Doctrines and Discipline retains the Articles verbatim. Wesley to Conyers Middleton (1749) and Sermon 89 'The More Excellent Way': the gifts ceased because 'the love of many waxed cold', not by design. A member answering S4 +2, S5 -1, S6 +2 scores table 8; even a 'pew' Methodist (+1, 0, +2) scores 25. Score 40 requires agreeing that baptism is 'a sign of a decision already made', which is the credobaptist view the Articles reject. Arithmetic: informed-member distance to the entry falls from 45.0 to 27.8, pew-member from 21.3 to 6.1, with the proposed coordinates.",
+   "fix": "Set Wesleyan / Methodist to {grace: 85, table: 25, spirit: 35, kingdom: 25, tradition: 45, worship: 35}. If the entry is meant to also cover the Wesleyan-Holiness churches (Nazarene, Wesleyan Church, Free Methodist, Salvation Army), whose Manuals use memorial language and allow dedication instead of infant baptism, split it: 'Methodist (UMC / Global Methodist)' at the coordinates above and 'Wesleyan-Holiness (Nazarene / Wesleyan)' at about {grace: 85, table: 60, spirit: 35, kingdom: 35, tradition: 65, worship: 60}. The list already splits Baptists three ways, so this is proportionate."
+  }
+ ]
+}

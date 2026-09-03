@@ -1,0 +1,23 @@
+{
+ "target": "tradition:Roman Catholic",
+ "findings": [
+  {
+   "id": "catholic-1",
+   "lens": "Roman Catholic",
+   "category": "scoring",
+   "severity": "blocker",
+   "claim": "The Roman Catholic coordinates [grace 55, table 5, spirit 40, kingdom 15, tradition 10, worship 10] send a Catholic who answers from the Catechism to Eastern Orthodox first. Spirit 40 is far too high for a church that officially affirms the charisms, and tradition/worship at 10 (Orthodox: 5) penalize an answer set identical to the Orthodox one on 15 of 18 statements.",
+   "evidence": "Simulation scores [50,0,8,8,0,0]. Distance to Eastern Orthodox [65,5,35,15,5,5] = sqrt(225+25+729+49+25+25) = sqrt(1078) = 32.8 (87% match); to Roman Catholic = sqrt(25+25+1024+49+100+100) = sqrt(1323) = 36.4 (85%). Spirit alone is 1024 of 1323. The Church is not agnostic on the gifts: Lumen Gentium 12 (charisms 'are to be received with thanksgiving and consolation'), CCC 799-801 and 2003, Paul VI's address to the Renewal (Pentecost 1975), Francis's CHARIS statutes (2019), Augustine City of God XXII.8, and canonization has required verified miracles since Urban VIII (1634). Even a cautious Catholic (S7 Unsure, S8 Disagree, S9 Agree) scores 33 on Spirit, never 40+.",
+   "fix": "Set Roman Catholic to [55, 5, 20, 15, 5, 5]. Recheck: simulation distance to RC = sqrt(25+25+144+49+25+25) = sqrt(293) = 17.1 vs Orthodox 32.8, RC nearest. Cautious Catholic (spirit 33): RC sqrt(318) = 17.8 vs Orthodox sqrt(353) = 18.8, still RC. Keep grace at 50-55; Thomist and Molinist Catholics already range 33-83 on the Grace axis as written."
+  },
+  {
+   "id": "charismatic-21",
+   "lens": "charismatic non-denominational (Vineyard, Bethel, Hillsong, Third Wave)",
+   "category": "scoring",
+   "severity": "minor",
+   "claim": "spirit 40 places Rome in 'undecided on the gifts', but Catholic doctrine is non-cessationist and the Catholic Charismatic Renewal is Vatican-sponsored.",
+   "evidence": "Catechism 799-801 and 2003 (charisms 'whether extraordinary or simple and humble' remain for the church); Lumen Gentium 12; CHARIS established by Pope Francis (2019); miracles are required for canonization. A Catholic answering Q7 Agree, Q8 Disagree, Q9 Agree scores 25. The same applies to Eastern Orthodox at 35.",
+   "fix": "Roman Catholic spirit: 25; Eastern Orthodox spirit: 25."
+  }
+ ]
+}

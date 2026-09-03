@@ -1,0 +1,32 @@
+{
+ "target": "axis:spirit:bands",
+ "findings": [
+  {
+   "id": "anglican-12",
+   "lens": "Anglican (broad, Thirty-Nine Articles / Book of Common Prayer)",
+   "category": "tone",
+   "severity": "major",
+   "claim": "The middle band 'undecided on the gifts' calls a settled, official position (open but cautious) indecision; this is the band applied to the Anglican coordinate (45) and the Roman Catholic coordinate (40).",
+   "evidence": "The Church of England House of Bishops (A Time to Heal, 2000) and the Catholic Catechism 800-801 take a deliberate position: the gifts continue and are to be discerned by the church. The band list is also asymmetric: bands[1] 'open to the gifts' has no mirror in bands[3] 'cautious about the gifts', so the right side gets two cautious labels and the middle gets 'undecided'.",
+   "fix": "Bands: ['continuationist', 'open to the gifts', 'open but cautious on the gifts', 'cessationist-leaning', 'cessationist']."
+  },
+  {
+   "id": "copy-4",
+   "lens": "copy editor",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "Middle band \"undecided on the gifts\" imputes indecision to people who hold a settled moderate view.",
+   "evidence": "S7 Disagree (+1), S8 Unsure (0), S9 Agree (-1) gives raw 0 → score 50 → \"undecided on the gifts\". That answer pattern is the \"open but cautious\" position, a named and settled view (Grudem, ed., Are Miraculous Gifts for Today? Four Views, 1996; Saucy's chapter). Every other mid band describes a position (\"balanced\", \"flexible\"), not a state of mind.",
+   "fix": "\"balanced on the gifts\""
+  },
+  {
+   "id": "survey-28",
+   "lens": "survey methodologist",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "\"undecided on the gifts\" labels a deliberate mediating position as indecision; the 41-59 band on this axis is a recognised, named view.",
+   "evidence": "Are Miraculous Gifts for Today? Four Views (Zondervan, ed. Grudem) names the mediating position \"open but cautious\" (Saucy). A respondent who affirms prophecy but denies tongues answers decisively yet lands in this band. \"open to the gifts\" (band 1) and \"cautious about the gifts\" (band 3) also reuse the same two words at different strengths.",
+   "fix": "bands: [\"continuationist\", \"continuationist-leaning\", \"open but cautious\", \"cessationist-leaning\", \"cessationist\"]."
+  }
+ ]
+}

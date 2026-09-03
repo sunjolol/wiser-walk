@@ -1,0 +1,32 @@
+{
+ "target": "axis:grace:history:3",
+ "findings": [
+  {
+   "id": "historian-8",
+   "lens": "church historian",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'the Synod of Dort replies with five points' is a mild anachronism: the Canons are arranged under four heads (the Third and Fourth combined), and 'five points'/TULIP is a twentieth-century mnemonic.",
+   "evidence": "Canons of Dort (1619): First, Second, Third and Fourth, Fifth Heads of Doctrine. The TULIP acrostic is first attested in 1905 (McAfee) and popularized by Boettner (1932).",
+   "fix": "{when: '1610–19', what: 'The Remonstrance sets out five Arminian articles; the Synod of Dort answers them article by article in its Canons.'}"
+  },
+  {
+   "id": "lutheran-16",
+   "lens": "confessional Lutheran (LCMS / WELS / Book of Concord)",
+   "category": "missing",
+   "severity": "major",
+   "claim": "The history runs Augustine, Orange, Luther, Dort, Wesley, so Luther reads as a prelude to Dort; the Formula of Concord (1577), which fixed the Lutheran third position (conversion God's work alone, grace resistible, no decree of reprobation, election known only in Christ through the gospel), is missing.",
+   "evidence": "FC SD II (free will) and XI (election), esp. SD XI.28 (Christ died for all), 41 (the lost resist), 65-66 (election in Christ), and the rejection of a decree to damnation; this is the position of the tradition listed at Grace 20.",
+   "fix": "Insert before the Dort entry: {\"when\": \"1577\", \"what\": \"Formula of Concord (arts. II, XI): conversion is God's work alone, yet grace can be resisted and there is no decree of reprobation; election is known only in Christ through the gospel.\"}"
+  },
+  {
+   "id": "orthodox-7",
+   "lens": "Eastern Orthodox",
+   "category": "missing",
+   "severity": "major",
+   "claim": "All five entries are Western, and the synergist side is anchored only to the Remonstrants and Wesley, implying the Orthodox position is a Protestant variant; the East's own conciliar answer to Calvinism is absent.",
+   "evidence": "Patriarch Cyril Lucaris published a Calvinist confession in 1629; the Synod of Jerusalem (1672, Confession of Dositheus) rejected it, Decree 3 teaching predestination according to foreknowledge of each person's free use of the will.",
+   "fix": "Insert after the Dort entry: {\"when\": \"1672\", \"what\": \"Synod of Jerusalem rejects Patriarch Cyril Lucaris's Calvinist confession: God predestines according to his foreknowledge of each person's free response.\"}"
+  }
+ ]
+}

@@ -1,0 +1,113 @@
+{
+ "target": "statement:17",
+ "findings": [
+  {
+   "id": "anabaptist-9",
+   "lens": "Anabaptist / Mennonite (Schleitheim Confession, Confession of Faith in a Mennonite Perspective 1995)",
+   "category": "scoring",
+   "severity": "major",
+   "claim": "'Worship should be free-form and led by the Spirit in the moment' is Pentecostal vocabulary; Mennonites disagree with it and with S16, so their whole Worship score is decided by S18 (communion frequency).",
+   "evidence": "Mennonite worship is planned, plain, hymn-centred and congregational (four-part a cappella singing from Hymnal: A Worship Book 1992 / Voices Together 2020, sermon, sharing time, prayer); Old Order and Amish worship follows a fixed traditional order (Ausbund, Lob Lied) without a prayer book. Simulation: S16 = -1, S17 = -1, S18 = -2 -> raw = 1 - 1 + 2 = 2 -> 67 'informal in worship'; the first two statements cancel and one statement carries the axis. The same is true for most Baptists.",
+   "fix": "'Spontaneous contributions from the congregation, such as a testimony, a prayer, or a song, belong in Sunday worship.' (direction +1). Mennonites answer +1 (sharing time), Pentecostals +2, Anglo-Catholics -2. If adopted, the Anabaptist worship coordinate should move from 60 to about 75 (raw 1 + 1 + 2 = 4 -> 83 for the simulated Mennonite)."
+  },
+  {
+   "id": "anglican-15",
+   "lens": "Anglican (broad, Thirty-Nine Articles / Book of Common Prayer)",
+   "category": "unfairness",
+   "severity": "minor",
+   "claim": "'Worship should be free-form and led by the Spirit in the moment' implies that set liturgy is not led by the Spirit, which no liturgical Christian concedes; disagreeing feels like denying the Spirit.",
+   "evidence": "Article XXXIV and the BCP preface ('Concerning the Service of the Church') claim the Spirit's guidance for the church's ordered worship; the fair summary itself is careful not to make this implication.",
+   "fix": "'Worship is best when its shape is open and decided in the moment rather than fixed in advance.'"
+  },
+  {
+   "id": "catholic-25",
+   "lens": "Roman Catholic",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "\"Worship should be free-form and led by the Spirit in the moment\" pairs a form question with a loaded contrast; a liturgical Catholic must 'disagree' with being led by the Spirit.",
+   "evidence": "CCC 1091-1112 on the Spirit's work in the liturgy; SC 7.",
+   "fix": "\"Worship should be shaped in the moment rather than follow a set order.\""
+  },
+  {
+   "id": "charismatic-9",
+   "lens": "charismatic non-denominational (Vineyard, Bethel, Hillsong, Third Wave)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "'Worship should be free-form and led by the Spirit in the moment.' equates free-form with Spirit-led; liturgical charismatics reject the equation and liturgical readers find it loaded.",
+   "evidence": "Holy Trinity Brompton (Alpha) and the Catholic Charismatic Renewal are charismatic and liturgical; they would answer 'the Spirit leads through the liturgy'. Hillsong and Bethel services run planned setlists with room for spontaneity, so 'free-form' is not even how those churches describe themselves ('spontaneous worship' is a moment inside a produced set). The other pole's statement (16) is not loaded this way.",
+   "fix": "'Worship should keep its order open so the service can change direction as the Spirit leads.'"
+  },
+  {
+   "id": "churchofchrist-3",
+   "lens": "Church of Christ / Restoration Movement (Stone-Campbell)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "'Worship should be free-form and led by the Spirit in the moment' is double-barreled: a Church of Christ member says yes to 'free-form' (no set liturgy, no calendar, prayers in the leader's own words) and no to 'led by the Spirit in the moment', so he answers Disagree and is pushed toward Liturgical.",
+   "evidence": "The tradition's worship texts are John 4:24 ('in spirit and in truth', read as 'according to the New Testament pattern') and 1 Cor 14:40 ('decently and in order'); its pneumatology since the Campbell-Rice Debate (1843, proposition on the Holy Spirit) holds that the Spirit leads through the Word, not by impulse in the assembly. Regulative-principle Presbyterians have the same problem: they also reject spontaneity while rejecting fixed liturgy. The statement makes charismatic spontaneity the only kind of non-liturgical worship.",
+   "fix": "'Worship needs no fixed order of prayers or church calendar; each congregation may shape its own service.' direction +1. Church of Christ: Strongly agree; Pentecostal: Strongly agree; Anglican/Lutheran/Catholic/Orthodox: Disagree."
+  },
+  {
+   "id": "dispensational-11",
+   "lens": "Dispensationalist (Dallas / classic and progressive dispensationalism)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "\"Worship should be free-form and led by the Spirit in the moment.\" is Pentecostal vocabulary; a cessationist Bible church member disagrees with it even though he is entirely non-liturgical, so the item pushes him toward 'Liturgical' and away from his own tradition's coordinate.",
+   "evidence": "Bible-church worship is planned, order-of-service driven and sermon-centred (hymns, announcements, offering, 40-minute expository sermon), with 'led by the Spirit in the moment' understood as a charismatic claim we reject (DTS Doctrinal Statement, art. XII on temporary gifts; MacArthur, Strange Fire, on 'Spirit-led' spontaneity). Arithmetic: typical answers S16 -1, S17 -1, S18 -1 give Worship raw (-1)(-1)+(1)(-1)+(-1)(-1) = 1 -> 58 'flexible in worship', against the tradition coordinate of 75; that 17-point gap contributes 289 of the 618 squared distance, the single largest term. With a non-liturgical wording answered +2, raw = 4 -> 83 and the distance to DBC falls from 24.86 to sqrt(393) = 19.82.",
+   "fix": "\"Worship need not follow a fixed liturgy or the church calendar; each congregation is free to shape its own order of service.\" (direction +1). Move spontaneity to the fair summary as one form the free end can take."
+  },
+  {
+   "id": "pentecostal-17",
+   "lens": "Pentecostal (Assemblies of God Statement of Fundamental Truths)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'Worship should be free-form and led by the Spirit in the moment' is double-barrelled: Pentecostals affirm the second clause and will answer Agree, but AG services follow a recognisable order (worship set, offering, sermon, altar call), so 'free-form' is a caricature of the pole Pentecostals occupy.",
+   "evidence": "Albrecht, Rites in the Spirit (1999), documents the stable ritual structure of Pentecostal worship; 1 Cor 14:40 ('decently and in order') is cited in AG worship teaching alongside 14:26.",
+   "fix": "'Worship should leave room for the Spirit to lead in the moment rather than follow a fixed order.'"
+  },
+  {
+   "id": "progressive-18",
+   "lens": "progressive mainline Protestant (PCUSA, ELCA, Episcopal, UMC progressive wing)",
+   "category": "tone",
+   "severity": "minor",
+   "claim": "'Led by the Spirit' is set as the contrast to a set liturgy, implying that a collect or a eucharistic prayer is not Spirit-led; liturgical Christians will not accept that framing as their opponents' fair words.",
+   "evidence": "Text: \"Worship should be free-form and led by the Spirit in the moment.\" Every eucharistic prayer in the BCP, ELW, and Book of Common Worship contains an epiclesis invoking the Spirit.",
+   "fix": "\"Worship should be unscripted, leaving room for spontaneous leading rather than a fixed order.\""
+  },
+  {
+   "id": "reformedcharismatic-4",
+   "lens": "Reformed charismatic (John Piper, Wayne Grudem, Sam Storms, Sovereign Grace Churches, Acts 29 continuationists)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "'Worship should be free-form and led by the Spirit in the moment' yokes two things my tradition splits: we reject 'free-form' and affirm 'led by the Spirit in the moment'.",
+   "evidence": "Kauflin, Worship Matters (cited by the quiz on this pole) has a chapter 'Planned and Spontaneous' arguing for both; Sovereign Grace and Acts 29 services are carefully planned (call to worship, songs, confession, sermon, Supper) with room for prophetic contributions per 1 Cor 14:26-33. The honest answer is Unsure, which throws away the information.",
+   "fix": "Worship should leave room for the Spirit to lead in the moment rather than follow a set script."
+  },
+  {
+   "id": "sbc-8",
+   "lens": "Southern Baptist (Baptist Faith & Message 2000)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "'Worship should be free-form and led by the Spirit in the moment' defines the Free pole in Pentecostal vocabulary, so the single most common Protestant service in America, the planned but non-liturgical Baptist order (hymns, prayer, offering, sermon, invitation), has no honest answer and is pulled to the center.",
+   "evidence": "James F. White, Protestant Worship: Traditions in Transition (1989), classifies Baptist worship as the 'Frontier' tradition: deliberately ordered around preaching, revival-shaped, and non-liturgical, but never 'free-form'. A typical SBC member answers Unsure (as in the simulation) or Disagree, which is why the SBC coordinate has to sit at 70 rather than 85 on an axis where Baptists are the paradigm 'free church'.",
+   "fix": "'Worship need not follow any fixed liturgy; each congregation is free to order its own service as it judges best.' (direction +1). Then raise the Southern Baptist worship coordinate to 80."
+  },
+  {
+   "id": "survey-19",
+   "lens": "survey methodologist",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "\"Worship should be free-form and led by the Spirit in the moment\" measures spontaneity, not non-liturgical worship, and its \"led by the Spirit\" clause makes disagreement feel like denying the Spirit; typical planned non-liturgical churches disagree and are pushed toward Liturgical.",
+   "evidence": "Worked case: a Southern Baptist with a planned, non-liturgical service answers S16 Disagree, S17 Disagree, S18 Disagree -> raw +1 -> 58, \"58% toward Free\", against a Southern Baptist coordinate of 70. Liturgical charismatics (e.g., Anglican renewal parishes) agree with \"led by the Spirit\" and disagree with \"free-form\".",
+   "fix": "Replace with: \"Each congregation should shape its own order of service rather than follow a prescribed liturgy.\" (15 words, direction +1). If spontaneity is wanted, make it a separate item."
+  },
+  {
+   "id": "wesleyan-13",
+   "lens": "Wesleyan / Methodist (Wesley's sermons, Articles of Religion, Global Methodist / UMC evangelical wing)",
+   "category": "unfairness",
+   "severity": "minor",
+   "claim": "'Worship should be free-form and led by the Spirit in the moment' implies that liturgical worship is not led by the Spirit. A Methodist who prays the Great Thanksgiving believes the Spirit leads through the set form; the statement makes disagreeing feel like denying the Spirit.",
+   "evidence": "The fair summary for the liturgical pole describes 'words tested over centuries' as the congregation praying 'with the historic church', which any liturgical Christian would say is itself Spirit-led. The liturgical statement (S16) contains no matching jab at the free side.",
+   "fix": "Worship should be free-form, open to what happens in the moment rather than following a fixed order. (direction +1)"
+  }
+ ]
+}

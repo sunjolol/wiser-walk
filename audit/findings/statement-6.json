@@ -1,0 +1,23 @@
+{
+ "target": "statement:6",
+ "findings": [
+  {
+   "id": "anglican-13",
+   "lens": "Anglican (broad, Thirty-Nine Articles / Book of Common Prayer)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'The infants of believing parents should be baptized' is Reformed covenant-theology vocabulary; Anglican, Lutheran, Catholic and Orthodox practice baptizes infants brought by sponsors and grounds it differently.",
+   "evidence": "Article XXVII grounds infant baptism in its being 'most agreeable with the institution of Christ', and the 1662 service requires godparents, not believing parents; the parish system baptized any child presented. Everyone paedobaptist still agrees, so the direction is right, but the phrasing tells an Anglican the question was written by a Presbyterian.",
+   "fix": "'Infants should be baptized, not only those old enough to profess faith.'"
+  },
+  {
+   "id": "mockery-34",
+   "lens": "mockery critic",
+   "category": "tone",
+   "severity": "minor",
+   "claim": "'The infants of believing parents' is Reformed covenant-household idiom. Catholic apologist: 'lol, written by a Presbyterian — we baptize infants, full stop.'",
+   "evidence": "CCC 1250 states the case as infants needing new birth; the 'believing parents' framing comes from WCF 28.4 ('infants of one or both believing parents').",
+   "fix": "'Infants should be baptized, not only those old enough to profess faith.'"
+  }
+ ]
+}

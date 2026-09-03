@@ -1,0 +1,347 @@
+{
+ "target": "general",
+ "findings": [
+  {
+   "id": "anabaptist-1",
+   "lens": "Anabaptist / Mennonite (Schleitheim Confession, Confession of Faith in a Mennonite Perspective 1995)",
+   "category": "missing",
+   "severity": "blocker",
+   "claim": "No axis measures the things that make an Anabaptist an Anabaptist (believers' church under discipline, nonresistance, no oaths, separation from the state), so the 'Anabaptist / Mennonite' entry is defined by nothing Anabaptist and any non-Calvinist, non-dispensational, believers'-baptism evangelical is told they are a Mennonite.",
+   "evidence": "Schleitheim (1527) Art. II (the ban), IV (separation from the world), VI ('the sword is ordained of God outside the perfection of Christ'), VII (no oaths); CFMP 1995 Art. 14 (Discipline), 20 (Truth and the Avoidance of Oaths), 22 (Peace, Justice, and Nonresistance: 'we do not prepare for war, or participate in war or military service'), 23 (The Church's Relation to Government and Society). Arithmetic: a generic non-Calvinist evangelical with no peace theology at (75,85,50,30,80,70) is 15.0 from the Anabaptist coordinate = '94% match Anabaptist / Mennonite', next SBC at 56.1; a Free Will Baptist profile (85,90,60,50,85,70) is 29.6 from Anabaptist vs 47.4 from SBC. In my own simulation the second-nearest tradition printed in the share text is 'Charismatic non-denominational' (61.1) because no free-church neighbour exists in the space. The intro promises to 'name the traditions nearest to you'; for this family it cannot. The axis called 'Kingdom' compounds it: for Anabaptists 'kingdom' means the reign of God embodied now in a nonresistant community (Schleitheim's two kingdoms), and the axis measures Israel/church and the rapture instead.",
+   "fix": "Add a seventh axis, key 'sword', name 'Church & World', left pole 'Christendom' (0), right pole 'Nonresistant' (100). Statements: S19 'A Christian may serve in the military or police and use lethal force when the state lawfully requires it.' (direction -1); S20 'Jesus' command to love enemies rules out Christians taking part in war.' (direction +1); S21 'Christians should swear oaths in court and hold public office like anyone else.' (direction -1). Fair summary: 'The Christendom view holds that God ordains the state to bear the sword (Romans 13), so Christians may serve in it, fight in a just war, swear lawful oaths, and govern, and church and state can work together. The nonresistant view holds that the church is a voluntary community of disciples set apart from the state's coercion: Jesus' command to love enemies forbids Christians to kill or take part in war, and his word rules out oaths (Matthew 5:33-48).' Coordinates: Roman Catholic 20, Eastern Orthodox 20, Lutheran 15, Anglican 15, Presbyterian 15, Reformed Baptist 30, Southern Baptist 30, Dispensational 25, Wesleyan 35, Pentecostal 35, Charismatic 35, Anabaptist / Mennonite 95. Check: the generic evangelical at 30 on the new axis is then sqrt(225 + 4225) = 66.7 from Anabaptist and 56.1 from SBC, so lands on SBC; the simulated Mennonite (95) still lands at 38.3. Rename the existing 'Kingdom' axis 'Israel & Church' (or 'End times') so it does not claim to measure kingdom ethics."
+  },
+  {
+   "id": "anabaptist-27",
+   "lens": "Anabaptist / Mennonite (Schleitheim Confession, Confession of Faith in a Mennonite Perspective 1995)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "The middle option is labelled 'Unsure', which forces respondents whose honest answer is 'neither / it depends' to describe themselves as uncertain.",
+   "evidence": "Statement 13 is the Mennonite case: the creeds are affirmed in content (Hubmaier's Twelve Articles expound the Apostles' Creed; CFMP Art. 1-3 are Nicene) but carry only derived authority (CFMP introduction: a confession 'is subject to the authority of the Bible'), so the honest answer is 'neither', not 'unsure'. HTML answers row: 'Strongly disagree / Disagree / Unsure / Agree / Strongly agree'.",
+   "fix": "Label the 0 option 'Neither / it depends'."
+  },
+  {
+   "id": "anglican-3",
+   "lens": "Anglican (broad, Thirty-Nine Articles / Book of Common Prayer)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "One point for 'Anglican (broad)' is a centroid that no actual Anglican wing occupies; the three honest wings each land on a different non-Anglican tradition, so the label promises a placement the math cannot deliver.",
+   "evidence": "Anglo-Catholic answers [0, 1, 0, 2, -2, 2, 1, -2, 1, -2, 1, -2, 2, -1, 1, 2, -2, 2] -> scores [58, 0, 17, 8, 17, 0]: Eastern Orthodox 24.8, Roman Catholic 27.6, Anglican 49.5. Reformed evangelical Anglican [2, -1, 2, 1, -1, 2, -1, 1, 0, -1, 2, -2, 1, 2, -1, 1, -2, -1] -> [8, 17, 67, 8, 67, 33]: Presbyterian 32.7, Lutheran 37.4, Anglican 57.0. Charismatic Anglican [0, 1, 0, 1, -1, 1, 2, -2, 2, -1, 0, -1, 1, 0, 0, 1, 1, 1] -> [58, 25, 0, 33, 42, 42]: Wesleyan 53.0, Anglican 56.1. The spread inside one tradition is 50 points on Grace, 67 on Spirit and 50 on Tradition. Reformed Baptist / Southern Baptist and Pentecostal / Charismatic already get split entries, so the precedent exists.",
+   "fix": "Keep the corrected broad entry and add 'Anglican (Anglo-Catholic)' at [55, 5, 20, 10, 15, 5] (the Anglo-Catholic simulation then lands there at d = 8.7 instead of being told it is Eastern Orthodox). An evangelical Anglican landing on 'Presbyterian / Reformed' and a charismatic one on 'Wesleyan / Methodist' are honest neighbours and can stand. Add to the 'Closest traditions' note: 'Broad churches (Anglican, Methodist) are placed at their centre; their wings sit nearer other entries.'"
+  },
+  {
+   "id": "anglican-23",
+   "lens": "Anglican (broad, Thirty-Nine Articles / Book of Common Prayer)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'Unsure' is the only middle option, so a considered 'yes to one half, no to the other' answer (which Anglicans must give on S14, S15 and S7) is recorded as not knowing.",
+   "evidence": "Statements 7, 14 and 15 each contain two claims that the Anglican formularies answer differently; the middle button is the only honest choice and its label misdescribes it.",
+   "fix": "Label the middle option 'Unsure / mixed'."
+  },
+  {
+   "id": "catholic-30",
+   "lens": "Roman Catholic",
+   "category": "scoring",
+   "severity": "major",
+   "claim": "Roman Catholic and Eastern Orthodox answer 15 of 18 statements identically; the only separator is Grace, where Catholics themselves range 33-83. The top two for any Catholic will be RC and EO in an order set by noise, and nothing in the quiz tests a Catholic distinctive (papacy, purgatory, the sacrifice of the Mass, justification). The copy should say so, and the Orthodox grace coordinate should reflect that Orthodox reject election prior to foreseen faith more uniformly than Catholics do.",
+   "evidence": "John of Damascus, De fide orthodoxa II.30 ('God foreknows all things but does not predetermine all'); Ware, The Orthodox Church. An Orthodox answering S1 -1, S2 +2, S3 -1 gets raw 4, score 83, yet the coordinate is 65. With RC fixed to [55,5,20,15,5,5] and EO grace at 75, base simulation: RC 17.1 vs EO sqrt(100+25+729+49+25+25) = 30.9.",
+   "fix": "Set Eastern Orthodox grace to 75. Add under 'Closest traditions': \"Roman Catholic and Eastern Orthodox answer these eighteen statements almost alike; the quiz does not measure what divides them.\" Do not try a papacy statement on the Tradition axis (it would push Orthodox toward 'Scripture alone')."
+  },
+  {
+   "id": "catholic-31",
+   "lens": "Roman Catholic",
+   "category": "tone",
+   "severity": "minor",
+   "claim": "'Roman Catholic' excludes the 23 Eastern Catholic churches (roughly 18 million members) whose adherents answer these statements identically; the term is also of Anglican origin and not the Church's self-designation.",
+   "evidence": "Orientalium Ecclesiarum (1964); Code of Canons of the Eastern Churches (1990); the Church names itself 'Catholic' in the creeds and 'Catholic Church' in the Catechism's title.",
+   "fix": "Rename the tradition entry \"Catholic\"."
+  },
+  {
+   "id": "charismatic-1",
+   "lens": "charismatic non-denominational (Vineyard, Bethel, Hillsong, Third Wave)",
+   "category": "missing",
+   "severity": "blocker",
+   "claim": "With these six axes 'Charismatic non-denominational' and 'Pentecostal / Assemblies of God' are not distinguishable, and real AoG members land on the charismatic entry.",
+   "evidence": "The two coordinates differ only by grace 10, table 5, kingdom 15: distance sqrt(100+25+225)=18.7, smaller than one answer swing on one statement (33 points on an axis). Simulated younger AoG member, Unsure on Q10 and Q12 (scores 75,83,0,58,75,92): Charismatic 12.9 vs Pentecostal 21.1 -> lands 'Charismatic non-denominational'. The real boundary between the two families is untested: AoG Statement of Fundamental Truths art. 7 (baptism in the Holy Spirit 'distinct from and subsequent to' the new birth) and art. 8 (speaking in tongues as 'the initial physical evidence'); Third Wave teaching denies both (Wimber; Grudem, Systematic Theology ch. 39; Storms, Practicing the Power; Vineyard USA Statement of Faith). No statement touches Spirit baptism or initial evidence.",
+   "fix": "Add a 19th statement that is NOT scored on the Spirit band (so a Third Wave respondent is not pushed toward 'cessationist') but is used as a seventh coordinate in the nearest-tradition distance: 'Speaking in tongues is the normal first sign that a person has been baptized in the Holy Spirit.' Map -2..2 to 0..100 and give traditions an initial_evidence coordinate: Pentecostal / AoG 95, Charismatic non-denominational 15, all others 0-5. Result: Charismatic<->Pentecostal separation rises from 18.7 to 86.6; the younger-AoG profile lands Pentecostal (29.1 vs 63.1); the Hillsong pre-trib profile lands Pentecostal (23.3 vs 69.7); the Third Wave and Bethel profiles stay Charismatic (21.2 and 34.2)."
+  },
+  {
+   "id": "charismatic-4",
+   "lens": "charismatic non-denominational (Vineyard, Bethel, Hillsong, Third Wave)",
+   "category": "missing",
+   "severity": "major",
+   "claim": "There is no Reformed charismatic tradition (Sovereign Grace Churches, Newfrontiers, the Piper/Grudem/Storms readership), and such a person has no entry within 65 points.",
+   "evidence": "Simulated Reformed charismatic (Q1/Q3 Strongly agree, Q2 Disagree, gifts fully continuationist): scores 8,83,0,42,75,75. Nearest: Charismatic non-denominational 67.3 (73%), Pentecostal 81.4, Reformed Baptist 85.0. The result would headline 'Continuationist, firmly monergist, memorialist' and then name two Arminian traditions as 'closest'. Sovereign Grace Churches' Statement of Faith is both Reformed and continuationist; Newfrontiers (Terry Virgo) likewise; the quiz's own Spirit read-more list is two Reformed charismatics (Grudem, Storms).",
+   "fix": "Add {\"name\": \"Reformed charismatic (Sovereign Grace, Newfrontiers)\", \"position\": {\"grace\": 15, \"table\": 80, \"spirit\": 10, \"kingdom\": 35, \"tradition\": 65, \"worship\": 70}}. The simulated profile then lands on it at 18.2."
+  },
+  {
+   "id": "churchofchrist-1",
+   "lens": "Church of Christ / Restoration Movement (Stone-Campbell)",
+   "category": "missing",
+   "severity": "blocker",
+   "claim": "Churches of Christ and Christian Churches (Stone-Campbell), roughly 2.5 million adherents in the US and the largest indigenous American Protestant family, are absent from the tradition list, so every member lands on nonsense: 'Closest traditions: Anabaptist / Mennonite, Wesleyan / Methodist'.",
+   "evidence": "Simulation scores [100, 58, 100, 0, 100, 42]. Nearest: Anabaptist / Mennonite d = sqrt(5503) = 74.2 (70%), Wesleyan / Methodist d = sqrt(7403) = 86.0 (65%). No listed tradition has a Table coordinate between 40 and 70, which is exactly where believer's immersion 'for the remission of sins' (Acts 2:38; Campbell, The Christian System, 1835) lands. Mennonites are pacifist memorialists open to the gifts (spirit 55); Methodists baptize infants (table 40). Neither is anything a member would recognize.",
+   "fix": "Add { name: 'Churches of Christ / Christian Churches', position: { grace: 90, table: 60, spirit: 95, kingdom: 5, tradition: 95, worship: 40 } } under the current statements (worship 85 if statements 17 and 18 are replaced as proposed). Distance from the simulation becomes sqrt(183) = 13.5 (94%); the entry does not become nearest for any existing tradition's own coordinates (closest existing neighbour is Anabaptist / Mennonite at 64)."
+  },
+  {
+   "id": "copy-19",
+   "lens": "copy editor",
+   "category": "typo",
+   "severity": "minor",
+   "claim": "All apostrophes and quotation marks are straight (God's, Lord's, Erasmus's, Calvin's, 'new prophecy', 'new measures', 'everywhere, always, by all') on a page that otherwise uses typographic characters (·, ↔, →, …, en dashes) and a display serif with optical sizing.",
+   "evidence": "Straight quotes in Fraunces at 44–54 px read as typewriter marks; the page already commits to typographic punctuation everywhere else. 23 strings in the JSON carry a straight apostrophe, 3 carry straight single quotes as quotation marks.",
+   "fix": "Use ’ for every apostrophe (God’s, Lord’s, Erasmus’s) and ‘ ’ for quoted phrases (‘new prophecy’, ‘new measures’, ‘everywhere, always, and by all.’) in both the JSON and the HTML data block."
+  },
+  {
+   "id": "copy-20",
+   "lens": "copy editor",
+   "category": "tone",
+   "severity": "minor",
+   "claim": "Footer \"Demo build. Tradition positions are approximate; statements and histories should be reviewed before publishing.\" is a note to the builder, and on a page whose promise is fairness it tells readers the content has not been checked.",
+   "evidence": "The Closest-traditions note already gives the reader-facing version of the caveat (\"Approximate positions of typical adherents, not official teaching.\"); the second clause of the footer has no reader-facing purpose.",
+   "fix": "\"Demo build. Tradition positions are approximate sketches of typical adherents, not official teaching.\""
+  },
+  {
+   "id": "dispensational-15",
+   "lens": "Dispensationalist (Dallas / classic and progressive dispensationalism)",
+   "category": "missing",
+   "severity": "major",
+   "claim": "The two largest dispensational constituencies that are not 'Bible churches' have no entry, and one of them (Calvary Chapel) is routed to Pentecostalism, the tradition it defines itself against.",
+   "evidence": "Independent/Fundamental Baptists (GARBC Articles of Faith on the return of Christ: pretribulational, premillennial; BBFI; the largest dispensational bloc in North America) and Calvary Chapel (Chuck Smith, Calvary Chapel Distinctives, 2000: pretrib dispensational, Scofield-style prophecy teaching, moderately continuationist, explicitly not Pentecostal after Smith left Foursquare) are absent. Calvary Chapel profile: grace 58, table 100, spirit 25, kingdom 100, tradition 92, worship 83 -> nearest 'Pentecostal / Assemblies of God' sqrt(1832) = 42.80, then 'Charismatic non-denominational' 51.40, with 'Dispensational Bible church' fourth at 68.86. Dispensationalism also crosses the Spirit axis (AG Statement of Fundamental Truths 13–14 are pretrib premillennial), so one 'Dispensational' entry pinned at spirit 90 cannot catch dispensationalists who are continuationist.",
+   "fix": "Add \"Calvary Chapel\" at [60, 90, 30, 95, 90, 80] and \"Independent Baptist\" at [55, 95, 95, 95, 95, 65]. With those, the Calvary Chapel profile lands on Calvary Chapel (distance sqrt(4+100+25+25+4+9) = 12.9)."
+  },
+  {
+   "id": "historian-1",
+   "lens": "church historian",
+   "category": "unfairness",
+   "severity": "blocker",
+   "claim": "The Tradition history is a 4:1 victory narrative for the 'with tradition' pole. Counting: Vincent (434), Trent (1546), Newman (1845), Dei Verbum (1965) all speak for tradition; only Westminster (1646) speaks for Scripture alone. The Reformation's founding moments for sola scriptura are absent entirely.",
+   "evidence": "Leipzig Disputation (July 1519): Luther, pressed by Eck, concedes that the Council of Constance erred in condemning Hus, i.e. councils can err. Diet of Worms (18 April 1521): 'Unless I am convinced by the testimony of Scripture or by clear reason... my conscience is captive to the Word of God.' Formula of Concord, Epitome, Summary (1577): the prophetic and apostolic Scriptures are 'the only rule and norm according to which all teachings, together with all teachers, should be evaluated and judged.' (Bainton, Here I Stand; Kolb-Wengert ed. of the Book of Concord.) A Protestant reader will screenshot a 'Scripture alone' history that has one Protestant line and three Roman Catholic ones.",
+   "fix": "Insert two lines so the array reads 434 / 1519–21 / 1546 / 1577 / 1646 / 1845 / 1965: {when: '1519–21', what: 'At Leipzig Luther concedes that councils have erred; at Worms he refuses to recant unless convinced \"by Scripture and plain reason\".'} and {when: '1577', what: 'Formula of Concord: Scripture is \"the only rule and norm\" by which teachers and doctrines are judged; the ancient creeds are received as witnesses to it.'} If length matters, drop the 1845 Newman line (it is already the first read-more title)."
+  },
+  {
+   "id": "historian-2",
+   "lens": "church historian",
+   "category": "unfairness",
+   "severity": "blocker",
+   "claim": "The Spirit history reads as the cessationist's story: the gifts are viewed warily (2nd c.), cease (c. 390), and reappear in Los Angeles in 1906. Count: Montanist-wariness, Chrysostom, Warfield, Strange Fire = 4 lines for cessation; Azusa, 1960s = 2 for continuation; nothing at all between 390 and 1906. The early-church witnesses to continuing gifts, which every Pentecostal historian cites first, are missing.",
+   "evidence": "Irenaeus, Against Heresies 2.32.4 (c. 180): believers 'drive out devils... have foreknowledge of things to come... heal the sick by laying their hands upon them... the dead even have been raised'; 5.6.1: 'many brethren in the Church who possess prophetic gifts and who through the Spirit speak all kinds of languages.' Augustine, De vera religione 25.47 (c. 390) says miracles were not allowed to continue; Retractationes 1.13.7 withdraws this, and City of God 22.8 (c. 426) catalogues some seventy recent miracles at Hippo. The 'Third Wave' (Wimber, Vineyard, Wagner's term, 1980s) is also absent although Grudem's 1988 book in read-more came out of it. (Kydd, Charismatic Gifts in the Early Church; Ruthven, On the Cessation of the Charismata.)",
+   "fix": "Add three lines: {when: 'c. 180', what: 'Irenaeus, Against Heresies 2.32 and 5.6, reports prophecy, tongues, healings, and even the dead raised in the churches of his day.'}; {when: 'c. 426', what: 'Augustine, City of God 22.8, records recent healings at Hippo, withdrawing his earlier view that miracles had ceased.'}; {when: '1980s', what: 'The \"Third Wave\" (John Wimber, the Vineyard) brings the gifts into evangelical churches that had never been Pentecostal.'} With these the count is 4 : 5, and the array no longer jumps from 390 to 1906."
+  },
+  {
+   "id": "historian-5",
+   "lens": "church historian",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The Grace history never gives the synergist pole a milestone of its own. Count: Augustine (0) and Luther (2) are monergist landmarks; Orange (1), Remonstrance/Dort (3), Wesley/Whitefield (4) are shared. The Eastern tradition, whose word 'synergy' names the right pole and which sits at 65 on the map, has no line on this axis (or on any axis).",
+   "evidence": "John Cassian, Conferences 13 (c. 426–29), the classic statement that grace and will cooperate, attacked by Prosper in Contra Collatorem c. 432 (Gonzalez, History of Christian Thought II; Pelikan, Christian Tradition I). Council of Trent, Session VI, Decree on Justification (13 Jan 1547), ch. 5 and canon 4: the will, moved by grace, 'is able to refuse' (potest dissentire, si velit).",
+   "fix": "Add {when: 'c. 426–29', what: 'John Cassian, Conferences 13: grace and the human will work together, the position the Christian East calls synergy.'} and {when: '1547', what: 'Council of Trent, Decree on Justification: the will, moved and awakened by grace, freely assents and can refuse.'} Sequence: 411–430 / 426–29 / 529 / 1525 / 1547 / 1610–19 / 1739–41."
+  },
+  {
+   "id": "historian-9",
+   "lens": "church historian",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The Table history stops in 1559 and gives the memorial pole a single line. Count: Ignatius, Lateran IV, Calvin = 3 sacramental; Zurich 1525 = 1 memorial; Marburg = shared. Baptists, the pole's actual population (SBC 85, Bible church 90, Pentecostal 85), do not appear, and Zwingli's own argument, the read-more title for this pole, has no history line.",
+   "evidence": "Zwingli, Commentary on True and False Religion (1525) and On the Lord's Supper (1526), adopting Hoen's reading that est means significat. John Smyth's baptism of believers, Amsterdam, 1609; First London Baptist Confession (1644), art. 40, requires 'dipping or plunging' of professing believers (Lumpkin, Baptist Confessions of Faith).",
+   "fix": "Add {when: '1525–26', what: 'Zwingli, On the Lord\\'s Supper: \"this is my body\" means \"this signifies my body\"; the Supper is a thanksgiving memorial.'} and {when: '1609–44', what: 'John Smyth baptizes professing believers in Amsterdam; the First London Baptist Confession (1644) requires their immersion.'} Sequence: c. 110 / 1215 / 1525 / 1525–26 / 1529 / 1559 / 1609–44."
+  },
+  {
+   "id": "historian-17",
+   "lens": "church historian",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The Kingdom history is shaped as a covenantal narrative: the ancient church is Augustine (amillennial), dispensationalism appears from nowhere in the 1830s, and the last two lines show it retreating (Ladd's 'one people of God', progressive dispensationalism 'softens'). Missing is the fact every dispensationalist and historic premillennialist states first: the second-century Fathers expected a literal earthly thousand-year reign.",
+   "evidence": "Justin Martyr, Dialogue with Trypho 80–81: 'there will be a resurrection of the dead, and a thousand years in Jerusalem, which will then be built'; Irenaeus, Against Heresies 5.32–36; Papias (in Eusebius HE 3.39); Tertullian, Adv. Marc. 3.24 (Pelikan I, 123–26; Gonzalez I). Augustine himself says in City of God 20.7 that he once held the chiliast view. 'Softens' is the covenantalist's verb; Blaising and Bock describe their work as revising the distinction, not softening it.",
+   "fix": "Add {when: 'c. 155–180', what: 'Justin Martyr and Irenaeus expect a literal thousand-year reign of Christ on earth in a rebuilt Jerusalem (chiliasm).'} before the Augustine line, and change history:5 to {when: '1990s', what: 'Progressive dispensationalism (Blaising, Bock, Saucy) revises the Israel–church distinction: one people of God, distinct roles.'}"
+  },
+  {
+   "id": "historian-28",
+   "lens": "church historian",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "Three of the recommended authors (Grudem, Storms, Kauflin) belong to a Reformed-charismatic family (Sovereign Grace, the Piper circle) that has no node on the map. A Reformed continuationist answering honestly, roughly (10, 70, 10, 30, 55, 65), lands on 'Reformed Baptist' at about 71% only because the Spirit axis differs by 70 points.",
+   "evidence": "Distance to Reformed Baptist (10,70,80,30,55,65) = 70; to Charismatic non-denominational (70,80,5,60,85,90) = sqrt(3600+100+25+900+900+625) ≈ 78. Neither is a 'close' match.",
+   "fix": "Add {name: 'Reformed charismatic', position: {grace: 10, table: 70, spirit: 15, kingdom: 30, tradition: 55, worship: 70}}."
+  },
+  {
+   "id": "lutheran-27",
+   "lens": "confessional Lutheran (LCMS / WELS / Book of Concord)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "A confessional Lutheran can take the whole quiz and never once see his own confession described: on Grace, Kingdom and Tradition the Lutheran position is a documented third way (FC XI; AC XVII; FC Rule and Norm) and the poles, summaries, histories and reading lists are written in Reformed, Catholic or evangelical vocabulary; no Lutheran author appears in any of the twelve read-more lists and no Book of Concord text in any of the thirty-three history lines, though \"Lutheran (confessional)\" is a listed tradition.",
+   "evidence": "Only two history entries mention Luther (1525 Bondage of the Will, 1529 Marburg) and neither states what he held; the Lutheran coordinates are hand-set in a way no honest Lutheran answer set reaches (Tradition 35).",
+   "fix": "Apply the summary clauses and three history insertions proposed above (FC 1577 on Grace, AC XVII 1530 on Kingdom, FC Rule and Norm 1577 on Tradition), add Luther's Bondage of the Will and Sasse to the reading lists, and recalibrate the Lutheran and Presbyterian coordinates by simulation."
+  },
+  {
+   "id": "mockery-1",
+   "lens": "mockery critic",
+   "category": "scoring",
+   "severity": "blocker",
+   "claim": "The Catholic apologist and the Orthodox convert get the same screenshot from opposite sides: a Catholic who answers exactly as Trent and the Catechism require lands on 'Closest traditions: Eastern Orthodox, Roman Catholic', and an Orthodox convert's card says 'Roman Catholic 85%'. Caption: 'lol, this quiz was written by a Baptist — it cannot tell Rome from Constantinople.' The six axes are the intra-evangelical arguments (Calvinism, baptism, gifts, rapture, sola scriptura, worship style); nothing on the compass measures the papacy, the filioque, or justification, so the two largest Christian bodies are coordinates 13 units apart in a 245-unit space.",
+   "evidence": "Roman Catholic [55,5,40,15,10,10] vs Eastern Orthodox [65,5,35,15,5,5]: distance 13.2, the smallest gap between any two traditions. A Catholic answer set (Strongly agree on resistible grace per Trent VI canon 4, real presence, infant baptism, creeds, church as final interpreter, liturgy, weekly Eucharist) scores [83,0,25,17,0,0]: Orthodox 22.4 (91%), Catholic 35.2 (86%). An Anglo-Catholic answer set [67,0,33,17,17,0] lands Orthodox 94%, Catholic 92%, Anglican 81%.",
+   "fix": "Either add a seventh axis 'Church' (statements: 'The bishop of Rome holds a Christ-given authority over the whole church'; 'The church is governed by bishops in succession from the apostles'; 'A local congregation is complete in itself and answers to no higher church body') which also separates episcopal, presbyterian, and congregational Protestants; or, as a minimum, when the two nearest traditions are within 15 units of each other, render them as one tied line: 'Roman Catholic / Eastern Orthodox — tied: what divides them (the papacy, the filioque) is not on this compass.'"
+  },
+  {
+   "id": "mockery-7",
+   "lens": "mockery critic",
+   "category": "missing",
+   "severity": "major",
+   "claim": "There is no home for the Reformed charismatic (Sovereign Grace, Newfrontiers, Piper/Grudem/Storms readers) — the very people whose books the quiz lists under Spirit and Worship. The Pentecostal pastor screenshots the reading list beside the tradition list: 'The quiz's favourite authors don't exist on its own map.'",
+   "evidence": "Answer set 1 SA, 2 SD, 3 SA; 4 U, 5 SA, 6 SD; 7 SA, 8 SD, 9 SA; 10 D, 11 A, 12 D; 13 A, 14 A, 15 D; 16 D, 17 A, 18 U → [0,83,0,25,58,67]. Nearest: Reformed Baptist 81.9 (67%), Charismatic non-denominational 86.1 (65%). No other realistic answer set in my runs failed to reach 85%.",
+   "fix": "Add { name: 'Reformed charismatic', position: {grace:10, table:75, spirit:10, kingdom:30, tradition:55, worship:70} } — the answer set above lands 17.5 away (93%) and Pentecostal / Assemblies of God and Charismatic non-denominational stay far (>75)."
+  },
+  {
+   "id": "mockery-35",
+   "lens": "mockery critic",
+   "category": "tone",
+   "severity": "minor",
+   "claim": "Axis names 'Spirit' and 'Tradition' are named after the left pole's key word, so the share bar and the headline read as if the cessationist has no Spirit and the Protestant no tradition (and vice versa). Both discernment sides screenshot the axis name alone.",
+   "evidence": "Both cessationists and continuationists confess the Spirit; both Catholics and Protestants have tradition. 'Gifts' and 'Authority' are the words each side would accept for what is actually being measured, and the bands already say 'the gifts' and 'authority'.",
+   "fix": "name: 'Gifts' for the spirit axis; name: 'Authority' for the tradition axis. Leave 'Grace', 'Table', 'Kingdom', 'Worship'."
+  },
+  {
+   "id": "mockery-36",
+   "lens": "mockery critic",
+   "category": "tone",
+   "severity": "minor",
+   "claim": "Do not touch these — they are the reason the quiz survives at all, and 'fixing' them would produce blandness: the pole names Monergist/Synergist (the Orthodox convert is delighted to be called a synergist; only the bands spoil it); 'A map, not a grade. No answer is the right one.'; 'Approximate positions of typical adherents, not official teaching.'; statements 8, 10, 12, 14 and 16 are each in the holder's own words; the fair summaries on Grace, Spirit, and Kingdom use each side's vocabulary ('ordinances' vs 'sacraments', 'sought and tested', 'usually preceded by'); the Grace history's Orange entry conceding the condemnation of predestination to evil; the Table history giving Calvin his own entry apart from Zwingli; the Kingdom history including Ladd and progressive dispensationalism; the 3–3 passage balance on Grace and Tradition; the primary-source-plus-modern pairing on Grace, Kingdom, and Tradition; 'firmly' on both ends of Grace; the footer admitting the positions are approximate.",
+   "evidence": "None of these produced a screenshot line for any of the four readers.",
+   "fix": "Keep verbatim."
+  },
+  {
+   "id": "orthodox-26",
+   "lens": "Eastern Orthodox",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "All six axes are controversies internal to Western Christianity; the Roman Catholic and Eastern Orthodox coordinates differ by at most 10 points on any axis and the quiz cannot separate the two largest non-Protestant communions, so the intro's \"Tradition-neutral\" promise is overstated for them.",
+   "evidence": "RC [55,5,40,15,10,10] vs EO [65,5,35,15,5,5]; no axis touches the papacy, the filioque, doctrinal development, purgatory, or theosis, the matters that actually divide Rome and the East. Soft-pattern arithmetic: [50,0,33,17,0,0] gives RC 17.41 vs EO 17.55, both shown as 93% match. Intro text: \"Tradition-neutral: every position is described in words its holders would accept.\"",
+   "fix": "Add one distance-only statement, \"The bishop of Rome has, by Christ's appointment, authority over the whole church\", scored as a seventh coordinate used only in nearest-tradition matching (Roman Catholic 95, Anglican 10, all others 5); or, at minimum, add to the intro: \"The six axes are the questions that divided the Western churches; Orthodox and Catholic readers will land close together.\""
+  },
+  {
+   "id": "orthodox-27",
+   "lens": "Eastern Orthodox",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "\"Unsure\" is the only middle answer, so \"I have no view\" and \"my tradition does not frame the question this way\" score identically; on the Spirit and Kingdom statements an Orthodox reader needs the second.",
+   "evidence": "Answer buttons: Strongly disagree / Disagree / Unsure / Agree / Strongly agree; statements 7, 8, 10, 12 use Pentecostal and dispensational vocabulary (\"sign gifts\", \"completion of the New Testament\", \"national Israel\", \"seven-year tribulation\") that has no Orthodox equivalent.",
+   "fix": "Add a one-line note above the quiz: \"If a statement is not how your tradition frames the question, choose Unsure.\" (or a fourth option \"Not how I'd put it\" scored 0)."
+  },
+  {
+   "id": "pentecostal-1",
+   "lens": "Pentecostal (Assemblies of God Statement of Fundamental Truths)",
+   "category": "missing",
+   "severity": "major",
+   "claim": "The quiz lists 'Pentecostal / Assemblies of God' and 'Charismatic non-denominational' as separate traditions but contains no statement on the one doctrine that separates them, so it cannot place a Pentecostal as a Pentecostal; the two entries sit at identical spirit=5 and differ only on grace (80/70), table (85/80) and kingdom (75/60). Statement 9 is also nearly redundant with statement 7 (both test whether prophecy continues), so the Spirit axis is effectively two items.",
+   "evidence": "AG Statement of Fundamental Truths art. 7: the baptism in the Holy Spirit 'is distinct from and subsequent to the experience of the new birth'; art. 8: it 'is witnessed by the initial physical sign of speaking with other tongues' (Acts 2:4). Reformed continuationists (Grudem, Storms, Sovereign Grace, most non-denominational charismatics) reject both. Arithmetic: an AG member agnostic on the pretrib rapture (S10=0, S11=-1, S12=-1) scores [92,92,0,50,83,92] and lands on Charismatic non-denominational (27.59) ahead of AoG (29.17): the Pentecostal/charismatic call flips on eschatology alone.",
+   "fix": "Replace statement 9 with: 'The baptism in the Holy Spirit is an experience distinct from conversion, and speaking in tongues is normally its first sign.' (axis spirit, direction -1). Then set Charismatic non-denominational spirit to 20 and keep Pentecostal / AoG at 5. If the owners prefer to keep the axis purely cessationist/continuationist, merge the two entries into one 'Pentecostal / charismatic' tradition, because the current pair is a distinction the instrument cannot measure."
+  },
+  {
+   "id": "pentecostal-22",
+   "lens": "Pentecostal (Assemblies of God Statement of Fundamental Truths)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The entry name 'Pentecostal / Assemblies of God' leaves out the Holiness-Pentecostal bodies that share every one of its coordinates -- Church of God (Cleveland) and the Church of God in Christ, the largest Pentecostal denomination in the United States -- and gives no signal that Oneness Pentecostals (UPCI), who make baptism in Jesus' name essential to salvation, are not covered.",
+   "evidence": "COGIC and Church of God confess Spirit baptism with tongues, believer's baptism, memorial Supper, Arminian soteriology and premillennial return; their only distinctive (entire sanctification as a second work) is not measured by any axis. UPCI Articles of Faith require water baptism in Jesus' name and Spirit baptism with tongues for the new birth, which the Table axis cannot represent.",
+   "fix": "Rename the entry 'Pentecostal (Assemblies of God, Church of God, COGIC)' and add to the traditions note: 'Oneness Pentecostal bodies are not represented.'"
+  },
+  {
+   "id": "presbyterian-30",
+   "lens": "Presbyterian / Reformed (Westminster Standards, Three Forms of Unity)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "The middle response is labelled 'Unsure', but the honest middle answer for a confessional reader on S13, S16 and S18 is 'partly' or 'it depends', not ignorance; being forced to click 'Unsure' on your own tradition's distinctives is a small indignity, and it nudges people toward a pole instead.",
+   "evidence": "Simulation: S16 requires 'Unsure' from a Presbyterian who is entirely sure worship should be ordered but not bound to a liturgy.",
+   "fix": "Relabel the 0 option \"Neither / it depends\" (HTML answers group, data-v=\"0\")."
+  },
+  {
+   "id": "progressive-2",
+   "lens": "progressive mainline Protestant (PCUSA, ELCA, Episcopal, UMC progressive wing)",
+   "category": "missing",
+   "severity": "blocker",
+   "claim": "Mainline Protestantism (PCUSA, ELCA, UMC, UCC, Disciples, ABC-USA; TEC is covered by Anglican (broad)) has no tradition entry, so a PCUSA member lands on 'Anglican (broad) / Roman Catholic' with 'Presbyterian / Reformed' in 6th place, and an ELCA member lands on 'Roman Catholic' first with 'Lutheran (confessional)' 4th.",
+   "evidence": "Simulation: PCUSA persona (50,0,33,33,33,25): Anglican 32.7, Roman Catholic 34.3, Eastern Orthodox 42.0, Lutheran (confessional) 53.4, Wesleyan 55.5, Presbyterian / Reformed 73.9. ELCA persona (42,0,33,33,25,8): Roman Catholic 28.2, Anglican 33.3, Orthodox 35.9, Lutheran (confessional) 51.4. The intro promises 'See which church families sit closest to your answers' and the list contains 12 families of which 7 are evangelical/confessional and none is mainline, though mainline Protestants are roughly a tenth of US adults (Pew) and the PCUSA (~1.1M) is larger than the PCA (~0.4M).",
+   "fix": "Add {\"name\": \"Mainline Protestant (PCUSA / ELCA / UMC)\", \"position\": {\"grace\": 45, \"table\": 10, \"spirit\": 35, \"kingdom\": 10, \"tradition\": 30, \"worship\": 20}}. With S11 reworded, the PCUSA persona is 16.2 from it (93%) vs 32.8 from Roman Catholic; the ELCA persona 19.5 vs 26.4; the Anglican and Roman Catholic prototypes remain 21.2 and 26.0 away from it and at 0 from their own entries."
+  },
+  {
+   "id": "progressive-16",
+   "lens": "progressive mainline Protestant (PCUSA, ELCA, Episcopal, UMC progressive wing)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The quiz silently assumes an evangelical/Reformed map: the Kingdom axis is an intra-evangelical debate on which six of twelve traditions sit within 10 points of each other, the Spirit right pole is Warfield's argument, the read-more lists contain no mainline author, and the one question that actually divides PCUSA from PCA, ELCA from LCMS, TEC from ACNA, UMC from GMC (how Scripture is read) is never asked.",
+   "evidence": "Read-more: of 24 entries, 5 are Catholic/Orthodox (Schmemann x2, Newman, Florovsky), 3 are primary sources (Calvin, Arminius, Zwingli), and 16 are conservative evangelical or confessional Reformed (Sproul, Mathison x2, Schreiner & Wright, Grudem, Storms, MacArthur, Warfield, Horton, Riddlebarger, Ryrie, Blaising & Bock, Barrett, Frame, Kauflin, Olson); zero mainline. Kingdom coordinates: RC 15, EO 15, Lutheran 15, Anglican 20, Presbyterian 15, Wesleyan 25. Confession of 1967 (9.29): Scripture is 'the words of men, conditioned by the language, thought forms, and literary fashions' of its time; the Tradition axis's right pole assumes 'only Scripture is infallible', so a progressive is on neither pole.",
+   "fix": "Candid scope call: keep the six axes (the Kingdom axis is live for the intended audience and half the tradition list depends on it), but (1) add the mainline tradition entry now, (2) reword S11 and the Kingdom pole names, (3) add at least one mainline title per read-more column, and (4) for a v2, consider a seventh axis 'Scripture: plain and inerrant <-> critically read witness'; without it the quiz cannot distinguish the two halves of any of the four denominational splits of the last fifteen years, though it is also the axis most likely to be worded unfairly, so it should not ship without this kind of review."
+  },
+  {
+   "id": "reformedbaptist-31",
+   "lens": "Reformed Baptist (1689 London Baptist Confession)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "There is no landing place for Calvinistic Baptists who are continuationist (Sovereign Grace, Piper-style), which is probably why the Reformed Baptist entry is hedged to spirit 80; adding that entry frees the Reformed Baptist coordinate to reflect the 1689 position.",
+   "evidence": "Simulation with spirit 90 for Reformed Baptist improves the confessional match from 85% to 93%; a Reformed charismatic entry at [15, 75, 15, 25, 65, 75] would catch the users who currently pull the Reformed Baptist entry leftward.",
+   "fix": "Add {name: 'Reformed charismatic (Sovereign Grace / Newfrontiers)', position: {grace: 15, table: 75, spirit: 15, kingdom: 25, tradition: 65, worship: 75}} and set Reformed Baptist spirit to 90."
+  },
+  {
+   "id": "reformedcharismatic-1",
+   "lens": "Reformed charismatic (John Piper, Wayne Grudem, Sam Storms, Sovereign Grace Churches, Acts 29 continuationists)",
+   "category": "missing",
+   "severity": "blocker",
+   "claim": "The tradition list has no monergist-continuationist entry, so the coordinates encode a Grace-Spirit correlation that does not exist theologically, and a Reformed charismatic cannot land anywhere honest.",
+   "evidence": "Every monergist entry is cessationist-leaning (Lutheran grace 20 / spirit 70; Presbyterian 10 / 75; Reformed Baptist 10 / 80) and both continuationist entries are synergist (Pentecostal grace 80 / spirit 5; Charismatic non-denominational 70 / 5). The quadrant grace <= 20 and spirit <= 20 is empty. Real, sizable movement lives there: Sovereign Grace Churches (Statement of Faith affirms unconditional election and effectual calling and that all New Testament gifts continue), Newfrontiers, Acts 29 (Reformed soteriology, explicitly not cessationist), Bethlehem Baptist under Piper, Grudem's Systematic Theology (the best-selling evangelical systematic, continuationist), Storms. Dort and Westminster say nothing that ties election to cessation. Simulation: (0, 67, 0, 17, 67, 67) lands on Reformed Baptist at 82.6 (66%) and Presbyterian at 87.9 (64%), both 75-80 points away on Spirit; runner-up is a 0.4-unit tie with Charismatic non-denominational.",
+   "fix": "Add {\"name\": \"Reformed charismatic\", \"position\": {\"grace\": 10, \"table\": 65, \"spirit\": 10, \"kingdom\": 20, \"tradition\": 60, \"worship\": 70}}. Distance from the simulated member: 271 -> 16.5 -> 93%. Distances from existing coordinates to the new point: Reformed Baptist 71.2, Presbyterian 77.5, Charismatic non-denominational 80.5, Pentecostal 96.8, so no existing family is captured."
+  },
+  {
+   "id": "sbc-32",
+   "lens": "Southern Baptist (Baptist Faith & Message 2000)",
+   "category": "missing",
+   "severity": "major",
+   "claim": "There is no axis for church polity, which after believer's baptism is the defining Baptist distinctive; the Table axis carries the whole weight of Baptist identity, and a congregational Baptist and a presbyterian or episcopal Christian who happen to agree on the ordinances are indistinguishable.",
+   "evidence": "BF&M 2000 Art. VI: 'A New Testament church ... is an autonomous local congregation of baptized believers ... operates under the Lordship of Christ through democratic processes'; preamble: Baptists 'deny the right of any secular or religious authority to impose a confession of faith upon a church'. Catholic, Orthodox, Anglican, Presbyterian, Methodist, and Baptist positions all differ on this and it is invisible in the six axes.",
+   "fix": "If a seventh axis is feasible: 'Church: Connectional ↔ Congregational', with statements such as 'Each local congregation governs itself under Christ; no bishop, presbytery, or convention can bind it' (+1), 'Bishops or presbyteries rightly hold authority over local congregations' (-1), 'Church membership should be limited to those who have personally professed faith' (+1). If not, say in the intro that polity is deliberately out of scope."
+  },
+  {
+   "id": "sbc-33",
+   "lens": "Southern Baptist (Baptist Faith & Message 2000)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The tradition list has no historically Black Baptist entry, although the National Baptist Convention USA is the second-largest Baptist body in the country and its members will take this quiz; they share the SBC's ordinances and Scripture-alone stance but are markedly more open on the gifts and freer in worship, so they will be scattered between 'Southern Baptist' and 'Pentecostal'.",
+   "evidence": "NBC USA's Articles of Faith descend from the same 1925 Baptist confessional family as the BF&M; Black Baptist worship is neither cessationist-leaning nor 'planned Frontier' in the SBC sense.",
+   "fix": "Add 'National Baptist (historically Black Baptist)' at approximately {grace 70, table 85, spirit 50, kingdom 65, tradition 85, worship 80}."
+  },
+  {
+   "id": "scholar-1",
+   "lens": "biblical scholar",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The passage list cannot deliver what the page promises. The section intro says these are \"the passages each side reaches for\", but key_passages is a flat, unlabeled chip list (theology-compass.html lines 997-999), whereas read_more is split by pole (lines 1002-1003). Nothing tells a reader that Ephesians 2:20 is a cessationist text and Acts 2:17-18 a continuationist one, that 1 Corinthians 13:8-12 is read both ways, or that John 6 is claimed by both the sacramental and the Zwinglian side.",
+   "evidence": "Line 449: \"A fair summary of both poles, a short dated history, and the passages each side reaches for.\" Line 998: a.passages.map renders each string as a bare chip with a \"Read in Scripture Web\" CTA and no pole or gloss. Compare the more-pole span used for books. The brief asks that 1 Corinthians 13:8-12 be included \"read both ways\"; the data structure has no way to say so.",
+   "fix": "Restructure key_passages per axis as {\"left\": [...], \"right\": [...], \"both\": [...]} and render three labeled rows like read_more (left pole name, right pole name, \"Read both ways\"). If chips must stay flat, add a 6-10 word gloss to each, e.g. \"1 Corinthians 13:8-12 - 'when the perfect comes': the canon, or Christ's return\", \"Ephesians 2:20 - apostles and prophets as the church's foundation\", \"Acts 2:17-18 - 'in the last days... your sons and daughters shall prophesy'\"."
+  },
+  {
+   "id": "survey-2",
+   "lens": "survey methodologist",
+   "category": "scoring",
+   "severity": "blocker",
+   "claim": "No axis distinguishes Roman Catholic from Eastern Orthodox, so which one a Catholic or Orthodox respondent \"lands\" on is decided by rounding on the Grace items.",
+   "evidence": "Distance between the two coordinate sets is 13.2, less than two answer steps on one axis (one step = 100/12 = 8.3 points). A Catholic who answers devoutly Catholic on five axes and leans free-will on Grace (S1 Unsure, S2 Strongly agree, S3 Disagree) scores [75,0,25,8,0,0] -> \"Eastern Orthodox 93%\", \"Roman Catholic 88%\". A Thomist Catholic scores [42,0,25,8,0,0] -> \"Roman Catholic 89%\", \"Eastern Orthodox 89%\" (identical percentages). Same structure for Pentecostal / Assemblies of God vs Charismatic non-denominational (18.7 apart, second slot always the twin).",
+   "fix": "For v1 either merge each pair into one family (\"Catholic or Orthodox\", \"Pentecostal / charismatic\") or add unscored tie-break items used only in nearest-tradition: \"The bishop of Rome holds a God-given authority over the whole church.\" (Catholic yes, Orthodox no; Lumen Gentium 22 vs. Orthodox rejection of universal jurisdiction) and \"Speaking in tongues is the initial physical evidence of baptism in the Holy Spirit.\" (Assemblies of God Statement of Fundamental Truths, art. 8; most non-denominational charismatics say no)."
+  },
+  {
+   "id": "survey-21",
+   "lens": "survey methodologist",
+   "category": "scoring",
+   "severity": "major",
+   "claim": "Keying is unbalanced on every axis (two items toward one pole, one toward the other; five axes lean left-keyed, Kingdom right-keyed), so acquiescence produces a systematic profile, and three items give only 13 score levels with a single answer step of 8.3 points crossing a band boundary in 4 of 12 transitions.",
+   "evidence": "All 18 direction signs are correct given the pole definitions (agreement with 1,3,4,6,7,9,11,13,15,16,18 pushes left; with 2,5,8,10,12,14,17 pushes right). All-Strongly-agree -> [33,33,33,67,33,33] -> \"Reformed-leaning, sacramental-leaning, open to the gifts\"; all-Agree -> [42,42,42,58,42,42]. One flip Strongly agree -> Strongly disagree moves an axis 33 points (two bands). Three heterogeneous items per axis will not reach conventional reliability (alpha .70).",
+   "fix": "v1: four items per axis (24 items, ~4 minutes), keyed 2/2, using the rewrites above plus one opposite-keyed addition per axis; six per axis if per-axis reliability is to be reported. Candidates (direction in brackets): Grace: [+1] \"Someone truly born again can later fall away and be finally lost.\"; [+1] \"God gives everyone enough grace to believe; the difference lies in how each person responds.\"; [-1] \"Whether a person believes is ultimately decided by God, not by the person.\" Table: [+1] \"Baptism should be given only to those old enough to profess faith for themselves.\"; [+1] \"The bread and wine remain ordinary bread and wine; the Supper's value is in remembering.\"; [-1] \"In baptism God himself acts: he washes, seals, or joins the person to Christ.\" Spirit: [+1] \"With the Bible complete, the church no longer needs prophecy to hear from God.\"; [+1] \"Tongues today are learned or emotional speech, not the gift described in the New Testament.\"; [-1] \"Every Christian should eagerly seek the gifts of the Spirit, including the more dramatic ones.\" Kingdom: [-1] \"There will be no future period in which God deals with Israel separately from the church.\"; [-1] \"The Old Testament land promises find their fulfilment in Christ and the new creation.\"; [+1] \"Ethnic Israel still has a distinct future role in God's plan that the church has not taken over.\" Tradition: [+1] \"A Christian with an open Bible may rightly reject a teaching that every council has affirmed.\"; [+1] \"Practices not found in Scripture, however ancient, may be dropped by any church.\"; [-1] \"What the apostles handed down by word of mouth carries the same authority as what they wrote.\" Worship: [+1] \"Spontaneous prayer in one's own words suits public worship better than prayers read from a book.\"; [+1] \"A church should adapt its service style to the people it serves rather than keep historic forms.\"; [-1] \"The congregation should say or sing set responses, creeds, and prayers together each week.\""
+  },
+  {
+   "id": "wesleyan-20",
+   "lens": "Wesleyan / Methodist (Wesley's sermons, Articles of Religion, Global Methodist / UMC evangelical wing)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "Nothing in the eighteen statements touches perseverance, yet Hebrews 6:4-6 is listed as a key grace passage. For lay Methodists, 'can a true believer fall away' is the single most common way they distinguish themselves from Baptists ('once saved, always saved'), and the quiz cannot see it. Entire sanctification and assurance are likewise invisible, so the only thing that makes the Wesleyan entry Wesleyan is grace plus infant baptism.",
+   "evidence": "Wesley, 'Serious Thoughts upon the Perseverance of the Saints' (1751) and 'A Call to Backsliders' (Sermon 86) deny unconditional perseverance; the Confession of Faith Art. XI ('Of Sanctification and Christian Perfection'). Statement 2 tests pre-conversion resistance, not post-conversion apostasy. Arithmetic if S2 were replaced by 'Someone who has truly been born again cannot finally fall away and be lost' (direction -1): Wesleyan -2 -> +2, SBC-typical +2 -> -2 (grace 50 vs coordinate 45), Reformed +2 -> -2, so the axis keeps its spread while separating Methodists from Baptists on the point they themselves name.",
+   "fix": "If a seventh statement is too many, replace statement 2 with the perseverance statement above; if the six-axis frame is fixed, at least drop Hebrews 6:4–6 from the passages or add the statement it belongs to."
+  }
+ ]
+}

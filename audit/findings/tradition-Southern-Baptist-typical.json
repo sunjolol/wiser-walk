@@ -1,0 +1,23 @@
+{
+ "target": "tradition:Southern Baptist (typical)",
+ "findings": [
+  {
+   "id": "mockery-26",
+   "lens": "mockery critic",
+   "category": "tone",
+   "severity": "minor",
+   "claim": "'(typical)' is the only qualifier on the list that is a judgement rather than a wing name — 'Lutheran (confessional)' and 'Anglican (broad)' name real sub-traditions. The SBC pastor screenshots: 'lol, typical.'",
+   "evidence": "The panel note already says 'Approximate positions of typical adherents', so the parenthetical adds nothing but the sneer.",
+   "fix": "name: 'Southern Baptist'"
+  },
+  {
+   "id": "sbc-1",
+   "lens": "Southern Baptist (Baptist Faith & Message 2000)",
+   "category": "scoring",
+   "severity": "blocker",
+   "claim": "The Grace coordinate 45 ('balanced on grace') describes no Southern Baptist: the convention is split between Calvinists (Grace ~0-15) and non-Calvinist Traditionalists (Grace ~75-85), and the average of the two populations makes a real historic-premillennial Southern Baptist land on 'Anabaptist / Mennonite' first.",
+   "evidence": "Lifeway Research 2012: about 30% of SBC pastors describe their congregation as Calvinist; the 2012 'Statement of the Traditional Southern Baptist Understanding of God's Plan of Salvation' (Hankins et al.) was written precisely because the other ~70% reject Calvinism. Arithmetic: a Traditionalist who is historic premillennial (S10 +1, S11 -1, S12 -2, Kingdom 50; the view of much SBC seminary leadership, BF&M X being silent on the millennium) scores [83,100,75,50,92,67]; distance to Anabaptist = sqrt(64+225+400+400+484+49) = 40.3, to Southern Baptist = sqrt(1444+225+0+400+49+9) = 46.1. Even the pretrib profile in the simulation loses 1444 of its 1752 squared distance to the Grace axis alone, capping the match at 83% for a textbook member. The label '(typical)' also stands out: the parallel qualifiers are '(confessional)' and '(broad)', which name a subgroup, while '(typical)' grades the person and implies the SBC has no confessional standard (it has the BF&M 2000).",
+   "fix": "Replace the single entry with two: 'Southern Baptist (non-Calvinist)' = {grace 75, table 85, spirit 75, kingdom 70, tradition 85, worship 70} and 'Southern Baptist (Calvinist)' = {grace 15, table 85, spirit 75, kingdom 55, tradition 85, worship 70}. Check: historic-premil Traditionalist -> non-Calvinist entry sqrt(64+225+0+400+49+9)=27.3 vs Anabaptist 40.3; Calvinist profile [0,100,75,75,92,67] -> Calvinist entry sqrt(225+225+0+400+49+9)=30.1 vs Dispensational 48.9 vs Reformed Baptist 66.5. If only one entry is kept, put grace at 70 and rename it 'Southern Baptist (BF&M 2000)'."
+  }
+ ]
+}

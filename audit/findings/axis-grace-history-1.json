@@ -1,0 +1,32 @@
+{
+ "target": "axis:grace:history:1",
+ "findings": [
+  {
+   "id": "copy-14",
+   "lens": "copy editor",
+   "category": "citation",
+   "severity": "minor",
+   "claim": "\"Council of Orange: faith itself begins with grace, though the council also condemns predestination to evil.\" names the wrong council: the 529 synod is the Second Council of Orange.",
+   "evidence": "There was a first Council of Orange in 441 (disciplinary canons); the 529 council under Caesarius of Arles, confirmed by Boniface II in 531, is uniformly cited as Orange II / the Second Council of Orange (Denzinger 370–397).",
+   "fix": "\"Second Council of Orange: faith itself begins with grace, though the council also condemns predestination to evil.\""
+  },
+  {
+   "id": "historian-7",
+   "lens": "church historian",
+   "category": "citation",
+   "severity": "minor",
+   "claim": "'Council of Orange' should be 'Second Council of Orange' (there was a first, in 441), and the line understates what the council said on the synergist side: it does not only reject predestination to evil, it also affirms that every baptized person can, with Christ's help, do what salvation requires.",
+   "evidence": "Orange II, canons 5–7 (the initium fidei is God's gift); Conclusion: 'we not only do not believe that any are foreordained to evil by the power of God, but... anathema'; and 'all baptized persons have the ability and responsibility, if they desire to labor faithfully, to perform with the aid and cooperation of Christ what is of essential importance in regard to the salvation of their soul' (Denzinger 370–397; Pelikan I, 329).",
+   "fix": "{when: '529', what: 'Second Council of Orange: even the first stirring of faith is God\\'s gift (canon 5), yet the council anathematizes any predestination to evil and says all the baptized can, with Christ\\'s help, do what salvation requires.'}"
+  },
+  {
+   "id": "mockery-20",
+   "lens": "mockery critic",
+   "category": "missing",
+   "severity": "major",
+   "claim": "The Grace timeline is Augustine, Orange, and then Protestants arguing with each other (Luther, Dort, Wesley). The Catholic apologist screenshots it: 'lol, written by an evangelical — Trent Session VI, the biggest statement on grace since Orange, isn't on the list.' The Orthodox convert adds that his side has no patristic ancestor at all, so 'synergist' looks like a 17th-century Dutch invention.",
+   "evidence": "Council of Trent, Decree on Justification (1547), canon 4: the will, moved by God, 'can also refuse its assent if it wishes'; canons 15–16: no one may presume certainty of predestination. John Cassian, Conferences XIII (c. 426), is the classic Eastern statement of grace and free will cooperating, and Cassian is a saint in the East.",
+   "fix": "Insert after Augustine: ['c. 426', 'John Cassian, Conferences XIII: grace and free will work together — the Eastern \"synergy\" against both Pelagius and hard predestination.'] and after Luther: ['1547', 'Council of Trent, Decree on Justification: grace goes first and enables the will, which can still refuse it; no one may presume to know he is among the predestined.']"
+  }
+ ]
+}

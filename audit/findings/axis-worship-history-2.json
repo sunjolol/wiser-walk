@@ -1,0 +1,32 @@
+{
+ "target": "axis:worship:history:2",
+ "findings": [
+  {
+   "id": "copy-16",
+   "lens": "copy editor",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "\"Thomas Cranmer's first Book of Common Prayer.\" is a sentence fragment with no claim, while its neighbours in the same list are full statements.",
+   "evidence": "Compare \"Puritans articulate the regulative principle: only what Scripture commands belongs in worship.\" The 1549 book's significance for this axis is that it replaced the Latin rites with one vernacular liturgy for the whole realm (Act of Uniformity 1549).",
+   "fix": "\"Thomas Cranmer's first Book of Common Prayer gives the English church a single vernacular liturgy.\""
+  },
+  {
+   "id": "lutheran-25",
+   "lens": "confessional Lutheran (LCMS / WELS / Book of Concord)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The history jumps from Justin Martyr (155) to Cranmer (1549), skipping the first Protestant liturgies, Luther's Formula Missae (1523) and Deutsche Messe (1526), which kept the historic order of the Mass in the vernacular and added congregational hymns, the pattern the tradition at Worship 20 still follows.",
+   "evidence": "Luther, Formula Missae (1523), Deutsche Messe (1526); AC XXIV.1: \"we keep the Mass\"; the Lutheran Divine Service (LSB, CW) is a direct descendant.",
+   "fix": "Insert before the Cranmer entry: {\"when\": \"1526\", \"what\": \"Luther's German Mass keeps the historic order of the Mass in the vernacular and adds congregational hymns.\"}"
+  },
+  {
+   "id": "mockery-32",
+   "lens": "mockery critic",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The liturgical timeline jumps from Justin Martyr (155) to Cranmer (1549); Hillsong makes the list and the Divine Liturgy of St John Chrysostom does not. Orthodox convert: 'lol.'",
+   "evidence": "The Byzantine liturgy attributed to Chrysostom took shape in Constantinople by c. 400 and is the Orthodox Sunday service to this day.",
+   "fix": "Insert before Cranmer: ['c. 400', 'The Divine Liturgy of St John Chrysostom takes shape in Constantinople; it is still the Orthodox Sunday service.']"
+  }
+ ]
+}

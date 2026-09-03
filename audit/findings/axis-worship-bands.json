@@ -1,0 +1,68 @@
+{
+ "target": "axis:worship:bands",
+ "findings": [
+  {
+   "id": "anabaptist-11",
+   "lens": "Anabaptist / Mennonite (Schleitheim Confession, Confession of Faith in a Mennonite Perspective 1995)",
+   "category": "tone",
+   "severity": "minor",
+   "claim": "'Informal in worship' (60-79) misdescribes plain-church worship, which is non-liturgical but highly formal.",
+   "evidence": "Old Order Mennonite and Amish services have a prescribed order, prescribed hymns (Ausbund) and a two-sermon structure; a conservative Mennonite at 65 would object to 'informal'.",
+   "fix": "Bands: 'liturgical', 'liturgy-leaning', 'flexible in worship', 'simple in worship', 'free in worship'."
+  },
+  {
+   "id": "charismatic-18",
+   "lens": "charismatic non-denominational (Vineyard, Bethel, Hillsong, Third Wave)",
+   "category": "tone",
+   "severity": "minor",
+   "claim": "'informal in worship' (60-79) is inaccurate for produced contemporary worship and reads as a liturgical put-down.",
+   "evidence": "Hillsong, Bethel and Elevation services are highly rehearsed and produced; 'informal' is the word a prayer-book critic would use. The parallel band on the other side is the neutral 'liturgy-leaning'.",
+   "fix": "'contemporary in worship'."
+  },
+  {
+   "id": "mockery-12",
+   "lens": "mockery critic",
+   "category": "tone",
+   "severity": "major",
+   "claim": "'informal in worship' for band 3. The Pentecostal pastor screenshots his headline 'Continuationist, memorialist, informal in worship': 'lol, informal — written by someone in a cassock.' 'Informal' is what liturgical people call free worship; free-worship people call it Spirit-led or free.",
+   "evidence": "The pole name is 'Free' and the fair summary uses 'free worship'; the band system elsewhere uses the pole word with '-leaning'. 'Informal' is the only band on any axis that describes a position with an outsider's word.",
+   "fix": "bands: ['liturgical', 'liturgy-leaning', 'between liturgical and free', 'leaning to free worship', 'free in worship']"
+  },
+  {
+   "id": "presbyterian-4",
+   "lens": "Presbyterian / Reformed (Westminster Standards, Three Forms of Unity)",
+   "category": "unfairness",
+   "severity": "blocker",
+   "claim": "The middle band 'flexible in worship' is exactly where regulative-principle Presbyterians land (42-50), and it is the one adjective their tradition cannot bear: the regulative principle is the strictest rule of worship in Protestantism.",
+   "evidence": "WCF 21.1: the acceptable way of worshipping God 'is instituted by himself, and so limited by his own revealed will, that he may not be worshipped according to the imaginations and devices of men'. Simulation: S16 0, S17 -2, S18 -1 -> raw -1 -> 42 -> 'flexible in worship'; a Hodge-style reader with S16 -1, S18 -1 -> raw 0 -> 50 -> still 'flexible in worship'. The headline could read 'Firmly monergist, cessationist, flexible in worship' for an OPC elder.",
+   "fix": "bands: [\"liturgical\", \"liturgy-leaning\", \"ordered in worship\", \"informal in worship\", \"free in worship\"]. 'Ordered' is true of both the regulative-principle church and a blended evangelical service, and false of neither pole."
+  },
+  {
+   "id": "reformedbaptist-13",
+   "lens": "Reformed Baptist (1689 London Baptist Confession)",
+   "category": "inaccuracy",
+   "severity": "major",
+   "claim": "The Liturgical/Free axis has no place for the regulative principle, so a Reformed Baptist lands at 50 and is labeled 'flexible in worship', and the tradition entry at 65 reads 'informal in worship'. Both are the opposite of a regulative-principle service.",
+   "evidence": "Simulation: statement 16 Disagree (+1), 17 Strongly disagree (-2), 18 Disagree (+1) = 0 -> 50 -> 'flexible in worship'. LBC 22.1: God 'may not be worshipped according to the imagination and devices of men... or any other way not prescribed in the Holy Scriptures'. That is the least flexible position on the axis.",
+   "fix": "bands: ['liturgical', 'liturgy-leaning', 'between set forms and free', 'informal in worship', 'free in worship']; and set the Reformed Baptist worship coordinate to 50."
+  },
+  {
+   "id": "reformedcharismatic-12",
+   "lens": "Reformed charismatic (John Piper, Wayne Grudem, Sam Storms, Sovereign Grace Churches, Acts 29 continuationists)",
+   "category": "tone",
+   "severity": "major",
+   "claim": "'informal in worship' (60-79) is a judgement about manner, not form, and lands in the headline of people whose worship is planned and reverent.",
+   "evidence": "My simulated member scores 67 here; a Sovereign Grace member whose worship pastor wrote Worship Matters would be sharing a card reading 'informal in worship'. The mirror band on the other side is 'liturgy-leaning', which is descriptive, not evaluative.",
+   "fix": "bands[3]: \"free-leaning in worship\"."
+  },
+  {
+   "id": "sbc-23",
+   "lens": "Southern Baptist (Baptist Faith & Message 2000)",
+   "category": "tone",
+   "severity": "major",
+   "claim": "'Informal in worship' is the band a typical Southern Baptist receives (60-79), and it is simply false of the traditional Baptist service; non-liturgical is not informal.",
+   "evidence": "The simulation lands at 67 -> 'informal in worship'. First Baptist Dallas, Bellevue, and thousands of SBC churches hold ordered services with robed choirs and printed bulletins. The word will read as a put-down on a shared card.",
+   "fix": "bands: ['liturgical', 'liturgy-leaning', 'flexible in worship', 'non-liturgical', 'free in worship']"
+  }
+ ]
+}

@@ -1,0 +1,14 @@
+{
+ "target": "tradition:Anglican (broad)",
+ "findings": [
+  {
+   "id": "anglican-1",
+   "lens": "Anglican (broad, Thirty-Nine Articles / Book of Common Prayer)",
+   "category": "scoring",
+   "severity": "blocker",
+   "claim": "The coordinates [40, 25, 45, 20, 30, 20] make a typical Prayer-Book Anglican land on Roman Catholic first and Anglican second, which is exactly the screenshot this product cannot afford ('Theology Compass says Anglicans are really Catholics').",
+   "evidence": "Simulation scores [42, 0, 33, 17, 33, 8]: d(Roman Catholic) = sqrt(780) = 27.9, d(Anglican) = sqrt(935) = 30.6. 625 of the 935 is the Table axis alone. Any Anglican who believes Article XXVII ('a sign of Regeneration... whereby, as by an instrument, they that receive Baptism rightly are grafted into the Church'; 'The Baptism of young Children is in any wise to be retained'), Article XXVIII and the Catechism ('verily and indeed taken and received by the faithful') answers S4 +2, S6 +2 and S5 -1 or -2, so Table = 0-8, never 25. Spirit 45 also sits right of the tradition's centre: the Church of England has an authorised healing ministry (A Time to Heal, 2000; Common Worship Wholeness and Healing), a very large charismatic wing (HTB, New Wine), and a majority Global-South membership that is renewal-shaped; 'undecided' is not where the typical adherent is. Worship 20 is high for a church whose Sunday service is by canon a set liturgy: the simulation gives 8.",
+   "fix": "Set Anglican (broad) to [40, 10, 35, 20, 30, 15] (d = sqrt(175) = 13.2, RC second at 27.9). Or, better, adopt the S5 replacement in the scoring finding, which makes the current Table 25 correct (same respondent then scores Table 25, d = 17.6 vs RC 34.0)."
+  }
+ ]
+}

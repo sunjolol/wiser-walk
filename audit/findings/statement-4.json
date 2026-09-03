@@ -1,0 +1,59 @@
+{
+ "target": "statement:4",
+ "findings": [
+  {
+   "id": "anabaptist-6",
+   "lens": "Anabaptist / Mennonite (Schleitheim Confession, Confession of Faith in a Mennonite Perspective 1995)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "'Christ is truly present in a way that goes beyond a symbol' can be honestly affirmed by a Mennonite who believes the risen Christ is present in the gathered congregation, not the elements, and it would score him sacramental.",
+   "evidence": "CFMP Art. 12: 'the Lord's Supper is a sign by which the church thankfully remembers the new covenant... the members of the church renew their covenant with God and with each other', with the commentary locating the presence of the risen Christ in the gathered body (Matthew 18:20). Pilgram Marpeck's 'co-witness' view goes further still. The statement never says where Christ is present, so the Marpeck strand and many modern Mennonites would Agree while remaining memorialist on the elements.",
+   "fix": "'In the Lord's Supper, Christ is truly present in the bread and wine themselves, not only in the gathered congregation.'"
+  },
+  {
+   "id": "catholic-8",
+   "lens": "Roman Catholic",
+   "category": "scoring",
+   "severity": "major",
+   "claim": "\"In the Lord's Supper, Christ is truly present in a way that goes beyond a symbol\" is affirmed equally by a Catholic and a Calvinist, so the Table axis has no statement separating the Catholic/Orthodox/Lutheran pole from the Reformed spiritual-presence position. Presbyterians answering S4-S6 honestly score 0 on Table and sit on top of the Catholic pole, while their coordinate says 35. 'Lord's Supper' is also not the Catholic word.",
+   "evidence": "Calvin, Institutes IV.17.10-12 affirms a true presence by the Spirit while denying local presence; WCF 29.7: 'really, but spiritually, present'. Trent Sess. XIII canons 1-2 and CCC 1376 define substantial presence by transubstantiation. A Presbyterian answering S4 +2, S5 -2, S6 +2 gets raw -6, score 0, Table coordinate 35.",
+   "fix": "\"In the Eucharist (the Lord's Supper), the bread and wine truly become the body and blood of Christ.\" Catholic, Orthodox, and Lutheran adherents agree; Reformed answer Unsure or Disagree; memorialists Strongly disagree."
+  },
+  {
+   "id": "charismatic-6",
+   "lens": "charismatic non-denominational (Vineyard, Bethel, Hillsong, Third Wave)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "'Christ is truly present in a way that goes beyond a symbol' reads, to a charismatic, as a statement about the manifest presence of God in the gathering, not about the elements, so charismatics are pushed toward 'sacramental' without holding a means-of-grace view.",
+   "evidence": "Charismatic churches speak constantly of 'the presence' (Ps 22:3, Matt 18:20); Bethel and Joseph Prince (Health and Wholeness Through the Holy Communion, 2006) teach communion as an act of faith for healing while calling it an ordinance. Every charismatic profile I simulated answers Agree or Strongly agree; with Q4 = +2 a Bethel member scores table 67. The statement never says 'in the bread and wine' or 'through receiving them'.",
+   "fix": "'Receiving the bread and wine is a means by which God gives grace, not only a way of remembering what Christ did.' (still includes Calvin's spiritual presence, excludes bare memorial, and is unambiguous for charismatics)."
+  },
+  {
+   "id": "pentecostal-9",
+   "lens": "Pentecostal (Assemblies of God Statement of Fundamental Truths)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "'In the Lord's Supper, Christ is truly present in a way that goes beyond a symbol' forces a Pentecostal who confesses Christ's real presence by the Spirit among the gathered believers, and who expects healing at the Table, to deny Christ's presence in order to avoid being scored sacramental.",
+   "evidence": "AG Statement of Fundamental Truths art. 6 calls the Supper 'the symbol expressing our sharing the divine nature of our Lord Jesus Christ (2 Peter 1:4); a memorial of His suffering and death' -- so the tradition's confessional answer is Disagree -- yet Pentecostal spirituality prays 'Christ is present here' at the Table (Matt 18:20), and AG theologians such as Chris Green (Toward a Pentecostal Theology of the Lord's Supper, 2012) argue for presence by the Spirit. Arithmetic: S4=+1 moves table from 92 to 75 ('memorial-leaning') on a point unrelated to sacramental theology.",
+   "fix": "'In the Lord's Supper, Christ is given to us through the bread and wine themselves, not only remembered.'"
+  },
+  {
+   "id": "sbc-28",
+   "lens": "Southern Baptist (Baptist Faith & Message 2000)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'Truly present in a way that goes beyond a symbol' makes symbol and presence contraries, so a Baptist who affirms that Christ is truly present with his gathered church at the Supper (Matthew 18:20) while holding the bread remains a symbol is torn.",
+   "evidence": "BF&M 2000 Art. VII: 'a symbolic act of obedience'; Baptist treatments such as Hammett, Forty Questions About Baptism and the Lord's Supper, argue for a spiritual presence within a memorial view. The discriminating question is whether Christ is given in or through the elements.",
+   "fix": "'In the Lord's Supper Christ is given to believers in or through the bread and cup, not only remembered.' (direction -1); this still catches Calvin's view and Lutheran/Catholic views on the sacramental side."
+  },
+  {
+   "id": "survey-8",
+   "lens": "survey methodologist",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "\"Christ is truly present in a way that goes beyond a symbol\" is affirmed by Reformed Baptists and many Baptists (Christ present spiritually with the gathered church), so memorialists on the Supper are pulled toward Sacramental.",
+   "evidence": "Second London Baptist Confession (1689) 30.7: worthy receivers \"really and indeed... spiritually receive, and feed upon Christ crucified.\" Reformed Baptist coordinate is table 70 yet a 1689 subscriber answers Agree here (worked case scores 75; with Strongly agree, 67). The item must locate the presence in the elements, which is what actually divides the poles.",
+   "fix": "Replace with: \"In the Lord's Supper Christ is received through the bread and wine themselves, not only remembered.\" (16 words, direction -1)."
+  }
+ ]
+}

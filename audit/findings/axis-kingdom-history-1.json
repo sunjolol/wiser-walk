@@ -1,0 +1,68 @@
+{
+ "target": "axis:kingdom:history:1",
+ "findings": [
+  {
+   "id": "catholic-19",
+   "lens": "Roman Catholic",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The only Catholic marker on this axis is Augustine; the Church's formal rejection of millenarianism is absent, while Westminster's covenant of works (a Reformed-internal development that has nothing to do with Israel or the millennium) stands in as the left pole's landmark.",
+   "evidence": "Holy Office decree of 21 July 1944 (DS 3839): mitigated millenarianism 'cannot safely be taught'; CCC 676: the Church 'has rejected even modified forms of this falsification of the kingdom to come under the name of millenarianism'.",
+   "fix": "Add {\"when\":\"1944\",\"what\":\"Holy Office rules that even 'mitigated' millenarianism cannot safely be taught; CCC 676 (1992) repeats the rejection.\"}"
+  },
+  {
+   "id": "churchofchrist-9",
+   "lens": "Church of Christ / Restoration Movement (Stone-Campbell)",
+   "category": "unfairness",
+   "severity": "minor",
+   "claim": "'1646 Westminster Confession sets out the covenant of works and the covenant of grace' is the only post-Augustine entry for the left pole, so the timeline tells a member who scores 0 that his position's modern history is Reformed federalism.",
+   "evidence": "The left pole has two entries (Augustine, Westminster); the right has four (Darby, Scofield, Ladd, Blaising/Bock). The largest American fight over premillennialism outside the Reformed world was the Stone-Campbell one (R. H. Boll expelled from mainstream fellowship, 1915-1930s).",
+   "fix": "Add: '1816 Alexander Campbell's Sermon on the Law: the Christian is under the New Covenant alone and the kingdom began at Pentecost; a century later the Churches of Christ expel premillennialism (the Boll controversy).' Keep Westminster but reword to '...the covenant of grace, one people of God in both testaments.'"
+  },
+  {
+   "id": "historian-19",
+   "lens": "church historian",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'Westminster Confession sets out the covenant of works and the covenant of grace' is true but is not the point this axis measures. The covenantal claim tested by statement 11 (one people of God across both testaments) is Calvin's, and he states it exactly.",
+   "evidence": "Calvin, Institutes II.10.2 (1559): 'the covenant made with all the patriarchs is so much like ours in substance and reality that the two are actually one and the same'; II.11 on the differences in administration. Westminster ch. 7 (1646) builds on this but is about the works/grace distinction.",
+   "fix": "{when: '1559', what: 'Calvin, Institutes II.10–11: the covenant with the patriarchs and ours are one in substance, differing only in administration.'} Keep the 1646 line if space allows, but this one should come first."
+  },
+  {
+   "id": "lutheran-20",
+   "lens": "confessional Lutheran (LCMS / WELS / Book of Concord)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "\"1646 Westminster Confession sets out the covenant of works and the covenant of grace\" defines the left pole by a system four of its five occupying traditions reject, while the Lutheran amillennial anchor, Augsburg XVII (1530), is absent.",
+   "evidence": "AC XVII (1530) condemns chiliasm 116 years before Westminster; Rome (Trent) and the Orthodox have no covenant-of-works doctrine either.",
+   "fix": "Replace with or add before it: {\"when\": \"1530\", \"what\": \"Augsburg Confession XVII rejects a reign of the saints on earth before the resurrection: the kingdom is present now and consummated at Christ's return.\"}"
+  },
+  {
+   "id": "mockery-22",
+   "lens": "mockery critic",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "'1646 Westminster Confession sets out the covenant of works and the covenant of grace' has nothing to do with Israel and the church, and it makes the left pole's founding document a Presbyterian confession — the Catholic's, Lutheran's, and Mennonite's eschatology apparently begins at Westminster. Meanwhile the dispensational side's history starts in 1830, which is the covenantalist's favourite jab ('your theology was invented by Darby').",
+   "evidence": "Justin Martyr, Dialogue 80–81 (c. 155) and Irenaeus, Against Heresies 5.32–36 (c. 180) expect a literal thousand-year reign on earth; Papias is cited for the same by Eusebius. Dispensationalists (Ryrie, Dispensationalism, ch. 4) claim exactly these as the premillennial root; so does Ladd.",
+   "fix": "Replace the 1646 entry with ['c. 155–180', 'Justin Martyr and Irenaeus expect a literal thousand-year reign of Christ on earth — the early premillennialism both Ladd and the dispensationalists claim.'] and move it to the front of the list."
+  },
+  {
+   "id": "reformedbaptist-21",
+   "lens": "Reformed Baptist (1689 London Baptist Confession)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "'1646 Westminster Confession sets out the covenant of works and the covenant of grace' is the only covenantal marker, which implies covenant theology is paedobaptist property and helps explain the RB entry sitting at 30.",
+   "evidence": "Nehemiah Coxe, A Discourse of the Covenants (1681); 1689 LBC ch. 7 and 20 (covenant of grace 'revealed in the gospel').",
+   "fix": "Change to: {when: '1646 / 1689', what: 'Westminster and London Baptist Confessions set out the covenant of works and the covenant of grace; Particular Baptists give covenant theology a credobaptist form.'}"
+  },
+  {
+   "id": "sbc-20",
+   "lens": "Southern Baptist (Baptist Faith & Message 2000)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The 1646 Westminster line makes the left pole explicitly paedobaptist covenant theology and nothing on the timeline records the Baptist middle way that arose in the SBC's own seminary.",
+   "evidence": "Gentry & Wellum, Kingdom through Covenant (Crossway 2012; 2nd ed. 2018) and Wellum & Parker (eds.), Progressive Covenantalism (B&H 2016), both from Southern Seminary, are the standard statement of a position that is neither Westminster covenantalism nor dispensationalism.",
+   "fix": "Add {when: '2012', what: 'Gentry and Wellum, Kingdom through Covenant: progressive covenantalism, a Baptist alternative to both Westminster covenant theology and dispensationalism.'}"
+  }
+ ]
+}

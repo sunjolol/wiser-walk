@@ -1,0 +1,23 @@
+{
+ "target": "axis:tradition:history:1",
+ "findings": [
+  {
+   "id": "mockery-23",
+   "lens": "mockery critic",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The 'with tradition' side of the timeline is Vincent, then three Roman entries (Trent, Newman, Vatican II) and no Orthodox one. The Orthodox convert screenshots Newman: 'lol, written by a Catholic — we reject Newman's development theory, and our Fathers aren't on the list.' The Protestant side is also missing its own founding moment.",
+   "evidence": "Basil, On the Holy Spirit 27.66 (c. 375): some teachings come from written Scripture, others from unwritten apostolic tradition — the standard Orthodox citation (used by Florovsky, whom the quiz lists). Luther at Worms, 1521 ('unless I am convinced by Scripture and plain reason'), is the sola scriptura moment the timeline skips in favour of 1646.",
+   "fix": "Insert before Trent: ['c. 375', 'Basil the Great, On the Holy Spirit: some teachings come from written Scripture, others from the unwritten tradition of the apostles.'] and ['1521', 'Luther at Worms: bound by Scripture and plain reason, he will not recant on the authority of popes and councils alone.']"
+  },
+  {
+   "id": "reformedbaptist-25",
+   "lens": "Reformed Baptist (1689 London Baptist Confession)",
+   "category": "missing",
+   "severity": "major",
+   "claim": "The Scripture-alone side of the timeline begins in 1646; the Reformation is absent. Every Protestant reader will notice that Worms is missing from a history of sola scriptura.",
+   "evidence": "Luther at the Diet of Worms, 1521: conscience 'captive to the Word of God'; the formal principle of the Reformation predates Westminster by 125 years.",
+   "fix": "Insert before Trent: {when: '1521', what: 'Luther at Worms: unless convinced by Scripture, his conscience is captive to the Word of God.'}"
+  }
+ ]
+}

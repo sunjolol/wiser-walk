@@ -1,0 +1,86 @@
+{
+ "target": "statement:7",
+ "findings": [
+  {
+   "id": "anglican-7",
+   "lens": "Anglican (broad, Thirty-Nine Articles / Book of Common Prayer)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "'Tongues, prophecy, and healing continue in the church today, as they did in Acts' bundles three gifts and then adds 'as they did in Acts', so the large open-but-cautious middle (most Anglicans, the Catholic Church) is forced to 'Unsure' and scored as more cessationist than it is.",
+   "evidence": "The Church of England's A Time to Heal (2000) and Common Worship healing rites affirm continuing healing; the Catechism of the Catholic Church 799-801 affirms continuing charisms; neither claims Acts-level normativity or frequency. A respondent who believes God heals today but is unsure about tongues has no honest answer.",
+   "fix": "'The Spirit still gives tongues, prophecy, and healing to the church today.' (direction -1)."
+  },
+  {
+   "id": "charismatic-22",
+   "lens": "charismatic non-denominational (Vineyard, Bethel, Hillsong, Third Wave)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'as they did in Acts' is a second claim bolted onto the first; careful continuationists distinguish today's gifts from apostolic-era authority and scale.",
+   "evidence": "Grudem, The Gift of Prophecy in the New Testament and Today: congregational prophecy is not apostolic-quality revelation; Third Wave teaching says the gifts are 'the same in kind, not always in measure'. An informed member still answers Strongly agree, but the clause is a hostage to the 'you don't see Acts-level miracles' objection.",
+   "fix": "'Tongues, prophecy, and healing are still given to the church today.'"
+  },
+  {
+   "id": "orthodox-3",
+   "lens": "Eastern Orthodox",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "Triple-barreled (\"Tongues, prophecy, and healing\" plus \"as they did in Acts\"): the Orthodox affirm healing and prophecy in the lives of the saints, have no practice of tongues, and do not claim an Acts-style congregational pattern, so an honest answer is Unsure or Disagree, which is scored cessationist, a position the Orthodox flatly reject.",
+   "evidence": "Text: \"Tongues, prophecy, and healing continue in the church today, as they did in Acts.\" Anointing for healing is one of the seven mysteries; the Church canonizes wonderworkers and elders with foresight (Seraphim of Sarov, d. 1833; Paisios of Mount Athos, canonized 2015); glossolalia is absent from Orthodox practice and \"as in Acts\" is the Pentecostal reading. A parish Orthodox answering 0 here moves Spirit from 17 to 25 for no doctrinal reason.",
+   "fix": "Miraculous gifts such as healing and prophecy still occur in the church today. (Tongues stays covered by statement 8's \"sign gifts\".)"
+  },
+  {
+   "id": "progressive-6",
+   "lens": "progressive mainline Protestant (PCUSA, ELCA, Episcopal, UMC progressive wing)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "Triple-barreled (tongues, prophecy, healing) plus a restorationist clause ('as they did in Acts') that only Pentecostals affirm, so a mainline Christian who has healing rites in the service book is pushed toward the center.",
+   "evidence": "Text: \"Tongues, prophecy, and healing continue in the church today, as they did in Acts.\" BCP 1979 Ministration to the Sick (laying on of hands and anointing), ELW Service of Healing, PCUSA Book of Common Worship healing services; none of these bodies is cessationist, but none claims Acts-level restoration and most members are agnostic about tongues.",
+   "fix": "\"The Spirit still gives gifts such as prophecy, healing, and tongues in the church today.\" (Direction -1.)"
+  },
+  {
+   "id": "reformedbaptist-30",
+   "lens": "Reformed Baptist (1689 London Baptist Confession)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'Tongues, prophecy, and healing continue in the church today, as they did in Acts' is loaded against moderate continuationists (who deny today's prophecy equals apostolic prophecy) and its 'healing' clause blurs the cessationist affirmation that God still heals.",
+   "evidence": "Grudem, The Gift of Prophecy, argues New Testament congregational prophecy is not Acts-level revelation; Warfield distinguishes gifts of healing from God's healing in answer to prayer.",
+   "fix": "'The gifts of tongues, prophecy, and healing are still given to the church today.' (direction -1)"
+  },
+  {
+   "id": "reformedcharismatic-20",
+   "lens": "Reformed charismatic (John Piper, Wayne Grudem, Sam Storms, Sovereign Grace Churches, Acts 29 continuationists)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'as they did in Acts' is Pentecostal restorationist phrasing; Reformed continuationists ground continuation in 1 Corinthians 1:7 and 13:10 (until Christ returns), and Grudem distinguishes congregational prophecy from apostolic-era authority.",
+   "evidence": "Grudem, The Gift of Prophecy in the New Testament and Today, chs. 1-3; Storms, Practicing the Power, ch. 1. A careful Reformed charismatic hesitates at 'as they did in Acts' and answers Agree rather than Strongly agree for a reason that has nothing to do with cessation.",
+   "fix": "Tongues, prophecy, and healing are still given by the Spirit to the church today."
+  },
+  {
+   "id": "sbc-26",
+   "lens": "Southern Baptist (Baptist Faith & Message 2000)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "Listing 'tongues, prophecy, and healing' together forces a Southern Baptist who prays for the sick and expects God to heal, but denies tongues and prophecy, to answer for all three at once.",
+   "evidence": "James 5:14-15 anointing and prayer is ordinary SBC practice; the IMB's 2005 ban on private prayer language and its 2015 reversal show the SBC's internal variance is specifically about tongues. 'As they did in Acts' helps but does not remove the third barrel.",
+   "fix": "'The gifts of tongues and prophecy continue in the church today, as they did in Acts.' (direction -1)"
+  },
+  {
+   "id": "survey-10",
+   "lens": "survey methodologist",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "\"Tongues, prophecy, and healing continue in the church today, as they did in Acts\" is triple-barreled and the tag \"as they did in Acts\" makes moderate continuationists hesitate while cessationists affirm that God still heals.",
+   "evidence": "Grudem, The Gift of Prophecy in the New Testament and Today, distinguishes fallible congregational prophecy from apostolic prophecy; MacArthur, Strange Fire, affirms that God heals today while denying a gift of healing. Both groups are pushed toward the centre by wording rather than belief.",
+   "fix": "Replace with one gift per item: \"The Spirit still gives the gift of tongues to some Christians today.\" (12 words, direction -1); leave prophecy to statement 9."
+  },
+  {
+   "id": "wesleyan-10",
+   "lens": "Wesleyan / Methodist (Wesley's sermons, Articles of Religion, Global Methodist / UMC evangelical wing)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'Tongues, prophecy, and healing continue in the church today, as they did in Acts' is double-barreled: continuation (a Methodist says yes) and same manner and frequency as Acts (most Methodists say Unsure). The tail clause pushes non-charismatic continuationists toward the cessationist pole.",
+   "evidence": "Wesley to Middleton (1749) and Sermon 89 argue the gifts were never withdrawn by God, while not claiming Acts-level frequency. The statement's own pair, S8, is single-barreled.",
+   "fix": "Tongues, prophecy, and healing are still given to the church today. (direction -1)"
+  }
+ ]
+}

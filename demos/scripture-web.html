@@ -1,0 +1,1543 @@
+<title>Scripture Web</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=David+Libre:wght@400;500&family=Gentium+Plus:ital,wght@0,400;1,400&display=swap">
+<style>
+:root{
+  --paper:#F5F0E6; --surface:#FDFBF6; --ink:#1E1B17; --ink-muted:#6B6355; --rule:#D9CFBC; --accent:#7B1E2B;
+  --on-accent:#FDFBF6; --accent-band:rgba(123,30,43,.08); --hover:rgba(30,27,23,.045); --scrim:rgba(30,27,23,.5);
+  --shadow:0 12px 36px rgba(30,27,23,.16); --toast-bg:#1E1B17; --toast-ink:#F5F0E6;
+  --c-crossref:#33556B; --c-quotation:#7B1E2B; --c-structure:#8B6A2E; --c-typology:#5A6B35; --c-symbol:#5E3A6E; --c-secondtemple:#6E4B2E; --c-fathers:#4A4640;
+  --font-display:"Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-body:"Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
+  --font-ui:"IBM Plex Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-he:"David Libre", "SBL Hebrew", "Times New Roman", serif;
+  --font-gr:"Gentium Plus", "Gentium", "Palatino Linotype", "Times New Roman", serif;
+  --font-mono:ui-monospace, "Cascadia Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+  --topH:57px;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#1A1816; --surface:#221F1C; --ink:#ECE4D4; --ink-muted:#A89E8C; --rule:#3A352E; --accent:#D97A86;
+    --on-accent:#1A1816; --accent-band:rgba(217,122,134,.13); --hover:rgba(236,228,212,.06); --scrim:rgba(0,0,0,.6);
+    --shadow:0 12px 36px rgba(0,0,0,.5); --toast-bg:#ECE4D4; --toast-ink:#1A1816;
+    --c-crossref:#8FB3CC; --c-quotation:#D97A86; --c-structure:#D4B06A; --c-typology:#A9BE78; --c-symbol:#B893C9; --c-secondtemple:#C99A6B; --c-fathers:#B8B2A8;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#1A1816; --surface:#221F1C; --ink:#ECE4D4; --ink-muted:#A89E8C; --rule:#3A352E; --accent:#D97A86;
+  --on-accent:#1A1816; --accent-band:rgba(217,122,134,.13); --hover:rgba(236,228,212,.06); --scrim:rgba(0,0,0,.6);
+  --shadow:0 12px 36px rgba(0,0,0,.5); --toast-bg:#ECE4D4; --toast-ink:#1A1816;
+  --c-crossref:#8FB3CC; --c-quotation:#D97A86; --c-structure:#D4B06A; --c-typology:#A9BE78; --c-symbol:#B893C9; --c-secondtemple:#C99A6B; --c-fathers:#B8B2A8;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-body);font-size:17px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.label{font-family:var(--font-ui);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted);font-weight:500}
+.btn{font-family:var(--font-ui);font-size:12.5px;font-weight:500;padding:5px 11px;border:1px solid var(--rule);border-radius:6px;background:var(--surface);cursor:pointer;color:var(--ink);line-height:1.3;white-space:nowrap}
+.btn:hover{background:var(--hover)}
+.btn:disabled{opacity:.6;cursor:default}
+.btn-primary{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.btn-primary:hover{background:var(--accent);opacity:.92}
+.btn-mini{font-size:11.5px;padding:3px 8px}
+
+/* top bar */
+.top{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px 14px;flex-wrap:wrap;padding:10px 16px;background:var(--surface);border-bottom:1px solid var(--rule)}
+.brand{display:flex;align-items:center;gap:10px}
+.wordmark{font-family:var(--font-display);font-weight:600;font-size:24px;line-height:1;letter-spacing:.01em}
+.badge{font-family:var(--font-ui);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border:1px solid var(--rule);border-radius:999px;color:var(--ink-muted)}
+.url{flex:1 1 300px;min-width:0;display:flex;align-items:center;gap:8px;padding:3px 3px 3px 12px;border:1px solid var(--rule);border-radius:8px;background:var(--paper);font-family:var(--font-mono);font-size:12.5px;color:var(--ink-muted)}
+.url-text{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink)}
+.seg{display:inline-flex;border:1px solid var(--rule);border-radius:8px;overflow:hidden;background:var(--paper);margin-left:auto}
+.seg-btn{font-family:var(--font-ui);font-size:13px;font-weight:500;padding:6px 16px;border:0;background:transparent;cursor:pointer;color:var(--ink-muted)}
+.seg-btn.is-on{background:var(--accent);color:var(--on-accent)}
+.seg-btn:focus-visible{outline-offset:-2px}
+@media (max-width:699px){.seg{order:1}.url{order:2;flex-basis:100%}}
+
+/* layout */
+.app{display:grid;grid-template-columns:minmax(0,1fr)}
+.rail{padding:12px 12px 10px;border-bottom:1px solid var(--rule);background:var(--paper);min-width:0}
+.center{min-width:0;padding:20px 14px 28px}
+.panel{background:var(--surface);border-top:1px solid var(--rule);padding:18px 16px 48px;min-width:0;container-type:inline-size}
+@media (min-width:1100px){
+  .app{grid-template-columns:240px minmax(0,1fr) 400px;align-items:start}
+  .rail{border-bottom:0;border-right:1px solid var(--rule);position:sticky;top:var(--topH);max-height:calc(100vh - var(--topH));overflow:auto;padding:14px 12px 24px}
+  .center{padding:28px 32px 44px}
+  .panel{border-top:0;border-left:1px solid var(--rule);position:sticky;top:var(--topH);max-height:calc(100vh - var(--topH));overflow:auto}
+}
+
+/* rail */
+.search{width:100%;font-family:var(--font-ui);font-size:13px;padding:7px 10px;border:1px solid var(--rule);border-radius:8px;background:var(--surface);color:var(--ink)}
+.search::placeholder{color:var(--ink-muted)}
+.hublist{display:flex;gap:8px;overflow-x:auto;padding:10px 0 4px;scrollbar-width:thin}
+.group-label{display:none}
+.hub{flex:0 0 auto;display:flex;align-items:center;gap:9px;padding:6px 11px;border:1px solid var(--rule);border-radius:999px;background:var(--surface);cursor:pointer;text-align:left}
+.hub:hover{background:var(--hover)}
+.hub-ref{font-family:var(--font-display);font-weight:600;font-size:16px;line-height:1.1;white-space:nowrap}
+.hub.is-on{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.pips{display:flex;gap:3px;flex:0 0 auto}
+.pip{width:7px;height:7px;border-radius:50%;background:var(--tc)}
+.rail-empty{font-family:var(--font-ui);font-size:12.5px;color:var(--ink-muted);padding:8px 4px}
+@media (min-width:1100px){
+  .hublist{display:block;overflow:visible;padding:6px 0 0}
+  .group-label{display:block;margin:12px 6px 6px}
+  .hub{display:flex;width:100%;justify-content:space-between;border:0;border-radius:6px;background:transparent;padding:7px 8px;margin-bottom:2px}
+  .hub.is-on{background:var(--surface);box-shadow:inset 3px 0 0 var(--accent)}
+}
+
+/* reading pane */
+.reading{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:22px 14px 26px;max-width:calc(65ch + 150px);margin:0 auto}
+@media (min-width:600px){.reading{padding:28px 26px 30px}}
+.reading-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px 14px;flex-wrap:wrap;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--rule)}
+.reading-title{font-family:var(--font-display);font-weight:600;font-size:30px;line-height:1.1;margin:0}
+.reading-intro{font-size:14.5px;color:var(--ink-muted);margin:0 0 10px;line-height:1.5}
+.verses{display:flex;flex-direction:column;gap:2px}
+.verse{display:grid;grid-template-columns:30px minmax(0,1fr) 22px;gap:0 8px;align-items:start;width:100%;text-align:left;border:0;background:transparent;padding:6px 6px 6px 4px;border-radius:0 8px 8px 0;cursor:pointer;font:inherit;color:inherit;line-height:1.6;border-left:3px solid transparent}
+@media (min-width:600px){.verse{grid-template-columns:40px minmax(0,1fr) 26px;gap:0 12px}}
+.verse:hover{background:var(--hover)}
+.verse.in-unit{border-left-color:var(--rule)}
+.verse.is-hub{background:var(--accent-band);border-left-color:var(--accent)}
+.verse.is-sel{box-shadow:inset 0 0 0 1.5px var(--accent)}
+.vnum{font-family:var(--font-display);font-weight:600;font-size:14px;color:var(--ink-muted);text-align:right;padding-top:5px}
+.vtext{font-size:17.5px;max-width:65ch}
+.gutter{display:flex;flex-direction:column;gap:3px;padding-top:10px;align-items:center}
+.reading-foot{margin-top:14px;font-family:var(--font-ui);font-size:11.5px;color:var(--ink-muted);display:flex;gap:6px 14px;flex-wrap:wrap}
+.reading-foot .k{display:inline-flex;align-items:center;gap:5px}
+.reading-foot .sw{width:10px;height:10px;border-radius:2px;background:var(--accent-band);border-left:3px solid var(--accent)}
+.reading-foot .sw2{width:10px;height:10px;border-radius:2px;border-left:3px solid var(--rule)}
+
+/* web view */
+.web{position:relative;background:var(--surface);border:1px solid var(--rule);border-radius:12px;height:min(74vh,760px);min-height:440px;overflow:hidden}
+.web canvas{display:block;width:100%;height:100%;touch-action:manipulation}
+.legend{position:absolute;left:10px;bottom:10px;background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:8px 10px;font-family:var(--font-ui);font-size:11px;max-width:250px;line-height:1.4;opacity:.97}
+.legend .lg{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px}
+.legend .li{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.legend .sw{width:9px;height:9px;border-radius:50%;background:var(--tc);flex:0 0 auto}
+.legend .ring{width:9px;height:9px;border-radius:50%;border:2px solid var(--ink);flex:0 0 auto}
+.legend .dash{width:9px;height:9px;border-radius:50%;border:1.5px dashed var(--ink);flex:0 0 auto}
+.legend p{margin:6px 0 0;color:var(--ink-muted)}
+.web-hint{position:absolute;right:10px;top:10px;font-family:var(--font-ui);font-size:11px;color:var(--ink-muted);background:var(--surface);padding:3px 8px;border-radius:6px;border:1px solid var(--rule);max-width:56%}
+@media (max-width:599px){.legend .lg{grid-template-columns:1fr}.legend{max-width:180px}.web-hint{display:none}}
+
+/* panel */
+.sel-kicker{margin-bottom:4px}
+.sel-ref{font-family:var(--font-display);font-weight:600;font-size:28px;line-height:1.1;margin:0 0 6px}
+.sel-text{font-size:15.5px;line-height:1.55;margin:0 0 8px}
+.sel-sum{margin:0}
+.tabs{display:flex;flex-wrap:wrap;gap:0 2px;margin:14px 0 2px;border-bottom:1px solid var(--rule)}
+.tab{font-family:var(--font-ui);font-size:12.5px;padding:7px 7px 8px;border:0;background:transparent;color:var(--ink-muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.tab .dot{width:7px;height:7px;border-radius:50%;background:var(--tc)}
+.tab .n{font-size:11px;color:var(--ink-muted);font-variant-numeric:tabular-nums}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--tc);font-weight:500}
+.tabpanel{padding-top:2px}
+.row{padding:14px 0;border-bottom:1px solid var(--rule)}
+.row.flash{background:var(--accent-band)}
+.row-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.chip{font-family:var(--font-ui);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:4px;color:var(--tc);background:transparent;border:1px solid var(--tc);line-height:1.5;white-space:nowrap}
+@supports (color:color-mix(in srgb,red 10%,transparent)){
+  .chip{background:color-mix(in srgb,var(--tc) 12%,transparent);border-color:color-mix(in srgb,var(--tc) 35%,transparent)}
+}
+.chip.alt{--tc:var(--ink-muted)}
+.hubchip{font-family:var(--font-ui);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;color:var(--on-accent);background:var(--accent);border:1px solid var(--accent);cursor:pointer;line-height:1.5}
+.hubchip:hover{opacity:.9}
+.ref{font-family:var(--font-display);font-weight:600;font-size:18px;line-height:1.1}
+.row-text{font-size:15px;line-height:1.55;margin:0 0 6px}
+.why{font-size:14px;line-height:1.5;color:var(--ink-muted);margin:0 0 4px}
+.why b,.src b{font-family:var(--font-ui);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;margin-right:6px;color:var(--ink-muted)}
+.src{font-family:var(--font-ui);font-size:11.5px;color:var(--ink-muted);margin:0 0 9px;line-height:1.45}
+.row-actions{display:flex;gap:6px;flex-wrap:wrap}
+.tnote{font-family:var(--font-ui);font-size:12px;line-height:1.5;color:var(--ink-muted);border:1px dashed var(--rule);padding:6px 10px;border-radius:6px;margin:6px 0 8px}
+.tnote b{color:var(--ink);font-weight:600}
+.empty{border:1px dashed var(--rule);border-radius:8px;padding:14px;font-size:14px;color:var(--ink-muted);line-height:1.5;margin:12px 0}
+.note{font-family:var(--font-ui);font-size:12.5px;line-height:1.5;color:var(--ink-muted);background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:8px 12px;margin:10px 0 4px}
+
+/* quotations */
+.qcols{display:grid;grid-template-columns:1fr;gap:10px;margin:10px 0}
+@container (min-width:560px){.qcols{grid-template-columns:repeat(var(--n,3),minmax(0,1fr))}}
+.qcol{background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:10px 12px;min-width:0}
+.qcol .label{margin-bottom:6px;display:block}
+.orig{font-size:16px;line-height:1.5;margin:0 0 6px;overflow-wrap:anywhere}
+.orig[lang="he"]{font-family:var(--font-he);font-size:20px;direction:rtl;text-align:right;line-height:1.7}
+.orig[lang="grc"]{font-family:var(--font-gr);font-size:16.5px}
+.gloss{font-size:13.5px;color:var(--ink-muted);line-height:1.45}
+.changed{font-size:14.5px;line-height:1.55;background:var(--accent-band);border-left:3px solid var(--c-quotation);padding:8px 12px;border-radius:0 8px 8px 0;margin:8px 0}
+.changed b{font-family:var(--font-ui);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;color:var(--c-quotation);display:block;margin-bottom:2px}
+
+/* structure */
+.st-title{font-family:var(--font-display);font-weight:600;font-size:18px}
+.ladder{list-style:none;margin:8px 0;padding:0;font-size:14.5px}
+.rung{display:flex;gap:8px;align-items:baseline;padding:3px 0;padding-left:calc(var(--d) * 14px)}
+.tag{font-family:var(--font-ui);font-size:11px;font-weight:600;min-width:26px;color:var(--c-structure);border:1px solid var(--c-structure);border-radius:4px;text-align:center;padding:0 4px;line-height:1.5;flex:0 0 auto}
+.rung.center{color:var(--accent);font-weight:600}
+.rung.center .tag{color:var(--on-accent);background:var(--accent);border-color:var(--accent)}
+.vref{font-family:var(--font-ui);font-size:11px;color:var(--ink-muted);white-space:nowrap}
+.seq{margin:8px 0;padding:0;list-style:none;font-size:14.5px}
+.seq li{display:flex;gap:10px;align-items:baseline;padding:5px 0;border-top:1px dotted var(--rule);flex-wrap:wrap}
+.seq .k{font-family:var(--font-ui);font-size:11px;letter-spacing:.04em;color:var(--ink-muted);flex:0 0 120px;line-height:1.4}
+.steps{display:flex;flex-wrap:wrap;gap:4px;align-items:center;flex:1 1 180px}
+.step{font-family:var(--font-ui);font-size:12px;padding:2px 8px;border:1px solid var(--rule);border-radius:999px;background:var(--paper)}
+.step.muted{color:var(--ink-muted);border-style:dashed}
+.arrow{color:var(--ink-muted);font-family:var(--font-ui)}
+.marks{margin:8px 0;padding:0;list-style:none;font-size:14.5px}
+.marks li{display:flex;gap:10px;padding:4px 0;border-top:1px dotted var(--rule);align-items:baseline}
+.marks .tag{min-width:40px}
+.echo{display:grid;grid-template-columns:1fr;gap:6px;margin:8px 0}
+.echo .side{background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:8px 10px;font-size:14px;line-height:1.5}
+.echo .side .ref{font-size:15px;display:block;margin-bottom:2px}
+.echo em{font-style:normal;color:var(--c-structure);font-weight:600}
+.st-notes{margin:6px 0 0;padding-left:18px;font-size:13.5px;line-height:1.5;color:var(--ink-muted)}
+.st-notes li{margin-bottom:3px}
+
+/* typology */
+.pair{display:grid;grid-template-columns:1fr 22px 1fr;gap:8px;align-items:stretch;margin:8px 0 4px}
+.pair .side{background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:8px 10px;min-width:0}
+.pair .side .ref{font-size:16px;display:block}
+.pair .side .lab{font-family:var(--font-ui);font-size:11px;color:var(--c-typology);font-weight:600;letter-spacing:.04em}
+.pair .txt{font-size:13.5px;line-height:1.45;margin-top:4px}
+.pair .arr{align-self:center;text-align:center;color:var(--c-typology);font-size:18px;font-family:var(--font-ui)}
+.phrase{font-size:13.5px;color:var(--ink-muted);font-style:italic;margin:0 0 6px}
+@container (max-width:340px){.pair{grid-template-columns:1fr}.pair .arr{transform:rotate(90deg)}}
+
+/* symbol thread */
+.thread-name{font-family:var(--font-display);font-weight:600;font-size:18px}
+.thread{display:flex;overflow-x:auto;padding:10px 0 6px;margin:6px 0 4px;scrollbar-width:thin}
+.stop{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:5px;width:96px;background:transparent;border:0;cursor:pointer;padding:0 3px;position:relative}
+.stop::before{content:"";position:absolute;left:0;right:0;top:9px;height:2px;background:var(--c-symbol);opacity:.35}
+.stop:first-child::before{left:50%}
+.stop:last-child::before{right:50%}
+.stop .dotb{width:14px;height:14px;border-radius:50%;background:var(--surface);border:3px solid var(--c-symbol);position:relative;margin-top:2px}
+.stop.is-on .dotb{background:var(--c-symbol)}
+.stop.here .dotb{box-shadow:0 0 0 3px var(--accent-band)}
+.stop .sref{font-family:var(--font-ui);font-size:11.5px;font-weight:500;text-align:center;line-height:1.25;color:var(--ink)}
+.stop .slabel{font-family:var(--font-ui);font-size:10.5px;color:var(--ink-muted);text-align:center;line-height:1.25}
+.stop:focus-visible{outline-offset:-2px;border-radius:6px}
+.stop-detail{background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:10px 12px;margin:6px 0 8px;font-size:14px;line-height:1.5}
+.stop-detail .ref{font-size:16px;display:block;margin-bottom:2px}
+.stop-detail .snote{font-family:var(--font-ui);font-size:12px;color:var(--ink-muted);margin-top:4px}
+
+/* second temple + fathers */
+.s2-src{font-family:var(--font-display);font-weight:600;font-size:18px}
+.date{font-family:var(--font-ui);font-size:11px;color:var(--ink-muted);border:1px solid var(--rule);border-radius:999px;padding:1px 8px;white-space:nowrap}
+.excerpt{font-size:14.5px;line-height:1.55;border-left:3px solid var(--c-secondtemple);padding:2px 0 2px 12px;margin:8px 0}
+.fa-quote{font-size:14.5px;line-height:1.55;border-left:3px solid var(--c-fathers);padding:2px 0 2px 12px;margin:8px 0}
+.kind{font-family:var(--font-ui);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted)}
+.readingchip{font-family:var(--font-ui);font-size:10.5px;font-weight:600;letter-spacing:.04em;padding:2px 8px;border-radius:999px;border:1px solid var(--c-fathers);color:var(--c-fathers);white-space:nowrap}
+
+/* footer, toast */
+.foot{font-family:var(--font-ui);font-size:12px;color:var(--ink-muted);text-align:center;padding:16px;border-top:1px solid var(--rule);background:var(--paper)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,16px);opacity:0;background:var(--toast-bg);color:var(--toast-ink);font-family:var(--font-ui);font-size:13px;padding:8px 14px;border-radius:8px;z-index:60;pointer-events:none;transition:opacity .2s,transform .2s;max-width:calc(100vw - 32px)}
+.toast.is-on{opacity:1;transform:translate(-50%,0)}
+
+/* modal + card */
+.modal{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:14px}
+.modal-backdrop{position:absolute;inset:0;background:var(--scrim)}
+.modal-box{position:relative;background:var(--surface);border:1px solid var(--rule);border-radius:12px;box-shadow:var(--shadow);width:min(100%,640px);max-height:calc(100vh - 28px);overflow:auto;padding:16px}
+.modal-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+.modal-title{font-family:var(--font-display);font-weight:600;font-size:22px;margin:0}
+.modal-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;align-items:center}
+.modal-note{font-family:var(--font-ui);font-size:12px;color:var(--ink-muted);margin:8px 0 0}
+.card-wrap{position:relative;margin:0 auto;overflow:hidden;border-radius:4px}
+.card{width:1080px;height:1080px;transform-origin:top left;background:var(--surface);color:var(--ink);padding:84px 88px;display:flex;flex-direction:column;border:10px solid var(--rule);position:absolute;left:0;top:0;overflow:hidden}
+.card-eyebrow{font-family:var(--font-ui);font-size:26px;letter-spacing:.12em;text-transform:uppercase;color:var(--tc);font-weight:600;margin-bottom:30px;display:flex;align-items:center;gap:16px}
+.card-eyebrow .cdot{width:18px;height:18px;border-radius:50%;background:var(--tc);flex:0 0 auto}
+.card-refs{font-family:var(--font-display);font-weight:600;font-size:56px;line-height:1.05;margin-bottom:32px;overflow-wrap:anywhere;flex:0 0 auto}
+.card-refs .sep{color:var(--accent);margin:0 16px}
+.card-text{font-family:var(--font-body);font-size:29px;line-height:1.42;margin-bottom:22px;max-height:212px;overflow:hidden;flex:0 1 auto;min-height:0}
+.card-text .cref{font-family:var(--font-ui);font-size:19px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted);display:block;margin-bottom:6px}
+.card-why{font-size:26px;line-height:1.42;color:var(--ink-muted);font-style:italic;margin-top:auto;padding-top:22px;border-top:2px solid var(--rule);max-height:170px;overflow:hidden;flex:0 1 auto;min-height:0}
+.card-foot{display:flex;justify-content:space-between;align-items:baseline;gap:20px;margin-top:30px;font-family:var(--font-ui);font-size:21px;color:var(--ink-muted);flex:0 0 auto}
+.card-foot .curl{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:var(--font-mono);font-size:20px}
+.card-foot .wm{font-family:var(--font-display);font-weight:600;font-size:34px;color:var(--ink);flex:0 0 auto}
+.card-img{margin-top:12px;text-align:center}
+.card-img img{max-width:100%;width:min(100%,540px);border:1px solid var(--rule);border-radius:8px;display:block;margin:0 auto}
+.offscreen{position:fixed;left:-10000px;top:0;width:1080px;height:1080px;overflow:hidden;pointer-events:none}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style>
+
+<header class="top" id="top">
+  <div class="brand"><span class="wordmark">Scripture Web</span><span class="badge">Demo</span></div>
+  <div class="url" id="urlPill" title="Permanent URL (demo)"><span class="url-text" id="urlText">scriptureweb.app/v/genesis/3/15</span><button class="btn btn-mini" id="copyUrl" type="button">Copy link</button></div>
+  <div class="seg" role="group" aria-label="View">
+    <button type="button" class="seg-btn is-on" data-view="read" aria-pressed="true">Read</button>
+    <button type="button" class="seg-btn" data-view="web" aria-pressed="false">Web</button>
+  </div>
+</header>
+
+<div class="app">
+  <aside class="rail" aria-label="Hub passages">
+    <label for="search" class="sr-only">Search passages</label>
+    <input id="search" type="search" class="search" placeholder="Try: Genesis 3:15" autocomplete="off" spellcheck="false">
+    <nav id="hubList" class="hublist" aria-label="Passages"></nav>
+  </aside>
+
+  <main class="center" id="center">
+    <section class="reading" id="reading" aria-label="Reading pane"></section>
+    <section class="web" id="web" hidden aria-label="Connection web">
+      <canvas id="graph" role="img" aria-label="Force-directed web of connections for the selected passage. The same connections are listed in the panel."></canvas>
+      <div class="web-hint" id="webHint">Hover an edge for its kind. Click a ringed node to open that hub.</div>
+      <div class="legend" id="legend"></div>
+    </section>
+  </main>
+
+  <aside class="panel" id="panel" aria-label="Connections"></aside>
+</div>
+
+<footer class="foot">Demo build. Data hand-curated from published scholarship, verify before publishing.</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-backdrop" id="modalBackdrop"></div>
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2 class="modal-title" id="modalTitle">Connection card</h2>
+      <button class="btn btn-mini" id="modalClose" type="button">Close</button>
+    </div>
+    <div class="card-wrap" id="cardWrap">
+      <div class="card" id="card">
+        <div class="card-eyebrow" id="cardEyebrow"><span class="cdot"></span><span id="cardType">Cross-reference</span></div>
+        <div class="card-refs"><span id="cardFrom">Genesis 3:15</span><span class="sep">→</span><span id="cardTo">Romans 16:20</span></div>
+        <div class="card-text"><span class="cref" id="cardFromRef"></span><span id="cardFromText"></span></div>
+        <div class="card-text"><span class="cref" id="cardToRef"></span><span id="cardToText"></span></div>
+        <div class="card-why" id="cardWhy"></div>
+        <div class="card-foot"><span class="curl" id="cardUrl"></span><span class="wm">scriptureweb.app</span></div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" id="cardSave" type="button">Save image</button>
+      <button class="btn" id="cardCopy" type="button">Copy link</button>
+      <button class="btn" id="cardClose2" type="button">Close</button>
+    </div>
+    <div class="card-img" id="cardImgWrap" hidden>
+      <img id="cardImg" alt="Rendered connection card">
+      <p class="modal-note">Right-click or long-press to save.</p>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+(function(){
+'use strict';
+
+/* ---------- World English Bible text (public domain), fetched from bible-api.com ---------- */
+var V = {"1 Corinthians 15:4":"that he was buried, that he was raised on the third day according to the Scriptures,","1 John 3:8":"He who sins is of the devil, for the devil has been sinning from the beginning. To this end the Son of God was revealed: that he might destroy the works of the devil.","1 Peter 1:19":"but with precious blood, as of a lamb without blemish or spot, the blood of Christ;","1 Samuel 15:22":"Samuel said, “Has Yahweh as great delight in burnt offerings and sacrifices, as in obeying Yahweh’s voice? Behold, to obey is better than sacrifice, and to listen than the fat of rams.","2 Chronicles 3:1":"Then Solomon began to build Yahweh’s house at Jerusalem on Mount Moriah, where Yahweh appeared to David his father, which he prepared in the place that David had appointed, on the threshing floor of Ornan the Jebusite.","2 Peter 2:4":"For if God didn’t spare angels when they sinned, but cast them down to Tartarus, and committed them to pits of darkness, to be reserved for judgment;","2 Peter 2:5":"and didn’t spare the ancient world, but preserved Noah with seven others, a preacher of righteousness, when he brought a flood on the world of the ungodly;","2 Samuel 7:11":"and as from the day that I commanded judges to be over my people Israel. I will cause you to rest from all your enemies. Moreover Yahweh tells you that Yahweh will make you a house.","2 Samuel 7:12":"When your days are fulfilled, and you sleep with your fathers, I will set up your offspring after you, who will proceed out of your body, and I will establish his kingdom.","2 Samuel 7:13":"He will build a house for my name, and I will establish the throne of his kingdom forever.","2 Samuel 7:14":"I will be his father, and he will be my son. If he commits iniquity, I will chasten him with the rod of men, and with the stripes of the children of men;","2 Samuel 7:15":"but my loving kindness will not depart from him, as I took it from Saul, whom I put away before you.","2 Samuel 7:16":"Your house and your kingdom will be made sure forever before you. Your throne will be established forever.”’”","Acts 15:13":"After they were silent, James answered, “Brothers, listen to me.","Acts 15:14":"Simeon has reported how God first visited the nations, to take out of them a people for his name.","Acts 15:15":"This agrees with the words of the prophets. As it is written,","Acts 15:16":"‘After these things I will return. I will again build the tabernacle of David, which has fallen. I will again build its ruins. I will set it up,","Acts 15:17":"That the rest of men may seek after the Lord; all the Gentiles who are called by my name, says the Lord, who does all these things.","Acts 15:18":"All of God’s works are known to him from eternity.’","Acts 15:19":"“Therefore my judgment is that we don’t trouble those from among the Gentiles who turn to God,","Acts 15:20":"but that we write to them that they abstain from the pollution of idols, from sexual immorality, from what is strangled, and from blood.","Acts 15:21":"For Moses from generations of old has in every city those who preach him, being read in the synagogues every Sabbath.”","Acts 2:1":"Now when the day of Pentecost had come, they were all with one accord in one place.","Acts 2:2":"Suddenly there came from the sky a sound like the rushing of a mighty wind, and it filled all the house where they were sitting.","Acts 2:3":"Tongues like fire appeared and were distributed to them, and one sat on each of them.","Acts 2:4":"They were all filled with the Holy Spirit, and began to speak with other languages, as the Spirit gave them the ability to speak.","Acts 2:5":"Now there were dwelling in Jerusalem Jews, devout men, from every nation under the sky.","Acts 2:6":"When this sound was heard, the multitude came together, and were bewildered, because everyone heard them speaking in his own language.","Acts 2:7":"They were all amazed and marveled, saying to one another, “Behold, aren’t all these who speak Galileans?","Acts 2:8":"How do we hear, everyone in our own native language?","Acts 2:9":"Parthians, Medes, Elamites, and people from Mesopotamia, Judea, Cappadocia, Pontus, Asia,","Acts 2:10":"Phrygia, Pamphylia, Egypt, the parts of Libya around Cyrene, visitors from Rome, both Jews and proselytes,","Acts 2:11":"Cretans and Arabians: we hear them speaking in our languages the mighty works of God!”","Amos 5:2":"“The virgin of Israel has fallen; She shall rise no more. She is cast down on her land; there is no one to raise her up.”","Amos 9:11":"In that day I will raise up the tent of David who is fallen, and close up its breaches, and I will raise up its ruins, and I will build it as in the days of old;","Amos 9:12":"that they may possess the remnant of Edom, and all the nations who are called by my name,” says Yahweh who does this.","Amos 9:13":"“Behold, the days come,” says Yahweh, “that the plowman shall overtake the reaper, and the one treading grapes him who sows seed; and sweet wine will drip from the mountains, and flow from the hills.","Amos 9:14":"I will bring my people Israel back from captivity, and they will rebuild the ruined cities, and inhabit them; and they will plant vineyards, and drink wine from them. They shall also make gardens, and eat their fruit.","Amos 9:15":"I will plant them on their land, and they will no more be plucked up out of their land which I have given them,” says Yahweh your God.","Deuteronomy 32:8":"When the Most High gave to the nations their inheritance, when he separated the children of men, he set the bounds of the peoples according to the number of the children of Israel.","Deuteronomy 8:2":"You shall remember all the way which Yahweh your God has led you these forty years in the wilderness, that he might humble you, to prove you, to know what was in your heart, whether you would keep his commandments, or not.","Deuteronomy 8:3":"He humbled you, and allowed you to be hungry, and fed you with manna, which you didn’t know, neither did your fathers know; that he might teach you that man does not live by bread only, but man lives by every word that proceeds out of Yahweh’s mouth.","Exodus 12:3":"Speak to all the congregation of Israel, saying, ‘On the tenth day of this month, they shall take to them every man a lamb, according to their fathers’ houses, a lamb for a household;","Exodus 12:5":"Your lamb shall be without defect, a male a year old. You shall take it from the sheep, or from the goats:","Exodus 12:13":"The blood shall be to you for a token on the houses where you are: and when I see the blood, I will pass over you, and there shall no plague be on you to destroy you, when I strike the land of Egypt.","Exodus 21:6":"then his master shall bring him to God, and shall bring him to the door or to the doorpost, and his master shall bore his ear through with an awl, and he shall serve him for ever.","Exodus 2:8":"Pharaoh’s daughter said to her, “Go.” The young woman went and called the child’s mother.","Exodus 4:22":"You shall tell Pharaoh, ‘Yahweh says, Israel is my son, my firstborn,","Exodus 4:23":"and I have said to you, “Let my son go, that he may serve me”; and you have refused to let him go. Behold, I will kill your son, your firstborn.’”","Galatians 4:4":"But when the fullness of the time came, God sent out his Son, born to a woman, born under the law,","Genesis 10:8":"Cush became the father of Nimrod. He began to be a mighty one in the earth.","Genesis 10:9":"He was a mighty hunter before Yahweh. Therefore it is said, “like Nimrod, a mighty hunter before Yahweh”.","Genesis 10:10":"The beginning of his kingdom was Babel, Erech, Accad, and Calneh, in the land of Shinar.","Genesis 11:1":"The whole earth was of one language and of one speech.","Genesis 11:2":"As they traveled from the east, they found a plain in the land of Shinar, and they lived there.","Genesis 11:3":"They said to one another, “Come, let’s make bricks, and burn them thoroughly.” They had brick for stone, and they used tar for mortar.","Genesis 11:4":"They said, “Come, let’s build ourselves a city, and a tower whose top reaches to the sky, and let’s make a name for ourselves, lest we be scattered abroad on the surface of the whole earth.”","Genesis 11:5":"Yahweh came down to see the city and the tower, which the children of men built.","Genesis 11:6":"Yahweh said, “Behold, they are one people, and they have all one language, and this is what they begin to do. Now nothing will be withheld from them, which they intend to do.","Genesis 11:7":"Come, let’s go down, and there confuse their language, that they may not understand one another’s speech.”","Genesis 11:8":"So Yahweh scattered them abroad from there on the surface of all the earth. They stopped building the city.","Genesis 11:9":"Therefore its name was called Babel, because there Yahweh confused the language of all the earth. From there, Yahweh scattered them abroad on the surface of all the earth.","Genesis 12:2":"I will make of you a great nation. I will bless you and make your name great. You will be a blessing.","Genesis 22:1":"After these things, God tested Abraham, and said to him, “Abraham!” He said, “Here I am.”","Genesis 22:2":"He said, “Now take your son, your only son, whom you love, even Isaac, and go into the land of Moriah. Offer him there as a burnt offering on one of the mountains which I will tell you of.”","Genesis 22:3":"Abraham rose early in the morning, and saddled his donkey, and took two of his young men with him, and Isaac his son. He split the wood for the burnt offering, and rose up, and went to the place of which God had told him.","Genesis 22:4":"On the third day Abraham lifted up his eyes, and saw the place far off.","Genesis 22:5":"Abraham said to his young men, “Stay here with the donkey. The boy and I will go yonder. We will worship, and come back to you.”","Genesis 22:6":"Abraham took the wood of the burnt offering and laid it on Isaac his son. He took in his hand the fire and the knife. They both went together.","Genesis 22:7":"Isaac spoke to Abraham his father, and said, “My father?” He said, “Here I am, my son.” He said, “Here is the fire and the wood, but where is the lamb for a burnt offering?”","Genesis 22:8":"Abraham said, “God will provide himself the lamb for a burnt offering, my son.” So they both went together.","Genesis 22:9":"They came to the place which God had told him of. Abraham built the altar there, and laid the wood in order, bound Isaac his son, and laid him on the altar, on the wood.","Genesis 22:10":"Abraham stretched out his hand, and took the knife to kill his son.","Genesis 22:11":"Yahweh’s angel called to him out of the sky, and said, “Abraham, Abraham!” He said, “Here I am.”","Genesis 22:12":"He said, “Don’t lay your hand on the boy or do anything to him. For now I know that you fear God, since you have not withheld your son, your only son, from me.”","Genesis 22:13":"Abraham lifted up his eyes, and looked, and saw that behind him was a ram caught in the thicket by his horns. Abraham went and took the ram, and offered him up for a burnt offering instead of his son.","Genesis 22:14":"Abraham called the name of that place Yahweh Will Provide. As it is said to this day, “On Yahweh’s mountain, it will be provided.”","Genesis 24:43":"behold, I am standing by this spring of water. Let it happen, that the maiden who comes out to draw, to whom I will say, “Please give me a little water from your pitcher to drink,”","Genesis 28:12":"He dreamed. Behold, a stairway set upon the earth, and its top reached to heaven. Behold, the angels of God ascending and descending on it.","Genesis 3:1":"Now the serpent was more subtle than any animal of the field which Yahweh God had made. He said to the woman, “Has God really said, ‘You shall not eat of any tree of the garden?’”","Genesis 3:14":"Yahweh God said to the serpent, “Because you have done this, you are cursed above all livestock, and above every animal of the field. You shall go on your belly and you shall eat dust all the days of your life.","Genesis 3:15":"I will put hostility between you and the woman, and between your offspring and her offspring. He will bruise your head, and you will bruise his heel.”","Genesis 3:16":"To the woman he said, “I will greatly multiply your pain in childbirth. In pain you will bear children. Your desire will be for your husband, and he will rule over you.”","Genesis 3:17":"To Adam he said, “Because you have listened to your wife’s voice, and ate from the tree, about which I commanded you, saying, ‘You shall not eat of it,’ the ground is cursed for your sake. You will eat from it with much labor all the days of your life.","Genesis 3:18":"It will yield thorns and thistles to you; and you will eat the herb of the field.","Genesis 3:19":"By the sweat of your face will you eat bread until you return to the ground, for out of it you were taken. For you are dust, and to dust you shall return.”","Genesis 3:6":"When the woman saw that the tree was good for food, and that it was a delight to the eyes, and that the tree was to be desired to make one wise, she took some of its fruit, and ate; and she gave some to her husband with her, and he ate it, too.","Genesis 6:1":"When men began to multiply on the surface of the ground, and daughters were born to them,","Genesis 6:2":"God’s sons saw that men’s daughters were beautiful, and they took any that they wanted for themselves as wives.","Genesis 6:3":"Yahweh said, “My Spirit will not strive with man forever, because he also is flesh; so his days will be one hundred twenty years.”","Genesis 6:4":"The Nephilim were in the earth in those days, and also after that, when God’s sons came in to men’s daughters and had children with them. Those were the mighty men who were of old, men of renown.","Genesis 6:5":"Yahweh saw that the wickedness of man was great in the earth, and that every imagination of the thoughts of man’s heart was continually only evil.","Genesis 6:6":"Yahweh was sorry that he had made man on the earth, and it grieved him in his heart.","Genesis 6:7":"Yahweh said, “I will destroy man whom I have created from the surface of the ground—man, along with animals, creeping things, and birds of the sky—for I am sorry that I have made them.”","Genesis 6:8":"But Noah found favor in Yahweh’s eyes.","Hebrews 10:5":"Therefore when he comes into the world, he says, “Sacrifice and offering you didn’t desire, but you prepared a body for me.","Hebrews 10:10":"by which will we have been sanctified through the offering of the body of Jesus Christ once for all.","Hebrews 10:6":"You had no pleasure in whole burnt offerings and sacrifices for sin.","Hebrews 10:7":"Then I said, ‘Behold, I have come (in the scroll of the book it is written of me) to do your will, O God.’”","Hebrews 10:8":"Previously saying, “Sacrifices and offerings and whole burnt offerings and sacrifices for sin you didn’t desire, neither had pleasure in them” (those which are offered according to the law),","Hebrews 10:9":"then he has said, “Behold, I have come to do your will.” He takes away the first, that he may establish the second,","Hebrews 11:17":"By faith, Abraham, being tested, offered up Isaac. Yes, he who had gladly received the promises was offering up his one and only son,","Hebrews 11:18":"to whom it was said, “your offspring will be accounted as from Isaac”;","Hebrews 11:19":"concluding that God is able to raise up even from the dead. Figuratively speaking, he also did receive him back from the dead.","Hebrews 2:14":"Since then the children have shared in flesh and blood, he also himself in the same way partook of the same, that through death he might bring to nothing him who had the power of death, that is, the devil,","Hosea 11:1":"“When Israel was a child, then I loved him, and called my son out of Egypt.","Hosea 11:2":"They called to them, so they went from them. They sacrificed to the Baals, and burned incense to engraved images.","Hosea 11:3":"Yet I taught Ephraim to walk. I took them by his arms; but they didn’t know that I healed them.","Hosea 11:4":"I drew them with cords of a man, with ties of love; and I was to them like those who lift up the yoke on their necks; and I bent down to him and I fed him.","Hosea 11:8":"“How can I give you up, Ephraim? How can I hand you over, Israel? How can I make you like Admah? How can I make you like Zeboiim? My heart is turned within me, my compassion is aroused.","Hosea 11:9":"I will not execute the fierceness of my anger. I will not return to destroy Ephraim: for I am God, and not man; the Holy One among you; and I will not come in wrath.","Hosea 11:10":"They will walk after Yahweh, who will roar like a lion; for he will roar, and the children will come trembling from the west.","Hosea 11:11":"They will come trembling like a bird out of Egypt, and like a dove out of the land of Assyria; and I will settle them in their houses,” says Yahweh.","Hosea 6:6":"For I desire mercy, and not sacrifice; and the knowledge of God more than burnt offerings.","Isaiah 11:10":"It will happen in that day that the nations will seek the root of Jesse, who stands as a banner of the peoples; and his resting place will be glorious.","Isaiah 14:13":"You said in your heart, “I will ascend into heaven! I will exalt my throne above the stars of God! I will sit on the mountain of assembly, in the far north!","Isaiah 14:14":"I will ascend above the heights of the clouds! I will make myself like the Most High!”","Isaiah 1:11":"“What are the multitude of your sacrifices to me?”, says Yahweh. “I have had enough of the burnt offerings of rams, and the fat of fed animals. I don’t delight in the blood of bulls, or of lambs, or of male goats.","Isaiah 27:1":"In that day, Yahweh with his hard and great and strong sword will punish leviathan, the fleeing serpent, and leviathan the twisted serpent; and he will kill the dragon that is in the sea.","Isaiah 2:2":"It shall happen in the latter days, that the mountain of Yahweh’s house shall be established on the top of the mountains, and shall be raised above the hills; and all nations shall flow to it.","Isaiah 2:3":"Many peoples shall go and say, “Come, let’s go up to the mountain of Yahweh, to the house of the God of Jacob; and he will teach us of his ways, and we will walk in his paths.” For out of Zion the law shall go out, and Yahweh’s word from Jerusalem.","Isaiah 45:21":"Declare and present it. Yes, let them take counsel together. Who has shown this from ancient time? Who has declared it of old? Haven’t I, Yahweh? There is no other God besides me, a just God and a Savior; There is no one besides me.","Isaiah 53:7":"He was oppressed, yet when he was afflicted he didn’t open his mouth. As a lamb that is led to the slaughter, and as a sheep that before its shearers is silent, so he didn’t open his mouth.","Isaiah 7:10":"Yahweh spoke again to Ahaz, saying,","Isaiah 7:11":"“Ask a sign of Yahweh your God; ask it either in the depth, or in the height above.”","Isaiah 7:12":"But Ahaz said, “I will not ask, neither will I tempt Yahweh.”","Isaiah 7:13":"He said, “Listen now, house of David. Is it not enough for you to try the patience of men, that you will try the patience of my God also?","Isaiah 7:14":"Therefore the Lord himself will give you a sign. Behold, the virgin will conceive, and bear a son, and shall call his name Immanuel.","Isaiah 7:15":"He shall eat butter and honey when he knows to refuse the evil, and choose the good.","Isaiah 7:16":"For before the child knows to refuse the evil, and choose the good, the land whose two kings you abhor shall be forsaken.","Isaiah 8:8":"It will sweep onward into Judah. It will overflow and pass through; it will reach even to the neck; and the stretching out of its wings will fill the width of your land, Immanuel.","Isaiah 8:10":"Take counsel together, and it will be brought to nothing; speak the word, and it will not stand: for God is with us.”","Isaiah 9:6":"For to us a child is born. To us a son is given; and the government will be on his shoulders. His name will be called Wonderful, Counselor, Mighty God, Everlasting Father, Prince of Peace.","James 2:21":"Wasn’t Abraham our father justified by works, in that he offered up Isaac his son on the altar?","James 2:22":"You see that faith worked with his works, and by works faith was perfected;","James 2:23":"and the Scripture was fulfilled which says, “Abraham believed God, and it was accounted to him as righteousness”; and he was called the friend of God.","Jeremiah 12:15":"It will happen, that after I have plucked them up, I will return and have compassion on them. I will bring them again, every man to his heritage, and every man to his land.","Jeremiah 31:15":"Yahweh says: “A voice is heard in Ramah, lamentation and bitter weeping, Rachel weeping for her children. She refuses to be comforted for her children, because they are no more.”","Job 1:6":"Now on the day when God’s sons came to present themselves before Yahweh, Satan also came among them.","Job 2:1":"Again, on the day when the God’s sons came to present themselves before Yahweh, Satan came also among them to present himself before Yahweh.","Job 38:7":"when the morning stars sang together, and all the sons of God shouted for joy?","John 19:17":"He went out, bearing his cross, to the place called “The Place of a Skull”, which is called in Hebrew, “Golgotha”,","John 1:29":"The next day, he saw Jesus coming to him, and said, “Behold, the Lamb of God, who takes away the sin of the world!","John 3:14":"As Moses lifted up the serpent in the wilderness, even so must the Son of Man be lifted up,","John 3:16":"For God so loved the world, that he gave his one and only Son, that whoever believes in him should not perish, but have eternal life.","John 4:34":"Jesus said to them, “My food is to do the will of him who sent me, and to accomplish his work.","Jude 1:6":"Angels who didn’t keep their first domain, but deserted their own dwelling place, he has kept in everlasting bonds under darkness for the judgment of the great day.","Jude 1:14":"About these also Enoch, the seventh from Adam, prophesied, saying, “Behold, the Lord came with ten thousands of his holy ones,","Jude 1:15":"to execute judgment on all, and to convict all the ungodly of all their works of ungodliness which they have done in an ungodly way, and of all the hard things which ungodly sinners have spoken against him.”","Luke 10:19":"Behold, I give you authority to tread on serpents and scorpions, and over all the power of the enemy. Nothing will in any way hurt you.","Luke 1:31":"Behold, you will conceive in your womb, and give birth to a son, and will call his name ‘Jesus.’","Luke 1:38":"Mary said, “Behold, the servant of the Lord; let it be done to me according to your word.” The angel departed from her.","Matthew 18:20":"For where two or three are gathered together in my name, there I am in the middle of them.”","Matthew 1:23":"“Behold, the virgin shall be with child, and shall give birth to a son. They shall call his name Immanuel”; which is, being interpreted, “God with us.”","Matthew 28:20":"teaching them to observe all things that I commanded you. Behold, I am with you always, even to the end of the age.” Amen.","Matthew 2:6":"‘You Bethlehem, land of Judah, are in no way least among the princes of Judah: for out of you shall come a governor, who shall shepherd my people, Israel.’”","Matthew 2:15":"and was there until the death of Herod; that it might be fulfilled which was spoken by the Lord through the prophet, saying, “Out of Egypt I called my son.”","Matthew 2:18":"“A voice was heard in Ramah, lamentation, weeping and great mourning, Rachel weeping for her children; she wouldn’t be comforted, because they are no more.”","Matthew 2:23":"and came and lived in a city called Nazareth; that it might be fulfilled which was spoken through the prophets: “He will be called a Nazarene.”","Matthew 3:17":"Behold, a voice out of the heavens said, “This is my beloved Son, with whom I am well pleased.”","Matthew 4:1":"Then Jesus was led up by the Spirit into the wilderness to be tempted by the devil.","Matthew 4:2":"When he had fasted forty days and forty nights, he was hungry afterward.","Matthew 4:3":"The tempter came and said to him, “If you are the Son of God, command that these stones become bread.”","Matthew 4:4":"But he answered, “It is written, ‘Man shall not live by bread alone, but by every word that proceeds out of the mouth of God.’”","Micah 5:2":"But you, Bethlehem Ephrathah, being small among the clans of Judah, out of you one will come out to me that is to be ruler in Israel; whose goings out are from of old, from ancient times.","Micah 6:6":"How shall I come before Yahweh, and bow myself before the exalted God? Shall I come before him with burnt offerings, with calves a year old?","Micah 6:7":"Will Yahweh be pleased with thousands of rams? With tens of thousands of rivers of oil? Shall I give my firstborn for my disobedience? The fruit of my body for the sin of my soul?","Micah 6:8":"He has shown you, O man, what is good. What does Yahweh require of you, but to act justly, to love mercy, and to walk humbly with your God?","Numbers 13:33":"There we saw the Nephilim, the sons of Anak, who come from the Nephilim. We were in our own sight as grasshoppers, and so we were in their sight.”","Numbers 21:8":"Yahweh said to Moses, “Make a venomous snake, and set it on a pole. It shall happen, that everyone who is bitten, when he sees it, shall live.”","Numbers 21:9":"Moses made a serpent of brass, and set it on the pole. If a serpent had bitten any man, when he looked at the serpent of brass, he lived.","Numbers 24:8":"God brings him out of Egypt. He has as it were the strength of the wild ox. He shall eat up the nations his adversaries, shall break their bones in pieces, and pierce them with his arrows.","Psalms 29:1":"Ascribe to Yahweh, you sons of the mighty, ascribe to Yahweh glory and strength.","Psalms 40:6":"Sacrifice and offering you didn’t desire. You have opened my ears. You have not required burnt offering and sin offering.","Psalms 40:7":"Then I said, “Behold, I have come. It is written about me in the book in the scroll.","Psalms 40:8":"I delight to do your will, my God. Yes, your law is within my heart.”","Psalms 51:16":"For you don’t delight in sacrifice, or else I would give it. You have no pleasure in burnt offering.","Psalms 51:17":"The sacrifices of God are a broken spirit. A broken and contrite heart, O God, you will not despise.","Psalms 82:1":"God presides in the great assembly. He judges among the gods.","Psalms 82:6":"I said, “You are gods, all of you are sons of the Most High.","Psalms 89:6":"For who in the skies can be compared to Yahweh? Who among the sons of the heavenly beings is like Yahweh,","Revelation 12:17":"The dragon grew angry with the woman, and went away to make war with the rest of her offspring, who keep God’s commandments and hold Jesus’ testimony.","Revelation 12:9":"The great dragon was thrown down, the old serpent, he who is called the devil and Satan, the deceiver of the whole world. He was thrown down to the earth, and his angels were thrown down with him.","Revelation 18:2":"He cried with a mighty voice, saying, “Fallen, fallen is Babylon the great, and she has become a habitation of demons, a prison of every unclean spirit, and a prison of every unclean and hateful bird!","Revelation 20:2":"He seized the dragon, the old serpent, which is the devil and Satan, who deceives the whole inhabited earth, and bound him for a thousand years,","Revelation 5:6":"I saw in the middle of the throne and of the four living creatures, and in the middle of the elders, a Lamb standing, as though it had been slain, having seven horns, and seven eyes, which are the seven Spirits of God, sent out into all the earth.","Revelation 7:9":"After these things I looked, and behold, a great multitude, which no man could count, out of every nation and of all tribes, peoples, and languages, standing before the throne and before the Lamb, dressed in white robes, with palm branches in their hands.","Romans 16:20":"And the God of peace will quickly crush Satan under your feet. The grace of our Lord Jesus Christ be with you.","Romans 8:32":"He who didn’t spare his own Son, but delivered him up for us all, how would he not also with him freely give us all things?","Zechariah 2:11":"Many nations shall join themselves to Yahweh in that day, and shall be my people; and I will dwell among you, and you shall know that Yahweh of Armies has sent me to you.","Zephaniah 3:9":"For then I will purify the lips of the peoples, that they may all call on Yahweh’s name, to serve him shoulder to shoulder."};
+
+/* ---------- connection types ---------- */
+var TYPE_ORDER = ['crossref','quotation','structure','typology','symbol','secondtemple','fathers'];
+var TYPES = {
+  crossref:{label:'Cross-refs', chip:'Cross-ref', card:'Cross-reference', token:'--c-crossref'},
+  quotation:{label:'Quotations', chip:'Quotation', card:'Quotation', token:'--c-quotation'},
+  structure:{label:'Structure', chip:'Structure', card:'Structure', token:'--c-structure'},
+  typology:{label:'Typology', chip:'Typology', card:'Typology', token:'--c-typology'},
+  symbol:{label:'Symbols', chip:'Symbol', card:'Symbol thread', token:'--c-symbol'},
+  secondtemple:{label:'Second Temple', chip:'Second Temple', card:'Second Temple source', token:'--c-secondtemple'},
+  fathers:{label:'The Fathers', chip:'Fathers', card:'The Fathers', token:'--c-fathers'}
+};
+var OB = 'OpenBible.info cross-reference dataset (CC-BY), curated for this demo';
+var TSK = 'Treasury of Scripture Knowledge (1830s), via the OpenBible.info dataset (CC-BY)';
+var TRAD = 'Traditional Christian reading; New Testament passage cited.';
+var CHARLES = 'R.H. Charles, The Apocrypha and Pseudepigrapha of the Old Testament (Oxford, 1913), public domain';
+var WHISTON = 'Josephus, tr. William Whiston (1737), public domain';
+var DEUT_NOTE = 'Textual note. MT: “children of Israel” (bene yisra’el). LXX: “angels of God” (angelōn theou). Dead Sea Scroll 4QDeut-j: “sons of God” (bene elohim). Modern translations split: ESV and NRSV follow Qumran/LXX; NIV and NASB keep the MT.';
+
+/* ---------- hubs (hand-curated, real connections only) ---------- */
+var HUBS = [
+{
+  id:'gen3', book:'Genesis', chapter:3, slug:'genesis/3/15', display:'Genesis 3:15', testament:'Old Testament',
+  range:[14,19], hub:15, unit:[15,15], defaultTab:'crossref',
+  intro:'The sentence on the serpent. Since Irenaeus this verse has been read as the first promise of the gospel, the protevangelium.',
+  crossref:[
+    {ref:'Romans 16:20', why:'Paul’s “crush Satan under your feet” picks up the promise that the woman’s offspring will bruise the serpent’s head.', source:OB},
+    {ref:'Revelation 12:9', why:'John calls the dragon “the old serpent,” identifying Eden’s serpent with the devil.', source:OB},
+    {ref:'Revelation 12:17', why:'The dragon makes war with “the rest of her offspring”: the woman, her seed, and the serpent’s hostility, all in one verse.', source:OB},
+    {ref:'Galatians 4:4', why:'“Born to a woman”: the Son arrives as the woman’s offspring.', source:OB},
+    {ref:'Hebrews 2:14', why:'Through death he brings to nothing the one who had the power of death, the devil: the head-blow delivered by way of a wounded heel.', source:OB},
+    {ref:'1 John 3:8', why:'The Son of God was revealed to destroy the devil’s works, the first of which is told in Genesis 3.', source:OB},
+    {ref:'Luke 10:19', why:'Authority to tread on serpents keeps the image of the serpent underfoot.', source:OB},
+    {ref:'Isaiah 7:14', why:'Paired under “her offspring” in the Treasury of Scripture Knowledge: the promised child of the woman and the son the young woman bears.', source:TSK}
+  ],
+  quotation:[],
+  structure:[
+    {kind:'sequence', short:'Order of judgment', title:'The judgments reverse the interrogation',
+     rows:[
+       {k:'Transgression (3:1–6)', steps:['serpent','woman','man']},
+       {k:'Interrogation (3:9–13)', steps:['man','woman','serpent not questioned']},
+       {k:'Judgment (3:14–19)', steps:['serpent','woman','man']}
+     ],
+     notes:['God questions the man and the woman but never the serpent, then sentences in the order the sin unfolded. Genesis 3:15 sits inside the first oracle.'],
+     summary:'Sin runs serpent → woman → man; the questioning runs man → woman; the sentences run serpent → woman → man again.',
+     source:'Wenham, Genesis 1–15 (WBC 1), on 3:14–19; widely noted in the commentaries.'}
+  ],
+  typology:[
+    {type:{ref:'Genesis 3:15', label:'Seed of the woman'}, anti:{ref:'Galatians 4:4', label:'Christ, born of a woman'}, phrase:'“her offspring” → “born to a woman”', source:TRAD},
+    {type:{ref:'Genesis 3:15', label:'Bruised heel'}, anti:{ref:'Hebrews 2:14', label:'The cross'}, phrase:'“you will bruise his heel” → “through death he might bring to nothing…”', source:TRAD},
+    {type:{ref:'Genesis 3:15', label:'Crushed head'}, anti:{ref:'Romans 16:20', label:'Victory over Satan'}, phrase:'“he will bruise your head” → “crush Satan under your feet”', source:TRAD},
+    {type:{ref:'Genesis 3:15', label:'Eve'}, anti:{ref:'Luke 1:38', label:'Mary, the reversal'}, phrase:'“the knot of Eve’s disobedience was loosed by the obedience of Mary”', source:'Irenaeus, Against Heresies 3.22.4 (ANF 1).'}
+  ],
+  symbol:[
+    {name:'Serpent', why:'Follows the word “serpent” (Hebrew nachash, Greek ophis) from the garden to the abyss. John 3:14 and Revelation 12:9 make the links explicit.', source:'Curated thread; verbal occurrences of serpent / dragon.',
+     stops:[
+       {ref:'Genesis 3:1', label:'The subtle serpent', note:'nachash'},
+       {ref:'Numbers 21:8-9', label:'Bronze serpent on a pole', note:'nachash nechoshet'},
+       {ref:'Isaiah 27:1', label:'Leviathan the fleeing serpent', note:'nachash bariach'},
+       {ref:'John 3:14', label:'Son of Man lifted up', note:'ophis, citing Numbers 21'},
+       {ref:'Revelation 12:9', label:'The old serpent, the devil', note:'ho ophis ho archaios'},
+       {ref:'Revelation 20:2', label:'Bound for a thousand years', note:'ho ophis ho archaios'}
+     ]}
+  ],
+  secondtemple:[
+    {source:'Wisdom of Solomon 2:24', short:'Wisdom 2:24', date:'1st c. BC · deuterocanonical', kind:'quote',
+     excerpt:'Nevertheless through envy of the devil came death into the world: and they that do hold of his side do find it.',
+     tr:'KJV Apocrypha (1611), public domain',
+     why:'The earliest surviving text to read the serpent’s work in Eden as the devil’s, and to tie it to death entering the world.'}
+  ],
+  fathers:[
+    {author:'Irenaeus', work:'Against Heresies', loc:'3.23.7', short:'Irenaeus · AH 3.23.7', series:'ANF 1', kind:'quote', reading:'Christ is the seed',
+     text:'He, the sole of whose foot should be bitten, having power also to tread upon the enemy’s head; but the other biting, killing, and impeding the steps of man, until the seed did come appointed to tread down his head, which was born of Mary.',
+     why:'Irenaeus reads the “seed” who tramples the serpent as Christ, born of Mary.'},
+    {author:'Justin Martyr', work:'Dialogue with Trypho', loc:'100', short:'Justin · Dial. 100', series:'ANF 1', kind:'paraphrase', reading:'Eve–Mary parallel',
+     text:'Eve, while still a virgin, conceived the serpent’s word and bore disobedience and death; the Virgin Mary received faith and joy at Gabriel’s word and bore the one through whom God destroys the serpent.',
+     why:'The earliest Eve–Mary contrast, tying Genesis 3:15 to the annunciation.'}
+  ]
+},
+{
+  id:'gen6', book:'Genesis', chapter:6, slug:'genesis/6/2', display:'Genesis 6:1-4', testament:'Old Testament',
+  range:[1,8], hub:2, unit:[1,4], defaultTab:'crossref',
+  intro:'The sons of God, the daughters of men, and the Nephilim. Four verses, two ancient readings, and a canonical letter that quotes 1 Enoch.',
+  crossref:[
+    {ref:'Job 1:6', why:'“God’s sons” present themselves before Yahweh in the heavenly court: the same phrase (bene ha-elohim) as Genesis 6:2.', source:OB},
+    {ref:'Job 38:7', why:'The sons of God shout for joy at creation, in parallel with the morning stars: heavenly beings, present before humanity existed.', source:OB},
+    {ref:'Psalm 82:1, 6', why:'The divine council: God judges “among the gods,” who are called “sons of the Most High.”', source:OB},
+    {ref:'Deuteronomy 32:8', why:'The nations are allotted according to the number of the “sons of God” in the Qumran and Greek texts: the same beings as Genesis 6:2 in that reading.', source:OB, note:DEUT_NOTE},
+    {ref:'Jude 6', why:'Angels who left their proper dwelling, kept in bonds for judgment; Jude’s next verse compares their sin to Sodom’s.', source:OB},
+    {ref:'2 Peter 2:4-5', why:'Angels who sinned, cast into Tartarus, named immediately before Noah and the Flood: the sequence of Genesis 6.', source:OB},
+    {ref:'Numbers 13:33', why:'The only other biblical mention of the Nephilim, here as the giants of Canaan.', source:OB, at:4},
+    {ref:'Genesis 11:4', why:'“Men of renown” is literally “men of the name” (anshe ha-shem, 6:4); Babel’s builders say “let us make a name (shem) for ourselves” (11:4). Genesis 12:2 answers both: “I will make your name great.”', source:OB + '; verbal link noted in Wenham, Genesis 1–15 (WBC 1), on 11:4', at:4}
+  ],
+  quotation:[
+    {title:'Jude 14–15 quotes 1 Enoch 1:9', from:'Jude 14-15', to:'Jude 14-15', kind:'Quotation of a non-canonical book',
+     cols:[
+       {label:'Greek (NT) · Jude 14–15', lang:'grc', text:'ἰδοὺ ἦλθεν κύριος ἐν ἁγίαις μυριάσιν αὐτοῦ ποιῆσαι κρίσιν κατὰ πάντων', gloss:'“Behold, the Lord came with his holy myriads to execute judgment on all.”'},
+       {label:'1 Enoch 1:9 · Ethiopic, tr. Charles (1917)', lang:'en', text:'And behold! He cometh with ten thousands of His holy ones to execute judgement upon all, and to destroy all the ungodly.', gloss:'Aramaic fragments of this verse survive at Qumran (4Q204).'}
+     ],
+     changed:'Jude introduces the line as prophecy from “Enoch, the seventh from Adam” and quotes it nearly word for word. Jude’s aorist “came” (ēlthen) renders a prophetic perfect, and “the Lord” (kyrios) replaces Enoch’s “He.” A canonical letter quoting a non-canonical book is the reason 1 Enoch belongs in a Genesis 6 study.',
+     summary:'Jude 14–15 quotes 1 Enoch 1:9 nearly verbatim, naming Enoch as the prophet.',
+     source:'Greek New Testament (Jude 14–15); ' + CHARLES + '.'}
+  ],
+  structure:[
+    {kind:'echo', short:'Echo of Gen 3:6', title:'“Saw … good … took”: the fall repeated',
+     pairs:[
+       {ref:'Genesis 3:6', html:'When the woman <em>saw</em> that the tree was <em>good</em> for food … she <em>took</em> some of its fruit'},
+       {ref:'Genesis 6:2', html:'God’s sons <em>saw</em> that men’s daughters were <em>beautiful</em> (tovot, “good”) … and they <em>took</em> any that they wanted'}
+     ],
+     notes:['The same three Hebrew verbs in the same order (ra’ah, tov, laqach): the narrator frames the sons of God as repeating Eve’s grasp.'],
+     summary:'Genesis 6:2 repeats the verbs of Genesis 3:6 in order: saw, good, took.',
+     source:'Wenham, Genesis 1–15 (WBC 1), on 6:2; Cassuto, A Commentary on the Book of Genesis, Part II.'}
+  ],
+  typology:[],
+  symbol:[
+    {name:'Sons of God', why:'Follows the phrase “sons of God” (bene [ha-]elohim, bene elim) through the Old Testament. Every occurrence outside Genesis 6 is in a heavenly setting.', source:'Curated thread; verbal occurrences. Canonical order.',
+     stops:[
+       {ref:'Genesis 6:2', label:'Saw the daughters of men', note:'bene ha-elohim'},
+       {ref:'Deuteronomy 32:8', label:'Nations allotted by their number', note:'bene elohim (4QDeut-j); LXX “angels of God”; MT “sons of Israel”'},
+       {ref:'Job 1:6', label:'Present themselves before Yahweh', note:'bene ha-elohim'},
+       {ref:'Job 2:1', label:'Present themselves again', note:'bene ha-elohim'},
+       {ref:'Job 38:7', label:'Shout for joy at creation', note:'bene elohim'},
+       {ref:'Psalm 29:1', label:'“Sons of the mighty” ascribe glory', note:'bene elim'},
+       {ref:'Psalm 89:6', label:'“Sons of the heavenly beings”', note:'bene elim'}
+     ]}
+  ],
+  secondtemple:[
+    {source:'1 Enoch 6:1-6', short:'1 Enoch 6', date:'c. 3rd–2nd c. BC', kind:'quote',
+     excerpt:'And the angels, the children of the heaven, saw and lusted after them, and said to one another: “Come, let us choose us wives from among the children of men and beget us children.” … And they were in all two hundred; who descended in the days of Jared on the summit of Mount Hermon.',
+     tr:CHARLES, why:'The earliest full retelling of Genesis 6:1–4: the “sons of God” are angels (Watchers), two hundred of them, led by Semjaza, who descend on Hermon.'},
+    {source:'1 Enoch 7:1-2', short:'1 Enoch 7', date:'c. 3rd–2nd c. BC', kind:'quote',
+     excerpt:'And they became pregnant, and they bare great giants, whose height was three thousand ells: who consumed all the acquisitions of men.',
+     tr:CHARLES, why:'Explains the Nephilim of 6:4 as the giant offspring of the Watchers.'},
+    {source:'1 Enoch 10:4-6', short:'1 Enoch 10', date:'c. 3rd–2nd c. BC', kind:'quote',
+     excerpt:'And again the Lord said to Raphael: “Bind Azâzêl hand and foot, and cast him into the darkness: and make an opening in the desert, which is in Dûdâêl, and cast him therein … and let him abide there for ever … And on the day of the great judgement he shall be cast into the fire.”',
+     tr:CHARLES, why:'The binding of the rebel angels in darkness until judgment is the background Jude 6 and 2 Peter 2:4 assume.'},
+    {source:'Jubilees 5:1-2', short:'Jubilees 5', date:'2nd c. BC', kind:'quote',
+     excerpt:'…the angels of God saw them on a certain year of this jubilee, that they were beautiful to look upon; and they took themselves wives of all whom they chose, and they bare unto them sons and they were giants.',
+     tr:CHARLES, why:'Rewrites Genesis 6:1–2 with “angels of God” in place of “sons of God.”'},
+    {source:'Josephus, Antiquities 1.3.1', short:'Josephus · Ant. 1.3.1', date:'c. AD 93', kind:'quote',
+     excerpt:'For many angels of God accompanied with women, and begat sons that proved unjust, and despisers of all that was good, on account of the confidence they had in their own strength; for the tradition is, that these men did what resembled the acts of those whom the Grecians call giants.',
+     tr:WHISTON, why:'A first-century Jewish historian reads “sons of God” as angels and compares their offspring to the giants of Greek myth.'},
+    {source:'Philo, On the Giants 6', short:'Philo · Gig. 6', date:'c. AD 20–40', kind:'quote',
+     excerpt:'Those beings, whom other philosophers call demons, Moses usually calls angels; and they are souls hovering in the air.',
+     tr:'Philo, tr. C.D. Yonge (1854), public domain', why:'Philo quotes Genesis 6:2 in its Greek form (“angels of God”) and explains angels as the beings philosophers call daemons.'}
+  ],
+  fathers:[
+    {author:'Justin Martyr', work:'Second Apology', loc:'5', short:'Justin · 2 Apol. 5', series:'ANF 1', kind:'quote', reading:'Angelic view',
+     text:'But the angels transgressed this appointment, and were captivated by love of women, and begat children who are those that are called demons.',
+     why:'The earliest Christian witness takes the sons of God as angels, in line with 1 Enoch.'},
+    {author:'Tertullian', work:'On the Veiling of Virgins', loc:'7', short:'Tertullian · Virg. 7', series:'ANF 4', kind:'paraphrase', reading:'Angelic view',
+     text:'Tertullian reads Paul’s “because of the angels” (1 Corinthians 11:10) through Genesis 6: angels once desired the daughters of men, so virgins should be veiled.',
+     why:'Shows the angelic reading in use as a practical argument in the early third century.'},
+    {author:'Julius Africanus', work:'Chronography, fragment', loc:'2', short:'Africanus · Chron. fr. 2', series:'ANF 6', kind:'paraphrase', reading:'Sethite view',
+     text:'The descendants of Seth are called the sons of God on account of the righteous men and patriarchs sprung from him; the descendants of Cain are called the seed of men. Africanus notes that some copies read “angels of God.”',
+     why:'The first surviving statement of the Sethite reading, c. AD 220, and he records the rival reading beside it.'},
+    {author:'Augustine', work:'City of God', loc:'15.23', short:'Augustine · Civ. 15.23', series:'NPNF1 2', kind:'paraphrase', reading:'Sethite view',
+     text:'The “sons of God” were the godly line of Seth who married Cainite women; “angels” here means men so called for their piety. Augustine also declines to treat 1 Enoch as authoritative.',
+     why:'Fixed the Sethite reading as the majority Western view for a thousand years.'}
+  ]
+},
+{
+  id:'gen11', book:'Genesis', chapter:11, slug:'genesis/11/5', display:'Genesis 11:1-9', testament:'Old Testament',
+  range:[1,9], hub:5, unit:[1,9], defaultTab:'structure',
+  intro:'Babel. Nine verses built as a mirror, with Yahweh’s descent at the hinge.',
+  crossref:[
+    {ref:'Genesis 10:8-10', textRef:'Genesis 10:10', why:'Nimrod’s kingdom begins at Babel in Shinar; chapter 10 names the place before chapter 11 tells its story.', source:OB},
+    {ref:'Deuteronomy 32:8', why:'The Most High divides the nations and sets their bounds: the theological summary of the scattering at Babel.', source:OB, note:DEUT_NOTE},
+    {ref:'Acts 2:1-11', textRef:'Acts 2:4-6', why:'At Pentecost every nation hears in its own language; widely read as the reversal of Babel’s confusion.', source:OB},
+    {ref:'Zephaniah 3:9', why:'God will give the peoples a purified lip so that all call on his name together: Babel’s divided speech undone.', source:OB},
+    {ref:'Revelation 7:9', why:'A multitude from every nation, tribe, people and language before the throne: the scattered nations gathered.', source:OB},
+    {ref:'Isaiah 14:13-14', why:'The king of Babylon’s “I will ascend into heaven” repeats Babel’s ambition to reach the sky.', source:OB},
+    {ref:'Genesis 28:12', why:'Jacob’s stairway “with its top reaching to heaven” uses the tower’s phrase (11:4), but this time God comes down to bless.', source:OB, at:4},
+    {ref:'Genesis 6:4', why:'“Let us make a name (shem) for ourselves” answers the “men of the name” (men of renown) of 6:4; Genesis 12:2 turns both around: “I will make your name great.”', source:OB + '; verbal link noted in Wenham, Genesis 1–15 (WBC 1), on 11:4', at:4}
+  ],
+  quotation:[],
+  structure:[
+    {kind:'ladder', short:'Chiasm A–X–A′', title:'Fokkelman’s chiasm',
+     rungs:[
+       {tag:'A', text:'all the earth had one language', ref:'v1'},
+       {tag:'B', text:'there', ref:'v2'},
+       {tag:'C', text:'each other', ref:'v3'},
+       {tag:'D', text:'Come, let us make bricks', ref:'v3'},
+       {tag:'E', text:'let us build for ourselves', ref:'v4'},
+       {tag:'F', text:'a city and a tower', ref:'v4'},
+       {tag:'X', text:'Yahweh came down to see', ref:'v5', center:true},
+       {tag:'F′', text:'the city and the tower', ref:'v5'},
+       {tag:'E′', text:'which the children of men built', ref:'v5'},
+       {tag:'D′', text:'Come, let us confuse', ref:'v7'},
+       {tag:'C′', text:'each other’s speech', ref:'v7'},
+       {tag:'B′', text:'from there', ref:'v8'},
+       {tag:'A′', text:'the language of all the earth', ref:'v9'}
+     ],
+     notes:[
+       'Wordplay: “let us brick bricks,” nilbenah lebenim (v3), mirrors “let us confuse,” navlah (v7). The consonants l-b-n are reversed to n-b-l.',
+       'The name Babel (bavel) is explained by balal, “confuse” (v9).',
+       'Humanity builds up in the first half; Yahweh comes down at the centre; everything unwinds in the second half.'
+     ],
+     summary:'Thirteen mirrored steps, A to A′, hinged on “Yahweh came down to see” (v5).',
+     source:'J.P. Fokkelman, Narrative Art in Genesis (1975), ch. 1.'}
+  ],
+  typology:[
+    {type:{ref:'Genesis 11:7', label:'Babel: languages confused'}, anti:{ref:'Acts 2:4-6', label:'Pentecost: every language hears'}, phrase:'“confuse their language” → “everyone heard them speaking in his own language” (a reversal)', source:'Reading common since the Fathers; the parallel is verbal and situational.'},
+    {type:{ref:'Genesis 11:9', label:'Babel'}, anti:{ref:'Revelation 18:2', label:'Babylon the Great'}, phrase:'Babel and Babylon are the same word in Hebrew (bavel); the city of confusion falls', source:TRAD}
+  ],
+  symbol:[
+    {name:'Babel / Babylon', why:'Follows the name Babel/Babylon (bavel, Babylōn) from Nimrod’s first city to John’s fallen city.', source:'Curated thread; verbal occurrences. Canonical order.',
+     stops:[
+       {ref:'Genesis 10:10', label:'Beginning of Nimrod’s kingdom', note:'bavel'},
+       {ref:'Genesis 11:9', label:'Named Babel, “confusion”', note:'bavel / balal'},
+       {ref:'Isaiah 14:13-14', label:'The king of Babylon’s ascent', note:'oracle against Babylon, 14:4'},
+       {ref:'Revelation 18:2', label:'“Fallen, fallen is Babylon the great”', note:'Babylōn hē megalē'}
+     ]}
+  ],
+  secondtemple:[
+    {source:'Jubilees 10:18-26', short:'Jubilees 10', date:'2nd c. BC', kind:'quote',
+     excerpt:'And they built it: forty and three years were they building it … And the Lord sent a mighty wind against the tower and overthrew it upon the earth, and behold it was between Asshur and Babylon in the land of Shinar, and they called its name “Overthrow.”',
+     tr:CHARLES, why:'Adds what Genesis leaves out: how long the building took and what became of the tower.'},
+    {source:'Josephus, Antiquities 1.4.1-3', short:'Josephus · Ant. 1.4', date:'c. AD 93', kind:'quote',
+     excerpt:'Now it was Nimrod who excited them to such an affront and contempt of God. He was the grandson of Ham, the son of Noah, a bold man, and of great strength of hand. He persuaded them not to ascribe it to God, as if it were through his means they were happy, but to believe that it was their own courage which procured that happiness.',
+     tr:WHISTON, why:'Josephus names Nimrod as the tower’s builder, filling a gap: Genesis 11 names no leader.'}
+  ],
+  fathers:[
+    {author:'Augustine', work:'City of God', loc:'16.4', short:'Augustine · Civ. 16.4', series:'NPNF1 2', kind:'paraphrase', reading:'City of pride',
+     text:'Augustine reads Babel as the founding act of the earthly city, pride reaching for heaven, and explains that “Babylon” means “confusion.”',
+     why:'Babel becomes the emblem of the civitas terrena, the city of man, throughout the City of God.'}
+  ]
+},
+{
+  id:'gen22', book:'Genesis', chapter:22, slug:'genesis/22/8', display:'Genesis 22:8', testament:'Old Testament',
+  range:[1,14], hub:8, unit:[8,8], defaultTab:'typology',
+  intro:'The binding of Isaac (the Akedah). Click a verse: several connections attach to verses other than the hub.',
+  crossref:[
+    {ref:'Hebrews 11:17-19', textRef:'Hebrews 11:17, 19', why:'Hebrews reads the offering of Isaac as faith in resurrection: Abraham received him back “figuratively speaking.”', source:OB},
+    {ref:'James 2:21-23', textRef:'James 2:21-22', why:'James makes the Akedah the proof that Abraham’s faith worked together with his works.', source:OB},
+    {ref:'John 3:16', why:'God gives his “one and only Son” as Abraham did not withhold “your son, your only son” (22:2, 12).', source:OB, at:2},
+    {ref:'Matthew 3:17', why:'“My beloved Son” matches the Greek of 22:2, “your beloved son” (ton huion sou ton agapēton).', source:OB, at:2},
+    {ref:'John 1:29', why:'“Behold, the Lamb of God” answers Isaac’s question, “where is the lamb?” (22:7), and Abraham’s reply (22:8).', source:OB},
+    {ref:'John 19:17', why:'Jesus carries his own cross as Isaac carried the wood for his own offering (22:6).', source:OB, at:6},
+    {ref:'2 Chronicles 3:1', why:'Moriah is named only here and in 22:2: the mountain of the binding is the temple mount at Jerusalem.', source:OB, at:2},
+    {ref:'Romans 8:32', why:'“He who did not spare his own Son” echoes the Greek of 22:12, “you did not spare your beloved son.”', source:OB, at:12}
+  ],
+  quotation:[
+    {title:'Genesis 22:12 in Romans 8:32', from:'Genesis 22:12', to:'Romans 8:32', kind:'Allusion, not quotation', at:12,
+     cols:[
+       {label:'Hebrew (MT) · Genesis 22:12', lang:'he', text:'וְלֹא חָשַׂכְתָּ אֶת־בִּנְךָ אֶת־יְחִידְךָ מִמֶּנִּי', gloss:'“and you have not withheld your son, your only one, from me”'},
+       {label:'Greek (LXX) · Genesis 22:12', lang:'grc', text:'οὐκ ἐφείσω τοῦ υἱοῦ σου τοῦ ἀγαπητοῦ δι᾽ ἐμέ', gloss:'“you did not spare your beloved son for my sake”'},
+       {label:'Greek (NT) · Romans 8:32', lang:'grc', text:'ὅς γε τοῦ ἰδίου υἱοῦ οὐκ ἐφείσατο', gloss:'“who did not spare his own Son”'}
+     ],
+     changed:'The Hebrew “you did not withhold” (chasak) becomes “you did not spare” (pheidomai) in the Greek, and “your only one” (yachid) becomes “your beloved” (agapētos). Paul echoes the LXX verb and applies Abraham’s act to the Father, who “did not spare his own Son.”',
+     summary:'Paul’s “did not spare his own Son” echoes the Greek of Genesis 22:12.',
+     source:'Rahlfs LXX; Greek New Testament; N.A. Dahl, “The Atonement: An Adequate Reward for the Akedah?” (1969).'}
+  ],
+  structure:[
+    {kind:'markers', short:'“Here I am” ×3', title:'Three “Here I am,” one double call, one frame',
+     items:[
+       {tag:'v1', text:'“Here I am” (hinneni), to God'},
+       {tag:'v7', text:'“Here I am, my son,” to Isaac'},
+       {tag:'v11', text:'“Here I am,” to the angel, after the double call “Abraham, Abraham!”'},
+       {tag:'v1 · v20', text:'Frame: “After these things” opens the test (22:1) and the next section (22:20)'}
+     ],
+     notes:['Abraham answers everyone who calls him with the same word. The double call at v11 marks the turning point of the story.'],
+     summary:'Abraham says “Here I am” to God, to Isaac and to the angel; the doubled name at v11 is the turning point.',
+     source:'Wenham, Genesis 16–50 (WBC 2), on 22:1–19; Alter, Genesis: Translation and Commentary (1996).'}
+  ],
+  typology:[
+    {type:{ref:'Genesis 22:2', label:'Your son, your only son, whom you love'}, anti:{ref:'Matthew 3:17', label:'This is my beloved Son'}, phrase:'LXX 22:2 “ton agapēton” → Matthew “ho agapētos”', source:TRAD, at:2},
+    {type:{ref:'Genesis 22:6', label:'Isaac carries the wood'}, anti:{ref:'John 19:17', label:'Jesus carries the cross'}, phrase:'“laid it on Isaac his son” → “bearing his cross”', source:'Tertullian, Against the Jews 10 (earliest witness); ' + TRAD, at:6},
+    {type:{ref:'Genesis 22:4', label:'On the third day'}, anti:{ref:'1 Corinthians 15:4', label:'Raised on the third day'}, phrase:'the place seen on the third day → the tomb opened on the third day', source:TRAD, at:4},
+    {type:{ref:'Genesis 22:2', label:'The land of Moriah'}, anti:{ref:'2 Chronicles 3:1', label:'Mount Moriah, Jerusalem'}, phrase:'the mountain of the binding → the temple mount', source:'2 Chronicles 3:1; the identification is inner-biblical.', at:2},
+    {type:{ref:'Genesis 22:8', label:'God will provide himself the lamb'}, anti:{ref:'John 1:29', label:'Behold, the Lamb of God'}, phrase:'“where is the lamb?” → “Behold, the Lamb”', source:TRAD},
+    {type:{ref:'Hebrews 11:19', label:'Received back “in a figure”'}, anti:{ref:'1 Corinthians 15:4', label:'Resurrection'}, phrase:'Greek en parabolē, “figuratively speaking” → raised on the third day', source:'Hebrews 11:19 itself.', at:13}
+  ],
+  symbol:[
+    {name:'Lamb', why:'Follows “lamb” from Isaac’s question to the Lamb on the throne. John 1:29 and 1 Peter 1:19 tie the Passover lamb and Isaiah’s lamb to Christ.', source:'Curated thread; verbal occurrences. Canonical order.',
+     stops:[
+       {ref:'Genesis 22:8', label:'God will provide the lamb', note:'seh'},
+       {ref:'Exodus 12:3-13', textRef:'Exodus 12:5, 13', label:'The Passover lamb', note:'seh; “when I see the blood, I will pass over you”'},
+       {ref:'Isaiah 53:7', label:'Like a lamb led to slaughter', note:'seh'},
+       {ref:'John 1:29', label:'Behold, the Lamb of God', note:'amnos'},
+       {ref:'1 Peter 1:19', label:'A lamb without blemish', note:'amnos; echoes Exodus 12:5'},
+       {ref:'Revelation 5:6', label:'A Lamb standing, as though slain', note:'arnion'}
+     ]}
+  ],
+  secondtemple:[
+    {source:'Jubilees 17:15–18:19', short:'Jubilees 17–18', date:'2nd c. BC', kind:'quote',
+     excerpt:'And the prince Mastêmâ came and said before God, “Behold, Abraham loves Isaac his son, and he delights in him above all things else; bid him offer him as a burnt-offering on the altar, and Thou wilt see if he will do this command.”',
+     tr:CHARLES, why:'Supplies a Job-like prologue (the test is Mastema’s proposal) and dates the event to the days of Passover, the twelfth to the fifteenth of the first month.'},
+    {source:'4 Maccabees 13:12; 16:20', short:'4 Maccabees 13; 16', date:'1st c. AD · Greek', kind:'paraphrase',
+     excerpt:'The martyred brothers are told to remember Isaac, who offered himself to be sacrificed for the sake of piety; their mother recalls that Isaac did not flinch when he saw his father’s hand and the knife.',
+     tr:'Paraphrase of the Greek text', why:'Isaac becomes a willing self-offering and a model for martyrs, a step toward reading the Akedah as sacrifice, not only test.'},
+    {source:'Josephus, Antiquities 1.13.2-4', short:'Josephus · Ant. 1.13', date:'c. AD 93', kind:'quote',
+     excerpt:'Now Isaac was of such a generous disposition as became the son of such a father, and was pleased with this discourse; and said, that he was not worthy to be born at first, if he should reject the determination of God and of his father.',
+     tr:WHISTON, why:'Josephus makes Isaac an adult of twenty-five who consents, and has Abraham explain the sacrifice to him before the altar.'}
+  ],
+  fathers:[
+    {author:'Tertullian', work:'Against the Jews', loc:'10', short:'Tertullian · Adv. Jud. 10', series:'ANF 3', kind:'quote', reading:'Typological',
+     text:'Isaac, when led by his father as a victim, and himself bearing his own “wood,” was even at that period pointing to Christ’s death; conceded, as He was, as a victim by the Father; carrying, as He did, the “wood” of His own passion.',
+     why:'The earliest explicit statement that Isaac carrying the wood prefigures Christ carrying the cross.'},
+    {author:'Origen', work:'Homilies on Genesis', loc:'8', short:'Origen · Hom. Gen. 8', series:'FC 71, tr. Heine', kind:'paraphrase', reading:'Typological',
+     text:'Origen reads “God will provide himself the lamb” as Abraham prophesying Christ, and Isaac carrying the wood as Christ carrying his cross; the ram in the thicket points to the flesh in which Christ suffered.',
+     why:'A full typological reading of the chapter, verse by verse, from the third century.'},
+    {author:'Melito of Sardis', work:'Fragments on Genesis 22', loc:'fr. 9–12', short:'Melito · fr. 9–12', series:'ed. Hall (Oxford, 1979)', kind:'paraphrase', reading:'Ram as the type',
+     text:'The ram caught in the thicket, not Isaac, is the type of the Lord’s death: Isaac was bound but released, the ram was slain in his place.',
+     why:'Shows that early readers did not all locate the type in the same figure.'},
+    {author:'Irenaeus', work:'Against Heresies', loc:'4.5.4', short:'Irenaeus · AH 4.5.4', series:'ANF 1', kind:'quote', reading:'Typological',
+     text:'Abraham … gave up his only-begotten and beloved son as a sacrifice to God, in order that God also might be pleased to offer up for all his seed His own beloved and only-begotten Son, as a sacrifice for our redemption.',
+     why:'Irenaeus pairs Abraham’s “only-begotten and beloved” with the Father’s gift of the Son.'}
+  ]
+},
+{
+  id:'isa7', book:'Isaiah', chapter:7, slug:'isaiah/7/14', display:'Isaiah 7:14', testament:'Old Testament',
+  range:[10,16], hub:14, unit:[14,14], defaultTab:'quotation',
+  intro:'The sign to Ahaz. The most argued-over quotation in the Gospels: young woman or virgin?',
+  crossref:[
+    {ref:'Matthew 1:23', why:'Matthew quotes the verse in its Greek form as fulfilled in Jesus’ birth, adding the gloss “God with us.”', source:OB},
+    {ref:'Isaiah 8:8', why:'The land is addressed as “Immanuel”: the name given in 7:14 recurs in the next chapter.', source:OB},
+    {ref:'Isaiah 8:10', why:'“God is with us” (immanu el) as a sentence, closing the Immanuel section.', source:OB},
+    {ref:'Isaiah 9:6', why:'The next child-oracle: “to us a child is born, to us a son is given,” with throne names.', source:OB},
+    {ref:'Luke 1:31', why:'Gabriel’s “you will conceive in your womb, and give birth to a son, and will call his name” tracks the Greek wording of Isaiah 7:14.', source:OB},
+    {ref:'Genesis 24:43', why:'Rebekah is “the maiden” (almah), the same word as Isaiah 7:14: a young woman of marriageable age.', source:OB},
+    {ref:'Exodus 2:8', why:'Miriam is “the young woman” (almah), watching over the infant Moses: another of the word’s few uses.', source:OB},
+    {ref:'Matthew 28:20', why:'“I am with you always” closes Matthew as “God with us” opened it.', source:OB},
+    {ref:'Genesis 3:15', why:'Paired in the Treasury of Scripture Knowledge under “a virgin”: the child of the woman and the son the young woman bears.', source:TSK}
+  ],
+  quotation:[
+    {title:'Isaiah 7:14 in Matthew 1:23', from:'Isaiah 7:14', to:'Matthew 1:23', kind:'Fulfilment quotation',
+     cols:[
+       {label:'Hebrew (MT)', lang:'he', text:'הִנֵּה הָעַלְמָה הָרָה וְיֹלֶדֶת בֵּן וְקָרָאת שְׁמוֹ עִמָּנוּ אֵל', gloss:'“Behold, the young woman is pregnant and bears a son, and she shall call his name Immanuel.”'},
+       {label:'Greek (LXX)', lang:'grc', text:'ἰδοὺ ἡ παρθένος ἐν γαστρὶ ἕξει καὶ τέξεται υἱόν, καὶ καλέσεις τὸ ὄνομα αὐτοῦ Εμμανουηλ', gloss:'“Behold, the virgin shall conceive and bear a son, and you shall call his name Emmanuel.”'},
+       {label:'Greek (NT) · Matthew 1:23', lang:'grc', text:'ἰδοὺ ἡ παρθένος ἐν γαστρὶ ἕξει καὶ τέξεται υἱόν, καὶ καλέσουσιν τὸ ὄνομα αὐτοῦ Ἐμμανουήλ', gloss:'“…and they shall call his name Emmanuel.”'}
+     ],
+     changed:'Almah (“young woman”) is rendered parthenos (“virgin”) by the LXX, and Matthew follows the LXX. The verb shifts from “she shall call” (MT) to “you shall call” (LXX) to “they shall call” (Matthew). Matthew adds the gloss “which is, being interpreted, God with us.”',
+     note:'Textual note. The second-century Greek revisions of Aquila, Symmachus and Theodotion read νεᾶνις (neanis, “young woman”), as Justin’s Trypho and Irenaeus both report.',
+     summary:'The LXX turns almah into parthenos; Matthew follows the LXX and adds “God with us.”',
+     source:'BHS (MT); Rahlfs LXX; Greek New Testament. The Three reported by Irenaeus, AH 3.21.1, and Justin, Dial. 43, 67.'}
+  ],
+  structure:[
+    {kind:'ladder', short:'Matthew’s inclusio', title:'Matthew’s “with us” inclusio',
+     rungs:[
+       {tag:'A', text:'“God with us” (Immanuel)', ref:'Matt 1:23'},
+       {tag:'X', text:'“there I am in the middle of them”', ref:'Matt 18:20', center:true},
+       {tag:'A′', text:'“I am with you always, even to the end of the age”', ref:'Matt 28:20'}
+     ],
+     notes:['The quotation of Isaiah 7:14 is not a proof-text dropped in: Matthew opens, centres and closes his Gospel on the presence of God with his people.'],
+     summary:'“God with us” at 1:23, “there I am” at 18:20, “I am with you always” at 28:20.',
+     source:'Widely noted; e.g. Davies and Allison, Matthew (ICC), on 1:23; D.D. Kupp, Matthew’s Emmanuel (1996).'}
+  ],
+  typology:[],
+  symbol:[
+    {name:'Immanuel · God with us', why:'Follows the name and the sentence behind it from Isaiah into Matthew’s frame.', source:'Curated thread; verbal occurrences. Canonical order.',
+     stops:[
+       {ref:'Isaiah 7:14', label:'The sign: a son named Immanuel', note:'immanu el'},
+       {ref:'Isaiah 8:8', label:'The land addressed as Immanuel', note:'immanu el'},
+       {ref:'Isaiah 8:10', label:'“For God is with us”', note:'ki immanu el'},
+       {ref:'Matthew 1:23', label:'“God with us,” interpreted', note:'meth’ hēmōn ho theos'},
+       {ref:'Matthew 18:20', label:'“There I am in the middle of them”', note:'ekei eimi en mesō autōn'},
+       {ref:'Matthew 28:20', label:'“I am with you always”', note:'egō meth’ hymōn eimi'}
+     ]}
+  ],
+  secondtemple:[
+    {source:'Great Isaiah Scroll, 1QIsaᵃ', short:'1QIsaᵃ', date:'c. 125 BC · Qumran manuscript', kind:'paraphrase',
+     excerpt:'The oldest complete copy of Isaiah reads ha-almah (“the young woman”) at 7:14, agreeing with the Masoretic Text.',
+     tr:'Abegg, Flint and Ulrich, The Dead Sea Scrolls Bible (1999)', why:'A textual witness rather than literature: it shows the Hebrew wording Matthew’s Greek source was translating.'}
+  ],
+  fathers:[
+    {author:'Justin Martyr', work:'Dialogue with Trypho', loc:'43; 66–67', short:'Justin · Dial. 43, 67', series:'ANF 1', kind:'quote', reading:'Both sides recorded',
+     text:'Trypho: “the Scripture has not, ‘Behold, the virgin shall conceive,’ but, ‘Behold, the young woman shall conceive.’” Justin answers that the Seventy translated parthenos and that a sign must be something beyond the ordinary.',
+     why:'The second-century debate preserved with the Jewish objection stated in full: the demo shows both readings, not one.'},
+    {author:'Irenaeus', work:'Against Heresies', loc:'3.21.1', short:'Irenaeus · AH 3.21.1', series:'ANF 1', kind:'paraphrase', reading:'Virgin (parthenos)',
+     text:'Irenaeus rejects the reading “young woman” of Theodotion and Aquila, “both Jewish proselytes,” and defends the Septuagint’s “virgin,” which he holds to be older than the Christian dispute.',
+     why:'Shows that the disagreement was already about competing Greek versions, not only about Hebrew.'}
+  ]
+},
+{
+  id:'ps40', book:'Psalms', chapter:40, slug:'psalms/40/6', display:'Psalm 40:6-8', testament:'Old Testament',
+  range:[6,8], hub:6, unit:[6,8], defaultTab:'quotation',
+  intro:'Hebrew numbering 40:7–9; Greek Psalm 39:7–9. Hebrews 10 puts these lines in Christ’s mouth, following the Greek.',
+  crossref:[
+    {ref:'1 Samuel 15:22', why:'“To obey is better than sacrifice”: the prophetic critique of sacrifice the psalm shares.', source:OB},
+    {ref:'Hosea 6:6', why:'“I desire mercy, and not sacrifice,” quoted twice by Jesus in Matthew.', source:OB},
+    {ref:'Psalm 51:16-17', why:'“You don’t delight in sacrifice … the sacrifices of God are a broken spirit.”', source:OB},
+    {ref:'Micah 6:6-8', textRef:'Micah 6:7-8', why:'“Will Yahweh be pleased with thousands of rams?” The same question, answered with justice, mercy and humility.', source:OB},
+    {ref:'Isaiah 1:11', why:'“What are the multitude of your sacrifices to me?”', source:OB},
+    {ref:'Hebrews 10:10', why:'Hebrews builds on the Greek “body”: “through the offering of the body of Jesus Christ once for all.”', source:OB},
+    {ref:'John 4:34', why:'“My food is to do the will of him who sent me” answers “I delight to do your will” (40:8).', source:OB, at:8},
+    {ref:'Exodus 21:6', why:'The servant’s ear bored through at the doorpost: traditionally linked to “ears you have dug for me.”', source:OB}
+  ],
+  quotation:[
+    {title:'Psalm 40:6 in Hebrews 10:5', from:'Psalm 40:6', to:'Hebrews 10:5', kind:'Quotation via the Greek',
+     cols:[
+       {label:'Hebrew (MT) · Psalm 40:7', lang:'he', text:'זֶבַח וּמִנְחָה לֹא־חָפַצְתָּ אָזְנַיִם כָּרִיתָ לִּי', gloss:'“Sacrifice and offering you did not desire; ears you have dug for me.”'},
+       {label:'Greek (LXX) · Psalm 39:7', lang:'grc', text:'θυσίαν καὶ προσφορὰν οὐκ ἠθέλησας, σῶμα δὲ κατηρτίσω μοι', gloss:'“Sacrifice and offering you did not want, but a body you prepared for me.”'},
+       {label:'Greek (NT) · Hebrews 10:5', lang:'grc', text:'θυσίαν καὶ προσφορὰν οὐκ ἠθέλησας, σῶμα δὲ κατηρτίσω μοι', gloss:'“Sacrifice and offering you didn’t desire, but you prepared a body for me.”'}
+     ],
+     changed:'“Ears you have dug” becomes “a body you prepared.” Hebrews reads the Greek and builds on “body” in 10:10, “through the offering of the body of Jesus Christ once for all.” Whether the Greek reflects a metonymy (the ear standing for the whole body) or a different Hebrew text is debated.',
+     note:'Textual note. The great Greek codices (Vaticanus, Sinaiticus, Alexandrinus) read sōma, “body.” Rahlfs’s edition prints ōtia, “ears,” judging sōma a Christian correction toward Hebrews. Which is original is disputed.',
+     summary:'The Hebrew “ears you have dug” reaches Hebrews as “a body you prepared.”',
+     source:'BHS (MT); Rahlfs LXX with apparatus; Greek New Testament.'}
+  ],
+  structure:[
+    {kind:'markers', short:'Hebrews’ three moves', title:'How Hebrews 10:5–10 uses the psalm',
+     items:[
+       {tag:'10:5–7', text:'Quote: “Sacrifice and offering you didn’t desire, but you prepared a body for me … Behold, I have come to do your will.”'},
+       {tag:'10:8–9', text:'Explain: the first clause names what is set aside, the second what is established. “He takes away the first, that he may establish the second.”'},
+       {tag:'10:10', text:'Conclude: “through the offering of the body of Jesus Christ once for all.”'}
+     ],
+     notes:['The argument depends on the Greek wording: “body” in the quotation becomes “the body of Jesus Christ” in the conclusion.'],
+     summary:'Hebrews quotes the psalm, splits it into “first” and “second,” and lands on the offered body.',
+     source:'Hebrews 10:5–10 itself; see Attridge, Hebrews (Hermeneia), ad loc.'}
+  ],
+  typology:[
+    {type:{ref:'Psalm 40:7-8', label:'The psalmist: “Behold, I have come … to do your will”'}, anti:{ref:'Hebrews 10:7', label:'Christ coming into the world'}, phrase:'Hebrews reads the psalm as spoken by Christ “when he comes into the world” (10:5)', source:'Hebrews 10:5–7 itself.'}
+  ],
+  symbol:[],
+  secondtemple:[],
+  fathers:[
+    {author:'Augustine', work:'Expositions on the Psalms', loc:'Psalm 40 (39 in his numbering)', short:'Augustine · En. Ps. 39', series:'NPNF1 8', kind:'paraphrase', reading:'Christ speaking',
+     text:'Augustine reads the psalm in Christ’s voice and takes “a body you prepared for me” of the body offered on the cross, the one sacrifice that replaces the sacrifices of the law.',
+     why:'Shows the Latin tradition reading the psalm through Hebrews 10.'},
+    {author:'John Chrysostom', work:'Homilies on Hebrews', loc:'18 (on 10:5)', short:'Chrysostom · Hom. Heb. 18', series:'NPNF1 14', kind:'paraphrase', reading:'Old sacrifices set aside',
+     text:'Chrysostom takes “sacrifice and offering you did not desire” as God’s own verdict on the old sacrifices, replaced by the obedience and body of Christ.',
+     why:'The Greek tradition on the same verse, a generation before Augustine.'}
+  ]
+},
+{
+  id:'hos11', book:'Hosea', chapter:11, slug:'hosea/11/1', display:'Hosea 11:1', testament:'Old Testament',
+  range:[1,4], hub:1, unit:[1,1], defaultTab:'quotation',
+  intro:'A line about Israel’s exodus that Matthew applies to a child returning from Egypt.',
+  crossref:[
+    {ref:'Matthew 2:15', why:'Matthew cites the verse as fulfilled when Jesus is brought back from Egypt.', source:OB},
+    {ref:'Exodus 4:22-23', why:'“Israel is my son, my firstborn”: the sonship Hosea looks back to.', source:OB},
+    {ref:'Numbers 24:8', why:'Balaam’s “God brings him out of Egypt” uses the same phrase of the nation.', source:OB},
+    {ref:'Matthew 4:1-4', textRef:'Matthew 4:1-2, 4', why:'Jesus in the wilderness quotes Deuteronomy 8:3, reliving Israel’s testing after Egypt.', source:OB},
+    {ref:'Deuteronomy 8:2-3', textRef:'Deuteronomy 8:3', why:'Israel’s forty years in the wilderness: “man does not live by bread only.”', source:OB},
+    {ref:'Jeremiah 31:15', why:'The next fulfilment quotation in Matthew (2:18): Rachel weeping at Ramah.', source:OB},
+    {ref:'Hosea 11:8-11', textRef:'Hosea 11:11', why:'The chapter ends with the son coming back “trembling like a bird out of Egypt”: a second exodus inside Hosea itself.', source:OB}
+  ],
+  quotation:[
+    {title:'Hosea 11:1 in Matthew 2:15', from:'Hosea 11:1', to:'Matthew 2:15', kind:'Fulfilment quotation',
+     cols:[
+       {label:'Hebrew (MT)', lang:'he', text:'כִּי נַעַר יִשְׂרָאֵל וָאֹהֲבֵהוּ וּמִמִּצְרַיִם קָרָאתִי לִבְנִי', gloss:'“When Israel was a child, I loved him, and out of Egypt I called my son.”'},
+       {label:'Greek (LXX)', lang:'grc', text:'Διότι νήπιος Ισραηλ, καὶ ἐγὼ ἠγάπησα αὐτὸν καὶ ἐξ Αἰγύπτου μετεκάλεσα τὰ τέκνα αὐτοῦ', gloss:'“Because Israel was an infant, and I loved him, and out of Egypt I called his children.”'},
+       {label:'Greek (NT) · Matthew 2:15', lang:'grc', text:'ἐξ Αἰγύπτου ἐκάλεσα τὸν υἱόν μου', gloss:'“Out of Egypt I called my son.”'}
+     ],
+     changed:'Matthew follows the Hebrew “my son” against the LXX’s “his children.” A standard example that Matthew worked from a Hebrew text here, not from the Greek Bible.',
+     summary:'Matthew’s “my son” follows the Hebrew, not the Greek “his children.”',
+     source:'BHS (MT); Rahlfs LXX; Greek New Testament; discussed by Jerome, Letter 57.7.'}
+  ],
+  structure:[
+    {kind:'markers', short:'Matthew 2’s four places', title:'Matthew 2: four fulfilment quotations keyed to place names',
+     items:[
+       {tag:'2:6', text:'Bethlehem ← Micah 5:2'},
+       {tag:'2:15', text:'Egypt ← Hosea 11:1'},
+       {tag:'2:18', text:'Ramah ← Jeremiah 31:15'},
+       {tag:'2:23', text:'Nazareth ← “the prophets”'}
+     ],
+     notes:['Each quotation answers “where?” The chapter is a geography of the Messiah’s infancy, and Hosea 11:1 supplies the Egypt leg.'],
+     summary:'Bethlehem, Egypt, Ramah, Nazareth: Matthew 2 hangs a quotation on each place.',
+     source:'K. Stendahl, “Quis et Unde? An Analysis of Matthew 1–2” (1960); R.T. France, The Gospel of Matthew (NICNT), on ch. 2.'}
+  ],
+  typology:[
+    {type:{ref:'Exodus 4:22', label:'Israel, God’s son, called out of Egypt'}, anti:{ref:'Matthew 2:15', label:'Jesus, the Son, called out of Egypt'}, phrase:'the nation’s story recapitulated in one child', source:'Matthew’s own pattern; R.T. France, The Gospel of Matthew (NICNT), on 2:15.'},
+    {type:{ref:'Deuteronomy 8:2-3', label:'Israel tested forty years in the wilderness'}, anti:{ref:'Matthew 4:1-4', label:'Jesus tested forty days in the wilderness'}, phrase:'Egypt, then water, then wilderness; Jesus answers with Deuteronomy 8:3', source:'Matthew 4:4 quoting Deuteronomy 8:3.'}
+  ],
+  symbol:[
+    {name:'Out of Egypt', why:'Follows the exodus phrase “out of Egypt” as it moves from the nation to the son.', source:'Curated thread; verbal occurrences. Canonical order.',
+     stops:[
+       {ref:'Exodus 4:22-23', label:'“Israel is my son, my firstborn”', note:'beni bekhori'},
+       {ref:'Numbers 24:8', label:'“God brings him out of Egypt”', note:'mi-mitsrayim'},
+       {ref:'Hosea 11:1', label:'“Called my son out of Egypt”', note:'mi-mitsrayim … livni'},
+       {ref:'Hosea 11:11', label:'“Trembling like a bird out of Egypt”', note:'mi-mitsrayim'},
+       {ref:'Matthew 2:15', label:'“Out of Egypt I called my son”', note:'ex Aigyptou'}
+     ]}
+  ],
+  secondtemple:[],
+  fathers:[
+    {author:'Jerome', work:'Letter 57 (to Pammachius, On the Best Method of Translating)', loc:'7', short:'Jerome · Ep. 57.7', series:'NPNF2 6', kind:'paraphrase', reading:'Hebrew over Greek',
+     text:'Jerome points out that Matthew’s “out of Egypt I called my son” follows the Hebrew, while the Septuagint reads “his children,” and uses it to defend translating sense rather than word.',
+     why:'A fourth-century scholar noticing exactly the textual difference the comparison above shows.'}
+  ]
+},
+{
+  id:'amos9', book:'Amos', chapter:9, slug:'amos/9/12', display:'Amos 9:11-12', testament:'Old Testament',
+  range:[11,15], hub:12, unit:[11,12], defaultTab:'quotation',
+  intro:'The fallen tent of David. James’s decisive text at the Jerusalem Council, in a Greek form that differs from the Hebrew by two letters.',
+  crossref:[
+    {ref:'Acts 15:13-21', textRef:'Acts 15:16-17', why:'James quotes Amos 9:11–12 to settle whether Gentiles must become Jews.', source:OB},
+    {ref:'2 Samuel 7:11-16', textRef:'2 Samuel 7:12-13', why:'Yahweh will make David a house: the promise behind the “tent of David” that has fallen.', source:OB, at:11},
+    {ref:'Isaiah 11:10', why:'The nations seek the root of Jesse: David’s line as the rallying point of the peoples.', source:OB},
+    {ref:'Isaiah 45:21', why:'“Who has declared it of old?” is echoed by Acts 15:18, “known from eternity.”', source:OB},
+    {ref:'Zechariah 2:11', why:'“Many nations shall join themselves to Yahweh … and shall be my people.”', source:OB},
+    {ref:'Isaiah 2:2-3', textRef:'Isaiah 2:2', why:'All nations flow to the mountain of Yahweh’s house.', source:OB},
+    {ref:'Jeremiah 12:15', why:'“After I have plucked them up, I will return and have compassion”: the plant / pluck vocabulary of Amos 9:15.', source:OB, at:15}
+  ],
+  quotation:[
+    {title:'Amos 9:12 in Acts 15:17', from:'Amos 9:12', to:'Acts 15:17', kind:'Quotation via the Greek',
+     cols:[
+       {label:'Hebrew (MT)', lang:'he', text:'לְמַעַן יִירְשׁוּ אֶת־שְׁאֵרִית אֱדוֹם וְכָל־הַגּוֹיִם אֲשֶׁר־נִקְרָא שְׁמִי עֲלֵיהֶם', gloss:'“that they may possess the remnant of Edom and all the nations who are called by my name”'},
+       {label:'Greek (LXX)', lang:'grc', text:'ὅπως ἐκζητήσωσιν οἱ κατάλοιποι τῶν ἀνθρώπων καὶ πάντα τὰ ἔθνη ἐφ᾽ οὓς ἐπικέκληται τὸ ὄνομά μου ἐπ᾽ αὐτούς', gloss:'“that the remnant of mankind may seek, and all the nations upon whom my name is called”'},
+       {label:'Greek (NT) · Acts 15:17', lang:'grc', text:'ὅπως ἂν ἐκζητήσωσιν οἱ κατάλοιποι τῶν ἀνθρώπων τὸν κύριον, καὶ πάντα τὰ ἔθνη ἐφ᾽ οὓς ἐπικέκληται τὸ ὄνομά μου ἐπ᾽ αὐτούς', gloss:'“that the rest of men may seek after the Lord: all the Gentiles who are called by my name”'}
+     ],
+     changed:'Hebrew “Edom” (אדום) was read as “mankind” (אדם, one letter apart), and “possess” (יירשו) as “seek” (ידרשו, a dalet / resh difference). James’s argument at the Jerusalem Council rests on the Greek reading: the nations seek, rather than being possessed.',
+     summary:'Two Hebrew letters separate “possess Edom” from “mankind seeks”; Acts follows the Greek.',
+     source:'BHS (MT); Rahlfs LXX; Greek New Testament.'}
+  ],
+  structure:[
+    {kind:'echo', short:'Echo of Amos 5:2', title:'“Fallen … raise up”: the funeral song answered',
+     pairs:[
+       {ref:'Amos 5:2', html:'The virgin of Israel has <em>fallen</em>; she shall <em>rise</em> no more … there is no one to <em>raise her up</em>'},
+       {ref:'Amos 9:11', html:'I will <em>raise up</em> the tent of David who is <em>fallen</em> … I will <em>raise up</em> its ruins'}
+     ],
+     notes:['The same two verbs, naphal (“fall”) and qum (“rise, raise”), open the book’s lament and close its final oracle. What no one could raise in 5:2, Yahweh raises in 9:11.'],
+     summary:'Amos 9:11 answers the funeral song of 5:2 with the same verbs, fall and raise.',
+     source:'Verbal link in the Hebrew; noted in the commentaries, e.g. Shalom M. Paul, Amos (Hermeneia), on 9:11.', at:11}
+  ],
+  typology:[],
+  symbol:[],
+  secondtemple:[
+    {source:'4Q174 (Florilegium) 1:10-13', short:'4QFlorilegium', date:'1st c. BC · Qumran', kind:'paraphrase',
+     excerpt:'“I will raise up the tent of David that is fallen” (Amos 9:11) is explained as the Branch of David who will arise with the Interpreter of the Law in Zion in the last days.',
+     tr:'Paraphrase; Hebrew text in DJD V', why:'Shows the verse already read messianically at Qumran, a century before James used it.'},
+    {source:'Damascus Document, CD 7:14-18', short:'CD 7', date:'c. 100 BC · Qumran', kind:'paraphrase',
+     excerpt:'Amos 9:11 is cited together with Amos 5:26–27: the “booth of the king” is read as the books of the Law, and “the king” as the congregation.',
+     tr:'Paraphrase; Hebrew text in the Cairo Genizah manuscript A', why:'A second Qumran-related text applying the fallen booth to the community’s own hopes.'}
+  ],
+  fathers:[
+    {author:'Irenaeus', work:'Against Heresies', loc:'3.12.14', short:'Irenaeus · AH 3.12.14', series:'ANF 1', kind:'paraphrase', reading:'One God for Jews and Gentiles',
+     text:'Recounting the council of Acts 15, Irenaeus cites James’s appeal to the prophets to show that the apostles taught one God for Jews and Gentiles alike.',
+     why:'The earliest patristic use of James’s Amos quotation as a proof of continuity between the Testaments.'}
+  ]
+}
+];
+
+/* ---------- helpers ---------- */
+var HUB_BY_ID = {};
+HUBS.forEach(function(h){ HUB_BY_ID[h.id] = h; });
+
+function esc(s){ return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function bookKey(b){ return b === 'Psalm' ? 'Psalms' : b; }
+function parseRef(ref){
+  var s = String(ref).trim();
+  if(/^Jude\s+\d/.test(s) && s.indexOf(':') < 0) s = s.replace(/^Jude\s+/, 'Jude 1:');
+  var m = s.match(/^((?:[1-4]\s)?[A-Za-z]+(?:\s[A-Za-z]+)*)\s+(\d+)(?::([\d,\s\-–]+))?$/);
+  if(!m) return null;
+  var book = bookKey(m[1]), chapter = +m[2], spec = m[3];
+  if(!spec) return {book:book, chapter:chapter, verses:[]};
+  var verses = [];
+  spec.split(',').forEach(function(part){
+    part = part.trim(); if(!part) return;
+    var r = part.split(/[-–]/).map(Number);
+    if(r.length === 1) verses.push(r[0]); else for(var v = r[0]; v <= r[1]; v++) verses.push(v);
+  });
+  return {book:book, chapter:chapter, verses:verses};
+}
+function normRef(ref){ var p = parseRef(ref); if(!p) return String(ref); return p.book + ' ' + p.chapter + ':' + p.verses.join(','); }
+function verseText(ref){
+  var p = parseRef(ref); if(!p) return '';
+  return p.verses.map(function(v){ return V[p.book + ' ' + p.chapter + ':' + v]; }).filter(Boolean).join(' ');
+}
+function displayRef(ref){ return String(ref).replace(/^Psalms\s/, 'Psalm ').replace(/^Jude 1:/, 'Jude '); }
+function hubForRef(ref){
+  var p = parseRef(ref); if(!p) return null;
+  for(var i = 0; i < HUBS.length; i++){
+    var h = HUBS[i];
+    if(bookKey(h.book) === p.book && h.chapter === p.chapter && p.verses.some(function(v){ return v >= h.unit[0] && v <= h.unit[1]; })) return h;
+  }
+  return null;
+}
+function refSlug(ref){
+  var p = parseRef(ref);
+  if(!p) return 'x/' + slugify(ref);
+  var spec = String(ref).split(':')[1];
+  if(p.book === 'Jude') spec = String(p.verses[0]) + (p.verses.length > 1 ? '-' + p.verses[p.verses.length - 1] : '');
+  return p.book.toLowerCase().replace(/\s+/g, '-') + '/' + p.chapter + '/' + (spec ? spec.replace(/\s+/g, '').replace(/–/g, '-') : '');
+}
+function slugify(s){ return String(s).toLowerCase().replace(/[’'".,()]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''); }
+function clip(s, n){ s = String(s || ''); return s.length > n ? s.slice(0, n - 1).replace(/\s+\S*$/, '') + '…' : s; }
+function cssVar(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+function md(s){ return esc(s).replace(/\*(.+?)\*/g, '<em>$1</em>'); }
+
+/* index of refs -> hubs that cite them (for "shared" nodes) */
+var REF_INDEX = {};
+function indexRef(ref, hubId){ var k = normRef(ref); (REF_INDEX[k] = REF_INDEX[k] || {})[hubId] = true; }
+HUBS.forEach(function(h){
+  h.crossref.forEach(function(c){ indexRef(c.ref, h.id); });
+  h.quotation.forEach(function(q){ indexRef(q.to, h.id); });
+  h.typology.forEach(function(t){ indexRef(t.anti.ref, h.id); });
+  h.symbol.forEach(function(s){ s.stops.forEach(function(st){ indexRef(st.ref, h.id); }); });
+});
+function sharedWith(ref, hubId){
+  var m = REF_INDEX[normRef(ref)]; if(!m) return null;
+  var ids = Object.keys(m).filter(function(id){ return id !== hubId; });
+  return ids.length ? ids[0] : null;
+}
+
+/* ---------- state ---------- */
+var state = {hubId:'gen3', verse:15, view:'read', tab:'crossref', symbolStop:{}};
+var $ = function(id){ return document.getElementById(id); };
+var els = {
+  top:$('top'), urlText:$('urlText'), copyUrl:$('copyUrl'), search:$('search'), hubList:$('hubList'),
+  reading:$('reading'), web:$('web'), canvas:$('graph'), legend:$('legend'), panel:$('panel'), toast:$('toast'),
+  modal:$('modal'), modalBackdrop:$('modalBackdrop'), modalClose:$('modalClose'), cardWrap:$('cardWrap'), card:$('card'),
+  cardType:$('cardType'), cardEyebrow:$('cardEyebrow'), cardFrom:$('cardFrom'), cardTo:$('cardTo'), cardFromRef:$('cardFromRef'), cardFromText:$('cardFromText'),
+  cardToRef:$('cardToRef'), cardToText:$('cardToText'), cardWhy:$('cardWhy'), cardUrl:$('cardUrl'),
+  cardSave:$('cardSave'), cardCopy:$('cardCopy'), cardClose2:$('cardClose2'), cardImgWrap:$('cardImgWrap'), cardImg:$('cardImg')
+};
+var RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function currentHub(){ return HUB_BY_ID[state.hubId]; }
+function inUnit(h, v){ return v >= h.unit[0] && v <= h.unit[1]; }
+function typesPresent(h){ return TYPE_ORDER.filter(function(t){ return h[t] && h[t].length; }); }
+function itemsAt(h, v){
+  var out = {};
+  TYPE_ORDER.forEach(function(t){ out[t] = h[t].filter(function(it){ return it.at === v; }); });
+  return out;
+}
+function currentSet(){
+  var h = currentHub();
+  if(inUnit(h, state.verse)){ var all = {}; TYPE_ORDER.forEach(function(t){ all[t] = h[t]; }); return {items:all, scope:'hub'}; }
+  return {items:itemsAt(h, state.verse), scope:'verse'};
+}
+function countSet(set){
+  var total = 0, kinds = 0;
+  TYPE_ORDER.forEach(function(t){ var n = set[t].length; total += n; if(n) kinds++; });
+  return {total:total, kinds:kinds};
+}
+function currentSlug(){
+  var h = currentHub();
+  return inUnit(h, state.verse) ? h.slug : (h.book.toLowerCase() + '/' + h.chapter + '/' + state.verse);
+}
+function selectionRef(){
+  var h = currentHub();
+  return inUnit(h, state.verse) ? h.display : (displayRef(h.book) + ' ' + h.chapter + ':' + state.verse);
+}
+
+/* ---------- toast + copy ---------- */
+var toastTimer = 0;
+function toast(msg){
+  els.toast.textContent = msg; els.toast.classList.add('is-on');
+  clearTimeout(toastTimer); toastTimer = setTimeout(function(){ els.toast.classList.remove('is-on'); }, 1700);
+}
+function copyText(text){
+  var done = function(){ toast('Copied ' + text); };
+  var fallback = function(){
+    try{
+      var ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed'; ta.style.left = '-10000px'; document.body.appendChild(ta); ta.select();
+      var ok = document.execCommand && document.execCommand('copy'); document.body.removeChild(ta);
+      if(ok) done(); else toast('Copy blocked here. Link: ' + text);
+    }catch(e){ toast('Copy blocked here. Link: ' + text); }
+  };
+  try{
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(done, fallback); }
+    else fallback();
+  }catch(e){ fallback(); }
+}
+
+/* ---------- rail ---------- */
+function pipsHtml(types){
+  return '<span class="pips" aria-hidden="true">' + types.map(function(t){ return '<span class="pip" style="--tc:var(' + TYPES[t].token + ')"></span>'; }).join('') + '</span>';
+}
+function renderRail(){
+  var q = els.search.value.trim().toLowerCase();
+  var groups = {}; var order = [];
+  HUBS.forEach(function(h){
+    var hay = (h.display + ' ' + h.book + ' ' + h.slug.replace(/\//g, ' ')).toLowerCase();
+    if(q && hay.indexOf(q) < 0) return;
+    if(!groups[h.testament]){ groups[h.testament] = []; order.push(h.testament); }
+    groups[h.testament].push(h);
+  });
+  if(!order.length){ els.hubList.innerHTML = '<div class="rail-empty">No hub passages match “' + esc(els.search.value) + '”. The demo curates eight; production searches every verse.</div>'; return; }
+  els.hubList.innerHTML = order.map(function(g){
+    return '<div class="label group-label">' + esc(g) + '</div>' + groups[g].map(function(h){
+      var on = h.id === state.hubId;
+      return '<button type="button" class="hub' + (on ? ' is-on' : '') + '" data-hub="' + h.id + '" aria-pressed="' + on + '" title="' + esc(typesPresent(h).length) + ' kinds of connection"><span class="hub-ref">' + esc(h.display) + '</span>' + pipsHtml(typesPresent(h)) + '</button>';
+    }).join('');
+  }).join('');
+}
+
+/* ---------- reading pane ---------- */
+function renderReading(){
+  var h = currentHub();
+  var present = typesPresent(h);
+  var rows = [];
+  for(var v = h.range[0]; v <= h.range[1]; v++){
+    var key = h.book + ' ' + h.chapter + ':' + v;
+    var text = V[key] || '';
+    var cls = 'verse' + (v === h.hub ? ' is-hub' : (inUnit(h, v) ? ' in-unit' : '')) + (v === state.verse ? ' is-sel' : '');
+    var g = v === h.hub ? present : TYPE_ORDER.filter(function(t){ return h[t].some(function(it){ return it.at === v; }); });
+    var pips = g.map(function(t){ return '<span class="pip" style="--tc:var(' + TYPES[t].token + ')" title="' + esc(TYPES[t].label) + '"></span>'; }).join('');
+    rows.push('<button type="button" class="' + cls + '" data-verse="' + v + '" aria-pressed="' + (v === state.verse) + '"><span class="vnum" aria-hidden="true">' + v + '</span><span class="vtext"><span class="sr-only">Verse ' + v + '. </span>' + esc(text) + '</span><span class="gutter" aria-hidden="true">' + pips + '</span></button>');
+  }
+  var title = displayRef(h.book) + ' ' + h.chapter + ':' + h.range[0] + (h.range[1] > h.range[0] ? '–' + h.range[1] : '');
+  els.reading.innerHTML =
+    '<div class="reading-head"><h1 class="reading-title">' + esc(title) + '</h1><span class="label">World English Bible</span></div>' +
+    (h.intro ? '<p class="reading-intro">' + esc(h.intro) + '</p>' : '') +
+    '<div class="verses">' + rows.join('') + '</div>' +
+    '<div class="reading-foot"><span class="k"><span class="sw"></span>hub verse</span>' + (h.unit[1] > h.unit[0] ? '<span class="k"><span class="sw2"></span>passage treated as one unit</span>' : '') + '<span class="k">Dots mark kinds of connection. Click any verse.</span></div>';
+}
+
+/* ---------- panel ---------- */
+function chip(t){ return '<span class="chip" style="--tc:var(' + TYPES[t].token + ')">' + esc(TYPES[t].chip) + '</span>'; }
+function refHead(ref, hubId){
+  var h = hubForRef(ref);
+  var hubBtn = (h && h.id !== hubId) ? ' <button type="button" class="hubchip" data-act="hub" data-hub="' + h.id + '" title="Open ' + esc(h.display) + '">Hub ↗</button>' : '';
+  return '<span class="ref">' + esc(displayRef(ref)) + '</span>' + hubBtn;
+}
+function actions(type, i, toSlug){
+  return '<div class="row-actions"><button type="button" class="btn btn-mini" data-act="card" data-type="' + type + '" data-i="' + i + '">Card</button><button type="button" class="btn btn-mini" data-act="link" data-slug="' + esc(toSlug) + '">Link</button></div>';
+}
+function whyLine(s){ return s ? '<p class="why"><b>Why</b>' + md(s) + '</p>' : ''; }
+function srcLine(s){ return s ? '<p class="src"><b>Source</b>' + esc(s) + '</p>' : ''; }
+
+function renderCrossref(items, hub){
+  return items.map(function(c, i){
+    var idx = hub.crossref.indexOf(c);
+    return '<div class="row" data-row="crossref-' + idx + '"><div class="row-head">' + chip('crossref') + refHead(c.ref, hub.id) + (c.at ? '<span class="chip alt" style="--tc:var(--ink-muted)">v' + c.at + '</span>' : '') + '</div>' +
+      '<p class="row-text">' + esc(verseText(c.textRef || c.ref) || '(text not embedded in demo)') + '</p>' +
+      whyLine(c.why) + (c.note ? '<div class="tnote">' + esc(c.note) + '</div>' : '') + srcLine(c.source) + actions('crossref', idx, refSlug(c.ref)) + '</div>';
+  }).join('');
+}
+function renderQuotation(items, hub){
+  return items.map(function(q){
+    var idx = hub.quotation.indexOf(q);
+    var cols = q.cols.map(function(c){
+      var lang = c.lang === 'he' ? 'he' : (c.lang === 'grc' ? 'grc' : 'en');
+      return '<div class="qcol"><span class="label">' + esc(c.label) + '</span><p class="orig" lang="' + lang + '"' + (lang === 'he' ? ' dir="rtl"' : '') + '>' + esc(c.text) + '</p><p class="gloss">' + esc(c.gloss) + '</p></div>';
+    }).join('');
+    return '<div class="row" data-row="quotation-' + idx + '"><div class="row-head">' + chip('quotation') + '<span class="ref">' + esc(q.title) + '</span><span class="chip alt" style="--tc:var(--ink-muted)">' + esc(q.kind) + '</span></div>' +
+      '<div class="qcols" style="--n:' + q.cols.length + '">' + cols + '</div>' +
+      '<div class="changed"><b>What changed</b>' + md(q.changed) + '</div>' +
+      (q.note ? '<div class="tnote">' + esc(q.note) + '</div>' : '') + srcLine(q.source) + actions('quotation', idx, refSlug(q.to)) + '</div>';
+  }).join('');
+}
+function renderStructure(items, hub){
+  return items.map(function(s){
+    var idx = hub.structure.indexOf(s);
+    var body = '';
+    if(s.kind === 'ladder'){
+      var n = s.rungs.length;
+      body = '<ol class="ladder">' + s.rungs.map(function(r, i){
+        var d = Math.min(i, n - 1 - i);
+        return '<li class="rung' + (r.center ? ' center' : '') + '" style="--d:' + d + '"><span class="tag">' + esc(r.tag) + '</span><span>' + esc(r.text) + '</span><span class="vref">' + esc(r.ref) + '</span></li>';
+      }).join('') + '</ol>';
+    } else if(s.kind === 'sequence'){
+      body = '<ul class="seq">' + s.rows.map(function(r){
+        return '<li><span class="k">' + esc(r.k) + '</span><span class="steps">' + r.steps.map(function(st, j){
+          var muted = /not questioned/.test(st);
+          return (j ? '<span class="arrow">→</span>' : '') + '<span class="step' + (muted ? ' muted' : '') + '">' + esc(st) + '</span>';
+        }).join('') + '</span></li>';
+      }).join('') + '</ul>';
+    } else if(s.kind === 'markers'){
+      body = '<ul class="marks">' + s.items.map(function(it){ return '<li><span class="tag">' + esc(it.tag) + '</span><span>' + esc(it.text) + '</span></li>'; }).join('') + '</ul>';
+    } else if(s.kind === 'echo'){
+      body = '<div class="echo">' + s.pairs.map(function(p){ return '<div class="side"><span class="ref">' + esc(displayRef(p.ref)) + '</span>' + p.html + '</div>'; }).join('') + '</div>';
+    }
+    var notes = s.notes && s.notes.length ? '<ul class="st-notes">' + s.notes.map(function(x){ return '<li>' + md(x) + '</li>'; }).join('') + '</ul>' : '';
+    return '<div class="row" data-row="structure-' + idx + '"><div class="row-head">' + chip('structure') + '<span class="st-title">' + esc(s.title) + '</span></div>' + body + notes + '<p class="why"><b>Why</b>' + esc(s.summary) + '</p>' + srcLine(s.source) + actions('structure', idx, 'structure/' + slugify(s.short)) + '</div>';
+  }).join('');
+}
+function renderTypology(items, hub){
+  return items.map(function(t){
+    var idx = hub.typology.indexOf(t);
+    var side = function(x, lab){
+      return '<div class="side"><span class="lab">' + lab + '</span><span class="ref">' + esc(displayRef(x.ref)) + '</span><div class="txt">' + esc(x.label) + '</div></div>';
+    };
+    return '<div class="row" data-row="typology-' + idx + '"><div class="row-head">' + chip('typology') + refHead(t.anti.ref, hub.id) + (t.at ? '<span class="chip alt" style="--tc:var(--ink-muted)">v' + t.at + '</span>' : '') + '</div>' +
+      '<div class="pair">' + side(t.type, 'Type') + '<span class="arr" aria-hidden="true">→</span>' + side(t.anti, 'Antitype') + '</div>' +
+      '<p class="phrase">' + esc(t.phrase) + '</p>' +
+      '<p class="row-text">' + esc(verseText(t.anti.ref) || '') + '</p>' + srcLine(t.source) + actions('typology', idx, refSlug(t.anti.ref)) + '</div>';
+  }).join('');
+}
+function renderSymbol(items, hub){
+  return items.map(function(s){
+    var idx = hub.symbol.indexOf(s);
+    var key = hub.id + ':' + idx;
+    var sel = state.symbolStop[key];
+    if(sel == null){ sel = 0; s.stops.forEach(function(st, j){ if(hubForRef(st.ref) === hub) sel = j; }); state.symbolStop[key] = sel; }
+    var stops = s.stops.map(function(st, j){
+      var here = hubForRef(st.ref) === hub;
+      return '<button type="button" class="stop' + (j === sel ? ' is-on' : '') + (here ? ' here' : '') + '" data-act="stop" data-sym="' + idx + '" data-stop="' + j + '" aria-pressed="' + (j === sel) + '"><span class="dotb"></span><span class="sref">' + esc(displayRef(st.ref)) + '</span><span class="slabel">' + esc(st.label) + '</span></button>';
+    }).join('');
+    var st = s.stops[sel];
+    var stHub = hubForRef(st.ref);
+    var detail = '<div class="stop-detail"><span class="ref">' + esc(displayRef(st.ref)) + '</span>' + (stHub && stHub !== hub ? ' <button type="button" class="hubchip" data-act="hub" data-hub="' + stHub.id + '">Hub ↗</button>' : '') + (stHub === hub ? ' <span class="chip alt" style="--tc:var(--ink-muted)">this hub</span>' : '') +
+      '<div>' + esc(verseText(st.textRef || st.ref) || '(text not embedded in demo)') + '</div>' + (st.note ? '<div class="snote">' + esc(st.note) + '</div>' : '') + '</div>';
+    return '<div class="row" data-row="symbol-' + idx + '"><div class="row-head">' + chip('symbol') + '<span class="thread-name">' + esc(s.name) + '</span><span class="chip alt" style="--tc:var(--ink-muted)">' + s.stops.length + ' stops · Genesis → Revelation order</span></div>' +
+      '<div class="thread" role="group" aria-label="Occurrences in canonical order">' + stops + '</div>' + detail + whyLine(s.why) + srcLine(s.source) + actions('symbol', idx, 'thread/' + slugify(s.name)) + '</div>';
+  }).join('');
+}
+function renderSecondTemple(items, hub){
+  var note = '<div class="note">Non-canonical Second Temple literature. Shown for background, labeled by source and date.</div>';
+  return note + items.map(function(s){
+    var idx = hub.secondtemple.indexOf(s);
+    return '<div class="row" data-row="secondtemple-' + idx + '"><div class="row-head">' + chip('secondtemple') + '<span class="s2-src">' + esc(s.source) + '</span><span class="date">' + esc(s.date) + '</span></div>' +
+      '<p class="excerpt">' + esc(s.excerpt) + '</p>' + '<p class="src"><b>' + (s.kind === 'quote' ? 'Translation' : 'Note') + '</b>' + esc(s.tr) + '</p>' + whyLine(s.why) + actions('secondtemple', idx, 'source/' + slugify(s.short)) + '</div>';
+  }).join('');
+}
+function renderFathers(items, hub){
+  return items.map(function(f){
+    var idx = hub.fathers.indexOf(f);
+    return '<div class="row" data-row="fathers-' + idx + '"><div class="row-head">' + chip('fathers') + '<span class="ref">' + esc(f.author) + '</span>' + (f.reading ? '<span class="readingchip">' + esc(f.reading) + '</span>' : '') + '</div>' +
+      '<p class="src" style="margin-bottom:4px">' + esc(f.work) + ' ' + esc(f.loc) + ' · ' + esc(f.series) + ' · <span class="kind">' + (f.kind === 'quote' ? 'quotation' : 'paraphrase') + '</span></p>' +
+      '<p class="fa-quote">' + esc(f.text) + '</p>' + whyLine(f.why) + actions('fathers', idx, 'fathers/' + slugify(f.short)) + '</div>';
+  }).join('');
+}
+var RENDER = {crossref:renderCrossref, quotation:renderQuotation, structure:renderStructure, typology:renderTypology, symbol:renderSymbol, secondtemple:renderSecondTemple, fathers:renderFathers};
+var EMPTY_TAB = {
+  crossref:'No cross-references curated here in the demo. Production pulls the full OpenBible.info set for every verse.',
+  quotation:'No New Testament quotation of this passage is recorded in the demo.',
+  structure:'No literary structure curated for this passage in the demo.',
+  typology:'No typological pairing curated for this passage in the demo.',
+  symbol:'No symbol thread runs through this passage in the demo.',
+  secondtemple:'No Second Temple sources curated for this passage in the demo.',
+  fathers:'No patristic citations curated for this passage in the demo.'
+};
+
+function renderPanel(){
+  var h = currentHub();
+  var set = currentSet();
+  var counts = countSet(set.items);
+  var ref = selectionRef();
+  var verseKey = h.book + ' ' + h.chapter + ':' + state.verse;
+  var head = '<div class="sel-kicker label">' + (set.scope === 'hub' ? 'Hub passage' : 'Verse in the ' + esc(h.display) + ' hub') + '</div>' +
+    '<h2 class="sel-ref">' + esc(ref) + '</h2>' +
+    '<p class="sel-text">' + esc(V[verseKey] || '') + '</p>';
+  if(counts.total === 0){
+    els.panel.innerHTML = head + '<p class="sel-sum label">No connections</p><div class="empty">No curated connections for this verse in the demo. Production pulls cross-references from the OpenBible.info dataset (about 340,000 links, CC-BY) and layers curated structure, typology, and symbol threads on top.</div>' +
+      '<p class="src">Nearest hub: <button type="button" class="hubchip" data-act="verse" data-verse="' + h.hub + '">' + esc(h.display) + ' ↗</button></p>';
+    return;
+  }
+  if(!set.items[state.tab] || !set.items[state.tab].length){
+    var first = TYPE_ORDER.filter(function(t){ return set.items[t].length; })[0];
+    if(set.scope === 'verse') state.tab = first; else if(!h[state.tab] || !h[state.tab].length) state.tab = first;
+  }
+  var tabs = '<div class="tabs" role="tablist" aria-label="Connection kinds">' + TYPE_ORDER.map(function(t){
+    var n = set.items[t].length;
+    return '<button type="button" role="tab" class="tab" id="tab-' + t + '" aria-selected="' + (t === state.tab) + '" aria-controls="tabpanel" data-act="tab" data-tab="' + t + '" style="--tc:var(' + TYPES[t].token + ')"><span class="dot"></span>' + esc(TYPES[t].label) + '<span class="n">' + n + '</span></button>';
+  }).join('') + '</div>';
+  var items = set.items[state.tab];
+  var body = items.length ? RENDER[state.tab](items, h) : '<div class="empty">' + esc(EMPTY_TAB[state.tab]) + '</div>';
+  els.panel.innerHTML = head + '<p class="sel-sum label">' + counts.total + ' connection' + (counts.total === 1 ? '' : 's') + ' · ' + counts.kinds + ' kind' + (counts.kinds === 1 ? '' : 's') + (set.scope === 'verse' ? ' · attached to verse ' + state.verse : '') + '</p>' + tabs +
+    '<div class="tabpanel" id="tabpanel" role="tabpanel" aria-labelledby="tab-' + state.tab + '">' + body + '</div>';
+}
+
+/* ---------- URL + selection ---------- */
+function renderUrl(){ els.urlText.textContent = 'scriptureweb.app/v/' + currentSlug(); }
+function persist(){ try{ localStorage.setItem('sw-demo-hub', state.hubId); }catch(e){} }
+function selectHub(id, verse){
+  var h = HUB_BY_ID[id]; if(!h) return;
+  state.hubId = id; state.verse = verse != null ? verse : h.hub; state.tab = h.defaultTab || 'crossref';
+  persist(); renderRail(); renderReading(); renderPanel(); renderUrl();
+  if(state.view === 'web') buildGraph();
+  if(booted && window.innerWidth < 1100){ try{ (state.view === 'web' ? els.web : els.reading).scrollIntoView({block:'start', behavior:RM ? 'auto' : 'smooth'}); }catch(e){} }
+}
+var booted = false;
+function selectVerse(v){
+  state.verse = v;
+  var h = currentHub();
+  Array.prototype.forEach.call(els.reading.querySelectorAll('.verse'), function(b){ var on = +b.getAttribute('data-verse') === v; b.classList.toggle('is-sel', on); b.setAttribute('aria-pressed', on); });
+  if(!inUnit(h, v)){ var set = itemsAt(h, v); var first = TYPE_ORDER.filter(function(t){ return set[t].length; })[0]; if(first) state.tab = first; }
+  else if(!h[state.tab] || !h[state.tab].length){ state.tab = h.defaultTab; }
+  renderPanel(); renderUrl();
+}
+function setView(view){
+  state.view = view;
+  Array.prototype.forEach.call(document.querySelectorAll('.seg-btn'), function(b){ var on = b.getAttribute('data-view') === view; b.classList.toggle('is-on', on); b.setAttribute('aria-pressed', on); });
+  els.reading.hidden = view !== 'read';
+  els.web.hidden = view !== 'web';
+  if(view === 'web'){ resizeCanvas(); buildGraph(); }
+}
+
+/* ---------- card modal ---------- */
+var cardState = null, lastFocus = null;
+function cardFor(type, i){
+  var h = currentHub(); var it = h[type][i]; if(!it) return null;
+  var fromRef = h.display, fromText = verseText(h.book + ' ' + h.chapter + ':' + h.hub);
+  var c = {type:type, fromRef:fromRef, fromText:fromText};
+  if(type === 'crossref'){ c.toRef = displayRef(it.ref); c.toText = verseText(it.textRef || it.ref); c.why = it.why; c.slug = refSlug(it.ref); }
+  else if(type === 'quotation'){ c.toRef = displayRef(it.to); c.toText = verseText(it.to) || it.cols[it.cols.length - 1].gloss; c.why = it.summary; c.slug = refSlug(it.to); if(it.from !== h.display){ c.fromRef = displayRef(it.from); c.fromText = verseText(it.from) || fromText; } }
+  else if(type === 'structure'){ c.toRef = it.title; c.toText = it.summary; c.why = it.notes && it.notes[0] ? it.notes[0] : ''; c.slug = 'structure/' + slugify(it.short); }
+  else if(type === 'typology'){ c.fromRef = displayRef(it.type.ref); c.fromText = verseText(it.type.ref) || it.type.label; c.toRef = displayRef(it.anti.ref); c.toText = verseText(it.anti.ref) || it.anti.label; c.why = it.phrase; c.slug = refSlug(it.anti.ref); }
+  else if(type === 'symbol'){ c.toRef = 'Thread: ' + it.name; c.toText = it.stops.map(function(s){ return displayRef(s.ref); }).join(' → '); c.why = it.why; c.slug = 'thread/' + slugify(it.name); }
+  else if(type === 'secondtemple'){ c.toRef = it.source; c.toText = it.excerpt; c.why = it.why; c.slug = 'source/' + slugify(it.short); }
+  else if(type === 'fathers'){ c.toRef = it.author + ', ' + it.work + ' ' + it.loc; c.toText = it.text; c.why = it.why; c.slug = 'fathers/' + slugify(it.short); }
+  c.url = 'scriptureweb.app/c/' + h.slug + '/' + c.slug;
+  return c;
+}
+function layoutCard(){
+  var avail = Math.min(540, Math.max(240, (window.innerWidth - 64)));
+  var s = avail / 1080;
+  els.cardWrap.style.width = (1080 * s) + 'px'; els.cardWrap.style.height = (1080 * s) + 'px';
+  els.card.style.transform = 'scale(' + s + ')';
+}
+function openCard(type, i, trigger){
+  var c = cardFor(type, i); if(!c) return;
+  cardState = c; lastFocus = trigger || document.activeElement;
+  els.cardEyebrow.style.setProperty('--tc', 'var(' + TYPES[type].token + ')');
+  els.cardType.textContent = TYPES[type].card;
+  els.cardFrom.textContent = c.fromRef; els.cardTo.textContent = c.toRef;
+  els.cardFromRef.textContent = c.fromRef; els.cardFromText.textContent = clip(c.fromText, 200);
+  els.cardToRef.textContent = c.toRef; els.cardToText.textContent = clip(c.toText, 200);
+  els.cardWhy.textContent = clip(c.why, 160);
+  els.cardUrl.textContent = c.url;
+  els.cardImgWrap.hidden = true; els.cardImg.removeAttribute('src');
+  els.cardSave.disabled = false; els.cardSave.textContent = 'Save image';
+  layoutCard();
+  els.modal.hidden = false;
+  els.modalClose.focus();
+}
+function closeCard(){
+  els.modal.hidden = true;
+  if(lastFocus && lastFocus.focus){ try{ lastFocus.focus(); }catch(e){} }
+}
+function saveImage(){
+  if(typeof html2canvas !== 'function'){ toast('Image renderer did not load'); return; }
+  els.cardSave.disabled = true; els.cardSave.textContent = 'Rendering…';
+  var ready = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+  ready.then(function(){
+    var off = document.createElement('div'); off.className = 'offscreen'; off.setAttribute('aria-hidden', 'true');
+    var clone = els.card.cloneNode(true); clone.removeAttribute('id'); clone.style.transform = 'none';
+    off.appendChild(clone); document.body.appendChild(off);
+    return html2canvas(clone, {scale:1, width:1080, height:1080, backgroundColor:cssVar('--surface') || '#FDFBF6', logging:false, useCORS:false})
+      .then(function(cv){ off.remove(); els.cardImg.src = cv.toDataURL('image/png'); els.cardImgWrap.hidden = false; toast('Image ready below'); },
+            function(err){ off.remove(); throw err; });
+  }).catch(function(){ toast('Could not render the image here'); })
+    .then(function(){ els.cardSave.disabled = false; els.cardSave.textContent = 'Save image'; });
+}
+
+/* ---------- graph (Canvas 2D, simple force layout) ---------- */
+var G = {nodes:[], edges:[], w:0, h:0, dpr:1, alpha:0, raf:0, hoverNode:null, hoverEdge:null, colors:null, ctx:null, L:120};
+function readColors(){
+  var c = {ink:cssVar('--ink'), muted:cssVar('--ink-muted'), paper:cssVar('--paper'), surface:cssVar('--surface'), accent:cssVar('--accent'), rule:cssVar('--rule'), onAccent:cssVar('--on-accent')};
+  TYPE_ORDER.forEach(function(t){ c[t] = cssVar(TYPES[t].token); });
+  c.hub = c.accent; c.hub2 = c.accent; c.shared = c.ink;
+  G.colors = c;
+}
+function buildGraph(){
+  var h = currentHub();
+  var nodes = [], edges = [], byKey = {};
+  var center = {id:'center', label:h.display, type:'hub', r:22, fixed:true, x:G.w / 2, y:G.h / 2, vx:0, vy:0, types:{hub:true}};
+  nodes.push(center);
+  function add(key, label, type, extra){
+    var n = byKey[key];
+    if(!n){ n = {id:key, label:label, type:type, r:9, x:0, y:0, vx:0, vy:0, types:{}}; for(var k in extra) n[k] = extra[k]; byKey[key] = n; nodes.push(n); }
+    n.types[type] = true; return n;
+  }
+  function link(a, b, type, rest, chain){ edges.push({a:a, b:b, type:type, rest:rest, chain:!!chain}); }
+  h.crossref.forEach(function(c, i){ link(center, add('ref:' + normRef(c.ref), displayRef(c.ref), 'crossref', {ref:c.ref, rowId:'crossref-' + i}), 'crossref', 1); });
+  h.quotation.forEach(function(q, i){ link(center, add('ref:' + normRef(q.to), displayRef(q.to), 'quotation', {ref:q.to, rowId:'quotation-' + i}), 'quotation', 0.9); });
+  h.structure.forEach(function(s, i){ link(center, add('st:' + i, s.short, 'structure', {rowId:'structure-' + i}), 'structure', 0.85); });
+  h.typology.forEach(function(t, i){ link(center, add('ref:' + normRef(t.anti.ref), displayRef(t.anti.ref), 'typology', {ref:t.anti.ref, rowId:'typology-' + i}), 'typology', 1.1); });
+  h.symbol.forEach(function(s, i){
+    var prev = null;
+    s.stops.forEach(function(st){
+      if(hubForRef(st.ref) === h) return;
+      var n = add('ref:' + normRef(st.ref), displayRef(st.ref), 'symbol', {ref:st.ref, rowId:'symbol-' + i});
+      link(center, n, 'symbol', 1.35);
+      if(prev && prev !== n) link(prev, n, 'symbol', 0.55, true);
+      prev = n;
+    });
+  });
+  h.secondtemple.forEach(function(s, i){ link(center, add('s2:' + i, s.short, 'secondtemple', {rowId:'secondtemple-' + i}), 'secondtemple', 1.45); });
+  h.fathers.forEach(function(f, i){ link(center, add('fa:' + i, f.short, 'fathers', {rowId:'fathers-' + i}), 'fathers', 1.55); });
+  nodes.slice().forEach(function(n){
+    if(!n.ref) return;
+    var target = hubForRef(n.ref);
+    if(target && target.id !== h.id){ n.hubId = target.id; n.r = 11; return; }
+    var other = sharedWith(n.ref, h.id);
+    if(other){
+      n.shared = other;
+      var oh = HUB_BY_ID[other];
+      var on = add('hub:' + other, oh.display, 'hub2', {hubId:other, r:12});
+      link(n, on, 'shared', 0.75);
+    }
+  });
+  /* initial positions: sectors by type around the centre */
+  var order = TYPE_ORDER.slice(); order.push('hub2');
+  var ring = nodes.filter(function(n){ return n !== center; });
+  ring.sort(function(a, b){ return order.indexOf(a.type) - order.indexOf(b.type); });
+  var m = ring.length;
+  ring.forEach(function(n, i){
+    var ang = -Math.PI / 2 + (i / Math.max(1, m)) * Math.PI * 2;
+    var rad = G.L * (n.type === 'hub2' ? 2.1 : 1.2 + (i % 2) * 0.35);
+    n.x = G.w / 2 + Math.cos(ang) * rad; n.y = G.h / 2 + Math.sin(ang) * rad; n.vx = 0; n.vy = 0;
+  });
+  G.nodes = nodes; G.edges = edges; G.hoverNode = null; G.hoverEdge = null;
+  renderLegend();
+  reheat(1);
+}
+function reheat(a){
+  G.alpha = Math.max(G.alpha, a);
+  if(RM){ for(var i = 0; i < 420; i++) tick(); G.alpha = 0; draw(); return; }
+  if(!G.raf) G.raf = requestAnimationFrame(loop);
+}
+function loop(){
+  G.raf = 0;
+  if(G.alpha > 0.004){ tick(); G.alpha *= 0.975; draw(); G.raf = requestAnimationFrame(loop); }
+  else { G.alpha = 0; draw(); }
+}
+/*SIM-START*/
+function tick(){
+  var nodes = G.nodes, edges = G.edges, w = G.w, h = G.h, L = G.L;
+  var alpha = G.alpha || 0.01;
+  var rep = L * L * 0.55;
+  var i, j, a, b, dx, dy, d2, d, f;
+  for(i = 0; i < nodes.length; i++){
+    a = nodes[i];
+    for(j = i + 1; j < nodes.length; j++){
+      b = nodes[j];
+      dx = b.x - a.x; dy = b.y - a.y; d2 = dx * dx + dy * dy;
+      if(d2 < 1){ dx = (i - j) * 0.7; dy = 0.5; d2 = dx * dx + dy * dy; }
+      d = Math.sqrt(d2);
+      f = rep / d2 * alpha;
+      if(f > 12) f = 12;
+      if(!a.fixed){ a.vx -= dx / d * f; a.vy -= dy / d * f; }
+      if(!b.fixed){ b.vx += dx / d * f; b.vy += dy / d * f; }
+    }
+  }
+  for(i = 0; i < edges.length; i++){
+    var e = edges[i]; a = e.a; b = e.b;
+    dx = b.x - a.x; dy = b.y - a.y; d = Math.sqrt(dx * dx + dy * dy) || 1;
+    f = (d - e.rest * L) * (e.chain ? 0.01 : 0.04) * alpha;
+    if(!a.fixed){ a.vx += dx / d * f; a.vy += dy / d * f; }
+    if(!b.fixed){ b.vx -= dx / d * f; b.vy -= dy / d * f; }
+  }
+  var pad = 46;
+  for(i = 0; i < nodes.length; i++){
+    a = nodes[i];
+    if(a.fixed){ a.x = w / 2; a.y = h / 2; a.vx = 0; a.vy = 0; continue; }
+    a.vx += (w / 2 - a.x) * 0.003 * alpha; a.vy += (h / 2 - a.y) * 0.003 * alpha;
+    a.vx *= 0.8; a.vy *= 0.8;
+    a.x += a.vx; a.y += a.vy;
+    if(a.x < pad){ a.x = pad; a.vx = 0; } if(a.x > w - pad){ a.x = w - pad; a.vx = 0; }
+    if(a.y < pad){ a.y = pad; a.vy = 0; } if(a.y > h - pad - 8){ a.y = h - pad - 8; a.vy = 0; }
+  }
+}
+/*SIM-END*/
+function draw(){
+  var ctx = G.ctx; if(!ctx || !G.w) return;
+  var C = G.colors || (readColors(), G.colors);
+  ctx.setTransform(G.dpr, 0, 0, G.dpr, 0, 0);
+  ctx.clearRect(0, 0, G.w, G.h);
+  var i, e, n;
+  for(i = 0; i < G.edges.length; i++){
+    e = G.edges[i];
+    var hot = e === G.hoverEdge || (G.hoverNode && (e.a === G.hoverNode || e.b === G.hoverNode));
+    ctx.beginPath(); ctx.moveTo(e.a.x, e.a.y); ctx.lineTo(e.b.x, e.b.y);
+    ctx.strokeStyle = C[e.type] || C.ink;
+    ctx.globalAlpha = hot ? 1 : (e.chain ? 0.3 : 0.55);
+    ctx.lineWidth = hot ? 2.6 : (e.chain ? 1 : 1.4);
+    ctx.setLineDash(e.chain || e.type === 'shared' ? [4, 4] : []);
+    ctx.stroke();
+  }
+  ctx.setLineDash([]); ctx.globalAlpha = 1;
+  for(i = 0; i < G.nodes.length; i++){
+    n = G.nodes[i];
+    var col = n.type === 'hub' || n.type === 'hub2' ? C.accent : (C[n.type] || C.ink);
+    var hov = n === G.hoverNode;
+    ctx.beginPath(); ctx.arc(n.x, n.y, n.r + (hov ? 2 : 0), 0, Math.PI * 2);
+    ctx.fillStyle = col; ctx.fill();
+    if(n.type === 'hub2'){ ctx.beginPath(); ctx.arc(n.x, n.y, n.r - 4, 0, Math.PI * 2); ctx.fillStyle = C.surface; ctx.fill(); }
+    if(n.hubId || n.type === 'hub'){ ctx.beginPath(); ctx.arc(n.x, n.y, n.r + 4.5, 0, Math.PI * 2); ctx.strokeStyle = C.ink; ctx.lineWidth = 1.5; ctx.stroke(); }
+    if(n.shared){ ctx.beginPath(); ctx.arc(n.x, n.y, n.r + 5, 0, Math.PI * 2); ctx.setLineDash([3, 3]); ctx.strokeStyle = C.ink; ctx.lineWidth = 1.5; ctx.stroke(); ctx.setLineDash([]); }
+    var label = n.label;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+    ctx.font = n.type === 'hub' ? '600 15px "Cormorant Garamond", Georgia, serif' : (n.type === 'hub2' ? '600 13px "Cormorant Garamond", Georgia, serif' : '500 11.5px "IBM Plex Sans", "Segoe UI", sans-serif');
+    ctx.lineWidth = 4; ctx.strokeStyle = C.surface; ctx.lineJoin = 'round';
+    var ly = n.y + n.r + 7;
+    ctx.strokeText(label, n.x, ly); ctx.fillStyle = C.ink; ctx.fillText(label, n.x, ly);
+    if(n.shared){
+      ctx.font = '600 9.5px "IBM Plex Sans", "Segoe UI", sans-serif';
+      ctx.strokeText('SHARED', n.x, ly + 15); ctx.fillStyle = C.muted; ctx.fillText('SHARED', n.x, ly + 15);
+    }
+  }
+  var tip = null, tx = 0, ty = 0;
+  if(G.hoverEdge){ e = G.hoverEdge; tip = e.type === 'shared' ? 'shared node · also cited by ' + e.b.label : (e.chain ? 'thread order' : TYPES[e.type].chip); tx = (e.a.x + e.b.x) / 2; ty = (e.a.y + e.b.y) / 2; }
+  else if(G.hoverNode && G.hoverNode !== G.nodes[0]){
+    n = G.hoverNode;
+    var kinds = Object.keys(n.types).filter(function(t){ return TYPES[t]; }).map(function(t){ return TYPES[t].chip; }).join(' · ');
+    tip = n.type === 'hub2' ? 'Open hub ' + n.label : (kinds + (n.hubId ? ' · click to open hub' : '') + (n.shared ? ' · shared with ' + HUB_BY_ID[n.shared].display : ''));
+    tx = n.x; ty = n.y - n.r - 10;
+  }
+  if(tip){
+    ctx.font = '500 11px "IBM Plex Sans", "Segoe UI", sans-serif';
+    var tw = ctx.measureText(tip).width + 14;
+    var bx = Math.min(Math.max(tx - tw / 2, 4), G.w - tw - 4), by = Math.max(4, ty - 22);
+    ctx.fillStyle = C.ink; ctx.globalAlpha = 0.92;
+    ctx.beginPath(); ctx.rect(bx, by, tw, 20); ctx.fill(); ctx.globalAlpha = 1;
+    ctx.fillStyle = C.surface; ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.fillText(tip, bx + 7, by + 10);
+  }
+}
+function renderLegend(){
+  var h = currentHub();
+  var shared = G.nodes.filter(function(n){ return n.shared; });
+  var example = shared.length ? shared[0].label + ' links ' + HUB_BY_ID[shared[0].shared].display + ' to ' + h.display : 'Deuteronomy 32:8 links Babel to the sons of God';
+  els.legend.innerHTML = '<div class="lg">' + TYPE_ORDER.map(function(t){ return '<span class="li"><span class="sw" style="--tc:var(' + TYPES[t].token + ')"></span>' + esc(TYPES[t].label) + '</span>'; }).join('') +
+    '<span class="li"><span class="ring"></span>Hub in this demo</span><span class="li"><span class="dash"></span>Shared node</span></div>' +
+    '<p>Shared nodes reveal connections between passages, e.g. ' + esc(example) + '.</p>';
+}
+function resizeCanvas(){
+  var rect = els.web.getBoundingClientRect();
+  var w = Math.round(rect.width), h = Math.round(rect.height);
+  if(w < 40 || h < 40) return;
+  var dpr = Math.min(2, window.devicePixelRatio || 1);
+  els.canvas.width = Math.round(w * dpr); els.canvas.height = Math.round(h * dpr);
+  els.canvas.style.width = w + 'px'; els.canvas.style.height = h + 'px';
+  if(!G.ctx) G.ctx = els.canvas.getContext('2d');
+  if(G.w && G.h){ var sx = w / G.w, sy = h / G.h; G.nodes.forEach(function(n){ n.x *= sx; n.y *= sy; }); }
+  G.w = w; G.h = h; G.dpr = dpr;
+  G.L = Math.max(90, Math.min(170, Math.min(w, h) * 0.26));
+  readColors();
+  if(G.nodes.length) reheat(0.35); else draw();
+}
+function pointFromEvent(ev){
+  var r = els.canvas.getBoundingClientRect();
+  var p = ev.touches && ev.touches[0] ? ev.touches[0] : ev;
+  return {x:p.clientX - r.left, y:p.clientY - r.top};
+}
+function hitTest(pt){
+  var best = null, bd = 1e9, i, n;
+  for(i = 0; i < G.nodes.length; i++){ n = G.nodes[i]; var d = Math.hypot(n.x - pt.x, n.y - pt.y); if(d < n.r + 7 && d < bd){ bd = d; best = n; } }
+  if(best) return {node:best, edge:null};
+  var be = null; bd = 7;
+  for(i = 0; i < G.edges.length; i++){
+    var e = G.edges[i]; var ax = e.a.x, ay = e.a.y, bx = e.b.x, by = e.b.y;
+    var l2 = (bx - ax) * (bx - ax) + (by - ay) * (by - ay); if(!l2) continue;
+    var t = Math.max(0, Math.min(1, ((pt.x - ax) * (bx - ax) + (pt.y - ay) * (by - ay)) / l2));
+    var dd = Math.hypot(pt.x - (ax + t * (bx - ax)), pt.y - (ay + t * (by - ay)));
+    if(dd < bd){ bd = dd; be = e; }
+  }
+  return {node:null, edge:be};
+}
+function onGraphMove(ev){
+  if(!G.nodes.length) return;
+  var hit = hitTest(pointFromEvent(ev));
+  if(hit.node !== G.hoverNode || hit.edge !== G.hoverEdge){
+    G.hoverNode = hit.node; G.hoverEdge = hit.edge;
+    els.canvas.style.cursor = hit.node && hit.node !== G.nodes[0] ? 'pointer' : 'default';
+    if(!G.raf) draw();
+  }
+}
+function onGraphClick(ev){
+  if(!G.nodes.length) return;
+  var hit = hitTest(pointFromEvent(ev));
+  var n = hit.node; if(!n || n === G.nodes[0]) return;
+  if(n.hubId){ selectHub(n.hubId); return; }
+  var type = n.rowId ? n.rowId.split('-')[0] : null;
+  if(type){
+    var h = currentHub();
+    if(!inUnit(h, state.verse)) state.verse = h.hub;
+    state.tab = type; renderPanel(); renderUrl();
+    var row = els.panel.querySelector('[data-row="' + n.rowId + '"]');
+    if(row){ row.classList.add('flash'); setTimeout(function(){ row.classList.remove('flash'); }, 1400); try{ row.scrollIntoView({block:'nearest', behavior:RM ? 'auto' : 'smooth'}); }catch(e){} }
+  }
+}
+
+/* ---------- events ---------- */
+els.hubList.addEventListener('click', function(ev){
+  var b = ev.target.closest('[data-hub]'); if(!b) return; selectHub(b.getAttribute('data-hub'));
+});
+els.search.addEventListener('input', renderRail);
+els.search.addEventListener('keydown', function(ev){
+  if(ev.key !== 'Enter') return;
+  var first = els.hubList.querySelector('[data-hub]'); if(first){ selectHub(first.getAttribute('data-hub')); }
+});
+els.reading.addEventListener('click', function(ev){
+  var b = ev.target.closest('[data-verse]'); if(!b) return; selectVerse(+b.getAttribute('data-verse'));
+});
+els.panel.addEventListener('click', function(ev){
+  var b = ev.target.closest('[data-act]'); if(!b) return;
+  var act = b.getAttribute('data-act');
+  if(act === 'tab'){ state.tab = b.getAttribute('data-tab'); renderPanel(); var t = document.getElementById('tab-' + state.tab); if(t) t.focus(); }
+  else if(act === 'hub'){ selectHub(b.getAttribute('data-hub')); }
+  else if(act === 'verse'){ selectVerse(+b.getAttribute('data-verse')); }
+  else if(act === 'card'){ openCard(b.getAttribute('data-type'), +b.getAttribute('data-i'), b); }
+  else if(act === 'link'){ copyText('scriptureweb.app/c/' + currentHub().slug + '/' + b.getAttribute('data-slug')); }
+  else if(act === 'stop'){ state.symbolStop[currentHub().id + ':' + b.getAttribute('data-sym')] = +b.getAttribute('data-stop'); renderPanel(); var s = els.panel.querySelector('[data-act="stop"][data-sym="' + b.getAttribute('data-sym') + '"][data-stop="' + b.getAttribute('data-stop') + '"]'); if(s) s.focus(); }
+});
+els.panel.addEventListener('keydown', function(ev){
+  var t = ev.target.closest('[role="tab"]'); if(!t) return;
+  if(ev.key !== 'ArrowRight' && ev.key !== 'ArrowLeft') return;
+  var i = TYPE_ORDER.indexOf(t.getAttribute('data-tab')); if(i < 0) return;
+  i = (i + (ev.key === 'ArrowRight' ? 1 : TYPE_ORDER.length - 1)) % TYPE_ORDER.length;
+  state.tab = TYPE_ORDER[i]; renderPanel(); var nt = document.getElementById('tab-' + state.tab); if(nt) nt.focus(); ev.preventDefault();
+});
+Array.prototype.forEach.call(document.querySelectorAll('.seg-btn'), function(b){ b.addEventListener('click', function(){ setView(b.getAttribute('data-view')); }); });
+els.copyUrl.addEventListener('click', function(){ copyText(els.urlText.textContent); });
+els.modalClose.addEventListener('click', closeCard);
+els.cardClose2.addEventListener('click', closeCard);
+els.modalBackdrop.addEventListener('click', closeCard);
+els.cardSave.addEventListener('click', saveImage);
+els.cardCopy.addEventListener('click', function(){ if(cardState) copyText(cardState.url); });
+document.addEventListener('keydown', function(ev){ if(ev.key === 'Escape' && !els.modal.hidden){ closeCard(); } });
+els.canvas.addEventListener('mousemove', onGraphMove);
+els.canvas.addEventListener('mouseleave', function(){ if(G.hoverNode || G.hoverEdge){ G.hoverNode = null; G.hoverEdge = null; if(!G.raf) draw(); } });
+els.canvas.addEventListener('click', onGraphClick);
+
+function measureTop(){ document.documentElement.style.setProperty('--topH', els.top.offsetHeight + 'px'); }
+window.addEventListener('resize', function(){ measureTop(); if(state.view === 'web') resizeCanvas(); if(!els.modal.hidden) layoutCard(); });
+if(window.ResizeObserver){ new ResizeObserver(function(){ if(state.view === 'web') resizeCanvas(); }).observe(els.web); }
+function onTheme(){ readColors(); if(state.view === 'web') draw(); }
+if(window.matchMedia){ var mq = window.matchMedia('(prefers-color-scheme: dark)'); if(mq.addEventListener) mq.addEventListener('change', onTheme); else if(mq.addListener) mq.addListener(onTheme); }
+if(window.MutationObserver){ new MutationObserver(onTheme).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']}); }
+if(document.fonts && document.fonts.ready){ document.fonts.ready.then(function(){ if(state.view === 'web') draw(); }); }
+
+/* ---------- boot ---------- */
+var saved = null; try{ saved = localStorage.getItem('sw-demo-hub'); }catch(e){}
+measureTop();
+selectHub(HUB_BY_ID[saved] ? saved : 'gen3');
+booted = true;
+})();
+</script>

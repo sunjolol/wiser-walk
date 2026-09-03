@@ -1,0 +1,1121 @@
+<title>Structure Cards</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Serif+Hebrew:wght@500&family=Noto+Serif:wght@500&display=swap">
+<style>
+:root{
+  --ground:#131210;--panel:#1C1A17;--raised:#24211D;--line:rgba(212,175,55,0.22);
+  --text:#EAE3D2;--muted:#9A9184;--gold:#D4AF37;--gold-bright:#F0D77A;--gold-deep:#9C7B1E;--focus:#F0D77A;
+  --f-display:"Cinzel",Georgia,"Times New Roman",serif;
+  --f-serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --f-orig:"Cormorant Garamond","Noto Serif Hebrew","Noto Serif",Georgia,"Times New Roman",serif;
+  --f-ui:"IBM Plex Sans",-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  --f-mono:"IBM Plex Mono",Consolas,"Courier New",monospace;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{overflow-x:hidden;background:var(--ground)}
+body{margin:0;background:var(--ground);color:var(--text);font:400 13px/1.5 var(--f-ui);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+[hidden]{display:none!important}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+button{font-family:inherit;color:inherit}
+h1,h2,h3,p,ul{margin:0}
+ul{padding:0;list-style:none}
+.label{font:500 11px/1 var(--f-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.btn{font:500 12px/1 var(--f-ui);letter-spacing:.04em;text-transform:uppercase;padding:9px 14px;border:1px solid var(--line);background:transparent;color:var(--text);border-radius:4px;cursor:pointer;white-space:nowrap}
+.btn:hover{border-color:var(--gold);color:var(--gold-bright)}
+.btn.primary{background:var(--gold);border-color:var(--gold);color:#131210}
+.btn.primary:hover{background:var(--gold-bright);border-color:var(--gold-bright);color:#131210}
+.btn.small{padding:6px 10px;font-size:11px}
+.btn:disabled{opacity:.5;cursor:default}
+
+/* Top bar */
+.topbar{display:flex;align-items:center;flex-wrap:wrap;gap:10px 20px;min-height:57px;padding:10px 20px;border-bottom:1px solid var(--line);background:var(--panel);position:sticky;top:0;z-index:20}
+.wordmark{display:flex;align-items:center;gap:12px;margin-right:auto}
+.wordmark h1{font:600 19px/1 var(--f-display);color:var(--gold);letter-spacing:.06em}
+.badge{font:500 10px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:3px;padding:4px 6px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:6px;padding:3px;background:var(--ground)}
+.seg-btn{font:500 12px/1 var(--f-ui);letter-spacing:.04em;padding:8px 12px;border:0;border-radius:4px;background:transparent;color:var(--muted);cursor:pointer}
+.seg-btn:hover{color:var(--text)}
+.seg-btn[aria-pressed="true"]{background:var(--raised);color:var(--gold-bright)}
+
+/* Studio */
+.studio{display:grid;grid-template-columns:280px minmax(0,1fr) 320px;min-height:calc(100vh - 57px)}
+.library,.panel{background:var(--panel);position:sticky;top:57px;max-height:calc(100vh - 57px);overflow-y:auto}
+.library{border-right:1px solid var(--line);padding:14px 0}
+.panel{border-left:1px solid var(--line);padding:18px 18px 28px}
+.stage{display:flex;flex-direction:column;align-items:center;gap:22px;padding:28px 24px 40px;min-width:0}
+.lib-head{display:flex;justify-content:space-between;align-items:baseline;padding:0 18px 10px}
+.lib-head .n{font:400 10px/1 var(--f-mono);color:var(--muted);letter-spacing:.04em}
+.lib-row{display:block;width:100%;text-align:left;background:transparent;border:0;border-left:3px solid transparent;padding:10px 16px 10px 19px;color:var(--text);cursor:pointer}
+.lib-row:hover{background:var(--raised)}
+.lib-row[aria-pressed="true"]{border-left-color:var(--gold);background:var(--raised)}
+.lib-row .ref{display:flex;justify-content:space-between;gap:10px;align-items:baseline;font:500 13px/1.3 var(--f-ui)}
+.lib-row[aria-pressed="true"] .ref{color:var(--gold-bright)}
+.lib-row .n{font:400 10px/1 var(--f-mono);color:var(--muted);letter-spacing:.04em;white-space:nowrap}
+.lib-row .src{display:block;margin-top:3px;font:400 11px/1.3 var(--f-ui);color:var(--muted)}
+
+/* Stage */
+.stage-canvas{width:100%;display:flex;justify-content:center}
+.card-wrap{position:relative;flex:0 0 auto;box-shadow:0 30px 80px rgba(0,0,0,.55)}
+.transport{width:100%;max-width:560px;display:flex;align-items:center;gap:12px}
+.progress{flex:1;height:24px;display:flex;align-items:center;cursor:pointer;border-radius:4px}
+.progress .track{position:relative;width:100%;height:4px;background:var(--raised);border-radius:2px}
+.progress .fill{position:absolute;left:0;top:0;height:100%;width:0;background:var(--gold);border-radius:2px}
+.time{font:400 11px/1 var(--f-mono);color:var(--muted);white-space:nowrap;min-width:80px;text-align:right}
+.script{width:100%;max-width:560px;border:1px solid var(--line);border-radius:6px;background:var(--panel);padding:14px 16px}
+.script-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.script li{display:grid;grid-template-columns:44px 1fr;gap:10px;padding:5px 6px;border-radius:4px;font:500 16px/1.4 var(--f-serif);color:var(--muted)}
+.script li .ts{font:400 11px/1.7 var(--f-mono);letter-spacing:.04em}
+.script li.done{color:var(--text);opacity:.7}
+.script li.now{background:var(--raised);color:var(--text);opacity:1}
+.script li.now .ts{color:var(--gold-bright)}
+.script-note{margin-top:10px;font:400 11px/1.5 var(--f-ui);color:var(--muted)}
+
+/* Right panel */
+.section{padding:16px 0;border-top:1px solid var(--line)}
+.section:first-child{border-top:0;padding-top:0}
+.section h2{margin-bottom:12px}
+.swatches{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.swatch{display:flex;flex-direction:column;align-items:center;gap:7px;background:transparent;border:0;padding:4px 2px;cursor:pointer;color:var(--muted);font:400 10px/1.2 var(--f-ui);text-align:center;border-radius:4px}
+.swatch .dot{width:34px;height:34px;border-radius:50%;border:2px solid var(--line);position:relative;background:var(--sw-ground)}
+.swatch .dot::after{content:"";position:absolute;inset:9px;border-radius:50%;background:var(--sw-accent)}
+.swatch:hover{color:var(--text)}
+.swatch[aria-pressed="true"]{color:var(--text)}
+.swatch[aria-pressed="true"] .dot{border-color:var(--gold-bright);box-shadow:0 0 0 1px var(--gold-bright)}
+.opt{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:7px 0;font-size:13px;color:var(--text);cursor:pointer}
+.switch{appearance:none;-webkit-appearance:none;flex:0 0 auto;width:34px;height:20px;margin:0;border-radius:10px;background:var(--raised);border:1px solid var(--line);position:relative;cursor:pointer}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:12px;height:12px;border-radius:50%;background:var(--muted);transition:transform .15s}
+.switch:checked{background:var(--gold-deep);border-color:var(--gold)}
+.switch:checked::after{transform:translateX(14px);background:var(--gold-bright)}
+.kit-item{border:1px solid var(--line);border-radius:6px;background:var(--raised);padding:10px 12px;margin-bottom:8px}
+.kit-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}
+.kit-text{font:400 12px/1.5 var(--f-ui);color:var(--text);white-space:pre-wrap;word-break:break-word;max-height:128px;overflow:auto}
+.kit-text.mono{font:400 12px/1.5 var(--f-mono);color:var(--gold-bright)}
+.export-note{font:400 11px/1.5 var(--f-mono);color:var(--muted);margin-top:10px}
+
+/* Page footer, toast, modal */
+.page-foot{border-top:1px solid var(--line);padding:16px 20px;font:400 11px/1.5 var(--f-mono);color:var(--muted);text-align:center;letter-spacing:.02em;background:var(--panel)}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:var(--raised);border:1px solid var(--gold);color:var(--text);padding:9px 14px;border-radius:6px;font:500 12px/1 var(--f-ui);z-index:60;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.72);display:flex;align-items:center;justify-content:center;padding:24px;z-index:50}
+.modal-box{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px;max-width:min(92vw,640px);max-height:92vh;display:flex;flex-direction:column;gap:12px}
+.modal-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.modal-box img{display:block;max-width:100%;max-height:calc(92vh - 130px);width:auto;height:auto;object-fit:contain;margin:0 auto;border:1px solid var(--line)}
+.modal-note{font:400 11px/1.5 var(--f-mono);color:var(--muted);text-align:center}
+
+/* Card (native 1080 base; all sizes in px) */
+.card{position:absolute;left:0;top:0;transform-origin:0 0;width:1080px;height:1080px;background:var(--c-ground);color:var(--c-text);display:flex;flex-direction:column;padding:84px 92px 76px;overflow:hidden;
+  --gutter:96px;--letter-w:74px;--step:34px;--row-font:30px;--gap:10px;
+  --c-ground:#131210;--c-text:#EAE3D2;--c-accent:#D4AF37;--c-accent-bright:#F0D77A;--c-muted:#9A9184;--c-glow:rgba(240,215,122,0.35);--c-line:rgba(212,175,55,0.3);--c-subbg:rgba(0,0,0,0.38)}
+.card.fmt-portrait{height:1350px;padding:120px 92px 104px}
+.card.fmt-short{height:1920px;padding:150px 84px 590px;--gutter:104px;--letter-w:92px}
+.card-frame{position:absolute;inset:30px;border:1px solid var(--c-accent);opacity:.38;pointer-events:none}
+.card-corners{position:absolute;left:0;top:0;pointer-events:none}
+.card-head,.card-insight,.card-foot{flex:0 0 auto}
+.card-head{position:relative}
+.card-eyebrow{font:600 21px/1 var(--f-display);letter-spacing:.3em;text-transform:uppercase;color:var(--c-accent)}
+.card-ref{font:600 72px/1.08 var(--f-display);letter-spacing:.02em;margin-top:22px;color:var(--c-text)}
+.card-tag{display:inline-block;margin-top:16px;font:500 17px/1 var(--f-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--c-muted)}
+.card-rule{height:2px;margin-top:30px;background:linear-gradient(90deg,var(--c-accent) 0%,var(--c-accent) 40%,transparent 100%);opacity:.85}
+.ladder{position:relative;flex:1 1 auto;min-height:0;display:flex;flex-direction:column;justify-content:center;padding:26px 0 10px}
+.rows{position:relative;display:flex;flex-direction:column;gap:var(--gap)}
+.arcs{position:absolute;left:0;top:0;pointer-events:none;overflow:visible}
+.row{display:flex;align-items:baseline;padding-left:calc(var(--gutter) + var(--depth,0) * var(--step));font:500 var(--row-font)/1.22 var(--f-serif);color:var(--c-text)}
+.letter{flex:0 0 var(--letter-w);font:600 .8em/1 var(--f-display);letter-spacing:.04em;color:var(--c-accent)}
+.body{position:relative;z-index:0;flex:1 1 auto;min-width:0}
+.txt{display:block}
+.key{display:inline-block;font:600 .5em/1 var(--f-display);letter-spacing:.16em;text-transform:uppercase;color:var(--c-accent);margin-right:.55em;vertical-align:.14em}
+.orig{display:block;margin-top:.12em;font:500 .78em/1.3 var(--f-orig);color:var(--c-muted);text-align:left}
+.vref{flex:0 0 auto;margin-left:26px;font:400 .48em/1.6 var(--f-mono);letter-spacing:.06em;color:var(--c-muted)}
+.row.center{font-size:calc(var(--row-font) * 1.24);color:var(--c-accent-bright);margin:.12em 0}
+.row.center .letter,.row.inner .letter{color:var(--c-accent-bright)}
+.row.inner{color:var(--c-accent-bright)}
+.row.center .txt{text-shadow:0 0 28px var(--c-glow)}
+.glow{position:absolute;left:-12%;top:-110%;width:100%;height:320%;z-index:-1;background:radial-gradient(ellipse at 35% 50%,var(--c-glow) 0%,transparent 62%);pointer-events:none}
+.card-insight{font:italic 500 40px/1.32 var(--f-serif);color:var(--c-text);margin-top:26px;padding-top:28px;border-top:1px solid var(--c-line)}
+.card-foot{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-top:34px}
+.credit{font:400 19px/1.4 var(--f-ui);color:var(--c-muted);max-width:660px}
+.brand{display:flex;align-items:center;gap:12px;font:600 20px/1 var(--f-display);letter-spacing:.12em;color:var(--c-accent);white-space:nowrap}
+.brand svg{width:18px;height:18px;flex:0 0 auto}
+.caption-zone{position:absolute;left:84px;right:84px;top:1360px;height:170px;display:flex;align-items:flex-end;justify-content:center;text-align:center}
+.caption-zone .sub{display:inline-block;font:600 40px/1.25 var(--f-ui);color:var(--c-text);background:var(--c-subbg);padding:16px 30px;border-radius:14px}
+.safe-guide{position:absolute;left:0;right:0;top:1536px;border-top:1px dashed var(--c-accent);opacity:.35;font:400 16px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--c-accent);padding:10px 40px}
+.card.fmt-portrait .ladder{padding:40px 0 20px}
+.card.fmt-portrait .card-insight{margin-top:36px;padding-top:34px}
+.card.fmt-portrait .card-foot{margin-top:44px}
+.card.fmt-short .card-eyebrow{font-size:27px;letter-spacing:.34em}
+.card.fmt-short .card-ref{font-size:92px;margin-top:26px}
+.card.fmt-short .card-tag{font-size:21px}
+.card.fmt-short .card-rule{margin-top:36px}
+.card.fmt-short .ladder{padding:34px 0 14px}
+.card.fmt-short .card-insight{font-size:52px;margin-top:36px;padding-top:34px}
+.card.fmt-short .card-foot{margin-top:40px}
+.card.fmt-short .credit{font-size:23px;max-width:620px}
+.card.fmt-short .brand{font-size:24px}
+.card.fmt-short .brand svg{width:22px;height:22px}
+
+/* Responsive */
+@media (max-width:999px){
+  .studio{display:flex;flex-direction:column;min-height:0}
+  .stage{order:0;padding:16px 16px 12px;gap:16px}
+  .library{order:1;position:static;max-height:none;border-right:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:0}
+  .panel{order:2;position:static;max-height:none;border-left:0;padding:18px 16px 28px}
+  .lib-head{padding:12px 16px 0}
+  .lib-list{display:flex;overflow-x:auto;gap:8px;padding:12px 16px;scrollbar-width:thin}
+  .lib-row{flex:0 0 auto;width:auto;border:1px solid var(--line);border-radius:999px;padding:8px 14px;background:var(--ground)}
+  .lib-row .src{display:none}
+  .lib-row[aria-pressed="true"]{border-color:var(--gold);background:var(--raised)}
+  .card-wrap{box-shadow:0 16px 40px rgba(0,0,0,.5)}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important}
+}
+</style>
+<header class="topbar">
+  <div class="wordmark"><h1>Structure Cards</h1><span class="badge">Demo</span></div>
+  <div class="seg" role="group" aria-label="Card format" id="formatSeg">
+    <button type="button" class="seg-btn" data-format="square" aria-pressed="true">Square 1:1</button>
+    <button type="button" class="seg-btn" data-format="portrait" aria-pressed="false">Portrait 4:5</button>
+    <button type="button" class="seg-btn" data-format="short" aria-pressed="false">Short 9:16</button>
+  </div>
+</header>
+<main class="studio">
+  <aside class="library" aria-label="Library">
+    <div class="lib-head"><span class="label">Library</span><span class="n" id="libCount"></span></div>
+    <div class="lib-list" id="libList"></div>
+  </aside>
+  <section class="stage" aria-label="Stage">
+    <div class="stage-canvas" id="stageCanvas">
+      <div class="card-wrap" id="cardWrap">
+        <div class="card fmt-square" id="card"></div>
+      </div>
+    </div>
+    <div class="transport" id="transport" hidden>
+      <button type="button" class="btn" id="playBtn">Play</button>
+      <div class="progress" id="progress" role="slider" tabindex="0" aria-label="Playback position" aria-valuemin="0" aria-valuemax="25" aria-valuenow="0"><div class="track"><div class="fill" id="progressFill"></div></div></div>
+      <span class="time" id="timeLabel">0:00 / 0:25</span>
+    </div>
+    <div class="script" id="scriptPanel" hidden>
+      <div class="script-head"><span class="label">Voiceover script</span><button type="button" class="btn small" id="copyScript">Copy script</button></div>
+      <ul id="scriptList"></ul>
+      <p class="script-note">Timestamps drive the subtitles. Copy gives the lines only, ready for a text-to-speech voice.</p>
+    </div>
+  </section>
+  <aside class="panel" aria-label="Controls">
+    <div class="section">
+      <h2 class="label">Style</h2>
+      <div class="swatches" id="swatches"></div>
+    </div>
+    <div class="section">
+      <h2 class="label">Options</h2>
+      <label class="opt"><span>Reference labels on each element</span><input type="checkbox" class="switch" id="optRefs" checked></label>
+      <label class="opt"><span>Original-language line when available</span><input type="checkbox" class="switch" id="optOrig" checked></label>
+      <label class="opt"><span>Source credit</span><input type="checkbox" class="switch" id="optCredit" checked></label>
+      <label class="opt"><span>Brand stamp</span><input type="checkbox" class="switch" id="optBrand" checked></label>
+    </div>
+    <div class="section">
+      <h2 class="label">Post kit</h2>
+      <div id="kit"></div>
+    </div>
+    <div class="section">
+      <h2 class="label">Export</h2>
+      <button type="button" class="btn primary" id="saveBtn">Save image</button>
+      <p class="export-note" id="exportNote">Produces a 1080 × 1080 PNG</p>
+    </div>
+  </aside>
+</main>
+<footer class="page-foot">Demo build. Structures from published scholarship, verify before publishing.</footer>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-box">
+    <div class="modal-head"><h2 class="label" id="modalTitle">Exported image</h2><button type="button" class="btn small" id="modalClose">Close</button></div>
+    <img id="modalImg" alt="Rendered card">
+    <p class="modal-note" id="modalNote">Right-click or long-press to save. 1080×1080 PNG.</p>
+  </div>
+</div>
+<!-- VERIFY: Genesis 6-9 flood element summaries and all Hebrew/Greek lines were typed from memory (bible-api.com returned 429 for the flood verses). -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+(function () {
+'use strict';
+
+var BRAND = 'scriptureweb.app';
+
+var PRESETS = {
+  gold:      { name: 'Gold on Charcoal', ground: '#131210', text: '#EAE3D2', accent: '#D4AF37', accentBright: '#F0D77A', muted: '#9A9184', glow: 'rgba(240,215,122,0.35)', dark: true,  alt: 'Gold lettering on a dark charcoal poster card' },
+  parchment: { name: 'Ink on Parchment', ground: '#F2EAD8', text: '#1D1A15', accent: '#7B1E2B', accentBright: '#A3303F', muted: '#6B6355', glow: 'rgba(163,48,63,0.18)',   dark: false, alt: 'Deep red lettering on a parchment poster card' },
+  midnight:  { name: 'Midnight',         ground: '#0F1A2B', text: '#E6EEF8', accent: '#8FB3FF', accentBright: '#C7D9FF', muted: '#8A9AB5', glow: 'rgba(199,217,255,0.3)',  dark: true,  alt: 'Pale blue lettering on a midnight navy poster card' },
+  crimson:   { name: 'Crimson',          ground: '#2A0E12', text: '#F3E6E1', accent: '#E0B36A', accentBright: '#F5D39A', muted: '#B08F8A', glow: 'rgba(245,211,154,0.3)',  dark: true,  alt: 'Warm gold lettering on a deep crimson poster card' }
+};
+var PRESET_ORDER = ['gold', 'parchment', 'midnight', 'crimson'];
+
+var FORMATS = {
+  square:   { w: 1080, h: 1080, label: 'Square 1:1' },
+  portrait: { w: 1080, h: 1350, label: 'Portrait 4:5' },
+  short:    { w: 1080, h: 1920, label: 'Short 9:16' }
+};
+
+/* English text: World English Bible (public domain). Element phrases are trimmed to the mirrored words. */
+var LIB = [
+  {
+    id: 'genesis-11', reference: 'Genesis 11:1–9', title: 'The Tower of Babel', book: 'Genesis', testament: 'OT',
+    elements: [
+      { letter: 'A',  text: 'The whole earth was of one language', ref: 'v. 1' },
+      { letter: 'B',  text: 'they lived there', ref: 'v. 2' },
+      { letter: 'C',  text: 'They said to one another', ref: 'v. 3' },
+      { letter: 'D',  text: '“Come, let’s make bricks”', ref: 'v. 3', orig: 'נִלְבְּנָה לְבֵנִים (nilbenah lebenim)' },
+      { letter: 'E',  text: '“Come, let’s build ourselves”', ref: 'v. 4' },
+      { letter: 'F',  text: 'a city, and a tower', ref: 'v. 4' },
+      { letter: 'X',  text: 'Yahweh came down to see', ref: 'v. 5' },
+      { letter: 'F′', text: 'the city and the tower', ref: 'v. 5' },
+      { letter: 'E′', text: 'which the children of men built', ref: 'v. 5' },
+      { letter: 'D′', text: '“Come, let’s … confuse”', ref: 'v. 7', orig: 'נָבְלָה (navlah)' },
+      { letter: 'C′', text: 'one another’s speech', ref: 'v. 7' },
+      { letter: 'B′', text: 'from there', ref: 'v. 8' },
+      { letter: 'A′', text: 'the language of all the earth', ref: 'v. 9' }
+    ],
+    source: 'Fokkelman, Narrative Art in Genesis (1975)',
+    sourceFull: 'J. P. Fokkelman, Narrative Art in Genesis: Specimens of Stylistic and Structural Analysis (Assen: Van Gorcum, 1975).',
+    insight: 'The tower story is built as a mirror. At its exact center, God comes down.',
+    note: 'Hebrew wordplay: “let us brick bricks” (nilbenah lebenim, v. 3) is answered by “let us confuse” (navlah, v. 7), the consonants l-b-n reversed to n-b-l; and Babel (bavel) puns on balal, “confuse.”',
+    caption: 'Genesis 11:1–9 is written as a mirror: thirteen elements fold around one center, “Yahweh came down to see” (v. 5). The Hebrew even reverses its own consonants, “let us brick bricks” (l-b-n, v. 3) answered by “let us confuse” (n-b-l, v. 7), and Babel (bavel) puns on balal, “confuse.” Structure: Fokkelman, Narrative Art in Genesis (1975).',
+    hashtags: '#Bible #BibleStudy #Chiasm #Genesis #TowerOfBabel #Scripture #BibleDesign #OldTestament',
+    altText: 'the chiastic structure of Genesis 11:1–9, the Tower of Babel: thirteen short lines stepped inward in mirrored pairs, from “the whole earth was of one language” to “the language of all the earth,” with the center line “Yahweh came down to see” set larger. Below it: The tower story is built as a mirror. At its exact center, God comes down. Credit: Fokkelman, Narrative Art in Genesis (1975).',
+    pinterest: 'The Tower of Babel story in Genesis 11 is arranged as a mirror, and God coming down sits at its exact center. A clean poster card of the full chiastic structure, source credited.',
+    slug: 'structure/genesis-11',
+    voiceover: [
+      { t: 0.0,  line: 'Genesis eleven, the Tower of Babel, is written as a mirror.' },
+      { t: 3.2,  line: 'One language, one place, one speech.' },
+      { t: 5.8,  line: 'Bricks, a plan, a city and a tower.' },
+      { t: 9.2,  line: 'And then, at the exact center of the story,' },
+      { t: 10.6, line: 'Yahweh comes down to see.' },
+      { t: 13.0, line: 'Everything after that answers everything before it: the tower, the plan, the speech, the place, the language.' },
+      { t: 18.5, line: 'The Hebrew even reverses its own letters. Let us brick bricks becomes let us confuse.' },
+      { t: 22.5, line: 'Structure from Fokkelman, Narrative Art in Genesis.' }
+    ]
+  },
+  {
+    id: 'genesis-6-9', reference: 'Genesis 6–9', title: 'The Flood', book: 'Genesis', testament: 'OT',
+    elements: [
+      { letter: 'A',  text: 'Noah and his sons', ref: '6:10' },
+      { letter: 'B',  text: 'God’s covenant to save Noah', ref: '6:18' },
+      { letter: 'C',  text: 'Enter the ark', ref: '7:1' },
+      { letter: 'D',  text: 'Seven days', ref: '7:4' },
+      { letter: 'E',  text: 'Forty days of flood', ref: '7:17' },
+      { letter: 'F',  text: '150 days: the waters prevail', ref: '7:24' },
+      { letter: 'X',  text: 'God remembered Noah', ref: '8:1' },
+      { letter: 'F′', text: '150 days: the waters abate', ref: '8:3' },
+      { letter: 'E′', text: 'Forty days', ref: '8:6' },
+      { letter: 'D′', text: 'Seven days', ref: '8:10, 12' },
+      { letter: 'C′', text: 'Leave the ark', ref: '8:16' },
+      { letter: 'B′', text: 'God’s covenant with all flesh', ref: '9:8–17' },
+      { letter: 'A′', text: 'Noah and his sons', ref: '9:18–19' }
+    ],
+    source: 'Condensed from Wenham’s 31-element structure, VT 28 (1978)',
+    sourceFull: 'Gordon J. Wenham, “The Coherence of the Flood Narrative,” Vetus Testamentum 28 (1978): 336–348. Condensed here from his 31-element palistrophe.',
+    insight: 'The flood is not the center of the flood story. God remembering is.',
+    caption: 'The flood narrative in Genesis 6–9 is one long mirror. The waters rise through seven, forty, and one hundred fifty days and fall back through the same numbers in reverse, and at the center stand four words: “God remembered Noah” (8:1). Condensed from Wenham’s 31-element structure, Vetus Testamentum 28 (1978).',
+    hashtags: '#Bible #BibleStudy #Chiasm #Genesis #Noah #Flood #Scripture #BibleDesign',
+    altText: 'the mirrored structure of the flood narrative, Genesis 6–9, condensed to thirteen lines: Noah and his sons, covenant, entering the ark, seven days, forty days, one hundred fifty days, then the center “God remembered Noah,” then the same steps in reverse. Below it: The flood is not the center of the flood story. God remembering is. Credit: condensed from Wenham, Vetus Testamentum 28 (1978).',
+    pinterest: 'The flood story rises and falls in matching steps, with “God remembered Noah” at the center. A poster card of Wenham’s structure, condensed to thirteen elements and credited.',
+    slug: 'structure/genesis-6-9',
+    voiceover: [
+      { t: 0.0,  line: 'The flood story in Genesis six through nine is one long mirror.' },
+      { t: 3.0,  line: 'Noah and his sons. A covenant. Entering the ark.' },
+      { t: 6.0,  line: 'Seven days, forty days, one hundred fifty days as the waters rise.' },
+      { t: 9.6,  line: 'And at the center, four words:' },
+      { t: 10.6, line: 'God remembered Noah.' },
+      { t: 13.0, line: 'Then the waters fall through the same numbers, in reverse, until Noah and his sons walk out into a new covenant.' },
+      { t: 19.0, line: 'The flood is not the center of the flood story. God remembering is.' },
+      { t: 22.8, line: 'Condensed from Wenham, Vetus Testamentum, nineteen seventy-eight.' }
+    ]
+  },
+  {
+    id: 'genesis-9-6', reference: 'Genesis 9:6', title: 'Blood for blood', book: 'Genesis', testament: 'OT', literalOrder: true,
+    elements: [
+      { letter: 'A',  text: 'whoever sheds', orig: 'שֹׁפֵךְ' },
+      { letter: 'B',  text: 'the blood', orig: 'דַּם' },
+      { letter: 'C',  text: 'of man', orig: 'הָאָדָם' },
+      { letter: 'C′', text: 'by man', orig: 'בָּאָדָם' },
+      { letter: 'B′', text: 'his blood', orig: 'דָּמוֹ' },
+      { letter: 'A′', text: 'shall be shed', orig: 'יִשָּׁפֵךְ' }
+    ],
+    source: 'Hebrew word order; see Wenham, Genesis 1–15 (WBC)',
+    sourceFull: 'Hebrew word order of Genesis 9:6a; see Gordon J. Wenham, Genesis 1–15, Word Biblical Commentary 1 (Waco: Word, 1987).',
+    insight: 'Six Hebrew words, folded exactly in half. What is poured out comes back.',
+    caption: 'Genesis 9:6 in Hebrew is six words that fold exactly in half: sheds, blood, man, man, blood, shed. The World English Bible reads, “Whoever sheds man’s blood, his blood will be shed by man.” Hebrew word order; see Wenham, Genesis 1–15 (Word Biblical Commentary).',
+    hashtags: '#Bible #BibleStudy #Chiasm #Genesis #Hebrew #Scripture #BibleDesign',
+    altText: 'the six-word chiasm of Genesis 9:6 in literal Hebrew order: whoever sheds, the blood, of man, by man, his blood, shall be shed, with the Hebrew word under each line. Below it: Six Hebrew words, folded exactly in half. What is poured out comes back.',
+    pinterest: 'Six Hebrew words in Genesis 9:6, folded exactly in half. A poster card showing the literal word order with the Hebrew beneath each line.',
+    slug: 'structure/genesis-9-6',
+    voiceover: [
+      { t: 0.0,  line: 'Genesis nine, verse six. Six Hebrew words.' },
+      { t: 1.8,  line: 'Whoever sheds. Shall be shed.' },
+      { t: 4.0,  line: 'The blood. His blood.' },
+      { t: 6.2,  line: 'Of man. By man.' },
+      { t: 8.2,  line: 'The sentence folds exactly in half. Each word on the way in is answered on the way out.' },
+      { t: 13.0, line: 'What is poured out comes back; the word order says so before the sentence does.' },
+      { t: 16.5, line: 'Hebrew word order, following Wenham, Genesis one to fifteen.' }
+    ]
+  },
+  {
+    id: 'isaiah-6-10', reference: 'Isaiah 6:10', title: 'Heart, ears, eyes', book: 'Isaiah', testament: 'OT', literalOrder: true,
+    elements: [
+      { letter: 'A',  key: 'heart', text: 'make the heart of this people fat', orig: 'לֵב־הָעָם' },
+      { letter: 'B',  key: 'ears',  text: 'make their ears heavy', orig: 'אָזְנָיו' },
+      { letter: 'C',  key: 'eyes',  text: 'shut their eyes', orig: 'עֵינָיו' },
+      { letter: 'C′', key: 'eyes',  text: 'lest they see with their eyes', orig: 'בְעֵינָיו' },
+      { letter: 'B′', key: 'ears',  text: 'hear with their ears', orig: 'וּבְאָזְנָיו' },
+      { letter: 'A′', key: 'heart', text: 'understand with their heart, and turn again, and be healed', orig: 'וּלְבָבוֹ' }
+    ],
+    source: 'Standard example; quoted in Matthew 13:15, John 12:40, Acts 28:27',
+    sourceFull: 'A standard textbook example of a verse-level chiasm; the verse is quoted in Matthew 13:15, John 12:40, and Acts 28:27.',
+    insight: 'Judgment goes in through the heart and comes back out through it.',
+    caption: 'Isaiah 6:10 names heart, ears, eyes, and then eyes, ears, heart, in reverse. The judgment enters through the heart, and in the second half healing would return through it. This verse is quoted in Matthew 13:15, John 12:40, and Acts 28:27.',
+    hashtags: '#Bible #BibleStudy #Chiasm #Isaiah #Prophets #Scripture #BibleDesign',
+    altText: 'the chiastic structure of Isaiah 6:10: heart, ears, eyes on the way in and eyes, ears, heart on the way out, each line showing the key word and the phrase it comes from. Below it: Judgment goes in through the heart and comes back out through it.',
+    pinterest: 'Heart, ears, eyes, then eyes, ears, heart: Isaiah 6:10 reverses its own list. A poster card of the structure, quoted later in Matthew, John, and Acts.',
+    slug: 'structure/isaiah-6-10',
+    voiceover: [
+      { t: 0.0,  line: 'Isaiah six, verse ten. Heart, ears, eyes.' },
+      { t: 1.8,  line: 'Make the heart fat. Understand with the heart.' },
+      { t: 4.0,  line: 'Make the ears heavy. Hear with the ears.' },
+      { t: 6.2,  line: 'Shut the eyes. See with the eyes.' },
+      { t: 8.2,  line: 'The same three organs, in reverse. The judgment goes in through the heart and comes back out through it.' },
+      { t: 14.0, line: 'Jesus quotes this verse in Matthew thirteen, and John twelve quotes it again.' },
+      { t: 18.0, line: 'A standard example of a small chiasm inside a single verse.' }
+    ]
+  },
+  {
+    id: 'matthew-7-6', reference: 'Matthew 7:6', title: 'Dogs and pigs', book: 'Matthew', testament: 'NT',
+    elements: [
+      { letter: 'A',  key: 'dogs', text: 'Don’t give that which is holy to the dogs' },
+      { letter: 'B',  key: 'pigs', text: 'neither throw your pearls before the pigs' },
+      { letter: 'B′', key: 'pigs', text: 'lest perhaps they trample them under their feet' },
+      { letter: 'A′', key: 'dogs', text: 'and turn and tear you to pieces' }
+    ],
+    source: 'Standard example of a Gospel chiasm',
+    sourceFull: 'A standard textbook example of a four-line Gospel chiasm.',
+    insight: 'Read straight, pearls turn and bite. Read as a mirror, it resolves: pigs trample, dogs turn.',
+    caption: 'Read in a straight line, Matthew 7:6 seems to say pearls turn and bite. Read as a mirror, the inner pair belongs to the pigs (trample) and the outer pair to the dogs (turn and tear). A standard example of a four-line Gospel chiasm.',
+    hashtags: '#Bible #BibleStudy #Chiasm #Matthew #SermonOnTheMount #Gospel #Scripture #BibleDesign',
+    altText: 'the four-line chiasm of Matthew 7:6: holy things to the dogs, pearls before the pigs, they trample them, they turn and tear you, with the outer pair tagged dogs and the inner pair tagged pigs. Below it: Read straight, pearls turn and bite. Read as a mirror, it resolves: pigs trample, dogs turn.',
+    pinterest: 'Matthew 7:6 makes more sense as a mirror: the pigs trample, the dogs turn and tear. A poster card of the four-line Gospel chiasm.',
+    slug: 'structure/matthew-7-6',
+    voiceover: [
+      { t: 0.0,  line: 'Matthew seven, verse six, reads strangely in a straight line.' },
+      { t: 2.0,  line: 'Holy things to dogs. Pearls to pigs.' },
+      { t: 4.2,  line: 'Pigs trample. Dogs turn and tear.' },
+      { t: 6.4,  line: 'Read straight, the pearls seem to turn and bite you. Read as a mirror, it resolves.' },
+      { t: 11.0, line: 'The inner pair belongs to the pigs, the outer pair to the dogs.' },
+      { t: 14.5, line: 'A standard example of a Gospel chiasm, four lines long.' }
+    ]
+  },
+  {
+    id: 'mark-2-27', reference: 'Mark 2:27', title: 'The Sabbath for man', book: 'Mark', testament: 'NT', literalOrder: true,
+    elements: [
+      { letter: 'A',  text: 'The Sabbath', orig: 'τὸ σάββατον' },
+      { letter: 'B',  text: 'was made for man', orig: 'διὰ τὸν ἄνθρωπον ἐγένετο' },
+      { letter: 'B′', text: 'not man', orig: 'καὶ οὐχ ὁ ἄνθρωπος' },
+      { letter: 'A′', text: 'for the Sabbath', orig: 'διὰ τὸ σάββατον' }
+    ],
+    source: 'Standard example; Greek word order',
+    sourceFull: 'A standard textbook example; the Greek word order runs Sabbath, man, man, Sabbath.',
+    insight: 'Four beats, folded. The order of the words is the argument.',
+    caption: 'Mark 2:27 in Greek runs Sabbath, man, man, Sabbath: “The Sabbath was made for man, not man for the Sabbath.” Four beats, folded, with humanity in the middle. Greek word order; a standard short example.',
+    hashtags: '#Bible #BibleStudy #Chiasm #Mark #Gospel #Sabbath #Scripture #BibleDesign',
+    altText: 'the four-part chiasm of Mark 2:27 in literal Greek order: the Sabbath, was made for man, not man, for the Sabbath, with the Greek under each line. Below it: Four beats, folded. The order of the words is the argument.',
+    pinterest: 'Sabbath, man, man, Sabbath: Mark 2:27 folds in the middle. A poster card of the Greek word order, one of the shortest chiasms in the Gospels.',
+    slug: 'structure/mark-2-27',
+    voiceover: [
+      { t: 0.0,  line: 'Mark two, verse twenty-seven. Four beats, folded.' },
+      { t: 1.8,  line: 'The Sabbath. For the Sabbath.' },
+      { t: 4.0,  line: 'Was made for man. Not man.' },
+      { t: 6.0,  line: 'In Greek the order is exact: Sabbath, man, man, Sabbath.' },
+      { t: 9.5,  line: 'The order of the words is the argument. Sabbath sits on the outside; humanity sits in the middle.' },
+      { t: 14.5, line: 'One of the shortest chiasms in the Gospels, and one of the clearest to hear aloud.' }
+    ]
+  },
+  {
+    id: 'daniel-2-7', reference: 'Daniel 2–7', title: 'The Aramaic Chiasm', book: 'Daniel', testament: 'OT',
+    elements: [
+      { letter: 'A',  key: 'Ch. 2', text: 'Four kingdoms: the statue' },
+      { letter: 'B',  key: 'Ch. 3', text: 'The faithful delivered from the furnace' },
+      { letter: 'C',  key: 'Ch. 4', text: 'A king humbled: Nebuchadnezzar' },
+      { letter: 'C′', key: 'Ch. 5', text: 'A king humbled: Belshazzar' },
+      { letter: 'B′', key: 'Ch. 6', text: 'The faithful delivered from the lions' },
+      { letter: 'A′', key: 'Ch. 7', text: 'Four kingdoms: the beasts' }
+    ],
+    source: 'Lenglet, Biblica 53 (1972)',
+    sourceFull: 'A. Lenglet, “La structure littéraire de Daniel 2–7,” Biblica 53 (1972): 169–190.',
+    insight: 'The Aramaic half of Daniel is one symmetrical block. Two humbled kings sit at its center.',
+    caption: 'Daniel 2–7 is written in Aramaic, and the six chapters form one symmetrical block: four kingdoms (chapters 2 and 7), the faithful delivered (3 and 6), and two humbled kings at the center (4 and 5). Structure: Lenglet, Biblica 53 (1972).',
+    hashtags: '#Bible #BibleStudy #Chiasm #Daniel #Prophets #Scripture #BibleDesign #OldTestament',
+    altText: 'the chiastic arrangement of Daniel chapters 2 to 7: four kingdoms as a statue and as beasts on the outside, the faithful delivered from the furnace and from the lions inside that, and two humbled kings, Nebuchadnezzar and Belshazzar, at the center. Below it: The Aramaic half of Daniel is one symmetrical block. Two humbled kings sit at its center. Credit: Lenglet, Biblica 53 (1972).',
+    pinterest: 'The Aramaic chapters of Daniel form one mirrored block, with two humbled kings at the center. A poster card of Lenglet’s structure of Daniel 2–7.',
+    slug: 'structure/daniel-2-7',
+    voiceover: [
+      { t: 0.0,  line: 'Daniel chapters two through seven are written in Aramaic, and they form one block.' },
+      { t: 2.0,  line: 'Chapter two: four kingdoms as a statue. Chapter seven: four kingdoms as beasts.' },
+      { t: 4.4,  line: 'Chapter three: the faithful delivered from the furnace. Chapter six: the faithful delivered from the lions.' },
+      { t: 7.0,  line: 'Chapters four and five, at the center: two kings humbled. Nebuchadnezzar, then Belshazzar.' },
+      { t: 11.5, line: 'The Aramaic half of Daniel is one symmetrical block, with two humbled kings at its heart.' },
+      { t: 16.0, line: 'Structure from Lenglet, Biblica, nineteen seventy-two.' }
+    ]
+  },
+  {
+    id: 'psalm-67', reference: 'Psalm 67', title: 'Let the peoples praise you', book: 'Psalms', testament: 'OT',
+    elements: [
+      { letter: 'A',  text: 'Blessing: that your way may be known on earth', ref: 'vv. 1–2' },
+      { letter: 'B',  text: 'Let the peoples praise you, God. Let all the peoples praise you.', ref: 'v. 3' },
+      { letter: 'X',  text: 'Let the nations be glad and sing for joy, for you will judge the peoples with equity', ref: 'v. 4' },
+      { letter: 'B′', text: 'Let the peoples praise you, God. Let all the peoples praise you.', ref: 'v. 5' },
+      { letter: 'A′', text: 'Blessing: all the ends of the earth shall fear him', ref: 'vv. 6–7' }
+    ],
+    source: 'Refrain structure, widely noted (e.g., Kidner, Psalms 1–72)',
+    sourceFull: 'Refrain structure widely noted; see Derek Kidner, Psalms 1–72, Tyndale Old Testament Commentaries (London: Inter-Varsity Press, 1973).',
+    insight: 'Israel’s blessing exists so the nations can sing. The refrain is the frame; the nations are the center.',
+    caption: 'Psalm 67 is framed by blessing, repeats its refrain twice, “Let the peoples praise you, God,” and sets the nations singing at its center (v. 4). The blessing on Israel is aimed outward, that God’s way may be known on earth. Refrain structure, widely noted (e.g., Kidner, Psalms 1–72).',
+    hashtags: '#Bible #BibleStudy #Chiasm #Psalms #Psalm67 #Worship #Scripture #BibleDesign',
+    altText: 'the refrain structure of Psalm 67: blessing (verses 1–2), the refrain “Let the peoples praise you, God” (verse 3), the center “Let the nations be glad and sing for joy” (verse 4), the refrain again (verse 5), and blessing (verses 6–7). Below it: Israel’s blessing exists so the nations can sing. The refrain is the frame; the nations are the center.',
+    pinterest: 'Psalm 67 places its refrain on either side of one center line: let the nations be glad and sing. A poster card of the psalm’s structure.',
+    slug: 'structure/psalm-67',
+    voiceover: [
+      { t: 0.0,  line: 'Psalm sixty-seven is built on a refrain.' },
+      { t: 1.6,  line: 'Blessing opens it and blessing closes it, so that God’s way may be known on earth.' },
+      { t: 4.2,  line: 'Twice the refrain: let the peoples praise you, God. Let all the peoples praise you.' },
+      { t: 7.0,  line: 'And in the middle, the nations themselves: let the nations be glad and sing for joy.' },
+      { t: 10.5, line: 'Israel’s blessing exists so the nations can sing. The refrain is the frame; the nations are the center.' },
+      { t: 16.0, line: 'A refrain structure widely noted, for example in Kidner’s commentary on the Psalms.' }
+    ]
+  },
+  {
+    id: 'amos-5', reference: 'Amos 5:4b–6a', title: 'Seek me and live', book: 'Amos', testament: 'OT',
+    elements: [
+      { letter: 'A',  text: 'Seek me, and you will live', ref: 'v. 4' },
+      { letter: 'B',  text: 'but don’t seek Bethel', ref: 'v. 5' },
+      { letter: 'C',  text: 'nor enter into Gilgal', ref: 'v. 5' },
+      { letter: 'X',  text: 'and don’t pass to Beersheba', ref: 'v. 5' },
+      { letter: 'C′', text: 'for Gilgal shall surely go into captivity', ref: 'v. 5' },
+      { letter: 'B′', text: 'and Bethel shall come to nothing', ref: 'v. 5' },
+      { letter: 'A′', text: 'Seek Yahweh, and you will live', ref: 'v. 6' }
+    ],
+    source: 'de Waard, VT 27 (1977)',
+    sourceFull: 'Jan de Waard, “The Chiastic Structure of Amos V 1–17,” Vetus Testamentum 27 (1977): 170–177.',
+    insight: 'Every shrine the people trusted is folded around the one they skipped.',
+    caption: 'Amos 5:4b–6a opens and closes with the same call, “Seek me, and you will live,” and folds the shrines of Bethel and Gilgal around Beersheba at the center. The passage sits inside the larger chiasm of Amos 5:1–17. Structure: de Waard, Vetus Testamentum 27 (1977).',
+    hashtags: '#Bible #BibleStudy #Chiasm #Amos #Prophets #Scripture #BibleDesign #OldTestament',
+    altText: 'the chiastic structure of Amos 5:4b–6a: seek me and live, Bethel, Gilgal, then Beersheba at the center, then Gilgal, Bethel, seek Yahweh and live. Below it: Every shrine the people trusted is folded around the one they skipped. Credit: de Waard, Vetus Testamentum 27 (1977).',
+    pinterest: 'Seek me and live: Amos 5 folds Bethel and Gilgal around Beersheba and repeats its call on both sides. A poster card of de Waard’s structure, credited.',
+    slug: 'structure/amos-5',
+    voiceover: [
+      { t: 0.0,  line: 'Amos five, verses four to six. Seek me, and you will live.' },
+      { t: 2.0,  line: 'The same call opens and closes the passage: seek, and live.' },
+      { t: 4.4,  line: 'Inside it, Bethel and Gilgal, the shrines Israel trusted.' },
+      { t: 6.8,  line: 'Gilgal will go into captivity. Bethel will come to nothing.' },
+      { t: 9.0,  line: 'And at the center, the farthest of the three: don’t pass to Beersheba.' },
+      { t: 13.0, line: 'Every shrine the people trusted is folded around the one they skipped.' },
+      { t: 16.5, line: 'Structure from de Waard, Vetus Testamentum, nineteen seventy-seven.' }
+    ]
+  }
+];
+
+/* ---------- helpers ---------- */
+var $ = function (id) { return document.getElementById(id); };
+var SVG_NS = 'http://www.w3.org/2000/svg';
+function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined && text !== null) e.textContent = text; return e; }
+function svgEl(tag) { return document.createElementNS(SVG_NS, tag); }
+function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+function easeOut(p) { return 1 - Math.pow(1 - p, 3); }
+function r1(v) { return Math.round(v * 10) / 10; }
+function hexToRgba(hex, a) { var h = hex.replace('#', ''); var r = parseInt(h.substring(0, 2), 16), g = parseInt(h.substring(2, 4), 16), b = parseInt(h.substring(4, 6), 16); return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')'; }
+function fmtTime(s) { s = Math.max(0, Math.floor(s)); return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2); }
+function relPos(node, ancestor) { var l = 0, t = 0, e = node; while (e && e !== ancestor) { l += e.offsetLeft; t += e.offsetTop; e = e.offsetParent; } return { left: l, top: t }; }
+var REDUCED = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+function isMobile() { return !!(window.matchMedia && window.matchMedia('(max-width: 999px)').matches); }
+
+/* ---------- state ---------- */
+var state = {
+  item: LIB[0], preset: 'gold', format: 'square',
+  opts: { refs: true, orig: true, credit: true, brand: true },
+  scale: 1, timeline: null, playing: false, ended: false, time: 0, t0: 0, raf: 0
+};
+var els = {};
+['card', 'cardWrap', 'stageCanvas', 'libList', 'libCount', 'formatSeg', 'transport', 'playBtn', 'progress', 'progressFill', 'timeLabel',
+ 'scriptPanel', 'scriptList', 'copyScript', 'swatches', 'optRefs', 'optOrig', 'optCredit', 'optBrand', 'kit', 'saveBtn', 'exportNote',
+ 'toast', 'modal', 'modalImg', 'modalNote', 'modalClose'].forEach(function (id) { els[id] = $(id); });
+
+var PREF_KEY = 'structureCardsDemo';
+function loadPrefs() {
+  try {
+    var raw = localStorage.getItem(PREF_KEY); if (!raw) return;
+    var p = JSON.parse(raw);
+    if (p.preset && PRESETS[p.preset]) state.preset = p.preset;
+    if (p.format && FORMATS[p.format]) state.format = p.format;
+    if (p.item) { LIB.forEach(function (it) { if (it.id === p.item) state.item = it; }); }
+  } catch (e) { /* storage unavailable */ }
+}
+function savePrefs() {
+  try { localStorage.setItem(PREF_KEY, JSON.stringify({ preset: state.preset, format: state.format, item: state.item.id })); } catch (e) { /* ignore */ }
+}
+
+/* ---------- card ornaments ---------- */
+function makeDiamond() {
+  var svg = svgEl('svg');
+  svg.setAttribute('viewBox', '0 0 20 20'); svg.setAttribute('width', '18'); svg.setAttribute('height', '18');
+  var p = svgEl('path');
+  p.setAttribute('d', 'M10 1L19 10L10 19L1 10Z M10 6L14 10L10 14L6 10Z');
+  p.setAttribute('fill-rule', 'evenodd'); p.setAttribute('data-fill', '');
+  svg.appendChild(p);
+  return svg;
+}
+function makeCorners(F) {
+  var svg = svgEl('svg');
+  svg.setAttribute('class', 'card-corners');
+  svg.setAttribute('width', String(F.w)); svg.setAttribute('height', String(F.h));
+  svg.setAttribute('viewBox', '0 0 ' + F.w + ' ' + F.h);
+  var pts = [[30, 30], [F.w - 30, 30], [30, F.h - 30], [F.w - 30, F.h - 30]];
+  pts.forEach(function (p) {
+    var d = svgEl('path');
+    d.setAttribute('d', 'M' + p[0] + ' ' + (p[1] - 7) + 'L' + (p[0] + 7) + ' ' + p[1] + 'L' + p[0] + ' ' + (p[1] + 7) + 'L' + (p[0] - 7) + ' ' + p[1] + 'Z');
+    d.setAttribute('data-fill', '');
+    svg.appendChild(d);
+  });
+  return svg;
+}
+
+/* ---------- card render ---------- */
+function renderCard() {
+  var item = state.item, F = FORMATS[state.format], card = els.card;
+  var isShort = state.format === 'short';
+  stopPlayback();
+  card.className = 'card fmt-' + state.format;
+  while (card.firstChild) card.removeChild(card.firstChild);
+
+  card.appendChild(el('div', 'card-frame'));
+  card.appendChild(makeCorners(F));
+
+  var head = el('div', 'card-head');
+  head.appendChild(el('div', 'card-eyebrow', 'Literary Structure · Chiasm'));
+  head.appendChild(el('div', 'card-ref', item.reference));
+  if (item.literalOrder) head.appendChild(el('div', 'card-tag', 'Literal word order'));
+  head.appendChild(el('div', 'card-rule'));
+  card.appendChild(head);
+
+  var ladder = el('div', 'ladder');
+  var rows = el('div', 'rows');
+  var svg = svgEl('svg'); svg.setAttribute('class', 'arcs');
+  rows.appendChild(svg);
+  ladder.appendChild(rows);
+  card.appendChild(ladder);
+
+  var n = item.elements.length, odd = n % 2 === 1, half = Math.floor(n / 2);
+  item.elements.forEach(function (e, i) {
+    var depth = i < n / 2 ? i : n - 1 - i;
+    var row = el('div', 'row');
+    row.style.setProperty('--depth', String(depth));
+    var isCenter = odd && i === half;
+    var isInner = !odd && (i === half - 1 || i === half);
+    if (isCenter) row.classList.add('center');
+    if (isInner) row.classList.add('inner');
+    row.appendChild(el('span', 'letter', e.letter));
+    var body = el('span', 'body');
+    if (isCenter) body.appendChild(el('span', 'glow'));
+    var txt = el('span', 'txt');
+    if (e.key) txt.appendChild(el('span', 'key', e.key));
+    txt.appendChild(document.createTextNode(e.text));
+    body.appendChild(txt);
+    if (state.opts.orig && e.orig) { var o = el('span', 'orig', e.orig); o.setAttribute('dir', 'auto'); body.appendChild(o); }
+    row.appendChild(body);
+    if (state.opts.refs && e.ref) row.appendChild(el('span', 'vref', e.ref));
+    rows.appendChild(row);
+  });
+
+  var insight = el('div', 'card-insight');
+  if (isShort) {
+    var words = item.insight.split(' ');
+    words.forEach(function (w, i) { insight.appendChild(el('span', 'w', w + (i < words.length - 1 ? ' ' : ''))); });
+  } else {
+    insight.textContent = item.insight;
+  }
+  card.appendChild(insight);
+
+  if (state.opts.credit || state.opts.brand) {
+    var foot = el('div', 'card-foot');
+    foot.appendChild(el('span', 'credit', state.opts.credit ? 'Structure: ' + item.source : ''));
+    if (state.opts.brand) {
+      var brand = el('span', 'brand');
+      brand.appendChild(makeDiamond());
+      brand.appendChild(document.createTextNode(BRAND));
+      foot.appendChild(brand);
+    }
+    card.appendChild(foot);
+  }
+
+  if (isShort) {
+    var cz = el('div', 'caption-zone');
+    cz.appendChild(el('span', 'sub', ''));
+    card.appendChild(cz);
+    var guide = el('div', 'safe-guide', 'Shorts UI overlay · keep clear');
+    guide.setAttribute('data-noexport', '');
+    card.appendChild(guide);
+  }
+
+  applyPreset();
+  layoutCard();
+
+  if (isShort) {
+    buildTimeline();
+    state.time = state.timeline.end;
+    state.ended = true;
+    applyTime(state.time);
+    els.playBtn.textContent = 'Play';
+  }
+}
+
+function layoutCard() {
+  var card = els.card, n = state.item.elements.length;
+  var short = state.format === 'short', portrait = state.format === 'portrait';
+  var maxDepth = Math.ceil(n / 2) - 1;
+  var step = maxDepth > 0 ? clamp(Math.round(200 / maxDepth), 30, 64) : 0;
+  var base = n <= 5 ? 48 : n <= 7 ? 41 : n <= 9 ? 35 : n <= 11 ? 31 : 29;
+  var mult = short ? 1.35 : portrait ? 1.08 : 1;
+  var gap = Math.round((n > 9 ? 8 : 14) * (short ? 1.3 : 1));
+  card.style.setProperty('--step', Math.round(step * (short ? 1.15 : 1)) + 'px');
+  card.style.setProperty('--gap', gap + 'px');
+  var ladder = card.querySelector('.ladder'), rows = card.querySelector('.rows');
+  if (ladder && rows) {
+    var cs = window.getComputedStyle(ladder);
+    var pad = (parseFloat(cs.paddingTop) || 0) + (parseFloat(cs.paddingBottom) || 0);
+    var size = Math.round(base * mult);
+    for (var i = 0; i < 16; i++) {
+      card.style.setProperty('--row-font', size + 'px');
+      if (rows.offsetHeight <= ladder.clientHeight - pad || size <= 18) break;
+      size -= 2;
+    }
+  }
+  fitStage();
+  drawArcs(card);
+}
+
+function fitStage() {
+  var F = FORMATS[state.format];
+  var availW = els.stageCanvas.clientWidth;
+  if (!availW) return;
+  var s = availW / F.w;
+  if (!isMobile()) {
+    var topbar = document.querySelector('.topbar');
+    var availH = window.innerHeight - (topbar ? topbar.offsetHeight : 57) - 68;
+    if (availH > 240) s = Math.min(s, availH / F.h);
+  }
+  s = clamp(s, 0.08, 1);
+  state.scale = s;
+  els.cardWrap.style.width = Math.round(F.w * s) + 'px';
+  els.cardWrap.style.height = Math.round(F.h * s) + 'px';
+  els.card.style.transform = 'scale(' + s + ')';
+}
+
+function drawArcs(root) {
+  var rows = root.querySelector('.rows'); if (!rows) return;
+  var svg = rows.querySelector('.arcs'); if (!svg) return;
+  var rowEls = rows.querySelectorAll('.row');
+  var n = rowEls.length, pairs = Math.floor(n / 2);
+  var W = rows.offsetWidth, H = rows.offsetHeight;
+  svg.setAttribute('width', String(W)); svg.setAttribute('height', String(H));
+  svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+  svg.style.width = W + 'px'; svg.style.height = H + 'px';
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  var accent = PRESETS[state.preset].accent;
+  for (var k = 0; k < pairs; k++) {
+    var a = rowEls[k].querySelector('.letter'), b = rowEls[n - 1 - k].querySelector('.letter');
+    var pa = relPos(a, rows), pb = relPos(b, rows);
+    var x = pa.left - 12;
+    var y1 = pa.top + a.offsetHeight / 2, y2 = pb.top + b.offsetHeight / 2;
+    var span = y2 - y1;
+    var w = Math.min(0.16 * span + 16, x - 4); if (w < 10) w = 10;
+    var cx = x - w;
+    var d = 'M' + r1(x + 6) + ' ' + r1(y1) + ' L' + r1(x) + ' ' + r1(y1) +
+            ' C' + r1(cx) + ' ' + r1(y1) + ',' + r1(cx) + ' ' + r1(y2) + ',' + r1(x) + ' ' + r1(y2) +
+            ' L' + r1(x + 6) + ' ' + r1(y2);
+    var path = svgEl('path');
+    path.setAttribute('d', d);
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke', accent);
+    path.setAttribute('stroke-width', '2.2');
+    path.setAttribute('stroke-linecap', 'round');
+    path.setAttribute('stroke-linejoin', 'round');
+    var op = pairs > 1 ? 0.35 + 0.6 * (k / (pairs - 1)) : 0.9;
+    path.setAttribute('opacity', op.toFixed(2));
+    path.setAttribute('data-pair', String(k));
+    svg.appendChild(path);
+  }
+}
+
+function applyPreset() {
+  var P = PRESETS[state.preset], card = els.card, i;
+  card.style.setProperty('--c-ground', P.ground);
+  card.style.setProperty('--c-text', P.text);
+  card.style.setProperty('--c-accent', P.accent);
+  card.style.setProperty('--c-accent-bright', P.accentBright);
+  card.style.setProperty('--c-muted', P.muted);
+  card.style.setProperty('--c-glow', P.glow);
+  card.style.setProperty('--c-line', hexToRgba(P.accent, 0.3));
+  card.style.setProperty('--c-subbg', P.dark ? 'rgba(0,0,0,0.38)' : 'rgba(29,26,21,0.08)');
+  var fills = card.querySelectorAll('[data-fill]');
+  for (i = 0; i < fills.length; i++) fills[i].setAttribute('fill', P.accent);
+  var paths = card.querySelectorAll('.arcs path');
+  for (i = 0; i < paths.length; i++) paths[i].setAttribute('stroke', P.accent);
+  var sw = els.swatches.querySelectorAll('.swatch');
+  for (i = 0; i < sw.length; i++) sw[i].setAttribute('aria-pressed', sw[i].getAttribute('data-preset') === state.preset ? 'true' : 'false');
+}
+
+/* ---------- Short timeline ---------- */
+function stopPlayback() {
+  if (state.raf) cancelAnimationFrame(state.raf);
+  state.raf = 0; state.playing = false; state.ended = false; state.time = 0; state.timeline = null;
+  els.playBtn.textContent = 'Play';
+}
+
+function buildTimeline() {
+  var card = els.card, item = state.item;
+  var rowEls = Array.prototype.slice.call(card.querySelectorAll('.row'));
+  var paths = Array.prototype.slice.call(card.querySelectorAll('.arcs path'));
+  var n = rowEls.length, pairs = Math.floor(n / 2), odd = n % 2 === 1;
+  var steps = pairs + (odd ? 1 : 0);
+  var interval = clamp(10.5 / steps, 1.2, 2.4);
+  var ev = [];
+  var head = card.querySelector('.card-head');
+  ev.push({ t: 0, d: 0.9, apply: function (p) { var e = easeOut(p); head.style.opacity = String(e); head.style.transform = 'translateY(' + r1((1 - e) * 18) + 'px)'; } });
+  paths.forEach(function (path) { var len = path.getTotalLength(); path.setAttribute('stroke-dasharray', String(len)); path._len = len; });
+  var t = 1.5;
+  for (var k = 0; k < pairs; k++) {
+    (function (k, t) {
+      var a = rowEls[k], b = rowEls[n - 1 - k], path = paths[k];
+      ev.push({ t: t, d: 1.1, apply: function (p) {
+        var e = easeOut(Math.min(1, p * 1.6));
+        a.style.opacity = String(e); a.style.transform = 'translateX(' + r1((1 - e) * -36) + 'px)';
+        b.style.opacity = String(e); b.style.transform = 'translateX(' + r1((1 - e) * -36) + 'px)';
+        if (path) { var q = clamp((p - 0.25) / 0.75, 0, 1); path.setAttribute('stroke-dashoffset', String(path._len * (1 - easeOut(q)))); }
+      } });
+    })(k, t);
+    t += interval;
+  }
+  if (odd) {
+    var c = rowEls[pairs], glow = c.querySelector('.glow');
+    (function (t) {
+      ev.push({ t: t, d: 1.3, apply: function (p) {
+        var e = easeOut(Math.min(1, p * 1.4));
+        c.style.opacity = String(e);
+        c.style.transformOrigin = '0 50%';
+        c.style.transform = 'scale(' + r1(0.92 + 0.08 * e) + ')';
+        if (glow) glow.style.opacity = String(easeOut(p));
+      } });
+    })(t);
+    t += 1.3;
+  }
+  var insightT = t + 0.4;
+  var words = Array.prototype.slice.call(card.querySelectorAll('.card-insight .w'));
+  words.forEach(function (w, i) { ev.push({ t: insightT + i * 0.16, d: 0.3, apply: function (p) { w.style.opacity = String(p); } }); });
+  var insightEnd = insightT + words.length * 0.16 + 0.3;
+  var lastVoice = item.voiceover.length ? item.voiceover[item.voiceover.length - 1].t : 0;
+  var end = Math.max(lastVoice + 4, insightEnd + 5);
+  state.timeline = { events: ev, end: end };
+  els.progress.setAttribute('aria-valuemax', String(Math.round(end)));
+}
+
+function applyTime(t) {
+  var tl = state.timeline; if (!tl) return;
+  tl.events.forEach(function (ev) {
+    var p = ev.d > 0 ? (t - ev.t) / ev.d : (t >= ev.t ? 1 : 0);
+    ev.apply(clamp(p, 0, 1));
+  });
+  var vo = state.item.voiceover, idx = -1;
+  for (var i = 0; i < vo.length; i++) { if (vo[i].t <= t + 0.001) idx = i; }
+  var sub = els.card.querySelector('.caption-zone .sub');
+  if (sub) { sub.textContent = idx >= 0 ? vo[idx].line : ''; sub.style.visibility = idx >= 0 ? 'visible' : 'hidden'; }
+  var lis = els.scriptList.children;
+  for (var j = 0; j < lis.length; j++) {
+    lis[j].classList.toggle('now', j === idx);
+    lis[j].classList.toggle('done', j < idx);
+  }
+  var frac = clamp(t / tl.end, 0, 1);
+  els.progressFill.style.width = (frac * 100) + '%';
+  els.timeLabel.textContent = fmtTime(t) + ' / ' + fmtTime(tl.end);
+  els.progress.setAttribute('aria-valuenow', String(Math.round(t)));
+}
+
+function applyFinalFrame(root) {
+  var i;
+  var rows = root.querySelectorAll('.row');
+  for (i = 0; i < rows.length; i++) { rows[i].style.opacity = ''; rows[i].style.transform = ''; }
+  var head = root.querySelector('.card-head');
+  if (head) { head.style.opacity = ''; head.style.transform = ''; }
+  var paths = root.querySelectorAll('.arcs path');
+  for (i = 0; i < paths.length; i++) { paths[i].removeAttribute('stroke-dasharray'); paths[i].removeAttribute('stroke-dashoffset'); }
+  var words = root.querySelectorAll('.card-insight .w');
+  for (i = 0; i < words.length; i++) words[i].style.opacity = '';
+  var glows = root.querySelectorAll('.glow');
+  for (i = 0; i < glows.length; i++) glows[i].style.opacity = '';
+  var sub = root.querySelector('.caption-zone .sub');
+  if (sub) { var vo = state.item.voiceover; sub.textContent = vo.length ? vo[vo.length - 1].line : ''; sub.style.visibility = ''; }
+}
+
+function tick(now) {
+  if (!state.playing) return;
+  var tl = state.timeline; if (!tl) return;
+  state.time = (now - state.t0) / 1000;
+  if (state.time >= tl.end) { state.time = tl.end; applyTime(tl.end); finishPlayback(); return; }
+  applyTime(state.time);
+  state.raf = requestAnimationFrame(tick);
+}
+function finishPlayback() { state.playing = false; state.ended = true; state.raf = 0; els.playBtn.textContent = 'Replay'; }
+function play() {
+  var tl = state.timeline; if (!tl) return;
+  if (REDUCED) { state.time = tl.end; applyTime(tl.end); finishPlayback(); return; }
+  if (state.ended || state.time >= tl.end) { state.time = 0; state.ended = false; }
+  state.playing = true;
+  state.t0 = performance.now() - state.time * 1000;
+  els.playBtn.textContent = 'Pause';
+  state.raf = requestAnimationFrame(tick);
+}
+function pause() {
+  state.playing = false;
+  if (state.raf) cancelAnimationFrame(state.raf);
+  state.raf = 0;
+  els.playBtn.textContent = state.ended ? 'Replay' : 'Play';
+}
+function seek(t) {
+  var tl = state.timeline; if (!tl) return;
+  t = clamp(t, 0, tl.end);
+  state.time = t;
+  state.ended = t >= tl.end;
+  if (state.playing) {
+    state.t0 = performance.now() - t * 1000;
+    if (state.ended) { applyTime(t); finishPlayback(); return; }
+  } else {
+    els.playBtn.textContent = state.ended ? 'Replay' : 'Play';
+  }
+  applyTime(t);
+}
+function relayout() {
+  layoutCard();
+  if (state.format === 'short') {
+    var label = els.playBtn.textContent, ended = state.ended;
+    buildTimeline();
+    applyTime(state.time);
+    state.ended = ended;
+    els.playBtn.textContent = label;
+  }
+}
+
+/* ---------- panels ---------- */
+function renderScript() {
+  var list = els.scriptList;
+  while (list.firstChild) list.removeChild(list.firstChild);
+  state.item.voiceover.forEach(function (v) {
+    var li = el('li');
+    li.appendChild(el('span', 'ts', fmtTime(v.t)));
+    li.appendChild(el('span', 'ln', v.line));
+    list.appendChild(li);
+  });
+}
+
+function renderKit() {
+  var it = state.item, P = PRESETS[state.preset];
+  var link = BRAND + '/' + it.slug;
+  var entries = [
+    { label: 'Caption', btn: 'Copy caption', text: it.caption + ' ' + link },
+    { label: 'Hashtags', btn: 'Copy hashtags', text: it.hashtags },
+    { label: 'Alt text', btn: 'Copy alt text', text: P.alt + ' showing ' + it.altText },
+    { label: 'Pinterest description', btn: 'Copy description', text: it.pinterest },
+    { label: 'Permanent link', btn: 'Copy link', text: link, mono: true }
+  ];
+  var kit = els.kit;
+  while (kit.firstChild) kit.removeChild(kit.firstChild);
+  entries.forEach(function (en) {
+    var box = el('div', 'kit-item');
+    var head = el('div', 'kit-head');
+    head.appendChild(el('span', 'label', en.label));
+    var b = el('button', 'btn small', en.btn); b.type = 'button';
+    b.addEventListener('click', function () { copyText(en.text, en.label + ' copied'); });
+    head.appendChild(b);
+    box.appendChild(head);
+    box.appendChild(el('div', 'kit-text' + (en.mono ? ' mono' : ''), en.text));
+    kit.appendChild(box);
+  });
+}
+
+function buildLibrary() {
+  els.libCount.textContent = LIB.length + ' structures';
+  LIB.forEach(function (it) {
+    var b = el('button', 'lib-row'); b.type = 'button';
+    b.setAttribute('data-id', it.id);
+    b.setAttribute('aria-pressed', 'false');
+    var ref = el('span', 'ref');
+    ref.appendChild(el('span', null, it.reference));
+    ref.appendChild(el('span', 'n', it.elements.length + ' elements'));
+    b.appendChild(ref);
+    b.appendChild(el('span', 'src', it.source));
+    b.addEventListener('click', function () { selectItem(it); });
+    els.libList.appendChild(b);
+  });
+  syncLibrary();
+}
+function syncLibrary() {
+  var rows = els.libList.querySelectorAll('.lib-row');
+  for (var i = 0; i < rows.length; i++) rows[i].setAttribute('aria-pressed', rows[i].getAttribute('data-id') === state.item.id ? 'true' : 'false');
+}
+function selectItem(it) {
+  state.item = it;
+  syncLibrary();
+  renderCard(); renderKit(); renderScript();
+  if (state.format === 'short') applyTime(state.time);
+  savePrefs();
+}
+
+function buildSwatches() {
+  PRESET_ORDER.forEach(function (key) {
+    var P = PRESETS[key];
+    var b = el('button', 'swatch'); b.type = 'button';
+    b.setAttribute('data-preset', key);
+    b.setAttribute('aria-pressed', 'false');
+    b.setAttribute('aria-label', P.name);
+    var dot = el('span', 'dot');
+    dot.style.setProperty('--sw-ground', P.ground);
+    dot.style.setProperty('--sw-accent', P.accent);
+    b.appendChild(dot);
+    b.appendChild(el('span', null, P.name));
+    b.addEventListener('click', function () { state.preset = key; applyPreset(); renderKit(); savePrefs(); });
+    els.swatches.appendChild(b);
+  });
+}
+
+function setFormat(f) {
+  state.format = f;
+  var btns = els.formatSeg.querySelectorAll('.seg-btn');
+  for (var i = 0; i < btns.length; i++) btns[i].setAttribute('aria-pressed', btns[i].getAttribute('data-format') === f ? 'true' : 'false');
+  var isShort = f === 'short', F = FORMATS[f];
+  els.transport.hidden = !isShort;
+  els.scriptPanel.hidden = !isShort;
+  els.exportNote.textContent = 'Produces a ' + F.w + ' × ' + F.h + ' PNG' + (isShort ? ' of the final frame' : '');
+  renderCard();
+  savePrefs();
+}
+
+/* ---------- export ---------- */
+function saveImage() {
+  if (typeof window.html2canvas !== 'function') { toast('Image renderer did not load'); return; }
+  var F = FORMATS[state.format], P = PRESETS[state.preset];
+  els.saveBtn.disabled = true; els.saveBtn.textContent = 'Rendering…';
+  var holder = null;
+  var ready = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+  ready.then(function () {
+    var clone = els.card.cloneNode(true);
+    clone.removeAttribute('id');
+    clone.style.transform = 'none';
+    var strip = clone.querySelectorAll('[data-noexport]');
+    for (var i = 0; i < strip.length; i++) strip[i].parentNode.removeChild(strip[i]);
+    applyFinalFrame(clone);
+    holder = document.createElement('div');
+    holder.setAttribute('aria-hidden', 'true');
+    holder.style.cssText = 'position:fixed;left:-20000px;top:0;width:' + F.w + 'px;height:' + F.h + 'px;overflow:hidden;';
+    holder.appendChild(clone);
+    document.body.appendChild(holder);
+    return window.html2canvas(clone, { scale: 1, backgroundColor: P.ground, width: F.w, height: F.h, logging: false, useCORS: false });
+  }).then(function (canvas) {
+    els.modalImg.src = canvas.toDataURL('image/png');
+    els.modalNote.textContent = 'Right-click or long-press to save. ' + F.w + '×' + F.h + ' PNG.';
+    openModal();
+  }).catch(function () {
+    toast('Could not render the image');
+  }).then(function () {
+    if (holder && holder.parentNode) holder.parentNode.removeChild(holder);
+    els.saveBtn.disabled = false; els.saveBtn.textContent = 'Save image';
+  });
+}
+function openModal() { els.modal.hidden = false; els.modalClose.focus(); }
+function closeModal() { if (els.modal.hidden) return; els.modal.hidden = true; els.modalImg.removeAttribute('src'); els.saveBtn.focus(); }
+
+/* ---------- copy + toast ---------- */
+var toastTimer = 0;
+function toast(msg) {
+  els.toast.textContent = msg; els.toast.hidden = false;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function () { els.toast.hidden = true; }, 1600);
+}
+function copyText(text, msg) {
+  var done = function () { toast(msg || 'Copied'); };
+  var fallback = function () {
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.setAttribute('readonly', '');
+      ta.style.cssText = 'position:fixed;left:-9999px;top:0;';
+      document.body.appendChild(ta); ta.select();
+      var ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      if (ok) done(); else toast('Copy failed');
+    } catch (e) { toast('Copy failed'); }
+  };
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback);
+    else fallback();
+  } catch (e) { fallback(); }
+}
+
+/* ---------- events ---------- */
+function bindEvents() {
+  els.formatSeg.addEventListener('click', function (e) {
+    var b = e.target.closest ? e.target.closest('.seg-btn') : null;
+    if (b && b.getAttribute('data-format') !== state.format) setFormat(b.getAttribute('data-format'));
+  });
+  var optMap = { optRefs: 'refs', optOrig: 'orig', optCredit: 'credit', optBrand: 'brand' };
+  Object.keys(optMap).forEach(function (id) {
+    els[id].addEventListener('change', function () { state.opts[optMap[id]] = els[id].checked; renderCard(); });
+  });
+  els.playBtn.addEventListener('click', function () { if (state.playing) pause(); else play(); });
+  els.progress.addEventListener('click', function (e) {
+    var tl = state.timeline; if (!tl) return;
+    var r = els.progress.getBoundingClientRect();
+    if (r.width > 0) seek(((e.clientX - r.left) / r.width) * tl.end);
+  });
+  els.progress.addEventListener('keydown', function (e) {
+    var tl = state.timeline; if (!tl) return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { e.preventDefault(); seek(state.time + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') { e.preventDefault(); seek(state.time - 1); }
+    else if (e.key === 'Home') { e.preventDefault(); seek(0); }
+    else if (e.key === 'End') { e.preventDefault(); seek(tl.end); }
+    else if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); if (state.playing) pause(); else play(); }
+  });
+  els.copyScript.addEventListener('click', function () {
+    copyText(state.item.voiceover.map(function (v) { return v.line; }).join('\n'), 'Script copied');
+  });
+  els.saveBtn.addEventListener('click', saveImage);
+  els.modalClose.addEventListener('click', closeModal);
+  els.modal.addEventListener('click', function (e) { if (e.target === els.modal) closeModal(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+
+  var resizeRaf = 0;
+  var onResize = function () { if (resizeRaf) return; resizeRaf = requestAnimationFrame(function () { resizeRaf = 0; fitStage(); }); };
+  window.addEventListener('resize', onResize);
+  if (window.ResizeObserver) { new ResizeObserver(onResize).observe(els.stageCanvas); }
+
+  if (document.fonts) {
+    if (document.fonts.ready) document.fonts.ready.then(function () { relayout(); });
+    if (document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', function () { relayout(); });
+  }
+}
+
+/* ---------- init ---------- */
+function init() {
+  loadPrefs();
+  buildLibrary();
+  buildSwatches();
+  els.optRefs.checked = state.opts.refs;
+  els.optOrig.checked = state.opts.orig;
+  els.optCredit.checked = state.opts.credit;
+  els.optBrand.checked = state.opts.brand;
+  bindEvents();
+  renderScript();
+  renderKit();
+  setFormat(state.format);
+}
+init();
+})();
+</script>

@@ -1,0 +1,17 @@
+---
+import Base from '../../layouts/Base.astro';
+import { AXES } from '../../lib/compass';
+export function getStaticPaths() {
+  return AXES.map(a => ({ params: { slug: a.slug }, props: { axis: a } }));
+}
+const { axis } = Astro.props;
+---
+<Base title={`${axis.name}: ${axis.left} or ${axis.right}`} description={axis.summary.slice(0, 155)}>
+  <h1>{axis.name}</h1>
+  <p>{axis.left} ↔ {axis.right}</p>
+  <p>{axis.summary}</p>
+  <h2>A short history</h2>
+  <ol>{axis.history.map(h => <li><b>{h.when}</b> — {h.what}</li>)}</ol>
+  <h2>Key passages</h2>
+  <p>{axis.passages.join(' · ')}</p>
+</Base>

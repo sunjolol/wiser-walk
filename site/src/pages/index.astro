@@ -1,0 +1,12 @@
+---
+import Base from '../layouts/Base.astro';
+import { AXES, STATEMENTS, TRADITIONS } from '../lib/compass';
+---
+<Base title="Theology Compass" description="Place yourself on six axes of Christian belief.">
+  <h1>Theology Compass</h1>
+  <p>Scaffold. {STATEMENTS.length} statements, {AXES.length} axes, {TRADITIONS.length} traditions.</p>
+  <ul>
+    {AXES.map(a => <li><a href={`/axis/${a.slug}/`}>{a.name}: {a.left} ↔ {a.right}</a></li>)}
+  </ul>
+  <p><a href="/quiz/">Take it</a> · <a href="/method/">Method</a> · <a href="/about/">About</a></p>
+</Base>

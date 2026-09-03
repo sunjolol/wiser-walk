@@ -1,0 +1,32 @@
+{
+ "target": "axis:spirit:history:4",
+ "findings": [
+  {
+   "id": "catholic-15",
+   "lens": "Roman Catholic",
+   "category": "inaccuracy",
+   "severity": "major",
+   "claim": "\"Charismatic renewal carries the gifts into mainline and Catholic churches\" says the Catholic Church lacked the gifts until the 1960s. What entered in 1967 was Pentecostal-style practice; on Catholic teaching the gifts never left, and the Church had been verifying healings for canonization for three centuries.",
+   "evidence": "Duquesne weekend, February 1967, begins the Catholic Charismatic Renewal; Paul VI's address to the Renewal, 19 May 1975; Francis establishes CHARIS, 2019. LG 12 and CCC 799-801 treat charisms as a constant of the Church's life; Urban VIII (1634) on miracles for canonization.",
+   "fix": "\"1967: Duquesne weekend begins the Catholic Charismatic Renewal, later welcomed by Paul VI (1975) and Francis (2019); a similar renewal spreads through mainline Protestant churches.\""
+  },
+  {
+   "id": "charismatic-11",
+   "lens": "charismatic non-denominational (Vineyard, Bethel, Hillsong, Third Wave)",
+   "category": "missing",
+   "severity": "major",
+   "claim": "The Third Wave, the very tradition in the list, is absent from the Spirit history; the list stops at the 1960s renewal and then gives Strange Fire the last word.",
+   "evidence": "history has Montanism, Chrysostom, Azusa, Warfield, 1960s renewal, Strange Fire (four cautionary or cessationist notes, two continuationist). Missing: 1982 Fuller Seminary course MC510 'Signs, Wonders and Church Growth' (Wimber and Wagner), C. Peter Wagner's term 'Third Wave' (1983), Vineyard's adoption of Ladd's kingdom theology as the frame for healing without classical Pentecostal Spirit-baptism doctrine. Also missing 1901 Topeka (Parham), where tongues-as-initial-evidence was formulated, which is the historical root of the AoG/charismatic distinction the quiz cannot see.",
+   "fix": "Insert after the 1960s entry: {'when': '1980s', 'what': \"John Wimber's Vineyard and the 'Third Wave' bring healing and prophecy into evangelical churches without the Pentecostal doctrine of Spirit baptism with tongues.\"}; optionally insert before Azusa: {'when': '1901', 'what': \"Topeka: Charles Parham's students speak in tongues; tongues as the initial evidence of Spirit baptism becomes Pentecostal doctrine.\"}; and add to the 2013 line: 'Michael Brown (Authentic Fire) and Reformed continuationists reply.'"
+  },
+  {
+   "id": "mockery-11",
+   "lens": "mockery critic",
+   "category": "inaccuracy",
+   "severity": "minor",
+   "claim": "'Charismatic renewal carries the gifts into mainline and Catholic churches' implies the gifts were absent from the Catholic Church for nineteen centuries. The Catholic apologist screenshots it beside Padre Pio and the miracle requirement for canonization.",
+   "evidence": "Catholic canonization has required attested miracles since Urban VIII (1625–34); Lourdes cures are formally investigated. The 1967 Duquesne weekend brought Pentecostal-style tongues and prophecy, not 'the gifts' as such.",
+   "fix": "'Charismatic renewal brings Pentecostal-style tongues and prophecy into mainline Protestant and Catholic congregations.'"
+  }
+ ]
+}

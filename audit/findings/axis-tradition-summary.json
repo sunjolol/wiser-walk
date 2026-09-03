@@ -1,0 +1,86 @@
+{
+ "target": "axis:tradition:summary",
+ "findings": [
+  {
+   "id": "anabaptist-21",
+   "lens": "Anabaptist / Mennonite (Schleitheim Confession, Confession of Faith in a Mennonite Perspective 1995)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The Scripture-alone summary leaves no room for the Anabaptist way of reading Scripture: Christ-centred and tested in the congregation rather than by the individual reader.",
+   "evidence": "CFMP Art. 4: Scripture is interpreted 'in the light of Jesus Christ', and interpretations 'are to be tested in the faith community'; Stuart Murray, Biblical Interpretation in the Anabaptist Tradition (2000). The current text implies the only alternative to a teaching office is the lone reader.",
+   "fix": "Append to the right-pole sentence: '...says otherwise. Many in this camp read Scripture together, with Christ at the centre and each reader's interpretation tested in the congregation.'"
+  },
+  {
+   "id": "anglican-9",
+   "lens": "Anglican (broad, Thirty-Nine Articles / Book of Common Prayer)",
+   "category": "inaccuracy",
+   "severity": "major",
+   "claim": "The left pole is described in Roman vocabulary ('the church's teaching office') and the right pole in Puritan vocabulary ('where Scripture is silent'), so the magisterial Reformation position that Anglicans and Lutherans hold, and that sits at 30-45 on this axis, is described by neither side in words it would accept.",
+   "evidence": "Anglicans receive creeds and councils as real authority (Article VIII; Canon A5; the 1559 Act of Supremacy named the first four General Councils) but have no 'teaching office' and hold that councils 'may err, and sometimes have erred' (Article XXI). On the other side, Article XXXIV binds in matters where Scripture is silent, so 'no council or teacher can bind the conscience where Scripture is silent' describes the regulative-principle wing only, not 'Scripture alone' as Luther, Cranmer or Mathison (the right pole's own read-more author, who calls this 'Tradition I') understood it.",
+   "fix": "Left: 'the creeds, the councils, and the church's continuing teaching are God's appointed means of guarding and interpreting his Word, and so carry real authority.' Right: '...insist that only Scripture is infallible, that nothing may be required as an article of faith that cannot be proved from it, and that no council or teacher can bind the conscience against it.'"
+  },
+  {
+   "id": "historian-22",
+   "lens": "church historian",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'the church's teaching office' is Roman magisterium language. The Eastern Orthodox, placed at 5 on this axis, have no teaching office; they appeal to the councils and the consensus of the Fathers.",
+   "evidence": "Florovsky, Bible, Church, Tradition (the quiz's own read-more title) explicitly contrasts the Orthodox view with a magisterium; Dei Verbum 10 is where 'magisterium' is the term of art.",
+   "fix": "'...hold that the creeds, councils, and the church's living teaching (the consensus of the Fathers; for Catholics, the magisterium) are God's appointed means...'"
+  },
+  {
+   "id": "lutheran-9",
+   "lens": "confessional Lutheran (LCMS / WELS / Book of Concord)",
+   "category": "missing",
+   "severity": "major",
+   "claim": "Neither pole describes the confessional position held by three of the twelve listed traditions (Lutheran, Presbyterian, confessional Anglican): Scripture is the only infallible norm (norma normans) while creeds and confessions carry real, derived, binding authority (norma normata). The right pole reduces tradition to \"a valuable guide\", which understates quia subscription; the left pole gives the creeds \"real authority\" only as part of a teaching office.",
+   "evidence": "FC Ep Rule and Norm 7-8: other writings \"are not judges like Holy Scripture, but only witnesses and explanations of the faith\"; LCMS and WELS pastors subscribe to the Book of Concord unconditionally because (quia), not insofar as (quatenus), it agrees with Scripture, so on the ground the confessions bind teachers. The current wording forces such a person to split S13 against S14, landing in \"balanced on authority\" or \"Scripture-first\", neither of which is what he would call himself.",
+   "fix": "Those who hold to Scripture alone agree that creeds and confessions can carry real, derived authority, binding on teachers because and insofar as they agree with Scripture, but insist that only Scripture is infallible and that no council or teacher can bind the conscience where Scripture is silent or says otherwise."
+  },
+  {
+   "id": "mockery-24",
+   "lens": "mockery critic",
+   "category": "tone",
+   "severity": "minor",
+   "claim": "'the church's teaching office' is Roman vocabulary (magisterium). The Orthodox convert: 'We have no teaching office; we have the Church, the Fathers, and the councils.'",
+   "evidence": "Lumen Gentium 25 and CCC 85 use 'teaching office'; Orthodox writers (Florovsky, Ware) speak of the consensus of the Fathers and the councils received by the whole Church.",
+   "fix": "'the creeds, the councils, and the church's living teaching are God's appointed means...'"
+  },
+  {
+   "id": "orthodox-18",
+   "lens": "Eastern Orthodox",
+   "category": "inaccuracy",
+   "severity": "major",
+   "claim": "\"the church's teaching office\" is the Roman magisterium, which the Orthodox do not have, and \"read Scripture with tradition\" describes Trent's two-source model rather than the Orthodox view that Scripture lives within Tradition; the Orthodox at the left pole are described in Rome's words.",
+   "evidence": "Text: \"the creeds, councils, and the church's teaching office are God's appointed means of guarding and interpreting his Word\". Florovsky, \"The Function of Tradition in the Ancient Church\" (in Bible, Church, Tradition, the very book in read_more) and Ware, The Orthodox Church, ch. \"Holy Tradition\": Scripture is the heart of Tradition, not a source beside it; authority is the ecumenical councils received by the whole Church and the consensus of the Fathers (Vincent, Commonitorium 2).",
+   "fix": "Those who read Scripture within the Church's tradition hold that Scripture was written, recognized, and is rightly interpreted inside the life of the Church, so that the creeds, the ecumenical councils, the consensus of the Fathers, and (for Roman Catholics) the papal teaching office carry real authority in guarding and interpreting God's Word."
+  },
+  {
+   "id": "presbyterian-9",
+   "lens": "Presbyterian / Reformed (Westminster Standards, Three Forms of Unity)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The 'Scripture alone' side is described as holding that 'tradition can be a valuable guide', which is the biblicist position, not the confessional Protestant one. Reformed and Lutheran churches hold that creeds and confessions carry real, subordinate, ministerial authority and require subscription from office-bearers.",
+   "evidence": "WCF 31.2: decrees of synods, if consonant with the Word, 'are to be received with reverence and submission; not only for their agreement with the Word, but also for the power whereby they are made'; Belgic 9 receives the Apostles', Nicene and Athanasian creeds; Belgic 7 and WCF 1.10 keep Scripture alone infallible. The summary offers only 'God's appointed means... real authority' or 'valuable guide', so the confessional position is described by neither pole.",
+   "fix": "Replace the second sentence with: \"Those who hold to Scripture alone hold that creeds and confessions carry real but subordinate authority as summaries of Scripture, and insist that only Scripture is infallible: any council may err, and no council or teacher can bind the conscience where Scripture is silent or says otherwise.\""
+  },
+  {
+   "id": "progressive-20",
+   "lens": "progressive mainline Protestant (PCUSA, ELCA, Episcopal, UMC progressive wing)",
+   "category": "inaccuracy",
+   "severity": "minor",
+   "claim": "The left pole is described with 'the church's teaching office', a magisterium concept, though most people who score left of center on this axis are Protestants (Lutheran 35, Anglican 30, Presbyterian 45) who have creeds and councils but no teaching office.",
+   "evidence": "Text: \"the creeds, councils, and the church's teaching office are God's appointed means of guarding and interpreting his Word.\"",
+   "fix": "\"the creeds, councils, and the church's historic teaching (and, for Catholics and Orthodox, its teaching office) are the Spirit-guided means by which his Word has been guarded and interpreted, and so carry real authority.\""
+  },
+  {
+   "id": "reformedbaptist-26",
+   "lens": "Reformed Baptist (1689 London Baptist Confession)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "The Scripture-alone description ('tradition can be a valuable guide') reads as solo scriptura; confessional Protestants hold that creeds and confessions carry real, subordinate authority, which is the distinction Mathison's recommended book exists to make.",
+   "evidence": "LBC 1.10 examines councils by Scripture yet Reformed Baptist churches require confessional subscription of officers; WCF 31.3 (synods' decisions 'to be received with reverence and submission... if consonant to the Word of God').",
+   "fix": "'...agree that creeds, confessions, and the church's teaching carry a real but subordinate authority, but insist that only Scripture is infallible...'"
+  }
+ ]
+}

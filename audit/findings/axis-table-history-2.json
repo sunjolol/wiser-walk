@@ -1,0 +1,32 @@
+{
+ "target": "axis:table:history:2",
+ "findings": [
+  {
+   "id": "anabaptist-17",
+   "lens": "Anabaptist / Mennonite (Schleitheim Confession, Confession of Faith in a Mennonite Perspective 1995)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The 1525 Zurich line is accurate but the pole's founding confessional statement, Schleitheim 1527, and the cost of the position are missing.",
+   "evidence": "Schleitheim Art. I ('Baptism shall be given to all those who have learned repentance... This excludes all infant baptism') and Art. III (the bread 'in remembrance of the broken body of Christ') are the first confessional statement of the believers'-baptism-plus-memorial-Supper pole; Felix Manz was drowned by Zurich on 5 January 1527, six weeks before Schleitheim was signed.",
+   "fix": "Add after the 1525 line: '1527 — Zurich drowns Felix Manz for rebaptism; the Schleitheim Confession sets out believers' baptism and the Supper as a memorial of the one body.'"
+  },
+  {
+   "id": "copy-12",
+   "lens": "copy editor",
+   "category": "typo",
+   "severity": "minor",
+   "claim": "\"First believer's baptisms in Zurich; the Anabaptist movement begins.\" pairs a singular possessive with a plural noun.",
+   "evidence": "\"Believer's baptism\" is the name of the practice (as in the cited title Schreiner & Wright, Believer's Baptism); plural events need the plural possessive or a rewording. The events are the January 1525 baptisms of Grebel, Blaurock and Manz.",
+   "fix": "\"The first believers' baptisms in Zurich; the Anabaptist movement begins.\""
+  },
+  {
+   "id": "sbc-16",
+   "lens": "Southern Baptist (Baptist Faith & Message 2000)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The only origin given for believer's baptism is the Anabaptists (1525); English Baptists are not Anabaptists and Southern Baptists are sensitive to being filed under them, yet the tradition that supplies most of the right pole's adherents has no line at all.",
+   "evidence": "John Smyth's congregation in Amsterdam (1609) and the Particular Baptists' First London Confession (1644), which first specified immersion, are the Baptist line of descent; the 1644 immersion clause is the source of BF&M VII's 'immersion of a believer in water'.",
+   "fix": "Add after the 1525 entry: {when: '1609 / 1644', what: 'English Baptists: John Smyth's congregation baptizes believers; the First London Confession specifies immersion.'}"
+  }
+ ]
+}

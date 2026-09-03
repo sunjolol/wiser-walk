@@ -1,0 +1,41 @@
+{
+ "target": "axis:spirit:history:2",
+ "findings": [
+  {
+   "id": "historian-16",
+   "lens": "church historian",
+   "category": "inaccuracy",
+   "severity": "minor",
+   "claim": "'1906: Azusa Street revival in Los Angeles launches modern Pentecostalism' skips the birth. Historians date the movement to Topeka, 1 January 1901; Azusa (April 1906) is where it spread from.",
+   "evidence": "Charles Parham's Bethel Bible School, Topeka; Agnes Ozman's tongues, 1 Jan 1901; William Seymour's Azusa Street mission from April 1906 (Synan, The Holiness-Pentecostal Tradition; Anderson, An Introduction to Pentecostalism).",
+   "fix": "{when: '1901–06', what: 'Topeka (Charles Parham) and the Azusa Street revival in Los Angeles (William Seymour) launch modern Pentecostalism.'}"
+  },
+  {
+   "id": "pentecostal-14",
+   "lens": "Pentecostal (Assemblies of God Statement of Fundamental Truths)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "'1906 Azusa Street revival in Los Angeles launches modern Pentecostalism' is the only mention of the AG's world anywhere in six histories: Warfield and MacArthur are named on the other side but William Seymour is not, Topeka 1901 (where the initial-evidence doctrine of art. 8 was formed) is missing, and the Statement of Fundamental Truths (1916) never appears while Westminster appears twice.",
+   "evidence": "Parham's Topeka school, 1 Jan 1901 (Agnes Ozman); Seymour's Azusa Street mission, April 1906; General Council of the Assemblies of God, Hot Springs 1914; Statement of Fundamental Truths adopted 1916.",
+   "fix": "'1901–06 Charles Parham's Topeka school and William Seymour's Azusa Street mission launch modern Pentecostalism, with tongues as the sign of Spirit baptism.' and add '1916 The Assemblies of God adopt the Statement of Fundamental Truths, making Spirit baptism with tongues confessional.'"
+  },
+  {
+   "id": "reformedcharismatic-14",
+   "lens": "Reformed charismatic (John Piper, Wayne Grudem, Sam Storms, Sovereign Grace Churches, Acts 29 continuationists)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "Between the 2nd century and 1906 the history offers only cessationist data (Montanist wariness, Chrysostom), which is the cessationist storyline that the gifts vanished early.",
+   "evidence": "Irenaeus, Against Heresies 2.32.4 (c. 180), reports prophecy, healing and exorcism continuing in the churches; Augustine, City of God 22.8 (c. 426), records healings at Hippo and in Retractationes 1.13.7 withdraws his earlier statement that miracles had ceased. Both are the continuationist historical anchors used by Storms and Grudem.",
+   "fix": "Insert before the 1906 entry: {\"when\": \"c. 426\", \"what\": \"Augustine, City of God XXII.8, retracts his earlier view that miracles had ceased and records healings at Hippo.\"}"
+  },
+  {
+   "id": "wesleyan-18",
+   "lens": "Wesleyan / Methodist (Wesley's sermons, Articles of Religion, Global Methodist / UMC evangelical wing)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The history jumps from Chrysostom (c. 390) to Azusa Street (1906), so Pentecostalism appears from nowhere. Its immediate parent was the Wesleyan-holiness movement, and Wesley himself is the earliest major Protestant voice against cessationism.",
+   "evidence": "Wesley to Conyers Middleton (Jan 1749) and Sermon 89 'The More Excellent Way' (1787): the gifts declined because Christians 'were turned heathens again', not by divine withdrawal. John Fletcher's 'dispensation of the Spirit', Phoebe Palmer, and the National Camp Meeting Association (1867) taught a post-conversion 'baptism with the Holy Spirit'; Parham and Seymour were holiness preachers. Standard account: Vinson Synan, 'The Holiness-Pentecostal Tradition'.",
+   "fix": "Insert before the 1906 entry: '1749–1867: Wesley denies the gifts were withdrawn by God; the holiness movement's 'baptism with the Holy Spirit' prepares the ground for Pentecostalism.'"
+  }
+ ]
+}

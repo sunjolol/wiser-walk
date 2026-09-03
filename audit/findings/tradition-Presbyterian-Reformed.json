@@ -1,0 +1,59 @@
+{
+ "target": "tradition:Presbyterian / Reformed",
+ "findings": [
+  {
+   "id": "lutheran-5",
+   "lens": "confessional Lutheran (LCMS / WELS / Book of Concord)",
+   "category": "scoring",
+   "severity": "major",
+   "claim": "An informed Presbyterian lands on \"Lutheran (confessional)\" rather than on his own tradition, so the Lutheran label is being handed to Calvinists, which a Lutheran will find as objectionable as the reverse.",
+   "evidence": "Presbyterian control answers (S1 +2, S2 -2, S3 +2, S4 +2, S5 -2, S6 +2, S7 -1, S8 +1, S9 -1, S10 -2, S11 +2, S12 -2, S13 +1, S14 +2, S15 -1, S16 +1, S17 -2, S18 0) score [0, 0, 75, 0, 67, 25]; distance to Lutheran [20,15,70,15,35,20] = sqrt(400+225+25+225+1024+25) = 43.9, to Presbyterian [10,35,75,15,45,45] = sqrt(100+1225+0+225+484+400) = 49.3. The Presbyterian Table 35, Tradition 45 and Worship 45 are each 20-35 points from what WCF-confessing paedobaptists actually score.",
+   "fix": "{\"grace\": 10, \"table\": 10, \"spirit\": 80, \"kingdom\": 10, \"tradition\": 60, \"worship\": 25}. Check: Presbyterian control d = sqrt(100+100+25+100+49+0) = 19.3 vs proposed Lutheran 34.8; typical Lutheran stays Lutheran (15.5 vs 31.3). More generally, set every tradition's coordinates by running an informed member through the eighteen statements rather than by hand."
+  },
+  {
+   "id": "mockery-6",
+   "lens": "mockery critic",
+   "category": "scoring",
+   "severity": "blocker",
+   "claim": "A PCA elder answering straight from the Westminster Standards gets 'Closest traditions: Lutheran (confessional), Presbyterian / Reformed', both at 87%, Lutheran listed first. Screenshot: 'lol, the quiz says Westminster is Wittenberg.' The cause is table=35, which puts the Reformed a third of the way to memorialism.",
+   "evidence": "Answers: 1 SA, 2 SD, 3 SA; 4 A, 5 D, 6 SA; 7 D, 8 A, 9 D; 10 D, 11 A, 12 SD; 13 A, 14 A, 15 D; 16 A, 17 SD, 18 U → scores [0,17,75,17,58,25]. Distance to Lutheran (confessional) 31.4, to Presbyterian / Reformed 31.6. WCF 27.3 (grace 'conferred' by the sacraments), 28.6 (efficacy of baptism), 29.7 (Christ 'really, but spiritually, present') put Presbyterians near the sacramental end, not at 35.",
+   "fix": "Presbyterian / Reformed: table 35 → 20, worship 45 → 35. With those values the same answer set is 19.5 from Presbyterian and 31.4 from Lutheran; the Lutheran answer set still lands Lutheran (37.6 vs 54.5)."
+  },
+  {
+   "id": "presbyterian-1",
+   "lens": "Presbyterian / Reformed (Westminster Standards, Three Forms of Unity)",
+   "category": "scoring",
+   "severity": "blocker",
+   "claim": "The Table coordinate 35 is 18-35 points from where honest Reformed answers land, and it makes a Three Forms of Unity member land on Lutheran (confessional).",
+   "evidence": "WCF 29.7 (Christ 'really, but spiritually, present to the faith of believers'), Belgic 35 (not 'a bare and naked sign'), WCF 28.1 and 28.4 (baptism a sign and seal of the covenant; infants of believers to be baptized) give S4 = +1 or +2, S5 = -2, S6 = +2, i.e. raw -5 or -6, score 8 or 0; even a Hodge-style reader who answers S4 'Unsure' scores 17. Nothing in the three Table statements separates Lutheran bodily presence from Reformed spiritual presence, so the 35 encodes a distinction the quiz cannot measure. Arithmetic: Continental persona [0,0,92,0,50,25] -> Lutheran sqrt(400+225+484+225+225+25) = 39.80 < Presbyterian/Reformed sqrt(100+1225+289+225+25+400) = 47.58. With table = 15: P/R sqrt(100+225+289+225+25+400) = 35.55 < 39.80. Main persona [0,8,92,0,67,42]: distance falls from 42.85 to 34.00.",
+   "fix": "\"table\": 15 (Lutheran stays at 15; the two traditions are correctly indistinguishable on this axis as written). If you want them separated, add a fourth Table statement such as 'Christ's body and blood are received with the bread and wine by everyone who eats, believer or not' (Lutheran +2, Reformed -2) rather than faking it in the coordinate."
+  },
+  {
+   "id": "presbyterian-2",
+   "lens": "Presbyterian / Reformed (Westminster Standards, Three Forms of Unity)",
+   "category": "scoring",
+   "severity": "major",
+   "claim": "The Spirit coordinate 75 and the Tradition coordinate 45 both sit at the bottom of the range that informed members actually produce, costing a confessional Presbyterian 8-9 match points and putting the overlay dot in the 'balanced on authority' band.",
+   "evidence": "Spirit: WCF 1.1 ('those former ways of God's revealing his will unto his people being now ceased') and 1.6 ('whether by new revelations of the Spirit, or traditions of men') make cessation of revelation confessional; typical answers S7 -2, S8 +2, S9 -1 or -2 give 92-100; only an 'open but cautious' minority gives 67. Tradition: WCF 31.2-3 (councils 'to be received with reverence and submission' yet 'may err; and many have erred'), WCF 1.10 and 20.2 give S13 +1, S14 +2, S15 -1 or -2, i.e. 67-75; even the most creed-friendly Continental answers give 50. A coordinate of 45 places the tradition on the 'with tradition' side of center, which no Reformed confession supports. Arithmetic: main persona distance to P/R with table 15/spirit 85/tradition 60 = sqrt(100+49+49+225+49+9) = 21.93 (91%) versus 42.85 (83%) today.",
+   "fix": "\"spirit\": 85, \"tradition\": 60 (together with \"table\": 15)."
+  },
+  {
+   "id": "progressive-14",
+   "lens": "progressive mainline Protestant (PCUSA, ELCA, Episcopal, UMC progressive wing)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The entry is coded as a PCA/OPC profile but carries the unqualified name 'Presbyterian', while the largest Presbyterian body in the US is PCUSA; a PCUSA member is 74 points from it.",
+   "evidence": "grace 10, table 35, spirit 75, worship 45 describe the confessional micro-denominations (Westminster strict subscription, cessationism, regulative principle). PCUSA: Book of Confessions with Barmen and the Confession of 1967, no cessationism, Book of Common Worship. The list already qualifies 'Lutheran (confessional)' and 'Southern Baptist (typical)', so consistency demands the same here. Simulation: distance 73.9, 6th of 12.",
+   "fix": "Rename to \"Presbyterian / Reformed (confessional)\" and add the mainline entry proposed under general."
+  },
+  {
+   "id": "reformedbaptist-6",
+   "lens": "Reformed Baptist (1689 London Baptist Confession)",
+   "category": "scoring",
+   "severity": "minor",
+   "claim": "Presbyterian table = 35 is too far toward 'Memorial'; a WCF 28-29 adherent answering the three Table statements scores 0-17, and the 35 narrows the Reformed Baptist / Presbyterian separation that the Table axis is supposed to provide.",
+   "evidence": "WCF 29.7 (real spiritual feeding) -> statement 4 Strongly agree (-2); WCF 28.4 -> statement 5 Strongly disagree (-2), statement 6 Strongly agree (-2): raw -6 -> 0; a softer -1/-2 pattern gives 8-17. Simulated typical Presbyterian lands at Table 0 and is 51.65 from its own entry.",
+   "fix": "Presbyterian / Reformed table: 20."
+  }
+ ]
+}

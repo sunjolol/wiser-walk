@@ -1,0 +1,32 @@
+{
+ "target": "statement:12",
+ "findings": [
+  {
+   "id": "dispensational-1",
+   "lens": "Dispensationalist (Dallas / classic and progressive dispensationalism)",
+   "category": "scoring",
+   "severity": "blocker",
+   "claim": "\"Believers will be caught up to meet Christ before a seven-year tribulation.\" measures rapture timing, which is not what makes someone a dispensationalist, and it knocks real posttrib/prewrath dispensationalists onto the wrong tradition.",
+   "evidence": "Ryrie's three sine qua non of dispensationalism (Dispensationalism Today, 1965, ch. 2; rev. Dispensationalism, 1995) are the Israel/church distinction, a consistently plain hermeneutic, and the doxological purpose of God; rapture timing is explicitly not among them. Posttrib (Gundry, The Church and the Tribulation, 1973), midtrib (Buswell, Harrison) and prewrath (Rosenthal, The Pre-Wrath Rapture of the Church, 1990; Hultberg in Three Views on the Rapture, 2010, teaching at Talbot) dispensationalists exist and teach at dispensational schools. Arithmetic: my typical profile with S12 = -2 gives Kingdom raw (1)(2)+(-1)(-2)+(1)(-2) = 2 -> 67 'dispensational-leaning'; vector [50,100,100,67,92,58]; distance to Southern Baptist (typical) = sqrt(25+225+625+9+49+144) = sqrt(1077) = 32.82, to Dispensational Bible church = sqrt(100+100+100+784+4+289) = sqrt(1377) = 37.11. A Gundry-type dispensationalist is told he is a Southern Baptist.",
+   "fix": "Replace with the actual dispensational marker: \"The church is a distinct body that began at Pentecost; it is not the continuation of Old Testament Israel.\" (direction +1). A prewrath dispensationalist answers +2, Kingdom returns to 100 and DBC is nearest at 24.86. A Ladd-type historic premillennialist answers S10 +1, S11 +1, S12 -1 -> raw -1 -> 42 (middle band), which is where he belongs. Keep the pretrib rapture in the fair summary as 'most, though not all'."
+  },
+  {
+   "id": "orthodox-4",
+   "lens": "Eastern Orthodox",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "Leads with \"caught up to meet Christ\", which every tradition affirms from 1 Thess 4:17; the dispensational content is only the final clause, and an Orthodox, who has no doctrine of a rapture at all, may hesitate at the first clause.",
+   "evidence": "Text: \"Believers will be caught up to meet Christ before a seven-year tribulation.\" The Orthodox reading of 1 Thess 4:17 is the general resurrection at the Parousia (Chrysostom, Hom. 8 on 1 Thessalonians); no Orthodox text knows a seven-year tribulation.",
+   "fix": "The church will be taken out of the world before a final seven-year tribulation."
+  },
+  {
+   "id": "survey-15",
+   "lens": "survey methodologist",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "\"Believers will be caught up to meet Christ before a seven-year tribulation\" measures the pretribulational rapture, a sub-position, so one third of the Kingdom axis is spent on a question that post-tribulational and pre-wrath dispensationalists answer against their own pole.",
+   "evidence": "Gundry, The Church and the Tribulation (post-trib, dispensational); Rosenthal, The Pre-Wrath Rapture of the Church; \"seven-year tribulation\" is itself dispensational vocabulary (Dan 9:27 reading). Worked case: a post-trib dispensationalist (S10 +2, S11 -2, S12 -2) scores 67, \"dispensational-leaning\", not \"dispensational\". Everyone else floors the item, so it adds no information about covenantal respondents.",
+   "fix": "Replace with the core construct: \"Israel and the church are two distinct peoples with distinct roles in God's plan.\" (14 words, direction +1). Keep the rapture item for an extended version."
+  }
+ ]
+}

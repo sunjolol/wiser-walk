@@ -1,0 +1,14 @@
+{
+ "target": "tradition:Eastern Orthodox",
+ "findings": [
+  {
+   "id": "orthodox-10",
+   "lens": "Eastern Orthodox",
+   "category": "scoring",
+   "severity": "major",
+   "claim": "grace 65 and spirit 35 sit too far toward the monergist and cessationist poles; grace 65 even places the Orthodox coordinate in the \"Arminian-leaning\" band, and the Orthodox are at least as synergist as the Wesleyans, who are given 80.",
+   "evidence": "Informed simulation [92,0,17,0,0,0]: current distance sqrt(1353)=36.78 (85%), of which 729 comes from grace alone; with grace 85 / spirit 25 the distance is sqrt(413)=20.32 (92%). Doctrine: Dositheus Decree 3 (free response foreknown); Spirit 35 puts the Church one point from \"undecided on the gifts\" despite healing unction, canonized wonderworkers, and myrrh-streaming icons; a typical adherent answering statement 7 Unsure scores 25. Caveat: with statement 3 as currently worded, moving the coordinate alone does not rescue the soft pattern (grace 50 case: EO distance rises to 36.99); fix statements 1 and 3 first, then move the coordinate.",
+   "fix": "{\"grace\": 85, \"table\": 5, \"spirit\": 25, \"kingdom\": 15, \"tradition\": 5, \"worship\": 5}"
+  }
+ ]
+}

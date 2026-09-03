@@ -1,0 +1,23 @@
+{
+ "target": "axis:worship:poles",
+ "findings": [
+  {
+   "id": "copy-10",
+   "lens": "copy editor",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "Right pole \"Free\" stands alone at the end of a share line and in lean text (\"Liturgical ●●●●○○○○○○ Free\", \"80% toward Free\"), where it reads as \"free of charge\" rather than free-form worship.",
+   "evidence": "Statement 17 already uses the unambiguous form \"free-form\"; band[4] is \"free in worship\". The pole is the only one-word label on the compass that is a common adjective with an unrelated everyday meaning.",
+   "fix": "right_pole: \"Free-form\""
+  },
+  {
+   "id": "dispensational-13",
+   "lens": "Dispensationalist (Dallas / classic and progressive dispensationalism)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "A Bible church falls off the Worship axis: it is neither 'Liturgical' nor 'Free' as the fair summary defines 'Free', and the middle band 'flexible in worship' describes the opposite of a church whose order is identical every Sunday.",
+   "evidence": "Quoted right-pole summary: \"Free worship keeps the form open so that the Spirit can lead in the moment, with an emphasis on spontaneity, sincerity, and the participation of the whole congregation.\" That is Pentecostal worship. Bible churches, and the regulative-principle Presbyterians the history line [3] cites, are non-liturgical yet fully planned; they would accept 'non-liturgical' and reject 'spontaneous' and 'flexible'. Under the current items the typical member scores 58 and is labelled 'flexible in worship', which no Bible-church pastor would accept in a share card.",
+   "fix": "Define the right pole as \"Non-liturgical\" with summary: \"Non-liturgical worship keeps the form open: no prescribed liturgy or church calendar, an order set by each congregation and usually centred on the sermon, with room, in some churches, for spontaneity and open participation.\" Rename bands[2] \"simple in worship\" and bands[3] \"non-liturgical\", keeping bands[4] \"free in worship\"."
+  }
+ ]
+}

@@ -1,0 +1,104 @@
+{
+ "target": "statement:11",
+ "findings": [
+  {
+   "id": "anabaptist-8",
+   "lens": "Anabaptist / Mennonite (Schleitheim Confession, Confession of Faith in a Mennonite Perspective 1995)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "'The church is the true Israel, heir to every promise God made to Abraham' is loaded supersessionist wording that under-scores the Anabaptist one-people position.",
+   "evidence": "The biblical phrase is 'the Israel of God' (Galatians 6:16) and 'Abraham's offspring, heirs according to promise' (Galatians 3:29); 'every promise' drags in the land promise, which Anabaptists read as transformed in Christ (Hebrews 11:10, 16), not inherited by the church. Mennonite Church USA's 2017 resolution 'Seeking Peace in Israel and Palestine' and decades of Jewish-Mennonite dialogue make many informed Mennonites refuse 'true Israel' language while fully holding one people of God, so they answer 0 or +1 and the Kingdom score drifts toward the centre.",
+   "fix": "'Jews and Gentiles who trust Christ are together the one people of God, and the promises to Abraham are fulfilled in them.'"
+  },
+  {
+   "id": "anglican-8",
+   "lens": "Anglican (broad, Thirty-Nine Articles / Book of Common Prayer)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "'The church is the true Israel, heir to every promise God made to Abraham' is the opponents' caricature ('replacement theology') rather than the covenantal side's own words, and it is harsher than the quiz's own fair summary.",
+   "evidence": "The fair summary says 'the church, Jew and Gentile together, inherits the promises to Abraham', which its holders accept. Official Anglican teaching explicitly disowns 'replacement' language (Church of England Faith and Order Commission, God's Unfailing Word, 2019; Lambeth 1988, The Way of Dialogue); Romans 11:28-29, 'the gifts and the calling of God are irrevocable', is read by most amillennial Anglicans as leaving a future for Israel, so 'every promise' is a clause they would not sign.",
+   "fix": "'God's promises to Abraham are fulfilled in Christ and belong to everyone who is in him, Jew and Gentile alike.' (direction -1)."
+  },
+  {
+   "id": "catholic-17",
+   "lens": "Roman Catholic",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "\"The church is the true Israel, heir to every promise God made to Abraham\" is hard supersessionism, which the Catholic magisterium has explicitly stepped back from; a Catholic who takes Nostra Aetate seriously answers Unsure or a reluctant Agree. It is loaded against the other side too: dispensationalists hear 'replacement theology', a description covenant theologians themselves reject. Placement survives only because S10 and S12 carry the axis.",
+   "evidence": "Nostra Aetate 4; CCC 839-840 (the Jewish people remain God's people, Rom 11:29); Commission for Religious Relations with the Jews, 'The Gifts and the Calling of God are Irrevocable' (2015) §17: 'the Church does not replace the people of God of Israel'. Lumen Gentium 9 says 'new Israel', never 'true Israel'. Justin's 'true Israel' (Dial. Trypho 11, 123) is ancient but not current magisterial language.",
+   "fix": "\"The church, Jew and Gentile together, is the one people of God and inherits the promises made to Abraham.\""
+  },
+  {
+   "id": "charismatic-8",
+   "lens": "charismatic non-denominational (Vineyard, Bethel, Hillsong, Third Wave)",
+   "category": "tone",
+   "severity": "major",
+   "claim": "'The church is the true Israel, heir to every promise God made to Abraham.' is supersessionist vocabulary that many covenantal readers avoid and that pro-Israel charismatics reflexively reject, so non-dispensational charismatics get pushed toward the dispensational pole.",
+   "evidence": "'True Israel' and 'every promise' are the phrases discernment critics call 'replacement theology'; the covenantal fair_summary itself uses the gentler 'Jew and Gentile together, inherits the promises'. My simulated Third Wave member answers Disagree here purely on the wording and gains +1 toward dispensational despite rejecting the rapture (Q12).",
+   "fix": "'The promises to Abraham are fulfilled in Christ and belong to all who are in him, Jew and Gentile alike, with no separate plan for Israel.'"
+  },
+  {
+   "id": "dispensational-20",
+   "lens": "Dispensationalist (Dallas / classic and progressive dispensationalism)",
+   "category": "unfairness",
+   "severity": "minor",
+   "claim": "\"The church is the true Israel, heir to every promise God made to Abraham.\" overstates the covenantal position with 'every promise' and omits the 'in Christ' that every covenant theologian would insist on; it is a good discriminator for us but is phrased the way we caricature them.",
+   "evidence": "Covenant theologians locate the fulfilment in Christ as the true seed (Gal 3:16) and then in the church united to him (Horton, Introducing Covenant Theology, ch. 6); progressive covenantalists (Wellum & Gentry, Kingdom through Covenant, 2012) would balk at 'every promise' since they see the land fulfilled in the new creation, not in the church. Ladd would answer Agree, which matters for the arithmetic in axis:kingdom:poles.",
+   "fix": "\"In Christ, the church is the true Israel, and the promises made to Abraham are fulfilled in Jew and Gentile believers together.\" (direction -1)."
+  },
+  {
+   "id": "presbyterian-19",
+   "lens": "Presbyterian / Reformed (Westminster Standards, Three Forms of Unity)",
+   "category": "tone",
+   "severity": "minor",
+   "claim": "'The church is the true Israel, heir to every promise' is the wording covenant theologians are accused of ('replacement theology'), not the wording they use; the Reformed say the promises are fulfilled in Christ and the church inherits them in him, and many still expect a future conversion of ethnic Israel.",
+   "evidence": "Galatians 3:16 ('the seed... who is Christ'), 2 Corinthians 1:20; WLC 191 prays that 'the Jews [be] called'; Murray on Romans 11:26 and Hodge both expect a future large-scale conversion of Israel while remaining fully covenantal. Most Reformed will still answer Agree, but some will hesitate at 'true Israel' and score 8-17 instead of 0.",
+   "fix": "\"In Christ, the church of Jew and Gentile together inherits every promise God made to Abraham.\""
+  },
+  {
+   "id": "progressive-1",
+   "lens": "progressive mainline Protestant (PCUSA, ELCA, Episcopal, UMC progressive wing)",
+   "category": "scoring",
+   "severity": "blocker",
+   "claim": "The only positive statement for the covenantal pole is written as replacement theology, which every mainline body (and Rome) has formally repudiated, so the least dispensational Christians in the world are scored 33 points toward Dispensational for rejecting a slur they are on record against.",
+   "evidence": "Text: \"The church is the true Israel, heir to every promise God made to Abraham.\" PCUSA, A Theological Understanding of the Relationship between Christians and Jews (1987): the church \"has been engrafted into the people of God established by the covenant with Abraham\" and God's covenant with the Jewish people has not been abrogated. UMC, Building New Bridges in Hope (1996) rejects supersessionism; ELCA, Declaration to the Jewish Community (1994); TEC Guidelines for Christian-Jewish Relations (1988); Nostra Aetate 4 (1965) and the Vatican's The Gifts and the Calling of God Are Irrevocable (2015). Arithmetic: mainline answers S10 -2, S11 -2, S12 -2 -> raw (-2)+(+2)+(-2) = -2 -> 33 'covenantal-leaning'; with a non-supersessionist wording they answer +2 -> raw -6 -> 0. The axis's own fair_summary already says 'the church, Jew and Gentile together, inherits the promises' - the statement contradicts the summary.",
+   "fix": "Replace with: \"Gentile believers are grafted into the one people of God, so there is one covenant people across both testaments rather than two.\" (Romans 11:17-24; 'engrafted' is the PCUSA's own word.) Direction stays -1."
+  },
+  {
+   "id": "reformedbaptist-10",
+   "lens": "Reformed Baptist (1689 London Baptist Confession)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'The church is the true Israel, heir to every promise God made to Abraham' uses the phrasing dispensationalists use to caricature us ('replacement theology'), and 'every promise' trips 1689 Federalists, who distinguish the typological national promises fulfilled under the old covenant from the promise fulfilled in Christ.",
+   "evidence": "Nehemiah Coxe, A Discourse of the Covenants (1681), and the 1689 Federalism reading of Galatians 3:16 ('to your offspring, who is Christ'): Christ is the true Israel and the church is Israel in him. LBC 7.3 has the covenant of grace revealed 'by farther steps' rather than the church simply inheriting the Abrahamic administration.",
+   "fix": "'In Christ, the church, Jew and Gentile together, inherits the promises God made to Abraham.' (direction -1)"
+  },
+  {
+   "id": "reformedcharismatic-24",
+   "lens": "Reformed charismatic (John Piper, Wayne Grudem, Sam Storms, Sovereign Grace Churches, Acts 29 continuationists)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'The church is the true Israel, heir to every promise God made to Abraham' uses supersessionist vocabulary the covenantal side increasingly avoids, and 'every promise' makes historic premillennialists who expect a future for ethnic Israel hesitate.",
+   "evidence": "Piper and Grudem hold Romans 11:26 as a future conversion of ethnic Israel; covenant theologians prefer 'the church is the expansion of Israel' to 'replaces'. Galatians 3:29 supplies neutral wording.",
+   "fix": "Believers in Christ, Jew and Gentile alike, are Abraham's offspring and heirs of the promises made to him."
+  },
+  {
+   "id": "survey-14",
+   "lens": "survey methodologist",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "\"The church is the true Israel, heir to every promise God made to Abraham\" is supersessionist phrasing that many covenantal Christians, including Catholics (kingdom coordinate 15), refuse, so they are pushed toward Dispensational.",
+   "evidence": "Nostra Aetate 4 and CCC 839-840 affirm the Jewish people's irrevocable election (Rom 11:29); many covenantal theologians say Christ, not the church, is the true Israel. A Catholic answering S10 Strongly disagree, S11 Disagree, S12 Strongly disagree scores 25 instead of 8. \"True Israel\" is also the phrase dispensationalists cite as \"replacement theology\", so it reads as partisan on both sides.",
+   "fix": "Replace with: \"The promises God made to Abraham and Israel are inherited by the church, Jew and Gentile together in Christ.\" (19 words, direction -1)."
+  },
+  {
+   "id": "wesleyan-12",
+   "lens": "Wesleyan / Methodist (Wesley's sermons, Articles of Religion, Global Methodist / UMC evangelical wing)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'The church is the true Israel, heir to every promise God made to Abraham' with 'every' leaves no room for the widespread non-dispensational hope for a future turning of ethnic Israel (Romans 11), which Wesley held. Many amillennial and historic-premillennial readers hedge to Unsure on a statement they broadly agree with.",
+   "evidence": "Wesley, Explanatory Notes on Rom 11:26: 'all Israel shall be saved ... the Jews' as a nation, in a future ingathering. The fair summary itself says the church 'inherits the promises', without 'every'.",
+   "fix": "The promises God made to Abraham are fulfilled in Christ and belong to the church, Jew and Gentile together. (direction -1)"
+  }
+ ]
+}

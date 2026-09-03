@@ -1,0 +1,86 @@
+{
+ "target": "axis:kingdom:readmore",
+ "findings": [
+  {
+   "id": "anabaptist-26",
+   "lens": "Anabaptist / Mennonite (Schleitheim Confession, Confession of Faith in a Mennonite Perspective 1995)",
+   "category": "unfairness",
+   "severity": "minor",
+   "claim": "A Mennonite scoring 17 on Kingdom is sent to two Reformed books, one of which argues for infant baptism from the covenant of grace.",
+   "evidence": "Quoted: 'Horton, Introducing Covenant Theology', 'Riddlebarger, A Case for Amillennialism'. Ladd, whom the history already credits ('1950s George Eldon Ladd's historic premillennialism'), wrote the standard non-Reformed one-people, present-kingdom book.",
+   "fix": "Left: 'Riddlebarger, A Case for Amillennialism' and 'Ladd, The Gospel of the Kingdom'."
+  },
+  {
+   "id": "charismatic-14",
+   "lens": "charismatic non-denominational (Vineyard, Bethel, Hillsong, Third Wave)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "No Ladd; the one book a reader in the middle of this axis (and any Vineyard reader) would be handed is missing.",
+   "evidence": "read_more left is Horton and Riddlebarger (covenant, amillennial); right is Ryrie and Blaising & Bock. history[4] names Ladd's historic premillennialism but gives nothing to read.",
+   "fix": "Add 'Ladd, The Gospel of the Kingdom' to the left list (or as a third, center entry)."
+  },
+  {
+   "id": "churchofchrist-10",
+   "lens": "Church of Christ / Restoration Movement (Stone-Campbell)",
+   "category": "citation",
+   "severity": "minor",
+   "claim": "'Horton, Introducing Covenant Theology' as the left-pole reading again equates the pole with federal theology; an amillennial member of Churches of Christ would not be sent to it by anyone in his tradition.",
+   "evidence": "Horton's book is an exposition of the Reformed covenant scheme, not of one-people-of-God eschatology; Riddlebarger already covers amillennialism.",
+   "fix": "Replace Horton with 'Storms, Kingdom Come: The Amillennial Alternative' (a non-federal amillennial case) or, if a Restoration voice is wanted, 'Wallace, God's Prophetic Word'."
+  },
+  {
+   "id": "dispensational-17",
+   "lens": "Dispensationalist (Dallas / classic and progressive dispensationalism)",
+   "category": "citation",
+   "severity": "minor",
+   "claim": "The left list pairs a covenant-theology primer with an amillennialism apologetic; the right list has no millennial book, and Ladd, who is in the history, appears nowhere.",
+   "evidence": "Left: \"Horton, Introducing Covenant Theology\", \"Riddlebarger, A Case for Amillennialism\". Right: \"Ryrie, Dispensationalism\", \"Blaising & Bock, Progressive Dispensationalism\". If the left is allowed a millennial book, the right should have Walvoord, The Millennial Kingdom (1959) or Vlach, He Will Reign Forever (2017); and a reader who scores in the middle after the history mentions Ladd will look for Ladd, The Blessed Hope (1956) or The Gospel of the Kingdom (1959).",
+   "fix": "Right: add \"Walvoord, The Millennial Kingdom\". Add a middle/'between' entry: \"Ladd, The Gospel of the Kingdom\" (or move Riddlebarger out if the axis drops its millennial framing)."
+  },
+  {
+   "id": "orthodox-17",
+   "lens": "Eastern Orthodox",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The left list is two Reformed authors; an Orthodox or Catholic at the left pole is sent to covenant theology.",
+   "evidence": "read_more.left: [\"Horton, Introducing Covenant Theology\", \"Riddlebarger, A Case for Amillennialism\"].",
+   "fix": "Add \"Catechism of the Catholic Church §§ 668-682\" (§ 676 rejects millenarianism; the Orthodox share the reading) or \"Alfeyev, Orthodox Christianity vol. II, on the Last Things\"."
+  },
+  {
+   "id": "progressive-21",
+   "lens": "progressive mainline Protestant (PCUSA, ELCA, Episcopal, UMC progressive wing)",
+   "category": "citation",
+   "severity": "minor",
+   "claim": "Both left-column titles are confessional Reformed, though the pole covers Catholics, Orthodox, Lutherans, Methodists, and mainliners; the most widely read book on 'kingdom present, new creation coming' is not listed.",
+   "evidence": "left: \"Horton, Introducing Covenant Theology\", \"Riddlebarger, A Case for Amillennialism\".",
+   "fix": "Replace Horton with \"N. T. Wright, Surprised by Hope\" (or add it as a third entry)."
+  },
+  {
+   "id": "reformedbaptist-22",
+   "lens": "Reformed Baptist (1689 London Baptist Confession)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "Both covenantal titles (Horton, Riddlebarger) are Presbyterian; a Reformed Baptist reader is sent only to paedobaptist covenant theology.",
+   "evidence": "Denault, The Distinctiveness of Baptist Covenant Theology (2013); Renihan, The Mystery of Christ, His Covenant, and His Kingdom (2019).",
+   "fix": "left: ['Horton, Introducing Covenant Theology', 'Renihan, The Mystery of Christ, His Covenant, and His Kingdom']"
+  },
+  {
+   "id": "reformedcharismatic-30",
+   "lens": "Reformed charismatic (John Piper, Wayne Grudem, Sam Storms, Sovereign Grace Churches, Acts 29 continuationists)",
+   "category": "unfairness",
+   "severity": "minor",
+   "claim": "Both covenantal read-more titles are Presbyterian/URC amillennial, leaving the historic premillennialism the history features (Ladd) and the Baptist wing unrepresented.",
+   "evidence": "'Horton, Introducing Covenant Theology', 'Riddlebarger, A Case for Amillennialism'. Storms, Kingdom Come (amillennial, from a Reformed charismatic) or Ladd, The Gospel of the Kingdom would serve the same pole more broadly.",
+   "fix": "Replace Riddlebarger with 'Storms, Kingdom Come' or add 'Ladd, The Gospel of the Kingdom'."
+  },
+  {
+   "id": "sbc-21",
+   "lens": "Southern Baptist (Baptist Faith & Message 2000)",
+   "category": "missing",
+   "severity": "major",
+   "claim": "A Baptist who scores toward the left pole is sent to Horton and Riddlebarger, both Presbyterian amillennialists whose covenant theology grounds infant baptism, with no Baptist or premillennial option on that side.",
+   "evidence": "Horton, Introducing Covenant Theology, argues for paedobaptism from the covenant of grace; a Southern Baptist reading it as 'their' side's book will object. Gentry & Wellum, Kingdom through Covenant, and Blomberg & Chung, A Case for Historic Premillennialism, are the books a Baptist on this side actually reads.",
+   "fix": "left: ['Horton, Introducing Covenant Theology', 'Gentry & Wellum, Kingdom through Covenant', 'Blomberg & Chung, A Case for Historic Premillennialism']"
+  }
+ ]
+}

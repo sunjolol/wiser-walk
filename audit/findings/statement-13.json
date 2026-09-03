@@ -1,0 +1,50 @@
+{
+ "target": "statement:13",
+ "findings": [
+  {
+   "id": "lutheran-8",
+   "lens": "confessional Lutheran (LCMS / WELS / Book of Concord)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "\"The creeds and councils of the early church carry real authority\" bundles two things Lutherans answer differently: the three ecumenical creeds are confessed in the Book of Concord as binding (derived) norms, but councils can err and cannot make new articles of faith, so the informed Lutheran softens to Agree rather than Strongly agree.",
+   "evidence": "The Apostles', Nicene and Athanasian Creeds open the Book of Concord (1580); FC Ep Rule and Norm 2-3 receives them \"as witnesses\"; Luther, On the Councils and the Church (1539), denies councils the power to establish new articles; Second Nicaea on images is not received.",
+   "fix": "The ancient creeds (Apostles', Nicene, Athanasian) carry real authority for the church today, not just historical interest."
+  },
+  {
+   "id": "reformedbaptist-8",
+   "lens": "Reformed Baptist (1689 London Baptist Confession)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "'The creeds and councils of the early church carry real authority, not just historical interest' does not distinguish ministerial (subordinate) authority from magisterial authority. Every confessional Protestant, Reformed Baptists included, answers Agree and is pushed toward 'With tradition', whose summary defines that pole as the church's teaching office being 'God's appointed means... and so carry real authority'.",
+   "evidence": "LBC 1.10: 'all decrees of councils, opinions of ancient writers, doctrines of men, and private spirits, are to be examined' by Scripture; yet the same body binds its officers to a 32-chapter confession that reaffirms Nicene and Chalcedonian doctrine (chs. 2, 8). Real but subordinate authority is our position, and the statement cannot register it. Simulated effect: Agree costs 8 points and lands us 'Scripture-first' rather than 'Scripture alone', which is our formal principle.",
+   "fix": "'The early creeds and councils carry an authority of their own, not only as faithful summaries of what Scripture teaches.' (direction -1) Catholics and Orthodox agree; confessional Protestants disagree."
+  },
+  {
+   "id": "reformedcharismatic-21",
+   "lens": "Reformed charismatic (John Piper, Wayne Grudem, Sam Storms, Sovereign Grace Churches, Acts 29 continuationists)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'carry real authority, not just historical interest' offers no room for the Protestant answer (real but subordinate authority), so every confessional Protestant is pulled one notch toward the 'teaching office' pole for affirming Nicaea.",
+   "evidence": "WCF 31.4: councils 'may err' and are 'not to be made the rule of faith, or practice; but to be used as a help in both'. Sovereign Grace and Acts 29 both affirm the ecumenical creeds. The discriminating question is whether creeds bind in their own right.",
+   "fix": "The creeds and councils of the early church carry binding authority in their own right, not only insofar as they summarize Scripture."
+  },
+  {
+   "id": "sbc-6",
+   "lens": "Southern Baptist (Baptist Faith & Message 2000)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "'Real authority' does not distinguish ministerial authority under Scripture (which Reformation and Baptist theologians affirm) from magisterial authority in its own right (which they deny), so the better-informed a sola Scriptura respondent is, the more the statement pushes them toward the 'with tradition' pole.",
+   "evidence": "BF&M 2000 preamble: 'confessions are only guides in interpretation, having no authority over the conscience', yet SBC theologians (Mohler, Timothy George, the 2024 convention debate over adding the Nicene Creed to the BF&M) treat Nicene orthodoxy as normative for the church. A seminary professor answers Agree, a pew member answers Disagree, and both hold identical views on Scripture's supremacy. The statement is measuring education, not conviction.",
+   "fix": "'The early creeds and councils bind what the church must believe in their own right, not only because they agree with Scripture.' (direction -1)"
+  },
+  {
+   "id": "survey-3",
+   "lens": "survey methodologist",
+   "category": "ambiguity",
+   "severity": "blocker",
+   "claim": "\"The creeds and councils of the early church carry real authority, not just historical interest\" is affirmed by every confessional Protestant, so agreeing pushes sola scriptura Christians toward \"With tradition\" and lands Lutherans and Anglicans in \"balanced on authority\" or below.",
+   "evidence": "Formula of Concord, Epitome, Rule and Norm 3 and Solid Declaration: \"we pledge ourselves\" to the three ecumenical creeds; Thirty-Nine Articles VIII: the three creeds \"ought thoroughly to be received and believed\"; WCF 31.3: decrees of councils are \"to be received with reverence and submission... also for the power whereby they are made.\" Worked case, confessional Lutheran (S13 Strongly agree, S14 Unsure or Agree, S15 Disagree): raw -2 or 0 -> 33 or 50; axis row reads \"58% toward With tradition\" or \"50% centered\". A Presbyterian answering per WCF lands 58, \"58% toward Scripture alone\": two sola scriptura confessions on opposite sides of center. The discriminator between the poles as the fair_summary defines them is infallibility/binding force, not \"real authority\".",
+   "fix": "Replace with: \"Some church teaching is binding on Christians even where it cannot be proved from Scripture.\" (15 words, direction -1). Catholics and Orthodox agree (Trent Sess. 4: unwritten traditions; Dei Verbum 9); Protestants disagree (Art. VI: \"whatsoever is not read therein, nor may be proved thereby, is not to be required of any man\")."
+  }
+ ]
+}

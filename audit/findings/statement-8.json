@@ -1,0 +1,50 @@
+{
+ "target": "statement:8",
+ "findings": [
+  {
+   "id": "anglican-14",
+   "lens": "Anglican (broad, Thirty-Nine Articles / Book of Common Prayer)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'The miraculous sign gifts' is Warfield/MacArthur vocabulary; 'sign gifts' is not a category used outside cessationist writing, so non-cessationists are asked to answer inside their opponents' frame.",
+   "evidence": "The term derives from Warfield's Counterfeit Miracles (1918) and the Strange Fire literature; Anglican, Catholic and Pentecostal writing speaks of 'charisms' or 'gifts of the Spirit'.",
+   "fix": "'The miraculous gifts, such as tongues, prophecy, and healing, ended with the apostles or the completion of the New Testament.'"
+  },
+  {
+   "id": "catholic-13",
+   "lens": "Roman Catholic",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "\"The miraculous sign gifts ended with the apostles or the completion of the New Testament\" is written in Warfield-school vocabulary ('sign gifts') and its second disjunct presumes a canon that closed by itself rather than one recognized by the Church centuries later. Answerable, but a Catholic notices.",
+   "evidence": "Warfield, Counterfeit Miracles (1918) for the vocabulary; canon lists of Hippo (393), Carthage (397), Trent Sess. IV (1546); CCC 120.",
+   "fix": "\"The miraculous gifts of the apostolic age ended with the death of the apostles.\""
+  },
+  {
+   "id": "pentecostal-16",
+   "lens": "Pentecostal (Assemblies of God Statement of Fundamental Truths)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'The miraculous sign gifts ended with the apostles or the completion of the New Testament' adopts the cessationist term 'sign gifts' in the quiz's own voice; Pentecostals speak of the gifts or manifestations of the Spirit given 'for the common good'. The direction is correct and a Pentecostal can still answer Strongly disagree, so this is vocabulary, not scoring.",
+   "evidence": "1 Cor 12:7; AG Statement of Fundamental Truths art. 7 ('the bestowment of the gifts and their uses in the work of the ministry'); 'sign gifts' is the vocabulary of Warfield, Counterfeit Miracles, and MacArthur, Strange Fire.",
+   "fix": "'The miraculous gifts -- tongues, prophecy, and healing -- ended with the apostles or the completion of the New Testament.'"
+  },
+  {
+   "id": "sbc-27",
+   "lens": "Southern Baptist (Baptist Faith & Message 2000)",
+   "category": "unfairness",
+   "severity": "minor",
+   "claim": "'The miraculous sign gifts' adopts the cessationist classification of tongues, prophecy, and healing as 'sign gifts', which continuationists dispute; it is the other side's vocabulary and a fair-minded cessationist should not want the quiz to lean on it.",
+   "evidence": "The 'sign gift' category is Warfield's and MacArthur's framework (both in read-more). Grudem and Storms (read-more, left) argue the gifts were for edification, not merely attestation.",
+   "fix": "'The miraculous gifts of tongues, prophecy, and healing ended with the apostles or the completion of the New Testament.' (direction +1)"
+  },
+  {
+   "id": "survey-11",
+   "lens": "survey methodologist",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "\"The miraculous sign gifts ended with the apostles or the completion of the New Testament\" uses the cessationist category \"sign gifts\", which continuationist authors explicitly reject, so the statement embeds one side's conclusion.",
+   "evidence": "The term comes from Warfield and later dispensational cessationism; Grudem, Systematic Theology ch. 52, and Deere, Surprised by the Power of the Spirit, argue Paul has no such category. A continuationist cannot answer the item without conceding the premise. Standard item-writing guidance (DeVellis, Scale Development) bars vocabulary that presupposes the answer.",
+   "fix": "Replace with: \"The gifts of tongues, prophecy, and healing belonged to the apostolic age and have ceased.\" (15 words, direction +1)."
+  }
+ ]
+}

@@ -1,0 +1,113 @@
+{
+ "target": "axis:grace:summary",
+ "findings": [
+  {
+   "id": "catholic-3",
+   "lens": "Roman Catholic",
+   "category": "missing",
+   "severity": "major",
+   "claim": "Both pole descriptions are fair to Calvinists and Arminians, but the summary gives no words to the historic middle (Catholic, Orthodox, confessional Lutheran), which reaches 'balanced on grace' not by moderation but because a strong Yes to S1 and a strong Yes to S2 cancel. 'His saving grace cannot finally be refused' and 'election follows God's foreknowledge of faith' are each rejected by Thomist Catholics, who affirm election before foreseen merit AND resistible grace AND that the justified can fall.",
+   "evidence": "Trent Sess. VI ch. 5: man 'is able to reject' the inspiration of grace, 'yet is he not able, by his own free will, without the grace of God, to move himself unto justice'; canon 4; canons 16 and 23 (no certainty of perseverance without special revelation; the justified can lose grace). Aquinas ST I q.23 a.5-7: predestination is not caused by foreseen merit and its number is certain. CCC 600, 2001. Formula of Concord SD II and XI show the same middle for Lutherans (monergist conversion, resistible grace, no double predestination).",
+   "fix": "Append to fair_summary: \"Catholic, Orthodox, and Lutheran teaching sits between these poles: grace comes first and enables every good act, and God's plan cannot fail, yet grace can be refused and the justified can fall away. People in those traditions usually score near the center, and that is a settled position, not indecision.\""
+  },
+  {
+   "id": "historian-3",
+   "lens": "church historian",
+   "category": "inaccuracy",
+   "severity": "major",
+   "claim": "'his saving grace cannot finally be refused' makes irresistible grace the definition of monergism. That is the Reformed doctrine, not monergism as such; confessional Lutherans are monergists who expressly deny it, and the position table itself places them at 20 ('firmly monergist').",
+   "evidence": "Formula of Concord, Solid Declaration II (Free Will) and XI (Election): conversion is God's work alone, yet 'the Holy Spirit... can be resisted', grace is universal, and the regenerate can fall away (SD XI.42; SD IV.31). Quiz statement 2 ('A person can genuinely resist God's grace and refuse salvation to the very end') is therefore answered Agree by a Lutheran, and the summary tells him he is not a monergist. A Lutheran pastor will screenshot this.",
+   "fix": "Replace the first sentence with: 'Monergists hold that salvation is God's work from beginning to end: he chooses, calls, and keeps his people, and faith is his gift rather than the reason for his choice. (Whether that grace can be resisted divides Lutherans from the Reformed within this pole.)' Keep the synergist sentence as is."
+  },
+  {
+   "id": "lutheran-2",
+   "lens": "confessional Lutheran (LCMS / WELS / Book of Concord)",
+   "category": "inaccuracy",
+   "severity": "blocker",
+   "claim": "\"his saving grace cannot finally be refused\" defines the Monergist pole as Calvinism and thereby excludes the oldest Protestant monergists from their own pole.",
+   "evidence": "FC SD II.7, 44, 71-73: conversion is solely the Holy Spirit's work and man contributes nothing, not even non-resistance; yet FC SD II and XI (Matt 23:37, Acts 7:51, Heb 6:4-6) confess that grace can be resisted and that believers can fall away (FC SD XI.42). Lutherans coined \"monergism\" and \"synergism\" (the Synergistic Controversy, FC II) precisely as terms about the cause of conversion, not about irresistibility.",
+   "fix": "Monergists hold that salvation is God's work from beginning to end: he chooses, calls, and keeps his people, and the person contributes nothing to conversion, not even a decision to cooperate. Monergists differ on whether that grace can be resisted: the Reformed say no; Lutherans say yes, so that anyone lost is lost by his own refusal and not by a decree. Synergists hold that God's grace always comes first and makes faith possible, but that each person must freely respond and can decline, so that election follows God's foreknowledge of faith or rests on his choice of a people in Christ."
+  },
+  {
+   "id": "orthodox-6",
+   "lens": "Eastern Orthodox",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The monergist half states the Reformed position only (\"his saving grace cannot finally be refused\") and so excludes confessional Lutherans, whom the quiz places at grace 20 (\"firmly monergist\"); the synergist half is acceptable to the Orthodox but never names the Eastern framing (synergy, theosis), so the axis reads as an intra-Protestant quarrel.",
+   "evidence": "Formula of Concord, Solid Declaration II (Free Will), teaches that the unconverted can resist the Holy Spirit (Acts 7:51) while conversion remains God's work alone; a Lutheran therefore answers statement 2 Agree and is pushed synergist. On the Orthodox side, synergeia is the tradition's own word (1 Cor 3:9; Phil 2:12-13) and salvation is theosis (2 Pet 1:4; Athanasius, On the Incarnation 54).",
+   "fix": "Monergists hold that salvation is God's work from beginning to end: he chooses, calls, and keeps his people, and no one contributes anything to it, not even the decision to believe (the Reformed add that his saving grace cannot finally be refused; Lutherans hold that it can be resisted but never merited). Synergists hold that God's grace always comes first and makes faith possible, but that each person must freely respond and can decline, so that election follows God's foreknowledge of faith or rests on his choice of a people in Christ; the Christian East calls this cooperation synergy and sees salvation as a lifelong growth into God's likeness (theosis)."
+  },
+  {
+   "id": "presbyterian-22",
+   "lens": "Presbyterian / Reformed (Westminster Standards, Three Forms of Unity)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "'His saving grace cannot finally be refused', with nothing about the will being made willing, lets monergism read as coercion; the Reformed confessions are emphatic that the called come freely.",
+   "evidence": "WCF 10.1: 'yet so, as they come most freely, being made willing by his grace'; Canons of Dort III/IV.12: grace does not treat men 'as senseless stocks and blocks' but makes the will 'itself active'; III/IV.16: grace does not 'take away the will and its properties'.",
+   "fix": "\"...and his saving grace cannot finally be refused, because it makes the unwilling willing, so that those he calls come freely.\""
+  },
+  {
+   "id": "progressive-4",
+   "lens": "progressive mainline Protestant (PCUSA, ELCA, Episcopal, UMC progressive wing)",
+   "category": "inaccuracy",
+   "severity": "major",
+   "claim": "Monergism is defined by irresistible grace, which is the Calvinist form only; Lutheran monergism is excluded from the pole it named.",
+   "evidence": "Text: \"his saving grace cannot finally be refused.\" Formula of Concord SD XI rejects irresistibility while SD II denies any cooperation in conversion; the Reformed/Lutheran difference here is the whole substance of the 1586 Montbeliard colloquy and of the intra-Protestant debate on grace.",
+   "fix": "\"Monergists hold that salvation is God's work from beginning to end: he chooses, calls, and keeps his people, and the sinner contributes nothing to conversion, not even the decision to believe. (Reformed monergists add that saving grace cannot finally be refused; Lutheran monergists hold that it can be, without faith becoming a human work.)\" Keep the synergist sentence as is."
+  },
+  {
+   "id": "reformedbaptist-27",
+   "lens": "Reformed Baptist (1689 London Baptist Confession)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'his saving grace cannot finally be refused' without the confessional 'made willing' clause leaves the monergist open to the coercion caricature that the synergist sentence implicitly trades on.",
+   "evidence": "LBC 10.1: the called 'come most freely, being made willing by his grace'; Dort III/IV art. 16 rejects the 'stocks and blocks' reading.",
+   "fix": "'...and his saving grace cannot finally be refused, because it makes the unwilling willing so that they come freely.'"
+  },
+  {
+   "id": "reformedcharismatic-25",
+   "lens": "Reformed charismatic (John Piper, Wayne Grudem, Sam Storms, Sovereign Grace Churches, Acts 29 continuationists)",
+   "category": "unfairness",
+   "severity": "minor",
+   "claim": "'his saving grace cannot finally be refused' leaves standing the caricature that irresistible grace coerces, which the Canons explicitly reject.",
+   "evidence": "Canons of Dort III/IV art. 16: regenerating grace does not treat people 'as if they were blocks and stones' but makes the unwilling willing (cf. Ps 110:3; WCF 10.1 'yet so as they come most freely').",
+   "fix": "...and his saving grace, far from forcing anyone, makes the unwilling willing so that they come freely and cannot finally be lost."
+  },
+  {
+   "id": "sbc-9",
+   "lens": "Southern Baptist (Baptist Faith & Message 2000)",
+   "category": "missing",
+   "severity": "major",
+   "claim": "The monergist summary bundles perseverance ('he chooses, calls, and keeps his people') as if it were distinctive of monergism, while the synergist summary says nothing about security, so the largest non-Calvinist group in American Protestantism, Baptists who hold resistible grace and eternal security together, fits neither description.",
+   "evidence": "BF&M 2000 Art. V (perseverance) sits in the same confession that says election 'is consistent with the free agency of man'. Traditional Statement Art. 4 (grace can be resisted) and Art. 9 (the believer's security) are held simultaneously. A Traditionalist reading the current text sees their own view split across the two paragraphs.",
+   "fix": "Append to the synergist half: 'Many synergists, including most Baptists, nonetheless hold that those who truly believe are kept by God to the end.'"
+  },
+  {
+   "id": "scholar-4",
+   "lens": "biblical scholar",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The monergist half of the summary defines monergism as Reformed monergism only: \"he chooses, calls, and keeps his people, and his saving grace cannot finally be refused.\" Confessional Lutherans are monergists (Luther's Bondage of the Will headlines history[2]) yet reject irresistible grace and teach that the justified can fall away. A Lutheran reads this summary and finds their own position described as the other side, and Hebrews 6:4-6 in the list is a text they, as monergists, reach for.",
+   "evidence": "Augsburg Confession XII condemns those \"who deny that those once justified can lose the Holy Ghost\"; Formula of Concord, Solid Declaration II (Free Will) and XI (Election) teach that conversion is wholly God's work while affirming that a person can resist the Holy Spirit and that the regenerate can fall (Lutheran dogmatics: gratia resistibilis). The tradition coordinate for \"Lutheran (confessional)\" at grace=20 already presupposes they answer statement 2 'Agree'.",
+   "fix": "Replace the first sentence with: \"Monergists hold that salvation is God's work from beginning to end: he chooses, calls, and gives faith, and no one contributes anything to their own conversion. Most monergists (the Reformed) add that his saving grace cannot finally be refused and that he keeps his people to the end.\""
+  },
+  {
+   "id": "wesleyan-5",
+   "lens": "Wesleyan / Methodist (Wesley's sermons, Articles of Religion, Global Methodist / UMC evangelical wing)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "'Monergists hold that ... his saving grace cannot finally be refused' defines monergism as irresistible grace. That excludes confessional Lutherans, whom the quiz itself places at grace 20 ('firmly monergist'): they confess that conversion is entirely God's work and that grace can be resisted. A fair summary of the other pole should not describe it in a way one of its own major traditions rejects.",
+   "evidence": "Formula of Concord, Solid Declaration II (Free Will): conversion is 'solely' the work of the Holy Spirit, yet man 'can resist' the Spirit; SD XI (Election): election is not based on foreseen faith, and the lost are lost through their own resistance. Statement 2 ('A person can genuinely resist God's grace') is one a Lutheran answers Agree, which the quiz scores as synergist; the summary then tells them monergists deny what their confession affirms.",
+   "fix": "Monergists hold that salvation is God's work from beginning to end: he chooses his people without regard to anything he foresaw in them, and he alone works faith in them, so that the sinner contributes nothing to conversion, not even the decision to believe."
+  },
+  {
+   "id": "wesleyan-8",
+   "lens": "Wesleyan / Methodist (Wesley's sermons, Articles of Religion, Global Methodist / UMC evangelical wing)",
+   "category": "tone",
+   "severity": "minor",
+   "claim": "'each person must freely respond and can decline' is the language Wesleyans are most often accused with ('free will'). Wesley insisted the will is freed by prevenient grace, not free by nature, and the summary never uses the one term every Methodist reader would look for.",
+   "evidence": "Wesley, 'On Working Out Our Own Salvation' (Sermon 85): 'preventing grace ... the first wish to please God'; 'Some Remarks on Mr. Hill's Review': 'natural free-will ... I do not assert'. The Confession of Faith (EUB) Art. VIII: 'prevenient grace'.",
+   "fix": "Synergists hold that God's grace always comes first (Wesleyans call it prevenient grace) and frees the will to believe, but that each person, so enabled, must respond and can decline, so that election follows God's foreknowledge of faith or rests on his choice of a people in Christ."
+  }
+ ]
+}

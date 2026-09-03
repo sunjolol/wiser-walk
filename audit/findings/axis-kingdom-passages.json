@@ -1,0 +1,50 @@
+{
+ "target": "axis:kingdom:passages",
+ "findings": [
+  {
+   "id": "charismatic-15",
+   "lens": "charismatic non-denominational (Vineyard, Bethel, Hillsong, Third Wave)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "An axis named 'Kingdom' lists no kingdom-present passage; charismatics reach first for Matthew 12:28 and Matthew 6:10.",
+   "evidence": "key_passages: Romans 11, Galatians 3, Revelation 20, Daniel 9, 1 Thessalonians 4, Matthew 24, Ephesians 2. Bethel's whole program is Matthew 6:10 'on earth as it is in heaven' (Johnson, When Heaven Invades Earth); Vineyard's is Matthew 12:28 / Luke 4:18-19 / Mark 1:15.",
+   "fix": "Add 'Matthew 12:28' and 'Matthew 6:10'."
+  },
+  {
+   "id": "dispensational-6",
+   "lens": "Dispensationalist (Dallas / classic and progressive dispensationalism)",
+   "category": "missing",
+   "severity": "major",
+   "claim": "The passage list contains no Old Testament covenant text, though the whole dispensational case rests on the Abrahamic and Davidic covenants read in the prophets.",
+   "evidence": "Listed: Romans 11, Galatians 3:26–29, Revelation 20:1–6, Daniel 9:24–27, 1 Thessalonians 4:13–17, Matthew 24, Ephesians 2:11–22. Galatians 3 and Ephesians 2 are the covenantal proof texts; only Daniel 9 and 1 Thessalonians 4 are distinctly ours, and both concern the tribulation/rapture, not Israel's promises. Every standard dispensational treatment begins from Genesis 12:1–3; 15:18–21; 17:7–8, 2 Samuel 7:12–16, Jeremiah 31:31–37 (note vv. 35–37 on Israel's permanence) and Acts 1:6–7 (Pentecost, Things to Come, chs. 4–8; Walvoord, The Millennial Kingdom, chs. 12–15). Romans 11 should be pointed at 11:25–29 ('the gifts and the calling of God are irrevocable').",
+   "fix": "Replace 'Matthew 24' with 'Genesis 12:1–3; 15:18–21' and add 'Jeremiah 31:31–37' and 'Acts 1:6–7'; narrow 'Romans 11' to 'Romans 11:25–29'. If the axis keeps its millennial framing, Revelation 20:1–6 stays; otherwise it belongs to a millennium item."
+  },
+  {
+   "id": "presbyterian-27",
+   "lens": "Presbyterian / Reformed (Westminster Standards, Three Forms of Unity)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "Galatians 3:16 and Hebrews 8:6-13 are the covenantal texts the dispensationalist debate actually turns on and are absent, while Daniel 9 and 1 Thessalonians 4 (dispensational) are present.",
+   "evidence": "Horton and Riddlebarger (the left read-more) both argue from Galatians 3:16 (the seed is Christ) and Hebrews 8 (the new covenant promised to Israel is fulfilled in the church).",
+   "fix": "key_passages: add \"Galatians 3:16\" and \"Hebrews 8:6–13\"."
+  },
+  {
+   "id": "scholar-9",
+   "lens": "biblical scholar",
+   "category": "missing",
+   "severity": "major",
+   "claim": "The dispensational pole is represented only by eschatological timetable texts (Daniel 9:24-27, 1 Thessalonians 4:13-17) and has none of the Abrahamic covenant passages on which dispensationalism actually rests: the unconditional, 'everlasting' land promise of Genesis 12:1-3; 15:18-21; 17:7-8 is what statement 10 (\"promises to national Israel will be fulfilled literally\") means. The covenantal pole lacks its new-covenant text, Hebrews 8:6-13 (quoting Jeremiah 31:31-34), where a covenant made 'with the house of Israel' is applied to the church, and Galatians 6:16, 'the Israel of God', the phrase behind statement 11's \"the church is the true Israel\".",
+   "evidence": "Ryrie, Dispensationalism (in read_more), ch. 8, and Walvoord, The Millennial Kingdom, ch. 12-13, ground the Israel-church distinction on the unconditional Abrahamic covenant of Genesis 12, 15, 17; Scofield's notes on Genesis 12:1 and 15:18 do the same. Horton, Introducing Covenant Theology (in read_more), ch. 3-4, and Riddlebarger, A Case for Amillennialism, ch. 4, argue one people of God from Jeremiah 31/Hebrews 8 and Galatians 6:16.",
+   "fix": "Add \"Genesis 17:7–8\" (dispensational; or \"Genesis 12:1–3\") and \"Hebrews 8:6–13\" (covenantal); if space allows, also \"Galatians 6:16\". Resulting list: \"Genesis 17:7–8\", \"Romans 11\", \"Galatians 3:26–29\", \"Hebrews 8:6–13\", \"Ephesians 2:11–22\", \"Daniel 9:24–27\", \"Revelation 20:1–6\", \"1 Thessalonians 4:13–18\", \"Matthew 24\"."
+  },
+  {
+   "id": "scholar-10",
+   "lens": "biblical scholar",
+   "category": "citation",
+   "severity": "minor",
+   "claim": "\"1 Thessalonians 4:13–17\" stops one verse short of the unit; v.18, 'Therefore encourage one another with these words', closes the paragraph in every standard edition, and the pastoral purpose clause is part of what both pretribulational and posttribulational readers argue from.",
+   "evidence": "NA28 paragraphing 1 Thess 4:13-18; ESV/NIV/NRSV heading 'The Coming of the Lord' 4:13-18; Ryrie, Blaising & Bock and Ladd all cite 4:13-18.",
+   "fix": "Replace \"1 Thessalonians 4:13–17\" with \"1 Thessalonians 4:13–18\"."
+  }
+ ]
+}

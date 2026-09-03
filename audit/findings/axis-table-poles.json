@@ -1,0 +1,41 @@
+{
+ "target": "axis:table:poles",
+ "findings": [
+  {
+   "id": "catholic-9",
+   "lens": "Roman Catholic",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "Naming the right pole 'Memorial' hands the Zwinglian sense of the word to one side, when the Catholic Church calls the Eucharist a memorial in precisely the sacramental sense. A Catholic reads 'Sacramental vs Memorial' as a false opposition; a Baptist would happily accept their own word, 'ordinance', which the fair summary already uses.",
+   "evidence": "CCC 1362-1366: 'The Eucharist is the memorial of Christ's Passover... In the sense of Sacred Scripture the memorial is not merely the recollection of past events but... they become in a certain way present and real.' Luke 22:19 'Do this in memory of me'; the Roman Canon's 'Unde et memores'; SC 47. The fair summary text: 'both are ordinances obeyed by believers'.",
+   "fix": "right_pole: \"Ordinance\"; bands: [\"sacramental\", \"sacramental-leaning\", \"mixed on the sacraments\", \"ordinance-leaning\", \"ordinance only\"]. Update the share caption ('a memorialist shows many on Table') to match."
+  },
+  {
+   "id": "churchofchrist-22",
+   "lens": "Church of Christ / Restoration Movement (Stone-Campbell)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "The axis is named 'Table' with poles 'Sacramental / Memorial', but two of its three statements are about baptism and, for Churches of Christ, baptism is the whole story; a member reads 'Table' and does not expect his baptismal theology to be scored there.",
+   "evidence": "Statements 5 and 6 concern baptism; only statement 4 concerns the Supper. The band words and pole words ('memorial') describe the Supper only.",
+   "fix": "Rename the axis 'Font and Table' (or 'Sacraments') and keep the poles; or move one baptism statement to a real presence statement so the name is honest."
+  },
+  {
+   "id": "reformedbaptist-1",
+   "lens": "Reformed Baptist (1689 London Baptist Confession)",
+   "category": "unfairness",
+   "severity": "blocker",
+   "claim": "The Table axis (poles 'Sacramental' / 'Memorial') is scored by two baptism-subject statements (5, 6) and one Supper statement (4), so a 1689 Reformed Baptist who confesses Christ's spiritual presence at the Supper scores 67 and is told he is 'memorial-leaning'; the share text prints '🍞 Table · Sacramental ●●●●●●●○○○ Memorial'. We explicitly reject the memorial (Zwinglian) view.",
+   "evidence": "1689 LBC 30.7: worthy receivers 'do then also inwardly by faith, really and indeed, yet not carnally and corporally, but spiritually receive, and feed upon Christ crucified, and all the benefits of his death: the body and blood of Christ being then... spiritually present to the faith of believers in that ordinance'. Arithmetic: statement 4 Agree (-1), statement 5 Agree (+1), statement 6 Strongly disagree (+2) = +2 -> 67. The axis name is 'Table' but two-thirds of its weight is baptismal subjects, so the score does not measure what the pole names say.",
+   "fix": "Either (a) make the axis measure means-of-grace only: replace statement 5 with a means-of-grace statement (see statement:5) and keep statement 6 as the single baptism-subjects item; or (b) if the current statements stay, rename the right pole 'Ordinance' and the bands to 'sacramental / sacramental-leaning / mixed on the sacraments / ordinance-leaning / memorialist', so a 67 reads 'ordinance-leaning', which a Reformed Baptist would accept."
+  },
+  {
+   "id": "reformedcharismatic-6",
+   "lens": "Reformed charismatic (John Piper, Wayne Grudem, Sam Storms, Sovereign Grace Churches, Acts 29 continuationists)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "'Sacramental' vs 'Memorial' folds two independent questions (Christ's presence in the Supper; who is baptized) into one axis, so the Calvinistic credobaptist position held across my tradition has no place and is scored into a meaningless middle.",
+   "evidence": "1689 London Baptist Confession 30.7: worthy receivers 'spiritually receive, and feed upon Christ crucified'; Grudem, Systematic Theology ch. 50 (spiritual presence); Piper likewise; all credobaptist. Arithmetic: S4 +2, S5 +1, S6 -2 -> raw +1 -> 58 -> 'centered on the sacraments' (nonsense for a Baptist); S4 +1 -> 67 -> 'memorial-leaning' (denies what they affirm about the Supper).",
+   "fix": "Keep the axis but say so: add to the fair summary 'Between them stand many Reformed Baptists and evangelicals who hold Christ's spiritual presence in the Supper yet baptize only believers', and relabel the middle band (see labels finding)."
+  }
+ ]
+}

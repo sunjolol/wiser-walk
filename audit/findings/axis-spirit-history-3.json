@@ -1,0 +1,23 @@
+{
+ "target": "axis:spirit:history:3",
+ "findings": [
+  {
+   "id": "lutheran-22",
+   "lens": "confessional Lutheran (LCMS / WELS / Book of Concord)",
+   "category": "missing",
+   "severity": "major",
+   "claim": "The history makes caution about the gifts a 1918 Reformed innovation (Warfield) restated in 2013; the Lutheran rejection of the Spirit apart from the external Word, against the Zwickau prophets and Muntzer, dates to the 1520s and was confessed in 1537.",
+   "evidence": "Smalcald Articles III.viii (1537), \"Of Confession\", against \"enthusiasm\" (Schwarmerei); Luther, Against the Heavenly Prophets (1525).",
+   "fix": "Insert before the Warfield entry: {\"when\": \"1537\", \"what\": \"Smalcald Articles III.viii: against 'enthusiasm', Luther holds that the Spirit comes only through the external Word and sacraments, not by new revelation.\"}"
+  },
+  {
+   "id": "presbyterian-14",
+   "lens": "Presbyterian / Reformed (Westminster Standards, Three Forms of Unity)",
+   "category": "missing",
+   "severity": "major",
+   "claim": "The history jumps from Chrysostom (c. 390) to Azusa Street (1906) and then presents Warfield (1918) as the first Protestant cessationist, which reads as if cessationism were a twentieth-century reaction to Pentecostalism. It was confessional 270 years earlier.",
+   "evidence": "WCF 1.1 (1646): 'those former ways of God's revealing his will unto his people being now ceased'; WCF 1.6: nothing is to be added to Scripture 'whether by new revelations of the Spirit, or traditions of men'; Calvin, Institutes IV.19.18, on the gift of healing having 'vanished away'. Warfield's book is the classic apologetic, not the origin.",
+   "fix": "Insert before the Warfield entry: { \"when\": \"1646\", \"what\": \"Westminster Confession 1.1 and 1.6: the 'former ways of God's revealing his will' have ceased; no new revelations of the Spirit are to be added to Scripture.\" }"
+  }
+ ]
+}

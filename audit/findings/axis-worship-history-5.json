@@ -1,0 +1,23 @@
+{
+ "target": "axis:worship:history:5",
+ "findings": [
+  {
+   "id": "copy-17",
+   "lens": "copy editor",
+   "category": "typo",
+   "severity": "minor",
+   "claim": "Date \"1970s–\" ends in a dangling en dash and the entry \"Jesus movement and the contemporary worship movement (Calvary Chapel, Vineyard, Hillsong).\" is a fragment.",
+   "evidence": "An open-ended range needs a word after the dash or should be written out; the entry is the only one in the list without a verb. Hillsong (founded 1983) and Vineyard (1970s–80s) fit \"1970s on\".",
+   "fix": "when: \"1970s on\"; what: \"The Jesus movement and contemporary worship music (Calvary Chapel, Vineyard, Hillsong) reshape evangelical services.\""
+  },
+  {
+   "id": "pentecostal-13",
+   "lens": "Pentecostal (Assemblies of God Statement of Fundamental Truths)",
+   "category": "missing",
+   "severity": "major",
+   "claim": "'1970s– Jesus movement and the contemporary worship movement (Calvary Chapel, Vineyard, Hillsong)' credits modern free worship to the Jesus movement and names Hillsong without noting it was an Assemblies of God church; Pentecostal worship (Azusa 1906, the Black Pentecostal tradition, the 1948 Latter Rain origin of 'praise and worship') is absent from the axis Pentecostals define.",
+   "evidence": "Hillsong (Hills Christian Life Centre, 1983) belonged to the Assemblies of God in Australia / Australian Christian Churches until it withdrew in 2018. Ruth & Lim (2021) locate the 'praise and worship' theology in the 1948 Latter Rain revival and Pentecostal churches; Azusa Street introduced spontaneous song, tongues and interpretation, and the altar response that the summary describes.",
+   "fix": "Insert before this entry: '1906– Azusa Street: Pentecostal worship -- spontaneous song, tongues and interpretation, the altar call -- spreads worldwide; the 1948 Latter Rain revival gives \"praise and worship\" its theology.' and amend this entry to '(Calvary Chapel, Vineyard, and the Pentecostal Hillsong)'."
+  }
+ ]
+}

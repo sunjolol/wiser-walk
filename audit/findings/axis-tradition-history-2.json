@@ -1,0 +1,50 @@
+{
+ "target": "axis:tradition:history:2",
+ "findings": [
+  {
+   "id": "anabaptist-22",
+   "lens": "Anabaptist / Mennonite (Schleitheim Confession, Confession of Faith in a Mennonite Perspective 1995)",
+   "category": "unfairness",
+   "severity": "minor",
+   "claim": "Fairness to the other side: the history gives the tradition pole four entries (Vincent, Trent, Newman, Dei Verbum) and the Scripture-alone pole one (Westminster 1646).",
+   "evidence": "The obvious missing right-pole entry is Luther at Worms, 18 April 1521 ('unless I am convinced by Scripture and plain reason... my conscience is captive to the Word of God'), which is also where statement 14's 'bind the conscience' language comes from.",
+   "fix": "Insert before the Westminster line: '1521 — Luther at Worms: unless convinced by Scripture and plain reason, he will not recant; conscience is bound to the Word of God.'"
+  },
+  {
+   "id": "anglican-18",
+   "lens": "Anglican (broad, Thirty-Nine Articles / Book of Common Prayer)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The history jumps from Trent (1546) to Westminster (1646) and skips the settlement that defines the middle of this axis: Article VI (1571) and Hooker (1594).",
+   "evidence": "Article VI, 'Holy Scripture containeth all things necessary to salvation', is the classic statement of sufficiency-without-biblicism; Hooker's Laws of Ecclesiastical Polity (1594-97) is the standard defence of Scripture read with reason and the church's tradition, and is cited by both Catholics and Protestants as the via media text.",
+   "fix": "Insert before the Westminster entry: '1571-1594: The Thirty-Nine Articles make Scripture the test of what may be required as necessary to salvation; Hooker's Laws defends the church's authority in what Scripture leaves open.'"
+  },
+  {
+   "id": "churchofchrist-12",
+   "lens": "Church of Christ / Restoration Movement (Stone-Campbell)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The Tradition timeline gives the 'with tradition' pole four entries (Vincent 434, Trent 1546, Newman 1845, Dei Verbum 1965) and the 'Scripture alone' pole one (Westminster 1646); a reader on the right sees his side's history as a single line between two Catholic councils.",
+   "evidence": "Count of history entries by pole: 4 to 1. The two obvious right-pole landmarks are missing: Worms 1521 and the American restoration plea of 1809.",
+   "fix": "Add '1521 Diet of Worms: Luther will not recant unless convinced by Scripture and plain reason' and '1809 Thomas Campbell's Declaration and Address launches the Restoration plea: no creed as a test of fellowship, \"where the Scriptures speak, we speak; where the Scriptures are silent, we are silent.\"'"
+  },
+  {
+   "id": "lutheran-10",
+   "lens": "confessional Lutheran (LCMS / WELS / Book of Concord)",
+   "category": "missing",
+   "severity": "major",
+   "claim": "The Protestant slot in the Tradition history is given to Westminster (1646) alone; the two Lutheran sola Scriptura moments, Worms (1521) and the Formula of Concord's Rule and Norm (1577), which coined the judge/witness distinction the whole axis turns on, are absent.",
+   "evidence": "Luther at Worms, 1521: \"unless I am convinced by Scripture and plain reason... popes and councils have often erred\"; FC Ep Rule and Norm 1-8 (1577) predates WCF ch. 1 by seventy years and is its direct model for \"Scripture alone is judge\".",
+   "fix": "Insert before the Westminster entry: {\"when\": \"1577\", \"what\": \"Formula of Concord, Rule and Norm: Scripture alone is judge; creeds and confessions are witnesses to be judged by it, not judges themselves.\"} (optionally also {\"when\": \"1521\", \"what\": \"Luther at Worms: conscience bound by Scripture, since popes and councils have erred.\"})"
+  },
+  {
+   "id": "reformedcharismatic-10",
+   "lens": "Reformed charismatic (John Piper, Wayne Grudem, Sam Storms, Sovereign Grace Churches, Acts 29 continuationists)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The Tradition history is four entries for the tradition pole (Vincent, Trent, Newman, Dei Verbum) against one for Scripture alone (Westminster).",
+   "evidence": "history array: 434 Vincent, 1546 Trent, 1646 WCF, 1845 Newman, 1965 Dei Verbum. The intro promises 'both sides of every axis get a fair hearing'. The defining Scripture-alone moment is Luther at Worms, 1521, and the 1521 gap is also what makes the 1546 Trent line read as unprovoked.",
+   "fix": "Insert before the 1646 entry: {\"when\": \"1521\", \"what\": \"Luther at Worms refuses to recant unless convinced by Scripture and plain reason: his conscience is captive to the Word of God.\"}"
+  }
+ ]
+}

@@ -1,0 +1,86 @@
+{
+ "target": "axis:spirit:history:1",
+ "findings": [
+  {
+   "id": "catholic-14",
+   "lens": "Roman Catholic",
+   "category": "missing",
+   "severity": "major",
+   "claim": "Chrysostom (c. 390) followed straight by Azusa Street (1906) tells the reader the gifts were dead for fifteen centuries. The patristic counter-witness is missing, and Augustine's retraction is the single most-cited datum on the continuationist side; omitting it is unfair to both sides (cessationists lean on the early Augustine, continuationists on the late one).",
+   "evidence": "Irenaeus, Against Heresies II.32.4 (c. 180): prophecy, healing, exorcism, and raising the dead 'in the church'. Augustine, City of God XXII.8 (c. 426) catalogues some seventy recent miracles at Hippo; Retractations I.13.7 withdraws his earlier claim (De vera religione 25.47) that miracles had ceased. Urban VIII (1634) makes proven miracles a condition of canonization.",
+   "fix": "Insert before Chrysostom: {\"when\":\"c. 180\",\"what\":\"Irenaeus reports prophecy, healing, and even raising of the dead in the churches of his day.\"} and after Chrysostom: {\"when\":\"c. 426\",\"what\":\"Augustine, City of God XXII.8, records recent miracles at Hippo and withdraws his earlier view that they had ceased.\"}"
+  },
+  {
+   "id": "charismatic-12",
+   "lens": "charismatic non-denominational (Vineyard, Bethel, Hillsong, Third Wave)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "Chrysostom's cessationist remark is included but Augustine's retraction of the same view a generation later, the passage every continuationist cites, is not.",
+   "evidence": "Augustine, City of God XXII.8 (c. 426), records contemporary healings at Hippo and Milan and Retractations I.13.7 withdraws his earlier statement that miracles had ceased. Chrysostom, Homily 29 on 1 Corinthians, is quoted; the reply is not.",
+   "fix": "Add after Chrysostom: {'when': 'c. 426', 'what': 'Augustine, City of God XXII.8, records healings at Hippo and retracts his earlier view that miracles had ceased.'}"
+  },
+  {
+   "id": "historian-14",
+   "lens": "church historian",
+   "category": "inaccuracy",
+   "severity": "major",
+   "claim": "'notes that the sign gifts had ceased' puts a twentieth-century category ('sign gifts') and a doctrine (cessation) into Chrysostom's mouth. What he says is an observation that the gifts Paul lists no longer occur in his day; he gives no teaching that they ended with the apostles or the canon, and he elsewhere celebrates healings and exorcisms at the martyrs' shrines.",
+   "evidence": "Chrysostom, Homilies on 1 Corinthians 29 (on 12:1–2), delivered at Antioch c. 390–92: 'This whole place is very obscure: but the obscurity is produced by our ignorance of the facts referred to and by their cessation, being such as then used to occur but now no longer take place' (NPNF1 12:168). Homily De sancta Pentecoste 1 argues signs were scaffolding for unbelievers. On St. Babylas and the homilies on the martyrs speak of demons driven out at the relics.",
+   "fix": "{when: 'c. 390', what: 'Chrysostom, Homily 29 on 1 Corinthians, remarks that the gifts Paul lists \"used to occur but now no longer take place\", an observation about his own day rather than a doctrine that they ended with the apostles.'}"
+  },
+  {
+   "id": "mockery-10",
+   "lens": "mockery critic",
+   "category": "tone",
+   "severity": "minor",
+   "claim": "'Chrysostom ... notes that the sign gifts had ceased' — 'notes' reports his claim as an observed fact. Pentecostal caption: 'the quiz notes it too.'",
+   "evidence": "Homily 29 on 1 Corinthians (c. 392): the passage is obscure 'by their cessation, being such as then used to occur but now no longer take place' — his assertion about his own day.",
+   "fix": "'Chrysostom, preaching on 1 Corinthians, says the gifts of that chapter had ceased in his day.'"
+  },
+  {
+   "id": "orthodox-12",
+   "lens": "Eastern Orthodox",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The only patristic entry on this axis is deployed as a cessationist proof, and the continuationist side's first entry (index 0) is a condemned movement, so the sequence reads heresy, then a Father says the gifts ceased, then Pentecostalism; the patristic evidence for continuance is omitted.",
+   "evidence": "Text: \"Chrysostom, preaching on 1 Corinthians, notes that the sign gifts had ceased.\" Hom. 29 on 1 Corinthians (Antioch, c. 392) does say the Corinthian gifts \"no longer take place\", but the same preacher proclaims ongoing miracles at the martyrs' tombs (Hom. on St Babylas; Hom. on the Holy Martyrs). Augustine, Retractationes I.13.7, withdrew his earlier claim that miracles had ceased, and City of God XXII.8 (426) records nearly seventy healings at Hippo in under two years.",
+   "fix": "Reword entry 1 to \"c. 392 — Chrysostom, Homilies on 1 Corinthians, observes that the Corinthian gifts 'no longer take place', while preaching miracles at the martyrs' shrines.\" and insert after it {\"when\": \"426\", \"what\": \"Augustine, City of God XXII.8, withdraws his earlier view that miracles had ceased and records some seventy recent healings at Hippo.\"}"
+  },
+  {
+   "id": "pentecostal-15",
+   "lens": "Pentecostal (Assemblies of God Statement of Fundamental Truths)",
+   "category": "citation",
+   "severity": "minor",
+   "claim": "'Chrysostom, preaching on 1 Corinthians, notes that the sign gifts had ceased' puts the modern cessationist category 'sign gifts' into a fourth-century mouth.",
+   "evidence": "Chrysostom, Homily 29 on 1 Corinthians (on 12:1–2): the passage is obscure 'by our ignorance of the facts referred to and by their cessation, being such as then used to occur but now no longer take place' -- he speaks of the gifts Paul lists, not of a class called 'sign gifts', a term from Warfield and later.",
+   "fix": "'Chrysostom, preaching on 1 Corinthians 12, remarks that the gifts Paul describes no longer occur in his day.'"
+  },
+  {
+   "id": "reformedbaptist-15",
+   "lens": "Reformed Baptist (1689 London Baptist Confession)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The history jumps from Chrysostom (c. 390) to Azusa Street (1906) and Warfield (1918), then Strange Fire (2013), which makes cessationism look like a 20th-century reaction to Pentecostalism. It was the confessional Protestant position for 250 years before Azusa Street.",
+   "evidence": "WCF 1.1 (1646) and LBC 1.1 (1677/1689): 'those former ways of God's revealing his will unto his people being now ceased'; LBC 1.6: nothing to be added 'whether by new revelation of the Spirit, or traditions of men'. Calvin, Institutes IV.19.18-19, treats the gift of healing as having ceased.",
+   "fix": "Insert after the c. 390 entry: {when: '1646 / 1689', what: 'Westminster and London Baptist Confessions (1.1): God\\'s former ways of revealing his will are \"now ceased\".'}"
+  },
+  {
+   "id": "reformedcharismatic-27",
+   "lens": "Reformed charismatic (John Piper, Wayne Grudem, Sam Storms, Sovereign Grace Churches, Acts 29 continuationists)",
+   "category": "citation",
+   "severity": "minor",
+   "claim": "'notes that the sign gifts had ceased' puts a 20th-century cessationist category into Chrysostom's mouth.",
+   "evidence": "Homily 29 on 1 Corinthians says the gifts of 1 Corinthians 12 'used to occur but now no longer take place'; he has no 'sign gifts' class. Grudem and Storms argue the New Testament has no such category, so the phrase is contested vocabulary in a line meant to be neutral.",
+   "fix": "Chrysostom, preaching on 1 Corinthians 12, remarks that such gifts no longer occur in his day."
+  },
+  {
+   "id": "survey-31",
+   "lens": "survey methodologist",
+   "category": "unfairness",
+   "severity": "minor",
+   "claim": "\"Chrysostom... notes that the sign gifts had ceased\" puts a modern cessationist term of art in a fourth-century mouth.",
+   "evidence": "Chrysostom, Homily 29 on 1 Corinthians, says the passage is obscure \"by their cessation, being such as then used to occur but now no longer take place\"; he speaks of the charismata, not of \"sign gifts\", a category continuationists reject (see statement 8).",
+   "fix": "\"Chrysostom, preaching on 1 Corinthians, notes that the gifts Paul describes there no longer occur.\""
+  }
+ ]
+}

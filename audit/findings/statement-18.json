@@ -1,0 +1,122 @@
+{
+ "target": "statement:18",
+ "findings": [
+  {
+   "id": "anglican-5",
+   "lens": "Anglican (broad, Thirty-Nine Articles / Book of Common Prayer)",
+   "category": "scoring",
+   "severity": "major",
+   "claim": "'Communion should be celebrated every week as the center of the service' measures eucharistic frequency, which cuts across the liturgical/free axis in both directions, so it pushes classic Prayer-Book Anglicans toward 'Free' and free-church weekly-communion bodies toward 'Liturgical'.",
+   "evidence": "The 1662 rubric requires only that 'every Parishioner shall communicate at the least three times in the year'; the classic Anglican Sunday was Morning Prayer, Litany and Ante-Communion, the most fixed liturgy in English, with Communion monthly; weekly Communion became normal only with the Parish Communion movement (Hebert, 1937), and many evangelical Anglican parishes still keep a Service of the Word as the main service. Conversely Plymouth Brethren and Churches of Christ break bread every week as the centre of a wholly unscripted service and would answer +2, scoring as 'liturgical'.",
+   "fix": "'The church year, with Advent, Lent, Easter and the rest, should shape what a congregation reads, sings and prays each Sunday.' (direction -1). Anglicans, Lutherans, Catholics, Orthodox +2; Presbyterians and Baptists -1; Pentecostals -2."
+  },
+  {
+   "id": "churchofchrist-2",
+   "lens": "Church of Christ / Restoration Movement (Stone-Campbell)",
+   "category": "scoring",
+   "severity": "blocker",
+   "claim": "'Communion should be celebrated every week as the center of the service' is scored with direction -1 (agree pushes toward Liturgical), so the least liturgical major body in America, which has taken the Supper every Lord's Day since 1811, gets two full points toward 'Liturgical' and can be labelled 'liturgy-leaning'.",
+   "evidence": "Weekly Supper is a defining mark of Churches of Christ (Acts 20:7 'upon the first day of the week... to break bread'; Campbell, The Christian System, ch. 'Breaking the Loaf'; Ferguson, The Church of Christ, 1996). Variant run S16=-2, S17=-2, S18=+2 gives raw -2, score 33, band 'liturgy-leaning', for a congregation with no prayer book, no church year, no vestments, no instruments, and extemporaneous prayer. Weekly communion does not discriminate liturgical from free: Catholics, Orthodox, most Lutherans and Anglicans, Churches of Christ, Christian Churches, Disciples, and Plymouth Brethren all keep it; Calvin wanted it; most Presbyterians do not keep it. It measures Supper-centred vs sermon-centred, not liturgical vs free.",
+   "fix": "Replace with a church-year statement: 'The church year (Advent, Lent, Easter, Pentecost) should shape what is read, sung, and preached.' direction -1. Church of Christ: Strongly disagree (Gal 4:10-11; Col 2:16) -> +2 toward Free. Charismatic: Disagree -> Free. Anglican, Lutheran, Catholic, Orthodox: Strongly agree -> Liturgical."
+  },
+  {
+   "id": "copy-11",
+   "lens": "copy editor",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "\"Communion should be celebrated every week as the center of the service.\" is the only statement that calls the meal \"Communion\"; statement 4 says \"the Lord's Supper\", the summaries say \"the Supper\", the history says \"Eucharist\".",
+   "evidence": "Different terms for the same rite inside one 18-item instrument invite readers to suspect a tradition signal (\"Communion\" is Anglican/Methodist idiom, \"Eucharist\" Catholic/Orthodox, \"Lord's Supper\" Baptist/Reformed). Statements should use one neutral term; the instrument already chose \"the Lord's Supper\" in statement 4. The rewrite is 12 words.",
+   "fix": "\"The Lord's Supper should be celebrated every week as the center of the service.\""
+  },
+  {
+   "id": "dispensational-12",
+   "lens": "Dispensationalist (Dallas / classic and progressive dispensationalism)",
+   "category": "scoring",
+   "severity": "major",
+   "claim": "\"Communion should be celebrated every week as the center of the service.\" treats weekly communion as a liturgical marker, but the most non-liturgical bodies in Protestantism, including the Plymouth Brethren who are the cradle of dispensationalism, hold a weekly Breaking of Bread as the centre of the Lord's Day.",
+   "evidence": "Brethren practice from Dublin 1827 onward: a weekly, entirely unscripted 'open' meeting around the Lord's Table where any brother may pray, give out a hymn or read (Darby; Kelly; still universal in Open and Exclusive assemblies). Churches of Christ and many Restorationists likewise take the Supper weekly without any liturgy; Calvin also wanted weekly communion. A Brethren dispensationalist answers S16 -2, S17 +2, S18 +2: raw (-1)(-2)+(1)(2)+(-1)(2) = 2 -> 67 'informal in worship' instead of roughly 92; the item pulls him 2 raw points toward 'Liturgical' for doing exactly what Darby did. Frequency of the Supper is orthogonal to the axis.",
+   "fix": "\"Worship should follow the church year (Advent, Lent, Easter) and set prayers shared with the historic church.\" (direction -1). Weekly communion can be mentioned in the liturgical fair summary as typical, not scored."
+  },
+  {
+   "id": "historian-27",
+   "lens": "church historian",
+   "category": "scoring",
+   "severity": "minor",
+   "claim": "'Communion should be celebrated every week as the center of the service' pushes toward 'liturgical', but the two groups with the longest record of weekly communion without any liturgy, the Plymouth Brethren (weekly breaking of bread since the 1830s) and the Churches of Christ / Restorationists (weekly Supper since the 1800s), are among the most free-form congregations that exist. An honest Brethren answer is pulled toward the pole he rejects.",
+   "evidence": "Darby and the Brethren assemblies made the weekly, unled breaking of bread their defining practice; Alexander Campbell's Christian System (1835) makes weekly communion a mark of the restored church, with no liturgy.",
+   "fix": "Reword to test set form rather than frequency: 'Worship should follow the church year (Advent, Lent, Easter) and set forms for the sacraments.'"
+  },
+  {
+   "id": "lutheran-23",
+   "lens": "confessional Lutheran (LCMS / WELS / Book of Concord)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "\"Communion should be celebrated every week as the center of the service\" is double-barreled: Lutherans confess every-Sunday celebration but hold that the Divine Service has two centers, Word and Sacrament, so many informed Lutherans will drop to Agree or Unsure.",
+   "evidence": "AC XXIV.34 and Ap XXIV.1: Mass \"celebrated every Sunday and on other festivals\"; but AC V and VII make preaching and sacraments jointly the marks of the church, and much LCMS practice is still twice-monthly.",
+   "fix": "Communion should be celebrated every Sunday."
+  },
+  {
+   "id": "presbyterian-6",
+   "lens": "Presbyterian / Reformed (Westminster Standards, Three Forms of Unity)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "'Communion should be celebrated every week as the center of the service' is double-barreled: a Reformed reader who agrees with Calvin on weekly communion must still disagree because the preached Word, not the Supper, is the center of Reformed worship.",
+   "evidence": "Calvin, Institutes IV.17.43-46, wants the Supper 'at least once a week'; WLC 155 and Belgic 29 make the pure preaching of the Word the first mark and chief means; the Westminster Directory says the Supper is to be celebrated 'frequently'. So the frequency clause and the centrality clause pull a Reformed answer in opposite directions, and 'center of the service' is Catholic, Orthodox and Anglo-Catholic vocabulary.",
+   "fix": "\"Communion should be celebrated every week.\""
+  },
+  {
+   "id": "progressive-19",
+   "lens": "progressive mainline Protestant (PCUSA, ELCA, Episcopal, UMC progressive wing)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "Double-barreled: weekly celebration and 'the center of the service' are separate claims, and Word-and-Sacrament churches (Reformed, Lutheran, Methodist) hold that the sermon and the table are jointly central.",
+   "evidence": "Text: \"Communion should be celebrated every week as the center of the service.\" Calvin wanted weekly communion (Institutes IV.17.43-46) while insisting on the preached Word; a PCUSA member who agrees with weekly celebration must still hesitate at 'the center'.",
+   "fix": "\"Communion should be celebrated every week.\""
+  },
+  {
+   "id": "reformedbaptist-12",
+   "lens": "Reformed Baptist (1689 London Baptist Confession)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "'Communion should be celebrated every week as the center of the service' is double-barreled (frequency and centrality). A growing number of 1689 churches hold a weekly Supper but a Word-centered service, and cannot answer.",
+   "evidence": "LBC 30 prescribes no frequency; LBC 22.5 lists 'the reading of the Scriptures, preaching, and hearing the Word of God' first among the parts of worship, with the ordinances alongside. The centrality question is the liturgical distinctive; the frequency question is not.",
+   "fix": "'The Lord's Table, more than the sermon, should be the center of the weekly service.' (direction -1)"
+  },
+  {
+   "id": "reformedcharismatic-5",
+   "lens": "Reformed charismatic (John Piper, Wayne Grudem, Sam Storms, Sovereign Grace Churches, Acts 29 continuationists)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "'Communion should be celebrated every week as the center of the service' bundles frequency with centrality; Reformed people who follow Calvin on weekly communion but keep the preached Word central cannot answer.",
+   "evidence": "Calvin, Institutes 4.17.43-46, argues for the Supper 'at least once a week' while the sermon remains central; a growing number of Acts 29 and Reformed Baptist congregations do exactly this. The discriminating question between the poles is what sits at the center, not how often.",
+   "fix": "The Lord's Supper, not the sermon, should be the center of the Sunday service."
+  },
+  {
+   "id": "sbc-24",
+   "lens": "Southern Baptist (Baptist Faith & Message 2000)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'Communion should be celebrated every week as the center of the service' is double-barreled (frequency and centrality), and weekly frequency is not a liturgical marker: memorialist, non-liturgical churches keep a weekly Supper.",
+   "evidence": "Churches of Christ and Plymouth Brethren observe the Supper weekly as a memorial with no liturgy; a growing number of SBC churches (Capitol Hill Baptist and other 9Marks-influenced congregations) do likewise while keeping the sermon central. A Baptist in such a church who agrees on frequency but not centrality has no answer.",
+   "fix": "'The service should be built around the Lord's Supper rather than around the sermon.' (direction -1)"
+  },
+  {
+   "id": "survey-20",
+   "lens": "survey methodologist",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "\"Communion should be celebrated every week as the center of the service\" cross-loads on the Table axis and is practised by memorialist non-liturgical groups while many liturgical churches do not, so it mis-sorts both.",
+   "evidence": "Churches of Christ and Plymouth Brethren keep a weekly memorial Supper with no liturgy; Methodists historically communed monthly or quarterly, most Presbyterian churches monthly, and many Anglican evangelical parishes make Morning Prayer the main service. Worked case: a Brethren member (S16 Strongly disagree, S17 Agree, S18 Strongly agree) scores 58, \"flexible in worship\", though their open meeting is the archetype of free worship.",
+   "fix": "Replace with: \"The church year (Advent, Lent, Easter, Pentecost) should shape what a congregation does each Sunday.\" (15 words, direction -1)."
+  },
+  {
+   "id": "wesleyan-11",
+   "lens": "Wesleyan / Methodist (Wesley's sermons, Articles of Religion, Global Methodist / UMC evangelical wing)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'Communion should be celebrated every week as the center of the service' is double-barreled for Methodists, who follow Wesley on weekly (constant) communion but hold Word and Table together as the center, with the sermon at least co-central. A Methodist who agrees with weekly but not 'the center' answers Unsure and loses a liturgical point.",
+   "evidence": "Wesley, 'The Duty of Constant Communion': 'as often as he can'; UMC 'This Holy Mystery' recommends weekly celebration and describes the service as 'Word and Table'; the Basic Pattern of Worship in the UMC Book of Worship is Entrance, Word, Table, Sending.",
+   "fix": "Communion should be celebrated every week, not monthly or a few times a year. (direction -1)"
+  }
+ ]
+}

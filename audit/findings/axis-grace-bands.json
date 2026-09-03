@@ -1,0 +1,122 @@
+{
+ "target": "axis:grace:bands",
+ "findings": [
+  {
+   "id": "catholic-2",
+   "lens": "Roman Catholic",
+   "category": "unfairness",
+   "severity": "blocker",
+   "claim": "bands[1] 'Reformed-leaning' and bands[3] 'Arminian-leaning' pin Protestant party names on everyone scoring 21-40 or 60-79, which is where most Catholics land. Every other axis uses the pole-name-leaning pattern; Grace alone names denominations.",
+   "evidence": "A Thomist Catholic answering S1 +2, S2 +2, S3 +2 gets raw -2+2-2 = -2, score round(4/12*100) = 33, headline adjective 'Reformed-leaning'. The Dominicans (Banez) defended exactly that position against the charge of Calvinism through the Congregatio de Auxiliis (1597-1607), and Trent Sess. VI canons 4 and 17 anathematize the Reformed positions. A Molinist (S1 +1, S2 +2, S3 -2) gets raw 3, score 75, 'Arminian-leaning'; Arminius borrowed from Molina, not the reverse. Both labels are factually false for their holders and would be screenshotted ('Catholic priest scores Reformed-leaning').",
+   "fix": "[\"firmly monergist\", \"monergist-leaning\", \"balanced on grace\", \"synergist-leaning\", \"firmly synergist\"]"
+  },
+  {
+   "id": "charismatic-19",
+   "lens": "charismatic non-denominational (Vineyard, Bethel, Hillsong, Third Wave)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'Reformed-leaning' (21-40) is asymmetric with 'Arminian-leaning' (60-79) and collides with the tradition names; 'firmly synergist' is a word no charismatic layperson uses of themselves.",
+   "evidence": "'Reformed' names a whole tradition in the list ('Presbyterian / Reformed', 'Reformed Baptist') and a Reformed charismatic would be told they are 'Reformed-leaning' as if it were tentative; 'Arminian' names a soteriology. The Bethel profile is headlined 'Firmly synergist', a Reformed polemical coinage that Olson only reluctantly accepts as 'evangelical synergism'.",
+   "fix": "bands: ['firmly monergist', 'Calvinist-leaning', 'balanced on grace', 'Arminian-leaning', 'firmly free-will'] (or keep 'firmly synergist' but use 'Calvinist-leaning' for symmetry)."
+  },
+  {
+   "id": "churchofchrist-13",
+   "lens": "Church of Christ / Restoration Movement (Stone-Campbell)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The bands 'Reformed-leaning' and 'Arminian-leaning' name parties rather than positions, so a moderate Church of Christ member at 60-79 is labelled with another tradition's name; the Restoration Movement expressly rejected Arminianism as well as Calvinism, and Catholics and Orthodox at 55-65 get the same mislabel.",
+   "evidence": "Campbell-Rice Debate (1843), proposition on the Holy Spirit: Campbell denied the Arminian doctrine of a direct pre-conversion operation of the Spirit, holding that faith comes by hearing the Word (Rom 10:17). Standard self-description: 'neither Calvinist nor Arminian' (Garrett, The Stone-Campbell Movement). The other four grace bands use position words; only these two use party names.",
+   "fix": "bands[1] = 'leaning monergist', bands[3] = 'leaning synergist' (consistent with the pole names)."
+  },
+  {
+   "id": "copy-1",
+   "lens": "copy editor",
+   "category": "unfairness",
+   "severity": "blocker",
+   "claim": "Bands \"Reformed-leaning\" and \"Arminian-leaning\" put denominational names on a Monergist ↔ Synergist axis, so non-Reformed monergists and non-Arminian synergists are labelled with a party they reject.",
+   "evidence": "Walk-through of a confessional Lutheran (S1 Strongly agree, S2 Agree, S3 Strongly agree; sacramental; mildly cessationist; amillennial) gives scores [25, 0, 75, 17, 58, 42] and the headline \"Sacramental, covenantal, Reformed-leaning\". Formula of Concord SD XI teaches unconditional election while rejecting the Reformed doctrine of irresistible grace; no Lutheran accepts \"Reformed\" as a self-description (Marburg 1529 is in this very dataset). On the other side, the hand-set coordinates put Eastern Orthodox (grace 65), Anabaptist / Mennonite (75) and Charismatic non-denominational (70) in \"Arminian-leaning\": Orthodox synergism (Cassian, Maximus) predates Arminius by a millennium, and Anglican (broad) and Dispensational Bible church (both 40) land in \"Reformed-leaning\" although most dispensational Bible churches are explicitly non-Calvinist (Chafer, Ryrie). Every other axis uses the pole word for its leaning bands (\"sacramental-leaning\", \"covenantal-leaning\").",
+   "fix": "bands: [\"firmly monergist\", \"monergist-leaning\", \"balanced on grace\", \"synergist-leaning\", \"firmly synergist\"]"
+  },
+  {
+   "id": "dispensational-10",
+   "lens": "Dispensationalist (Dallas / classic and progressive dispensationalism)",
+   "category": "tone",
+   "severity": "major",
+   "claim": "The 21–40 band \"Reformed-leaning\" labels a moderately Calvinistic dispensationalist with the name of the system he explicitly rejects; 'Arminian-leaning' is a soteriology label but 'Reformed' is a whole-tradition label, so the pair is asymmetric.",
+   "evidence": "'Calvinistic but not Reformed' is standard DTS self-description; Ryrie, Dispensationalism (1995) devotes a chapter to contrasting dispensationalism with covenant (Reformed) theology, and the Reformed confessions (WCF ch. 7, 25, 28) commit to covenant theology and paedobaptism, which every Bible church denies. A Chafer/Walvoord-type answering S1 +2, S2 0, S3 +1 scores raw -3 -> 25 and would receive a headline containing both 'Reformed-leaning' and 'dispensational', which both camps would screenshot as a contradiction in terms.",
+   "fix": "Rename bands[1] \"Calvinist-leaning\" (parallel to \"Arminian-leaning\"); optionally bands[0] \"firmly Calvinist\" and bands[4] \"firmly Arminian\" for full symmetry, though 'monergist/synergist' are acceptable."
+  },
+  {
+   "id": "historian-4",
+   "lens": "church historian",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "'Reformed-leaning' (21–40) and 'Arminian-leaning' (60–79) hang party names on a doctrinal axis, unlike every other axis ('sacramental-leaning', 'covenantal-leaning'). A confessional Lutheran, a Thomist Catholic, or a Jansenist who scores 25–40 is told he is 'Reformed-leaning'; a Molinist Catholic, an Eastern Orthodox (whose own word is 'synergy'), or a Wesleyan who scores 60–79 is told he is 'Arminian-leaning'. Those labels appear in the headline and share card.",
+   "evidence": "Aquinas, ST I q.23 a.5 (predestination not grounded in foreseen merit) and the Formula of Concord XI are monergist texts by people who were not Reformed; the Confession of Dositheus (1672) and the whole Greek patristic tradition of synergeia predate Arminius. The tradition table puts Lutheran at 20 and Orthodox at 65, i.e. right on these mislabeled bands.",
+   "fix": "bands: ['firmly monergist', 'monergist-leaning', 'balanced on grace', 'synergist-leaning', 'firmly synergist']."
+  },
+  {
+   "id": "lutheran-3",
+   "lens": "confessional Lutheran (LCMS / WELS / Book of Concord)",
+   "category": "unfairness",
+   "severity": "blocker",
+   "claim": "The 21-40 band is named \"Reformed-leaning\" and the 60-79 band \"Arminian-leaning\"; a confessional Lutheran lands at 33 and is told he is Reformed-leaning. No other axis names a rival tradition in a band label.",
+   "evidence": "Simulation: Grace raw -2 -> 33 -> bands[1] = \"Reformed-leaning\". FC SD XI explicitly rejects the Reformed decree of reprobation and FC SD VII the Reformed view of the Supper; \"Reformed\" is the tradition Lutherans have defined themselves against since Marburg (1529). An Eastern Orthodox at 65 is likewise told he is \"Arminian-leaning\", a 17th-century Dutch label for a 1st-millennium church.",
+   "fix": "[\"firmly monergist\", \"mostly monergist\", \"mixed on grace\", \"mostly synergist\", \"firmly synergist\"]"
+  },
+  {
+   "id": "orthodox-5",
+   "lens": "Eastern Orthodox",
+   "category": "unfairness",
+   "severity": "blocker",
+   "claim": "\"Reformed-leaning\" and \"Arminian-leaning\" pin Protestant party names on everyone in the 21-40 and 60-79 bands; the quiz's own Eastern Orthodox coordinate (grace 65) sits inside the \"Arminian-leaning\" band, so the data file labels the Orthodox Church a leaning-Arminian body.",
+   "evidence": "Bands: [\"firmly monergist\",\"Reformed-leaning\",\"balanced on grace\",\"Arminian-leaning\",\"firmly synergist\"]. Orthodox synergism (Cassian, Conferences 13; Maximus the Confessor; John of Damascus, Exact Exposition II.29-30; Synod of Jerusalem 1672) predates Arminius (1560-1609) by a millennium and rests on a different anthropology: no total depravity, no prevenient-grace scheme, salvation as theosis. An Orthodox landing 60-79 sees \"Arminian-leaning\" on the share card.",
+   "fix": "[\"firmly monergist\", \"leaning monergist\", \"balanced on grace\", \"leaning synergist\", \"firmly synergist\"]"
+  },
+  {
+   "id": "presbyterian-3",
+   "lens": "Presbyterian / Reformed (Westminster Standards, Three Forms of Unity)",
+   "category": "unfairness",
+   "severity": "blocker",
+   "claim": "'Reformed-leaning' names one tradition as the owner of monergism and will be pinned on confessional Lutherans, Augustinian Catholics and Reformed Baptists who explicitly reject the 'Reformed' label; 'Arminian-leaning' does the same to Catholics and Orthodox whose synergism predates Arminius by a millennium.",
+   "evidence": "Formula of Concord, Epitome XI, rejects the Reformed doctrine of reprobation while affirming that election is by grace alone; a confessional Lutheran who answers S1 +1, S2 +2, S3 +2 scores raw -1-2+... = (-1)(1)+(1)(2)+(-1)(2) = -1 -> round(5/12*100) = 42? No: with S1 +2, S2 +2, S3 +2 the raw is -2+2-2 = -2 -> 33, which is band[1] 'Reformed-leaning'. The Lutheran will screenshot that. Every other axis uses doctrinal adjectives (sacramental-leaning, covenantal-leaning, memorial-leaning); only Grace uses tradition names. From our own side, 'Reformed' is a whole theology (covenant, church, worship), not a synonym for the five points.",
+   "fix": "bands: [\"firmly monergist\", \"monergist-leaning\", \"balanced on grace\", \"synergist-leaning\", \"firmly synergist\"]."
+  },
+  {
+   "id": "progressive-9",
+   "lens": "progressive mainline Protestant (PCUSA, ELCA, Episcopal, UMC progressive wing)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "Denominational names are used as band adjectives, and the midpoint band calls a sola-gratia Lutheran 'balanced on grace'.",
+   "evidence": "bands[1] \"Reformed-leaning\", bands[3] \"Arminian-leaning\", bands[2] \"balanced on grace\". A Thomist Catholic at 30 is not 'Reformed-leaning'; an Orthodox at 70 is not 'Arminian-leaning'; an ELCA member scores 42 by the instrument (see statement:2) and is told grace is something they are balanced about, when Augsburg Confession IV is their whole identity.",
+   "fix": "[\"firmly monergist\", \"monergist-leaning\", \"mixed on grace and free will\", \"synergist-leaning\", \"firmly synergist\"]."
+  },
+  {
+   "id": "reformedbaptist-29",
+   "lens": "Reformed Baptist (1689 London Baptist Confession)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'Reformed-leaning' names a tradition rather than a position; confessional Lutherans are monergists and would refuse the label, which weakens the 'both sides fair' promise even though it does not hurt us.",
+   "evidence": "Formula of Concord, Solid Declaration II (Free Will) is monergist on conversion while rejecting Reformed predestinarianism; the Lutheran entry sits at grace 20, i.e., inside the 'Reformed-leaning' band.",
+   "fix": "bands: ['firmly monergist', 'leaning monergist', 'balanced on grace', 'leaning synergist', 'firmly synergist']"
+  },
+  {
+   "id": "sbc-2",
+   "lens": "Southern Baptist (Baptist Faith & Message 2000)",
+   "category": "unfairness",
+   "severity": "blocker",
+   "claim": "The right-hand band adjectives 'Arminian-leaning' and 'firmly synergist' will be applied to the majority of the largest Protestant body in the United States, which has spent a decade insisting in print that it is neither Arminian nor synergist.",
+   "evidence": "The 2012 Traditional Statement's preamble distinguishes traditional Southern Baptist soteriology from both Calvinism and Arminianism; its Article 4 denies that 'the response of faith is in any way a meritorious work that earns salvation' and Article 9 affirms the security of the believer, which classical Wesleyan Arminianism denies. 'Synergist' is the word Calvinist polemics use for this group, not a word it uses for itself. In the simulation a Traditionalist scores 83 and receives 'firmly synergist' as the third word of the headline card that the quiz invites them to share; a pastor at 75 gets 'Arminian-leaning'. That card will be screenshotted with the caption 'this quiz calls Southern Baptists Arminians'.",
+   "fix": "bands: ['firmly monergist', 'Reformed-leaning', 'balanced on grace', 'free-will-leaning', 'firmly free-will']. Both Traditionalists (Traditional Statement Art. 2 affirms 'free will') and Wesleyans use 'free will' of themselves, and Catholics accept it."
+  },
+  {
+   "id": "survey-4",
+   "lens": "survey methodologist",
+   "category": "unfairness",
+   "severity": "blocker",
+   "claim": "The Grace band adjectives \"Reformed-leaning\" and \"Arminian-leaning\" are tradition names, so Lutherans, Thomist Catholics, and Orthodox are labelled with a rival tradition on a quiz that promises tradition-neutrality.",
+   "evidence": "A confessional Lutheran scores 33-42 on Grace (worked case above) and is told \"Reformed-leaning\" in the headline; Lutherans define themselves against the Reformed precisely on predestination (Formula of Concord XI rejects the Reformed reading). All-Strongly-agree acquiescent answers also produce the headline \"Reformed-leaning, sacramental-leaning, open to the gifts\". Eastern Orthodox (coordinate 65) would be \"Arminian-leaning\" though Orthodox synergism predates Arminius by a millennium. Every other axis uses position words, not tradition names.",
+   "fix": "bands: [\"firmly monergist\", \"monergist-leaning\", \"balanced on grace\", \"synergist-leaning\", \"firmly synergist\"]."
+  }
+ ]
+}

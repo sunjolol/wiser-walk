@@ -1,0 +1,23 @@
+{
+ "target": "tradition:Dispensational Bible church",
+ "findings": [
+  {
+   "id": "dispensational-14",
+   "lens": "Dispensationalist (Dallas / classic and progressive dispensationalism)",
+   "category": "scoring",
+   "severity": "major",
+   "claim": "The coordinates [40, 90, 90, 95, 90, 75] put worship and spirit higher than the current statements deliver for real adherents, so a progressive dispensationalist who is 'open but cautious' on the gifts is handed 'Southern Baptist (typical)' first.",
+   "evidence": "Progressive dispensationalist profile: S1 1, S2 1, S3 0; table -2,2,-2; S7 -1, S8 1, S9 -1 (Spirit raw 3 -> 75); S10 2, S11 -1 (PD says the church shares Abraham's blessing but is not 'true Israel'), S12 1 (Kingdom raw 4 -> 83); S13 -1, S14 2, S15 -2 (92); S16 -1, S17 -1, S18 -1 (58). Vector [50,100,75,83,92,58]. Distance to Southern Baptist (typical) [45,85,75,70,85,70] = sqrt(25+225+0+169+49+144) = sqrt(612) = 24.74; to Dispensational Bible church = sqrt(100+100+225+144+4+289) = sqrt(862) = 29.36. With worship 65 and spirit 85 the same vector gives DBC sqrt(100+100+100+144+4+49) = sqrt(497) = 22.29, ahead of SBC 24.74; the typical classic profile improves from 24.86 to sqrt(503) = 22.43. If S17 is rewritten as proposed, worship 75 becomes correct and only spirit needs the nudge. Grace 40 is defensible (the DTS 'moderate Calvinist' range under these items runs 25–75); table 90, kingdom 95 and tradition 90 are right.",
+   "fix": "Set worship to 65 and spirit to 85 (or keep worship 75 only if statement 17 is rewritten to measure non-liturgical rather than spontaneous worship)."
+  },
+  {
+   "id": "dispensational-16",
+   "lens": "Dispensationalist (Dallas / classic and progressive dispensationalism)",
+   "category": "tone",
+   "severity": "minor",
+   "claim": "\"Dispensational Bible church\" is recognisable but is not a name anyone uses for their own church, and it is the only entry named by a theological system rather than a church family.",
+   "evidence": "'Bible church' is a real label (IFCA International, founded 1930 as the Independent Fundamental Churches of America; its doctrinal statement is dispensational and pretribulational; Dallas Bible Church, Grace Bible Church, etc.), and everyone in the movement knows Bible churches are dispensational. But 'Presbyterian / Reformed' is not called 'Covenantal Presbyterian church', so the adjective singles us out as the ones defined by a system.",
+   "fix": "\"Bible church (independent, dispensational)\" or \"Independent Bible church\"."
+  }
+ ]
+}

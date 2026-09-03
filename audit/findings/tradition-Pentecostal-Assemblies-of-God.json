@@ -1,0 +1,14 @@
+{
+ "target": "tradition:Pentecostal / Assemblies of God",
+ "findings": [
+  {
+   "id": "pentecostal-19",
+   "lens": "Pentecostal (Assemblies of God Statement of Fundamental Truths)",
+   "category": "scoring",
+   "severity": "minor",
+   "claim": "Coordinates [80, 85, 5, 75, 85, 90] are directionally right but sit low on grace and kingdom relative to how an informed AG member answers; the entry lands nearest in the simulation (17.03) but would fit better at grace 85 and kingdom 80.",
+   "evidence": "Simulation scores grace 92 and kingdom 83; the AG requires a pretribulational rapture of its ministers (Bylaws Art. IX.B) and rejects unconditional election, so typical members answer S2 and S12 at +2. With grace 85 and kingdom 80 the distance becomes sqrt(49+49+25+9+4+4)=sqrt(140)=11.83 (95%) with no change to any other tradition's nearest result (Charismatic non-denom stays at 34.50).",
+   "fix": "grace 85, kingdom 80 (leave the rest)."
+  }
+ ]
+}

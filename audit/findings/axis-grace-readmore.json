@@ -1,0 +1,59 @@
+{
+ "target": "axis:grace:readmore",
+ "findings": [
+  {
+   "id": "lutheran-15",
+   "lens": "confessional Lutheran (LCMS / WELS / Book of Concord)",
+   "category": "citation",
+   "severity": "major",
+   "claim": "The Monergist reading list is Calvin and Sproul only; the book the quiz's own history names as the Reformation's monergist manifesto (1525, The Bondage of the Will) is not listed, which reinforces the equation monergist = Calvinist.",
+   "evidence": "Grace history entry index 2 cites Luther's Bondage of the Will; read_more.left omits it.",
+   "fix": "left: [\"Luther, The Bondage of the Will\", \"Calvin, Institutes III\"] (or add \"Formula of Concord, Article XI\" as a third)."
+  },
+  {
+   "id": "mockery-28",
+   "lens": "mockery critic",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The synergist list is Arminius and Olson, so the pole that Catholics and Orthodox share with Arminians is described only by Arminians. Orthodox convert: 'my reading list is a Dutch Remonstrant and a Baylor Baptist.'",
+   "evidence": "Cassian, Conferences XIII is the primary-source counterpart to Calvin, Institutes III, and is the text Eastern writers cite for synergy.",
+   "fix": "right: ['Arminius, Works', 'Olson, Arminian Theology', 'Cassian, Conferences XIII']"
+  },
+  {
+   "id": "orthodox-9",
+   "lens": "Eastern Orthodox",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The right pole's list is Arminius and Olson only, so an Orthodox or Catholic scoring synergist is sent to Arminian sources.",
+   "evidence": "read_more.right: [\"Arminius, Works\", \"Olson, Arminian Theology\"]; the quiz itself coordinates Orthodox (65) and Catholics (55) on this side.",
+   "fix": "Add \"Ware, The Orthodox Way\" (or \"John of Damascus, Exact Exposition II.29-30\")."
+  },
+  {
+   "id": "presbyterian-24",
+   "lens": "Presbyterian / Reformed (Westminster Standards, Three Forms of Unity)",
+   "category": "citation",
+   "severity": "minor",
+   "claim": "The right pole gets its primary source (Arminius, Works) but the left gets no confessional primary source, although the history line names the Synod of Dort's five points.",
+   "evidence": "The Canons of Dort (1618-19) are the actual reply to the Remonstrance and the shortest, most readable monergist primary text; Institutes III is 400 pages.",
+   "fix": "left: [\"Canons of Dort\", \"Calvin, Institutes III.21–24\", \"Sproul, Chosen by God\"]."
+  },
+  {
+   "id": "sbc-12",
+   "lens": "Southern Baptist (Baptist Faith & Message 2000)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The right-hand reading list sends a non-Calvinist Southern Baptist to Arminius and Olson, neither of whom they would recognize as their tradition, when the SBC has its own standard literature.",
+   "evidence": "Allen & Lemke (eds.), Whosoever Will: A Biblical-Theological Critique of Five-Point Calvinism (B&H 2010) is the SBC non-Calvinist text; Schreiner & Ware (eds.), Still Sovereign (Baker 2000) is the SBC Calvinist one. The history array likewise has no entry after 1740, though the 2012 Traditional Statement is the most recent widely read document on this axis.",
+   "fix": "right: add 'Allen & Lemke, Whosoever Will'; left: add 'Schreiner & Ware, Still Sovereign'. History: add {when: '2012', what: 'The Traditional Statement marks the Calvinist/non-Calvinist divide inside the Southern Baptist Convention.'}"
+  },
+  {
+   "id": "wesleyan-15",
+   "lens": "Wesleyan / Methodist (Wesley's sermons, Articles of Religion, Global Methodist / UMC evangelical wing)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The right-pole read-more ('Arminius, Works', 'Olson, Arminian Theology') gives a Methodist reader a Dutch Reformed source and a modern Baptist-Arminian one but not Wesley, whose short treatise is the text Methodists actually hand people.",
+   "evidence": "Wesley, 'Predestination Calmly Considered' (1752) is the standard Methodist statement on election and is freely available; 'Arminius, Works' (three volumes) is not a realistic read-more for a lay reader.",
+   "fix": "right: ['Wesley, Predestination Calmly Considered', 'Olson, Arminian Theology'] (keep Arminius as a third if space allows)."
+  }
+ ]
+}

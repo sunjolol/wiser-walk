@@ -1,0 +1,131 @@
+{
+ "target": "axis:worship:summary",
+ "findings": [
+  {
+   "id": "anabaptist-10",
+   "lens": "Anabaptist / Mennonite (Schleitheim Confession, Confession of Faith in a Mennonite Perspective 1995)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The 'Free worship' description bundles spontaneity with whole-congregation participation, so Anabaptist plain worship, which has the second without the first, fits neither pole.",
+   "evidence": "Quoted text: 'Free worship keeps the form open so that the Spirit can lead in the moment, with an emphasis on spontaneity, sincerity, and the participation of the whole congregation.' Multivoiced participation (1 Corinthians 14:26; Eleanor Kreider's term) is Anabaptist and Quaker; 'the Spirit can lead in the moment' and 'spontaneity' are Pentecostal. A Mennonite scored 60-79 reads a description of a worship style he does not practise.",
+   "fix": "'Free worship holds that no fixed rite is required: the congregation orders its own service, simply and sincerely, around Scripture, preaching, prayer, and song, with room for members to take part and for the Spirit to lead, whether the service is planned in plain forms or open to the moment.'"
+  },
+  {
+   "id": "anglican-6",
+   "lens": "Anglican (broad, Thirty-Nine Articles / Book of Common Prayer)",
+   "category": "inaccuracy",
+   "severity": "major",
+   "claim": "'Liturgical worship follows a set order, the church calendar, and a weekly Eucharist' makes weekly Eucharist definitional, which excludes three centuries of Book of Common Prayer worship and most Lutheran and Reformed liturgical practice.",
+   "evidence": "The 1662 Prayer Book is the archetype of English-language liturgical worship and did not assume a weekly celebration (rubric: at least three times a year); Morning and Evening Prayer are its normal Sunday offices. Weekly Eucharist is a feature of Catholic, Orthodox and modern Anglican practice, not of liturgical worship as such.",
+   "fix": "'Liturgical worship follows a set order and the church calendar, usually with the Eucharist at its centre, so that a congregation prays with the historic church in words tested over centuries.'"
+  },
+  {
+   "id": "catholic-24",
+   "lens": "Roman Catholic",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "\"Free worship keeps the form open so that the Spirit can lead in the moment, with an emphasis on spontaneity, sincerity, and the participation of the whole congregation\" implicitly says liturgical worship is not led by the Spirit and is not participatory. The second claim is especially galling: 'active participation' is the watchword of Catholic liturgical reform.",
+   "evidence": "CCC 1091-1112, 'The Holy Spirit and the Church in the Liturgy'; SC 7 (Christ present in the liturgy); SC 14: 'full, conscious, and active participation' of all the faithful is 'the aim to be considered before all else'.",
+   "fix": "\"Free worship keeps the form open, trusting the Spirit to shape each gathering as it happens, with an emphasis on spontaneity, sincerity, and every member's freedom to contribute.\""
+  },
+  {
+   "id": "churchofchrist-4",
+   "lens": "Church of Christ / Restoration Movement (Stone-Campbell)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The Free pole is described in charismatic vocabulary only ('so that the Spirit can lead in the moment, with an emphasis on spontaneity'), and the Liturgical pole is defined to include 'a weekly Eucharist', so a Church of Christ member reads both summaries and finds his own worship (weekly Supper, no liturgy, no calendar, a cappella congregational singing) in neither.",
+   "evidence": "Quoted text: 'Liturgical worship follows a set order, the church calendar, and a weekly Eucharist' and 'Free worship keeps the form open so that the Spirit can lead in the moment, with an emphasis on spontaneity, sincerity, and the participation of the whole congregation.' No member of Churches of Christ would accept 'spontaneity' or 'Spirit can lead in the moment' as a description of his assembly; he would accept 'simple', 'no prescribed forms', 'in the leader's own words', 'the whole congregation sings' (Eph 5:19; Col 3:16).",
+   "fix": "'Liturgical worship follows a set order of prayers and readings and the church calendar, usually with a weekly Eucharist, so that a congregation prays with the historic church in words tested over centuries. Free worship has no prescribed liturgy or church year: prayers are in the leader's own words and each congregation shapes its own service, whether by following a simple New Testament pattern or by leaving room for the Spirit to lead in the moment, with an emphasis on sincerity and the participation of the whole congregation.'"
+  },
+  {
+   "id": "historian-23",
+   "lens": "church historian",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "'the participation of the whole congregation' is claimed as the free pole's distinctive. That phrase is the liturgical movement's own watchword, and a Catholic, Orthodox, or Anglican reader will object that responsive liturgy is congregational participation by design.",
+   "evidence": "Vatican II, Sacrosanctum Concilium 14 (4 Dec 1963): 'full, conscious, and active participation in liturgical celebrations... is the aim to be considered before all else'. Common prayer (Cranmer's title) means prayer said by the people. The free pole's real distinctive is that any member may contribute as prompted.",
+   "fix": "Free-pole sentence: 'Free worship keeps the form open so that the Spirit can lead in the moment, with an emphasis on spontaneity, sincerity, and room for any member to contribute as the Spirit prompts.' Also add to history: {when: '1963', what: 'Vatican II, Sacrosanctum Concilium: vernacular liturgy and the \"full, conscious, and active participation\" of the people.'}"
+  },
+  {
+   "id": "lutheran-24",
+   "lens": "confessional Lutheran (LCMS / WELS / Book of Concord)",
+   "category": "unfairness",
+   "severity": "minor",
+   "claim": "\"the participation of the whole congregation\" is listed as a distinctive of free worship, implying liturgical worship is not participatory; congregational hymnody and the sung ordinary are Lutheran inventions. The liturgical rationale \"prays with the historic church\" is the Anglican/Webber reason, not the Lutheran one (in the Divine Service God serves the congregation with Word and Sacrament).",
+   "evidence": "Luther, Deutsche Messe (1526), replaced choir propers with congregational chorales; LC and AC XXIV.2-3 on singing in the vernacular \"for the instruction of the people\". The Free summary also lumps regulative-principle Presbyterians (who reject \"led in the moment\") with Pentecostals, which is unfair to that side too.",
+   "fix": "Free worship keeps the form open, whether so that the Spirit can lead in the moment or so that each service can take its own shape, with an emphasis on spontaneity and sincerity."
+  },
+  {
+   "id": "mockery-19",
+   "lens": "mockery critic",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "Free worship is defined as 'spontaneity ... the Spirit can lead in the moment', which is Pentecostal worship only. The Reformed blogger, whose church has no liturgy and no spontaneity, screenshots it with the Puritan entry from the same timeline: 'The quiz's two options are the Prayer Book and Hillsong. The regulative principle is in its own history and nowhere on its axis.' The liturgical side also reads 'the Spirit can lead' as claiming the Spirit for one pole.",
+   "evidence": "A regulative-principle Presbyterian answers Disagree on 16 and Disagree on 17 and cancels to the midpoint; the history entry '1600s Puritans articulate the regulative principle' describes a position the axis cannot place. 'Free worship' in worship studies (e.g. James F. White, Protestant Worship) covers Reformed, Baptist, and Pentecostal non-liturgical worship alike.",
+   "fix": "'Free worship keeps the form open — from the plain, Scripture-ordered service of Reformed and Baptist churches to the spontaneity of Pentecostal worship — so that the service is shaped by the congregation and its leaders rather than by a fixed text, with an emphasis on sincerity and the participation of everyone present.'"
+  },
+  {
+   "id": "orthodox-23",
+   "lens": "Eastern Orthodox",
+   "category": "unfairness",
+   "severity": "minor",
+   "claim": "Listing \"the participation of the whole congregation\" as a free-worship distinctive implies liturgical worship lacks it, and the liturgical description reads as an argument from antiquity, omitting the reason the Orthodox keep a set liturgy: it joins the worship of heaven.",
+   "evidence": "Text: \"with an emphasis on spontaneity, sincerity, and the participation of the whole congregation.\" Leitourgia means the work of the people; the Orthodox liturgy is sung and answered by all; the Cherubic Hymn and Isaiah 6 / Revelation 4-5 are its rationale.",
+   "fix": "Liturgical worship follows a set order, the church calendar, and a weekly Eucharist, so that the whole congregation prays and sings with the historic church, in words tested over centuries, and joins the worship of heaven. Free worship keeps the form open so that the Spirit can lead in the moment, with an emphasis on spontaneity, sincerity, and room for any member to contribute."
+  },
+  {
+   "id": "pentecostal-18",
+   "lens": "Pentecostal (Assemblies of God Statement of Fundamental Truths)",
+   "category": "unfairness",
+   "severity": "minor",
+   "claim": "'with an emphasis on spontaneity, sincerity, and the participation of the whole congregation' claims sincerity for the free side, which implies the liturgical side lacks it; the other pole is described without any such contrast. The paragraph also never mentions the exercise of the gifts, which is what makes Pentecostal worship free.",
+   "evidence": "The liturgical paragraph is descriptive ('a set order, the church calendar, and a weekly Eucharist'); 'sincerity' is evaluative. AG Statement of Fundamental Truths art. 7 and 1 Cor 14:26 ('each one has a hymn, a lesson, a revelation, a tongue, or an interpretation').",
+   "fix": "'...with an emphasis on spontaneity, immediacy, and the participation of the whole congregation, including in Pentecostal churches the exercise of the gifts.'"
+  },
+  {
+   "id": "presbyterian-5",
+   "lens": "Presbyterian / Reformed (Westminster Standards, Three Forms of Unity)",
+   "category": "missing",
+   "severity": "major",
+   "claim": "The Reformed position falls off this axis: the liturgical pole is defined as 'a set order, the church calendar, and a weekly Eucharist' and the free pole as 'the Spirit can lead in the moment', and the regulative principle (ordered, Scripture-limited, no prayer book, historically no calendar) is neither. The summary never tells a Reformed reader why they landed in the middle.",
+   "evidence": "Westminster Directory for the Publick Worship of God (1645) deliberately replaced the Prayer Book with a directory rather than a liturgy; WCF 21.1, 21.5 list the commanded elements; the Puritans rejected the church calendar (Directory, appendix: 'Festival days, vulgarly called Holy-days, having no warrant in the word of God, are not to be continued'). Belgic 32 and HC 96 make the same point for the Continental churches.",
+   "fix": "Append to fair_summary: \"A third stream, the Reformed regulative principle, is neither: worship is simple and ordered, limited to what Scripture commands, but bound to no prayer book or calendar. It usually lands near the middle of this axis.\""
+  },
+  {
+   "id": "progressive-10",
+   "lens": "progressive mainline Protestant (PCUSA, ELCA, Episcopal, UMC progressive wing)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The free-worship description claims sincerity and whole-congregation participation as its distinctives, which implies liturgical worship lacks both; liturgy means 'the work of the people' and congregational participation is precisely its claim.",
+   "evidence": "Text: \"with an emphasis on spontaneity, sincerity, and the participation of the whole congregation.\" Sacrosanctum Concilium 14 (1963): 'full, conscious, and active participation' is the liturgical movement's slogan; the 1979 BCP and ELW are built around congregational responses, and the Kyrie, Sanctus, and Lord's Prayer are sung by the whole assembly.",
+   "fix": "\"with an emphasis on spontaneity, heartfelt expression, and freedom for any member to contribute as the Spirit prompts.\""
+  },
+  {
+   "id": "reformedbaptist-14",
+   "lens": "Reformed Baptist (1689 London Baptist Confession)",
+   "category": "missing",
+   "severity": "major",
+   "claim": "The summary describes only prayer-book liturgy and Spirit-led spontaneity. The Puritan/Reformed 'regulative principle' worship that most Presbyterians and Reformed Baptists practice is neither, and readers who land mid-axis get no description of their own view even though the history line for the 1600s names it.",
+   "evidence": "LBC 22.1 and 22.5; WCF 21.1 and 21.5 identical in substance: a simple, fixed order of Scripture-commanded elements (reading, preaching, prayer, singing, the ordinances) without a prescribed liturgy or spontaneous forms.",
+   "fix": "Append: 'Between them, churches shaped by the Puritan regulative principle keep a simple, fixed order of the elements Scripture commands (reading, preaching, prayer, singing, baptism and the Supper) without a prayer book and without improvisation.'"
+  },
+  {
+   "id": "reformedcharismatic-11",
+   "lens": "Reformed charismatic (John Piper, Wayne Grudem, Sam Storms, Sovereign Grace Churches, Acts 29 continuationists)",
+   "category": "inaccuracy",
+   "severity": "major",
+   "claim": "'Free worship keeps the form open so that the Spirit can lead in the moment, with an emphasis on spontaneity, sincerity, and the participation of the whole congregation' describes revivalist spontaneity only, contradicts the pole's own read-more and history, and 'sincerity' implies liturgical worship is less sincere.",
+   "evidence": "The right-pole read-more is Frame, Worship in Spirit and Truth (a defense of the regulative principle) and Kauflin, Worship Matters (planned services, 'Rooted and Relevant'); the history's 1600s line is the Puritan regulative principle. None of these is 'spontaneity'. Sovereign Grace and Bethlehem worship is Word-regulated and planned with room for the Spirit. A Prayer Book Anglican would screenshot 'sincerity'.",
+   "fix": "Free worship holds that Scripture prescribes the elements of worship (the Word read and preached, prayer, song, the ordinances) but no fixed script, so each service can be shaped freshly, with room for the Spirit to lead in the moment and for the whole congregation to take part."
+  },
+  {
+   "id": "sbc-22",
+   "lens": "Southern Baptist (Baptist Faith & Message 2000)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "'Free worship keeps the form open so that the Spirit can lead in the moment, with an emphasis on spontaneity' describes Pentecostal worship, not the free-church principle; Baptists are the paradigm 'free church' and their services are planned, sermon-centered, and not spontaneous.",
+   "evidence": "The Baptist principle is that Scripture prescribes no fixed liturgy and each autonomous congregation (BF&M 2000 Art. VI) orders its own worship, historically under the regulative principle (Second London Confession ch. 22); White's 'Frontier' tradition is ordered and preaching-centered. As written, the summary tells a First Baptist congregation with a choir, orchestra, and printed order of service that their side of the axis is about spontaneity.",
+   "fix": "'Free worship holds that Scripture prescribes no fixed liturgy, so each congregation orders its own service as it judges best, usually around the preaching of the Word; in some churches this leaves room for spontaneity and congregational participation in the moment.'"
+  }
+ ]
+}

@@ -1,0 +1,29 @@
+---
+import Base from '../../layouts/Base.astro';
+import { decode, headline, nearest, nearestLine, AXES, lean, SIMULATIONS, encode, computeScores } from '../../lib/compass';
+
+// Pre-render the published answer sheets; the rest are generated on demand in Stage 2.
+export function getStaticPaths() {
+  const codes = new Set<string>();
+  for (const sim of SIMULATIONS as any[]) {
+    if (Array.isArray(sim.answers) && sim.answers.length) codes.add(encode(computeScores(sim.answers)));
+  }
+  return [...codes].map(code => ({ params: { code } }));
+}
+
+const { code } = Astro.params;
+const scores = decode(String(code).toUpperCase());
+---
+{scores ? (
+  <Base title={`${headline(scores)} — Theology Compass`} description={nearestLine(scores, nearest(scores))} noindex={true}>
+    <h1>{headline(scores)}</h1>
+    <p>{nearestLine(scores, nearest(scores))}</p>
+    <ul>{AXES.map((a, i) => <li>{a.name}: {lean(a, scores[i])}</li>)}</ul>
+    <p><a href="/quiz/">Take it yourself</a></p>
+  </Base>
+) : (
+  <Base title="Result not found" description="That result code is not valid.">
+    <h1>That code is not a valid result</h1>
+    <p><a href="/quiz/">Take the quiz</a></p>
+  </Base>
+)}

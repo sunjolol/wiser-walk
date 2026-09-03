@@ -1,0 +1,23 @@
+{
+ "target": "axis:spirit:history:0",
+ "findings": [
+  {
+   "id": "mockery-9",
+   "lens": "mockery critic",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "Continuationism's ancestry on the timeline is Montanist heretics, then Chrysostom saying the gifts ceased, then nothing for 1,500 years until Azusa Street. The Pentecostal pastor screenshots the whole list: 'lol, written by a cessationist — my family tree is Montanus and a gap.' The cessationist side gets Chrysostom, Warfield, and Strange Fire.",
+   "evidence": "Irenaeus, Against Heresies 2.32.4 and 5.6.1 (c. 180): brethren in the church prophesy, heal, speak in tongues, and 'the dead even have been raised'. Augustine, City of God 22.8 (c. 426) records healings at Hippo and Retractationes 1.13.7 withdraws his earlier claim that miracles had ceased — the standard continuationist patristic citations, both absent.",
+   "fix": "Prepend ['c. 180', 'Irenaeus, Against Heresies: brethren in the church still prophesy, heal, and speak in tongues.'], keep the Montanist entry second, and insert after Chrysostom ['c. 426', 'Augustine, City of God XXII.8, withdraws his earlier view that miracles had ceased and records healings at Hippo.']"
+  },
+  {
+   "id": "pentecostal-5",
+   "lens": "Pentecostal (Assemblies of God Statement of Fundamental Truths)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The only pre-modern datum on the continuationist side is 'Montanist \"new prophecy\" in Phrygia; the wider church grows wary of ongoing prophecy' -- a movement the church condemned. That is Warfield's genealogy (charismata = Montanist aberration), not a neutral history; the orthodox second-century witness to continuing gifts is omitted.",
+   "evidence": "Irenaeus, Against Heresies 2.32.4 (healings and raisings of the dead in the churches) and 5.6.1 ('we do also hear many brethren in the Church, who possess prophetic gifts, and who through the Spirit speak all kinds of languages'); also Tertullian, Against Marcion 5.8, and Novatian, On the Trinity 29. Warfield, Counterfeit Miracles, is the source of the Montanist framing.",
+   "fix": "'2nd c. -- Irenaeus reports prophecy, tongues, and healings in the churches (Against Heresies 2.32; 5.6); the Montanist \"new prophecy\" in Phrygia makes the wider church wary of unregulated prophecy.'"
+  }
+ ]
+}

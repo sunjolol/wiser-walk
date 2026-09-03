@@ -1,0 +1,23 @@
+{
+ "target": "axis:spirit:history:5",
+ "findings": [
+  {
+   "id": "presbyterian-21",
+   "lens": "Presbyterian / Reformed (Westminster Standards, Three Forms of Unity)",
+   "category": "tone",
+   "severity": "minor",
+   "claim": "Closing the Spirit history with '2013: Strange Fire conference restates the cessationist case' makes the most combative event the last word for our side, while the continuationist entries are all movements and renewals.",
+   "evidence": "The standard scholarly marker for the late-20th-century debate is Grudem (ed.), Are Miraculous Gifts for Today? Four Views (1996), where Gaffin (cessationist), Saucy (open but cautious), Storms and Oss set out the cases side by side.",
+   "fix": "{ \"when\": \"1996\", \"what\": \"Are Miraculous Gifts for Today? sets the cessationist (Gaffin), open-but-cautious (Saucy), and continuationist (Storms, Oss) cases side by side.\" }"
+  },
+  {
+   "id": "reformedcharismatic-13",
+   "lens": "Reformed charismatic (John Piper, Wayne Grudem, Sam Storms, Sovereign Grace Churches, Acts 29 continuationists)",
+   "category": "missing",
+   "severity": "major",
+   "claim": "The Spirit history has no entry for the third wave, the movement that produced every Reformed continuationist the quiz cites, so continuationism reaches the reader as Azusa plus mainline/Catholic renewal, always non-Reformed.",
+   "evidence": "Wagner coined 'third wave' in 1983 for Wimber's Vineyard and evangelicals embracing the gifts without Pentecostal second-blessing theology; Grudem, The Gift of Prophecy in the New Testament and Today (1988); Piper's 1990-91 sermons on gifts; Sovereign Grace (PDI, 1982) and Newfrontiers; Grudem ed., Are Miraculous Gifts for Today? (1996). The axis's own read-more (Grudem, Storms) belongs to this stream, which the history never mentions.",
+   "fix": "Insert before the 2013 entry: {\"when\": \"1980s-90s\", \"what\": \"The 'third wave' (Wimber's Vineyard; Grudem, Storms, Piper) brings the gifts into Reformed and evangelical churches without Pentecostal second-blessing theology.\"}"
+  }
+ ]
+}

@@ -1,0 +1,140 @@
+{
+ "target": "axis:table:passages",
+ "findings": [
+  {
+   "id": "anabaptist-13",
+   "lens": "Anabaptist / Mennonite (Schleitheim Confession, Confession of Faith in a Mennonite Perspective 1995)",
+   "category": "missing",
+   "severity": "major",
+   "claim": "The passage list omits the texts believers'-baptism traditions actually cite and includes two that are specifically paedobaptist proof texts, so three of six lean to the sacramental side.",
+   "evidence": "Present: John 6:53-58 (real presence), Acts 2:38-39 (v. 39 'the promise is for you and for your children' is the Reformed infant-baptism text; Anabaptists cite v. 38 alone), Colossians 2:11-12 (the circumcision-baptism argument). Absent: Matthew 28:19-20 (teach, then baptize; the order was the Anabaptist argument in the 1525 Zurich disputations), 1 Peter 3:21 (baptism as 'the pledge of a good conscience toward God', central to Hubmaier and Menno; CFMP Art. 11 calls baptism 'a pledge before the church'), 1 Corinthians 10:16-17 (one bread, one body; Schleitheim Art. III's Supper text).",
+   "fix": "Key passages: John 6:53-58; 1 Corinthians 11:23-29; Acts 2:38-39; Colossians 2:11-12; Romans 6:3-4; Matthew 28:19-20; 1 Peter 3:21; 1 Corinthians 10:16-17 (drop Matthew 26:26-28 if the list must stay at six or seven; it duplicates 1 Corinthians 11)."
+  },
+  {
+   "id": "anglican-20",
+   "lens": "Anglican (broad, Thirty-Nine Articles / Book of Common Prayer)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The Table passages omit 1 Corinthians 10:16-17, the text Article XXVIII quotes verbatim for the Supper, and Mark 10:13-16, the Gospel read at every Prayer Book infant baptism.",
+   "evidence": "Article XXVIII: 'the Bread which we break is a partaking of the Body of Christ' (1 Cor 10:16); the 1662 Publick Baptism of Infants appoints Mark 10:13-16 as its Gospel and builds its exhortation on it.",
+   "fix": "Add '1 Corinthians 10:16-17' and 'Mark 10:13-16'."
+  },
+  {
+   "id": "catholic-12",
+   "lens": "Roman Catholic",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The texts Catholics reach for first on presence and on baptism actually saving are absent.",
+   "evidence": "1 Corinthians 10:16-17 (CCC 1329, 1396); Luke 22:19-20 (CCC 1339, 1365); 1 Peter 3:20-21 (CCC 1219); Titus 3:5 (CCC 1215).",
+   "fix": "Add \"1 Corinthians 10:16-17\", \"Luke 22:19-20\", \"1 Peter 3:20-21\"."
+  },
+  {
+   "id": "churchofchrist-17",
+   "lens": "Church of Christ / Restoration Movement (Stone-Campbell)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The baptism texts Churches of Christ (and Lutherans) actually reach for, 1 Peter 3:21 and Acts 22:16, are absent, while Matthew 26:26-28 duplicates the institution narrative already covered by 1 Corinthians 11:23-29.",
+   "evidence": "1 Pet 3:21 ('baptism now saves you') and Acts 22:16 ('be baptized and wash away your sins') are the standard proof texts in every Restoration tract on baptism and in Luther's Large Catechism IV; Gal 3:27 is a close third.",
+   "fix": "Replace Matthew 26:26-28 with 1 Peter 3:21 and add Acts 22:16."
+  },
+  {
+   "id": "historian-10",
+   "lens": "church historian",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The page promises 'the passages each side reaches for', but all six Table passages are the sacramental side's texts. John 6:53–58 (real presence), Acts 2:38–39 ('you and your children'), Colossians 2:11–12 (circumcision–baptism), Romans 6:3–4 and Matthew 26:26–28 (shared), 1 Corinthians 11 (shared). No distinctly memorialist or credobaptist text appears.",
+   "evidence": "Standard credobaptist proof texts: Acts 8:36–38 (belief precedes baptism), 1 Peter 3:21 ('an appeal to God for a good conscience'), Acts 16:31–33; the memorialist text is Luke 22:19 ('do this in remembrance of me'). See Schreiner & Wright, Believer's Baptism, which the quiz itself recommends.",
+   "fix": "key_passages: ['John 6:53–58', '1 Corinthians 11:23–29', 'Luke 22:19–20', 'Acts 2:38–39', 'Colossians 2:11–12', 'Acts 8:36–38', '1 Peter 3:21']."
+  },
+  {
+   "id": "lutheran-12",
+   "lens": "confessional Lutheran (LCMS / WELS / Book of Concord)",
+   "category": "citation",
+   "severity": "major",
+   "claim": "John 6:53-58 heads the list as a sacramental proof text, but Lutherans do not read John 6 as about the Supper, and 1 Corinthians 10:16, the passage the Formula of Concord makes decisive for the real presence, is missing; the baptism texts Lutherans actually cite (1 Peter 3:21, Titus 3:5) are missing while Colossians 2:11-12 (the Reformed circumcision argument) is present.",
+   "evidence": "FC SD VII.61-62: the eating of John 6 \"is nothing else than faith\", a spiritual eating distinct from the sacrament; FC SD VII.54-59 builds the real presence on 1 Cor 10:16; SC IV cites Titus 3:5, 1 Pet 3:21, Mark 16:16 for what baptism gives.",
+   "fix": "[\"1 Corinthians 10:16\", \"1 Corinthians 11:23-29\", \"Matthew 26:26-28\", \"John 6:53-58\", \"Acts 2:38-39\", \"1 Peter 3:21\", \"Titus 3:5\", \"Romans 6:3-4\"] (drop Colossians 2:11-12 if a slot must go)."
+  },
+  {
+   "id": "mockery-30",
+   "lens": "mockery critic",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "Every baptism text is one paedobaptists use (Acts 2:38–39 'to your children', Col 2:11–12 circumcision, Rom 6); the credobaptist's own proof text is missing. Baptist caption: 'the memorial side's passages were chosen by a Presbyterian.'",
+   "evidence": "Acts 8:36–38 (profession before baptism) and Matthew 28:19–20 (make disciples, then baptize) are the standard Baptist citations (Schreiner & Wright, Believer's Baptism, chs. 2–3).",
+   "fix": "Add 'Acts 8:36–38'."
+  },
+  {
+   "id": "orthodox-22",
+   "lens": "Eastern Orthodox",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The Orthodox anchor texts for baptism and the Eucharist are absent.",
+   "evidence": "John 3:5 (born of water and the Spirit) is the baptismal text read at every Orthodox baptism; 1 Cor 10:16-17 (the cup a koinonia in the Blood, one bread one body) is the Eucharistic text the Fathers cite alongside John 6.",
+   "fix": "Add \"John 3:5\" and \"1 Corinthians 10:16-17\"."
+  },
+  {
+   "id": "presbyterian-13",
+   "lens": "Presbyterian / Reformed (Westminster Standards, Three Forms of Unity)",
+   "category": "missing",
+   "severity": "major",
+   "claim": "The list omits the two texts the Reformed actually reach for: 1 Corinthians 10:16-17 for the Supper and Genesis 17:7 for infant baptism. As it stands the sacramental case is John 6 (Catholic) and the paedobaptist case is Acts 2:39 and Colossians 2 only.",
+   "evidence": "Calvin, Institutes IV.17.10 builds the whole doctrine of spiritual presence on 1 Cor 10:16 ('the cup of blessing... is it not a participation in the blood of Christ?'); WCF 29.7 and Belgic 35 cite it; WCF 28.4 and HC 74 cite Genesis 17:7 and 1 Corinthians 7:14 for the covenant status of children; every Reformed-Baptist debate turns on Genesis 17.",
+   "fix": "key_passages: [\"John 6:53–58\", \"1 Corinthians 10:16–17\", \"1 Corinthians 11:23–29\", \"Genesis 17:7\", \"Acts 2:38–39\", \"Colossians 2:11–12\", \"Romans 6:3–4\", \"Matthew 26:26–28\"]."
+  },
+  {
+   "id": "reformedbaptist-18",
+   "lens": "Reformed Baptist (1689 London Baptist Confession)",
+   "category": "missing",
+   "severity": "major",
+   "claim": "The Table passages include two paedobaptist reaches (Acts 2:38-39, Colossians 2:11-12) but none of the credobaptist reaches, and omit 1 Corinthians 10:16, the text the Reformed spiritual-presence view rests on. The page promises 'the passages each side reaches for'.",
+   "evidence": "LBC 30.7 cites 1 Corinthians 10:16 ('a participation in the blood of Christ'). Credobaptist argument: Acts 2:41, Acts 8:36-38, Matthew 28:19-20, 1 Peter 3:21, and Jeremiah 31:31-34 / Hebrews 8:6-12 ('they shall all know me'), the key text of Baptist covenant theology.",
+   "fix": "key_passages: ['1 Corinthians 10:16-17', '1 Corinthians 11:23-29', 'John 6:53-58', 'Acts 2:38-41', 'Acts 8:36-38', 'Colossians 2:11-12', 'Jeremiah 31:31-34']"
+  },
+  {
+   "id": "reformedcharismatic-8",
+   "lens": "Reformed charismatic (John Piper, Wayne Grudem, Sam Storms, Sovereign Grace Churches, Acts 29 continuationists)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "All three baptism passages listed are paedobaptist proof-texts; the credobaptist case is absent.",
+   "evidence": "'Acts 2:38-39' (the promise 'for you and for your children') and 'Colossians 2:11-12' (circumcision/baptism) are the standard infant-baptism texts; Romans 6:3-4 is shared. Schreiner & Wright, Believer's Baptism, which the quiz cites, rests its case on Jeremiah 31:31-34 / Hebrews 8 (all new-covenant members know the Lord), Acts 8:36-38, Galatians 3:26-27 and 1 Peter 3:21. The result page promises 'the passages each side reaches for'.",
+   "fix": "Add 'Jeremiah 31:31-34' and 'Acts 8:36-38'; drop 'Matthew 26:26-28' if the list must stay at six (it duplicates 1 Corinthians 11)."
+  },
+  {
+   "id": "sbc-14",
+   "lens": "Southern Baptist (Baptist Faith & Message 2000)",
+   "category": "missing",
+   "severity": "major",
+   "claim": "There is no believer's-baptism text in the list: four passages are sacramental proof texts, two are shared, and Acts 2:38-39 ('the promise is for you and your children') is the paedobaptist text, so a Baptist sees only the other side's Bible.",
+   "evidence": "The passages Baptists actually reach for: Acts 8:36-38 (the eunuch: belief, then 'went down into the water'), Matthew 28:19-20 (make disciples, then baptize), Acts 2:41 ('those who received his word were baptized'), Luke 22:19 / 1 Corinthians 11:24-26 ('in remembrance of me', 'proclaim the Lord's death until he comes'). Schreiner & Wright, Believer's Baptism (already in read-more) builds on exactly these.",
+   "fix": "Add 'Acts 8:36-38' and 'Matthew 28:19-20'; keep Acts 2:38-39 since both sides use it."
+  },
+  {
+   "id": "scholar-5",
+   "lens": "biblical scholar",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "\"John 6:53–58\" is cropped to the sacramental half of the Bread of Life discourse and omits v.63, \"It is the Spirit who gives life; the flesh is no help at all\", which is the memorialist's verse in the same passage and the very verse the Marburg Colloquy (history[3]) was fought over. As listed, John 6 reads as a one-sided proof text.",
+   "evidence": "Zwingli, On the Lord's Supper (1526, in read_more) and Commentary on True and False Religion (1525) build the memorial reading on John 6:63; at Marburg (1529) Zwingli pressed 6:63 against Luther's 'hoc est corpus meum'. Baptist and Zwinglian commentators also deny that John 6 concerns the Supper at all, a point the reader cannot see when the chip stops at v.58.",
+   "fix": "Replace \"John 6:53–58\" with \"John 6:51–63\" and, if glosses are added, mark it read both ways ('my flesh is true food' v.55 / 'the flesh is no help at all' v.63)."
+  },
+  {
+   "id": "scholar-6",
+   "lens": "biblical scholar",
+   "category": "missing",
+   "severity": "major",
+   "claim": "Two loci classici are missing. For the sacramental pole: 1 Corinthians 10:16-17, the koinonia text ('a participation in the blood of Christ... in the body of Christ'), which is Calvin's central Supper passage and a catechism proof text for both Reformed and Catholic teaching. For the memorial/credobaptist pole there is no baptism text that is distinctively theirs; every baptism entry (Acts 2:38-39, Colossians 2:11-12, Romans 6:3-4) is one paedobaptists cite at least as readily. The believer's-baptism argument from the order 'make disciples... baptizing them' (Matthew 28:19-20) and from 'the pledge of a good conscience' (1 Peter 3:21) is absent.",
+   "evidence": "Heidelberg Catechism Q.77 and CCC 1396 quote 1 Corinthians 10:16-17 in full as the Supper's meaning; Calvin, Institutes IV.17 (history[4]) argues the real spiritual presence from it. Second London Baptist Confession 29.2 and Schreiner & Wright, Believer's Baptism (in read_more), ch. 1-2, argue from Matthew 28:19-20, Acts 8:12, 36-38 and 1 Peter 3:21.",
+   "fix": "Add \"1 Corinthians 10:16–17\" (sacramental), \"Matthew 28:19–20\" (memorial/credobaptist) and \"1 Peter 3:21\" (read both ways). Resulting list: \"John 6:51–63\", \"1 Corinthians 10:16–17\", \"1 Corinthians 11:23–29\", \"Matthew 26:26–28\", \"Acts 2:38–39\", \"Matthew 28:19–20\", \"Colossians 2:11–12\", \"Romans 6:3–4\", \"1 Peter 3:21\"."
+  },
+  {
+   "id": "wesleyan-17",
+   "lens": "Wesleyan / Methodist (Wesley's sermons, Articles of Religion, Global Methodist / UMC evangelical wing)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The sacramental side's most-cited Protestant real-presence text is missing: 1 Corinthians 10:16-17 is the passage behind Art. XVIII's 'partaking', Calvin's IV.17, and Charles Wesley's Hymns on the Lord's Supper.",
+   "evidence": "Art. XVIII quotes 1 Cor 10:16 ('the bread which we break is a partaking of the body of Christ'); Charles Wesley, Hymns on the Lord's Supper (1745), Hymn 57 and passim.",
+   "fix": "Add '1 Corinthians 10:16–17'."
+  }
+ ]
+}

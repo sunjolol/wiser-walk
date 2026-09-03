@@ -1,0 +1,32 @@
+{
+ "target": "tradition:Lutheran (confessional)",
+ "findings": [
+  {
+   "id": "lutheran-4",
+   "lens": "confessional Lutheran (LCMS / WELS / Book of Concord)",
+   "category": "scoring",
+   "severity": "blocker",
+   "claim": "Coordinates [20, 15, 70, 15, 35, 20] do not match what an informed confessional Lutheran scores on these eighteen statements; Tradition 35 in particular places Lutherans left of center (\"tradition-friendly\"), which contradicts the Formula of Concord and cannot be reached by any honest Lutheran answer set.",
+   "evidence": "Honest simulation scores [33, 0, 83, 8, 67, 8]; distance to the current coords = sqrt(13^2+15^2+13^2+7^2+32^2+12^2) = 42.2, only 83%. Tradition: FC Ep Rule and Norm 1-8 (\"Holy Scripture alone remains the only judge, rule, and norm... other writings are not judges but witnesses\") and AC XXVIII.34-35 (traditions cannot bind conscience) give S14 +2 and S15 -1, so the floor is 58 even with S13 +2. Table 15 vs Rome's 5 is a distinction the three Table statements cannot measure (all five paedobaptist traditions score 0). A lay Lutheran wary of decretal wording and unsure on the gifts ([50,0,50,8,67,8]) is placed Anglican: sqrt(2407) = 49.1 vs Lutheran sqrt(2742) = 52.4.",
+   "fix": "{\"grace\": 30, \"table\": 8, \"spirit\": 75, \"kingdom\": 10, \"tradition\": 60, \"worship\": 15}. Check: typical Lutheran d = sqrt(3^2+8^2+8^2+2^2+7^2+7^2) = sqrt(239) = 15.5 (94%); wary variant d = 24.2 (90%); the Anglican flip case becomes Lutheran 35.0 vs Anglican 49.1."
+  },
+  {
+   "id": "progressive-13",
+   "lens": "progressive mainline Protestant (PCUSA, ELCA, Episcopal, UMC progressive wing)",
+   "category": "scoring",
+   "severity": "major",
+   "claim": "The Grace and Spirit coordinates cannot be reached by a confessional Lutheran answering the quiz honestly, which is why an ELCA member (and probably an LCMS one) lands on Roman Catholic instead.",
+   "evidence": "Coded grace 20, spirit 70. By the instrument a Lutheran answers S1 +1, S2 +2, S3 +2 (Formula of Concord SD II and XI) -> raw -1 -> 42, not 20. The Book of Concord teaches no cessationism; Luther's 1540 prayer for Melanchthon's healing and the ELW healing rite are the tradition's practice; 70 'cautious about the gifts' is a Warfieldian import. ELCA persona distance 51.4, of which 37^2 = 1369 comes from the spirit gap alone.",
+   "fix": "grace 40, spirit 55. (Adding the mainline entry is still required; this fix is for LCMS/WELS members.)"
+  },
+  {
+   "id": "survey-30",
+   "lens": "survey methodologist",
+   "category": "inaccuracy",
+   "severity": "major",
+   "claim": "tradition: 35 places confessional Lutherans in the \"tradition-friendly\" band, contradicting the Formula of Concord, and the value only \"fits\" because statements 13 and 15 currently push Lutherans to 42-58.",
+   "evidence": "Formula of Concord, Epitome, Rule and Norm 1: \"the only rule and norm according to which all doctrines and teachers alike must be appraised and judged are the prophetic and apostolic writings of the Old and New Testament alone.\" Same problem for Anglican (broad) 30 (Art. VI) and Presbyterian / Reformed 45 (WCF 1.6, 1.10), both banded at or below \"balanced on authority\" on a Scripture-alone axis while Southern Baptist sits at 85.",
+   "fix": "After the statement 13/14/15 rewrites: Lutheran (confessional) 65, Anglican (broad) 60, Presbyterian / Reformed 70; leave Roman Catholic 10 and Eastern Orthodox 5. Re-check with the worked cases (a confessional Lutheran answering the rewritten items scores 75-83)."
+  }
+ ]
+}

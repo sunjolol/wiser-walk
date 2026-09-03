@@ -1,0 +1,104 @@
+{
+ "target": "axis:grace:passages",
+ "findings": [
+  {
+   "id": "anglican-21",
+   "lens": "Anglican (broad, Thirty-Nine Articles / Book of Common Prayer)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "Romans 8:28-30 is missing, though it is the passage Article XVII paraphrases and the 'golden chain' every party on this axis argues over.",
+   "evidence": "Article XVII: 'they be called according to God's purpose... they be justified freely... they attain to everlasting felicity' tracks Romans 8:28-30 clause by clause; Hebrews 6 and 2 Peter 3:9 are included while the primary text is not.",
+   "fix": "Add 'Romans 8:28-30'."
+  },
+  {
+   "id": "catholic-7",
+   "lens": "Roman Catholic",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The cooperation text Catholics and Orthodox reach for first is missing; the list has three monergist and three synergist texts but none on grace-and-cooperation together.",
+   "evidence": "Philippians 2:12-13 is quoted in CCC 308; 1 Corinthians 15:10 is the other standard text; cf. Augustine, Sermo 169, quoted in CCC 1847 ('God created us without us: but he did not will to save us without us').",
+   "fix": "Add \"Philippians 2:12-13\" and \"1 Corinthians 15:10\"."
+  },
+  {
+   "id": "lutheran-17",
+   "lens": "confessional Lutheran (LCMS / WELS / Book of Concord)",
+   "category": "citation",
+   "severity": "minor",
+   "claim": "The texts Lutherans reach for on both halves of their position, Ephesians 2:8-9 (faith a gift) and Matthew 23:37 / Acts 7:51 (grace resisted), are absent.",
+   "evidence": "SC, Third Article explanation (\"I cannot by my own reason or strength believe\"); FC SD II cites Acts 7:51 and Matt 23:37 for resistance; Eph 2:8-9 is the standard sola gratia text in Ap IV.",
+   "fix": "Add \"Ephesians 2:8-9\" and \"Matthew 23:37\" (drop 2 Peter 3:9 or Hebrews 6:4-6 if the list must stay at six)."
+  },
+  {
+   "id": "orthodox-8",
+   "lens": "Eastern Orthodox",
+   "category": "missing",
+   "severity": "major",
+   "claim": "The two texts the synergist tradition reaches for first are absent.",
+   "evidence": "Rom 8:29-30 (\"those whom he foreknew he also predestined\") is the locus of the Orthodox and Arminian doctrine of election on foreknowledge; Phil 2:12-13 (\"work out your own salvation... for it is God who works in you\") is the classic synergy text (Chrysostom, Hom. 8 on Philippians).",
+   "fix": "Add \"Romans 8:29-30\" and \"Philippians 2:12-13\"."
+  },
+  {
+   "id": "presbyterian-23",
+   "lens": "Presbyterian / Reformed (Westminster Standards, Three Forms of Unity)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "Romans 8:28-30, the 'golden chain', is the most-cited Reformed text after Romans 9 and Ephesians 1 and is absent.",
+   "evidence": "WCF 3.6 and Canons of Dort I.7 and V.8-9 rest perseverance and effectual calling on Romans 8:29-30; Perkins' A Golden Chaine (1591) takes its title from it.",
+   "fix": "key_passages: add \"Romans 8:28–30\"."
+  },
+  {
+   "id": "reformedbaptist-28",
+   "lens": "Reformed Baptist (1689 London Baptist Confession)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "Romans 8:28-30, the 'golden chain', is the monergist reach alongside Romans 9 and is absent; statement 3 (faith as gift) has no supporting passage in the list.",
+   "evidence": "Every Reformed treatment from Calvin, Institutes III.21-24, to Sproul cites Romans 8:29-30; faith as gift is argued from Ephesians 2:8-9 and Philippians 1:29.",
+   "fix": "Add 'Romans 8:28-30' and 'Ephesians 2:8-9'; drop one of Hebrews 6:4-6 or 2 Peter 3:9 if the list must stay at six."
+  },
+  {
+   "id": "reformedcharismatic-26",
+   "lens": "Reformed charismatic (John Piper, Wayne Grudem, Sam Storms, Sovereign Grace Churches, Acts 29 continuationists)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "Romans 8:28-30, the passage Reformed preachers reach for first, is absent.",
+   "evidence": "The 'golden chain' (foreknew, predestined, called, justified, glorified) is the text behind Piper's and Sproul's popular treatments and Dort I.7; the list has Romans 9, Ephesians 1 and John 6 but not it.",
+   "fix": "Add 'Romans 8:28-30'."
+  },
+  {
+   "id": "sbc-10",
+   "lens": "Southern Baptist (Baptist Faith & Message 2000)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "Hebrews 6:4-6 is an apostasy text; listing it as a synergist passage tells the reader that the right pole means 'you can lose your salvation', which non-Calvinist Baptists explicitly deny, and the list omits the texts they actually reach for.",
+   "evidence": "BF&M 2000 Art. V: believers 'will never fall away from the state of grace'; Traditional Statement Art. 9. No Southern Baptist Traditionalist argues from Hebrews 6:4-6; they argue from Romans 8:29-30 (foreknowledge), John 3:16, 1 Peter 1:2, Acts 7:51 ('you always resist the Holy Spirit'), and Matthew 23:37 ('you were not willing'). 1 Timothy 2:3-4 and 2 Peter 3:9 are the right kind of text; Hebrews 6 is the wrong one.",
+   "fix": "Replace 'Hebrews 6:4-6' with 'Romans 8:29-30' and add 'Acts 7:51'."
+  },
+  {
+   "id": "scholar-2",
+   "lens": "biblical scholar",
+   "category": "missing",
+   "severity": "major",
+   "claim": "The single most-cited predestination text in the whole debate, Romans 8:28-30, is absent, and it is the one passage both poles build on: the Reformed 'golden chain' (foreknew, predestined, called, justified, glorified) and the Arminian 'those whom he foreknew' that grounds the summary's own clause \"election follows God's foreknowledge of faith\". The synergist pole also lacks its resistible-grace text, Acts 7:51, which is what statement 2 (\"can genuinely resist God's grace\") is drawn from.",
+   "evidence": "Calvin, Institutes III.21-24 and Canons of Dort I.6-7 and I.17 argue from Romans 8:29-30 with Ephesians 1; the Remonstrant Articles (1610) art. 1 and Arminius, Works (Declaration of Sentiments, on predestination) rest election-on-foreknowledge on Romans 8:29 and 1 Peter 1:2; Olson, Arminian Theology (in read_more), Myth 6 on resistible grace, argues from Acts 7:51 and Matthew 23:37. The fair_summary asserts the foreknowledge view but the list gives the reader no verse for it.",
+   "fix": "Add \"Romans 8:28–30\" (read both ways) and \"Acts 7:51\" (synergist). Resulting list: \"Romans 9\", \"Romans 8:28–30\", \"Ephesians 1:3–14\", \"John 6:37–44\", \"1 Timothy 2:3–4\", \"2 Peter 3:9\", \"Acts 7:51\", \"Hebrews 6:4–6\"."
+  },
+  {
+   "id": "scholar-3",
+   "lens": "biblical scholar",
+   "category": "citation",
+   "severity": "minor",
+   "claim": "\"Ephesians 1:3–11\" is not a conventional unit. Verses 3-14 are one sentence in Greek and are paragraphed as a unit in NA28/UBS5 and every major English version; stopping at v.11 cuts the sentence mid-clause (v.12 'so that we... might be to the praise of his glory'). The predestination verses are 4-5 and 11, so either the whole berakah or the specific verses should be cited.",
+   "evidence": "NA28 paragraphing Eph 1:3-14; ESV/NIV/NRSV headings 'Spiritual Blessings in Christ' 1:3-14. The stop at v.11 looks chosen to end on 'predestined according to the purpose of him who works all things according to the counsel of his will', which a synergist reader will notice.",
+   "fix": "Replace \"Ephesians 1:3–11\" with \"Ephesians 1:3–14\" (or, if brevity matters, \"Ephesians 1:4–6, 11\")."
+  },
+  {
+   "id": "wesleyan-16",
+   "lens": "Wesleyan / Methodist (Wesley's sermons, Articles of Religion, Global Methodist / UMC evangelical wing)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The synergist passages (1 Tim 2:3-4, 2 Pet 3:9, Heb 6:4-6) omit the prevenient-grace texts Wesleyans reach for first.",
+   "evidence": "Wesley's sermons and the Confession of Faith Art. VIII ground prevenient grace in Titus 2:11 ('the grace of God that bringeth salvation hath appeared to all men'), John 1:9 ('the true Light, which lighteth every man'), and John 12:32 ('I will draw all men unto me').",
+   "fix": "Add 'Titus 2:11' and 'John 1:9' (or 'John 12:32') so the list runs Romans 9, Ephesians 1:3–11, John 6:37–44, 1 Timothy 2:3–4, Titus 2:11, John 1:9, Hebrews 6:4–6."
+  }
+ ]
+}

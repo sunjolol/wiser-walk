@@ -1,0 +1,77 @@
+{
+ "target": "statement:5",
+ "findings": [
+  {
+   "id": "anabaptist-20",
+   "lens": "Anabaptist / Mennonite (Schleitheim Confession, Confession of Faith in a Mennonite Perspective 1995)",
+   "category": "tone",
+   "severity": "minor",
+   "claim": "'A decision to follow Christ' is revivalist decisionism vocabulary; Anabaptists speak of a pledge or covenant made before the church.",
+   "evidence": "CFMP Art. 11 ('a pledge before the church of their covenant with God'); Schleitheim Art. I (baptism for those who 'have learned repentance and amendment of life... and desire to be baptized upon their own request'). Mennonites still answer +2, so no mis-scoring, but the wording tells them the pole belongs to someone else.",
+   "fix": "'Baptism is the outward sign of a faith in Christ and a commitment to follow him that a person has already made.'"
+  },
+  {
+   "id": "churchofchrist-6",
+   "lens": "Church of Christ / Restoration Movement (Stone-Campbell)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "'Baptism is an outward sign of a decision to follow Christ that has already been made' is written in Baptist vocabulary and is double-barreled: a Church of Christ member agrees that the decision (faith, repentance, confession) precedes baptism but denies that baptism is an outward sign, so the less reflective member who reads the 'already made' clause as operative answers Agree and is scored a memorialist.",
+   "evidence": "'Outward sign' is the Baptist Faith and Message 2000 Art. VII ('an act of obedience symbolizing the believer's faith') and the Prayer Book catechism ('outward and visible sign'). The Restoration Movement has refused that formula since Campbell's 1823 debate with Walker; its language is 'for the remission of sins' (Acts 2:38), 'born of water and the Spirit' (John 3:5), 'wash away your sins' (Acts 22:16). Variant run with S5=+1 gives table 92, 'memorialist', for someone who believes salvation occurs in baptism.",
+   "fix": "'Baptism pictures a salvation already received; God does not forgive sins or join a person to Christ in the act itself.' direction +1. Baptist: Strongly agree; Church of Christ, Lutheran, Catholic, Orthodox: Strongly disagree; no second clause to trip on."
+  },
+  {
+   "id": "mockery-18",
+   "lens": "mockery critic",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "Two of the three Table statements are about baptism, so a Reformed Baptist who holds Calvin's spiritual presence is pushed to 'memorial-leaning' or 'memorialist' for being credobaptist. Screenshot from a 1689 elder: 'I confess that we really and indeed, spiritually, receive and feed upon Christ, and the quiz calls me a memorialist.'",
+   "evidence": "1689 LBCF 30.7 copies WCF 29.7 on the Supper. Answer set 4 Agree, 5 Strongly agree, 6 Strongly disagree → table 75, band 'memorial-leaning'; the quiz's own Reformed Baptist coordinate table=70 is in that band. Statement 5 measures baptismal candidacy, which statement 6 already measures.",
+   "fix": "Statement 5 (direction +1): 'Baptism and the Supper are signs of a grace already received, not means by which God gives it.' That measures the actual pole; a Reformed Baptist (Agree 4, Unsure 5, Strongly disagree 6) then lands 58, 'between sacramental and memorial', and a Zwinglian Baptist still lands 83, 'memorialist'."
+  },
+  {
+   "id": "reformedbaptist-4",
+   "lens": "Reformed Baptist (1689 London Baptist Confession)",
+   "category": "unfairness",
+   "severity": "blocker",
+   "claim": "'Baptism is an outward sign of a decision to follow Christ that has already been made' is revivalist/decisionist vocabulary. Reformed Baptists teach that baptism signifies union with Christ and his work, not the candidate's decision; a confessional reader who answers Disagree on those grounds, and Strongly agree on statement 4, lands nearest 'Presbyterian / Reformed'.",
+   "evidence": "LBC 29.1: baptism is 'a sign of his fellowship with him, in his death and resurrection; of his being engrafted into him; of remission of sins; and of giving up into God... to live and walk in newness of life'; 29.2 restricts subjects to those who 'actually profess repentance towards God, faith in, and obedience to, our Lord Jesus Christ'. Nothing about a 'decision'. Arithmetic: answers 4=+2, 5=-1, 6=-2 give Table = -2-1+2 = -1 -> 42; distances then Presbyterian / Reformed 36.50 vs Reformed Baptist 46.23.",
+   "fix": "Replace with a means-of-grace statement, direction +1: 'Baptism and the Lord's Supper are acts of obedience and testimony; God does not give grace through them.' A Zwinglian Baptist agrees, a Reformed Baptist disagrees (Baptist Catechism Q. 93), a Presbyterian strongly disagrees. Then recalibrate Table coordinates: Lutheran 10, Anglican 25, Presbyterian 20, Reformed Baptist 50, Wesleyan 40, Southern Baptist 90, Dispensational 90, Pentecostal 85, Charismatic 85, Anabaptist 90, Catholic/Orthodox 5. If the statement must stay about subjects, use: 'Only those who have personally professed faith in Christ should be baptized.'"
+  },
+  {
+   "id": "reformedcharismatic-19",
+   "lens": "Reformed charismatic (John Piper, Wayne Grudem, Sam Storms, Sovereign Grace Churches, Acts 29 continuationists)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'a decision to follow Christ that has already been made' is revivalist vocabulary; Reformed Baptists baptize on profession of faith, not a 'decision'.",
+   "evidence": "Piper's long-standing aversion to decisionism; 1689 LBC 29.2 baptizes 'those who do actually profess repentance towards God, faith in, and obedience to, our Lord Jesus Christ'. The direction still scores correctly, but the wording makes them wince.",
+   "fix": "Baptism is for those who already profess faith in Christ, as a sign of that faith."
+  },
+  {
+   "id": "sbc-25",
+   "lens": "Southern Baptist (Baptist Faith & Message 2000)",
+   "category": "tone",
+   "severity": "minor",
+   "claim": "'A decision to follow Christ' is revivalist decisionism vocabulary that many SBC pastors have publicly repudiated, and the statement omits the one word Baptists consider confessional about baptism, immersion.",
+   "evidence": "BF&M 2000 Art. VII: 'Christian baptism is the immersion of a believer in water ... symbolizing the believer's faith in a crucified, buried, and risen Saviour.' The 2012 SBC resolution on the 'sinner's prayer' was occasioned by an intra-SBC argument against decision-based evangelism; Reformed Baptists in the convention will wince at 'decision'.",
+   "fix": "'Baptism is for those who already believe: a public confession of a faith already present, not the means by which faith is given.' (direction +1)"
+  },
+  {
+   "id": "survey-9",
+   "lens": "survey methodologist",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "\"Baptism is an outward sign of a decision to follow Christ that has already been made\" uses the paedobaptist definition of a sacrament (\"outward sign\") and decision-theology vocabulary, so paedobaptists agree for converts and Reformed Baptists balk at \"decision\".",
+   "evidence": "BCP Catechism: a sacrament is \"an outward and visible sign of an inward and spiritual grace\"; WSC 92 \"sensible sign\". A Presbyterian baptizing an adult convert agrees with the sentence as written. The discriminating idea is whether God gives anything through baptism, which the item never states.",
+   "fix": "Replace with: \"Baptism is a public testimony to a faith already held, not a means by which God gives grace.\" (18 words, direction +1)."
+  },
+  {
+   "id": "wesleyan-9",
+   "lens": "Wesleyan / Methodist (Wesley's sermons, Articles of Religion, Global Methodist / UMC evangelical wing)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'Baptism is an outward sign of a decision to follow Christ that has already been made' conflates 'sign of profession' (which Methodists partly accept, for adult converts) with 'sign of a prior decision' (credobaptism). Because the axis already has a dedicated infant-baptism statement (S6), this second baptism statement adds noise rather than information, and a Methodist thinking of adult baptisms who answers Agree is pushed from table 8 to 25.",
+   "evidence": "Art. XVII: 'Baptism is not only a sign of profession and mark of difference ... but it is also a sign of regeneration.' UMC 'By Water and the Spirit': baptism is 'God's gift', not primarily the candidate's act. Arithmetic: S5 -1 -> raw -5 -> 8; S5 +1 -> raw -3 -> 25.",
+   "fix": "Replace with a means-of-grace statement that tests the Supper and baptism together and uses vocabulary both poles recognize: 'Baptism and the Lord's Supper are means through which God actually gives grace, not only acts of obedience and remembrance.' (direction -1)"
+  }
+ ]
+}

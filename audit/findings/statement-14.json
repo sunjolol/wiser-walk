@@ -1,0 +1,32 @@
+{
+ "target": "statement:14",
+ "findings": [
+  {
+   "id": "anglican-4",
+   "lens": "Anglican (broad, Thirty-Nine Articles / Book of Common Prayer)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "'Every doctrine must be proven from Scripture alone; tradition can never bind the conscience' is two statements, and the Anglican formularies answer yes to the first and no to the second, so the tradition's actual position collapses to 'Unsure'.",
+   "evidence": "Article VI: 'whatsoever is not read therein, nor may be proved thereby, is not to be required of any man, that it should be believed as an article of the Faith' (Agree). Article XXXIV: 'Whosoever, through his private judgment, willingly and purposely, doth openly break the Traditions and Ceremonies of the Church, which be not repugnant to the Word of God... ought to be rebuked openly' (Disagree); Hooker, Laws III.viii, is a whole book on why the church may bind in things Scripture leaves open. Lutherans (FC X on adiaphora) split the same way. The statement is written in the Puritan/biblicist idiom, not in the idiom of the Reformation's own sola scriptura.",
+   "fix": "'Nothing may be required of Christians as an article of faith unless it can be proved from Scripture.' (direction +1). Anglicans, Lutherans, Reformed and Baptists then agree; Rome (Dei Verbum 9: the Church 'does not draw her certainty about all revealed truths from the holy Scriptures alone') and Orthodoxy disagree. Note the coordinate consequence: Anglican and Lutheran Tradition scores rise to about 45-50; adjust those two coordinates to 45."
+  },
+  {
+   "id": "progressive-17",
+   "lens": "progressive mainline Protestant (PCUSA, ELCA, Episcopal, UMC progressive wing)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "Double-barreled: an Episcopalian affirms the first clause (Article VI: nothing not 'read therein, nor may be proved thereby' may be required) and denies the second (creeds and prayer book bind ordinands), and a PCUSA officer vows to be 'guided by' the confessions.",
+   "evidence": "Text: \"Every doctrine must be proven from Scripture alone; tradition can never bind the conscience.\" Thirty-Nine Articles VI and XX; PCUSA Book of Order W-4.0404 ordination questions.",
+   "fix": "\"No creed, council, or church teaching can bind a Christian's conscience beyond what Scripture itself teaches.\" (Direction +1.)"
+  },
+  {
+   "id": "survey-16",
+   "lens": "survey methodologist",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "\"Every doctrine must be proven from Scripture alone; tradition can never bind the conscience\" is double-barreled and overstates the Protestant standard, so material-sufficiency Catholics and Orthodox can agree with the first clause while rejecting the second.",
+   "evidence": "WCF 1.6 limits the claim to what is \"expressly set down... or by good and necessary consequence\"; Art. VI to \"things necessary to salvation\". Congar and much post-conciliar Catholic theology hold the material sufficiency of Scripture, so clause one does not separate the poles.",
+   "fix": "Replace with: \"Only Scripture is infallible; every creed, council, and teacher can err and must be tested by it.\" (17 words, direction +1). WCF 31.4 (\"all synods or councils... may err\") vs. Catholic/Orthodox infallibility of ecumenical councils."
+  }
+ ]
+}

@@ -1,0 +1,41 @@
+{
+ "target": "axis:worship:history:3",
+ "findings": [
+  {
+   "id": "anabaptist-23",
+   "lens": "Anabaptist / Mennonite (Schleitheim Confession, Confession of Faith in a Mennonite Perspective 1995)",
+   "category": "inaccuracy",
+   "severity": "minor",
+   "claim": "The right pole's history opens with the Puritan regulative principle, which is a strict Reformed rule for ordering worship, while the free-church plain-worship stream has no entry at all.",
+   "evidence": "Quoted: '1600s — Puritans articulate the regulative principle: only what Scripture commands belongs in worship.' The Ausbund (first edition 1564), the Anabaptist martyr hymnal still sung in Amish services, is the oldest hymnal in continuous use and the clearest early witness to worship without prayer book, calendar, or priest; Quaker unprogrammed meeting (1650s) is the other missing witness.",
+   "fix": "Add before the Puritan line: '1564 — The Ausbund, the Anabaptist martyr hymnal still sung in Amish services: plain worship of song, Scripture, and preaching without prayer book or priest.'"
+  },
+  {
+   "id": "anglican-19",
+   "lens": "Anglican (broad, Thirty-Nine Articles / Book of Common Prayer)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "'Puritans articulate the regulative principle' presents one side of an intra-Anglican debate without the reply that shaped the liturgical pole for the English-speaking world.",
+   "evidence": "The regulative principle was argued against the Prayer Book (Admonition to Parliament, 1572); Hooker's answer, that the church may order what Scripture does not forbid (the normative principle), is the stated rationale of every Anglican and Lutheran liturgy since.",
+   "fix": "'1570s-1600s: Puritans argue that only what Scripture commands belongs in worship (the regulative principle); Hooker replies that the church may order what Scripture does not forbid.'"
+  },
+  {
+   "id": "historian-26",
+   "lens": "church historian",
+   "category": "inaccuracy",
+   "severity": "minor",
+   "claim": "'1600s: Puritans articulate the regulative principle' is a century late for the articulation and vague on the landmark. The principle is sixteenth-century Reformed; the Puritan landmark is Westminster's Directory replacing the Prayer Book (1645) and WCF 21.1 (1646).",
+   "evidence": "Calvin, The Necessity of Reforming the Church (1543); Scots Confession (1560) ch. 20; the Vestiarian controversy (1566); Cartwright's Admonition controversy (1572). Directory for the Publique Worship of God, adopted by Parliament 3 January 1645; WCF 21.1: worship 'limited by his own revealed will'.",
+   "fix": "{when: '1645–46', what: 'Westminster\\'s Directory for Public Worship replaces the Prayer Book; the Confession (21.1) states the regulative principle: only what Scripture prescribes belongs in worship.'}"
+  },
+  {
+   "id": "presbyterian-28",
+   "lens": "Presbyterian / Reformed (Westminster Standards, Three Forms of Unity)",
+   "category": "inaccuracy",
+   "severity": "minor",
+   "claim": "'1600s: Puritans articulate the regulative principle' is a century late and mis-attributed; Calvin and the Scottish Reformation articulated it, and the dated landmark is the Westminster Directory of 1645.",
+   "evidence": "Calvin, The Necessity of Reforming the Church (1543): God 'disapproves of all modes of worship not expressly sanctioned by his Word'; Scots Confession 20 (1560); Westminster Directory for the Publick Worship of God (1645); WCF 21.1 (1646).",
+   "fix": "{ \"when\": \"1543–1645\", \"what\": \"Calvin, then the Westminster Directory, set out the regulative principle: worship is ordered by what Scripture commands, without an imposed prayer book.\" }"
+  }
+ ]
+}

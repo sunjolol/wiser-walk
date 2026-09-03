@@ -1,0 +1,607 @@
+{
+  "note": "Extracted from theology-compass.html (demo). Scores run 0..100 per axis: 0 = left pole, 100 = right pole.",
+  "scoring": {
+    "response_scale": {
+      "Strongly disagree": -2,
+      "Disagree": -1,
+      "Unsure": 0,
+      "Agree": 1,
+      "Strongly agree": 2
+    },
+    "statement_direction": "+1 means agreeing pushes toward the RIGHT pole of the axis, -1 toward the LEFT pole",
+    "axis_raw": "sum over the three statements of (direction * response), range -6..+6",
+    "axis_score": "round((raw + 6) / 12 * 100), so 0 = fully left pole, 50 = center, 100 = fully right pole",
+    "bands": "score <= 20 -> bands[0], 21-40 -> bands[1], 41-59 -> bands[2], 60-79 -> bands[3], >= 80 -> bands[4]",
+    "headline": "take the three axes with the largest |score - 50|, join their band adjectives; if all six are within 10 of 50, label is \"A theological centrist\"",
+    "nearest_tradition": "Euclidean distance in the six-dimensional 0..100 space to each tradition position; the two smallest are shown as \"Closest traditions\"; match % = round(100 - distance / sqrt(6 * 100^2) * 100)"
+  },
+  "axes": [
+    {
+      "index": 0,
+      "key": "grace",
+      "name": "Grace",
+      "left_pole": "Monergist",
+      "right_pole": "Synergist",
+      "bands": [
+        "firmly monergist",
+        "Reformed-leaning",
+        "balanced on grace",
+        "Arminian-leaning",
+        "firmly synergist"
+      ],
+      "fair_summary": "Monergists hold that salvation is God's work from beginning to end: he chooses, calls, and keeps his people, and his saving grace cannot finally be refused. Synergists hold that God's grace always comes first and makes faith possible, but that each person must freely respond and can decline, so that election follows God's foreknowledge of faith or rests on his choice of a people in Christ.",
+      "history": [
+        {
+          "when": "c. 411–430",
+          "what": "Augustine argues against Pelagius that grace must precede and enable every good will."
+        },
+        {
+          "when": "529",
+          "what": "Council of Orange: faith itself begins with grace, though the council also condemns predestination to evil."
+        },
+        {
+          "when": "1525",
+          "what": "Luther, The Bondage of the Will, answers Erasmus's defense of free choice."
+        },
+        {
+          "when": "1610–19",
+          "what": "The Remonstrance sets out five Arminian articles; the Synod of Dort replies with five points."
+        },
+        {
+          "when": "1740s",
+          "what": "Wesley and Whitefield divide the evangelical revival over predestination."
+        }
+      ],
+      "key_passages": [
+        "Romans 9",
+        "Ephesians 1:3–11",
+        "John 6:37–44",
+        "1 Timothy 2:3–4",
+        "2 Peter 3:9",
+        "Hebrews 6:4–6"
+      ],
+      "read_more": {
+        "left": [
+          "Calvin, Institutes III",
+          "Sproul, Chosen by God"
+        ],
+        "right": [
+          "Arminius, Works",
+          "Olson, Arminian Theology"
+        ]
+      }
+    },
+    {
+      "index": 1,
+      "key": "table",
+      "name": "Table",
+      "left_pole": "Sacramental",
+      "right_pole": "Memorial",
+      "bands": [
+        "sacramental",
+        "sacramental-leaning",
+        "centered on the sacraments",
+        "memorial-leaning",
+        "memorialist"
+      ],
+      "fair_summary": "The sacramental view holds that God really gives grace through the sacraments: Christ is truly present in the Supper, baptism joins a person to Christ and his church, and so the children of believers are baptized. The memorial view holds that the Supper is a remembrance of Christ's death and baptism a public confession of a faith already held, so both are ordinances obeyed by believers rather than channels of grace.",
+      "history": [
+        {
+          "when": "c. 110",
+          "what": "Ignatius of Antioch calls the Eucharist the flesh of our Savior Jesus Christ."
+        },
+        {
+          "when": "1215",
+          "what": "Fourth Lateran Council defines transubstantiation."
+        },
+        {
+          "when": "1525",
+          "what": "First believer's baptisms in Zurich; the Anabaptist movement begins."
+        },
+        {
+          "when": "1529",
+          "what": "Marburg Colloquy: Luther and Zwingli agree on fourteen articles and part over the Supper."
+        },
+        {
+          "when": "1559",
+          "what": "Calvin's final Institutes (IV.17): a real spiritual presence, received by faith through the Spirit."
+        }
+      ],
+      "key_passages": [
+        "John 6:53–58",
+        "1 Corinthians 11:23–29",
+        "Acts 2:38–39",
+        "Colossians 2:11–12",
+        "Romans 6:3–4",
+        "Matthew 26:26–28"
+      ],
+      "read_more": {
+        "left": [
+          "Schmemann, For the Life of the World",
+          "Mathison, Given for You"
+        ],
+        "right": [
+          "Zwingli, On the Lord's Supper",
+          "Schreiner & Wright, Believer's Baptism"
+        ]
+      }
+    },
+    {
+      "index": 2,
+      "key": "spirit",
+      "name": "Spirit",
+      "left_pole": "Continuationist",
+      "right_pole": "Cessationist",
+      "bands": [
+        "continuationist",
+        "open to the gifts",
+        "undecided on the gifts",
+        "cautious about the gifts",
+        "cessationist"
+      ],
+      "fair_summary": "Continuationists hold that the gifts of 1 Corinthians 12, including tongues, prophecy, and healing, remain available to the church until Christ returns, and should be sought and tested. Cessationists hold that those sign gifts authenticated the apostles and their message, and passed away once the apostolic foundation was laid and the New Testament was complete.",
+      "history": [
+        {
+          "when": "2nd c.",
+          "what": "Montanist 'new prophecy' in Phrygia; the wider church grows wary of ongoing prophecy."
+        },
+        {
+          "when": "c. 390",
+          "what": "Chrysostom, preaching on 1 Corinthians, notes that the sign gifts had ceased."
+        },
+        {
+          "when": "1906",
+          "what": "Azusa Street revival in Los Angeles launches modern Pentecostalism."
+        },
+        {
+          "when": "1918",
+          "what": "B. B. Warfield, Counterfeit Miracles, ties the gifts to the apostles."
+        },
+        {
+          "when": "1960s",
+          "what": "Charismatic renewal carries the gifts into mainline and Catholic churches."
+        },
+        {
+          "when": "2013",
+          "what": "Strange Fire conference restates the cessationist case."
+        }
+      ],
+      "key_passages": [
+        "1 Corinthians 12–14",
+        "1 Corinthians 13:8–12",
+        "Acts 2:17–18",
+        "Ephesians 2:20",
+        "Hebrews 2:3–4",
+        "Joel 2:28–29"
+      ],
+      "read_more": {
+        "left": [
+          "Grudem, The Gift of Prophecy",
+          "Storms, Practicing the Power"
+        ],
+        "right": [
+          "MacArthur, Strange Fire",
+          "Warfield, Counterfeit Miracles"
+        ]
+      }
+    },
+    {
+      "index": 3,
+      "key": "kingdom",
+      "name": "Kingdom",
+      "left_pole": "Covenantal",
+      "right_pole": "Dispensational",
+      "bands": [
+        "covenantal",
+        "covenantal-leaning",
+        "centered on the kingdom",
+        "dispensational-leaning",
+        "dispensational"
+      ],
+      "fair_summary": "The covenantal view sees one people of God across both testaments: the church, Jew and Gentile together, inherits the promises to Abraham, and Christ's kingdom is present now, with his return bringing the new creation. The dispensational view keeps Israel and the church distinct: God's promises to national Israel will be fulfilled literally in a future earthly kingdom, usually preceded by the rapture of the church and a seven-year tribulation.",
+      "history": [
+        {
+          "when": "c. 413–426",
+          "what": "Augustine, City of God, reads the thousand years of Revelation 20 as the present church age."
+        },
+        {
+          "when": "1646",
+          "what": "Westminster Confession sets out the covenant of works and the covenant of grace."
+        },
+        {
+          "when": "1830s",
+          "what": "J. N. Darby and the Plymouth Brethren teach a distinct Israel and a pretribulational rapture."
+        },
+        {
+          "when": "1909",
+          "what": "Scofield Reference Bible carries dispensationalism into the pews."
+        },
+        {
+          "when": "1950s",
+          "what": "George Eldon Ladd's historic premillennialism: a future millennium, one people of God, the church through the tribulation."
+        },
+        {
+          "when": "1990s",
+          "what": "Progressive dispensationalism (Blaising, Bock, Saucy) softens the Israel–church distinction."
+        }
+      ],
+      "key_passages": [
+        "Romans 11",
+        "Galatians 3:26–29",
+        "Revelation 20:1–6",
+        "Daniel 9:24–27",
+        "1 Thessalonians 4:13–17",
+        "Matthew 24",
+        "Ephesians 2:11–22"
+      ],
+      "read_more": {
+        "left": [
+          "Horton, Introducing Covenant Theology",
+          "Riddlebarger, A Case for Amillennialism"
+        ],
+        "right": [
+          "Ryrie, Dispensationalism",
+          "Blaising & Bock, Progressive Dispensationalism"
+        ]
+      }
+    },
+    {
+      "index": 4,
+      "key": "tradition",
+      "name": "Tradition",
+      "left_pole": "With tradition",
+      "right_pole": "Scripture alone",
+      "bands": [
+        "rooted in tradition",
+        "tradition-friendly",
+        "balanced on authority",
+        "Scripture-first",
+        "Scripture alone"
+      ],
+      "fair_summary": "Those who read Scripture with tradition hold that the creeds, councils, and the church's teaching office are God's appointed means of guarding and interpreting his Word, and so carry real authority. Those who hold to Scripture alone agree that tradition can be a valuable guide, but insist that only Scripture is infallible and that no council or teacher can bind the conscience where Scripture is silent or says otherwise.",
+      "history": [
+        {
+          "when": "434",
+          "what": "Vincent of Lérins: hold what has been believed 'everywhere, always, by all'."
+        },
+        {
+          "when": "1546",
+          "what": "Council of Trent: the gospel is preserved in written books and in unwritten traditions."
+        },
+        {
+          "when": "1646",
+          "what": "Westminster Confession ch. 1: Scripture is the supreme judge of all controversies."
+        },
+        {
+          "when": "1845",
+          "what": "Newman, An Essay on the Development of Christian Doctrine."
+        },
+        {
+          "when": "1965",
+          "what": "Vatican II, Dei Verbum: Scripture and Tradition flow from the same divine wellspring."
+        }
+      ],
+      "key_passages": [
+        "2 Thessalonians 2:15",
+        "2 Timothy 3:16–17",
+        "1 Timothy 3:15",
+        "Acts 17:11",
+        "Matthew 15:3–9",
+        "John 16:13"
+      ],
+      "read_more": {
+        "left": [
+          "Newman, Development of Doctrine",
+          "Florovsky, Bible, Church, Tradition"
+        ],
+        "right": [
+          "Mathison, The Shape of Sola Scriptura",
+          "Barrett, God's Word Alone"
+        ]
+      }
+    },
+    {
+      "index": 5,
+      "key": "worship",
+      "name": "Worship",
+      "left_pole": "Liturgical",
+      "right_pole": "Free",
+      "bands": [
+        "liturgical",
+        "liturgy-leaning",
+        "flexible in worship",
+        "informal in worship",
+        "free in worship"
+      ],
+      "fair_summary": "Liturgical worship follows a set order, the church calendar, and a weekly Eucharist, so that a congregation prays with the historic church in words tested over centuries. Free worship keeps the form open so that the Spirit can lead in the moment, with an emphasis on spontaneity, sincerity, and the participation of the whole congregation.",
+      "history": [
+        {
+          "when": "late 1st c.",
+          "what": "The Didache gives set Eucharistic prayers, while letting prophets give thanks as they wish."
+        },
+        {
+          "when": "c. 155",
+          "what": "Justin Martyr's First Apology describes Sunday readings, preaching, prayer, and the Eucharist."
+        },
+        {
+          "when": "1549",
+          "what": "Thomas Cranmer's first Book of Common Prayer."
+        },
+        {
+          "when": "1600s",
+          "what": "Puritans articulate the regulative principle: only what Scripture commands belongs in worship."
+        },
+        {
+          "when": "1830s",
+          "what": "Charles Finney's revivalist 'new measures' reshape Protestant services."
+        },
+        {
+          "when": "1970s–",
+          "what": "Jesus movement and the contemporary worship movement (Calvary Chapel, Vineyard, Hillsong)."
+        }
+      ],
+      "key_passages": [
+        "Acts 2:42",
+        "John 4:23–24",
+        "1 Corinthians 14:26–40",
+        "Colossians 3:16",
+        "Hebrews 12:28",
+        "Psalm 150"
+      ],
+      "read_more": {
+        "left": [
+          "Schmemann, Introduction to Liturgical Theology",
+          "Webber, Ancient-Future Worship"
+        ],
+        "right": [
+          "Frame, Worship in Spirit and Truth",
+          "Kauflin, Worship Matters"
+        ]
+      }
+    }
+  ],
+  "statements": [
+    {
+      "index": 1,
+      "axis": "grace",
+      "direction": -1,
+      "text": "Before anyone does anything, God has already chosen who will be saved, and his choice cannot fail."
+    },
+    {
+      "index": 2,
+      "axis": "grace",
+      "direction": 1,
+      "text": "A person can genuinely resist God's grace and refuse salvation to the very end."
+    },
+    {
+      "index": 3,
+      "axis": "grace",
+      "direction": -1,
+      "text": "Saving faith is itself a gift God gives to those he has chosen, not the reason he chose them."
+    },
+    {
+      "index": 4,
+      "axis": "table",
+      "direction": -1,
+      "text": "In the Lord's Supper, Christ is truly present in a way that goes beyond a symbol."
+    },
+    {
+      "index": 5,
+      "axis": "table",
+      "direction": 1,
+      "text": "Baptism is an outward sign of a decision to follow Christ that has already been made."
+    },
+    {
+      "index": 6,
+      "axis": "table",
+      "direction": -1,
+      "text": "The infants of believing parents should be baptized."
+    },
+    {
+      "index": 7,
+      "axis": "spirit",
+      "direction": -1,
+      "text": "Tongues, prophecy, and healing continue in the church today, as they did in Acts."
+    },
+    {
+      "index": 8,
+      "axis": "spirit",
+      "direction": 1,
+      "text": "The miraculous sign gifts ended with the apostles or the completion of the New Testament."
+    },
+    {
+      "index": 9,
+      "axis": "spirit",
+      "direction": -1,
+      "text": "A modern-day prophecy should be weighed carefully, but it can genuinely come from the Spirit."
+    },
+    {
+      "index": 10,
+      "axis": "kingdom",
+      "direction": 1,
+      "text": "God's promises to national Israel will be fulfilled literally in a future earthly kingdom."
+    },
+    {
+      "index": 11,
+      "axis": "kingdom",
+      "direction": -1,
+      "text": "The church is the true Israel, heir to every promise God made to Abraham."
+    },
+    {
+      "index": 12,
+      "axis": "kingdom",
+      "direction": 1,
+      "text": "Believers will be caught up to meet Christ before a seven-year tribulation."
+    },
+    {
+      "index": 13,
+      "axis": "tradition",
+      "direction": -1,
+      "text": "The creeds and councils of the early church carry real authority, not just historical interest."
+    },
+    {
+      "index": 14,
+      "axis": "tradition",
+      "direction": 1,
+      "text": "Every doctrine must be proven from Scripture alone; tradition can never bind the conscience."
+    },
+    {
+      "index": 15,
+      "axis": "tradition",
+      "direction": -1,
+      "text": "The church, not the individual reader, is the final interpreter of Scripture."
+    },
+    {
+      "index": 16,
+      "axis": "worship",
+      "direction": -1,
+      "text": "Worship should follow a set liturgy that connects us to the historic church."
+    },
+    {
+      "index": 17,
+      "axis": "worship",
+      "direction": 1,
+      "text": "Worship should be free-form and led by the Spirit in the moment."
+    },
+    {
+      "index": 18,
+      "axis": "worship",
+      "direction": -1,
+      "text": "Communion should be celebrated every week as the center of the service."
+    }
+  ],
+  "traditions": [
+    {
+      "name": "Roman Catholic",
+      "position": {
+        "grace": 55,
+        "table": 5,
+        "spirit": 40,
+        "kingdom": 15,
+        "tradition": 10,
+        "worship": 10
+      }
+    },
+    {
+      "name": "Eastern Orthodox",
+      "position": {
+        "grace": 65,
+        "table": 5,
+        "spirit": 35,
+        "kingdom": 15,
+        "tradition": 5,
+        "worship": 5
+      }
+    },
+    {
+      "name": "Lutheran (confessional)",
+      "position": {
+        "grace": 20,
+        "table": 15,
+        "spirit": 70,
+        "kingdom": 15,
+        "tradition": 35,
+        "worship": 20
+      }
+    },
+    {
+      "name": "Anglican (broad)",
+      "position": {
+        "grace": 40,
+        "table": 25,
+        "spirit": 45,
+        "kingdom": 20,
+        "tradition": 30,
+        "worship": 20
+      }
+    },
+    {
+      "name": "Presbyterian / Reformed",
+      "position": {
+        "grace": 10,
+        "table": 35,
+        "spirit": 75,
+        "kingdom": 15,
+        "tradition": 45,
+        "worship": 45
+      }
+    },
+    {
+      "name": "Reformed Baptist",
+      "position": {
+        "grace": 10,
+        "table": 70,
+        "spirit": 80,
+        "kingdom": 30,
+        "tradition": 55,
+        "worship": 65
+      }
+    },
+    {
+      "name": "Southern Baptist (typical)",
+      "position": {
+        "grace": 45,
+        "table": 85,
+        "spirit": 75,
+        "kingdom": 70,
+        "tradition": 85,
+        "worship": 70
+      }
+    },
+    {
+      "name": "Dispensational Bible church",
+      "position": {
+        "grace": 40,
+        "table": 90,
+        "spirit": 90,
+        "kingdom": 95,
+        "tradition": 90,
+        "worship": 75
+      }
+    },
+    {
+      "name": "Wesleyan / Methodist",
+      "position": {
+        "grace": 80,
+        "table": 40,
+        "spirit": 45,
+        "kingdom": 25,
+        "tradition": 45,
+        "worship": 40
+      }
+    },
+    {
+      "name": "Pentecostal / Assemblies of God",
+      "position": {
+        "grace": 80,
+        "table": 85,
+        "spirit": 5,
+        "kingdom": 75,
+        "tradition": 85,
+        "worship": 90
+      }
+    },
+    {
+      "name": "Charismatic non-denominational",
+      "position": {
+        "grace": 70,
+        "table": 80,
+        "spirit": 5,
+        "kingdom": 60,
+        "tradition": 85,
+        "worship": 90
+      }
+    },
+    {
+      "name": "Anabaptist / Mennonite",
+      "position": {
+        "grace": 75,
+        "table": 85,
+        "spirit": 55,
+        "kingdom": 30,
+        "tradition": 70,
+        "worship": 60
+      }
+    }
+  ]
+}

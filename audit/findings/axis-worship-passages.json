@@ -1,0 +1,59 @@
+{
+ "target": "axis:worship:passages",
+ "findings": [
+  {
+   "id": "anabaptist-25",
+   "lens": "Anabaptist / Mennonite (Schleitheim Confession, Confession of Faith in a Mennonite Perspective 1995)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "Matthew 18:20 is missing; it is the Anabaptist worship and ecclesiology text.",
+   "evidence": "'Where two or three are gathered in my name, there am I among them' is the ground of the free-church claim that the gathered congregation, not a rite or a building, is where Christ is present; it sits behind statement 4 as well.",
+   "fix": "Add 'Matthew 18:20' to the Worship key passages."
+  },
+  {
+   "id": "catholic-28",
+   "lens": "Roman Catholic",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "Missing the texts liturgical Christians cite for the word-and-sacrament shape of worship and the heavenly liturgy.",
+   "evidence": "Luke 24:28-35 (CCC 1347 reads the Emmaus meal as the shape of the Mass); Revelation 4-5 (CCC 1136-1139); Acts 20:7.",
+   "fix": "Add \"Luke 24:28-35\" and \"Revelation 4-5\"."
+  },
+  {
+   "id": "churchofchrist-21",
+   "lens": "Church of Christ / Restoration Movement (Stone-Campbell)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "Statement 18 asks about weekly communion but Acts 20:7, the one text everyone cites for it, is not among the passages; Ephesians 5:19, the companion of Colossians 3:16 and the a cappella text, is also absent.",
+   "evidence": "Acts 20:7 'upon the first day of the week, when the disciples came together to break bread'; Eph 5:19 'singing and making melody in your heart'. Both appear in every Restoration statement on worship.",
+   "fix": "Add 'Acts 20:7' and 'Ephesians 5:19'."
+  },
+  {
+   "id": "orthodox-25",
+   "lens": "Eastern Orthodox",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The texts the liturgical side actually reaches for, the heavenly liturgy, are absent; the list is weighted to the free side's proof texts (John 4, 1 Cor 14, Psalm 150).",
+   "evidence": "Isaiah 6:1-3 and Revelation 4-5 supply the Trisagion and the Sanctus; Hebrews 8:1-5 grounds earthly worship in the heavenly sanctuary.",
+   "fix": "Add \"Revelation 4-5\" and \"Hebrews 8:1-5\"."
+  },
+  {
+   "id": "presbyterian-29",
+   "lens": "Presbyterian / Reformed (Westminster Standards, Three Forms of Unity)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "None of the regulative-principle texts appear, so the passage list presents the axis as liturgy versus spontaneity only.",
+   "evidence": "WCF 21.1 prooftexts: Deuteronomy 12:32, Exodus 20:4-6, Matthew 15:9; Leviticus 10:1-3 (Nadab and Abihu) is the sermon text every Reformed hearer knows on this subject.",
+   "fix": "key_passages: add \"Deuteronomy 12:32\" and \"Leviticus 10:1–3\"."
+  },
+  {
+   "id": "scholar-12",
+   "lens": "biblical scholar",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "Statement 18 asserts weekly communion, but the only New Testament text for weekly frequency, Acts 20:7 ('on the first day of the week, when we were gathered together to break bread'), is not listed. The free pole has no Spirit-led text beyond John 4:23-24; Ephesians 5:18-20 ('be filled with the Spirit... singing and making melody... with your heart') is what free-worship writers actually cite. Matthew 6:7-13 is a natural read-both-ways addition: v.7 against 'empty phrases' for the free pole, v.9 'Pray then like this' as the Lord's own set form for the liturgical pole.",
+   "evidence": "Calvin, Institutes IV.17.43-46, argues weekly communion from Acts 2:42 and 20:7; the Restoration Movement built its weekly Supper on Acts 20:7. Frame, Worship in Spirit and Truth (in read_more), ch. 1-2, works from John 4:24 and Ephesians 5:18-20; Anglican and Orthodox apologists for set prayer cite Matthew 6:9 and Luke 11:2 ('When you pray, say...').",
+   "fix": "Add \"Acts 20:7\", \"Ephesians 5:18–20\" and \"Matthew 6:7–13\". Resulting list: \"Acts 2:42\", \"Acts 20:7\", \"Hebrews 12:28\", \"Matthew 6:7–13\", \"1 Corinthians 14:26–40\", \"Colossians 3:16\", \"John 4:23–24\", \"Ephesians 5:18–20\", \"Psalm 150\"."
+  }
+ ]
+}

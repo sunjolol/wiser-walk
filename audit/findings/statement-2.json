@@ -1,0 +1,95 @@
+{
+ "target": "statement:2",
+ "findings": [
+  {
+   "id": "charismatic-20",
+   "lens": "charismatic non-denominational (Vineyard, Bethel, Hillsong, Third Wave)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'A person can genuinely resist God's grace and refuse salvation to the very end.' can be answered Agree by a Calvinist reading 'grace' as the outward call, which pushes monergists toward the synergist pole.",
+   "evidence": "Reformed theology affirms that the non-elect resist common grace and the general call to the end (Westminster Confession 10.4); only effectual calling is irresistible. The statement never says 'saving' or 'effectual' grace.",
+   "fix": "'No one is finally saved without their own free consent; God's saving grace can be refused.'"
+  },
+  {
+   "id": "dispensational-8",
+   "lens": "Dispensationalist (Dallas / classic and progressive dispensationalism)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "\"A person can genuinely resist God's grace and refuse salvation to the very end.\" is double-barreled for a dispensationalist: we affirm that the unsaved can resist the Spirit, and we deny that a saved person can refuse salvation 'to the very end'.",
+   "evidence": "Eternal security is the one soteriological point every dispensational Bible church holds (DTS Doctrinal Statement, art. X 'Eternal Security'; Ryrie, So Great Salvation, 1989; Chafer, Systematic Theology, vol. 3, 'Eternal Security'), while most DTS-stream theologians reject Dortian irresistible grace and read Acts 7:51 and Matthew 23:37 as real resistance (Ryrie, Basic Theology; Geisler, Chosen But Free). As worded, 'refuse salvation to the very end' reads as apostasy of a believer, so the honest 4-point dispensationalist answer is 'Agree and Strongly disagree', which is not on the scale. This is also the item that carries our tradition's most distinctive doctrine, and it cannot register it.",
+   "fix": "\"A person who hears the gospel can resist God's grace and refuse it to the very end; grace does not overcome an unwilling heart.\" (direction +1). Perseverance/eternal security, if wanted, needs its own item."
+  },
+  {
+   "id": "lutheran-1",
+   "lens": "confessional Lutheran (LCMS / WELS / Book of Concord)",
+   "category": "scoring",
+   "severity": "blocker",
+   "claim": "\"A person can genuinely resist God's grace and refuse salvation to the very end\" is scored (+1) as a synergist statement, but confessional Lutherans affirm it for monergist reasons, so every Lutheran is pushed two notches toward \"Synergist\" for confessing that the lost are lost by their own resistance and not by a decree.",
+   "evidence": "FC SD II: before conversion the will is purely passive and can only resist (Acts 7:51 is the proof text); FC SD XI.41: those who are lost perish by their own wilful contempt of the Word, not because God did not will their salvation; FC SD XI rejects any decree of reprobation. A Lutheran therefore answers S1 +2, S2 +2, S3 +2, the most monergist honest set available, and receives Grace 33 = \"Reformed-leaning\". If S1 is softened to +1 the score is 42 = \"balanced on grace\". Neither describes a tradition whose founding text is The Bondage of the Will (which the quiz's own history cites).",
+   "fix": "Keep S2 (it is the only thing separating Wittenberg from Geneva in the instrument) but (a) reword the Grace fair summary so monergism is not defined by irresistibility, (b) drop the \"Reformed-leaning\" band name, and (c) move the Lutheran grace coordinate to 30. If the axis is meant to be a pure monergism test instead, replace S2 with: \"Coming to faith requires a person's own free cooperation with God's grace.\" (Lutheran and Reformed -2; Arminian, Catholic, Orthodox +1/+2) and put Lutheran grace at 12."
+  },
+  {
+   "id": "mockery-33",
+   "lens": "mockery critic",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'A person can genuinely resist God's grace and refuse salvation to the very end' — a Calvinist can agree (Acts 7:51: everyone resists the Spirit; what is irresistible is effectual calling), which blunts the statement. A Lutheran agrees with it and with statements 1 and 3, and cancels to the middle.",
+   "evidence": "Canons of Dort III/IV.16 vs Remonstrance article 4 turn on whether saving grace in the elect can be finally refused; Formula of Concord SD XI holds unconditional election and resistible grace together.",
+   "fix": "'A person whom God is drawing to salvation can still refuse his grace, even to the very end.'"
+  },
+  {
+   "id": "presbyterian-8",
+   "lens": "Presbyterian / Reformed (Westminster Standards, Three Forms of Unity)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "'A person can genuinely resist God's grace and refuse salvation to the very end' can be honestly affirmed by a Calvinist, because the Reformed teach that the non-elect do resist the Spirit's common operations and refuse to the end; only saving, effectual grace cannot be finally resisted.",
+   "evidence": "WCF 10.4: others not elected 'may have some common operations of the Spirit, yet they never truly come unto Christ'; Acts 7:51 ('you always resist the Holy Spirit') is a standard Reformed prooftext; Canons of Dort III/IV.12 and Rejection of Errors 8 deny only that God's regenerating grace can be frustrated. A careful Reformed reader will answer Disagree, but a fair share will read the plain words and answer Agree, moving Grace from 0 to 17-33.",
+   "fix": "\"God's saving grace can be finally resisted: someone God is drawing to himself can still refuse to the end.\""
+  },
+  {
+   "id": "progressive-3",
+   "lens": "progressive mainline Protestant (PCUSA, ELCA, Episcopal, UMC progressive wing)",
+   "category": "scoring",
+   "severity": "major",
+   "claim": "Lutheran monergists (ELCA and LCMS alike) affirm that grace can be resisted while denying any human contribution to conversion, so this statement scores the tradition that coined the monergism/synergism contrast as halfway to synergist.",
+   "evidence": "Text: \"A person can genuinely resist God's grace and refuse salvation to the very end.\" Formula of Concord SD II (Free Will): the will is purely passive in conversion; SD XI (Election): the lost are lost because they resist and despise the Word, not because God withheld grace. A confessional Lutheran answers S1 +1, S2 +2, S3 +2 -> raw -1+2-2 = -1 -> 42 'balanced on grace', 22 points from the coded 20.",
+   "fix": "Replace with: \"Whether a person comes to faith depends in part on their own free choice to accept God's offer of grace.\" (Direction +1.) Wesleyans and Orthodox agree, Lutherans and Reformed disagree, which is the actual monergist/synergist line."
+  },
+  {
+   "id": "reformedbaptist-7",
+   "lens": "Reformed Baptist (1689 London Baptist Confession)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "'A person can genuinely resist God's grace and refuse salvation to the very end' is literally true on Reformed premises (the non-elect do exactly that, and all people resist the Spirit), so a careful monergist reading it plainly answers Agree and is pushed 17-25 points toward 'Synergist'. The intended sense (grace that God intends to save with can be finally refused) is not stated, and 'resist grace' is the Remonstrant vocabulary.",
+   "evidence": "Acts 7:51 ('you always resist the Holy Spirit') is a text the Reformed affirm; Canons of Dort III/IV art. 16 deny that grace 'treats men as senseless stocks and blocks' and the Canons never use the word 'irresistible'. LBC 10.1: the effectually called 'come most freely, being made willing by his grace'. Arithmetic: statement 2 answered Agree instead of Strongly disagree moves Grace from 0 to 25 and the headline from 'Firmly monergist' to 'Reformed-leaning'.",
+   "fix": "'Someone God is drawing to himself can still finally refuse, so that no one is saved without their own free consent.' (direction +1)"
+  },
+  {
+   "id": "reformedcharismatic-2",
+   "lens": "Reformed charismatic (John Piper, Wayne Grudem, Sam Storms, Sovereign Grace Churches, Acts 29 continuationists)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "'A person can genuinely resist God's grace and refuse salvation to the very end' does not say which grace, so an informed Calvinist can honestly agree and be mis-scored toward synergism.",
+   "evidence": "Reformed theology affirms that the non-elect resist the external call to the end: Canons of Dort III/IV art. 9 (those called through the ministry of the word 'refuse to come'), WCF 10.4 (the non-elect 'may be called by the ministry of the Word... yet they never truly come'), Acts 7:51. Only effectual (saving) grace is 'irresistible'. Arithmetic: a five-point Calvinist who answers Agree here scores raw -3 -> 25 -> 'Reformed-leaning' instead of 0 -> 'firmly monergist', and moves 25 points toward Wesleyan/Anglican in the distance table.",
+   "fix": "Even someone God is drawing to himself can finally refuse him and be lost."
+  },
+  {
+   "id": "sbc-4",
+   "lens": "Southern Baptist (Baptist Faith & Message 2000)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "'Refuse salvation to the very end' reads to a Baptist as the perseverance question (can a believer fall away?) rather than the resistibility question (can an unbeliever refuse?), and a Traditionalist who holds both resistible grace and eternal security has no honest answer.",
+   "evidence": "BF&M 2000 Art. V: 'All true believers endure to the end. Those whom God has accepted in Christ ... will never fall away from the state of grace, but shall persevere to the end.' Traditional Statement Art. 9 affirms the same. Such a person agrees that grace can be refused but hears 'to the very end' as 'a saved person can end lost' and hedges to Unsure, pulling the score toward center and hiding the position they actually hold.",
+   "fix": "'A person who hears the gospel can genuinely resist God's grace and refuse to be saved; God does not override that refusal.' (direction +1)"
+  },
+  {
+   "id": "survey-6",
+   "lens": "survey methodologist",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "\"A person can genuinely resist God's grace and refuse salvation to the very end\" is true on Calvinist premises for the non-elect, so a Calvinist can agree and be pushed toward Synergist; the sign is right but the item does not separate the poles.",
+   "evidence": "WCF 10.4: the non-elect \"never truly come unto Christ\" though called by the ministry of the Word; Canons of Dort III/IV art. 9: the unconverted are lost through their own resistance. The only grace a Calvinist holds cannot be finally resisted is the effectual call to the elect, which the sentence never names.",
+   "fix": "Replace with: \"A person whom God is drawing to salvation can still finally refuse him and be lost.\" (16 words, direction +1)."
+  }
+ ]
+}

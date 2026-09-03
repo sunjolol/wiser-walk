@@ -1,0 +1,14 @@
+{
+ "target": "axis:table:history:0",
+ "findings": [
+  {
+   "id": "orthodox-21",
+   "lens": "Eastern Orthodox",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "After Ignatius the sacramental side is represented only by Lateran IV, a council the East does not recognize; the Eastern teaching of the change by the epiclesis, which directly answers statement 4's \"beyond a symbol\", is absent.",
+   "evidence": "Cyril of Jerusalem, Mystagogical Catecheses 4-5 (c. 350); John of Damascus, Exact Exposition IV.13 (c. 743): the bread and wine are \"not merely figures... but the deified body of the Lord itself\", changed \"through the invocation and coming of the Holy Spirit\".",
+   "fix": "Insert after Ignatius: {\"when\": \"c. 743\", \"what\": \"John of Damascus, Exact Exposition IV.13: the bread and wine are changed by the invocation of the Holy Spirit; not a figure but the very Body.\"}"
+  }
+ ]
+}

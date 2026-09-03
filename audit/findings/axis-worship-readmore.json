@@ -1,0 +1,86 @@
+{
+ "target": "axis:worship:readmore",
+ "findings": [
+  {
+   "id": "anabaptist-24",
+   "lens": "Anabaptist / Mennonite (Schleitheim Confession, Confession of Faith in a Mennonite Perspective 1995)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "Both 'Free' read-more titles are Reformed (Frame, Presbyterian; Kauflin, Sovereign Grace); nothing represents free-church or Anabaptist worship.",
+   "evidence": "Quoted: 'Frame, Worship in Spirit and Truth', 'Kauflin, Worship Matters'. Alan and Eleanor Kreider, Worship and Mission after Christendom (2011) is the standard Anabaptist treatment.",
+   "fix": "Right: 'Kreider & Kreider, Worship and Mission after Christendom' in place of Frame, or as a third entry."
+  },
+  {
+   "id": "anglican-22",
+   "lens": "Anglican (broad, Thirty-Nine Articles / Book of Common Prayer)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The liturgical read-more list (Schmemann, Webber) has no Prayer Book title, although the Book of Common Prayer is the most widely used Protestant liturgy and the history line already names Cranmer.",
+   "evidence": "Dix, The Shape of the Liturgy (1945) is the standard Anglican study; Alan Jacobs, The Book of Common Prayer: A Biography (2013) is the accessible one.",
+   "fix": "Add 'Dix, The Shape of the Liturgy' (or 'Jacobs, The Book of Common Prayer: A Biography') to the left list."
+  },
+  {
+   "id": "catholic-27",
+   "lens": "Roman Catholic",
+   "category": "missing",
+   "severity": "major",
+   "claim": "No Catholic entry on the Liturgical list for an axis where Catholics sit at 10; the obvious modern classic is missing.",
+   "evidence": "read_more.left = [\"Schmemann, Introduction to Liturgical Theology\", \"Webber, Ancient-Future Worship\"].",
+   "fix": "left: [\"Schmemann, Introduction to Liturgical Theology\", \"Ratzinger, The Spirit of the Liturgy\"]; move Webber to a middle slot if one exists."
+  },
+  {
+   "id": "charismatic-13",
+   "lens": "charismatic non-denominational (Vineyard, Bethel, Hillsong, Third Wave)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "Both 'Free' read-more titles are by Reformed authors, one of whom defends the regulative principle; the free-worship tradition's own literature is absent.",
+   "evidence": "'Frame, Worship in Spirit and Truth' is a Presbyterian defense of a (loosened) regulative principle; 'Kauflin, Worship Matters' is Sovereign Grace (Reformed charismatic). The history line for this pole names Calvary Chapel, Vineyard and Hillsong, none of whom appear in the reading.",
+   "fix": "right: ['Redman, The Unquenchable Worshipper', 'Kauflin, Worship Matters'] or, for a scholarly pair, add 'Ruth & Lim, Lovin' on Jesus: A Concise History of Contemporary Worship'."
+  },
+  {
+   "id": "historian-24",
+   "lens": "church historian",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "Both right-pole authors are Reformed. Frame's Worship in Spirit and Truth is a Presbyterian defense of the regulative principle (he would answer statement 17 Disagree), and Kauflin is Sovereign Grace. The Pentecostal/Assemblies of God tradition, at 90 on this axis, has no voice for the position 'led by the Spirit in the moment'.",
+   "evidence": "All four books exist as titled (Schmemann 1966; Webber 2008; Frame, P&R 1996; Kauflin, Crossway 2008). Frame, ch. 3–4, argues for the regulative principle with broad application. Jack Hayford, Worship His Majesty (Word, 1987), by the Foursquare pastor who wrote 'Majesty', is the standard Pentecostal worship book.",
+   "fix": "right: ['Hayford, Worship His Majesty', 'Kauflin, Worship Matters']."
+  },
+  {
+   "id": "mockery-27",
+   "lens": "mockery critic",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The 'Free' reading list is Frame (Reformed, Westminster) and Kauflin (Sovereign Grace) — two Calvinists for the pole that Pentecostals think is theirs; the liturgical list has no Catholic (Schmemann is Orthodox, Webber Anglican-evangelical). The Pentecostal pastor: 'Free worship, as explained by two Presbyterians.' The Catholic apologist: 'Schmemann twice, Newman once, and not one Catholic liturgist.'",
+   "evidence": "Frame, Worship in Spirit and Truth is a defence of freedom within the regulative principle; Kauflin leads Sovereign Grace Music. Ratzinger, The Spirit of the Liturgy (2000) is the obvious Catholic pick; Hayford, Worship His Majesty (Foursquare) the obvious Pentecostal one.",
+   "fix": "left: ['Schmemann, Introduction to Liturgical Theology', 'Ratzinger, The Spirit of the Liturgy']; right: ['Frame, Worship in Spirit and Truth', 'Hayford, Worship His Majesty']. Keep Webber as a third if three per side is acceptable."
+  },
+  {
+   "id": "pentecostal-12",
+   "lens": "Pentecostal (Assemblies of God Statement of Fundamental Truths)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The 'Free' pole's reading list is 'Frame, Worship in Spirit and Truth' -- a Reformed defence of the regulative principle, i.e. a constraint on worship -- and 'Kauflin, Worship Matters' from Sovereign Grace; the largest free-worship family in the world, Pentecostalism, has no author on its own pole.",
+   "evidence": "Frame's book argues for the Puritan regulative principle listed at history[3] as a liturgical-side landmark; Kauflin is Sovereign Grace (Reformed charismatic). Standard Pentecostal works: Albrecht, Rites in the Spirit (1999); Ruth & Lim, A History of Contemporary Praise & Worship (Baker Academic, 2021), which traces 'praise and worship' to Pentecostal and Latter Rain roots.",
+   "fix": "right: ['Albrecht, Rites in the Spirit', 'Ruth & Lim, A History of Contemporary Praise & Worship'] (keep Kauflin as a third if three are allowed; drop Frame)."
+  },
+  {
+   "id": "presbyterian-16",
+   "lens": "Presbyterian / Reformed (Westminster Standards, Three Forms of Unity)",
+   "category": "inaccuracy",
+   "severity": "major",
+   "claim": "'Frame, Worship in Spirit and Truth' is filed under the 'Free' pole, but Frame is a Westminster Seminary Reformed theologian whose book is a defense of the regulative principle; he is not an advocate of worship 'led by the Spirit in the moment'.",
+   "evidence": "Frame, Worship in Spirit and Truth (1996), chapters 3-4 restate and defend the regulative principle from WCF 21.1 (broadened in application, but still 'only what God commands'). Listing him as the Free-pole authority tells a Reformed reader that the quiz thinks the regulative principle is free worship.",
+   "fix": "right: [\"Kauflin, Worship Matters\", \"Liesch, The New Worship\"]; if a third-stream entry is wanted, add \"Old, Worship: Reformed According to Scripture\" under a note on the regulative principle, or under the middle band."
+  },
+  {
+   "id": "progressive-22",
+   "lens": "progressive mainline Protestant (PCUSA, ELCA, Episcopal, UMC progressive wing)",
+   "category": "citation",
+   "severity": "minor",
+   "claim": "The liturgical column has no mainline Protestant title; the standard seminary textbook across Methodist, Presbyterian, and Lutheran schools is missing.",
+   "evidence": "left: \"Schmemann, Introduction to Liturgical Theology\", \"Webber, Ancient-Future Worship\" (Webber is an evangelical rediscovering liturgy).",
+   "fix": "Add \"James F. White, Introduction to Christian Worship\" or \"Gordon Lathrop, Holy Things\"."
+  }
+ ]
+}

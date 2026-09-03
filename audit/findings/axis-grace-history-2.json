@@ -1,0 +1,23 @@
+{
+ "target": "axis:grace:history:2",
+ "findings": [
+  {
+   "id": "anabaptist-18",
+   "lens": "Anabaptist / Mennonite (Schleitheim Confession, Confession of Faith in a Mennonite Perspective 1995)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The history jumps from Luther 1525 to the Remonstrance 1610, skipping the first Protestant free-will tradition.",
+   "evidence": "Balthasar Hubmaier, On Free Will and On the Freedom of the Will (both 1527), are the first Protestant replies to The Bondage of the Will, two years after it; Menno Simons taught the same (God 'wills not the death of the sinner'). The right pole's story is told as Erasmus, the Remonstrants and Wesley, which lets the Reformed reader think free response entered Protestantism only through Arminius.",
+   "fix": "Insert after the Luther line: '1527 — Balthasar Hubmaier, On Free Will: the first Anabaptist reply to Luther; grace restores the will so that it can accept or refuse.'"
+  },
+  {
+   "id": "catholic-6",
+   "lens": "Roman Catholic",
+   "category": "missing",
+   "severity": "major",
+   "claim": "After Orange (529) every entry is Protestant (Luther, Remonstrance/Dort, Wesley/Whitefield). The Catholic Church's own definitive statements on grace and free will are absent even though Catholics are placed on the axis, so the history reads as a Protestant family quarrel that Catholics wandered into.",
+   "evidence": "Trent Sess. VI, Decree on Justification (13 January 1547), the standing Catholic doctrine of prevenient grace and free cooperation; Paul V's 1607 ruling ending the Congregatio de Auxiliis and permitting Thomists and Molinists each to teach their view; Innocent X, Cum occasione (1653), condemning the Jansenist propositions that interior grace is irresistible and that Christ died only for the elect.",
+   "fix": "Insert after 'Luther, The Bondage of the Will': {\"when\":\"1547\",\"what\":\"Council of Trent, Decree on Justification: grace comes first and enables, yet the will freely cooperates and can refuse.\"} and {\"when\":\"1607\",\"what\":\"Paul V ends the Congregatio de Auxiliis, leaving Thomists (efficacious grace) and Molinists (middle knowledge) both free to teach.\"}"
+  }
+ ]
+}

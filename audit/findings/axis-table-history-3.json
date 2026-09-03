@@ -1,0 +1,23 @@
+{
+ "target": "axis:table:history:3",
+ "findings": [
+  {
+   "id": "historian-11",
+   "lens": "church historian",
+   "category": "inaccuracy",
+   "severity": "minor",
+   "claim": "Marburg produced fifteen articles, not fourteen; Luther and Zwingli signed fourteen and most of the fifteenth, differing only on whether Christ's body is bodily present in the bread.",
+   "evidence": "Marburg Articles, 1–4 October 1529: article 15 records agreement on both kinds, rejection of the mass as a sacrifice, and spiritual eating of the body and blood, and disagreement 'whether the true body and blood of Christ are bodily in the bread and wine' (Schaff, History VII, §108; LW 38:85–89).",
+   "fix": "{when: '1529', what: 'Marburg Colloquy: Luther and Zwingli sign fourteen of fifteen articles and most of the fifteenth, but not whether Christ\\'s body is bodily present in the bread.'}"
+  },
+  {
+   "id": "lutheran-11",
+   "lens": "confessional Lutheran (LCMS / WELS / Book of Concord)",
+   "category": "missing",
+   "severity": "major",
+   "claim": "The Table history states transubstantiation (1215) and Calvin's spiritual presence (1559) but never states the Lutheran doctrine of the Supper, the view of the tradition placed at 15 on the axis; the Marburg line says Luther and Zwingli \"part over the Supper\" without saying what Luther held.",
+   "evidence": "AC X (1530): \"the body and blood of Christ are truly present and are distributed to those who eat\"; FC SD VII (1577): sacramental union \"in, with, and under\" the bread and wine, oral reception by all communicants, explicitly without transubstantiation (SD VII.35-38).",
+   "fix": "Either amend the 1529 line to \"Marburg Colloquy: Luther and Zwingli agree on fourteen articles and part over whether Christ's body is bodily present in the bread ('This is my body')\", or add {\"when\": \"1530\", \"what\": \"Augsburg Confession X: Christ's body and blood are truly present under the bread and wine and given to all who eat, with no theory of transubstantiation.\"}"
+  }
+ ]
+}

@@ -1,0 +1,32 @@
+{
+ "target": "tradition:Reformed Baptist",
+ "findings": [
+  {
+   "id": "reformedbaptist-5",
+   "lens": "Reformed Baptist (1689 London Baptist Confession)",
+   "category": "scoring",
+   "severity": "major",
+   "claim": "The Reformed Baptist coordinates [10, 70, 80, 30, 55, 65] place us 'covenantal-leaning' on Kingdom, 'informal in worship', and only just 'cessationist'. A 1689 subscriber answering the actual statements scores Kingdom 8, Worship 50, Spirit 100, and those three coordinates account for 1109 of the 1362 squared distance in the simulation.",
+   "evidence": "Kingdom: LBC ch. 7 is covenant theology ('This covenant is revealed in the gospel... until the full discovery thereof was completed in the New Testament', 7.3); chs. 31-32 teach one general resurrection and one judgment with no rapture or tribulation scheme, and even historic-premillennial Reformed Baptists (Spurgeon, many 17th-century Particular Baptists) answer statements 10 and 12 Disagree, giving 8-25, not 30. Spirit: LBC 1.1 'those former ways of God's revealing his will unto his people being now ceased'; 1.6 forbids 'new revelation of the Spirit'; 90 not 80. Worship: LBC 22.1 (regulative principle) is ordered, simple, and Word-centered, not 'informal'; Reformed Baptist and Presbyterian services are nearly identical in shape, so 50 alongside the Presbyterian 45. Arithmetic with [10, 65, 90, 15, 60, 50]: squared sum 100+4+100+49+49+0 = 302 -> 17.38 (93% match) against 36.91 now; and the confession-literal pattern (Table 42) also lands Reformed Baptist (28.76) ahead of Presbyterian (42.04, with Presbyterian table at 20).",
+   "fix": "Set Reformed Baptist to grace 10, table 65 (or 50 if statement 5 is replaced), spirit 90, kingdom 15, tradition 60, worship 50."
+  },
+  {
+   "id": "reformedcharismatic-31",
+   "lens": "Reformed charismatic (John Piper, Wayne Grudem, Sam Storms, Sovereign Grace Churches, Acts 29 continuationists)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'Reformed Baptist' with spirit 80 describes the 1689 confessional Baptist, but the label is also used loosely for Piper, Grudem and Sovereign Grace, who are 75-80 points away on that axis.",
+   "evidence": "1689 LBC 1.1 ('those former ways of God's revealing his will unto his people being now ceased') justifies the 80; the loose usage is common enough that a continuationist Baptist told 'Closest: Reformed Baptist' will assume the quiz means him and wonder why the match is 66%.",
+   "fix": "Rename to \"Reformed Baptist (1689)\", in the style of \"Lutheran (confessional)\", once a \"Reformed charismatic\" entry exists."
+  },
+  {
+   "id": "sbc-30",
+   "lens": "Southern Baptist (Baptist Faith & Message 2000)",
+   "category": "scoring",
+   "severity": "minor",
+   "claim": "Reformed Baptists (many of them inside the SBC) are given tradition 55, 'balanced on authority', although the 1689 confession is as sola Scriptura as Westminster; and 'Reformed Baptist' versus 'Southern Baptist' mixes a soteriological label with a denominational one, since the two overlap heavily.",
+   "evidence": "Second London Confession 1.10: 'The supreme judge ... can be no other but the Holy Scripture.' A 1689 Baptist answers S13 +1 (creeds have real authority), S14 +2, S15 -2 -> raw 3 -> 75. Founders Ministries, the main Reformed Baptist network, is an SBC organization.",
+   "fix": "Set tradition to 70. If the SBC entry is split as proposed, consider renaming this entry 'Baptist (1689 / Reformed)' so the categories read as parallel."
+  }
+ ]
+}

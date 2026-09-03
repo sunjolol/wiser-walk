@@ -1,0 +1,14 @@
+{
+ "target": "axis:kingdom:history:3",
+ "findings": [
+  {
+   "id": "dispensational-18",
+   "lens": "Dispensationalist (Dallas / classic and progressive dispensationalism)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The right pole's history jumps from Scofield (1909) to progressive dispensationalism (1990s), skipping the institution and the systematics that define the 'Bible church' tradition being scored.",
+   "evidence": "Lewis Sperry Chafer founded Dallas Theological Seminary in 1924 and his eight-volume Systematic Theology (1947–48) is the first full system; Ryrie's Dispensationalism Today (1965) supplied the sine qua non every later discussion uses. The tradition entry literally names the Bible-church movement that DTS produced.",
+   "fix": "Insert after 1909: \"1924: Lewis Sperry Chafer founds Dallas Theological Seminary; his Systematic Theology (1948) gives dispensationalism its first full systematic form.\""
+  }
+ ]
+}

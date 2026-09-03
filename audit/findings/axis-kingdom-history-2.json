@@ -1,0 +1,14 @@
+{
+ "target": "axis:kingdom:history:2",
+ "findings": [
+  {
+   "id": "historian-18",
+   "lens": "church historian",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'J. N. Darby and the Plymouth Brethren teach a distinct Israel and a pretribulational rapture' attributes to the whole movement what divided it. The Israel/church distinction is Darby's from the Powerscourt conferences (1831–33); the pretribulational rapture is fully worked out by about 1839–40; and leading Brethren (B. W. Newton, S. P. Tregelles) rejected the secret rapture, which was one cause of the Darby–Newton rupture of 1845–48.",
+   "evidence": "Sandeen, The Roots of Fundamentalism, ch. 2–3; Ryrie, Dispensationalism, ch. 4 (Darby's system formed 1827–33 and developed thereafter); Darby, The Hopes of the Church of God (Lausanne lectures, 1840); Tregelles, The Hope of Christ's Second Coming (1864).",
+   "fix": "{when: '1830s', what: 'J. N. Darby, out of the Powerscourt conferences (1831–33), separates Israel\\'s earthly hope from the church\\'s heavenly one and develops the pretribulational rapture; some Brethren (B. W. Newton) dissent.'}"
+  }
+ ]
+}

@@ -1,0 +1,86 @@
+{
+ "target": "statement:15",
+ "findings": [
+  {
+   "id": "anabaptist-5",
+   "lens": "Anabaptist / Mennonite (Schleitheim Confession, Confession of Faith in a Mennonite Perspective 1995)",
+   "category": "scoring",
+   "severity": "major",
+   "claim": "'The church, not the individual reader, is the final interpreter of Scripture' conflates a teaching office with the gathered congregation, so an Anabaptist who holds the community hermeneutic must either misanswer or be scored toward Rome.",
+   "evidence": "CFMP Art. 4: 'Insights and understandings which we bring to the interpretation of the Scripture are to be tested in the faith community'; 1 Corinthians 14:29 ('let the others weigh what is said') was the Swiss Brethren's rule; the pole's fair summary defines 'with tradition' as 'creeds, councils, and the church's teaching office'. Arithmetic: a Mennonite who answers S15 honestly at +2 with S13 = -1 and S14 = +2 gets raw = 1 -> 58 'balanced on authority'; with S13 = 0, raw = 0 -> 50, twenty points left of the hand-set coordinate 70. The statement measures 'who interprets' while the axis is labelled by 'is anything beside Scripture infallible', which are different questions (Catholics: magisterium; Anabaptists: congregation under Scripture; Baptists: soul competency).",
+   "fix": "'The church's teaching office (bishops, councils, or a magisterium), not the individual reader, has the final say on what Scripture means.' Mennonites and congregational Baptists can then disagree cleanly; if adopted, move the Anabaptist tradition coordinate from 70 to 75."
+  },
+  {
+   "id": "catholic-20",
+   "lens": "Roman Catholic",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "\"The church, not the individual reader, is the final interpreter of Scripture\" is a false dichotomy that is unfair to the other side: magisterial Protestants deny both that the church is infallible and that the individual is the final interpreter, so a Presbyterian cannot answer honestly. The Catholic claim is about a teaching office, not 'church vs individual'.",
+   "evidence": "WCF 1.9-10 (Scripture interprets Scripture; the supreme judge is 'the Holy Spirit speaking in the Scripture'); WCF 31.3 (councils 'may err, and many have erred'); Mathison, The Shape of Sola Scriptura, distinguishes sola from 'solo' scriptura. Catholic side: DV 10, authentic interpretation 'has been entrusted exclusively to the living teaching office of the Church'.",
+   "fix": "\"The church's teaching office can settle a disputed reading of Scripture with an authority that binds believers.\""
+  },
+  {
+   "id": "lutheran-7",
+   "lens": "confessional Lutheran (LCMS / WELS / Book of Concord)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "\"The church, not the individual reader, is the final interpreter of Scripture\" is a false dichotomy written in Roman Catholic apologetic vocabulary (\"private judgment\"); the Lutheran answer is that Scripture is its own interpreter and neither the magisterium nor the private reader is \"final\".",
+   "evidence": "FC Ep Rule and Norm 1: Scripture is \"the only judge, rule, and norm\"; Luther, Bondage of the Will, on the claritas Scripturae; Scriptura sui ipsius interpres is the standard Lutheran formula. A Lutheran who disagrees is not thereby asserting individualism, yet that is what the statement makes him affirm; a Lutheran who is bound to the Book of Concord by subscription may even hesitate toward Unsure, pulling the score the wrong way.",
+   "fix": "When Christians disagree about what a passage means, the church's teaching office has the final say. (direction -1)"
+  },
+  {
+   "id": "mockery-17",
+   "lens": "mockery critic",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "'The church, not the individual reader, is the final interpreter of Scripture' makes the only alternative to Rome 'the individual reader'. The Reformed blogger screenshots it: 'lol, written by a Catholic — the options are the Magisterium or me alone in my bedroom.'",
+   "evidence": "WCF 1.10: the supreme judge is 'the Holy Spirit speaking in the Scripture', not the reader; WCF 31.3: councils 'may err ... to be used as a help'. Protestants deny the statement without affirming individualism, and the wording denies them that.",
+   "fix": "'When the church has defined a doctrine, that definition settles the meaning of Scripture for every believer.' Catholics (CCC 85, 100) and Orthodox (the ecumenical councils) agree; confessional Protestants disagree on the record without being cast as lone readers."
+  },
+  {
+   "id": "presbyterian-7",
+   "lens": "Presbyterian / Reformed (Westminster Standards, Three Forms of Unity)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "'The church, not the individual reader, is the final interpreter of Scripture' is a false dichotomy for the Reformed, who hold that neither is: Scripture interprets Scripture and the church's role is ministerial. Honest answers scatter from -1 to +1 on the same convictions.",
+   "evidence": "WCF 1.9: 'the infallible rule of interpretation of Scripture is the Scripture itself'; WCF 1.10: the supreme judge 'can be no other but the Holy Spirit speaking in the Scripture'; WCF 31.2-3: synods do have real, though fallible, authority to settle controversies. Mathison, The Shape of Sola Scriptura (listed in this axis's read-more) is an entire book against 'the individual reader' as final interpreter, yet a Reformed reader who follows Mathison is pushed toward the 'with tradition' pole by this statement.",
+   "fix": "\"The church's official teaching, not Scripture interpreting Scripture, has the final say on what a passage means.\" (Catholic/Orthodox +2 per Dei Verbum 10 and 12; Reformed -2 per WCF 1.9-10; the individualist alternative is no longer smuggled in.)"
+  },
+  {
+   "id": "reformedbaptist-9",
+   "lens": "Reformed Baptist (1689 London Baptist Confession)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'The church, not the individual reader, is the final interpreter of Scripture' is a false dichotomy for the Reformed, who deny both options.",
+   "evidence": "LBC 1.9: 'The infallible rule of interpretation of Scripture is the Scripture itself'; 1.10: the supreme judge is 'the Holy Scripture delivered by the Spirit'. A Reformed Baptist in a confessional church with elders does not think the individual is the final interpreter either, and may answer Unsure.",
+   "fix": "'The church's teaching office can settle the meaning of Scripture with an authority the individual reader must accept.' (direction -1)"
+  },
+  {
+   "id": "reformedcharismatic-22",
+   "lens": "Reformed charismatic (John Piper, Wayne Grudem, Sam Storms, Sovereign Grace Churches, Acts 29 continuationists)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'The church, not the individual reader, is the final interpreter of Scripture' is a false dilemma written in Rome's vocabulary for the Protestant position ('private interpretation').",
+   "evidence": "WCF 1.9-10: the infallible rule of interpretation is Scripture itself and the supreme judge is 'the Holy Spirit speaking in the Scripture'; neither church nor individual. A Reformed reader disagrees but only by rejecting a caricature of his own view.",
+   "fix": "When Scripture and the church's settled teaching seem to conflict, the church's teaching should prevail."
+  },
+  {
+   "id": "sbc-7",
+   "lens": "Southern Baptist (Baptist Faith & Message 2000)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "'The church, not the individual reader, is the final interpreter of Scripture' offers a false binary, and the only way a Baptist can register sola Scriptura is to appear to affirm that 'the individual reader' is the final interpreter, which is the standard caricature ('just me and my Bible') used against Baptists.",
+   "evidence": "BF&M 2000 Art. I: 'The criterion by which the Bible is to be interpreted is Jesus Christ'; the preamble pairs 'soul competency and the priesthood of believers' with 'our accountability to each other under the Word of God'; Art. VI locates discernment in the gathered congregation. Baptists name neither the isolated individual nor a teaching office as final interpreter; Scripture interprets Scripture under the Spirit in the congregation. The statement lets a Catholic or Orthodox respondent answer in their own vocabulary but makes the Protestant answer in a caricature.",
+   "fix": "'A living teaching office (bishops, councils, or a magisterium) has the final say on what Scripture means.' (direction -1)"
+  },
+  {
+   "id": "survey-17",
+   "lens": "survey methodologist",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "\"The church, not the individual reader, is the final interpreter of Scripture\" poses a false dichotomy that confessional Protestants also affirm, compounding statement 13's pull of sola scriptura respondents toward \"With tradition\".",
+   "evidence": "Mathison, The Shape of Sola Scriptura (listed in this axis's own read_more, right side) argues exactly that the church, not the individual, interprets within the rule of faith, against \"solo scriptura\". WCF 1.10 makes \"the Holy Spirit speaking in the Scripture\" the supreme judge, which is neither of the two options offered.",
+   "fix": "Replace with: \"A church council or teaching office can settle the meaning of Scripture with final, unappealable authority.\" (16 words, direction -1). Dei Verbum 10 (authentic interpretation entrusted to the Magisterium) vs. WCF 31.4."
+  }
+ ]
+}

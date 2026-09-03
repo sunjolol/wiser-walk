@@ -1,0 +1,23 @@
+{
+ "target": "axis:worship:history:1",
+ "findings": [
+  {
+   "id": "historian-25",
+   "lens": "church historian",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "Justin's description is quoted only for its order; the same chapter says the presider prays 'according to his ability', the free-worship side's favorite second-century datum, and the line should carry both.",
+   "evidence": "Justin, First Apology 67 (also 65): the president 'offers prayers and thanksgivings, according to his ability' (ὅση δύναμις αὐτῷ); Bradshaw, The Search for the Origins of Christian Worship, on improvised presidential prayer.",
+   "fix": "{when: 'c. 155', what: 'Justin Martyr\\'s First Apology 67: Sunday readings, a sermon, prayers, and the Eucharist, the presider giving thanks \"according to his ability\".'}"
+  },
+  {
+   "id": "orthodox-24",
+   "lens": "Eastern Orthodox",
+   "category": "missing",
+   "severity": "major",
+   "claim": "The liturgical side jumps from Justin (155) to Cranmer (1549), so the first named liturgy in the list is Anglican; the liturgies celebrated every Sunday by the Orthodox Church, coordinated at worship 5, do not appear.",
+   "evidence": "The Liturgy of St Basil (4th c., Cappadocia) and the Liturgy of St John Chrysostom (Antioch/Constantinople, 4th-5th c.) are the ordinary eucharistic rites of Orthodoxy and the oldest liturgies in continuous use.",
+   "fix": "Insert after Justin: {\"when\": \"4th-5th c.\", \"what\": \"The Liturgies of St Basil and St John Chrysostom take the shape still celebrated every Sunday in the Orthodox Church.\"}"
+  }
+ ]
+}

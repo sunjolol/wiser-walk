@@ -1,0 +1,104 @@
+{
+ "target": "axis:table:summary",
+ "findings": [
+  {
+   "id": "anabaptist-19",
+   "lens": "Anabaptist / Mennonite (Schleitheim Confession, Confession of Faith in a Mennonite Perspective 1995)",
+   "category": "inaccuracy",
+   "severity": "minor",
+   "claim": "The memorial-side summary is written in Baptist/Zwinglian terms and omits what Anabaptists add: baptism as a covenant with the church under mutual accountability, and the Supper as the reconciled community's covenant renewal.",
+   "evidence": "Quoted: 'baptism a public confession of a faith already held, so both are ordinances obeyed by believers rather than channels of grace.' CFMP Art. 11: baptism is 'a pledge before the church of their covenant with God to walk in the way of Jesus Christ' and a commitment 'to give and receive counsel'; Art. 12: 'the members of the church renew their covenant with God and with each other', with admission conditioned on being 'at peace with God and with their brothers and sisters'; Schleitheim Art. III requires that communicants 'be united beforehand by baptism in one body'.",
+   "fix": "'The memorial view holds that the Supper is a remembrance of Christ's death in which the reconciled congregation renews its covenant, and baptism a public pledge of a faith already held that binds the believer to Christ and to an accountable church, so both are ordinances kept by believers rather than channels of grace in themselves.'"
+  },
+  {
+   "id": "charismatic-23",
+   "lens": "charismatic non-denominational (Vineyard, Bethel, Hillsong, Third Wave)",
+   "category": "unfairness",
+   "severity": "minor",
+   "claim": "'ordinances obeyed by believers rather than channels of grace' does not describe the charismatic practice of communion as an occasion of healing and encounter, which is neither sacramental nor bare memorial.",
+   "evidence": "Bethel's healing rooms take communion as an act of faith for healing; Joseph Prince, Health and Wholeness Through the Holy Communion (2006); Perry Stone, The Meal That Heals. These churches call the Supper an ordinance yet expect God to act in it. The tradition coordinate (table 80) lands in the 'memorialist' band.",
+   "fix": "'...so both are ordinances kept by believers in obedience; whatever blessing comes with them comes through the faith of those who take part, not through the elements themselves.'"
+  },
+  {
+   "id": "churchofchrist-5",
+   "lens": "Church of Christ / Restoration Movement (Stone-Campbell)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "Neither pole summary describes believer's baptism for the remission of sins, the position of Churches of Christ, Christian Churches, and a growing number of Baptist sacramentalists; the sacramental sentence ties efficacy to infant baptism by a non sequitur and the memorial sentence makes every believer-baptizer a memorialist.",
+   "evidence": "Quoted: 'baptism joins a person to Christ and his church, and so the children of believers are baptized' and 'baptism a public confession of a faith already held, so both are ordinances obeyed by believers rather than channels of grace.' Churches of Christ affirm the first clause of the sacramental sentence (Gal 3:27; Rom 6:3-4; 1 Cor 12:13; Acts 2:41, 47; Col 2:12 'through faith in the working of God') and deny its 'and so'; they deny the memorial sentence outright (Acts 2:38 'for the remission of sins'; Acts 22:16 'wash away your sins'; 1 Pet 3:21 'baptism now saves you'; Campbell-Rice Debate 1843 on the design of baptism; Hicks & Taylor, Down in the River to Pray, 2004). The product promise is that every position is described in words its holders would accept; this one is not described at all.",
+   "fix": "'The sacramental view holds that God really gives grace through the sacraments: Christ is truly present in the Supper and baptism is the moment God forgives sins and joins a person to Christ and his church; most on this side therefore baptize the children of believers. The memorial view holds that the Supper is a remembrance of Christ's death and baptism a public confession of a faith already held, so both are ordinances obeyed by believers rather than channels of grace. Some hold a mixed view and land near the middle: Churches of Christ, for instance, baptize only believers but teach that God forgives sins in baptism (Acts 2:38), and keep a weekly memorial Supper.'"
+  },
+  {
+   "id": "lutheran-13",
+   "lens": "confessional Lutheran (LCMS / WELS / Book of Concord)",
+   "category": "unfairness",
+   "severity": "minor",
+   "claim": "\"and so the children of believers are baptized\" grounds infant baptism in the parents' faith, which is the Reformed covenant rationale; Lutherans, Catholics and Orthodox, three of the four paedobaptist traditions at this pole, baptize infants because baptism itself regenerates and infants need it.",
+   "evidence": "SC IV.2: baptism \"works forgiveness of sins, rescues from death and the devil, and gives eternal salvation\"; LC IV.47-63 on infant faith; John 3:5, Titus 3:5. Statement 6's \"infants of believing parents\" has the same covenantal tilt, though a Lutheran still answers +2.",
+   "fix": "...baptism joins a person to Christ and his church and gives forgiveness and new birth, and so infants too are baptized."
+  },
+  {
+   "id": "orthodox-20",
+   "lens": "Eastern Orthodox",
+   "category": "tone",
+   "severity": "minor",
+   "claim": "\"Christ is truly present in the Supper\" describes the sacramental view in the memorialist's vocabulary; no Orthodox or Catholic calls it \"the Supper\".",
+   "evidence": "The sacramental side's own word is \"Eucharist\" (Ignatius, Smyrn. 7, the very source cited in history[0]).",
+   "fix": "Christ is truly present in the Eucharist (the Lord's Supper)"
+  },
+  {
+   "id": "pentecostal-11",
+   "lens": "Pentecostal (Assemblies of God Statement of Fundamental Truths)",
+   "category": "unfairness",
+   "severity": "minor",
+   "claim": "'so both are ordinances obeyed by believers rather than channels of grace' is the Reformed critic's summary of the memorial view, not the memorialist's own; Pentecostals would say the ordinances confer no saving grace but that Christ is met there by faith and the Spirit.",
+   "evidence": "AG Statement of Fundamental Truths art. 6: the Supper is 'the symbol expressing our sharing the divine nature of our Lord Jesus Christ (2 Peter 1:4)' -- a sharing, not bare obedience; Pentecostal practice pairs the Table with prayer for healing (1 Cor 11:29–30 read positively).",
+   "fix": "'...so both are ordinances obeyed by believers: Christ is met in them by faith and the Spirit, but the acts themselves do not confer saving grace.'"
+  },
+  {
+   "id": "presbyterian-11",
+   "lens": "Presbyterian / Reformed (Westminster Standards, Three Forms of Unity)",
+   "category": "inaccuracy",
+   "severity": "major",
+   "claim": "The sacramental pole says 'baptism joins a person to Christ and his church, and so the children of believers are baptized', which makes paedobaptism follow from baptismal regeneration. The Reformed baptize infants because of the covenant, and expressly deny that grace is so tied to baptism that everyone baptized is regenerated.",
+   "evidence": "WCF 28.1: baptism is 'a sign and seal of the covenant of grace, of his ingrafting into Christ'; WCF 28.5: 'grace and salvation are not so inseparably annexed unto it, as that no person can be regenerated or saved without it, or that all that are baptized are undoubtedly regenerated'; WCF 28.4 and HC 74 ground infant baptism in the children being 'included in the covenant and church of God'; Genesis 17:7 and Acts 2:39 are the standard prooftexts. As written, a Reformed reader must accept a description of 'their' pole in Lutheran and Catholic terms.",
+   "fix": "\"The sacramental view holds that God really gives grace through the sacraments: Christ is truly present in the Supper, whether bodily or by the Spirit to faith, and baptism is God's sign and seal that brings a person into Christ's covenant people, which is why the children of believers are baptized.\""
+  },
+  {
+   "id": "reformedbaptist-2",
+   "lens": "Reformed Baptist (1689 London Baptist Confession)",
+   "category": "inaccuracy",
+   "severity": "blocker",
+   "claim": "The memorial pole is defined as holding that 'both are ordinances obeyed by believers rather than channels of grace', yet Reformed Baptists are scored toward that pole while confessing the ordinances are means of grace. The sacramental side is also misdescribed: 'baptism joins a person to Christ and his church, and so the children of believers are baptized' derives infant baptism from sacramental efficacy, which is not the Reformed paedobaptist ground.",
+   "evidence": "Baptist Catechism (Keach, 1693), Q. 93 (numbering varies by edition): 'The outward and ordinary means whereby Christ communicateth to us the benefits of redemption are his ordinances, especially the Word, Baptism, the Lord's Supper and Prayer; all which are made effectual to the elect for salvation.' LBC 30.1: the Supper is for 'confirmation of the faith of believers... their spiritual nourishment, and growth in him'. For the other side: WCF 28.1 and 28.4 ground infant baptism in the covenant ('infants of one or both believing parents are to be baptized'), not in 'and so'; Lutherans and Catholics ground it in baptismal regeneration. The 'and so' is false for every paedobaptist body.",
+   "fix": "Replace the summary with: 'The sacramental view holds that God really gives grace through the sacraments: Christ is truly present in the Supper, and baptism is a means by which God joins a person to Christ and his church; most on this side also baptize the children of believers, whether as covenant members or for regeneration. The memorial view holds that the Supper is chiefly a remembrance of Christ's death and baptism a believer's public confession of faith, so both are ordinances obeyed by believers rather than channels of grace. Many Baptists stand between: believer's baptism only, but a Calvinist view that Christ feeds his people spiritually at the Table.'"
+  },
+  {
+   "id": "reformedcharismatic-7",
+   "lens": "Reformed charismatic (John Piper, Wayne Grudem, Sam Storms, Sovereign Grace Churches, Acts 29 continuationists)",
+   "category": "inaccuracy",
+   "severity": "major",
+   "claim": "'baptism joins a person to Christ and his church, and so the children of believers are baptized' gives the Reformed paedobaptist a Lutheran/Catholic baptismal-regeneration rationale, and 'rather than channels of grace' denies Reformed Baptists a view they confess.",
+   "evidence": "WCF 28.1 calls baptism 'a sign and seal of the covenant of grace'; 28.5 says grace 'is not so inseparably annexed unto it' that all the baptized are regenerated; Larger Catechism Q166 baptizes infants because they are 'within the covenant'. Heidelberg Q74 likewise. The 'and so' is therefore not their argument. On the other pole, 1689 LBC 30.7 and Grudem ST ch. 50 hold that Christ spiritually nourishes believers at the table. As my tradition's opponents are misdescribed, our people would end up arguing against a straw man.",
+   "fix": "Sacramental: 'Christ is truly present in the Supper, baptism is a sign and seal of God's covenant promise (for some, the very means of new birth), and so the children of believers are baptized.' Memorial: 'the Supper is a remembrance of Christ's death and baptism a public confession of a faith already held, so both are ordinances for believers; some who hold this still speak of Christ nourishing his people spiritually at the table.'"
+  },
+  {
+   "id": "sbc-15",
+   "lens": "Southern Baptist (Baptist Faith & Message 2000)",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "The memorial summary reduces the Supper to 'a remembrance' and says the ordinances are 'rather than channels of grace', which is thinner than the Baptist confessional statement and excludes Reformed Baptists (also Southern Baptists) who hold a spiritual feeding; and the sacramental half's 'and so the children of believers are baptized' is a non sequitur for Reformed paedobaptists.",
+   "evidence": "BF&M 2000 Art. VII: members 'memorialize the death of the Redeemer and anticipate His second coming'; 1 Corinthians 11:26 'proclaim'. Second London Confession 30.7: worthy receivers 'spiritually receive and feed upon Christ crucified'. On the other side, Westminster Confession 28.4 grounds infant baptism in covenant membership ('infants of one or both believing parents'), not in baptism joining the child to Christ.",
+   "fix": "Memorial half: 'The memorial view holds that the Supper is a remembrance and proclamation of Christ's death until he comes, and baptism a public confession of a faith already held, so both are ordinances obeyed by believers rather than means by which grace is conferred.' Sacramental half: '...baptism joins a person to Christ and his church, and the children of believers are baptized as members of the covenant people.'"
+  },
+  {
+   "id": "survey-29",
+   "lens": "survey methodologist",
+   "category": "inaccuracy",
+   "severity": "major",
+   "claim": "The pole definitions make infant baptism definitional of the sacramental view (\"and so the children of believers are baptized\") and believer's baptism definitional of the memorial view, so credobaptist sacramentalists and paedobaptist memorialists have no place on the axis.",
+   "evidence": "Churches of Christ / Restoration Movement (roughly 1.5 million in the US) baptize believers only and hold baptism is \"for the remission of sins\" (Acts 2:38) while keeping a weekly memorial Supper; Reformed Baptists confess spiritual feeding on Christ (1689 LBCF 30.7) with believer's baptism. Two of the three Table items (5, 6) are about baptism's subjects, one about the Supper, so the axis is two constructs (efficacy, subjects) scored as one.",
+   "fix": "Define the poles by efficacy only and demote subjects to an indicator: \"...baptism joins a person to Christ and his church (most such churches therefore also baptize believers' infants).\" and \"...so both are ordinances of obedience rather than channels of grace (most such churches baptize only those who profess faith).\" Keep S6 as one item among four, not as the pole's definition."
+  }
+ ]
+}

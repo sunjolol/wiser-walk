@@ -1,0 +1,23 @@
+{
+ "target": "axis:tradition:passages",
+ "findings": [
+  {
+   "id": "catholic-22",
+   "lens": "Roman Catholic",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The texts a Catholic actually opens first on church authority are missing; the current left-side texts (2 Thess 2:15, 1 Tim 3:15, John 16:13) are right but incomplete.",
+   "evidence": "Matthew 16:18-19 (CCC 553, 881); Acts 15:6-29 ('it has seemed good to the Holy Spirit and to us'); 2 Peter 1:20-21 (no prophecy of Scripture is a matter of one's own interpretation); 2 Peter 3:15-16.",
+   "fix": "Add \"Acts 15:6-29\", \"Matthew 16:18-19\", \"2 Peter 1:20-21\"."
+  },
+  {
+   "id": "scholar-11",
+   "lens": "biblical scholar",
+   "category": "missing",
+   "severity": "major",
+   "claim": "Statement 13 is about the authority of councils, yet the one council in Scripture, the Jerusalem Council of Acts 15 with its formula 'it seemed good to the Holy Spirit and to us' (15:28), is absent; it is the passage every Catholic and Orthodox writer reaches for first on conciliar authority. The Scripture-alone pole is likewise missing its sharpest text, Galatians 1:8-9, the apostolic anathema on any authority, 'even an angel from heaven', that preaches a different gospel, which is the classic Protestant ground for refusing to let church authority bind the conscience beyond Scripture.",
+   "evidence": "Florovsky, 'The Authority of the Ancient Councils and the Tradition of the Fathers', in Bible, Church, Tradition (in read_more), takes Acts 15 as the type of every council; Dei Verbum 10 and CCC 880-892 build the teaching office on the apostolic college of Acts 15 and Matthew 16:18-19. Westminster Confession 1.6 (history[2]) cites Galatians 1:8-9 with 2 Timothy 3:15-17 as its proof texts for the sufficiency of Scripture.",
+   "fix": "Add \"Acts 15:22–29\" (with tradition) and \"Galatians 1:8–9\" (Scripture alone). Optionally add \"2 Peter 1:20–21\" as a read-both-ways text for statement 15. Resulting list: \"2 Thessalonians 2:15\", \"1 Timothy 3:15\", \"Acts 15:22–29\", \"John 16:13\", \"2 Timothy 3:16–17\", \"Acts 17:11\", \"Matthew 15:3–9\", \"Galatians 1:8–9\"."
+  }
+ ]
+}

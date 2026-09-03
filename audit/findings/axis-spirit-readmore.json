@@ -1,0 +1,68 @@
+{
+ "target": "axis:spirit:readmore",
+ "findings": [
+  {
+   "id": "catholic-16",
+   "lens": "Roman Catholic",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The Continuationist list is two Reformed charismatics; the largest continuationist body in the world has no entry.",
+   "evidence": "read_more.left = [\"Grudem, The Gift of Prophecy\", \"Storms, Practicing the Power\"].",
+   "fix": "Add \"Cantalamessa, Sober Intoxication of the Spirit\" (or \"McDonnell & Montague, Christian Initiation and Baptism in the Holy Spirit\" for the patristic evidence)."
+  },
+  {
+   "id": "historian-15",
+   "lens": "church historian",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "'MacArthur, Strange Fire' is the cessationist polemic whose subtitle is 'The Danger of Offending the Holy Spirit with Counterfeit Worship'; a charismatic will not accept a page that recommends a book calling his worship counterfeit as the fair account of the other side, and the quiz already lists the conference in the history. Both cessationist titles contain 'Counterfeit'. On the left, Grudem and Storms are both Reformed continuationists; the Pentecostal/Assemblies of God tradition, placed at 5 on this very axis, has no author.",
+   "evidence": "All four books exist as titled (Grudem 1988/2000, Storms 2017, MacArthur 2013, Warfield 1918). Measured cessationist statement: Richard Gaffin, Perspectives on Pentecost (P&R, 1979). Pentecostal scholarship: Gordon Fee (Assemblies of God), God's Empowering Presence (Hendrickson, 1994); Craig Keener, Gift and Giver (Baker, 2001).",
+   "fix": "left: ['Fee, God\\'s Empowering Presence', 'Grudem, The Gift of Prophecy']; right: ['Gaffin, Perspectives on Pentecost', 'Warfield, Counterfeit Miracles']."
+  },
+  {
+   "id": "mockery-8",
+   "lens": "mockery critic",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The continuationist reading list contains zero Pentecostals (Grudem and Storms are both Reformed charismatics) while the cessationist list leads with Strange Fire, the one book that calls Pentecostal worship blasphemous. The Pentecostal pastor screenshots both lines: 'lol, my side is represented by two Calvinists and the other side by the book that says I offend the Holy Spirit.' The Reformed blogger enjoys it, which is the problem.",
+   "evidence": "Grudem (formerly Vineyard, Reformed) and Storms (Bridgeway, Reformed) vs MacArthur, Strange Fire (subtitle: 'The Danger of Offending the Holy Spirit with Counterfeit Worship'). Every other axis pairs a primary source with a measured modern defence; this is the only axis whose modern pick on one side is a polemic.",
+   "fix": "left: ['Fee, Paul, the Spirit, and the People of God', 'Grudem, The Gift of Prophecy']  (Fee is an Assemblies of God minister); right: ['Warfield, Counterfeit Miracles', 'Gaffin, Perspectives on Pentecost'] (or Schreiner, Spiritual Gifts). Drop Strange Fire from the list; it stays in the timeline."
+  },
+  {
+   "id": "orthodox-14",
+   "lens": "Eastern Orthodox",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The left list is entirely charismatic-Protestant; the Orthodox and Catholics coordinated on that pole have no entry.",
+   "evidence": "read_more.left: [\"Grudem, The Gift of Prophecy\", \"Storms, Practicing the Power\"].",
+   "fix": "Add \"Seraphim of Sarov, On the Acquisition of the Holy Spirit (Conversation with Motovilov)\"."
+  },
+  {
+   "id": "pentecostal-3",
+   "lens": "Pentecostal (Assemblies of God Statement of Fundamental Truths)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The continuationist reading list ('Grudem, The Gift of Prophecy', 'Storms, Practicing the Power') is written entirely by Reformed continuationists who explicitly reject the Pentecostal doctrines of subsequence and initial evidence; not one Pentecostal author represents the pole Pentecostals defined.",
+   "evidence": "Grudem, Systematic Theology ch. 39, argues against a second-stage baptism in the Spirit; Storms writes the Third Wave essay in Grudem (ed.), Are Miraculous Gifts for Today? Four Views (1996), where the Pentecostal view is a separate chapter by Douglas Oss. The AG's own systematic works (Stanley Horton, ed., Systematic Theology: A Pentecostal Perspective; Menzies & Menzies, Spirit and Power; Stronstad, The Charismatic Theology of St. Luke; Macchia, Baptized in the Spirit) are absent.",
+   "fix": "left: ['Stronstad, The Charismatic Theology of St. Luke', 'Grudem (ed.), Are Miraculous Gifts for Today? Four Views'] -- the second volume contains Pentecostal, Third Wave, open-but-cautious and cessationist essays side by side and is the fairest single title for either pole. Alternatively keep Grudem and add 'Macchia, Baptized in the Spirit'."
+  },
+  {
+   "id": "presbyterian-15",
+   "lens": "Presbyterian / Reformed (Westminster Standards, Three Forms of Unity)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "Representing the cessationist side by 'MacArthur, Strange Fire' pairs our position with its most polemical book; the standard Reformed exegetical case is Gaffin.",
+   "evidence": "Richard Gaffin, Perspectives on Pentecost (1979), is the text Reformed seminaries assign and the one the 'open but cautious' and continuationist Reformed engage; Strange Fire is a conference polemic that continuationists cite as evidence of cessationist unfairness. The continuationist side gets two irenic scholarly titles (Grudem, Storms); the cessationist side gets one scholar and one polemic.",
+   "fix": "right: [\"Gaffin, Perspectives on Pentecost\", \"Warfield, Counterfeit Miracles\"]."
+  },
+  {
+   "id": "reformedbaptist-17",
+   "lens": "Reformed Baptist (1689 London Baptist Confession)",
+   "category": "tone",
+   "severity": "minor",
+   "claim": "'MacArthur, Strange Fire' is the most polemical title on the cessationist shelf and is the one continuationists will screenshot; a fairer flagship exists, including one by a Reformed Baptist.",
+   "evidence": "Gaffin, Perspectives on Pentecost (1979) is the standard exegetical case; Waldron, To Be Continued? (2005) is the Reformed Baptist statement.",
+   "fix": "right: ['Gaffin, Perspectives on Pentecost', 'Warfield, Counterfeit Miracles'] (or Waldron, To Be Continued?)"
+  }
+ ]
+}

@@ -1,0 +1,77 @@
+{
+ "target": "axis:spirit:passages",
+ "findings": [
+  {
+   "id": "charismatic-16",
+   "lens": "charismatic non-denominational (Vineyard, Bethel, Hillsong, Third Wave)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The continuationist proof texts charismatics actually use are missing.",
+   "evidence": "Listed: 1 Cor 12-14, 1 Cor 13:8-12, Acts 2:17-18, Eph 2:20, Heb 2:3-4, Joel 2:28-29. Not listed: 1 Corinthians 14:1 ('eagerly desire spiritual gifts, especially prophecy'), 1 Thessalonians 5:19-21 (do not quench, test everything, the Vineyard 'weigh it' text behind statement 9), John 14:12 (Bethel's 'greater works'), Acts 2:38-39 ('the promise is for you and your children and all who are far off', which the quiz files only under Table).",
+   "fix": "Add '1 Corinthians 14:1', '1 Thessalonians 5:19–21', 'John 14:12', 'Acts 2:38–39'."
+  },
+  {
+   "id": "churchofchrist-20",
+   "lens": "Church of Christ / Restoration Movement (Stone-Campbell)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "Acts 8:14-19, the central cessationist text for Churches of Christ (the miraculous gifts were conferred only through the laying on of the apostles' hands, so they ceased when those recipients died), is absent, though the axis otherwise lists the Reformed cessationist texts.",
+   "evidence": "Every Church of Christ treatment of the gifts (e.g., Jividen, Miracles: From God or Man?, 1987) leads with Acts 8:18 alongside 1 Cor 13:8-10; the tradition is the largest non-Reformed cessationist body, and its argument is not Warfield's authentication thesis.",
+   "fix": "Add 'Acts 8:14-19'."
+  },
+  {
+   "id": "copy-18",
+   "lens": "copy editor",
+   "category": "citation",
+   "severity": "minor",
+   "claim": "\"1 Corinthians 12–14\" already contains \"1 Corinthians 13:8–12\", so the list cites the same text twice and the cessationist passage is a subset of the continuationist one.",
+   "evidence": "Every other axis lists six distinct passages. The continuationist proof text within those chapters is the command to pursue prophecy.",
+   "fix": "Replace \"1 Corinthians 12–14\" with \"1 Corinthians 14:1–5\""
+  },
+  {
+   "id": "mockery-31",
+   "lens": "mockery critic",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "Cessationists get three texts (1 Cor 13:8–12, Eph 2:20, Heb 2:3–4); continuationists get two (Acts 2, Joel 2) plus the shared 1 Cor 12–14. The Pentecostal's first citation is absent.",
+   "evidence": "1 Thessalonians 5:19–21 ('do not despise prophecies, but test everything') and 1 Corinthians 14:1 ('earnestly desire ... that you may prophesy') are the texts behind 'sought and tested' in the quiz's own fair summary.",
+   "fix": "Add '1 Thessalonians 5:19–21'."
+  },
+  {
+   "id": "orthodox-13",
+   "lens": "Eastern Orthodox",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The text the older churches use for both continuance and testing is absent.",
+   "evidence": "1 Thess 5:19-21 (\"Do not quench the Spirit. Do not despise prophecies, but test everything\") is the Orthodox and Catholic rule for the gifts; the present list has no text that unites the two poles.",
+   "fix": "Add \"1 Thessalonians 5:19-21\"."
+  },
+  {
+   "id": "pentecostal-6",
+   "lens": "Pentecostal (Assemblies of God Statement of Fundamental Truths)",
+   "category": "missing",
+   "severity": "major",
+   "claim": "The passage list carries the same text twice (Joel 2:28–29 and Acts 2:17–18, which quotes it) while the AG's central continuation text, Acts 2:38–39, appears only under the Table axis as a paedobaptist proof, and the Lukan evidence texts (Acts 10:44–46; 19:1–7) and the text behind statement 9 (1 Thess 5:19–21) are absent.",
+   "evidence": "AG Statement of Fundamental Truths art. 7–8 cite Luke 24:49, Acts 1:4,8, 2:4, 2:38–39, 10:44–46, 15:7–9, 19:1–7. Acts 2:39, 'the promise is for you and your children and for all who are far off, for all whom the Lord our God will call', is the verse every AG preacher reaches for against cessationism.",
+   "fix": "Replace 'Joel 2:28–29' with 'Acts 2:38–39' and add 'Acts 10:44–46' and '1 Thessalonians 5:19–21'."
+  },
+  {
+   "id": "reformedcharismatic-29",
+   "lens": "Reformed charismatic (John Piper, Wayne Grudem, Sam Storms, Sovereign Grace Churches, Acts 29 continuationists)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "1 Thessalonians 5:19-21, the signature Reformed-charismatic text, is missing.",
+   "evidence": "'Do not quench the Spirit. Do not despise prophecies, but test everything' is the text behind statement 9's 'weighed carefully' wording, Piper's sermons on the gifts and Storms's Practicing the Power; the list has Joel and Acts 2 but not it.",
+   "fix": "Add '1 Thessalonians 5:19-21'."
+  },
+  {
+   "id": "scholar-7",
+   "lens": "biblical scholar",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "\"Joel 2:28–29\" and \"Acts 2:17–18\" are the same text (Peter quotes Joel verbatim), so the continuationist column is padded with a duplicate while the cessationist flagship, 2 Corinthians 12:12 ('the signs of a true apostle'), is missing entirely. The continuationist pole in turn lacks 1 Thessalonians 5:19-21, the 'do not despise prophecies, but test everything' text that statement 9 (\"weighed carefully, but it can genuinely come from the Spirit\") and the summary's \"sought and tested\" are paraphrasing, and James 5:14-16, the text continuationists reach for on healing, which statement 7 names.",
+   "evidence": "Acts 2:17-21 = LXX Joel 3:1-5 (English 2:28-32). Warfield, Counterfeit Miracles (in read_more), ch. 1, rests cessation on miracles as the credential of apostles from 2 Corinthians 12:12 and Hebrews 2:3-4; MacArthur, Strange Fire, uses the same verse. Grudem, The Gift of Prophecy (in read_more), grounds weighed, fallible congregational prophecy on 1 Corinthians 14:29 and 1 Thessalonians 5:20-21; Storms, Practicing the Power, on James 5:14-16.",
+   "fix": "Replace \"Joel 2:28–29\" with \"2 Corinthians 12:12\"; add \"1 Thessalonians 5:19–21\" and \"James 5:14–16\". Resulting list: \"1 Corinthians 12–14\", \"1 Corinthians 13:8–12\", \"Acts 2:17–18\", \"1 Thessalonians 5:19–21\", \"James 5:14–16\", \"Ephesians 2:20\", \"Hebrews 2:3–4\", \"2 Corinthians 12:12\"."
+  }
+ ]
+}

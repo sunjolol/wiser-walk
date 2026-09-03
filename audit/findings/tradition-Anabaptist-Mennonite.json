@@ -1,0 +1,14 @@
+{
+ "target": "tradition:Anabaptist / Mennonite",
+ "findings": [
+  {
+   "id": "anabaptist-14",
+   "lens": "Anabaptist / Mennonite (Schleitheim Confession, Confession of Faith in a Mennonite Perspective 1995)",
+   "category": "scoring",
+   "severity": "major",
+   "claim": "The Spirit coordinate 55 places Mennonites in 'undecided on the gifts' and slightly toward cessationism; no Anabaptist confession is cessationist and the simulation lands at 25-33.",
+   "evidence": "Schleitheim, Dordrecht (1632), and CFMP 1995 contain no cessationist clause; CFMP Art. 3 describes the Spirit giving gifts to the church without restriction; anointing with oil for healing (James 5:14) is standard Mennonite practice in the Minister's Manual; congregational weighing of prophecy (1 Corinthians 14:29) is the Anabaptist hermeneutic; the 1970s Mennonite charismatic renewal was absorbed, not expelled. Simulation: S7 +1, S8 -1, S9 +1 -> raw -3 -> 25; a cautious Mennonite (0, -1, +1) -> 33. Moving spirit from 55 to 40 cuts the simulated distance from sqrt(1465) = 38.3 to sqrt(1465 - 900 + 225) = 28.1 and does not disturb any other tradition's nearest.",
+   "fix": "spirit: 40. Also, if statement 15 is reworded as proposed, tradition: 75; if statement 17 is reworded as proposed, worship: 75. Grace 75, table 85, kingdom 30 are acceptable for 'typical adherents' (Mennonite Church USA/Canada are mostly amillennial, Mennonite Brethren historically premillennial, so 30 is a fair average)."
+  }
+ ]
+}

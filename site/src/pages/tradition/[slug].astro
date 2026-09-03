@@ -1,0 +1,13 @@
+---
+import Base from '../../layouts/Base.astro';
+import { TRADITIONS, AXES } from '../../lib/compass';
+export function getStaticPaths() {
+  return TRADITIONS.map(t => ({ params: { slug: t.slug }, props: { tradition: t } }));
+}
+const { tradition } = Astro.props;
+---
+<Base title={`${tradition.name} on the Theology Compass`} description={`Where ${tradition.name} sits on six axes of Christian belief.`}>
+  <h1>{tradition.name}</h1>
+  <ul>{AXES.map((a, i) => <li>{a.name}: {tradition.position[i]} ({a.left} 0 → {a.right} 100)</li>)}</ul>
+  <p>Approximate sketch of typical adherents, not official teaching.</p>
+</Base>

@@ -1,0 +1,32 @@
+{
+ "target": "axis:grace:poles",
+ "findings": [
+  {
+   "id": "anabaptist-4",
+   "lens": "Anabaptist / Mennonite (Schleitheim Confession, Confession of Faith in a Mennonite Perspective 1995)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "'Synergist' is a condemnation label in Lutheran usage and a Reformed polemic term; no Anabaptist confession describes itself that way.",
+   "evidence": "Formula of Concord Art. II (Free Will) rejects 'the Synergists' by name. CFMP Art. 8 says only that 'through Jesus Christ, God offers salvation from sin and a new way of life to all people' and that we receive it when we 'repent of sin and accept Jesus Christ'. Hubmaier, On Free Will (1527): grace restores the will so it can accept or refuse. Reformed critics will happily share a card that says 'firmly synergist' as if the quiz had conceded their charge.",
+   "fix": "Left pole 'Sovereign grace', right pole 'Free response'. Keep the fair summary text but replace 'Monergists hold' / 'Synergists hold' with 'The sovereign-grace view holds' / 'The free-response view holds'."
+  },
+  {
+   "id": "catholic-4",
+   "lens": "Roman Catholic",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "'Synergist' is a label coined by opponents in the Lutheran synergistic controversy; no Catholic document uses it of Catholic teaching. Tolerable (the Orthodox use synergeia positively) but not the holders' own word.",
+   "evidence": "Formula of Concord SD II condemns 'the Synergists'. Trent Sess. VI ch. 5 speaks of 'freely assenting to and cooperating with' grace; CCC 2001: 'God's free initiative demands man's free response.'",
+   "fix": "Keep the pole names, but gloss the term once in the summary: \"Synergists (those who hold that we cooperate with grace) hold that...\""
+  },
+  {
+   "id": "sbc-11",
+   "lens": "Southern Baptist (Baptist Faith & Message 2000)",
+   "category": "tone",
+   "severity": "major",
+   "claim": "'Synergist' as a pole name is accepted by academic Arminians (Olson) but rejected by the non-Calvinist Baptists who will make up a large share of respondents; it appears at the end of every axis bar, in the share text, and on the result card.",
+   "evidence": "The Traditional Statement (2012) avoids the word entirely and Art. 4 denies that faith 'earns' anything, which is what 'synergism' means in the popular Calvinist usage most respondents have heard. The pole pair 'Monergist / Synergist' is also one side's taxonomy of the debate.",
+   "fix": "Pole names both sides use of themselves: left 'Effectual grace', right 'Resistible grace' (Dort II/IV vs. Remonstrance Art. 4; Traditional Statement Art. 4 denies grace 'cannot be resisted')."
+  }
+ ]
+}

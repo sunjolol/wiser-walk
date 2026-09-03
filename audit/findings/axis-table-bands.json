@@ -1,0 +1,86 @@
+{
+ "target": "axis:table:bands",
+ "findings": [
+  {
+   "id": "anabaptist-15",
+   "lens": "Anabaptist / Mennonite (Schleitheim Confession, Confession of Faith in a Mennonite Perspective 1995)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The midpoint band 'centered on the sacraments' reads as the left pole's doctrine (the sacraments as centre) rather than a middle position, and uses the word memorialists do not use.",
+   "evidence": "Bands run 'sacramental', 'sacramental-leaning', 'centered on the sacraments', 'memorial-leaning', 'memorialist': band 2 sounds more sacramental than band 1. Mennonites and Baptists say 'ordinances' (as the axis's own fair summary acknowledges: 'both are ordinances obeyed by believers'), so a Mennonite at 50 is labelled in the other side's vocabulary.",
+   "fix": "Band 2: 'between sign and sacrament'."
+  },
+  {
+   "id": "anglican-10",
+   "lens": "Anglican (broad, Thirty-Nine Articles / Book of Common Prayer)",
+   "category": "inaccuracy",
+   "severity": "major",
+   "claim": "The middle band (41-59) is labelled 'centered on the sacraments', which describes the left pole, not the middle; a respondent at 50 is told in the headline that their theology is 'centered on the sacraments'.",
+   "evidence": "The other axes use 'balanced on grace' and 'balanced on authority' for the middle; 'centered on the sacraments' is the Anglo-Catholic and Roman self-description and reads as a pole label.",
+   "fix": "Middle band: 'balanced on the sacraments'."
+  },
+  {
+   "id": "churchofchrist-7",
+   "lens": "Church of Christ / Restoration Movement (Stone-Campbell)",
+   "category": "inaccuracy",
+   "severity": "major",
+   "claim": "The middle band 'centered on the sacraments' (41-59) is where a Church of Christ member lands (58), and it is wrong twice: the tradition refuses the word 'sacrament' (it says 'ordinances' or 'commands'), and as a label the phrase reads as the left pole, so a memorialist Baptist at 55 is told he is 'centered on the sacraments'.",
+   "evidence": "Simulation table score 58 -> bands[2] = 'centered on the sacraments'. The other five axes use neutral middle words ('balanced', 'undecided', 'flexible'); this one uses a pole word.",
+   "fix": "Replace bands[2] with 'mixed on baptism and the Supper' (headline reads 'Firmly synergist, mixed on baptism and the Supper, ...')."
+  },
+  {
+   "id": "copy-2",
+   "lens": "copy editor",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "Middle band \"centered on the sacraments\" means \"at the centre of the axis\" but reads as \"sacrament-centred\", i.e. a claim that the person's faith is focused on the sacraments.",
+   "evidence": "Mid-band adjectives do reach the headline whenever fewer than three axes deviate strongly: scores [100, 50, 50, 50, 50, 50] produce \"Firmly synergist, centered on the sacraments, undecided on the gifts\". A Baptist who split their answers (Agree on real presence, Strongly agree on believer's baptism) sits at 50–58 and is told they are \"centered on the sacraments\". The Grace and Tradition axes already use the non-ambiguous form \"balanced on grace\" / \"balanced on authority\".",
+   "fix": "\"balanced on the sacraments\""
+  },
+  {
+   "id": "mockery-3",
+   "lens": "mockery critic",
+   "category": "unfairness",
+   "severity": "blocker",
+   "claim": "The middle band is 'centered on the sacraments' — on the sacramental-vs-memorial axis, the midpoint is labeled with the left pole's word and reads as a theological position (sacrament-centered). A Baptist at 50 gets a headline like 'Cessationist, centered on the sacraments, dispensational-leaning' and screenshots it: 'lol, I said ordinances and the quiz made me sacrament-centered.'",
+   "evidence": "Score 50 on Table (e.g. Agree on 4, Agree on 5, Unsure on 6) yields bands[2] = 'centered on the sacraments'; headline() concatenates it verbatim. The memorial pole's own summary says 'ordinances ... rather than channels of grace', so the word 'sacraments' is contested on this very axis.",
+   "fix": "bands: ['sacramental', 'sacramental-leaning', 'between sacramental and memorial', 'memorial-leaning', 'memorialist']"
+  },
+  {
+   "id": "pentecostal-10",
+   "lens": "Pentecostal (Assemblies of God Statement of Fundamental Truths)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The middle band 'centered on the sacraments' (41–59) uses the left pole's vocabulary for the neutral position; a Pentecostal or Baptist at 50–59 who calls the Supper an ordinance is labelled with the word his tradition deliberately avoids, while every other axis has a neutral middle ('balanced on grace', 'undecided on the gifts', 'centered on the kingdom', 'balanced on authority', 'flexible in worship').",
+   "evidence": "AG Statement of Fundamental Truths art. 6 is titled 'The Ordinances of the Church'; the memorial fair_summary itself says 'both are ordinances ... rather than channels of grace'.",
+   "fix": "bands[2]: 'between sign and sacrament' (or 'balanced on the Table')."
+  },
+  {
+   "id": "presbyterian-12",
+   "lens": "Presbyterian / Reformed (Westminster Standards, Three Forms of Unity)",
+   "category": "ambiguity",
+   "severity": "major",
+   "claim": "The middle band 'centered on the sacraments' is a non sequitur: a score of 41-59 means mixed answers (a real-presence credobaptist, a memorialist paedobaptist), not a person more sacrament-centered than the 'sacramental' band at 0-20.",
+   "evidence": "A 1689 Reformed Baptist answering S4 +2 (LBCF 30.7 'really and indeed... spiritually receive and feed upon Christ'), S5 +2, S6 -2 scores raw 2 -> 67 'memorial-leaning', and one answering S4 +1 scores 58 -> 'centered on the sacraments', which is the opposite of what the answers say. Both a Reformed and a Baptist reader will notice that 'sacramental' < 'centered on the sacraments' makes no sense as a scale.",
+   "fix": "bands: [\"sacramental\", \"sacramental-leaning\", \"mixed on the sacraments\", \"memorial-leaning\", \"memorialist\"]."
+  },
+  {
+   "id": "reformedbaptist-3",
+   "lens": "Reformed Baptist (1689 London Baptist Confession)",
+   "category": "scoring",
+   "severity": "major",
+   "claim": "The middle band 'centered on the sacraments' (41-59) reads like the sacramental pole, not a midpoint, and 'memorial-leaning' (60-79) is exactly where Calvinistic Baptists land. A Reformed Baptist who scores 58 would be screenshotted as 'centered on the sacraments'.",
+   "evidence": "Simulation with Strongly agree on statement 4: Table = (-1)(+2)+(+1)(+1)+(-1)(-2) = +1 -> 58 -> 'centered on the sacraments'. With Agree: 67 -> 'memorial-leaning'. Neither label describes LBC 30.7 plus 29.2.",
+   "fix": "bands: ['sacramental', 'sacramental-leaning', 'mixed on the sacraments', 'ordinance-leaning', 'memorialist']"
+  },
+  {
+   "id": "sbc-13",
+   "lens": "Southern Baptist (Baptist Faith & Message 2000)",
+   "category": "inaccuracy",
+   "severity": "major",
+   "claim": "The midpoint band 'centered on the sacraments' describes the center of a sacramental-versus-memorial axis in the left pole's own vocabulary, so a Baptist who lands at 50 is told they are 'centered on the sacraments'.",
+   "evidence": "BF&M 2000 Art. VII calls baptism and the Supper 'ordinances' and 'symbolic act[s] of obedience'; a Baptist at 50 is exactly the person who is not centered on sacraments. The headline builder will print this phrase capitalized as the first word of the label.",
+   "fix": "bands[2]: 'between sacrament and symbol'."
+  }
+ ]
+}

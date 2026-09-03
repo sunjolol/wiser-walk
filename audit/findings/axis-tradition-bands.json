@@ -1,0 +1,41 @@
+{
+ "target": "axis:tradition:bands",
+ "findings": [
+  {
+   "id": "catholic-23",
+   "lens": "Roman Catholic",
+   "category": "tone",
+   "severity": "minor",
+   "claim": "'Scripture-first' (60-79) implies the tradition side does not put Scripture first.",
+   "evidence": "DV 21 (Scripture venerated as the Body of the Lord); DV 24 (Scripture 'the soul of sacred theology').",
+   "fix": "bands[3] = \"leaning Scripture alone\"."
+  },
+  {
+   "id": "copy-6",
+   "lens": "copy editor",
+   "category": "ambiguity",
+   "severity": "minor",
+   "claim": "Band \"Scripture alone\" is a noun phrase in a list of predicate adjectives, so headlines such as \"Firmly monergist, Scripture alone, memorialist\" do not parse (\"you are firmly monergist, you are Scripture alone\").",
+   "evidence": "All other bands work as predicates (\"firmly monergist\", \"Scripture-first\", \"free in worship\"). The holders' own adjectival self-description is \"sola scriptura\" (Westminster Confession 1.6, 1.10; Mathison, The Shape of Sola Scriptura, already cited under read more), and it capitalises cleanly when first: \"Sola scriptura, memorialist, cessationist\".",
+   "fix": "bands[4]: \"sola scriptura\""
+  },
+  {
+   "id": "presbyterian-10",
+   "lens": "Presbyterian / Reformed (Westminster Standards, Three Forms of Unity)",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "Because S13 and S15 reward denying any authority to creeds, the 'Scripture alone' band (80+) is reachable only by biblicists, while the Reformation's actual sola scriptura position scores 50-75 and is labelled 'balanced on authority' or 'Scripture-first'. The axis name contradicts its own read-more list.",
+   "evidence": "Continental persona (Belgic 9, S13 +2) scores 50 -> 'balanced on authority'; Hodge-style persona scores 42 -> the same. Mathison, The Shape of Sola Scriptura (right-pole read-more) distinguishes sola scriptura (Scripture the only infallible authority, read within the creeds) from 'solo scriptura' (no creed has authority), and argues the Reformers held the former; the quiz gives the pole name 'Scripture alone' to the latter.",
+   "fix": "bands: [\"rooted in tradition\", \"tradition-friendly\", \"creedal\", \"Scripture-first\", \"Scripture alone\"], together with the S15 rewrite, so a confessional Protestant lands at 75 'Scripture-first' and a middle score reads as 'creedal' rather than 'balanced'."
+  },
+  {
+   "id": "reformedcharismatic-9",
+   "lens": "Reformed charismatic (John Piper, Wayne Grudem, Sam Storms, Sovereign Grace Churches, Acts 29 continuationists)",
+   "category": "scoring",
+   "severity": "major",
+   "claim": "The band 'Scripture alone' (>= 80) is reachable only by denying the creeds any real authority, so the Reformation slogan is handed to biblicists while confessional Protestants get the un-owned label 'Scripture-first'.",
+   "evidence": "Confessional answers (S13 Agree, S14 Strongly agree, S15 Disagree) give raw +2 -> 67 -> 'Scripture-first'. Mathison, The Shape of Sola Scriptura (cited by the quiz on this pole), distinguishes sola scriptura (Scripture the only infallible norm, creeds carrying real subordinate authority) from solo scriptura (no creed but the Bible); the quiz labels Mathison's own position 'Scripture-first' and gives 'Scripture alone' to the view his book argues against.",
+   "fix": "bands: [\"rooted in tradition\", \"tradition-friendly\", \"mixed on authority\", \"Scripture alone\", \"Scripture only\"]."
+  }
+ ]
+}

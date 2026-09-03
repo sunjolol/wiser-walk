@@ -1,0 +1,32 @@
+{
+ "target": "axis:table:history:1",
+ "findings": [
+  {
+   "id": "catholic-10",
+   "lens": "Roman Catholic",
+   "category": "inaccuracy",
+   "severity": "minor",
+   "claim": "\"Fourth Lateran Council defines transubstantiation\" overstates; Lateran IV used the word in its creed, and the dogmatic definition with canons is Trent (1551), which is also absent from the history.",
+   "evidence": "Lateran IV canon 1 (Firmiter, 1215): 'transubstantiatis pane in corpus, et vino in sanguinem'. Trent Sess. XIII (11 October 1551) ch. 4 and canon 2 define transubstantiation; CCC 1376 quotes Trent, not Lateran IV, as the definition.",
+   "fix": "\"1215: Fourth Lateran Council adopts the word 'transubstantiation' in its creed.\" and add {\"when\":\"1551\",\"what\":\"Council of Trent defines the Real Presence and transubstantiation against the Reformers.\"}"
+  },
+  {
+   "id": "historian-12",
+   "lens": "church historian",
+   "category": "inaccuracy",
+   "severity": "minor",
+   "claim": "'Fourth Lateran Council defines transubstantiation' overstates it. Lateran IV used the word in its creed; the dogmatic definition came at Trent. The line also makes a specifically Roman doctrine the sacramental pole's milestone, though the Lutherans and Orthodox placed at that pole reject transubstantiation.",
+   "evidence": "Lateran IV, canon 1 Firmiter (1215): 'transubstantiatis pane in corpus et vino in sanguinem'. Trent, Session XIII (11 Oct 1551), ch. 4 and canon 2, defines the doctrine (Denzinger 802; 1642, 1652). McGrath, Christian Theology, on the term's history.",
+   "fix": "{when: '1215', what: 'Fourth Lateran Council writes \"transubstantiated\" into its creed; Trent (1551) will define the doctrine.'}"
+  },
+  {
+   "id": "mockery-29",
+   "lens": "mockery critic",
+   "category": "citation",
+   "severity": "minor",
+   "claim": "'Fourth Lateran Council defines transubstantiation' overstates it; the Catholic apologist will correct you.",
+   "evidence": "Lateran IV (1215) uses 'transubstantiatis' in its opening creed; the dogmatic definition with canons is Trent, Session XIII (1551).",
+   "fix": "'Fourth Lateran Council uses the word transubstantiation in its creed; Trent defines it in 1551.'"
+  }
+ ]
+}

@@ -1,0 +1,32 @@
+{
+ "target": "axis:table:history:4",
+ "findings": [
+  {
+   "id": "churchofchrist-18",
+   "lens": "Church of Christ / Restoration Movement (Stone-Campbell)",
+   "category": "missing",
+   "severity": "minor",
+   "claim": "The Table timeline stops in 1559, so it omits the formation of the two largest believer's-baptism families in America and, in particular, the one position the axis cannot describe (believer's immersion for remission with a weekly Supper).",
+   "evidence": "Entries: 110, 1215, 1525, 1529, 1559. Nothing on the English Baptists (1609/1644) or the Stone-Campbell movement.",
+   "fix": "Add after Calvin: '1843 Campbell-Rice debate, Lexington: the Stone-Campbell movement argues believer's immersion \"for the remission of sins\" (Acts 2:38) with a weekly Supper, sacramental in effect, memorial in the Supper.'"
+  },
+  {
+   "id": "presbyterian-25",
+   "lens": "Presbyterian / Reformed (Westminster Standards, Three Forms of Unity)",
+   "category": "citation",
+   "severity": "minor",
+   "claim": "Dating the Reformed spiritual presence to 'Calvin's final Institutes' (1559) makes it look like one man's late opinion; the Reformed churches united on it in 1549 and confessed it in 1561-63.",
+   "evidence": "Consensus Tigurinus (1549), Calvin and Bullinger: Christ truly given in the Supper by the Spirit to faith; Belgic Confession 35 (1561); Heidelberg Catechism 75-79 (1563); WCF 29.7 (1646).",
+   "fix": "{ \"when\": \"1549\", \"what\": \"Consensus Tigurinus: Calvin and Bullinger unite the Reformed churches on a real presence given by the Spirit and received by faith; confessed in Belgic 35 and Heidelberg 75–79.\" }"
+  },
+  {
+   "id": "reformedbaptist-19",
+   "lens": "Reformed Baptist (1689 London Baptist Confession)",
+   "category": "missing",
+   "severity": "major",
+   "claim": "The only Baptist marker on the Table timeline is '1525 First believer's baptisms in Zurich; the Anabaptist movement begins', which implies English Particular Baptists descend from the Anabaptists. They arose from Puritan separatism and said so, and their confession puts a Calvinist Supper inside a credobaptist body, which is the whole point this axis mis-scores.",
+   "evidence": "First London Confession (1644) title page: 'commonly (though falsely) called Anabaptists'; 1689 LBC 29.4 (immersion) with 30.7 (spiritual presence).",
+   "fix": "Add a sixth entry after 1559: {when: '1644 / 1689', what: 'The Particular Baptists\\' London Confessions: believer\\'s baptism by immersion, with Christ \"spiritually present to the faith of believers\" at the Supper.'}"
+  }
+ ]
+}

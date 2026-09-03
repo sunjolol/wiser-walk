@@ -1,0 +1,32 @@
+{
+ "target": "axis:tradition:poles",
+ "findings": [
+  {
+   "id": "copy-5",
+   "lens": "copy editor",
+   "category": "inaccuracy",
+   "severity": "major",
+   "claim": "Left pole \"With tradition\" is not parallel to \"Scripture alone\" and breaks every sentence the code builds around a pole name.",
+   "evidence": "lean() produces \"70% toward With tradition\" (capital W mid-sentence, no noun) in the Axis-by-axis rows, the accordion header, the card bars and the radar aria description; the intro chip and quiz tag read \"Tradition · With tradition ↔ Scripture alone\", repeating the axis name; the share line reads \"📜 Tradition · With tradition ●●●●○○○○○○ Scripture alone\". Every other axis pairs two parallel labels (Monergist / Synergist, Liturgical / Free). The holders' own phrase is \"Scripture and Tradition\" (Trent, Session IV, 1546: \"written books and unwritten traditions\"; Dei Verbum 9–10).",
+   "fix": "left_pole: \"Scripture and tradition\"  (right_pole stays \"Scripture alone\"; lean text then reads \"70% toward Scripture and tradition\", chip reads \"Tradition · Scripture and tradition ↔ Scripture alone\")"
+  },
+  {
+   "id": "historian-21",
+   "lens": "church historian",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "The right pole and its top band are both called 'Scripture alone', but statements 14 and 15 ('proven from Scripture alone; tradition can never bind the conscience'; 'the church, not the individual reader, is the final interpreter') measure biblicism, not the Reformers' sola scriptura. The people who wrote the axis's own Protestant history line (Westminster) subscribe to binding creeds and confessions and so land at 35–45, labeled 'tradition-friendly' or 'balanced on authority'; the Reformation slogan is handed to the position Mathison's recommended book calls 'solo scriptura'.",
+   "evidence": "Luther subscribed to the three ecumenical creeds (Three Symbols, 1538); Formula of Concord receives them as binding summaries. WCF 31.3: decrees of councils 'if consonant to the Word of God, are to be received with reverence and submission'. Lutheran and Presbyterian ministers are bound by confessional subscription. Mathison, The Shape of Sola Scriptura (2001), argues precisely that the Reformers' view included the regula fidei. The tradition table itself puts Lutheran at 35 and Presbyterian at 45.",
+   "fix": "right_pole: 'Scripture over tradition'; bands: ['rooted in tradition', 'tradition-friendly', 'balanced on authority', 'Scripture-first', 'Bible-only']. Alternatively keep the pole name and reword statement 14 to 'No creed, council, or confession can bind the conscience; only Scripture can.'"
+  },
+  {
+   "id": "mockery-16",
+   "lens": "mockery critic",
+   "category": "unfairness",
+   "severity": "major",
+   "claim": "'With tradition' vs 'Scripture alone' and the band 'Scripture-first' hand the Catholic apologist his line: 'So my side is Scripture-last? Dei Verbum 21 says we venerate the Scriptures as we venerate the Lord's Body.' The right pole gets its own slogan; the left pole gets a description with 'Scripture' removed from it.",
+   "evidence": "Dei Verbum 9–10: 'Sacred Tradition and Sacred Scripture' together; the Catholic name for the position is 'Scripture and Tradition', the Orthodox 'Scripture within Tradition' (Florovsky, whose book the quiz itself lists). 'Scripture-first' as a band implies an ordering the other side denies rather than a difference the other side would state.",
+   "fix": "left_pole: 'Scripture and Tradition'; right_pole: 'Scripture alone'. bands: ['Scripture within tradition', 'tradition-leaning', 'balanced on authority', 'Scripture over tradition', 'Scripture alone']. Rename the axis 'Authority' (the band already says 'balanced on authority'); an axis named 'Tradition' is named after one pole."
+  }
+ ]
+}

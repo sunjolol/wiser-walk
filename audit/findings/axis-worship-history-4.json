@@ -1,0 +1,32 @@
+{
+ "target": "axis:worship:history:4",
+ "findings": [
+  {
+   "id": "catholic-26",
+   "lens": "Roman Catholic",
+   "category": "missing",
+   "severity": "major",
+   "claim": "The liturgical side's history stops at Cranmer 1549; the most consequential liturgical event of the last four centuries for the largest church is absent, and it is the one that made 'participation' a liturgical rather than free-church watchword.",
+   "evidence": "Sacrosanctum Concilium, promulgated 4 December 1963; SC 14 'full, conscious, and active participation'. Pius V's Roman Missal (1570) standardized the Latin Mass for four centuries.",
+   "fix": "Insert after Finney: {\"when\":\"1963\",\"what\":\"Vatican II, Sacrosanctum Concilium: reform of the Mass and the call for 'full, conscious, and active participation' of the whole congregation.\"} Optionally add {\"when\":\"1570\",\"what\":\"Pius V's Roman Missal fixes the Latin Mass for four centuries.\"}"
+  },
+  {
+   "id": "progressive-12",
+   "lens": "progressive mainline Protestant (PCUSA, ELCA, Episcopal, UMC progressive wing)",
+   "category": "missing",
+   "severity": "major",
+   "claim": "The liturgical pole's history stops at Cranmer 1549 while the free pole gets Finney and Hillsong; the Liturgical Movement, which is the reason a mainline church today has a weekly Eucharist and the church year, is missing.",
+   "evidence": "History: Didache, Justin, 1549 BCP, 1600s Puritans, 1830s Finney, 1970s Jesus movement. Sacrosanctum Concilium (1963), BCP 1979 (Eucharist as 'the principal act of Christian worship on the Lord's Day'), Lutheran Book of Worship 1978, PCUSA Book of Common Worship 1993, ELCA 'The Use of the Means of Grace' 1997 commending weekly communion.",
+   "fix": "Insert after the 1830s entry: {\"when\": \"1963-79\", \"what\": \"The Liturgical Movement: Vatican II's Sacrosanctum Concilium, the 1979 Book of Common Prayer, and new Lutheran and Presbyterian service books restore the weekly Eucharist and the church year across the mainline.\"}"
+  },
+  {
+   "id": "wesleyan-19",
+   "lens": "Wesleyan / Methodist (Wesley's sermons, Articles of Religion, Global Methodist / UMC evangelical wing)",
+   "category": "inaccuracy",
+   "severity": "minor",
+   "claim": "'1830s: Charles Finney's revivalist new measures reshape Protestant services' presents Finney as the origin of revivalist worship. The camp meeting and the mourner's bench were Methodist practices a generation earlier, and Finney's 'anxious bench' was borrowed from them. The axis also has no entry for Wesley's 1784 Sunday Service, which is the liturgical side's Methodist root.",
+   "evidence": "Cane Ridge revival (1801) and the Methodist camp meetings organized from 1802 (Francis Asbury's journals); the mourner's bench is documented in Methodist revivals by the 1800s-1810s; Finney's 'Lectures on Revivals of Religion' (1835) defends the anxious seat as an existing measure. Wesley, 'The Sunday Service of the Methodists in North America' (1784), an abridged Book of Common Prayer.",
+   "fix": "Insert before Finney: '1801–: Cane Ridge and the Methodist camp meetings bring revival worship and the mourner's bench to the American frontier.' Optionally add '1784: Wesley sends the American Methodists an abridged Prayer Book, the Sunday Service.'"
+  }
+ ]
+}
