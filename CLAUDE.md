@@ -99,6 +99,22 @@ Checked and **rejected** as a false alarm: the claim that `band()` and `nearestS
 contradict each other. At both 3 and 6 items per axis the reachable scores skip 40 and 60, so it
 cannot occur. Do not "fix" it.
 
+### Owner decisions taken 2026-09-03 — treat as settled
+
+- **Email offer: the result link plus a short follow-up series** (3–4 emails unpacking the reader's
+  strongest axes using the history and passages already written). This is the honest reason to hold
+  an address — the bare result link is already free and in their URL bar, so "we'll email you your
+  result" converts badly on its own. Requires rewriting the "no email list" promises on `/about`
+  and `/method`; do not quietly contradict them.
+- **Blueprint the whole platform before building further.** Spec result shapes and scoring
+  strategies for the Compass, seven deadly sins, spiritual gifts and who-in-the-Bible, plus the
+  article system and Bible study tools. **Critically: the Compass is bipolar and the others are
+  not.** A unipolar quiz has categories ranked by strength — no poles, no centre, no "names no
+  position" band. Applying a bipolar chassis to unipolar data is the same class of error as
+  labelling one pole of two, so the result page must be specced for both shapes together.
+- **No mobile app.** Responsive web only — no PWA, no service worker, no manifest, no native
+  wrapper. Phone-first responsive design done properly is the whole requirement.
+
 ### Still unbuilt
 
 Email capture (owner confirmed he wants it — requires honestly rewriting the "no email list"
