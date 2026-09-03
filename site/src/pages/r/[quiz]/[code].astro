@@ -44,14 +44,11 @@ const depthOrder =
     ? [...view.rows].sort((a, b) => Math.abs(b.value - 50) - Math.abs(a.value - 50))
     : [];
 
+// Copy for the outcome list. 'central' is handled separately below, as a disclosure.
 const outcomeHeading =
-  view?.shape === 'bipolar'
-    ? view.state === 'central'
-      ? 'What the arithmetic returned anyway'
-      : view.state === 'loose'
-        ? 'Loose neighbours, not matches'
-        : 'Closest on the map'
-    : 'In order';
+  view?.shape === 'bipolar' && view.state === 'loose'
+    ? 'Loose neighbours, not matches'
+    : 'Closest on the map';
 ---
 {quiz && view ? (
   <Base
@@ -78,28 +75,57 @@ const outcomeHeading =
         : <CategoryStack quiz={quiz} view={view} />}
     </div>
 
-    {view.ranked.length > 0 && (
+    {/*
+      Only when the quiz has OUTCOMES — named things measured against, which is a separate
+      entity from the rows. On a unipolar quiz `ranked` is just the rows again, and the
+      stack above has already shown them in order; printing them twice would be padding.
+    */}
+    {quiz.outcomes.length > 0 && view.ranked.length > 0 && (
       <section class="outcomes">
-        <h2>{outcomeHeading}</h2>
-        {view.shape === 'bipolar' && (
-          <p class="tags">
-            {view.state === 'central'
-              ? 'Your answers sit in the no-position band on every axis, so nothing here is a claim about you. It is only what the distances come to.'
-              : view.state === 'loose'
+        {view.state === 'central' ? (
+          /*
+            The lede has just said that no tradition is named. Listing five of them with
+            percentages underneath contradicts that at exactly the moment a discernment-
+            minded reader is deciding whether the instrument is honest — the nearest here is
+            67 units away against a hedge threshold of 45. The numbers are still available
+            to anyone who wants them; they are just not presented as an answer.
+          */
+          <details class="arith">
+            <summary>
+              <span>Show what the arithmetic returned anyway</span>
+              <span class="chev" aria-hidden="true"></span>
+            </summary>
+            <p class="tags">
+              These are distances, not findings. Your answers sit in the no-position band on
+              every axis, so none of this is a claim about what you believe.
+            </p>
+            <ul class="ranked">
+              {view.ranked.slice(0, 5).map(r => (
+                <li>
+                  <span><a href={outcomeHref({ name: r.name, slug: r.slug })}>{r.name}</a></span>
+                  <span>{r.score}%</span>
+                </li>
+              ))}
+            </ul>
+          </details>
+        ) : (
+          <>
+            <h2>{outcomeHeading}</h2>
+            <p class="tags">
+              {view.state === 'loose'
                 ? 'Nothing on the list is a close fit. These are the nearest, and "nearest" is doing a lot of work.'
                 : 'Scored against the listed traditions only — a sketch of typical adherents, not official teaching, and not a complete list of Christian traditions.'}
-          </p>
+            </p>
+            <ul class="ranked">
+              {view.ranked.slice(0, 5).map(r => (
+                <li>
+                  <span><a href={outcomeHref({ name: r.name, slug: r.slug })}>{r.name}</a></span>
+                  <span>{r.score}%</span>
+                </li>
+              ))}
+            </ul>
+          </>
         )}
-        <ul class="ranked">
-          {view.ranked.slice(0, 5).map(r => (
-            <li>
-              <span>{quiz.outcomes.length
-                ? <a href={outcomeHref({ name: r.name, slug: r.slug })}>{r.name}</a>
-                : r.name}</span>
-              <span>{r.score}%</span>
-            </li>
-          ))}
-        </ul>
       </section>
     )}
 

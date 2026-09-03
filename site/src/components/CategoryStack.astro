@@ -37,7 +37,7 @@ const leading = view.state === 'flat' ? 0 : view.state === 'tie' ? 2 : 1;
 
   <ol class="stack">
     {rows.map(row => (
-      <li class:list={['tier', { 'is-leading': row.rank <= leading }]}>
+      <li class:list={['tier', { 'is-leading': row.rank <= leading, 'is-below': row.below }]}>
         <div class="tier-head">
           <span class="tier-rank" aria-hidden="true">{row.rank}</span>
           <span class="tier-name">
@@ -47,22 +47,33 @@ const leading = view.state === 'flat' ? 0 : view.state === 'tie' ? 2 : 1;
           <span class="tier-strength">{row.strength}</span>
         </div>
         {/*
-          A magnitude, filled from zero — the opposite of the bipolar rail's position
-          marker, and labelled so it cannot be read as a probability or a percentile.
+          The bar shows the PULL, not the raw score.
+
+          category.score() maps the answer sum onto 0..100 exactly as the bipolar scorer
+          does, so 50 means "agreed as much as you disagreed" — not "half as much sloth".
+          Drawing a bar from zero to 50 would tell a reader with a completely neutral sheet
+          that they are halfway to every vice on the list. The honest magnitude is how far
+          the score rose ABOVE that neutral mark, which is exactly the number `strength`
+          already says in words, so the bar and the words cannot disagree.
+
+          Nothing is drawn at 50 to mark it. A tick at the neutral point on every row would
+          line up down the page into a centre spine, which is the bipolar hero wearing a
+          disguise — and a ranking has no centre.
         */}
         <div
           class="tier-track"
           role="img"
           aria-label={`${row.name}: ${row.strength}, ranked ${row.rank} of ${rows.length}.`}
         >
-          <span class="tier-fill" style={`--v:${row.value}`}></span>
+          <span class="tier-fill" style={`--v:${Math.max(0, (row.value - 50) * 2)}`}></span>
         </div>
       </li>
     ))}
   </ol>
 
   <p class="stack-note">
-    Each bar is how far above the midpoint your answers put that one, as a share of the
-    half-scale. It is not a percentage of you, and the bars are not shares of a whole.
+    Each bar is how far your answers pushed that one above no-net-agreement. An empty bar
+    means your answers pulled neither way, not that the answer was zero. These are not
+    percentages of you, and they are not shares of a whole — they do not add up to anything.
   </p>
 </div>

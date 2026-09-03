@@ -19,29 +19,31 @@ interface Props {
 }
 
 const { quiz, view, linked = true } = Astro.props;
-const [lo, hi] = view.noClaimRange;
 
 /**
- * The zone bounds come from the scoring rules, not from a number typed into the CSS, so a
- * quiz that moved its band edges cannot ship a visual that disagrees with its own maths.
+ * The zone bounds come from the scoring rules — snapped to the reachable positions the band
+ * actually contains — not from a number typed into the CSS. A quiz that moved its band
+ * edges, or that runs a longer instrument, cannot ship a visual that disagrees with its own
+ * arithmetic.
  */
-// The band is the integer range [41, 59], so the boundary a reader should see falls half a
-// unit outside it: a score of 40 is out, 41 is in. Drawing the edge at 40.5 puts the line
-// where the rule actually changes.
-const zoneStyle = `--zone-lo:${lo - 0.5};--zone-hi:${hi + 0.5}`;
+const [zoneLo, zoneHi] = view.noClaimSpan;
+const zoneStyle = `--zone-lo:${zoneLo};--zone-hi:${zoneHi}`;
 ---
 <div class="rails-block" style={zoneStyle}>
   <p class="rails-legend">
     <span class="legend-swatch" aria-hidden="true"></span>
-    The hatched middle is where the quiz names no position.
+    In the hatched middle the quiz names neither pole.
   </p>
 
   <div class="rails">
     {view.rows.map(row => {
       // Diverge FROM the centre: the tint grows outward toward whichever pole was chosen,
       // so its length reads as conviction rather than as a score out of a hundred.
-      const from = Math.min(row.value, 50);
-      const span = Math.abs(row.value - 50);
+      // Geometry from the integer step, so the knob lands exactly on the position the
+      // instrument can produce rather than on a rounded percentage of it.
+      const at = (row.step / row.steps) * 100;
+      const from = Math.min(at, 50);
+      const span = Math.abs(at - 50);
       const side = row.value < 50 ? 'left' : row.value > 50 ? 'right' : 'centre';
       const reading = row.noClaim ? row.band : row.lean;
       const href = groupHref(quiz, row);
@@ -49,7 +51,7 @@ const zoneStyle = `--zone-lo:${lo - 0.5};--zone-hi:${hi + 0.5}`;
       return (
         <div
           class:list={['rail', `rail--${side}`, { 'is-centred': row.noClaim }]}
-          style={`--pos:${row.value};--from:${from};--span:${span}`}
+          style={`--pos:${at};--from:${from};--span:${span}`}
         >
           <div class="rail-head">
             <span class="rail-name">
@@ -59,16 +61,17 @@ const zoneStyle = `--zone-lo:${lo - 0.5};--zone-hi:${hi + 0.5}`;
           </div>
 
           {/*
-            One image with one label, rather than four decorative spans a screen reader has
-            to assemble. The label says the position and both poles, because "34% toward
-            Monergist" is meaningless without knowing what it is 34% away from.
+            The geometry gets one label rather than four decorative spans a screen reader
+            has to assemble. It does NOT restate the pole names: those are real text in
+            .rail-poles below, which is not aria-hidden. "Both pole names print on every
+            rail" has to be true of what a screen reader reads, not only of what is drawn,
+            and text in an aria-label is not text — it cannot be selected, translated,
+            searched or found by a reader who zooms.
           */}
           <div
             class="rail-track"
             role="img"
-            aria-label={`${row.name}: ${row.noClaim
-              ? `${row.band}. The quiz names no position on this axis.`
-              : row.lean}. This axis runs from ${row.left} to ${row.right}.`}
+            aria-label={`${row.name}: ${row.noClaim ? `${row.band}, naming neither pole` : row.lean}`}
           >
             <span class="rail-zone" aria-hidden="true"></span>
             <span class="rail-spine" aria-hidden="true"></span>
@@ -76,7 +79,7 @@ const zoneStyle = `--zone-lo:${lo - 0.5};--zone-hi:${hi + 0.5}`;
             <span class="rail-knob" aria-hidden="true"></span>
           </div>
 
-          <p class="rail-poles" aria-hidden="true">
+          <p class="rail-poles">
             <span>{row.left}</span><span>{row.right}</span>
           </p>
         </div>

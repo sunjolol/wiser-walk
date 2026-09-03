@@ -24,11 +24,42 @@ interface Props {
 }
 
 const { quiz, view, share } = Astro.props;
+
+/*
+ * The card is DISPLAYED split and COPIED whole.
+ *
+ * As one <pre> it showed about 42 characters at .72rem on a 360px phone, against a hedge
+ * line that runs to 164 — so the fairness caveat, the one line the card exists to carry,
+ * was the part you had to scroll sideways to find. Only the bar block has earned the right
+ * not to wrap, because its columns line up and that alignment is the point. The title,
+ * the verdict and the URL are ordinary prose and wrap like it.
+ *
+ * The copy button still copies `share` verbatim, so the audited text that leaves the page
+ * is byte-for-byte what the strategy produced.
+ */
+const isBar = (line: string) => /[●○█░]/.test(line);
+
+const blocks: Array<{ bar: boolean; lines: string[] }> = [];
+for (const line of share.split('\n')) {
+  const bar = isBar(line);
+  const last = blocks[blocks.length - 1];
+  if (last && last.bar === bar) last.lines.push(line);
+  else blocks.push({ bar, lines: [line] });
+}
 ---
 <section class="share-block" data-quiz={quiz.slug} data-code={view.code}>
   <h2 data-visitor="Their result, in text" data-mine="Share it">Their result, in text</h2>
 
-  <pre class="share" id="share-text">{share}</pre>
+  <div class="share-card">
+    {blocks.map(b =>
+      b.bar
+        ? <pre class="share share-bars">{b.lines.join('\n')}</pre>
+        : b.lines.map(l => <p class="share-line">{l}</p>)
+    )}
+  </div>
+
+  {/* The canonical text, for the clipboard. Never shown, never re-wrapped. */}
+  <pre class="sr-only" id="share-text">{share}</pre>
 
   <div class="btn-row">
     <button class="btn dark" id="share-copy" type="button">Copy</button>
@@ -72,9 +103,11 @@ const { quiz, view, share } = Astro.props;
         await navigator.clipboard.writeText(pre?.textContent ?? '');
         btn.textContent = 'Copied';
       } catch {
-        // Selecting it is the honest fallback: the reader can then copy it themselves.
+        // Clipboard denied. Select the visible card so the reader can copy it themselves —
+        // selecting the hidden canonical copy would look like nothing happened.
+        const card = document.querySelector('.share-card');
         const range = document.createRange();
-        range.selectNodeContents(pre);
+        range.selectNodeContents(card ?? pre);
         const sel = window.getSelection();
         sel?.removeAllRanges();
         sel?.addRange(range);

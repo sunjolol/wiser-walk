@@ -66,7 +66,8 @@
   --on-grad: #3B3B3B;  /* text that sits ON the gradient, in both themes */
   --zone-hatch: rgba(124, 130, 136, .18);
   --zone-edge: rgba(124, 130, 136, .34);
-  --tint-op: .32;
+  /* .35 is the value the owner approved in theology-compass.html (.fill{opacity:.35}) */
+  --tint-op: .35;
   /* The reference uses .52 for a HERO band carrying display type. This panel carries data:
      six rails whose labels are small uppercase greys, so the wash has to stay under them.
      Measured rather than guessed — see the contrast check in the commit that set it. */
@@ -396,13 +397,29 @@ a { color: var(--accent); text-underline-offset: 2px; }
 }
 .rail.is-centred .rail-knob { background: var(--ink-mute); box-shadow: 0 0 0 1.5px var(--ink-mute); }
 
+/*
+ * BOTH spans take --ink-soft, unconditionally.
+ *
+ * --ink-mute (#7C8288) on --panel (#EEEEEE) measures 3.35:1, which fails AA for text this
+ * size; --ink-soft measures 5.49:1. Worse than the contrast itself was the asymmetry this
+ * rule used to carry: the left pole in --ink-soft and the right in --ink-mute rendered the
+ * two poles of every axis at different weights. Encoding a pole by weight is the same
+ * failure family as encoding one by omission, on the very element the "both pole names
+ * print on every rail" rule exists to protect.
+ *
+ * Sentence case on a phone, uppercase from 48rem. The data already stores "Bible &
+ * tradition" in sentence case, and 11px uppercase at wide tracking is the least legible
+ * combination on the page — it is also what makes the longest pair tight at 320px.
+ */
 .rail-poles {
   display: flex; gap: .75rem; margin: .5rem 0 0;
-  font-family: var(--ui); font-size: .7rem; font-weight: 600; letter-spacing: .04em;
-  text-transform: uppercase; color: var(--ink-mute);
+  font-family: var(--ui); font-size: .74rem; font-weight: 600;
+  color: var(--ink-soft);
 }
-.rail-poles span:first-child { color: var(--ink-soft); }
 .rail-poles span:last-child { margin-left: auto; text-align: right; }
+@media (min-width: 48rem) {
+  .rail-poles { font-size: .7rem; letter-spacing: .05em; text-transform: uppercase; }
+}
 
 /* ------------------------------------------------------- the depth panels */
 /*
@@ -494,7 +511,11 @@ a { color: var(--accent); text-underline-offset: 2px; }
   font-family: var(--ui); font-size: .7rem; font-weight: 700; color: var(--ink-mute);
   font-variant-numeric: tabular-nums; min-width: 1.1em;
 }
-.tier-name { font-family: var(--ui); font-weight: 700; font-size: .95rem; color: var(--ink); }
+/* the sins data stores names lowercase ("pride"); only the headline is capitalised there */
+.tier-name {
+  font-family: var(--ui); font-weight: 700; font-size: .95rem; color: var(--ink);
+  text-transform: capitalize;
+}
 .tier-name a { color: inherit; text-decoration: none; }
 .tier-name a:hover { text-decoration: underline; }
 .tier-emoji { margin-right: .3rem; }
@@ -514,6 +535,9 @@ a { color: var(--accent); text-underline-offset: 2px; }
   opacity: .5; border-radius: inherit;
 }
 .tier.is-leading .tier-fill { opacity: 1; }
+/* Disagreed-with on balance: a real answer, and a different one from "neither pulled you". */
+.tier.is-below .tier-track { opacity: .55; }
+.tier.is-below .tier-strength { font-style: italic; }
 .tier.is-leading .tier-name { font-size: 1.05rem; }
 .tier.is-leading .tier-rank { color: var(--accent); }
 
@@ -577,6 +601,22 @@ a { color: var(--accent); text-underline-offset: 2px; }
 
 .share-note { font-size: .82rem; color: var(--ink-mute); margin: .25rem 0 0; max-width: var(--measure); }
 
+/* the all-central disclosure: available, but never presented as the answer */
+.arith { margin-top: 1rem; }
+.arith > summary {
+  list-style: none; cursor: pointer; display: flex; align-items: center; gap: .5rem;
+  min-height: 44px; font-family: var(--ui); font-size: .82rem; font-weight: 600;
+  color: var(--ink-mute);
+}
+.arith > summary::-webkit-details-marker { display: none; }
+.arith > summary:hover { color: var(--accent); }
+.arith .chev {
+  width: 7px; height: 7px; flex: none;
+  border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
+  transform: rotate(45deg) translate(-2px, -2px); transition: transform .2s;
+}
+.arith[open] .chev { transform: rotate(-135deg); }
+
 /* ---- email capture ---- */
 .capture {
   background: var(--panel); border-radius: var(--r); box-shadow: var(--lift);
@@ -610,10 +650,16 @@ a { color: var(--accent); text-underline-offset: 2px; }
 
 /* ------------------------------------------------------------------ misc */
 
-.share {
+.share-card {
+  background: var(--shell); border-radius: var(--r-sm); padding: .9rem 1rem;
+  color: var(--ink-soft); margin: 0 0 1rem; font-size: .82rem; line-height: 1.55;
+}
+.share-line { margin: 0 0 .5rem; overflow-wrap: anywhere; }
+.share-line:last-child { margin-bottom: 0; }
+/* only the bars refuse to wrap: their columns line up, and that alignment is the point */
+.share-bars {
   font-family: var(--mono); font-size: .72rem; line-height: 1.6; white-space: pre;
-  background: var(--shell); border-radius: var(--r-sm); padding: .9rem;
-  overflow-x: auto; color: var(--ink-soft); margin: 0 0 1rem;
+  overflow-x: auto; margin: 0 0 .7rem; padding-bottom: .2rem;
 }
 .ranked { list-style: none; padding: 0; margin: 1rem 0; display: flex; flex-direction: column; gap: .5rem; }
 .ranked li {

@@ -41,6 +41,28 @@ export const noClaimRange = (): [number, number] => [
 
 export const namesNoPosition = (score: number) => band(score) === MIDDLE_BAND;
 
+/** Every score the instrument can actually produce, in order. */
+export function reachable(quiz: Quiz): number[] {
+  const steps = Math.max(1, quiz.config.radix - 1);
+  return Array.from({ length: steps + 1 }, (_, k) => Math.round((k * 100) / steps));
+}
+
+/**
+ * The no-claim band as a share of the track, snapped to half a step outside the outermost
+ * reachable positions it contains. Derived, never typed: at radix 25 the band holds a
+ * different set of steps, and a hard-coded percentage would quietly stop matching band().
+ */
+export function noClaimSpan(quiz: Quiz): [number, number] {
+  const steps = Math.max(1, quiz.config.radix - 1);
+  const inside = reachable(quiz)
+    .map((v, k) => (namesNoPosition(v) ? k : -1))
+    .filter(k => k >= 0);
+  if (!inside.length) return [50, 50];
+  const lo = (inside[0]! - 0.5) / steps;
+  const hi = (inside[inside.length - 1]! + 0.5) / steps;
+  return [Math.max(0, lo * 100), Math.min(100, hi * 100)];
+}
+
 /** Distance from the midpoint as a share of the half-axis, so one net Agree is not "58%". */
 export function lean(group: { left?: string; right?: string }, score: number): string {
   if (score === 50) return 'at the center';
@@ -152,9 +174,12 @@ export const bipolar: ScoringStrategy = {
 
   result(quiz: Quiz, values: number[]): BipolarView {
     const near = nearest(quiz, values);
+    const steps = Math.max(1, quiz.config.radix - 1);
     const rows: BipolarRow[] = quiz.groups.map((g, i) => {
       const value = values[i] ?? 50;
       return {
+        step: Math.round((value * steps) / 100),
+        steps,
         key: g.key,
         slug: g.slug,
         name: g.name,
@@ -178,6 +203,7 @@ export const bipolar: ScoringStrategy = {
       summary: nearestLine(quiz, values, near),
       rows,
       noClaimRange: noClaimRange(),
+      noClaimSpan: noClaimSpan(quiz),
       ranked: near.map(m => ({ name: m.name, slug: m.slug, score: m.match }))
     };
   },

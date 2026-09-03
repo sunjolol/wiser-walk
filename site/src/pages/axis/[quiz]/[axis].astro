@@ -50,7 +50,7 @@ const jsonLd = {
 
     {group.history && group.history.length > 0 && (
       <>
-        <h2>How the question arose</h2>
+        <h2>{bipolar ? 'How the question arose' : 'How this has been understood'}</h2>
         <ol>
           {group.history.map(h => <li><strong>{h.when}</strong> — {h.what}</li>)}
         </ol>
@@ -59,7 +59,8 @@ const jsonLd = {
 
     {group.passages && group.passages.length > 0 && (
       <>
-        <h2>Passages both sides argue from</h2>
+        {/* "Both sides" is a bipolar claim. A category has no second side to argue back. */}
+        <h2>{bipolar ? 'Passages both sides argue from' : 'Passages'}</h2>
         <p>{group.passages.join(' · ')}</p>
       </>
     )}

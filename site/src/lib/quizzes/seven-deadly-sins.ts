@@ -79,8 +79,12 @@ export const sevenDeadlySins: Quiz = {
   config: {
     // Two items per group: raw runs -4..+4, so 9 reachable scores per group.
     radix: 9,
-    centerUnits: 10,
-    tieUnits: 8
+    // Points a category must clear above no-net-agreement before it is named at all.
+    namingFloor: 10,
+    // Reachable steps within which two categories count as level. Zero, so only an exact
+    // equality is called a tie: at two items per group one step is a whole answer's worth
+    // of difference, and calling that "level" would throw away something real.
+    tieSteps: 0
   },
   shareTitle: 'Which of the seven I am weakest to'
 };

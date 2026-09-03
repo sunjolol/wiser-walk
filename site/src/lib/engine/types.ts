@@ -112,6 +112,14 @@ export interface ResultRowBase {
 }
 
 export interface BipolarRow extends ResultRowBase {
+  /**
+   * Which of the instrument's reachable positions this is (0..steps). Geometry is drawn
+   * from this, not from `value`: `value` is a rounded percentage, so a knob placed at 42%
+   * sits a pixel or so off a zone edge computed from the same step. Positioning both from
+   * the integer makes them provably coincide.
+   */
+  step: number;
+  steps: number;
   /** Both poles, always. A pole encoded by omission is the failure this type prevents. */
   left: string;
   right: string;
@@ -126,7 +134,12 @@ export interface BipolarRow extends ResultRowBase {
 export interface UnipolarRow extends ResultRowBase {
   /** 1-based position in the ranking. */
   rank: number;
-  /** e.g. "62% pull" — a share of the half-scale, never a probability or a percentile. */
+  /**
+   * The reader disagreed with this category's statements on balance. Not "the low end of
+   * an axis" — there is no axis — but a distinct answer from "neither pulled you".
+   */
+  below: boolean;
+  /** In words, never a number: see pull() in strategies/category.ts for why. */
   strength: string;
 }
 
@@ -167,8 +180,17 @@ export interface BipolarView extends ViewBase {
   shape: 'bipolar';
   state: BipolarState;
   rows: BipolarRow[];
-  /** The inclusive score range in which no position is named, e.g. [41, 59]. */
+  /** The inclusive SCORE range in which no position is named, e.g. [41, 59]. For prose. */
   noClaimRange: [number, number];
+  /**
+   * The same band as a share of the track (0..100), snapped outward to half a step past the
+   * outermost reachable positions inside it. For GEOMETRY.
+   *
+   * At radix 13 the band contains steps 5, 6 and 7 (scores 42, 50, 58), so the zone runs
+   * 37.5%-62.5% rather than 41%-59%. Drawn at 41% the knob for a score of 42 would sit a
+   * pixel inside the edge of the zone it belongs to, which reads as "just outside".
+   */
+  noClaimSpan: [number, number];
 }
 
 export interface UnipolarView extends ViewBase {

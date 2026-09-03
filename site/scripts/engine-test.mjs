@@ -200,8 +200,85 @@ console.log('6. second quiz runs on the same engine');
 
     const flat = sins.items.map(() => 0);
     const flatRes = resultFor(sins, scoreQuiz(sins, flat));
-    if (!/no category is named/.test(flatRes.summary)) fail('flat sheet not hedged: ' + flatRes.summary);
-    else ok('flat sheet names nothing');
+    // Assert the state, not the sentence: the copy is allowed to improve, the rule is not.
+    if (flatRes.state !== 'flat') fail('flat sheet gave state ' + flatRes.state);
+    else if (!/none is named|no category is named/.test(flatRes.summary)) {
+      fail('flat sheet not hedged: ' + flatRes.summary);
+    } else ok('flat sheet names nothing');
+  }
+}
+
+// ------------------------------- 6b. the unipolar naming rule does not accuse anybody
+console.log('6b. unipolar naming floor and tie margin');
+{
+  const sins = getQuiz('seven-deadly-sins');
+  const run = sheet => resultFor(sins, scoreQuiz(sins, sheet));
+  const byKey = (fn) => sins.items.map(it => fn(sins.groups[it.group].key, it.direction));
+
+  // The one that used to fail: answering "that is not me" to every statement scores 0 on
+  // all seven, and the old midpoint-distance test called that "standing out". It named the
+  // alphabetically first two — the most emphatic denial came back as an accusation.
+  const denied = run(byKey((_, d) => (d === 1 ? -2 : 2)));
+  if (denied.state !== 'flat') fail('denying everything gave state ' + denied.state);
+  else if (/envy|gluttony|pride/i.test(denied.headline)) {
+    fail('denying everything still names a vice: ' + denied.headline);
+  } else ok('denying every statement names nothing: "' + denied.headline + '"');
+
+  const unsure = run(sins.items.map(() => 0));
+  if (unsure.state !== 'flat') fail('all-unsure gave state ' + unsure.state);
+  else ok('all-unsure names nothing');
+
+  const pride = run(byKey(k => (k === 'pride' ? 2 : 0)).map((v, i) =>
+    sins.groups[sins.items[i].group].key === 'pride' ? (sins.items[i].direction === 1 ? 2 : -2) : 0
+  ));
+  if (pride.state !== 'clear' || pride.headline !== 'Pride') {
+    fail('a clear pride sheet gave ' + pride.state + ' / ' + pride.headline);
+  } else ok('a clear leader is named');
+
+  // Two steps apart at radix 9 is 25 points — a real, measurable difference, not a tie.
+  const twoApart = run(sins.items.map(it => {
+    const k = sins.groups[it.group].key;
+    if (k === 'pride') return it.direction === 1 ? 2 : -2;
+    if (k === 'envy') return it.direction === 1 ? 2 : 0;
+    return 0;
+  }));
+  if (twoApart.state !== 'clear') fail('100 vs 75 was called ' + twoApart.state + ', not clear');
+  else ok('two reachable steps apart is not a tie');
+
+  const level = run(sins.items.map(it =>
+    ['pride', 'envy'].includes(sins.groups[it.group].key) ? (it.direction === 1 ? 2 : -2) : 0
+  ));
+  if (level.state !== 'tie') fail('two equal leaders gave ' + level.state);
+  else ok('two equal leaders are both named: "' + level.headline + '"');
+}
+
+// -------------------------- 6c. the pole split never moves a pole's words to the middle
+console.log('6c. the pole split keeps every sentence with its own side');
+{
+  const compass = getQuiz('theology-compass');
+  let checked = 0;
+  for (const g of compass.groups) {
+    const parts = g.summaryParts;
+    if (!parts) { fail(`${g.name} has no summaryParts`); continue; }
+    if (!parts.left || !parts.right) { fail(`${g.name} lost a pole's case`); continue; }
+
+    // A "between the poles" block that opens with a pronoun takes its subject from the
+    // sentence before it, and that sentence belongs to a pole. Gifts and Kingdom used to
+    // fail exactly here: "They affirm that God still heals..." is the CESSATIONISTS'
+    // own qualification, and filing it as neutral took it out of their case.
+    if (parts.between && /^(They|These|Those|Such|It|This)/.test(parts.between)) {
+      fail(`${g.name}: the between-note starts with a pronoun, so it belongs to a pole`);
+    }
+
+    // Every sentence of the audited summary must survive somewhere, exactly once.
+    const rebuilt = [parts.left, parts.right, parts.between, parts.caution]
+      .filter(Boolean).join(' ').replace(/\s+/g, ' ').trim();
+    if (rebuilt !== g.summary.replace(/\s+/g, ' ').trim()) {
+      fail(`${g.name}: the split does not reassemble into the audited summary`);
+    } else checked++;
+  }
+  if (checked === compass.groups.length) {
+    ok(`all ${checked} axis summaries split into poles and reassemble exactly`);
   }
 }
 

@@ -18,10 +18,57 @@ function codecFor(quiz: Quiz) {
   return makeCodec(quiz.config.radix, quiz.groups.length);
 }
 
-/** How far above the midpoint this category sits, as a share of the half-scale. */
-export function pull(score: number): string {
-  if (score <= 50) return 'not a strong pull';
-  return `${Math.round(((score - 50) / 50) * 100)}% pull`;
+/**
+ * How strongly a category came out, in words.
+ *
+ * No percentage and no 0..100 number appears anywhere in a unipolar result, including the
+ * aria-labels. At two items per group only nine values are reachable and they sit 12.5
+ * points apart, so "63%" claims a precision the instrument cannot express — and it invites
+ * "I am 63% Wrath", which is not a claim the data makes. The words are cut on reachable
+ * STEPS above the point where agreement and disagreement cancelled out, so they track what
+ * was actually measured however long the instrument is.
+ *
+ * The previous version returned "not a strong pull" for every value at or below 50 — five
+ * of the nine reachable values — so a reader who disagreed with every statement about a
+ * vice read identically to one who was perfectly balanced on it. That distinction is real
+ * and worth keeping.
+ */
+const ABOVE = ['', 'a slight pull', 'a clear pull', 'a strong pull', 'the strongest here'];
+
+export function pull(quiz: Quiz, score: number): string {
+  if (score < 50) return 'leaned away';
+  if (score === 50) return 'no pull either way';
+  const half = Math.max(1, (quiz.config.radix - 1) / 2);
+  const above = ((score - 50) / 50) * half;
+  return ABOVE[Math.min(4, Math.max(1, Math.ceil((above / half) * 4)))]!;
+}
+
+/**
+ * How close two categories must be to count as level.
+ *
+ * Expressed in REACHABLE STEPS, not points, because a point is not a constant: at two items
+ * per group the scale has 9 rungs 12.5 points apart, and at six it has 25 rungs 4.2 apart.
+ * A fixed 8-point threshold means "exact tie only" on the first and "two rungs apart is a
+ * tie" on the second. `tieSteps` says what was actually meant, at any length of instrument.
+ */
+function tieMargin(quiz: Quiz): number {
+  const steps = Math.max(1, quiz.config.tieSteps ?? 1);
+  const rung = 100 / Math.max(1, quiz.config.radix - 1);
+  return steps * rung + 0.5; // the half-point absorbs score()'s rounding
+}
+
+/**
+ * Whether anything rose far enough above no-net-agreement to be worth naming.
+ *
+ * This deliberately does NOT ask how far each score sits from 50 in either direction. That
+ * is the bipolar question, and asking it here produced a real and ugly failure: a reader who
+ * answered "that is not me" to every statement scored 0 on all seven vices, and was told
+ * they were "Envy and gluttony" — the alphabetically first two of seven tied at the bottom.
+ * The most emphatic denial the instrument accepts came back as an accusation.
+ */
+function nothingNamed(quiz: Quiz, values: number[]): boolean {
+  const floor = quiz.config.namingFloor ?? 10;
+  return values.every(v => v - 50 <= floor);
 }
 
 export const category: ScoringStrategy = {
@@ -53,13 +100,14 @@ export const category: ScoringStrategy = {
       emoji: g.emoji,
       value: values[i] ?? 50,
       rank: place.get(g.slug) ?? i + 1,
-      strength: pull(values[i] ?? 50)
+      below: (values[i] ?? 50) < 50,
+      strength: pull(quiz, values[i] ?? 50)
     }));
 
-    const flat = values.every(s => Math.abs(s - 50) <= quiz.config.centerUnits);
+    const flat = nothingNamed(quiz, values);
     const tied =
       ranked[1] !== undefined &&
-      Math.abs(ranked[0]!.score - ranked[1]!.score) <= quiz.config.tieUnits;
+      Math.abs(ranked[0]!.score - ranked[1]!.score) <= tieMargin(quiz);
 
     let headline: string;
     let summary: string;
@@ -68,7 +116,9 @@ export const category: ScoringStrategy = {
       // "Flat", never "central": a ranking has no centre to sit in the middle of.
       state = 'flat';
       headline = 'No single one stands out';
-      summary = 'Your answers sit near the middle throughout, so no category is named.';
+      // True whether the reader answered neutrally throughout or denied every statement
+      // outright. The old copy ("your answers sit near the middle") was false for the second.
+      summary = 'Nothing here rose far enough above the rest to name one, so none is named.';
     } else if (tied) {
       state = 'tie';
       headline = `${ranked[0]!.name} and ${ranked[1]!.name}`;

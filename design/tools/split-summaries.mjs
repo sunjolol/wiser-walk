@@ -16,11 +16,38 @@ const DATA = new URL('../../site/src/data/compass.json', import.meta.url);
 const ANCHORS = {
   grace:     { right: /^Synergists \(/,                    caution: /^One caution about how this axis is built/ },
   table:     { right: /^The memorial view holds/,          middle:  /^Many stand between the poles/ },
-  spirit:    { right: /^Cessationists hold/,               middle:  /^They affirm that God still heals/ },
+  spirit:    { right: /^Cessationists hold/ },
   kingdom:   { right: /^The dispensational view keeps/,    middle:  /^Progressive dispensationalists add/ },
   tradition: { right: /^Those who hold to Scripture alone/ },
   worship:   { right: /^Free worship holds/ }
 };
+
+/*
+ * `spirit` and `kingdom` used to declare a `middle` anchor, and both were wrong.
+ *
+ *   spirit:  "They affirm that God still heals and answers prayer, but hold that the
+ *            Spirit's ordinary work is now through the Word and providence..."
+ *            "They" is the CESSATIONISTS of the previous sentence. This is their own
+ *            qualification of their own position, and filing it as neutral middle ground
+ *            took the most sympathetic sentence in the cessationist case out of the
+ *            cessationist case — leaving them looking harsher than their own words.
+ *
+ * `kingdom` KEEPS its anchor, on a second look. "Progressive dispensationalists add that
+ * Christ's kingdom has already begun" is the one-people side's central claim held together
+ * with the dispensational side's Israel/church distinction — a genuinely mediating
+ * position, which is exactly what this bucket is for. Folding it into the right pole would
+ * attribute one camp's mediating qualification to the pole it mediates between.
+ *
+ * `table` keeps its anchor because the prose itself says so: "Many stand between the
+ * poles..." names the in-between position rather than continuing either case. That is the
+ * standard — a `middle` block must identify who stands there, in its own first words.
+ */
+
+/**
+ * A block that opens with a bare pronoun takes its subject from the sentence before it, and
+ * that sentence belongs to a pole. Such a block cannot be neutral, whatever the anchor says.
+ */
+const LEADING_PRONOUN = /^(They|These|Those|Such|It|He|She|This)/;
 
 const sentences = s => s.split(/(?<=\.)\s+/).filter(Boolean);
 
@@ -35,13 +62,39 @@ export function splitSummary(axisKey, summary) {
   const idxCaution = a.caution ? sents.findIndex(s => a.caution.test(s)) : -1;
   const idxMiddle  = a.middle  ? sents.findIndex(s => a.middle.test(s))  : -1;
 
-  // the first trailing block that actually appears after the right-pole case
-  const ends = [idxCaution, idxMiddle].filter(i => i > idxRight);
-  const idxEnd = ends.length ? Math.min(...ends) : sents.length;
+  /*
+   * Trailing blocks, sliced between successive marks in document order.
+   *
+   * Both `note` and `caution` used to be assigned the WHOLE tail, so an axis carrying both
+   * anchors would have emitted the same sentences twice, in two different roles — and the
+   * verification below could not catch it, because `used` was built from that same array.
+   * No axis has both today, which is the only reason it never showed.
+   */
+  const marks = [
+    idxMiddle > idxRight ? { kind: 'note', at: idxMiddle } : null,
+    idxCaution > idxRight ? { kind: 'caution', at: idxCaution } : null
+  ].filter(Boolean).sort((a, b) => a.at - b.at);
+
+  const idxEnd = marks.length ? marks[0].at : sents.length;
 
   const left  = sents.slice(0, idxRight);
   const right = sents.slice(idxRight, idxEnd);
   const tail  = sents.slice(idxEnd);
+
+  const blocks = { note: [], caution: [] };
+  marks.forEach((m, i) => {
+    blocks[m.kind] = sents.slice(m.at, marks[i + 1] ? marks[i + 1].at : sents.length);
+  });
+
+  if (idxMiddle > idxRight && LEADING_PRONOUN.test(tail[0] ?? '')) {
+    return {
+      ok: false,
+      reason:
+        'the "between the poles" block opens with a pronoun, so its subject is the ' +
+        'previous sentence — which belongs to a pole, not to the middle',
+      whole: summary
+    };
+  }
 
   // verification: every sentence used exactly once, nothing invented, nothing dropped
   const used = [...left, ...right, ...tail];
@@ -52,8 +105,8 @@ export function splitSummary(axisKey, summary) {
     ok: true,
     left: left.join(' '),
     right: right.join(' '),
-    note: idxMiddle > idxRight ? tail.join(' ') : '',
-    caution: idxCaution > idxRight ? tail.join(' ') : '',
+    note: blocks.note.join(' '),
+    caution: blocks.caution.join(' '),
     counts: { left: left.length, right: right.length, tail: tail.length, total: sents.length }
   };
 }
