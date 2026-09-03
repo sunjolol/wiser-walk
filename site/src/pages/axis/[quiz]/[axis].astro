@@ -25,6 +25,11 @@ const bipolar = Boolean(group.left && group.right);
 const split = isSplitReadMore(group.readMore) ? group.readMore : null;
 const reading = readMoreAll(group.readMore);
 
+// The full text, still as two mirrored panels. This is the page the result page truncates
+// TO, so the prose is whole here — but a disagreement between two positions should read as
+// a disagreement on the indexable page as well, not as one long paragraph about a topic.
+const parts = group.summaryParts;
+
 const title = bipolar ? `${group.name}: ${group.left} or ${group.right}` : group.name;
 
 const jsonLd = {
@@ -46,7 +51,32 @@ const jsonLd = {
     <p class="eyebrow">{quiz.emoji} {quiz.title}</p>
     <h1>{group.emoji} {group.name}</h1>
     {bipolar && <p class="lede">{group.left} ↔ {group.right}</p>}
-    <p>{group.summary}</p>
+  </div>
+
+  {parts ? (
+    <div class="axis-cases">
+      <div class="poles-split">
+        <section class="pole-panel pole-panel--left">
+          <h4>{group.left}</h4>
+          <p>{parts.left}</p>
+        </section>
+        <section class="pole-panel pole-panel--right">
+          <h4>{group.right}</h4>
+          <p>{parts.right}</p>
+        </section>
+      </div>
+      {parts.between && (
+        <p class="between"><strong>Between the poles.</strong> {parts.between}</p>
+      )}
+      {parts.caution && (
+        <p class="caution"><strong>About this axis.</strong> {parts.caution}</p>
+      )}
+    </div>
+  ) : (
+    <div class="prose"><p>{group.summary}</p></div>
+  )}
+
+  <div class="prose">
 
     {group.history && group.history.length > 0 && (
       <>
