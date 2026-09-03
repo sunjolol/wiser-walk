@@ -8,19 +8,35 @@
 export interface Codec {
   readonly radix: number;
   readonly slots: number;
+  /** Total characters, including any quiz prefix. */
   readonly length: number;
   encode(values: number[]): string;
   decode(code: string): number[] | null;
 }
 
-export function makeCodec(radix: number, slots: number): Codec {
+/**
+ * `prefix` binds a code to its quiz.
+ *
+ * Without it, two quizzes whose radix^slots ranges overlap accept each other's codes. That
+ * is not hypothetical: the Compass is 13^6 = 4,826,809 and the seven deadly sins 9^7 =
+ * 4,782,969, both six base-36 characters, so a Compass code pasted under the sins slug
+ * decoded to a complete, plausible, entirely fabricated result. A wrong URL must 404, not
+ * invent an answer — that is the same rule the junk-code test already enforces.
+ *
+ * The Compass takes NO prefix, because its permalinks are already live and a result link is
+ * the only copy of a result that exists. Every other quiz takes one, and the registry
+ * enforces that at most one quiz can go without — so the ambiguity cannot come back.
+ */
+export function makeCodec(radix: number, slots: number, prefix = ''): Codec {
   if (!Number.isInteger(radix) || radix < 2) throw new Error(`bad radix: ${radix}`);
   if (!Number.isInteger(slots) || slots < 1) throw new Error(`bad slot count: ${slots}`);
 
   const steps = radix - 1;
   const max = Math.pow(radix, slots);
   if (!Number.isSafeInteger(max)) throw new Error(`radix^slots overflows: ${radix}^${slots}`);
-  const length = Math.max(6, max.toString(36).length);
+  if (prefix && !/^[A-Z]{1,3}$/.test(prefix)) throw new Error(`bad code prefix: ${prefix}`);
+  const body = Math.max(6, max.toString(36).length);
+  const length = prefix.length + body;
 
   return {
     radix,
@@ -34,13 +50,14 @@ export function makeCodec(radix: number, slots: number): Codec {
         const step = Math.max(0, Math.min(steps, Math.round((v * steps) / 100)));
         n = n * radix + step;
       }
-      return n.toString(36).toUpperCase().padStart(length, '0');
+      return prefix + n.toString(36).toUpperCase().padStart(body, '0');
     },
 
     decode(code: string): number[] | null {
       if (typeof code !== 'string') return null;
       if (code.length !== length || !/^[0-9A-Z]+$/i.test(code)) return null;
-      let n = parseInt(code, 36);
+      if (prefix && code.slice(0, prefix.length).toUpperCase() !== prefix) return null;
+      let n = parseInt(code.slice(prefix.length), 36);
       if (!Number.isFinite(n) || n < 0 || n >= max) return null;
       const out: number[] = [];
       for (let i = 0; i < slots; i++) {

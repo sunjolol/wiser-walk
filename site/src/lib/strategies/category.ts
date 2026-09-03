@@ -15,7 +15,7 @@ function spanOf(quiz: Quiz, group: number): number {
 }
 
 function codecFor(quiz: Quiz) {
-  return makeCodec(quiz.config.radix, quiz.groups.length);
+  return makeCodec(quiz.config.radix, quiz.groups.length, quiz.codePrefix ?? '');
 }
 
 /**

@@ -282,6 +282,35 @@ console.log('6c. the pole split keeps every sentence with its own side');
   }
 }
 
+// ------------------------- 6c2. a code from one quiz must not decode under another
+console.log('6c2. result codes are bound to their quiz');
+{
+  const compass = getQuiz('theology-compass');
+  const sins = getQuiz('seven-deadly-sins');
+
+  // 13^6 = 4,826,809 and 9^7 = 4,782,969: both six base-36 characters, overlapping ranges.
+  // Before the code prefix, a Compass code pasted under the sins slug decoded to a
+  // complete, plausible and entirely fabricated result.
+  const cCode = encodeFor(compass, [33, 42, 33, 58, 50, 67]);
+  const sCode = encodeFor(sins, sins.groups.map((_, i) => (i === 0 ? 100 : 50)));
+
+  if (decodeFor(sins, cCode) !== null) fail('a Compass code decoded under seven-deadly-sins');
+  else ok('a Compass code is rejected by the sins quiz');
+  if (decodeFor(compass, sCode) !== null) fail('a sins code decoded under the Compass');
+  else ok('a sins code is rejected by the Compass');
+
+  // The Compass keeps its bare six-character codes: its permalinks are already live, and a
+  // result link is the only copy of a result that exists.
+  if (cCode.length !== 6 || /^[A-Z]{1,3}0/.test(cCode) === false) {
+    // a bare code starts with the padded body, not a letter prefix
+  }
+  if (compass.codePrefix) fail('the Compass gained a code prefix; live links would break');
+  else ok('Compass codes are unprefixed and unchanged: ' + cCode);
+
+  if (decodeFor(sins, sCode) === null) fail('the sins code does not round-trip');
+  else ok('prefixed codes still round-trip: ' + sCode);
+}
+
 // ------------------------- 6d. the two share bars mean two different things, on purpose
 console.log('6d. the share bars keep position and magnitude apart');
 {

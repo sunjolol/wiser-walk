@@ -239,6 +239,12 @@ export interface Quiz {
   config: Record<string, number>;
   /** First line of the share text, e.g. "My Theology Compass". */
   shareTitle: string;
+  /**
+   * 1-3 uppercase letters prefixed to every result code, binding the code to this quiz.
+   * Omit ONLY for a quiz whose links are already live — see makeCodec. The registry allows
+   * at most one such quiz across the whole site.
+   */
+  codePrefix?: string;
 }
 
 export const isLive = (q: Quiz) => q.status === 'live';

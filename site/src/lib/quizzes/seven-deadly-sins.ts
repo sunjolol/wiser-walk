@@ -86,5 +86,6 @@ export const sevenDeadlySins: Quiz = {
     // of difference, and calling that "level" would throw away something real.
     tieSteps: 0
   },
-  shareTitle: 'Which of the seven I am weakest to'
+  shareTitle: 'Which of the seven I am weakest to',
+  codePrefix: 'S'
 };

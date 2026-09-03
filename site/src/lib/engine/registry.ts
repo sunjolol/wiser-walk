@@ -105,6 +105,29 @@ function validate(quiz: Quiz): void {
  * Outcome pages live at a site-wide /tradition/<slug>/, so a slug reused by a second quiz
  * would overwrite the first quiz's page. Checked across the whole registry, not per quiz.
  */
+/**
+ * Result codes must not be interchangeable between quizzes. A code prefix is what keeps
+ * them apart, so prefixes must be unique, and at most one quiz may go without one — the
+ * Compass, whose permalinks predate the prefix and are the only copy of a reader's result.
+ */
+function validateCodePrefixes(quizzes: Quiz[]): void {
+  const seen = new Map<string, string>();
+  const bare: string[] = [];
+  quizzes.forEach(q => {
+    const p = q.codePrefix?.toUpperCase() ?? '';
+    if (!p) { bare.push(q.slug); return; }
+    const prior = seen.get(p);
+    if (prior) throw new Error(`quizzes "${prior}" and "${q.slug}" share the code prefix "${p}"`);
+    seen.set(p, q.slug);
+  });
+  if (bare.length > 1) {
+    throw new Error(
+      `these quizzes have no code prefix: ${bare.join(', ')}. Only one may go without, ` +
+      'or their result codes become interchangeable and a wrong URL invents a result.'
+    );
+  }
+}
+
 function validateOutcomeSlugs(quizzes: Quiz[]): void {
   const owner = new Map<string, string>();
   quizzes.forEach(q =>
@@ -123,3 +146,4 @@ function validateOutcomeSlugs(quizzes: Quiz[]): void {
 
 QUIZZES.forEach(validate);
 validateOutcomeSlugs(QUIZZES);
+validateCodePrefixes(QUIZZES);
