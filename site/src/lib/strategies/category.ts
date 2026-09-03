@@ -150,10 +150,21 @@ export const category: ScoringStrategy = {
     const ranked = quiz.groups
       .map((g, i) => ({ g, v: values[i] ?? 50 }))
       .sort((a, b) => b.v - a.v);
+    /*
+     * Filled from the PULL, not from the raw score.
+     *
+     * The eleven-slot bar is an audited Compass artifact, and on that bar the middle slot
+     * is the centre of a two-ended axis. Reused here with `round(v / 10)`, a perfectly
+     * neutral 50 filled six of eleven cells — telling a reader they were somewhat envious
+     * for having answered neither way. The bipolar card marks a POSITION and this one
+     * shows a MAGNITUDE; that difference is the whole reason there are two of them, and
+     * nobody should later "unify" them.
+     */
+    const CELLS = 11;
     ranked.forEach(({ g, v }) => {
-      const at = Math.max(0, Math.min(10, Math.round(v / 10)));
+      const filled = Math.max(0, Math.min(CELLS, Math.round(((v - 50) / 50) * CELLS)));
       let bar = '';
-      for (let k = 0; k < 11; k++) bar += k <= at ? '█' : '░';
+      for (let k = 0; k < CELLS; k++) bar += k < filled ? '█' : '░';
       lines.push(`${g.emoji ?? '·'} ${bar} ${g.name}`);
     });
     lines.push(`${origin}/r/${quiz.slug}/${this.encode(quiz, values)}`);

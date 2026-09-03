@@ -16,7 +16,7 @@ import type { Quiz, QuizGroup, QuizItem } from '../engine/types';
 const groups: QuizGroup[] = [
   { key: 'pride', slug: 'pride', name: 'pride', emoji: '👑',
     summary: 'Gregory placed pride first, as the root the other six grow from: the refusal to be under anything.' },
-  { key: 'envy', slug: 'envy', name: 'envy', emoji: '🫥',
+  { key: 'envy', slug: 'envy', name: 'envy', emoji: '🙄',
     summary: 'Sorrow at another’s good — the one sin, Aquinas noted, that offers its owner no pleasure at all.' },
   { key: 'wrath', slug: 'wrath', name: 'wrath', emoji: '🔥',
     summary: 'Anger held past its usefulness, until it hardens into the desire to see someone pay.' },

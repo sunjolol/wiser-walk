@@ -282,6 +282,25 @@ console.log('6c. the pole split keeps every sentence with its own side');
   }
 }
 
+// ------------------------- 6d. the two share bars mean two different things, on purpose
+console.log('6d. the share bars keep position and magnitude apart');
+{
+  const sins = getQuiz('seven-deadly-sins');
+  const neutral = shareTextFor(sins, scoreQuiz(sins, sins.items.map(() => 0)), 'https://x');
+  // A perfectly neutral sheet used to fill six of eleven cells on every row, because the
+  // eleven-slot bar is a Compass artifact whose middle slot is the CENTRE of an axis.
+  if (/█/.test(neutral)) fail('a neutral unipolar sheet fills cells: \n' + neutral);
+  else ok('a neutral unipolar sheet leaves every bar empty');
+
+  const compass = getQuiz('theology-compass');
+  const centre = shareTextFor(compass, compass.groups.map(() => 50), 'https://x');
+  // The bipolar bar marks a POSITION, so a centred axis must still show its marker.
+  const marked = centre.split('\n').filter(l => l.includes('●')).length;
+  if (marked !== compass.groups.length) {
+    fail(`bipolar centre lost its position marker on ${compass.groups.length - marked} rows`);
+  } else ok('a centred bipolar sheet still marks a position on every row');
+}
+
 // ------------------------------------------------------------- 7. share surfaces
 console.log('7. share text');
 {
