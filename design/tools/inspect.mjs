@@ -2,7 +2,9 @@
 import { inflateSync } from 'node:zlib';
 import { readFileSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
-const DIR = new URL('../graphics/', import.meta.url).pathname.replace(/^//, '');
+import { fileURLToPath } from 'node:url';
+// fileURLToPath, not .pathname: on Windows the latter yields "/C:/...", which resolve() mangles.
+const DIR = fileURLToPath(new URL('../graphics/', import.meta.url));
 
 function decode(buf){
   let p=8, w=0,h=0,depth=0,ct=0; const idat=[];
