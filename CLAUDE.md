@@ -41,6 +41,70 @@ Note he had earlier rejected the word "wiser" as "weird to say"; he has since ov
 
 State: local git repo initialised, **one commit** `c8fd322`, 137 files tracked, `node_modules` excluded. Authored as `Light <serenitybackto@gmail.com>` — he was offered a GitHub noreply address to keep his email out of public history and **chose to keep his real email**. Do not change it.
 
+## PICK UP HERE (as of 2026-09-03)
+
+**Mobile is priority one, from the ground up.** Most users arrive on phones, the owner wants a clean
+path to a mobile app later, and his previous project became a painful retrofit because mobile was
+left until the end. Design and build phone-first, then tablet, then desktop — never desktop scaled
+down. This applies at every stage, not as a final pass.
+
+### The visual theme is SETTLED — do not redesign it
+
+Locked reference: https://claude.ai/code/artifact/95ff2a65-2e28-4d5c-b5bf-1fa3b434f00a
+Result-page attempt (rejected, see below): https://claude.ai/code/artifact/0ef3fc2e-0b50-4372-ac9e-2c5287297ba7
+
+Riche palette `#7EBAEE`→`#F0A06F` on `#444444`, panels `#EEEEEE` on `#E8E8E8` shell on `#E3E3E3`
+page, `border-radius:15–22px`, whisper shadows `3px 3px 5px rgba(68,68,68,.065)`, DM Serif Display
++ Poppins + Inter, bulb theme toggle, light default. Sources and tools in `design/`.
+
+### The result page is NOT done — this is the live task
+
+The theme demo was only ever a style specimen. The owner reviewed a richer earlier version
+(`theology-compass.html`, open it with `#r=00YHZG`) and correctly judged the new page a regression.
+Ten agents produced `design/DESIGN-SPECS.md`; **every dimension came back `needs-work`, so read each
+critique alongside its spec — the critique usually wins.**
+
+Decisions accepted from that round:
+
+- **No separate compass wheel.** The hero visual and the axis rows are ONE component: six
+  full-width diverging rails on a shared centre spine. A circle cannot fit twelve pole labels, so
+  something always gets dropped — which is exactly how the last version shipped a named pole facing
+  an anonymous blank sector. Stacked rails make that failure structurally impossible.
+- **Both pole names print on every rail, unconditionally.** Never encode a pole by omission.
+- **Draw the audited 41–59 "names no position" band as a visible zone**, so a centrist sees why
+  nothing was named instead of getting an empty state.
+- **Layered opacity, never flat fill:** ~30% tint under a 100% solid knob with a card-coloured
+  ring. This already ships in `theology-compass.html` (`.fill` opacity .35 + solid `.marker`) and is
+  what the owner likes; the flat saturated version was rejected.
+- **Deep content as two mirrored pole panels** so the disagreement reads as a disagreement, fed by
+  `design/tools/split-summaries.mjs` (splits by an explicit anchor, then verifies every sentence is
+  used exactly once; refuses rather than guessing).
+- **Do NOT assign scripture passages to a pole.** Romans 9 and 1 Tim 2:3–4 are claimed by both
+  camps; splitting them would be invented editorial content and an audit violation. `readMore` IS
+  pole-split, because the data says so.
+- **Truncate axis prose on the result page; full text lives on the indexable `/axis/` pages.** Fixes
+  the wall-of-text and the SEO funnel in one move.
+
+### Open bugs found and verified, NOT yet fixed
+
+1. **Axis key ≠ slug.** Internal keys are `spirit` and `tradition`; built slugs are `gifts` and
+   `authority`. Anything keying URLs off `key` 404s on two of six axes. Always use `slug`.
+2. **`(see candidate_statements)`** — an internal JSON key — is in the published Grace summary in
+   `audit/compass-data.revised.json`. Needs an editorial fix at the audit source.
+
+Already fixed this session: `Disallow: /r/` removed from robots.txt (it blocked the crawl that
+`noindex, follow` depends on, severing link flow to the axis/tradition pages).
+
+Checked and **rejected** as a false alarm: the claim that `band()` and `nearestState()` can
+contradict each other. At both 3 and 6 items per axis the reachable scores skip 40 and 60, so it
+cannot occur. Do not "fix" it.
+
+### Still unbuilt
+
+Email capture (owner confirmed he wants it — requires honestly rewriting the "no email list"
+promises on `/about` and `/method`), OG image generation, the context-aware CTA (the same URL is
+both "my result" and "a friend's result"), and applying the theme across the 41 pages.
+
 ## Where the build stands
 
 ### Done

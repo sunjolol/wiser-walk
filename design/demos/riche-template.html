@@ -1,0 +1,363 @@
+<title>Riche Blue for Wiser Walk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+  :root{
+    --smokey:url("{{SMOKEY}}");
+    --smokey2:url("{{SMOKEY2}}");
+    --smokey3:url("{{SMOKEY3}}");
+    --flower2:url("{{FLOWER2}}");
+    --starry:url("{{STARRY}}");
+
+    --blue:#7EBAEE;
+    --orange:#F0A06F;
+    --grad:linear-gradient(to bottom right,var(--blue),var(--orange));
+    --grad-r:linear-gradient(to right,var(--blue),var(--orange));
+
+    --lift:3px 3px 5px rgba(68,68,68,.065);
+    --lift-soft:0px 0px 10px rgba(40,40,40,.045);
+
+    --display:"DM Serif Display",Georgia,serif;
+    --ui:"Poppins",ui-sans-serif,system-ui,sans-serif;
+    --text:"Inter",ui-sans-serif,system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+
+  /* ---------- light (default) ---------- */
+  :root{
+    --page:#E3E3E3;
+    --shell:#E8E8E8;   /* sits between the outer page and the content boxes */
+    --panel:#EEEEEE;
+    --ink:#444444;
+    --ink-soft:#5A6066;
+    --ink-mute:#7C8288;
+    --accent:#3E86C4;  /* the gradient's blue, deepened so it reads on a light panel */
+    --pip-off:#3B3B3B;
+    --pip-border:#3B3B3B;
+    --card-ink:#E8E8E8;
+    --veil-blend:soft-light;
+    --veil-op:.68;
+    --hero-wash-op:.52;
+    --sheet-flower-op:.42;
+    --flower-fill:linear-gradient(to bottom right,#3E86C4,#D2793F);
+    /* the dark fill used by plain pills and the secondary button */
+    --dark-fill:#1C1C23;
+    --dark-fill-img:var(--starry);
+    --dark-fill-size:420px;
+    --lift-deep:0px 25px 20px -15px hsl(208 47% 20% / 25%);
+  }
+  :root[data-theme="dark"]{
+    --page:#131319;
+    --shell:#1B1B21;
+    --panel:#24242B;
+    --ink:#EAE8E4;
+    --ink-soft:#B4B0AA;
+    --ink-mute:#8E8A84;
+    --accent:#7EBAEE;
+    --pip-off:#33333C;
+    --pip-border:#4A4A55;
+    --card-ink:#EAE8E4;
+    --veil-blend:overlay;
+    --veil-op:.1;
+    --hero-wash-op:.05;
+    --sheet-flower-op:.2;
+    --flower-fill:var(--grad);
+    --dark-fill:#343441;
+    --dark-fill-img:none;
+    --dark-fill-size:auto;
+    --lift-deep:0 18px 44px rgba(0,0,0,.55);
+  }
+
+  *,*::before,*::after{box-sizing:border-box}
+  body{margin:0;background:var(--page);color:var(--ink);font-family:var(--text);
+       font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:62rem;margin:0 auto;padding:0 1.5rem}
+
+  /* ---------- texture utilities ---------- */
+  .wash{position:absolute;inset:0;z-index:1;pointer-events:none;
+    -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+    -webkit-mask-size:cover;mask-size:cover;
+    -webkit-mask-position:center;mask-position:center}
+  .wash::before{content:"";display:block;height:100%;width:100%;background:var(--grad)}
+  .wash.smokey{-webkit-mask-image:var(--smokey);mask-image:var(--smokey)}
+  .wash.flower2::before{background:var(--flower-fill)}
+  .wash.flower2{-webkit-mask-image:var(--flower2);mask-image:var(--flower2);
+    -webkit-mask-size:contain;mask-size:contain}
+
+  .veil{position:absolute;inset:0;z-index:1;pointer-events:none;background-size:cover;
+    background-position:center;background-repeat:no-repeat;
+    filter:invert(100%);mix-blend-mode:var(--veil-blend);opacity:var(--veil-op)}
+  .veil.smokey2{background-image:var(--smokey2)}
+  .veil.smokey3{background-image:var(--smokey3)}
+
+  /* one dark fill, themed: starfield on light, flat lifted grey on dark */
+  .fill-dark{background-color:var(--dark-fill);background-image:var(--dark-fill-img);
+    background-size:var(--dark-fill-size);background-position:center}
+
+  /* ---------- explainer ---------- */
+  .frame{position:relative;overflow:hidden;padding:3rem 0 2.2rem;background:var(--page)}
+  .frame-in{position:relative;z-index:2}
+  .kicker{font-family:var(--mono);font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--ink-mute);margin:0 0 .9rem}
+  h1{font-family:var(--display);font-size:clamp(2rem,5.4vw,3.1rem);line-height:1.06;
+    letter-spacing:-.01em;margin:0 0 .9rem;text-wrap:balance;color:var(--ink)}
+  .stand{font-size:1.05rem;color:var(--ink-soft);max-width:44em;margin:0}
+  .strip{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink-mute);padding:2.4rem 0 .7rem}
+
+  /* ================== THE APP ================== */
+  .app{border-radius:22px;overflow:hidden;background:var(--shell);
+    box-shadow:var(--lift-deep);margin-bottom:2rem;position:relative}
+
+  .bar{display:flex;align-items:center;gap:1.2rem;padding:1rem 1.6rem;background:var(--panel);
+    position:relative;z-index:6;box-shadow:var(--lift-soft)}
+  .bar .brand{font-family:var(--display);font-size:1.5rem;color:var(--ink);line-height:1.1}
+  .bar .brand span{font-style:italic;background:var(--grad-r);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .bar nav{margin-left:auto;display:flex;gap:1.7rem;align-items:center}
+  .bar nav a{font-family:var(--ui);font-size:.9rem;font-weight:600;
+    color:var(--ink-mute);text-decoration:none}
+  .bar nav a.on{color:var(--accent);font-weight:700}
+
+  /* bulb toggle: lit when the page is light, dimmed when dark */
+  .toggle{display:inline-flex;align-items:center;justify-content:center;color:var(--ink-mute);
+    background:none;border:0;cursor:pointer;padding:.3rem;border-radius:9px;line-height:0;
+    transition:color .2s,background .2s}
+  .toggle:hover{background:rgba(126,186,238,.14)}
+  .toggle:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .toggle svg{display:block}
+  .toggle .rays{opacity:0;transform-origin:12px 12px;transform:scale(.65);
+    transition:opacity .22s,transform .22s}
+  .toggle .glass{fill:transparent;transition:fill .22s}
+  .toggle.lit{color:var(--orange)}
+  .toggle.lit .rays{opacity:1;transform:scale(1)}
+  .toggle.lit .glass{fill:rgba(240,160,111,.3)}
+
+  /* hero */
+  .hero{position:relative;overflow:hidden;background:var(--shell);padding:2.8rem 1.9rem 2.4rem}
+  .hero .wash{opacity:var(--hero-wash-op)}
+  .hero-in{position:relative;z-index:3}
+  .hero .eyebrow{font-family:var(--ui);font-size:.9rem;font-weight:700;letter-spacing:.09em;
+    text-transform:uppercase;margin:0 0 .8rem;color:var(--accent)}
+  .hero h2{font-family:var(--display);font-size:clamp(1.9rem,4.8vw,3rem);line-height:1.1;
+    letter-spacing:-.01em;margin:0 0 .75rem;color:var(--ink);max-width:15em;text-wrap:balance}
+  .hero p{font-size:1.02rem;font-weight:700;color:var(--ink-soft);margin:0;max-width:44em}
+
+  .strip-stats{display:flex;flex-wrap:wrap;gap:.55rem;margin:1.5rem 0 0}
+  .pill{background:var(--panel);border-radius:12px;padding:.6rem .95rem;text-align:center;
+    box-shadow:var(--lift)}
+  .pill b{display:block;font-family:var(--display);font-size:1.4rem;line-height:1.15;color:var(--ink)}
+  .pill span{display:block;font-family:var(--ui);font-size:.62rem;font-weight:600;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--ink-mute);margin-top:.15rem}
+
+  /* result sheet */
+  .sheet{position:relative;z-index:4;overflow:hidden;margin:0 1.2rem 1.2rem;background:var(--panel);
+    border-radius:18px;padding:1.8rem 1.7rem 2rem;box-shadow:var(--lift)}
+  .sheet-in{position:relative;z-index:2}
+  .tag{font-family:var(--ui);font-size:.79rem;font-weight:600;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--ink-mute);margin:0 0 .5rem}
+  .sheet h3{font-family:var(--display);font-style:italic;font-size:1.6rem;line-height:1.25;
+    margin:0 0 .5rem;color:var(--ink)}
+  .sheet .sub{font-size:.99rem;color:var(--ink-soft);margin:0;max-width:39em}
+
+  /* ---- axis rows ---- */
+  .axes{display:grid;gap:1.4rem;margin:2rem 0 0}
+  .axis-top{display:flex;align-items:baseline;gap:1rem;margin-bottom:.5rem}
+  .axis-name{font-family:var(--ui);font-weight:700;font-size:1rem;letter-spacing:.09em;
+    text-transform:uppercase;color:var(--accent)}
+  .axis-lean{margin-left:auto;font-family:var(--ui);font-size:1rem;font-weight:600;
+    color:var(--ink-mute);white-space:nowrap}
+  /* eleven slots across the full width. The gradient runs continuously (1100% wide,
+     stepped 10% per slot); unlit slots are dimmed by an inset so the spectrum still reads. */
+  .pips{display:flex;gap:6px}
+  .pips b{flex:1 1 0;height:20px;border:solid 3px var(--pip-border);border-radius:6px;
+    transform:skewX(-10deg);background-image:var(--grad-r);background-size:1100% 100%;
+    box-shadow:inset 0 0 0 99px var(--pip-off)}
+  .pips b.on{box-shadow:none;border-color:var(--ink)}
+  .poles{display:flex;font-family:var(--ui);font-size:.79rem;font-weight:600;letter-spacing:.05em;
+    text-transform:uppercase;color:var(--ink-mute);margin-top:.45rem}
+  .poles span:last-child{margin-left:auto}
+
+  /* ---- nearest ---- */
+  .sec{font-family:var(--ui);font-size:.79rem;font-weight:700;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--ink-mute);margin:2.3rem 0 .9rem}
+  .trads{display:flex;flex-direction:column;gap:.6rem;padding-right:.4rem}
+  .trad{transform:skewX(-7deg);border-radius:6px 20px 20px 6px;padding:.9rem 1.5rem;
+    box-shadow:var(--lift-soft);position:relative;overflow:hidden}
+  .trad .n,.trad .m{transform:skewX(7deg);display:block;position:relative;z-index:2}
+  .trad .n{font-family:var(--display);font-style:italic;font-size:1.5rem;line-height:1.2;
+    color:var(--card-ink)}
+  .trad .m{font-family:var(--ui);font-weight:600;font-size:.79rem;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--blue);margin-top:.15rem}
+  .trad.win{background-image:var(--grad)}
+  .trad.win .n{color:#3B3B3B}
+  .trad.win .m{color:#7A4A22}
+  /* The winning card IS the gradient, so its floral must contrast rather than repeat it.
+     Full-bleed cover + invert: the art is only 4% opaque, so it only reads spread wide. */
+  .bloom{position:absolute;inset:0;z-index:1;pointer-events:none;
+    background-image:var(--flower2);background-size:cover;background-position:center;
+    background-repeat:no-repeat;filter:invert(100%);mix-blend-mode:overlay;opacity:.55}
+  .trad:nth-child(2){margin-right:1.6rem}
+  .trad:nth-child(3){margin-right:3.2rem}
+
+  /* ---- buttons ---- */
+  .cta-row{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;margin:2.1rem 0 0}
+  .btn{display:inline-block;font-family:var(--ui);font-size:.9rem;font-weight:700;
+    letter-spacing:.12em;text-transform:uppercase;text-decoration:none;padding:.85rem 1.7rem;
+    border-radius:35px;color:#3B3B3B;background-image:var(--grad);box-shadow:var(--lift);
+    transition:.2s;position:relative;overflow:hidden}
+  .btn:hover{box-shadow:0 6px 14px rgba(62,134,196,.3)}
+  /* two class names, so this beats .btn's gradient rather than tying on specificity */
+  .btn.dark{background-color:var(--dark-fill);background-image:var(--dark-fill-img);
+    background-size:var(--dark-fill-size);background-position:center;color:var(--card-ink)}
+  .btn span{position:relative;z-index:2}
+
+  footer{padding:1.5rem 0 3.5rem;font-family:var(--mono);font-size:.71rem;
+    color:var(--ink-mute);line-height:1.85}
+  footer em{font-style:italic;color:var(--ink-soft)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="frame">
+  <div class="veil smokey3"></div>
+  <div class="frame-in"><div class="wrap">
+    <p class="kicker">Wiser Walk &middot; riche palette &middot; light and dark</p>
+    <h1>Blue to orange, soft edges, real texture</h1>
+    <p class="stand">
+      DM Serif Display throughout, spectrum bars spanning the full width, flat blue accents instead of
+      repeated gradient text. The bulb in the nav switches themes &mdash; it follows your system
+      setting until you click it.
+    </p>
+  </div></div>
+</div>
+
+<div class="wrap">
+  <p class="strip">Result page</p>
+
+  <div class="app">
+    <div class="bar">
+      <span class="brand">Wiser <span>Walk</span></span>
+      <nav>
+        <a class="on" href="#x">Quizzes</a><a href="#x">Articles</a><a href="#x">Method</a><a href="#x">About</a>
+        <button class="toggle" id="tt" type="button" aria-label="Switch to dark theme">
+          <svg viewBox="0 0 24 24" width="21" height="21" aria-hidden="true" fill="none"
+               stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+            <g class="rays">
+              <path d="M12 1.3v1.8"/><path d="M4.4 4.4l1.3 1.3"/><path d="M19.6 4.4l-1.3 1.3"/>
+              <path d="M1.4 12.2h1.8"/><path d="M20.8 12.2h1.8"/>
+            </g>
+            <path class="glass" d="M12 5a5.3 5.3 0 0 0-3.5 9.3c.6.55.95 1.3.95 2.1v.4h5.1v-.4c0-.8.35-1.55.95-2.1A5.3 5.3 0 0 0 12 5z"/>
+            <path d="M9.7 18.6h4.6"/><path d="M10.5 20.8h3"/>
+          </svg>
+        </button>
+      </nav>
+    </div>
+
+    <div class="hero">
+      <div class="wash smokey"></div>
+      <div class="veil smokey2"></div>
+      <div class="hero-in">
+        <p class="eyebrow">Theology Compass &middot; your result</p>
+        <h2>Monergist-leaning, sacramental-leaning, continuationist-leaning</h2>
+        <p>Six axes, eighteen statements, and an audit that took 522 findings to settle.</p>
+        <div class="strip-stats">
+          <div class="pill"><b>18</b><span>statements</span></div>
+          <div class="pill"><b>6</b><span>axes</span></div>
+          <div class="pill"><b>18</b><span>traditions</span></div>
+          <div class="pill"><b>65%</b><span>best match</span></div>
+          <div class="pill"><b>3m</b><span>to take</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sheet">
+      <div class="wash flower2" style="opacity:var(--sheet-flower-op);left:auto;width:23rem;-webkit-mask-position:right top;mask-position:right top"></div>
+      <div class="sheet-in">
+        <p class="tag">Your leanings</p>
+        <h3>Anglican (broad), just ahead of Mainline Protestant</h3>
+        <p class="sub">Scored against the listed traditions only &mdash; a sketch of typical adherents,
+          not official teaching, and not a complete list of Christian traditions.</p>
+
+        <div class="axes" id="axes"></div>
+
+        <p class="sec">Closest traditions</p>
+        <div class="trads">
+          <div class="trad win">
+            <div class="bloom"></div>
+            <span class="n">Anglican (broad)</span>
+            <span class="m">65% match &middot; closest</span>
+          </div>
+          <div class="trad fill-dark">
+            <span class="n">Mainline Protestant</span>
+            <span class="m">65% match</span>
+          </div>
+          <div class="trad fill-dark">
+            <span class="n">Wesleyan / Methodist</span>
+            <span class="m">58% match</span>
+          </div>
+        </div>
+
+        <div class="cta-row">
+          <a class="btn" href="#x"><span>Take it yourself</span></a>
+          <a class="btn dark" href="#x"><span>Copy share link</span></a>
+        </div>
+      </div>
+    </div>
+    <div style="height:1.2rem"></div>
+  </div>
+
+  <footer>
+    Your graphics used as CSS masks and inverted overlays. Palette and box language from
+    <em>riche 5e character sheet</em>; spectrum bars and skewed pills from <em>ccpb#006 rose water</em>;
+    wash treatment from <em>epitaph</em>.<br>
+    Type: DM Serif Display &middot; Poppins &middot; Inter.
+  </footer>
+</div>
+
+<script>
+  /* Axis rows render from data so the eleven slots cannot drift from the value. */
+  const AXES = [
+    { name: 'Grace',     left: 'Monergist',         right: 'Synergist',       value: 34 },
+    { name: 'Table',     left: 'Sacramental',       right: 'Memorial',        value: 34 },
+    { name: 'Gifts',     left: 'Continuationist',   right: 'Cessationist',    value: 34 },
+    { name: 'Kingdom',   left: 'One people',        right: 'Dispensational',  value: 66 },
+    { name: 'Authority', left: 'Bible & tradition', right: 'Scripture alone', value: 34 },
+    { name: 'Worship',   left: 'Liturgical',        right: 'Free',            value: 34 }
+  ];
+  const SLOTS = 11;
+  const host = document.getElementById('axes');
+  for (const a of AXES) {
+    const at = Math.max(0, Math.min(SLOTS - 1, Math.round((a.value / 100) * (SLOTS - 1))));
+    const lean = a.value === 50
+      ? 'at the centre'
+      : Math.round((Math.abs(a.value - 50) / 50) * 100) + '% toward ' + (a.value < 50 ? a.left : a.right);
+    // background-size is 1100%, so a position of i*10% shows exactly the i-th slice
+    const pips = Array.from({ length: SLOTS }, (_, i) =>
+      '<b class="' + (i === at ? 'on' : '') + '" style="background-position:' + (i * 10) + '% 0"></b>'
+    ).join('');
+    const row = document.createElement('div');
+    row.innerHTML =
+      '<div class="axis-top"><span class="axis-name">' + a.name + '</span>' +
+      '<span class="axis-lean">' + lean + '</span></div>' +
+      '<div class="pips">' + pips + '</div>' +
+      '<div class="poles"><span>' + a.left + '</span><span>' + a.right + '</span></div>';
+    host.appendChild(row);
+  }
+
+  /* Theme toggle: follows the system setting until the reader overrides it. */
+  const root = document.documentElement;
+  const btn = document.getElementById('tt');
+  const current = () => root.dataset.theme || 'light';  // light is the default
+  const paint = () => {
+    const light = current() === 'light';
+    btn.classList.toggle('lit', light);
+    btn.setAttribute('aria-label', light ? 'Switch to dark theme' : 'Switch to light theme');
+    btn.setAttribute('aria-pressed', String(!light));
+  };
+  btn.addEventListener('click', () => {
+    root.dataset.theme = current() === 'dark' ? 'light' : 'dark';
+    paint();
+  });
+  paint();
+</script>

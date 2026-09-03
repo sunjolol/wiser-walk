@@ -1,0 +1,538 @@
+<title>Wiser Walk Result Page</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+  :root{
+    --smokey:url("{{SMOKEY}}"); --smokey2:url("{{SMOKEY2}}"); --smokey3:url("{{SMOKEY3}}");
+    --flower2:url("{{FLOWER2}}"); --starry:url("{{STARRY}}");
+    --blue:#7EBAEE; --orange:#F0A06F;
+    --grad:linear-gradient(to bottom right,var(--blue),var(--orange));
+    --grad-r:linear-gradient(to right,var(--blue),var(--orange));
+    --lift:3px 3px 5px rgba(68,68,68,.065);
+    --lift-soft:0px 0px 10px rgba(40,40,40,.045);
+    --display:"DM Serif Display",Georgia,serif;
+    --ui:"Poppins",ui-sans-serif,system-ui,sans-serif;
+    --text:"Inter",ui-sans-serif,system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  /* light is the default */
+  :root{
+    --page:#E3E3E3; --shell:#E8E8E8; --panel:#EEEEEE; --sunk:#E3E3E3;
+    --ink:#444444; --ink-soft:#5A6066; --ink-mute:#7C8288;
+    --accent:#3E86C4; --line:#D6D6D6;
+    --card-ink:#E8E8E8; --veil-blend:soft-light; --veil-op:.68;
+    --hero-wash-op:.5; --sheet-flower-op:.42;
+    --flower-fill:linear-gradient(to bottom right,#3E86C4,#D2793F);
+    --dark-fill:#1C1C23; --dark-fill-img:var(--starry); --dark-fill-size:420px;
+    --lift-deep:0px 25px 20px -15px hsl(208 47% 20% / 25%);
+    --wheel-plate:#E9E9E9; --wheel-gridline:#CFCFCF; --wheel-empty:rgba(68,68,68,.07);
+  }
+  :root[data-theme="dark"]{
+    --page:#131319; --shell:#1B1B21; --panel:#24242B; --sunk:#1B1B21;
+    --ink:#EAE8E4; --ink-soft:#B4B0AA; --ink-mute:#8E8A84;
+    --accent:#7EBAEE; --line:#33333C;
+    --card-ink:#EAE8E4; --veil-blend:overlay; --veil-op:.1;
+    --hero-wash-op:.05; --sheet-flower-op:.2; --flower-fill:var(--grad);
+    --dark-fill:#343441; --dark-fill-img:none; --dark-fill-size:auto;
+    --lift-deep:0 18px 44px rgba(0,0,0,.55);
+    --wheel-plate:#1F1F27; --wheel-gridline:#3A3A46; --wheel-empty:rgba(234,232,228,.06);
+  }
+
+  *,*::before,*::after{box-sizing:border-box}
+  body{margin:0;background:var(--page);color:var(--ink);font-family:var(--text);
+       font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:62rem;margin:0 auto;padding:0 1.5rem}
+
+  .wash{position:absolute;inset:0;z-index:1;pointer-events:none;
+    -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-size:cover;mask-size:cover;
+    -webkit-mask-position:center;mask-position:center}
+  .wash::before{content:"";display:block;height:100%;width:100%;background:var(--grad)}
+  .wash.smokey{-webkit-mask-image:var(--smokey);mask-image:var(--smokey)}
+  .wash.flower2::before{background:var(--flower-fill)}
+  .wash.flower2{-webkit-mask-image:var(--flower2);mask-image:var(--flower2)}
+  .veil{position:absolute;inset:0;z-index:1;pointer-events:none;background-size:cover;
+    background-position:center;background-repeat:no-repeat;filter:invert(100%);
+    mix-blend-mode:var(--veil-blend);opacity:var(--veil-op)}
+  .veil.smokey2{background-image:var(--smokey2)}
+  .veil.smokey3{background-image:var(--smokey3)}
+  .fill-dark{background-color:var(--dark-fill);background-image:var(--dark-fill-img);
+    background-size:var(--dark-fill-size);background-position:center}
+
+  /* ---------- notes frame ---------- */
+  .frame{position:relative;overflow:hidden;padding:3rem 0 2rem;background:var(--page)}
+  .frame-in{position:relative;z-index:2}
+  .kicker{font-family:var(--mono);font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--ink-mute);margin:0 0 .9rem}
+  h1{font-family:var(--display);font-size:clamp(2rem,5.4vw,3.1rem);line-height:1.06;
+    letter-spacing:-.01em;margin:0 0 .9rem;text-wrap:balance;color:var(--ink)}
+  .stand{font-size:1.05rem;color:var(--ink-soft);max-width:44em;margin:0 0 1.5rem}
+  .stand b{color:var(--ink);font-weight:600}
+  .notes{display:grid;gap:1rem}
+  @media(min-width:52rem){.notes{grid-template-columns:1fr 1fr;gap:1.3rem}}
+  .note{background:var(--panel);border-radius:15px;padding:1rem 1.2rem;box-shadow:var(--lift)}
+  .note h3{font-family:var(--ui);font-size:.79rem;font-weight:700;letter-spacing:.13em;
+    text-transform:uppercase;margin:0 0 .6rem;color:var(--accent)}
+  .note ul{margin:0;padding-left:1.05rem}
+  .note li{font-size:.9rem;margin:0 0 .4rem;color:var(--ink-soft)}
+  .note li b{color:var(--ink);font-weight:600}
+  .strip{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink-mute);padding:2.4rem 0 .7rem}
+
+  /* ================= APP ================= */
+  .app{border-radius:22px;overflow:hidden;background:var(--shell);
+    box-shadow:var(--lift-deep);margin-bottom:2rem;position:relative}
+  .bar{display:flex;align-items:center;gap:1.2rem;padding:1rem 1.6rem;background:var(--panel);
+    position:relative;z-index:6;box-shadow:var(--lift-soft)}
+  .bar .brand{font-family:var(--display);font-size:1.5rem;color:var(--ink);line-height:1.1}
+  .bar .brand span{font-style:italic;background:var(--grad-r);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .bar nav{margin-left:auto;display:flex;gap:1.7rem;align-items:center}
+  .bar nav a{font-family:var(--ui);font-size:.9rem;font-weight:600;color:var(--ink-mute);text-decoration:none}
+  .bar nav a.on{color:var(--accent);font-weight:700}
+  .toggle{display:inline-flex;align-items:center;justify-content:center;color:var(--ink-mute);
+    background:none;border:0;cursor:pointer;padding:.3rem;border-radius:9px;line-height:0;transition:.2s}
+  .toggle:hover{background:rgba(126,186,238,.14)}
+  .toggle:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .toggle .rays{opacity:0;transform-origin:12px 12px;transform:scale(.65);transition:.22s}
+  .toggle .glass{fill:transparent;transition:fill .22s}
+  .toggle.lit{color:var(--orange)}
+  .toggle.lit .rays{opacity:1;transform:scale(1)}
+  .toggle.lit .glass{fill:rgba(240,160,111,.3)}
+
+  /* ---------- hero: the picture leads ---------- */
+  .hero{position:relative;overflow:hidden;background:var(--shell);padding:2.4rem 1.9rem 2.2rem}
+  .hero .wash{opacity:var(--hero-wash-op)}
+  .hero-in{position:relative;z-index:3;display:grid;gap:1.8rem;align-items:center}
+  @media(min-width:54rem){.hero-in{grid-template-columns:minmax(0,20rem) minmax(0,1fr);gap:2.4rem}}
+  .wheel-holder{justify-self:center}
+  .eyebrow{font-family:var(--ui);font-size:.9rem;font-weight:700;letter-spacing:.09em;
+    text-transform:uppercase;margin:0 0 .7rem;color:var(--accent)}
+  .hero h2{font-family:var(--display);font-size:clamp(1.7rem,4.2vw,2.6rem);line-height:1.1;
+    letter-spacing:-.01em;margin:0 0 .6rem;color:var(--ink);text-wrap:balance}
+  .hero .sub{font-size:1.02rem;font-weight:600;color:var(--ink-soft);margin:0;max-width:44em}
+  .legend{display:flex;flex-wrap:wrap;gap:.4rem .9rem;margin:1.2rem 0 0;padding:0;list-style:none}
+  .legend li{display:flex;align-items:center;gap:.4rem;font-family:var(--ui);font-size:.79rem;
+    font-weight:600;color:var(--ink-soft)}
+  .legend i{width:9px;height:9px;border-radius:3px;display:block}
+
+  /* ---------- panels ---------- */
+  .sheet{position:relative;z-index:4;overflow:hidden;margin:0 1.2rem 1.2rem;background:var(--panel);
+    border-radius:18px;padding:1.7rem 1.7rem 1.9rem;box-shadow:var(--lift)}
+  .sheet-in{position:relative;z-index:2}
+  .tag{font-family:var(--ui);font-size:.79rem;font-weight:600;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--ink-mute);margin:0 0 .45rem}
+  .sheet h3{font-family:var(--display);font-style:italic;font-size:1.6rem;line-height:1.25;
+    margin:0 0 .45rem;color:var(--ink)}
+  .sheet .sub{font-size:.99rem;color:var(--ink-soft);margin:0;max-width:39em}
+
+  /* ---------- diverging axis bars ---------- */
+  .axes{display:grid;gap:1.5rem;margin:1.8rem 0 0}
+  .axis-top{display:flex;align-items:baseline;gap:1rem;margin-bottom:.5rem}
+  .axis-name{font-family:var(--ui);font-weight:700;font-size:1rem;letter-spacing:.09em;text-transform:uppercase}
+  .axis-lean{margin-left:auto;font-family:var(--ui);font-size:1rem;font-weight:600;
+    color:var(--ink-mute);white-space:nowrap}
+  .track{position:relative;height:16px;background:var(--sunk);border-radius:99px;
+    box-shadow:inset 0 1px 3px rgba(0,0,0,.09)}
+  .track .mid{position:absolute;left:50%;top:-4px;bottom:-4px;width:2px;margin-left:-1px;
+    background:var(--line);border-radius:2px}
+  .track .fill{position:absolute;top:0;bottom:0;border-radius:99px;transition:width .5s ease}
+  .track .knob{position:absolute;top:50%;width:20px;height:20px;margin:-10px 0 0 -10px;
+    border-radius:50%;border:3px solid var(--panel);box-shadow:0 1px 4px rgba(0,0,0,.3);
+    transition:left .5s ease}
+  .poles{display:flex;font-family:var(--ui);font-size:.79rem;font-weight:600;letter-spacing:.04em;
+    text-transform:uppercase;color:var(--ink-mute);margin-top:.5rem}
+  .poles span:last-child{margin-left:auto}
+
+  /* ---------- traditions ---------- */
+  .sec{font-family:var(--ui);font-size:.79rem;font-weight:700;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--ink-mute);margin:0 0 .9rem}
+  .trads{display:flex;flex-direction:column;gap:.6rem;padding-right:.4rem}
+  .trad{transform:skewX(-7deg);border-radius:6px 20px 20px 6px;padding:.9rem 1.5rem;
+    box-shadow:var(--lift-soft);position:relative;overflow:hidden}
+  .trad .n,.trad .m{transform:skewX(7deg);display:block;position:relative;z-index:2}
+  .trad .n{font-family:var(--display);font-style:italic;font-size:1.5rem;line-height:1.2;color:var(--card-ink)}
+  .trad .m{font-family:var(--ui);font-weight:600;font-size:.79rem;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--blue);margin-top:.15rem}
+  .trad.win{background-image:var(--grad)}
+  .trad.win .n{color:#3B3B3B}
+  .trad.win .m{color:#7A4A22}
+  .bloom{position:absolute;inset:0;z-index:1;pointer-events:none;background-image:var(--flower2);
+    background-size:cover;background-position:center;background-repeat:no-repeat;
+    filter:invert(100%);mix-blend-mode:overlay;opacity:.55}
+  .trad:nth-child(2){margin-right:1.6rem}
+  .trad:nth-child(3){margin-right:3.2rem}
+
+  /* ---------- where your view came from ---------- */
+  .origins{display:flex;flex-direction:column;gap:.5rem;margin:1.4rem 0 0}
+  .origin{border-radius:14px;background:var(--sunk);overflow:hidden}
+  .origin summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.85rem;
+    padding:.85rem 1.1rem;font-family:var(--ui);font-weight:700;font-size:.95rem}
+  .origin summary::-webkit-details-marker{display:none}
+  .origin summary:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+  .origin .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+  .origin .poles-mini{font-family:var(--ui);font-weight:600;font-size:.85rem;color:var(--ink-mute);
+    text-transform:none;letter-spacing:0}
+  .origin .lean-mini{margin-left:auto;font-family:var(--ui);font-size:.79rem;font-weight:600;
+    color:var(--ink-mute);white-space:nowrap}
+  .origin .chev{width:16px;height:16px;flex-shrink:0;transition:transform .2s;color:var(--ink-mute)}
+  .origin[open] .chev{transform:rotate(180deg)}
+  .origin-body{padding:0 1.1rem 1.2rem 2.95rem;font-size:.95rem;color:var(--ink-soft)}
+  .origin-body p{margin:0 0 .9rem;max-width:44em}
+  .origin-body h4{font-family:var(--ui);font-size:.72rem;font-weight:700;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--ink-mute);margin:1.1rem 0 .5rem}
+  .timeline{list-style:none;margin:0;padding:0;border-left:2px solid var(--line)}
+  .timeline li{position:relative;padding:0 0 .8rem 1.1rem;font-size:.92rem}
+  .timeline li::before{content:"";position:absolute;left:-5px;top:.55em;width:8px;height:8px;
+    border-radius:50%;background:var(--line)}
+  .timeline b{color:var(--ink);font-family:var(--mono);font-size:.8rem;margin-right:.4rem}
+  .passages{font-family:var(--mono);font-size:.82rem;color:var(--ink-soft);margin:0}
+
+  /* ---------- share ---------- */
+  .share-grid{display:grid;gap:1.2rem;margin:1.4rem 0 0}
+  @media(min-width:50rem){.share-grid{grid-template-columns:minmax(0,1fr) minmax(0,15rem)}}
+  .card-prev{border-radius:14px;overflow:hidden;box-shadow:var(--lift-soft);background:var(--panel);
+    border:1px solid var(--line)}
+  .card-rail{display:flex;height:7px}
+  .card-rail i{flex:1}
+  .card-body{padding:1.1rem 1.2rem 1.3rem}
+  .card-body .cb-brand{font-family:var(--display);font-size:1.05rem;color:var(--ink);margin:0 0 .4rem}
+  .card-body .cb-head{font-family:var(--display);font-style:italic;font-size:1.15rem;line-height:1.25;
+    margin:0 0 .5rem;color:var(--ink)}
+  .card-body .cb-sub{font-size:.85rem;color:var(--ink-mute);margin:0 0 .9rem}
+  .cb-rows{display:grid;gap:.4rem}
+  .cb-row{display:flex;align-items:center;gap:.6rem;font-family:var(--ui);font-size:.7rem;font-weight:700;
+    letter-spacing:.06em;text-transform:uppercase}
+  .cb-track{flex:1;position:relative;height:7px;background:var(--sunk);border-radius:99px}
+  .cb-track .f{position:absolute;top:0;bottom:0;border-radius:99px}
+  .cb-foot{font-family:var(--mono);font-size:.72rem;color:var(--ink-mute);margin:.9rem 0 0}
+  .link-row{display:flex;gap:.5rem;margin:.9rem 0 0}
+  .link-row input{flex:1;min-width:0;font-family:var(--mono);font-size:.82rem;padding:.65rem .8rem;
+    border-radius:10px;border:1px solid var(--line);background:var(--sunk);color:var(--ink)}
+  .link-row input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+  .btn{display:inline-block;font-family:var(--ui);font-size:.9rem;font-weight:700;letter-spacing:.12em;
+    text-transform:uppercase;text-decoration:none;padding:.8rem 1.4rem;border-radius:35px;
+    color:#3B3B3B;background-image:var(--grad);box-shadow:var(--lift);border:0;cursor:pointer;
+    transition:.2s;text-align:center}
+  .btn:hover{box-shadow:0 6px 14px rgba(62,134,196,.3)}
+  .btn.dark{background-color:var(--dark-fill);background-image:var(--dark-fill-img);
+    background-size:var(--dark-fill-size);background-position:center;color:var(--card-ink)}
+  .btn.small{padding:.65rem 1.1rem;font-size:.79rem}
+  .email-box{background:var(--sunk);border-radius:14px;padding:1.1rem 1.2rem}
+  .email-box h4{font-family:var(--ui);font-size:.79rem;font-weight:700;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--ink-mute);margin:0 0 .5rem}
+  .email-box p{font-size:.88rem;color:var(--ink-soft);margin:0 0 .8rem}
+  .email-box input[type=email]{width:100%;font-family:var(--text);font-size:.92rem;padding:.65rem .8rem;
+    border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--ink);margin-bottom:.6rem}
+  .email-box .btn{width:100%}
+  .consent{font-size:.78rem;color:var(--ink-mute);margin:.7rem 0 0;line-height:1.5}
+
+  footer{padding:1.5rem 0 3.5rem;font-family:var(--mono);font-size:.71rem;color:var(--ink-mute);line-height:1.85}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="frame">
+  <div class="veil smokey3"></div>
+  <div class="frame-in"><div class="wrap">
+    <p class="kicker">Wiser Walk &middot; result page &middot; rebuilt around the data</p>
+    <h1>The picture first, then the proof, then the depth</h1>
+    <p class="stand">
+      Same theme as the locked version. What changed is <b>what the page actually does</b>: a wheel you
+      can read at a glance, bars that fill from the centre so direction and distance are one shape,
+      the axis histories restored, and a share block built around a card rather than a wall of text.
+    </p>
+    <div class="notes">
+      <div class="note">
+        <h3>Why the wheel changed</h3>
+        <ul>
+          <li><b>Filled sectors, not scattered dots.</b> Six wedges, each split into its two poles; the side you lean fills outward.</li>
+          <li><b>Area is the message</b> &mdash; a big petal is a strong conviction, an empty circle is a centrist. No lines to trace.</li>
+          <li><b>Six labels, not twelve.</b> Only the pole you actually lean toward gets named.</li>
+        </ul>
+      </div>
+      <div class="note">
+        <h3>Why the bars changed</h3>
+        <ul>
+          <li><b>They fill from the midpoint out</b>, so length is conviction and side is direction &mdash; one read, not two.</li>
+          <li><b>Eleven pips could not do this.</b> They marked a position but never showed distance from centre.</li>
+          <li>Each axis keeps its own colour, carried through the wheel, the bars and the share card.</li>
+        </ul>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<div class="wrap">
+  <p class="strip">Result page</p>
+  <div class="app">
+    <div class="bar">
+      <span class="brand">Wiser <span>Walk</span></span>
+      <nav>
+        <a class="on" href="#x">Quizzes</a><a href="#x">Articles</a><a href="#x">Method</a><a href="#x">About</a>
+        <button class="toggle" id="tt" type="button" aria-label="Switch to dark theme">
+          <svg viewBox="0 0 24 24" width="21" height="21" aria-hidden="true" fill="none"
+               stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+            <g class="rays"><path d="M12 1.3v1.8"/><path d="M4.4 4.4l1.3 1.3"/><path d="M19.6 4.4l-1.3 1.3"/>
+              <path d="M1.4 12.2h1.8"/><path d="M20.8 12.2h1.8"/></g>
+            <path class="glass" d="M12 5a5.3 5.3 0 0 0-3.5 9.3c.6.55.95 1.3.95 2.1v.4h5.1v-.4c0-.8.35-1.55.95-2.1A5.3 5.3 0 0 0 12 5z"/>
+            <path d="M9.7 18.6h4.6"/><path d="M10.5 20.8h3"/>
+          </svg>
+        </button>
+      </nav>
+    </div>
+
+    <div class="hero">
+      <div class="wash smokey"></div>
+      <div class="veil smokey2"></div>
+      <div class="hero-in">
+        <div class="wheel-holder" id="wheel"></div>
+        <div>
+          <p class="eyebrow">Theology Compass &middot; your result</p>
+          <h2 id="headline">&nbsp;</h2>
+          <p class="sub" id="summary">&nbsp;</p>
+          <ul class="legend" id="legend"></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="sheet">
+      <div class="wash flower2" style="opacity:var(--sheet-flower-op);left:auto;width:23rem;-webkit-mask-position:right top;mask-position:right top"></div>
+      <div class="sheet-in">
+        <p class="tag">Your leanings</p>
+        <h3>How far, and which way, on each axis</h3>
+        <p class="sub">The bar grows from the centre line. A short bar is a mild lean; a long one is a
+          settled conviction. Nothing is named for an axis that sits near the middle.</p>
+        <div class="axes" id="axes"></div>
+      </div>
+    </div>
+
+    <div class="sheet">
+      <div class="sheet-in">
+        <p class="sec">Closest traditions</p>
+        <div class="trads" id="trads"></div>
+        <p class="sub" style="margin-top:1rem;font-size:.88rem">Scored against the listed traditions
+          only &mdash; a sketch of typical adherents, not official teaching.</p>
+      </div>
+    </div>
+
+    <div class="sheet">
+      <div class="sheet-in">
+        <p class="sec">Where your view came from</p>
+        <p class="sub">A fair summary of both poles, a short dated history, and the passages each side
+          reaches for. Open the axis you want to understand.</p>
+        <div class="origins" id="origins"></div>
+      </div>
+    </div>
+
+    <div class="sheet">
+      <div class="sheet-in">
+        <p class="sec">Share it</p>
+        <div class="share-grid">
+          <div>
+            <div class="card-prev" id="cardPrev"></div>
+            <div class="link-row">
+              <input id="permalink" readonly value="wiserwalk.com/r/theology-compass/00YHZG" aria-label="Result link">
+              <button class="btn dark small" id="copyBtn" type="button">Copy</button>
+            </div>
+          </div>
+          <div class="email-box">
+            <h4 id="ctaHead">Email me this result</h4>
+            <p id="ctaBody">We will send this page as a link so you can find it again.</p>
+            <input type="email" id="email" placeholder="you@example.com" aria-label="Email address">
+            <button class="btn" id="emailBtn" type="button">Send it to me</button>
+            <p class="consent">Your answers are never sent anywhere &mdash; only the scores already in
+              this link. See <a href="#x">the method</a>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="height:.6rem"></div>
+  </div>
+
+  <footer>
+    Axis summaries, dated histories and key passages are the real audited content from
+    <code>compass-data.revised.json</code>, not placeholder text.<br>
+    Graphics used as CSS masks and inverted overlays. Type: DM Serif Display &middot; Poppins &middot; Inter.
+  </footer>
+</div>
+
+<script>
+  const AXES = /*{{AXES}}*/;
+  const TRADITIONS = /*{{TRADITIONS}}*/;
+  const SCORING = /*{{SCORING}}*/;
+
+  /* A sample result: the sheet that produces 00YHZG. */
+  const SCORES = [34, 34, 34, 66, 34, 34];
+
+  const $ = id => document.getElementById(id);
+  const clamp = (v,a,b)=>v<a?a:v>b?b:v;
+  const leanPct = s => Math.round((Math.abs(s - 50) / 50) * 100);
+  const leanText = (a, s) => s === 50 ? 'at the centre'
+    : leanPct(s) + '% toward ' + (s < 50 ? a.left : a.right);
+  const poleOf = (a, s) => s < 50 ? a.left : a.right;
+
+  /* ---------------- 1. the wheel ----------------
+     Six 60-degree wedges, one per axis, each split into its two poles. The half you
+     lean toward fills outward from the centre, so area reads as conviction. */
+  function wheel(){
+    // the circle is small relative to the canvas on purpose: side labels like
+    // 'Bible & tradition' need horizontal room or they clip at the viewBox edge
+    const R = 104, padX = 124, padY = 56;
+    const W = 2*(R+padX), H = 2*(R+padY), cx = R+padX, cy = R+padY, SEG = 360/AXES.length;
+    const pol = (r,deg)=>{const t=(deg-90)*Math.PI/180;return [cx+r*Math.cos(t), cy+r*Math.sin(t)];};
+    const sector = (r,a0,a1)=>{
+      const [x0,y0]=pol(r,a0), [x1,y1]=pol(r,a1);
+      const large = (a1-a0) > 180 ? 1 : 0;
+      return `M ${cx} ${cy} L ${x0} ${y0} A ${r} ${r} 0 ${large} 1 ${x1} ${y1} Z`;
+    };
+    let s = `<svg viewBox="0 0 ${W} ${H}" width="100%" style="max-width:${W}px;display:block" role="img" aria-label="Your compass">`;
+    s += `<circle cx="${cx}" cy="${cy}" r="${R}" fill="var(--wheel-plate)"/>`;
+    // reference rings at a third and two thirds
+    [R/3, R*2/3].forEach(r => { s += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--wheel-gridline)" stroke-width="1" stroke-dasharray="3 4"/>`; });
+
+    AXES.forEach((a,i)=>{
+      const a0 = i*SEG, mid = a0 + SEG/2, a1 = a0 + SEG;
+      const s0 = SCORES[i];
+      // both halves faint, so the empty side still reads as "available"
+      s += `<path d="${sector(R,a0,mid)}" fill="var(--wheel-empty)"/>`;
+      s += `<path d="${sector(R,mid,a1)}" fill="var(--wheel-empty)"/>`;
+      const r = (Math.abs(s0-50)/50) * R;
+      if (r > 1) {
+        const [f0,f1] = s0 < 50 ? [a0,mid] : [mid,a1];
+        s += `<path d="${sector(r,f0,f1)}" fill="${a.colour}" fill-opacity=".85"/>`;
+        s += `<path d="${sector(r,f0,f1)}" fill="none" stroke="${a.colour}" stroke-width="1.5"/>`;
+      }
+      // wedge divider
+      const [dx,dy] = pol(R, a0);
+      s += `<line x1="${cx}" y1="${cy}" x2="${dx}" y2="${dy}" stroke="var(--wheel-gridline)" stroke-width="1"/>`;
+      // one label per axis, at the wedge midline
+      const [lx,ly] = pol(R+15, mid);
+      const anchor = Math.abs(mid % 360) < 6 || Math.abs(mid % 360 - 180) < 6 ? 'middle'
+        : (mid % 360) < 180 ? 'start' : 'end';
+      s += `<text x="${lx}" y="${ly}" text-anchor="${anchor}" dominant-baseline="middle"
+              font-family="Poppins,sans-serif" font-size="10.5" font-weight="700"
+              letter-spacing="1" fill="${a.colour}">${a.name.toUpperCase()}</text>`;
+      s += `<text x="${lx}" y="${ly+13}" text-anchor="${anchor}" dominant-baseline="middle"
+              font-family="Inter,sans-serif" font-size="10.5" font-weight="600"
+              fill="var(--ink-mute)">${SCORES[i]===50?'centre':poleOf(a,SCORES[i])}</text>`;
+    });
+    s += `<circle cx="${cx}" cy="${cy}" r="3.5" fill="var(--wheel-gridline)"/></svg>`;
+    return s;
+  }
+
+  /* ---------------- 2. headline + summary ---------------- */
+  function band(s){ return s<=20?0:s<=40?1:s<=59?2:s<=79?3:4; }
+  function nearest(){
+    return TRADITIONS.map(t=>{
+      let sum=0; for(let i=0;i<SCORES.length;i++){const d=t.position[i]-SCORES[i];sum+=d*d;}
+      const distance=Math.sqrt(sum);
+      return {name:t.name, slug:t.slug, distance,
+        match:Math.max(0,Math.round(100-(distance/SCORING.maxDistance)*100))};
+    }).sort((a,b)=>a.distance-b.distance);
+  }
+  const near = nearest();
+  const allCentral = SCORES.every(s=>Math.abs(s-50)<=SCORING.centerUnits);
+  const headline = (()=> {
+    const out = SCORES.map((s,i)=>({i,d:Math.abs(s-50),b:band(s)})).filter(x=>x.b!==2);
+    if(!out.length) return 'Near the centre on every axis';
+    out.sort((a,b)=>b.d-a.d||a.i-b.i);
+    // the band adjectives are audited copy — use them verbatim, never paraphrase
+    const str = out.slice(0,3).map(x=>AXES[x.i].bands[x.b]).join(', ');
+    return str.charAt(0).toUpperCase()+str.slice(1);
+  })();
+  const summary = allCentral ? 'Near the centre on every axis, so no tradition is named.'
+    : near[0].distance > SCORING.hedgeUnits
+      ? 'No listed tradition is a close fit. Nearest, loosely: ' + near[0].name + ' and ' + near[1].name + '.'
+      : 'Nearest on the map: ' + near[0].name + '.';
+
+  $('headline').textContent = headline;
+  $('summary').textContent = summary;
+  $('wheel').innerHTML = wheel();
+  $('legend').innerHTML = AXES.map(a=>`<li><i style="background:${a.colour}"></i>${a.name}</li>`).join('');
+
+  /* ---------------- 3. diverging bars ---------------- */
+  $('axes').innerHTML = AXES.map((a,i)=>{
+    const s = SCORES[i], pct = Math.abs(s-50);           // 0..50 from centre
+    const w = pct + '%';                                  // half-track share
+    const side = s < 50 ? `right:50%` : `left:50%`;
+    const knob = `left:${s}%`;
+    return `<div>
+      <div class="axis-top">
+        <span class="axis-name" style="color:${a.colour}">${a.name}</span>
+        <span class="axis-lean">${leanText(a,s)}</span>
+      </div>
+      <div class="track">
+        <span class="fill" style="${side};width:${w};background:${a.colour}"></span>
+        <span class="mid"></span>
+        <span class="knob" style="${knob};background:${a.colour}"></span>
+      </div>
+      <div class="poles"><span>${a.left}</span><span>${a.right}</span></div>
+    </div>`;
+  }).join('');
+
+  /* ---------------- 4. traditions ---------------- */
+  $('trads').innerHTML = near.slice(0,3).map((t,i)=>
+    `<div class="trad ${i===0?'win':'fill-dark'}">${i===0?'<div class="bloom"></div>':''}
+      <span class="n">${t.name}</span>
+      <span class="m">${t.match}% match${i===0?' &middot; closest':''}</span>
+    </div>`).join('');
+
+  /* ---------------- 5. where your view came from ---------------- */
+  $('origins').innerHTML = AXES.map((a,i)=>`
+    <details class="origin">
+      <summary>
+        <span class="dot" style="background:${a.colour}"></span>
+        <span style="color:${a.colour}">${a.name}</span>
+        <span class="poles-mini">${a.left} &harr; ${a.right}</span>
+        <span class="lean-mini">${leanText(a,SCORES[i])}</span>
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
+      <div class="origin-body">
+        <p>${a.summary}</p>
+        ${a.history.length ? '<h4>How the question arose</h4><ul class="timeline">' +
+          a.history.map(h=>`<li><b>${h.when}</b>${h.what}</li>`).join('') + '</ul>' : ''}
+        ${a.passages.length ? '<h4>Passages both sides argue from</h4><p class="passages">' +
+          a.passages.join(' &middot; ') + '</p>' : ''}
+      </div>
+    </details>`).join('');
+
+  /* ---------------- 6. the share card preview ---------------- */
+  $('cardPrev').innerHTML =
+    `<div class="card-rail">${AXES.map(a=>`<i style="background:${a.colour}"></i>`).join('')}</div>
+     <div class="card-body">
+       <p class="cb-brand">Wiser Walk &middot; Theology Compass</p>
+       <p class="cb-head">${headline}</p>
+       <p class="cb-sub">${summary}</p>
+       <div class="cb-rows">
+         ${AXES.map((a,i)=>{
+           const s=SCORES[i], pct=Math.abs(s-50);
+           const side = s<50?'right:50%':'left:50%';
+           return `<div class="cb-row"><span style="color:${a.colour};width:4.6rem">${a.name}</span>
+             <span class="cb-track"><span class="f" style="${side};width:${pct}%;background:${a.colour}"></span></span></div>`;
+         }).join('')}
+       </div>
+       <p class="cb-foot">wiserwalk.com/r/theology-compass/00YHZG</p>
+     </div>`;
+
+  /* ---------------- 7. copy + context-aware call to action ---------------- */
+  $('copyBtn').addEventListener('click', async ()=>{
+    const el=$('permalink'); el.select();
+    try{ await navigator.clipboard.writeText(el.value); $('copyBtn').textContent='Copied'; }
+    catch{ $('copyBtn').textContent='Ctrl+C'; }
+    setTimeout(()=>{$('copyBtn').textContent='Copy';},1500);
+  });
+  $('emailBtn').addEventListener('click', ()=>{
+    const v=$('email').value.trim();
+    $('emailBtn').textContent = /.+@.+\..+/.test(v) ? 'Sent' : 'Enter an email';
+    setTimeout(()=>{$('emailBtn').textContent='Send it to me';},1600);
+  });
+
+  /* theme */
+  const root=document.documentElement, btn=$('tt');
+  const current=()=>root.dataset.theme||'light';
+  const paint=()=>{const light=current()==='light';btn.classList.toggle('lit',light);
+    btn.setAttribute('aria-label',light?'Switch to dark theme':'Switch to light theme');};
+  btn.addEventListener('click',()=>{root.dataset.theme=current()==='dark'?'light':'dark';paint();});
+  paint();
+</script>
