@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Result pages are per-person and thin by nature; they carry noindex too.
+Disallow: /r/
+
+Sitemap: https://wiserwalk.com/sitemap-index.xml

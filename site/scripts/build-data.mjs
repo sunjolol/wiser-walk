@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 const here = dirname(fileURLToPath(import.meta.url));
 const SOURCE = resolve(here, '../../audit/compass-data.revised.json');
 const OUT = resolve(here, '../src/data/compass.json');
+const ASIDE = resolve(here, '../src/data/compass-audit.json');
 
 const src = JSON.parse(readFileSync(SOURCE, 'utf8'));
 
@@ -79,15 +80,24 @@ const out = {
     tieUnits: 10,
     hedgeUnits: 45,
     centerUnits: 10
-  },
+  }
+};
+
+// The answer sheets and the disputed log are build-time only. They are large and are
+// never needed in the browser, so they live in a separate file that the quiz runner's
+// bundle does not import.
+const aside = {
+  generatedFrom: 'audit/compass-data.revised.json',
   simulations: src.simulations ?? [],
   disputed: src.disputed ?? []
 };
 
 mkdirSync(dirname(OUT), { recursive: true });
 writeFileSync(OUT, JSON.stringify(out, null, 1));
+writeFileSync(ASIDE, JSON.stringify(aside, null, 1));
 
 console.log(
   `compass.json: ${axes.length} axes, ${statements.length} statements (${itemsPerAxis}/axis, radix ${radix}), ` +
-  `${traditions.length} traditions, max distance ${out.scoring.maxDistance}`
+  `${traditions.length} traditions, max distance ${out.scoring.maxDistance}\n` +
+  `compass-audit.json: ${aside.simulations.length} answer sheets, ${aside.disputed.length} disputed findings`
 );

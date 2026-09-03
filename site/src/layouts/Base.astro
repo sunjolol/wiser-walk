@@ -1,23 +1,68 @@
 ---
-export interface Props { title: string; description: string; noindex?: boolean; }
-const { title, description, noindex = true } = Astro.props;
+import '../styles/site.css';
+
+export interface Props {
+  title: string;
+  description: string;
+  /** Result pages and unaudited drafts stay out of the index; content pages do not. */
+  noindex?: boolean;
+  /** JSON-LD for this page, serialised into a script tag. */
+  jsonLd?: Record<string, unknown> | null;
+  ogType?: string;
+}
+
+const { title, description, noindex = false, jsonLd = null, ogType = 'website' } = Astro.props;
+
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const siteName = 'Wiser Walk';
+const fullTitle = title === siteName ? title : `${title} — ${siteName}`;
 ---
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
+    <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex" />}
+    {noindex && <meta name="robots" content="noindex, follow" />}
+
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
   </head>
   <body>
-    <main><slot /></main>
+    <header class="site-head">
+      <div class="wrap">
+        <a class="brand" href="/">Wiser Walk</a>
+        <nav>
+          <a href="/quizzes/">Quizzes</a>
+          <a href="/articles/">Articles</a>
+          <a href="/method/">Method</a>
+          <a href="/about/">About</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="wrap page"><slot /></main>
+
+    <footer class="site-foot">
+      <div class="wrap">
+        <p>
+          Wiser Walk — quizzes and articles for understanding yourself, and your walk with God, a little better.
+        </p>
+        <p>
+          Nothing you answer leaves your browser: every quiz is scored on your own device, and
+          a result link only ever carries your scores. <a href="/method/">How this was made</a>.
+        </p>
+      </div>
+    </footer>
   </body>
 </html>

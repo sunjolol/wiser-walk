@@ -1,7 +1,54 @@
 ---
 import Base from '../layouts/Base.astro';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: 'About Wiser Walk',
+  url: new URL('/about/', Astro.site).href
+};
 ---
-<Base title="About the Theology Compass" description="What this is and what it is not.">
-  <h1>About</h1>
-  <p>Scaffold.</p>
+<Base
+  title="About"
+  description="What Wiser Walk is, what it is not, and who is behind it."
+  jsonLd={jsonLd}
+>
+  <div class="prose">
+    <h1>About</h1>
+    <p class="lede">
+      Wiser Walk is a place to understand yourself a little better — through quizzes worth
+      taking and articles worth reading.
+    </p>
+
+    <h2>What this is</h2>
+    <p>
+      Self-assessments and short essays for Christians who would rather see themselves
+      clearly than comfortably. Some of the quizzes are serious, some are lighter. Not all
+      of them are about theology: some are about character, some about gifts, some about how
+      well you actually know the Bible.
+    </p>
+    <p>
+      The quizzes are the door. The articles are what is on the other side of it.
+    </p>
+
+    <h2>What this is not</h2>
+    <ul>
+      <li><strong>Not a verdict on your faith.</strong> No quiz here scores anyone as a better or worse Christian.</li>
+      <li><strong>Not a recruiting tool.</strong> The Compass tells you where you already stand; it does not argue you toward a position.</li>
+      <li><strong>Not a church.</strong> Nothing here substitutes for one.</li>
+      <li><strong>Not collecting anything.</strong> No accounts, no email list, no analytics on your answers — because your answers never leave your browser.</li>
+    </ul>
+
+    <h2>On fairness</h2>
+    <p>
+      The hardest part of a quiz like this is describing a position you disagree with in
+      terms its holders would recognise. That is the standard everything here is held to,
+      and the <a href="/method/">method page</a> shows the working — including the findings
+      that were raised and deliberately not applied.
+    </p>
+    <p>
+      If you hold a position and think it is described unfairly, that is worth hearing.
+      Being wrong about someone else's belief is the one failure this site cannot afford.
+    </p>
+  </div>
 </Base>

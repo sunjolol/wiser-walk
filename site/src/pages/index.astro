@@ -1,12 +1,68 @@
 ---
 import Base from '../layouts/Base.astro';
-import { AXES, STATEMENTS, TRADITIONS } from '../lib/compass';
+import { liveQuizzes } from '../lib/engine/registry';
+import { getCollection } from 'astro:content';
+
+const quizzes = liveQuizzes();
+const articles = (await getCollection('articles'))
+  .filter(a => !a.data.draft)
+  .sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf())
+  .slice(0, 4);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Wiser Walk',
+  url: 'https://wiserwalk.com/',
+  description: 'Quizzes and articles for understanding yourself, and your walk with God, a little better.'
+};
 ---
-<Base title="Theology Compass" description="Place yourself on six axes of Christian belief.">
-  <h1>Theology Compass</h1>
-  <p>Scaffold. {STATEMENTS.length} statements, {AXES.length} axes, {TRADITIONS.length} traditions.</p>
-  <ul>
-    {AXES.map(a => <li><a href={`/axis/${a.slug}/`}>{a.name}: {a.left} ↔ {a.right}</a></li>)}
-  </ul>
-  <p><a href="/quiz/">Take it</a> · <a href="/method/">Method</a> · <a href="/about/">About</a></p>
+<Base
+  title="Wiser Walk"
+  description="Quizzes and articles for understanding yourself, and your walk with God, a little better. Start with the Theology Compass."
+  jsonLd={jsonLd}
+>
+  <div class="prose">
+    <h1>Know yourself a little better.</h1>
+    <p class="lede">
+      Quizzes worth taking and articles worth reading, for Christians who would rather see
+      themselves clearly than comfortably. Nothing you answer leaves your browser.
+    </p>
+  </div>
+
+  <h2>Quizzes</h2>
+  <div class="cards">
+    {quizzes.map(q => (
+      <div class="card">
+        <h3><a href={`/q/${q.slug}/`}>{q.emoji} {q.title}</a></h3>
+        <p>{q.tagline}</p>
+        <p class="meta">{q.items.length} statements · about {q.minutes} minutes</p>
+      </div>
+    ))}
+  </div>
+
+  {articles.length > 0 && (
+    <>
+      <h2>Articles</h2>
+      <div class="cards">
+        {articles.map(a => (
+          <div class="card">
+            <h3><a href={`/articles/${a.id}/`}>{a.data.title}</a></h3>
+            <p>{a.data.description}</p>
+            <p class="meta">{a.data.minutes} min read</p>
+          </div>
+        ))}
+      </div>
+      <p><a href="/articles/">All articles →</a></p>
+    </>
+  )}
+
+  <div class="note">
+    <p>
+      <strong>Why you can trust the results.</strong> The Theology Compass went through an
+      adversarial fairness audit: twenty reviewers, 522 findings, 424 applied. Every position
+      is described in words its own holders would accept.
+      <a href="/method/">Read the method →</a>
+    </p>
+  </div>
 </Base>

@@ -49,7 +49,8 @@ State: local git repo initialised, **one commit** `c8fd322`, 137 files tracked, 
 - **The fairness audit is complete.** 20 adversarial reviewers raised 522 findings; three-lens verification (accuracy / fairness / necessity) kept 424, including all 42 blockers. Six tradition families added (18 total). All 18 published answer sheets land on their own tradition at 87–95%. **Do not re-run it.**
 - **All nine scoring/copy fixes** the audit specified are implemented: base-13 permalink, 198-unit match denominator, 10-unit tie rule, 45-unit poor-fit hedge, all-central suppression, middle-band exclusion in `headline()`, `lean()` as a share of the half-axis, eleven-slot share bar, "Unsure / neither" plus scale hint, closest-traditions scope note, footer.
 - **Back button fixed** — it did nothing on statement 1 (a disabled control) and was dead for ~390ms after each answer. Now cancels pending timers, and on statement 1 reads "← Leave the quiz" and exits to the intro.
-- **Stage 0 scaffold** — Astro + Vercel in `site/`, builds clean (46 pages, sitemap, Vercel output). Not deployed; that needs his Vercel account (`npx vercel` from `site/`).
+- **Stage 0 scaffold** — Astro + Vercel in `site/`. Superseded by Stage 2.
+- **Stage 2 platform core** — DONE. The quiz engine is real: `site/src/lib/engine/` (types, generic base-N codec, registry with build-time validation), `site/src/lib/strategies/` (`bipolar-nearest`, `category-highest`), `site/src/lib/quizzes/` (quizzes as data). Routes namespaced: `/q/[quiz]`, `/r/[quiz]/[code]` (on-demand), `/axis/[quiz]/[axis]`, `/tradition/[slug]`, `/articles/[slug]`, `/quizzes`, `/method`, `/about`. 41 static pages, sitemap excludes `/r/`, `noindex` removed from content pages and kept on results and drafts. A second quiz (`seven-deadly-sins`, unaudited draft) proves the strategy seam. **Not deployed**; that needs his Vercel account (`npx vercel` from `site/`).
 
 ### Files that matter
 
@@ -60,8 +61,9 @@ State: local git repo initialised, **one commit** `c8fd322`, 137 files tracked, 
 - `audit/selftest.js` — **run `node audit/selftest.js` after any data or scoring change, and before any publish or deploy.**
 - `audit/review-results.json`, `audit/findings/*.json` — raw reviews by target.
 - `audit/theology-compass.pre-audit.html` — the page before the audit.
-- `site/scripts/build-data.mjs` — regenerates `site/src/data/compass.json` from the audit file and derives the permalink radix from the item count (13 at 3 statements per axis, 25 at 6). Never hand-edit the generated file.
-- `site/src/lib/compass.ts` — the shared scoring core ported from the audited page.
+- `site/scripts/build-data.mjs` — regenerates `site/src/data/compass.json` (quiz data, bundled to the browser) **and** `site/src/data/compass-audit.json` (answer sheets and the disputed log, build-time only — kept out of the client bundle on purpose). Derives the permalink radix from the item count (13 at 3 statements per axis, 25 at 6). Never hand-edit either generated file.
+- `site/scripts/engine-test.mjs` — **run `npm run test` in `site/` after any engine, data or scoring change.** Bundles the TypeScript with esbuild and re-scores all 18 audited answer sheets through the engine; also checks codec round-trips, junk-code rejection, the audited edge-case rules, and the second quiz. Wired into `prebuild`, so a regression fails the build. This is the site's counterpart to `audit/selftest.js`, which checks the demo page's independent copy of the same rules. **Both must pass.**
+- `site/src/lib/engine/` and `site/src/lib/strategies/` — the quiz engine. A quiz is data; a scoring strategy is pluggable. `site/src/lib/compass.ts` was replaced by this.
 - `demos/` — the two runner-up demos: Scripture Web (https://claude.ai/code/artifact/a291298f-9530-405d-a9a5-af721aa2404b) and Structure Cards (https://claude.ai/code/artifact/ff361b6e-5023-4a26-a3f1-d76ac8119dd8), plus the pre-audit Compass.
 
 ## Rules that must not be broken

@@ -1,0 +1,44 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const articles = (await getCollection('articles'))
+  .filter(a => !a.data.draft)
+  .sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf());
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Articles',
+  url: new URL('/articles/', Astro.site).href,
+  hasPart: articles.map(a => ({
+    '@type': 'Article',
+    headline: a.data.title,
+    url: new URL(`/articles/${a.id}/`, Astro.site).href,
+    datePublished: a.data.published.toISOString().slice(0, 10)
+  }))
+};
+---
+<Base
+  title="Articles"
+  description="Plain, practical writing on Christian formation: gratitude, joy, and what it actually means to be Christ-like."
+  jsonLd={jsonLd}
+>
+  <div class="prose">
+    <h1>Articles</h1>
+    <p class="lede">
+      Practical writing on formation — the slow business of becoming someone different.
+      Every claim is tied to a text you can check.
+    </p>
+  </div>
+
+  <div class="cards">
+    {articles.map(a => (
+      <div class="card">
+        <h3><a href={`/articles/${a.id}/`}>{a.data.title}</a></h3>
+        <p>{a.data.description}</p>
+        <p class="meta">{a.data.minutes} min read</p>
+      </div>
+    ))}
+  </div>
+</Base>

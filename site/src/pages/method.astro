@@ -1,7 +1,92 @@
 ---
 import Base from '../layouts/Base.astro';
+import audit from '../data/compass-audit.json';
+import { theologyCompass } from '../lib/quizzes/theology-compass';
+
+const sheets = (audit.simulations ?? []) as Array<Record<string, any>>;
+const landed = sheets.filter(s => Array.isArray(s.answers) && s.answers.length);
+const disputed = (audit.disputed ?? []) as Array<Record<string, any>>;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'How the Theology Compass was made',
+  description: 'The adversarial fairness audit behind the Theology Compass, in public.',
+  url: new URL('/method/', Astro.site).href
+};
 ---
-<Base title="How this was made" description="The fairness audit behind the Theology Compass, in public.">
-  <h1>Method</h1>
-  <p>Scaffold: the audit in public lands here in Stage 2.</p>
+<Base
+  title="How this was made"
+  description="The adversarial fairness audit behind the Theology Compass: twenty reviewers, 522 findings, 424 applied, and every answer sheet re-tested."
+  jsonLd={jsonLd}
+>
+  <div class="prose">
+    <h1>How this was made</h1>
+    <p class="lede">
+      A quiz that tells people what they believe has to be fair to beliefs its author does
+      not hold. This page is the working, in public.
+    </p>
+
+    <h2>The promise</h2>
+    <p>
+      Every position on the Compass is described in words its own holders would accept. No
+      band adjective names a rival tradition, flatters one side, or belittles the other.
+      Nothing is invented: positions are traced to a confession, a council, or a standard
+      work, and both poles of every axis are stated by someone who holds them.
+    </p>
+
+    <h2>The audit</h2>
+    <p>
+      Twenty adversarial reviewers read the instrument, each briefed to find where it was
+      unfair to a particular tradition or simply wrong. They raised <strong>522 findings</strong>.
+      Each was then put through three independent verification lenses — is it accurate, is
+      it a genuine fairness problem, and is the change necessary — and
+      <strong>424 were kept and applied</strong>, including all 42 rated as blockers.
+    </p>
+    <p>
+      Six tradition families were added during the audit because the original list did not
+      represent them, bringing the map to {theologyCompass.outcomes.length}. A further
+      {disputed.length} findings were considered and deliberately <em>not</em> applied; that
+      log is kept rather than quietly dropped.
+    </p>
+
+    <h2>The test that has to pass</h2>
+    <p>
+      The audit produced {landed.length} answer sheets — one filled in as a well-catechised
+      member of each tradition would answer it. The instrument only works if each sheet
+      lands on its own tradition. All {landed.length} do, at 87–95% match.
+    </p>
+    <p>
+      That check runs automatically before anything ships, against both the quiz engine and
+      the original demo page, which implement the scoring independently. If a change to the
+      wording or the scoring quietly moved someone's result, the build fails.
+    </p>
+
+    <h2>What the numbers mean, and do not mean</h2>
+    <ul>
+      <li>
+        A match percentage is distance on the map, expressed against the widest gap between
+        any two listed traditions. It is not a claim about how good a Christian anyone is.
+      </li>
+      <li>
+        Axes near the middle name no position. A midpoint is not a conviction, so the
+        headline only reports axes that actually lean.
+      </li>
+      <li>
+        If nothing is close, the result says so rather than forcing a label. Answering
+        “Unsure” throughout names no tradition at all.
+      </li>
+      <li>
+        The listed traditions are a sketch of where typical adherents land, not official
+        teaching, and not a complete list of Christian traditions.
+      </li>
+    </ul>
+
+    <h2>Your answers</h2>
+    <p>
+      Every quiz is scored in your browser. Answers are never sent to a server, there is no
+      account and no email, and nothing is stored. A result link carries only your scores,
+      encoded — which is also why a broken link cannot be recovered.
+    </p>
+  </div>
 </Base>

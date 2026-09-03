@@ -1,0 +1,61 @@
+---
+import Base from '../layouts/Base.astro';
+import { QUIZZES } from '../lib/engine/registry';
+
+const live = QUIZZES.filter(q => q.status === 'live');
+const drafts = QUIZZES.filter(q => q.status === 'draft');
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Quizzes',
+  url: new URL('/quizzes/', Astro.site).href,
+  hasPart: live.map(q => ({
+    '@type': 'Quiz',
+    name: q.title,
+    url: new URL(`/q/${q.slug}/`, Astro.site).href
+  }))
+};
+---
+<Base
+  title="Quizzes"
+  description="Self-assessments for Christians who would rather see themselves clearly than comfortably. Scored in your browser; nothing is stored."
+  jsonLd={jsonLd}
+>
+  <div class="prose">
+    <h1>Quizzes</h1>
+    <p class="lede">
+      Each one is scored entirely in your browser. No account, no email, nothing stored —
+      a result link carries your scores and nothing else.
+    </p>
+  </div>
+
+  <div class="cards">
+    {live.map(q => (
+      <div class="card">
+        <h3><a href={`/q/${q.slug}/`}>{q.emoji} {q.title}</a></h3>
+        <p>{q.tagline}</p>
+        <p class="meta">{q.items.length} statements · about {q.minutes} minutes</p>
+      </div>
+    ))}
+  </div>
+
+  {drafts.length > 0 && (
+    <>
+      <h2>In draft</h2>
+      <p class="tags">
+        Written but not yet through the fairness audit. You can take them; treat the
+        results as a conversation starter rather than a verdict.
+      </p>
+      <div class="cards">
+        {drafts.map(q => (
+          <div class="card">
+            <h3><a href={`/q/${q.slug}/`}>{q.emoji} {q.title}</a></h3>
+            <p>{q.tagline}</p>
+            <p class="meta">{q.items.length} statements · unaudited draft</p>
+          </div>
+        ))}
+      </div>
+    </>
+  )}
+</Base>

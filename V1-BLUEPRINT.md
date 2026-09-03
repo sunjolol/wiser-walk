@@ -43,9 +43,15 @@ Astro project in `site/`, TypeScript strict, no UI framework. Builds clean: 46 p
 
 **Stopping point.** `audit/compass-data.v1.json` plus a short delta report, `node audit/selftest.js` green. The demo keeps running the 18-item set until Stage 2 switches over.
 
-## Stage 2 — Platform core (rewritten for the multi-quiz vision)
+## Stage 2 — Platform core — DONE (2026-09-03)
 
-**Goal.** The real site: a quiz *engine* that hosts many assessments, an article system, and the indexable pages that earn search traffic. The Compass is the first quiz to run on it, not the thing itself.
+**Built.** `src/lib/engine/` holds the contracts, the generic base-N codec and the registry; `src/lib/strategies/` holds two pluggable strategies (`bipolar-nearest` for the Compass, `category-highest` for gifts/sins); `src/lib/quizzes/` holds the quizzes as data. Routes are namespaced (`/q/[quiz]`, `/r/[quiz]/[code]`, `/axis/[quiz]/[axis]`). Articles are a content collection with two-way quiz cross-linking. 41 static pages, result pages render on demand, `noindex` removed from content pages and kept on results and drafts. `npm run test` re-scores all 18 audited answer sheets through the engine and is wired into `prebuild`, so a scoring regression fails the build.
+
+**Proof the seams are real:** `seven-deadly-sins` runs the same routes, codec, result page and share card with a different strategy, 7 groups instead of 6, 2 items per group instead of 3, and radix 9 instead of 13 — with no engine changes. It ships as an unaudited draft (noindex, banner) because its statements have not been through the audit.
+
+**Carried debt:** the local folder is still `theology compass`; the demo page and the site implement the scoring twice (which the two test suites currently exploit as a cross-check, but which will drift).
+
+**Goal (original).** The real site: a quiz *engine* that hosts many assessments, an article system, and the indexable pages that earn search traffic. The Compass is the first quiz to run on it, not the thing itself.
 
 **2a. The quiz engine.** A quiz is data, not code.
 

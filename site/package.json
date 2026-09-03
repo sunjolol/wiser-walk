@@ -1,15 +1,16 @@
 {
-  "name": "theology-compass",
+  "name": "wiser-walk",
   "type": "module",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "predev": "node scripts/build-data.mjs",
     "dev": "astro dev",
-    "prebuild": "node scripts/build-data.mjs",
+    "prebuild": "node scripts/build-data.mjs && node scripts/engine-test.mjs",
     "build": "astro build",
     "preview": "astro preview",
-    "data": "node scripts/build-data.mjs"
+    "data": "node scripts/build-data.mjs",
+    "test": "node scripts/build-data.mjs && node scripts/engine-test.mjs"
   },
   "dependencies": {
     "astro": "^5.1.1",

@@ -1,13 +1,56 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { TRADITIONS, AXES } from '../../lib/compass';
+import { theologyCompass } from '../../lib/quizzes/theology-compass';
+import { lean } from '../../lib/strategies/bipolar';
+
 export function getStaticPaths() {
-  return TRADITIONS.map(t => ({ params: { slug: t.slug }, props: { tradition: t } }));
+  return theologyCompass.outcomes.map(t => ({ params: { slug: t.slug }, props: { tradition: t } }));
 }
+
 const { tradition } = Astro.props;
+const quiz = theologyCompass;
+const position = tradition.position ?? [];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: `${tradition.name} on the Theology Compass`,
+  description: `Where ${tradition.name} sits on six axes of Christian belief.`,
+  url: new URL(`/tradition/${tradition.slug}/`, Astro.site).href
+};
 ---
-<Base title={`${tradition.name} on the Theology Compass`} description={`Where ${tradition.name} sits on six axes of Christian belief.`}>
-  <h1>{tradition.name}</h1>
-  <ul>{AXES.map((a, i) => <li>{a.name}: {tradition.position[i]} ({a.left} 0 → {a.right} 100)</li>)}</ul>
-  <p>Approximate sketch of typical adherents, not official teaching.</p>
+<Base
+  title={`${tradition.name} on the Theology Compass`}
+  description={`Where ${tradition.name} typically sits on six axes of Christian belief — a sketch of adherents, not official teaching.`}
+  jsonLd={jsonLd}
+>
+  <div class="prose">
+    <p class="eyebrow">🧭 Theology Compass</p>
+    <h1>{tradition.name}</h1>
+    <p class="lede">
+      Where this tradition typically sits on the six axes.
+    </p>
+    <div class="note">
+      <p>
+        This is an approximate sketch of where typical adherents land, not official
+        teaching, and not a claim that everyone in the tradition agrees. It exists so the
+        quiz has something to measure distance against.
+      </p>
+    </div>
+  </div>
+
+  <ul class="bars">
+    {quiz.groups.map((g, i) => (
+      <li>
+        <div class="bar-head">
+          <span class="name">{g.emoji} <a href={`/axis/${quiz.slug}/${g.slug}/`}>{g.name}</a></span>
+          <span class="lean">{lean(g, position[i] ?? 50)}</span>
+        </div>
+        <div class="track"><span class="dot" style={`left:${position[i] ?? 50}%`}></span></div>
+        <div class="poles"><span>{g.left}</span><span>{g.right}</span></div>
+      </li>
+    ))}
+  </ul>
+
+  <p><a href={`/q/${quiz.slug}/`}>See where you land →</a></p>
 </Base>

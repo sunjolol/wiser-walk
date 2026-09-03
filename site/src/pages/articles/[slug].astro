@@ -1,0 +1,61 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+import { getQuiz } from '../../lib/engine/registry';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles');
+  return articles
+    .filter(a => !a.data.draft)
+    .map(a => ({ params: { slug: a.id }, props: { article: a } }));
+}
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+
+// The other half of the cross-link: an article offers the quizzes it speaks to.
+const related = article.data.quizzes.map(getQuiz).filter(Boolean);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: article.data.title,
+  description: article.data.description,
+  datePublished: article.data.published.toISOString().slice(0, 10),
+  url: new URL(`/articles/${article.id}/`, Astro.site).href,
+  publisher: { '@type': 'Organization', name: 'Wiser Walk' }
+};
+---
+<Base
+  title={article.data.title}
+  description={article.data.description}
+  ogType="article"
+  jsonLd={jsonLd}
+>
+  <article class="prose">
+    <p class="eyebrow">{article.data.minutes} min read</p>
+    <h1>{article.data.title}</h1>
+    <p class="lede">{article.data.description}</p>
+    <Content />
+  </article>
+
+  {related.length > 0 && (
+    <>
+      <h2>Related quizzes</h2>
+      <div class="cards">
+        {related.map(q => (
+          <div class="card">
+            <h3><a href={`/q/${q!.slug}/`}>{q!.emoji} {q!.title}</a></h3>
+            <p>{q!.tagline}</p>
+            <p class="meta">
+              {q!.items.length} statements
+              {q!.status === 'draft' ? ' · unaudited draft' : ` · about ${q!.minutes} minutes`}
+            </p>
+          </div>
+        ))}
+      </div>
+    </>
+  )}
+
+  <p><a href="/articles/">← All articles</a></p>
+</Base>

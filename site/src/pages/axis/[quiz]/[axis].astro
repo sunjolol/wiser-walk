@@ -1,0 +1,69 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { QUIZZES, getQuiz } from '../../../lib/engine/registry';
+
+/**
+ * Long-form pages for a quiz's groups. The route is generic; only groups that carry
+ * written content get a page, so a quiz without axis essays simply produces none.
+ */
+export function getStaticPaths() {
+  return QUIZZES.flatMap(q =>
+    q.groups
+      .filter(g => g.summary)
+      .map(g => ({ params: { quiz: q.slug, axis: g.slug }, props: { group: g } }))
+  );
+}
+
+const { group } = Astro.props;
+const quiz = getQuiz(Astro.params.quiz)!;
+const bipolar = Boolean(group.left && group.right);
+
+const title = bipolar ? `${group.name}: ${group.left} or ${group.right}` : group.name;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description: group.summary!.slice(0, 200),
+  url: new URL(`/axis/${quiz.slug}/${group.slug}/`, Astro.site).href,
+  isPartOf: { '@type': 'Quiz', name: quiz.title, url: new URL(`/q/${quiz.slug}/`, Astro.site).href }
+};
+---
+<Base
+  title={title}
+  description={group.summary!.slice(0, 155)}
+  noindex={quiz.status === 'draft'}
+  jsonLd={jsonLd}
+>
+  <div class="prose">
+    <p class="eyebrow">{quiz.emoji} {quiz.title}</p>
+    <h1>{group.emoji} {group.name}</h1>
+    {bipolar && <p class="lede">{group.left} ↔ {group.right}</p>}
+    <p>{group.summary}</p>
+
+    {group.history && group.history.length > 0 && (
+      <>
+        <h2>How the question arose</h2>
+        <ol>
+          {group.history.map(h => <li><strong>{h.when}</strong> — {h.what}</li>)}
+        </ol>
+      </>
+    )}
+
+    {group.passages && group.passages.length > 0 && (
+      <>
+        <h2>Passages both sides argue from</h2>
+        <p>{group.passages.join(' · ')}</p>
+      </>
+    )}
+
+    {group.readMore && group.readMore.length > 0 && (
+      <>
+        <h2>Read further</h2>
+        <ul>{group.readMore.map(r => <li>{r}</li>)}</ul>
+      </>
+    )}
+
+    <p><a href={`/q/${quiz.slug}/`}>Take the {quiz.title} →</a></p>
+  </div>
+</Base>

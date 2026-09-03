@@ -1,0 +1,151 @@
+---
+import Base from '../../layouts/Base.astro';
+import { QUIZZES, getQuiz } from '../../lib/engine/registry';
+
+export function getStaticPaths() {
+  return QUIZZES.map(q => ({ params: { quiz: q.slug } }));
+}
+
+const quiz = getQuiz(Astro.params.quiz)!;
+const isDraft = quiz.status === 'draft';
+
+const jsonLd = isDraft
+  ? null
+  : {
+      '@context': 'https://schema.org',
+      '@type': 'Quiz',
+      name: quiz.title,
+      description: quiz.description,
+      url: new URL(`/q/${quiz.slug}/`, Astro.site).href,
+      numberOfQuestions: quiz.items.length,
+      educationalLevel: 'general',
+      about: { '@type': 'Thing', name: 'Christian belief and self-understanding' }
+    };
+---
+<Base title={quiz.title} description={quiz.description} noindex={isDraft} jsonLd={jsonLd}>
+  <div class="prose">
+    <p class="eyebrow">{quiz.items.length} statements · about {quiz.minutes} minutes</p>
+    <h1>{quiz.title}</h1>
+    <p class="lede">{quiz.description}</p>
+
+    {isDraft && (
+      <div class="note draft">
+        <p><strong>Unaudited draft.</strong>{" " + quiz.draftNote}</p>
+      </div>
+    )}
+  </div>
+
+  <div class="runner" id="runner" data-quiz={quiz.slug}>
+    <noscript>
+      <div class="note">
+        <p>This quiz is scored in your browser, so it needs JavaScript enabled. That is also
+        why none of your answers are ever sent anywhere.</p>
+      </div>
+    </noscript>
+
+    <div id="intro">
+      <p>
+        Answer honestly rather than correctly — there is no score to win. If a statement
+        does not land either way, say so; “Unsure” is a real answer and is counted as one.
+      </p>
+      <div class="btn-row">
+        <button class="btn" id="start" type="button">Start</button>
+      </div>
+    </div>
+
+    <div id="play" hidden>
+      <div class="progress"><i id="prog" style="width:0%"></i></div>
+      <p class="count" id="count"></p>
+      <p class="statement" id="statement"></p>
+      <div class="scale" id="scale"></div>
+      <p class="scale-hint">
+        The scale runs from strongly disagree to strongly agree. Unsure sits in the middle
+        and does not push you either way.
+      </p>
+      <div class="runner-nav">
+        <button class="btn ghost" id="back" type="button">← Back</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import { getQuiz, scoreQuiz, encodeFor } from '../../lib/engine/registry';
+
+    const root = document.getElementById('runner');
+    const quiz = getQuiz(root?.dataset.quiz);
+    if (root && quiz) {
+      const SCALE = [
+        { v: -2, label: 'Strongly disagree' },
+        { v: -1, label: 'Disagree' },
+        { v: 0, label: 'Unsure / neither' },
+        { v: 1, label: 'Agree' },
+        { v: 2, label: 'Strongly agree' }
+      ];
+
+      const $ = (id) => document.getElementById(id);
+      const intro = $('intro'), play = $('play'), scaleEl = $('scale');
+      const sheet = new Array(quiz.items.length).fill(null);
+      let at = 0;
+      let timer = 0;
+
+      SCALE.forEach(s => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.textContent = s.label;
+        b.setAttribute('aria-pressed', 'false');
+        b.addEventListener('click', () => answer(s.v));
+        scaleEl.appendChild(b);
+      });
+
+      function render() {
+        const item = quiz.items[at];
+        $('statement').textContent = item.text;
+        $('count').textContent = `Statement ${at + 1} of ${quiz.items.length}`;
+        $('prog').style.width = `${(at / quiz.items.length) * 100}%`;
+        [...scaleEl.children].forEach((b, i) => {
+          b.setAttribute('aria-pressed', String(sheet[at] === SCALE[i].v));
+        });
+        // On the first statement Back leaves the quiz rather than sitting there dead.
+        $('back').textContent = at === 0 ? '← Leave the quiz' : '← Back';
+      }
+
+      function answer(v) {
+        sheet[at] = v;
+        render();
+        // A short beat so the selection is visible, but never a dead control:
+        // any later click cancels the pending advance.
+        clearTimeout(timer);
+        timer = window.setTimeout(() => {
+          if (at < quiz.items.length - 1) { at++; render(); }
+          else finish();
+        }, 180);
+      }
+
+      function finish() {
+        const values = scoreQuiz(quiz, sheet);
+        const code = encodeFor(quiz, values);
+        window.location.href = `/r/${quiz.slug}/${code}/`;
+      }
+
+      $('start').addEventListener('click', () => {
+        intro.hidden = true;
+        play.hidden = false;
+        render();
+        $('statement').focus?.();
+      });
+
+      $('back').addEventListener('click', () => {
+        clearTimeout(timer);
+        if (at === 0) { play.hidden = true; intro.hidden = false; return; }
+        at--;
+        render();
+      });
+
+      document.addEventListener('keydown', e => {
+        if (play.hidden) return;
+        const n = Number(e.key);
+        if (n >= 1 && n <= 5) { answer(SCALE[n - 1].v); e.preventDefault(); }
+      });
+    }
+  </script>
+</Base>

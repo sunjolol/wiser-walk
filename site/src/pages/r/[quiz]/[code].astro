@@ -1,0 +1,131 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { getQuiz, resultFor, decodeFor, shareTextFor } from '../../../lib/engine/registry';
+import { getCollection } from 'astro:content';
+
+// Rendered on demand: any valid code has a permanent page, without pre-building
+// millions of them. Nothing is scored here — the code already carries the scores.
+export const prerender = false;
+
+const quiz = getQuiz(Astro.params.quiz);
+const raw = String(Astro.params.code ?? '').toUpperCase();
+const values = quiz ? decodeFor(quiz, raw) : null;
+
+if (quiz && values) Astro.response.headers.set('cache-control', 'public, max-age=600');
+else Astro.response.status = 404;
+
+const result = quiz && values ? resultFor(quiz, values) : null;
+const share = quiz && values ? shareTextFor(quiz, values, Astro.site!.origin) : '';
+
+// Articles that speak to this quiz, so a result is a doorway rather than a dead end.
+const related = quiz
+  ? (await getCollection('articles'))
+      .filter(a => !a.data.draft && a.data.quizzes?.includes(quiz.slug))
+      .slice(0, 3)
+  : [];
+---
+{quiz && result ? (
+  <Base
+    title={`${result.headline} — ${quiz.title}`}
+    description={result.summary}
+    noindex={true}
+    ogType="article"
+  >
+    <div class="prose">
+      <p class="eyebrow">{quiz.emoji} {quiz.title}</p>
+      <h1>{result.headline}</h1>
+      <p class="lede">{result.summary}</p>
+      {quiz.status === 'draft' && (
+        <div class="note draft"><p><strong>Unaudited draft.</strong>{" " + quiz.draftNote}</p></div>
+      )}
+    </div>
+
+    <ul class="bars">
+      {result.bars.map(bar => (
+        <li>
+          <div class="bar-head">
+            <span class="name">{bar.emoji} {bar.label}</span>
+            <span class="lean">{bar.lean}</span>
+          </div>
+          <div class="track">
+            {bar.left
+              ? <span class="dot" style={`left:${bar.value}%`}></span>
+              : <span class="fill" style={`width:${bar.value}%`}></span>}
+          </div>
+          {bar.left && (
+            <div class="poles"><span>{bar.left}</span><span>{bar.right}</span></div>
+          )}
+        </li>
+      ))}
+    </ul>
+
+    {result.ranked.length > 0 && (
+      <>
+        <h2>{quiz.outcomes.length ? 'Closest on the map' : 'In order'}</h2>
+        {quiz.outcomes.length > 0 && (
+          <p class="tags">
+            Scored against the listed traditions only — a sketch of typical adherents,
+            not official teaching, and not a complete list of Christian traditions.
+          </p>
+        )}
+        <ul class="ranked">
+          {result.ranked.slice(0, 5).map(r => (
+            <li>
+              <span>{quiz.outcomes.length
+                ? <a href={`/tradition/${r.slug}/`}>{r.name}</a>
+                : r.name}</span>
+              <span>{r.score}%</span>
+            </li>
+          ))}
+        </ul>
+      </>
+    )}
+
+    <h2>Share it</h2>
+    <pre class="share" id="share">{share}</pre>
+    <div class="btn-row">
+      <button class="btn" id="copy" type="button">Copy</button>
+      <a class="btn ghost" href={`/q/${quiz.slug}/`}>Take it again</a>
+    </div>
+
+    {related.length > 0 && (
+      <>
+        <h2>Where to go from here</h2>
+        <div class="cards">
+          {related.map(a => (
+            <div class="card">
+              <h3><a href={`/articles/${a.id}/`}>{a.data.title}</a></h3>
+              <p>{a.data.description}</p>
+              <p class="meta">{a.data.minutes} min read</p>
+            </div>
+          ))}
+        </div>
+      </>
+    )}
+
+    <script>
+      const btn = document.getElementById('copy');
+      const pre = document.getElementById('share');
+      btn?.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(pre?.textContent ?? '');
+          btn.textContent = 'Copied';
+        } catch {
+          btn.textContent = 'Press Ctrl+C';
+        }
+        setTimeout(() => { btn.textContent = 'Copy'; }, 1600);
+      });
+    </script>
+  </Base>
+) : (
+  <Base title="Result not found" description="That result link is not valid." noindex={true}>
+    <div class="prose">
+      <h1>That link is not a valid result</h1>
+      <p>
+        Result codes are exact: one wrong character and there is no way to recover the
+        answers, because nothing about your result is stored on our side.
+      </p>
+      <p><a href="/quizzes/">Take a quiz →</a></p>
+    </div>
+  </Base>
+)}
