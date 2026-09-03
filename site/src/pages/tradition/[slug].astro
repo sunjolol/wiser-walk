@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import { theologyCompass } from '../../lib/quizzes/theology-compass';
 import { lean } from '../../lib/strategies/bipolar';
+import { groupHref, quizHref } from '../../lib/engine/registry';
 
 export function getStaticPaths() {
   return theologyCompass.outcomes.map(t => ({ params: { slug: t.slug }, props: { tradition: t } }));
@@ -43,7 +44,7 @@ const jsonLd = {
     {quiz.groups.map((g, i) => (
       <li>
         <div class="bar-head">
-          <span class="name">{g.emoji} <a href={`/axis/${quiz.slug}/${g.slug}/`}>{g.name}</a></span>
+          <span class="name">{g.emoji} <a href={groupHref(quiz, g)}>{g.name}</a></span>
           <span class="lean">{lean(g, position[i] ?? 50)}</span>
         </div>
         <div class="track"><span class="dot" style={`left:${position[i] ?? 50}%`}></span></div>
@@ -52,5 +53,5 @@ const jsonLd = {
     ))}
   </ul>
 
-  <p><a href={`/q/${quiz.slug}/`}>See where you land →</a></p>
+  <p><a href={quizHref(quiz)}>See where you land →</a></p>
 </Base>

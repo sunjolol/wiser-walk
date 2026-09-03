@@ -37,7 +37,25 @@ export interface QuizGroup {
   summary?: string;
   history?: Array<{ when: string; what: string }>;
   passages?: string[];
-  readMore?: string[];
+  readMore?: ReadMore;
+}
+
+/**
+ * Further reading. A bipolar group's list is split by pole because its SOURCES are —
+ * Bondage of the Will argues one side and Arminius the other, and pretending otherwise
+ * would misattribute a real book to a position its author opposed. A unipolar group has
+ * no pole to split by, so its list is flat. Both shapes are read through the helpers
+ * below; nothing should test `.length` on this type directly.
+ */
+export type ReadMore = string[] | { left: string[]; right: string[] };
+
+export const isSplitReadMore = (r: ReadMore | undefined): r is { left: string[]; right: string[] } =>
+  Boolean(r) && !Array.isArray(r);
+
+/** Every entry, in reading order, whatever shape the data came in. */
+export function readMoreAll(r: ReadMore | undefined): string[] {
+  if (!r) return [];
+  return Array.isArray(r) ? r : [...r.left, ...r.right];
 }
 
 /** A named result: a tradition, a spiritual gift, a besetting sin, a biblical figure. */

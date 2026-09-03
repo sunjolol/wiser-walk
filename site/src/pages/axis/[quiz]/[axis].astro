@@ -1,6 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
-import { QUIZZES, getQuiz } from '../../../lib/engine/registry';
+import { QUIZZES, getQuiz, quizHref } from '../../../lib/engine/registry';
+import { isSplitReadMore, readMoreAll } from '../../../lib/engine/types';
 
 /**
  * Long-form pages for a quiz's groups. The route is generic; only groups that carry
@@ -17,6 +18,12 @@ export function getStaticPaths() {
 const { group } = Astro.props;
 const quiz = getQuiz(Astro.params.quiz)!;
 const bipolar = Boolean(group.left && group.right);
+
+// Further reading is pole-split on a bipolar axis because the sources are: Bondage of the
+// Will argues one side, Arminius the other. Flattening them would put a book under the
+// position its author wrote against.
+const split = isSplitReadMore(group.readMore) ? group.readMore : null;
+const reading = readMoreAll(group.readMore);
 
 const title = bipolar ? `${group.name}: ${group.left} or ${group.right}` : group.name;
 
@@ -57,13 +64,26 @@ const jsonLd = {
       </>
     )}
 
-    {group.readMore && group.readMore.length > 0 && (
+    {reading.length > 0 && (
       <>
         <h2>Read further</h2>
-        <ul>{group.readMore.map(r => <li>{r}</li>)}</ul>
+        {split ? (
+          <div class="read-split">
+            <div>
+              <h3>{group.left}</h3>
+              <ul>{split.left.map(r => <li>{r}</li>)}</ul>
+            </div>
+            <div>
+              <h3>{group.right}</h3>
+              <ul>{split.right.map(r => <li>{r}</li>)}</ul>
+            </div>
+          </div>
+        ) : (
+          <ul>{reading.map(r => <li>{r}</li>)}</ul>
+        )}
       </>
     )}
 
-    <p><a href={`/q/${quiz.slug}/`}>Take the {quiz.title} →</a></p>
+    <p><a href={quizHref(quiz)}>Take the {quiz.title} →</a></p>
   </div>
 </Base>
