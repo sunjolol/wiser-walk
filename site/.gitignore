@@ -7,3 +7,6 @@ dist/
 .env
 .env.*
 !.env.example
+
+# the rail specimen is a design tool; build it into design/demos/, which is ignored
+public/_rails.html
