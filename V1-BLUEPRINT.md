@@ -1,93 +1,105 @@
-# Theology Compass v1 — build blueprint
+# v1 build blueprint
 
-Stack: **Astro + Vercel**. Quiz: **36 statements, re-audited**. Surfaces: **result pages + axis/tradition pages, famous figures, OG images, compare with a friend**.
+Stack: **Astro + Vercel**, `.com` domain to be chosen by the owner. Quiz: **36 statements, re-audited**. Surfaces: **result pages + axis/tradition pages, famous figures, OG images, compare with a friend**.
 
-Every stage below is independently shippable and ends at a stopping point: a state where the work on disk is coherent, committed, and a new session can pick it up from this file alone. Nothing later depends on a stage being finished in the same session as it was started.
+**Read `CLAUDE.md` first.** The site is a Christian hub for understanding yourself — a platform of many quizzes plus formation articles — and the Theology Compass is only its first module. That reframing rewrote Stage 2 below.
+
+Every stage is independently shippable and ends at a stopping point: a state where the work on disk is coherent, committed, and a new session can resume from this file alone. Nothing later depends on a stage finishing in the session that started it.
 
 ## Usage budget
 
-The fairness audit cost roughly 22M subagent tokens across three runs (~300 verifier agents each). That was the expensive part and it is done. v1 needs far less fan-out, because most of it is code I write directly rather than agents deliberating.
+The fairness audit cost roughly 22M subagent tokens across three runs. That was the expensive part and it is done. v1 needs far less fan-out, because most of it is code written directly rather than agents deliberating.
 
 | Stage | Agents | Rough share of the audit |
 |---|---|---|
 | 0. Scaffold | 0 | — |
 | 1. Quiz to 36, re-audited | ~45 | ~1/7 |
-| 2. Core site | 0 | — |
+| 2. Platform core | 0 | — |
 | 3. Famous figures | ~24 | ~1/12 |
 | 4. Share surfaces | 0 | — |
 | 5. Launch prep | ~6 | tiny |
 
-Stages 0, 2 and 4 are effectively free in agent terms. If usage is tight, do those and defer 1 and 3.
+Stages 0, 2 and 4 are effectively free in agent terms. If usage is tight, do those and defer 1 and 3 — the site works fine with the audited 18-statement quiz.
 
 ---
 
-## Stage 0 — Scaffold
+## Stage 0 — Scaffold — DONE
 
-**Goal.** An Astro project that builds and deploys, with the audited data as its single source of truth.
+Astro project in `site/`, TypeScript strict, no UI framework. Builds clean: 46 pages, sitemap, Vercel output. Data pipeline (`site/scripts/build-data.mjs`) sits downstream of the audit and derives the permalink radix from the item count. Shared scoring core in `site/src/lib/compass.ts`. Routes exist as placeholders, all `noindex`.
 
-- `npm create astro` in `site/`, TypeScript strict, no UI framework (islands only where needed).
-- `site/src/data/compass.json` generated from `audit/compass-data.revised.json` by a script, so the audit stays upstream of the site. Never hand-edit the copy.
-- Route skeleton with placeholder content: `/`, `/quiz`, `/r/[code]`, `/axis/[key]`, `/tradition/[slug]`, `/compare/[a]/[b]`, `/about`, `/method`.
-- `astro.config.mjs` with `site:` set, `@astrojs/sitemap`, and Vercel adapter.
-- Deploy once to confirm the pipeline works.
+**Not deployed** — needs the owner's Vercel account: `npx vercel` then `npx vercel --prod` from `site/`.
 
-**Stopping point.** A live URL serving placeholder pages with real routes and a sitemap. Nothing is indexable yet (`noindex` until Stage 2 copy lands).
+**Carried debt:** the routes are single-quiz shaped (`/quiz`, `/r/[code]`). Stage 2 must namespace them per quiz.
 
 ## Stage 1 — Quiz to 36 statements, re-audited
 
 **Goal.** Six statements per axis, balanced keying, with the new 18 held to the same standard as the audited 18.
 
-- Promote the 18 drafted `candidate_statements` into the working set; re-derive every direction sign from the poles.
-- Adversarial pass **scoped to the new items only**: one reviewer per tradition (~14) reading only the 18 new statements and the axis they sit on, plus a survey methodologist. Two verification lenses (accuracy, fairness) rather than three.
-- Re-derive all 18 tradition coordinates against the 36-item instrument, and re-publish the answer sheets.
-- Recalibrate: the match denominator, the 45-unit hedge, and the permalink encoder all change when the item count doubles (raw range becomes −12..+12, so 25 reachable scores per axis, and base-13 becomes base-25).
-- Extend `audit/selftest.js` to cover the new counts.
+- Promote the 18 drafted `candidate_statements`; re-derive every direction sign from the poles.
+- Adversarial pass **scoped to the new items only**: one reviewer per tradition (~14) reading only the new statements and the axis they sit on, plus a survey methodologist. Two verification lenses (accuracy, fairness) rather than three.
+- Re-derive all 18 tradition coordinates against the 36-item instrument; republish the answer sheets.
+- Recalibrate what the item count changes: raw range becomes −12..+12, so 25 reachable scores per axis and the permalink radix becomes 25. The match denominator and the 45-unit hedge both need re-deriving.
+- Extend `audit/selftest.js` to the new counts.
 
-**Stopping point.** `audit/compass-data.v1.json` + a short delta report, `node audit/selftest.js` green. The demo page still runs the 18-item set until Stage 2 switches over.
+**Stopping point.** `audit/compass-data.v1.json` plus a short delta report, `node audit/selftest.js` green. The demo keeps running the 18-item set until Stage 2 switches over.
 
-## Stage 2 — Core site
+## Stage 2 — Platform core (rewritten for the multi-quiz vision)
 
-**Goal.** The real product: the quiz, permanent result pages, and the pages Google indexes.
+**Goal.** The real site: a quiz *engine* that hosts many assessments, an article system, and the indexable pages that earn search traffic. The Compass is the first quiz to run on it, not the thing itself.
 
-- Quiz as one Astro island; no result is computed on the server, so no answers leave the browser.
-- `/r/[code]`: server-rendered from the code alone — headline, compass, per-axis breakdown, nearest traditions, and the "where your view came from" sections. Statically generated for common codes, rendered on demand for the rest.
-- `/axis/[key]`: the full fair summary, the dated history, key passages, and reading lists — the long-form pages that earn search traffic.
-- `/tradition/[slug]`: what this family holds on each axis, with its coordinates shown honestly as a sketch.
-- `/method`: the audit, in public. How the statements were written, who reviewed them, what was changed. This page is the credibility moat.
-- Real `<title>`/meta per route, canonical URLs, JSON-LD, sitemap, robots. Remove `noindex`.
+**2a. The quiz engine.** A quiz is data, not code.
 
-**Stopping point.** The site does everything the demo did, plus indexable pages. This is the point at which it could launch.
+- Define a quiz schema: id, slug, title, description, items, a scoring strategy, result copy, and share/OG configuration.
+- Make the **scoring strategy pluggable**. The Compass uses bipolar axes with Euclidean nearest-neighbour matching. Others will need: highest-category-wins (spiritual gifts, seven deadly sins), similarity-to-a-figure (who in the Bible are you most like), and simple scored right/wrong (Bible knowledge). Build the seams now; implement only the Compass strategy in this stage.
+- Generic permalink codec parameterised by item count and axis count, not hard-coded to six and thirteen.
+- One quiz-runner island reused by every quiz. Nothing is scored on the server, so no answers ever leave the browser.
+
+**2b. Routes, namespaced from the start.**
+
+- `/` — the hub: what the site is, the quizzes on offer, recent articles.
+- `/q/[quiz]` — take any quiz.
+- `/r/[quiz]/[code]` — a permanent, server-rendered result page per quiz.
+- `/axis/[quiz]/[axis]` — long-form axis pages (Compass-specific content, generic route).
+- `/tradition/[slug]` — Compass tradition pages.
+- `/articles` and `/articles/[slug]` — the formation articles. Content collections, MDX.
+- `/method` — the audit in public: how statements were written, who reviewed them, what changed. **This page is the credibility moat.**
+- `/about`.
+
+**2c. Cross-linking.** Articles link to relevant quizzes; result pages link to relevant articles ("you leaned toward X — here's how to grow in Y"). This is the engine of both retention and internal SEO.
+
+**2d. SEO plumbing.** Real per-route `<title>`/meta, canonical URLs, JSON-LD, sitemap, robots. Remove `noindex`. Server-rendered pages are non-negotiable — nutrientcodex.com was a SPA and got zero search traffic, which is the single lesson driving this whole architecture.
+
+**Stopping point.** The site does everything the demo did, plus indexable pages, plus a second quiz stubbed on the engine to prove the seams are real. This is the point at which it could launch.
 
 ## Stage 3 — Famous figures on the map
 
-**Goal.** Ten to fifteen figures placed on the compass, each defensible from their own writings.
+**Goal.** Ten to fifteen figures placed on the Compass, each placement defensible from their own writings.
 
-- Candidates: Augustine, Aquinas, Luther, Calvin, Menno Simons, Cranmer, Arminius, Owen, Wesley, Whitefield, Edwards, Spurgeon, Newman, Schleiermacher (as a foil), Barth, Lewis, Bonhoeffer, Schaeffer.
-- One researcher per figure: place them on all six axes, each coordinate justified by a citation to a primary text, with an explicit note where a figure predates the question or falls off the axis.
-- Verification pass: a second agent tries to refute each placement from the same primary sources.
-- Anything that cannot be sourced gets omitted, not guessed. Figures who genuinely do not fit an axis are shown with that axis blank rather than a made-up number.
-- Surface: figures overlaid on your own compass, plus `/figure/[slug]` pages (more indexable content, and a strong share hook — "you are closest to Owen").
+- Candidates: Augustine, Aquinas, Luther, Calvin, Menno Simons, Cranmer, Arminius, Owen, Wesley, Whitefield, Edwards, Spurgeon, Newman, Barth, Lewis, Bonhoeffer.
+- One researcher per figure: all six axes, every coordinate justified by a citation to a primary text, with an explicit note where a figure predates the question.
+- A verification pass then tries to refute each placement from the same primary sources.
+- Anything unsourceable is omitted, not guessed. A figure who genuinely falls off an axis gets it left blank rather than a fabricated number.
+- Surface: figures overlaid on your own result, plus `/figure/[slug]` pages — more indexable content and a strong share hook ("you're closest to Owen").
 
-**Stopping point.** `data/figures.json` with citations, and the overlay working.
+**Stopping point.** A figures data file with citations, and the overlay working.
 
 ## Stage 4 — Share surfaces
 
 **Goal.** A pasted link looks like the product, and two people can compare.
 
-- OG images: generated at build/request time from the same compass renderer, 1200×630, with the headline, the compass, and the nearest traditions. One per result code.
-- Twitter/X card tags, Facebook, iMessage preview checked for real.
-- `/compare/[a]/[b]`: both compasses overlaid, the axes where you differ most named in plain language, and a shareable summary. Entry point is a "Compare with a friend" button on any result page that copies an invite link.
+- OG images generated from the same renderer, 1200×630, one per result code — **built generically so every future quiz gets them free**.
+- Card tags verified for real on X and iMessage, not merely written.
+- `/compare/[quiz]/[a]/[b]` — both results overlaid, the axes of largest difference named in plain language, reachable by an invite link from any result page.
 
-**Stopping point.** Links unfurl correctly on at least X and iMessage; compare works from two real codes.
+**Stopping point.** Links unfurl correctly, and compare works from two real codes.
 
 ## Stage 5 — Launch prep
 
 **Goal.** Ready to post, with a way to tell whether it worked.
 
-- Privacy-respecting analytics (Plausible or Vercel Analytics): track completions, shares, and result-page visits from outside.
-- The five posts written for their venues: r/Reformed, r/TrueChristian, r/Catholicism or r/OrthodoxChristianity, two Facebook groups; each following that venue's self-promotion rules.
-- A `/method` link in every post, because this audience checks.
-- Success test, decided in advance: unprompted shares by strangers within three weeks. If fewer than ten, stop and rethink before building further.
+- Privacy-respecting analytics: completions, shares, and result visits arriving from outside.
+- Five posts written for their venues (r/Reformed, r/TrueChristian, one of r/Catholicism or r/OrthodoxChristianity, two Facebook groups), each following that venue's self-promotion rules and each linking `/method`, because this audience checks.
+- The success test, fixed in advance: **unprompted shares by strangers within three weeks.** Under ten, stop and rethink rather than build further. The Codex's real failure was learning the market's answer at month three instead of week three.
 
 **Stopping point.** Launch.
 
@@ -95,6 +107,6 @@ Stages 0, 2 and 4 are effectively free in agent terms. If usage is tight, do tho
 
 ## Resuming in a new session
 
-Open this folder and read `CLAUDE.md`, then this file. Each stage says what it produces; check which artifacts exist on disk to find where you are. The audit is finished and must not be re-run.
+Read `CLAUDE.md`, then this file. Each stage says what it produces; check which artifacts exist on disk to locate yourself. The fairness audit is finished and must not be re-run. The naming search is finished and must not be re-run.
 
-Non-negotiables carried forward from the audit: real data only with citations; both poles of every axis in their holders' vocabulary; no band adjective naming a rival tradition; statements under 22 words with one claim each; both keyings present on every axis; direction signs re-derived whenever a statement changes; `node audit/selftest.js` green before any publish or deploy.
+Non-negotiables carried forward: real data only with citations; both poles of every axis in their holders' vocabulary; no band adjective naming a rival tradition; statements under 22 words with one claim each; both keyings present on every axis; direction signs re-derived whenever a statement changes; `node audit/selftest.js` green before any publish or deploy.
