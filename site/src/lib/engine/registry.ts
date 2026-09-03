@@ -69,6 +69,26 @@ function validate(quiz: Quiz): void {
     );
   }
 
+  // The declared shape must match the data. A bipolar axis missing a pole would render a
+  // named position facing an anonymous blank; a unipolar category carrying poles would
+  // invite the renderer to draw a centre that a ranking does not have.
+  quiz.groups.forEach(g => {
+    const poles = Boolean(g.left || g.right);
+    if (quiz.strategy.shape === 'bipolar') {
+      if (!g.left || !g.right) {
+        throw new Error(`${where}: bipolar group "${g.key}" is missing a pole name`);
+      }
+      if (!g.bands || g.bands.length !== 5) {
+        throw new Error(`${where}: bipolar group "${g.key}" needs five band adjectives`);
+      }
+    } else if (poles || g.bands) {
+      throw new Error(
+        `${where}: unipolar group "${g.key}" carries bipolar fields (left/right/bands). ` +
+        'A ranking has no poles and no centre.'
+      );
+    }
+  });
+
   // Slugs are the URL identity, so they must exist, be URL-safe, and be unique. A group
   // whose slug collided with another's would silently publish one axis over the other.
   const seen = new Set<string>();

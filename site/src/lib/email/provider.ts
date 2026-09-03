@@ -112,14 +112,21 @@ const consoleProvider: EmailProvider = {
  * in whatever the build machine happened to have.
  */
 export function getProvider(env: Record<string, string | undefined>): EmailProvider {
+  // EMAIL_PREVIEW wins over a real key on purpose: it exists so the form can be developed
+  // and screenshotted, and a local run must never be able to write to the live list.
+  if (env.EMAIL_PREVIEW === '1') return consoleProvider;
   const key = env.MAILERLITE_API_KEY?.trim();
   if (key) return mailerlite(key, env.MAILERLITE_GROUP_ID?.trim() || undefined);
   return consoleProvider;
 }
 
-/** True when a real provider is wired up — the form asks so it can hide rather than lie. */
+/**
+ * True when the form should be shown at all. With no provider it stays hidden rather than
+ * collecting addresses that go nowhere. EMAIL_PREVIEW=1 shows it against the console
+ * provider, for local work.
+ */
 export const isConfigured = (env: Record<string, string | undefined>) =>
-  Boolean(env.MAILERLITE_API_KEY?.trim());
+  env.EMAIL_PREVIEW === '1' || Boolean(env.MAILERLITE_API_KEY?.trim());
 
 /**
  * Deliberately loose. An address is validated by whether the confirmation mail arrives,

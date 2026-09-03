@@ -1,0 +1,68 @@
+---
+/**
+ * The unipolar hero: categories ranked by strength.
+ *
+ * This is deliberately NOT the rail component with the poles hidden. A ranking has no two
+ * ends, no centre, and no band in which nothing is named — so it has no spine, no diverging
+ * tint and no no-claim zone. Reusing the bipolar chassis here would be the same class of
+ * error as labelling one pole of two, and it is the specific mistake this file exists to
+ * make impossible.
+ *
+ * Rows render in RANK order here (unlike the data, which keeps quiz order) because the
+ * ranking is the whole result. `rank` is on the row, so nothing has to be re-derived.
+ */
+import type { Quiz, UnipolarView } from '../lib/engine/types';
+import { groupHref } from '../lib/engine/registry';
+
+interface Props {
+  quiz: Quiz;
+  view: UnipolarView;
+  linked?: boolean;
+}
+
+const { quiz, view, linked = true } = Astro.props;
+const rows = [...view.rows].sort((a, b) => a.rank - b.rank);
+
+// Only the top row is emphasised, and only when the result actually supports emphasising
+// one. On a tie two lead; on a flat result nothing does, because nothing did.
+const leading = view.state === 'flat' ? 0 : view.state === 'tie' ? 2 : 1;
+---
+<div class="stack-block">
+  {view.state === 'flat' && (
+    <p class="stack-legend">
+      Nothing here stands out far enough to name. The bars below are what the arithmetic
+      returned, in order — not a verdict.
+    </p>
+  )}
+
+  <ol class="stack">
+    {rows.map(row => (
+      <li class:list={['tier', { 'is-leading': row.rank <= leading }]}>
+        <div class="tier-head">
+          <span class="tier-rank" aria-hidden="true">{row.rank}</span>
+          <span class="tier-name">
+            {row.emoji && <span class="tier-emoji" aria-hidden="true">{row.emoji}</span>}
+            {linked ? <a href={groupHref(quiz, row)}>{row.name}</a> : row.name}
+          </span>
+          <span class="tier-strength">{row.strength}</span>
+        </div>
+        {/*
+          A magnitude, filled from zero — the opposite of the bipolar rail's position
+          marker, and labelled so it cannot be read as a probability or a percentile.
+        */}
+        <div
+          class="tier-track"
+          role="img"
+          aria-label={`${row.name}: ${row.strength}, ranked ${row.rank} of ${rows.length}.`}
+        >
+          <span class="tier-fill" style={`--v:${row.value}`}></span>
+        </div>
+      </li>
+    ))}
+  </ol>
+
+  <p class="stack-note">
+    Each bar is how far above the midpoint your answers put that one, as a share of the
+    half-scale. It is not a percentage of you, and the bars are not shares of a whole.
+  </p>
+</div>

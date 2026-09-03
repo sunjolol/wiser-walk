@@ -31,6 +31,7 @@ const groups: QuizGroup[] = data.axes.map(a => ({
   right: a.right,
   bands: a.bands,
   summary: a.summary,
+  summaryParts: a.summaryParts,
   history: a.history,
   passages: a.passages,
   readMore: a.readMore

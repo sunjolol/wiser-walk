@@ -44,6 +44,9 @@
   /* rail geometry, in one place so a change is one edit */
   --rail-h: 14px;
   --knob: 20px;
+  /* overridden per result from the scoring rules; these are only a safe default */
+  --zone-lo: 40.5;
+  --zone-hi: 59.5;
 }
 
 /* ---- light, the default ---- */
@@ -64,8 +67,11 @@
   --zone-hatch: rgba(124, 130, 136, .18);
   --zone-edge: rgba(124, 130, 136, .34);
   --tint-op: .32;
-  --wash-op: .5;
-  --veil-op: .62;
+  /* The reference uses .52 for a HERO band carrying display type. This panel carries data:
+     six rails whose labels are small uppercase greys, so the wash has to stay under them.
+     Measured rather than guessed — see the contrast check in the commit that set it. */
+  --wash-op: .14;
+  --veil-op: .38;
   --veil-blend: soft-light;
   --dark-fill: #1C1C23;
   --dark-fill-img: url("/tex/starry.png");
@@ -103,8 +109,8 @@
     --zone-hatch: rgba(190, 196, 205, .2);
     --zone-edge: rgba(190, 196, 205, .34);
     --tint-op: .4;
-    --wash-op: .06;
-    --veil-op: .1;
+    --wash-op: .05;
+    --veil-op: .08;
     --veil-blend: overlay;
     --dark-fill: #343441;
     --dark-fill-img: none;
@@ -131,8 +137,8 @@
   --zone-hatch: rgba(190, 196, 205, .2);
   --zone-edge: rgba(190, 196, 205, .34);
   --tint-op: .4;
-  --wash-op: .06;
-  --veil-op: .1;
+  --wash-op: .05;
+  --veil-op: .08;
   --veil-blend: overlay;
   --dark-fill: #343441;
   --dark-fill-img: none;
@@ -267,7 +273,8 @@ a { color: var(--accent); text-underline-offset: 2px; }
   background: url("/tex/veil.png") center / cover no-repeat;
   filter: invert(100%); mix-blend-mode: var(--veil-blend); opacity: var(--veil-op);
 }
-.layered > * { position: relative; z-index: 1; }
+/* everything except the texture layers themselves, which must stay absolute and beneath */
+.layered > *:not(.wash):not(.veil) { position: relative; z-index: 1; }
 
 .cards {
   display: grid; gap: .9rem; margin: 1.5rem 0;
@@ -328,7 +335,8 @@ a { color: var(--accent); text-underline-offset: 2px; }
  * pole encoded by omission is exactly the failure the last version shipped.
  */
 
-.rails { display: flex; flex-direction: column; gap: 1.15rem; margin: 1.25rem 0 0; }
+.rails-block { margin: 1.5rem 0 0; }
+.rails { display: flex; flex-direction: column; gap: 1.15rem; }
 .rails-legend {
   display: flex; align-items: center; gap: .5rem; margin: 0 0 1.1rem;
   font-size: .78rem; color: var(--ink-mute);
@@ -364,8 +372,8 @@ a { color: var(--accent); text-underline-offset: 2px; }
 /* the audited 41-59 band, drawn so a centrist sees WHY nothing was named */
 .rail-zone {
   position: absolute; top: 0; bottom: 0;
-  left: calc(var(--knob) / 2 + var(--run) * 41 / 100);
-  right: calc(var(--knob) / 2 + var(--run) * 41 / 100);
+  left: calc(var(--knob) / 2 + var(--run) * var(--zone-lo) / 100);
+  right: calc(var(--knob) / 2 + var(--run) * (100 - var(--zone-hi)) / 100);
   background: repeating-linear-gradient(135deg, var(--zone-hatch) 0 3px, transparent 3px 6px);
   border-left: 1px solid var(--zone-edge); border-right: 1px solid var(--zone-edge);
 }
@@ -395,6 +403,121 @@ a { color: var(--accent); text-underline-offset: 2px; }
 }
 .rail-poles span:first-child { color: var(--ink-soft); }
 .rail-poles span:last-child { margin-left: auto; text-align: right; }
+
+/* ------------------------------------------------------- the depth panels */
+/*
+ * Two mirrored pole panels. On a phone they stack, which is the hard case: a reader who
+ * only ever sees the first must still know a second exists and that the two disagree. The
+ * summary line names both poles before either panel is read, the panels keep their headings
+ * and their tinted edge, and the stacked pair sits inside one bordered group.
+ */
+
+.depth {
+  background: var(--panel); border-radius: var(--r-sm); box-shadow: var(--lift-soft);
+  margin: 0 0 .6rem; overflow: hidden;
+}
+.depth > summary {
+  list-style: none; cursor: pointer; display: flex; flex-wrap: wrap;
+  align-items: baseline; gap: .1rem .6rem;
+  padding: .85rem 1rem; min-height: 44px;
+}
+.depth > summary::-webkit-details-marker { display: none; }
+.depth-name { font-family: var(--ui); font-weight: 700; font-size: .95rem; color: var(--ink); }
+.depth-poles {
+  font-family: var(--ui); font-size: .72rem; font-weight: 600; letter-spacing: .04em;
+  text-transform: uppercase; color: var(--ink-mute); width: 100%; order: 3;
+}
+.depth .chev {
+  margin-left: auto; width: 8px; height: 8px; flex: none; align-self: center;
+  border-right: 2px solid var(--ink-mute); border-bottom: 2px solid var(--ink-mute);
+  transform: rotate(45deg) translate(-2px, -2px); transition: transform .2s;
+}
+.depth[open] .chev { transform: rotate(-135deg); }
+.depth > summary:hover .depth-name { color: var(--accent); }
+
+.depth-body { padding: 0 1rem 1.1rem; }
+
+.poles-split { display: grid; gap: .75rem; grid-template-columns: 1fr; }
+@media (min-width: 44rem) { .poles-split { grid-template-columns: 1fr 1fr; gap: 1.1rem; } }
+.pole-panel {
+  background: var(--shell); border-radius: var(--r-sm); padding: .8rem .9rem;
+  font-size: .88rem; color: var(--ink-soft);
+}
+.pole-panel--left { box-shadow: inset 3px 0 0 var(--blue); }
+.pole-panel--right { box-shadow: inset 3px 0 0 var(--orange); }
+.pole-panel h4 {
+  font-family: var(--ui); font-size: .68rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--ink-mute); margin: 0 0 .4rem;
+}
+/* the reader's own side is marked, but the other is never dimmed or shortened */
+.pole-panel.is-yours h4 { color: var(--accent); }
+.pole-panel.is-yours::after {
+  content: "your side"; display: block; margin-top: .5rem;
+  font-family: var(--ui); font-size: .62rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--ink-mute);
+}
+.pole-panel p { margin: 0; }
+
+.between, .caution { font-size: .85rem; color: var(--ink-soft); margin: .85rem 0 0; }
+.between strong, .caution strong { color: var(--ink); }
+.caution {
+  background: var(--warn-bg); color: var(--warn-ink); border-radius: var(--r-sm);
+  padding: .7rem .85rem;
+}
+.caution strong { color: inherit; }
+
+.passages { margin: .95rem 0 0; font-size: .85rem; color: var(--ink-soft); }
+.passages h4, .read-split--compact h4 {
+  font-family: var(--ui); font-size: .68rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--ink-mute); margin: 0 0 .3rem;
+}
+.passages p { margin: 0; }
+
+.read-split--compact { margin: .95rem 0 0; font-size: .85rem; gap: .75rem; }
+.read-split--compact ul { margin: 0; padding-left: 1.1rem; color: var(--ink-soft); }
+.read-split--compact li { margin: 0 0 .15rem; }
+
+.depth-more { margin: 1rem 0 0; font-size: .85rem; }
+
+/* --------------------------------------------------- the unipolar stack */
+/*
+ * Ranked categories. No spine, no diverging tint, no no-claim zone: a ranking has none of
+ * those, and borrowing them from the rails is the error this whole shape split prevents.
+ */
+
+.stack-block { margin: 1.5rem 0 0; }
+.stack-legend { font-size: .9rem; color: var(--ink-soft); margin: 0 0 1.1rem; }
+.stack { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 1rem; }
+
+.tier-head { display: flex; align-items: baseline; gap: .55rem; margin: 0 0 .4rem; }
+.tier-rank {
+  font-family: var(--ui); font-size: .7rem; font-weight: 700; color: var(--ink-mute);
+  font-variant-numeric: tabular-nums; min-width: 1.1em;
+}
+.tier-name { font-family: var(--ui); font-weight: 700; font-size: .95rem; color: var(--ink); }
+.tier-name a { color: inherit; text-decoration: none; }
+.tier-name a:hover { text-decoration: underline; }
+.tier-emoji { margin-right: .3rem; }
+.tier-strength {
+  margin-left: auto; font-family: var(--ui); font-size: .74rem; font-weight: 600;
+  color: var(--ink-mute); text-align: right;
+}
+
+.tier-track {
+  position: relative; height: var(--rail-h); border-radius: calc(var(--rail-h) / 2);
+  background: var(--shell); box-shadow: inset 0 1px 2px rgba(68, 68, 68, .08); overflow: hidden;
+}
+/* filled from zero: a magnitude, not a position between two ends */
+.tier-fill {
+  position: absolute; inset: 0 auto 0 0; width: calc(var(--v) * 1%);
+  background-image: var(--grad-r); background-size: 100% 100%;
+  opacity: .5; border-radius: inherit;
+}
+.tier.is-leading .tier-fill { opacity: 1; }
+.tier.is-leading .tier-name { font-size: 1.05rem; }
+.tier.is-leading .tier-rank { color: var(--accent); }
+
+.stack-note { font-size: .8rem; color: var(--ink-mute); margin: 1.1rem 0 0; }
 
 /* ------------------------------------------------- legacy bars (tradition page) ---- */
 
@@ -444,6 +567,46 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .scale-hint { font-size: .8rem; color: var(--ink-mute); margin: .8rem 0 0; }
 .runner-nav { display: flex; gap: .6rem; margin-top: 1.5rem; }
 .runner-nav .btn { font-size: .74rem; padding: .55rem 1.1rem; min-height: 40px; }
+
+/* -------------------------------------------------- result page furniture */
+
+.result-head { margin-bottom: 1.25rem; }
+.result-panel { margin: 0 0 2rem; }
+.outcomes, .depth-section, .share-block, .capture { margin: 2.5rem 0 0; }
+.depth-section > .tags, .outcomes > .tags { margin: 0 0 1rem; max-width: var(--measure); }
+
+.share-note { font-size: .82rem; color: var(--ink-mute); margin: .25rem 0 0; max-width: var(--measure); }
+
+/* ---- email capture ---- */
+.capture {
+  background: var(--panel); border-radius: var(--r); box-shadow: var(--lift);
+  padding: 1.35rem 1.15rem 1.4rem;
+}
+.capture h2 { margin-top: 0; }
+.capture-offer { font-size: 1rem; color: var(--ink-soft); max-width: 34em; }
+.capture-row { display: flex; flex-direction: column; gap: .55rem; }
+@media (min-width: 30rem) { .capture-row { flex-direction: row; } }
+.capture-row input {
+  flex: 1 1 auto; min-width: 0; min-height: 46px;
+  font-family: var(--text); font-size: 1rem;   /* 16px, or iOS zooms the page on focus */
+  padding: .7rem .95rem; border-radius: var(--r-pill);
+  border: 0; background: var(--shell); color: var(--ink);
+  box-shadow: inset 0 1px 2px rgba(68, 68, 68, .09);
+}
+.capture-row input::placeholder { color: var(--ink-mute); }
+.capture-row .btn { flex: none; }
+.capture-status { font-size: .85rem; margin: .7rem 0 0; min-height: 1.2em; }
+.capture-status.is-ok { color: var(--accent); }
+.capture-status.is-bad { color: var(--warn-ink); }
+.capture-status.is-busy { color: var(--ink-mute); }
+.capture-small { font-size: .78rem; color: var(--ink-mute); margin: 1rem 0 0; max-width: 42em; }
+
+/* honeypot and screen-reader-only text: present for the right audience, hidden from the eye */
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
 
 /* ------------------------------------------------------------------ misc */
 

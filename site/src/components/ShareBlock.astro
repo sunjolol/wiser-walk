@@ -1,0 +1,86 @@
+---
+/**
+ * Share text, and the CTA that has to work for two different readers.
+ *
+ * A result URL is both "my result" and "a friend's result", and the same page is served to
+ * both. "Take it again" is wrong for a visitor who has never taken it; "See where you land"
+ * is faintly insulting to the person who just did.
+ *
+ * So the SERVER renders the visitor's version, and the page upgrades itself only when it
+ * can prove otherwise — a sessionStorage note the quiz runner leaves behind on the way to
+ * this page. Getting it wrong for the visitor is the costlier error, and the person who
+ * just took the quiz necessarily had JavaScript on, so the upgrade will reach them.
+ *
+ * sessionStorage, not localStorage or a cookie: it is a UI convenience scoped to the tab,
+ * it never leaves the device, and it is gone when the tab closes.
+ */
+import type { Quiz, ResultView } from '../lib/engine/types';
+import { quizHref } from '../lib/engine/registry';
+
+interface Props {
+  quiz: Quiz;
+  view: ResultView;
+  share: string;
+}
+
+const { quiz, view, share } = Astro.props;
+---
+<section class="share-block" data-quiz={quiz.slug} data-code={view.code}>
+  <h2 data-visitor="Their result, in text" data-mine="Share it">Their result, in text</h2>
+
+  <pre class="share" id="share-text">{share}</pre>
+
+  <div class="btn-row">
+    <button class="btn dark" id="share-copy" type="button">Copy</button>
+    <a
+      class="btn"
+      id="share-cta"
+      href={quizHref(quiz)}
+      data-visitor="See where you land"
+      data-mine="Take it again"
+    >See where you land</a>
+  </div>
+
+  <p class="share-note" id="share-note"
+     data-visitor={`Someone sent you this. ${quiz.items.length} statements, about ${quiz.minutes} minutes, scored in your own browser.`}
+     data-mine="This link is your whole result. Nothing is stored on our side, so keep it if you want to come back to it."
+  >Someone sent you this. {quiz.items.length} statements, about {quiz.minutes} minutes, scored in your own browser.</p>
+</section>
+
+<script>
+  (function () {
+    const block = document.querySelector('.share-block');
+    if (!block) return;
+
+    // Did THIS browser produce THIS result? Anything else is treated as a visitor.
+    let mine = false;
+    try {
+      mine = sessionStorage.getItem('ww:took:' + block.dataset.quiz) === block.dataset.code;
+    } catch (e) {}
+
+    if (mine) {
+      block.querySelectorAll('[data-mine]').forEach(el => {
+        const text = el.getAttribute('data-mine');
+        if (el.tagName === 'A' || el.tagName === 'H2' || el.tagName === 'P') el.textContent = text;
+      });
+    }
+
+    const btn = document.getElementById('share-copy');
+    const pre = document.getElementById('share-text');
+    btn?.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(pre?.textContent ?? '');
+        btn.textContent = 'Copied';
+      } catch {
+        // Selecting it is the honest fallback: the reader can then copy it themselves.
+        const range = document.createRange();
+        range.selectNodeContents(pre);
+        const sel = window.getSelection();
+        sel?.removeAllRanges();
+        sel?.addRange(range);
+        btn.textContent = 'Selected — copy it';
+      }
+      setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+    });
+  })();
+</script>

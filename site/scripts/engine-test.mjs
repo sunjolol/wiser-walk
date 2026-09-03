@@ -127,8 +127,59 @@ console.log('5. audited scoring rules still hold');
 
   // Left pole and right pole must be reachable and describe themselves.
   const left = resultFor(compass, compass.groups.map(() => 0));
-  if (!/at the .* pole/.test(left.bars[0].lean)) fail('left pole lean: ' + left.bars[0].lean);
-  else ok('pole positions describe themselves: "' + left.bars[0].lean + '"');
+  if (!/at the .* pole/.test(left.rows[0].lean)) fail('left pole lean: ' + left.rows[0].lean);
+  else ok('pole positions describe themselves: "' + left.rows[0].lean + '"');
+}
+
+// ------------------------------------- 5b. the result view declares its shape honestly
+console.log('5b. the result view keeps the two shapes apart');
+{
+  const compass = getQuiz('theology-compass');
+  const view = resultFor(compass, [33, 42, 33, 58, 50, 67]);
+
+  if (view.shape !== 'bipolar') fail('compass view shape: ' + view.shape);
+  else ok('compass declares shape "bipolar"');
+
+  // Both poles on every row, unconditionally. This is the one that must never regress.
+  const missing = view.rows.filter(r => !r.left || !r.right);
+  if (missing.length) fail('rows missing a pole name: ' + missing.map(r => r.key).join(','));
+  else ok('every row prints both pole names');
+
+  // The visible no-claim zone must be the same range the scoring actually uses.
+  const [lo, hi] = view.noClaimRange;
+  if (lo !== 41 || hi !== 59) fail('no-claim range: ' + lo + '-' + hi);
+  const wrong = view.rows.filter(r => r.noClaim !== (r.value >= lo && r.value <= hi));
+  if (wrong.length) fail('noClaim disagrees with the range on: ' + wrong.map(r => r.key).join(','));
+  else ok(`no-claim zone ${lo}-${hi} matches every row's own flag`);
+
+  // Slug, not key: two of the six differ, and a URL built from key would 404.
+  const bySlug = view.rows.map(r => r.slug);
+  if (!bySlug.includes('gifts') || !bySlug.includes('authority')) {
+    fail('rows do not carry the published slugs: ' + bySlug.join(','));
+  } else ok('rows carry slugs (gifts, authority), not keys (spirit, tradition)');
+
+  // Every reachable score must land in exactly one band with a real adjective.
+  const reach = [0, 8, 17, 25, 33, 42, 50, 58, 67, 75, 83, 92, 100];
+  const bad = reach.filter(v => !resultFor(compass, [v, 50, 50, 50, 50, 50]).rows[0].band);
+  if (bad.length) fail('scores with no band adjective: ' + bad.join(','));
+  else ok('all 13 reachable scores name a band');
+
+  const sins = getQuiz('seven-deadly-sins');
+  const uni = resultFor(sins, sins.groups.map(() => 50));
+  if (uni.shape !== 'unipolar') fail('sins view shape: ' + uni.shape);
+  else ok('seven-deadly-sins declares shape "unipolar"');
+
+  // The bipolar chassis must not reach the unipolar view at all.
+  const leaked = uni.rows.filter(r => 'left' in r || 'right' in r || 'band' in r || 'noClaim' in r);
+  if (leaked.length) fail('bipolar fields leaked into unipolar rows: ' + leaked.map(r => r.key).join(','));
+  else ok('unipolar rows carry no pole, band or no-claim field');
+  if ('noClaimRange' in uni) fail('unipolar view carries a no-claim range');
+  else ok('unipolar view has no no-claim range — a ranking has no centre');
+
+  const ranks = uni.rows.map(r => r.rank).sort((a, b) => a - b);
+  if (ranks.join(',') !== uni.rows.map((_, i) => i + 1).join(',')) {
+    fail('unipolar ranks are not 1..n: ' + ranks.join(','));
+  } else ok('unipolar rows rank 1..' + uni.rows.length + ' with no gaps or ties in the numbering');
 }
 
 // ----------------------------------------------- 6. the second quiz on the seams
@@ -145,7 +196,7 @@ console.log('6. second quiz runs on the same engine');
     const res = resultFor(sins, values);
     if (res.ranked[0].slug !== 'pride') fail('pride sheet ranked ' + res.ranked[0].slug + ' first');
     else ok(`pride sheet -> "${res.headline}" (${res.ranked[0].score})`);
-    if (res.bars.length !== 7) fail('expected 7 bars, got ' + res.bars.length);
+    if (res.rows.length !== 7) fail('expected 7 rows, got ' + res.rows.length);
 
     const flat = sins.items.map(() => 0);
     const flatRes = resultFor(sins, scoreQuiz(sins, flat));

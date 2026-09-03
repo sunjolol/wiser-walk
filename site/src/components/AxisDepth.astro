@@ -1,0 +1,113 @@
+---
+/**
+ * The deep content for one bipolar axis, as TWO MIRRORED POLE PANELS, so the disagreement
+ * reads on the page as a disagreement rather than as one paragraph about a topic.
+ *
+ * Three rules here are audit rules, not layout preferences:
+ *
+ * 1. The prose comes from `summaryParts`, computed by design/tools/split-summaries.mjs,
+ *    which verifies that every sentence of the audited summary is used exactly once and
+ *    refuses rather than guessing. Nothing is written here.
+ * 2. Scripture passages are NOT assigned to a pole. Romans 9 and 1 Timothy 2:3-4 are
+ *    claimed by both camps; splitting them would be invented editorial content. They sit
+ *    under a heading that says so out loud.
+ * 3. Further reading IS pole-split, because the data says so: Bondage of the Will argues
+ *    one side and Arminius the other, and flattening the two lists would file a book under
+ *    the position its author wrote against.
+ *
+ * The prose is truncated to each pole's opening sentence — which is its thesis, and is
+ * exactly where the splitter anchors. Truncation is never mid-sentence: a clipped claim
+ * about someone else's belief is worse than a short one. The full text lives on the
+ * indexable /axis/ page, which is where the link goes.
+ */
+import type { BipolarRow, Quiz } from '../lib/engine/types';
+import { isSplitReadMore } from '../lib/engine/types';
+import { groupHref } from '../lib/engine/registry';
+
+interface Props {
+  quiz: Quiz;
+  row: BipolarRow;
+  /** Open on load. Used for the axis the reader leaned on hardest. */
+  open?: boolean;
+}
+
+const { quiz, row, open = false } = Astro.props;
+
+const group = quiz.groups.find(g => g.slug === row.slug)!;
+const parts = group.summaryParts;
+
+/** First sentence only, never a clipped one. */
+const thesis = (text: string) => {
+  const first = text.trim().split(/(?<=\.)\s+/)[0] ?? '';
+  return first;
+};
+const more = (text: string) => text.trim().split(/(?<=\.)\s+/).length > 1;
+
+const split = isSplitReadMore(group.readMore) ? group.readMore : null;
+const href = groupHref(quiz, row);
+---
+<details class="depth" open={open}>
+  <summary>
+    <span class="depth-name">{row.emoji} {row.name}</span>
+    <span class="depth-poles">{row.left} <span aria-hidden="true">↔</span> {row.right}</span>
+    <span class="chev" aria-hidden="true"></span>
+  </summary>
+
+  <div class="depth-body">
+    {parts ? (
+      <div class="poles-split">
+        <section class:list={['pole-panel', 'pole-panel--left', { 'is-yours': row.value < 50 && !row.noClaim }]}>
+          <h4>{row.left}</h4>
+          <p>{thesis(parts.left)}</p>
+        </section>
+        <section class:list={['pole-panel', 'pole-panel--right', { 'is-yours': row.value > 50 && !row.noClaim }]}>
+          <h4>{row.right}</h4>
+          <p>{thesis(parts.right)}</p>
+        </section>
+      </div>
+    ) : (
+      <p>{thesis(group.summary ?? '')}</p>
+    )}
+
+    {parts?.between && (
+      <p class="between">
+        <strong>Between the poles.</strong> {thesis(parts.between)}
+      </p>
+    )}
+
+    {parts?.caution && (
+      /* Methodology, not doctrine. It must never read as one pole's argument. */
+      <p class="caution">
+        <strong>About this axis.</strong> {thesis(parts.caution)}
+      </p>
+    )}
+
+    {group.passages && group.passages.length > 0 && (
+      <div class="passages">
+        <h4>Texts both sides argue from</h4>
+        <p>{group.passages.join(' · ')}</p>
+      </div>
+    )}
+
+    {split && (
+      <div class="read-split read-split--compact">
+        <div>
+          <h4>{row.left}</h4>
+          <ul>{split.left.slice(0, 2).map(r => <li>{r}</li>)}</ul>
+        </div>
+        <div>
+          <h4>{row.right}</h4>
+          <ul>{split.right.slice(0, 2).map(r => <li>{r}</li>)}</ul>
+        </div>
+      </div>
+    )}
+
+    <p class="depth-more">
+      <a href={href}>
+        {(parts && (more(parts.left) || more(parts.right)))
+          ? `Read both cases in full, and how the argument unfolded →`
+          : `More on ${row.name} →`}
+      </a>
+    </p>
+  </div>
+</details>

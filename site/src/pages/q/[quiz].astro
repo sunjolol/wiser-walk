@@ -124,6 +124,9 @@ const jsonLd = isDraft
       function finish() {
         const values = scoreQuiz(quiz, sheet);
         const code = encodeFor(quiz, values);
+        // A note for the result page, which is served identically to the person who just
+        // took the quiz and to anyone they send the link to. Tab-scoped, never sent.
+        try { sessionStorage.setItem('ww:took:' + quiz.slug, code); } catch (e) {}
         window.location.href = `/r/${quiz.slug}/${code}/`;
       }
 

@@ -4,7 +4,7 @@
  * fairness audit — see audit/fairness-report.md before changing any of them.
  */
 import { makeCodec } from '../engine/codec';
-import type { Bar, Quiz, QuizResult, ScoringStrategy, Sheet } from '../engine/types';
+import type { BipolarRow, BipolarView, Quiz, ScoringStrategy, Sheet } from '../engine/types';
 
 /** Items per group fixes the raw range, so a group with more items still maps to 0..100. */
 function spanOf(quiz: Quiz, group: number): number {
@@ -17,10 +17,29 @@ function codecFor(quiz: Quiz) {
   return makeCodec(quiz.config.radix, quiz.groups.length);
 }
 
-/** Five bands across the scale; band 2 is the middle, and a midpoint is not a conviction. */
+/**
+ * Five bands across the scale. A score at or below BAND_EDGES[i] is band i; band 2 is the
+ * middle, and a midpoint is not a conviction.
+ *
+ * These edges are the single source of truth for the no-claim band. The result page draws
+ * that band as a visible zone, and it reads the range from here rather than hard-coding
+ * 41-59 in CSS — otherwise a quiz that moved its edges would ship a visual that lies.
+ */
+export const BAND_EDGES = [20, 40, 59, 79, 100] as const;
+const MIDDLE_BAND = 2;
+
 export function band(score: number): number {
-  return score <= 20 ? 0 : score <= 40 ? 1 : score <= 59 ? 2 : score <= 79 ? 3 : 4;
+  for (let i = 0; i < BAND_EDGES.length; i++) if (score <= BAND_EDGES[i]!) return i;
+  return BAND_EDGES.length - 1;
 }
+
+/** The inclusive score range in which the instrument names no position: [41, 59]. */
+export const noClaimRange = (): [number, number] => [
+  BAND_EDGES[MIDDLE_BAND - 1]! + 1,
+  BAND_EDGES[MIDDLE_BAND]!
+];
+
+export const namesNoPosition = (score: number) => band(score) === MIDDLE_BAND;
 
 /** Distance from the midpoint as a share of the half-axis, so one net Agree is not "58%". */
 export function lean(group: { left?: string; right?: string }, score: number): string {
@@ -118,6 +137,7 @@ export function nearestLine(quiz: Quiz, values: number[], near: Match[]): string
 
 export const bipolar: ScoringStrategy = {
   id: 'bipolar-nearest',
+  shape: 'bipolar',
 
   score(quiz: Quiz, sheet: Sheet): number[] {
     const raw = new Array(quiz.groups.length).fill(0);
@@ -130,22 +150,34 @@ export const bipolar: ScoringStrategy = {
     });
   },
 
-  result(quiz: Quiz, values: number[]): QuizResult {
+  result(quiz: Quiz, values: number[]): BipolarView {
     const near = nearest(quiz, values);
-    const bars: Bar[] = quiz.groups.map((g, i) => ({
-      label: g.name,
-      value: values[i] ?? 50,
-      emoji: g.emoji,
-      left: g.left,
-      right: g.right,
-      lean: lean(g, values[i] ?? 50)
-    }));
+    const rows: BipolarRow[] = quiz.groups.map((g, i) => {
+      const value = values[i] ?? 50;
+      return {
+        key: g.key,
+        slug: g.slug,
+        name: g.name,
+        emoji: g.emoji,
+        value,
+        // A bipolar group without both poles is a data error, not a rendering variant.
+        // The registry rejects it at build time; this keeps the type honest meanwhile.
+        left: g.left ?? '',
+        right: g.right ?? '',
+        band: g.bands?.[band(value)] ?? '',
+        lean: lean(g, value),
+        noClaim: namesNoPosition(value)
+      };
+    });
     return {
+      shape: 'bipolar',
+      state: nearestState(quiz, values, near).kind,
       quizSlug: quiz.slug,
       code: this.encode(quiz, values),
       headline: headline(quiz, values),
       summary: nearestLine(quiz, values, near),
-      bars,
+      rows,
+      noClaimRange: noClaimRange(),
       ranked: near.map(m => ({ name: m.name, slug: m.slug, score: m.match }))
     };
   },

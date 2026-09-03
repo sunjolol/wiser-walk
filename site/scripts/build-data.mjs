@@ -29,25 +29,50 @@ if (!existsSync(SOURCE)) {
 
 const src = JSON.parse(readFileSync(SOURCE, 'utf8'));
 
+/*
+ * The pole split is computed HERE and committed into compass.json, for the same reason the
+ * quiz data is: design/tools/split-summaries.mjs lives outside site/, which is the Vercel
+ * root directory and may be all that a build machine checks out. The tool stays the single
+ * source of truth for how a summary is split, and it verifies its own work — it refuses
+ * rather than guessing, because attributing one pole's words to the other is exactly the
+ * unfairness the whole instrument exists to avoid.
+ */
+const { splitSummary } = await import('../../design/tools/split-summaries.mjs');
+
 const slug = s => String(s)
   .toLowerCase()
   .replace(/&/g, ' and ')
   .replace(/[^a-z0-9]+/g, '-')
   .replace(/^-+|-+$/g, '');
 
-const axes = src.axes.map((a, i) => ({
-  index: i,
-  key: a.key,
-  name: a.name,
-  slug: slug(a.name),
-  left: a.left_pole,
-  right: a.right_pole,
-  bands: a.bands,
-  summary: a.fair_summary,
-  history: a.history,
-  passages: a.key_passages,
-  readMore: a.read_more
-}));
+const axes = src.axes.map((a, i) => {
+  const split = splitSummary(a.key, a.fair_summary);
+  if (!split.ok) {
+    // Rendering the summary whole is a correct fallback; silently mis-attributing half of
+    // it to the wrong pole is not. Fail the build and let a person look at the anchor.
+    throw new Error(`build-data: cannot split the ${a.name} summary safely (${split.reason})`);
+  }
+  return {
+    index: i,
+    key: a.key,
+    name: a.name,
+    slug: slug(a.name),
+    left: a.left_pole,
+    right: a.right_pole,
+    bands: a.bands,
+    summary: a.fair_summary,
+    // Verified: every sentence of the audited summary is used exactly once.
+    summaryParts: {
+      left: split.left,
+      right: split.right,
+      between: split.note || '',
+      caution: split.caution || ''
+    },
+    history: a.history,
+    passages: a.key_passages,
+    readMore: a.read_more
+  };
+});
 
 const axisKeys = axes.map(a => a.key);
 
@@ -114,6 +139,13 @@ mkdirSync(dirname(OUT), { recursive: true });
 writeFileSync(OUT, JSON.stringify(out, null, 1));
 writeFileSync(ASIDE, JSON.stringify(aside, null, 1));
 
+const splitWords = t => (t ? t.trim().split(/\s+/).length : 0);
+console.log(
+  'summary splits: ' +
+    axes
+      .map(a => `${a.name} ${splitWords(a.summaryParts.left)}/${splitWords(a.summaryParts.right)}w`)
+      .join(', ')
+);
 console.log(
   `compass.json: ${axes.length} axes, ${statements.length} statements (${itemsPerAxis}/axis, radix ${radix}), ` +
   `${traditions.length} traditions, max distance ${out.scoring.maxDistance}\n` +

@@ -1,0 +1,137 @@
+---
+/**
+ * The email offer.
+ *
+ * The honest framing matters here more than the conversion. The result link is already
+ * free and already in the reader's address bar, so "we'll email you your result" would be
+ * asking for an address in exchange for something they already have. What is actually
+ * worth an address is the follow-up: a short series that unpacks the axes they leaned on
+ * hardest, out of the history and passages already written for the axis pages.
+ *
+ * That series needs the result code, which means the code leaves the browser. /about and
+ * /method say so, and so does the line under this form. Nothing here may be softer than
+ * those pages are.
+ */
+import type { Quiz, ResultView } from '../lib/engine/types';
+
+interface Props {
+  quiz: Quiz;
+  view: ResultView;
+  /** False when no provider is configured, so the form is hidden rather than made to lie. */
+  enabled: boolean;
+}
+
+const { quiz, view, enabled } = Astro.props;
+if (!enabled) return null;
+
+const backTo = `/r/${quiz.slug}/${view.code}/`;
+
+// Name the strongest axes in the offer, so it is concrete rather than a generic newsletter
+// pitch. On a flat or all-central result there is nothing to name, and the copy says that.
+const named =
+  view.shape === 'bipolar'
+    ? view.rows.filter(r => !r.noClaim).sort((a, b) => Math.abs(b.value - 50) - Math.abs(a.value - 50))
+    : [...view.rows].sort((a, b) => a.rank - b.rank).filter(r => r.value > 50);
+
+const topTwo = named.slice(0, 2).map(r => r.name);
+const offer =
+  topTwo.length === 2
+    ? `Three or four emails on where your answers actually came from, starting with ${topTwo[0]} and ${topTwo[1]}.`
+    : topTwo.length === 1
+      ? `Three or four emails on where your answers actually came from, starting with ${topTwo[0]}.`
+      : 'Three or four emails on the questions behind this quiz, and why they have divided people who read the same Bible.';
+---
+<section class="capture" id="follow-up">
+  <h2>Where this came from</h2>
+  <p class="capture-offer">{offer}</p>
+
+  <form class="capture-form" id="capture-form" method="post" action="/api/subscribe">
+    <input type="hidden" name="quiz" value={quiz.slug} />
+    <input type="hidden" name="code" value={view.code} />
+    <input type="hidden" name="back" value={backTo} />
+
+    {/* Hidden from people, irresistible to naive bots. Not a CAPTCHA and never will be. */}
+    <p class="hp" aria-hidden="true">
+      <label>Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+    </p>
+
+    <label class="sr-only" for="capture-email">Your email address</label>
+    <div class="capture-row">
+      <input
+        id="capture-email"
+        type="email"
+        name="email"
+        required
+        autocomplete="email"
+        inputmode="email"
+        placeholder="you@example.com"
+      />
+      <button class="btn" type="submit">Send them</button>
+    </div>
+  </form>
+
+  {/* Outside the form on purpose: on success the form is hidden, and a status message
+      inside it would be hidden along with the thing it is reporting on. */}
+  <p class="capture-status" id="capture-status" role="status" aria-live="polite"></p>
+
+  <p class="capture-small">
+    Your answers stay in your browser, as always. Subscribing sends two things and nothing
+    else: the address you type, and the code from this page's link, so the emails can be
+    about your result rather than a generic one. One email to confirm first, and every one
+    after it has an unsubscribe link. <a href="/method/#your-answers">The full detail</a>.
+  </p>
+</section>
+
+<script>
+  const form = document.getElementById('capture-form');
+  const status = document.getElementById('capture-status');
+  if (form && status) {
+    const button = form.querySelector('button[type="submit"]');
+    const say = (text, kind) => {
+      status.textContent = text;
+      status.className = 'capture-status is-' + kind;
+    };
+
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+      const data = Object.fromEntries(new FormData(form));
+      button.disabled = true;
+      say('Sending…', 'busy');
+
+      try {
+        const res = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        const body = await res.json().catch(() => ({}));
+
+        if (res.ok && body.ok) {
+          // Hidden rather than reset: leaving an empty box under a success message invites
+          // a second submission that would only say the same thing again.
+          form.hidden = true;
+          say(
+            body.already
+              ? 'You are already on the list — nothing has changed.'
+              : 'Check your inbox for a confirmation email. It has to be clicked before anything else is sent.',
+            'ok'
+          );
+        } else {
+          button.disabled = false;
+          say(body.error || 'That did not go through. Try again in a moment.', 'bad');
+        }
+      } catch {
+        button.disabled = false;
+        say('That did not go through — you may be offline. Try again in a moment.', 'bad');
+      }
+    });
+
+    // The no-JS path redirects back here with the outcome in the query string.
+    const params = new URLSearchParams(location.search);
+    const sub = params.get('sub');
+    if (sub === 'ok') say('Check your inbox for a confirmation email.', 'ok');
+    else if (sub === 'already') say('You are already on the list — nothing has changed.', 'ok');
+    else if (sub === 'error') say(params.get('why') || 'That did not go through.', 'bad');
+    if (sub) history.replaceState(null, '', location.pathname);
+  }
+</script>

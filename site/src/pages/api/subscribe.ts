@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { getProvider, isConfigured, looksLikeEmail } from '../../lib/email/provider';
+import { readEnv } from '../../lib/email/env';
 import { getQuiz, decodeFor, resultFor } from '../../lib/engine/registry';
 
 /** The only route on the site that talks to anything outside the browser. */
@@ -12,32 +13,48 @@ const json = (status: number, body: unknown) =>
   });
 
 export const POST: APIRoute = async ({ request, locals }) => {
-  const env = { ...process.env, ...((locals as any)?.runtime?.env ?? {}) } as Record<
-    string,
-    string | undefined
-  >;
+  const env = readEnv(locals);
 
-  if (!isConfigured(env) && env.NODE_ENV === 'production') {
+  if (!isConfigured(env) && env.PROD) {
     // Better to refuse loudly than to accept an address and drop it on the floor.
     return json(503, { ok: false, error: 'Sign-up is not switched on yet.' });
   }
 
+  // Two callers: fetch() from the result page, and a plain form POST when JavaScript is
+  // off. The result page is server-rendered, so someone can reach it without ever having
+  // run the quiz — a shared link — and the form should still work for them.
+  const asForm = !(request.headers.get('content-type') ?? '').includes('application/json');
+
   let payload: Record<string, unknown>;
   try {
-    payload = await request.json();
+    payload = asForm
+      ? Object.fromEntries(await request.formData())
+      : await request.json();
   } catch {
     return json(400, { ok: false, error: 'Malformed request.' });
   }
 
+  /** No-JS replies are a redirect back to the result page, with the outcome in the query. */
+  const back = (status: 'ok' | 'already' | 'error', message?: string) => {
+    const to = typeof payload.back === 'string' && payload.back.startsWith('/')
+      ? payload.back
+      : '/';
+    const url = new URL(to, request.url);
+    url.searchParams.set('sub', status);
+    if (message) url.searchParams.set('why', message);
+    return new Response(null, { status: 303, headers: { location: url.pathname + url.search } });
+  };
+
   // Honeypot: a field hidden from people and irresistible to naive bots. Anything in it
   // gets the same cheerful answer a person gets, so a bot learns nothing from the response.
   if (typeof payload.website === 'string' && payload.website.length > 0) {
-    return json(200, { ok: true });
+    return asForm ? back('ok') : json(200, { ok: true });
   }
 
   const email = payload.email;
   if (!looksLikeEmail(email)) {
-    return json(400, { ok: false, error: "That does not look like an email address." });
+    const msg = 'That does not look like an email address.';
+    return asForm ? back('error', msg) : json(400, { ok: false, error: msg });
   }
 
   // The quiz slug and code are echoed back by the page, so validate them rather than
@@ -57,8 +74,14 @@ export const POST: APIRoute = async ({ request, locals }) => {
     headline: result?.headline
   });
 
-  if (outcome.ok) return json(200, { ok: true, already: outcome.already });
-  return json(outcome.retryable ? 503 : 400, { ok: false, error: outcome.message });
+  if (outcome.ok) {
+    return asForm
+      ? back(outcome.already ? 'already' : 'ok')
+      : json(200, { ok: true, already: outcome.already });
+  }
+  return asForm
+    ? back('error', outcome.message)
+    : json(outcome.retryable ? 503 : 400, { ok: false, error: outcome.message });
 };
 
 /** Anything but POST, answered properly rather than as a 404 from the catch-all. */

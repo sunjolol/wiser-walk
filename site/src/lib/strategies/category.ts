@@ -6,7 +6,7 @@
  * strategy, so the permalink codec, the result page and the share card stay generic.
  */
 import { makeCodec } from '../engine/codec';
-import type { Bar, Quiz, QuizResult, ScoringStrategy, Sheet } from '../engine/types';
+import type { Quiz, ScoringStrategy, Sheet, UnipolarRow, UnipolarView } from '../engine/types';
 
 function spanOf(quiz: Quiz, group: number): number {
   let n = 0;
@@ -26,6 +26,7 @@ export function pull(score: number): string {
 
 export const category: ScoringStrategy = {
   id: 'category-highest',
+  shape: 'unipolar',
 
   score(quiz: Quiz, sheet: Sheet): number[] {
     const raw = new Array(quiz.groups.length).fill(0);
@@ -38,16 +39,21 @@ export const category: ScoringStrategy = {
     });
   },
 
-  result(quiz: Quiz, values: number[]): QuizResult {
+  result(quiz: Quiz, values: number[]): UnipolarView {
     const ranked = quiz.groups
       .map((g, i) => ({ name: g.name, slug: g.slug, score: values[i] ?? 50 }))
       .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
 
-    const bars: Bar[] = quiz.groups.map((g, i) => ({
-      label: g.name,
-      value: values[i] ?? 50,
+    // Rank by slug, so rows can stay in quiz order and still know where they placed.
+    const place = new Map(ranked.map((r, i) => [r.slug, i + 1]));
+    const rows: UnipolarRow[] = quiz.groups.map((g, i) => ({
+      key: g.key,
+      slug: g.slug,
+      name: g.name,
       emoji: g.emoji,
-      lean: pull(values[i] ?? 50)
+      value: values[i] ?? 50,
+      rank: place.get(g.slug) ?? i + 1,
+      strength: pull(values[i] ?? 50)
     }));
 
     const flat = values.every(s => Math.abs(s - 50) <= quiz.config.centerUnits);
@@ -57,24 +63,31 @@ export const category: ScoringStrategy = {
 
     let headline: string;
     let summary: string;
+    let state: UnipolarView['state'];
     if (flat) {
+      // "Flat", never "central": a ranking has no centre to sit in the middle of.
+      state = 'flat';
       headline = 'No single one stands out';
       summary = 'Your answers sit near the middle throughout, so no category is named.';
     } else if (tied) {
+      state = 'tie';
       headline = `${ranked[0]!.name} and ${ranked[1]!.name}`;
       headline = headline.charAt(0).toUpperCase() + headline.slice(1);
       summary = `Two came out level: ${ranked[0]!.name} and ${ranked[1]!.name}.`;
     } else {
+      state = 'clear';
       headline = ranked[0]!.name.charAt(0).toUpperCase() + ranked[0]!.name.slice(1);
       summary = `Strongest pull: ${ranked[0]!.name}. Next: ${ranked[1]?.name ?? '—'}.`;
     }
 
     return {
+      shape: 'unipolar',
+      state,
       quizSlug: quiz.slug,
       code: this.encode(quiz, values),
       headline,
       summary,
-      bars,
+      rows,
       ranked
     };
   },

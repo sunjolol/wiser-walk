@@ -1,6 +1,13 @@
 ---
 import Base from '../../../layouts/Base.astro';
-import { getQuiz, resultFor, decodeFor, shareTextFor } from '../../../lib/engine/registry';
+import RailStack from '../../../components/RailStack.astro';
+import CategoryStack from '../../../components/CategoryStack.astro';
+import AxisDepth from '../../../components/AxisDepth.astro';
+import ShareBlock from '../../../components/ShareBlock.astro';
+import EmailCapture from '../../../components/EmailCapture.astro';
+import { getQuiz, resultFor, decodeFor, shareTextFor, outcomeHref } from '../../../lib/engine/registry';
+import { isConfigured } from '../../../lib/email/provider';
+import { readEnv } from '../../../lib/email/env';
 import { getCollection } from 'astro:content';
 
 // Rendered on demand: any valid code has a permanent page, without pre-building
@@ -14,8 +21,10 @@ const values = quiz ? decodeFor(quiz, raw) : null;
 if (quiz && values) Astro.response.headers.set('cache-control', 'public, max-age=600');
 else Astro.response.status = 404;
 
-const result = quiz && values ? resultFor(quiz, values) : null;
+const view = quiz && values ? resultFor(quiz, values) : null;
 const share = quiz && values ? shareTextFor(quiz, values, Astro.site!.origin) : '';
+
+const emailOn = isConfigured(readEnv(Astro.locals));
 
 // Articles that speak to this quiz, so a result is a doorway rather than a dead end.
 const related = quiz
@@ -23,73 +32,94 @@ const related = quiz
       .filter(a => !a.data.draft && a.data.quizzes?.includes(quiz.slug))
       .slice(0, 3)
   : [];
+
+/*
+ * Depth is ordered by how hard the reader actually leaned, and the strongest one opens on
+ * load. An axis in the no-claim band still gets a panel — it just sorts last. Suppressing
+ * it would leave a centrist with an empty page and no explanation, which is the failure the
+ * visible no-claim zone exists to prevent.
+ */
+const depthOrder =
+  view?.shape === 'bipolar'
+    ? [...view.rows].sort((a, b) => Math.abs(b.value - 50) - Math.abs(a.value - 50))
+    : [];
+
+const outcomeHeading =
+  view?.shape === 'bipolar'
+    ? view.state === 'central'
+      ? 'What the arithmetic returned anyway'
+      : view.state === 'loose'
+        ? 'Loose neighbours, not matches'
+        : 'Closest on the map'
+    : 'In order';
 ---
-{quiz && result ? (
+{quiz && view ? (
   <Base
-    title={`${result.headline} — ${quiz.title}`}
-    description={result.summary}
+    title={`${view.headline} — ${quiz.title}`}
+    description={view.summary}
     noindex={true}
     ogType="article"
   >
-    <div class="prose">
+    <div class="prose result-head">
       <p class="eyebrow">{quiz.emoji} {quiz.title}</p>
-      <h1>{result.headline}</h1>
-      <p class="lede">{result.summary}</p>
+      <h1>{view.headline}</h1>
+      <p class="lede">{view.summary}</p>
       {quiz.status === 'draft' && (
         <div class="note draft"><p><strong>Unaudited draft.</strong>{" " + quiz.draftNote}</p></div>
       )}
     </div>
 
-    <ul class="bars">
-      {result.bars.map(bar => (
-        <li>
-          <div class="bar-head">
-            <span class="name">{bar.emoji} {bar.label}</span>
-            <span class="lean">{bar.lean}</span>
-          </div>
-          <div class="track">
-            {bar.left
-              ? <span class="dot" style={`left:${bar.value}%`}></span>
-              : <span class="fill" style={`width:${bar.value}%`}></span>}
-          </div>
-          {bar.left && (
-            <div class="poles"><span>{bar.left}</span><span>{bar.right}</span></div>
-          )}
-        </li>
-      ))}
-    </ul>
+    <div class="panel layered result-panel">
+      <div class="wash" aria-hidden="true"></div>
+      <div class="veil" aria-hidden="true"></div>
 
-    {result.ranked.length > 0 && (
-      <>
-        <h2>{quiz.outcomes.length ? 'Closest on the map' : 'In order'}</h2>
-        {quiz.outcomes.length > 0 && (
+      {view.shape === 'bipolar'
+        ? <RailStack quiz={quiz} view={view} />
+        : <CategoryStack quiz={quiz} view={view} />}
+    </div>
+
+    {view.ranked.length > 0 && (
+      <section class="outcomes">
+        <h2>{outcomeHeading}</h2>
+        {view.shape === 'bipolar' && (
           <p class="tags">
-            Scored against the listed traditions only — a sketch of typical adherents,
-            not official teaching, and not a complete list of Christian traditions.
+            {view.state === 'central'
+              ? 'Your answers sit in the no-position band on every axis, so nothing here is a claim about you. It is only what the distances come to.'
+              : view.state === 'loose'
+                ? 'Nothing on the list is a close fit. These are the nearest, and "nearest" is doing a lot of work.'
+                : 'Scored against the listed traditions only — a sketch of typical adherents, not official teaching, and not a complete list of Christian traditions.'}
           </p>
         )}
         <ul class="ranked">
-          {result.ranked.slice(0, 5).map(r => (
+          {view.ranked.slice(0, 5).map(r => (
             <li>
               <span>{quiz.outcomes.length
-                ? <a href={`/tradition/${r.slug}/`}>{r.name}</a>
+                ? <a href={outcomeHref({ name: r.name, slug: r.slug })}>{r.name}</a>
                 : r.name}</span>
               <span>{r.score}%</span>
             </li>
           ))}
         </ul>
-      </>
+      </section>
     )}
 
-    <h2>Share it</h2>
-    <pre class="share" id="share">{share}</pre>
-    <div class="btn-row">
-      <button class="btn" id="copy" type="button">Copy</button>
-      <a class="btn ghost" href={`/q/${quiz.slug}/`}>Take it again</a>
-    </div>
+    {view.shape === 'bipolar' && depthOrder.some(r => quiz.groups.find(g => g.slug === r.slug)?.summary) && (
+      <section class="depth-section">
+        <h2>Where these differences come from</h2>
+        <p class="tags">
+          Each one is a real disagreement between Christians who read the same Bible. Both
+          cases below are stated by people who hold them.
+        </p>
+        {depthOrder.map((row, i) => <AxisDepth quiz={quiz} row={row} open={i === 0} />)}
+      </section>
+    )}
+
+    <ShareBlock quiz={quiz} view={view} share={share} />
+
+    <EmailCapture quiz={quiz} view={view} enabled={emailOn} />
 
     {related.length > 0 && (
-      <>
+      <section>
         <h2>Where to go from here</h2>
         <div class="cards">
           {related.map(a => (
@@ -100,22 +130,8 @@ const related = quiz
             </div>
           ))}
         </div>
-      </>
+      </section>
     )}
-
-    <script>
-      const btn = document.getElementById('copy');
-      const pre = document.getElementById('share');
-      btn?.addEventListener('click', async () => {
-        try {
-          await navigator.clipboard.writeText(pre?.textContent ?? '');
-          btn.textContent = 'Copied';
-        } catch {
-          btn.textContent = 'Press Ctrl+C';
-        }
-        setTimeout(() => { btn.textContent = 'Copy'; }, 1600);
-      });
-    </script>
   </Base>
 ) : (
   <Base title="Result not found" description="That result link is not valid." noindex={true}>
@@ -124,6 +140,10 @@ const related = quiz
       <p>
         Result codes are exact: one wrong character and there is no way to recover the
         answers, because nothing about your result is stored on our side.
+      </p>
+      <p>
+        If someone sent you this link, ask them for it again — and check that nothing was
+        cut off at the end.
       </p>
       <p><a href="/quizzes/">Take a quiz →</a></p>
     </div>
