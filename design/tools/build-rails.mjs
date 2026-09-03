@@ -1,0 +1,213 @@
+/**
+ * Prototype of the result page's ONE hero component: six full-width diverging rails on a
+ * shared centre spine, built from the real audited data so the layout is judged against
+ * the actual pole names rather than placeholder text.
+ *
+ * Writes a standalone page next to the other demos. This is a specimen for measuring, not
+ * the shipped component — the shipped one lives in the Astro site.
+ *
+ * Run: node design/tools/build-rails.mjs [outfile]
+ */
+import { readFileSync, writeFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const HERE = fileURLToPath(new URL('.', import.meta.url));
+const data = JSON.parse(readFileSync(resolve(HERE, '../../site/src/data/compass.json'), 'utf8'));
+
+/** The audited band edges. 41–59 is the zone in which the instrument names no position. */
+const ZONE_LO = 41;
+const ZONE_HI = 59;
+
+const inZone = s => s >= ZONE_LO && s <= ZONE_HI;
+const band = s => (s <= 20 ? 0 : s <= 40 ? 1 : s <= 59 ? 2 : s <= 79 ? 3 : 4);
+
+const lean = (a, s) =>
+  s === 50 ? 'at the centre'
+  : s === 0 ? `at the ${a.left} pole`
+  : s === 100 ? `at the ${a.right} pole`
+  : `${Math.round((Math.abs(s - 50) / 50) * 100)}% toward ${s < 50 ? a.left : a.right}`;
+
+const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+/**
+ * Three sheets that between them exercise every layout risk: a mixed result, an
+ * all-central one (six rails sitting inside the zone, which must not read as an error),
+ * and both poles pinned.
+ */
+const SHEETS = {
+  mixed:   { label: 'Mixed — the common case',        scores: [33, 42, 33, 58, 50, 67] },
+  central: { label: 'All central — names nothing',    scores: [50, 50, 42, 58, 50, 50] },
+  extreme: { label: 'Pinned at both poles',           scores: [0, 100, 0, 100, 0, 100] }
+};
+
+function rail(axis, score) {
+  const centred = inZone(score);
+  const from = Math.min(score, 50);
+  const width = Math.abs(score - 50);
+  const side = score < 50 ? 'left' : score > 50 ? 'right' : 'centre';
+  // In the zone the reading is the audited band adjective alone. "Names no position" is
+  // said once, in the legend above the rails, rather than six times down the right margin.
+  const reading = centred ? axis.bands[band(score)] : lean(axis, score);
+
+  return `
+      <div class="rail rail--${side}${centred ? ' is-centred' : ''}"
+           style="--pos:${score};--from:${from};--span:${width}">
+        <div class="rail-head">
+          <span class="rail-name">${esc(axis.name)}</span>
+          <span class="rail-read">${esc(reading)}</span>
+        </div>
+        <div class="rail-track">
+          <span class="rail-zone" aria-hidden="true"></span>
+          <span class="rail-spine" aria-hidden="true"></span>
+          ${centred ? '' : '<span class="rail-tint" aria-hidden="true"></span>'}
+          <span class="rail-knob" aria-hidden="true"></span>
+        </div>
+        <p class="rail-poles"><span>${esc(axis.left)}</span><span>${esc(axis.right)}</span></p>
+      </div>`;
+}
+
+const panels = Object.entries(SHEETS)
+  .map(
+    ([key, s]) => `
+    <section class="specimen" id="${key}">
+      <p class="specimen-label">${esc(s.label)} — ${s.scores.join(' / ')}</p>
+      <p class="rails-legend"><span class="legend-swatch" aria-hidden="true"></span>
+        The hatched middle is where the quiz names no position.</p>
+      <div class="rails">${data.axes.map((a, i) => rail(a, s.scores[i])).join('')}</div>
+    </section>`
+  )
+  .join('');
+
+const html = `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rail specimen — Wiser Walk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+:root{
+  --blue:#7EBAEE; --orange:#F0A06F;
+  --grad-r:linear-gradient(to right,var(--blue),var(--orange));
+  --page:#E3E3E3; --shell:#E8E8E8; --panel:#EEEEEE;
+  --ink:#444444; --ink-soft:#5A6066; --ink-mute:#7C8288;
+  --accent:#3E86C4;
+  --lift:3px 3px 5px rgba(68,68,68,.065);
+  --display:"DM Serif Display",Georgia,serif;
+  --ui:"Poppins",ui-sans-serif,system-ui,sans-serif;
+  --text:"Inter",ui-sans-serif,system-ui,sans-serif;
+
+  /* rail geometry, all in one place so a change is one edit */
+  --rail-h:14px;
+  --knob:20px;
+  --tint-op:.32;
+  /* the no-claim zone needs its own tokens: at .16 on a near-black track it disappears */
+  --zone-hatch:rgba(124,130,136,.18);
+  --zone-edge:rgba(124,130,136,.34);
+}
+:root[data-theme="dark"]{
+  --page:#131319; --shell:#1B1B21; --panel:#24242B;
+  --ink:#EAE8E4; --ink-soft:#B4B0AA; --ink-mute:#8E8A84;
+  --accent:#7EBAEE;
+  --tint-op:.4;
+  --zone-hatch:rgba(190,196,205,.2);
+  --zone-edge:rgba(190,196,205,.34);
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--text);
+  font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:34rem;margin:0 auto;padding:1.5rem 1.25rem 4rem}
+h1{font-family:var(--display);font-size:1.7rem;margin:0 0 .3rem;line-height:1.15}
+.note{color:var(--ink-soft);font-size:.9rem;margin:0 0 1.5rem}
+.specimen{background:var(--panel);border-radius:18px;padding:1.25rem 1.1rem 1.4rem;
+  box-shadow:var(--lift);margin:0 0 1.25rem}
+.specimen-label{font-family:var(--ui);font-size:.68rem;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-mute);margin:0 0 1.1rem}
+
+/* ---------------- the rail ---------------- */
+.rails{display:flex;flex-direction:column;gap:1.15rem}
+.rail{--tone:var(--ink-mute)}
+.rail--left{--tone:var(--blue)}
+.rail--right{--tone:var(--orange)}
+
+.rail-head{display:flex;align-items:baseline;gap:.6rem;margin:0 0 .45rem}
+.rail-name{font-family:var(--ui);font-weight:700;font-size:.8rem;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--accent);flex:none}
+.rail-read{margin-left:auto;font-family:var(--ui);font-size:.74rem;font-weight:600;
+  color:var(--ink-mute);text-align:right;line-height:1.3;
+  /* the longest audited band adjective is 33 characters; let it shrink rather than wrap */
+  min-width:0;overflow-wrap:anywhere}
+.is-centred .rail-read{font-style:italic;color:var(--ink-soft)}
+
+.rails-legend{display:flex;align-items:center;gap:.5rem;margin:0 0 1.1rem;
+  font-size:.76rem;color:var(--ink-mute)}
+.legend-swatch{flex:none;width:26px;height:12px;border-radius:6px;background:var(--shell);
+  background-image:repeating-linear-gradient(135deg,var(--zone-hatch) 0 3px,transparent 3px 6px);
+  border:1px solid var(--zone-edge)}
+
+.rail-track{position:relative;height:var(--rail-h);border-radius:calc(var(--rail-h)/2);
+  background:var(--shell);box-shadow:inset 0 1px 2px rgba(68,68,68,.08)}
+
+/* the audited 41-59 band, drawn so a centrist sees WHY nothing was named */
+.rail-zone{position:absolute;top:0;bottom:0;
+  left:calc(var(--knob) / 2 + var(--run) * 41 / 100);
+  right:calc(var(--knob) / 2 + var(--run) * 41 / 100);
+  background:repeating-linear-gradient(135deg,
+    var(--zone-hatch) 0 3px, transparent 3px 6px);
+  border-left:1px solid var(--zone-edge);border-right:1px solid var(--zone-edge)}
+.rail-spine{position:absolute;left:50%;top:-4px;bottom:-4px;width:1px;
+  background:var(--zone-edge);transform:translateX(-.5px)}
+
+/*
+ * The position scale is inset by half a knob at each end, so a score of 0 or 100 puts the
+ * knob's EDGE on the rail's edge instead of hanging half of it off into the card padding.
+ * --pos/--from/--span are unitless 0-100, resolved against the inset track here.
+ */
+.rail-track{--run:calc(100% - var(--knob))}
+.rail-x{left:calc(var(--knob) / 2 + var(--run) * var(--pos) / 100)}
+
+/* layered opacity: a tint diverging FROM the centre, never a flat saturated fill */
+.rail-tint{position:absolute;top:0;bottom:0;
+  left:calc(var(--knob) / 2 + var(--run) * var(--from) / 100);
+  width:calc(var(--run) * var(--span) / 100);
+  background:var(--tone);opacity:var(--tint-op);border-radius:calc(var(--rail-h)/2)}
+.rail-knob{position:absolute;top:50%;
+  left:calc(var(--run) * var(--pos) / 100);
+  width:var(--knob);height:var(--knob);
+  transform:translateY(-50%);border-radius:50%;
+  background:var(--tone);border:3px solid var(--panel);box-shadow:0 0 0 1.5px var(--tone)}
+.is-centred .rail-knob{background:var(--ink-mute);box-shadow:0 0 0 1.5px var(--ink-mute)}
+
+.rail-poles{display:flex;gap:.75rem;margin:.5rem 0 0;font-family:var(--ui);font-size:.7rem;
+  font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-mute)}
+.rail-poles span:first-child{color:var(--ink-soft)}
+.rail-poles span:last-child{margin-left:auto;text-align:right}
+
+.toggle{position:fixed;right:12px;bottom:12px;font-family:var(--ui);font-size:.75rem;
+  padding:.5rem .9rem;border-radius:20px;border:1px solid var(--ink-mute);
+  background:var(--panel);color:var(--ink);cursor:pointer}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Rail specimen</h1>
+  <p class="note">Real audited pole names and real reachable scores. Hero and axis rows are
+  one component. Both poles print on every rail; the hatched middle is the audited 41&ndash;59
+  band in which the instrument names no position.</p>
+  ${panels}
+</div>
+<button class="toggle" id="t" type="button">Dark</button>
+<script>
+  const root=document.documentElement,b=document.getElementById('t');
+  b.onclick=()=>{const d=root.dataset.theme==='dark';root.dataset.theme=d?'light':'dark';b.textContent=d?'Dark':'Light';};
+</script>
+</body>
+</html>
+`;
+
+const out = process.argv[2] ?? resolve(HERE, '../demos/wiser-walk-rails.html');
+writeFileSync(out, html);
+console.log(`${out}  ${(Buffer.byteLength(html) / 1024).toFixed(1)} kB`);
