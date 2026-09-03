@@ -1,6 +1,6 @@
 // Generate the site's data file from the audited source. The audit stays upstream:
 // never hand-edit site/src/data/compass.json — change the audit file and rerun this.
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -8,6 +8,24 @@ const here = dirname(fileURLToPath(import.meta.url));
 const SOURCE = resolve(here, '../../audit/compass-data.revised.json');
 const OUT = resolve(here, '../src/data/compass.json');
 const ASIDE = resolve(here, '../src/data/compass-audit.json');
+
+// The audited source lives outside site/, which a host may not check out when the
+// project root is set to site/. The generated files are committed for exactly that
+// case: if the source is missing but the outputs are present, use them and carry on.
+// If neither exists, fail loudly rather than building a site with no quiz in it.
+if (!existsSync(SOURCE)) {
+  if (existsSync(OUT) && existsSync(ASIDE)) {
+    console.log(
+      'build-data: audit source not present (building outside the repo root?) — ' +
+      'using the committed src/data/*.json unchanged.'
+    );
+    process.exit(0);
+  }
+  throw new Error(
+    `build-data: cannot find ${SOURCE}, and no committed data to fall back on. ` +
+    'Check out the whole repository, or restore site/src/data/compass.json.'
+  );
+}
 
 const src = JSON.parse(readFileSync(SOURCE, 'utf8'));
 
