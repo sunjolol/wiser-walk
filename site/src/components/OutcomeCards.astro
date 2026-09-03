@@ -1,0 +1,47 @@
+---
+/**
+ * "Closest on the map" — the traditions, as cards you can read at a glance.
+ *
+ * A plain name-and-number list made the reader do the comparing. The card and the bar are
+ * therefore the same object: each card is filled from the left to its own match, so the
+ * ranking is visible as length before any number is read, and the number is still there for
+ * anyone who wants it.
+ *
+ * The fill is the true percentage, not a rescaled one. Matches cluster — 68, 66, 65, 64, 62
+ * is a real spread — and stretching that range to fill the card would manufacture a gap the
+ * data does not have, on the one screen where a reader is deciding which church to look at.
+ * The closest one is marked instead, by treatment rather than by exaggeration.
+ *
+ * The skew, the asymmetric radius and the gradient on the leader are the theme's own card
+ * language; the layered fill is the rails' and the compass's.
+ */
+import type { Quiz, Ranked } from '../lib/engine/types';
+import { outcomeHref } from '../lib/engine/registry';
+
+interface Props {
+  quiz: Quiz;
+  ranked: Ranked[];
+  /** How many lead. Two on a tie, none when nothing is a real fit. */
+  leading?: number;
+  limit?: number;
+}
+
+const { quiz, ranked, leading = 1, limit = 5 } = Astro.props;
+const shown = ranked.slice(0, limit);
+---
+<ol class="outcomes-list">
+  {shown.map((r, i) => (
+    <li class:list={['outcome', { 'is-lead': i < leading }]}>
+      <a href={outcomeHref({ name: r.name, slug: r.slug })} class="outcome-card">
+        <span class="outcome-fill" style={`--v:${r.score}`} aria-hidden="true"></span>
+        {i < leading && <span class="outcome-bloom" aria-hidden="true"></span>}
+        <span class="outcome-body">
+          <span class="outcome-name">{r.name}</span>
+          <span class="outcome-meta">
+            {r.score}% match{i < leading && <span class="outcome-tag"> · closest</span>}
+          </span>
+        </span>
+      </a>
+    </li>
+  ))}
+</ol>

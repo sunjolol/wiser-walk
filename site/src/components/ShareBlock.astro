@@ -1,81 +1,92 @@
 ---
 /**
- * Share text, and the CTA that has to work for two different readers.
+ * Sharing: a picture, a link, and — last — the plain text.
  *
- * A result URL is both "my result" and "a friend's result", and the same page is served to
- * both. "Take it again" is wrong for a visitor who has never taken it; "See where you land"
- * is faintly insulting to the person who just did.
+ * The card is the point. It is drawn onto a canvas at 1080×1350 from the same numbers and
+ * the same geometry the page uses, so what someone posts is the page rather than a
+ * screenshot of it. Canvas rather than a DOM-to-image library: the card has a
+ * gradient-filled polygon, a hatched disc and three web fonts, which is exactly the
+ * material those libraries mangle.
  *
- * So the SERVER renders the visitor's version, and the page upgrades itself only when it
- * can prove otherwise — a sessionStorage note the quiz runner leaves behind on the way to
- * this page. Getting it wrong for the visitor is the costlier error, and the person who
- * just took the quiz necessarily had JavaScript on, so the upgrade will reach them.
+ * The card is always drawn in the LIGHT palette. A shared image is seen on a stranger's
+ * timeline, not against this page, and it should look the same to everyone.
  *
- * sessionStorage, not localStorage or a cookie: it is a UI convenience scoped to the tab,
- * it never leaves the device, and it is gone when the tab closes.
+ * The link comes second, in a field that selects itself, because the link IS the result —
+ * nothing is stored on our side.
+ *
+ * The plain-text block comes last and collapsed. It is genuinely useful where images do not
+ * go, and genuinely the least of the three.
+ *
+ * The CTA has to serve two readers, since the same URL is both "my result" and "a friend's
+ * result". The server renders the visitor's version and the page upgrades itself only when
+ * it can prove otherwise, from a tab-scoped note the quiz runner leaves behind. Getting it
+ * wrong for a visitor is the costlier error.
  */
-import type { Quiz, ResultView } from '../lib/engine/types';
+import type { BipolarView, Quiz, ResultView } from '../lib/engine/types';
 import { quizHref } from '../lib/engine/registry';
 
 interface Props {
   quiz: Quiz;
   view: ResultView;
   share: string;
+  origin: string;
 }
 
-const { quiz, view, share } = Astro.props;
+const { quiz, view, share, origin } = Astro.props;
+const url = `${origin}/r/${quiz.slug}/${view.code}/`;
 
-/*
- * The card is DISPLAYED split and COPIED whole.
- *
- * As one <pre> it showed about 42 characters at .72rem on a 360px phone, against a hedge
- * line that runs to 164 — so the fairness caveat, the one line the card exists to carry,
- * was the part you had to scroll sideways to find. Only the bar block has earned the right
- * not to wrap, because its columns line up and that alignment is the point. The title,
- * the verdict and the URL are ordinary prose and wrap like it.
- *
- * The copy button still copies `share` verbatim, so the audited text that leaves the page
- * is byte-for-byte what the strategy produced.
- */
-const isBar = (line: string) => /[●○█░]/.test(line);
-
-const blocks: Array<{ bar: boolean; lines: string[] }> = [];
-for (const line of share.split('\n')) {
-  const bar = isBar(line);
-  const last = blocks[blocks.length - 1];
-  if (last && last.bar === bar) last.lines.push(line);
-  else blocks.push({ bar, lines: [line] });
-}
+/** Everything the card needs, and nothing else. */
+const card = {
+  quiz: quiz.title,
+  code: view.code,
+  url: url.replace(/^https?:\/\//, '').replace(/\/$/, ''),
+  shape: view.shape,
+  headline: view.headlineParts,
+  summary: view.summary,
+  noClaimSpan: view.shape === 'bipolar' ? (view as BipolarView).noClaimSpan : null,
+  rows: view.rows.map(r =>
+    'left' in r
+      ? {
+          name: r.name, left: r.left, right: r.right, value: r.value,
+          step: r.step, steps: r.steps, noClaim: r.noClaim, lean: r.lean, band: r.band
+        }
+      : { name: r.name, value: r.value, rank: r.rank, strength: r.strength }
+  )
+};
 ---
 <section class="share-block" data-quiz={quiz.slug} data-code={view.code}>
-  <h2 data-visitor="Their result, in text" data-mine="Share it">Their result, in text</h2>
+  <h2 data-visitor="Their result" data-mine="Share your compass">Their result</h2>
 
-  <div class="share-card">
-    {blocks.map(b =>
-      b.bar
-        ? <pre class="share share-bars">{b.lines.join('\n')}</pre>
-        : b.lines.map(l => <p class="share-line">{l}</p>)
-    )}
+  <div class="share-actions">
+    <button class="btn" id="card-save" type="button">Save the card</button>
+    <button class="btn dark" id="card-share" type="button" hidden>Share</button>
+    <a class="btn ghost" id="share-cta" href={quizHref(quiz)}
+       data-visitor="See where you land" data-mine="Take it again">See where you land</a>
   </div>
 
-  {/* The canonical text, for the clipboard. Never shown, never re-wrapped. */}
-  <pre class="sr-only" id="share-text">{share}</pre>
-
-  <div class="btn-row">
-    <button class="btn dark" id="share-copy" type="button">Copy</button>
-    <a
-      class="btn"
-      id="share-cta"
-      href={quizHref(quiz)}
-      data-visitor="See where you land"
-      data-mine="Take it again"
-    >See where you land</a>
+  <div class="share-link">
+    <label class="sr-only" for="share-url">Your result link</label>
+    <input id="share-url" type="text" readonly value={url} spellcheck="false" />
+    <button class="btn ghost" id="link-copy" type="button">Copy link</button>
   </div>
 
   <p class="share-note" id="share-note"
      data-visitor={`Someone sent you this. ${quiz.items.length} statements, about ${quiz.minutes} minutes, scored in your own browser.`}
      data-mine="This link is your whole result. Nothing is stored on our side, so keep it if you want to come back to it."
   >Someone sent you this. {quiz.items.length} statements, about {quiz.minutes} minutes, scored in your own browser.</p>
+
+  <figure class="card-stage" id="card-stage" hidden>
+    <canvas id="card-canvas" width="1080" height="1350" aria-label="Your result card"></canvas>
+    <figcaption class="card-hint" id="card-hint"></figcaption>
+  </figure>
+
+  <details class="share-text-wrap">
+    <summary>Or copy it as plain text</summary>
+    <pre class="share" id="share-text">{share}</pre>
+    <button class="btn ghost" id="text-copy" type="button">Copy text</button>
+  </details>
+
+  <script type="application/json" id="card-data" set:html={JSON.stringify(card)}></script>
 </section>
 
 <script>
@@ -83,37 +94,276 @@ for (const line of share.split('\n')) {
     const block = document.querySelector('.share-block');
     if (!block) return;
 
-    // Did THIS browser produce THIS result? Anything else is treated as a visitor.
+    /* ---------------- who is looking ---------------- */
     let mine = false;
     try {
       mine = sessionStorage.getItem('ww:took:' + block.dataset.quiz) === block.dataset.code;
     } catch (e) {}
-
     if (mine) {
       block.querySelectorAll('[data-mine]').forEach(el => {
-        const text = el.getAttribute('data-mine');
-        if (el.tagName === 'A' || el.tagName === 'H2' || el.tagName === 'P') el.textContent = text;
+        el.textContent = el.getAttribute('data-mine');
       });
     }
 
-    const btn = document.getElementById('share-copy');
-    const pre = document.getElementById('share-text');
-    btn?.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(pre?.textContent ?? '');
-        btn.textContent = 'Copied';
-      } catch {
-        // Clipboard denied. Select the visible card so the reader can copy it themselves —
-        // selecting the hidden canonical copy would look like nothing happened.
-        const card = document.querySelector('.share-card');
-        const range = document.createRange();
-        range.selectNodeContents(card ?? pre);
-        const sel = window.getSelection();
-        sel?.removeAllRanges();
-        sel?.addRange(range);
-        btn.textContent = 'Selected — copy it';
+    /* ---------------- copy ---------------- */
+    const flash = (btn, text) => {
+      const was = btn.textContent;
+      btn.textContent = text;
+      setTimeout(() => { btn.textContent = was; }, 1800);
+    };
+    const copy = async (text, btn) => {
+      try { await navigator.clipboard.writeText(text); flash(btn, 'Copied'); }
+      catch { flash(btn, 'Press Ctrl+C'); }
+    };
+
+    const field = document.getElementById('share-url');
+    field?.addEventListener('focus', () => field.select());
+    document.getElementById('link-copy')?.addEventListener('click', e => {
+      field.select();
+      copy(field.value, e.currentTarget);
+    });
+    document.getElementById('text-copy')?.addEventListener('click', e =>
+      copy(document.getElementById('share-text')?.textContent ?? '', e.currentTarget)
+    );
+
+    /* ---------------- the card ---------------- */
+    const data = JSON.parse(document.getElementById('card-data').textContent);
+    const canvas = document.getElementById('card-canvas');
+    const stage = document.getElementById('card-stage');
+    const hint = document.getElementById('card-hint');
+
+    const P = {
+      page: '#E3E3E3', panel: '#EEEEEE', shell: '#E8E8E8',
+      ink: '#3B3B3B', soft: '#5A6066', mute: '#7C8288',
+      blue: '#7EBAEE', orange: '#F0A06F', accent: '#3E86C4', rust: '#7A4A22',
+      zone: 'rgba(124,130,136,.34)', hatch: 'rgba(124,130,136,.30)'
+    };
+    const W = 1080, H = 1350;
+    const tone = r => (r.noClaim ? P.mute : r.value < 50 ? P.blue : P.orange);
+    const ink = side => (side === 'left' ? P.accent : side === 'right' ? P.rust : P.ink);
+
+    function roundRect(g, x, y, w, h, r) {
+      g.beginPath();
+      g.moveTo(x + r, y);
+      g.arcTo(x + w, y, x + w, y + h, r);
+      g.arcTo(x + w, y + h, x, y + h, r);
+      g.arcTo(x, y + h, x, y, r);
+      g.arcTo(x, y, x + w, y, r);
+      g.closePath();
+    }
+
+    /** Diagonal hatching inside whatever path was just clipped. */
+    function hatch(g, x, y, w, h, gap) {
+      g.save();
+      g.strokeStyle = P.hatch;
+      g.lineWidth = 4;
+      for (let d = -h; d < w + h; d += gap) {
+        g.beginPath();
+        g.moveTo(x + d, y + h);
+        g.lineTo(x + d + h, y);
+        g.stroke();
       }
-      setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+      g.restore();
+    }
+
+    function wrapWords(g, words, max) {
+      const lines = [];
+      let line = [];
+      for (const word of words) {
+        const test = [...line, word];
+        if (g.measureText(test.map(o => o.t ?? o).join(' ')).width > max && line.length) {
+          lines.push(line);
+          line = [word];
+        } else line = test;
+      }
+      if (line.length) lines.push(line);
+      return lines;
+    }
+
+    function drawWheel(g, cx, cy, R) {
+      const rows = data.rows, n = rows.length;
+      const zoneT = data.noClaimSpan ? (data.noClaimSpan[1] - 50) / 50 : 0;
+      const ang = i => (-90 + i * (360 / n)) * Math.PI / 180;
+      const pt = (i, t) => [cx + R * t * Math.cos(ang(i)), cy + R * t * Math.sin(ang(i))];
+
+      g.strokeStyle = P.zone;
+      g.lineWidth = 2;
+      [1, 0.5].forEach(t => { g.beginPath(); g.arc(cx, cy, R * t, 0, Math.PI * 2); g.stroke(); });
+      rows.forEach((_, i) => {
+        const [x, y] = pt(i, 1);
+        g.beginPath(); g.moveTo(cx, cy); g.lineTo(x, y); g.stroke();
+      });
+
+      if (zoneT > 0) {
+        g.save();
+        g.beginPath(); g.arc(cx, cy, R * zoneT, 0, Math.PI * 2); g.clip();
+        hatch(g, cx - R, cy - R, R * 2, R * 2, 13);
+        g.restore();
+        g.strokeStyle = P.zone; g.lineWidth = 2;
+        g.beginPath(); g.arc(cx, cy, R * zoneT, 0, Math.PI * 2); g.stroke();
+      }
+
+      const tips = rows.map((r, i) => pt(i, Math.abs(r.step - r.steps / 2) / (r.steps / 2)));
+
+      g.save();
+      g.globalAlpha = 0.55;
+      tips.forEach((a, i) => {
+        const b = tips[(i + 1) % tips.length];
+        const grad = g.createLinearGradient(a[0], a[1], b[0], b[1]);
+        grad.addColorStop(0, tone(rows[i]));
+        grad.addColorStop(1, tone(rows[(i + 1) % rows.length]));
+        g.fillStyle = grad;
+        g.beginPath(); g.moveTo(cx, cy); g.lineTo(a[0], a[1]); g.lineTo(b[0], b[1]);
+        g.closePath(); g.fill();
+      });
+      g.restore();
+
+      g.save();
+      g.globalAlpha = .55; g.strokeStyle = P.soft; g.lineWidth = 3; g.lineJoin = 'round';
+      g.beginPath();
+      tips.forEach((p, i) => (i ? g.lineTo(p[0], p[1]) : g.moveTo(p[0], p[1])));
+      g.closePath(); g.stroke();
+      g.restore();
+
+      rows.forEach((r, i) => {
+        const [x, y] = tips[i];
+        g.strokeStyle = tone(r); g.lineWidth = 11; g.lineCap = 'round';
+        g.beginPath(); g.moveTo(cx, cy); g.lineTo(x, y); g.stroke();
+        g.fillStyle = tone(r);
+        g.beginPath(); g.arc(x, y, 19, 0, Math.PI * 2); g.fill();
+        g.strokeStyle = P.panel; g.lineWidth = 8;
+        g.beginPath(); g.arc(x, y, 19, 0, Math.PI * 2); g.stroke();
+      });
+      g.fillStyle = P.mute;
+      g.beginPath(); g.arc(cx, cy, 7, 0, Math.PI * 2); g.fill();
+
+      rows.forEach((r, i) => {
+        const a = ang(i), c = Math.cos(a), s = Math.sin(a);
+        const lx = cx + (R + 46) * c, ly = cy + (R + 46) * s;
+        g.textAlign = c > 0.2 ? 'left' : c < -0.2 ? 'right' : 'center';
+        const dy = s < -0.2 ? -38 : s > 0.2 ? 24 : -10;
+        g.fillStyle = P.mute;
+        g.font = '700 21px Poppins, system-ui, sans-serif';
+        g.fillText(r.name.toUpperCase(), lx, ly + dy);
+        g.fillStyle = r.noClaim ? P.mute : r.value < 50 ? P.accent : P.rust;
+        g.font = '600 27px Poppins, system-ui, sans-serif';
+        g.fillText(r.noClaim ? 'no lean' : r.value < 50 ? r.left : r.right, lx, ly + dy + 32);
+      });
+      g.textAlign = 'left';
+    }
+
+    let drawn = false;
+    async function draw() {
+      if (drawn) return;
+      try { await document.fonts.ready; } catch (e) {}
+      const g = canvas.getContext('2d');
+      const pad = 52;
+
+      g.fillStyle = P.page; g.fillRect(0, 0, W, H);
+      g.fillStyle = P.panel;
+      roundRect(g, pad, pad, W - pad * 2, H - pad * 2, 44); g.fill();
+
+      const x = pad + 54, w = W - (pad + 54) * 2;
+      let y = pad + 88;
+
+      g.fillStyle = P.accent;
+      g.font = '700 23px Poppins, system-ui, sans-serif';
+      g.fillText(data.quiz.toUpperCase(), x, y);
+
+      // the verdict, each clause in the colour of the pole it names
+      g.font = '58px "DM Serif Display", Georgia, serif';
+      const words = data.headline.flatMap((p, i) => {
+        const text = p.text + (i < data.headline.length - 1 ? ',' : '');
+        return text.split(' ').map(t => ({ t, side: p.side }));
+      });
+      wrapWords(g, words, w).forEach(line => {
+        y += 68;
+        let cx = x;
+        line.forEach(word => {
+          g.fillStyle = ink(word.side);
+          g.fillText(word.t, cx, y);
+          cx += g.measureText(word.t + ' ').width;
+        });
+      });
+
+      y += 44;
+      g.fillStyle = P.soft;
+      g.font = '25px Inter, system-ui, sans-serif';
+      wrapWords(g, data.summary.split(' '), w).slice(0, 2).forEach(line => {
+        g.fillText(line.join(' '), x, y);
+        y += 35;
+      });
+
+      /*
+       * The card is a POSTER, not the page. It carries the verdict and the picture; the
+       * page carries the precision. Trying to fit the six rails under the wheel on a 4:5
+       * card left both cramped — the rim labels ran into the first rail and the last rail
+       * ran off the bottom — and the rails were only restating what the wheel already says.
+       *
+       * The wheel therefore takes everything between the summary and the footer, computed
+       * rather than fixed: the verdict is one line for some readers and three for others,
+       * so the space above it is not a constant.
+       */
+      const footY = H - pad - 44;
+      if (data.shape === 'bipolar') {
+        const top = y + 10;
+        const LABELS = 104;                 // room for a two-line rim label, top and bottom
+        const R = Math.max(120, Math.min(248, (footY - 58 - top - LABELS * 2) / 2));
+        drawWheel(g, W / 2, top + LABELS + R, R);
+      }
+
+      g.fillStyle = P.mute;
+      g.font = '600 22px Poppins, system-ui, sans-serif';
+      g.fillText(data.url.toUpperCase(), x, footY);
+
+      drawn = true;
+    }
+
+    const filename = 'wiser-walk-' + data.code + '.png';
+    const blob = () => new Promise(res => canvas.toBlob(res, 'image/png'));
+
+    document.getElementById('card-save')?.addEventListener('click', async e => {
+      const btn = e.currentTarget;
+      btn.disabled = true;
+      await draw();
+      stage.hidden = false;
+      const b = await blob();
+      const href = URL.createObjectURL(b);
+      const a = document.createElement('a');
+      a.href = href;
+      a.download = filename;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(href), 4000);
+      btn.disabled = false;
+      hint.textContent = 'Saved as ' + filename + ' — this is the image.';
+    });
+
+    // Offered only where it can actually send a file. A Share button that silently does
+    // nothing is worse than no Share button.
+    const shareBtn = document.getElementById('card-share');
+    try {
+      const probe = new File([new Blob([''], { type: 'image/png' })], 'x.png', { type: 'image/png' });
+      if (navigator.canShare && navigator.canShare({ files: [probe] })) shareBtn.hidden = false;
+    } catch (e) {}
+
+    shareBtn?.addEventListener('click', async e => {
+      const btn = e.currentTarget;
+      btn.disabled = true;
+      await draw();
+      stage.hidden = false;
+      const b = await blob();
+      try {
+        await navigator.share({
+          files: [new File([b], filename, { type: 'image/png' })],
+          title: data.quiz,
+          text: data.summary
+        });
+      } catch (err) {
+        if (err && err.name !== 'AbortError') {
+          hint.textContent = 'Sharing was not available here. The card is above — save it instead.';
+        }
+      }
+      btn.disabled = false;
     });
   })();
 </script>

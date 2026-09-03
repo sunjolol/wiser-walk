@@ -2,6 +2,7 @@
 import Base from '../../../layouts/Base.astro';
 import Icon from '../../../components/Icon.astro';
 import CompassWheel from '../../../components/CompassWheel.astro';
+import OutcomeCards from '../../../components/OutcomeCards.astro';
 import RailStack from '../../../components/RailStack.astro';
 import CategoryStack from '../../../components/CategoryStack.astro';
 import AxisDepth from '../../../components/AxisDepth.astro';
@@ -132,14 +133,11 @@ const outcomeHeading =
                 ? 'Nothing on the list is a close fit. These are the nearest, and "nearest" is doing a lot of work.'
                 : 'Scored against the listed traditions only — a sketch of typical adherents, not official teaching, and not a complete list of Christian traditions.'}
             </p>
-            <ul class="ranked">
-              {view.ranked.slice(0, 5).map(r => (
-                <li>
-                  <span><a href={outcomeHref({ name: r.name, slug: r.slug })}>{r.name}</a></span>
-                  <span>{r.score}%</span>
-                </li>
-              ))}
-            </ul>
+            <OutcomeCards
+              quiz={quiz}
+              ranked={view.ranked}
+              leading={view.state === 'tie' ? 2 : view.state === 'loose' ? 0 : 1}
+            />
           </>
         )}
       </section>
@@ -156,7 +154,7 @@ const outcomeHeading =
       </section>
     )}
 
-    <ShareBlock quiz={quiz} view={view} share={share} />
+    <ShareBlock quiz={quiz} view={view} share={share} origin={Astro.site!.origin} />
 
     <EmailCapture quiz={quiz} view={view} enabled={emailOn} />
 

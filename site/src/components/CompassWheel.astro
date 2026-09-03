@@ -61,7 +61,11 @@ const rays = view.rows.map((row, i) => {
     // Where a rim label sits, as a percentage of the box, so HTML can be placed on it.
     lx: 50 + ((R + 12) / SIZE) * 100 * Math.cos(rad),
     ly: 50 + ((R + 12) / SIZE) * 100 * Math.sin(rad),
-    anchor: Math.cos(rad) > 0.2 ? 'start' : Math.cos(rad) < -0.2 ? 'end' : 'middle'
+    anchor: Math.cos(rad) > 0.2 ? 'start' : Math.cos(rad) < -0.2 ? 'end' : 'middle',
+    // A label centred on its rim point hangs half of itself back over the drawing. The two
+    // vertical spokes are where that shows: the top label dropped into the plot and the
+    // bottom one rose into it. Anchor those by their near edge instead of their middle.
+    vert: Math.sin(rad) < -0.2 ? 'above' : Math.sin(rad) > 0.2 ? 'below' : 'mid'
   };
 });
 
@@ -130,7 +134,7 @@ const label = (a: string) => `${a} compass`;
     </svg>
 
     {!bare && rays.map(r => (
-      <span class={`wheel-label wheel-label--${r.anchor} wheel-label--${r.side}`}
+      <span class={`wheel-label wheel-label--${r.anchor} wheel-label--v-${r.vert} wheel-label--${r.side}`}
             style={`left:${f(r.lx)}%;top:${f(r.ly)}%`}>
         <b>{r.row.name}</b>
         <i>{r.pole ?? 'no lean'}</i>

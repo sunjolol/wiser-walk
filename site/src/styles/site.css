@@ -342,7 +342,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
  */
 
 .wheel { margin: 0; }
-.wheel-plot { position: relative; width: 100%; max-width: 21rem; margin: 0 auto; }
+.wheel-plot { position: relative; width: 100%; max-width: 21rem; margin: 2.6rem auto 0; padding-bottom: .4rem; }
 @media (min-width: 40rem) { .wheel-plot { max-width: 25rem; } }
 .wheel-svg { display: block; width: 100%; height: auto; overflow: visible; }
 
@@ -385,14 +385,30 @@ a { color: var(--accent); text-underline-offset: 2px; }
  * rather than the display face, which is too wide to fit and would have to break mid-word.
  */
 .wheel-label {
-  position: absolute; transform: translateY(-50%);
+  position: absolute;
   display: flex; flex-direction: column; line-height: 1.2;
   width: 4.4rem; pointer-events: none;
 }
 @media (min-width: 34rem) { .wheel-label { width: 5.9rem; } }
+/* horizontal anchoring: the label grows away from the circle, never across it */
 .wheel-label--start { text-align: left; }
-.wheel-label--end { text-align: right; transform: translate(-100%, -50%); }
-.wheel-label--middle { text-align: center; transform: translate(-50%, -50%); width: 8rem !important; }
+.wheel-label--end { text-align: right; }
+.wheel-label--middle { text-align: center; width: 8rem !important; }
+
+/*
+ * Vertical anchoring, for the same reason. A two-line label centred on the top spoke's rim
+ * point hangs its lower half back inside the plot, which is what put "Monergist" and
+ * "Kingdom" through the drawing. Above the circle it hangs upward, below it hangs down.
+ */
+.wheel-label--v-mid    { transform: translateY(-50%); }
+.wheel-label--v-above  { transform: translateY(-100%); }
+.wheel-label--v-below  { transform: translateY(0); }
+.wheel-label--end.wheel-label--v-mid   { transform: translate(-100%, -50%); }
+.wheel-label--end.wheel-label--v-above { transform: translate(-100%, -100%); }
+.wheel-label--end.wheel-label--v-below { transform: translate(-100%, 0); }
+.wheel-label--middle.wheel-label--v-mid   { transform: translate(-50%, -50%); }
+.wheel-label--middle.wheel-label--v-above { transform: translate(-50%, -100%); }
+.wheel-label--middle.wheel-label--v-below { transform: translate(-50%, 0); }
 .wheel-label b {
   font-family: var(--ui); font-size: .66rem; font-weight: 700; letter-spacing: .09em;
   text-transform: uppercase; color: var(--ink-mute);
@@ -602,6 +618,61 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .read-split--compact li { margin: 0 0 .15rem; }
 
 .depth-more { margin: 1rem 0 0; font-size: .85rem; }
+
+/* ------------------------------------------------- outcome cards */
+/*
+ * The card IS the bar: it fills from the left to its own match, so the ranking reads as
+ * length before a number is read. The fill is the true percentage — matches cluster, and
+ * rescaling the spread to fill the card would invent a gap on the one screen where someone
+ * is deciding which church to go and look at.
+ */
+
+.outcomes-list { list-style: none; margin: 1rem 0 0; padding: 0 .35rem 0 0; display: grid; gap: .55rem; }
+.outcome { position: relative; }
+
+.outcome-card {
+  position: relative; display: block; overflow: hidden; text-decoration: none;
+  transform: skewX(-7deg); border-radius: 6px 20px 20px 6px;
+  background: var(--panel); box-shadow: var(--lift-soft);
+  padding: .85rem 1.4rem; transition: box-shadow .2s, transform .2s;
+}
+.outcome-card:hover { box-shadow: var(--lift); transform: skewX(-7deg) translateX(2px); }
+.outcome-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* the fill: layered opacity, the same idiom as the rail tint and the compass wedge */
+.outcome-fill {
+  position: absolute; inset: 0 auto 0 0; width: calc(var(--v) * 1%);
+  background-image: var(--grad-r); background-size: 26rem 100%;
+  opacity: .34; border-radius: inherit;
+}
+.is-lead .outcome-fill { opacity: .85; }
+/* the floral only reads spread wide and only over the leader's saturated fill */
+.outcome-bloom {
+  position: absolute; inset: 0; pointer-events: none;
+  background: url("/tex/flower.png") center / cover no-repeat;
+  filter: invert(100%); mix-blend-mode: overlay; opacity: .5;
+}
+
+/* everything legible un-skewed again, and above both layers */
+.outcome-body { position: relative; z-index: 2; display: block; transform: skewX(7deg); }
+.outcome-name {
+  display: block; font-family: var(--display); font-style: italic; font-size: 1.25rem;
+  line-height: 1.2; color: var(--ink); text-wrap: balance;
+}
+.is-lead .outcome-name { font-size: 1.4rem; color: var(--on-grad); }
+.outcome-meta {
+  display: block; margin-top: .12rem; font-family: var(--ui); font-weight: 600;
+  font-size: .7rem; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--ink-mute); font-variant-numeric: tabular-nums;
+}
+.is-lead .outcome-meta { color: #7A4A22; }
+.outcome-tag { color: inherit; }
+
+@media (min-width: 34rem) {
+  .outcome-card { padding: .95rem 1.7rem; }
+  .outcome-name { font-size: 1.4rem; }
+  .is-lead .outcome-name { font-size: 1.6rem; }
+}
 
 /* ------------------------------------------- history and passages */
 /*
@@ -859,16 +930,48 @@ a { color: var(--accent); text-underline-offset: 2px; }
 
 /* ------------------------------------------------------------------ misc */
 
-.share-card {
-  background: var(--shell); border-radius: var(--r-sm); padding: .9rem 1rem;
-  color: var(--ink-soft); margin: 0 0 1rem; font-size: .82rem; line-height: 1.55;
+/* ---- sharing: a picture, a link, then the text ---- */
+
+.share-actions { display: flex; flex-wrap: wrap; gap: .6rem; margin: 1.1rem 0 1rem; }
+
+.share-link { display: flex; flex-direction: column; gap: .5rem; }
+@media (min-width: 30rem) { .share-link { flex-direction: row; } }
+.share-link input {
+  flex: 1 1 auto; min-width: 0; min-height: 46px;
+  font-family: var(--mono); font-size: .82rem; color: var(--ink-soft);
+  padding: .65rem .95rem; border: 0; border-radius: var(--r-pill);
+  background: var(--shell); box-shadow: inset 0 1px 2px rgba(68, 68, 68, .09);
+  text-overflow: ellipsis;
 }
-.share-line { margin: 0 0 .5rem; overflow-wrap: anywhere; }
-.share-line:last-child { margin-bottom: 0; }
-/* only the bars refuse to wrap: their columns line up, and that alignment is the point */
-.share-bars {
+.share-link .btn { flex: none; }
+
+/* the card, once it has been drawn */
+.card-stage { margin: 1.25rem 0 0; }
+.card-stage canvas {
+  display: block; width: 100%; max-width: 24rem; height: auto; margin: 0 auto;
+  border-radius: var(--r); box-shadow: var(--lift);
+}
+.card-hint { font-size: .78rem; color: var(--ink-mute); text-align: center; margin: .7rem 0 0; }
+
+/* the plain text: real, useful where images do not go, and the least of the three */
+.share-text-wrap { margin: 1.5rem 0 0; }
+.share-text-wrap > summary {
+  list-style: none; cursor: pointer; min-height: 40px; display: flex; align-items: center;
+  font-family: var(--ui); font-size: .78rem; font-weight: 600; color: var(--ink-mute);
+}
+.share-text-wrap > summary::-webkit-details-marker { display: none; }
+/* a chevron drawn, not a character: the escape was mangled into a literal glyph */
+.share-text-wrap > summary::before {
+  content: ""; width: 6px; height: 6px; margin-right: .55rem; flex: none;
+  border-right: 2px solid var(--ink-mute); border-bottom: 2px solid var(--ink-mute);
+  transform: rotate(-45deg); transition: transform .2s;
+}
+.share-text-wrap[open] > summary::before { transform: rotate(45deg); }
+.share-text-wrap > summary:hover { color: var(--accent); }
+.share {
   font-family: var(--mono); font-size: .72rem; line-height: 1.6; white-space: pre;
-  overflow-x: auto; margin: 0 0 .7rem; padding-bottom: .2rem;
+  background: var(--shell); border-radius: var(--r-sm); padding: .9rem;
+  overflow-x: auto; color: var(--ink-soft); margin: .5rem 0 .8rem;
 }
 .ranked { list-style: none; padding: 0; margin: 1rem 0; display: flex; flex-direction: column; gap: .5rem; }
 .ranked li {
