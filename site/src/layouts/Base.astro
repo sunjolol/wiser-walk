@@ -16,6 +16,15 @@ const { title, description, noindex = false, jsonLd = null, ogType = 'website' }
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const siteName = 'Wiser Walk';
 const fullTitle = title === siteName ? title : `${title} — ${siteName}`;
+
+const NAV = [
+  { href: '/quizzes/', label: 'Quizzes' },
+  { href: '/articles/', label: 'Articles' },
+  { href: '/method/', label: 'Method' },
+  { href: '/about/', label: 'About' }
+];
+const here = Astro.url.pathname;
+const isCurrent = (href: string) => here === href || here.startsWith(href.replace(/\/$/, '') + '/');
 ---
 <!doctype html>
 <html lang="en">
@@ -26,6 +35,25 @@ const fullTitle = title === siteName ? title : `${title} — ${siteName}`;
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex, follow" />}
+
+    {/*
+      Applied before first paint, so a reader who chose a theme never sees the other one
+      flash. The stylesheet still follows the system setting when nothing is stored, which
+      is why this only ever writes an explicit value.
+    */}
+    <script is:inline>
+      try {
+        var t = localStorage.getItem('ww-theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&display=swap"
+    />
 
     <meta property="og:site_name" content={siteName} />
     <meta property="og:type" content={ogType} />
@@ -41,13 +69,23 @@ const fullTitle = title === siteName ? title : `${title} — ${siteName}`;
   <body>
     <header class="site-head">
       <div class="wrap">
-        <a class="brand" href="/">Wiser Walk</a>
+        <a class="brand" href="/">Wiser <span>Walk</span></a>
         <nav>
-          <a href="/quizzes/">Quizzes</a>
-          <a href="/articles/">Articles</a>
-          <a href="/method/">Method</a>
-          <a href="/about/">About</a>
+          {NAV.map(n => (
+            <a href={n.href} aria-current={isCurrent(n.href) ? 'page' : undefined}>{n.label}</a>
+          ))}
         </nav>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch theme">
+          <svg viewBox="0 0 24 24" width="21" height="21" aria-hidden="true" fill="none"
+               stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+            <g class="rays">
+              <path d="M12 1.3v1.8"/><path d="M4.4 4.4l1.3 1.3"/><path d="M19.6 4.4l-1.3 1.3"/>
+              <path d="M1.4 12.2h1.8"/><path d="M20.8 12.2h1.8"/>
+            </g>
+            <path class="glass" d="M12 5a5.3 5.3 0 0 0-3.5 9.3c.6.55.95 1.3.95 2.1v.4h5.1v-.4c0-.8.35-1.55.95-2.1A5.3 5.3 0 0 0 12 5z"/>
+            <path d="M9.7 18.6h4.6"/><path d="M10.5 20.8h3"/>
+          </svg>
+        </button>
       </div>
     </header>
 
@@ -64,5 +102,35 @@ const fullTitle = title === siteName ? title : `${title} — ${siteName}`;
         </p>
       </div>
     </footer>
+
+    <script is:inline>
+      (function () {
+        var root = document.documentElement;
+        var btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+
+        var media = window.matchMedia('(prefers-color-scheme: dark)');
+        // With nothing stored the page follows the system, so "what is showing" is not the
+        // same question as "what was chosen".
+        var showing = function () {
+          return root.dataset.theme || (media.matches ? 'dark' : 'light');
+        };
+        var paint = function () {
+          var light = showing() === 'light';
+          btn.classList.toggle('lit', light);
+          btn.setAttribute('aria-label', light ? 'Switch to dark theme' : 'Switch to light theme');
+          btn.setAttribute('aria-pressed', String(!light));
+        };
+        btn.addEventListener('click', function () {
+          var next = showing() === 'dark' ? 'light' : 'dark';
+          root.dataset.theme = next;
+          try { localStorage.setItem('ww-theme', next); } catch (e) {}
+          paint();
+        });
+        // Keep following the system until the reader has actually chosen.
+        media.addEventListener('change', function () { if (!root.dataset.theme) paint(); });
+        paint();
+      })();
+    </script>
   </body>
 </html>
