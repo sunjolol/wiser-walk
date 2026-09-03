@@ -26,27 +26,18 @@ So: *not all quizzes will be theology-based.* Some are character, some are gifts
 
 The fairness promise carries across the whole platform: every position described in words its holders would accept, nothing invented, everything citable. A discernment-minded audience will screenshot anything unfair, so rigor is the moat.
 
-## Naming and domain — DO NOT REDO THIS
+## Name and domain — SETTLED, do not reopen
 
-**The owner is handling the name and domain himself. Do not start another naming search unless he explicitly asks.**
+**The name is `wiserwalk.com`. The owner chose it himself on 2026-09-03. The naming search is over — do not reopen it, and do not question the choice.**
 
-About 1,100 `.com` domains were checked via RDAP across ~27 sweeps in one session, with no usable result. Recording the constraints and rejections so this is never repeated:
+Note he had earlier rejected the word "wiser" as "weird to say"; he has since overridden his own objection and picked `wiserwalk` anyway. That earlier rejection is void. Every other rejection below still stands for copy and sub-brand naming.
 
-- **Hard constraints:** `.com` only (`.org` explicitly refused). Two words maximum, one preferred — ideally a combination word or an invented word "that has a ring to it".
-- **Names he admires as models:** `understandmyself.com` and `clearerthinking.org` — plain, descriptive, general, memorable, destination-feeling. Note `understandmyself` is **two** words (I once mis-parsed it as three; that error wasted a whole pass).
-- **Explicitly rejected:** the word "faith" (feels like a church); "wiser" (weird to say); every `-ward` name ("absolutely garbage"); "almost / not yet / barely" framings (negative, bad marketing); theology-jargon compounds (`creedmap`, `theoaxis`, `doctrinescale` — "absurd, a major logic/extrapolation fail" because not all quizzes are theology); anything three words or longer; and above all **templated variations on his own examples** — he asked for variety repeatedly and did not get it.
-- **`wisewalk.com`** is the name he liked best. It is parked with GoDaddy (held since 2000, renewed to 2027) at roughly **$7,500**, which he has refused as too expensive for a side project.
-- `wiserwalk.com` is free but rejected over "wiser". `wisewalk.org` is free but `.org` is refused.
-- Finding: `.com` is picked clean. Every evocative single word and pleasant short compound is squatted, including obscure ones (`bochim`, `aholiab`, `jabbok`, `crucible`, `whetstone`, `touchstone`, `noetica`, `binah`). Verified accurate — a control string returns 404 while these return 200.
+- **Repo:** https://github.com/sunjolol/wiser-walk (public), pushed 2026-09-03, branch `main`.
+- **Still-standing rejections** for taglines, quiz names and sub-brands: the word "faith" (feels like a church); every `-ward` name; "almost / not yet / barely" framings (negative marketing); theology-jargon compounds (`creedmap`, `theoaxis`) because not all quizzes are theology; and templated riffs on `understandmyself.com` / `clearerthinking.org`, the two names he admires as models.
+- **The search that produced the shortlist** (~19,900 `.com` checked via RDAP, 233 verified-available names) is archived at https://claude.ai/code/artifact/48f38a40-737f-48b5-ae88-0e63c5f1ac1f. Do not re-run it.
+- Useful fact if a domain question ever recurs: Verisign runs **no premium tier on `.com`**, so any unregistered `.com` costs the standard ~$11/yr. Check with `curl -s -o /dev/null -w "%{http_code}" https://rdap.verisign.com/com/v1/domain/NAME.com` — 404 = available, 200 = taken. Always run a control string.
 
-**Working name for now:** the repo and project stay `theology-compass` until he chooses. GitHub renames cleanly with redirects, so this costs nothing.
-
-## Immediate next step: the GitHub repo
-
-He wants a **public** GitHub repo. There is **no `gh` CLI installed**, so the flow agreed with him is:
-
-1. He creates an **empty public repo** on github.com (no README, no `.gitignore`, no licence) and pastes the URL.
-2. Claude runs `git remote add origin <url>` and pushes.
+**Rename still pending:** the local folder is still `theology compass` and the package/project names still say `theology-compass`. The GitHub repo is already `wiser-walk`. Renaming the rest is unfinished business, not a decision to revisit.
 
 State: local git repo initialised, **one commit** `c8fd322`, 137 files tracked, `node_modules` excluded. Authored as `Light <serenitybackto@gmail.com>` — he was offered a GitHub noreply address to keep his email out of public history and **chose to keep his real email**. Do not change it.
 
