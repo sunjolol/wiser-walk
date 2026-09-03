@@ -50,7 +50,15 @@ State: local git repo initialised, **one commit** `c8fd322`, 137 files tracked, 
 - **All nine scoring/copy fixes** the audit specified are implemented: base-13 permalink, 198-unit match denominator, 10-unit tie rule, 45-unit poor-fit hedge, all-central suppression, middle-band exclusion in `headline()`, `lean()` as a share of the half-axis, eleven-slot share bar, "Unsure / neither" plus scale hint, closest-traditions scope note, footer.
 - **Back button fixed** — it did nothing on statement 1 (a disabled control) and was dead for ~390ms after each answer. Now cancels pending timers, and on statement 1 reads "← Leave the quiz" and exits to the intro.
 - **Stage 0 scaffold** — Astro + Vercel in `site/`. Superseded by Stage 2.
-- **Stage 2 platform core** — DONE. The quiz engine is real: `site/src/lib/engine/` (types, generic base-N codec, registry with build-time validation), `site/src/lib/strategies/` (`bipolar-nearest`, `category-highest`), `site/src/lib/quizzes/` (quizzes as data). Routes namespaced: `/q/[quiz]`, `/r/[quiz]/[code]` (on-demand), `/axis/[quiz]/[axis]`, `/tradition/[slug]`, `/articles/[slug]`, `/quizzes`, `/method`, `/about`. 41 static pages, sitemap excludes `/r/`, `noindex` removed from content pages and kept on results and drafts. A second quiz (`seven-deadly-sins`, unaudited draft) proves the strategy seam. **Not deployed**; that needs his Vercel account (`npx vercel` from `site/`).
+- **Stage 2 platform core** — DONE. The quiz engine is real: `site/src/lib/engine/` (types, generic base-N codec, registry with build-time validation), `site/src/lib/strategies/` (`bipolar-nearest`, `category-highest`), `site/src/lib/quizzes/` (quizzes as data). Routes namespaced: `/q/[quiz]`, `/r/[quiz]/[code]` (on-demand), `/axis/[quiz]/[axis]`, `/tradition/[slug]`, `/articles/[slug]`, `/quizzes`, `/method`, `/about`. 41 static pages, sitemap excludes `/r/`, `noindex` removed from content pages and kept on results and drafts. A second quiz (`seven-deadly-sins`, unaudited draft) proves the strategy seam.
+- **LIVE at https://wiserwalk.com** (deployed 2026-09-03). Vercel is connected to the GitHub repo, so **every push to `main` deploys automatically** — there is no manual deploy step, and a bad push goes straight to production.
+
+### Deployment facts that are easy to break
+
+- **Vercel Root Directory is `site/`**, not the repo root.
+- `site/src/data/compass.json` and `compass-audit.json` are **generated but committed**, because `build-data.mjs` reads `../../audit/`, which is outside the Vercel root directory. The script falls back to the committed files when the audit source is absent and regenerates whenever it is present. Do not re-add them to either `.gitignore` (there are **two**: the repo root and `site/.gitignore`).
+- DNS is hosted at **SiteGround**; the domain was bought there. Apex `A → 216.198.79.1` (Vercel), `www` `CNAME → *.vercel-dns-017.com`. **The MX, SPF, DKIM and DMARC records are SiteGround email — never delete them.** SiteGround hosting itself is unused but still runs the mail.
+- The apex is the primary domain; `www` 308-redirects to it. This matches `site:` in `astro.config.mjs`, so canonicals, OG URLs and all 41 sitemap entries resolve to a clean 200 with no redirect. **If you ever change one, change the other.**
 
 ### Files that matter
 
