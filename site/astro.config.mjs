@@ -4,7 +4,7 @@ import vercel from '@astrojs/vercel';
 
 // Result pages are rendered on demand from the code in the URL, everything else is static.
 export default defineConfig({
-  site: 'https://theologycompass.app',
+  site: 'https://wiserwalk.com',
   output: 'static',
   adapter: vercel(),
   integrations: [sitemap()],

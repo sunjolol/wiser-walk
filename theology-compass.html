@@ -477,7 +477,7 @@
             <div class="c-bars" id="c-bars"></div>
           </div>
           <div class="c-foot">
-            <span class="c-take">Take it: theologycompass.app</span>
+            <span class="c-take">Take it: wiserwalk.com</span>
             <span class="c-code" id="c-code"></span>
           </div>
         </div>
@@ -793,7 +793,7 @@
       lines.push(a.emoji + ' ' + bar + ' ' + a.name + ': ' + a.left + ' → ' + a.right);
     });
     lines.push(nearestLine(scores, near) + (isAllCentral(scores) || near[0].d > HEDGE_UNITS ? '' : ' (approximate)'));
-    lines.push('theologycompass.app/r/' + code);
+    lines.push('wiserwalk.com/r/' + code);
     return lines.join('\n');
   }
   function describe(scores) {
@@ -1100,7 +1100,7 @@
   function renderShare() {
     var scores = current.scores, code = current.code;
     $('share-text').textContent = shareText(scores, code, current.near);
-    $('permalink').textContent = 'theologycompass.app/r/' + code;
+    $('permalink').textContent = 'wiserwalk.com/r/' + code;
     $('deep-hint').textContent = 'The link above is the product concept. In this demo, opening the page with #r=' + code + ' loads this same result.';
   }
 
@@ -1136,7 +1136,7 @@
     var o = { width: 630, height: 440, radius: 160, cy: 220, pad: 16, colors: LIGHT, labels: false, label: 'Compass' };
     $('c-radar').innerHTML = radarSVG(scores, o) + cardLabelsHTML(geometry(o));
     $('c-bars').innerHTML = cardBarsHTML(scores);
-    $('c-code').textContent = 'theologycompass.app/r/' + code;
+    $('c-code').textContent = 'wiserwalk.com/r/' + code;
   }
   function fitCard() {
     var pv = $('card-preview');
@@ -1302,7 +1302,7 @@
     $('save-btn').addEventListener('click', saveCard);
     $('share-btn').addEventListener('click', shareResult);
     $('copylink-btn').addEventListener('click', function () {
-      if (current) copyText('theologycompass.app/r/' + current.code, 'Link copied');
+      if (current) copyText('wiserwalk.com/r/' + current.code, 'Link copied');
     });
     $('retake-btn').addEventListener('click', startQuiz);
     $('toggles').addEventListener('click', function (e) {
