@@ -946,7 +946,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .share-link .btn { flex: none; }
 
 /* the card, once it has been drawn */
-.card-stage { margin: 1.25rem 0 0; }
+.card-stage { margin: 1.1rem 0 1.25rem; }
 .card-stage canvas {
   display: block; width: 100%; max-width: 24rem; height: auto; margin: 0 auto;
   border-radius: var(--r); box-shadow: var(--lift);

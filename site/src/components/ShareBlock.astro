@@ -57,6 +57,12 @@ const card = {
 <section class="share-block" data-quiz={quiz.slug} data-code={view.code}>
   <h2 data-visitor="Their result" data-mine="Share your compass">Their result</h2>
 
+  {/* The picture first. It is the thing being shared; the buttons act on it. */}
+  <figure class="card-stage" data-role="stage">
+    <canvas data-role="canvas" width="1080" height="1350" aria-label="Your result card"></canvas>
+    <figcaption class="card-hint" data-role="hint">This is the image people see when you share it.</figcaption>
+  </figure>
+
   <div class="share-actions">
     <button class="btn" data-role="save" type="button">Save the card</button>
     <button class="btn dark" data-role="share" type="button" hidden>Share</button>
@@ -74,12 +80,6 @@ const card = {
      data-visitor={`Someone sent you this. ${quiz.items.length} statements, about ${quiz.minutes} minutes, scored in your own browser.`}
      data-mine="This link is your whole result. Nothing is stored on our side, so keep it if you want to come back to it."
   >Someone sent you this. {quiz.items.length} statements, about {quiz.minutes} minutes, scored in your own browser.</p>
-
-  <figure class="card-stage" data-role="stage" hidden>
-    <canvas data-role="canvas" width="1080" height="1350" aria-label="Your result card"></canvas>
-    <figcaption class="card-hint" data-role="hint"></figcaption>
-  </figure>
-
 
   <script type="application/json" data-role="data" set:html={JSON.stringify(card)}></script>
 </section>
@@ -253,6 +253,14 @@ const card = {
     }
 
     let drawn = false;
+    /**
+     * Drawn on load, not on click.
+     *
+     * It used to sit behind the Save button, so the page showed two buttons and a link
+     * field and no picture — which is indistinguishable from there being no card at all.
+     * The demo this replaces kept its card preview on the page permanently, and it was
+     * right to.
+     */
     async function draw() {
       if (drawn) return;
       try { await document.fonts.ready; } catch (e) {}
@@ -319,6 +327,9 @@ const card = {
       drawn = true;
     }
 
+    if ('requestIdleCallback' in window) requestIdleCallback(() => draw(), { timeout: 1200 });
+    else setTimeout(draw, 200);
+
     const filename = 'wiser-walk-' + data.code + '.png';
     const blob = () => new Promise(res => canvas.toBlob(res, 'image/png'));
 
@@ -326,7 +337,6 @@ const card = {
       const btn = e.currentTarget;
       btn.disabled = true;
       await draw();
-      stage.hidden = false;
       const b = await blob();
       const href = URL.createObjectURL(b);
       const a = document.createElement('a');
@@ -335,7 +345,7 @@ const card = {
       document.body.appendChild(a); a.click(); a.remove();
       setTimeout(() => URL.revokeObjectURL(href), 4000);
       btn.disabled = false;
-      hint.textContent = 'Saved as ' + filename + ' — this is the image.';
+      hint.textContent = 'Saved as ' + filename + '.';
     });
 
     // Offered only where it can actually send a file. A Share button that silently does
@@ -350,7 +360,6 @@ const card = {
       const btn = e.currentTarget;
       btn.disabled = true;
       await draw();
-      stage.hidden = false;
       const b = await blob();
       try {
         await navigator.share({
