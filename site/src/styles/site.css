@@ -953,26 +953,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
 }
 .card-hint { font-size: .78rem; color: var(--ink-mute); text-align: center; margin: .7rem 0 0; }
 
-/* the plain text: real, useful where images do not go, and the least of the three */
-.share-text-wrap { margin: 1.5rem 0 0; }
-.share-text-wrap > summary {
-  list-style: none; cursor: pointer; min-height: 40px; display: flex; align-items: center;
-  font-family: var(--ui); font-size: .78rem; font-weight: 600; color: var(--ink-mute);
-}
-.share-text-wrap > summary::-webkit-details-marker { display: none; }
 /* a chevron drawn, not a character: the escape was mangled into a literal glyph */
-.share-text-wrap > summary::before {
-  content: ""; width: 6px; height: 6px; margin-right: .55rem; flex: none;
-  border-right: 2px solid var(--ink-mute); border-bottom: 2px solid var(--ink-mute);
-  transform: rotate(-45deg); transition: transform .2s;
-}
-.share-text-wrap[open] > summary::before { transform: rotate(45deg); }
-.share-text-wrap > summary:hover { color: var(--accent); }
-.share {
-  font-family: var(--mono); font-size: .72rem; line-height: 1.6; white-space: pre;
-  background: var(--shell); border-radius: var(--r-sm); padding: .9rem;
-  overflow-x: auto; color: var(--ink-soft); margin: .5rem 0 .8rem;
-}
 .ranked { list-style: none; padding: 0; margin: 1rem 0; display: flex; flex-direction: column; gap: .5rem; }
 .ranked li {
   display: flex; gap: .75rem; align-items: baseline; padding: .6rem .9rem;

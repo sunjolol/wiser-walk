@@ -1,6 +1,6 @@
 ---
 /**
- * Sharing: a picture, a link, and — last — the plain text.
+ * Sharing: a picture and a link.
  *
  * The card is the point. It is drawn onto a canvas at 1080×1350 from the same numbers and
  * the same geometry the page uses, so what someone posts is the page rather than a
@@ -14,8 +14,9 @@
  * The link comes second, in a field that selects itself, because the link IS the result —
  * nothing is stored on our side.
  *
- * The plain-text block comes last and collapsed. It is genuinely useful where images do not
- * go, and genuinely the least of the three.
+ * There is no plain-text version. A row of filled and empty circles is not a standard
+ * anyone reads, and the owner has said so twice; a picture and a link are the two things
+ * people actually send.
  *
  * The CTA has to serve two readers, since the same URL is both "my result" and "a friend's
  * result". The server renders the visitor's version and the page upgrades itself only when
@@ -28,11 +29,10 @@ import { quizHref } from '../lib/engine/registry';
 interface Props {
   quiz: Quiz;
   view: ResultView;
-  share: string;
   origin: string;
 }
 
-const { quiz, view, share, origin } = Astro.props;
+const { quiz, view, origin } = Astro.props;
 const url = `${origin}/r/${quiz.slug}/${view.code}/`;
 
 /** Everything the card needs, and nothing else. */
@@ -58,41 +58,44 @@ const card = {
   <h2 data-visitor="Their result" data-mine="Share your compass">Their result</h2>
 
   <div class="share-actions">
-    <button class="btn" id="card-save" type="button">Save the card</button>
-    <button class="btn dark" id="card-share" type="button" hidden>Share</button>
-    <a class="btn ghost" id="share-cta" href={quizHref(quiz)}
+    <button class="btn" data-role="save" type="button">Save the card</button>
+    <button class="btn dark" data-role="share" type="button" hidden>Share</button>
+    <a class="btn ghost" data-role="cta" href={quizHref(quiz)}
        data-visitor="See where you land" data-mine="Take it again">See where you land</a>
   </div>
 
   <div class="share-link">
-    <label class="sr-only" for="share-url">Your result link</label>
-    <input id="share-url" type="text" readonly value={url} spellcheck="false" />
-    <button class="btn ghost" id="link-copy" type="button">Copy link</button>
+    <input data-role="url" type="text" readonly value={url} spellcheck="false"
+           aria-label="Your result link" />
+    <button class="btn ghost" data-role="copy-link" type="button">Copy link</button>
   </div>
 
-  <p class="share-note" id="share-note"
+  <p class="share-note" data-role="note"
      data-visitor={`Someone sent you this. ${quiz.items.length} statements, about ${quiz.minutes} minutes, scored in your own browser.`}
      data-mine="This link is your whole result. Nothing is stored on our side, so keep it if you want to come back to it."
   >Someone sent you this. {quiz.items.length} statements, about {quiz.minutes} minutes, scored in your own browser.</p>
 
-  <figure class="card-stage" id="card-stage" hidden>
-    <canvas id="card-canvas" width="1080" height="1350" aria-label="Your result card"></canvas>
-    <figcaption class="card-hint" id="card-hint"></figcaption>
+  <figure class="card-stage" data-role="stage" hidden>
+    <canvas data-role="canvas" width="1080" height="1350" aria-label="Your result card"></canvas>
+    <figcaption class="card-hint" data-role="hint"></figcaption>
   </figure>
 
-  <details class="share-text-wrap">
-    <summary>Or copy it as plain text</summary>
-    <pre class="share" id="share-text">{share}</pre>
-    <button class="btn ghost" id="text-copy" type="button">Copy text</button>
-  </details>
 
-  <script type="application/json" id="card-data" set:html={JSON.stringify(card)}></script>
+  <script type="application/json" data-role="data" set:html={JSON.stringify(card)}></script>
 </section>
 
 <script>
-  (function () {
-    const block = document.querySelector('.share-block');
-    if (!block) return;
+  /*
+   * Runs once per .share-block, scoped to that section.
+   *
+   * It used to reach for document-wide ids, which meant exactly one share block could ever
+   * work on a page. That is a real constraint on a component, and it bit immediately: a
+   * preview showing several results at once could not include the share section at all, so
+   * it got lifted out — which read, correctly, as the feature having been deleted. Nothing
+   * here touches the document outside its own section.
+   */
+  document.querySelectorAll('.share-block').forEach(function (block) {
+    const pick = role => block.querySelector('[data-role="' + role + '"]');
 
     /* ---------------- who is looking ---------------- */
     let mine = false;
@@ -116,21 +119,18 @@ const card = {
       catch { flash(btn, 'Press Ctrl+C'); }
     };
 
-    const field = document.getElementById('share-url');
+    const field = pick('url');
     field?.addEventListener('focus', () => field.select());
-    document.getElementById('link-copy')?.addEventListener('click', e => {
+    pick('copy-link')?.addEventListener('click', e => {
       field.select();
       copy(field.value, e.currentTarget);
     });
-    document.getElementById('text-copy')?.addEventListener('click', e =>
-      copy(document.getElementById('share-text')?.textContent ?? '', e.currentTarget)
-    );
 
     /* ---------------- the card ---------------- */
-    const data = JSON.parse(document.getElementById('card-data').textContent);
-    const canvas = document.getElementById('card-canvas');
-    const stage = document.getElementById('card-stage');
-    const hint = document.getElementById('card-hint');
+    const data = JSON.parse(pick('data').textContent);
+    const canvas = pick('canvas');
+    const stage = pick('stage');
+    const hint = pick('hint');
 
     const P = {
       page: '#E3E3E3', panel: '#EEEEEE', shell: '#E8E8E8',
@@ -322,7 +322,7 @@ const card = {
     const filename = 'wiser-walk-' + data.code + '.png';
     const blob = () => new Promise(res => canvas.toBlob(res, 'image/png'));
 
-    document.getElementById('card-save')?.addEventListener('click', async e => {
+    pick('save')?.addEventListener('click', async e => {
       const btn = e.currentTarget;
       btn.disabled = true;
       await draw();
@@ -340,7 +340,7 @@ const card = {
 
     // Offered only where it can actually send a file. A Share button that silently does
     // nothing is worse than no Share button.
-    const shareBtn = document.getElementById('card-share');
+    const shareBtn = pick('share');
     try {
       const probe = new File([new Blob([''], { type: 'image/png' })], 'x.png', { type: 'image/png' });
       if (navigator.canShare && navigator.canShare({ files: [probe] })) shareBtn.hidden = false;
@@ -365,5 +365,5 @@ const card = {
       }
       btn.disabled = false;
     });
-  })();
+  });
 </script>

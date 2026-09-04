@@ -8,7 +8,7 @@ import CategoryStack from '../../../components/CategoryStack.astro';
 import AxisDepth from '../../../components/AxisDepth.astro';
 import ShareBlock from '../../../components/ShareBlock.astro';
 import EmailCapture from '../../../components/EmailCapture.astro';
-import { getQuiz, resultFor, decodeFor, shareTextFor, outcomeHref } from '../../../lib/engine/registry';
+import { getQuiz, resultFor, decodeFor, outcomeHref } from '../../../lib/engine/registry';
 import { isConfigured } from '../../../lib/email/provider';
 import { readEnv } from '../../../lib/email/env';
 import { getCollection } from 'astro:content';
@@ -25,7 +25,6 @@ if (quiz && values) Astro.response.headers.set('cache-control', 'public, max-age
 else Astro.response.status = 404;
 
 const view = quiz && values ? resultFor(quiz, values) : null;
-const share = quiz && values ? shareTextFor(quiz, values, Astro.site!.origin) : '';
 
 const emailOn = isConfigured(readEnv(Astro.locals));
 
@@ -154,7 +153,7 @@ const outcomeHeading =
       </section>
     )}
 
-    <ShareBlock quiz={quiz} view={view} share={share} origin={Astro.site!.origin} />
+    <ShareBlock quiz={quiz} view={view} origin={Astro.site!.origin} />
 
     <EmailCapture quiz={quiz} view={view} enabled={emailOn} />
 
