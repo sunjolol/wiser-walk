@@ -533,6 +533,87 @@ a { color: var(--accent); text-underline-offset: 2px; }
   .rail-poles { font-size: .7rem; letter-spacing: .05em; text-transform: uppercase; }
 }
 
+/* ---------------------------------- two people on one set of rails ---- */
+/*
+ * Identity is the marker SHAPE — solid for the first reader, a ring for the second.
+ * Colour still means which pole, exactly as it does everywhere else on the site, so the
+ * two channels never have to be told apart.
+ *
+ * There is NO directional tint in this mode. A tint diverging from the spine says "this
+ * reader leans this far", and with two readers there are two of those pointing opposite
+ * ways; one tint would silently make one of them the subject. What is shaded instead is
+ * the run BETWEEN the markers, in neutral ink, because a distance belongs to neither.
+ */
+
+.rails-block--overlay { margin-top: .25rem; }
+
+.ov-legend {
+  display: flex; flex-wrap: wrap; gap: .5rem 1.1rem; margin: 0 0 1.2rem;
+  font-size: .78rem; color: var(--ink-mute);
+}
+.ov-key { display: inline-flex; align-items: center; gap: .45rem; }
+.ov-mark {
+  flex: none; width: 14px; height: 14px; border-radius: 50%;
+  background: var(--ink-soft); box-shadow: 0 0 0 1.5px var(--ink-soft);
+}
+.ov-mark--ring {
+  position: relative; background: var(--panel); border: 2.5px solid var(--ink-soft);
+  box-shadow: none;
+}
+.ov-mark--ring::after {
+  content: ""; position: absolute; inset: 0; margin: auto;
+  width: 4px; height: 4px; border-radius: 50%; background: var(--ink-soft);
+}
+
+/* the reading names two bands, so it is allowed a line of its own on a narrow screen */
+.rail--pair .rail-head { flex-wrap: wrap; }
+.rail--pair .rail-read { color: var(--ink-soft); }
+.rail--pair .rail-read.is-same { color: var(--ink-mute); font-style: italic; }
+
+.rail-gap {
+  position: absolute; top: 0; bottom: 0;
+  left: calc(var(--knob) / 2 + var(--run) * var(--gap-from) / 100);
+  width: calc(var(--run) * var(--gap-span) / 100);
+  background: var(--ink-mute); opacity: .22; border-radius: calc(var(--rail-h) / 2);
+}
+
+/* each marker takes the colour of ITS OWN side, grey inside the no-claim band */
+.rail-mark--left { --tone: var(--blue); }
+.rail-mark--right { --tone: var(--orange); }
+.rail-mark--centre { --tone: var(--ink-mute); }
+
+.rail-knob--a { left: calc(var(--run) * var(--a) / 100); z-index: 2; }
+.rail-knob--b {
+  left: calc(var(--run) * var(--b) / 100); z-index: 3;
+  background: var(--panel); border: 3px solid var(--tone);
+  box-shadow: 0 0 0 1.5px var(--tone);
+}
+.rail-knob--b::after {
+  content: ""; position: absolute; inset: 0; margin: auto;
+  width: 6px; height: 6px; border-radius: 50%; background: var(--tone);
+}
+
+/*
+ * When both readers land on the same reachable position the two markers coincide, and a
+ * ring drawn straight over the solid hides it completely: one marker, on a page whose
+ * legend promises two. The ring nests INSIDE the solid instead, so both glyphs stay
+ * legible and neither moves off the position the arithmetic put it on.
+ */
+.rail--pair.is-together .rail-knob--b {
+  width: 13px; height: 13px; margin-left: 3.5px; border-width: 2px; box-shadow: none;
+}
+.rail--pair.is-together .rail-knob--b::after { width: 4px; height: 4px; }
+
+/* two rankings side by side; one column on a phone, where they read as a list each */
+.ov-columns { display: grid; gap: 1.5rem; grid-template-columns: 1fr; }
+@media (min-width: 46rem) { .ov-columns { grid-template-columns: 1fr 1fr; gap: 1.6rem; } }
+.ov-column > h3 {
+  font-family: var(--ui); font-size: .78rem; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--accent); margin: 0 0 .2rem;
+}
+/* the note explains the bars, which are the same bars twice: state it once */
+.ov-column:nth-child(2) .stack-note { display: none; }
+
 /* ------------------------------------------------------- the depth panels */
 /*
  * Two mirrored pole panels. On a phone they stack, which is the hard case: a reader who
@@ -944,6 +1025,13 @@ a { color: var(--accent); text-underline-offset: 2px; }
   text-overflow: ellipsis;
 }
 .share-link .btn { flex: none; }
+
+/* the invite, owner-side: a second link with its own reason for existing */
+.compare-row {
+  margin: 1.25rem 0 0; padding: 1rem 0 0;
+  border-top: 1px solid var(--zone-edge);
+}
+.compare-row .share-note { margin: 0 0 .7rem; }
 
 /* the card, once it has been drawn */
 .card-stage { margin: 1.1rem 0 1.25rem; }

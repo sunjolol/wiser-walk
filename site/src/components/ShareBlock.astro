@@ -24,7 +24,7 @@
  * wrong for a visitor is the costlier error.
  */
 import type { BipolarView, Quiz, ResultView } from '../lib/engine/types';
-import { quizHref } from '../lib/engine/registry';
+import { quizHref, inviteHref } from '../lib/engine/registry';
 
 interface Props {
   quiz: Quiz;
@@ -34,6 +34,12 @@ interface Props {
 
 const { quiz, view, origin } = Astro.props;
 const url = `${origin}/r/${quiz.slug}/${view.code}/`;
+/*
+ * The invite carries THIS result's code, so whoever follows it is compared with the person
+ * whose result this is. That is right for both readers of the same URL: a visitor who
+ * follows it lands beside the friend who sent it, and the owner hands it on to someone new.
+ */
+const invite = `${origin}${inviteHref(quiz, view.code)}`;
 
 /** Everything the card needs, and nothing else. */
 const card = {
@@ -66,14 +72,38 @@ const card = {
   <div class="share-actions">
     <button class="btn" data-role="save" type="button">Save the card</button>
     <button class="btn dark" data-role="share" type="button" hidden>Share</button>
-    <a class="btn ghost" data-role="cta" href={quizHref(quiz)}
-       data-visitor="See where you land" data-mine="Take it again">See where you land</a>
+    {/*
+      Two readers, two destinations. A visitor's next step is to answer for themselves and
+      land beside this result, so their link carries it; the owner's next step is just the
+      quiz. The href swaps with the label, or the owner would be invited to compare with
+      themselves.
+    */}
+    <a class="btn ghost" data-role="cta" href={invite} data-mine-href={quizHref(quiz)}
+       data-visitor="See where you land next to them" data-mine="Take it again"
+       >See where you land next to them</a>
   </div>
 
   <div class="share-link">
     <input data-role="url" type="text" readonly value={url} spellcheck="false"
            aria-label="Your result link" />
     <button class="btn ghost" data-role="copy-link" type="button">Copy link</button>
+  </div>
+
+  {/*
+    Owner-only, revealed by the same `mine` switch as the copy above. A visitor already has
+    the invitation on the button; showing them a second copy of it would be one CTA too many
+    on a page that is not about them.
+  */}
+  <div class="compare-row" data-mine-show hidden>
+    <p class="share-note">
+      Send this to someone else and, when they finish, you both see your answers on the same
+      rails. Nothing is stored on our side.
+    </p>
+    <div class="share-link">
+      <input data-role="invite-url" type="text" readonly value={invite} spellcheck="false"
+             aria-label="Invite link" />
+      <button class="btn ghost" data-role="copy-invite" type="button">Copy link</button>
+    </div>
   </div>
 
   <p class="share-note" data-role="note"
@@ -106,6 +136,10 @@ const card = {
       block.querySelectorAll('[data-mine]').forEach(el => {
         el.textContent = el.getAttribute('data-mine');
       });
+      block.querySelectorAll('[data-mine-href]').forEach(el => {
+        el.setAttribute('href', el.getAttribute('data-mine-href'));
+      });
+      block.querySelectorAll('[data-mine-show]').forEach(el => { el.hidden = false; });
     }
 
     /* ---------------- copy ---------------- */
@@ -124,6 +158,13 @@ const card = {
     pick('copy-link')?.addEventListener('click', e => {
       field.select();
       copy(field.value, e.currentTarget);
+    });
+
+    const inviteField = pick('invite-url');
+    inviteField?.addEventListener('focus', () => inviteField.select());
+    pick('copy-invite')?.addEventListener('click', e => {
+      inviteField.select();
+      copy(inviteField.value, e.currentTarget);
     });
 
     /* ---------------- the card ---------------- */

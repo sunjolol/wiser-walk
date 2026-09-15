@@ -23,6 +23,7 @@
 import type { BipolarRow, Quiz } from '../lib/engine/types';
 import { isSplitReadMore } from '../lib/engine/types';
 import { groupHref } from '../lib/engine/registry';
+import { firstSentence, hasMore } from '../lib/prose';
 import HistoryTimeline from './HistoryTimeline.astro';
 import PassagePills from './PassagePills.astro';
 
@@ -38,12 +39,9 @@ const { quiz, row, open = false } = Astro.props;
 const group = quiz.groups.find(g => g.slug === row.slug)!;
 const parts = group.summaryParts;
 
-/** First sentence only, never a clipped one. */
-const thesis = (text: string) => {
-  const first = text.trim().split(/(?<=\.)\s+/)[0] ?? '';
-  return first;
-};
-const more = (text: string) => text.trim().split(/(?<=\.)\s+/).length > 1;
+/** First sentence only, never a clipped one. Shared with the two-person overlay page. */
+const thesis = firstSentence;
+const more = hasMore;
 
 const split = isSplitReadMore(group.readMore) ? group.readMore : null;
 const href = groupHref(quiz, row);

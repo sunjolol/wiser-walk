@@ -1,0 +1,227 @@
+---
+/**
+ * Two results on one page.
+ *
+ * Rendered on demand from the two codes in the URL, exactly as a single result is, and for
+ * the same reason: any valid pair has a permanent page and nothing is stored on our side.
+ *
+ * What this page is NOT allowed to do, in order of how badly it would go wrong:
+ *
+ * 1. **No percentage, score or "match" between two people.** The instrument measures where
+ *    someone sits between two named poles. It has no opinion about two people at all, and
+ *    inventing one is the same class of error as naming a position the quiz does not name.
+ * 2. **Never the word "agree".** Two readers in one band have landed in the same band; they
+ *    have not agreed about anything, and the quiz has not asked them to.
+ * 3. **Never suggest one should move toward the other.** Both poles are described in words
+ *    their holders would accept; a page that nudged would forfeit that in one sentence.
+ * 4. **No name, initial or label in the URL**, and no tradition named for the pair. The two
+ *    codes carry scores and nothing else.
+ */
+import Base from '../../../layouts/Base.astro';
+import Icon from '../../../components/Icon.astro';
+import RailOverlay from '../../../components/RailOverlay.astro';
+import CategoryStack from '../../../components/CategoryStack.astro';
+import {
+  getQuiz, parseCodes, compare, resultHref, groupHref, inviteHref
+} from '../../../lib/engine/registry';
+import { firstSentence } from '../../../lib/prose';
+
+export const prerender = false;
+
+const quiz = getQuiz(Astro.params.quiz);
+const sheets = quiz ? parseCodes(quiz, String(Astro.params.codes ?? '')) : null;
+
+if (quiz && sheets) Astro.response.headers.set('cache-control', 'public, max-age=600');
+else Astro.response.status = 404;
+
+const cmp = quiz && sheets ? compare(quiz, sheets[0]!, sheets[1]!) : null;
+
+// Re-encoded from the decoded scores, so the page's own links are the canonical codes
+// whatever case or padding arrived in the URL.
+const codeA = cmp?.a.code ?? '';
+const codeB = cmp?.b.code ?? '';
+
+const heading =
+  cmp?.shape === 'bipolar'
+    ? `Same band on ${cmp.sameCount} of ${cmp.total}`
+    : 'Two rankings, side by side';
+
+const lede =
+  cmp?.shape === 'bipolar'
+    ? cmp.widest
+      ? `Your widest gap is ${cmp.widest.name}.`
+      : 'You land in the same band on every axis.'
+    : cmp?.sharedTop
+      ? 'The category that came out strongest is the same one for both of you.'
+      : 'The category that came out strongest is a different one for each of you.';
+
+// The widest-gap axis gets its two mirrored pole panels, from the audited split.
+// AxisDepth is deliberately not reused: it marks one pole as "yours" from a single row's
+// value, and on this page that would quietly make one of the two readers the subject.
+const widestGroup =
+  cmp?.shape === 'bipolar' && cmp.widest
+    ? quiz!.groups.find(g => g.slug === cmp.widest!.slug)
+    : undefined;
+const widestParts = widestGroup?.summaryParts;
+
+const inviteUrlA = quiz ? `${Astro.site!.origin}${inviteHref(quiz, codeA)}` : '';
+const inviteUrlB = quiz ? `${Astro.site!.origin}${inviteHref(quiz, codeB)}` : '';
+---
+{quiz && cmp ? (
+  <Base
+    title={`${heading} — ${quiz.title}`}
+    description={`Two ${quiz.title} results on the same rails. ${lede}`}
+    noindex={true}
+  >
+    <div class="prose result-head">
+      <p class="eyebrow"><Icon name={quiz.icon} size={15} /> {quiz.title}</p>
+      <h1>{heading}</h1>
+      <p class="lede">{lede}</p>
+      {quiz.status === 'draft' && (
+        <div class="note draft"><p><strong>Unaudited draft.</strong>{" " + quiz.draftNote}</p></div>
+      )}
+    </div>
+
+    <div
+      class="panel layered result-panel"
+      data-role="overlay"
+      data-quiz={quiz.slug}
+      data-code-a={codeA}
+      data-code-b={codeB}
+    >
+      <div class="wash" aria-hidden="true"></div>
+      <div class="veil" aria-hidden="true"></div>
+
+      {cmp.shape === 'bipolar' ? (
+        <RailOverlay quiz={quiz} cmp={cmp} />
+      ) : (
+        <div class="ov-columns">
+          <div class="ov-column">
+            <h3 data-who="a" data-self="You" data-other="Them">First</h3>
+            <CategoryStack quiz={quiz} view={cmp.a} />
+          </div>
+          <div class="ov-column">
+            <h3 data-who="b" data-self="You" data-other="Them">Second</h3>
+            <CategoryStack quiz={quiz} view={cmp.b} />
+          </div>
+        </div>
+      )}
+    </div>
+
+    {cmp.shape === 'bipolar' && cmp.widest && widestParts && (
+      <section>
+        <h2>Where the widest gap comes from</h2>
+        <p class="tags">
+          Both positions below are stated by people who hold them.
+        </p>
+        <div class="poles-split">
+          <section class="pole-panel pole-panel--left">
+            <h4>{cmp.widest.left}</h4>
+            <p>{firstSentence(widestParts.left)}</p>
+          </section>
+          <section class="pole-panel pole-panel--right">
+            <h4>{cmp.widest.right}</h4>
+            <p>{firstSentence(widestParts.right)}</p>
+          </section>
+        </div>
+        <p class="depth-more">
+          <a href={groupHref(quiz, cmp.widest)}>More on {cmp.widest.name} →</a>
+        </p>
+      </section>
+    )}
+
+    <section>
+      <h2>Each result on its own</h2>
+      <div class="btn-row">
+        <a class="btn ghost" href={resultHref(quiz, codeA)}
+           data-who="a" data-self="Your result" data-other="Their result">The first result</a>
+        <a class="btn ghost" href={resultHref(quiz, codeB)}
+           data-who="b" data-self="Your result" data-other="Their result">The second result</a>
+      </div>
+    </section>
+
+    <section class="invite-block">
+      <h2>Send this to someone else</h2>
+      <p class="tags">
+        When they finish, you both see your answers on the same rails, and nothing is stored
+        on our side.
+      </p>
+      <div class="share-link">
+        <input data-role="invite-url" type="text" readonly value={inviteUrlA}
+               data-url-a={inviteUrlA} data-url-b={inviteUrlB}
+               spellcheck="false" aria-label="Invite link" />
+        <button class="btn ghost" data-role="copy-invite" type="button">Copy link</button>
+      </div>
+    </section>
+
+    <script>
+      /*
+       * Who is looking.
+       *
+       * The server renders the neutral first/second wording, so the page is already correct
+       * with no script at all - and correct for the commonest reader, who was sent the link
+       * and is in neither role. Only when a tab-scoped note the quiz runner left behind
+       * PROVES the viewer is one of the two does anything change. Nothing is sent anywhere.
+       */
+      document.querySelectorAll('[data-role="overlay"]').forEach(function (root) {
+        const codeA = root.dataset.codeA || '';
+        const codeB = root.dataset.codeB || '';
+
+        let took = null;
+        try { took = sessionStorage.getItem('ww:took:' + root.dataset.quiz); } catch (e) {}
+        const self = took && took === codeA ? 'a' : took && took === codeB ? 'b' : null;
+        if (!self) return;
+
+        // The legend, the column headings and the two result links all swap together, so
+        // the marker shapes and the words can never end up describing different people.
+        document.querySelectorAll('[data-who]').forEach(function (node) {
+          const text = node.dataset.who === self ? node.dataset.self : node.dataset.other;
+          if (text) node.textContent = text;
+        });
+
+        // The rails' spoken description says the same thing the legend now shows.
+        document.querySelectorAll('.rail-track[data-label-a]').forEach(function (track) {
+          const label = self === 'a' ? track.dataset.labelA : track.dataset.labelB;
+          if (label) track.setAttribute('aria-label', label);
+        });
+
+        // The invite offers the viewer's OWN link, so whoever they send it to is compared
+        // with them rather than with whoever sent them here.
+        const field = document.querySelector('[data-role="invite-url"]');
+        const own = field && (self === 'a' ? field.dataset.urlA : field.dataset.urlB);
+        if (field && own) field.value = own;
+      });
+
+      document.querySelectorAll('[data-role="invite-url"]').forEach(function (field) {
+        field.addEventListener('focus', function () { field.select(); });
+      });
+      document.querySelectorAll('[data-role="copy-invite"]').forEach(function (btn) {
+        btn.addEventListener('click', async function () {
+          const field = document.querySelector('[data-role="invite-url"]');
+          if (!field) return;
+          field.select();
+          const was = btn.textContent;
+          try { await navigator.clipboard.writeText(field.value); btn.textContent = 'Copied'; }
+          catch (e) { btn.textContent = 'Press Ctrl+C'; }
+          setTimeout(function () { btn.textContent = was; }, 1800);
+        });
+      });
+    </script>
+  </Base>
+) : (
+  <Base title="Comparison not found" description="That comparison link is not valid." noindex={true}>
+    <div class="prose">
+      <h1>That link is not a valid comparison</h1>
+      <p>
+        A comparison link carries two result codes, joined by a dot. Both have to be exact:
+        one wrong character and there is no way to recover the answers, because nothing
+        about either result is stored on our side.
+      </p>
+      <p>
+        If someone sent you this link, ask them for it again, and check that nothing was cut
+        off at the end.
+      </p>
+      <p><a href="/quizzes/">Take a quiz →</a></p>
+    </div>
+  </Base>
+)}

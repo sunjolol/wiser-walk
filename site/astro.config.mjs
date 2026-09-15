@@ -14,8 +14,12 @@ export default defineConfig({
   adapter: vercel({ webAnalytics: { enabled: true } }),
   integrations: [
     sitemap({
-      // Result pages are per-person and carry noindex; keep them out of the sitemap too.
-      filter: page => !new URL(page).pathname.startsWith('/r/')
+      // Result and comparison pages are per-person and carry noindex; keep them out of the
+      // sitemap too.
+      filter: page => {
+        const path = new URL(page).pathname;
+        return !path.startsWith('/r/') && !path.startsWith('/c/');
+      }
     })
   ],
   build: { format: 'directory' }

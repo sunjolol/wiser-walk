@@ -91,16 +91,21 @@ const isCurrent = (href: string) => here === href || here.startsWith(href.replac
     {breadcrumbLd && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />}
 
     <script is:inline>
-      // A result page's address is its result code. Strip the code before analytics sees
-      // the view, so /r/<quiz>/<code>/ is counted as /r/<quiz>/ and no code is ever recorded.
+      // A result page's address is its result code, and a comparison page's address is two
+      // of them. Strip the codes before analytics sees the view, so /r/<quiz>/<code>/ is
+      // counted as /r/<quiz>/ and /c/<quiz>/<a>.<b>/ as /c/<quiz>/. No code is ever
+      // recorded, and a pair of codes is not recorded either: two people who compared
+      // results would otherwise be joined up in a log, which is exactly what a page that
+      // stores nothing must not do by the back door.
       // The queue stub is the same one the Vercel adapter injects; defining it again is a no-op.
       window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
       window.va('beforeSend', function (event) {
         try {
           var u = new URL(event.url);
-          var m = u.pathname.match(/^\/r\/([^/]+)\/[^/]+\/?$/);
+          var m = u.pathname.match(/^\/(r|c)\/([^/]+)\/[^/]+\/?$/);
           if (m) {
-            u.pathname = '/r/' + m[1] + '/';
+            u.pathname = '/' + m[1] + '/' + m[2] + '/';
+            u.search = '';
             u.hash = '';
             return Object.assign({}, event, { url: u.toString() });
           }

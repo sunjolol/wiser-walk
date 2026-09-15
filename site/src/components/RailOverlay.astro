@@ -1,0 +1,117 @@
+---
+/**
+ * Two people's results on ONE set of rails.
+ *
+ * It is a sibling of RailStack rather than a mode of it because almost every decision
+ * differs, and the ones that do not are the ones that must never differ:
+ *
+ * - **Both pole names print on every rail**, at the same weight, exactly as on the single
+ *   result. Two markers do not buy an excuse to drop a label.
+ * - **The no-claim zone stays visible.** If both readers land in it, the page has to show
+ *   why nothing is named rather than drawing two knobs on a bare track.
+ * - **No directional tint at all.** A tint diverging from the centre means "this reader
+ *   leans this far". With two readers there are two of those and they point opposite ways,
+ *   and a single tint would silently pick one of them as the subject. What is shaded
+ *   instead is the RUN BETWEEN the two markers, in neutral ink-mute: a distance, belonging
+ *   to neither of them.
+ * - **No percentage, no score, no "match".** The reading names the audited band each
+ *   reader is in, which is the only comparison the instrument is entitled to make.
+ *
+ * Marker shapes, not marker colours, carry identity: A is the solid knob and B the ring,
+ * and each takes the pole colour of ITS OWN side. Using colour for identity would collide
+ * with the blue/orange that means "which pole" everywhere else on the site.
+ */
+import type { Quiz } from '../lib/engine/types';
+import type { BipolarComparison } from '../lib/engine/compare';
+import { groupHref } from '../lib/engine/registry';
+
+interface Props {
+  quiz: Quiz;
+  cmp: BipolarComparison;
+  /** Link each rail's name to its axis page. */
+  linked?: boolean;
+}
+
+const { quiz, cmp, linked = true } = Astro.props;
+
+const [zoneLo, zoneHi] = cmp.a.noClaimSpan;
+const zoneStyle = `--zone-lo:${zoneLo};--zone-hi:${zoneHi}`;
+
+/** Grey in the no-claim band, the pole's colour outside it. Same rule as the single rail. */
+const sideOf = (row: { value: number; noClaim: boolean }) =>
+  row.noClaim ? 'centre' : row.value < 50 ? 'left' : 'right';
+---
+<div class="rails-block rails-block--overlay" style={zoneStyle}>
+  <p class="ov-legend" data-role="legend">
+    <span class="ov-key">
+      <span class="ov-mark ov-mark--solid" aria-hidden="true"></span>
+      <span data-who="a" data-self="you" data-other="them">first</span>
+    </span>
+    <span class="ov-key">
+      <span class="ov-mark ov-mark--ring" aria-hidden="true"></span>
+      <span data-who="b" data-self="you" data-other="them">second</span>
+    </span>
+    <span class="ov-key">
+      <span class="legend-swatch" aria-hidden="true"></span>
+      <span>the quiz names neither pole</span>
+    </span>
+  </p>
+
+  <div class="rails rails--overlay">
+    {cmp.rows.map(row => {
+      // Geometry from the integer step, so each knob lands on a position the instrument
+      // can actually produce rather than on a rounded percentage of it.
+      const atA = (row.a.step / row.a.steps) * 100;
+      const atB = (row.b.step / row.b.steps) * 100;
+      const gapFrom = Math.min(atA, atB);
+      const gapSpan = Math.abs(atA - atB);
+
+      const reading = row.sameBand
+        ? `same band: ${row.a.band}`
+        : `${row.a.band} / ${row.b.band}`;
+
+      const say = (first: string, second: string) =>
+        row.sameBand
+          ? `${row.name}: ${first} and ${second} are in the same band, ${row.a.band}. Between ${row.left} and ${row.right}.`
+          : `${row.name}: ${first} ${row.a.band}, ${second} ${row.b.band}. Between ${row.left} and ${row.right}.`;
+
+      return (
+        <div
+          class:list={['rail', 'rail--pair', { 'is-together': gapSpan === 0 }]}
+          style={`--a:${atA};--b:${atB};--gap-from:${gapFrom};--gap-span:${gapSpan}`}
+        >
+          <div class="rail-head">
+            <span class="rail-name">
+              {linked ? <a href={groupHref(quiz, row)}>{row.name}</a> : row.name}
+            </span>
+            <span class:list={['rail-read', { 'is-same': row.sameBand }]}>{reading}</span>
+          </div>
+
+          {/*
+            The three readings are spelled out rather than assembled, because which marker
+            is whom changes once the page knows who is looking, and a screen reader must be
+            told the same thing the legend now shows. The rendered value is the neutral one,
+            so it is correct with no script at all.
+          */}
+          <div
+            class="rail-track"
+            role="img"
+            aria-label={say('the first', 'the second')}
+            data-label-a={say('you are', 'they are')}
+            data-label-b={say('they are', 'you are')}
+          >
+            <span class="rail-zone" aria-hidden="true"></span>
+            <span class="rail-spine" aria-hidden="true"></span>
+            {gapSpan > 0 && <span class="rail-gap" aria-hidden="true"></span>}
+            <span class:list={['rail-knob', 'rail-knob--a', `rail-mark--${sideOf(row.a)}`]} aria-hidden="true"></span>
+            <span class:list={['rail-knob', 'rail-knob--b', `rail-mark--${sideOf(row.b)}`]} aria-hidden="true"></span>
+          </div>
+
+          <p class="rail-poles">
+            <span>{row.left}</span><span>{row.right}</span>
+          </p>
+        </div>
+      );
+    })}
+  </div>
+</div>

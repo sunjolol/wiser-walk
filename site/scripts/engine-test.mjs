@@ -27,7 +27,8 @@ await build({
 
 const engine = await import(pathToFileURL(OUT).href);
 const {
-  QUIZZES, getQuiz, scoreQuiz, resultFor, encodeFor, decodeFor, shareTextFor, groupHref
+  QUIZZES, getQuiz, scoreQuiz, resultFor, encodeFor, decodeFor, shareTextFor, groupHref,
+  parseCodes, compare, compareHref, inviteHref
 } = engine;
 
 let failures = 0;
@@ -383,6 +384,130 @@ console.log('8. generated data files');
   const incomplete = changes.filter(c => !c.target || !c.why);
   if (incomplete.length) fail(`${incomplete.length} changelog entries have no target or no reason`);
   else ok('every changelog entry names a target and a reason');
+}
+
+// --------------------------------------------- 9. two results on one set of rails
+console.log('9. the two-person overlay');
+{
+  const compass = getQuiz('theology-compass');
+  const sins = getQuiz('seven-deadly-sins');
+  const data = JSON.parse(readFileSync(resolve(ROOT, 'src/data/compass-audit.json'), 'utf8'));
+  const sheetOf = name => (data.simulations ?? []).find(s => s.tradition === name)?.answers;
+
+  // ---- parseCodes: two codes, or nothing at all
+  const a = encodeFor(compass, scoreQuiz(compass, sheetOf('Presbyterian / Reformed (confessional)')));
+  const b = encodeFor(compass, scoreQuiz(compass, sheetOf('Eastern Orthodox')));
+  const sCode = encodeFor(sins, sins.groups.map((_, i) => (i === 0 ? 100 : 50)));
+
+  const pair = parseCodes(compass, `${a}.${b}`);
+  if (!pair || pair.length !== 2) fail('parseCodes did not return two sheets for two good codes');
+  else if (pair[0].length !== compass.groups.length || pair[1].length !== compass.groups.length) {
+    fail('parseCodes returned sheets of the wrong width');
+  } else if (pair[0].join(',') !== decodeFor(compass, a).join(',')) {
+    fail('parseCodes decoded the first code differently from decodeFor');
+  } else ok(`parseCodes: ${a}.${b} -> two ${pair[0].length}-value sheets`);
+
+  // Lower case in the URL must still work: nothing uppercases the parameter before this.
+  if (!parseCodes(compass, `${a}.${b}`.toLowerCase())) fail('parseCodes rejected lowercase codes');
+  else ok('parseCodes accepts a lowercased link');
+
+  const rejects = [
+    ['one code', a],
+    ['three codes', `${a}.${b}.${a}`],
+    ['a junk part', `${a}.ZZZZZZ`],
+    ['an empty part', `${a}.`],
+    ['nothing at all', ''],
+    ['a sins code under the compass slug', `${a}.${sCode}`],
+    ['two sins codes under the compass slug', `${sCode}.${sCode}`]
+  ];
+  let leaked = 0;
+  for (const [what, param] of rejects) {
+    if (parseCodes(compass, param) !== null) { leaked++; fail(`parseCodes accepted ${what}: ${param}`); }
+  }
+  if (!leaked) ok(`parseCodes rejects all ${rejects.length} malformed parameters`);
+
+  // ---- compare: two audited sheets
+  const cmp = compare(compass, decodeFor(compass, a), decodeFor(compass, b));
+  if (cmp.shape !== 'bipolar') fail('compare on the Compass gave shape ' + cmp.shape);
+  if (cmp.total !== compass.groups.length) fail('compare total: ' + cmp.total);
+  if (!(cmp.sameCount >= 0 && cmp.sameCount <= cmp.total)) fail('sameCount out of range: ' + cmp.sameCount);
+
+  // sameBand is band-string equality and nothing else. No distance, no threshold, no score.
+  const wrongBand = cmp.rows.filter(r => r.sameBand !== (r.a.band === r.b.band));
+  if (wrongBand.length) fail('sameBand disagrees with the band strings on: ' + wrongBand.map(r => r.slug).join(','));
+  else ok(`sameBand is band-string equality on all ${cmp.total} axes (same on ${cmp.sameCount})`);
+
+  const wrongGap = cmp.rows.filter(r => r.gap !== Math.abs(r.a.value - r.b.value));
+  if (wrongGap.length) fail('gap is not |a - b| on: ' + wrongGap.map(r => r.slug).join(','));
+
+  const maxGap = Math.max(...cmp.rows.map(r => r.gap));
+  if (!cmp.widest) fail('two different sheets produced no widest gap');
+  else if (cmp.widest.gap !== maxGap) fail(`widest gap ${cmp.widest.gap} != max row gap ${maxGap}`);
+  else ok(`widest gap is ${cmp.widest.name} at ${maxGap} units, largest of ${cmp.rows.map(r => r.gap).join('/')}`);
+
+  // Both pole names survive the pairing. This is the rule that must never regress.
+  const poleless = cmp.rows.filter(r => !r.left || !r.right);
+  if (poleless.length) fail('paired rows missing a pole name: ' + poleless.map(r => r.slug).join(','));
+  else ok('every paired row still carries both pole names');
+
+  // ---- a sheet against itself
+  const self = compare(compass, decodeFor(compass, a), decodeFor(compass, a));
+  if (self.sameCount !== self.total) fail(`a sheet against itself: ${self.sameCount}/${self.total}`);
+  else if (self.widest !== null) fail('a sheet against itself named a widest gap');
+  else ok('a sheet against itself: same band on every axis, no widest gap');
+
+  // Ties go to quiz order, so the same pair of codes always highlights the same axis.
+  const base = compass.groups.map(() => 50);
+  const bump = compass.groups.map((_, i) => (i === 1 || i === 4 ? 100 : 50));
+  const tied = compare(compass, base, bump);
+  if (tied.widest?.slug !== compass.groups[1].slug) {
+    fail('a tied widest gap did not go to the earlier axis: ' + tied.widest?.slug);
+  } else ok('equal gaps break to quiz order: ' + tied.widest.name);
+
+  // ---- unipolar
+  const prideSheet = sins.items.map(it =>
+    sins.groups[it.group].key === 'pride' ? (it.direction === 1 ? 2 : -2) : 0
+  );
+  const envySheet = sins.items.map(it =>
+    sins.groups[it.group].key === 'envy' ? (it.direction === 1 ? 2 : -2) : 0
+  );
+  const pv = scoreQuiz(sins, prideSheet);
+  const ev = scoreQuiz(sins, envySheet);
+
+  const uni = compare(sins, pv, ev);
+  if (uni.shape !== 'unipolar') fail('compare on the sins quiz gave shape ' + uni.shape);
+  if (uni.rows.length !== sins.groups.length) fail('unipolar pairing lost rows: ' + uni.rows.length);
+  const mispaired = uni.rows.filter(r => r.a.slug !== r.slug || r.b.slug !== r.slug);
+  if (mispaired.length) fail('unipolar rows paired across different slugs');
+  else ok('unipolar rows pair by slug, ' + uni.rows.length + ' of them');
+  const order = uni.rows.map(r => r.a.rank);
+  if (order.join(',') !== [...order].sort((x, y) => x - y).join(',')) {
+    fail("unipolar rows are not in A's rank order: " + order.join(','));
+  } else ok("unipolar rows run in A's rank order");
+  if (uni.sharedTop) fail('a pride sheet and an envy sheet were called a shared top');
+  else ok('different leaders: sharedTop false');
+  const same = compare(sins, pv, pv);
+  if (!same.sharedTop) fail('the same sheet twice did not report a shared top');
+  else ok('the same leader twice: sharedTop true');
+
+  // ---- the two URLs, exactly
+  const ch = compareHref(compass, a, b);
+  if (ch !== `/c/theology-compass/${a}.${b}/`) fail('compareHref: ' + ch);
+  else ok('compareHref: ' + ch);
+  const ih = inviteHref(compass, a);
+  if (ih !== `/q/theology-compass/?with=${a}`) fail('inviteHref: ' + ih);
+  else ok('inviteHref: ' + ih);
+  const ihs = inviteHref(sins, sCode);
+  if (ihs !== `/q/seven-deadly-sins/?with=${sCode}`) fail('inviteHref (sins): ' + ihs);
+  else ok('inviteHref (sins): ' + ihs);
+
+  // A comparison URL carries the quiz slug and two codes, and nothing else: no name, no
+  // initial, no label, in either direction.
+  const codesPart = ch.slice(`/c/${compass.slug}/`.length).replace(/\/$/, '');
+  if (codesPart !== `${a}.${b}`) fail('compareHref path carries more than two codes: ' + ch);
+  else if (/[^A-Z0-9.]/.test(codesPart)) {
+    fail('compareHref carries something other than codes: ' + codesPart);
+  } else ok('a comparison URL is two codes and nothing else');
 }
 
 rmSync(OUT, { force: true });

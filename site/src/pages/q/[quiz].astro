@@ -60,6 +60,18 @@ const breadcrumbs = isDraft
     </noscript>
 
     <div id="intro">
+      {/*
+        Shown only once a ?with= code has proved it decodes for THIS quiz. It says what is
+        about to happen before a single statement is answered, because a reader who finds
+        out afterwards that their answers were going somewhere they did not expect has been
+        surprised by us, which is the one thing this site cannot afford to do.
+      */}
+      <div class="note" id="with-note" hidden>
+        <p>
+          Someone wants to see where you land next to them. Answer for yourself; the
+          comparison comes after.
+        </p>
+      </div>
       <p>
         Answer honestly rather than correctly — there is no score to win. If a statement
         does not land either way, say so; “Unsure” is a real answer and is counted as one.
@@ -85,7 +97,7 @@ const breadcrumbs = isDraft
   </div>
 
   <script>
-    import { getQuiz, scoreQuiz, encodeFor } from '../../lib/engine/registry';
+    import { getQuiz, scoreQuiz, encodeFor, decodeFor } from '../../lib/engine/registry';
 
     const root = document.getElementById('runner');
     const quiz = getQuiz(root?.dataset.quiz);
@@ -103,6 +115,25 @@ const breadcrumbs = isDraft
       const sheet = new Array(quiz.items.length).fill(null);
       let at = 0;
       let timer = 0;
+
+      /*
+       * An invitation: ?with=<their code>.
+       *
+       * It is only honoured if it actually DECODES for this quiz, so a mangled or foreign
+       * code drops the invitation and the reader takes the quiz normally, rather than
+       * finishing into a comparison page that 404s. The code is a set of scores and
+       * nothing else; it is kept tab-scoped and never sent anywhere.
+       */
+      const WITH_KEY = 'ww:with:' + quiz.slug;
+      const invited = new URLSearchParams(location.search).get('with');
+      if (invited) {
+        const code = invited.trim().toUpperCase();
+        if (decodeFor(quiz, code)) {
+          try { sessionStorage.setItem(WITH_KEY, code); } catch (e) {}
+          const note = $('with-note');
+          if (note) note.hidden = false;
+        }
+      }
 
       SCALE.forEach(s => {
         const b = document.createElement('button');
@@ -143,6 +174,17 @@ const breadcrumbs = isDraft
         // A note for the result page, which is served identically to the person who just
         // took the quiz and to anyone they send the link to. Tab-scoped, never sent.
         try { sessionStorage.setItem('ww:took:' + quiz.slug, code); } catch (e) {}
+
+        // An invitation sends you to the two-person page instead, with the inviter first.
+        // Cleared on the way out so a second run of the quiz in the same tab is just a
+        // result again, and an identical code is treated as no comparison at all.
+        let other = null;
+        try { other = sessionStorage.getItem(WITH_KEY); } catch (e) {}
+        if (other && other !== code) {
+          try { sessionStorage.removeItem(WITH_KEY); } catch (e) {}
+          window.location.href = `/c/${quiz.slug}/${other}.${code}/`;
+          return;
+        }
         window.location.href = `/r/${quiz.slug}/${code}/`;
       }
 

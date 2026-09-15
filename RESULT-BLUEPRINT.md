@@ -272,6 +272,77 @@ copy**, and the page upgrades itself only when it can prove otherwise, from a ta
 visitor is the costlier error, and the person who just took the quiz necessarily had
 JavaScript on, so the upgrade reaches them.
 
+### Two-person overlay — BUILT
+
+Two results on one set of rails, at `/c/[quiz]/[codes]/`, rendered on demand exactly as a
+single result is. `site/src/lib/engine/compare.ts` holds the rules; `RailOverlay.astro`
+draws them.
+
+**What the page may not say.** These are not copy preferences; each one is a claim the
+instrument cannot support:
+
+- **No percentage, score or "match" between two people.** The Compass measures where one
+  person sits between two named poles. It has no opinion about two people at all, and a
+  compatibility number would be invented precision on the one screen where two readers are
+  deciding how seriously to take each other. Nothing in `compare.ts` computes a similarity.
+- **Never the word "agree".** Two readers in one band have **landed in the same band**.
+  They have not agreed about anything, and the quiz never asked them to.
+- **Never suggest one should move toward the other.** Both poles are described in words
+  their holders would accept; a page that nudged would forfeit that in one sentence.
+- **No name, initial or label in the URL**, and no tradition named for the pair. The two
+  codes carry scores and nothing else, joined by a dot because base-36 codes never contain
+  one and it survives every mail client unescaped.
+
+**What the page counts.** `sameBand` is equality of the two audited **band strings**, never
+a distance threshold. Two readers three points apart can straddle a band edge and two
+twenty points apart can share one; the band is what the quiz is willing to name, so it is
+what the page reports. `widest` is the largest `|a - b|`, **quiz order breaking ties**, so
+the same pair of codes always highlights the same axis; it is `null` when the two land
+identically, and the lede says so rather than naming a gap of zero.
+
+**The hero.** A sibling of `RailStack`, not a mode of it, because almost every decision
+differs — and the ones that do not are the ones that must never differ:
+
+- **Both pole names print on every rail**, at the same weight. Two markers do not buy an
+  excuse to drop a label.
+- **The no-claim zone stays visible**, so two centrists see why nothing was named instead of
+  two knobs on a bare track.
+- **No directional tint at all.** A tint diverging from the spine says "this reader leans
+  this far"; with two readers there are two of those pointing opposite ways, and one tint
+  would silently make one of them the subject. What is shaded instead is the run BETWEEN the
+  markers, in neutral `--ink-mute` at low opacity: a distance, belonging to neither.
+- **Identity is marker SHAPE, not colour.** A is the solid knob, B is a ring (panel fill,
+  pole-coloured border, pole-coloured dot), and each takes the pole colour of **its own**
+  side. Colour already means "which pole" everywhere else on the site and cannot be asked to
+  mean "which person" as well.
+- **When the two coincide the ring nests inside the solid** rather than covering it. Drawn
+  flat on top, the panel-filled ring hides the solid completely and the rail shows one
+  marker on a page whose legend promises two.
+- The reading on the right is `same band: <band>` or `<A's band> / <B's band>`. Never a
+  number.
+
+**Who is looking.** The server renders **first / second**, which is correct with no script
+and correct for the commonest reader, who was sent the link and is in neither role. A
+tab-scoped `ww:took:<slug>` matching one of the two codes swaps the legend, the column
+headings, the two result links and the rails' `aria-label` to **you / them**, all together,
+so the marker shapes and the words can never describe different people.
+
+**The invite.** `inviteHref` is a link to the **quiz** carrying the inviter's code
+(`/q/<slug>/?with=<code>`), not to a comparison that does not exist yet: the person invited
+answers for themselves first. The runner honours `?with=` only if it actually decodes for
+that quiz, shows a note on the intro before a single statement is answered, and on finish
+redirects to `/c/<slug>/<with>.<code>/` instead of `/r/`. The visitor CTA on a result page is
+the invite; the owner gets a compare row beside the share link.
+
+**Privacy.** `/c/<quiz>/<codes>/` is `noindex`, out of the sitemap, and stripped to
+`/c/<quiz>/` by the `beforeSend` hook before an analytics view is sent — a pair of codes in
+a log would join two people up, which is exactly what a site that stores nothing must not do
+by the back door.
+
+**Unipolar.** Two `CategoryStack`s side by side, one column on a phone, with `sharedTop` as
+the only summary. No same-band count, no widest gap, no no-claim band: a ranking has none of
+those, and the bipolar chassis does not reach this branch.
+
 ### OG image — OPEN
 
 1200×630, on a route that is already `prerender = false`. `design/tools/gen-textures.mjs` is

@@ -32,6 +32,16 @@ export const shareTextFor = (quiz: Quiz, values: number[], origin: string) =>
  * unavailable rather than merely discouraged.
  */
 export const quizHref = (quiz: Quiz) => `/q/${quiz.slug}/`;
+/**
+ * The two-person overlay's URLs live in compare.ts beside the rules they encode, and are
+ * re-exported here so every page keeps importing its URLs from one module.
+ */
+export {
+  MAX_CODES, CODE_SEPARATOR, parseCodes, compare, compareHref, inviteHref
+} from './compare';
+export type {
+  BipolarComparison, BipolarPairRow, Comparison, UnipolarComparison, UnipolarPairRow
+} from './compare';
 export const groupHref = (quiz: Quiz, group: QuizGroup) => `/axis/${quiz.slug}/${group.slug}/`;
 export const resultHref = (quiz: Quiz, code: string) => `/r/${quiz.slug}/${code}/`;
 /** Outcome pages are not namespaced by quiz yet; validate() enforces that they can't collide. */
