@@ -1,0 +1,26 @@
+---
+/**
+ * Correction intake.
+ *
+ * The fairness promise is only worth something if someone who holds a position can say it
+ * is described wrongly and be heard. So every page that describes somebody's belief carries
+ * a way in, and it points at the same public changelog the method page publishes, so a
+ * reader can see that corrections actually land rather than being absorbed.
+ *
+ * The issue title is prefilled with the page's subject, because a correction that does not
+ * say which page it is about is much harder to act on.
+ */
+interface Props {
+  /** What a correction would be about, e.g. "Grace axis" or "Eastern Orthodox". */
+  subject: string;
+}
+
+const { subject } = Astro.props;
+const href =
+  'https://github.com/sunjolol/wiser-walk/issues/new?title=' +
+  encodeURIComponent(`Correction: ${subject}`);
+---
+<p class="correction">
+  <a href={href} rel="noopener">Suggest a correction</a>. Corrections that are applied are
+  recorded in the <a href="/method/#changelog">public changelog</a>.
+</p>

@@ -8,10 +8,33 @@ export interface Props {
   noindex?: boolean;
   /** JSON-LD for this page, serialised into a script tag. */
   jsonLd?: Record<string, unknown> | null;
+  /**
+   * The trail from the home page to this one, innermost last. Paths are fine; they are
+   * resolved against the site origin here, because a BreadcrumbList with relative items is
+   * ignored. Built in one place so a page cannot publish a trail that does not match its
+   * own URL scheme.
+   */
+  breadcrumbs?: Array<{ name: string; url: string }> | null;
   ogType?: string;
 }
 
-const { title, description, noindex = false, jsonLd = null, ogType = 'website' } = Astro.props;
+const {
+  title, description, noindex = false, jsonLd = null, breadcrumbs = null, ogType = 'website'
+} = Astro.props;
+
+const breadcrumbLd =
+  breadcrumbs && breadcrumbs.length
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: breadcrumbs.map((b, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          name: b.name,
+          item: new URL(b.url, Astro.site).href
+        }))
+      }
+    : null;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const siteName = 'Wiser Walk';
@@ -65,6 +88,26 @@ const isCurrent = (href: string) => here === href || here.startsWith(href.replac
     <meta name="twitter:description" content={description} />
 
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+    {breadcrumbLd && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />}
+
+    <script is:inline>
+      // A result page's address is its result code. Strip the code before analytics sees
+      // the view, so /r/<quiz>/<code>/ is counted as /r/<quiz>/ and no code is ever recorded.
+      // The queue stub is the same one the Vercel adapter injects; defining it again is a no-op.
+      window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+      window.va('beforeSend', function (event) {
+        try {
+          var u = new URL(event.url);
+          var m = u.pathname.match(/^\/r\/([^/]+)\/[^/]+\/?$/);
+          if (m) {
+            u.pathname = '/r/' + m[1] + '/';
+            u.hash = '';
+            return Object.assign({}, event, { url: u.toString() });
+          }
+        } catch (e) {}
+        return event;
+      });
+    </script>
   </head>
   <body>
     <header class="site-head">

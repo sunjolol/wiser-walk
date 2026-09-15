@@ -17,11 +17,17 @@ const jsonLd = {
     url: new URL(`/q/${q.slug}/`, Astro.site).href
   }))
 };
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Quizzes', url: '/quizzes/' }
+];
 ---
 <Base
   title="Quizzes"
   description="Self-assessments for Christians who would rather see themselves clearly than comfortably. Scored in your browser; nothing is stored."
   jsonLd={jsonLd}
+  breadcrumbs={breadcrumbs}
 >
   <div class="prose">
     <h1>Quizzes</h1>

@@ -26,12 +26,19 @@ const jsonLd = {
   url: new URL(`/articles/${article.id}/`, Astro.site).href,
   publisher: { '@type': 'Organization', name: 'Wiser Walk' }
 };
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Articles', url: '/articles/' },
+  { name: article.data.title, url: `/articles/${article.id}/` }
+];
 ---
 <Base
   title={article.data.title}
   description={article.data.description}
   ogType="article"
   jsonLd={jsonLd}
+  breadcrumbs={breadcrumbs}
 >
   <article class="prose">
     <p class="eyebrow">{article.data.minutes} min read</p>

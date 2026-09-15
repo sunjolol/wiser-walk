@@ -3,9 +3,52 @@ import Base from '../layouts/Base.astro';
 import audit from '../data/compass-audit.json';
 import { theologyCompass } from '../lib/quizzes/theology-compass';
 
+import CorrectionNote from '../components/CorrectionNote.astro';
+
 const sheets = (audit.simulations ?? []) as Array<Record<string, any>>;
 const landed = sheets.filter(s => Array.isArray(s.answers) && s.answers.length);
 const disputed = (audit.disputed ?? []) as Array<Record<string, any>>;
+const changelog = (audit.changelog ?? []) as Array<Record<string, any>>;
+
+/*
+ * The changelog is published whole, not summarised. Entries are grouped by what they
+ * touched, which is the first segment of the audit's own `target` string, so the grouping
+ * is read off the data rather than assigned by hand. Anything the patterns below do not
+ * claim falls through to "Other" and is still printed: an entry must never be able to
+ * disappear because nobody wrote a bucket for it.
+ */
+const head = (target: unknown) => String(target ?? '').split(':')[0]!.trim();
+
+const BUCKETS: Array<{ id: string; label: string; test: RegExp }> = [
+  { id: 'axes', label: 'Axes', test: /^axis\b/i },
+  { id: 'statements', label: 'Statements', test: /^statements?\b/i },
+  { id: 'traditions', label: 'Traditions', test: /^tradition\b/i },
+  { id: 'scoring', label: 'Scoring', test: /^scoring\b/i },
+  { id: 'page-copy', label: 'Page copy', test: /^page copy\b/i }
+];
+
+const claimed = new Set<Record<string, any>>();
+const sections = BUCKETS.map(b => {
+  const entries = changelog.filter(c => b.test.test(head(c.target)));
+  entries.forEach(c => claimed.add(c));
+  return { ...b, entries };
+});
+sections.push({
+  id: 'other',
+  label: 'Other',
+  test: /^$/,
+  entries: changelog.filter(c => !claimed.has(c))
+});
+const groups = sections.filter(s => s.entries.length);
+
+/** The opening clause of a reason, for a summary line that is readable while collapsed. */
+const clause = (text: unknown) => {
+  const s = String(text ?? '').trim().replace(/\s+/g, ' ');
+  const cut = s.search(/[,;:]\s|\.\s/);
+  let out = cut > 0 ? s.slice(0, cut) : s;
+  if (out.length > 104) out = out.slice(0, 100).replace(/\s+\S*$/, '') + '…';
+  return out;
+};
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -14,11 +57,17 @@ const jsonLd = {
   description: 'The adversarial fairness audit behind the Theology Compass, in public.',
   url: new URL('/method/', Astro.site).href
 };
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Method', url: '/method/' }
+];
 ---
 <Base
   title="How this was made"
   description="The adversarial fairness audit behind the Theology Compass: twenty reviewers, 522 findings, 424 applied, and every answer sheet re-tested."
   jsonLd={jsonLd}
+  breadcrumbs={breadcrumbs}
 >
   <div class="prose">
     <h1>How this was made</h1>
@@ -47,9 +96,99 @@ const jsonLd = {
       Six tradition families were added during the audit because the original list did not
       represent them, bringing the map to {theologyCompass.outcomes.length}. A further
       {disputed.length} findings were considered and deliberately <em>not</em> applied; that
-      log is kept rather than quietly dropped.
+      log is <a href="#disputed">kept rather than quietly dropped</a>.
     </p>
+  </div>
 
+  <section class="changelog">
+    <div class="prose">
+      <h2 id="changelog">What the audit changed</h2>
+      <p>
+        Every change the fairness audit made is listed here, with the reason, so corrections
+        happen in the open.
+      </p>
+      <p class="tags">
+        {changelog.length} changes, grouped by what each one touched. Open one to read the
+        reason and see the wording before and after.
+      </p>
+    </div>
+
+    {groups.map(g => (
+      <div class="cl-group">
+        <h3 id={`changed-${g.id}`}>{g.label} <span class="cl-count">{g.entries.length}</span></h3>
+        <ul class="cl-list">
+          {g.entries.map(c => (
+            <li>
+              <details class="cl">
+                <summary>
+                  <span class="cl-target">{c.target}</span>
+                  <span class="cl-clause">{clause(c.why)}</span>
+                  <span class="chev" aria-hidden="true"></span>
+                </summary>
+                <div class="cl-body">
+                  <p>{c.why}</p>
+                  {c.before && (
+                    <>
+                      <h4>Before</h4>
+                      <pre>{c.before}</pre>
+                    </>
+                  )}
+                  {c.after && (
+                    <>
+                      <h4>After</h4>
+                      <pre>{c.after}</pre>
+                    </>
+                  )}
+                  <p class="cl-meta">
+                    {c.status}
+                    {Array.isArray(c.finding_ids) && c.finding_ids.length > 0 && (
+                      <span> · raised by {c.finding_ids.length} {c.finding_ids.length === 1 ? 'finding' : 'findings'}</span>
+                    )}
+                  </p>
+                </div>
+              </details>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+
+    <div class="prose">
+      <h3 id="disputed">Kept but not applied</h3>
+      <p>
+        These {disputed.length} findings were raised and argued through, and the audit
+        decided against acting on them. They are kept here rather than dropped, because a
+        record that only shows the changes everyone agreed with is not a record.
+      </p>
+    </div>
+
+    <ul class="cl-list">
+      {disputed.map(d => (
+        <li>
+          <details class="cl">
+            <summary>
+              <span class="cl-target">{d.target}</span>
+              <span class="cl-clause">{clause(d.proposed)}</span>
+              <span class="chev" aria-hidden="true"></span>
+            </summary>
+            <div class="cl-body">
+              <h4>What was proposed</h4>
+              <p>{d.proposed}</p>
+              <h4>Why it was not applied</h4>
+              <p>{d.reason}</p>
+              {Array.isArray(d.finding_ids) && d.finding_ids.length > 0 && (
+                <p class="cl-meta">
+                  Raised by {d.finding_ids.length} {d.finding_ids.length === 1 ? 'finding' : 'findings'}
+                </p>
+              )}
+            </div>
+          </details>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <div class="prose">
     <h2>The test that has to pass</h2>
     <p>
       The audit produced {landed.length} answer sheets — one filled in as a well-catechised
@@ -101,5 +240,15 @@ const jsonLd = {
       while running one would be the same kind of dishonesty the rest of this page exists to
       rule out.
     </p>
+    <p>
+      Page views are counted in aggregate, through Vercel's web analytics. It is cookieless:
+      nothing is stored on your device, and you are not followed from one site to another.
+      Your answers are never sent to it, and no account, address or identity is attached to
+      a view. What it records is which page was opened. A result page's address contains
+      your result code, so the code is stripped before the view is counted: a result view is
+      recorded as the quiz's result path and nothing more. Nothing is joined up to a person.
+    </p>
+
+    <CorrectionNote subject="Method page" />
   </div>
 </Base>

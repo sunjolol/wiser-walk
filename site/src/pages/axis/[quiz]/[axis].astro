@@ -3,7 +3,8 @@ import Base from '../../../layouts/Base.astro';
 import Icon from '../../../components/Icon.astro';
 import HistoryTimeline from '../../../components/HistoryTimeline.astro';
 import PassagePills from '../../../components/PassagePills.astro';
-import { QUIZZES, getQuiz, quizHref } from '../../../lib/engine/registry';
+import CorrectionNote from '../../../components/CorrectionNote.astro';
+import { QUIZZES, getQuiz, groupHref, quizHref } from '../../../lib/engine/registry';
 import { isSplitReadMore, readMoreAll } from '../../../lib/engine/types';
 
 /**
@@ -40,15 +41,30 @@ const jsonLd = {
   '@type': 'Article',
   headline: title,
   description: group.summary!.slice(0, 200),
-  url: new URL(`/axis/${quiz.slug}/${group.slug}/`, Astro.site).href,
-  isPartOf: { '@type': 'Quiz', name: quiz.title, url: new URL(`/q/${quiz.slug}/`, Astro.site).href }
+  url: new URL(groupHref(quiz, group), Astro.site).href,
+  isPartOf: { '@type': 'Quiz', name: quiz.title, url: new URL(quizHref(quiz), Astro.site).href },
+  // Both poles' works, in the order the audit lists them. The page is an argument about
+  // what other people believe, so the works it rests on are part of the record.
+  ...(reading.length ? { citation: reading } : {})
 };
+
+// A draft quiz is noindex, so its axes publish no trail either.
+const breadcrumbs =
+  quiz.status === 'draft'
+    ? null
+    : [
+        { name: 'Home', url: '/' },
+        { name: 'Quizzes', url: '/quizzes/' },
+        { name: quiz.title, url: quizHref(quiz) },
+        { name: group.name, url: groupHref(quiz, group) }
+      ];
 ---
 <Base
   title={title}
   description={group.summary!.slice(0, 155)}
   noindex={quiz.status === 'draft'}
   jsonLd={jsonLd}
+  breadcrumbs={breadcrumbs}
 >
   <div class="prose">
     <p class="eyebrow"><Icon name={quiz.icon} size={15} /> {quiz.title}</p>
@@ -81,34 +97,49 @@ const jsonLd = {
 
   <div class="prose">
 
-    {group.passages && group.passages.length > 0 && (
-      <PassagePills refs={group.passages} heading="h3" />
-    )}
-
     {group.history && group.history.length > 0 && (
       <HistoryTimeline history={group.history} heading="h3" />
     )}
 
-    {reading.length > 0 && (
+    {/*
+      One heading over the two things a reader would go looking for: the texts the argument
+      is made from, and the books that make it. They were already both on the page; what was
+      missing was the word "Sources" over them, so nobody had to guess that this is where
+      the working is. Nothing is added here and nothing is attributed to a pole that the
+      audited data does not already attribute.
+    */}
+    {((group.passages && group.passages.length > 0) || reading.length > 0) && (
       <>
-        <h2>Read further</h2>
-        {split ? (
-          <div class="read-split">
-            <div>
-              <h3>{group.left}</h3>
-              <ul>{split.left.map(r => <li>{r}</li>)}</ul>
-            </div>
-            <div>
-              <h3>{group.right}</h3>
-              <ul>{split.right.map(r => <li>{r}</li>)}</ul>
-            </div>
-          </div>
-        ) : (
-          <ul>{reading.map(r => <li>{r}</li>)}</ul>
+        <h2 id="sources">Sources</h2>
+
+        {group.passages && group.passages.length > 0 && (
+          <PassagePills refs={group.passages} heading="h3" />
+        )}
+
+        {reading.length > 0 && (
+          <>
+            <h3>Further reading</h3>
+            {split ? (
+              <div class="read-split">
+                <div>
+                  <h4>{group.left}</h4>
+                  <ul>{split.left.map(r => <li>{r}</li>)}</ul>
+                </div>
+                <div>
+                  <h4>{group.right}</h4>
+                  <ul>{split.right.map(r => <li>{r}</li>)}</ul>
+                </div>
+              </div>
+            ) : (
+              <ul>{reading.map(r => <li>{r}</li>)}</ul>
+            )}
+          </>
         )}
       </>
     )}
 
     <p><a href={quizHref(quiz)}>Take the {quiz.title} →</a></p>
+
+    <CorrectionNote subject={`${group.name} axis`} />
   </div>
 </Base>

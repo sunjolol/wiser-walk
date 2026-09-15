@@ -26,7 +26,9 @@ await build({
 });
 
 const engine = await import(pathToFileURL(OUT).href);
-const { QUIZZES, getQuiz, scoreQuiz, resultFor, encodeFor, decodeFor, shareTextFor } = engine;
+const {
+  QUIZZES, getQuiz, scoreQuiz, resultFor, encodeFor, decodeFor, shareTextFor, groupHref
+} = engine;
 
 let failures = 0;
 const fail = m => { failures++; console.log('  FAIL ' + m); };
@@ -157,6 +159,20 @@ console.log('5b. the result view keeps the two shapes apart');
   if (!bySlug.includes('gifts') || !bySlug.includes('authority')) {
     fail('rows do not carry the published slugs: ' + bySlug.join(','));
   } else ok('rows carry slugs (gifts, authority), not keys (spirit, tradition)');
+
+  // The same rule at the other end: the URL builder itself must use the slug. The axes
+  // keyed "spirit" and "tradition" publish at /gifts/ and /authority/, so a href built
+  // from key would 404 on two of the six.
+  const hrefs = compass.groups.map(g => groupHref(compass, g));
+  const wrongHref = compass.groups
+    .map((g, i) => [g, hrefs[i]])
+    .filter(([g, h]) => h !== `/axis/theology-compass/${g.slug}/`);
+  if (wrongHref.length) {
+    fail('groupHref did not build /axis/theology-compass/<slug>/: ' + wrongHref.map(([, h]) => h).join(','));
+  } else if (!hrefs.includes('/axis/theology-compass/gifts/') ||
+             !hrefs.includes('/axis/theology-compass/authority/')) {
+    fail('groupHref did not publish the gifts and authority axes: ' + hrefs.join(' '));
+  } else ok(`groupHref builds all ${hrefs.length} axis URLs from slugs, gifts and authority included`);
 
   // Every reachable score must land in exactly one band with a real adjective.
   const reach = [0, 8, 17, 25, 33, 42, 50, 58, 67, 75, 83, 92, 100];
@@ -341,6 +357,32 @@ console.log('7. share text');
     if (!text.includes(`https://wiserwalk.com/r/${q.slug}/`)) fail(`${q.slug}: share link missing quiz slug`);
     else ok(`${q.slug}: ${lines.length} lines, links to /r/${q.slug}/`);
   }
+}
+
+// ------------------------------------------- 8. the generated data files themselves
+console.log('8. generated data files');
+{
+  // An internal JSON key once reached the published Grace summary. The client bundle is
+  // read by anyone who opens the page source, so the leak is checked on the text itself
+  // rather than on any one field.
+  const raw = readFileSync(resolve(ROOT, 'src/data/compass.json'), 'utf8');
+  if (raw.includes('candidate_statements')) {
+    fail('compass.json contains the internal key "candidate_statements"');
+  } else ok('compass.json leaks no internal audit key');
+
+  // The method page publishes the whole changelog and the whole disputed log. If either
+  // ever shipped short, the page would quietly claim completeness it did not have.
+  const aside = JSON.parse(readFileSync(resolve(ROOT, 'src/data/compass-audit.json'), 'utf8'));
+  const changes = aside.changelog ?? [];
+  const disputed = aside.disputed ?? [];
+  if (changes.length !== 89) fail(`compass-audit.json carries ${changes.length} changelog entries, expected 89`);
+  else ok('compass-audit.json carries all 89 changelog entries');
+  if (disputed.length !== 11) fail(`compass-audit.json carries ${disputed.length} disputed entries, expected 11`);
+  else ok('compass-audit.json carries all 11 disputed entries');
+
+  const incomplete = changes.filter(c => !c.target || !c.why);
+  if (incomplete.length) fail(`${incomplete.length} changelog entries have no target or no reason`);
+  else ok('every changelog entry names a target and a reason');
 }
 
 rmSync(OUT, { force: true });

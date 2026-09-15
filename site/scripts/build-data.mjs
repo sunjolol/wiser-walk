@@ -126,12 +126,14 @@ const out = {
   }
 };
 
-// The answer sheets and the disputed log are build-time only. They are large and are
-// never needed in the browser, so they live in a separate file that the quiz runner's
-// bundle does not import.
+// The answer sheets, the changelog and the disputed log are build-time only. They are
+// large and are never needed in the browser, so they live in a separate file that the quiz
+// runner's bundle does not import. The changelog is carried here so the method page can
+// publish every change the audit made, with its reason, rather than summarising it.
 const aside = {
   generatedFrom: 'audit/compass-data.revised.json',
   simulations: src.simulations ?? [],
+  changelog: src.changelog ?? [],
   disputed: src.disputed ?? []
 };
 
@@ -149,5 +151,6 @@ console.log(
 console.log(
   `compass.json: ${axes.length} axes, ${statements.length} statements (${itemsPerAxis}/axis, radix ${radix}), ` +
   `${traditions.length} traditions, max distance ${out.scoring.maxDistance}\n` +
-  `compass-audit.json: ${aside.simulations.length} answer sheets, ${aside.disputed.length} disputed findings`
+  `compass-audit.json: ${aside.simulations.length} answer sheets, ${aside.changelog.length} changelog entries, ` +
+  `${aside.disputed.length} disputed findings`
 );

@@ -18,11 +18,17 @@ const jsonLd = {
     datePublished: a.data.published.toISOString().slice(0, 10)
   }))
 };
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Articles', url: '/articles/' }
+];
 ---
 <Base
   title="Articles"
   description="Plain, practical writing on Christian formation: gratitude, joy, and what it actually means to be Christ-like."
   jsonLd={jsonLd}
+  breadcrumbs={breadcrumbs}
 >
   <div class="prose">
     <h1>Articles</h1>

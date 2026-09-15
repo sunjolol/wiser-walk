@@ -7,11 +7,17 @@ const jsonLd = {
   name: 'About Wiser Walk',
   url: new URL('/about/', Astro.site).href
 };
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'About', url: '/about/' }
+];
 ---
 <Base
   title="About"
   description="What Wiser Walk is, what it is not, and who is behind it."
   jsonLd={jsonLd}
+  breadcrumbs={breadcrumbs}
 >
   <div class="prose">
     <h1>About</h1>

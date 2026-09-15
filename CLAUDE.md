@@ -41,7 +41,63 @@ Note he had earlier rejected the word "wiser" as "weird to say"; he has since ov
 
 State: local git repo initialised, **one commit** `c8fd322`, 137 files tracked, `node_modules` excluded. Authored as `Light <serenitybackto@gmail.com>` — he was offered a GitHub noreply address to keep his email out of public history and **chose to keep his real email**. Do not change it.
 
-## PICK UP HERE (as of 2026-09-03)
+## PICK UP HERE (as of 2026-09-14)
+
+### The growth plan is DECIDED — build it in this order
+
+On 2026-09-14 a 13-agent brainstorm (9 lenses, 3 critics, 47 concepts, every precedent verified)
+answered "how does this site spread on its own". The owner accepted the recommendation. The full
+brief, with the evidence, the killed ideas and the 90-day plan, is at
+https://claude.ai/artifact/E4WPUV8x9EBusL19AGwrhU — read it before proposing any new feature.
+
+Three layers, in this order, nothing needing accounts, a database, an app, a new name or a new palette:
+
+1. **The fair reference floor** (week 1, then weeks 9–10): sources on axis pages, the 89-entry audit
+   changelog and the 11 disputes published on `/method#changelog`, BreadcrumbList JSON-LD everywhere,
+   a correction intake (GitHub issues), cookieless Vercel Web Analytics disclosed on `/method`. Later:
+   153 `/compare/[a]-vs-[b]` pair pages, six axis-topic pages, contested-passage pages (Romans 9,
+   1 Tim 2:3–4) in each tradition's own quoted words. **Tradition pages get NO sources block until real
+   citations exist in the data — the tradition entries hold only a name and a position vector, and
+   inventing confession references is forbidden.**
+2. **Compare with someone** (week 2): `/c/[quiz]/[a].[b]` decodes dot-joined result codes through the
+   existing codec and draws both people on one set of rails with the gap shaded. The invite is empty
+   until the second person finishes. Never a compatibility percentage; say "land in the same band",
+   never "agree"; no names or initials in URLs; a group map (`/g/`) shows nothing but a spread band
+   below five members and never labels a group's tradition.
+3. **Golden Chain** (weeks 3–6, launch Monday 2026-10-26): a daily NYT-Connections-shaped puzzle. Sixteen
+   short BSB verses sort into four groups that the OpenBible cross-reference index (CC BY, ~340k links
+   with vote counts) links to the same hidden hub verse. The category IS the hub verse verbatim, so the
+   site interprets nothing. Share = a 4×4 emoji grid in solve order, no verse text. Reveal = a permanent
+   `/verse/[ref]` page. Ninety boards precomputed and validated offline (each leaf links to exactly one
+   chosen hub). Streak private in localStorage, knowledge only; no reminders, no leaderboard. The
+   TSK/OpenBible provenance and the 66-book canon gap print in the game footer and on every verse page.
+   Then: one honest launch post per community (the owner agreed to make them), after reading each
+   community's rules live.
+
+Later, only if the numbers say so: a Computus module and dual-calendar Lent 2027 pages (week 8; Ash
+Wednesday 2027-02-10, Clean Monday 2027-03-15, Pascha 2027-05-02 — verified), the axis email series
+(week 11), "Said Who" (daily primary-source puzzle, needs 60 verified quotations before launch), the
+Catena Aurea verse layer (Newman 1841, one Gospel first), catechism pages, group rooms.
+
+**Killed, with reasons — do not re-propose:** self-portrait / collectible deck / season Wrapped /
+year recap (assume an installed base; "the soul as a stat sheet"); anything that counts devotion
+(prayer streaks, fasting trackers — Matthew 6, Hopko's maxims, the Exodus 90 critique); rule-of-life
+builder (Practicing the Way owns it); fasting calendar or saint-of-the-day (feastorfast.com,
+orthodoxiq.com); verse-reference Wordle clones (Versle, Lordle); anything social with accounts; a
+person-to-saint or person-to-person percentage; AI chat over theology or fasting. **Count knowledge,
+never devotion.**
+
+**Orthodox positioning, settled by evidence:** the capital-O convert wave is real, online-born and
+small (OSI 20-parish study; Pew ~1% of US adults; clergy publicly hostile to online tools above the
+priest). Serve it as a layer — Julian calendar toggle wherever a date appears, pre-1054 Fathers
+claimed for nobody, Orthodox positions cited to Orthodox documents, "bring this to your priest" as
+the primary action on anything practice-shaped — never as the site's identity. No icons, Byzantine
+styling, "ancient faith" copy, "orthobro" or masculinity framing anywhere.
+
+**Working rhythm the owner set on 2026-09-14:** be token-efficient. Use Opus (one agent, precise
+spec, no commit, no push) for anything Opus does as well; use Fable only for judgment. Ship one
+reviewable chunk at a time (about one week of the plan), run the tests, show the diff, and stop for
+his direction before pushing. No multi-hour builds. Every push to `main` deploys to production.
 
 **Mobile is priority one, from the ground up.** Most users arrive on phones, the owner wants a clean
 path to a mobile app later, and his previous project became a painful retrofit because mobile was
@@ -57,14 +113,15 @@ Riche palette `#7EBAEE`→`#F0A06F` on `#444444`, panels `#EEEEEE` on `#E8E8E8` 
 page, `border-radius:15–22px`, whisper shadows `3px 3px 5px rgba(68,68,68,.065)`, DM Serif Display
 + Poppins + Inter, bulb theme toggle, light default. Sources and tools in `design/`.
 
-### The result page is NOT done — this is the live task
+### The result page is BUILT — these decisions remain binding
 
-The theme demo was only ever a style specimen. The owner reviewed a richer earlier version
-(`theology-compass.html`, open it with `#r=00YHZG`) and correctly judged the new page a regression.
-Ten agents produced `design/DESIGN-SPECS.md`; **every dimension came back `needs-work`, so read each
-critique alongside its spec — the critique usually wins.**
+Built and reviewed between 2026-09-03 and 2026-09-14 (commits `bdc522a` through `01e8fd9`): one
+result system, two shapes (bipolar rails, unipolar ranking), the theme applied site-wide as a token
+layer, share card drawn on the page, BSB text bundled for all fifty cited passages. The design
+critiques live in `design/DESIGN-SPECS.md` and `RESULT-BLUEPRINT.md`. Do not redesign the result page
+or the theme; every hour on visuals is an hour not on the growth plan.
 
-Decisions accepted from that round:
+Decisions that remain binding:
 
 - **No separate compass wheel.** The hero visual and the axis rows are ONE component: six
   full-width diverging rails on a shared centre spine. A circle cannot fit twelve pole labels, so
@@ -85,14 +142,15 @@ Decisions accepted from that round:
 - **Truncate axis prose on the result page; full text lives on the indexable `/axis/` pages.** Fixes
   the wall-of-text and the SEO funnel in one move.
 
-### Open bugs found and verified, NOT yet fixed
+### Formerly open bugs — FIXED (verified against the repo 2026-09-14)
 
 1. **Axis key ≠ slug.** Internal keys are `spirit` and `tradition`; built slugs are `gifts` and
-   `authority`. Anything keying URLs off `key` 404s on two of six axes. Always use `slug`.
-2. **`(see candidate_statements)`** — an internal JSON key — is in the published Grace summary in
-   `audit/compass-data.revised.json`. Needs an editorial fix at the audit source.
+   `authority`. All URLs now go through `groupHref()` in `registry.ts`, and `engine-test.mjs` asserts
+   rows carry slugs. Still the rule: always use `slug`, never `key`, for anything URL-shaped.
+2. **`(see candidate_statements)`** no longer appears anywhere in the audit source or the bundle.
+   Week 1 adds a regression test so it cannot come back.
 
-Already fixed this session: `Disallow: /r/` removed from robots.txt (it blocked the crawl that
+Also fixed earlier: `Disallow: /r/` removed from robots.txt (it blocked the crawl that
 `noindex, follow` depends on, severing link flow to the axis/tradition pages).
 
 Checked and **rejected** as a false alarm: the claim that `band()` and `nearestState()` can
@@ -104,8 +162,9 @@ cannot occur. Do not "fix" it.
 - **Email offer: the result link plus a short follow-up series** (3–4 emails unpacking the reader's
   strongest axes using the history and passages already written). This is the honest reason to hold
   an address — the bare result link is already free and in their URL bar, so "we'll email you your
-  result" converts badly on its own. Requires rewriting the "no email list" promises on `/about`
-  and `/method`; do not quietly contradict them.
+  result" converts badly on its own. The "no email list" promises on `/about` and `/method` have
+  been rewritten honestly (`/method` says the list exists and what is sent). MailerLite is wired to
+  `src/pages/api/subscribe.ts`; the 3–4 axis emails themselves are not yet written (plan week 11).
 - **Blueprint the whole platform before building further.** Spec result shapes and scoring
   strategies for the Compass, seven deadly sins, spiritual gifts and who-in-the-Bible, plus the
   article system and Bible study tools. **Critically: the Compass is bipolar and the others are
@@ -117,9 +176,11 @@ cannot occur. Do not "fix" it.
 
 ### Still unbuilt
 
-Email capture (owner confirmed he wants it — requires honestly rewriting the "no email list"
-promises on `/about` and `/method`), OG image generation, the context-aware CTA (the same URL is
-both "my result" and "a friend's result"), and applying the theme across the 41 pages.
+The growth plan above, in order. Deliberately deferred until usage justifies it: a server-side OG
+image route (the share card is drawn on a browser canvas in `ShareBlock.astro`; nothing server-side
+exists), group rooms or any KV store, the seven-deadly-sins audit (it stays `draft` and out of every
+shared object until it has passed the same adversarial audit as the Compass), and new quizzes (each
+new quiz should arrive with a two-person mode once the pair route exists).
 
 ## Where the build stands
 

@@ -21,8 +21,24 @@ const jsonLd = isDraft
       educationalLevel: 'general',
       about: { '@type': 'Thing', name: 'Christian belief and self-understanding' }
     };
+
+// A draft is noindex, so it publishes no trail either: a breadcrumb is a statement about
+// where a page sits in a site that search engines are invited to read.
+const breadcrumbs = isDraft
+  ? null
+  : [
+      { name: 'Home', url: '/' },
+      { name: 'Quizzes', url: '/quizzes/' },
+      { name: quiz.title, url: `/q/${quiz.slug}/` }
+    ];
 ---
-<Base title={quiz.title} description={quiz.description} noindex={isDraft} jsonLd={jsonLd}>
+<Base
+  title={quiz.title}
+  description={quiz.description}
+  noindex={isDraft}
+  jsonLd={jsonLd}
+  breadcrumbs={breadcrumbs}
+>
   <div class="prose">
     <p class="eyebrow">{quiz.items.length} statements · about {quiz.minutes} minutes</p>
     <h1>{quiz.title}</h1>

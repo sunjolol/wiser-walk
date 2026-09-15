@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import CorrectionNote from '../../components/CorrectionNote.astro';
 import { theologyCompass } from '../../lib/quizzes/theology-compass';
 import { lean } from '../../lib/strategies/bipolar';
 import { groupHref, quizHref } from '../../lib/engine/registry';
@@ -19,11 +20,22 @@ const jsonLd = {
   description: `Where ${tradition.name} sits on six axes of Christian belief.`,
   url: new URL(`/tradition/${tradition.slug}/`, Astro.site).href
 };
+
+// There is no traditions index, and the site's nav has none: a tradition page exists
+// because the Compass measures distance to it, so the trail runs through the quiz that
+// owns it rather than through a section that does not exist.
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Quizzes', url: '/quizzes/' },
+  { name: quiz.title, url: quizHref(quiz) },
+  { name: tradition.name, url: `/tradition/${tradition.slug}/` }
+];
 ---
 <Base
   title={`${tradition.name} on the Theology Compass`}
   description={`Where ${tradition.name} typically sits on six axes of Christian belief — a sketch of adherents, not official teaching.`}
   jsonLd={jsonLd}
+  breadcrumbs={breadcrumbs}
 >
   <div class="prose">
     <p class="eyebrow">🧭 Theology Compass</p>
@@ -54,4 +66,6 @@ const jsonLd = {
   </ul>
 
   <p><a href={quizHref(quiz)}>See where you land →</a></p>
+
+  <CorrectionNote subject={tradition.name} />
 </Base>
