@@ -41,9 +41,36 @@ Note he had earlier rejected the word "wiser" as "weird to say"; he has since ov
 
 State: local git repo initialised, **one commit** `c8fd322`, 137 files tracked, `node_modules` excluded. Authored as `Light <serenitybackto@gmail.com>` — he was offered a GitHub noreply address to keep his email out of public history and **chose to keep his real email**. Do not change it.
 
-## PICK UP HERE (as of 2026-09-14)
+## PICK UP HERE (as of 2026-09-15) — PAUSED by the owner
 
-### The growth plan is DECIDED — build it in this order
+**Read this before the plan below.** Layers 1 and 2 shipped and are live (the reference
+floor, cookieless analytics with result codes stripped, the `/c/` two-person overlay). Layer 3
+did not survive contact with the owner. Two attempts at the daily object were built as
+playable previews and both were rejected on play:
+
+1. **Golden Chain** (sort sixteen verse fragments into four groups sharing a hidden
+   cross-referenced verse): "a game for AI, not for humans"; the cards were fragments needing
+   back-knowledge; only the tap-four interaction was fun.
+2. **Same Move / Who are you most like in the Bible?** (a situation, sixteen things you'd
+   actually do, each a cited recorded act of a Bible figure; a quiz that names the figure
+   whose moves you chose most): "loaded questions/answers", options written backwards from
+   the citation so they read as contrived; "surveys are not your strong point".
+
+Both are preserved on the local branch `shelved/golden-chain-and-figures` (generator,
+checker, deck, verifier, `FIGURES-BLUEPRINT.md`). Local `main` equals `origin/main`. Do not
+resume either unprompted.
+
+The owner has paused to decide what he actually wants to build and said the concept itself
+may be flawed and a fresh brainstorm may be needed. **When work resumes: ask what he decided
+first.** What he has said fun means for him: personal, instantly understood with no church or
+Bible vocabulary, tactile (tapping cards, choosing up to four), and a result about himself
+worth showing someone. What failed twice: optimising rigor (open data, citations, verifiers)
+before testing appeal. Next time, put a handful of real items in front of him before building
+any deck or machinery, and never present coverage tables or checkers as evidence of quality.
+
+The plan below is kept as the record of what was decided on 2026-09-14; its layer 3 is void.
+
+### The growth plan as decided on 2026-09-14 (layers 1 and 2 done; layer 3 void)
 
 On 2026-09-14 a 13-agent brainstorm (9 lenses, 3 critics, 47 concepts, every precedent verified)
 answered "how does this site spread on its own". The owner accepted the recommendation. The full
