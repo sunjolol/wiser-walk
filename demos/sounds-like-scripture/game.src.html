@@ -1,0 +1,1180 @@
+<title>Sounds Like Scripture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap">
+
+<style>
+/* ------------------------------------------------------------------ tokens
+   Copied from site/src/styles/site.css. Light on a bare :root, dark under the
+   guarded media query, and again under the explicit attribute, so a chosen
+   light never loses to a dark phone. */
+:root {
+  --blue: #7EBAEE;
+  --orange: #F0A06F;
+  --grad: linear-gradient(to bottom right, var(--blue), var(--orange));
+  --grad-r: linear-gradient(to right, var(--blue), var(--orange));
+
+  --display: "DM Serif Display", Georgia, "Times New Roman", serif;
+  --ui: "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --text: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --r-sm: 12px;
+  --r: 18px;
+  --r-lg: 22px;
+  --r-pill: 999px;
+
+  --lift: 3px 3px 5px rgba(68, 68, 68, .065);
+  --lift-soft: 0 0 10px rgba(40, 40, 40, .045);
+
+  --gutter: 16px;
+  --col: 30rem;
+}
+
+:root {
+  --page: #E3E3E3;
+  --shell: #E8E8E8;
+  --panel: #EEEEEE;
+  --ink: #444444;
+  --ink-soft: #5A6066;
+  --ink-mute: #7C8288;
+  --accent: #3E86C4;
+  --accent-soft: #E2EDF7;
+  --accent-ink: #FFFFFF;
+  --rule: rgba(68, 68, 68, .12);
+  --warn-bg: #FBEDE2;
+  --warn-ink: #7A4A22;
+  --on-grad: #3B3B3B;
+  --tint-op: .35;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --page: #131319;
+    --shell: #1B1B21;
+    --panel: #24242B;
+    --ink: #EAE8E4;
+    --ink-soft: #B4B0AA;
+    --ink-mute: #8E8A84;
+    --accent: #7EBAEE;
+    --accent-soft: #1E2A38;
+    --accent-ink: #10131A;
+    --rule: rgba(234, 232, 228, .13);
+    --warn-bg: #33261C;
+    --warn-ink: #F0A06F;
+    --tint-op: .4;
+    --lift: 0 2px 6px rgba(0, 0, 0, .3);
+    --lift-soft: 0 0 12px rgba(0, 0, 0, .25);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --page: #131319;
+  --shell: #1B1B21;
+  --panel: #24242B;
+  --ink: #EAE8E4;
+  --ink-soft: #B4B0AA;
+  --ink-mute: #8E8A84;
+  --accent: #7EBAEE;
+  --accent-soft: #1E2A38;
+  --accent-ink: #10131A;
+  --rule: rgba(234, 232, 228, .13);
+  --warn-bg: #33261C;
+  --warn-ink: #F0A06F;
+  --tint-op: .4;
+  --lift: 0 2px 6px rgba(0, 0, 0, .3);
+  --lift-soft: 0 0 12px rgba(0, 0, 0, .25);
+  color-scheme: dark;
+}
+
+/* -------------------------------------------------------------------- base */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--text);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overscroll-behavior: none;
+}
+
+.app {
+  height: 100%;
+  max-width: var(--col);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.screen { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+/* several blocks below set display, which would beat the hidden attribute */
+[hidden] { display: none !important; }
+
+h1, h2, h3 {
+  font-family: var(--display);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -.01em;
+  margin: 0 0 .5rem;
+  color: var(--ink);
+  text-wrap: balance;
+}
+h1 { font-size: clamp(2.1rem, 11vw, 2.9rem); }
+h2 { font-size: clamp(1.5rem, 7vw, 1.9rem); }
+p { margin: 0 0 .9rem; }
+
+.eyebrow {
+  font-family: var(--ui); font-size: .66rem; font-weight: 600;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--ink-mute);
+  margin: 0 0 .55rem;
+}
+.lede { color: var(--ink-soft); font-size: 1rem; }
+.small { font-size: .82rem; color: var(--ink-mute); line-height: 1.55; }
+
+svg { width: 1em; height: 1em; display: block; fill: none; stroke: currentColor;
+      stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+svg.solid { fill: currentColor; stroke: none; }
+
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+/* ----------------------------------------------------------------- buttons */
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  font-family: var(--ui); font-size: .78rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; text-decoration: none;
+  padding: .85rem 1.4rem; min-height: 52px; width: 100%;
+  border: 0; border-radius: var(--r-pill);
+  color: var(--on-grad); background-image: var(--grad);
+  box-shadow: var(--lift); cursor: pointer;
+  transition: box-shadow .2s ease, transform .12s ease;
+}
+.btn:active { transform: translateY(1px); }
+.btn.ghost {
+  background: none; background-image: none; color: var(--accent);
+  box-shadow: inset 0 0 0 1.5px var(--accent);
+}
+.btn.quiet {
+  background: var(--panel); background-image: none; color: var(--ink-soft);
+  box-shadow: var(--lift); font-size: .72rem;
+}
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.btn-col { display: grid; gap: .6rem; }
+.btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
+
+/* ------------------------------------------------------------------- start */
+
+#screen-start { overflow-y: auto; padding: 2rem 0 1.25rem; justify-content: space-between; }
+.start-top { flex: 0 0 auto; }
+.start-mark {
+  width: 46px; height: 8px; border-radius: var(--r-pill);
+  background-image: var(--grad-r); margin-bottom: 1.4rem;
+}
+.canon { margin: 1.6rem 0 1.1rem; }
+.canon-chips { display: flex; gap: .5rem; flex-wrap: wrap; }
+.chip {
+  flex: 1 1 auto; min-height: 48px; padding: .6rem .9rem;
+  border: 0; border-radius: var(--r-sm);
+  background: var(--panel); box-shadow: var(--lift);
+  font-family: var(--ui); font-size: .82rem; font-weight: 600;
+  color: var(--ink-soft); cursor: pointer;
+  transition: box-shadow .18s ease, color .18s ease;
+}
+.chip[aria-pressed="true"] {
+  color: var(--ink); box-shadow: inset 0 0 0 2px var(--accent), var(--lift);
+  background: var(--accent-soft);
+}
+.canon-note { margin: .8rem 0 0; }
+.banner {
+  background: var(--accent-soft); border-radius: var(--r);
+  padding: .95rem 1.1rem; margin: 0 0 1.1rem;
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+.banner p { margin: 0; color: var(--ink-soft); font-size: .95rem; }
+.banner strong { color: var(--ink); font-weight: 600; }
+.start-actions { margin-top: 1.6rem; }
+.foot { margin-top: 1.6rem; padding-bottom: calc(.5rem + env(safe-area-inset-bottom, 0px)); }
+
+/* -------------------------------------------------------------------- play */
+
+#screen-play { padding-top: max(.9rem, env(safe-area-inset-top, 0px)); }
+
+.hud { display: flex; align-items: center; gap: .75rem; flex: 0 0 auto; }
+.pips { display: flex; gap: 4px; flex: 1; }
+.pip { flex: 1; height: 5px; border-radius: var(--r-pill); background: var(--shell); }
+.pip.done { background: var(--ink-mute); }
+.pip.now { background-image: var(--grad-r); }
+.score {
+  font-family: var(--ui); font-weight: 700; font-size: .82rem;
+  letter-spacing: .04em; color: var(--ink-soft); font-variant-numeric: tabular-nums;
+  min-width: 3.4rem; text-align: right;
+}
+
+.fuse { height: 8px; border-radius: var(--r-pill); background: var(--shell); margin: .75rem 0 1rem; overflow: hidden; flex: 0 0 auto; }
+.fuse-fill { height: 100%; width: 100%; border-radius: var(--r-pill); background-image: var(--grad-r); }
+
+.stage { flex: 1; min-height: 0; display: flex; position: relative; }
+
+.card {
+  position: relative; flex: 1; min-height: 0;
+  background: var(--panel); border-radius: var(--r-lg); box-shadow: var(--lift);
+  padding: 1.5rem 1.25rem; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: center;
+  touch-action: pan-y; cursor: grab;
+  will-change: transform;
+}
+.card.dragging { cursor: grabbing; }
+.card.revealed { justify-content: flex-start; overflow-y: auto; cursor: default; }
+.card-tint {
+  position: absolute; inset: 0; border-radius: inherit; opacity: 0; pointer-events: none;
+}
+.card-tint.yes { background: var(--blue); }
+.card-tint.no { background: var(--orange); }
+.card-inner { position: relative; }
+
+.line {
+  font-family: var(--display); line-height: 1.32; letter-spacing: -.005em;
+  margin: 0; color: var(--ink); text-wrap: pretty;
+}
+.line.s1 { font-size: clamp(1.45rem, 6.6vw, 1.7rem); }
+.line.s2 { font-size: clamp(1.22rem, 5.6vw, 1.45rem); }
+.line.s3 { font-size: clamp(1.06rem, 4.8vw, 1.25rem); }
+.card.revealed .line { font-size: 1.02rem; color: var(--ink-soft); }
+
+.drag-hint {
+  font-family: var(--ui); font-size: .64rem; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--ink-mute); margin: 1.1rem 0 0;
+}
+
+.reveal { margin-top: 1.1rem; padding-top: 1.1rem; border-top: 1px solid var(--rule); }
+.reveal[hidden] { display: none; }
+.verdict {
+  display: flex; align-items: center; gap: .5rem;
+  font-family: var(--ui); font-weight: 700; font-size: 1.05rem; color: var(--ink);
+  margin: 0 0 .5rem;
+}
+.verdict svg { width: 1.15em; height: 1.15em; }
+.truth { font-size: .98rem; color: var(--ink); margin: 0 0 .5rem; }
+.cite { font-size: .9rem; color: var(--ink-soft); margin: 0 0 .25rem; }
+.cite b { font-weight: 600; color: var(--ink); }
+.reveal-note {
+  background: var(--warn-bg); color: var(--warn-ink); border-radius: var(--r-sm);
+  padding: .65rem .8rem; font-size: .84rem; margin: .7rem 0 0;
+}
+.reveal-meta {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+  margin-top: .9rem;
+}
+.points {
+  font-family: var(--ui); font-weight: 700; font-size: .9rem; color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.them { font-family: var(--ui); font-size: .78rem; color: var(--ink-mute); }
+.src-link { font-size: .8rem; color: var(--accent); text-decoration: none; }
+.src-link:hover { text-decoration: underline; }
+
+.bar {
+  flex: 0 0 auto; padding: 1rem 0 calc(1rem + env(safe-area-inset-bottom, 0px));
+}
+.answers { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
+.ans {
+  min-height: 62px; border: 0; border-radius: var(--r);
+  font-family: var(--ui); font-size: .84rem; font-weight: 700; line-height: 1.2;
+  color: var(--on-grad); box-shadow: var(--lift); cursor: pointer;
+  padding: .7rem .6rem; transition: transform .12s ease, filter .18s ease;
+}
+.ans:active { transform: translateY(1px); }
+.ans.no { background: var(--orange); }
+.ans.yes { background: var(--blue); }
+.ans.armed { filter: saturate(1.35) brightness(1.04); }
+
+/* ------------------------------------------------------------------ result */
+
+#screen-result { overflow-y: auto; padding: 1.75rem 0 1.25rem; }
+.tally {
+  background: var(--panel); border-radius: var(--r-lg); box-shadow: var(--lift);
+  padding: 1.25rem 1.2rem; margin: 0 0 1rem;
+}
+.big {
+  font-family: var(--display); font-size: clamp(2.6rem, 14vw, 3.4rem);
+  line-height: 1; margin: 0; font-variant-numeric: tabular-nums;
+}
+.stats { display: flex; flex-wrap: wrap; gap: .25rem 1.35rem; margin-top: .85rem; }
+.stat { font-size: .82rem; color: var(--ink-mute); }
+.stat b { display: block; font-family: var(--ui); font-size: .95rem; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
+.squares { display: flex; gap: .3rem; margin-top: 1.1rem; }
+.sq {
+  flex: 1; aspect-ratio: 1; max-width: 2.2rem; border-radius: 9px;
+  background: var(--shell); color: var(--ink-soft);
+  display: flex; align-items: center; justify-content: center; position: relative;
+  font-size: .85rem;
+}
+.sq .bolt { position: absolute; right: 2px; bottom: 1px; width: .55em; height: .55em; color: var(--accent); }
+.versus { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; margin-top: 1rem; }
+.versus div { background: var(--shell); border-radius: var(--r-sm); padding: .7rem .8rem; }
+.versus span { display: block; font-family: var(--ui); font-size: .64rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-mute); }
+.versus b { font-family: var(--ui); font-size: 1.15rem; font-variant-numeric: tabular-nums; }
+.block { margin: 1.4rem 0 0; }
+.block h3 { font-family: var(--ui); font-size: .68rem; font-weight: 700; letter-spacing: .14em;
+            text-transform: uppercase; color: var(--ink-mute); margin: 0 0 .6rem; }
+.misses { list-style: none; margin: 0; padding: 0; display: grid; gap: .55rem; }
+.misses li {
+  background: var(--panel); border-radius: var(--r-sm); box-shadow: var(--lift);
+  padding: .8rem .9rem; font-size: .88rem; color: var(--ink-soft);
+}
+.misses q { display: block; quotes: none; font-family: var(--display); font-size: 1.02rem; line-height: 1.35; color: var(--ink); margin-bottom: .45rem; }
+.misses b { display: block; color: var(--ink); font-weight: 600; margin-bottom: .1rem; }
+.fooled { display: flex; flex-wrap: wrap; gap: .4rem; }
+.fooled span {
+  background: var(--shell); border-radius: var(--r-pill); padding: .35rem .8rem;
+  font-size: .8rem; color: var(--ink-soft);
+}
+.result-actions { margin-top: 1.5rem; }
+.toast {
+  position: fixed; left: 50%; bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%); background: var(--ink); color: var(--page);
+  font-family: var(--ui); font-size: .78rem; font-weight: 600;
+  padding: .6rem 1.1rem; border-radius: var(--r-pill); box-shadow: var(--lift);
+  opacity: 0; pointer-events: none; transition: opacity .2s ease; z-index: 9;
+}
+.toast.on { opacity: 1; }
+
+/* --------------------------------------------------------------- widescreen */
+
+@media (min-width: 40rem) {
+  body { font-size: 16px; }
+  #screen-start, #screen-result { padding-top: 3rem; }
+  .card { padding: 2rem 1.75rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card, .btn, .ans { transition: none !important; }
+}
+</style>
+
+<div class="app">
+
+  <section class="screen" id="screen-start">
+    <div class="start-top">
+      <div class="start-mark" aria-hidden="true"></div>
+      <p class="eyebrow">A wiserwalk game</p>
+      <h1>Sounds Like Scripture</h1>
+
+      <div class="banner" id="challengeBanner" hidden>
+        <p><strong id="challengeScore">0</strong> <span id="challengeWord">was their score</span> on these ten lines.</p>
+      </div>
+
+      <p class="lede" id="startLede">Ten lines. Some are in the Bible. Some only sound like it. You have seconds.</p>
+
+      <div class="canon">
+        <p class="eyebrow">Which Bible do you read?</p>
+        <div class="canon-chips" role="group" aria-label="Choose your canon">
+          <button type="button" class="chip" id="canon-protestant" data-canon="protestant" aria-pressed="false">Protestant</button>
+          <button type="button" class="chip" id="canon-catholic" data-canon="catholic" aria-pressed="false">Catholic</button>
+          <button type="button" class="chip" id="canon-orthodox" data-canon="orthodox" aria-pressed="false">Orthodox</button>
+        </div>
+        <p class="small canon-note" id="canonNote" hidden></p>
+      </div>
+    </div>
+
+    <div class="start-bottom">
+      <div class="btn-col start-actions">
+        <button type="button" class="btn" id="btnPlay">Play</button>
+        <button type="button" class="btn ghost" id="btnDaily">Today's ten</button>
+      </div>
+      <p class="small foot" id="footStart"></p>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-play" hidden>
+    <div class="hud">
+      <div class="pips" id="pips" aria-label="Progress"></div>
+      <div class="score" id="scoreNow" aria-live="off">0</div>
+    </div>
+
+    <div class="fuse"><div class="fuse-fill" id="fuseFill"></div></div>
+
+    <div class="stage">
+      <article class="card" id="card">
+        <div class="card-tint no" id="tintNo"></div>
+        <div class="card-tint yes" id="tintYes"></div>
+        <div class="card-inner">
+          <p class="line s1" id="lineText"></p>
+          <p class="drag-hint" id="dragHint">Swipe or tap below</p>
+          <div class="reveal" id="reveal" hidden></div>
+        </div>
+      </article>
+    </div>
+
+    <div class="bar">
+      <div class="answers" id="answers">
+        <button type="button" class="ans no" id="btnNo">Not in<br>the Bible</button>
+        <button type="button" class="ans yes" id="btnYes">In the<br>Bible</button>
+      </div>
+      <div class="btn-col" id="nextWrap" hidden>
+        <button type="button" class="btn" id="btnNext">Next</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-result" hidden>
+    <div class="tally">
+      <p class="eyebrow">Your ten</p>
+      <p class="big" id="finalScore">0</p>
+      <div class="stats">
+        <div class="stat"><b id="statCorrect">0 / 10</b>called right</div>
+        <div class="stat"><b id="statAvg">0.0s</b>average answer</div>
+        <div class="stat"><b id="statBest">0</b>personal best</div>
+      </div>
+      <div class="squares" id="squares"></div>
+      <div class="versus" id="versus" hidden>
+        <div><span>You</span><b id="vsYou">0</b></div>
+        <div><span>Them</span><b id="vsThem">0</b></div>
+      </div>
+    </div>
+
+    <div class="block" id="missBlock" hidden>
+      <h3>The ones that got you</h3>
+      <ul class="misses" id="misses"></ul>
+    </div>
+
+    <div class="block" id="fooledBlock" hidden>
+      <h3>What fools you</h3>
+      <div class="fooled" id="fooled"></div>
+    </div>
+
+    <div class="btn-col result-actions">
+      <button type="button" class="btn" id="btnAgain">Play again</button>
+      <div class="btn-row">
+        <button type="button" class="btn quiet" id="btnCopyLink">Copy challenge link</button>
+        <button type="button" class="btn quiet" id="btnCopyResult">Copy result</button>
+      </div>
+    </div>
+
+    <p class="small foot" id="footResult"></p>
+  </section>
+
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script type="application/json" id="pool">/*__POOL__*/</script>
+
+<script>
+/*__LOGIC_START__*/
+/* Pure game logic. Nothing here may touch the page, the browser or the clock:
+   scripts/test-game.mjs extracts everything between these two markers and runs
+   it under Node, so a stray browser reference breaks the tests first. */
+
+var RUN_LENGTH = 10;
+var TIER_WEIGHT = { 1: 1, 2: 2, 3: 4 };
+var CANON_LETTER = { protestant: 'p', catholic: 'c', orthodox: 'o' };
+var LETTER_CANON = { p: 'protestant', c: 'catholic', o: 'orthodox' };
+
+/* mulberry32: small, fast, and identical in every browser and in Node. */
+function mulberry32(seed) {
+  var a = seed >>> 0;
+  return function () {
+    a = (a + 0x6D2B79F5) >>> 0;
+    var t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/* The daily seed is the UTC date as yyyymmdd, so everyone gets one board a day. */
+function dailySeed(date) {
+  return date.getUTCFullYear() * 10000 + (date.getUTCMonth() + 1) * 100 + date.getUTCDate();
+}
+
+function seedFromRandom(x) {
+  return Math.floor(x * 2176782336) >>> 0;
+}
+
+function wordCount(text) {
+  var s = String(text).trim();
+  return s ? s.split(/\s+/).length : 0;
+}
+
+/* KJV and WEBBE print LORD and GOD in small capitals, which is a giveaway in plain
+   text. The pool keeps the verbatim word; only the display changes. */
+function displayText(text) {
+  /* Same rule as scripts/assemble.mjs display(): small capitals and the quote style differ by
+     edition, so both would leak the answer. Typography only; no word is changed. */
+  return String(text)
+    .replace(/[‘’]/g, "'").replace(/[“”]/g, '"')
+    .replace(/\b(LORD|GOD)('S)?\b/g, function (m, w, s) {
+      return w.charAt(0) + w.slice(1).toLowerCase() + (s ? "'s" : '');
+    });
+}
+
+function isInBible(item, canon) {
+  if (!item) return false;
+  if (item.k === 'b') return true;
+  if (item.k === 'd') return Array.isArray(item.c) && item.c.indexOf(canon) !== -1;
+  return false;
+}
+
+/* One run never repeats a work. Scripture counts by book, prose by the work named
+   at the head of its citation, which is everything before the first comma or the
+   trailing section number. */
+function workKey(item) {
+  var ref = String(item && item.ref || '');
+  var comma = ref.indexOf(',');
+  var base = comma >= 0 ? ref.slice(0, comma) : ref;
+  base = base.replace(/\s+\d+(?::\d+)?(?:\s*[-–]\s*\d+)?\s*$/, '');
+  base = base.trim().toLowerCase();
+  return base || ('src:' + (item && item.s));
+}
+
+function fuseFor(words) {
+  return Math.min(16, Math.max(8, 5 + 0.35 * words));
+}
+
+function scoreFor(correct, remaining, fuse, streak) {
+  if (!correct) return 0;
+  var left = Math.max(0, Math.min(remaining, fuse));
+  var base = 100 + Math.round(100 * left / fuse);
+  var bonus = Math.min(50, Math.max(0, 10 * (streak - 1)));
+  return base + bonus;
+}
+
+/* Weighted draw without replacement. Tier 3 is the hardest and shows up most. */
+function weightedTake(rng, pool, count, usedWorks, usedIds) {
+  var bag = pool.slice();
+  var out = [];
+  while (out.length < count && bag.length) {
+    var total = 0, i;
+    for (i = 0; i < bag.length; i++) total += TIER_WEIGHT[bag[i].tier] || 1;
+    var r = rng() * total;
+    var at = bag.length - 1;
+    for (i = 0; i < bag.length; i++) {
+      r -= TIER_WEIGHT[bag[i].tier] || 1;
+      if (r <= 0) { at = i; break; }
+    }
+    var item = bag.splice(at, 1)[0];
+    var key = workKey(item);
+    if (usedWorks[key] || usedIds[item.id]) continue;
+    usedWorks[key] = true;
+    usedIds[item.id] = true;
+    out.push(item);
+  }
+  return out;
+}
+
+/* opts: { seed, canon, exclude } — exclude is an array of ids already seen, which
+   only the free "Play" mode passes; daily and challenge runs must match for
+   everyone, so they never exclude anything. */
+function drawRun(pool, opts) {
+  var canon = opts.canon;
+  var rng = mulberry32(opts.seed);
+  var skip = {};
+  (opts.exclude || []).forEach(function (id) { skip[id] = true; });
+
+  var usable = pool.items.filter(function (it) { return !skip[it.id]; });
+  if (usable.length < RUN_LENGTH) usable = pool.items.slice();
+
+  var yes = [], no = [], i;
+  for (i = 0; i < usable.length; i++) {
+    (isInBible(usable[i], canon) ? yes : no).push(usable[i]);
+  }
+
+  var want = 3 + Math.floor(rng() * 5);
+  var usedWorks = {}, usedIds = {};
+  var picked = weightedTake(rng, yes, Math.min(want, yes.length), usedWorks, usedIds);
+  picked = picked.concat(weightedTake(rng, no, RUN_LENGTH - picked.length, usedWorks, usedIds));
+  if (picked.length < RUN_LENGTH) {
+    picked = picked.concat(weightedTake(rng, yes.concat(no), RUN_LENGTH - picked.length, usedWorks, usedIds));
+  }
+
+  for (i = picked.length - 1; i > 0; i--) {
+    var j = Math.floor(rng() * (i + 1));
+    var tmp = picked[i]; picked[i] = picked[j]; picked[j] = tmp;
+  }
+  return picked;
+}
+
+/* Answer times ride in the link as half-second buckets, 1 to z; 0 means wrong or
+   timed out. Ten characters, one per line. */
+function timeBucket(seconds) {
+  return Math.min(35, Math.max(1, Math.ceil(seconds / 0.5)));
+}
+
+function encodeChallenge(base, canon, seed, score, answers) {
+  var marks = '', i;
+  for (i = 0; i < RUN_LENGTH; i++) {
+    var a = answers[i];
+    marks += (a && a.ok) ? timeBucket(a.secs).toString(36) : '0';
+  }
+  return base + '#d=' + (CANON_LETTER[canon] || 'p') +
+    ((seed >>> 0).toString(36)) + '.' +
+    (Math.max(0, Math.round(score)).toString(36)) + '.' + marks;
+}
+
+function decodeChallenge(hash) {
+  if (typeof hash !== 'string') return null;
+  var m = /^#?d=([pco])([0-9a-z]{1,8})\.([0-9a-z]{1,6})\.([0-9a-z]{10})$/.exec(hash.trim());
+  if (!m) return null;
+  var seed = parseInt(m[2], 36), score = parseInt(m[3], 36);
+  if (!isFinite(seed) || !isFinite(score)) return null;
+  var marks = [], i;
+  for (i = 0; i < 10; i++) {
+    var v = parseInt(m[4].charAt(i), 36);
+    marks.push(v === 0 ? { ok: false, secs: null } : { ok: true, secs: v * 0.5 });
+  }
+  return { canon: LETTER_CANON[m[1]], seed: seed, score: score, marks: marks };
+}
+/*__LOGIC_END__*/
+
+/* ------------------------------------------------------------------ the app */
+(function () {
+  'use strict';
+
+  var POOL = JSON.parse(document.getElementById('pool').textContent);
+  var SOURCES = POOL.sources || [];
+
+  var ORTHODOX_NOTE = 'Orthodox canons vary a little from church to church; this follows the books printed in the Greek Orthodox Bible.';
+  var FOOT = 'Every line is quoted word for word from a public-domain edition. LORD and GOD in small capitals are shown as Lord and God, and quotation marks are shown in one style. Scripture: King James Version and World English Bible, British Edition.';
+
+  var ICON = {
+    tick: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 12.6l4.8 4.8L19.6 7"/></svg>',
+    cross: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg>',
+    clock: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.2V12l3.2 2"/></svg>',
+    bolt: '<svg viewBox="0 0 24 24" aria-hidden="true" class="solid bolt"><path d="M13.4 2L5 13.2h4.9L8.6 22 19 10.4h-5.2z"/></svg>'
+  };
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  var el = {
+    start: $('screen-start'), play: $('screen-play'), result: $('screen-result'),
+    banner: $('challengeBanner'), bannerScore: $('challengeScore'), bannerWord: $('challengeWord'),
+    lede: $('startLede'), canonNote: $('canonNote'), footStart: $('footStart'), footResult: $('footResult'),
+    btnPlay: $('btnPlay'), btnDaily: $('btnDaily'),
+    pips: $('pips'), scoreNow: $('scoreNow'), fuseFill: $('fuseFill'),
+    card: $('card'), tintYes: $('tintYes'), tintNo: $('tintNo'),
+    line: $('lineText'), dragHint: $('dragHint'), reveal: $('reveal'),
+    answers: $('answers'), btnNo: $('btnNo'), btnYes: $('btnYes'),
+    nextWrap: $('nextWrap'), btnNext: $('btnNext'),
+    finalScore: $('finalScore'), statCorrect: $('statCorrect'), statAvg: $('statAvg'), statBest: $('statBest'),
+    squares: $('squares'), versus: $('versus'), vsYou: $('vsYou'), vsThem: $('vsThem'),
+    missBlock: $('missBlock'), misses: $('misses'), fooledBlock: $('fooledBlock'), fooled: $('fooled'),
+    btnAgain: $('btnAgain'), btnCopyLink: $('btnCopyLink'), btnCopyResult: $('btnCopyResult'),
+    toast: $('toast')
+  };
+
+  /* ---- storage, always defensive: the game works with storage blocked ---- */
+  var K = { canon: 'sls.canon', seen: 'sls.seen', best: 'sls.best', fooled: 'sls.fooled' };
+  function read(key, fallback) {
+    try {
+      var raw = localStorage.getItem(key);
+      return raw === null ? fallback : JSON.parse(raw);
+    } catch (e) { return fallback; }
+  }
+  function write(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) { /* fine */ }
+  }
+
+  var reducedMotion = false;
+  try { reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+
+  /* ------------------------------------------------------------- state ---- */
+  var state = {
+    screen: 'start',
+    canon: null,
+    mode: 'free',
+    seed: 0,
+    run: [],
+    index: 0,
+    score: 0,
+    streak: 0,
+    answers: [],
+    phase: 'idle',
+    challenge: null
+  };
+  var timerId = null;
+  var lineStart = 0;
+  var lineFuse = 0;
+
+  function publish() {
+    window.__sls = {
+      screen: state.screen,
+      phase: state.phase,
+      canon: state.canon,
+      mode: state.mode,
+      seed: state.seed,
+      index: state.index,
+      score: state.score,
+      run: state.run,
+      answers: state.answers,
+      challenge: state.challenge,
+      logic: {
+        mulberry32: mulberry32, drawRun: drawRun, isInBible: isInBible, fuseFor: fuseFor,
+        scoreFor: scoreFor, displayText: displayText, workKey: workKey,
+        encodeChallenge: encodeChallenge, decodeChallenge: decodeChallenge
+      },
+      answer: answer,
+      next: nextLine
+    };
+  }
+
+  /* -------------------------------------------------------------- start --- */
+  function sourceOf(item) { return SOURCES[item.s] || {}; }
+
+  function setCanon(canon, remember) {
+    state.canon = canon;
+    ['protestant', 'catholic', 'orthodox'].forEach(function (c) {
+      $('canon-' + c).setAttribute('aria-pressed', String(c === canon));
+    });
+    var orthodox = canon === 'orthodox';
+    el.canonNote.hidden = !orthodox;
+    el.canonNote.textContent = orthodox ? ORTHODOX_NOTE : '';
+    el.footStart.textContent = FOOT + (orthodox ? ' ' + ORTHODOX_NOTE : '');
+    el.footResult.textContent = el.footStart.textContent;
+    if (remember) write(K.canon, canon);
+    el.btnPlay.disabled = !canon;
+    el.btnDaily.disabled = !canon;
+    publish();
+  }
+
+  function showScreen(name) {
+    state.screen = name;
+    el.start.hidden = name !== 'start';
+    el.play.hidden = name !== 'play';
+    el.result.hidden = name !== 'result';
+    publish();
+  }
+
+  /* --------------------------------------------------------------- run ---- */
+  function seenIds() {
+    var seen = read(K.seen, []);
+    return Array.isArray(seen) ? seen : [];
+  }
+
+  function rememberSeen(ids) {
+    var seen = seenIds().concat(ids);
+    var uniq = [], map = {};
+    seen.forEach(function (id) { if (!map[id]) { map[id] = true; uniq.push(id); } });
+    var total = (POOL.items || []).length;
+    if (total && (total - uniq.length) / total < 0.3) uniq = [];
+    write(K.seen, uniq);
+  }
+
+  function startRun(mode, seed) {
+    state.mode = mode;
+    state.seed = seed;
+    state.run = drawRun(POOL, {
+      seed: seed,
+      canon: state.canon,
+      exclude: mode === 'free' ? seenIds() : []
+    });
+    state.index = 0;
+    state.score = 0;
+    state.streak = 0;
+    state.answers = [];
+    el.scoreNow.textContent = '0';
+    buildPips();
+    showScreen('play');
+    showLine();
+  }
+
+  function buildPips() {
+    var html = '';
+    for (var i = 0; i < state.run.length; i++) html += '<div class="pip" data-i="' + i + '"></div>';
+    el.pips.innerHTML = html;
+    paintPips();
+  }
+
+  function paintPips() {
+    var pips = el.pips.children;
+    for (var i = 0; i < pips.length; i++) {
+      pips[i].className = 'pip' + (i < state.index ? ' done' : (i === state.index ? ' now' : ''));
+    }
+  }
+
+  function sizeClass(words) {
+    if (words <= 14) return 's1';
+    if (words <= 24) return 's2';
+    return 's3';
+  }
+
+  function showLine() {
+    var item = state.run[state.index];
+    state.phase = 'play';
+    var words = wordCount(item.t);
+    lineFuse = fuseFor(words);
+
+    el.line.className = 'line ' + sizeClass(words);
+    el.line.textContent = displayText(item.t);
+    el.reveal.hidden = true;
+    el.reveal.innerHTML = '';
+    el.card.classList.remove('revealed');
+    el.dragHint.hidden = false;
+    el.answers.hidden = false;
+    el.nextWrap.hidden = true;
+    resetCard();
+    paintPips();
+
+    /* The fuse is a linear width transition, not an animation frame loop: the
+       owner's preview pane never fires frame callbacks. */
+    el.fuseFill.style.transition = 'none';
+    el.fuseFill.style.width = '100%';
+    void el.fuseFill.offsetWidth;
+    el.fuseFill.style.transition = 'width ' + lineFuse + 's linear';
+    el.fuseFill.style.width = '0%';
+
+    lineStart = performance.now();
+    clearTimeout(timerId);
+    timerId = setTimeout(function () { answer(null); }, lineFuse * 1000);
+    publish();
+  }
+
+  function freezeFuse() {
+    var frac = Math.max(0, 1 - (performance.now() - lineStart) / (lineFuse * 1000));
+    el.fuseFill.style.transition = 'none';
+    el.fuseFill.style.width = (frac * 100).toFixed(2) + '%';
+  }
+
+  /* said: true for "In the Bible", false for "Not in the Bible", null for the fuse */
+  function answer(said) {
+    if (state.phase !== 'play') return;
+    clearTimeout(timerId);
+    freezeFuse();
+    state.phase = 'reveal';
+
+    var item = state.run[state.index];
+    var elapsed = (performance.now() - lineStart) / 1000;
+    var remaining = Math.max(0, lineFuse - elapsed);
+    var truth = isInBible(item, state.canon);
+    var timedOut = said === null;
+    var ok = !timedOut && said === truth;
+
+    state.streak = ok ? state.streak + 1 : 0;
+    var points = scoreFor(ok, remaining, lineFuse, state.streak);
+    state.score += points;
+    el.scoreNow.textContent = String(state.score);
+
+    state.answers.push({
+      id: item.id, ok: ok, timedOut: timedOut,
+      secs: timedOut ? lineFuse : Math.min(elapsed, lineFuse),
+      points: points, said: said, truth: truth
+    });
+
+    if (!ok) noteFooled(item);
+    renderReveal(item, ok, timedOut, points, truth);
+    publish();
+  }
+
+  function truthSentence(item, truth) {
+    if (item.k === 'b') return 'In the Bible.';
+    if (item.k === 'd') {
+      var c = item.c || [];
+      if (c.indexOf('catholic') !== -1) {
+        return 'In Catholic and Orthodox Bibles. Protestant Bibles leave it out or print it as Apocrypha.';
+      }
+      return 'In Orthodox Bibles. Catholic and Protestant Bibles leave it out or print it as Apocrypha.';
+    }
+    return 'Not in the Bible.';
+  }
+
+  function citationLine(item) {
+    var src = sourceOf(item);
+    var bits = [];
+    if (src.kind === 'bible' || src.kind === 'deutero') {
+      bits.push(src.title);
+    } else {
+      if (src.author) bits.push(src.author);
+      if (src.date) bits.push(src.date);
+      if (src.translator) bits.push('translated by ' + src.translator);
+    }
+    return bits.filter(Boolean).join(', ');
+  }
+
+  function esc(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function renderReveal(item, ok, timedOut, points, truth) {
+    var src = sourceOf(item);
+    var mark = ok ? ICON.tick : (timedOut ? ICON.clock : ICON.cross);
+    var word = ok ? 'Correct' : (timedOut ? 'Out of time' : 'Wrong');
+
+    var html = '<p class="verdict">' + mark + '<span>' + word + '</span></p>';
+    html += '<p class="truth">' + esc(truthSentence(item, truth)) + '</p>';
+    html += '<p class="cite"><b>' + esc(item.ref) + '</b>';
+    var cit = citationLine(item);
+    if (cit) html += '<br>' + esc(cit);
+    html += '</p>';
+    if (src.note) html += '<p class="reveal-note">' + esc(src.note) + '</p>';
+
+    html += '<div class="reveal-meta">';
+    html += '<span class="points">' + (points > 0 ? '+' + points : 'No points') + '</span>';
+    if (src.url) html += '<a class="src-link" href="' + esc(src.url) + '" target="_blank" rel="noopener">Read the source</a>';
+    html += '</div>';
+
+    if (state.challenge && state.challenge.marks[state.index]) {
+      var them = state.challenge.marks[state.index];
+      html += '<p class="them">' + (them.ok ? 'Them: correct in ' + them.secs.toFixed(1) + 's' : 'Them: wrong') + '</p>';
+    }
+
+    el.reveal.innerHTML = html;
+    el.reveal.hidden = false;
+    el.card.classList.add('revealed');
+    el.dragHint.hidden = true;
+    el.answers.hidden = true;
+    el.nextWrap.hidden = false;
+    el.btnNext.textContent = state.index === state.run.length - 1 ? 'See your ten' : 'Next';
+    el.btnNext.focus({ preventScroll: true });
+  }
+
+  function nextLine() {
+    if (state.phase !== 'reveal') return;
+    state.index += 1;
+    if (state.index >= state.run.length) return finish();
+    showLine();
+  }
+
+  /* ------------------------------------------------------------ result ---- */
+  function noteFooled(item) {
+    var src = sourceOf(item);
+    var label = item.ref.split(',')[0].replace(/\s+\d+(?::\d+)?\s*$/, '').trim() || src.title || '';
+    if (!label) return;
+    var tally = read(K.fooled, {});
+    if (!tally || typeof tally !== 'object') tally = {};
+    tally[label] = (tally[label] || 0) + 1;
+    write(K.fooled, tally);
+  }
+
+  function finish() {
+    state.phase = 'done';
+    clearTimeout(timerId);
+    if (state.mode === 'free') rememberSeen(state.run.map(function (it) { return it.id; }));
+
+    var correct = 0, totalSecs = 0;
+    state.answers.forEach(function (a) { if (a.ok) correct++; totalSecs += a.secs; });
+    var best = read(K.best, 0);
+    if (typeof best !== 'number' || !isFinite(best)) best = 0;
+    if (state.score > best) { best = state.score; write(K.best, best); }
+
+    el.finalScore.textContent = state.score.toLocaleString();
+    el.statCorrect.textContent = correct + ' / ' + state.run.length;
+    el.statAvg.textContent = (totalSecs / Math.max(1, state.answers.length)).toFixed(1) + 's';
+    el.statBest.textContent = best.toLocaleString();
+
+    var sq = '';
+    state.answers.forEach(function (a) {
+      sq += '<div class="sq">' + (a.ok ? ICON.tick : ICON.cross) +
+            (a.ok && a.secs < 3 ? ICON.bolt : '') + '</div>';
+    });
+    el.squares.innerHTML = sq;
+
+    if (state.challenge) {
+      el.versus.hidden = false;
+      el.vsYou.textContent = state.score.toLocaleString();
+      el.vsThem.textContent = state.challenge.score.toLocaleString();
+    } else {
+      el.versus.hidden = true;
+    }
+
+    var missed = [];
+    state.answers.forEach(function (a, i) {
+      if (a.ok) return;
+      var item = state.run[i];
+      var cit = citationLine(item);
+      missed.push('<li><q>' + esc(displayText(item.t)) + '</q><b>' + esc(item.ref) + '</b>' + esc(truthSentence(item, a.truth)) +
+                  (cit ? ' ' + esc(cit) + '.' : '') + '</li>');
+    });
+    el.misses.innerHTML = missed.join('');
+    el.missBlock.hidden = missed.length === 0;
+
+    var tally = read(K.fooled, {}) || {};
+    var rows = Object.keys(tally).sort(function (a, b) { return tally[b] - tally[a]; }).slice(0, 8);
+    el.fooled.innerHTML = rows.map(function (k) {
+      return '<span>' + esc(k) + ' ' + tally[k] + '</span>';
+    }).join('');
+    el.fooledBlock.hidden = rows.length === 0;
+
+    showScreen('result');
+  }
+
+  /* --------------------------------------------------------------- share -- */
+  function linkBase() { return location.origin + location.pathname; }
+
+  function challengeLink() {
+    return encodeChallenge(linkBase(), state.canon, state.seed, state.score, state.answers);
+  }
+
+  function resultText() {
+    var squares = state.answers.map(function (a) {
+      return a.ok ? (a.secs < 3 ? '⚡' : '✅') : '❌';
+    }).join('');
+    return 'Sounds Like Scripture — ' + state.score.toLocaleString() + '\n' + squares + '\n' + challengeLink();
+  }
+
+  function toast(msg) {
+    el.toast.textContent = msg;
+    el.toast.classList.add('on');
+    setTimeout(function () { el.toast.classList.remove('on'); }, 1800);
+  }
+
+  function copy(text, msg) {
+    var done = function () { toast(msg); };
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text, done); });
+        return;
+      }
+    } catch (e) {}
+    fallbackCopy(text, done);
+  }
+
+  function fallbackCopy(text, done) {
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      done();
+    } catch (e) { toast('Could not copy'); }
+  }
+
+  /* ---------------------------------------------------------- card drag --- */
+  var drag = { on: false, id: null, x0: 0, dx: 0, threshold: 96 };
+
+  function resetCard() {
+    el.card.style.transition = '';
+    el.card.style.transform = '';
+    el.tintYes.style.opacity = '0';
+    el.tintNo.style.opacity = '0';
+    el.btnYes.classList.remove('armed');
+    el.btnNo.classList.remove('armed');
+    el.card.classList.remove('dragging');
+  }
+
+  el.card.addEventListener('pointerdown', function (e) {
+    if (state.phase !== 'play' || e.button > 0) return;
+    drag.on = true;
+    drag.id = e.pointerId;
+    drag.x0 = e.clientX;
+    drag.dx = 0;
+    drag.threshold = Math.min(110, Math.max(70, el.card.offsetWidth * 0.28));
+    el.card.classList.add('dragging');
+    el.card.style.transition = 'none';
+    try { el.card.setPointerCapture(e.pointerId); } catch (err) {}
+  });
+
+  el.card.addEventListener('pointermove', function (e) {
+    if (!drag.on || e.pointerId !== drag.id) return;
+    drag.dx = e.clientX - drag.x0;
+    var frac = Math.min(1, Math.abs(drag.dx) / drag.threshold);
+    if (!reducedMotion) {
+      el.card.style.transform = 'translateX(' + drag.dx.toFixed(1) + 'px) rotate(' + (drag.dx * 0.035).toFixed(2) + 'deg)';
+    }
+    el.tintYes.style.opacity = drag.dx > 0 ? (frac * 0.34).toFixed(3) : '0';
+    el.tintNo.style.opacity = drag.dx < 0 ? (frac * 0.34).toFixed(3) : '0';
+    el.btnYes.classList.toggle('armed', drag.dx > 0 && frac >= 1);
+    el.btnNo.classList.toggle('armed', drag.dx < 0 && frac >= 1);
+  });
+
+  function endDrag(e) {
+    if (!drag.on || (e && e.pointerId !== drag.id)) return;
+    drag.on = false;
+    var dx = drag.dx;
+    el.card.classList.remove('dragging');
+    if (Math.abs(dx) >= drag.threshold && state.phase === 'play') {
+      if (!reducedMotion) {
+        el.card.style.transition = 'transform .16s ease-out';
+        el.card.style.transform = 'translateX(' + (dx > 0 ? 1 : -1) * 460 + 'px) rotate(' + (dx > 0 ? 12 : -12) + 'deg)';
+      }
+      answer(dx > 0);
+      setTimeout(resetCard, reducedMotion ? 0 : 170);
+    } else {
+      el.card.style.transition = 'transform .18s ease';
+      el.card.style.transform = '';
+      el.tintYes.style.opacity = '0';
+      el.tintNo.style.opacity = '0';
+      el.btnYes.classList.remove('armed');
+      el.btnNo.classList.remove('armed');
+    }
+  }
+  el.card.addEventListener('pointerup', endDrag);
+  el.card.addEventListener('pointercancel', endDrag);
+
+  /* ------------------------------------------------------------- wiring --- */
+  ['protestant', 'catholic', 'orthodox'].forEach(function (c) {
+    $('canon-' + c).addEventListener('click', function () { setCanon(c, true); });
+  });
+
+  el.btnPlay.addEventListener('click', function () {
+    if (state.challenge) startRun('challenge', state.challenge.seed);
+    else startRun('free', seedFromRandom(Math.random()));
+  });
+  el.btnDaily.addEventListener('click', function () {
+    state.challenge = null;
+    startRun('daily', dailySeed(new Date()));
+  });
+  el.btnNo.addEventListener('click', function () { answer(false); });
+  el.btnYes.addEventListener('click', function () { answer(true); });
+  el.btnNext.addEventListener('click', nextLine);
+  el.btnAgain.addEventListener('click', function () {
+    state.challenge = null;
+    try { history.replaceState(null, '', linkBase()); } catch (e) {}
+    el.banner.hidden = true;
+    el.lede.hidden = false;
+    el.btnPlay.textContent = 'Play';
+    el.btnDaily.hidden = false;
+    showScreen('start');
+  });
+  el.btnCopyLink.addEventListener('click', function () { copy(challengeLink(), 'Challenge link copied'); });
+  el.btnCopyResult.addEventListener('click', function () { copy(resultText(), 'Result copied'); });
+
+  document.addEventListener('keydown', function (e) {
+    if (state.screen !== 'play') return;
+    if (state.phase === 'play') {
+      if (e.key === 'ArrowLeft') { e.preventDefault(); answer(false); }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); answer(true); }
+    } else if (state.phase === 'reveal') {
+      if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); nextLine(); }
+    }
+  });
+
+  /* -------------------------------------------------------------- boot ---- */
+  var incoming = decodeChallenge(location.hash);
+  var savedCanon = read(K.canon, null);
+
+  if (incoming) {
+    state.challenge = incoming;
+    el.banner.hidden = false;
+    el.bannerScore.textContent = incoming.score.toLocaleString();
+    el.bannerWord.textContent = 'was their score';
+    el.lede.hidden = true;
+    el.btnPlay.textContent = 'Take the challenge';
+    el.btnDaily.hidden = true;
+    setCanon(incoming.canon, false);
+  } else if (savedCanon === 'protestant' || savedCanon === 'catholic' || savedCanon === 'orthodox') {
+    setCanon(savedCanon, false);
+  } else {
+    setCanon(null, false);
+    el.footStart.textContent = FOOT;
+    el.footResult.textContent = FOOT;
+  }
+
+  showScreen('start');
+  publish();
+})();
+</script>

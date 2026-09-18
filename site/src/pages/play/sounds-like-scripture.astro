@@ -1,0 +1,115 @@
+---
+/**
+ * Sounds Like Scripture, the first game.
+ *
+ * The game is a one-screen app, so it does not sit inside the Base layout: a site header
+ * and footer would take the room the card and the two answer buttons need on a phone. It
+ * is its own document, carrying the same head the layout would give it (canonical, Open
+ * Graph, breadcrumbs, the stored theme, the analytics hook).
+ *
+ * The markup, styles, script and the pool of lines come from one generated fragment,
+ * src/games/sounds-like-scripture.html, written by
+ * demos/sounds-like-scripture/scripts/build-page.mjs. It is generated but committed, for the
+ * same reason as src/data/compass.json: Vercel's root directory is site/. Never hand-edit
+ * it; change demos/sounds-like-scripture/game.src.html and rebuild. The same fragment is
+ * the standalone demo, so the two cannot drift.
+ */
+import fragment from '../../games/sounds-like-scripture.html?raw';
+
+const title = 'Sounds Like Scripture';
+const siteName = 'Wiser Walk';
+const description =
+  'A line appears. Is it in the Bible, or does it only sound like it? Ten lines against the clock, every one quoted word for word, with the citation after each answer.';
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+
+// Split the fragment where its stylesheet ends: what comes before belongs in the head.
+const SPLIT = '</style>';
+const cut = fragment.indexOf(SPLIT);
+if (cut === -1) throw new Error('sounds-like-scripture.html: no </style> to split on');
+if (fragment.includes('/*__POOL__*/')) throw new Error('sounds-like-scripture.html: the pool was never injected');
+
+const head = fragment.slice(0, cut + SPLIT.length).replace(/<title>[\s\S]*?<\/title>/, '');
+let body = fragment.slice(cut + SPLIT.length);
+
+// The standalone demo has nowhere to link to; the live page does. Both swaps fail the build
+// rather than silently doing nothing if the source markup ever changes.
+const swap = (html: string, find: string, put: string) => {
+  if (!html.includes(find)) throw new Error(`sounds-like-scripture.html: expected markup not found: ${find}`);
+  return html.replace(find, () => put);
+};
+body = swap(
+  body,
+  '<p class="eyebrow">A wiserwalk game</p>',
+  '<p class="eyebrow"><a class="ww-home" href="/">&larr; Wiser Walk</a></p>'
+);
+body = swap(
+  body,
+  '<p class="small foot" id="footResult"></p>',
+  '<p class="small ww-more"><a href="/q/theology-compass/">Take the Theology Compass</a><span aria-hidden="true"> · </span><a href="/">More from Wiser Walk</a></p>\n    <p class="small foot" id="footResult"></p>'
+);
+
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: new URL('/', Astro.site).href },
+    { '@type': 'ListItem', position: 2, name: title, item: canonical }
+  ]
+};
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{`${title} — ${siteName}`}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <script is:inline>
+      try {
+        var t = localStorage.getItem('ww-theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    </script>
+
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
+
+    <script is:inline>
+      // A challenge link carries a run number, a score and ten answer times after the "#".
+      // Nothing personal, but the rule on this site is that no code is ever recorded, so the
+      // fragment and any query are stripped before the view is counted.
+      window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+      window.va('beforeSend', function (event) {
+        try {
+          var u = new URL(event.url);
+          u.search = '';
+          u.hash = '';
+          return Object.assign({}, event, { url: u.toString() });
+        } catch (e) {}
+        return event;
+      });
+    </script>
+
+    <Fragment set:html={head} />
+
+    <style is:inline>
+      .ww-home, .ww-more a { color: inherit; text-decoration: none; }
+      .ww-home:hover, .ww-more a:hover { text-decoration: underline; }
+      .ww-more { margin: 1.4rem 0 0; text-align: center; }
+      .ww-more a { color: var(--accent); font-weight: 600; }
+    </style>
+  </head>
+  <body>
+    <Fragment set:html={body} />
+  </body>
+</html>

@@ -41,6 +41,47 @@ Note he had earlier rejected the word "wiser" as "weird to say"; he has since ov
 
 State: local git repo initialised, **one commit** `c8fd322`, 137 files tracked, `node_modules` excluded. Authored as `Light <serenitybackto@gmail.com>` — he was offered a GitHub noreply address to keep his email out of public history and **chose to keep his real email**. Do not change it.
 
+## RESUMED 2026-09-17: the owner picked a direction. Read this before the paused section below
+
+The owner ended the pause wanting something fun-first and competitive in the spirit of GeoGuessr
+(take a corpus that already exists and make it a game). Of the concepts put to him he rejected the
+church-interior guesser outright and chose one: **a timed game where a line appears and the player
+calls whether it is in the Bible.** His words: "SUPER fun and virtually unlimited". His two demands:
+it must be **hard** (he called famous misquotes such as "God helps those who help themselves" low-IQ;
+players must not learn to always get it right) and it must have **massive variety** that feels like
+never seeing the same line twice. He likes the clock.
+
+A first playable demo was built on 2026-09-18 (https://claude.ai/artifact/WngUq9McGs3tVGLRjGKUoe). The owner
+played it, said "Looks good", and asked for it to go live with a card under a new "Games" category on the
+home page. **It is LIVE at https://wiserwalk.com/play/sounds-like-scripture/ (shipped 2026-09-18).**
+
+- Working title "Sounds Like Scripture". **"Bible or Not" is a registered mark of an existing app; never use it.**
+- The pipeline lives in `demos/sounds-like-scripture/` (read its `SPEC.md` first). `scripts/build-page.mjs`
+  writes the standalone demo `demos/sounds-like-scripture.html` AND the site's copy,
+  `site/src/games/sounds-like-scripture.html` plus `.meta.json`. Those two site files are **generated but
+  committed** (Vercel's root is `site/`), like `compass.json`: never hand-edit them; edit `game.src.html`
+  and rebuild.
+- On the site the game is its own full-screen document, `site/src/pages/play/sounds-like-scripture.astro`
+  (no Base layout, same head: canonical, OG, breadcrumbs, stored theme, analytics with the challenge hash
+  stripped). Games are listed in `site/src/lib/games.ts`; the home page renders that list under "Games".
+  Routes for games are `/play/<slug>/`. `/method#the-game` discloses what the game keeps in localStorage.
+- **No line is ever written by a model.** Scripts extract verbatim lines from downloaded public-domain
+  files (KJV, KJV Apocrypha, World English Bible British Edition with deuterocanon, 1 Enoch, the
+  Apostolic Fathers, Augustine, a Kempis, Julian, Josephus and others); blind curators rate lines by
+  number only; `scripts/verify.mjs` proves every pooled line is a substring of its source file. Run it
+  and `scripts/test-game.mjs` after any change.
+- Tells were removed on purpose: both registers exist on both sides (archaic and modern), small-capital
+  LORD and quote styles are normalised for display only, contractions and dangling quotes are dropped,
+  lines quoting Scripture inside other works are dropped by a five-word shingle test.
+- Canon is a player choice (Protestant, Catholic, Orthodox) and truth is computed per canon; a
+  deuterocanonical line is never called fake. 2 Esdras, 4 Maccabees and Greek Esther are left out.
+- Lesson from the build: blind Opus curators guessed 1,796 of 1,800 lines correctly, so a model's
+  guess cannot rank difficulty for people. Real difficulty has to be measured from play.
+- Not built yet: a `/games/` index and nav entry, permanent reveal pages per line or source, an OG image,
+  a second curation pass (about 24,000 prose candidates exist; only 760 were rated), measured difficulty.
+
+**When work resumes: ask how the demo played before proposing anything.**
+
 ## PICK UP HERE (as of 2026-09-15) — PAUSED by the owner
 
 **Read this before the plan below.** Layers 1 and 2 shipped and are live (the reference

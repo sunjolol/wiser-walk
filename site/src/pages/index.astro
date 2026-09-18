@@ -2,9 +2,11 @@
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import { liveQuizzes } from '../lib/engine/registry';
+import { liveGames } from '../lib/games';
 import { getCollection } from 'astro:content';
 
 const quizzes = liveQuizzes();
+const games = liveGames();
 const articles = (await getCollection('articles'))
   .filter(a => !a.data.draft)
   .sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf())
@@ -20,7 +22,7 @@ const jsonLd = {
 ---
 <Base
   title="Wiser Walk"
-  description="Quizzes and articles for understanding yourself, and your walk with God, a little better. Start with the Theology Compass."
+  description="Quizzes, games and articles for understanding yourself, and your walk with God, a little better. Start with the Theology Compass."
   jsonLd={jsonLd}
 >
   <div class="prose">
@@ -41,6 +43,21 @@ const jsonLd = {
       </div>
     ))}
   </div>
+
+  {games.length > 0 && (
+    <>
+      <h2>Games</h2>
+      <div class="cards">
+        {games.map(g => (
+          <div class="card">
+            <h3><a href={g.href}><Icon name={g.icon} size={17} /> {g.title}</a></h3>
+            <p>{g.tagline}</p>
+            <p class="meta">{g.meta}</p>
+          </div>
+        ))}
+      </div>
+    </>
+  )}
 
   {articles.length > 0 && (
     <>
