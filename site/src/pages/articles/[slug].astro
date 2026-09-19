@@ -1,4 +1,5 @@
 ---
+import Hero from '../../components/Hero.astro';
 import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
 import { getCollection, render } from 'astro:content';
@@ -40,10 +41,8 @@ const breadcrumbs = [
   jsonLd={jsonLd}
   breadcrumbs={breadcrumbs}
 >
+  <Hero title={article.data.title} eyebrow={`${article.data.minutes} min read`} icon="book" lede={article.data.description} />
   <article class="prose">
-    <p class="eyebrow">{article.data.minutes} min read</p>
-    <h1>{article.data.title}</h1>
-    <p class="lede">{article.data.description}</p>
     <Content />
   </article>
 

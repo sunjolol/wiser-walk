@@ -1,0 +1,54 @@
+---
+/**
+ * The page header every page shares.
+ *
+ * It is the result page's panel, reused: the soft grey panel with the spectrum poured
+ * through the smoke texture and the veil over it, a short spectrum mark, an eyebrow, the
+ * display headline, a lede. Before this existed only the result page looked finished and
+ * every other page was a bare heading on the page ground; now they are one family.
+ *
+ * `blue` and `orange` colour one phrase each inside the title, in the same two inks the
+ * result verdict uses, so the home page headline and a reader's verdict speak alike.
+ * The lede is the default slot (so it can carry links) or the `lede` prop for computed text.
+ * Anything in the "actions" slot lands under the lede: buttons, mostly.
+ */
+import Icon from './Icon.astro';
+
+export interface Props {
+  title: string;
+  eyebrow?: string;
+  icon?: 'compass' | 'flame' | 'scroll' | 'book' | 'arrow';
+  lede?: string;
+  blue?: string;
+  orange?: string;
+}
+const { title, eyebrow, icon, lede, blue, orange } = Astro.props;
+
+type Part = { text: string; tone: '' | 'left' | 'right' };
+let parts: Part[] = [{ text: title, tone: '' }];
+const paint = (phrase: string | undefined, tone: 'left' | 'right') => {
+  if (!phrase) return;
+  parts = parts.flatMap(p => {
+    if (p.tone || !p.text.includes(phrase)) return [p];
+    const [before, ...rest] = p.text.split(phrase);
+    return [
+      { text: before, tone: '' as const },
+      { text: phrase, tone },
+      { text: rest.join(phrase), tone: '' as const }
+    ].filter(x => x.text);
+  });
+};
+paint(blue, 'left');
+paint(orange, 'right');
+
+const hasLede = Boolean(lede) || Astro.slots.has('default');
+---
+<header class="panel layered hero">
+  <div class="wash" aria-hidden="true"></div>
+  <div class="veil" aria-hidden="true"></div>
+  <div class="hero-mark" aria-hidden="true"></div>
+  {eyebrow && <p class="eyebrow">{icon && <Icon name={icon} size={15} />} {eyebrow}</p>}
+  <h1>{parts.map(p => p.tone ? <span class={`verdict-part--${p.tone}`}>{p.text}</span> : p.text)}</h1>
+  {hasLede && <p class="lede">{lede ?? <slot />}</p>}
+  {Astro.slots.has('actions') && <div class="btn-row"><slot name="actions" /></div>}
+</header>

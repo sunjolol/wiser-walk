@@ -1131,3 +1131,57 @@ a { color: var(--accent); text-underline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }
+
+/* ----------------------------------------------- the shared page header ---- */
+/*
+ * Hero.astro. The result page's textured panel, reused as every page's header so the site
+ * reads as one family instead of one finished page and a set of plain ones. Phone first:
+ * the panel runs the full column; from 40rem it gains room and the headline grows.
+ */
+.hero { margin: 0 0 2rem; padding: 1.5rem 1.25rem 1.6rem; overflow: hidden; }
+.hero-mark { width: 46px; height: 8px; border-radius: var(--r-pill); background-image: var(--grad-r); margin: 0 0 1.15rem; }
+.hero h1 { margin: 0 0 .7rem; line-height: 1.08; }
+.hero .eyebrow { margin-bottom: .6rem; }
+.hero .lede { max-width: var(--measure); margin: 0; }
+.hero .btn-row { margin: 1.35rem 0 0; }
+@media (min-width: 40rem) {
+  .hero { padding: 2.4rem 2.2rem 2.5rem; margin-bottom: 2.75rem; }
+  .hero h1 { font-size: clamp(2.4rem, 5vw, 3.3rem); }
+  .hero .lede { font-size: 1.12rem; }
+}
+
+/* a section heading with the spectrum mark, for pages built from sections of cards */
+.section-head { display: flex; align-items: center; gap: .7rem; margin: 2.6rem 0 0; }
+.section-head::before {
+  content: ""; flex: none; width: 22px; height: 6px; border-radius: var(--r-pill);
+  background-image: var(--grad-r);
+}
+.section-head h2 { margin: 0; }
+.section-head + .cards { margin-top: 1rem; }
+
+/* ------------------------------------------------------ cards, second pass ---- */
+/* Card.astro: the whole card is the link. */
+.card-link { color: inherit; text-decoration: none; position: relative; overflow: hidden;
+  transition: box-shadow .2s ease, transform .2s ease; }
+.card-link:hover { box-shadow: 0 8px 18px rgba(62, 134, 196, .16); transform: translateY(-1px); }
+.card-link:active { transform: translateY(0); }
+.card-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.card-top { display: flex; align-items: center; gap: .7rem; }
+.card-chip {
+  flex: none; width: 40px; height: 40px; border-radius: var(--r-sm);
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--accent-soft); color: var(--accent);
+}
+.card-link h3 { margin: 0; font-size: 1.22rem; color: var(--ink); }
+.card-link:hover h3 { color: var(--accent); }
+.card-link .meta { display: flex; align-items: center; justify-content: space-between; gap: .75rem; }
+.card-go { flex: none; color: var(--accent); display: inline-flex; transition: transform .2s ease; }
+.card-link:hover .card-go { transform: translateX(3px); }
+.card-feature { padding: 1.35rem 1.25rem 1.4rem; }
+.card-feature h3 { font-size: 1.45rem; }
+.card-feature p { font-size: 1rem; }
+@media (min-width: 34rem) { .card-feature { grid-column: 1 / -1; padding: 1.7rem 1.7rem 1.75rem; } }
+@media (prefers-reduced-motion: reduce) {
+  .card-link, .card-go { transition: none; }
+  .card-link:hover { transform: none; }
+}

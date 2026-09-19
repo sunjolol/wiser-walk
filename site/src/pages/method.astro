@@ -1,4 +1,5 @@
 ---
+import Hero from '../components/Hero.astro';
 import Base from '../layouts/Base.astro';
 import audit from '../data/compass-audit.json';
 import { theologyCompass } from '../lib/quizzes/theology-compass';
@@ -69,12 +70,11 @@ const breadcrumbs = [
   jsonLd={jsonLd}
   breadcrumbs={breadcrumbs}
 >
-  <div class="prose">
-    <h1>How this was made</h1>
-    <p class="lede">
+  <Hero title="How this was made" eyebrow="Method" blue="made">
       A quiz that tells people what they believe has to be fair to beliefs its author does
       not hold. This page is the working, in public.
-    </p>
+  </Hero>
+  <div class="prose">
 
     <h2>The promise</h2>
     <p>

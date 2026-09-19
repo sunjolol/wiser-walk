@@ -1,4 +1,5 @@
 ---
+import Hero from '../../components/Hero.astro';
 import Base from '../../layouts/Base.astro';
 import CorrectionNote from '../../components/CorrectionNote.astro';
 import { theologyCompass } from '../../lib/quizzes/theology-compass';
@@ -37,12 +38,10 @@ const breadcrumbs = [
   jsonLd={jsonLd}
   breadcrumbs={breadcrumbs}
 >
-  <div class="prose">
-    <p class="eyebrow">🧭 Theology Compass</p>
-    <h1>{tradition.name}</h1>
-    <p class="lede">
+  <Hero title={tradition.name} eyebrow="Theology Compass" icon="compass">
       Where this tradition typically sits on the six axes.
-    </p>
+  </Hero>
+  <div class="prose">
     <div class="note">
       <p>
         This is an approximate sketch of where typical adherents land, not official

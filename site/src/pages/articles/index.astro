@@ -1,4 +1,6 @@
 ---
+import Hero from '../../components/Hero.astro';
+import Card from '../../components/Card.astro';
 import Base from '../../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 
@@ -30,21 +32,14 @@ const breadcrumbs = [
   jsonLd={jsonLd}
   breadcrumbs={breadcrumbs}
 >
-  <div class="prose">
-    <h1>Articles</h1>
-    <p class="lede">
+  <Hero title="Articles" eyebrow="Formation" icon="book">
       Practical writing on formation — the slow business of becoming someone different.
       Every claim is tied to a text you can check.
-    </p>
-  </div>
+  </Hero>
 
   <div class="cards">
     {articles.map(a => (
-      <div class="card">
-        <h3><a href={`/articles/${a.id}/`}>{a.data.title}</a></h3>
-        <p>{a.data.description}</p>
-        <p class="meta">{a.data.minutes} min read</p>
-      </div>
+      <Card href={`/articles/${a.id}/`} icon="book" title={a.data.title} text={a.data.description} meta={`${a.data.minutes} min read`} />
     ))}
   </div>
 </Base>

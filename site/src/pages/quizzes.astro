@@ -1,4 +1,6 @@
 ---
+import Hero from '../components/Hero.astro';
+import Card from '../components/Card.astro';
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import { QUIZZES } from '../lib/engine/registry';
@@ -29,21 +31,14 @@ const breadcrumbs = [
   jsonLd={jsonLd}
   breadcrumbs={breadcrumbs}
 >
-  <div class="prose">
-    <h1>Quizzes</h1>
-    <p class="lede">
+  <Hero title="Quizzes" eyebrow="Self-assessments" icon="compass">
       Each one is scored entirely in your browser. No account, no email, nothing stored —
       a result link carries your scores and nothing else.
-    </p>
-  </div>
+  </Hero>
 
   <div class="cards">
     {live.map(q => (
-      <div class="card">
-        <h3><a href={`/q/${q.slug}/`}><Icon name={q.icon} size={17} /> {q.title}</a></h3>
-        <p>{q.tagline}</p>
-        <p class="meta">{q.items.length} statements · about {q.minutes} minutes</p>
-      </div>
+      <Card href={`/q/${q.slug}/`} icon={q.icon} title={q.title} text={q.tagline} meta={`${q.items.length} statements · about ${q.minutes} minutes`} />
     ))}
   </div>
 
@@ -56,11 +51,7 @@ const breadcrumbs = [
       </p>
       <div class="cards">
         {drafts.map(q => (
-          <div class="card">
-            <h3><a href={`/q/${q.slug}/`}><Icon name={q.icon} size={17} /> {q.title}</a></h3>
-            <p>{q.tagline}</p>
-            <p class="meta">{q.items.length} statements · unaudited draft</p>
-          </div>
+          <Card href={`/q/${q.slug}/`} icon={q.icon} title={q.title} text={q.tagline} meta={`${q.items.length} statements · unaudited draft`} />
         ))}
       </div>
     </>

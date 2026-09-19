@@ -1,4 +1,5 @@
 ---
+import Hero from '../../components/Hero.astro';
 import Base from '../../layouts/Base.astro';
 import { QUIZZES, getQuiz } from '../../lib/engine/registry';
 
@@ -39,10 +40,8 @@ const breadcrumbs = isDraft
   jsonLd={jsonLd}
   breadcrumbs={breadcrumbs}
 >
+  <Hero title={quiz.title} eyebrow={`${quiz.items.length} statements · about ${quiz.minutes} minutes`} icon={quiz.icon} lede={quiz.description} />
   <div class="prose">
-    <p class="eyebrow">{quiz.items.length} statements · about {quiz.minutes} minutes</p>
-    <h1>{quiz.title}</h1>
-    <p class="lede">{quiz.description}</p>
 
     {isDraft && (
       <div class="note draft">

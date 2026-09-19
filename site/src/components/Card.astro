@@ -1,0 +1,32 @@
+---
+/**
+ * One card for a quiz, a game or an article. The whole card is the link (a 44px tap target
+ * is not enough when the card is the only thing a thumb is aiming at), the icon sits in a
+ * tinted chip, and the grey meta line ends in an arrow so the card reads as somewhere to go.
+ * `feature` is for the first thing on a page: it takes the full row and the textured panel.
+ */
+import Icon from './Icon.astro';
+
+export interface Props {
+  href: string;
+  title: string;
+  text: string;
+  meta?: string;
+  icon?: 'compass' | 'flame' | 'scroll' | 'book' | 'arrow';
+  feature?: boolean;
+}
+const { href, title, text, meta, icon, feature = false } = Astro.props;
+---
+<a class:list={['card', 'card-link', feature && 'card-feature layered']} href={href}>
+  {feature && <div class="wash" aria-hidden="true"></div>}
+  {feature && <div class="veil" aria-hidden="true"></div>}
+  <div class="card-top">
+    {icon && <span class="card-chip" aria-hidden="true"><Icon name={icon} size={19} /></span>}
+    <h3>{title}</h3>
+  </div>
+  <p>{text}</p>
+  <p class="meta">
+    <span>{meta}</span>
+    <span class="card-go" aria-hidden="true"><Icon name="arrow" size={16} /></span>
+  </p>
+</a>

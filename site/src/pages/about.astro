@@ -1,4 +1,5 @@
 ---
+import Hero from '../components/Hero.astro';
 import Base from '../layouts/Base.astro';
 
 const jsonLd = {
@@ -19,12 +20,11 @@ const breadcrumbs = [
   jsonLd={jsonLd}
   breadcrumbs={breadcrumbs}
 >
-  <div class="prose">
-    <h1>About</h1>
-    <p class="lede">
+  <Hero title="About">
       Wiser Walk is a place to understand yourself a little better — through quizzes worth
       taking and articles worth reading.
-    </p>
+  </Hero>
+  <div class="prose">
 
     <h2>What this is</h2>
     <p>
