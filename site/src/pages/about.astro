@@ -1,6 +1,24 @@
 ---
 import Hero from '../components/Hero.astro';
 import Base from '../layouts/Base.astro';
+import Card from '../components/Card.astro';
+import SectionHead from '../components/SectionHead.astro';
+import Icon from '../components/Icon.astro';
+import { getCollection } from 'astro:content';
+import { liveQuizzes, getQuiz } from '../lib/engine/registry';
+import { liveGames } from '../lib/games';
+
+/*
+ * The three counts below are read off the registry and the content collection, so the
+ * page cannot drift out of date the way a typed number would.
+ */
+const quizzes = liveQuizzes();
+const games = liveGames();
+const articles = (await getCollection('articles')).filter(a => !a.data.draft);
+const compass = getQuiz('theology-compass')!;
+const game = games[0];
+
+const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -20,42 +38,103 @@ const breadcrumbs = [
   jsonLd={jsonLd}
   breadcrumbs={breadcrumbs}
 >
-  <Hero title="About">
+  <Hero
+    title="About"
+    eyebrow="Wiser Walk"
+    icon="compass"
+    ghost="about"
+    tiles={[
+      { n: quizzes.length, label: quizzes.length === 1 ? 'Quiz' : 'Quizzes' },
+      { n: games.length, label: games.length === 1 ? 'Game' : 'Games' },
+      { n: articles.length, label: articles.length === 1 ? 'Article' : 'Articles' },
+      { n: compass.outcomes.length, label: 'Traditions' }
+    ]}
+  >
       Wiser Walk is a place to understand yourself a little better — through quizzes worth
       taking and articles worth reading.
   </Hero>
-  <div class="prose">
 
-    <h2>What this is</h2>
-    <p>
-      Self-assessments and short essays for Christians who would rather see themselves
-      clearly than comfortably. Some of the quizzes are serious, some are lighter. Not all
-      of them are about theology: some are about character, some about gifts, some about how
-      well you actually know the Bible.
-    </p>
-    <p>
-      The quizzes are the door. The articles are what is on the other side of it.
-    </p>
+  <SectionHead title="What this is" kicker="Three kinds of thing, one idea" />
 
-    <h2>What this is not</h2>
-    <ul>
-      <li><strong>Not a verdict on your faith.</strong> No quiz here scores anyone as a better or worse Christian.</li>
-      <li><strong>Not a recruiting tool.</strong> The Compass tells you where you already stand; it does not argue you toward a position.</li>
-      <li><strong>Not a church.</strong> Nothing here substitutes for one.</li>
-      <li><strong>Not collecting your answers.</strong> No accounts, and no record of what you answered — every quiz is scored on your own device, so your answers never leave your browser.</li>
-      <li><strong>Not a mailing list you get put on.</strong> There is one, and it is entirely opt-in: nothing is sent to it unless you type your address into the form and ask. If you never do, nothing about you leaves your browser at all. <a href="/method/#your-answers">What is sent, exactly</a>.</li>
-    </ul>
-
-    <h2>On fairness</h2>
-    <p>
-      The hardest part of a quiz like this is describing a position you disagree with in
-      terms its holders would recognise. That is the standard everything here is held to,
-      and the <a href="/method/">method page</a> shows the working — including the findings
-      that were raised and deliberately not applied.
-    </p>
-    <p>
-      If you hold a position and think it is described unfairly, that is worth hearing.
-      Being wrong about someone else's belief is the one failure this site cannot afford.
-    </p>
+  <div class="pnl pnl--cols">
+    <div class="doc doc--lead">
+      <p>
+        Self-assessments and short essays for Christians who would rather see themselves
+        clearly than comfortably. Some of the quizzes are serious, some are lighter. Not all
+        of them are about theology: some are about character, some about gifts, some about how
+        well you actually know the Bible.
+      </p>
+      <p>
+        The quizzes are the door. The articles are what is on the other side of it.
+      </p>
+    </div>
   </div>
+
+  <div class="scards" style="margin-top:.9rem">
+    <Card
+      href="/quizzes/"
+      icon={compass.icon}
+      title="Quizzes"
+      text={compass.tagline}
+      meta={plural(quizzes.length, 'quiz', 'quizzes')}
+      tab="Take one"
+      go="All quizzes"
+    />
+    {game && (
+      <Card
+        href="/games/"
+        icon={game.icon}
+        title="Games"
+        text={game.tagline}
+        meta={plural(games.length, 'game', 'games')}
+        tab="Play"
+        go="All games"
+      />
+    )}
+    <Card
+      href="/articles/"
+      icon="book"
+      title="Articles"
+      text="Plain, practical writing on Christian formation: gratitude, joy, and what it actually means to be Christ-like."
+      meta={plural(articles.length, 'piece', 'pieces')}
+      tab="Read"
+      go="All articles"
+    />
+  </div>
+
+  <SectionHead title="What this is not" kicker="Five things worth saying plainly" />
+
+  <ul class="facts">
+    <li><strong>Not a verdict on your faith.</strong> No quiz here scores anyone as a better or worse Christian.</li>
+    <li><strong>Not a recruiting tool.</strong> The Compass tells you where you already stand; it does not argue you toward a position.</li>
+    <li><strong>Not a church.</strong> Nothing here substitutes for one.</li>
+    <li><strong>Not collecting your answers.</strong> No accounts, and no record of what you answered — every quiz is scored on your own device, so your answers never leave your browser.</li>
+    <li><strong>Not a mailing list you get put on.</strong> There is one, and it is entirely opt-in: nothing is sent to it unless you type your address into the form and ask. If you never do, nothing about you leaves your browser at all. <a href="/method/#your-answers">What is sent, exactly</a>.</li>
+  </ul>
+
+  <SectionHead title="On fairness" kicker="The one failure this site cannot afford" />
+
+  <section class="pnl pnl--cols dark">
+    <div class="dark-ghost" aria-hidden="true">fairness</div>
+    <div class="pnl-head">
+      <p class="pnl-kicker"><Icon name="compass" size={13} /> The standard</p>
+      <h2 class="pnl-title">Described in terms its holders would recognise.</h2>
+    </div>
+    <div class="doc">
+      <p>
+        The hardest part of a quiz like this is describing a position you disagree with in
+        terms its holders would recognise. That is the standard everything here is held to,
+        and the <a href="/method/">method page</a> shows the working — including the findings
+        that were raised and deliberately not applied.
+      </p>
+      <p>
+        If you hold a position and think it is described unfairly, that is worth hearing.
+        Being wrong about someone else's belief is the one failure this site cannot afford.
+      </p>
+    </div>
+    <div class="btn-row">
+      <a class="btn" href="/method/">Read the method</a>
+      <a class="btn ghost" href="/method/#changelog">See what changed</a>
+    </div>
+  </section>
 </Base>

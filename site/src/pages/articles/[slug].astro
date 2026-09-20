@@ -1,9 +1,10 @@
 ---
 import Hero from '../../components/Hero.astro';
 import Base from '../../layouts/Base.astro';
-import Icon from '../../components/Icon.astro';
+import KeepGoing from '../../components/KeepGoing.astro';
 import { getCollection, render } from 'astro:content';
-import { getQuiz } from '../../lib/engine/registry';
+import { getQuiz, quizHref } from '../../lib/engine/registry';
+import { liveGames } from '../../lib/games';
 
 export async function getStaticPaths() {
   const articles = await getCollection('articles');
@@ -13,10 +14,52 @@ export async function getStaticPaths() {
 }
 
 const { article } = Astro.props;
-const { Content } = await render(article);
+const { Content, headings } = await render(article);
 
-// The other half of the cross-link: an article offers the quizzes it speaks to.
+/*
+ * The ghost word behind the band is the article's own subject, read off its slug rather
+ * than written by hand, so a new article arrives with one already: the last segment
+ * ("grateful", "joyful", "christlike"), falling back to the longest segment when that one
+ * is too short to carry display type.
+ */
+const segments = article.id.split('-').filter(Boolean);
+const last = segments[segments.length - 1] ?? '';
+const ghost =
+  last.length >= 4 ? last : segments.reduce((a, b) => (b.length > a.length ? b : a), '');
+
+/* Contents from the rendered headings — the article's own h2s, in the order they appear. */
+const contents = headings.filter(h => h.depth === 2).map(h => ({ id: h.slug, label: h.text }));
+
+const published = article.data.published.toLocaleDateString('en-GB', {
+  day: 'numeric', month: 'long', year: 'numeric'
+});
+
+/*
+ * Where to go next. Articles and quizzes cross-link in both directions, so the quizzes
+ * this article names in its front matter come first, then the flagship and the game, with
+ * anything already listed dropped rather than printed twice.
+ */
 const related = article.data.quizzes.map(getQuiz).filter(Boolean);
+const compass = getQuiz('theology-compass');
+const game = liveGames()[0];
+
+type Go = { href: string; title: string; meta?: string; text?: string; icon?: any };
+const next: Go[] = [];
+const add = (g: Go) => { if (!next.some(x => x.href === g.href)) next.push(g); };
+
+[...related, compass].forEach(q => {
+  if (!q) return;
+  add({
+    href: quizHref(q),
+    title: q.title,
+    meta: q.status === 'draft'
+      ? `Quiz · ${q.items.length} statements · unaudited draft`
+      : `Quiz · ${q.items.length} statements · about ${q.minutes} minutes`,
+    text: q.tagline,
+    icon: q.icon
+  });
+});
+if (game) add({ href: game.href, title: game.title, meta: 'Game · against the clock', text: game.tagline, icon: game.icon });
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -41,28 +84,53 @@ const breadcrumbs = [
   jsonLd={jsonLd}
   breadcrumbs={breadcrumbs}
 >
-  <Hero title={article.data.title} eyebrow={`${article.data.minutes} min read`} icon="book" lede={article.data.description} />
-  <article class="prose">
-    <Content />
-  </article>
+  <Hero
+    title={article.data.title}
+    eyebrow={`${article.data.minutes} min read`}
+    icon="book"
+    ghost={ghost}
+    lede={article.data.description}
+    long
+  />
 
-  {related.length > 0 && (
-    <>
-      <h2>Related quizzes</h2>
-      <div class="cards">
-        {related.map(q => (
-          <div class="card">
-            <h3><a href={`/q/${q!.slug}/`}><Icon name={q!.icon} size={17} /> {q!.title}</a></h3>
-            <p>{q!.tagline}</p>
-            <p class="meta">
-              {q!.items.length} statements
-              {q!.status === 'draft' ? ' · unaudited draft' : ` · about ${q!.minutes} minutes`}
-            </p>
-          </div>
-        ))}
+  <div class="doc-layout">
+    <aside class="doc-rail dark">
+      <div class="dark-ghost" aria-hidden="true">{ghost}</div>
+      <p class="rail-tag">Article</p>
+      <dl class="spec spec--rail">
+        <div><dt>Published</dt><dd>{published}</dd></div>
+        <div><dt>Reading time</dt><dd>{article.data.minutes} min</dd></div>
+        {article.data.tags.length > 0 && (
+          <div><dt>Topics</dt><dd>{article.data.tags.join(', ')}</dd></div>
+        )}
+      </dl>
+      <nav aria-label="Contents">
+        <p class="toc-head">In this article</p>
+        <ol class="toc-list">
+          {contents.map(c => <li><a href={`#${c.id}`}>{c.label}</a></li>)}
+        </ol>
+      </nav>
+      <div class="rail-foot">
+        <a class="btn ghost" href="/articles/">All articles</a>
       </div>
-    </>
+    </aside>
+
+    <div class="pnl">
+      <article class="doc doc--lead">
+        <Content />
+      </article>
+    </div>
+  </div>
+
+  {next.length > 0 && (
+    <KeepGoing
+      title="Keep going."
+      kicker="Where this leads"
+      ghost="next"
+      lede="Reading about yourself and seeing where you actually stand are two different things. These take a few minutes each."
+      links={next}
+    />
   )}
 
-  <p><a href="/articles/">← All articles</a></p>
+  <div class="btn-row"><a class="btn ghost" href="/articles/">All articles</a></div>
 </Base>

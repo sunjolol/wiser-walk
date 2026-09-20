@@ -1,0 +1,129 @@
+---
+/**
+ * "Where the traditions sit" — one axis, every outcome placed on ONE rail.
+ *
+ * The result page draws six rails with one reader on them. An axis page has the opposite
+ * job: one axis, and everybody on it. That is a dot plot, and dot plots collide — on this
+ * data four traditions share a score of 5 on the Grace axis, and three share 90. Eighteen
+ * labels on one line at 390px is not a layout problem to be nudged, so nothing is nudged:
+ * the dots are NUMBERED and stacked into lanes, and the names live underneath as chips in
+ * three honest groups. Left to right is the only ordering, and the number is the key.
+ *
+ * Two rules carried over from the rails, for the same reasons:
+ *
+ *  - both pole names print, unconditionally, at the ends of the rail;
+ *  - the band in which the instrument names no position is drawn, not implied.
+ *
+ * The band here is the SCORE range (41-59 from noClaimRange), not the snapped geometry the
+ * result page uses. A tradition's position is a coordinate, not one of the instrument's
+ * reachable steps, so a tradition at 60 must be drawn outside the band it is classified
+ * outside of. Using the rails' outward-snapped span would have drawn it inside.
+ */
+import type { Quiz, QuizGroup } from '../lib/engine/types';
+import { outcomeHref } from '../lib/engine/registry';
+import { namesNoPosition, noClaimRange } from '../lib/strategies/bipolar';
+
+interface Props {
+  quiz: Quiz;
+  group: QuizGroup;
+  /** Which coordinate of each outcome's position vector this axis is. */
+  index: number;
+}
+
+const { quiz, group, index } = Astro.props;
+const [lo, hi] = noClaimRange();
+
+type Side = 'left' | 'centre' | 'right';
+
+const placed = quiz.outcomes
+  .filter(o => Array.isArray(o.position) && typeof o.position[index] === 'number')
+  .map(o => ({ name: o.name, slug: o.slug, value: o.position![index]! }))
+  .sort((a, b) => a.value - b.value || a.name.localeCompare(b.name));
+
+/**
+ * Lanes. A dot is 22px and the narrowest track this ships on is about 300px, so two dots
+ * need roughly 8% of the run between them to stand side by side. Walking left to right,
+ * each dot takes the first lane whose last dot is far enough away; anything closer drops to
+ * a new lane. The number of lanes is therefore data, not a guess, and the same assignment
+ * holds at every width because it is computed in percentages.
+ */
+const GAP = 8;
+const laneEnd: number[] = [];
+const marks = placed.map((p, i) => {
+  let lane = laneEnd.findIndex(end => p.value - end >= GAP);
+  if (lane === -1) {
+    lane = laneEnd.length;
+    laneEnd.push(p.value);
+  } else {
+    laneEnd[lane] = p.value;
+  }
+  const side: Side = namesNoPosition(p.value) ? 'centre' : p.value < 50 ? 'left' : 'right';
+  return { ...p, n: i + 1, lane, side };
+});
+const lanes = Math.max(1, laneEnd.length);
+
+const bands: Array<{ side: Side; title: string; note?: string }> = [
+  { side: 'left', title: `Toward ${group.left}` },
+  { side: 'centre', title: 'Neither pole named', note: `${lo}–${hi}` },
+  { side: 'right', title: `Toward ${group.right}` }
+];
+---
+<div class="amap" style={`--lanes:${lanes};--zone-lo:${lo};--zone-hi:${hi}`}>
+  <p class="amap-legend">
+    <span class="legend-swatch" aria-hidden="true"></span>
+    Each dot is one tradition, numbered left to right. In the hatched middle the quiz
+    names neither pole.
+  </p>
+
+  <p class="amap-ends">
+    <span class="pole-l">{group.left}</span>
+    <span class="pole-r">{group.right}</span>
+  </p>
+
+  {/*
+    Decorative duplication: every dot's name, number and group is real text in the lists
+    below, so a screen reader is given the lists rather than eighteen unreadable pips.
+  */}
+  <div class="amap-plot" aria-hidden="true">
+    <div class="amap-rail">
+      <span class="amap-zone"></span>
+      <span class="amap-spine"></span>
+    </div>
+    <div class="amap-lanes">
+      {marks.map(m => (
+        <span class={`amap-dot amap-dot--${m.side}`} style={`--pos:${m.value};--lane:${m.lane}`}>
+          {m.n}
+        </span>
+      ))}
+    </div>
+  </div>
+
+  <div class="amap-groups">
+    {bands.map(b => {
+      const mine = marks.filter(m => m.side === b.side);
+      return (
+        <section class={`amap-group amap-group--${b.side}`}>
+          <h3 class="amap-group-head">
+            <span class="amap-group-name">{b.title}</span>
+            {b.note && <span class="amap-group-note">{b.note}</span>}
+            <span class="amap-group-count">{mine.length}</span>
+          </h3>
+          {mine.length > 0 ? (
+            <ul class="chips amap-chips">
+              {mine.map(m => (
+                <li>
+                  <a class="chip-link amap-chip" href={outcomeHref({ name: m.name, slug: m.slug })}>
+                    <b class={`amap-n amap-n--${m.side}`}>{m.n}</b>
+                    <span>{m.name}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p class="amap-empty">No listed tradition sits here on this axis.</p>
+          )}
+        </section>
+      );
+    })}
+  </div>
+</div>

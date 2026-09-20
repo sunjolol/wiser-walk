@@ -1,6 +1,9 @@
 ---
 import Hero from '../components/Hero.astro';
 import Base from '../layouts/Base.astro';
+import SectionHead from '../components/SectionHead.astro';
+import JumpBar from '../components/JumpBar.astro';
+import Icon from '../components/Icon.astro';
 import audit from '../data/compass-audit.json';
 import { theologyCompass } from '../lib/quizzes/theology-compass';
 
@@ -51,6 +54,25 @@ const clause = (text: unknown) => {
   return out;
 };
 
+/*
+ * Every sheet's nearest tradition is its own — the check beside each name below is read
+ * off the audit file, not asserted, so the list cannot claim a pass the data does not
+ * show. If one ever failed, it would print without the mark rather than silently.
+ */
+const landsOnItself = (s: Record<string, any>) =>
+  Array.isArray(s.nearest) && s.nearest[0] && s.nearest[0].name === s.tradition;
+
+const SECTIONS = [
+  { id: 'the-promise', label: 'The promise' },
+  { id: 'the-audit', label: 'The audit' },
+  { id: 'changelog', label: 'What changed' },
+  { id: 'disputed', label: 'Not applied' },
+  { id: 'the-test', label: 'The test' },
+  { id: 'the-numbers', label: 'The numbers' },
+  { id: 'your-answers', label: 'Your answers' },
+  { id: 'the-game', label: 'The game' }
+];
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Article',
@@ -70,97 +92,164 @@ const breadcrumbs = [
   jsonLd={jsonLd}
   breadcrumbs={breadcrumbs}
 >
-  <Hero title="How this was made" eyebrow="Method" blue="made">
+  <Hero
+    title="How this was made"
+    eyebrow="Method"
+    icon="compass"
+    blue="made"
+    ghost="method"
+    tiles={[
+      { n: 20, label: 'Reviewers' },
+      { n: 522, label: 'Findings' },
+      { n: 424, label: 'Applied' },
+      { n: disputed.length, label: 'Disputes' }
+    ]}
+  >
       A quiz that tells people what they believe has to be fair to beliefs its author does
       not hold. This page is the working, in public.
   </Hero>
-  <div class="prose">
 
-    <h2>The promise</h2>
-    <p>
-      Every position on the Compass is described in words its own holders would accept. No
-      band adjective names a rival tradition, flatters one side, or belittles the other.
-      Nothing is invented: positions are traced to a confession, a council, or a standard
-      work, and both poles of every axis are stated by someone who holds them.
-    </p>
+  <div class="method">
+    <JumpBar label="On this page" items={SECTIONS} numbered />
 
-    <h2>The audit</h2>
-    <p>
-      Twenty adversarial reviewers read the instrument, each briefed to find where it was
-      unfair to a particular tradition or simply wrong. They raised <strong>522 findings</strong>.
-      Each was then put through three independent verification lenses — is it accurate, is
-      it a genuine fairness problem, and is the change necessary — and
-      <strong>424 were kept and applied</strong>, including all 42 rated as blockers.
-    </p>
-    <p>
-      Six tradition families were added during the audit because the original list did not
-      represent them, bringing the map to {theologyCompass.outcomes.length}. A further
-      {disputed.length} findings were considered and deliberately <em>not</em> applied; that
-      log is <a href="#disputed">kept rather than quietly dropped</a>.
-    </p>
-  </div>
+    <SectionHead id="the-promise" title="The promise" kicker="What every position on the map is held to" />
 
-  <section class="changelog">
-    <div class="prose">
-      <h2 id="changelog">What the audit changed</h2>
-      <p>
-        Every change the fairness audit made is listed here, with the reason, so corrections
-        happen in the open.
-      </p>
-      <p class="tags">
-        {changelog.length} changes, grouped by what each one touched. Open one to read the
-        reason and see the wording before and after.
-      </p>
-    </div>
+    <section class="pnl dark">
+      <div class="dark-ghost" aria-hidden="true">fair</div>
+      <div class="pnl-head">
+        <p class="pnl-kicker"><Icon name="compass" size={13} /> The standard</p>
+        <h2 class="pnl-title">In words its own holders would accept.</h2>
+      </div>
+      <div class="doc">
+        <p>
+          Every position on the Compass is described in words its own holders would accept. No
+          band adjective names a rival tradition, flatters one side, or belittles the other.
+          Nothing is invented: positions are traced to a confession, a council, or a standard
+          work, and both poles of every axis are stated by someone who holds them.
+        </p>
+      </div>
+    </section>
 
-    {groups.map(g => (
-      <div class="cl-group">
-        <h3 id={`changed-${g.id}`}>{g.label} <span class="cl-count">{g.entries.length}</span></h3>
-        <ul class="cl-list">
-          {g.entries.map(c => (
+    <SectionHead id="the-audit" title="The audit" kicker="Twenty reviewers, briefed to find the unfairness" />
+
+    <section class="pnl pnl--split">
+      <div class="doc">
+        <p>
+          Twenty adversarial reviewers read the instrument, each briefed to find where it was
+          unfair to a particular tradition or simply wrong. They raised <strong>522 findings</strong>.
+          Each was then put through three independent verification lenses — is it accurate, is
+          it a genuine fairness problem, and is the change necessary — and
+          <strong>424 were kept and applied</strong>, including all 42 rated as blockers.
+        </p>
+        <p>
+          Six tradition families were added during the audit because the original list did not
+          represent them, bringing the map to {theologyCompass.outcomes.length}. A further
+          {disputed.length} findings were considered and deliberately <em>not</em> applied; that
+          log is <a href="#disputed">kept rather than quietly dropped</a>.
+        </p>
+      </div>
+      <aside class="pnl-aside">
+        <p class="pnl-kicker">The audit in figures</p>
+        <dl class="spec">
+          <div><dt>Reviewers</dt><dd>20, adversarial</dd></div>
+          <div><dt>Findings raised</dt><dd>522</dd></div>
+          <div><dt>Kept and applied</dt><dd>424</dd></div>
+          <div><dt>Blockers</dt><dd>42, all applied</dd></div>
+          <div><dt>Families added</dt><dd>6</dd></div>
+          <div><dt>Traditions now</dt><dd>{theologyCompass.outcomes.length}</dd></div>
+          <div><dt>Not applied</dt><dd>{disputed.length}</dd></div>
+        </dl>
+      </aside>
+    </section>
+
+    <SectionHead id="changelog" title="What the audit changed" kicker="Corrections happen in the open" />
+
+    <section class="pnl pnl--split">
+      <div>
+        <div class="doc">
+          <p>
+            Every change the fairness audit made is listed here, with the reason, so corrections
+            happen in the open.
+          </p>
+          <p class="tags">
+            {changelog.length} changes, grouped by what each one touched. Open one to read the
+            reason and see the wording before and after.
+          </p>
+        </div>
+        <ul class="chips">
+          {groups.map(g => (
             <li>
-              <details class="cl">
-                <summary>
-                  <span class="cl-target">{c.target}</span>
-                  <span class="cl-clause">{clause(c.why)}</span>
-                  <span class="chev" aria-hidden="true"></span>
-                </summary>
-                <div class="cl-body">
-                  <p>{c.why}</p>
-                  {c.before && (
-                    <>
-                      <h4>Before</h4>
-                      <pre>{c.before}</pre>
-                    </>
-                  )}
-                  {c.after && (
-                    <>
-                      <h4>After</h4>
-                      <pre>{c.after}</pre>
-                    </>
-                  )}
-                  <p class="cl-meta">
-                    {c.status}
-                    {Array.isArray(c.finding_ids) && c.finding_ids.length > 0 && (
-                      <span> · raised by {c.finding_ids.length} {c.finding_ids.length === 1 ? 'finding' : 'findings'}</span>
-                    )}
-                  </p>
-                </div>
-              </details>
+              <a class="chip-link" href={`#changed-${g.id}`}>{g.label} <small>{g.entries.length}</small></a>
             </li>
           ))}
         </ul>
       </div>
-    ))}
+      <aside class="pnl-aside">
+        <ul class="tiles">
+          <li class="tile"><b>{changelog.length}</b><span>Changes</span></li>
+          <li class="tile"><b>{groups.length}</b><span>Groups</span></li>
+        </ul>
+      </aside>
+    </section>
 
-    <div class="prose">
-      <h3 id="disputed">Kept but not applied</h3>
-      <p>
-        These {disputed.length} findings were raised and argued through, and the audit
-        decided against acting on them. They are kept here rather than dropped, because a
-        record that only shows the changes everyone agreed with is not a record.
-      </p>
+    <div class="changelog">
+      {groups.map(g => (
+        <div class="cl-group">
+          <h3 id={`changed-${g.id}`}>{g.label} <span class="cl-count">{g.entries.length}</span></h3>
+          <ul class="cl-list">
+            {g.entries.map(c => (
+              <li>
+                <details class="cl">
+                  <summary>
+                    <span class="cl-target">{c.target}</span>
+                    <span class="cl-clause">{clause(c.why)}</span>
+                    <span class="chev" aria-hidden="true"></span>
+                  </summary>
+                  <div class="cl-body">
+                    <p>{c.why}</p>
+                    {c.before && (
+                      <>
+                        <h4>Before</h4>
+                        <pre>{c.before}</pre>
+                      </>
+                    )}
+                    {c.after && (
+                      <>
+                        <h4>After</h4>
+                        <pre>{c.after}</pre>
+                      </>
+                    )}
+                    <p class="cl-meta">
+                      {c.status}
+                      {Array.isArray(c.finding_ids) && c.finding_ids.length > 0 && (
+                        <span> · raised by {c.finding_ids.length} {c.finding_ids.length === 1 ? 'finding' : 'findings'}</span>
+                      )}
+                    </p>
+                  </div>
+                </details>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
     </div>
+
+    <SectionHead id="disputed" title="Kept but not applied" kicker="A record that only shows the agreements is not a record" />
+
+    <section class="pnl pnl--split">
+      <div class="doc">
+        <p>
+          These {disputed.length} findings were raised and argued through, and the audit
+          decided against acting on them. They are kept here rather than dropped, because a
+          record that only shows the changes everyone agreed with is not a record.
+        </p>
+      </div>
+      <aside class="pnl-aside">
+        <ul class="tiles">
+          <li class="tile"><b>{disputed.length}</b><span>Disputes shown</span></li>
+        </ul>
+      </aside>
+    </section>
 
     <ul class="cl-list">
       {disputed.map(d => (
@@ -186,23 +275,53 @@ const breadcrumbs = [
         </li>
       ))}
     </ul>
-  </section>
 
-  <div class="prose">
-    <h2>The test that has to pass</h2>
-    <p>
-      The audit produced {landed.length} answer sheets — one filled in as a well-catechised
-      member of each tradition would answer it. The instrument only works if each sheet
-      lands on its own tradition. All {landed.length} do, at 87–95% match.
-    </p>
-    <p>
-      That check runs automatically before anything ships, against both the quiz engine and
-      the original demo page, which implement the scoring independently. If a change to the
-      wording or the scoring quietly moved someone's result, the build fails.
-    </p>
+    <SectionHead id="the-test" title="The test that has to pass" kicker={`${landed.length} answer sheets, re-scored before anything ships`} />
 
-    <h2>What the numbers mean, and do not mean</h2>
-    <ul>
+    <section class="pnl pnl--split">
+      <div class="doc">
+        <p>
+          The audit produced {landed.length} answer sheets — one filled in as a well-catechised
+          member of each tradition would answer it. The instrument only works if each sheet
+          lands on its own tradition. All {landed.length} do, at 87–95% match.
+        </p>
+        <p>
+          That check runs automatically before anything ships, against both the quiz engine and
+          the original demo page, which implement the scoring independently. If a change to the
+          wording or the scoring quietly moved someone's result, the build fails.
+        </p>
+      </div>
+      <aside class="pnl-aside">
+        <ul class="tiles">
+          <li class="tile"><b>{landed.length}</b><span>Answer sheets</span></li>
+          <li class="tile"><b>2</b><span>Implementations</span></li>
+        </ul>
+      </aside>
+    </section>
+
+    <section class="pnl">
+      <div class="pnl-head">
+        <p class="pnl-kicker">Every sheet lands on its own tradition</p>
+        <h2 class="pnl-title">The {landed.length} sheets.</h2>
+      </div>
+      <ul class="sheets">
+        {landed.map(s => (
+          <li>
+            {landsOnItself(s) && (
+              <svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4.5 12.5 9.5 17.5 19.5 6.5" />
+              </svg>
+            )}
+            {s.tradition}
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <SectionHead id="the-numbers" title="What the numbers mean" kicker="And what they do not mean" />
+
+    <ul class="facts">
       <li>
         A match percentage is distance on the map, expressed against the widest gap between
         any two listed traditions. It is not a claim about how good a Christian anyone is.
@@ -221,53 +340,102 @@ const breadcrumbs = [
       </li>
     </ul>
 
-    <h2 id="your-answers">Your answers</h2>
-    <p>
-      Every quiz is scored in your browser. Answers are never sent to a server, there is no
-      account, and nothing about your result is stored on our side. A result link carries
-      only your scores, encoded — which is also why a broken link cannot be recovered.
-    </p>
-    <p>
-      There is exactly one exception, and it only happens if you ask for it. At the bottom
-      of a result page you can request a short follow-up series about the axes you leaned on
-      hardest. If you fill that form in, two things are sent to our email provider: the
-      address you typed, and the code from your result link. The code is what makes the
-      emails about <em>your</em> result rather than a generic one. Nothing else is sent, and
-      if you never fill it in, nothing leaves your browser at all.
-    </p>
-    <p>
-      This page used to say there was no email list. There is one now; saying otherwise
-      while running one would be the same kind of dishonesty the rest of this page exists to
-      rule out.
-    </p>
-    <p>
-      Page views are counted in aggregate, through Vercel's web analytics. It is cookieless:
-      nothing is stored on your device, and you are not followed from one site to another.
-      Your answers are never sent to it, and no account, address or identity is attached to
-      a view. What it records is which page was opened. A result page's address contains
-      your result code, so the code is stripped before the view is counted: a result view is
-      recorded as the quiz's result path and nothing more. A comparison link carries two
-      codes and is treated the same way, so a pair of results is never recorded together
-      either. Nothing is joined up to a person.
-    </p>
+    <SectionHead id="your-answers" title="Your answers" kicker="What leaves your browser, and when" />
 
-    <h2 id="the-game">The game</h2>
-    <p>
-      <a href="/play/sounds-like-scripture/">Sounds Like Scripture</a> is scored in your browser
-      like everything else here. To avoid showing you the same line twice, it keeps four
-      things in your browser's own storage, on your device and nowhere else: the Bible you
-      chose, your best score, which lines you have already seen, and a tally of which
-      sources have fooled you. Clearing your browser's site data erases all of it. A
-      challenge link carries the run's number, one score and ten answer times, with no name
-      attached, and that part of the address is stripped before the page view is counted.
-    </p>
-    <p>
-      No line in the game was written or reworded by us or by a machine. Each one is quoted
-      word for word from a public-domain edition, the citation is shown after every answer
-      with a link to the source text, and a script checks every line against its source
-      file before the game is built. Whether a book counts as part of the Bible follows the
-      canon you choose: Protestant, Catholic or Orthodox. If a citation is wrong, tell us.
-    </p>
+    <div class="stack stack--2">
+      <section class="pnl">
+        <div class="pnl-head">
+          <p class="pnl-kicker">Scored on your device</p>
+          <h2 class="pnl-title">Nothing is sent.</h2>
+        </div>
+        <div class="doc">
+          <p>
+            Every quiz is scored in your browser. Answers are never sent to a server, there is no
+            account, and nothing about your result is stored on our side. A result link carries
+            only your scores, encoded — which is also why a broken link cannot be recovered.
+          </p>
+        </div>
+      </section>
+
+      <section class="pnl">
+        <div class="pnl-head">
+          <p class="pnl-kicker">The one exception</p>
+          <h2 class="pnl-title">Only if you ask for it.</h2>
+        </div>
+        <div class="doc">
+          <p>
+            There is exactly one exception, and it only happens if you ask for it. At the bottom
+            of a result page you can request a short follow-up series about the axes you leaned on
+            hardest. If you fill that form in, two things are sent to our email provider: the
+            address you typed, and the code from your result link. The code is what makes the
+            emails about <em>your</em> result rather than a generic one. Nothing else is sent, and
+            if you never fill it in, nothing leaves your browser at all.
+          </p>
+          <p>
+            This page used to say there was no email list. There is one now; saying otherwise
+            while running one would be the same kind of dishonesty the rest of this page exists to
+            rule out.
+          </p>
+        </div>
+      </section>
+
+      <section class="pnl">
+        <div class="pnl-head">
+          <p class="pnl-kicker">Page views</p>
+          <h2 class="pnl-title">Counted, cookieless, never joined up.</h2>
+        </div>
+        <div class="doc">
+          <p>
+            Page views are counted in aggregate, through Vercel's web analytics. It is cookieless:
+            nothing is stored on your device, and you are not followed from one site to another.
+            Your answers are never sent to it, and no account, address or identity is attached to
+            a view. What it records is which page was opened. A result page's address contains
+            your result code, so the code is stripped before the view is counted: a result view is
+            recorded as the quiz's result path and nothing more. A comparison link carries two
+            codes and is treated the same way, so a pair of results is never recorded together
+            either. Nothing is joined up to a person.
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <SectionHead id="the-game" title="The game" kicker="What Sounds Like Scripture keeps, and where its lines come from" />
+
+    <div class="stack stack--2">
+      <section class="pnl">
+        <div class="pnl-head">
+          <p class="pnl-kicker">On your device, nowhere else</p>
+          <h2 class="pnl-title">Four things in local storage.</h2>
+        </div>
+        <div class="doc">
+          <p>
+            <a href="/play/sounds-like-scripture/">Sounds Like Scripture</a> is scored in your browser
+            like everything else here. To avoid showing you the same line twice, it keeps four
+            things in your browser's own storage, on your device and nowhere else: the Bible you
+            chose, your best score, which lines you have already seen, and a tally of which
+            sources have fooled you. Clearing your browser's site data erases all of it. A
+            challenge link carries the run's number, one score and ten answer times, with no name
+            attached, and that part of the address is stripped before the page view is counted.
+          </p>
+        </div>
+      </section>
+
+      <section class="pnl">
+        <div class="pnl-head">
+          <p class="pnl-kicker">Where the lines come from</p>
+          <h2 class="pnl-title">Quoted word for word.</h2>
+        </div>
+        <div class="doc">
+          <p>
+            No line in the game was written or reworded by us or by a machine. Each one is quoted
+            word for word from a public-domain edition, the citation is shown after every answer
+            with a link to the source text, and a script checks every line against its source
+            file before the game is built. Whether a book counts as part of the Bible follows the
+            canon you choose: Protestant, Catholic or Orthodox. If a citation is wrong, tell us.
+          </p>
+        </div>
+      </section>
+    </div>
 
     <CorrectionNote subject="Method page" />
   </div>

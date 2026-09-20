@@ -1,16 +1,19 @@
 <title>Sounds Like Scripture</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap">
 
 <style>
 /* ------------------------------------------------------------------ tokens
-   Copied from site/src/styles/site.css. Light on a bare :root, dark under the
-   guarded media query, and again under the explicit attribute, so a chosen
-   light never loses to a dark phone. */
+   Copied from site/src/styles/site.css, plus the composed layer from kit.css.
+   Light sits on a bare :root and dark only under the explicit attribute, so
+   light is the default everywhere and a dark phone never overrides it. */
 :root {
   --blue: #7EBAEE;
   --orange: #F0A06F;
+  /* the same two inks with no alpha, for the gradient washes below */
+  --blue-0: rgba(126, 186, 238, 0);
+  --orange-0: rgba(240, 160, 111, 0);
   --grad: linear-gradient(to bottom right, var(--blue), var(--orange));
   --grad-r: linear-gradient(to right, var(--blue), var(--orange));
 
@@ -41,15 +44,27 @@
   --accent-soft: #E2EDF7;
   --accent-ink: #FFFFFF;
   --rule: rgba(68, 68, 68, .12);
+  --rule-strong: rgba(68, 68, 68, .2);
   --warn-bg: #FBEDE2;
   --warn-ink: #7A4A22;
   --on-grad: #3B3B3B;
   --tint-op: .35;
+
+  --stripe: rgba(68, 68, 68, .032);
+  --ghost: rgba(255, 255, 255, .62);
+  --ghost-dark: rgba(255, 255, 255, .055);
+  --band-wash: .5;
+  --card-wash: .22;
+  --dark-fill: #1C1C23;
+  --on-dark: #ECEAE6;
+  --on-dark-soft: #B9B5AF;
+  --blue-soft: #A9D0F3;
+  --orange-soft: #F4B991;
   color-scheme: light;
 }
 
-/* The system setting no longer switches the theme: the owner wants light by default, so
-   dark is only ever an explicit choice (the bulb, or ?theme=dark). */
+/* The system setting does not switch the theme: the owner wants light by default, so
+   dark is only ever an explicit choice (the site's bulb, or ?theme=dark). */
 
 :root[data-theme="dark"] {
   --page: #131319;
@@ -62,11 +77,19 @@
   --accent-soft: #1E2A38;
   --accent-ink: #10131A;
   --rule: rgba(234, 232, 228, .13);
+  --rule-strong: rgba(234, 232, 228, .2);
   --warn-bg: #33261C;
   --warn-ink: #F0A06F;
   --tint-op: .4;
   --lift: 0 2px 6px rgba(0, 0, 0, .3);
   --lift-soft: 0 0 12px rgba(0, 0, 0, .25);
+
+  --stripe: rgba(255, 255, 255, .018);
+  --ghost: rgba(255, 255, 255, .05);
+  --ghost-dark: rgba(255, 255, 255, .04);
+  --band-wash: .1;
+  --card-wash: .07;
+  --dark-fill: #343441;
   color-scheme: dark;
 }
 
@@ -77,7 +100,8 @@
 html, body { height: 100%; }
 body {
   margin: 0;
-  background: var(--page);
+  background-color: var(--page);
+  background-image: repeating-linear-gradient(135deg, var(--stripe) 0 1px, transparent 1px 8px);
   color: var(--ink);
   font-family: var(--text);
   font-size: 15px;
@@ -114,9 +138,9 @@ h1 { font-size: clamp(2.1rem, 11vw, 2.9rem); }
 h2 { font-size: clamp(1.5rem, 7vw, 1.9rem); }
 p { margin: 0 0 .9rem; }
 
-.eyebrow {
-  font-family: var(--ui); font-size: .66rem; font-weight: 600;
-  letter-spacing: .14em; text-transform: uppercase; color: var(--ink-mute);
+.eyebrow, .kicker {
+  font-family: var(--ui); font-size: .62rem; font-weight: 700;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--ink-mute);
   margin: 0 0 .55rem;
 }
 .lede { color: var(--ink-soft); font-size: 1rem; }
@@ -154,38 +178,142 @@ button { font: inherit; color: inherit; }
 .btn-col { display: grid; gap: .6rem; }
 .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
 
+/* --------------------------------------------------------------- the band
+   The site's header, rebuilt for a standalone document. The stencil the site
+   pours the spectrum through is a file this page cannot carry, so the wash is
+   four soft radial pours in the two spectrum inks at the band's own strength,
+   with a diagonal grain over them. Behind the words, one giant ghost word in
+   italic display, cropped by the band's edge. */
+
+.band {
+  position: relative; isolation: isolate; overflow: hidden; flex: 0 0 auto;
+  margin: 0 calc(-1 * var(--gutter));
+  padding: 1.4rem var(--gutter) 1.15rem;
+  background: var(--panel);
+  border-radius: 0 0 26px 26px;
+  box-shadow: var(--lift);
+}
+.band > *:not(.band-wash):not(.band-ghost) { position: relative; z-index: 2; }
+.band-wash {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  opacity: var(--band-wash);
+  background:
+    radial-gradient(78% 104% at 4% 4%, var(--blue) 0%, var(--blue-0) 62%),
+    radial-gradient(74% 96% at 98% 86%, var(--orange) 0%, var(--orange-0) 64%),
+    radial-gradient(52% 64% at 72% 2%, var(--orange) 0%, var(--orange-0) 72%),
+    radial-gradient(58% 74% at 26% 104%, var(--blue) 0%, var(--blue-0) 70%);
+}
+.band-wash::after {
+  content: ""; position: absolute; inset: 0;
+  background: repeating-linear-gradient(135deg, rgba(255, 255, 255, .5) 0 2px, rgba(255, 255, 255, 0) 2px 10px);
+  mix-blend-mode: soft-light; opacity: .5;
+}
+/* The word is long, so it is cropped by both edges of the band, which is the move
+   itself: a display word too big for its container, sitting behind the headline. */
+.band-ghost {
+  position: absolute; z-index: 1; right: -.07em; top: -.06em;
+  font-family: var(--display); font-style: italic; font-weight: 400;
+  font-size: clamp(3rem, 17.5vw, 5.4rem); line-height: .88; letter-spacing: -.045em;
+  color: var(--ghost); white-space: nowrap; pointer-events: none; user-select: none;
+}
+.band-chip {
+  display: inline-flex; align-items: center; gap: .45rem; margin: 0 0 1rem;
+  padding: .52rem .85rem; border-radius: var(--r-pill);
+  background-color: var(--dark-fill); color: var(--on-dark);
+  font-family: var(--ui); font-size: .58rem; font-weight: 700; letter-spacing: .16em;
+  text-transform: uppercase; line-height: 1;
+}
+.band-chip svg { width: .9em; height: .9em; color: var(--orange-soft); }
+.band h1 { margin: 0 0 .7rem; max-width: 11ch; line-height: 1.0; letter-spacing: -.022em; }
+.band h1 .t-blue { color: var(--accent); }
+.band h1 .t-orange { color: var(--warn-ink); }
+:root[data-theme="dark"] .band h1 .t-orange { color: var(--orange); }
+.band .lede { margin: 0; max-width: 26rem; }
+
+/* stat tiles: a number in display type over a whispered label */
+.tiles {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .45rem;
+  margin: 1.15rem 0 0; padding: 0; list-style: none;
+}
+.tile {
+  background: var(--panel); border-radius: 13px; box-shadow: var(--lift);
+  padding: .55rem .5rem .5rem; text-align: center;
+}
+.tile b {
+  display: block; font-family: var(--display); font-weight: 400; font-size: 1.35rem;
+  line-height: 1.1; color: var(--ink); font-variant-numeric: tabular-nums;
+}
+.tile span {
+  display: block; margin-top: .1rem; font-family: var(--ui); font-size: .52rem; font-weight: 600;
+  letter-spacing: .13em; text-transform: uppercase; color: var(--ink-mute); white-space: nowrap;
+}
+
+/* --------------------------------------------------------- section heads */
+
+.ghead { margin: 1.5rem 0 .75rem; }
+.ghead p { margin: 0 0 .1rem; }
+.ghead h3 {
+  margin: 0; font-family: var(--display); font-style: italic; font-weight: 400;
+  font-size: 1.75rem; line-height: .95; letter-spacing: -.02em; text-transform: lowercase;
+  color: var(--ink);
+}
+.ghead h3::after {
+  content: ""; display: block; width: 46px; height: 6px; margin-top: .5rem;
+  border-radius: var(--r-pill); background-image: var(--grad-r);
+}
+
 /* ------------------------------------------------------------------- start */
 
-#screen-start { overflow-y: auto; padding: 2rem 0 1.25rem; justify-content: space-between; }
+#screen-start { overflow-y: auto; justify-content: space-between; }
 .start-top { flex: 0 0 auto; }
-.start-mark {
-  width: 46px; height: 8px; border-radius: var(--r-pill);
-  background-image: var(--grad-r); margin-bottom: 1.4rem;
-}
-.canon { margin: 1.6rem 0 1.1rem; }
-.canon-chips { display: flex; gap: .5rem; flex-wrap: wrap; }
+.start-body { padding: 0 0 1.25rem; }
+
+.canon { margin: 1.25rem 0 0; }
+.canon-chips { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .45rem; }
 .chip {
-  flex: 1 1 auto; min-height: 48px; padding: .6rem .9rem;
-  border: 0; border-radius: var(--r-sm);
-  background: var(--panel); box-shadow: var(--lift);
-  font-family: var(--ui); font-size: .82rem; font-weight: 600;
+  min-height: 48px; padding: .6rem .4rem;
+  border: 0; border-radius: 11px; background: none;
+  box-shadow: inset 0 0 0 1.5px var(--rule-strong);
+  font-family: var(--ui); font-size: .62rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; line-height: 1.2;
   color: var(--ink-soft); cursor: pointer;
-  transition: box-shadow .18s ease, color .18s ease;
+  transition: box-shadow .18s ease, color .18s ease, background .18s ease;
 }
 .chip[aria-pressed="true"] {
-  color: var(--ink); box-shadow: inset 0 0 0 2px var(--accent), var(--lift);
-  background: var(--accent-soft);
+  color: var(--accent); background: var(--accent-soft);
+  box-shadow: inset 0 0 0 2px var(--accent);
 }
 .canon-note { margin: .8rem 0 0; }
+
+/* the charcoal block from the reference sheets, set against the light panels */
+.howto {
+  position: relative; isolation: isolate; overflow: hidden;
+  margin: 1.1rem 0 0; padding: .9rem 1rem 1rem;
+  background-color: var(--dark-fill); color: var(--on-dark);
+  border-radius: var(--r); box-shadow: var(--lift);
+}
+.howto > *:not(.dark-ghost) { position: relative; z-index: 1; }
+.dark-ghost {
+  position: absolute; z-index: 0; right: -.04em; bottom: -.26em;
+  font-family: var(--display); font-style: italic; font-size: 5.5rem; line-height: .8;
+  letter-spacing: -.04em; color: var(--ghost-dark); pointer-events: none; user-select: none;
+}
+.howto .kicker { color: var(--orange-soft); margin: 0; }
+.howto .spec { margin: .55rem 0 0; }
+.howto .spec > div { border-bottom-color: rgba(234, 232, 228, .22); padding: .45rem 0; }
+.howto .spec > div:first-child { border-top-color: rgba(234, 232, 228, .22); }
+.howto .spec > div:last-child { border-bottom: 0; }
+.howto .spec dt { color: var(--blue-soft); }
+.howto .spec dd { color: var(--on-dark-soft); font-size: .84rem; }
 .banner {
-  background: var(--accent-soft); border-radius: var(--r);
-  padding: .95rem 1.1rem; margin: 0 0 1.1rem;
+  background: var(--accent-soft); border-radius: var(--r-sm);
+  padding: .8rem .95rem; margin: 0 0 .9rem;
   box-shadow: inset 3px 0 0 var(--accent);
 }
-.banner p { margin: 0; color: var(--ink-soft); font-size: .95rem; }
-.banner strong { color: var(--ink); font-weight: 600; }
-.start-actions { margin-top: 1.6rem; }
-.foot { margin-top: 1.6rem; padding-bottom: calc(.5rem + env(safe-area-inset-bottom, 0px)); }
+.banner p { margin: 0; color: var(--ink-soft); font-size: .92rem; }
+.banner strong { color: var(--ink); font-weight: 600; font-family: var(--ui); }
+.start-actions { margin-top: 1.1rem; }
+.foot { margin: 1.4rem 0 0; padding-bottom: calc(.5rem + env(safe-area-inset-bottom, 0px)); }
 
 /* -------------------------------------------------------------------- play */
 
@@ -193,13 +321,14 @@ button { font: inherit; color: inherit; }
 
 .hud { display: flex; align-items: center; gap: .75rem; flex: 0 0 auto; }
 .pips { display: flex; gap: 4px; flex: 1; }
-.pip { flex: 1; height: 5px; border-radius: var(--r-pill); background: var(--shell); }
-.pip.done { background: var(--ink-mute); }
-.pip.now { background-image: var(--grad-r); }
+.pip { flex: 1; height: 5px; border-radius: var(--r-pill); background: var(--shell); box-shadow: inset 0 0 0 1px var(--rule); }
+.pip.done { background: var(--ink-mute); box-shadow: none; }
+.pip.now { background-image: var(--grad-r); box-shadow: none; }
 .score {
-  font-family: var(--ui); font-weight: 700; font-size: .82rem;
-  letter-spacing: .04em; color: var(--ink-soft); font-variant-numeric: tabular-nums;
-  min-width: 3.4rem; text-align: right;
+  font-family: var(--ui); font-weight: 700; font-size: .72rem;
+  letter-spacing: .06em; color: var(--ink-soft); font-variant-numeric: tabular-nums;
+  min-width: 3.2rem; text-align: center; padding: .3rem .5rem;
+  border-radius: var(--r-pill); box-shadow: inset 0 0 0 1.5px var(--rule-strong);
 }
 
 .fuse { height: 8px; border-radius: var(--r-pill); background: var(--shell); margin: .75rem 0 1rem; overflow: hidden; flex: 0 0 auto; }
@@ -208,7 +337,7 @@ button { font: inherit; color: inherit; }
 .stage { flex: 1; min-height: 0; display: flex; position: relative; }
 
 .card {
-  position: relative; flex: 1; min-height: 0;
+  position: relative; flex: 1; min-height: 0; isolation: isolate;
   background: var(--panel); border-radius: var(--r-lg); box-shadow: var(--lift);
   padding: 1.5rem 1.25rem; overflow: hidden;
   display: flex; flex-direction: column; justify-content: center;
@@ -217,12 +346,25 @@ button { font: inherit; color: inherit; }
 }
 .card.dragging { cursor: grabbing; }
 .card.revealed { justify-content: flex-start; overflow-y: auto; cursor: default; }
+/* the same four pours as the band, a whisper of them, so the card belongs to the header */
+.card-wash {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: var(--card-wash);
+  background:
+    radial-gradient(66% 80% at 2% 0%, var(--blue) 0%, var(--blue-0) 60%),
+    radial-gradient(70% 86% at 100% 100%, var(--orange) 0%, var(--orange-0) 62%);
+}
 .card-tint {
-  position: absolute; inset: 0; border-radius: inherit; opacity: 0; pointer-events: none;
+  position: absolute; inset: 0; z-index: 1; border-radius: inherit; opacity: 0; pointer-events: none;
 }
 .card-tint.yes { background: var(--blue); }
 .card-tint.no { background: var(--orange); }
-.card-inner { position: relative; }
+.card-inner { position: relative; z-index: 2; }
+.card-q {
+  position: absolute; z-index: 1; top: .35rem; left: 1rem;
+  font-family: var(--display); font-style: italic; font-size: 4.2rem; line-height: 1;
+  color: var(--warn-ink); opacity: .32; pointer-events: none; user-select: none;
+}
+.card.revealed .card-q { display: none; }
 
 .line {
   font-family: var(--display); line-height: 1.32; letter-spacing: -.005em;
@@ -231,39 +373,59 @@ button { font: inherit; color: inherit; }
 .line.s1 { font-size: clamp(1.45rem, 6.6vw, 1.7rem); }
 .line.s2 { font-size: clamp(1.22rem, 5.6vw, 1.45rem); }
 .line.s3 { font-size: clamp(1.06rem, 4.8vw, 1.25rem); }
-.card.revealed .line { font-size: 1.02rem; color: var(--ink-soft); }
+.card.revealed .line { font-size: 1.02rem; color: var(--ink-soft); font-style: italic; }
 
 .drag-hint {
-  font-family: var(--ui); font-size: .64rem; font-weight: 600; letter-spacing: .12em;
+  font-family: var(--ui); font-size: .6rem; font-weight: 700; letter-spacing: .14em;
   text-transform: uppercase; color: var(--ink-mute); margin: 1.1rem 0 0;
 }
 
-.reveal { margin-top: 1.1rem; padding-top: 1.1rem; border-top: 1px solid var(--rule); }
+/* ------------------------------------------------------------------ reveal */
+
+.reveal { margin-top: 1rem; padding-top: 1rem; border-top: 2px dotted var(--rule-strong); }
 .reveal[hidden] { display: none; }
 .verdict {
-  display: flex; align-items: center; gap: .5rem;
-  font-family: var(--ui); font-weight: 700; font-size: 1.05rem; color: var(--ink);
-  margin: 0 0 .5rem;
+  display: inline-flex; align-items: center; gap: .45rem; margin: 0 0 .6rem;
+  padding: .48rem .8rem; border-radius: var(--r-pill);
+  background-color: var(--dark-fill); color: var(--on-dark);
+  font-family: var(--ui); font-weight: 700; font-size: .62rem;
+  letter-spacing: .14em; text-transform: uppercase; line-height: 1;
 }
 .verdict svg { width: 1.15em; height: 1.15em; }
-.truth { font-size: .98rem; color: var(--ink); margin: 0 0 .5rem; }
-.cite { font-size: .9rem; color: var(--ink-soft); margin: 0 0 .25rem; }
-.cite b { font-weight: 600; color: var(--ink); }
+.verdict.ok svg { color: var(--blue-soft); }
+.verdict.bad svg { color: var(--orange-soft); }
+.truth {
+  font-family: var(--display); font-size: 1.16rem; line-height: 1.25; color: var(--ink);
+  margin: 0 0 .2rem;
+}
 .reveal-note {
   background: var(--warn-bg); color: var(--warn-ink); border-radius: var(--r-sm);
-  padding: .65rem .8rem; font-size: .84rem; margin: .7rem 0 0;
+  padding: .6rem .75rem; font-size: .82rem; margin: .8rem 0 0;
 }
-.reveal-meta {
-  display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
-  margin-top: .9rem;
+.src-link {
+  display: inline-flex; align-items: center; gap: .3rem; margin-top: .8rem;
+  font-family: var(--ui); font-size: .6rem; font-weight: 700; letter-spacing: .13em;
+  text-transform: uppercase; color: var(--accent); text-decoration: none;
 }
-.points {
-  font-family: var(--ui); font-weight: 700; font-size: .9rem; color: var(--ink);
-  font-variant-numeric: tabular-nums;
-}
-.them { font-family: var(--ui); font-size: .78rem; color: var(--ink-mute); }
-.src-link { font-size: .8rem; color: var(--accent); text-decoration: none; }
 .src-link:hover { text-decoration: underline; }
+
+/* -------------------------------------------------------------- spec lists */
+
+.spec { margin: .9rem 0 0; padding: 0; }
+.spec > div {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+  padding: .55rem 0; border-bottom: 2px dotted var(--rule-strong);
+}
+.spec > div:first-child { border-top: 2px dotted var(--rule-strong); }
+.spec dt {
+  font-family: var(--ui); font-size: .58rem; font-weight: 700; letter-spacing: .13em;
+  text-transform: uppercase; color: var(--accent); flex: none;
+}
+.spec dd { margin: 0; text-align: right; font-size: .88rem; color: var(--ink-soft); }
+.spec dd b { color: var(--ink); font-weight: 600; }
+.spec dd.num { font-family: var(--ui); font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
+
+/* ------------------------------------------------------------------- bar */
 
 .bar {
   flex: 0 0 auto; padding: 1rem 0 calc(1rem + env(safe-area-inset-bottom, 0px));
@@ -282,51 +444,83 @@ button { font: inherit; color: inherit; }
 
 /* ------------------------------------------------------------------ result */
 
-#screen-result { overflow-y: auto; padding: 1.75rem 0 1.25rem; }
-.tally {
-  background: var(--panel); border-radius: var(--r-lg); box-shadow: var(--lift);
-  padding: 1.25rem 1.2rem; margin: 0 0 1rem;
+#screen-result { overflow-y: auto; }
+.result-band { padding-bottom: 1.5rem; }
+.result-band .big {
+  font-family: var(--display); font-size: clamp(3rem, 17vw, 4.2rem);
+  line-height: .95; margin: 0; color: var(--ink); font-variant-numeric: tabular-nums;
+  letter-spacing: -.03em;
 }
-.big {
-  font-family: var(--display); font-size: clamp(2.6rem, 14vw, 3.4rem);
-  line-height: 1; margin: 0; font-variant-numeric: tabular-nums;
+.result-band .big-label {
+  margin: .1rem 0 0; font-family: var(--ui); font-size: .58rem; font-weight: 700;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--ink-mute);
 }
-.stats { display: flex; flex-wrap: wrap; gap: .25rem 1.35rem; margin-top: .85rem; }
-.stat { font-size: .82rem; color: var(--ink-mute); }
-.stat b { display: block; font-family: var(--ui); font-size: .95rem; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
 .squares { display: flex; gap: .3rem; margin-top: 1.1rem; }
 .sq {
   flex: 1; aspect-ratio: 1; max-width: 2.2rem; border-radius: 9px;
-  background: var(--shell); color: var(--ink-soft);
+  background: var(--panel); color: var(--ink-soft); box-shadow: var(--lift);
   display: flex; align-items: center; justify-content: center; position: relative;
   font-size: .85rem;
 }
 .sq .bolt { position: absolute; right: 2px; bottom: 1px; width: .55em; height: .55em; color: var(--accent); }
-.versus { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; margin-top: 1rem; }
-.versus div { background: var(--shell); border-radius: var(--r-sm); padding: .7rem .8rem; }
-.versus span { display: block; font-family: var(--ui); font-size: .64rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-mute); }
-.versus b { font-family: var(--ui); font-size: 1.15rem; font-variant-numeric: tabular-nums; }
-.block { margin: 1.4rem 0 0; }
-.block h3 { font-family: var(--ui); font-size: .68rem; font-weight: 700; letter-spacing: .14em;
-            text-transform: uppercase; color: var(--ink-mute); margin: 0 0 .6rem; }
-.misses { list-style: none; margin: 0; padding: 0; display: grid; gap: .55rem; }
+
+/* two scores, no names, never a percentage between them */
+.versus { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; margin-top: .9rem; }
+.versus div { background: var(--panel); border-radius: var(--r-sm); box-shadow: var(--lift); padding: .6rem .75rem; }
+.versus span { display: block; font-family: var(--ui); font-size: .54rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-mute); }
+.versus b { font-family: var(--display); font-weight: 400; font-size: 1.35rem; font-variant-numeric: tabular-nums; }
+
+.block { margin: 0; }
+
+/* the stripe card, from the site's lists: a washed stripe carrying a rotated tag,
+   a medallion over its edge, then the line, its citation and where it is printed */
+.misses { list-style: none; margin: 0; padding: 0; display: grid; gap: .7rem; }
 .misses li {
-  background: var(--panel); border-radius: var(--r-sm); box-shadow: var(--lift);
-  padding: .8rem .9rem; font-size: .88rem; color: var(--ink-soft);
+  position: relative; overflow: hidden; min-height: 8.5rem;
+  background: var(--panel); border-radius: var(--r); box-shadow: var(--lift);
+  padding: 1rem 1rem 1.05rem 4.4rem;
 }
-.misses q { display: block; quotes: none; font-family: var(--display); font-size: 1.02rem; line-height: 1.35; color: var(--ink); margin-bottom: .45rem; }
-.misses b { display: block; color: var(--ink); font-weight: 600; margin-bottom: .1rem; }
-.fooled { display: flex; flex-wrap: wrap; gap: .4rem; }
-.fooled span {
-  background: var(--shell); border-radius: var(--r-pill); padding: .35rem .8rem;
-  font-size: .8rem; color: var(--ink-soft);
+.miss-stripe {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 2.4rem; background: var(--shell);
+  display: flex; align-items: flex-end; justify-content: center; padding-bottom: .7rem;
 }
+.miss-stripe::before {
+  content: ""; position: absolute; inset: 0; background: var(--grad); opacity: .62;
+}
+.miss-stripe::after {
+  content: ""; position: absolute; inset: 0;
+  background: repeating-linear-gradient(135deg, rgba(255, 255, 255, .55) 0 2px, rgba(255, 255, 255, 0) 2px 9px);
+  mix-blend-mode: soft-light;
+}
+.miss-tag {
+  position: relative; writing-mode: vertical-rl; transform: rotate(180deg);
+  background-color: var(--dark-fill); color: var(--on-dark); border-radius: 7px; padding: .5rem .3rem;
+  font-family: var(--ui); font-size: .52rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; white-space: nowrap; line-height: 1;
+}
+.miss-medal {
+  position: absolute; left: 1.2rem; top: .9rem; width: 2.4rem; height: 2.4rem; border-radius: 50%;
+  background: var(--panel); color: var(--warn-ink); display: inline-flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 0 4px var(--panel), 0 0 0 6px var(--rule);
+  font-size: 1rem;
+}
+.misses q {
+  display: block; quotes: none; font-family: var(--display); font-size: 1.05rem;
+  line-height: 1.3; color: var(--ink); margin: .2rem 0 .55rem;
+}
+.miss-ref {
+  margin: 0; font-family: var(--ui); font-size: .62rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--accent);
+}
+.miss-where { margin: .3rem 0 0; font-size: .84rem; color: var(--ink-soft); }
+
 .result-actions { margin-top: 1.5rem; }
 .toast {
   position: fixed; left: 50%; bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
-  transform: translateX(-50%); background: var(--ink); color: var(--page);
-  font-family: var(--ui); font-size: .78rem; font-weight: 600;
-  padding: .6rem 1.1rem; border-radius: var(--r-pill); box-shadow: var(--lift);
+  transform: translateX(-50%); background: var(--dark-fill); color: var(--on-dark);
+  font-family: var(--ui); font-size: .7rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: .7rem 1.2rem; border-radius: var(--r-pill); box-shadow: var(--lift);
   opacity: 0; pointer-events: none; transition: opacity .2s ease; z-index: 9;
 }
 .toast.on { opacity: 1; }
@@ -335,12 +529,48 @@ button { font: inherit; color: inherit; }
 
 @media (min-width: 40rem) {
   body { font-size: 16px; }
-  #screen-start, #screen-result { padding-top: 3rem; }
+  .band { padding: 2rem var(--gutter) 1.7rem; border-radius: 0 0 30px 30px; }
+  .band h1 { font-size: 3.1rem; }
   .card { padding: 2rem 1.75rem; }
+  .tile b { font-size: 1.55rem; }
+  .tile span { font-size: .55rem; }
+}
+
+/* Wide: the column stays a phone column, so it becomes a sheet standing on the striped
+   ground rather than a strip cut off by the top of the window. */
+@media (min-width: 64rem) and (min-height: 44rem) {
+  .app { padding-top: 1.4rem; padding-bottom: .4rem; }
+  .band { border-radius: 26px; }
+}
+
+/* A phone, where the visible viewport is well under the screen: the band and the blocks
+   under it give their height back first, so both buttons stay in the thumb's reach
+   without scrolling. */
+@media (max-height: 46rem) {
+  .band { padding-top: 1.1rem; padding-bottom: 1rem; }
+  .band h1 { font-size: 2.35rem; }
+  .band .lede { font-size: .94rem; }
+  .tiles { margin-top: .9rem; }
+  .tile { padding: .45rem .5rem .42rem; }
+  .tile b { font-size: 1.25rem; }
+  .canon { margin-top: 1rem; }
+  .howto { margin-top: .9rem; padding: .8rem .9rem .85rem; }
+  .howto .spec > div { padding: .35rem 0; }
+  .start-actions { margin-top: .95rem; }
+  .btn { min-height: 48px; }
+  .foot { margin-top: 1rem; }
+}
+
+/* Landscape, or a very small window. */
+@media (max-height: 34rem) {
+  .band { padding-top: 1rem; padding-bottom: 1rem; }
+  .band h1 { font-size: 2rem; }
+  .band .lede { display: none; }
+  .tiles { margin-top: .8rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .card, .btn, .ans { transition: none !important; }
+  .card, .btn, .ans, .chip { transition: none !important; }
 }
 </style>
 
@@ -348,18 +578,23 @@ button { font: inherit; color: inherit; }
 
   <section class="screen" id="screen-start">
     <div class="start-top">
-      <div class="start-mark" aria-hidden="true"></div>
-      <p class="eyebrow">A wiserwalk game</p>
-      <h1>Sounds Like Scripture</h1>
+      <div class="band">
+        <div class="band-wash" aria-hidden="true"></div>
+        <div class="band-ghost" aria-hidden="true">scripture?</div>
+        <p class="band-chip">A wiserwalk game</p>
+        <h1>Sounds <span class="t-blue">Like</span> <span class="t-orange">Scripture</span></h1>
 
-      <div class="banner" id="challengeBanner" hidden>
-        <p><strong id="challengeScore">0</strong> <span id="challengeWord">was their score</span> on these ten lines.</p>
+        <div class="banner" id="challengeBanner" hidden>
+          <p><strong id="challengeScore">0</strong> <span id="challengeWord">was their score</span> on these ten lines.</p>
+        </div>
+
+        <p class="lede" id="startLede">Ten lines. Some are in the Bible. Some only sound like it. You have seconds.</p>
+
+        <ul class="tiles" id="startTiles"></ul>
       </div>
 
-      <p class="lede" id="startLede">Ten lines. Some are in the Bible. Some only sound like it. You have seconds.</p>
-
       <div class="canon">
-        <p class="eyebrow">Which Bible do you read?</p>
+        <p class="kicker">Which Bible do you read?</p>
         <div class="canon-chips" role="group" aria-label="Choose your canon">
           <button type="button" class="chip" id="canon-protestant" data-canon="protestant" aria-pressed="false">Protestant</button>
           <button type="button" class="chip" id="canon-catholic" data-canon="catholic" aria-pressed="false">Catholic</button>
@@ -367,9 +602,19 @@ button { font: inherit; color: inherit; }
         </div>
         <p class="small canon-note" id="canonNote" hidden></p>
       </div>
+
+      <div class="howto">
+        <span class="dark-ghost" aria-hidden="true">hard</span>
+        <p class="kicker">How a run goes</p>
+        <dl class="spec">
+          <div><dt>Ten lines</dt><dd>Eight to sixteen seconds each</dd></div>
+          <div><dt>Points</dt><dd>Speed, and a bonus for a streak</dd></div>
+          <div><dt>After each</dt><dd>The citation, and where to read it</dd></div>
+        </dl>
+      </div>
     </div>
 
-    <div class="start-bottom">
+    <div class="start-body">
       <div class="btn-col start-actions">
         <button type="button" class="btn" id="btnPlay">Play</button>
         <button type="button" class="btn ghost" id="btnDaily">Today's ten</button>
@@ -388,8 +633,10 @@ button { font: inherit; color: inherit; }
 
     <div class="stage">
       <article class="card" id="card">
+        <div class="card-wash" aria-hidden="true"></div>
         <div class="card-tint no" id="tintNo"></div>
         <div class="card-tint yes" id="tintYes"></div>
+        <span class="card-q" aria-hidden="true">&ldquo;</span>
         <div class="card-inner">
           <p class="line s1" id="lineText"></p>
           <p class="drag-hint" id="dragHint">Swipe or tap below</p>
@@ -410,29 +657,38 @@ button { font: inherit; color: inherit; }
   </section>
 
   <section class="screen" id="screen-result" hidden>
-    <div class="tally">
-      <p class="eyebrow">Your ten</p>
+    <div class="band result-band">
+      <div class="band-wash" aria-hidden="true"></div>
+      <div class="band-ghost" aria-hidden="true">ten</div>
+      <p class="band-chip">Your ten</p>
       <p class="big" id="finalScore">0</p>
-      <div class="stats">
-        <div class="stat"><b id="statCorrect">0 / 10</b>called right</div>
-        <div class="stat"><b id="statAvg">0.0s</b>average answer</div>
-        <div class="stat"><b id="statBest">0</b>personal best</div>
-      </div>
+      <p class="big-label">Points</p>
       <div class="squares" id="squares"></div>
       <div class="versus" id="versus" hidden>
         <div><span>You</span><b id="vsYou">0</b></div>
         <div><span>Them</span><b id="vsThem">0</b></div>
       </div>
+      <ul class="tiles" id="resultTiles">
+        <li class="tile"><b id="statCorrect">0 / 10</b><span>Called right</span></li>
+        <li class="tile"><b id="statAvg">0.0s</b><span>Average</span></li>
+        <li class="tile"><b id="statBest">0</b><span>Your best</span></li>
+      </ul>
     </div>
 
     <div class="block" id="missBlock" hidden>
-      <h3>The ones that got you</h3>
+      <div class="ghead">
+        <p class="kicker">Word for word, with the citation</p>
+        <h3>The ones that got you</h3>
+      </div>
       <ul class="misses" id="misses"></ul>
     </div>
 
     <div class="block" id="fooledBlock" hidden>
-      <h3>What fools you</h3>
-      <div class="fooled" id="fooled"></div>
+      <div class="ghead">
+        <p class="kicker">On this device, every run so far</p>
+        <h3>What fools you</h3>
+      </div>
+      <dl class="spec" id="fooled"></dl>
     </div>
 
     <div class="btn-col result-actions">
@@ -642,6 +898,7 @@ function decodeChallenge(hash) {
     start: $('screen-start'), play: $('screen-play'), result: $('screen-result'),
     banner: $('challengeBanner'), bannerScore: $('challengeScore'), bannerWord: $('challengeWord'),
     lede: $('startLede'), canonNote: $('canonNote'), footStart: $('footStart'), footResult: $('footResult'),
+    startTiles: $('startTiles'),
     btnPlay: $('btnPlay'), btnDaily: $('btnDaily'),
     pips: $('pips'), scoreNow: $('scoreNow'), fuseFill: $('fuseFill'),
     card: $('card'), tintYes: $('tintYes'), tintNo: $('tintNo'),
@@ -891,23 +1148,25 @@ function decodeChallenge(hash) {
     var mark = ok ? ICON.tick : (timedOut ? ICON.clock : ICON.cross);
     var word = ok ? 'Correct' : (timedOut ? 'Out of time' : 'Wrong');
 
-    var html = '<p class="verdict">' + mark + '<span>' + word + '</span></p>';
+    /* The reveal is the site's own furniture: a dark verdict chip, the truth in display
+       type, then the facts on dotted rules, exactly as a spec list elsewhere. */
+    var html = '<p class="verdict ' + (ok ? 'ok' : 'bad') + '">' + mark + '<span>' + word + '</span></p>';
     html += '<p class="truth">' + esc(truthSentence(item, truth)) + '</p>';
-    html += '<p class="cite"><b>' + esc(item.ref) + '</b>';
+
+    html += '<dl class="spec">';
+    html += '<div><dt>Reference</dt><dd><b>' + esc(item.ref) + '</b></dd></div>';
     var cit = citationLine(item);
-    if (cit) html += '<br>' + esc(cit);
-    html += '</p>';
-    if (src.note) html += '<p class="reveal-note">' + esc(src.note) + '</p>';
-
-    html += '<div class="reveal-meta">';
-    html += '<span class="points">' + (points > 0 ? '+' + points : 'No points') + '</span>';
-    if (src.url) html += '<a class="src-link" href="' + esc(src.url) + '" target="_blank" rel="noopener">Read the source</a>';
-    html += '</div>';
-
+    if (cit) html += '<div><dt>Source</dt><dd>' + esc(cit) + '</dd></div>';
+    html += '<div><dt>Points</dt><dd class="num">' + (points > 0 ? '+' + points : 'None') + '</dd></div>';
     if (state.challenge && state.challenge.marks[state.index]) {
       var them = state.challenge.marks[state.index];
-      html += '<p class="them">' + (them.ok ? 'Them: correct in ' + them.secs.toFixed(1) + 's' : 'Them: wrong') + '</p>';
+      html += '<div><dt>Them</dt><dd>' +
+              (them.ok ? 'correct in ' + them.secs.toFixed(1) + 's' : 'wrong') + '</dd></div>';
     }
+    html += '</dl>';
+
+    if (src.note) html += '<p class="reveal-note">' + esc(src.note) + '</p>';
+    if (src.url) html += '<a class="src-link" href="' + esc(src.url) + '" target="_blank" rel="noopener">Read the source</a>';
 
     el.reveal.innerHTML = html;
     el.reveal.hidden = false;
@@ -968,13 +1227,25 @@ function decodeChallenge(hash) {
       el.versus.hidden = true;
     }
 
+    /* Each missed line as a stripe card: the spectrum stripe carries what you actually
+       said, the medallion which way it went wrong, and the body the line, its reference
+       and where the book is printed. */
     var missed = [];
     state.answers.forEach(function (a, i) {
       if (a.ok) return;
       var item = state.run[i];
       var cit = citationLine(item);
-      missed.push('<li><q>' + esc(displayText(item.t)) + '</q><b>' + esc(item.ref) + '</b>' + esc(truthSentence(item, a.truth)) +
-                  (cit ? ' ' + esc(cit) + '.' : '') + '</li>');
+      var tag = a.timedOut ? 'Timed out' : (a.said ? 'You said in' : 'You said not');
+      missed.push(
+        '<li>' +
+        '<span class="miss-stripe" aria-hidden="true"><span class="miss-tag">' + esc(tag) + '</span></span>' +
+        '<span class="miss-medal" aria-hidden="true">' + (a.timedOut ? ICON.clock : ICON.cross) + '</span>' +
+        '<q>' + esc(displayText(item.t)) + '</q>' +
+        '<p class="miss-ref">' + esc(item.ref) + '</p>' +
+        '<p class="miss-where">' + esc(truthSentence(item, a.truth)) +
+        (cit ? ' ' + esc(cit) + '.' : '') + '</p>' +
+        '</li>'
+      );
     });
     el.misses.innerHTML = missed.join('');
     el.missBlock.hidden = missed.length === 0;
@@ -982,7 +1253,7 @@ function decodeChallenge(hash) {
     var tally = read(K.fooled, {}) || {};
     var rows = Object.keys(tally).sort(function (a, b) { return tally[b] - tally[a]; }).slice(0, 8);
     el.fooled.innerHTML = rows.map(function (k) {
-      return '<span>' + esc(k) + ' ' + tally[k] + '</span>';
+      return '<div><dt>' + esc(k) + '</dt><dd class="num">' + tally[k] + '</dd></div>';
     }).join('');
     el.fooledBlock.hidden = rows.length === 0;
 
@@ -1136,6 +1407,14 @@ function decodeChallenge(hash) {
   });
 
   /* -------------------------------------------------------------- boot ---- */
+
+  /* The three numbers on the start band are counted from the pool that was injected
+     into this page, never typed: change the pool and they change with it. */
+  el.startTiles.innerHTML =
+    '<li class="tile"><b>' + (POOL.items || []).length.toLocaleString() + '</b><span>Lines</span></li>' +
+    '<li class="tile"><b>' + SOURCES.length + '</b><span>Sources</span></li>' +
+    '<li class="tile"><b>' + RUN_LENGTH + '</b><span>A run</span></li>';
+
   var incoming = decodeChallenge(location.hash);
   var savedCanon = read(K.canon, null);
 

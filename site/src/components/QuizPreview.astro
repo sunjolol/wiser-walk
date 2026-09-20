@@ -1,0 +1,50 @@
+---
+/**
+ * What a quiz will show you, drawn from the quiz's own data before a single answer.
+ *
+ * The shape is READ from the strategy, never guessed: a bipolar quiz previews its axes as
+ * rails on the charcoal panel the result page draws its instruments on, and BOTH pole
+ * names print on every one of them — a pole encoded by omission is the failure this site
+ * refuses to ship. A unipolar quiz has no poles and no centre, so it previews its
+ * categories as a flat grid; giving it rails would be the same class of error in the other
+ * direction.
+ */
+import Icon from './Icon.astro';
+import type { Quiz } from '../lib/engine/types';
+import { groupHref } from '../lib/engine/registry';
+
+export interface Props { quiz: Quiz }
+const { quiz } = Astro.props;
+const bipolar = quiz.strategy.shape === 'bipolar';
+---
+<div class="axpv-panel dark">
+  <div class="dark-ghost" aria-hidden="true">{bipolar ? 'axes' : 'each one'}</div>
+
+  {bipolar ? (
+    <div class="axpv">
+      {quiz.groups.map(g => (
+        <a class="axpv-row" href={groupHref(quiz, g)}>
+          <span class="axpv-name">{g.name}</span>
+          <span class="axpv-go" aria-hidden="true"><Icon name="arrow" size={14} /></span>
+          <span class="axpv-bar" aria-hidden="true"></span>
+          <span class="axpv-poles">
+            <span class="axpv-l">{g.left}</span>
+            <span class="axpv-r">{g.right}</span>
+          </span>
+        </a>
+      ))}
+    </div>
+  ) : (
+    <ul class="chips catpv">
+      {quiz.groups.map(g => (
+        <li><a class="chip-link" href={groupHref(quiz, g)}>{g.name}</a></li>
+      ))}
+    </ul>
+  )}
+
+  <p class="axpv-note">
+    {bipolar
+      ? 'Neither end of an axis is the better one. Blue and orange only mark which end is which; read either name for what it says.'
+      : 'A ranking has no opposite end and no middle: each one is measured on its own, and the strongest is simply the strongest.'}
+  </p>
+</div>

@@ -1,1 +1,35 @@
 /* play pages. Owned by one builder; see design/RICHE-PASS-BRIEF.md. Tokens only, phone first. */
+
+/* ------------------------------------------------- the two-person overlay */
+
+/*
+ * The two mirrored pole panels on /c/. The result page's own .pole-panel names each pole
+ * in a small letterspaced label; on this page the two panels ARE the section, so the pole
+ * names are set as the reference skins set a panel title: lowercase-cased italic display,
+ * big enough to read as a heading. Both poles still print, unconditionally, and neither
+ * is styled as the better one — only the axis ink differs, blue left and orange right.
+ */
+.cmp-poles .pole-panel h4 {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.3rem;
+  line-height: 1.05;
+  letter-spacing: -.015em;
+  text-transform: none;
+}
+@media (min-width: 44rem) {
+  .cmp-poles .pole-panel h4 { font-size: 1.45rem; }
+}
+
+/* The invite block is a charcoal panel here, so its field and its button have to be
+   legible against it rather than against a light panel. */
+.invite-block.dark .share-link input {
+  background: rgba(255, 255, 255, .07);
+  color: var(--on-dark);
+  box-shadow: none;
+}
+.invite-block.dark .share-link .btn.ghost {
+  color: var(--blue-soft);
+  box-shadow: inset 0 0 0 1.5px var(--blue-soft);
+}

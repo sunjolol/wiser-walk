@@ -1,0 +1,42 @@
+---
+/**
+ * The composed game card, exactly as the home page draws it: a light half carrying the
+ * words and a spec list of real facts, and a dark half carrying a drawing of the game.
+ *
+ * The home page builds this inline; the games index builds it through here, so the two
+ * are siblings rather than a feature and a list. No real line is ever shown in the
+ * drawing — nothing about a run can be spoiled by a card.
+ */
+import type { Game } from '../lib/games';
+
+export interface Props {
+  game: Game;
+  /** Label and value, both taken from the game's own data. */
+  specs: Array<{ k: string; v: string }>;
+  /** The ghost word behind the drawing, and the small line above it. */
+  ghost: string;
+  kicker: string;
+  /** The two choices this game puts in front of a player, in its own words. */
+  answers: [string, string];
+}
+const { game, specs, ghost, kicker, answers } = Astro.props;
+---
+<a class="gamecard" href={game.href}>
+  <div class="feature-body">
+    <h3>{game.title}</h3>
+    <p>{game.tagline}</p>
+    <dl class="spec">
+      {specs.map(s => <div><dt>{s.k}</dt><dd>{s.v}</dd></div>)}
+    </dl>
+    <div class="btn-row"><span class="btn">Play now</span></div>
+  </div>
+  <div class="gamecard-art dark">
+    <div class="dark-ghost" aria-hidden="true">{ghost}</div>
+    <p class="feature-kicker">{kicker}</p>
+    <div class="mock" aria-hidden="true">
+      <div class="mock-fuse"><i></i></div>
+      <div class="mock-card"><span class="mock-q">“</span><i></i><i></i><i></i></div>
+      <div class="mock-btns"><span>{answers[0]}</span><span>{answers[1]}</span></div>
+    </div>
+  </div>
+</a>

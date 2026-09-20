@@ -1,0 +1,52 @@
+---
+/**
+ * The dark block that ends a reading page.
+ *
+ * Articles and quizzes have to cross-link in both directions, which is a platform rule
+ * rather than a nicety: an article about gratitude is the front door of the quiz that
+ * measures what pulls hardest on you, and the quiz's result is the front door of the
+ * article. So every article ends on the charcoal column from the reference skins, with
+ * the places to go next drawn as cards on it.
+ *
+ * Every link passed in is a real page; nothing here invents a destination.
+ */
+import Icon from './Icon.astro';
+
+export interface Props {
+  title: string;
+  kicker?: string;
+  ghost?: string;
+  lede?: string;
+  links: Array<{
+    href: string;
+    title: string;
+    /** The small uppercase line: "18 statements · about 3 minutes". */
+    meta?: string;
+    text?: string;
+    icon?: 'compass' | 'flame' | 'scroll' | 'book' | 'arrow';
+  }>;
+}
+const { title, kicker, ghost, lede, links } = Astro.props;
+---
+<section class="pnl dark keepgoing">
+  {ghost && <div class="dark-ghost" aria-hidden="true">{ghost}</div>}
+  <div class="pnl-head">
+    {kicker && <p class="pnl-kicker">{kicker}</p>}
+    <h2 class="pnl-title">{title}</h2>
+  </div>
+  {lede && <p>{lede}</p>}
+  <ul class="gocards">
+    {links.map(l => (
+      <li>
+        <a class="gocard" href={l.href}>
+          <span class="gocard-medal" aria-hidden="true"><Icon name={l.icon ?? 'book'} size={17} /></span>
+          <span class="gocard-text">
+            <b>{l.title}</b>
+            {l.meta && <span>{l.meta}</span>}
+            {l.text && <em>{l.text}</em>}
+          </span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>

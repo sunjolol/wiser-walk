@@ -1,7 +1,9 @@
 ---
-import Hero from '../../../components/Hero.astro';
 import Base from '../../../layouts/Base.astro';
+import Hero from '../../../components/Hero.astro';
+import SectionHead from '../../../components/SectionHead.astro';
 import Icon from '../../../components/Icon.astro';
+import AxisMap from '../../../components/AxisMap.astro';
 import HistoryTimeline from '../../../components/HistoryTimeline.astro';
 import PassagePills from '../../../components/PassagePills.astro';
 import CorrectionNote from '../../../components/CorrectionNote.astro';
@@ -23,6 +25,7 @@ export function getStaticPaths() {
 const { group } = Astro.props;
 const quiz = getQuiz(Astro.params.quiz)!;
 const bipolar = Boolean(group.left && group.right);
+const index = quiz.groups.findIndex(g => g.slug === group.slug);
 
 // Further reading is pole-split on a bipolar axis because the sources are: Bondage of the
 // Will argues one side, Arminius the other. Flattening them would put a book under the
@@ -35,7 +38,41 @@ const reading = readMoreAll(group.readMore);
 // a disagreement on the indexable page as well, not as one long paragraph about a topic.
 const parts = group.summaryParts;
 
+const history = group.history ?? [];
+const passages = group.passages ?? [];
+const statements = quiz.items.filter(it => it.group === index).length;
+const placed = quiz.outcomes.filter(o => Array.isArray(o.position)).length;
+
+/**
+ * Tiles are counts of things that are on this page, taken from the data. Nothing here is
+ * a headline number invented to fill a row: if an axis carries no chronology, that tile
+ * does not appear.
+ */
+const tiles = [
+  { n: statements, label: 'Statements' },
+  ...(history.length ? [{ n: history.length, label: 'Moments' }] : []),
+  ...(passages.length ? [{ n: passages.length, label: 'Passages' }] : []),
+  ...(bipolar && placed
+    ? [{ n: placed, label: 'Traditions' }]
+    : [{ n: quiz.groups.length, label: 'Categories' }])
+];
+
+/**
+ * "Take the Which of the seven are you weakest to?" is what a title-in-a-sentence does to
+ * a quiz whose title is a question. Short noun-phrase titles read well in the button;
+ * anything else gets the plain form.
+ */
+const takeIt =
+  quiz.title.length <= 24 && !quiz.title.includes('?') ? `Take the ${quiz.title}` : 'Take the quiz';
+
+// Siblings that actually have a page of their own, in the quiz's own order.
+const siblings = quiz.groups.filter(g => g.summary);
+const at = siblings.findIndex(g => g.slug === group.slug);
+const prev = at > 0 ? siblings[at - 1] : null;
+const next = at >= 0 && at < siblings.length - 1 ? siblings[at + 1] : null;
+
 const title = bipolar ? `${group.name}: ${group.left} or ${group.right}` : group.name;
+const ghost = group.name.toLowerCase();
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -67,75 +104,170 @@ const breadcrumbs =
   jsonLd={jsonLd}
   breadcrumbs={breadcrumbs}
 >
-  <Hero title={group.name} eyebrow={quiz.title} icon={quiz.icon} lede={bipolar ? `${group.left} ↔ ${group.right}` : undefined} />
+  <Hero title={group.name} eyebrow={quiz.title} icon={quiz.icon} ghost={ghost} tiles={tiles}>
+    {bipolar ? (
+      <span class="poleline">
+        <b class="pole-l">{group.left}</b>
+        <i aria-hidden="true">↔</i>
+        <b class="pole-r">{group.right}</b>
+      </span>
+    ) : (
+      quiz.tagline
+    )}
+  </Hero>
 
-  {parts ? (
-    <div class="axis-cases">
-      <div class="poles-split">
-        <section class="pole-panel pole-panel--left">
-          <h4>{group.left}</h4>
-          <p>{parts.left}</p>
-        </section>
-        <section class="pole-panel pole-panel--right">
-          <h4>{group.right}</h4>
-          <p>{parts.right}</p>
-        </section>
+  <div class="ref ref--axis">
+    {quiz.status === 'draft' && quiz.draftNote && (
+      <div class="note draft ref-draft">
+        <p><strong>Unaudited draft.</strong>{' ' + quiz.draftNote}</p>
       </div>
-      {parts.between && (
-        <p class="between"><strong>Between the poles.</strong> {parts.between}</p>
-      )}
-      {parts.caution && (
-        <p class="caution"><strong>About this axis.</strong> {parts.caution}</p>
-      )}
-    </div>
-  ) : (
-    <div class="prose"><p>{group.summary}</p></div>
-  )}
-
-  <div class="prose">
-
-    {group.history && group.history.length > 0 && (
-      <HistoryTimeline history={group.history} heading="h3" />
     )}
 
-    {/*
-      One heading over the two things a reader would go looking for: the texts the argument
-      is made from, and the books that make it. They were already both on the page; what was
-      missing was the word "Sources" over them, so nobody had to guess that this is where
-      the working is. Nothing is added here and nothing is attributed to a pole that the
-      audited data does not already attribute.
-    */}
-    {((group.passages && group.passages.length > 0) || reading.length > 0) && (
+    {bipolar && placed > 0 && (
       <>
-        <h2 id="sources">Sources</h2>
+        <SectionHead
+          title="Where the traditions sit"
+          kicker={`All ${placed} families on one rail`}
+        />
+        <section class="dark amap-panel">
+          <div class="dark-ghost" aria-hidden="true">{ghost}</div>
+          <p class="feature-kicker">
+            <Icon name="compass" size={13} /> One axis, everybody on it
+          </p>
+          <AxisMap quiz={quiz} group={group} index={index} />
+        </section>
+      </>
+    )}
 
-        {group.passages && group.passages.length > 0 && (
-          <PassagePills refs={group.passages} heading="h3" />
+    {parts ? (
+      <>
+        <SectionHead title="The two cases" kicker="Each stated by people who hold it" />
+        <div class="cases">
+          <article class="case case--left">
+            <span class="case-tag" aria-hidden="true">Left pole</span>
+            <h3>{group.left}</h3>
+            <p>{parts.left}</p>
+          </article>
+          <article class="case case--right">
+            <span class="case-tag" aria-hidden="true">Right pole</span>
+            <h3>{group.right}</h3>
+            <p>{parts.right}</p>
+          </article>
+        </div>
+
+        {parts.between && (
+          <aside class="axis-note axis-note--between">
+            <p class="axis-note-label">Between the poles</p>
+            <p>{parts.between}</p>
+          </aside>
         )}
+        {parts.caution && (
+          <aside class="axis-note axis-note--caution">
+            <p class="axis-note-label">About this axis</p>
+            <p>{parts.caution}</p>
+          </aside>
+        )}
+      </>
+    ) : (
+      <>
+        <SectionHead
+          title="What it means"
+          kicker={`Category ${index + 1} of ${quiz.groups.length}`}
+        />
+        <div class="panel layered ref-panel">
+          <div class="wash" aria-hidden="true"></div>
+          <div class="veil" aria-hidden="true"></div>
+          <p class="ref-lead">{group.summary}</p>
+        </div>
+      </>
+    )}
 
-        {reading.length > 0 && (
-          <>
-            <h3>Further reading</h3>
-            {split ? (
-              <div class="read-split">
-                <div>
-                  <h4>{group.left}</h4>
-                  <ul>{split.left.map(r => <li>{r}</li>)}</ul>
-                </div>
-                <div>
-                  <h4>{group.right}</h4>
-                  <ul>{split.right.map(r => <li>{r}</li>)}</ul>
-                </div>
-              </div>
-            ) : (
+    {history.length > 0 && (
+      <>
+        <SectionHead title="How it unfolded" kicker="In order, with dates and sources" />
+        <div class="panel layered ref-panel ref-panel--tl">
+          <div class="wash" aria-hidden="true"></div>
+          <div class="veil" aria-hidden="true"></div>
+          <HistoryTimeline history={history} heading="h3" />
+        </div>
+      </>
+    )}
+
+    {passages.length > 0 && (
+      <>
+        <SectionHead
+          id="sources"
+          title="The passages"
+          kicker="Argued from by both sides, assigned to neither"
+        />
+        <div class="panel layered ref-panel ref-panel--pg">
+          <div class="wash" aria-hidden="true"></div>
+          <div class="veil" aria-hidden="true"></div>
+          <PassagePills refs={passages} heading="h3" />
+        </div>
+      </>
+    )}
+
+    {reading.length > 0 && (
+      <>
+        <SectionHead
+          title="Further reading"
+          kicker={split ? 'Split by pole, because the books are' : `${reading.length} works`}
+        />
+        {split ? (
+          <div class="reading">
+            <section class="reading-col reading-col--left">
+              <h3>{group.left}</h3>
+              <ul>{split.left.map(r => <li>{r}</li>)}</ul>
+            </section>
+            <section class="reading-col reading-col--right">
+              <h3>{group.right}</h3>
+              <ul>{split.right.map(r => <li>{r}</li>)}</ul>
+            </section>
+          </div>
+        ) : (
+          <div class="reading">
+            <section class="reading-col">
               <ul>{reading.map(r => <li>{r}</li>)}</ul>
-            )}
-          </>
+            </section>
+          </div>
         )}
       </>
     )}
 
-    <p><a href={quizHref(quiz)}>Take the {quiz.title} →</a></p>
+    <section class="dark pledge ref-cta">
+      <div class="dark-ghost" aria-hidden="true">{ghost}</div>
+      <p class="feature-kicker">
+        <Icon name={quiz.icon} size={13} /> {quiz.items.length} statements · about {quiz.minutes} minutes
+      </p>
+      <h2>Where do you land?</h2>
+      <p>
+        {bipolar
+          ? 'Answer the statements and the whole map is drawn for you — every axis, and the traditions that sit nearest to where you land. Nothing you answer leaves your browser.'
+          : 'Answer the statements and every category is ranked by how much pull it has on you. Nothing you answer leaves your browser.'}
+      </p>
+      <div class="btn-row">
+        <a class="btn" href={quizHref(quiz)}>{takeIt}</a>
+        {quiz.status === 'live' && <a class="btn ghost" href="/method/">How it was made fair</a>}
+      </div>
+    </section>
+
+    {(prev || next) && (
+      <nav class="pager" aria-label="Other axes">
+        {prev ? (
+          <a class="pager-link pager-link--prev" href={groupHref(quiz, prev)}>
+            <span class="pager-dir">Previous</span>
+            <span class="pager-name">{prev.name}</span>
+          </a>
+        ) : <span></span>}
+        {next && (
+          <a class="pager-link pager-link--next" href={groupHref(quiz, next)}>
+            <span class="pager-dir">Next</span>
+            <span class="pager-name">{next.name}</span>
+          </a>
+        )}
+      </nav>
+    )}
 
     <CorrectionNote subject={`${group.name} axis`} />
   </div>

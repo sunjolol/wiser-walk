@@ -1,6 +1,16 @@
 ---
+/**
+ * A quiz: its intro, and the runner it turns into.
+ *
+ * The intro is composed from the quiz's own data — counts, axes or categories, both pole
+ * names on every axis — so adding a quiz still means adding a data file. Everything
+ * introductory lives INSIDE #intro, which the runner already hides when play starts, so
+ * the question screen is the whole page without the script having to learn a new rule.
+ */
 import Hero from '../../components/Hero.astro';
 import Base from '../../layouts/Base.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import QuizPreview from '../../components/QuizPreview.astro';
 import { QUIZZES, getQuiz } from '../../lib/engine/registry';
 
 export function getStaticPaths() {
@@ -9,6 +19,24 @@ export function getStaticPaths() {
 
 const quiz = getQuiz(Astro.params.quiz)!;
 const isDraft = quiz.status === 'draft';
+const bipolar = quiz.strategy.shape === 'bipolar';
+
+/**
+ * The ghost word behind the band is taken from the quiz's own title — the last word long
+ * enough to read at 40vw — so a new quiz brings its own and none is ever invented here.
+ */
+const words = quiz.title.toLowerCase().replace(/[^a-z\s]/g, ' ').split(/\s+/).filter(Boolean);
+const ghost = [...words].reverse().find(w => w.length >= 5) ?? words[words.length - 1] ?? quiz.slug;
+const painted = quiz.title
+  .split(/\s+/)
+  .find(w => w.toLowerCase().replace(/[^a-z]/g, '') === ghost);
+
+const tiles = [
+  { n: quiz.items.length, label: 'Statements' },
+  { n: quiz.groups.length, label: bipolar ? 'Axes' : 'Categories' },
+  ...(quiz.outcomes.length ? [{ n: quiz.outcomes.length, label: 'Traditions' }] : []),
+  { n: `${quiz.minutes}m`, label: 'To take' }
+];
 
 const jsonLd = isDraft
   ? null
@@ -40,15 +68,16 @@ const breadcrumbs = isDraft
   jsonLd={jsonLd}
   breadcrumbs={breadcrumbs}
 >
-  <Hero title={quiz.title} eyebrow={`${quiz.items.length} statements · about ${quiz.minutes} minutes`} icon={quiz.icon} lede={quiz.description} />
-  <div class="prose">
-
-    {isDraft && (
-      <div class="note draft">
-        <p><strong>Unaudited draft.</strong>{" " + quiz.draftNote}</p>
-      </div>
-    )}
-  </div>
+  <Hero
+    title={quiz.title}
+    blue={painted}
+    ghost={ghost}
+    eyebrow={`${quiz.items.length} statements · about ${quiz.minutes} minutes`}
+    icon={quiz.icon}
+    lede={quiz.description}
+    tiles={tiles}
+    long={quiz.title.length > 24}
+  />
 
   <div class="runner" id="runner" data-quiz={quiz.slug}>
     <noscript>
@@ -71,26 +100,80 @@ const breadcrumbs = isDraft
           comparison comes after.
         </p>
       </div>
-      <p>
-        Answer honestly rather than correctly — there is no score to win. If a statement
-        does not land either way, say so; “Unsure” is a real answer and is counted as one.
-      </p>
-      <div class="btn-row">
-        <button class="btn" id="start" type="button">Start</button>
-      </div>
+
+      <SectionHead
+        title="What you will see"
+        kicker={bipolar
+          ? `${quiz.groups.length} axes · both ends named`
+          : `${quiz.groups.length} categories · ranked by strength`}
+      />
+      <QuizPreview quiz={quiz} />
+
+      <SectionHead title="How to answer" kicker="Five answers, none of them right" />
+      <section class="howto panel layered">
+        <div class="wash" aria-hidden="true"></div>
+        <div class="veil" aria-hidden="true"></div>
+        <p class="howto-lede">
+          <b>Answer honestly rather than correctly</b> — there is no score to win. If a
+          statement does not land either way, say so; “Unsure” is a real answer and is
+          counted as one.
+        </p>
+        <dl class="spec">
+          <div><dt>Scale</dt><dd>Five, strongly disagree to strongly agree</dd></div>
+          <div><dt>Going back</dt><dd>Any time, one statement at a time</dd></div>
+          <div><dt>Keyboard</dt><dd>Keys 1 to 5, if you have one</dd></div>
+          <div><dt>Scored</dt><dd>On your device; nothing is sent</dd></div>
+        </dl>
+      </section>
+
+      {isDraft && (
+        <div class="note draft">
+          <p><strong>Unaudited draft.</strong>{" " + quiz.draftNote}</p>
+        </div>
+      )}
+
+      <section class="dark startbox">
+        <div class="dark-ghost" aria-hidden="true">begin</div>
+        <div class="startbox-text">
+          <p class="feature-kicker">When you are ready</p>
+          <h2>{quiz.items.length} statements, about {quiz.minutes} minutes.</h2>
+          <p>
+            You can stop at any point, and go back at any point. Nothing is kept either way.
+          </p>
+        </div>
+        <div class="btn-row">
+          <button class="btn" id="start" type="button">Start the quiz</button>
+        </div>
+      </section>
     </div>
 
     <div id="play" hidden>
-      <div class="progress"><i id="prog" style="width:0%"></i></div>
-      <p class="count" id="count"></p>
-      <p class="statement" id="statement"></p>
+      <div class="ask-top">
+        <div class="ask-meta">
+          <p class="count" id="count"></p>
+          <span class="ask-quiz">{quiz.title}</span>
+        </div>
+        <div class="progress" style={`--pips:${quiz.items.length}`}>
+          <i id="prog" style="width:0%"></i>
+        </div>
+      </div>
+
+      <div class="ask layered">
+        <div class="wash" aria-hidden="true"></div>
+        <div class="veil" aria-hidden="true"></div>
+        <p class="statement" id="statement" tabindex="-1"></p>
+      </div>
+
       <div class="scale" id="scale"></div>
-      <p class="scale-hint">
-        The scale runs from strongly disagree to strongly agree. Unsure sits in the middle
-        and does not push you either way.
-      </p>
-      <div class="runner-nav">
-        <button class="btn ghost" id="back" type="button">← Back</button>
+
+      <div class="runner-foot">
+        <div class="runner-nav">
+          <button class="btn ghost" id="back" type="button">← Back</button>
+        </div>
+        <p class="scale-hint">
+          The scale runs from strongly disagree to strongly agree. Unsure sits in the middle
+          and does not push you either way.
+        </p>
       </div>
     </div>
   </div>
@@ -208,4 +291,6 @@ const breadcrumbs = isDraft
       });
     }
   </script>
+
+
 </Base>

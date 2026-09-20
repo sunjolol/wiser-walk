@@ -1,1 +1,451 @@
-/* prose pages. Owned by one builder; see design/RICHE-PASS-BRIEF.md. Tokens only, phone first. */
+/*
+ * prose.css — the reading pages: an article, the article index, About, and Method.
+ *
+ * Owned by one builder; see design/RICHE-PASS-BRIEF.md. Tokens only, phone first, nothing
+ * here styles a phone by undoing a desktop rule.
+ *
+ * These four pages are the only ones on the site made mostly of sentences, so they need a
+ * vocabulary the kit does not carry: a reading column with real editorial typography, a
+ * rail beside it on a wide screen, panels that announce themselves, fact cards for a list
+ * of claims, and a dark "keep going" block that sends the reader somewhere. Everything is
+ * built out of kit surfaces (panel, dark, spec, chips, tiles) so these pages read as
+ * siblings of the home page rather than as documents pasted into it.
+ */
+
+/* ===================================================== panels that speak ==== */
+
+/*
+ * A panel carrying running text. Same paper, radius and whisper shadow as the kit's
+ * surfaces, with room for a head and, when it is a dark one, a ghost word behind.
+ */
+.pnl {
+  position: relative; isolation: isolate; overflow: hidden;
+  background: var(--panel); border-radius: var(--r); box-shadow: var(--lift);
+  padding: 1.3rem 1.15rem 1.45rem; margin: 1rem 0 0;
+}
+@media (min-width: 40rem) { .pnl { padding: 1.9rem 1.9rem 2.05rem; border-radius: var(--r-lg); } }
+@media (min-width: 68rem) { .pnl { padding: 2.1rem 2.3rem 2.25rem; } }
+
+/* the panel's own head: a whispered kicker over an italic display title on a spectrum rule */
+.pnl-head { margin: 0 0 1rem; }
+.pnl-kicker {
+  margin: 0 0 .25rem; font-family: var(--ui); font-size: .6rem; font-weight: 700;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--ink-mute);
+}
+.dark .pnl-kicker { color: var(--orange-soft); }
+.pnl-title {
+  margin: 0; font-family: var(--display); font-style: italic; font-weight: 400;
+  font-size: clamp(1.5rem, 6.4vw, 2.05rem); line-height: 1.04; letter-spacing: -.02em;
+  color: var(--ink);
+}
+.pnl-title::after {
+  content: ""; display: block; width: 46px; height: 6px; margin-top: .6rem;
+  border-radius: var(--r-pill); background-image: var(--grad-r);
+}
+.pnl.dark { padding-bottom: 1.6rem; }
+.pnl.dark .pnl-title { color: var(--on-dark); }
+.pnl .dark-ghost { font-size: clamp(5rem, 26vw, 9rem); right: -.04em; bottom: -.22em; }
+
+/* a run of panels stacked with the same rhythm */
+.stack { display: grid; gap: 1rem; margin-top: 1rem; align-items: start; }
+.stack > .pnl { margin: 0; }
+@media (min-width: 58rem) {
+  /* panels hug their own text: an equal-height row would print half a panel of empty
+     paper next to a long one, which reads as a fault rather than a grid */
+  .stack--2 { grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr)); }
+  /*
+   * An odd panel left alone on the last row would sit in one column with a hole beside it,
+   * so it takes the whole width and sets its text in two columns instead. Nothing is
+   * hidden or reordered: it is the same panel, filling the paper it is given.
+   */
+  .stack--2 > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .stack--2 > :last-child:nth-child(odd) .doc { max-width: none; column-count: 2; column-gap: 2.6rem; }
+}
+
+/*
+ * A split panel: the sentences on the left at a readable measure, the figures on the
+ * right. Without this a 37rem column inside a 70rem sheet leaves half the paper empty,
+ * which is exactly the "plain document" look these pages are being rebuilt out of.
+ */
+@media (min-width: 58rem) {
+  .pnl--split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 17rem); gap: 2rem; align-items: start; }
+}
+/*
+ * A panel of running text with no figures beside it would leave the same hole, so on a
+ * wide screen it sets its paragraphs in two columns: two readable measures instead of one
+ * measure and an empty half. Paragraphs never break across the gutter.
+ */
+@media (min-width: 62rem) {
+  .pnl--cols .doc { max-width: none; column-count: 2; column-gap: 2.6rem; }
+  .pnl--cols .doc > p { break-inside: avoid; }
+  .pnl--cols .doc > p:first-of-type { margin-top: 0; }
+}
+
+.pnl-aside { margin-top: 1.4rem; }
+.pnl-aside .spec { margin-top: .5rem; }
+.pnl-aside .tiles { margin-top: .5rem; }
+.pnl-aside .tile { background: var(--shell); box-shadow: none; }
+@media (min-width: 58rem) {
+  .pnl-aside { margin-top: .3rem; }
+  .pnl-aside .tiles { display: grid; grid-template-columns: 1fr; gap: .5rem; }
+  .pnl-aside .tile { text-align: left; padding: .7rem .95rem .6rem; }
+}
+
+/* an anchored section head has to clear the top of the viewport when jumped to */
+.sect[id] { scroll-margin-top: 1.25rem; }
+
+/* a chip that is a label, not a link: no pointer affordance, no hover promise */
+.chip-static { cursor: default; }
+.chip-static:hover { color: var(--ink-soft); background: none; box-shadow: inset 0 0 0 1.5px var(--rule-strong); }
+
+/* ================================================ the anchor / jump bar ===== */
+
+/*
+ * A row of in-page links, directly under the band. On a phone it scrolls sideways inside
+ * its own strip rather than stacking eight pills into a wall; from 46rem it wraps.
+ */
+.jump {
+  position: relative; margin: 1.1rem calc(-1 * var(--gut, 1.25rem)) 0;
+  padding: .1rem var(--gut, 1.25rem);
+  overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.jump::-webkit-scrollbar { display: none; }
+.jump ul {
+  display: flex; gap: .4rem; margin: 0; padding: .25rem 0; list-style: none;
+  width: max-content;
+}
+.jump-label {
+  margin: 0 0 .5rem; font-family: var(--ui); font-size: .58rem; font-weight: 700;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--ink-mute);
+}
+.jump a {
+  display: inline-flex; align-items: center; gap: .4rem; min-height: 44px;
+  padding: .5rem .8rem; border-radius: 11px; white-space: nowrap;
+  box-shadow: inset 0 0 0 1.5px var(--rule-strong); text-decoration: none;
+  font-family: var(--ui); font-size: .64rem; font-weight: 700; letter-spacing: .09em;
+  text-transform: uppercase; color: var(--ink-soft); line-height: 1;
+  transition: box-shadow .18s ease, color .18s ease, background .18s ease;
+}
+.jump a:hover { color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 0 0 1.5px var(--accent); }
+.jump a i {
+  font-style: normal; font-variant-numeric: tabular-nums; color: var(--ink-mute);
+  font-size: .9em; letter-spacing: .04em;
+}
+.jump a:hover i { color: var(--accent); }
+@media (min-width: 46rem) {
+  .jump { overflow: visible; margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0; }
+  .jump ul { flex-wrap: wrap; width: auto; }
+}
+
+/* ======================================================= the fact cards ===== */
+
+/*
+ * A list of claims where each claim is a whole thought: "not a verdict on your faith",
+ * "a match percentage is distance on the map". Too long for a chip, too short for a
+ * section. A card each, with the spectrum standing at its edge.
+ */
+.facts { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; gap: .75rem; }
+@media (min-width: 46rem) { .facts { grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); } }
+.facts > li {
+  position: relative; overflow: hidden; background: var(--panel); border-radius: var(--r);
+  box-shadow: var(--lift); padding: 1.05rem 1.1rem 1.15rem 1.35rem;
+  font-size: .94rem; line-height: 1.6; color: var(--ink-soft);
+}
+.facts > li::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 6px;
+  background-image: var(--grad);
+}
+.facts > li > strong:first-child {
+  display: block; margin: 0 0 .35rem; font-family: var(--display); font-weight: 400;
+  font-style: italic; font-size: 1.16rem; line-height: 1.15; color: var(--ink);
+}
+.facts > li a { color: var(--accent); }
+.dark .facts > li { background: rgba(255, 255, 255, .07); box-shadow: none; color: var(--on-dark-soft); }
+.dark .facts > li > strong:first-child { color: var(--on-dark); }
+
+/* ==================================================== the reading column ==== */
+
+/*
+ * The document layout. One column on a phone; from 62rem a rail carries the contents and
+ * the article's facts beside the reading column, because a 34rem measure inside a 70rem
+ * sheet otherwise leaves half the paper blank. The rail cannot be sticky: the sheet frame
+ * sets overflow:hidden at the same width, which would make position:sticky inert.
+ */
+.doc-layout { display: grid; gap: 1rem; grid-template-columns: 1fr; align-items: stretch; margin-top: 1.1rem; }
+@media (min-width: 62rem) {
+  .doc-layout { grid-template-columns: 17rem minmax(0, 1fr); gap: 1.4rem; }
+}
+.doc-layout > .pnl { margin: 0; }
+
+/*
+ * The rail is the charcoal column from the Riche sheet: the facts about the piece, its
+ * contents, and the way back, standing against the light reading panel. It stretches to
+ * the panel's height on a wide screen with the ghost word anchored at its foot, because a
+ * short rail beside a long article leaves a hole in the sheet.
+ *
+ * It cannot be sticky — kit.css sets overflow:hidden on .sheet at the same width, which
+ * makes position:sticky inert — so it is composed to be read once, at the top.
+ */
+.doc-rail {
+  display: flex; flex-direction: column; padding: 1.2rem 1.15rem 1.3rem;
+  border-radius: var(--r);
+}
+.doc-rail .dark-ghost { font-size: clamp(4.5rem, 22vw, 7rem); left: -.05em; bottom: -.2em; }
+/* the reference's vertical gradient strip: it gives the tall column a spine */
+.doc-rail::after {
+  content: ""; position: absolute; z-index: 0; left: 0; top: 2.6rem; bottom: 2.6rem; width: 5px;
+  border-radius: 0 var(--r-pill) var(--r-pill) 0; background-image: linear-gradient(to bottom, var(--blue), var(--orange));
+  opacity: .5;
+}
+.rail-tag {
+  margin: 0 0 1rem; font-family: var(--ui); font-size: .58rem; font-weight: 700;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--orange-soft);
+}
+.doc-rail .spec dd { color: var(--on-dark); }
+.rail-foot { margin-top: 1.4rem; }
+.rail-foot .btn { width: 100%; }
+@media (min-width: 62rem) {
+  .doc-rail { padding: 1.5rem 1.4rem 1.6rem; }
+  .rail-foot { margin-top: auto; padding-top: 2rem; }
+}
+
+/* the contents list: a real sequence, so it is numbered */
+.toc { background: var(--panel); border-radius: var(--r); box-shadow: var(--lift); padding: 1rem 1.05rem 1.15rem; }
+.toc-head {
+  margin: 1.1rem 0 .65rem; font-family: var(--ui); font-size: .58rem; font-weight: 700;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--ink-mute);
+}
+.spec--rail { margin-top: 0; }
+.spec--rail dt { font-size: .56rem; letter-spacing: .14em; }
+.spec--rail dd { font-size: .82rem; }
+.spec--rail > div { padding: .45rem 0; }
+.toc-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .4rem; counter-reset: toc; }
+.toc-list li { counter-increment: toc; }
+.toc-list a {
+  display: inline-flex; align-items: baseline; gap: .45rem; min-height: 44px;
+  padding: .45rem .7rem; border-radius: 10px; text-decoration: none;
+  box-shadow: inset 0 0 0 1.5px var(--rule-strong);
+  font-family: var(--ui); font-size: .72rem; font-weight: 600; color: var(--ink-soft);
+  line-height: 1.35; transition: box-shadow .18s ease, color .18s ease, background .18s ease;
+}
+.toc-list a::before {
+  content: counter(toc, decimal-leading-zero); flex: none;
+  font-size: .62rem; font-weight: 700; letter-spacing: .06em; color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.toc-list a:hover { color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 0 0 1.5px var(--accent); }
+@media (min-width: 62rem) {
+  .toc-list { display: grid; gap: .2rem; }
+  .toc-list a {
+    box-shadow: none; border-radius: 9px; padding: .5rem .55rem; align-items: flex-start;
+    min-height: 0; border-left: 3px solid var(--rule); margin-left: 0;
+  }
+  .toc-list a:hover { box-shadow: none; border-left-color: var(--accent); }
+}
+
+/* the reading column itself */
+.doc {
+  max-width: 37rem; font-size: 1.02rem; line-height: 1.75; color: var(--ink-soft);
+  text-wrap: pretty;
+}
+.doc > p { margin: 0 0 1.15rem; }
+
+/* the lead: the first paragraph carries the spectrum and reads a size up */
+.doc--lead > p:first-of-type {
+  position: relative; margin: 0 0 1.5rem; padding-left: 1.1rem;
+  font-size: 1.14rem; line-height: 1.62; color: var(--ink);
+}
+.doc--lead > p:first-of-type::before {
+  content: ""; position: absolute; left: 0; top: .28em; bottom: .28em; width: 6px;
+  border-radius: var(--r-pill); background-image: var(--grad);
+}
+@media (min-width: 40rem) {
+  .doc { font-size: 1.05rem; }
+  .doc--lead > p:first-of-type { font-size: 1.22rem; padding-left: 1.35rem; }
+}
+
+/*
+ * Headings keep the author's capitalisation. The kit's section titles are lowercase
+ * because they are single words; an article heading is a sentence, and lowercasing
+ * "It is a destination God has already chosen" would print a wrong word, not a style.
+ */
+.doc h2 {
+  font-family: var(--display); font-style: italic; font-weight: 400;
+  font-size: clamp(1.5rem, 6.2vw, 1.95rem); line-height: 1.08; letter-spacing: -.018em;
+  color: var(--ink); margin: 2.5rem 0 .85rem; scroll-margin-top: 1.25rem; text-wrap: balance;
+}
+.doc h2:first-child { margin-top: 0; }
+.doc h2::after {
+  content: ""; display: block; width: 42px; height: 6px; margin-top: .55rem;
+  border-radius: var(--r-pill); background-image: var(--grad-r);
+}
+.doc h3 {
+  font-family: var(--ui); font-size: .74rem; font-weight: 700; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--ink-mute); margin: 2rem 0 .55rem;
+  scroll-margin-top: 1.25rem; line-height: 1.5;
+}
+
+/*
+ * Bold is the house's emphasis voice, and in this language that voice is the display face
+ * in italic — the same one the section heads and the panel titles speak in.
+ *
+ * It is set on every strong rather than only on a run-in at the head of a paragraph,
+ * because CSS cannot tell the two apart: :first-child ignores text nodes, so
+ * "They raised **522 findings**" matches exactly as "**Name particulars.** Thank you..."
+ * does. Styling only the "first" one would print two bolds in one paragraph in two
+ * different faces, which reads as a fault rather than a choice.
+ */
+.doc strong {
+  font-family: var(--display); font-weight: 400; font-style: italic;
+  font-size: 1.08em; line-height: 1.2; color: var(--ink);
+}
+
+/*
+ * Lists take the spectrum as their marker — but only the author's lists. A chip grid, a
+ * tile row or a fact list is also a <ul>, and must not inherit a dash and a hanging
+ * indent from the reading column it happens to sit in.
+ */
+.doc ul:not(.chips):not(.tiles):not(.facts):not(.sheets) { list-style: none; margin: 1.25rem 0 1.4rem; padding: 0; }
+.doc ul:not(.chips):not(.tiles):not(.facts):not(.sheets) > li { position: relative; margin: 0 0 .9rem; padding-left: 1.6rem; }
+.doc ul:not(.chips):not(.tiles):not(.facts):not(.sheets) > li::before {
+  content: ""; position: absolute; left: 0; top: .66em; width: 15px; height: 6px;
+  border-radius: var(--r-pill); background-image: var(--grad-r);
+}
+.doc ol { list-style: none; margin: 1.25rem 0 1.4rem; padding: 0; counter-reset: docol; }
+.doc ol > li { position: relative; margin: 0 0 .9rem; padding-left: 2.1rem; counter-increment: docol; }
+.doc ol > li::before {
+  content: counter(docol, decimal-leading-zero); position: absolute; left: 0; top: .1em;
+  font-family: var(--ui); font-size: .7rem; font-weight: 700; letter-spacing: .06em;
+  color: var(--accent); font-variant-numeric: tabular-nums;
+}
+
+/* a quotation becomes a washed panel in the display face */
+.doc blockquote {
+  position: relative; isolation: isolate; overflow: hidden;
+  margin: 1.6rem 0; padding: 1.2rem 1.15rem 1.25rem; border-radius: var(--r);
+  background: var(--shell);
+  font-family: var(--display); font-style: italic; font-size: 1.18rem; line-height: 1.42;
+  color: var(--ink);
+}
+.doc blockquote::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; background: var(--grad);
+  -webkit-mask: url("/tex/smokey.png") center / cover no-repeat;
+  mask: url("/tex/smokey.png") center / cover no-repeat;
+  opacity: var(--wash-op);
+}
+.doc blockquote p { margin: 0 0 .6rem; }
+.doc blockquote p:last-child { margin: 0; }
+.doc blockquote cite {
+  display: block; margin-top: .6rem; font-family: var(--ui); font-style: normal;
+  font-size: .62rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+.doc a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.doc a:hover { text-decoration-thickness: 2px; }
+/* a chip or a button inside the column keeps its own shape */
+.doc a.chip-link, .doc a.btn { text-decoration: none; }
+.doc em { font-style: italic; }
+.doc hr { border: 0; height: 6px; width: 42px; margin: 2rem 0; border-radius: var(--r-pill); background-image: var(--grad-r); }
+.doc code {
+  font-family: var(--mono); font-size: .88em; background: var(--shell);
+  border-radius: 6px; padding: .12em .35em;
+}
+.doc > *:last-child { margin-bottom: 0; }
+
+/* ====================================================== keep going block ==== */
+
+.keepgoing { margin-top: 1.4rem; padding: 1.4rem 1.15rem 1.5rem; }
+.keepgoing .dark-ghost { font-size: clamp(5rem, 26vw, 9.5rem); right: -.05em; bottom: -.2em; }
+.keepgoing .pnl-title { color: var(--on-dark); }
+.keepgoing > p { max-width: 34rem; margin: 0; color: var(--on-dark-soft); }
+@media (min-width: 40rem) { .keepgoing { padding: 2rem 1.95rem 2.1rem; } }
+
+.gocards { list-style: none; margin: 1.2rem 0 0; padding: 0; display: grid; gap: .65rem; }
+@media (min-width: 44rem) { .gocards { grid-template-columns: repeat(auto-fit, minmax(14.5rem, 1fr)); } }
+.gocards > li { display: flex; }
+.gocard {
+  position: relative; flex: 1; display: flex; gap: .85rem; align-items: flex-start;
+  padding: .95rem 1rem 1rem; border-radius: 15px; text-decoration: none;
+  background: rgba(255, 255, 255, .07); color: var(--on-dark); overflow: hidden;
+  transition: background .18s ease, transform .18s ease;
+}
+.gocard::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background-image: var(--grad); }
+.gocard:hover { background: rgba(255, 255, 255, .12); transform: translateY(-2px); }
+.gocard-medal {
+  flex: none; width: 2.2rem; height: 2.2rem; border-radius: 50%; margin-left: .2rem;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: rgba(255, 255, 255, .09); color: var(--blue-soft);
+}
+/* .gocard-text is itself a span, so every rule below names its children explicitly */
+.gocard-text { min-width: 0; display: block; }
+.gocard-text > b {
+  display: block; font-family: var(--display); font-weight: 400; font-size: 1.12rem;
+  line-height: 1.16; color: var(--on-dark); letter-spacing: -.01em; text-wrap: balance;
+}
+.gocard-text > span {
+  display: block; margin-top: .35rem; font-family: var(--ui); font-size: .56rem; font-weight: 700;
+  letter-spacing: .13em; text-transform: uppercase; color: var(--on-dark-mute); line-height: 1.6;
+}
+.gocard-text > em {
+  display: block; margin-top: .5rem; font-style: normal; font-size: .85rem;
+  line-height: 1.55; color: var(--on-dark-soft);
+}
+
+/* ================================================ the article index card ==== */
+
+.topicline { margin-top: 1.1rem; }
+
+/* ============================================================== method ====== */
+
+/*
+ * The audit changelog keeps its markup and its data; what changes is the surface it sits
+ * on. Grouped lists become panels, the count becomes a tile-shaped badge, and an open
+ * entry's before/after sits on the shell rather than floating on the page.
+ */
+.method .changelog { margin: 0; }
+.method .cl-group {
+  margin: 0 0 .8rem; background: var(--panel); border-radius: var(--r); box-shadow: var(--lift);
+  padding: 1rem 1rem 1.1rem;
+}
+.method .cl-group h3 {
+  margin: 0; font-family: var(--ui); font-size: .68rem; font-weight: 700; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--ink-mute); scroll-margin-top: 1.25rem;
+  align-items: center;
+}
+.method .cl-group h3::before {
+  content: ""; flex: none; width: 20px; height: 6px; border-radius: var(--r-pill);
+  background-image: var(--grad-r);
+}
+.method .cl-count {
+  display: inline-flex; align-items: center; justify-content: center; min-width: 1.9rem;
+  padding: .12rem .45rem; border-radius: var(--r-pill); background: var(--shell);
+  color: var(--ink-soft); font-size: .62rem; letter-spacing: .06em;
+}
+.method .cl-list { gap: .35rem; margin-top: .8rem; }
+.method .cl { background: var(--shell); box-shadow: none; }
+.method .cl-body pre { background: var(--panel); }
+@media (min-width: 40rem) { .method .cl-group { padding: 1.35rem 1.4rem 1.45rem; } }
+
+/* the correction intake: a note, not a panel, but marked as belonging to the page */
+.method .correction {
+  position: relative; max-width: none; margin: 2rem 0 0; padding: .9rem 0 0;
+  border-top: 2px dotted var(--rule-strong);
+}
+
+/* the eighteen answer sheets: one chip each, each one landing on itself */
+.sheets { display: flex; flex-wrap: wrap; gap: .4rem; margin: 1.1rem 0 0; padding: 0; list-style: none; }
+.sheets li {
+  display: inline-flex; align-items: center; gap: .45rem; padding: .5rem .75rem;
+  min-height: 40px; border-radius: 10px; box-shadow: inset 0 0 0 1.5px var(--rule);
+  font-family: var(--ui); font-size: .6rem; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--ink-soft); line-height: 1.3;
+}
+.sheets svg { flex: none; color: var(--accent); }
+
+/* ============================================================ reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .gocard, .toc-list a, .jump a { transition: none; }
+  .gocard:hover { transform: none; }
+}

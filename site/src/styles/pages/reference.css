@@ -1,1 +1,323 @@
-/* reference pages. Owned by one builder; see design/RICHE-PASS-BRIEF.md. Tokens only, phone first. */
+/*
+ * reference pages — the axis pages and the tradition pages.
+ * Owned by one builder; see design/RICHE-PASS-BRIEF.md. Tokens only, phone first.
+ *
+ * These two page types are the site's reference floor: they describe somebody else's
+ * belief, so every element here is either data from the repo or a label for it. The
+ * vocabulary is the kit's (the band, section heads, dark panels, spec lists, chip grids,
+ * stripe cards), plus four instruments this file adds because the pages need them:
+ *
+ *   .amap      one axis, every tradition placed on one rail, numbered and laned
+ *   .cases     the two poles as mirrored panels, each washed in its own pole's colour
+ *   .reading   further reading in two columns, on dotted rules, split by pole
+ *   .caveat    the "this is a sketch, not teaching" note, made impossible to skim past
+ *
+ * Blue is the left pole and orange the right, everywhere, and neither is good.
+ */
+
+/* ------------------------------------------------------------- shared ---- */
+
+.ref-draft { margin-top: 1.5rem; }
+
+/* a data panel: the kit's panel with the texture layers, used for borrowed instruments */
+.ref-panel { margin: 1.1rem 0 0; padding: 1.15rem 1.05rem 1.3rem; }
+@media (min-width: 40rem) { .ref-panel { padding: 1.6rem 1.6rem 1.8rem; } }
+.ref-panel .tl, .ref-panel .pg, .ref-panel .rails-block { margin-top: 0; }
+
+.ref-note {
+  margin: .35rem 0 0; max-width: 44rem; font-size: .88rem; color: var(--ink-mute);
+}
+/* one sentence alone in a panel reads as a stranded paragraph unless it is set as a
+   statement, which is what it is: the category's whole definition */
+.ref-lead {
+  margin: 0; font-family: var(--display); font-size: 1.22rem; line-height: 1.45;
+  color: var(--ink); text-wrap: pretty;
+}
+
+.ref .correction { margin-top: 2rem; }
+
+/* the pole names as the band's lede: both printed, each in its own ink */
+.poleline { display: flex; flex-wrap: wrap; align-items: baseline; gap: .1rem .6rem; }
+.poleline b {
+  font-family: var(--display); font-style: italic; font-weight: 400;
+  font-size: clamp(1.45rem, 7.4vw, 2.2rem); line-height: 1.05; letter-spacing: -.015em;
+}
+.poleline i { font-style: normal; color: var(--ink-mute); font-size: 1.1rem; line-height: 1; }
+.pole-l { color: var(--accent); }
+.pole-r { color: var(--warn-ink); }
+
+/* ---------------------------------------------- where the traditions sit ---- */
+
+.amap-panel { margin: 1.1rem 0 0; padding: 1.3rem 1.1rem 1.5rem; }
+.amap-panel .dark-ghost { font-size: clamp(5rem, 24vw, 8.5rem); right: -.05em; bottom: -.22em; }
+@media (min-width: 40rem) { .amap-panel { padding: 2rem 1.9rem 2.2rem; } }
+
+.amap { margin-top: 1.2rem; }
+.amap-legend {
+  display: flex; align-items: flex-start; gap: .55rem; margin: 0 0 1.3rem;
+  font-size: .78rem; color: var(--ink-mute); max-width: 40rem;
+}
+.amap-legend .legend-swatch { margin-top: .3rem; }
+
+.amap-ends {
+  display: flex; justify-content: space-between; gap: 1rem; margin: 0 0 .55rem;
+  font-family: var(--ui); font-size: .64rem; font-weight: 700; letter-spacing: .11em;
+  text-transform: uppercase; line-height: 1.3;
+}
+.amap-ends .pole-r { text-align: right; }
+
+.amap-plot { --dot: 22px; --lane-h: 26px; --run: calc(100% - var(--dot)); }
+.amap-rail {
+  position: relative; height: 12px; border-radius: 6px; background: var(--shell);
+  box-shadow: inset 0 1px 2px rgba(68, 68, 68, .08);
+}
+/* the audited no-claim band, as the SCORE range: a tradition's position is a coordinate,
+   not one of the instrument's reachable steps, so the rails' outward-snapped span would
+   draw a tradition at 60 inside the band it is classified outside of */
+.amap-zone {
+  position: absolute; top: 0; bottom: 0;
+  left: calc(var(--dot) / 2 + var(--run) * var(--zone-lo) / 100);
+  right: calc(var(--dot) / 2 + var(--run) * (100 - var(--zone-hi)) / 100);
+  background: repeating-linear-gradient(135deg, var(--zone-hatch) 0 3px, transparent 3px 6px);
+  border-left: 1px solid var(--zone-edge); border-right: 1px solid var(--zone-edge);
+}
+.amap-spine {
+  position: absolute; left: 50%; top: -5px; bottom: -5px; width: 1px;
+  background: var(--zone-edge); transform: translateX(-.5px);
+}
+
+.amap-lanes { position: relative; height: calc(var(--lanes) * var(--lane-h)); margin-top: 10px; }
+.amap-dot {
+  position: absolute; top: calc(var(--lane) * var(--lane-h));
+  left: calc(var(--run) * var(--pos) / 100);
+  width: var(--dot); height: var(--dot); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--ui); font-weight: 700; font-size: .58rem; line-height: 1;
+  color: var(--on-grad); font-variant-numeric: tabular-nums;
+}
+/* the leader back to the rail, so a dot four lanes down still reads as a position */
+.amap-dot::before {
+  content: ""; position: absolute; left: 50%; bottom: 100%; width: 1px;
+  height: calc(var(--lane) * var(--lane-h) + 10px); background: var(--zone-edge);
+}
+.amap-dot--left { background: var(--blue); }
+.amap-dot--right { background: var(--orange); }
+.amap-dot--centre { background: var(--ink-mute); color: var(--panel); }
+
+.amap-groups { display: grid; gap: 1.4rem; margin-top: 1.9rem; }
+@media (min-width: 62rem) { .amap-groups { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.6rem; } }
+
+.amap-group-head {
+  display: flex; align-items: center; gap: .3rem .55rem; margin: 0 0 .7rem;
+  padding-bottom: .55rem; border-bottom: 2px dotted var(--rule-strong);
+  font-family: var(--ui); font-size: .62rem; font-weight: 700; letter-spacing: .13em;
+  text-transform: uppercase; line-height: 1.3;
+}
+.amap-group-name { color: var(--ink-soft); }
+.amap-group--left .amap-group-name { color: var(--accent); }
+.amap-group--right .amap-group-name { color: var(--warn-ink); }
+.amap-group-note {
+  font-weight: 600; font-size: .64rem; letter-spacing: .04em; text-transform: none;
+  color: var(--ink-mute);
+}
+.amap-group-count {
+  margin-left: auto; min-width: 1.7rem; padding: .12rem .45rem; border-radius: var(--r-pill);
+  text-align: center; background: var(--accent-soft); color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.amap-chips { margin-top: 0; gap: .4rem; }
+.amap-chip { padding: .5rem .72rem; gap: .5rem; font-size: .58rem; letter-spacing: .07em; }
+.amap-n {
+  flex: none; width: 19px; height: 19px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: .56rem; font-weight: 700; color: var(--on-grad); font-variant-numeric: tabular-nums;
+}
+.amap-n--left { background: var(--blue); }
+.amap-n--right { background: var(--orange); }
+.amap-n--centre { background: var(--ink-mute); color: var(--panel); }
+.amap-empty { margin: 0; font-size: .86rem; font-style: italic; color: var(--ink-mute); }
+
+/* -------------------------------------------------------- the two cases ---- */
+
+.cases { display: grid; gap: .9rem; margin-top: 1.15rem; }
+@media (min-width: 54rem) { .cases { grid-template-columns: 1fr 1fr; gap: 1.1rem; } }
+
+.case {
+  position: relative; isolation: isolate; overflow: hidden;
+  background: var(--panel); border-radius: var(--r-lg); box-shadow: var(--lift);
+  padding: 2.9rem 1.15rem 1.35rem 1.45rem;
+}
+.case--left { --tone: var(--blue); }
+.case--right { --tone: var(--orange); padding: 2.9rem 1.45rem 1.35rem 1.15rem; }
+/* the pole's own colour poured through the smoke stencil, fading inward */
+.case::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(to bottom right, var(--tone), transparent 72%);
+  -webkit-mask: url("/tex/smokey.png") center / cover no-repeat;
+  mask: url("/tex/smokey.png") center / cover no-repeat;
+  opacity: calc(var(--wash-op) + .1);
+}
+.case--right::after { background: linear-gradient(to bottom left, var(--tone), transparent 72%); }
+.case::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 6px;
+  background: var(--tone); opacity: .85;
+}
+.case--right::before { left: auto; right: 0; }
+.case-tag {
+  position: absolute; top: 0; left: 0; padding: .48rem .75rem; line-height: 1;
+  background-color: var(--dark-fill); background-image: var(--dark-fill-img);
+  background-size: 420px; color: var(--on-dark); border-radius: 0 0 12px 0;
+  font-family: var(--ui); font-size: .54rem; font-weight: 700; letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.case--right .case-tag { left: auto; right: 0; border-radius: 0 0 0 12px; }
+.case h3 {
+  margin: 0 0 .7rem; font-style: italic; letter-spacing: -.018em; line-height: 1;
+  font-size: clamp(1.7rem, 8vw, 2.4rem);
+}
+.case--left h3 { color: var(--accent); }
+.case--right h3 { color: var(--warn-ink); text-align: right; }
+.case p { margin: 0; color: var(--ink-soft); font-size: .95rem; text-wrap: pretty; }
+
+/* genuine middle ground, belonging to neither panel: centred between them, on dotted rules */
+.axis-note { margin: 1.1rem 0 0; }
+.axis-note-label {
+  margin: 0 0 .4rem; font-family: var(--ui); font-size: .6rem; font-weight: 700;
+  letter-spacing: .15em; text-transform: uppercase; color: var(--ink-mute);
+}
+.axis-note--between {
+  max-width: 44rem; margin-inline: auto; padding: 1.2rem 0 1.25rem; text-align: center;
+  border-top: 2px dotted var(--rule-strong); border-bottom: 2px dotted var(--rule-strong);
+}
+.axis-note--between p:last-child {
+  margin: 0; font-family: var(--display); font-size: 1.08rem; line-height: 1.45;
+  color: var(--ink); text-wrap: pretty;
+}
+/* methodology, never one pole's argument: neutral ink, no pole colour anywhere near it */
+.axis-note--caution {
+  padding: 1.1rem 1.15rem 1.15rem; border-radius: var(--r); background: var(--panel);
+  box-shadow: inset 4px 0 0 var(--ink-mute), var(--lift-soft);
+}
+.axis-note--caution p:last-child { margin: 0; font-size: .9rem; color: var(--ink-soft); }
+
+/* -------------------------------- borrowed instruments, re-headed by SectionHead ---- */
+/*
+ * HistoryTimeline and PassagePills print their own small heading, which is now said louder
+ * by the section head above them. The heading stays in the document for a screen reader;
+ * the line beside it (the century span, the translation and licence) is real information
+ * and stays visible, moved to the left now that nothing sits to its left.
+ */
+.ref-panel .tl-head h3, .ref-panel .pg-head h3 {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+.ref-panel .tl-head, .ref-panel .pg-head { margin-bottom: 1rem; }
+.ref-panel .tl-span, .ref-panel .pg-note { margin-left: 0; }
+
+/*
+ * From 54rem there is room for the reference sheet's vertical strip: the spectrum poured
+ * down the side of the panel with its label reading up it. The label is the instrument's
+ * OWN heading, unhidden and rotated rather than a second copy in CSS content, so what the
+ * strip says is what the document says. The min-height keeps a short panel taller than
+ * its own label, because a clipped word is worse than no strip at all.
+ *
+ * The strip is positioned against .tl / .pg, not the panel: .layered gives every direct
+ * child position:relative so the texture layers can sit beneath them, which makes the
+ * instrument its own containing block. Hence the negative left, which walks back out
+ * through the padding this rule adds.
+ */
+@media (min-width: 54rem) {
+  .ref-panel--tl, .ref-panel--pg { padding-left: 4.7rem; min-height: 16rem; }
+  .ref-panel--tl .tl-head h3, .ref-panel--pg .pg-head h3 {
+    position: absolute; clip-path: none; overflow: visible; white-space: nowrap;
+    /* as tall as the panel, or as tall as its own words if those are longer */
+    width: auto; height: auto; min-height: 100%; margin: 0; left: -3.4rem; top: 0;
+    display: flex; align-items: center; justify-content: center;
+    writing-mode: vertical-rl; transform: rotate(180deg);
+    padding: .8rem .4rem; border-radius: 10px;
+    /* blue to orange down the strip, the same direction the spectrum runs everywhere else */
+    background-image: linear-gradient(to bottom, var(--blue), var(--orange));
+    color: var(--on-grad);
+    font-size: .5rem; letter-spacing: .12em;
+  }
+}
+
+/* ----------------------------------------------------- further reading ---- */
+
+.reading { display: grid; gap: .9rem; margin-top: 1.15rem; }
+@media (min-width: 54rem) { .reading { grid-template-columns: 1fr 1fr; gap: 1.1rem; } }
+.reading-col {
+  background: var(--panel); border-radius: var(--r); box-shadow: var(--lift);
+  padding: 1.15rem 1.15rem 1.25rem;
+}
+.reading-col h3 { margin: 0 0 .35rem; font-style: italic; font-size: 1.4rem; line-height: 1.1; }
+.reading-col--left h3 { color: var(--accent); }
+.reading-col--right h3 { color: var(--warn-ink); text-align: right; }
+.reading-col ul { list-style: none; margin: 0; padding: 0; }
+.reading-col li {
+  padding: .62rem 0; border-bottom: 2px dotted var(--rule-strong);
+  font-size: .92rem; color: var(--ink-soft); text-wrap: pretty;
+}
+.reading-col li:first-child { border-top: 2px dotted var(--rule-strong); }
+.reading-col li:last-child { border-bottom: 0; padding-bottom: 0; }
+
+/* ------------------------------------------------------------- the pager ---- */
+
+.pager { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; margin: 1.6rem 0 0; }
+.pager-link {
+  display: flex; flex-direction: column; justify-content: center; gap: .1rem;
+  min-height: 44px; padding: .85rem 1rem .9rem; border-radius: var(--r);
+  background: var(--panel); box-shadow: var(--lift); text-decoration: none;
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+.pager-link:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(62, 134, 196, .16); }
+.pager-link--next { text-align: right; }
+.pager-dir {
+  font-family: var(--ui); font-size: .56rem; font-weight: 700; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--ink-mute);
+}
+.pager-link--prev .pager-dir::before { content: "← "; }
+.pager-link--next .pager-dir::after { content: " →"; }
+.pager-name {
+  font-family: var(--display); font-style: italic; font-size: 1.3rem; line-height: 1.15;
+  color: var(--ink);
+}
+.pager-link:hover .pager-name { color: var(--accent); }
+
+/* ------------------------------------------------------ tradition pages ---- */
+
+.caveat {
+  display: flex; gap: .85rem; align-items: flex-start; margin: 1.5rem 0 0;
+  padding: 1.05rem 1.15rem 1.1rem; border-radius: var(--r);
+  background: var(--accent-soft); box-shadow: inset 3px 0 0 var(--accent);
+}
+.caveat-mark {
+  flex: none; width: 2.3rem; height: 2.3rem; border-radius: 50%; background: var(--panel);
+  color: var(--accent); display: inline-flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 0 1.5px var(--rule);
+}
+.caveat-label {
+  margin: 0 0 .25rem; font-family: var(--ui); font-size: .6rem; font-weight: 700;
+  letter-spacing: .15em; text-transform: uppercase; color: var(--accent);
+}
+.caveat p:last-child { margin: 0; font-size: .93rem; color: var(--ink-soft); }
+.caveat strong { color: var(--ink); }
+
+.trad-feature { margin: 1.15rem 0 0; }
+.trad-kicker { color: var(--accent); }
+.trad-verdict { text-wrap: balance; }
+.trad-verdict .verdict-sep { color: var(--ink-mute); }
+.trad-feature .spec { margin-top: 1.25rem; }
+.trad-feature .spec dt a { color: inherit; text-decoration: none; }
+.trad-feature .spec dt a:hover { text-decoration: underline; }
+.trad-feature .spec dd { font-family: var(--display); font-size: 1.02rem; color: var(--ink); }
+
+/* the compass reads better with a little more air on the dark half at phone width */
+.trad-feature .feature-art { min-height: 19rem; }
+
+.ref-cta { margin-top: 2.8rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pager-link { transition: none; }
+  .pager-link:hover { transform: none; }
+}

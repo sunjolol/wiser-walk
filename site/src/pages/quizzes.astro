@@ -1,12 +1,28 @@
 ---
+/**
+ * The quiz hub.
+ *
+ * Composed in the kit's language rather than listed: the band, then the flagship as the
+ * home page presents it (a real audited answer sheet on the dark half), then drafts under
+ * their own head with the honest warning kept word for word, then the one claim that is
+ * true of every quiz here — nothing you answer leaves the browser.
+ *
+ * Every number on this page is counted from the registry at build time.
+ */
+import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
 import Card from '../components/Card.astro';
-import Base from '../layouts/Base.astro';
+import SectionHead from '../components/SectionHead.astro';
+import CompassFeature from '../components/CompassFeature.astro';
 import Icon from '../components/Icon.astro';
-import { QUIZZES } from '../lib/engine/registry';
+import { QUIZZES, getQuiz, quizHref } from '../lib/engine/registry';
 
 const live = QUIZZES.filter(q => q.status === 'live');
 const drafts = QUIZZES.filter(q => q.status === 'draft');
+const compass = getQuiz('theology-compass')!;
+/** The flagship gets the feature card; anything else live falls to a stripe card. */
+const otherLive = live.filter(q => q.slug !== compass.slug);
+const statements = QUIZZES.reduce((n, q) => n + q.items.length, 0);
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -31,29 +47,73 @@ const breadcrumbs = [
   jsonLd={jsonLd}
   breadcrumbs={breadcrumbs}
 >
-  <Hero title="Quizzes" eyebrow="Self-assessments" icon="compass">
-      Each one is scored entirely in your browser. No account, no email, nothing stored —
-      a result link carries your scores and nothing else.
+  <Hero
+    title="See where you actually stand."
+    blue="actually"
+    ghost="quizzes"
+    eyebrow="Self-assessments"
+    icon="compass"
+    tiles={[
+      { n: QUIZZES.length, label: QUIZZES.length === 1 ? 'Quiz' : 'Quizzes' },
+      { n: statements, label: 'Statements' },
+      { n: compass.outcomes.length, label: 'Traditions' },
+      { n: drafts.length, label: 'In draft' }
+    ]}
+  >
+    Self-assessments for Christians who would rather see themselves clearly than
+    comfortably. Each one is scored entirely in your browser.
   </Hero>
 
-  <div class="cards">
-    {live.map(q => (
-      <Card href={`/q/${q.slug}/`} icon={q.icon} title={q.title} text={q.tagline} meta={`${q.items.length} statements · about ${q.minutes} minutes`} />
-    ))}
-  </div>
+  <SectionHead
+    title="The flagship"
+    kicker="Audited before it was published"
+    href="/method/"
+    more="The method"
+  />
+
+  <CompassFeature />
+
+  {otherLive.length > 0 && (
+    <div class="scards qz-more">
+      {otherLive.map(q => (
+        <Card href={quizHref(q)} icon={q.icon} title={q.title} text={q.tagline}
+              meta={`${q.items.length} statements`} tab="Quiz" go="Take it" />
+      ))}
+    </div>
+  )}
 
   {drafts.length > 0 && (
     <>
-      <h2>In draft</h2>
-      <p class="tags">
+      <SectionHead title="In draft" kicker="Written, not yet audited" />
+      <p class="qz-draftnote">
+        <span class="qz-draftflag"><Icon name="flame" size={13} /> Draft</span>
         Written but not yet through the fairness audit. You can take them; treat the
         results as a conversation starter rather than a verdict.
       </p>
-      <div class="cards">
+      <div class="scards qz-drafts">
         {drafts.map(q => (
-          <Card href={`/q/${q.slug}/`} icon={q.icon} title={q.title} text={q.tagline} meta={`${q.items.length} statements · unaudited draft`} />
+          <Card href={quizHref(q)} icon={q.icon} title={q.title} text={q.tagline}
+                meta={`${q.items.length} statements`} tab="Draft" go="Take it anyway" />
         ))}
       </div>
     </>
   )}
+
+  <section class="dark pledge qz-pledge">
+    <div class="dark-ghost" aria-hidden="true">yours</div>
+    <div class="qz-pledge-text">
+      <p class="feature-kicker"><Icon name="scroll" size={13} /> What happens to your answers</p>
+      <h2>Nothing you answer leaves your browser.</h2>
+      <p>
+        No account, no email, nothing stored — a result link carries your scores and nothing
+        else, which is also why you have to keep the link if you want the result.
+      </p>
+    </div>
+    <dl class="spec">
+      <div><dt>Scored</dt><dd>On your own device</dd></div>
+      <div><dt>Stored</dt><dd>Nothing, at either end</dd></div>
+      <div><dt>Result link</dt><dd>Your scores, nothing else</dd></div>
+    </dl>
+    <div class="btn-row"><a class="btn" href="/method/#your-answers">What is kept</a></div>
+  </section>
 </Base>

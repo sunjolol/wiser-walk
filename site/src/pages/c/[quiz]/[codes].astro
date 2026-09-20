@@ -19,6 +19,8 @@
  */
 import Base from '../../../layouts/Base.astro';
 import Icon from '../../../components/Icon.astro';
+import Hero from '../../../components/Hero.astro';
+import SectionHead from '../../../components/SectionHead.astro';
 import RailOverlay from '../../../components/RailOverlay.astro';
 import CategoryStack from '../../../components/CategoryStack.astro';
 import {
@@ -66,6 +68,22 @@ const widestParts = widestGroup?.summaryParts;
 
 const inviteUrlA = quiz ? `${Astro.site!.origin}${inviteHref(quiz, codeA)}` : '';
 const inviteUrlB = quiz ? `${Astro.site!.origin}${inviteHref(quiz, codeB)}` : '';
+
+// Counts, never a score between the two people: how many axes the quiz has, how many
+// statements produced them, and — for a bipolar quiz — how many rows put the two in the
+// same audited band. Nothing here is a percentage of agreement.
+const tiles = quiz && cmp
+  ? cmp.shape === 'bipolar'
+    ? [
+        { n: `${cmp.sameCount}/${cmp.total}`, label: 'Same band' },
+        { n: quiz.groups.length, label: 'Axes' },
+        { n: quiz.items.length, label: 'Statements' }
+      ]
+    : [
+        { n: quiz.groups.length, label: 'Categories' },
+        { n: quiz.items.length, label: 'Statements' }
+      ]
+  : [];
 ---
 {quiz && cmp ? (
   <Base
@@ -73,14 +91,23 @@ const inviteUrlB = quiz ? `${Astro.site!.origin}${inviteHref(quiz, codeB)}` : ''
     description={`Two ${quiz.title} results on the same rails. ${lede}`}
     noindex={true}
   >
-    <div class="prose result-head">
-      <p class="eyebrow"><Icon name={quiz.icon} size={15} /> {quiz.title}</p>
-      <h1>{heading}</h1>
-      <p class="lede">{lede}</p>
-      {quiz.status === 'draft' && (
-        <div class="note draft"><p><strong>Unaudited draft.</strong>{" " + quiz.draftNote}</p></div>
-      )}
-    </div>
+    <Hero
+      title={heading}
+      eyebrow={quiz.title}
+      icon={quiz.icon}
+      ghost="both"
+      lede={lede}
+      tiles={tiles}
+      long={true}
+    />
+
+    {quiz.status === 'draft' && (
+      <div class="note draft" style="margin-top:1.4rem">
+        <p><strong>Unaudited draft.</strong>{" " + quiz.draftNote}</p>
+      </div>
+    )}
+
+    <SectionHead title="Side by side" kicker="Two results on one set of rails" />
 
     <div
       class="panel layered result-panel"
@@ -110,11 +137,11 @@ const inviteUrlB = quiz ? `${Astro.site!.origin}${inviteHref(quiz, codeB)}` : ''
 
     {cmp.shape === 'bipolar' && cmp.widest && widestParts && (
       <section>
-        <h2>Where the widest gap comes from</h2>
+        <SectionHead title="The widest gap" kicker={`Where ${cmp.widest.name} comes apart`} />
         <p class="tags">
           Both positions below are stated by people who hold them.
         </p>
-        <div class="poles-split">
+        <div class="poles-split cmp-poles">
           <section class="pole-panel pole-panel--left">
             <h4>{cmp.widest.left}</h4>
             <p>{firstSentence(widestParts.left)}</p>
@@ -131,7 +158,7 @@ const inviteUrlB = quiz ? `${Astro.site!.origin}${inviteHref(quiz, codeB)}` : ''
     )}
 
     <section>
-      <h2>Each result on its own</h2>
+      <SectionHead title="Each on its own" kicker="The full result behind each code" />
       <div class="btn-row">
         <a class="btn ghost" href={resultHref(quiz, codeA)}
            data-who="a" data-self="Your result" data-other="Their result">The first result</a>
@@ -140,11 +167,14 @@ const inviteUrlB = quiz ? `${Astro.site!.origin}${inviteHref(quiz, codeB)}` : ''
       </div>
     </section>
 
-    <section class="invite-block">
-      <h2>Send this to someone else</h2>
-      <p class="tags">
+    <section class="dark pledge invite-block">
+      <div class="dark-ghost" aria-hidden="true">send</div>
+      <p class="feature-kicker"><Icon name="compass" size={13} /> Add a third reader</p>
+      <h2>Send this to someone else.</h2>
+      <p>
         When they finish, you both see your answers on the same rails, and nothing is stored
-        on our side.
+        on our side. The link carries two sets of scores and nothing else — no name, no
+        initial, no label.
       </p>
       <div class="share-link">
         <input data-role="invite-url" type="text" readonly value={inviteUrlA}

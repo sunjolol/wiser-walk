@@ -1,12 +1,39 @@
 ---
 import Hero from '../../components/Hero.astro';
 import Card from '../../components/Card.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import KeepGoing from '../../components/KeepGoing.astro';
 import Base from '../../layouts/Base.astro';
 import { getCollection } from 'astro:content';
+import { getQuiz, quizHref } from '../../lib/engine/registry';
+import { liveGames } from '../../lib/games';
 
 const articles = (await getCollection('articles'))
   .filter(a => !a.data.draft)
   .sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf());
+
+/* Every number on this page is counted off the collection, never typed in. */
+const minutes = articles.reduce((n, a) => n + a.data.minutes, 0);
+const topics = [...new Set(articles.flatMap(a => a.data.tags))].sort();
+
+const compass = getQuiz('theology-compass');
+const game = liveGames()[0];
+const next = [
+  compass && {
+    href: quizHref(compass),
+    title: compass.title,
+    meta: `Quiz · ${compass.items.length} statements · about ${compass.minutes} minutes`,
+    text: compass.tagline,
+    icon: compass.icon
+  },
+  game && {
+    href: game.href,
+    title: game.title,
+    meta: 'Game · against the clock',
+    text: game.tagline,
+    icon: game.icon
+  }
+].filter(Boolean) as Array<{ href: string; title: string; meta?: string; text?: string; icon?: any }>;
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -32,14 +59,55 @@ const breadcrumbs = [
   jsonLd={jsonLd}
   breadcrumbs={breadcrumbs}
 >
-  <Hero title="Articles" eyebrow="Formation" icon="book">
+  <Hero
+    title="Articles"
+    eyebrow="Formation"
+    icon="book"
+    ghost="read"
+    tiles={[
+      { n: articles.length, label: articles.length === 1 ? 'Article' : 'Articles' },
+      { n: minutes, label: 'Minutes in all' },
+      { n: topics.length, label: 'Topics' }
+    ]}
+  >
       Practical writing on formation — the slow business of becoming someone different.
       Every claim is tied to a text you can check.
   </Hero>
 
-  <div class="cards">
+  <SectionHead title="Everything here" kicker="The slow work of formation" />
+
+  <div class="scards">
     {articles.map(a => (
-      <Card href={`/articles/${a.id}/`} icon="book" title={a.data.title} text={a.data.description} meta={`${a.data.minutes} min read`} />
+      <Card
+        href={`/articles/${a.id}/`}
+        icon="book"
+        title={a.data.title}
+        text={a.data.description}
+        meta={`${a.data.minutes} min read`}
+        tab="Article"
+        go="Read"
+      />
     ))}
   </div>
+
+  {topics.length > 0 && (
+    <>
+      <SectionHead title="Topics" kicker={`What the ${articles.length} pieces are about`} />
+      <ul class="chips topicline">
+        {topics.map(t => (
+          <li><span class="chip-link chip-static">{t} <small>{articles.filter(a => a.data.tags.includes(t)).length}</small></span></li>
+        ))}
+      </ul>
+    </>
+  )}
+
+  {next.length > 0 && (
+    <KeepGoing
+      title="Or see where you stand."
+      kicker="The other half of the site"
+      ghost="try"
+      lede="Reading about yourself and being shown where you actually land are two different things. Nothing you answer leaves your browser."
+      links={next}
+    />
+  )}
 </Base>
