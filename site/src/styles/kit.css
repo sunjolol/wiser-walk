@@ -68,17 +68,91 @@ body {
 
 /* header: the nav items become pills, the current one filled */
 .site-head nav a {
+  display: inline-flex; align-items: center; min-height: 44px;
   padding: .42rem .7rem; border-radius: var(--r-pill);
   transition: background .18s ease, color .18s ease;
 }
 .site-head nav a:hover { background: var(--accent-soft); }
 .site-head nav a[aria-current="page"] { background: var(--accent-soft); color: var(--accent); }
 @media (max-width: 29.99rem) {
-  .site-head nav { gap: .15rem; margin: 0 -.5rem; overflow-x: auto; scrollbar-width: none; }
+  .site-head nav { gap: 0; margin: 0 -.5rem; overflow-x: auto; scrollbar-width: none; }
   .site-head nav::-webkit-scrollbar { display: none; }
-  .site-head nav a { padding: .5rem .62rem; white-space: nowrap; }
+  /* tighter than it was: two of the five items now carry a caret, and the row still has to
+     hold all five inside a 390px screen without anything hiding off the right edge */
+  .site-head nav a { padding: .5rem .4rem; white-space: nowrap; }
 }
 @media (min-width: 30rem) { .site-head nav { gap: .25rem; } }
+
+/* --------------------------------------------------------- the nav menus
+ *
+ * Quizzes and Games open a list of everything they hold, so that one tap from any page
+ * reaches any quiz. They are <details>, which opens without JavaScript and is already
+ * keyboard-operable; the script in Base.astro only closes them.
+ *
+ * WHERE THE PANEL HANGS FROM is the whole difficulty. On a phone the nav is a horizontal
+ * scroller (see the max-width rule above), and a panel whose containing block sat inside
+ * that scroller would be clipped to a 44px-high strip — the menu would open into a slot.
+ * An absolutely positioned box escapes a scrolling ancestor when its containing block is
+ * OUTSIDE it, so below 30rem the <details> stays static and the panel is measured against
+ * .site-head, dropping the full width of the header. From 30rem the nav no longer scrolls,
+ * the <details> takes position: relative, and the panel hangs under its own item — anchored
+ * to the item's right edge, because the nav sits at the right of the header and the sheet
+ * around it is clipped to its own frame.
+ */
+.navmenu { position: static; }
+.navmenu > summary {
+  display: inline-flex; align-items: center; gap: .22rem; min-height: 44px;
+  padding: .42rem .7rem; border-radius: var(--r-pill);
+  color: var(--ink-mute); font-weight: 600; white-space: nowrap; cursor: pointer;
+  list-style: none; transition: background .18s ease, color .18s ease;
+}
+.navmenu > summary::-webkit-details-marker { display: none; }
+.navmenu > summary::marker { content: ""; }
+.navmenu > summary:hover,
+.navmenu[open] > summary,
+.navmenu.here > summary { background: var(--accent-soft); color: var(--accent); }
+.navmenu > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.navmenu-caret { flex: none; opacity: .75; transition: transform .18s ease; }
+.navmenu[open] .navmenu-caret { transform: rotate(180deg); }
+/* the same tightening the links take, so all five items fit a 390px row */
+@media (max-width: 29.99rem) { .navmenu > summary { padding: .5rem .4rem; } }
+
+.navmenu-panel {
+  position: absolute; z-index: 40; top: calc(100% - .2rem); left: .75rem; right: .75rem;
+  background: var(--panel); border-radius: var(--r);
+  box-shadow: var(--frame-shadow), inset 0 0 0 1px var(--rule);
+}
+.navmenu-panel ul { margin: 0; padding: .35rem; list-style: none; }
+.site-head .navmenu-panel a {
+  display: flex; align-items: center; gap: .6rem; min-height: 44px;
+  padding: .5rem .65rem; border-radius: 12px;
+  color: var(--ink-soft); font-size: .82rem; font-weight: 600; white-space: normal;
+}
+.site-head .navmenu-panel a:hover { background: var(--accent-soft); color: var(--accent); }
+/* the way back to the hub is the first item, and reads as its own thing */
+.navmenu-panel li:first-child {
+  margin-bottom: .3rem; padding-bottom: .3rem; border-bottom: 2px dotted var(--rule-strong);
+}
+.navmenu-tag {
+  margin-left: auto; flex: none; padding: .25rem .45rem; border-radius: var(--r-pill);
+  background-color: var(--dark-fill); background-image: var(--dark-fill-img); background-size: 420px;
+  color: var(--on-dark); font-family: var(--ui); font-size: .5rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase; line-height: 1;
+}
+:root[data-theme="dark"] .navmenu-tag {
+  background-color: #3A3A48; background-image: none;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08);
+}
+@media (min-width: 30rem) {
+  .navmenu { position: relative; }
+  /* right-anchored, so a menu near the right edge of the sheet cannot open past the frame
+     the sheet clips itself to. The width is the min-width: an absolutely positioned box
+     that takes its `right` from a summary-sized parent has almost no room to shrink into. */
+  .navmenu-panel { top: calc(100% + .45rem); left: auto; right: 0; min-width: 17.5rem; max-width: 22rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .navmenu > summary, .navmenu-caret { transition: none; }
+}
 
 /* --------------------------------------------------------------- the band */
 

@@ -5,7 +5,7 @@ import '../styles/pages/quiz.css';
 import '../styles/pages/reference.css';
 import '../styles/pages/prose.css';
 import '../styles/pages/play.css';
-import { QUIZZES } from '../lib/engine/registry';
+import { QUIZZES, quizHref } from '../lib/engine/registry';
 import { liveGames } from '../lib/games';
 import { SEO } from '../lib/seo';
 
@@ -50,17 +50,51 @@ const seo = SEO[Astro.url.pathname];
 const fullTitle = seo ? seo.title : title === siteName ? title : `${title} — ${siteName}`;
 const metaDescription = seo ? seo.description : description;
 
-const NAV = [
-  { href: '/quizzes/', label: 'Quizzes' },
-  { href: '/games/', label: 'Games' },
-  { href: '/articles/', label: 'Articles' },
-  { href: '/method/', label: 'Method' },
-  { href: '/about/', label: 'About' }
-];
 const here = Astro.url.pathname;
 const footQuizzes = QUIZZES;
 const footGames = liveGames();
 const isCurrent = (href: string) => here === href || here.startsWith(href.replace(/\/$/, '') + '/');
+
+/**
+ * The nav.
+ *
+ * Quizzes and Games carry a menu of everything they hold, so that one tap from any page
+ * reaches any quiz — the owner found the others buried behind the flagship. The list is
+ * built from the registry, so a new quiz appears in the nav of every page on the site
+ * without this file changing, and a draft says it is one.
+ *
+ * "All quizzes" is deliberately the first item: the menu replaces a link to the hub, and a
+ * reader who wanted the hub must not have to hunt for it at the bottom of a list.
+ */
+const NAV: Array<{
+  href: string;
+  label: string;
+  items?: Array<{ href: string; label: string; tag?: string }>;
+}> = [
+  {
+    href: '/quizzes/',
+    label: 'Quizzes',
+    items: [
+      { href: '/quizzes/', label: 'All quizzes' },
+      ...QUIZZES.map(q => ({
+        href: quizHref(q),
+        label: q.title,
+        tag: q.status === 'draft' ? 'Draft' : undefined
+      }))
+    ]
+  },
+  {
+    href: '/games/',
+    label: 'Games',
+    items: [
+      { href: '/games/', label: 'All games' },
+      ...footGames.map(g => ({ href: g.href, label: g.title, tag: undefined }))
+    ]
+  },
+  { href: '/articles/', label: 'Articles' },
+  { href: '/method/', label: 'Method' },
+  { href: '/about/', label: 'About' }
+];
 ---
 <!doctype html>
 <html lang="en">
@@ -135,8 +169,36 @@ const isCurrent = (href: string) => here === href || here.startsWith(href.replac
     <header class="site-head">
       <div class="wrap">
         <a class="brand" href="/">Wiser <span>Walk</span></a>
+        {/*
+          The menus are <details>, so they open with JavaScript off and the keyboard already
+          works; `name` makes the two of them mutually exclusive where the browser supports
+          it, and the script at the foot of the page does the rest. aria-current stays on the
+          LINKS, which is where it means something; the summary of a menu holding the current
+          page is only marked visually.
+        */}
         <nav>
-          {NAV.map(n => (
+          {NAV.map(n => n.items ? (
+            <details class:list={['navmenu', n.items.some(i => isCurrent(i.href)) && 'here']} name="sitenav">
+              <summary>
+                {n.label}
+                <svg class="navmenu-caret" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"
+                     fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"
+                     stroke-linejoin="round"><path d="M6 9.5l6 6 6-6"/></svg>
+              </summary>
+              <div class="navmenu-panel">
+                <ul>
+                  {n.items.map(i => (
+                    <li>
+                      <a href={i.href} aria-current={here === i.href ? 'page' : undefined}>
+                        <span>{i.label}</span>
+                        {i.tag && <span class="navmenu-tag">{i.tag}</span>}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </details>
+          ) : (
             <a href={n.href} aria-current={isCurrent(n.href) ? 'page' : undefined}>{n.label}</a>
           ))}
         </nav>
@@ -204,6 +266,35 @@ const isCurrent = (href: string) => here === href || here.startsWith(href.replac
     </div>
 
     <script is:inline>
+      /*
+       * The nav menus already open, close and take the keyboard on their own: they are
+       * <details>. This adds only the three things a <details> cannot do for itself —
+       * close when another opens (where the browser does not honour the shared `name`),
+       * close on a click outside, and close on Escape, putting the focus back where the
+       * reader left it. With this script blocked the menus still work.
+       */
+      (function () {
+        var menus = [].slice.call(document.querySelectorAll('.site-head .navmenu'));
+        if (!menus.length) return;
+        var closeAll = function (except) {
+          menus.forEach(function (d) { if (d !== except) d.open = false; });
+        };
+        menus.forEach(function (d) {
+          d.addEventListener('toggle', function () { if (d.open) closeAll(d); });
+        });
+        document.addEventListener('click', function (e) {
+          if (!e.target.closest || !e.target.closest('.site-head .navmenu')) closeAll(null);
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key !== 'Escape') return;
+          var open = document.querySelector('.site-head .navmenu[open]');
+          if (!open) return;
+          open.open = false;
+          var s = open.querySelector('summary');
+          if (s) s.focus();
+        });
+      })();
+
       (function () {
         var root = document.documentElement;
         var btn = document.getElementById('theme-toggle');

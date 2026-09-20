@@ -13,8 +13,19 @@ import Icon from './Icon.astro';
 import type { Quiz } from '../lib/engine/types';
 import { groupHref } from '../lib/engine/registry';
 
-export interface Props { quiz: Quiz }
-const { quiz } = Astro.props;
+export interface Props {
+  quiz: Quiz;
+  /**
+   * The hub shows one of these beside every quiz on the page, so a unipolar quiz's
+   * categories are drawn as the kit's chips with one shared ruler under them rather than as
+   * a row apiece carrying its own definition. Thirteen definitions belong on the quiz's own
+   * page, where a reader has chosen that quiz; in a stack of feature blocks they bury the
+   * next quiz down. A bipolar quiz previews the same way either side of this flag: six rails
+   * with both pole names is already the compact form.
+   */
+  compact?: boolean;
+}
+const { quiz, compact = false } = Astro.props;
 const bipolar = quiz.strategy.shape === 'bipolar';
 
 /**
@@ -42,6 +53,21 @@ const slots = Math.max(2, quiz.config.radix);
         </a>
       ))}
     </div>
+  ) : compact ? (
+    <div class="rankpv-brief">
+      <ul class="chips">
+        {quiz.groups.map(g => (
+          <li><a class="chip-link" href={groupHref(quiz, g)}>{g.name}</a></li>
+        ))}
+      </ul>
+      {/* The ruler every one of them is measured on, empty because nothing is answered yet,
+          cut into the number of scores this instrument can actually reach. */}
+      <span class="rankpv-scale" style={`--slots:${slots}`} aria-hidden="true">
+        <span class="rankpv-end">None</span>
+        <span class="rankpv-tick"></span>
+        <span class="rankpv-end">Strongest</span>
+      </span>
+    </div>
   ) : (
     <div class="rankpv">
       {quiz.groups.map(g => (
@@ -62,6 +88,6 @@ const slots = Math.max(2, quiz.config.radix);
   <p class="axpv-note">
     {bipolar
       ? 'Neither end of an axis is the better one. Blue and orange only mark which end is which; read either name for what it says.'
-      : 'A ranking has no opposite end and no middle: each one is measured on its own, on the ruler drawn under it. The strongest is the one you are told; if two come out level both are named, and if nothing rises far enough above the rest, none is.'}
+      : 'A ranking has no opposite end and no middle: each one is measured on its own, on the ruler drawn under it. The strongest is the one you are told; if a few come out level they are all named, and if nothing rises far enough above the rest, none is.'}
   </p>
 </div>

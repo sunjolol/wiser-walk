@@ -9,10 +9,8 @@
 
 /* ===================================================== the hub, /quizzes/ */
 
-.qz-more { margin-top: .9rem; }
-
 /*
- * The flagship, as the HUB presents it — deliberately not the home page's card.
+ * The feature block, as the HUB presents a quiz — deliberately not the home page's card.
  *
  * The home page leads with the compass wheel drawn from a real answer sheet; a reader who
  * has just scrolled past it learns nothing from meeting it again here. So the hub shows the
@@ -51,14 +49,10 @@
 }
 
 /*
- * Drafts. One draft card stretched across the sheet leaves half a screen of bare ground, so
- * the warning that used to hang above the row as a loose line becomes the row's other half:
- * the same words, now a panel that says what a draft is and is not.
+ * Drafts. The warning that used to hang above the row as a loose line is a panel of its own:
+ * the same words, now saying what a draft is and is not. (It is laid out in the findability
+ * block at the foot of this file, where the blocks it introduces are.)
  */
-.qz-draftrow { display: grid; grid-template-columns: 1fr; gap: .9rem; margin-top: 1.05rem; }
-@media (min-width: 52rem) {
-  .qz-draftrow { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
-}
 .qz-draftbox {
   position: relative; isolation: isolate; overflow: hidden; margin: 0;
   background: var(--panel); border-radius: var(--r-lg); box-shadow: var(--lift);
@@ -69,7 +63,6 @@
 .qz-draftbox .spec { margin-top: 1rem; }
 .qz-draftbox .spec dt { font-size: .58rem; letter-spacing: .12em; }
 .qz-draftbox .spec dd { font-size: .85rem; }
-.qz-drafts { align-content: start; }
 
 .qz-pledge .spec { max-width: 34rem; }
 
@@ -434,8 +427,119 @@
   .qz-pledge-text p { max-width: 32rem; }
 }
 
-/* the draft row is already two columns; its cards take the column they are given */
-@media (min-width: 52rem) { .qz-drafts { grid-template-columns: minmax(0, 1fr); } }
+/* ==========================================================================
+   FINDABILITY: the index of every quiz, and a feature block for each of them
+   (one block, owned by one builder; the rules above are untouched)
+   ========================================================================== */
+
+/*
+ * The index head sits directly under the band, so it does not take the kit's 3rem of air:
+ * that gap is for separating two blocks of content, and here it would push the fourth quiz
+ * off a phone screen. Everything else about it is the kit's section head.
+ */
+.qz-indexhead { margin-top: 1.5rem; margin-bottom: .85rem; }
+
+/*
+ * Every quiz, one equal card each. Two columns from 46rem; an odd one out takes the full
+ * width rather than leaving a hole beside it, the way the ranking preview already does.
+ */
+.qz-index { display: grid; grid-template-columns: 1fr; gap: .7rem; }
+@media (min-width: 46rem) {
+  .qz-index { grid-template-columns: 1fr 1fr; gap: .8rem; }
+  .qz-index .scard:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+
+/*
+ * The card itself: the kit's stripe card at index height. Four of these have to fit inside
+ * about a screen and a half of a phone, or the index is not doing the one job it has.
+ */
+.qz-index .scard { min-height: 6.6rem; padding: .9rem 1rem 1rem 4.4rem; }
+.qz-index .scard-medal { left: 1.1rem; top: .85rem; width: 2.5rem; height: 2.5rem; }
+/* the tag is short by construction (see tag() on the page), and set a shade smaller still,
+   because the stripe on a card this height is only about 90px of room */
+.qz-index .scard-tag { font-size: .52rem; letter-spacing: .1em; padding: .45rem .32rem; }
+.qz-index .scard h3 { margin: 0 0 .3rem; font-size: 1.15rem; padding-right: 3.3rem; }
+/* the tagline is a line of orientation, not the description: two lines, then it stops */
+.qz-index .scard p {
+  font-size: .87rem; line-height: 1.45;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+}
+/* the facts stand where "Take it →" usually does: counted, so in the quiet ink, with the
+   arrow left in the accent because the card is still the way in */
+.qzx-facts { margin-top: .5rem; color: var(--ink-mute); font-size: .58rem; letter-spacing: .11em; }
+.qzx-facts .icon { color: var(--accent); }
+.scard:hover .qzx-facts { color: var(--ink-soft); }
+
+/*
+ * A draft's chip, on the feature block it belongs to. The dark chip the band and the cards
+ * already use, at label size, in front of the kicker rather than in a corner: a reader who
+ * reads one line of that block has read it.
+ */
+.qz-chip {
+  display: inline-flex; align-items: center; margin-right: .5rem; padding: .3rem .5rem;
+  border-radius: var(--r-pill); background-color: var(--dark-fill);
+  background-image: var(--dark-fill-img); background-size: 420px; color: var(--on-dark);
+  font-size: .55rem; letter-spacing: .16em; line-height: 1;
+}
+:root[data-theme="dark"] .qz-chip {
+  background-color: #3A3A48; background-image: none;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08);
+}
+
+/* what a quiz measures you against, in its own words, under the facts it belongs to */
+.qz-scope {
+  margin: .9rem 0 0; max-width: 34rem; font-size: .78rem; line-height: 1.5;
+  color: var(--ink-mute);
+}
+
+/* one block after another, each the same distance from the last */
+.qz-flag + .qz-flag, .qz-draftnote + .qz-flag { margin-top: 1rem; }
+
+/*
+ * The preview on a RANKING's feature block: the real category names, every one of them, on
+ * the empty ruler they are all measured against. Not rails, which would draw a centre and
+ * two poles that a ranking does not have; and not the quiz page's rows, which carry a
+ * definition apiece and would bury the next quiz down the page.
+ */
+.rankpv-brief { display: flex; flex-direction: column; }
+/* a grid rather than a wrapped row: equal cells never strand the last category alone on a
+   line of its own, and the names stay the data's, never abbreviated to make them fit */
+.rankpv-brief .chips {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(6.8rem, 1fr));
+  margin: 0; gap: .45rem;
+}
+/* a shade bigger than a chip in a list, and centred in its cell: these are the instrument,
+   not a row of links at the bottom of a page */
+.rankpv-brief .chip-link {
+  justify-content: center; text-align: center; font-size: .65rem; padding: .7rem .95rem;
+}
+.rankpv-brief .rankpv-scale { margin-top: 1.1rem; }
+@media (min-width: 60rem) {
+  /*
+   * Seven one-word categories cannot fill a panel stretched to the height of the words
+   * beside them: spread out they strand the last chip on a line of its own, and centred
+   * they huddle in the middle of a slab of charcoal. So a ranking's panel is NOT stretched
+   * — it takes its own height and sits against the middle of the block. A bipolar quiz's
+   * rails are left exactly as they were, filling the panel they are given.
+   */
+  .qz-flag:has(.rankpv-brief) { align-items: center; }
+  .qz-flag .rankpv-brief { flex: none; }
+}
+
+/*
+ * The draft note, full width above the blocks: its words on one side, its facts on the
+ * other, so it reads as a panel rather than as a column of text with a list under it.
+ */
+.qz-draftnote { margin-top: 1.05rem; }
+@media (min-width: 52rem) {
+  /* two cells, not four: the words are one block, so the kicker cannot be pushed away from
+     the sentence under it by a list in the other column */
+  .qz-draftnote {
+    display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    gap: 0 2.6rem; align-items: center;
+  }
+  .qz-draftnote .spec { margin-top: 0; }
+}
 
 /* ==========================================================================
    Copy a quiz carries about its own ranking
@@ -469,3 +573,40 @@
  */
 .tier-name { display: inline-block; text-transform: none; }
 .tier-name::first-letter { text-transform: uppercase; }
+
+/* ==========================================================================
+   The same answer to every statement: the one question the runner asks back
+   (rendered only on a quiz that sets uniformSheet; see pages/q/[quiz].astro)
+   ========================================================================== */
+
+/*
+ * The reader has not left the instrument, so the frame does not change under them: the
+ * band, the nav and the footer stay out of the way exactly as they do while a statement is
+ * up. Same rules as the play panel's, on the panel that replaces it for one screen.
+ */
+.page:has(#uniform:not([hidden])) .band { display: none; }
+.page:has(#uniform:not([hidden])) .runner { margin-top: .25rem; }
+.page:has(#uniform:not([hidden])) { padding-top: .9rem; padding-bottom: 2.25rem; }
+.sheet:has(#uniform:not([hidden])) .site-head nav,
+.sheet:has(#uniform:not([hidden])) .site-foot { display: none; }
+
+#uniform { max-width: 44rem; margin: 0 auto; }
+
+/* the card the statement card leaves behind, in the same place and the same material */
+.uniform-box {
+  position: relative; isolation: isolate; overflow: hidden;
+  background: var(--panel); border-radius: var(--r-lg); box-shadow: var(--lift);
+  padding: 1.35rem 1.2rem 1.45rem;
+}
+/* the display face, near the size of the statement it stands in for, because it is being
+   read in the same glance and by a reader who is expecting a statement */
+.uniform-lede {
+  margin: 0; max-width: 34rem; color: var(--ink); text-wrap: pretty;
+  font-family: var(--display); font-size: clamp(1.1rem, 4.4vw, 1.55rem); line-height: 1.32;
+}
+/* focused by script so a screen reader lands on the words; the card already has an edge */
+.uniform-lede:focus { outline: none; }
+.uniform-box .btn-row { margin: 1.3rem 0 0; }
+.uniform-box .btn { flex: 1 1 auto; }
+@media (min-width: 30rem) { .uniform-box .btn { flex: 0 0 auto; } }
+@media (min-width: 40rem) { .uniform-box { padding: 1.9rem 1.8rem 2rem; } }
