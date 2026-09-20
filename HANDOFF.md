@@ -4,6 +4,15 @@ Everything below is committed on the branch `build/three-new` and pushed. `main`
 are untouched since the Riche design pass. The site builds and all tests pass in this state.
 **Nothing on this branch has been shown to the owner yet. Do not merge without his say.**
 
+## Status on 2026-09-22: waiting on the owner
+
+Calibration, the audit and the search fixes are done and committed; the branch is pushed and the
+preview is https://wiser-walk-7ureyjkaq-sunjo.vercel.app (may need his Vercel login). He has been
+given the preview, the two one-page instruments and the six decisions at the top of
+`audit/new-quizzes/AUDIT-LOG.md`. **Ask what he thought before doing anything else.** Still open:
+the citation pass (step 3 below; about sixteen Fable agents, so only with his go), four small engine
+items listed in the audit log, and merging, which is his call.
+
 ## Done and safe on the branch
 
 - **Who Said It?** (second game): finished, verified, tested. `demos/who-said-it/` (read its SPEC.md),
