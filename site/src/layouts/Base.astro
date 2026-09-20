@@ -7,6 +7,7 @@ import '../styles/pages/prose.css';
 import '../styles/pages/play.css';
 import { liveQuizzes } from '../lib/engine/registry';
 import { liveGames } from '../lib/games';
+import { SEO } from '../lib/seo';
 
 export interface Props {
   title: string;
@@ -45,7 +46,9 @@ const breadcrumbLd =
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const siteName = 'Wiser Walk';
-const fullTitle = title === siteName ? title : `${title} — ${siteName}`;
+const seo = SEO[Astro.url.pathname];
+const fullTitle = seo ? seo.title : title === siteName ? title : `${title} — ${siteName}`;
+const metaDescription = seo ? seo.description : description;
 
 const NAV = [
   { href: '/quizzes/', label: 'Quizzes' },
@@ -65,7 +68,7 @@ const isCurrent = (href: string) => here === href || here.startsWith(href.replac
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
-    <meta name="description" content={description} />
+    <meta name="description" content={metaDescription} />
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex, follow" />}
 
@@ -94,11 +97,11 @@ const isCurrent = (href: string) => here === href || here.startsWith(href.replac
     <meta property="og:site_name" content={siteName} />
     <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
+    <meta property="og:description" content={metaDescription} />
     <meta property="og:url" content={canonical} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
+    <meta name="twitter:description" content={metaDescription} />
 
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
     {breadcrumbLd && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />}

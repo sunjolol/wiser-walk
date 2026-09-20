@@ -58,7 +58,13 @@ export const theologyCompass: Quiz = {
     hedgeUnits: data.scoring.hedgeUnits,
     centerUnits: data.scoring.centerUnits
   },
-  shareTitle: 'My Theology Compass'
+  shareTitle: 'My Theology Compass',
+  // People searching say "denomination"; the page had never used the word. One plain sentence
+  // says why the quiz says "traditions" instead, which is true and costs nothing.
+  notes: {
+    intro:
+      'Most people would call these denominations. We say traditions, because several of them do not use that word for themselves.'
+  }
 };
 
 // The audit's answer sheets deliberately live in src/data/compass-audit.json, not here:
