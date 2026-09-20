@@ -85,7 +85,13 @@ const axes = quiz.groups.map((group, i) => {
      */
     mask: figure.mask[i]!,
     bothEnds: figure.mask[i] === 'both',
-    notShown: figure.mask[i] === 'none'
+    notShown: figure.mask[i] === 'none',
+    /**
+     * A not-placed cell that says WHY instead of the stock sentence. One exists: Jesus on
+     * Reasons, where the Gospels say he knew what was coming, so neither pole describes him.
+     * "The text does not show this" above a sentence citing three passages would be false.
+     */
+    explained: figure.mask[i] === 'none' && items[0]?.did !== 'The text does not show this.'
   };
 });
 
@@ -100,7 +106,9 @@ const axes = quiz.groups.map((group, i) => {
  * this person on is the exact claim this whole pass exists to stop making.
  */
 const reading = (a: (typeof axes)[number]) =>
-  a.notShown ? 'not shown in the text' : a.bothEnds ? 'recorded at both ends' : a.row.band;
+  a.explained
+    ? 'not placed'
+    : a.notShown ? 'not shown in the text' : a.bothEnds ? 'recorded at both ends' : a.row.band;
 
 const blocksFor = (a: (typeof axes)[number]) =>
   a.bothEnds
@@ -111,8 +119,19 @@ const blocksFor = (a: (typeof axes)[number]) =>
     : [{ label: null, side: null, items: a.items }];
 
 const momentCount = axes.reduce((n, a) => n + a.cited.length, 0);
-const silentAxes = axes.filter(a => a.notShown).length;
+const silentAxes = axes.filter(a => a.notShown && !a.explained).length;
+const explainedAxes = axes.filter(a => a.explained).length;
 const bothAxes = axes.filter(a => a.bothEnds).length;
+/** Which axes are left out of the match, in words, so the sentence is true of every figure. */
+const leftOutParts = [
+  silentAxes > 0 ? 'the axes the text is silent on' : '',
+  bothAxes > 0 ? 'the axes where the text shows both ends' : '',
+  explainedAxes > 0 ? 'the axis where neither end describes what it records' : ''
+].filter(Boolean);
+const leftOut =
+  leftOutParts.length > 1
+    ? leftOutParts.slice(0, -1).join(', ') + ' and ' + leftOutParts[leftOutParts.length - 1]
+    : leftOutParts[0] ?? '';
 /** The axes this person is actually matched on. Never all six for every figure. */
 const matchedAxes = axes.filter(a => a.mask === 'shown').length;
 
@@ -179,11 +198,7 @@ const breadcrumbs = isDraft
           where the text shows nothing the page says so instead of guessing.
           {matchedAxes < quiz.groups.length && (
             <> A reader is measured against {figure.name} on {matchedAxes} of the
-            {' ' + quiz.groups.length} — the {silentAxes > 0 && bothAxes > 0
-              ? 'axes the text is silent on, and the ones where it shows both ends, are'
-              : silentAxes > 0
-                ? 'axes the text is silent on are'
-                : 'axes where the text shows both ends are'} left out rather than counted as
+            {' ' + quiz.groups.length} — {leftOut} are left out rather than counted as
             a position in the middle.</>
           )}
         </p>
@@ -239,7 +254,8 @@ const breadcrumbs = isDraft
     <p class="ref-note">
       Each line is one recorded act and the reference it is taken from. The sentence says
       what the person did; where it is in quotation marks it is verbatim from the World
-      English Bible British Edition.
+      English Bible British Edition. An act listed here is evidence of how this person moved,
+      not approval of it; read the passage for how it was received.
       {silentAxes > 0 && ` On ${silentAxes} of the six the text does not show this, and that axis is left out of the match rather than filled in.`}
       {bothAxes > 0 && ` On ${bothAxes} the text shows both ends and they do not settle, so that axis is left out too — the acts for each end are printed under it.`}
     </p>
@@ -264,7 +280,14 @@ const breadcrumbs = isDraft
             about a person. Both sentences also say the consequence — the axis is left out
             of the match — because that is the part a reader would otherwise have to guess.
           */}
-          {axis.notShown && (
+          {axis.explained && (
+            <p class="moment-note">
+              <strong>Not placed on this axis.</strong> The reason is below. The axis is left
+              out when a reader is matched, rather than counted as a position in the middle.
+            </p>
+          )}
+
+          {axis.notShown && !axis.explained && (
             <p class="moment-note">
               <strong>The text does not show this.</strong> Nothing in the record puts
               {' ' + figure.name} at either end of this axis, so it is left out when a reader
@@ -297,7 +320,13 @@ const breadcrumbs = isDraft
                             toward {item.toward === 'left' ? axis.group.left : axis.group.right}
                           </span>
                         </p>
-                      : <p class="moment-ref"><span class="moment-cite">No record</span></p>}
+                      : <p class="moment-ref">
+                          {/* A not-placed cell that says WHY (Jesus on Reasons) cites records
+                              in its own sentence, so "No record" above it would be false. */}
+                          <span class="moment-cite">
+                            {item.did === 'The text does not show this.' ? 'No record' : 'Not placed'}
+                          </span>
+                        </p>}
                     <p class="moment-did">{item.did}</p>
                     {item.quote && <blockquote class="moment-quote">{item.quote}</blockquote>}
                   </li>

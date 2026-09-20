@@ -20,9 +20,10 @@
  * change the audit source and regenerate. It is copied under site/ for the same reason
  * compass.json is: Vercel's root directory is site/, and audit/ is outside it.
  *
- * STATUS: DRAFT, and registered. The statements have been through two adversarial critics
- * and an editor, not through the full fairness audit the Compass had, and the owner has not
- * yet played it. Draft means noindex, out of the sitemap, and off the hub's live list.
+ * STATUS: DRAFT, and registered. The statements have been through two adversarial critics,
+ * an editor, a calibration pass and five audit reviews (cessationist, Pentecostal, Catholic
+ * and Orthodox, psychometric, evidence), closed in audit/new-quizzes/AUDIT-LOG.md. The owner
+ * has not yet played it. Draft means noindex, out of the sitemap, and off the hub's live list.
  *
  * FIELDS THE ENGINE NOW READS (wired 2026-09-19; the first three moved into engine/types.ts):
  *   quiz.hideOutcomeScore  never print a percentage against a figure, on any surface
@@ -35,6 +36,9 @@
  * TWO KINDS OF 50 in a figure's position, told apart by the evidence, never by the number:
  *   both ends   two or three items with real refs and opposing `toward` values
  *   not shown   exactly one item, ref null, toward null, did "The text does not show this."
+ *               One cell says more than the stock sentence: Jesus on Reasons, where the
+ *               Gospels say he knew what was coming (John 18:4), so neither pole describes
+ *               him and the cell says why instead of only saying "not shown".
  * Neither is a place the person stood, so neither is counted when a reader is matched. That
  * is the evidence mask: see maskFor() below, and AxisMask in engine/types.ts.
  */
@@ -138,7 +142,9 @@ const groups: QuizGroup[] = [
     summary:
       'Some people need the reason before they go on; they find the hole in the plan, and they ' +
       'hold things up while they ask. Others go on and let the reason come later; the work ' +
-      'gets moving, and now and then it is the wrong work. Neither is the better way to be.'
+      'gets moving, and now and then it is the wrong work. Neither is the better way to be. ' +
+      'This axis is about how someone handles instructions, reports and plans: asking first, ' +
+      'or going on. It is not a measure of faith in God.'
   },
   {
     key: 'plan', slug: 'plans', name: 'Plans',
@@ -164,14 +170,15 @@ const groups: QuizGroup[] = [
  * into one corner of the space: pace 2 left / 1 right, voice 1/2, lead 2/1, conflict 1/2,
  * doubt 2/1, plan 1/2. Nine statements are keyed -1 and nine +1.
  *
- * At most one statement per axis is in a borrowed voice ("I have been told..."), and never
- * as the only statement on a pole: a reader with nobody around to comment on them would
- * otherwise disagree with both poles and be read as central.
+ * Two statements are in a borrowed voice ("People have told me..."), at most one per axis
+ * and never the only statement on a pole. There were five, and every one reported a fault:
+ * a reader with nobody around to comment on them, or one who denies criticism, disagreed
+ * with all five and was moved to one profile (the psychometric audit's finding F2).
  */
 const RAW: Array<[string, string, 1 | -1]> = [
   // round one
-  ['pace', 'I buy things while I still feel like it.', -1],
-  ['voice', 'I am teased for sitting through a whole conversation without joining in.', 1],
+  ['pace', 'When I am offered something, I say yes or no there and then.', -1],
+  ['voice', 'I often sit through a whole conversation without joining in.', 1],
   ['lead', 'I would rather run the meeting than sit in it.', -1],
   ['conflict', 'When two people I know have argued, I end up passing messages between them.', 1],
   ['doubt', 'People have told me I ask one question too many.', -1],
@@ -179,17 +186,17 @@ const RAW: Array<[string, string, 1 | -1]> = [
   // round two
   ['pace', 'I take a night to decide things that other people decide on the spot.', 1],
   ['voice', 'People can always tell what I am thinking, because I have already said it.', -1],
-  ['lead', 'I have been told I take over a group without being asked to.', -1],
+  ['lead', 'I start handing out jobs in a group before anyone has asked me to.', -1],
   ['conflict', 'I would rather have the argument now than keep things calm for another week.', -1],
-  ['doubt', 'I go along with things without checking them first.', 1],
+  ['doubt', 'I follow instructions as given and leave the reasons for later.', 1],
   ['plan', 'I carry things I will probably not need, in case the day goes wrong.', -1],
   // round three
   ['pace', 'People have told me I jumped in before I had the whole picture.', -1],
   ['voice', 'I often leave a conversation with an opinion I never said out loud.', 1],
   ['lead', 'In a group I wait to see who is leading before I offer anything.', 1],
-  ['conflict', 'I step in to calm an argument before both sides have finished.', 1],
+  ['conflict', 'I step in to calm arguments that are not mine.', 1],
   ['doubt', 'I ask why a rule exists before I follow it.', -1],
-  ['plan', 'I have been told I leave everything until the last possible minute.', 1]
+  ['plan', 'I drop my plans when something new comes up.', 1]
 ];
 
 const keys = groups.map(g => g.key);
@@ -292,7 +299,14 @@ const outcomes: FigureOutcome[] = data.figures.map(f => ({
  *              the same three the 41-59 no-position band holds — so "central" means
  *              precisely "named no position on any axis", which is also the case where no
  *              figure can be measured at all. If the radix ever changes, check this again.
- * minShownAxes 4 of 6. See validateOutcomeMasks in engine/registry.ts.
+ * minShownAxes 3 of 6. See validateOutcomeMasks in engine/registry.ts. It was 4 until the
+ *              audit was applied. Three reviewers (cessationist, Catholic and Orthodox,
+ *              evidence) found that Jesus cannot honestly be placed on Reasons, because the
+ *              Gospels say he knew what was coming; that leaves him placed on three axes, and
+ *              the same reading of the text leaves his mother and Deborah on three. A floor
+ *              of four would take all three off the results, which the owner's decision about
+ *              Jesus and the blueprint's nine women both rule out. Measured at 3: no figure
+ *              closest for more than 9%, ties 8%. THE OWNER'S CALL: see AUDIT-LOG.md, top.
  */
 const perAxis = groups.map((_, g) => items.filter(it => it.group === g).length);
 if (new Set(perAxis).size !== 1) {
@@ -330,18 +344,22 @@ export const bibleFigure: FigureQuiz = {
   description:
     'Eighteen statements about how you act, speak, lead, argue, question and plan. None ' +
     'mentions the Bible. The result names the figure whose recorded acts sit nearest, and ' +
-    'shows the cited moments that place them there. It measures temperament, not virtue.',
+    'shows the cited moments that place them there. It asks about temperament, not virtue.',
   icon: 'scroll',
   minutes: 3,
   status: 'draft',
   draftNote:
-    'This one is an unaudited draft. Every figure is placed by cited, recorded acts, and each ' +
-    'reference has been checked against the text, but where a figure sits is still a judgement, ' +
-    'and the statements have not been through the adversarial fairness audit the Theology ' +
-    'Compass went through. You are compared to each person only on the axes where the text ' +
-    'places them and your own answers name a position: where the text shows nothing, or shows ' +
-    'both ends, that axis is left out rather than counted as a match in the middle. No ' +
-    'percentage is ever shown against a person. Neither end of any axis is the better one. ' +
+    'This one is a draft. Its statements and placements have had five adversarial reviews, ' +
+    'not the full fairness audit the Theology Compass went through, and nobody has played it ' +
+    'yet. Every figure is placed by cited, recorded acts, and each reference has been checked ' +
+    'against the text: the references, not the placements, because where a figure sits is ' +
+    'still an editor’s judgement. Every figure comes from the books all Christians share. ' +
+    'Judith, Tobit, the Maccabees and others from the books Catholic and Orthodox Bibles also ' +
+    'contain are not in it yet; that is a limit of the draft, not a judgement about those ' +
+    'books. You are compared to each person only on the axes where the text places them and ' +
+    'your own answers name a position: where the text shows nothing, or shows both ends, that ' +
+    'axis is left out rather than counted as a match in the middle. No percentage is ever ' +
+    'shown against a person. Neither end of any axis is the better one. ' +
     'Treat the result as a conversation starter, not a verdict.',
   items,
   groups,
@@ -353,10 +371,12 @@ export const bibleFigure: FigureQuiz = {
     tieUnits: 1,
     hedgeUnits: 45,
     centerUnits: 10,
-    minShownAxes: 4,
+    minShownAxes: 3,
     minMatchAxes: 2
   },
-  shareTitle: 'Who in the Bible I am most like',
+  // Not "I am most like": pasted into a chat beside the name of Jesus, that sentence is a
+  // boast the note on his card cannot travel with (both audits' F8).
+  shareTitle: 'Who in the Bible my answers sat nearest',
   codePrefix: 'BF',
 
   /*
@@ -368,9 +388,11 @@ export const bibleFigure: FigureQuiz = {
   outcomeNounPlural: 'figures',
   outcomePathBase: 'figure',
   outcomeScopeNote:
-    `Scored against the ${outcomes.length} people listed here, on the axes of temperament ` +
-    'where the text places them and your own answers name a position. Nearness is not ' +
-    'likeness of character, and no number is ever shown against a person.',
+    `Scored against the ${outcomes.length - 1} people listed here, and Jesus, on the axes of ` +
+    'temperament where the text places them and your own answers name a position. Each place ' +
+    'is an editor’s reading of a few recorded acts, not a measurement, and with three ' +
+    'statements to an axis one changed answer can change the name: read the rails, not the ' +
+    'name. Nearness is not likeness of character, and no number is ever shown against a person.',
   hideOutcomeScore: true,
 
   /**

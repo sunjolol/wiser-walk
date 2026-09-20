@@ -642,7 +642,7 @@ console.log('11. who in the Bible are you most like?');
     // dropped a woman to fix a distribution would be the worst way to hit a number.
     const women = [
       'Deborah', 'Esther', 'Ruth', 'Hannah', 'Abigail', 'Rahab',
-      'Mary of Nazareth', 'Martha', 'Mary Magdalene', 'Priscilla', 'Sarah', 'Miriam'
+      'Mary the mother of Jesus', 'Martha', 'Mary Magdalene', 'Priscilla', 'Sarah', 'Miriam'
     ].filter(n => bf.outcomes.some(o => o.name === n));
     if (women.length < 9) fail(`only ${women.length} women on the roster: ${women.join(', ')}`);
     else ok(`${women.length} women on the roster of ${bf.outcomes.length}`);

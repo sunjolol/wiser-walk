@@ -38,10 +38,15 @@ are untouched since the Riche design pass. The site builds and all tests pass in
    against a 1.5% floor** — she is crowded by Moses, Paul, David and Deborah and there is little more
    of her in the text; and the evidence for moving Jesus's Lead coordinate from 50 to 40 is the one
    judgement in the pass to question first.
-2. **Apply the audit.** An editor verifies each blocker and major finding in the five audit files,
-   applies what holds, and writes `audit/new-quizzes/AUDIT-LOG.md` with the owner's decisions at the
-   top (above all: whether and how the gifts quiz includes prophecy, healing, miracles, tongues and
-   interpretation). Do this AFTER calibration, because both touch `bible-figure.ts`.
+2. **Apply the audit: DONE 2026-09-20, not committed, not yet shown to the owner.** 106 findings:
+   81 applied, 7 moot after calibration, 3 rejected, 4 left for the owner or engineer, 11 minor and
+   left. Read `audit/new-quizzes/AUDIT-LOG.md`: six owner decisions are at its top (the gifts quiz's
+   1 Corinthians 12:8-10 split first). Six figure statements and ten gifts statements were reworded.
+   Jesus is no longer placed on Reasons (three reviewers), which leaves him, Mary the mother of Jesus
+   (renamed from "Mary of Nazareth"; slug unchanged) and Deborah placed on three axes, so
+   `minShownAxes` went from 4 to 3: owner decision 2. Simulator after: top figure 7.9%, ties 8.1%,
+   all four targets met, Martha 1.6%. The one-page instruments (`figure-final.md`, `gifts-final.md`)
+   show both quizzes as they now stand.
 3. **Citation pass: 13 of 18 tradition files written, only 2 verified.** Files in `audit/citations/`.
    A file is finished only if it contains `"verified_on"`. Re-run the researcher for the five missing
    traditions and the verifier for every file without `verified_on`. Nothing here is on the site yet;

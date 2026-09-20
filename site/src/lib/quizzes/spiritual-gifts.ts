@@ -10,13 +10,17 @@
  *     from the World English Bible British Edition (WEBBE) held on disk at
  *     demos/sounds-like-scripture/work/verses-all.json (src "webbe"), and was checked as a
  *     substring of that file. Never retype one from memory.
- *   - The STATEMENTS ARE NOT AUDITED. They came from two independent drafts and two
- *     adversarial critiques, then one editor. They have not had the Compass's audit, and the
- *     owner has not played them. That is why status is 'draft'.
+ *   - The statements came from two independent drafts and two adversarial critiques, then
+ *     one editor, then five audit reviews (cessationist, Pentecostal, Catholic and Orthodox,
+ *     psychometric, evidence) closed in audit/new-quizzes/AUDIT-LOG.md. That is not the
+ *     Compass's audit, and the owner has not played them. That is why status is 'draft'.
  *
  * Not in this draft: prophecy, healing, miracles, tongues and their interpretation. Whether
  * and how to include them is the OWNER'S OPEN DECISION (see draftNote and
- * giftsFrame.notIncluded). Nothing here may imply they are lesser or that they have ceased.
+ * giftsFrame.notIncluded), and so is whether wisdom, discernment and faith, which come from
+ * the same sentence of Paul's, may stay while the rest are out: a cessationist and a
+ * Pentecostal reviewer both called that split taking a side. Nothing here may rule on the
+ * rank of the gifts left out, or on whether they are given today, in either direction.
  *
  * For the engineer who wires this:
  *   - `giftSources`, `giftActs` and `giftsFrame` are exported beside the quiz on purpose and
@@ -83,7 +87,7 @@ export const giftSources: Record<string, GiftSource[]> = {
   ]
 };
 
-/** The plain sentence that follows the quotation in each summary. One sentence each. */
+/** The plain description that follows the quotation in each summary. */
 const PLAIN: Record<string, string> = {
   serving:
     'Romans says service and 1 Corinthians says helps, and this draft treats them as one: doing the practical work that other people’s work depends on.',
@@ -94,42 +98,44 @@ const PLAIN: Record<string, string> = {
     'Letting money and possessions go where they are needed; nothing here counts how much.',
   leading:
     'The translation quoted here says rules where many others say leads: taking on the direction of a shared work and answering for it.',
-  mercy: 'Going towards people in distress and staying, with nothing to fix.',
+  // Not "staying, with nothing to fix": both cited acts are practical relief (Tabitha made
+  // garments, Onesiphorus sought Paul out and refreshed him).
+  mercy: 'Going towards people in distress and doing what eases it.',
   administration:
     'The translation quoted here says governments where many others say administration or guidance: keeping the order that a shared work runs on.',
   wisdom:
     'The passage names a word of wisdom, something said, and these statements can see only the everyday pattern of being brought hard choices and asked what to do.',
   discernment:
-    'The passage names the discerning of spirits, which is more than being shrewd about people and offers, and these statements can see only that everyday pattern.',
+    'The passage names the discerning of spirits, which is more than being careful about people and ideas, and these statements can see only that everyday pattern.',
   faith:
-    'Listed as something given to some and not to others, so it is not about whether you believe; these statements look only for a habit of going ahead before the outcome is secured.',
+    'Listed as something given to some and not to others, so it is not about whether you believe; these statements look only for a habit of staying sure, and saying so, after other people have stopped expecting a thing to come right. Paul elsewhere writes of “all faith, so as to remove mountains” (1 Corinthians 13:2).',
   evangelism: 'Telling the good news to people who have not heard it or do not hold it.',
   shepherding:
-    'Many translations say pastors: watching over the same people for a long time.',
+    'Many translations say pastors: watching over the same people for a long time. Ephesians 4:11 names people given to the church, and both passages below are addressed to elders; a result here names a pattern of care and says nothing about who should hold an office.',
   hospitality:
     'Peter asks hospitality of everyone and speaks of each person’s gift in the next sentence, so coming out low here releases nobody from the first.'
 };
 
 export const giftActs: Record<string, GiftAct[]> = {
   serving: [
-    { ref: 'Acts 6:1-6', what: 'When the Hellenists complained that their widows were neglected in the daily service, the disciples chose seven men and the apostles appointed them over that business.' },
-    { ref: 'Romans 16:1-2', what: 'Paul commends Phoebe, a servant of the assembly at Cenchreae, and asks the Romans to assist her because she has been a helper of many, himself included.' }
+    { ref: 'Acts 6:1-6', what: 'When the Hellenists complained that their widows were neglected in the daily service, the disciples chose seven men and set them before the apostles, who prayed and laid their hands on them.' },
+    { ref: 'Romans 16:1-2', what: 'Paul commends Phoebe, a servant of the church at Cenchreae, and asks the Romans to assist her because she has been a helper of many, himself included.' }
   ],
   teaching: [
     { ref: 'Acts 18:24-26', what: 'Apollos taught accurately about Jesus but knew only the baptism of John; Priscilla and Aquila took him aside and explained the way of God to him more accurately.' },
-    { ref: 'Acts 11:25-26', what: 'Barnabas fetched Saul from Tarsus to Antioch, where for a whole year the two met with the assembly and taught many people.' }
+    { ref: 'Acts 11:25-26', what: 'Barnabas fetched Saul from Tarsus to Antioch, where for a whole year the two met with the church and taught many people.' }
   ],
   encouraging: [
     { ref: 'Acts 4:36', what: 'The apostles called Joses of Cyprus Barnabas, which Luke translates as Son of Encouragement.' },
     { ref: 'Acts 11:22-23', what: 'Sent to Antioch, Barnabas saw what had happened there, was glad, and exhorted them all to remain near to the Lord with purpose of heart.' },
-    { ref: 'Acts 15:30-32', what: 'After the letter from Jerusalem was read at Antioch, Judas and Silas encouraged the brothers with many words and strengthened them.' }
+    { ref: 'Acts 15:30-32', what: 'After the letter from Jerusalem was read at Antioch, Judas and Silas, whom Luke calls prophets themselves, encouraged the brothers with many words and strengthened them.' }
   ],
   giving: [
     { ref: 'Acts 4:34-37', what: 'Owners of lands and houses sold them and laid the proceeds at the apostles’ feet, Barnabas among them with the price of a field, and distribution was made to each as anyone had need.' },
-    { ref: '2 Corinthians 8:1-5', what: 'Paul reports that the assemblies of Macedonia, in deep poverty, gave of their own accord beyond their power and begged to share in the service to the saints.' }
+    { ref: '2 Corinthians 8:1-5', what: 'Paul reports that the churches of Macedonia, in deep poverty, gave of their own accord beyond their power and begged to share in the service to the saints.' }
   ],
   leading: [
-    { ref: 'Acts 15:13-29', what: 'At Jerusalem, once the others had fallen silent, James gave his judgement on what to ask of the Gentiles, and the apostles, elders and whole assembly sent it out in a letter.' },
+    { ref: 'Acts 15:13-29', what: 'At Jerusalem, once the others had fallen silent, James gave his judgement on what to ask of the Gentiles, and the apostles, elders and whole church sent it out in a letter.' },
     { ref: 'Acts 6:2-4', what: 'Faced with the neglected widows, the twelve set out how the work should be divided: seven men over that business, and themselves kept to prayer and the word.' }
   ],
   mercy: [
@@ -138,7 +144,7 @@ export const giftActs: Record<string, GiftAct[]> = {
   ],
   administration: [
     { ref: 'Titus 1:5', what: 'Paul left Titus in Crete to set in order the things that were lacking and to appoint elders in every city, as he had directed.' },
-    { ref: '2 Corinthians 8:18-21', what: 'A brother appointed by the assemblies travelled with the collection, so that nobody could blame Paul’s company over the money they were administering.' }
+    { ref: '2 Corinthians 8:18-21', what: 'A brother appointed by the churches travelled with the collection, so that nobody could blame Paul’s company over the money they were administering.' }
   ],
   wisdom: [
     { ref: 'Acts 6:9-10', what: 'Men from several synagogues disputed with Stephen and were not able to withstand the wisdom and the Spirit by which he spoke.' },
@@ -146,15 +152,17 @@ export const giftActs: Record<string, GiftAct[]> = {
   ],
   discernment: [
     { ref: 'Acts 8:18-23', what: 'When Simon offered money for the power to give the Holy Spirit, Peter told him his heart was not right before God and said what he saw in him.' },
-    { ref: 'Acts 5:1-4', what: 'Ananias kept back part of a sale price and laid the rest at the apostles’ feet; Peter asked him why he had lied and kept part back.' }
+    { ref: 'Acts 5:1-4', what: 'Ananias kept back part of a sale price and laid the rest at the apostles’ feet; Peter asked him why Satan had filled his heart to lie to the Holy Spirit and to keep back part of the price.' },
+    { ref: 'Acts 13:8-10', what: 'When Elymas the sorcerer tried to turn the proconsul away from the faith, Paul, filled with the Holy Spirit, fastened his eyes on him and called him full of all deceit.' },
+    { ref: 'Acts 17:11', what: 'The Jews of Beroea received the word with all readiness of mind and examined the Scriptures daily to see whether these things were so.' }
   ],
   faith: [
-    { ref: 'Acts 27:21-25', what: 'In the storm, with those aboard long without food, Paul stood up and told them to cheer up, saying he believed God that it would be just as he had been told.' },
-    { ref: 'Acts 6:5', what: 'Among the seven the disciples chose, Luke singles out Stephen as a man full of faith and of the Holy Spirit.' }
+    { ref: 'Acts 27:21-25', what: 'In the storm, with those aboard long without food, Paul stood up and told them to cheer up: an angel had stood by him that night and said all aboard would live, and he said he believed God that it would be just as he had been told.' },
+    { ref: 'Acts 6:5-8', what: 'Among the seven the disciples chose, Luke singles out Stephen as a man full of faith and of the Holy Spirit, and three verses later as full of faith and power, performing great wonders and signs among the people.' }
   ],
   evangelism: [
-    { ref: 'Acts 8:5-8', what: 'Philip went down to the city of Samaria and proclaimed the Christ to them, and there was great joy in that city.' },
-    { ref: 'Acts 8:26-35', what: 'Philip ran to the Ethiopian official’s chariot, asked whether he understood what he was reading, and beginning from that Scripture told him about Jesus.' },
+    { ref: 'Acts 8:5-8', what: 'Philip proclaimed the Christ in the city of Samaria; the crowds listened when they heard and saw the signs he did, unclean spirits came out, many paralysed and lame were healed, and there was great joy in that city.' },
+    { ref: 'Acts 8:26-35', what: 'Told by the Spirit to go near the chariot, Philip ran to the Ethiopian official, asked whether he understood what he was reading, and beginning from that Scripture told him about Jesus.' },
     { ref: 'Acts 21:8', what: 'Luke later calls him Philip the evangelist, and Paul’s company stayed at his house in Caesarea.' }
   ],
   shepherding: [
@@ -163,7 +171,7 @@ export const giftActs: Record<string, GiftAct[]> = {
   ],
   hospitality: [
     { ref: 'Acts 16:14-15', what: 'After Lydia and her household were baptised at Philippi, she begged Paul’s company to come into her house and stay, and persuaded them.' },
-    { ref: 'Romans 16:23', what: 'Paul sends greetings from Gaius, whom he calls his host and host of the whole assembly.' }
+    { ref: 'Romans 16:23', what: 'Paul sends greetings from Gaius, whom he calls his host and host of the whole church.' }
   ]
 };
 
@@ -222,7 +230,7 @@ const groups: QuizGroup[] = GIFTS.map(([key, slug, name]) => ({
  */
 const RAW: Array<[string, string, 1 | -1]> = [
   ['serving', 'When something practical needs doing, I have usually started before anyone asked me to.', 1],
-  ['serving', 'I tend to leave the practical jobs to whoever is better at them than me.', -1],
+  ['serving', 'When there is clearing up to do, I am usually still talking to someone.', -1],
   ['serving', 'People ask me when an errand needs running or a form needs filling in, and I usually say yes.', 1],
 
   ['teaching', 'People come to me to have something explained, even when they only wanted the short answer.', 1],
@@ -234,31 +242,31 @@ const RAW: Array<[string, string, 1 | -1]> = [
   ['encouraging', 'I tell people what I think they are capable of, even when they have not asked.', 1],
 
   ['giving', 'I give away things I am still using when somebody needs them more than I do.', 1],
-  ['giving', 'Even when I have the money, I find it easier to give my time.', -1],
+  ['giving', 'Even when I can afford it, I look for a way to help other than money.', -1],
   ['giving', 'When somebody needs money and I have it, I decide quickly and rarely think about it again.', 1],
 
-  ['leading', 'People look at me when a decision has to be made and nobody wants to make it.', 1],
+  ['leading', 'When nobody will decide, I make the decision for the group.', 1],
   ['leading', 'I end up answering for how the whole thing went, including parts other people did.', 1],
   ['leading', 'I would rather be told where we are going than be the one to decide it.', -1],
 
-  ['mercy', 'When somebody is in pain I want to fix the cause rather than sit with it.', -1],
+  ['mercy', 'I keep my distance from people in distress until I know how to help.', -1],
   ['mercy', 'When somebody starts crying, I move closer rather than give them room.', 1],
   ['mercy', 'I notice the person who is not coping before I notice anything else in the room.', 1],
 
   ['administration', 'When plans are loose, I write them down and send them round without being asked.', 1],
-  ['administration', 'I keep most of my week in my head rather than written down.', -1],
+  ['administration', 'When a group makes plans, I leave it to someone else to keep the list.', -1],
   ['administration', 'People send me the details because they know I will keep track of them.', 1],
 
   ['wisdom', 'When two good options are on the table, people ask me which one to take.', 1],
   ['wisdom', 'In an argument I end up saying what I think the disagreement is actually about.', 1],
-  ['wisdom', 'I would rather say what I would do than work out what suits them.', -1],
+  ['wisdom', 'When a friend asks my advice, I tell them what I would do myself.', -1],
 
-  ['discernment', 'I would rather assume the best of somebody than test whether they are being straight.', -1],
-  ['discernment', 'Friends check a person or an offer with me before they commit to it.', 1],
+  ['discernment', 'I take a new idea as it sounds rather than look into where it came from.', -1],
+  ['discernment', 'Friends ask me whether someone can be trusted before they rely on them.', 1],
   ['discernment', 'I decide something is off about a person before I could say what it is.', 1],
 
-  ['faith', 'I commit to things before I can see how they will be paid for or finished.', 1],
-  ['faith', 'When the odds look bad, I am the one naming what could go wrong.', -1],
+  ['faith', 'I keep telling people a thing will come right after they have stopped expecting it.', 1],
+  ['faith', 'When the odds look bad, I am among the first to say we should stop.', -1],
   ['faith', 'I keep going with a project long after other people have written it off.', 1],
 
   ['evangelism', 'I end up talking about God with people I have only just met.', 1],
@@ -308,21 +316,27 @@ const items: QuizItem[] = ordered.map(([key, text, direction], i) => ({
 export const giftsFrame = {
   translation: WEBBE,
   intro:
-    'Scripture gives lists of gifts. It gives no test for them. The lists say each is given ' +
-    '“for the profit of all” (1 Corinthians 12:7), and gifts are recognised in service, by ' +
-    'other people, over time. So this is a conversation starter, not a verdict: thirty-nine ' +
-    'statements cannot see your last ten years. If you know the lists you will sometimes see ' +
-    'which gift a statement is about, which is one more reason to take the result to two or ' +
-    'three people who have watched you serve and ask them whether it is true.',
+    'Scripture gives lists of gifts. It gives no test for finding which are yours. It says the ' +
+    'Spirit gives them, “distributing to each one separately as he desires” (1 Corinthians ' +
+    '12:11), and that each is given “for the profit of all” (1 Corinthians 12:7). So this is a ' +
+    'conversation starter, not a verdict: thirty-nine statements cannot see your last ten ' +
+    'years, and the people who have watched you serve can. If you know the lists you will ' +
+    'sometimes see which gift a statement is about, which is one more reason to take the ' +
+    'result to your pastor or priest and to one or two people who have served alongside you, ' +
+    'and ask them whether it is true. Catholic readers usually call the gifts in these lists ' +
+    'charisms, and keep “the gifts of the Holy Spirit” for the seven that Catholic teaching ' +
+    'draws from Isaiah 11:2; this page is about the first.',
   /** The one line for above the start button on a phone, if the full intro sits below it. */
   introShort:
-    'Scripture lists gifts and gives no test for them; other people usually name yours before you do.',
+    'Scripture lists gifts and gives no test for finding which are yours; ask the people who have watched you serve.',
   result:
     'This is where your answers pointed. It is not a measurement of what God has given you. ' +
-    'Nobody is only one of these, the list here is not everything Scripture names, and a ' +
-    'self-report can be wrong in both directions, about what you avoid as much as what you ' +
-    'are good at. The useful step is not to believe this page. It is to send it to somebody ' +
-    'who has served alongside you and ask whether it matches what they have seen.',
+    'No one is summed up by one row of this page, the list here is not everything Scripture ' +
+    'names, and a self-report can be wrong in both directions, about what you avoid as much ' +
+    'as what you are good at. Some of these patterns are temperament as much as gift, and ' +
+    'these statements cannot tell the two apart. The useful step is not to believe this page. ' +
+    'It is to take it to your pastor or priest, and to somebody who has served alongside you, ' +
+    'and ask whether it matches what they have seen.',
   /** What a low row means. Must print wherever a gift is shown below the line. */
   low:
     '“As each has received a gift, employ it in serving one another” (1 Peter 4:10). A gift ' +
@@ -337,12 +351,17 @@ export const giftsFrame = {
   /** A headline frame, so the largest type on the page is not a bare one-word verdict. */
   headlineLead: 'Your answers pointed most to',
   notIncluded:
-    'Prophecy, healing, miracles, tongues and their interpretation are not in this draft. ' +
-    '(The translation quoted here says “prophecy”, “gifts of healings”, “workings of ' +
-    'miracles”, “different kinds of languages” and “the interpretation of languages”: ' +
-    '1 Corinthians 12:9-10.) That is not because they are lesser or have stopped. Christians ' +
-    'reading the same passages disagree about whether and how they are given today, and a ' +
-    'set of statements about yourself could not measure them fairly either way.',
+    'Prophets and prophecy, the word of knowledge, healing, miracles, tongues and their ' +
+    'interpretation, and apostles are not in this draft. (The translation quoted here says ' +
+    '“the word of knowledge”, “gifts of healings”, “workings of miracles”, “prophecy”, ' +
+    '“different kinds of languages” and “the interpretation of languages”: 1 Corinthians ' +
+    '12:8-10; and “apostles” and “prophets”: 1 Corinthians 12:28 and Ephesians 4:11.) Leaving ' +
+    'them out says nothing about their rank, and nothing about whether they are given today. ' +
+    'Christians reading the same passages disagree about whether and how they are, and a set ' +
+    'of statements about yourself could not measure them fairly either way. Also not here: the ' +
+    'gift Paul names when he writes of remaining unmarried (1 Corinthians 7:7), and the gift ' +
+    'given with the laying on of hands (1 Timothy 4:14). Statements about everyday habits ' +
+    'have nothing to say about either.',
   /** Link this to the Compass axis with groupHref(): its slug is `gifts`, its key is `spirit`. */
   notIncludedLink:
     'The Theology Compass sets that disagreement out in both sides’ own words.'
@@ -353,20 +372,23 @@ export const spiritualGifts: Quiz = {
   title: 'What are your spiritual gifts?',
   tagline: 'Thirty-nine statements, thirteen gifts, and a conversation to have afterwards.',
   description:
-    'Thirteen gifts the New Testament lists, each in its passage’s own words. Thirty-nine ' +
+    'Thirteen of the gifts the New Testament lists, each in its passage’s own words. Thirty-nine ' +
     'plain statements about what you do and what people bring you. Scripture gives no test ' +
     'for gifts, so check the result with people who know you.',
   icon: 'scroll',
   minutes: 5,
   status: 'draft',
   draftNote:
-    'This one is an unaudited draft. The thirteen gifts and the passages that list them are ' +
-    'quoted from the World English Bible British Edition, but these statements have not been ' +
-    'through the adversarial fairness audit the Theology Compass went through, and nobody ' +
-    'has played them yet. Still open, and the owner’s to decide: whether and how to include ' +
+    'This one is a draft. Its statements have had five adversarial reviews, not the full ' +
+    'fairness audit the Theology Compass went through, and nobody has played them yet. The ' +
+    'thirteen gifts and the passages that list them are quoted from the World English Bible ' +
+    'British Edition. Still open, and the owner’s to decide: whether and how to include ' +
     'prophecy, healing, miracles, tongues and their interpretation. They are left out of this ' +
-    'draft for now, which says nothing about whether they are lesser or have ceased. Treat ' +
-    'the result as a conversation starter, not a verdict.',
+    'draft for now, which says nothing about their rank or about whether they are given ' +
+    'today. Also open: wisdom, discernment and faith come from the same sentence of Paul’s ' +
+    '(1 Corinthians 12:8-10) as the gifts left out, and reviewers on both sides of that ' +
+    'disagreement said that keeping three and leaving the rest is itself taking a side. ' +
+    'Treat the result as a conversation starter, not a verdict.',
   items,
   groups,
   // The highest-category strategy ranks the groups themselves; it reads no outcomes.
@@ -419,7 +441,9 @@ export const spiritualGifts: Quiz = {
       // INSTRUMENT rather than the reader: what these statements found, not what you are.
       below: 'not found here',
       level: 'nothing either way',
-      above: ['a little', 'some of this', 'a lot of this', 'the most here']
+      // Not "the most here": the top word prints at 92 AND 100, so two rows could both
+      // claim a rank. These are levels, and the words must be levels too.
+      above: ['a little', 'some of this', 'a lot of this', 'nearly all of this']
     },
     headlineLead: giftsFrame.headlineLead,
     flat: giftsFrame.flat,
