@@ -41,18 +41,20 @@ Note he had earlier rejected the word "wiser" as "weird to say"; he has since ov
 
 State: local git repo initialised, **one commit** `c8fd322`, 137 files tracked, `node_modules` excluded. Authored as `Light <serenitybackto@gmail.com>` — he was offered a GitHub noreply address to keep his email out of public history and **chose to keep his real email**. Do not change it.
 
-## WORK IN PROGRESS (as of 2026-09-22): READ HANDOFF.md FIRST
+## WORK IN PROGRESS (as of 2026-09-20, late): READ HANDOFF.md FIRST
 
-Branch `build/three-new` (pushed, NOT merged) holds the finished second game Who Said It?, two
-calibrated and audit-closed DRAFT quizzes (Who in the Bible are you most like?; What are your
-spiritual gifts?), the research brief, article drafts and search fixes. The owner played the preview
-and said "Looks good", then decided: **the gifts quiz includes ALL the gifts** (prophecy, healing,
-miracles, tongues, interpretation: "just because cessationists disagree doesn't mean we leave them
-out"); **Judith and Tobit join the figure roster**; **Jesus stays on it**; never a percentage against a
-person; every quiz must be easy to find. Two audit questions he could not follow because they were
-asked in jargon: decide them sensibly and tell him in one plain sentence each.
-**`HANDOFF.md` at the repo root has the decisions, the ordered to-do list and the checks to run.**
-Ask before merging to `main`.
+Branch `build/three-new` (pushed, NOT merged) holds the finished second game Who Said It?, the two
+DRAFT quizzes with the owner's decisions carried out (the gifts quiz now has ALL nineteen gifts and
+fifty-seven statements, the disagreement described and never ruled on; Judith and Tobit are on the
+figure roster; Jesus stays; never a percentage against a person), the engine items from the audit log,
+and the findability work (an index of every quiz on `/quizzes/`, menus in the header). The owner has a
+fresh preview link and two questions in front of him: may the two quizzes leave draft, and may the
+branch merge to `main`? **`HANDOFF.md` at the repo root has what was done, the leftovers and the
+checks to run.** Ask before merging to `main`.
+
+**Models: Opus is the default for every agent; in a Workflow an `agent()` with no `model` inherits
+Fable, so set `model: 'opus'` explicitly.** Fable only where its judgement is the point. The owner
+said this twice.
 
 ## THE RICHE PASS (shipped 2026-09-20): how every page is designed now. Read before touching any page
 
