@@ -41,16 +41,41 @@ Note he had earlier rejected the word "wiser" as "weird to say"; he has since ov
 
 State: local git repo initialised, **one commit** `c8fd322`, 137 files tracked, `node_modules` excluded. Authored as `Light <serenitybackto@gmail.com>` — he was offered a GitHub noreply address to keep his email out of public history and **chose to keep his real email**. Do not change it.
 
-## WORK IN PROGRESS (as of 2026-09-20, late): READ HANDOFF.md FIRST
+## WHERE THINGS STAND (2026-09-20, late): READ HANDOFF.md FIRST
 
-Branch `build/three-new` (pushed, NOT merged) holds the finished second game Who Said It?, the two
-DRAFT quizzes with the owner's decisions carried out (the gifts quiz now has ALL nineteen gifts and
-fifty-seven statements, the disagreement described and never ruled on; Judith and Tobit are on the
-figure roster; Jesus stays; never a percentage against a person), the engine items from the audit log,
-and the findability work (an index of every quiz on `/quizzes/`, menus in the header). The owner has a
-fresh preview link and two questions in front of him: may the two quizzes leave draft, and may the
-branch merge to `main`? **`HANDOFF.md` at the repo root has what was done, the leftovers and the
-checks to run.** Ask before merging to `main`.
+**Merged and live on 2026-09-20 with the owner's yes:** Who Said It? (second game); "Who in the Bible
+are you most like?" (25 figures with Judith and Tobit, Jesus on the list, never a percentage against
+a person) and "What are your spiritual gifts?" (all nineteen gifts, fifty-seven statements, the
+disagreement described and never ruled on), both now `live`; the quizzes index and header menus; a
+recomposed footer with an email sign-up. Seven deadly sins is still an unaudited draft.
+`main` equals `build/three-new` apart from notes. **`HANDOFF.md` has the state and what is next.**
+
+## THE OWNER'S DIRECTION CHANGED ON 2026-09-20. This overrides older sections below
+
+In his words: he wants **login and profiles with stored data**, so users see all their scores, stats
+and results, and the site cross-references quizzes and games into one overall profile that gets more
+powerful the more someone does. Finding old results is impossible today and "feels really bad". He
+wants **sign-up to capture emails so he can market to users**, has wanted to **make money** from this
+"from day 1", and wants every part of the app judged under two lenses: (1) as engaging, fun, enticing
+AND useful as possible; (2) as SEO-friendly and marketable as possible, so traffic is organic and he
+never pays for ads or has to build a social following.
+
+- **Void:** the "no accounts, nothing stored, nothing leaves your browser" stance and every pledge of
+  it (removed from the site on 2026-09-20; `/method/` still describes how things work TODAY and must
+  be updated when accounts ship). The growth plan's "nothing needing accounts, a database" and the
+  kill-list line "anything social with accounts" are overridden.
+- **Still standing:** count knowledge, never devotion; never a percentage against a person or between
+  two people; real data only; both poles named; the fairness rules; no AI chat over theology.
+- **He finds the site over-explained and full of "inside baseball"** (method, audit changelog, reviewer
+  counts, draft explainers). Say a thing once, where it is needed. No process talk on pages whose job
+  is to get someone into a quiz, a game or an article. Method is out of the nav and footer; `/about/`
+  links to it.
+- **Email capture is NOT switched on in production:** `/api/subscribe` answers 503 "Sign-up is not
+  switched on yet" because `MAILERLITE_API_KEY` is not set in Vercel (see `site/src/lib/email/README.md`).
+  Only the owner can set it. Until then the footer form and the result-page form collect nothing.
+- A staged plan for accounts and revenue was put to him on 2026-09-20 (results shelf on the device
+  first, then email-link sign-in with sync, then the profile; church group plan as the main revenue
+  bet). **Ask what he decided before building any of it.**
 
 **Models: Opus is the default for every agent; in a Workflow an `agent()` with no `model` inherits
 Fable, so set `model: 'opus'` explicitly.** Fable only where its judgement is the point. The owner

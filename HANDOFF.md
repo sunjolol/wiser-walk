@@ -1,13 +1,18 @@
-# Handoff (updated 2026-09-20, late): start the next session here
+# Handoff (updated 2026-09-20, after the merge): start the next session here
 
-Branch `build/three-new` holds everything below, committed and pushed. `main` and production are
-unchanged since the Riche design pass. The site builds and every test passes.
-A preview is built on every push to the branch; find the newest through the GitHub deployments API
-(`gh api repos/sunjolol/wiser-walk/deployments`) as in earlier sessions.
+**Everything on `build/three-new` was merged to `main` and is live on wiserwalk.com** (owner's yes,
+2026-09-20): the two quizzes left draft, Who Said It? shipped, the footer and quizzes page were
+redesigned after his review, and the privacy pledges and process talk came out. Production was checked
+after the deploy: every key page 200, the new quizzes indexable and in the sitemap (88 entries), the
+sins draft and all result pages still noindex. Only notes differ between the branch and `main`.
 
-**Waiting on the owner:** he has been given a fresh preview link and asked two things: may the two
-quizzes leave draft status, and may the branch merge to `main`? Do NOT merge without his yes: every
-push to `main` deploys to production.
+**The owner changed the site's direction on 2026-09-20** (accounts, stored results, a cross-quiz
+profile, email capture, revenue): read the section of that name near the top of `CLAUDE.md`. A staged
+plan was put to him; **ask what he decided before building any of it.**
+
+**Blocking his email goal:** sign-up is not switched on in production. `/api/subscribe` answers 503
+until `MAILERLITE_API_KEY` is set in Vercel (Settings, Environment Variables; Production and Preview),
+and double opt-in must be ON in MailerLite. Steps: `site/src/lib/email/README.md`. Only he can do it.
 
 ## Done on 2026-09-20 (his six decisions of 2026-09-22 in the older notes, all carried out)
 
@@ -49,9 +54,9 @@ push to `main` deploys to production.
 
 ## Next, only with the owner's go
 
-1. If he says yes: set `status: 'live'` on the two quizzes (they then enter the sitemap and lose
-   noindex automatically; check `site/src/lib/seo.ts` has titles and descriptions for them), rewrite
-   their draft notes away, merge to `main`, watch the deploy. Who Said It? ships with that merge.
+1. Whatever he chose from the accounts and revenue plan (step one proposed: a "My results" shelf kept
+   on the device, so old results can be found at once, with "save these to your email" as the honest
+   reason to sign up).
 2. The citation pass (`audit/citations/`: 13 of 18 tradition files written, 2 verified). Costly; ask.
 3. Parked, from `research/BRIEF.md`: daily set and share grid for Sounds Like Scripture, "who is
    speaking in [chapter]" pages, canon pages, the eight article drafts in `audit/article-drafts/`,
