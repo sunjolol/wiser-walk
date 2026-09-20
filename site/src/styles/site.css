@@ -484,6 +484,21 @@ a { color: var(--accent); text-underline-offset: 2px; }
   background: var(--tone); border: 3px solid var(--panel); box-shadow: 0 0 0 1.5px var(--tone);
 }
 .rail.is-centred .rail-knob { background: var(--ink-mute); box-shadow: 0 0 0 1.5px var(--ink-mute); }
+/*
+ * A rail with NO position on it: the source does not place this outcome on this axis, or
+ * places it at both ends at once. It draws no knob at all — the blueprint's rule is that
+ * an honest blank keeps the figure off that axis's rails, and a dot in the middle of the
+ * hatched zone is a position however it is captioned. The track stays, so the axis is
+ * still visibly one of six rather than silently missing, and the reading beside it says
+ * which of the two silences this is. Readers always have a position, so this never
+ * reaches a result page.
+ */
+.rail.is-unshown .rail-track { opacity: .55; }
+.rail.is-unshown .rail-read { font-style: italic; color: var(--ink-soft); }
+/* the knob is hidden here rather than dropped from the markup: an Astro expression that
+   renders nothing still leaves the whitespace around it, and this component also draws the
+   Compass's rails, which have to come out of this change byte for byte unchanged */
+.rail.is-unshown .rail-knob { display: none; }
 
 /*
  * BOTH spans take --ink-soft, unconditionally.

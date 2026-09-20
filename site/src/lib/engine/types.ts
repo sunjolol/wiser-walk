@@ -91,12 +91,38 @@ export function readMoreAll(r: ReadMore | undefined): string[] {
   return Array.isArray(r) ? r : [...r.left, ...r.right];
 }
 
+/**
+ * What an outcome's coordinate on one axis is actually claiming.
+ *
+ *   shown  the source places this outcome somewhere on this axis, and the coordinate says
+ *          where. Only these axes count when a reader is matched.
+ *   none   the source shows nothing here. The coordinate is 50 because 50 is the middle of
+ *          the scale, NOT because the outcome sits in the middle.
+ *   both   the source shows this outcome at BOTH ends, and the two do not resolve into a
+ *          position. Also honestly at the centre, and also not a measurement of anything.
+ *
+ * `none` and `both` are the two reasons a coordinate can be a non-claim, and they must be
+ * told apart on the page — "the text does not show this" and "the text shows both ends"
+ * are different sentences about a person. They behave identically in the arithmetic: a
+ * distance is never computed against an axis where the outcome claims nothing, because
+ * treating "not shown" as "sits exactly in the middle" is a false claim about that person
+ * and hands every moderate reader to whichever outcome is least evidenced.
+ */
+export type AxisMask = 'shown' | 'none' | 'both';
+
 /** A named result: a tradition, a spiritual gift, a besetting sin, a biblical figure. */
 export interface Outcome {
   name: string;
   slug: string;
   /** Bipolar strategies place outcomes in group-space; category strategies do not. */
   position?: number[];
+  /**
+   * One entry per group, saying which coordinates are claims. OMIT IT ENTIRELY and every
+   * axis counts, which is what the Theology Compass does and must keep doing: a tradition's
+   * position comes from a survey of the whole instrument, so there is no such thing as an
+   * axis a tradition has no position on.
+   */
+  mask?: AxisMask[];
   description?: string;
   /** One line identifying who or what this is, under the name. Never a virtue word. */
   who?: string;
@@ -169,6 +195,12 @@ export interface Ranked {
   name: string;
   slug: string;
   score: number;
+  /**
+   * How many axes this outcome was measured on, where that is fewer than all of them —
+   * see AxisMask. Absent when every axis counted, which is every outcome on the Compass.
+   */
+  axes?: number;
+  ofAxes?: number;
 }
 
 /** One clause of the headline, with the side it leans to, so it can be coloured. */

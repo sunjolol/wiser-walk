@@ -5,7 +5,9 @@
  */
 import { makeCodec } from '../engine/codec';
 import { outcomeNoun } from '../engine/types';
-import type { BipolarRow, BipolarView, HeadlinePart, Quiz, ScoringStrategy, Sheet } from '../engine/types';
+import type {
+  AxisMask, BipolarRow, BipolarView, HeadlinePart, Quiz, ScoringStrategy, Sheet
+} from '../engine/types';
 
 /** Items per group fixes the raw range, so a group with more items still maps to 0..100. */
 function spanOf(quiz: Quiz, group: number): number {
@@ -135,29 +137,106 @@ export interface Match {
   position: number[];
   distance: number;
   match: number;
+  /** How many axes this outcome was actually measured on, and out of how many. */
+  axes: number;
+  ofAxes: number;
 }
 
+/**
+ * How many axes an outcome is PLACED on, whoever is reading. An outcome with no mask is
+ * placed on all of them — the Compass, where a tradition has a position on every axis by
+ * construction. Not the same number as a Match's `axes`, which is what one reader and this
+ * outcome had in common.
+ */
+export function shownAxes(quiz: Quiz, o: { mask?: AxisMask[] }): number {
+  if (!o.mask) return quiz.groups.length;
+  let n = 0;
+  for (let i = 0; i < quiz.groups.length; i++) if (o.mask[i] === 'shown') n++;
+  return n;
+}
+
+/**
+ * Is this quiz matched on evidence rather than on every axis? True as soon as one outcome
+ * declares a mask. The Compass declares none, so it is false there and the whole of the
+ * policy below is inert — its arithmetic is what it has always been.
+ */
+export const isEvidenceMasked = (quiz: Quiz) => quiz.outcomes.some(o => o.mask);
+
+/**
+ * Distance from a reader to each outcome, nearest first.
+ *
+ * EVIDENCE-MASKED MATCHING: AN AXIS COUNTS ONLY WHERE BOTH SIDES NAME A POSITION.
+ *
+ * On the outcome's side that is the mask (see AxisMask): an axis the source does not place
+ * them on is skipped, rather than being read as a coordinate of 50. Treating "the text does
+ * not show this" as "sits exactly in the middle" is a false claim about that person, and it
+ * hands every moderate reader to whichever outcome is least evidenced.
+ *
+ * On the READER's side it is the same rule, and for the same reason. This instrument
+ * already says that a score of 41-59 names no position: the rails draw it as a hatched
+ * zone, the headline drops those axes, and the result page prints "names no position" in
+ * so many words. Using such a score as a coordinate anyway — and calling a reader who
+ * named nothing "a close match for the one person who happens to sit at 50" — is the same
+ * error pointing the other way. Measured over ten thousand sheets it is also the larger
+ * half of the problem: masking only the outcome's side moved the commonest result from 21%
+ * of readers to 22%, and masking both sides moved it to 10%.
+ *
+ * The sum is a root mean square over the axes that counted, rescaled by the number of
+ * groups, so an outcome measured on three axes and one measured on six are on the same
+ * scale and the tie, hedge and max-distance thresholds keep meaning what they meant. When
+ * nothing is masked, `counted` is every group and the expression is exactly sqrt(sum) —
+ * the Compass's arithmetic, bit for bit, which is why the branch below is explicit.
+ *
+ * A reader who names no position anywhere can be measured against nobody, and every
+ * distance is Infinity. That is the `central` state, which names nobody in any case.
+ */
 export function nearest(quiz: Quiz, values: number[]): Match[] {
   const maxDistance = quiz.config.maxDistance;
+  const n = quiz.groups.length;
+  const symmetric = isEvidenceMasked(quiz);
+  const claimed = values.map(v => !namesNoPosition(v ?? 50));
   return quiz.outcomes
     .filter(o => Array.isArray(o.position))
     .map(o => {
       const position = o.position!;
+      const mask = o.mask;
       let sum = 0;
-      for (let i = 0; i < quiz.groups.length; i++) {
+      let counted = 0;
+      for (let i = 0; i < n; i++) {
+        if (mask && mask[i] !== 'shown') continue;
+        if (symmetric && !claimed[i]) continue;
         const d = (position[i] ?? 50) - (values[i] ?? 50);
         sum += d * d;
+        counted++;
       }
-      const distance = Math.sqrt(sum);
+      // An outcome that claims nothing anywhere cannot be anybody's nearest. The registry
+      // rejects one at build time; this keeps the arithmetic honest if one ever got through.
+      const distance =
+        counted === 0 ? Infinity : Math.sqrt(counted === n ? sum : (sum * n) / counted);
       return {
         name: o.name,
         slug: o.slug,
         position,
         distance,
-        match: Math.max(0, Math.round(100 - (distance / maxDistance) * 100))
+        match: Math.max(0, Math.round(100 - (distance / maxDistance) * 100)),
+        axes: counted,
+        ofAxes: n
       };
     })
-    .sort((a, b) => a.distance - b.distance);
+    /*
+     * Distance decides, but an outcome there was almost nothing to compare on does not get
+     * to win on it. Being four units away on ONE axis out of six is a coincidence, not a
+     * likeness, and because a smaller comparison is a noisier one those outcomes would win
+     * more often than their share — the same failure as the unmasked 50s, one level down.
+     * So anything under the floor sinks below everything above it, and if nothing clears
+     * the floor the state hedges (see nearestState). `minMatchAxes` defaults to 0, which
+     * every outcome clears, so this comparator falls straight through to distance on the
+     * Compass and on any quiz that has not set it.
+     */
+    .sort((a, b) => {
+      const floor = quiz.config.minMatchAxes ?? 0;
+      return (b.axes >= floor ? 1 : 0) - (a.axes >= floor ? 1 : 0) || a.distance - b.distance;
+    });
 }
 
 export type NearestKind = 'central' | 'loose' | 'tie' | 'near';
@@ -173,6 +252,15 @@ export function nearestState(
   }
   if (!near[0]) return { kind: 'loose', names };
   if (near[0].distance > quiz.config.hedgeUnits) return { kind: 'loose', names };
+  /*
+   * Too little in common to compare. Under evidence-masked matching a reader is measured
+   * against an outcome only where both of them name a position, and that can come down to
+   * one axis — a reader who lands in the no-position band five times over, against a figure
+   * the text places on four. Being four units away on one axis out of six is not "nearest
+   * on the map", so it hedges instead. Quizzes that set nothing here are unaffected, and on
+   * the Compass every match is measured on every axis in any case.
+   */
+  if (near[0].axes < (quiz.config.minMatchAxes ?? 0)) return { kind: 'loose', names };
   if (near[1] && Math.abs(near[1].distance - near[0].distance) <= quiz.config.tieUnits) {
     return { kind: 'tie', names };
   }
@@ -239,7 +327,16 @@ export const bipolar: ScoringStrategy = {
       rows,
       noClaimRange: noClaimRange(),
       noClaimSpan: noClaimSpan(quiz),
-      ranked: near.map(m => ({ name: m.name, slug: m.slug, score: m.match }))
+      /*
+       * `axes` travels with the ranking so a page can say what the match was made on. It is
+       * added only where an outcome is masked: on the Compass every outcome is measured on
+       * every axis, the sentence would be noise, and the object has to stay what it was.
+       */
+      ranked: near.map(m =>
+        m.axes === m.ofAxes
+          ? { name: m.name, slug: m.slug, score: m.match }
+          : { name: m.name, slug: m.slug, score: m.match, axes: m.axes, ofAxes: m.ofAxes }
+      )
     };
   },
 

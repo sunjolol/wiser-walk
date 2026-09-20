@@ -285,7 +285,7 @@
       "voice": 20,
       "lead": 15,
       "conflict": 45,
-      "doubt": 45,
+      "doubt": 30,
       "plan": 50
     },
     "evidence": {
@@ -353,6 +353,16 @@
           "ref": "1 Samuel 30:8",
           "toward": "left",
           "did": "He asked whether he would overtake the raiders before setting out after them."
+        },
+        {
+          "ref": "1 Samuel 23:2-4",
+          "toward": "left",
+          "did": "He asked whether to go and strike the Philistines, and asked a second time before he went."
+        },
+        {
+          "ref": "2 Samuel 5:19",
+          "toward": "left",
+          "did": "He asked whether to go up against the Philistines and whether they would be given into his hand."
         },
         {
           "ref": "2 Samuel 12:20-23",
@@ -667,7 +677,7 @@
       "voice": 45,
       "lead": 65,
       "conflict": 55,
-      "doubt": 55,
+      "doubt": 35,
       "plan": 30
     },
     "evidence": {
@@ -730,6 +740,17 @@
           "ref": "Daniel 7:16",
           "toward": "left",
           "did": "He went up to one of those standing by and asked what the vision meant."
+        },
+        {
+          "ref": "Daniel 8:15",
+          "toward": "left",
+          "did": "When he had seen the vision he sought to understand it."
+        },
+        {
+          "ref": "Daniel 12:8",
+          "toward": "left",
+          "did": "He said he had heard and had not understood, and asked what the outcome of these things would be.",
+          "quote": "I heard, but I didn’t understand."
         },
         {
           "ref": "Daniel 6:10",
@@ -899,9 +920,10 @@
           "did": "He charged Ananias to his face with keeping back part of the price and lying to God."
         },
         {
-          "ref": "Matthew 16:22",
+          "ref": "Acts 8:20-23",
           "toward": "left",
-          "did": "He took Jesus aside and rebuked him for what he had said."
+          "did": "He told Simon that his silver would perish with him, that he had no part in the matter, and told him to repent.",
+          "quote": "May your silver perish with you"
         },
         {
           "ref": "Acts 11:2-4",
@@ -1035,75 +1057,90 @@
     }
   },
   {
-    "slug": "thomas",
-    "name": "Thomas",
-    "who": "one of the Twelve, also called Didymus",
+    "slug": "gideon",
+    "name": "Gideon",
+    "who": "son of Joash of Ophrah, called from the wine press to fight Midian",
     "position": {
-      "pace": 50,
-      "voice": 15,
-      "lead": 40,
+      "pace": 65,
+      "voice": 25,
+      "lead": 25,
       "conflict": 50,
-      "doubt": 5,
-      "plan": 50
+      "doubt": 10,
+      "plan": 20
     },
     "evidence": {
       "pace": [
         {
-          "ref": "John 11:16",
-          "toward": "left",
-          "did": "He told his fellow disciples that they should go too, and die with him.",
-          "quote": "Let’s also go, that we may die with him."
-        },
-        {
-          "ref": "John 20:25",
+          "ref": "Judges 6:27",
           "toward": "right",
-          "did": "He would not act on the other disciples' report until he had seen and touched for himself."
+          "did": "He took ten of his servants and pulled down the altar by night rather than by day, because he feared his father’s household and the men of the city."
         }
       ],
       "voice": [
         {
-          "ref": "John 14:5",
+          "ref": "Judges 6:13",
           "toward": "left",
-          "did": "He said out loud that they did not know where Jesus was going or how they could know the way."
+          "did": "He asked why all this had happened to them if the LORD was with them, and where his wondrous works were."
         },
         {
-          "ref": "John 11:16",
+          "ref": "Judges 6:15",
           "toward": "left",
-          "did": "He said to the other disciples what he thought the journey to Judea would cost."
+          "did": "He said his family was the poorest in Manasseh and he was the least in his father’s house."
         }
       ],
       "lead": [
         {
-          "ref": "John 11:16",
+          "ref": "Judges 6:34",
           "toward": "left",
-          "did": "He addressed his fellow disciples and told them what they should do."
+          "did": "He blew a trumpet, and Abiezer was gathered together to follow him."
+        },
+        {
+          "ref": "Judges 7:17",
+          "toward": "left",
+          "did": "He told the three hundred to watch him and do likewise, and to do as he did when he came to the outermost part of the camp.",
+          "quote": "Watch me, and do likewise."
+        },
+        {
+          "ref": "Judges 8:23",
+          "toward": "right",
+          "did": "When the men of Israel asked him to rule over them he said he would not rule over them, nor would his son."
         }
       ],
       "conflict": [
         {
-          "ref": null,
-          "toward": null,
-          "did": "The text does not show this."
+          "ref": "Judges 8:16-17",
+          "toward": "left",
+          "did": "He took the elders of Succoth and taught the men of the city with thorns and briers, and broke down the tower of Penuel."
+        },
+        {
+          "ref": "Judges 8:1-3",
+          "toward": "right",
+          "did": "When the men of Ephraim rebuked him sharply he answered them by comparing their gleaning with his vintage, and their anger was abated towards him."
         }
       ],
       "doubt": [
         {
-          "ref": "John 20:25",
+          "ref": "Judges 6:17",
           "toward": "left",
-          "did": "He named the evidence he required before he would believe the report.",
-          "quote": "Unless I see in his hands the print of the nails, put my finger into the print of the nails, and put my hand into his side, I will not believe."
+          "did": "He asked for a sign that it was really the one speaking with him.",
+          "quote": "show me a sign that it is you who talk with me"
         },
         {
-          "ref": "John 14:5",
+          "ref": "Judges 6:36-40",
           "toward": "left",
-          "did": "He said he did not know the way and asked how he could."
+          "did": "He put a fleece on the threshing floor and asked for dew on it alone, then asked once more for the reverse."
         }
       ],
       "plan": [
         {
-          "ref": null,
-          "toward": null,
-          "did": "The text does not show this."
+          "ref": "Judges 6:11",
+          "toward": "left",
+          "did": "He was beating out wheat in the wine press, to hide it from the Midianites."
+        },
+        {
+          "ref": "Judges 7:16",
+          "toward": "left",
+          "did": "He divided the three hundred into three companies and put trumpets and empty pitchers with torches inside them into the hands of all of them."
         }
       ]
     }
@@ -1554,7 +1591,7 @@
       "pace": 55,
       "voice": 70,
       "lead": 65,
-      "conflict": 50,
+      "conflict": 40,
       "doubt": 60,
       "plan": 50
     },
@@ -1582,6 +1619,12 @@
           "ref": "Luke 2:51",
           "toward": "right",
           "did": "After Jerusalem she again kept what had been said in her heart."
+        },
+        {
+          "ref": "Luke 1:46-47",
+          "toward": "left",
+          "did": "She answered Elizabeth at length, saying that her soul magnified the Lord and her spirit had rejoiced in God her Saviour.",
+          "quote": "My soul magnifies the Lord."
         }
       ],
       "lead": [
@@ -1599,9 +1642,10 @@
       ],
       "conflict": [
         {
-          "ref": null,
-          "toward": null,
-          "did": "The text does not show this."
+          "ref": "Luke 2:48",
+          "toward": "left",
+          "did": "When they found him in the temple she asked him why he had treated them this way, and said that she and his father had been anxiously looking for him.",
+          "quote": "Son, why have you treated us this way?"
         }
       ],
       "doubt": [
@@ -1683,6 +1727,12 @@
           "ref": "Luke 10:40",
           "toward": "left",
           "did": "She asked Jesus to tell her sister to come and help her."
+        },
+        {
+          "ref": "John 11:21",
+          "toward": "left",
+          "did": "When he arrived she told him that if he had been there her brother would not have died.",
+          "quote": "Lord, if you would have been here, my brother wouldn’t have died."
         }
       ],
       "doubt": [
@@ -1786,50 +1836,59 @@
     }
   },
   {
-    "slug": "priscilla",
-    "name": "Priscilla",
-    "who": "tentmaker of Rome and Corinth, who worked and taught with her husband Aquila",
+    "slug": "barnabas",
+    "name": "Barnabas",
+    "who": "Levite of Cyprus, sent by the Jerusalem assembly to Antioch, Paul’s travelling companion",
     "position": {
-      "pace": 50,
-      "voice": 40,
-      "lead": 80,
-      "conflict": 50,
+      "pace": 35,
+      "voice": 25,
+      "lead": 85,
+      "conflict": 30,
       "doubt": 50,
-      "plan": 50
+      "plan": 35
     },
     "evidence": {
       "pace": [
         {
-          "ref": null,
-          "toward": null,
-          "did": "The text does not show this."
+          "ref": "Acts 14:14",
+          "toward": "left",
+          "did": "When he and Paul heard what the crowd at Lystra was doing, they tore their clothes and sprang into the multitude, crying out."
         }
       ],
       "voice": [
         {
-          "ref": "Acts 18:26",
+          "ref": "Acts 11:23",
           "toward": "left",
-          "did": "Hearing Apollos speak in the synagogue, she and Aquila explained the way of God to him more accurately."
+          "did": "When he came to Antioch and saw the grace of God he was glad, and exhorted them all to remain near to the Lord."
+        },
+        {
+          "ref": "Acts 15:12",
+          "toward": "left",
+          "did": "He and Paul reported to the gathered assembly what God had done among the nations, and the multitude listened."
         }
       ],
       "lead": [
         {
-          "ref": "Acts 18:26",
+          "ref": "Acts 9:27",
           "toward": "right",
-          "did": "She and Aquila took Apollos aside and set out the way of God to him more accurately.",
-          "quote": "they took him aside, and explained to him the way of God more accurately"
+          "did": "When the disciples in Jerusalem were afraid of Saul, he took him and brought him to the apostles and told them what had happened on the road."
         },
         {
-          "ref": "Romans 16:3-4",
+          "ref": "Acts 11:25-26",
           "toward": "right",
-          "did": "Paul greets her and Aquila as his fellow workers, who risked their own necks for his life."
+          "did": "He went to Tarsus to look for Saul, found him and brought him to Antioch, and for a whole year they taught many people there."
         }
       ],
       "conflict": [
         {
-          "ref": null,
-          "toward": null,
-          "did": "The text does not show this."
+          "ref": "Acts 15:2",
+          "toward": "left",
+          "did": "He and Paul had no small discord and discussion with those who were teaching the brothers at Antioch."
+        },
+        {
+          "ref": "Acts 15:37-39",
+          "toward": "left",
+          "did": "He planned to take Mark with them; when Paul did not agree the contention grew sharp and they separated, and he took Mark and sailed to Cyprus."
         }
       ],
       "doubt": [
@@ -1841,9 +1900,9 @@
       ],
       "plan": [
         {
-          "ref": null,
-          "toward": null,
-          "did": "The text does not show this."
+          "ref": "Acts 4:37",
+          "toward": "left",
+          "did": "Having a field, he sold it, brought the money and laid it at the apostles’ feet."
         }
       ]
     }
@@ -1855,7 +1914,7 @@
     "position": {
       "pace": 55,
       "voice": 40,
-      "lead": 50,
+      "lead": 40,
       "conflict": 50,
       "doubt": 70,
       "plan": 40
@@ -1905,6 +1964,17 @@
           "toward": "left",
           "did": "On the road up to Jerusalem he walked ahead of the Twelve and they followed.",
           "quote": "Jesus was going in front of them"
+        },
+        {
+          "ref": "Mark 1:17",
+          "toward": "left",
+          "did": "He told Simon and Andrew to come after him, and said he would make them fishers for men.",
+          "quote": "Come after me, and I will make you into fishers for men."
+        },
+        {
+          "ref": "Mark 3:13-14",
+          "toward": "left",
+          "did": "He went up the mountain, called to himself those whom he wanted, and appointed twelve to be with him and to be sent out to preach."
         },
         {
           "ref": "John 13:4-5",

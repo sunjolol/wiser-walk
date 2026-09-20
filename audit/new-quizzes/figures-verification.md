@@ -590,3 +590,60 @@ Coordinates: pace 55, voice 40, lead 50, conflict 50, doubt 70, plan 40
 | plan | Mark 14:13-16 | left | supported | Instructions given, and v16 says they found things as he had said. (kept) |
 | plan | Luke 22:8 | left | supported | Exactly the verse. (kept) |
 | plan | Mark 6:38-41 | right | overstated | The crowd, the lack of food and the late hour are 6:35-36, outside the ref. The notes cite 6:35-41; the data cites 6:38-41. (reworded) |
+
+---
+
+# Calibration pass, 2026-09-20
+
+The two structural findings above were answered in code. This section records what changed in
+`figures.verified.json`; the report of what it did to the distribution is in
+`site/scripts/sim-figures.mjs`, which prints it and is meant to be re-run.
+
+**Every reference below was opened in `demos/sounds-like-scripture/work/verses-all.json` at
+`src: "webbe"` before it was written**, and `site/scripts/engine-test.mjs` now proves, on every
+build, that all 265 references in the roster resolve and that all 50 quotations are verbatim
+substrings of the verses they cite.
+
+## What the engine now does
+
+An axis counts toward a match only where BOTH sides name a position: the figure, because the text
+places them there, and the reader, because their score is outside the 41-59 band in which this
+instrument says no pole is named. The mask is derived in `bible-figure.ts` from the `toward` fields
+and the coordinate, never stored, so it cannot drift from the evidence:
+
+- **none** — no cited act. The 50 beside it is the middle of a scale, not a place the person stood.
+- **both** — cited acts point both ways and the coordinate stays inside the no-pole band.
+- **shown** — the acts place the figure, and the coordinate says where. Acts pointing both ways
+  still count as shown when their weight carried the coordinate out of the band.
+
+A figure needs four of six shown axes to be a possible result (`minShownAxes`), and a reader must
+have at least two axes in common with a figure before it is named rather than hedged
+(`minMatchAxes`).
+
+## Evidence added, and the coordinates that followed it
+
+| figure | axis | was | now | what was added |
+|---|---|---|---|---|
+| David | doubt | 45 | 30 | 1 Samuel 23:2-4 and 2 Samuel 5:19, both left: he asked before going, and asked again. He had one left item; the record has the pattern. |
+| Daniel | doubt | 55 | 35 | Daniel 8:15 (he sought to understand the vision) and 12:8 (he heard, did not understand, and asked the outcome), both left. |
+| Mary of Nazareth | conflict | 50, not shown | 40 | Luke 2:48: she asked her son why he had treated them this way. The cell was blank; the verifier's own notes named this verse as unused. |
+| Mary of Nazareth | voice | 70 | 70 | Luke 1:46-47 added as a left item. The verifier dropped voice from 85 to 70 for selective evidence and cited nothing for it; now it is cited. No coordinate move. |
+| Jesus | lead | 50 | 40 | Mark 1:17 and Mark 3:13-14, both left. The cell carried one left act against two right while the Gospels record him calling, appointing and sending throughout. **A judgement call, and the one to overrule first if any is wrong.** Without it he is placed on three axes and the four-axis floor would take him off the roster, which is not an option the owner left open. |
+| Peter | conflict | 30 | 30 | Matthew 16:22 was carrying his voice-left AND his conflict-left. Replaced under conflict with Acts 8:20-23 (he told Simon his silver would perish with him). No coordinate move. |
+| Martha | conflict | 35 | 35 | Luke 10:40 was carrying four of her six axes. John 11:21 added (she told him that if he had been there her brother would not have died), so conflict no longer rests on the same verse as three other cells. No coordinate move. |
+
+## Roster changes
+
+- **Priscilla is out; Barnabas is in.** Four of her six cells were "the text does not show this" and
+  the two that remained rested on one verse plus one greeting: two shown axes, against a floor of
+  four. This is the replacement the verification above asked for. Barnabas is placed on five:
+  Acts 14:14 (pace), 11:23 and 15:12 (voice), 9:27 and 11:25-26 (lead), 15:2 and 15:37-39 (conflict),
+  4:37 (plan); the text does not show his Reasons.
+- **Thomas is out; Gideon is in.** Thomas is placed on three axes at best, and one of those, his
+  lead, rested on John 11:16, the same verse already carrying his pace and his voice — the reuse
+  named in this file. There is no further record of him to draw on. Gideon is placed on five:
+  Judges 6:27 (pace), 6:13 and 6:15 (voice), 6:34, 7:17 and 8:23 (lead), 6:17 and 6:36-40 (reasons),
+  6:11 and 7:16 (plan); on conflict the text shows both ends (8:16-17 and 8:1-3), so it is masked.
+- **The roster is still 23**, still holds Jesus, and still holds nine women — the blueprint's floor,
+  now exactly met rather than exceeded. `engine-test.mjs` asserts the count so it cannot be lost to
+  a later change.

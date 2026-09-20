@@ -66,6 +66,16 @@ const scopeNote =
 /** No number against an outcome where the quiz forbids it: the rank is said in words. */
 const hideScore = Boolean(quiz?.hideOutcomeScore);
 
+/**
+ * The axes on which the READER named no position. On a quiz matched against evidence these
+ * are left out of the comparison — an axis where the instrument says the reader claims
+ * nothing cannot be used to claim they are like somebody — so the closest card says which
+ * they were. Harmless everywhere else: a card only reads this where its outcome carries a
+ * mask, and no Compass tradition does.
+ */
+const silentAxes =
+  view?.shape === 'bipolar' ? view.rows.filter(r => r.noClaim).map(r => r.name) : [];
+
 /** A gift the reader came out low on needs its caveat beside it, not in a footer. */
 const showLow =
   view?.shape === 'unipolar' && Boolean(quiz?.notes?.low) && view.rows.some(r => r.below);
@@ -179,6 +189,7 @@ const showLow =
               quiz={quiz}
               ranked={view.ranked}
               leading={view.state === 'tie' ? 2 : view.state === 'loose' ? 0 : 1}
+              readerSilent={silentAxes}
             />
           </>
         )}

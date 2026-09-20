@@ -35,10 +35,12 @@
  * TWO KINDS OF 50 in a figure's position, told apart by the evidence, never by the number:
  *   both ends   two or three items with real refs and opposing `toward` values
  *   not shown   exactly one item, ref null, toward null, did "The text does not show this."
+ * Neither is a place the person stood, so neither is counted when a reader is matched. That
+ * is the evidence mask: see maskFor() below, and AxisMask in engine/types.ts.
  */
 import data from '../../data/bible-figures.json';
-import { bipolar } from '../strategies/bipolar';
-import type { Outcome, Quiz, QuizGroup, QuizItem } from '../engine/types';
+import { bipolar, namesNoPosition } from '../strategies/bipolar';
+import type { AxisMask, Outcome, Quiz, QuizGroup, QuizItem } from '../engine/types';
 
 export interface FigureEvidence {
   /** A Bible reference, or null when the text does not show this axis for this figure. */
@@ -53,6 +55,8 @@ export interface FigureEvidence {
 
 export interface FigureOutcome extends Outcome {
   position: number[];
+  /** Derived from the evidence below, never stored: see maskFor(). */
+  mask: AxisMask[];
   who: string;
   /** Keyed by group KEY (pace, voice, lead, conflict, doubt, plan), not by slug. */
   evidence: Record<string, FigureEvidence[]>;
@@ -205,26 +209,90 @@ if (data.axisOrder.join(',') !== keys.join(',')) {
   );
 }
 
+/**
+ * THE EVIDENCE MASK, derived from the data and never typed by hand.
+ *
+ * A figure is matched to a reader only on the axes where the text puts them somewhere.
+ * Which those are is read off two things the data already carries — the `toward` fields of
+ * the cited acts, and the coordinate the editor drew from them:
+ *
+ *   none   no cited act on this axis. The cell is the single "the text does not show this"
+ *          item, and the 50 beside it is the middle of a SCALE, not a place this person
+ *          stood. Counting it told every moderate reader they were most like whichever
+ *          figure had the fewest records, which is a false claim about that person.
+ *   both   cited acts point to both poles AND they do not resolve into a position — the
+ *          coordinate lands in the band where this instrument names no pole for anybody
+ *          (41-59, from BAND_EDGES). True of Jesus on three axes: he heals on the spot and
+ *          he prays all night before choosing; he overturns the tables and he restores
+ *          Peter. That is a real finding about the record and a real refusal to place him,
+ *          and it is not the same as a reader who is mildly in the middle.
+ *   shown  everything else: the acts place this figure, and the coordinate says where.
+ *          Acts pointing both ways still count as SHOWN when the weight of them carried
+ *          the coordinate out of the no-pole band — that is the editor reading the record,
+ *          which is exactly what a coordinate is for.
+ *
+ * So the rule in one line: an axis counts when the figure's own coordinate names a pole.
+ * Nothing here can drift from the evidence, because nothing here is stored.
+ */
+function maskFor(
+  name: string,
+  position: number[],
+  evidence: Record<string, FigureEvidence[]>
+): AxisMask[] {
+  return keys.map((key, i) => {
+    const cited = (evidence[key] ?? []).filter(e => e.ref);
+    if (!cited.length) return 'none';
+    const inBand = namesNoPosition(position[i] ?? 50);
+    const bothWays =
+      cited.some(e => e.toward === 'left') && cited.some(e => e.toward === 'right');
+    if (!inBand) return 'shown';
+    if (bothWays) return 'both';
+    // Acts that all point one way, and a coordinate that refuses to name the pole they
+    // point at. There is no honest sentence for that cell: it is not "the text does not
+    // show this" and it is not "the text shows both ends". The editor has to either place
+    // the figure where the acts point or say what the other end of the record is.
+    throw new Error(
+      `bible-figure: ${name}/${key} cites acts toward one pole only but sits at ` +
+      `${position[i]}, inside the band where no pole is named`
+    );
+  });
+}
+
 const outcomes: FigureOutcome[] = data.figures.map(f => ({
   name: f.name,
   slug: f.slug,
   position: f.position,
+  mask: maskFor(f.name, f.position, f.evidence as Record<string, FigureEvidence[]>),
   who: f.who,
   ...(f.slug === 'jesus' ? { note: JESUS_NOTE } : {}),
   evidence: f.evidence as Record<string, FigureEvidence[]>
 }));
 
 /**
- * Scoring config, derived the way scripts/build-data.mjs derives the Compass's.
+ * Scoring config. CALIBRATED, not copied: every number below was measured over 20,000
+ * simulated answer sheets with scripts/sim-figures.mjs, which is kept in the repo so the
+ * next person can re-run it. Run it after ANY change to a coordinate or a statement.
  *
  * radix        items per axis x 4 + 1: three items run -6..+6 raw, so 13 reachable scores.
- * maxDistance  the largest distance between any two listed outcomes, to one decimal place
- *              (132.9 on the verified roster: Joseph to John the Baptist). It sets BAR
- *              LENGTH only on this quiz; hideOutcomeScore means it never prints as a number.
- * tieUnits, hedgeUnits, centerUnits
- *              the Compass's audited 10 / 45 / 10, carried over UNCHANGED AND UNTESTED for
- *              this roster. They need their own look before launch: see the draft note and
- *              audit/new-quizzes/figures-verification.md, "Two structural findings".
+ * maxDistance  the largest distance between any two listed figures under the same
+ *              evidence-masked rule the engine matches with. It sets BAR LENGTH only on
+ *              this quiz; hideOutcomeScore means it never prints as a number.
+ * tieUnits     1, not the Compass's 10. Twenty-three figures crowd a space where the two
+ *              closest are about fifteen units apart, and a reader is measured only on the
+ *              axes they and the figure both name — so at 10 units more than half of all
+ *              readers had a second figure inside the window and "jointly" became the
+ *              normal result rather than the exception. At 1 it is 15% of readers, and it
+ *              means what it says: the two are level. (Measured: 0 -> 11%, 1 -> 15%,
+ *              2 -> 22%, 3 -> 29%, 10 -> 58%.)
+ * hedgeUnits   45, the Compass's, and it keeps its meaning because the rescale puts every
+ *              distance back on the six-axis scale it was set on. It is doing real work
+ *              here: a reader who names a position on only one or two axes is multiplied
+ *              back up by the rescale, so a thin match hedges itself. 7% of readers.
+ * centerUnits  10. At radix 13 the reachable scores inside it are exactly 42, 50 and 58 —
+ *              the same three the 41-59 no-position band holds — so "central" means
+ *              precisely "named no position on any axis", which is also the case where no
+ *              figure can be measured at all. If the radix ever changes, check this again.
+ * minShownAxes 4 of 6. See validateOutcomeMasks in engine/registry.ts.
  */
 const perAxis = groups.map((_, g) => items.filter(it => it.group === g).length);
 if (new Set(perAxis).size !== 1) {
@@ -232,15 +300,26 @@ if (new Set(perAxis).size !== 1) {
 }
 const radix = perAxis[0]! * 4 + 1;
 
+/*
+ * Measured the way the engine measures: an axis counts only where BOTH figures name a
+ * position, root-mean-square rescaled to the six-axis range. A figure read as a reader
+ * names a position on exactly its own shown axes, so the pair's axes are the intersection
+ * of the two masks — and the relation is symmetric, though the loop walks both ways rather
+ * than relying on that.
+ */
 let maxPair = 0;
-for (let i = 0; i < outcomes.length; i++) {
-  for (let j = i + 1; j < outcomes.length; j++) {
+for (const a of outcomes) {
+  for (const b of outcomes) {
+    if (a === b) continue;
     let sum = 0;
+    let counted = 0;
     for (let k = 0; k < groups.length; k++) {
-      const d = outcomes[i]!.position[k]! - outcomes[j]!.position[k]!;
+      if (a.mask[k] !== 'shown' || b.mask[k] !== 'shown') continue;
+      const d = a.position[k]! - b.position[k]!;
       sum += d * d;
+      counted++;
     }
-    maxPair = Math.max(maxPair, Math.sqrt(sum));
+    if (counted) maxPair = Math.max(maxPair, Math.sqrt((sum * groups.length) / counted));
   }
 }
 
@@ -259,10 +338,11 @@ export const bibleFigure: FigureQuiz = {
     'This one is an unaudited draft. Every figure is placed by cited, recorded acts, and each ' +
     'reference has been checked against the text, but where a figure sits is still a judgement, ' +
     'and the statements have not been through the adversarial fairness audit the Theology ' +
-    'Compass went through. Figures near the middle of the map, Jesus among them, come up more ' +
-    'often than the rest for a reader with moderate answers; that is how the map is built, not ' +
-    'a finding about you. No percentage is ever shown against a person. Neither end of any ' +
-    'axis is the better one. Treat the result as a conversation starter, not a verdict.',
+    'Compass went through. You are compared to each person only on the axes where the text ' +
+    'places them and your own answers name a position: where the text shows nothing, or shows ' +
+    'both ends, that axis is left out rather than counted as a match in the middle. No ' +
+    'percentage is ever shown against a person. Neither end of any axis is the better one. ' +
+    'Treat the result as a conversation starter, not a verdict.',
   items,
   groups,
   outcomes,
@@ -270,9 +350,11 @@ export const bibleFigure: FigureQuiz = {
   config: {
     radix,
     maxDistance: Math.round(maxPair * 10) / 10,
-    tieUnits: 10,
+    tieUnits: 1,
     hedgeUnits: 45,
-    centerUnits: 10
+    centerUnits: 10,
+    minShownAxes: 4,
+    minMatchAxes: 2
   },
   shareTitle: 'Who in the Bible I am most like',
   codePrefix: 'BF',
@@ -286,9 +368,9 @@ export const bibleFigure: FigureQuiz = {
   outcomeNounPlural: 'figures',
   outcomePathBase: 'figure',
   outcomeScopeNote:
-    `Scored against the ${outcomes.length} people listed here, on six axes of temperament ` +
-    'only. Nearness is not likeness of character, and no number is ever shown against a ' +
-    'person.',
+    `Scored against the ${outcomes.length} people listed here, on the axes of temperament ` +
+    'where the text places them and your own answers name a position. Nearness is not ' +
+    'likeness of character, and no number is ever shown against a person.',
   hideOutcomeScore: true,
 
   /**

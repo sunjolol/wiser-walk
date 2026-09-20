@@ -185,7 +185,41 @@ function validateOutcomePositions(quiz: Quiz): void {
   });
 }
 
+/**
+ * An outcome that declares an evidence mask must still be matchable.
+ *
+ * The mask exists so that a coordinate nobody argued for is not counted against a reader.
+ * Taken far enough that leaves an outcome measured on one or two axes, which is worse than
+ * the problem it fixes: a figure placed by two verses would be named as somebody's closest
+ * on the strength of two verses. The floor is four of six by default, and a quiz may raise
+ * it. A figure that cannot clear it is repaired from the text or taken off the roster —
+ * never quietly kept and never silently hidden, because both leave a page on the site
+ * claiming a result the arithmetic will not give.
+ */
+function validateOutcomeMasks(quiz: Quiz): void {
+  if (quiz.strategy.shape !== 'bipolar') return;
+  const floor = quiz.config.minShownAxes ?? 4;
+  quiz.outcomes.forEach(o => {
+    if (!o.mask) return;
+    if (o.mask.length !== quiz.groups.length) {
+      throw new Error(
+        `quiz "${quiz.slug}": outcome "${o.slug}" has a ${o.mask.length}-axis mask ` +
+        `for ${quiz.groups.length} groups`
+      );
+    }
+    const shown = o.mask.filter(m => m === 'shown').length;
+    if (shown < floor) {
+      throw new Error(
+        `quiz "${quiz.slug}": outcome "${o.slug}" is placed on only ${shown} of ` +
+        `${quiz.groups.length} axes (floor ${floor}). Add evidence that is really in the ` +
+        'source, or take the outcome off the list.'
+      );
+    }
+  });
+}
+
 QUIZZES.forEach(validate);
 QUIZZES.forEach(validateOutcomePositions);
+QUIZZES.forEach(validateOutcomeMasks);
 validateOutcomeSlugs(QUIZZES);
 validateCodePrefixes(QUIZZES);

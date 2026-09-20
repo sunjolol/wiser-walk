@@ -23,14 +23,21 @@ are untouched since the Riche design pass. The site builds and all tests pass in
 
 ## Stopped part-way (pick up here, in this order)
 
-1. **Figure quiz calibration: NOT started in code.** The problem, measured: an axis with no evidence is
-   stored as 50, so thinly evidenced figures sit at the centre and win. Over 6,000 simulated sheets
-   Mary of Nazareth was closest for about 20%, Jesus 14%, and half of all sheets tied. The fix is
-   specified in full in the "Calibrate" prompt of the workflow script named below: evidence-masked
-   distance (axes with no evidence, or with evidence at BOTH ends, are left out of the distance),
-   at least four shown axes per figure (repair or replace Priscilla), thresholds tuned by a kept
-   simulation script until no figure is closest for more than 9% of realistic sheets. The Compass
-   must stay byte-identical.
+1. **Figure quiz calibration: DONE 2026-09-20, not yet shown to the owner.** It was: an axis with no
+   evidence stored as 50, so thinly evidenced figures sat at the centre and won — Mary of Nazareth
+   closest for 20% of simulated sheets, Jesus 14%, and half of all sheets tied. Now: an axis counts
+   only where BOTH sides name a position (the figure, because the text places them there; the reader,
+   because the score is outside the 41-59 no-position band), a figure needs four of six placed axes
+   to be a possible result, and the thresholds were measured rather than copied — tie 10 to 1, plus
+   a floor of two axes in common before a figure is named. Mary is now 8.6% and Jesus 3.3%, ties are
+   7.1%. Roster: Priscilla replaced by Barnabas, Thomas by Gideon, both for want of evidence; still
+   23 people, nine women, Jesus. The Compass is byte-identical (24 built pages and three rendered
+   result pages, and 4,091 engine results). Kept: `site/scripts/sim-figures.mjs` — RUN IT after any
+   change to a coordinate or a statement. Record: the "Calibration pass" section at the end of
+   `audit/new-quizzes/figures-verification.md`. **Left undone: Martha is closest for 1.1% of sheets
+   against a 1.5% floor** — she is crowded by Moses, Paul, David and Deborah and there is little more
+   of her in the text; and the evidence for moving Jesus's Lead coordinate from 50 to 40 is the one
+   judgement in the pass to question first.
 2. **Apply the audit.** An editor verifies each blocker and major finding in the five audit files,
    applies what holds, and writes `audit/new-quizzes/AUDIT-LOG.md` with the owner's decisions at the
    top (above all: whether and how the gifts quiz includes prophecy, healing, miracles, tongues and

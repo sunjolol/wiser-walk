@@ -8,13 +8,15 @@ const here = dirname(fileURLToPath(import.meta.url));
 const SOURCE = resolve(here, '../../audit/compass-data.revised.json');
 const OUT = resolve(here, '../src/data/compass.json');
 const ASIDE = resolve(here, '../src/data/compass-audit.json');
+const FIGURES_SOURCE = resolve(here, '../../audit/new-quizzes/figures.verified.json');
+const FIGURES_OUT = resolve(here, '../src/data/bible-figures.json');
 
 // The audited source lives outside site/, which a host may not check out when the
 // project root is set to site/. The generated files are committed for exactly that
 // case: if the source is missing but the outputs are present, use them and carry on.
 // If neither exists, fail loudly rather than building a site with no quiz in it.
 if (!existsSync(SOURCE)) {
-  if (existsSync(OUT) && existsSync(ASIDE)) {
+  if (existsSync(OUT) && existsSync(ASIDE) && existsSync(FIGURES_OUT)) {
     console.log(
       'build-data: audit source not present (building outside the repo root?) — ' +
       'using the committed src/data/*.json unchanged.'
@@ -137,6 +139,49 @@ const aside = {
   disputed: src.disputed ?? []
 };
 
+/*
+ * The figure quiz's roster, flattened the same way and for the same reason: every
+ * coordinate is argued from cited acts in audit/new-quizzes/figures.verified.json, which
+ * lives outside site/ and so outside the Vercel root directory. The axis order is written
+ * into the file rather than assumed, and src/lib/quizzes/bible-figure.ts throws if it ever
+ * stops matching the groups — a silently reordered position array would move every figure.
+ *
+ * Nothing is computed here. The evidence mask that decides which axes a figure is matched
+ * on is derived in bible-figure.ts from these very fields, so there is nowhere for it to
+ * drift out of step with the evidence.
+ */
+const FIGURE_AXES = ['pace', 'voice', 'lead', 'conflict', 'doubt', 'plan'];
+let figureCount = 0;
+if (existsSync(FIGURES_SOURCE)) {
+  const src = JSON.parse(readFileSync(FIGURES_SOURCE, 'utf8'));
+  const figures = src.map(f => {
+    FIGURE_AXES.forEach(k => {
+      if (typeof f.position?.[k] !== 'number') {
+        throw new Error(`build-data: figure "${f.slug}" has no ${k} coordinate`);
+      }
+      if (!Array.isArray(f.evidence?.[k]) || !f.evidence[k].length) {
+        throw new Error(`build-data: figure "${f.slug}" has no evidence on ${k}`);
+      }
+    });
+    return {
+      name: f.name,
+      slug: f.slug,
+      who: f.who,
+      position: FIGURE_AXES.map(k => f.position[k]),
+      evidence: Object.fromEntries(FIGURE_AXES.map(k => [k, f.evidence[k]]))
+    };
+  });
+  figureCount = figures.length;
+  writeFileSync(
+    FIGURES_OUT,
+    JSON.stringify(
+      { generatedFrom: 'audit/new-quizzes/figures.verified.json', axisOrder: FIGURE_AXES, figures },
+      null,
+      1
+    )
+  );
+}
+
 mkdirSync(dirname(OUT), { recursive: true });
 writeFileSync(OUT, JSON.stringify(out, null, 1));
 writeFileSync(ASIDE, JSON.stringify(aside, null, 1));
@@ -152,5 +197,6 @@ console.log(
   `compass.json: ${axes.length} axes, ${statements.length} statements (${itemsPerAxis}/axis, radix ${radix}), ` +
   `${traditions.length} traditions, max distance ${out.scoring.maxDistance}\n` +
   `compass-audit.json: ${aside.simulations.length} answer sheets, ${aside.changelog.length} changelog entries, ` +
-  `${aside.disputed.length} disputed findings`
+  `${aside.disputed.length} disputed findings` +
+  (figureCount ? `\nbible-figures.json: ${figureCount} figures on ${FIGURE_AXES.length} axes` : '')
 );

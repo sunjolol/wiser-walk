@@ -561,14 +561,21 @@ console.log('11. who in the Bible are you most like?');
     if (!dupes) ok(`all ${bf.outcomes.length} figures sit at distinct positions`);
 
     // The closest pair, printed rather than asserted: it is a fact about the roster the
-    // owner should see move, and the tie rule is 10 units.
+    // owner should see move. Measured the way the engine measures — an axis counts only
+    // where BOTH figures name a position — so it is comparable to the tie rule.
     let closest = { d: Infinity, a: '', b: '' };
     for (let i = 0; i < bf.outcomes.length; i++) {
       for (let j = i + 1; j < bf.outcomes.length; j++) {
-        const d = Math.sqrt(bf.outcomes[i].position.reduce(
-          (s, v, k) => s + (v - bf.outcomes[j].position[k]) ** 2, 0
-        ));
-        if (d < closest.d) closest = { d, a: bf.outcomes[i].name, b: bf.outcomes[j].name };
+        const A = bf.outcomes[i], B = bf.outcomes[j];
+        let sum = 0, k = 0;
+        for (let g = 0; g < bf.groups.length; g++) {
+          if (A.mask[g] !== 'shown' || B.mask[g] !== 'shown') continue;
+          sum += (A.position[g] - B.position[g]) ** 2;
+          k++;
+        }
+        if (!k) continue;
+        const d = Math.sqrt((sum * bf.groups.length) / k);
+        if (d < closest.d) closest = { d, a: A.name, b: B.name };
       }
     }
     ok(`closest pair: ${closest.a} and ${closest.b}, ${closest.d.toFixed(1)} units apart ` +
@@ -629,7 +636,106 @@ console.log('11. who in the Bible are you most like?');
     if (!jesus) fail('Jesus is not on the roster');
     else if (!jesus.note || !/temperament/.test(jesus.note)) fail('Jesus carries no note');
     else ok('Jesus is on the roster and carries his note: "' + jesus.note.slice(0, 48) + '..."');
+
+    // The roster's own promises: both Testaments, at least nine women, and Jesus. Checked
+    // by name because there is no field for either, and a calibration pass that quietly
+    // dropped a woman to fix a distribution would be the worst way to hit a number.
+    const women = [
+      'Deborah', 'Esther', 'Ruth', 'Hannah', 'Abigail', 'Rahab',
+      'Mary of Nazareth', 'Martha', 'Mary Magdalene', 'Priscilla', 'Sarah', 'Miriam'
+    ].filter(n => bf.outcomes.some(o => o.name === n));
+    if (women.length < 9) fail(`only ${women.length} women on the roster: ${women.join(', ')}`);
+    else ok(`${women.length} women on the roster of ${bf.outcomes.length}`);
   }
+}
+
+// ------------------------ 11b. the evidence mask: what a figure is and is not measured on
+console.log('11b. evidence-masked matching');
+{
+  const bf = getQuiz('bible-figure');
+  const compass = getQuiz('theology-compass');
+  const n = bf.groups.length;
+
+  // Every figure declares a mask of the right width, made only of the three honest values,
+  // and agreeing with its own evidence. The mask is DERIVED in bible-figure.ts; this is the
+  // independent check that the derivation says what the data says.
+  let wrong = 0;
+  for (const f of bf.outcomes) {
+    if (!Array.isArray(f.mask) || f.mask.length !== n) { wrong++; fail(`${f.name}: mask width`); continue; }
+    bf.groups.forEach((g, i) => {
+      const cited = (f.evidence[g.key] ?? []).filter(e => e.ref);
+      const bothWays = cited.some(e => e.toward === 'left') && cited.some(e => e.toward === 'right');
+      const inBand = f.position[i] >= 41 && f.position[i] <= 59;
+      const want = !cited.length ? 'none' : !inBand ? 'shown' : bothWays ? 'both' : 'BROKEN';
+      if (f.mask[i] !== want) {
+        wrong++;
+        fail(`${f.name}/${g.key}: mask "${f.mask[i]}" but the evidence says "${want}" (at ${f.position[i]})`);
+      }
+    });
+  }
+  if (!wrong) ok(`all ${bf.outcomes.length} masks agree with the evidence they were derived from`);
+
+  // The eligibility floor. A figure placed on three axes would be named as somebody's
+  // closest on three verses; the registry throws on it, so reaching here means it held.
+  const floor = bf.config.minShownAxes;
+  const counts = bf.outcomes.map(f => f.mask.filter(m => m === 'shown').length);
+  const thin = bf.outcomes.filter((_, i) => counts[i] < floor);
+  if (thin.length) fail('figures below the floor: ' + thin.map(f => f.name).join(', '));
+  else ok(`every figure is placed on at least ${floor} of ${n} axes ` +
+          `(${Math.min(...counts)}-${Math.max(...counts)}, ${(counts.reduce((a, b) => a + b, 0) / counts.length).toFixed(1)} on average)`);
+
+  // A masked axis must be IGNORED, not counted. Move every coordinate a figure is NOT
+  // placed on to the far end of its axis, against a fixed reader: the whole ranking, every
+  // figure and every bar, must come out identical. This is the property the fix exists for
+  // — a coordinate nobody argued for cannot be allowed to touch anybody's result.
+  const readers = [[25, 75, 25, 75, 25, 75], [8, 8, 92, 33, 67, 50], [100, 0, 100, 0, 100, 0]];
+  let moved = 0;
+  for (const f of bf.outcomes) {
+    const shifted = f.position.map((v, i) => (f.mask[i] === 'shown' ? v : v < 50 ? 100 : 0));
+    if (shifted.join(',') === f.position.join(',')) continue;
+    const swapped = {
+      ...bf,
+      outcomes: bf.outcomes.map(o => (o.slug === f.slug ? { ...o, position: shifted } : o))
+    };
+    for (const reader of readers) {
+      const a = JSON.stringify(resultFor(bf, reader).ranked);
+      const b = JSON.stringify(bf.strategy.result(swapped, reader).ranked);
+      if (a !== b) { moved++; fail(`${f.name}: moving its masked axes changed a ranking`); break; }
+    }
+  }
+  if (!moved) ok('masked axes are ignored: moving every one of them to a pole changes no ranking');
+
+  // (That a figure's own coordinates return that figure is checked in 11 above. Under
+  // evidence-masked matching it is no longer arithmetic for free: a figure read as a reader
+  // names a position on exactly its own shown axes, so it is a real check that the mask
+  // derived from the evidence and the no-claim band agree.)
+
+  // The ranking says what it was measured on, and only where that is not everything.
+  const view = resultFor(bf, [25, 75, 25, 75, 25, 75]);
+  if (view.ranked.every(r => r.axes === undefined)) fail('the figure ranking carries no axis count');
+  else if (view.ranked.some(r => r.axes > r.ofAxes)) fail('an outcome was measured on more axes than exist');
+  else ok(`a figure result reports its axes: ${view.ranked.slice(0, 3).map(r => `${r.name} ${r.axes}/${r.ofAxes}`).join(', ')}`);
+
+  // ...and the Compass carries none of it, because every tradition has a position on every
+  // axis. This is the field-level half of "the Compass is unchanged".
+  const cv = resultFor(compass, [33, 42, 33, 58, 50, 67]);
+  if (compass.outcomes.some(o => o.mask)) fail('a Compass tradition declared an evidence mask');
+  else if (cv.ranked.some(r => 'axes' in r || 'ofAxes' in r)) {
+    fail('the Compass ranking gained an axis count');
+  } else ok('the Compass declares no mask and its ranking is unchanged in shape');
+
+  // The reader's side of the same rule: an axis the READER names no position on is left out
+  // too, because 41-59 is where this instrument says a score claims nothing. Proof: move
+  // one axis from one end of the no-claim band to the other. The figure ranking must be
+  // identical; the Compass, which counts every axis, must notice.
+  const lo = [42, 25, 75, 25, 75, 25];
+  const hi = [58, 25, 75, 25, 75, 25];
+  const same = q => JSON.stringify(resultFor(q, lo).ranked) === JSON.stringify(resultFor(q, hi).ranked);
+  if (!same(bf)) fail('the figure quiz counted an axis the reader named no position on');
+  else ok('an axis the reader names no position on is left out of the figure match');
+  if (same(compass)) fail('moving a Compass axis across the no-claim band changed nothing — ' +
+                          'the Compass must still count every axis');
+  else ok('the Compass still counts every axis, no-claim band included');
 }
 
 // -------------------------------------------- 12. the gifts quiz: words, not verdicts
@@ -710,6 +816,32 @@ console.log('13. every quoted passage is a substring of the translation on disk'
       }
     }
     if (checked && !missing) ok(`${checked} quotations are verbatim substrings of their cited verses`);
+
+    // The figure roster, held to the same standard the verifier held it to by hand: every
+    // reference must resolve in the translation on disk, and every quotation must be a
+    // verbatim substring of the verses it cites. A calibration pass that added evidence is
+    // exactly when this stops being theoretical.
+    const bf = getQuiz('bible-figure');
+    let refs = 0, quotes = 0, badRef = 0, badQuote = 0;
+    for (const f of bf.outcomes) {
+      for (const g of bf.groups) {
+        for (const e of f.evidence[g.key] ?? []) {
+          if (!e.ref) continue;
+          const text = textOf(e.ref);
+          refs++;
+          if (!text) { badRef++; fail(`${f.name}/${g.key}: ${e.ref} is not in the WEBBE file`); continue; }
+          if (!e.quote) continue;
+          quotes++;
+          if (!norm(text).includes(norm(e.quote))) {
+            badQuote++;
+            fail(`${f.name}/${g.key}: the quotation is not in ${e.ref}:\n    ${e.quote}\n    ${text}`);
+          }
+        }
+      }
+    }
+    if (!badRef && !badQuote) {
+      ok(`${refs} figure references all resolve, and all ${quotes} of their quotations are verbatim`);
+    }
   }
 }
 

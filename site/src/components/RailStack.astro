@@ -8,7 +8,7 @@
  * rails make that failure structurally impossible: every rail prints both of its pole
  * names, every time, from a type where they are required rather than optional.
  */
-import type { BipolarView, Quiz } from '../lib/engine/types';
+import type { AxisMask, BipolarView, Quiz } from '../lib/engine/types';
 import { groupHref } from '../lib/engine/registry';
 
 interface Props {
@@ -16,9 +16,23 @@ interface Props {
   view: BipolarView;
   /** Link each rail's name to its axis page. Off for a preview or a share card. */
   linked?: boolean;
+  /**
+   * Only when the rails are drawing an OUTCOME rather than a reader: which of its
+   * coordinates are claims (see AxisMask). An axis the source does not place it on is
+   * drawn with no position at all — the blueprint's words are that an honest blank "keeps
+   * the figure off that axis's rails", and a knob sitting in the middle of the no-claim
+   * zone with a band adjective beside it is a position, whatever the caption says.
+   *
+   * A reader always has a position on every axis, so the result page passes nothing here
+   * and every rail it draws is exactly what it was.
+   */
+  masks?: AxisMask[];
 }
 
-const { quiz, view, linked = true } = Astro.props;
+const { quiz, view, linked = true, masks } = Astro.props;
+
+/** The reading beside an unplaced rail: the two honest sentences, never a band adjective. */
+const UNSHOWN = { none: 'not shown in the text', both: 'recorded at both ends' } as const;
 
 /**
  * The zone bounds come from the scoring rules — snapped to the reachable positions the band
@@ -36,7 +50,8 @@ const zoneStyle = `--zone-lo:${zoneLo};--zone-hi:${zoneHi}`;
   </p>
 
   <div class="rails">
-    {view.rows.map(row => {
+    {view.rows.map((row, i) => {
+      const unshown = masks && masks[i] !== 'shown' ? (masks[i] as 'none' | 'both') : null;
       // Diverge FROM the centre: the tint grows outward toward whichever pole was chosen,
       // so its length reads as conviction rather than as a score out of a hundred.
       // Geometry from the integer step, so the knob lands exactly on the position the
@@ -45,12 +60,15 @@ const zoneStyle = `--zone-lo:${zoneLo};--zone-hi:${zoneHi}`;
       const from = Math.min(at, 50);
       const span = Math.abs(at - 50);
       const side = row.value < 50 ? 'left' : row.value > 50 ? 'right' : 'centre';
-      const reading = row.noClaim ? row.band : row.lean;
+      const reading = unshown ? UNSHOWN[unshown] : row.noClaim ? row.band : row.lean;
       const href = groupHref(quiz, row);
 
       return (
         <div
-          class:list={['rail', `rail--${side}`, { 'is-centred': row.noClaim }]}
+          class:list={[
+            'rail', `rail--${side}`,
+            { 'is-centred': row.noClaim, 'is-unshown': Boolean(unshown) }
+          ]}
           style={`--pos:${at};--from:${from};--span:${span}`}
         >
           <div class="rail-head">
@@ -71,7 +89,11 @@ const zoneStyle = `--zone-lo:${zoneLo};--zone-hi:${zoneHi}`;
           <div
             class="rail-track"
             role="img"
-            aria-label={`${row.name}: ${row.noClaim ? `${row.band}, naming neither pole` : row.lean}`}
+            aria-label={
+              unshown
+                ? `${row.name}: ${UNSHOWN[unshown]}, so no position is drawn`
+                : `${row.name}: ${row.noClaim ? `${row.band}, naming neither pole` : row.lean}`
+            }
           >
             <span class="rail-zone" aria-hidden="true"></span>
             <span class="rail-spine" aria-hidden="true"></span>

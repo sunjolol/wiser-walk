@@ -73,15 +73,48 @@ const axes = quiz.groups.map((group, i) => {
     row,
     items,
     cited,
-    /** The text records acts toward both poles — a different fact from recording none. */
-    bothEnds: cited.some(e => e.toward === 'left') && cited.some(e => e.toward === 'right'),
-    /** The data's not-shown cell: one item, no reference, no direction. */
-    notShown: cited.length === 0
+    /** Cited acts toward the left pole and toward the right pole, kept apart for the page. */
+    left: cited.filter(e => e.toward === 'left'),
+    right: cited.filter(e => e.toward === 'right'),
+    /**
+     * What this axis claims, straight from the quiz's own mask, so the page and the
+     * arithmetic can never say different things:
+     *   shown  the acts place this person, and a reader is measured against them here
+     *   both   the acts go both ways and do not settle anywhere — not counted
+     *   none   the text does not show this at all — not counted
+     */
+    mask: figure.mask[i]!,
+    bothEnds: figure.mask[i] === 'both',
+    notShown: figure.mask[i] === 'none'
   };
 });
 
+/**
+ * An axis whose record goes both ways prints its acts under each pole, so a reader can see
+ * the two ends rather than a list with the disagreement flattened out of it. Every other
+ * axis keeps one list, in the data's own order.
+ */
+/**
+ * What to print where a band adjective would go. A band adjective is a POSITION ("between
+ * planning ahead and meeting the day"), and printing one on an axis the text does not place
+ * this person on is the exact claim this whole pass exists to stop making.
+ */
+const reading = (a: (typeof axes)[number]) =>
+  a.notShown ? 'not shown in the text' : a.bothEnds ? 'recorded at both ends' : a.row.band;
+
+const blocksFor = (a: (typeof axes)[number]) =>
+  a.bothEnds
+    ? [
+        { label: a.group.left!, side: 'left' as const, items: a.left },
+        { label: a.group.right!, side: 'right' as const, items: a.right }
+      ]
+    : [{ label: null, side: null, items: a.items }];
+
 const momentCount = axes.reduce((n, a) => n + a.cited.length, 0);
 const silentAxes = axes.filter(a => a.notShown).length;
+const bothAxes = axes.filter(a => a.bothEnds).length;
+/** The axes this person is actually matched on. Never all six for every figure. */
+const matchedAxes = axes.filter(a => a.mask === 'shown').length;
 
 const jsonLd = isDraft
   ? null
@@ -119,7 +152,7 @@ const breadcrumbs = isDraft
     tiles={[
       { n: quiz.groups.length, label: 'Axes' },
       { n: momentCount, label: 'Cited acts' },
-      { n: named, label: 'Poles named' },
+      { n: matchedAxes, label: 'Axes matched on' },
       { n: quiz.outcomes.length - 1, label: 'Others' }
     ]}
   />
@@ -144,6 +177,15 @@ const breadcrumbs = isDraft
           Six axes of <strong>temperament, not virtue</strong>: neither end of any of them is
           the better one. Every coordinate below is argued from cited, recorded acts, and
           where the text shows nothing the page says so instead of guessing.
+          {matchedAxes < quiz.groups.length && (
+            <> A reader is measured against {figure.name} on {matchedAxes} of the
+            {' ' + quiz.groups.length} — the {silentAxes > 0 && bothAxes > 0
+              ? 'axes the text is silent on, and the ones where it shows both ends, are'
+              : silentAxes > 0
+                ? 'axes the text is silent on are'
+                : 'axes where the text shows both ends are'} left out rather than counted as
+            a position in the middle.</>
+          )}
         </p>
       </div>
     </aside>
@@ -161,6 +203,8 @@ const breadcrumbs = isDraft
         <CompassWheel view={view} />
         <p class="feature-note">
           Each arm is one axis; length is how far from the centre the recorded acts sit.
+          {matchedAxes < quiz.groups.length &&
+            ` An axis the text does not place ${figure.name} on has no arm.`}
         </p>
       </div>
       <div class="feature-body">
@@ -171,10 +215,10 @@ const breadcrumbs = isDraft
           ))}
         </h3>
         <dl class="spec">
-          {view.rows.map(row => (
+          {axes.map(axis => (
             <div>
-              <dt><a href={groupHref(quiz, row)}>{row.name}</a></dt>
-              <dd>{row.band}</dd>
+              <dt><a href={groupHref(quiz, axis.row)}>{axis.row.name}</a></dt>
+              <dd>{reading(axis)}</dd>
             </div>
           ))}
         </dl>
@@ -185,7 +229,7 @@ const breadcrumbs = isDraft
     <div class="panel layered ref-panel ref-panel--quiet">
       <div class="wash" aria-hidden="true"></div>
       <div class="veil" aria-hidden="true"></div>
-      <RailStack quiz={quiz} view={view} />
+      <RailStack quiz={quiz} view={view} masks={figure.mask} />
     </div>
 
     <SectionHead
@@ -196,12 +240,13 @@ const breadcrumbs = isDraft
       Each line is one recorded act and the reference it is taken from. The sentence says
       what the person did; where it is in quotation marks it is verbatim from the World
       English Bible British Edition.
-      {silentAxes > 0 && ` On ${silentAxes} of the six the text records nothing, and that axis is left at the centre rather than filled in.`}
+      {silentAxes > 0 && ` On ${silentAxes} of the six the text does not show this, and that axis is left out of the match rather than filled in.`}
+      {bothAxes > 0 && ` On ${bothAxes} the text shows both ends and they do not settle, so that axis is left out too — the acts for each end are printed under it.`}
     </p>
 
     <div class="moments">
       {axes.map(axis => (
-        <section class:list={['moment-axis', { 'is-silent': axis.notShown }]}>
+        <section class:list={['moment-axis', { 'is-silent': axis.notShown, 'is-both': axis.bothEnds }]}>
           <h3 class="moment-head">
             <a href={groupHref(quiz, axis.group)}>{axis.group.name}</a>
             <span class="moment-poles">
@@ -210,31 +255,56 @@ const breadcrumbs = isDraft
               <b class="pole-r">{axis.group.right}</b>
             </span>
           </h3>
-          <p class="moment-band">{axis.row.band}</p>
+          <p class="moment-band">{reading(axis)}</p>
 
-          {axis.bothEnds && (
+          {/*
+            The two kinds of middle, said in full and never swapped. "The text does not show
+            this" is a fact about the record; "the text shows both ends" is a different fact
+            about it, and a reader who is told the wrong one has been told something false
+            about a person. Both sentences also say the consequence — the axis is left out
+            of the match — because that is the part a reader would otherwise have to guess.
+          */}
+          {axis.notShown && (
             <p class="moment-note">
-              The text records acts toward both ends of this axis, which is why this
-              coordinate sits where it does — not because nothing is recorded.
+              <strong>The text does not show this.</strong> Nothing in the record puts
+              {' ' + figure.name} at either end of this axis, so it is left out when a reader
+              is matched, rather than counted as a position in the middle.
             </p>
           )}
 
-          <ol class="moment-list">
-            {axis.items.map(item => (
-              <li class:list={['moment', item.toward ? `moment--${item.toward}` : 'moment--none']}>
-                {item.ref
-                  ? <p class="moment-ref">
-                      <span class="moment-cite">{item.ref}</span>
-                      <span class="moment-toward">
-                        toward {item.toward === 'left' ? axis.group.left : axis.group.right}
-                      </span>
-                    </p>
-                  : <p class="moment-ref"><span class="moment-cite">No record</span></p>}
-                <p class="moment-did">{item.did}</p>
-                {item.quote && <blockquote class="moment-quote">{item.quote}</blockquote>}
-              </li>
-            ))}
-          </ol>
+          {axis.bothEnds && (
+            <p class="moment-note">
+              <strong>The text shows both ends.</strong> The recorded acts go one way and the
+              other and do not settle, so this axis is left out when a reader is matched
+              rather than counted as a position in the middle. Both ends are below.
+            </p>
+          )}
+
+          {blocksFor(axis).map(block => (
+            <>
+              {block.label && (
+                <p class:list={['moment-side', `moment-side--${block.side}`]}>
+                  Toward {block.label}
+                </p>
+              )}
+              <ol class="moment-list">
+                {block.items.map(item => (
+                  <li class:list={['moment', item.toward ? `moment--${item.toward}` : 'moment--none']}>
+                    {item.ref
+                      ? <p class="moment-ref">
+                          <span class="moment-cite">{item.ref}</span>
+                          <span class="moment-toward">
+                            toward {item.toward === 'left' ? axis.group.left : axis.group.right}
+                          </span>
+                        </p>
+                      : <p class="moment-ref"><span class="moment-cite">No record</span></p>}
+                    <p class="moment-did">{item.did}</p>
+                    {item.quote && <blockquote class="moment-quote">{item.quote}</blockquote>}
+                  </li>
+                ))}
+              </ol>
+            </>
+          ))}
         </section>
       ))}
     </div>

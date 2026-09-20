@@ -558,6 +558,16 @@
   background: var(--accent-soft); font-size: .85rem; color: var(--ink-soft);
 }
 
+/* an axis whose record goes both ways is not silent and not settled; it gets the panel, and
+   its two lists are headed by the pole each one points at */
+.moment-axis.is-both { background: var(--panel); }
+.moment-side {
+  margin: .95rem 0 -.35rem; font-family: var(--ui); font-size: .62rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--ink-mute);
+}
+.moment-side--left { color: var(--accent); }
+.moment-side--right { color: var(--warn-ink); }
+
 .moment-list { list-style: none; margin: .9rem 0 0; padding: 0; }
 .moment {
   padding: .75rem 0 .8rem .8rem; border-left: 3px solid var(--rule);

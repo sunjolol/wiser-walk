@@ -25,15 +25,65 @@ import type { Quiz, Ranked } from '../lib/engine/types';
 import { rankWord } from '../lib/engine/types';
 import { outcomeHref } from '../lib/engine/registry';
 
+/**
+ * What the reader was and was not compared on, said plainly under the closest card.
+ *
+ * An outcome may be placed on only some of the axes, and a reader names a position on only
+ * some of theirs; the comparison is what the two have in common (see AxisMask). Saying so
+ * is not a footnote — a reader told "closest: Mary of Nazareth" deserves to know it was
+ * decided on two axes rather than six, and the two reasons an axis drops out are different
+ * claims about a person that must never be printed as each other: "the text does not show
+ * this" and "the text shows both ends". The acts for each end are on the outcome's own
+ * page, which this line sits directly under a link to.
+ *
+ * Returns null for an outcome with no mask, which is every outcome on the Compass.
+ */
+const list = (xs: string[]) =>
+  xs.length > 1 ? `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}` : xs[0]!;
+
+function axisNote(quiz: Quiz, r: Ranked, silent: string[]): string | null {
+  const outcome = quiz.outcomes.find(o => o.slug === r.slug);
+  if (!outcome?.mask) return null;
+  const named = (want: string) =>
+    quiz.groups.filter((_, i) => outcome.mask![i] === want).map(g => g.name);
+  const none = named('none');
+  const both = named('both');
+  // Only axes the reader dropped that were not dropped already: an axis where the text
+  // shows nothing AND the reader named nothing is one reason, said once.
+  const alsoSilent = silent.filter(name =>
+    quiz.groups.some((g, i) => g.name === name && outcome.mask![i] === 'shown')
+  );
+  const record = [
+    none.length ? `the text does not show ${list(none)}` : '',
+    both.length ? `the text shows both ends on ${list(both)}` : ''
+  ].filter(Boolean).join(', and ');
+  const clauses = [
+    record ? `for ${outcome.name} ${record}` : '',
+    alsoSilent.length ? `your own answers name no position on ${list(alsoSilent)}` : ''
+  ].filter(Boolean);
+  if (!clauses.length) return null;
+  const count = r.axes ?? quiz.groups.length;
+  const dropped = none.length + both.length + alsoSilent.length;
+  return `Compared with you on ${count} of the ${quiz.groups.length} axes: ${clauses.join('; ')}. ` +
+    (dropped > 1 ? 'Those are' : 'That is') +
+    ' left out rather than counted as a match in the middle.';
+}
+
 interface Props {
   quiz: Quiz;
   ranked: Ranked[];
   /** How many lead. Two on a tie, none when nothing is a real fit. */
   leading?: number;
   limit?: number;
+  /**
+   * Names of the axes on which the READER named no position, so the card can say that half
+   * of why the comparison is narrower than six axes. Only read where the outcome carries an
+   * evidence mask, so the Compass's cards are untouched whatever is passed.
+   */
+  readerSilent?: string[];
 }
 
-const { quiz, ranked, leading = 1, limit = 5 } = Astro.props;
+const { quiz, ranked, leading = 1, limit = 5, readerSilent = [] } = Astro.props;
 const shown = ranked.slice(0, limit);
 const hideScore = Boolean(quiz.hideOutcomeScore);
 
@@ -59,7 +109,7 @@ const noteFor = (slug: string) => quiz.outcomes.find(o => o.slug === slug)?.note
               : <>{r.score}% match{i < leading && <span class="outcome-tag"> · closest</span>}</>}
           </span>
         </span>
-      {/* tight against the link's close: see noteFor above */}</a>{i < leading && noteFor(r.slug) && <p class="outcome-note">{noteFor(r.slug)}</p>}
+      {/* tight against the link's close: see noteFor above */}</a>{i < leading && noteFor(r.slug) && <p class="outcome-note">{noteFor(r.slug)}</p>}{i < leading && axisNote(quiz, r, readerSilent) && <p class="outcome-note outcome-axes">{axisNote(quiz, r, readerSilent)}</p>}
     </li>
   ))}
 </ol>
