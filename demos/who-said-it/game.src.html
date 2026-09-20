@@ -1,0 +1,1611 @@
+<title>Who Said It?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap">
+
+<style>
+/* ------------------------------------------------------------------ tokens
+   Copied from site/src/styles/site.css, plus the composed layer from kit.css,
+   and kept identical to the sibling game (demos/sounds-like-scripture) so the
+   two are visibly one family. Light sits on a bare :root and dark only under
+   the explicit attribute, so light is the default everywhere. */
+:root {
+  --blue: #7EBAEE;
+  --orange: #F0A06F;
+  /* the same two inks with no alpha, for the gradient washes below */
+  --blue-0: rgba(126, 186, 238, 0);
+  --orange-0: rgba(240, 160, 111, 0);
+  --grad: linear-gradient(to bottom right, var(--blue), var(--orange));
+  --grad-r: linear-gradient(to right, var(--blue), var(--orange));
+
+  --display: "DM Serif Display", Georgia, "Times New Roman", serif;
+  --ui: "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --text: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --r-sm: 12px;
+  --r: 18px;
+  --r-lg: 22px;
+  --r-pill: 999px;
+
+  --lift: 3px 3px 5px rgba(68, 68, 68, .065);
+  --lift-soft: 0 0 10px rgba(40, 40, 40, .045);
+
+  --gutter: 16px;
+  --col: 30rem;
+  /* the widescreen stage: a framed sheet, the same one the site draws round every page */
+  --stage: 62rem;
+}
+
+:root {
+  --page: #E3E3E3;
+  --shell: #E8E8E8;
+  --panel: #EEEEEE;
+  --ink: #444444;
+  --ink-soft: #5A6066;
+  --ink-mute: #7C8288;
+  --accent: #3E86C4;
+  --accent-soft: #E2EDF7;
+  --accent-ink: #FFFFFF;
+  --rule: rgba(68, 68, 68, .12);
+  --rule-strong: rgba(68, 68, 68, .2);
+  --warn-bg: #FBEDE2;
+  --warn-ink: #7A4A22;
+  --on-grad: #3B3B3B;
+  --tint-op: .35;
+
+  --stripe: rgba(68, 68, 68, .032);
+  --ghost: rgba(255, 255, 255, .62);
+  --ghost-dark: rgba(255, 255, 255, .055);
+  --band-wash: .5;
+  --card-wash: .22;
+  --dark-fill: #1C1C23;
+  --on-dark: #ECEAE6;
+  --on-dark-soft: #B9B5AF;
+  --blue-soft: #A9D0F3;
+  --orange-soft: #F4B991;
+  --frame: #F2F2F2;
+  --frame-shadow: 0 22px 48px rgba(40, 40, 40, .12);
+  color-scheme: light;
+}
+
+/* The system setting does not switch the theme: the owner wants light by default, so
+   dark is only ever an explicit choice (the site's bulb, or ?theme=dark). */
+
+:root[data-theme="dark"] {
+  --page: #131319;
+  --shell: #1B1B21;
+  --panel: #24242B;
+  --ink: #EAE8E4;
+  --ink-soft: #B4B0AA;
+  --ink-mute: #8E8A84;
+  --accent: #7EBAEE;
+  --accent-soft: #1E2A38;
+  --accent-ink: #10131A;
+  --rule: rgba(234, 232, 228, .13);
+  --rule-strong: rgba(234, 232, 228, .2);
+  --warn-bg: #33261C;
+  --warn-ink: #F0A06F;
+  --tint-op: .4;
+  --lift: 0 2px 6px rgba(0, 0, 0, .3);
+  --lift-soft: 0 0 12px rgba(0, 0, 0, .25);
+
+  --stripe: rgba(255, 255, 255, .018);
+  --ghost: rgba(255, 255, 255, .05);
+  --ghost-dark: rgba(255, 255, 255, .04);
+  --band-wash: .1;
+  --card-wash: .07;
+  --dark-fill: #343441;
+  --frame: #1F1F26;
+  --frame-shadow: 0 22px 48px rgba(0, 0, 0, .45);
+  color-scheme: dark;
+}
+
+/* -------------------------------------------------------------------- base */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background-color: var(--page);
+  background-image: repeating-linear-gradient(135deg, var(--stripe) 0 1px, transparent 1px 8px);
+  color: var(--ink);
+  font-family: var(--text);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overscroll-behavior: none;
+}
+
+.app {
+  height: 100%;
+  max-width: var(--col);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.screen { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+/* several blocks below set display, which would beat the hidden attribute */
+[hidden] { display: none !important; }
+
+/*
+ * The two-part composition, exactly as the sibling game builds it.
+ *
+ * On a phone the two .gcol wrappers are nothing: their blocks stack in source order,
+ * which is the reading order (the band, the explanation, the two run buttons, how a
+ * run goes, the note). From the stage width they become the two halves of one grid.
+ */
+.two { display: block; }
+.gcol { min-width: 0; }
+
+h1, h2, h3 {
+  font-family: var(--display);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -.01em;
+  margin: 0 0 .5rem;
+  color: var(--ink);
+  text-wrap: balance;
+}
+h1 { font-size: clamp(2.1rem, 11vw, 2.9rem); }
+h2 { font-size: clamp(1.5rem, 7vw, 1.9rem); }
+p { margin: 0 0 .9rem; }
+
+.eyebrow, .kicker {
+  font-family: var(--ui); font-size: .62rem; font-weight: 700;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--ink-mute);
+  margin: 0 0 .55rem;
+}
+.lede { color: var(--ink-soft); font-size: 1rem; }
+.small { font-size: .82rem; color: var(--ink-mute); line-height: 1.55; }
+.small a { color: var(--accent); }
+
+svg { width: 1em; height: 1em; display: block; fill: none; stroke: currentColor;
+      stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+svg.solid { fill: currentColor; stroke: none; }
+
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+/* ----------------------------------------------------------------- buttons */
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  font-family: var(--ui); font-size: .78rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; text-decoration: none;
+  padding: .85rem 1.4rem; min-height: 52px; width: 100%;
+  border: 0; border-radius: var(--r-pill);
+  color: var(--on-grad); background-image: var(--grad);
+  box-shadow: var(--lift); cursor: pointer;
+  transition: box-shadow .2s ease, transform .12s ease;
+}
+.btn:active { transform: translateY(1px); }
+.btn.ghost {
+  background: none; background-image: none; color: var(--accent);
+  box-shadow: inset 0 0 0 1.5px var(--accent);
+}
+.btn.quiet {
+  background: var(--panel); background-image: none; color: var(--ink-soft);
+  box-shadow: var(--lift); font-size: .72rem;
+}
+.btn-col { display: grid; gap: .6rem; }
+.btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
+
+/* --------------------------------------------------------------- the band
+   The site's header, rebuilt for a standalone document. The wash is four soft
+   radial pours in the two spectrum inks at the band's own strength, with a
+   diagonal grain over them; behind the words, one giant ghost word in italic
+   display, cropped by the band's edge. */
+
+.band {
+  position: relative; isolation: isolate; overflow: hidden; flex: 0 0 auto;
+  margin: 0 calc(-1 * var(--gutter));
+  padding: 1.4rem var(--gutter) 1.15rem;
+  background: var(--panel);
+  border-radius: 0 0 26px 26px;
+  box-shadow: var(--lift);
+}
+.band > *:not(.band-wash):not(.band-ghost) { position: relative; z-index: 2; }
+.band-wash {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  opacity: var(--band-wash);
+  background:
+    radial-gradient(78% 104% at 4% 4%, var(--blue) 0%, var(--blue-0) 62%),
+    radial-gradient(74% 96% at 98% 86%, var(--orange) 0%, var(--orange-0) 64%),
+    radial-gradient(52% 64% at 72% 2%, var(--orange) 0%, var(--orange-0) 72%),
+    radial-gradient(58% 74% at 26% 104%, var(--blue) 0%, var(--blue-0) 70%);
+}
+.band-wash::after {
+  content: ""; position: absolute; inset: 0;
+  background: repeating-linear-gradient(135deg, rgba(255, 255, 255, .5) 0 2px, rgba(255, 255, 255, 0) 2px 10px);
+  mix-blend-mode: soft-light; opacity: .5;
+}
+/* a display word too big for its container, cropped by the band, sitting behind the headline */
+.band-ghost {
+  position: absolute; z-index: 1; right: -.07em; top: -.06em;
+  font-family: var(--display); font-style: italic; font-weight: 400;
+  font-size: clamp(3rem, 17.5vw, 5.4rem); line-height: .88; letter-spacing: -.045em;
+  color: var(--ghost); white-space: nowrap; pointer-events: none; user-select: none;
+}
+.band-chip {
+  display: inline-flex; align-items: center; gap: .45rem; margin: 0 0 1rem;
+  padding: .52rem .85rem; border-radius: var(--r-pill);
+  background-color: var(--dark-fill); color: var(--on-dark);
+  font-family: var(--ui); font-size: .58rem; font-weight: 700; letter-spacing: .16em;
+  text-transform: uppercase; line-height: 1;
+}
+.band-chip svg { width: .9em; height: .9em; color: var(--orange-soft); }
+.band h1 { margin: 0 0 .7rem; max-width: 11ch; line-height: 1.0; letter-spacing: -.022em; }
+.band h1 .t-blue { color: var(--accent); }
+.band h1 .t-orange { color: var(--warn-ink); }
+:root[data-theme="dark"] .band h1 .t-orange { color: var(--orange); }
+.band .lede { margin: 0; max-width: 26rem; }
+
+/* stat tiles: a number in display type over a whispered label */
+.tiles {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .45rem;
+  margin: 1.15rem 0 0; padding: 0; list-style: none;
+}
+.tile {
+  background: var(--panel); border-radius: 13px; box-shadow: var(--lift);
+  padding: .55rem .5rem .5rem; text-align: center;
+}
+.tile b {
+  display: block; font-family: var(--display); font-weight: 400; font-size: 1.35rem;
+  line-height: 1.1; color: var(--ink); font-variant-numeric: tabular-nums;
+}
+.tile span {
+  display: block; margin-top: .15rem; font-family: var(--ui); font-size: .68rem; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--ink-mute); line-height: 1.2;
+}
+
+/* --------------------------------------------------------- section heads */
+
+.ghead { margin: 1.5rem 0 .75rem; }
+.ghead p { margin: 0 0 .1rem; }
+.ghead h3 {
+  margin: 0; font-family: var(--display); font-style: italic; font-weight: 400;
+  font-size: 1.75rem; line-height: .95; letter-spacing: -.02em; text-transform: lowercase;
+  color: var(--ink);
+}
+.ghead h3::after {
+  content: ""; display: block; width: 46px; height: 6px; margin-top: .5rem;
+  border-radius: var(--r-pill); background-image: var(--grad-r);
+}
+
+/* ------------------------------------------------------------------- start */
+
+/* The blocks simply flow, in this order: the band, the explanation, the two run
+   buttons, how a run goes, the note. Nothing is pinned to the bottom, so a tall
+   window never opens a hole in the middle of the screen. */
+#screen-start { overflow-y: auto; padding-bottom: 1.25rem; }
+
+/* ----------------------------------------------------------- the explanation
+   The sibling asks a question here, because it has to know which Bible you read
+   before it can score you. This game has nothing to ask, so the same slot holds
+   the one line that says what the game is, and both run buttons are live the
+   moment the page arrives. */
+
+.intro { margin: 1.15rem 0 0; }
+.intro-q {
+  font-family: var(--display); font-weight: 400; font-style: italic;
+  font-size: clamp(1.32rem, 6.4vw, 1.6rem); line-height: 1.08; letter-spacing: -.015em;
+  margin: 0 0 .3rem; color: var(--ink);
+}
+.intro-why { margin: 0; color: var(--ink-soft); font-size: .88rem; }
+
+/* the charcoal block from the reference sheets, set against the light panels */
+.howto {
+  position: relative; isolation: isolate; overflow: hidden;
+  margin: 1.1rem 0 0; padding: .9rem 1rem 1rem;
+  background-color: var(--dark-fill); color: var(--on-dark);
+  border-radius: var(--r); box-shadow: var(--lift);
+}
+.howto > *:not(.dark-ghost) { position: relative; z-index: 1; }
+/* cropped by ONE edge, so it still reads as a word rather than as a rendering fault */
+.dark-ghost {
+  position: absolute; z-index: 0; right: -.06em; bottom: -.03em;
+  font-family: var(--display); font-style: italic; font-size: 5.5rem; line-height: .8;
+  letter-spacing: -.04em; color: var(--ghost-dark); pointer-events: none; user-select: none;
+}
+.howto .kicker { color: var(--orange-soft); margin: 0; }
+.howto .spec { margin: .55rem 0 0; }
+.howto .spec > div { border-bottom-color: rgba(234, 232, 228, .22); padding: .45rem 0; }
+.howto .spec > div:first-child { border-top-color: rgba(234, 232, 228, .22); }
+.howto .spec > div:last-child { border-bottom: 0; }
+.howto .spec dt { color: var(--blue-soft); }
+.howto .spec dd { color: var(--on-dark-soft); font-size: .84rem; }
+/* the pool's real numbers, counted from the injected pool, sitting on the charcoal */
+.howto .tiles { margin-top: .9rem; }
+.howto .tile { background: rgba(255, 255, 255, .07); box-shadow: none; }
+.howto .tile b { color: var(--on-dark); }
+.howto .tile span { color: var(--on-dark-soft); }
+/* in the dark theme the charcoal panel sits close to the page, so it keeps a hairline
+   of its own and still reads as a panel rather than as a hole */
+:root[data-theme="dark"] .howto { box-shadow: inset 0 0 0 1px var(--rule-strong), var(--lift); }
+.banner {
+  background: var(--accent-soft); border-radius: var(--r-sm);
+  padding: .8rem .95rem; margin: 0 0 .9rem;
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+.banner p { margin: 0; color: var(--ink-soft); font-size: .92rem; }
+.banner strong { color: var(--ink); font-weight: 600; font-family: var(--ui); }
+.start-actions { margin-top: 1.1rem; }
+.foot { margin: 1.4rem 0 0; padding-bottom: calc(.5rem + env(safe-area-inset-bottom, 0px)); }
+
+/* -------------------------------------------------------------------- play */
+
+#screen-play { padding-top: max(.9rem, env(safe-area-inset-top, 0px)); }
+
+.hud { display: flex; align-items: center; gap: .75rem; flex: 0 0 auto; }
+.pips { display: flex; gap: 4px; flex: 1; }
+.pip { flex: 1; height: 5px; border-radius: var(--r-pill); background: var(--shell); box-shadow: inset 0 0 0 1px var(--rule); }
+.pip.done { background: var(--ink-mute); box-shadow: none; }
+.pip.now { background-image: var(--grad-r); box-shadow: none; }
+.score {
+  font-family: var(--ui); font-weight: 700; font-size: .72rem;
+  letter-spacing: .06em; color: var(--ink-soft); font-variant-numeric: tabular-nums;
+  min-width: 3.2rem; text-align: center; padding: .3rem .5rem;
+  border-radius: var(--r-pill); box-shadow: inset 0 0 0 1.5px var(--rule-strong);
+}
+
+.fuse { height: 8px; border-radius: var(--r-pill); background: var(--shell); margin: .7rem 0 .85rem; overflow: hidden; flex: 0 0 auto; }
+.fuse-fill { height: 100%; width: 100%; border-radius: var(--r-pill); background-image: var(--grad-r); }
+
+.stage { flex: 1; min-height: 0; display: flex; position: relative; }
+
+.card {
+  position: relative; flex: 1; min-height: 0; isolation: isolate;
+  background: var(--panel); border-radius: var(--r-lg); box-shadow: var(--lift);
+  padding: 1.4rem 1.2rem; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.card.revealed { justify-content: flex-start; overflow-y: auto; }
+/* the same pours as the band, a whisper of them, so the card belongs to the header */
+.card-wash {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: var(--card-wash);
+  background:
+    radial-gradient(66% 80% at 2% 0%, var(--blue) 0%, var(--blue-0) 60%),
+    radial-gradient(70% 86% at 100% 100%, var(--orange) 0%, var(--orange-0) 62%);
+}
+.card-inner { position: relative; z-index: 2; }
+.card-q {
+  position: absolute; z-index: 1; top: .35rem; left: 1rem;
+  font-family: var(--display); font-style: italic; font-size: 4.2rem; line-height: 1;
+  color: var(--warn-ink); opacity: .32; pointer-events: none; user-select: none;
+}
+.card.revealed .card-q { display: none; }
+
+.line {
+  font-family: var(--display); line-height: 1.32; letter-spacing: -.005em;
+  margin: 0; color: var(--ink); text-wrap: pretty;
+}
+.line.s1 { font-size: clamp(1.45rem, 6.6vw, 1.7rem); }
+.line.s2 { font-size: clamp(1.22rem, 5.6vw, 1.45rem); }
+.line.s3 { font-size: clamp(1.02rem, 4.6vw, 1.2rem); }
+.card.revealed .line { font-size: 1.02rem; color: var(--ink-soft); font-style: italic; }
+
+.card-hint {
+  font-family: var(--ui); font-size: .6rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--ink-mute); margin: 1rem 0 0;
+}
+.wide-only { display: none; }
+
+/* ------------------------------------------------------------------ reveal */
+
+.reveal { margin-top: 1rem; padding-top: 1rem; border-top: 2px dotted var(--rule-strong); }
+.reveal[hidden] { display: none; }
+.verdict {
+  display: inline-flex; align-items: center; gap: .45rem; margin: 0 0 .6rem;
+  padding: .48rem .8rem; border-radius: var(--r-pill);
+  background-color: var(--dark-fill); color: var(--on-dark);
+  font-family: var(--ui); font-weight: 700; font-size: .62rem;
+  letter-spacing: .14em; text-transform: uppercase; line-height: 1;
+}
+.verdict svg { width: 1.15em; height: 1.15em; }
+.verdict.ok svg { color: var(--blue-soft); }
+.verdict.bad svg { color: var(--orange-soft); }
+.truth {
+  font-family: var(--display); font-size: 1.16rem; line-height: 1.25; color: var(--ink);
+  margin: 0 0 .2rem;
+}
+
+/* -------------------------------------------------------------- spec lists */
+
+.spec { margin: .9rem 0 0; padding: 0; }
+.spec > div {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+  padding: .55rem 0; border-bottom: 2px dotted var(--rule-strong);
+}
+.spec > div:first-child { border-top: 2px dotted var(--rule-strong); }
+.spec dt {
+  font-family: var(--ui); font-size: .58rem; font-weight: 700; letter-spacing: .13em;
+  text-transform: uppercase; color: var(--accent); flex: none;
+}
+.spec dd { margin: 0; text-align: right; font-size: .88rem; color: var(--ink-soft); }
+.spec dd b { color: var(--ink); font-weight: 600; }
+.spec dd.num { font-family: var(--ui); font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
+
+/* The mix list is a spec list whose left side is a sentence rather than a label:
+   the dotted rules and the right-aligned number are the same furniture. */
+.spec.mix dt {
+  font-family: var(--text); font-size: .88rem; font-weight: 400; letter-spacing: 0;
+  text-transform: none; color: var(--ink); flex: 1;
+}
+.spec.mix dd { flex: none; }
+
+/* ------------------------------------------------------------------- bar */
+
+.bar {
+  flex: 0 0 auto; padding: .9rem 0 calc(1rem + env(safe-area-inset-bottom, 0px));
+}
+
+/*
+ * The four names.
+ *
+ * Two by two, at the bottom of the screen where a thumb already is. When any one of
+ * them is long — group names such as "The chief priests and elders" are common in the
+ * speaker data — the grid drops to a single column rather than shrinking the type
+ * below a readable size or letting a name break across three lines in a half-width box.
+ */
+.names { display: grid; grid-template-columns: 1fr 1fr; gap: .55rem; }
+.names.one { grid-template-columns: 1fr; gap: .45rem; }
+.name {
+  display: flex; align-items: center; justify-content: center; gap: .5rem;
+  min-height: 62px; padding: .6rem .7rem;
+  border: 0; border-radius: var(--r);
+  background: var(--panel); color: var(--ink);
+  box-shadow: inset 0 0 0 1.5px var(--rule-strong), var(--lift);
+  font-family: var(--ui); font-size: .92rem; font-weight: 700; line-height: 1.2;
+  text-align: center; cursor: pointer;
+  transition: box-shadow .18s ease, transform .12s ease, background .18s ease;
+}
+.names.one .name { min-height: 52px; font-size: .88rem; }
+.name:hover { box-shadow: inset 0 0 0 2px var(--accent), var(--lift); }
+.name:active { transform: translateY(1px); }
+.name .who { text-wrap: balance; }
+.name .key {
+  flex: none; display: none; align-items: center; justify-content: center;
+  width: 1.45rem; height: 1.45rem; border-radius: 50%;
+  background: var(--shell); color: var(--ink-mute);
+  font-size: .64rem; font-weight: 700; font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------------ result */
+
+#screen-result { overflow-y: auto; padding-bottom: 1.25rem; }
+.result-band { padding-bottom: 1.5rem; }
+.result-band .big {
+  font-family: var(--display); font-size: clamp(3rem, 17vw, 4.2rem);
+  line-height: .95; margin: 0; color: var(--ink); font-variant-numeric: tabular-nums;
+  letter-spacing: -.03em;
+}
+.result-band .big-label {
+  margin: .1rem 0 0; font-family: var(--ui); font-size: .58rem; font-weight: 700;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--ink-mute);
+}
+.squares { display: flex; gap: .3rem; margin-top: 1.1rem; }
+.sq {
+  flex: 1; aspect-ratio: 1; max-width: 2.2rem; border-radius: 9px;
+  background: var(--panel); color: var(--ink-soft); box-shadow: var(--lift);
+  display: flex; align-items: center; justify-content: center; position: relative;
+  font-size: .85rem;
+}
+.sq .bolt { position: absolute; right: 2px; bottom: 1px; width: .55em; height: .55em; color: var(--accent); }
+
+/* two scores, no names, never a percentage between them */
+.versus { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; margin-top: .9rem; }
+.versus div { background: var(--panel); border-radius: var(--r-sm); box-shadow: var(--lift); padding: .6rem .75rem; }
+.versus span { display: block; font-family: var(--ui); font-size: .54rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-mute); }
+.versus b { font-family: var(--display); font-weight: 400; font-size: 1.35rem; font-variant-numeric: tabular-nums; }
+
+.block { margin: 0; }
+
+/* the stripe card, from the site's lists: a washed stripe carrying a rotated tag,
+   a medallion over its edge, then the line, its citation and who actually said it */
+.misses { list-style: none; margin: 0; padding: 0; display: grid; gap: .7rem; }
+.misses li {
+  position: relative; overflow: hidden; min-height: 8.5rem;
+  background: var(--panel); border-radius: var(--r); box-shadow: var(--lift);
+  padding: 1rem 1rem 1.05rem 4.4rem;
+}
+.miss-stripe {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 2.4rem; background: var(--shell);
+  display: flex; align-items: flex-end; justify-content: center; padding-bottom: .7rem;
+}
+.miss-stripe::before {
+  content: ""; position: absolute; inset: 0; background: var(--grad); opacity: .62;
+}
+.miss-stripe::after {
+  content: ""; position: absolute; inset: 0;
+  background: repeating-linear-gradient(135deg, rgba(255, 255, 255, .55) 0 2px, rgba(255, 255, 255, 0) 2px 9px);
+  mix-blend-mode: soft-light;
+}
+.miss-tag {
+  position: relative; writing-mode: vertical-rl; transform: rotate(180deg);
+  background-color: var(--dark-fill); color: var(--on-dark); border-radius: 7px; padding: .5rem .3rem;
+  font-family: var(--ui); font-size: .52rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; white-space: nowrap; line-height: 1;
+}
+.miss-medal {
+  position: absolute; left: 1.2rem; top: .9rem; width: 2.4rem; height: 2.4rem; border-radius: 50%;
+  background: var(--panel); color: var(--warn-ink); display: inline-flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 0 4px var(--panel), 0 0 0 6px var(--rule);
+  font-size: 1rem;
+}
+.misses q {
+  display: block; quotes: none; font-family: var(--display); font-size: 1.05rem;
+  line-height: 1.3; color: var(--ink); margin: .2rem 0 .55rem;
+}
+.miss-ref {
+  margin: 0; font-family: var(--ui); font-size: .62rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--accent);
+}
+.miss-where { margin: .3rem 0 0; font-size: .84rem; color: var(--ink-soft); }
+
+.result-actions { margin-top: 1.5rem; }
+.toast {
+  position: fixed; left: 50%; bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%); background: var(--dark-fill); color: var(--on-dark);
+  font-family: var(--ui); font-size: .7rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: .7rem 1.2rem; border-radius: var(--r-pill); box-shadow: var(--lift);
+  opacity: 0; pointer-events: none; transition: opacity .2s ease; z-index: 9;
+}
+.toast.on { opacity: 1; }
+
+/* --------------------------------------------------------------- widescreen */
+
+@media (min-width: 40rem) {
+  body { font-size: 16px; }
+  .band { padding: 2rem var(--gutter) 1.7rem; border-radius: 0 0 30px 30px; }
+  .band h1 { font-size: 3.1rem; }
+  .card { padding: 2rem 1.75rem; }
+  .tile b { font-size: 1.55rem; }
+  .tile span { font-size: .55rem; }
+  /* the keyboard shortcut only exists where there is a keyboard */
+  .wide-only { display: inline; }
+  .name .key { display: inline-flex; }
+}
+
+/* ------------------------------------------------------------- the stage
+   From 56rem the game stops being a phone column marooned in a wide window. It
+   becomes what every other page on the site is: a framed sheet on the striped
+   ground, holding a two-part composition — the game itself on the left, and on
+   the right the charcoal panel with how a run goes and the pool's own numbers. */
+
+@media (min-width: 56rem) {
+  .app {
+    height: auto; min-height: 0;
+    max-width: var(--stage);
+    margin: 2rem auto 2.5rem;
+    padding: 1.9rem 2rem 2rem;
+    background: var(--shell);
+    border: 9px solid var(--frame); border-radius: 34px;
+    box-shadow: var(--frame-shadow);
+  }
+  .screen { flex: 0 0 auto; }
+
+  /* each half flows on its own, so nothing is stranded at the top of a stretched row */
+  .two { display: grid; align-items: start; gap: 1.6rem 1.8rem; margin-top: 1.5rem; }
+
+  /* the band belongs to the sheet now, so it stops being full bleed */
+  .band { margin: 0; border-radius: var(--r-lg); padding: 1.9rem 1.8rem 1.7rem; }
+  .band h1 { max-width: 14ch; }
+
+  /* start: the explanation and the two buttons, beside the charcoal rail.
+     There is no question to ask here, so the left column is shorter than the
+     sibling's by a row of chips. The one sentence and the two buttons take that
+     room back instead of leaving a hole under them: the sentence is set at the
+     size of a section title, and the buttons are the biggest thing on the sheet,
+     which is right for a screen whose only job is to start a run. */
+  #screen-start .two { grid-template-columns: minmax(0, 1fr) minmax(0, .82fr); }
+  #screen-start .intro { margin-top: 0; }
+  #screen-start .intro-q { font-size: 1.95rem; margin-bottom: .45rem; }
+  #screen-start .intro-why { font-size: .94rem; }
+  #screen-start .start-actions { margin-top: 1.7rem; gap: .75rem; }
+  #screen-start .start-actions .btn { min-height: 62px; font-size: .82rem; }
+  #screen-start .howto { margin-top: 0; padding: 1.3rem 1.4rem 1.4rem; }
+  #screen-start .foot { margin-top: 1.2rem; }
+
+  /* result: what caught you, beside who you mix up and what to do next */
+  #screen-result .two { grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr); }
+  #screen-result .result-actions { margin-top: 1.6rem; }
+  #screen-result .foot { margin-top: 1.4rem; }
+
+  /* the band's tiles stop stretching to the width of the sheet */
+  .band .tiles { grid-template-columns: repeat(3, minmax(0, 10rem)); }
+  .versus { grid-template-columns: repeat(2, minmax(0, 12rem)); }
+
+  /* play: one comfortable reading measure, with the four names directly under it */
+  #screen-play { max-width: 38rem; width: 100%; margin: 0 auto; padding-top: .25rem; }
+  .stage { flex: 0 0 auto; min-height: 16rem; }
+  .card { flex: 1; }
+  .bar { padding-bottom: .25rem; }
+  /* there is room for four across a wide sheet, even when one of them is a group */
+  .names.one { grid-template-columns: 1fr 1fr; gap: .55rem; }
+  .names.one .name { min-height: 62px; font-size: .92rem; }
+}
+
+@media (min-width: 72rem) {
+  .app { padding: 2.4rem 2.6rem 2.6rem; }
+  #screen-start .two, #screen-result .two { gap: 0 2.4rem; }
+}
+
+/* A phone, where the visible viewport is well under the screen: the band and the
+   blocks under it give their height back first, so the four names stay in the
+   thumb's reach without scrolling. */
+@media (max-height: 46rem) {
+  .band { padding-top: 1.1rem; padding-bottom: 1rem; }
+  .band h1 { font-size: 2.35rem; }
+  .band .lede { font-size: .94rem; }
+  .tiles { margin-top: .9rem; }
+  .tile { padding: .45rem .5rem .42rem; }
+  .tile b { font-size: 1.25rem; }
+  .intro { margin-top: 1rem; }
+  .howto { margin-top: .9rem; padding: .8rem .9rem .85rem; }
+  .howto .spec > div { padding: .35rem 0; }
+  .start-actions { margin-top: .95rem; }
+  .btn { min-height: 48px; }
+  .foot { margin-top: 1rem; }
+  .card { padding: 1.1rem 1rem; }
+  .card-hint { margin-top: .75rem; }
+  .fuse { margin: .55rem 0 .7rem; }
+  .bar { padding-top: .7rem; }
+  .name { min-height: 56px; }
+  .names.one .name { min-height: 48px; }
+}
+
+/* Landscape, or a very small window. */
+@media (max-height: 34rem) {
+  .band { padding-top: 1rem; padding-bottom: 1rem; }
+  .band h1 { font-size: 2rem; }
+  .band .lede { display: none; }
+  .tiles { margin-top: .8rem; }
+  .card-hint { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card, .btn, .name { transition: none !important; }
+}
+</style>
+
+<div class="app">
+
+  <section class="screen" id="screen-start">
+        <div class="band">
+          <div class="band-wash" aria-hidden="true"></div>
+          <div class="band-ghost" aria-hidden="true">spoke?</div>
+          <p class="band-chip">A wiserwalk game</p>
+          <h1>Who <span class="t-blue">Said</span> <span class="t-orange">It?</span></h1>
+
+          <div class="banner" id="challengeBanner" hidden>
+            <p><strong id="challengeScore">0</strong> <span id="challengeWord">was their score</span> on these ten lines.</p>
+          </div>
+
+          <p class="lede" id="startLede">Ten lines of speech from the Bible. Four names under each one. You have seconds.</p>
+        </div>
+
+    <div class="two">
+      <div class="gcol">
+        <div class="intro">
+          <h2 class="intro-q">Four names. One of them actually said it.</h2>
+          <p class="intro-why">Job's friends sound like God, and the Pharisees sound like the disciples, so the wrong name is rarely the odd one out.</p>
+        </div>
+
+        <div class="btn-col start-actions">
+          <button type="button" class="btn" id="btnPlay">Play</button>
+          <button type="button" class="btn ghost" id="btnDaily">Today's ten</button>
+        </div>
+      </div>
+
+      <div class="gcol">
+        <div class="howto">
+          <span class="dark-ghost" aria-hidden="true">hard</span>
+          <p class="kicker">How a run goes</p>
+          <dl class="spec">
+            <div><dt>Ten lines</dt><dd>Ten to eighteen seconds each</dd></div>
+            <div><dt>Four names</dt><dd>Tap one, or press 1 to 4</dd></div>
+            <div><dt>After each</dt><dd>Who said it, and where to read it</dd></div>
+            <div><dt>Your score</dt><dd>Stays in this browser</dd></div>
+          </dl>
+          <ul class="tiles" id="startTiles"></ul>
+        </div>
+
+        <p class="small foot" id="footStart"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-play" hidden>
+    <div class="hud">
+      <div class="pips" id="pips" aria-label="Progress"></div>
+      <div class="score" id="scoreNow" aria-live="off">0</div>
+    </div>
+
+    <div class="fuse"><div class="fuse-fill" id="fuseFill"></div></div>
+
+    <div class="stage">
+      <article class="card" id="card">
+        <div class="card-wash" aria-hidden="true"></div>
+        <span class="card-q" aria-hidden="true">&ldquo;</span>
+        <div class="card-inner">
+          <p class="line s1" id="lineText"></p>
+          <p class="card-hint" id="cardHint">Tap a name below<span class="wide-only">, or press 1 to 4</span></p>
+          <div class="reveal" id="reveal" hidden></div>
+        </div>
+      </article>
+    </div>
+
+    <div class="bar">
+      <div class="names" id="names" role="group" aria-label="Who said it">
+        <button type="button" class="name" id="name0" data-i="0"><span class="key" aria-hidden="true">1</span><span class="who"></span></button>
+        <button type="button" class="name" id="name1" data-i="1"><span class="key" aria-hidden="true">2</span><span class="who"></span></button>
+        <button type="button" class="name" id="name2" data-i="2"><span class="key" aria-hidden="true">3</span><span class="who"></span></button>
+        <button type="button" class="name" id="name3" data-i="3"><span class="key" aria-hidden="true">4</span><span class="who"></span></button>
+      </div>
+      <div class="btn-col" id="nextWrap" hidden>
+        <button type="button" class="btn" id="btnNext">Next</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-result" hidden>
+    <div class="band result-band">
+      <div class="band-wash" aria-hidden="true"></div>
+      <div class="band-ghost" aria-hidden="true">ten</div>
+      <p class="band-chip">Your ten</p>
+      <p class="big" id="finalScore">0</p>
+      <p class="big-label">Points</p>
+      <div class="squares" id="squares"></div>
+      <div class="versus" id="versus" hidden>
+        <div><span>You</span><b id="vsYou">0</b></div>
+        <div><span>Them</span><b id="vsThem">0</b></div>
+      </div>
+      <ul class="tiles" id="resultTiles">
+        <li class="tile"><b id="statCorrect">0 / 10</b><span>Named right</span></li>
+        <li class="tile"><b id="statAvg">0.0s</b><span>Average</span></li>
+        <li class="tile"><b id="statBest">0</b><span>Your best</span></li>
+      </ul>
+    </div>
+
+    <div class="two">
+      <div class="gcol">
+    <div class="block" id="missBlock" hidden>
+      <div class="ghead">
+        <p class="kicker">Word for word, with the citation</p>
+        <h3>The ones that got you</h3>
+      </div>
+      <ul class="misses" id="misses"></ul>
+    </div>
+      </div>
+
+      <div class="gcol">
+    <div class="block" id="mixBlock" hidden>
+      <div class="ghead">
+        <p class="kicker">On this device, every run so far</p>
+        <h3>Who you mix up</h3>
+      </div>
+      <dl class="spec mix" id="mix"></dl>
+    </div>
+
+    <div class="btn-col result-actions">
+      <button type="button" class="btn" id="btnAgain">Play again</button>
+      <div class="btn-row">
+        <button type="button" class="btn quiet" id="btnCopyLink">Copy challenge link</button>
+        <button type="button" class="btn quiet" id="btnCopyResult">Copy result</button>
+      </div>
+    </div>
+
+    <p class="small foot" id="footResult"></p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script type="application/json" id="pool">/*__POOL__*/</script>
+
+<script>
+/*__LOGIC_START__*/
+/* Pure game logic. Nothing here may touch the page, the browser or the clock:
+   scripts/test-game.mjs extracts everything between these two markers and runs
+   it under Node, so a stray browser reference breaks the tests first. */
+
+var RUN_LENGTH = 10;
+var OPTION_COUNT = 4;
+var TIER_WEIGHT = { 1: 1, 2: 3, 3: 5 };
+var BOOK_CAP = 2, NT_MIN = 3, ANCHOR_SPEAKER = 'Jesus';
+var NT_BOOKS = {MAT:1,MRK:1,LUK:1,JHN:1,ACT:1,ROM:1,'1CO':1,'2CO':1,GAL:1,EPH:1,PHP:1,COL:1,'1TH':1,'2TH':1,'1TI':1,'2TI':1,TIT:1,PHM:1,HEB:1,JAS:1,'1PE':1,'2PE':1,'1JN':1,'2JN':1,'3JN':1,JUD:1,REV:1};
+/* Past this many characters a name will not sit comfortably in a half-width button,
+   so the whole grid drops to one column. Group names are routinely longer than this. */
+var LONG_NAME = 18;
+
+/* mulberry32: small, fast, and identical in every browser and in Node. */
+function mulberry32(seed) {
+  var a = seed >>> 0;
+  return function () {
+    a = (a + 0x6D2B79F5) >>> 0;
+    var t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/* The daily seed is the UTC date as yyyymmdd, so everyone gets one run a day. */
+function dailySeed(date) {
+  return date.getUTCFullYear() * 10000 + (date.getUTCMonth() + 1) * 100 + date.getUTCDate();
+}
+
+function seedFromRandom(x) {
+  return Math.floor(x * 2176782336) >>> 0;
+}
+
+/* The four names under a line are drawn from their own stream, seeded from the run
+   seed and the position, so two people on the same seed see the same four names in
+   the same order however they answered the lines before. */
+function seedForIndex(seed, i) {
+  return (Math.imul(seed >>> 0, 2654435761) ^ Math.imul(i + 1, 1597334677)) >>> 0;
+}
+
+function wordCount(text) {
+  var s = String(text).trim();
+  return s ? s.split(/\s+/).length : 0;
+}
+
+/* KJV and WEBBE print LORD and GOD in small capitals, and the two editions punctuate
+   speech differently; either would leak which translation a line came from. The pool
+   keeps the verbatim word. Typography only: no word is added, dropped or changed. */
+function displayText(text) {
+  var s = String(text)
+    .replace(/[‘’]/g, "'").replace(/[“”]/g, '"')
+    .replace(/\b(LORD|GOD)('S)?\b/g, function (m, w, sfx) {
+      return w.charAt(0) + w.slice(1).toLowerCase() + (sfx ? "'s" : '');
+    });
+  /* A speech taken whole out of WEBBE still carries its own quotation marks; the
+     card is already a quotation, so the enclosing pair is dropped for display. */
+  if (s.length > 1 && s.charAt(0) === '"' && s.charAt(s.length - 1) === '"') s = s.slice(1, -1);
+  return s.trim();
+}
+
+function fuseFor(words) {
+  return Math.min(18, Math.max(10, 7 + 0.35 * words));
+}
+
+function scoreFor(correct, remaining, fuse, streak) {
+  if (!correct) return 0;
+  var left = Math.max(0, Math.min(remaining, fuse));
+  var base = 100 + Math.round(100 * left / fuse);
+  var bonus = Math.min(50, Math.max(0, 10 * (streak - 1)));
+  return base + bonus;
+}
+
+/* ------------------------------------------------------------------ speakers */
+
+function speakerMap(pool) {
+  var map = {}, list = (pool && pool.speakers) || [], i;
+  for (i = 0; i < list.length; i++) map[list[i].id] = list[i];
+  return map;
+}
+
+/* An id that is not in the pool prints as itself rather than as a blank: a lifetime
+   confusion tally outlives any one pool. */
+function speakerName(pool, id) {
+  var s = speakerMap(pool)[id];
+  return s ? s.name : String(id);
+}
+
+/*
+ * Some wrong answers would not be wrong. The conflicts map holds the pairs that must
+ * never be offered together — the divine voices against each other, a group against
+ * its own members — and it is read in both directions, so one entry is enough.
+ * Job's three friends against each other, and against God and Job, are deliberately
+ * absent from it: that is the best trap in the game.
+ */
+function inConflict(pool, a, b) {
+  if (a === b) return true;
+  var c = (pool && pool.conflicts) || {};
+  var la = c[a] || [], lb = c[b] || [];
+  return la.indexOf(b) !== -1 || lb.indexOf(a) !== -1;
+}
+
+/*
+ * Relayed speech. In the law, the prophets, the Psalms and Revelation a human voice is often
+ * carrying God's own words ("Thus says the LORD"), and the speaker file has to give such a
+ * verse to one or the other. Offering both names there would punish a reader for a fair
+ * reading, so in these books a divine name is never a wrong option beside a human answer, and
+ * nobody who speaks in the same book is a wrong option beside a divine answer.
+ * Job is deliberately not in the list: there the friends never relay God, and telling them
+ * from him is the best trap in the game.
+ */
+var RELAY_BOOKS = {EXO:1,LEV:1,NUM:1,DEU:1,PSA:1,ISA:1,JER:1,LAM:1,EZK:1,DAN:1,HOS:1,JOL:1,AMO:1,OBA:1,JON:1,MIC:1,NAM:1,HAB:1,ZEP:1,HAG:1,ZEC:1,MAL:1,REV:1};
+function isDivine(pool, id) { return id === 'God' || inConflict(pool, 'God', id); }
+
+function hasBook(speaker, book) {
+  return !!(speaker && speaker.books && book && speaker.books.indexOf(book) !== -1);
+}
+
+/* Fisher-Yates on a seeded stream, so a shuffle is reproducible. */
+function shuffle(rng, arr) {
+  for (var i = arr.length - 1; i > 0; i--) {
+    var j = Math.floor(rng() * (i + 1));
+    var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+  }
+  return arr;
+}
+
+/*
+ * The four names for one line: the speaker, plus three others who could plausibly
+ * have been in the room. Same book first, then the same Testament, then anyone left.
+ * Never a conflicting name, and never two names that print the same.
+ */
+function optionsFor(pool, item, rng) {
+  var list = (pool && pool.speakers) || [];
+  var byId = speakerMap(pool);
+  var answer = byId[item.sp] || { id: item.sp, name: String(item.sp), testament: '', books: [] };
+
+  var sameBook = [], sameTestament = [], rest = [], i, s;
+  for (i = 0; i < list.length; i++) {
+    s = list[i];
+    if (s.id === answer.id) continue;
+    if (inConflict(pool, answer.id, s.id)) continue;
+    if (s.name === answer.name) continue;
+    if (RELAY_BOOKS[item.book]) {
+      if (!isDivine(pool, answer.id) && isDivine(pool, s.id)) continue;
+      if (isDivine(pool, answer.id) && hasBook(s, item.book)) continue;
+    }
+    if (hasBook(s, item.book)) sameBook.push(s);
+    else if (s.testament && s.testament === answer.testament) sameTestament.push(s);
+    else rest.push(s);
+  }
+  shuffle(rng, sameBook);
+  shuffle(rng, sameTestament);
+  shuffle(rng, rest);
+
+  var ranked = sameBook.concat(sameTestament, rest);
+  var used = {};
+  used[answer.name] = true;
+  var picks = [];
+  for (i = 0; i < ranked.length && picks.length < OPTION_COUNT - 1; i++) {
+    if (used[ranked[i].name]) continue;
+    used[ranked[i].name] = true;
+    picks.push({ id: ranked[i].id, name: ranked[i].name });
+  }
+
+  var at = Math.floor(rng() * OPTION_COUNT);
+  if (at > picks.length) at = picks.length;
+  picks.splice(at, 0, { id: answer.id, name: answer.name });
+  return { options: picks, answerAt: at };
+}
+
+/* One long group name is enough to stack the grid. */
+function needsOneColumn(options) {
+  for (var i = 0; i < options.length; i++) {
+    if (String(options[i].name).length > LONG_NAME) return true;
+  }
+  return false;
+}
+
+/* --------------------------------------------------------------------- draw */
+
+/* A run never asks about the same speaker twice, so ten lines mean ten voices. */
+function speakerKey(item) {
+  return String((item && item.sp) || '');
+}
+
+/* Weighted draw without replacement. Tier 3 is the hardest and shows up most. */
+function weightedTake(rng, pool, count, usedKeys, usedIds, perBook) {
+  var bag = pool.slice();
+  var out = [];
+  while (out.length < count && bag.length) {
+    var total = 0, i;
+    for (i = 0; i < bag.length; i++) total += TIER_WEIGHT[bag[i].tier] || 1;
+    var r = rng() * total;
+    var at = bag.length - 1;
+    for (i = 0; i < bag.length; i++) {
+      r -= TIER_WEIGHT[bag[i].tier] || 1;
+      if (r <= 0) { at = i; break; }
+    }
+    var item = bag.splice(at, 1)[0];
+    var key = speakerKey(item);
+    if (usedKeys[key] || usedIds[item.id]) continue;
+    if (perBook) { if ((perBook[item.book] || 0) >= BOOK_CAP) continue; perBook[item.book] = (perBook[item.book] || 0) + 1; }
+    usedKeys[key] = true;
+    usedIds[item.id] = true;
+    out.push(item);
+  }
+  return out;
+}
+
+/* opts: { seed, exclude } — exclude is an array of ids already seen, which only the
+   free "Play" mode passes; daily and challenge runs must match for everyone, so they
+   never exclude anything. */
+function drawRun(pool, opts) {
+  var rng = mulberry32(opts.seed);
+  var skip = {};
+  (opts.exclude || []).forEach(function (id) { skip[id] = true; });
+
+  var usable = (pool.items || []).filter(function (it) { return !skip[it.id]; });
+  if (usable.length < RUN_LENGTH) usable = (pool.items || []).slice();
+
+  var usedKeys = {}, usedIds = {}, perBook = {};
+  /* Composition. Job alone is a quarter of the pool and the New Testament an eighth, so an
+     unshaped draw is a Job quiz in which Jesus never speaks. Every run therefore carries one
+     line from Jesus where one is available, at least three New Testament lines, and never
+     more than two lines from any one book. */
+  var picked = weightedTake(rng, usable.filter(function (it) { return it.sp === ANCHOR_SPEAKER; }), 1, usedKeys, usedIds, perBook);
+  var nt = usable.filter(function (it) { return NT_BOOKS[it.book]; });
+  var haveNt = picked.filter(function (it) { return NT_BOOKS[it.book]; }).length;
+  if (haveNt < NT_MIN) picked = picked.concat(weightedTake(rng, nt, NT_MIN - haveNt, usedKeys, usedIds, perBook));
+  picked = picked.concat(weightedTake(rng, usable, RUN_LENGTH - picked.length, usedKeys, usedIds, perBook));
+  /* A small pool can run out under the book cap: the cap gives way before a speaker repeats. */
+  if (picked.length < RUN_LENGTH) picked = picked.concat(weightedTake(rng, usable, RUN_LENGTH - picked.length, usedKeys, usedIds));
+  /* Too few voices left to fill ten: the one-speaker-per-run rule gives way before
+     the run length does, but a line is still never repeated. */
+  if (picked.length < RUN_LENGTH) {
+    picked = picked.concat(weightedTake(rng, usable, RUN_LENGTH - picked.length, {}, usedIds));
+  }
+
+  for (var i = picked.length - 1; i > 0; i--) {
+    var j = Math.floor(rng() * (i + 1));
+    var tmp = picked[i]; picked[i] = picked[j]; picked[j] = tmp;
+  }
+  return picked;
+}
+
+/* ----------------------------------------------------------------- challenge */
+
+/* Answer times ride in the link as half-second buckets, 1 to z; 0 means wrong or
+   timed out. Ten characters, one per line. */
+function timeBucket(seconds) {
+  return Math.min(35, Math.max(1, Math.ceil(seconds / 0.5)));
+}
+
+function encodeChallenge(base, seed, score, answers) {
+  var marks = '', i;
+  for (i = 0; i < RUN_LENGTH; i++) {
+    var a = answers[i];
+    marks += (a && a.ok) ? timeBucket(a.secs).toString(36) : '0';
+  }
+  return base + '#w=' + ((seed >>> 0).toString(36)) + '.' +
+    (Math.max(0, Math.round(score)).toString(36)) + '.' + marks;
+}
+
+function decodeChallenge(hash) {
+  if (typeof hash !== 'string') return null;
+  var m = /^#?w=([0-9a-z]{1,8})\.([0-9a-z]{1,6})\.([0-9a-z]{10})$/.exec(hash.trim());
+  if (!m) return null;
+  var seed = parseInt(m[1], 36), score = parseInt(m[2], 36);
+  if (!isFinite(seed) || !isFinite(score)) return null;
+  var marks = [], i;
+  for (i = 0; i < RUN_LENGTH; i++) {
+    var v = parseInt(m[3].charAt(i), 36);
+    marks.push(v === 0 ? { ok: false, secs: null } : { ok: true, secs: v * 0.5 });
+  }
+  return { seed: seed, score: score, marks: marks };
+}
+
+/* ------------------------------------------------------------- confusions --- */
+
+/* "You took Eliphaz for God": the key is the speaker first, then the name the player
+   reached for. The pair is directed, because mistaking God for Eliphaz is a different
+   mistake from mistaking Eliphaz for God. */
+function confusionKey(truthId, pickedId) {
+  return String(truthId) + '>' + String(pickedId);
+}
+
+function addConfusion(tally, truthId, pickedId) {
+  var out = {}, k;
+  if (tally && typeof tally === 'object') {
+    for (k in tally) if (Object.prototype.hasOwnProperty.call(tally, k)) out[k] = tally[k];
+  }
+  if (!truthId || !pickedId || truthId === pickedId) return out;
+  var key = confusionKey(truthId, pickedId);
+  var n = out[key];
+  out[key] = (typeof n === 'number' && isFinite(n) ? n : 0) + 1;
+  return out;
+}
+
+/* Sorted by how often, then by the key, so the same tally always prints the same way. */
+function topConfusions(tally, limit) {
+  var rows = [], k, parts;
+  if (tally && typeof tally === 'object') {
+    for (k in tally) {
+      if (!Object.prototype.hasOwnProperty.call(tally, k)) continue;
+      if (typeof tally[k] !== 'number' || !isFinite(tally[k]) || tally[k] <= 0) continue;
+      parts = k.split('>');
+      if (parts.length !== 2 || !parts[0] || !parts[1]) continue;
+      rows.push({ truth: parts[0], picked: parts[1], n: tally[k] });
+    }
+  }
+  rows.sort(function (a, b) {
+    return b.n - a.n || (confusionKey(a.truth, a.picked) < confusionKey(b.truth, b.picked) ? -1 : 1);
+  });
+  return rows.slice(0, Math.max(0, limit || 0));
+}
+/*__LOGIC_END__*/
+
+/* ------------------------------------------------------------------ the app */
+(function () {
+  'use strict';
+
+  var POOL = JSON.parse(document.getElementById('pool').textContent);
+  var SPEAKERS = POOL.speakers || [];
+
+  var TRANSLATION = {
+    kjv: 'King James Version',
+    webbe: 'World English Bible, British Edition'
+  };
+  var FOOT = 'Every line is quoted word for word from the King James Version or the World English ' +
+    'Bible, British Edition, and only the sixty-six book canon is used. LORD and GOD in small ' +
+    'capitals are shown as Lord and God. Speaker labels: Glyssen character data, © SIL and ' +
+    'Faith Comes By Hearing, MIT licence. A label can be wrong and we did not make them: ';
+  var FOOT_LINK = '<a href="https://wiserwalk.com/method/#the-game">report one</a>.';
+
+  var ICON = {
+    tick: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 12.6l4.8 4.8L19.6 7"/></svg>',
+    cross: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg>',
+    clock: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.2V12l3.2 2"/></svg>',
+    bolt: '<svg viewBox="0 0 24 24" aria-hidden="true" class="solid bolt"><path d="M13.4 2L5 13.2h4.9L8.6 22 19 10.4h-5.2z"/></svg>'
+  };
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  var el = {
+    start: $('screen-start'), play: $('screen-play'), result: $('screen-result'),
+    banner: $('challengeBanner'), bannerScore: $('challengeScore'), bannerWord: $('challengeWord'),
+    lede: $('startLede'), footStart: $('footStart'), footResult: $('footResult'),
+    startTiles: $('startTiles'),
+    btnPlay: $('btnPlay'), btnDaily: $('btnDaily'),
+    pips: $('pips'), scoreNow: $('scoreNow'), fuseFill: $('fuseFill'),
+    card: $('card'), line: $('lineText'), cardHint: $('cardHint'), reveal: $('reveal'),
+    names: $('names'),
+    nextWrap: $('nextWrap'), btnNext: $('btnNext'),
+    finalScore: $('finalScore'), statCorrect: $('statCorrect'), statAvg: $('statAvg'), statBest: $('statBest'),
+    squares: $('squares'), versus: $('versus'), vsYou: $('vsYou'), vsThem: $('vsThem'),
+    missBlock: $('missBlock'), misses: $('misses'), mixBlock: $('mixBlock'), mix: $('mix'),
+    btnAgain: $('btnAgain'), btnCopyLink: $('btnCopyLink'), btnCopyResult: $('btnCopyResult'),
+    toast: $('toast')
+  };
+  var nameBtns = [$('name0'), $('name1'), $('name2'), $('name3')];
+
+  /* ---- storage, always defensive: the game works with storage blocked ----
+     The keys carry this game's own prefix, so nothing here can collide with the
+     sibling game's sls.* keys on the same origin. */
+  var K = { seen: 'wsi.seen', best: 'wsi.best', mix: 'wsi.mix' };
+  function read(key, fallback) {
+    try {
+      var raw = localStorage.getItem(key);
+      return raw === null ? fallback : JSON.parse(raw);
+    } catch (e) { return fallback; }
+  }
+  function write(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) { /* fine */ }
+  }
+
+  /* ------------------------------------------------------------- state ---- */
+  var state = {
+    screen: 'start',
+    mode: 'free',
+    seed: 0,
+    run: [],
+    options: [],
+    answerAt: 0,
+    index: 0,
+    score: 0,
+    streak: 0,
+    answers: [],
+    phase: 'idle',
+    challenge: null
+  };
+  var timerId = null;
+  var lineStart = 0;
+  var lineFuse = 0;
+
+  function publish() {
+    window.__wsi = {
+      screen: state.screen,
+      phase: state.phase,
+      mode: state.mode,
+      seed: state.seed,
+      index: state.index,
+      score: state.score,
+      run: state.run,
+      options: state.options,
+      answerAt: state.answerAt,
+      answers: state.answers,
+      challenge: state.challenge,
+      logic: {
+        mulberry32: mulberry32, drawRun: drawRun, optionsFor: optionsFor, fuseFor: fuseFor,
+        scoreFor: scoreFor, displayText: displayText, speakerKey: speakerKey,
+        inConflict: inConflict, needsOneColumn: needsOneColumn,
+        encodeChallenge: encodeChallenge, decodeChallenge: decodeChallenge,
+        confusionKey: confusionKey, addConfusion: addConfusion, topConfusions: topConfusions
+      },
+      answer: answer,
+      next: nextLine
+    };
+  }
+
+  /* -------------------------------------------------------------- start --- */
+
+  function refreshActions() {
+    if (state.challenge) {
+      el.btnPlay.textContent = 'Take the challenge';
+      el.btnDaily.hidden = true;
+    } else {
+      el.btnPlay.textContent = 'Play';
+      el.btnDaily.textContent = "Today's ten";
+      el.btnDaily.hidden = false;
+    }
+  }
+
+  function showScreen(name) {
+    state.screen = name;
+    el.start.hidden = name !== 'start';
+    el.play.hidden = name !== 'play';
+    el.result.hidden = name !== 'result';
+    publish();
+  }
+
+  /* --------------------------------------------------------------- run ---- */
+  function seenIds() {
+    var seen = read(K.seen, []);
+    return Array.isArray(seen) ? seen : [];
+  }
+
+  function rememberSeen(ids) {
+    var seen = seenIds().concat(ids);
+    var uniq = [], map = {};
+    seen.forEach(function (id) { if (!map[id]) { map[id] = true; uniq.push(id); } });
+    var total = (POOL.items || []).length;
+    if (total && (total - uniq.length) / total < 0.3) uniq = [];
+    write(K.seen, uniq);
+  }
+
+  function startRun(mode, seed) {
+    state.mode = mode;
+    state.seed = seed;
+    state.run = drawRun(POOL, { seed: seed, exclude: mode === 'free' ? seenIds() : [] });
+    state.index = 0;
+    state.score = 0;
+    state.streak = 0;
+    state.answers = [];
+    el.scoreNow.textContent = '0';
+    buildPips();
+    showScreen('play');
+    showLine();
+  }
+
+  function buildPips() {
+    var html = '';
+    for (var i = 0; i < state.run.length; i++) html += '<div class="pip" data-i="' + i + '"></div>';
+    el.pips.innerHTML = html;
+    paintPips();
+  }
+
+  function paintPips() {
+    var pips = el.pips.children;
+    for (var i = 0; i < pips.length; i++) {
+      pips[i].className = 'pip' + (i < state.index ? ' done' : (i === state.index ? ' now' : ''));
+    }
+  }
+
+  function sizeClass(words) {
+    if (words <= 14) return 's1';
+    if (words <= 24) return 's2';
+    return 's3';
+  }
+
+  function paintNames() {
+    var opts = state.options;
+    el.names.classList.toggle('one', needsOneColumn(opts));
+    for (var i = 0; i < nameBtns.length; i++) {
+      var btn = nameBtns[i];
+      var opt = opts[i];
+      btn.hidden = !opt;
+      if (!opt) continue;
+      btn.querySelector('.who').textContent = opt.name;
+      btn.setAttribute('aria-label', opt.name);
+    }
+  }
+
+  function showLine() {
+    var item = state.run[state.index];
+    state.phase = 'play';
+    var words = wordCount(item.t);
+    lineFuse = fuseFor(words);
+
+    var drawn = optionsFor(POOL, item, mulberry32(seedForIndex(state.seed, state.index)));
+    state.options = drawn.options;
+    state.answerAt = drawn.answerAt;
+
+    el.line.className = 'line ' + sizeClass(words);
+    el.line.textContent = displayText(item.t);
+    el.reveal.hidden = true;
+    el.reveal.innerHTML = '';
+    el.card.classList.remove('revealed');
+    el.cardHint.hidden = false;
+    el.names.hidden = false;
+    el.nextWrap.hidden = true;
+    paintNames();
+    paintPips();
+
+    /* The fuse is a linear width transition, not an animation frame loop: the
+       owner's preview pane never fires frame callbacks. */
+    el.fuseFill.style.transition = 'none';
+    el.fuseFill.style.width = '100%';
+    void el.fuseFill.offsetWidth;
+    el.fuseFill.style.transition = 'width ' + lineFuse + 's linear';
+    el.fuseFill.style.width = '0%';
+
+    lineStart = performance.now();
+    clearTimeout(timerId);
+    timerId = setTimeout(function () { answer(null); }, lineFuse * 1000);
+    publish();
+  }
+
+  function freezeFuse() {
+    var frac = Math.max(0, 1 - (performance.now() - lineStart) / (lineFuse * 1000));
+    el.fuseFill.style.transition = 'none';
+    el.fuseFill.style.width = (frac * 100).toFixed(2) + '%';
+  }
+
+  /* pick: the index of the name tapped, or null when the fuse ran out */
+  function answer(pick) {
+    if (state.phase !== 'play') return;
+    clearTimeout(timerId);
+    freezeFuse();
+    state.phase = 'reveal';
+
+    var item = state.run[state.index];
+    var elapsed = (performance.now() - lineStart) / 1000;
+    var remaining = Math.max(0, lineFuse - elapsed);
+    var timedOut = pick === null || pick === undefined || !state.options[pick];
+    var picked = timedOut ? null : state.options[pick];
+    var ok = !timedOut && picked.id === item.sp;
+
+    state.streak = ok ? state.streak + 1 : 0;
+    var points = scoreFor(ok, remaining, lineFuse, state.streak);
+    state.score += points;
+    el.scoreNow.textContent = String(state.score);
+
+    state.answers.push({
+      id: item.id, ok: ok, timedOut: timedOut,
+      secs: timedOut ? lineFuse : Math.min(elapsed, lineFuse),
+      points: points, picked: picked ? picked.id : null, truth: item.sp
+    });
+
+    if (!ok && picked) write(K.mix, addConfusion(read(K.mix, {}), item.sp, picked.id));
+    renderReveal(item, ok, timedOut, points, picked);
+    publish();
+  }
+
+  function esc(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function renderReveal(item, ok, timedOut, points, picked) {
+    var mark = ok ? ICON.tick : (timedOut ? ICON.clock : ICON.cross);
+    var word = ok ? 'Correct' : (timedOut ? 'Out of time' : 'Wrong');
+    var who = speakerName(POOL, item.sp);
+
+    /* The reveal is the site's own furniture: a dark verdict chip, the speaker in
+       display type, then the facts on dotted rules, exactly as a spec list elsewhere. */
+    var html = '<p class="verdict ' + (ok ? 'ok' : 'bad') + '">' + mark + '<span>' + word + '</span></p>';
+    html += '<p class="truth">' + esc(who) + ' said it.</p>';
+
+    html += '<dl class="spec">';
+    html += '<div><dt>Reference</dt><dd><b>' + esc(item.ref) + '</b></dd></div>';
+    html += '<div><dt>Translation</dt><dd>' + esc(TRANSLATION[item.tr] || item.tr || '') + '</dd></div>';
+    html += '<div><dt>You said</dt><dd>' +
+            (picked ? esc(picked.name) : 'Nothing, the time ran out') + '</dd></div>';
+    html += '<div><dt>Points</dt><dd class="num">' + (points > 0 ? '+' + points : 'None') + '</dd></div>';
+    if (state.challenge && state.challenge.marks[state.index]) {
+      var them = state.challenge.marks[state.index];
+      html += '<div><dt>Them</dt><dd>' +
+              (them.ok ? 'right in ' + them.secs.toFixed(1) + 's' : 'wrong') + '</dd></div>';
+    }
+    html += '</dl>';
+
+    el.reveal.innerHTML = html;
+    el.reveal.hidden = false;
+    el.card.classList.add('revealed');
+    el.cardHint.hidden = true;
+    el.names.hidden = true;
+    el.nextWrap.hidden = false;
+    el.btnNext.textContent = state.index === state.run.length - 1 ? 'See your ten' : 'Next';
+    el.btnNext.focus({ preventScroll: true });
+  }
+
+  function nextLine() {
+    if (state.phase !== 'reveal') return;
+    state.index += 1;
+    if (state.index >= state.run.length) return finish();
+    showLine();
+  }
+
+  /* ------------------------------------------------------------ result ---- */
+  function finish() {
+    state.phase = 'done';
+    clearTimeout(timerId);
+    if (state.mode === 'free') rememberSeen(state.run.map(function (it) { return it.id; }));
+
+    var correct = 0, totalSecs = 0;
+    state.answers.forEach(function (a) { if (a.ok) correct++; totalSecs += a.secs; });
+    var best = read(K.best, 0);
+    if (typeof best !== 'number' || !isFinite(best)) best = 0;
+    if (state.score > best) { best = state.score; write(K.best, best); }
+
+    el.finalScore.textContent = state.score.toLocaleString();
+    el.statCorrect.textContent = correct + ' / ' + state.run.length;
+    el.statAvg.textContent = (totalSecs / Math.max(1, state.answers.length)).toFixed(1) + 's';
+    el.statBest.textContent = best.toLocaleString();
+
+    var sq = '';
+    state.answers.forEach(function (a) {
+      sq += '<div class="sq">' + (a.ok ? ICON.tick : ICON.cross) +
+            (a.ok && a.secs < 3 ? ICON.bolt : '') + '</div>';
+    });
+    el.squares.innerHTML = sq;
+
+    if (state.challenge) {
+      el.versus.hidden = false;
+      el.vsYou.textContent = state.score.toLocaleString();
+      el.vsThem.textContent = state.challenge.score.toLocaleString();
+    } else {
+      el.versus.hidden = true;
+    }
+
+    /* Each missed line as a stripe card: the stripe says how it went wrong, the
+       medallion repeats it, and the body carries the line, its citation, who said
+       it and the name you reached for instead. */
+    var missed = [];
+    state.answers.forEach(function (a, i) {
+      var item = state.run[i];
+      if (a.ok) return;
+      /* The tag is set vertically in a 2.4rem stripe whose top the medallion covers,
+         so it has about seven characters of room. Anything longer is clipped. */
+      var tag = a.timedOut ? 'Ran out' : 'Wrong';
+      var saidWhat = a.timedOut
+        ? 'The time ran out.'
+        : 'You said ' + esc(speakerName(POOL, a.picked)) + '.';
+      missed.push(
+        '<li>' +
+        '<span class="miss-stripe" aria-hidden="true"><span class="miss-tag">' + esc(tag) + '</span></span>' +
+        '<span class="miss-medal" aria-hidden="true">' + (a.timedOut ? ICON.clock : ICON.cross) + '</span>' +
+        '<q>' + esc(displayText(item.t)) + '</q>' +
+        '<p class="miss-ref">' + esc(item.ref) + ' &middot; ' + esc(TRANSLATION[item.tr] || item.tr || '') + '</p>' +
+        '<p class="miss-where">' + esc(speakerName(POOL, item.sp)) + ' said it. ' + saidWhat + '</p>' +
+        '</li>'
+      );
+    });
+    el.misses.innerHTML = missed.join('');
+    el.missBlock.hidden = missed.length === 0;
+
+    /* The personal result: not a score, but which two voices you cannot tell apart. */
+    var rows = topConfusions(read(K.mix, {}), 8);
+    el.mix.innerHTML = rows.map(function (r) {
+      return '<div><dt>You took ' + esc(speakerName(POOL, r.truth)) +
+             ' for ' + esc(speakerName(POOL, r.picked)) + '</dt>' +
+             '<dd class="num">' + (r.n === 1 ? 'once' : r.n + ' times') + '</dd></div>';
+    }).join('');
+    el.mixBlock.hidden = rows.length === 0;
+
+    showScreen('result');
+  }
+
+  /* --------------------------------------------------------------- share -- */
+  function linkBase() { return location.origin + location.pathname; }
+
+  function challengeLink() {
+    return encodeChallenge(linkBase(), state.seed, state.score, state.answers);
+  }
+
+  function resultText() {
+    var squares = state.answers.map(function (a) {
+      return a.ok ? (a.secs < 3 ? '⚡' : '✅') : '❌';
+    }).join('');
+    return 'Who Said It? — ' + state.score.toLocaleString() + '\n' + squares + '\n' + challengeLink();
+  }
+
+  function toast(msg) {
+    el.toast.textContent = msg;
+    el.toast.classList.add('on');
+    setTimeout(function () { el.toast.classList.remove('on'); }, 1800);
+  }
+
+  function copy(text, msg) {
+    var done = function () { toast(msg); };
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text, done); });
+        return;
+      }
+    } catch (e) {}
+    fallbackCopy(text, done);
+  }
+
+  function fallbackCopy(text, done) {
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      done();
+    } catch (e) { toast('Could not copy'); }
+  }
+
+  /* ------------------------------------------------------------- wiring --- */
+  nameBtns.forEach(function (btn, i) {
+    btn.addEventListener('click', function () { answer(i); });
+  });
+
+  el.btnPlay.addEventListener('click', function () {
+    if (state.challenge) startRun('challenge', state.challenge.seed);
+    else startRun('free', seedFromRandom(Math.random()));
+  });
+  el.btnDaily.addEventListener('click', function () {
+    state.challenge = null;
+    startRun('daily', dailySeed(new Date()));
+  });
+  el.btnNext.addEventListener('click', nextLine);
+  el.btnAgain.addEventListener('click', function () {
+    state.challenge = null;
+    try { history.replaceState(null, '', linkBase()); } catch (e) {}
+    el.banner.hidden = true;
+    el.lede.hidden = false;
+    refreshActions();
+    showScreen('start');
+  });
+  el.btnCopyLink.addEventListener('click', function () { copy(challengeLink(), 'Challenge link copied'); });
+  el.btnCopyResult.addEventListener('click', function () { copy(resultText(), 'Result copied'); });
+
+  document.addEventListener('keydown', function (e) {
+    if (state.screen !== 'play') return;
+    if (state.phase === 'play') {
+      var n = '1234'.indexOf(e.key);
+      if (n !== -1 && state.options[n]) { e.preventDefault(); answer(n); }
+    } else if (state.phase === 'reveal') {
+      if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); nextLine(); }
+    }
+  });
+
+  /* -------------------------------------------------------------- boot ---- */
+
+  /* The three numbers on the start band are counted from the pool that was injected
+     into this page, never typed: change the pool and they change with it. */
+  el.startTiles.innerHTML =
+    '<li class="tile"><b>' + (POOL.items || []).length.toLocaleString() + '</b><span>Lines</span></li>' +
+    '<li class="tile"><b>' + SPEAKERS.length.toLocaleString() + '</b><span>Speakers</span></li>' +
+    '<li class="tile"><b>' + RUN_LENGTH + '</b><span>Lines a run</span></li>';
+
+  el.footStart.innerHTML = esc(FOOT) + FOOT_LINK;
+  el.footResult.innerHTML = el.footStart.innerHTML;
+
+  var incoming = decodeChallenge(location.hash);
+  if (incoming) {
+    state.challenge = incoming;
+    el.banner.hidden = false;
+    el.bannerScore.textContent = incoming.score.toLocaleString();
+    el.bannerWord.textContent = 'was their score';
+    el.lede.hidden = true;
+  }
+  refreshActions();
+
+  showScreen('start');
+  publish();
+})();
+</script>

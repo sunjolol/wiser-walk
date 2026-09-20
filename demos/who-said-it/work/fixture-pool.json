@@ -1,0 +1,672 @@
+{
+ "version": 1,
+ "built": "2026-09-19",
+ "fixture": true,
+ "note": "Development fixture only. Every line below is an obvious placeholder, never a real or invented quotation, and no speaker here is a claim about who said anything. The speaker names, the testaments and the conflicts map are shaped like the real ones so the option drawing and the fairness rules can be tested.",
+ "speakers": [
+  {
+   "id": "god",
+   "name": "God",
+   "testament": "OT",
+   "books": [
+    "Job",
+    "Genesis"
+   ]
+  },
+  {
+   "id": "jesus",
+   "name": "Jesus",
+   "testament": "NT",
+   "books": [
+    "Matthew",
+    "John"
+   ]
+  },
+  {
+   "id": "spirit",
+   "name": "The Holy Spirit",
+   "testament": "NT",
+   "books": [
+    "Acts"
+   ]
+  },
+  {
+   "id": "job",
+   "name": "Job",
+   "testament": "OT",
+   "books": [
+    "Job"
+   ]
+  },
+  {
+   "id": "eliphaz",
+   "name": "Eliphaz",
+   "testament": "OT",
+   "books": [
+    "Job"
+   ]
+  },
+  {
+   "id": "bildad",
+   "name": "Bildad",
+   "testament": "OT",
+   "books": [
+    "Job"
+   ]
+  },
+  {
+   "id": "zophar",
+   "name": "Zophar",
+   "testament": "OT",
+   "books": [
+    "Job"
+   ]
+  },
+  {
+   "id": "moses",
+   "name": "Moses",
+   "testament": "OT",
+   "books": [
+    "Exodus"
+   ]
+  },
+  {
+   "id": "david",
+   "name": "David",
+   "testament": "OT",
+   "books": [
+    "1 Samuel",
+    "Psalms"
+   ]
+  },
+  {
+   "id": "peter",
+   "name": "Peter",
+   "testament": "NT",
+   "books": [
+    "Matthew",
+    "Acts"
+   ]
+  },
+  {
+   "id": "disciples",
+   "name": "The disciples",
+   "testament": "NT",
+   "books": [
+    "Matthew",
+    "John"
+   ]
+  },
+  {
+   "id": "priests",
+   "name": "The chief priests and elders",
+   "testament": "NT",
+   "books": [
+    "Matthew",
+    "John"
+   ]
+  }
+ ],
+ "conflicts": {
+  "god": [
+   "jesus",
+   "spirit"
+  ],
+  "jesus": [
+   "god",
+   "spirit"
+  ],
+  "spirit": [
+   "god",
+   "jesus"
+  ],
+  "disciples": [
+   "peter"
+  ],
+  "peter": [
+   "disciples"
+  ]
+ },
+ "items": [
+  {
+   "id": "fx-01",
+   "t": "Placeholder line 1, words measuring the card at.",
+   "sp": "god",
+   "ref": "Job 2:2",
+   "tr": "webbe",
+   "tier": 3,
+   "book": "Job"
+  },
+  {
+   "id": "fx-02",
+   "t": "Placeholder line 2, measuring the card at this length on a narrow screen held.",
+   "sp": "god",
+   "ref": "Job 3:3",
+   "tr": "kjv",
+   "tier": 3,
+   "book": "Job"
+  },
+  {
+   "id": "fx-03",
+   "t": "Placeholder line 3, the card at this length on a narrow screen held in one hand while the clock runs down.",
+   "sp": "god",
+   "ref": "Job 4:4",
+   "tr": "webbe",
+   "tier": 2,
+   "book": "Job"
+  },
+  {
+   "id": "fx-04",
+   "t": "Placeholder line 4 naming the LORD in small capitals so the display rule can be seen working.",
+   "sp": "god",
+   "ref": "Genesis 5:5",
+   "tr": "kjv",
+   "tier": 2,
+   "book": "Genesis"
+  },
+  {
+   "id": "fx-05",
+   "t": "Placeholder line 5, at this length on a narrow screen held in one hand while the clock runs down and the four names wait below for a tap from a thumb that is already.",
+   "sp": "god",
+   "ref": "Genesis 6:6",
+   "tr": "webbe",
+   "tier": 1,
+   "book": "Genesis"
+  },
+  {
+   "id": "fx-06",
+   "t": "Placeholder line 6, this length on a narrow screen held in.",
+   "sp": "jesus",
+   "ref": "Matthew 7:7",
+   "tr": "kjv",
+   "tier": 3,
+   "book": "Matthew"
+  },
+  {
+   "id": "fx-07",
+   "t": "Placeholder line 7, length on a narrow screen held in one hand while the clock runs down.",
+   "sp": "jesus",
+   "ref": "Matthew 8:8",
+   "tr": "webbe",
+   "tier": 3,
+   "book": "Matthew"
+  },
+  {
+   "id": "fx-08",
+   "t": "Placeholder line 8, on a narrow screen held in one hand while the clock runs down and the four names wait below for a.",
+   "sp": "jesus",
+   "ref": "Matthew 9:9",
+   "tr": "kjv",
+   "tier": 2,
+   "book": "Matthew"
+  },
+  {
+   "id": "fx-09",
+   "t": "\"Placeholder line 9, wrapped in the quotation marks the extractor drops for display.\"",
+   "sp": "jesus",
+   "ref": "John 10:10",
+   "tr": "webbe",
+   "tier": 2,
+   "book": "John"
+  },
+  {
+   "id": "fx-10",
+   "t": "Placeholder line 10, narrow screen held in one hand.",
+   "sp": "jesus",
+   "ref": "John 11:11",
+   "tr": "kjv",
+   "tier": 1,
+   "book": "John"
+  },
+  {
+   "id": "fx-11",
+   "t": "Placeholder line 11, screen held in one hand while the clock runs.",
+   "sp": "spirit",
+   "ref": "Acts 12:12",
+   "tr": "webbe",
+   "tier": 3,
+   "book": "Acts"
+  },
+  {
+   "id": "fx-12",
+   "t": "Placeholder line 12, held in one hand while the clock runs down and the four names wait below for.",
+   "sp": "spirit",
+   "ref": "Acts 13:13",
+   "tr": "kjv",
+   "tier": 3,
+   "book": "Acts"
+  },
+  {
+   "id": "fx-13",
+   "t": "Placeholder line 13, in one hand while the clock runs down and the four names wait below for a tap from a thumb that is already.",
+   "sp": "spirit",
+   "ref": "Acts 14:14",
+   "tr": "webbe",
+   "tier": 2,
+   "book": "Acts"
+  },
+  {
+   "id": "fx-14",
+   "t": "Placeholder line 14, one hand while the clock runs down and the four names wait below for a tap from a thumb that is already hovering over them filler words measuring the card.",
+   "sp": "spirit",
+   "ref": "Acts 15:15",
+   "tr": "kjv",
+   "tier": 2,
+   "book": "Acts"
+  },
+  {
+   "id": "fx-15",
+   "t": "Placeholder line 15, hand while the clock runs down and.",
+   "sp": "spirit",
+   "ref": "Acts 16:16",
+   "tr": "webbe",
+   "tier": 1,
+   "book": "Acts"
+  },
+  {
+   "id": "fx-16",
+   "t": "Placeholder line 16, while the clock runs down and the four names wait below for a.",
+   "sp": "job",
+   "ref": "Job 17:17",
+   "tr": "kjv",
+   "tier": 3,
+   "book": "Job"
+  },
+  {
+   "id": "fx-17",
+   "t": "Placeholder line 17, the clock runs down and the four names wait below for a tap from a thumb that is already hovering.",
+   "sp": "job",
+   "ref": "Job 18:18",
+   "tr": "webbe",
+   "tier": 3,
+   "book": "Job"
+  },
+  {
+   "id": "fx-18",
+   "t": "Placeholder line 18, clock runs down and the four names wait below for a tap from a thumb that is already hovering over them filler words measuring the card.",
+   "sp": "job",
+   "ref": "Job 19:19",
+   "tr": "kjv",
+   "tier": 2,
+   "book": "Job"
+  },
+  {
+   "id": "fx-19",
+   "t": "Placeholder line 19, runs down and the four names wait below for a.",
+   "sp": "job",
+   "ref": "Job 20:20",
+   "tr": "webbe",
+   "tier": 2,
+   "book": "Job"
+  },
+  {
+   "id": "fx-20",
+   "t": "Placeholder line 20, down and the four names wait below for a tap from a thumb that is already hovering.",
+   "sp": "job",
+   "ref": "Job 21:21",
+   "tr": "kjv",
+   "tier": 1,
+   "book": "Job"
+  },
+  {
+   "id": "fx-21",
+   "t": "Placeholder line 21, and the four names wait below for a tap from a thumb that is already hovering over them filler words measuring the.",
+   "sp": "eliphaz",
+   "ref": "Job 22:22",
+   "tr": "webbe",
+   "tier": 3,
+   "book": "Job"
+  },
+  {
+   "id": "fx-22",
+   "t": "Placeholder line 22, the four names wait below for a tap from a thumb that is already hovering over them filler words measuring the card at this length on a narrow.",
+   "sp": "eliphaz",
+   "ref": "Job 23:23",
+   "tr": "kjv",
+   "tier": 3,
+   "book": "Job"
+  },
+  {
+   "id": "fx-23",
+   "t": "Placeholder line 23, four names wait below for a tap from a thumb that is.",
+   "sp": "eliphaz",
+   "ref": "Job 24:24",
+   "tr": "webbe",
+   "tier": 2,
+   "book": "Job"
+  },
+  {
+   "id": "fx-24",
+   "t": "Placeholder line 24, names wait below for a tap from a thumb that is already hovering over them.",
+   "sp": "eliphaz",
+   "ref": "Job 25:25",
+   "tr": "kjv",
+   "tier": 2,
+   "book": "Job"
+  },
+  {
+   "id": "fx-25",
+   "t": "Placeholder line 25, wait below for a tap from a thumb that is already hovering over them filler words measuring the card.",
+   "sp": "eliphaz",
+   "ref": "Job 26:26",
+   "tr": "webbe",
+   "tier": 1,
+   "book": "Job"
+  },
+  {
+   "id": "fx-26",
+   "t": "Placeholder line 26, below for a tap from a thumb that is already hovering over them filler words measuring the card at this length on a narrow screen.",
+   "sp": "bildad",
+   "ref": "Job 27:27",
+   "tr": "kjv",
+   "tier": 3,
+   "book": "Job"
+  },
+  {
+   "id": "fx-27",
+   "t": "Placeholder line 27, for a tap from a thumb that is already hovering over them filler words measuring the card at this length on a narrow screen held in one hand while.",
+   "sp": "bildad",
+   "ref": "Job 28:1",
+   "tr": "webbe",
+   "tier": 3,
+   "book": "Job"
+  },
+  {
+   "id": "fx-28",
+   "t": "Placeholder line 28, a tap from a thumb.",
+   "sp": "bildad",
+   "ref": "Job 29:2",
+   "tr": "kjv",
+   "tier": 2,
+   "book": "Job"
+  },
+  {
+   "id": "fx-29",
+   "t": "Placeholder line 29, tap from a thumb that is already hovering over them filler words measuring the card at this length on a narrow screen held in one hand while the clock runs down.",
+   "sp": "bildad",
+   "ref": "Job 30:3",
+   "tr": "webbe",
+   "tier": 2,
+   "book": "Job"
+  },
+  {
+   "id": "fx-30",
+   "t": "Placeholder line 30, from a thumb that is already hovering over.",
+   "sp": "bildad",
+   "ref": "Job 31:4",
+   "tr": "kjv",
+   "tier": 1,
+   "book": "Job"
+  },
+  {
+   "id": "fx-31",
+   "t": "Placeholder line 31, a thumb that is already hovering over them filler words measuring the card at this length on a.",
+   "sp": "zophar",
+   "ref": "Job 32:5",
+   "tr": "webbe",
+   "tier": 3,
+   "book": "Job"
+  },
+  {
+   "id": "fx-32",
+   "t": "Placeholder line 32, thumb that is already hovering over them filler words measuring the card at this length on a narrow screen held in one hand while.",
+   "sp": "zophar",
+   "ref": "Job 33:6",
+   "tr": "kjv",
+   "tier": 3,
+   "book": "Job"
+  },
+  {
+   "id": "fx-33",
+   "t": "Placeholder line 33, that is already hovering over them filler words measuring the card.",
+   "sp": "zophar",
+   "ref": "Job 34:7",
+   "tr": "webbe",
+   "tier": 2,
+   "book": "Job"
+  },
+  {
+   "id": "fx-34",
+   "t": "Placeholder line 34, is already hovering over them filler.",
+   "sp": "zophar",
+   "ref": "Job 35:8",
+   "tr": "kjv",
+   "tier": 2,
+   "book": "Job"
+  },
+  {
+   "id": "fx-35",
+   "t": "Placeholder line 35, already hovering over them filler words measuring the card at this length on a narrow screen held in one hand while the clock runs down and the.",
+   "sp": "zophar",
+   "ref": "Job 36:9",
+   "tr": "webbe",
+   "tier": 1,
+   "book": "Job"
+  },
+  {
+   "id": "fx-36",
+   "t": "Placeholder line 36, hovering over them filler words measuring the card at this length on a narrow.",
+   "sp": "moses",
+   "ref": "Exodus 37:10",
+   "tr": "kjv",
+   "tier": 3,
+   "book": "Exodus"
+  },
+  {
+   "id": "fx-37",
+   "t": "Placeholder line 37, over them filler words measuring the card at this length on a narrow screen held in one hand while the clock.",
+   "sp": "moses",
+   "ref": "Exodus 38:11",
+   "tr": "webbe",
+   "tier": 3,
+   "book": "Exodus"
+  },
+  {
+   "id": "fx-38",
+   "t": "Placeholder line 38, them filler words measuring the card at this length.",
+   "sp": "moses",
+   "ref": "Exodus 39:12",
+   "tr": "kjv",
+   "tier": 2,
+   "book": "Exodus"
+  },
+  {
+   "id": "fx-39",
+   "t": "Placeholder line 39, filler words measuring the card at this length on a narrow screen held in one hand.",
+   "sp": "moses",
+   "ref": "Exodus 40:13",
+   "tr": "webbe",
+   "tier": 2,
+   "book": "Exodus"
+  },
+  {
+   "id": "fx-40",
+   "t": "Placeholder line 40, words measuring the card at this length on a narrow screen held in one hand while the clock runs down and the four.",
+   "sp": "moses",
+   "ref": "Exodus 1:14",
+   "tr": "kjv",
+   "tier": 1,
+   "book": "Exodus"
+  },
+  {
+   "id": "fx-41",
+   "t": "Placeholder line 41, measuring the card at this length on a narrow screen held in one hand while the clock runs down and the four names wait below for a tap from a.",
+   "sp": "david",
+   "ref": "1 Samuel 2:15",
+   "tr": "webbe",
+   "tier": 3,
+   "book": "1 Samuel"
+  },
+  {
+   "id": "fx-42",
+   "t": "Placeholder line 42, the card at this length on a.",
+   "sp": "david",
+   "ref": "1 Samuel 3:16",
+   "tr": "kjv",
+   "tier": 3,
+   "book": "1 Samuel"
+  },
+  {
+   "id": "fx-43",
+   "t": "Placeholder line 43, card at this length on a narrow screen held in one hand while.",
+   "sp": "david",
+   "ref": "Psalms 4:17",
+   "tr": "webbe",
+   "tier": 2,
+   "book": "Psalms"
+  },
+  {
+   "id": "fx-44",
+   "t": "Placeholder line 44, at this length on a narrow screen held in one hand while the clock runs down and the four names.",
+   "sp": "david",
+   "ref": "Psalms 5:18",
+   "tr": "kjv",
+   "tier": 2,
+   "book": "Psalms"
+  },
+  {
+   "id": "fx-45",
+   "t": "Placeholder line 45, this length on a narrow screen held in one hand while the clock runs down and the four names wait below for a tap from a.",
+   "sp": "david",
+   "ref": "Psalms 6:19",
+   "tr": "webbe",
+   "tier": 1,
+   "book": "Psalms"
+  },
+  {
+   "id": "fx-46",
+   "t": "Placeholder line 46, length on a narrow screen held in one hand while.",
+   "sp": "peter",
+   "ref": "Matthew 7:20",
+   "tr": "kjv",
+   "tier": 3,
+   "book": "Matthew"
+  },
+  {
+   "id": "fx-47",
+   "t": "Placeholder line 47, on a narrow screen held in one hand while the clock runs down and the four names.",
+   "sp": "peter",
+   "ref": "Matthew 8:21",
+   "tr": "webbe",
+   "tier": 3,
+   "book": "Matthew"
+  },
+  {
+   "id": "fx-48",
+   "t": "Placeholder line 48, a narrow screen held in one hand while the clock runs down and the four names wait below for a tap from.",
+   "sp": "peter",
+   "ref": "Acts 9:22",
+   "tr": "kjv",
+   "tier": 2,
+   "book": "Acts"
+  },
+  {
+   "id": "fx-49",
+   "t": "Placeholder line 49, narrow screen held in one hand while the clock runs down and the four names wait below for a tap from a thumb that is already hovering over.",
+   "sp": "peter",
+   "ref": "Acts 10:23",
+   "tr": "webbe",
+   "tier": 2,
+   "book": "Acts"
+  },
+  {
+   "id": "fx-50",
+   "t": "Placeholder line 50, screen held in one hand while the clock runs down and the.",
+   "sp": "peter",
+   "ref": "Acts 11:24",
+   "tr": "kjv",
+   "tier": 1,
+   "book": "Acts"
+  },
+  {
+   "id": "fx-51",
+   "t": "Placeholder line 51, held in one hand while the clock runs down and the four names wait below.",
+   "sp": "disciples",
+   "ref": "Matthew 12:25",
+   "tr": "webbe",
+   "tier": 3,
+   "book": "Matthew"
+  },
+  {
+   "id": "fx-52",
+   "t": "Placeholder line 52, in one hand while the clock runs down and the four names wait below for a tap from a.",
+   "sp": "disciples",
+   "ref": "Matthew 13:26",
+   "tr": "kjv",
+   "tier": 3,
+   "book": "Matthew"
+  },
+  {
+   "id": "fx-53",
+   "t": "Placeholder line 53, one hand while the clock runs down and the four names wait below for a tap from a thumb that is already hovering over them.",
+   "sp": "disciples",
+   "ref": "Matthew 14:27",
+   "tr": "webbe",
+   "tier": 2,
+   "book": "Matthew"
+  },
+  {
+   "id": "fx-54",
+   "t": "Placeholder line 54, hand while the clock runs down and the four names wait below for a tap from a thumb that is already hovering over them filler words measuring the card.",
+   "sp": "disciples",
+   "ref": "John 15:1",
+   "tr": "kjv",
+   "tier": 2,
+   "book": "John"
+  },
+  {
+   "id": "fx-55",
+   "t": "Placeholder line 55, while the clock runs down.",
+   "sp": "disciples",
+   "ref": "John 16:2",
+   "tr": "webbe",
+   "tier": 1,
+   "book": "John"
+  },
+  {
+   "id": "fx-56",
+   "t": "Placeholder line 56, the clock runs down and the four names wait below for a tap from a thumb that is already hovering over them filler words measuring the card at this length on.",
+   "sp": "priests",
+   "ref": "Matthew 17:3",
+   "tr": "kjv",
+   "tier": 3,
+   "book": "Matthew"
+  },
+  {
+   "id": "fx-57",
+   "t": "Placeholder line 57, clock runs down and the four names wait.",
+   "sp": "priests",
+   "ref": "Matthew 18:4",
+   "tr": "webbe",
+   "tier": 3,
+   "book": "Matthew"
+  },
+  {
+   "id": "fx-58",
+   "t": "Placeholder line 58, runs down and the four names wait below for a tap from a thumb that is already hovering.",
+   "sp": "priests",
+   "ref": "Matthew 19:5",
+   "tr": "kjv",
+   "tier": 2,
+   "book": "Matthew"
+  },
+  {
+   "id": "fx-59",
+   "t": "Placeholder line 59, down and the four names wait below for a tap from a thumb that is already hovering over them filler words measuring the card.",
+   "sp": "priests",
+   "ref": "John 20:6",
+   "tr": "webbe",
+   "tier": 2,
+   "book": "John"
+  },
+  {
+   "id": "fx-60",
+   "t": "Placeholder line 60, and the four names wait below for a tap from a.",
+   "sp": "priests",
+   "ref": "John 21:7",
+   "tr": "kjv",
+   "tier": 1,
+   "book": "John"
+  }
+ ]
+}

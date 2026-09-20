@@ -5,6 +5,7 @@
  * entry here and a route under /play/, never a change to the home page.
  */
 import slsMeta from '../games/sounds-like-scripture.meta.json';
+import wsiMeta from '../games/who-said-it.meta.json';
 
 export interface Game {
   slug: string;
@@ -28,6 +29,22 @@ export const GAMES: Game[] = [
       'A line appears. Is it in the Bible, or does it only sound like it? Ten lines, a few seconds each, and it is harder than you think.',
     meta: `${slsMeta.items} lines, every one quoted word for word · about two minutes a run`,
     icon: 'scroll',
+    live: true
+  }),
+  game({
+    slug: 'who-said-it',
+    title: 'Who Said It?',
+    tagline:
+      'A line of speech, and four names under it. Job’s friends sound like God and the Pharisees sound like the disciples, so the wrong name is rarely the odd one out.',
+    /*
+     * The line count comes from the built pool's own metadata, never typed. While the
+     * pool is still the development fixture that metadata reports zero lines on purpose,
+     * so this card says what a run is instead of printing a placeholder count.
+     */
+    meta: wsiMeta.items
+      ? `${wsiMeta.items} lines, every speaker from the Glyssen character data · about two minutes a run`
+      : 'Ten lines a run, four names under each one · about two minutes a run',
+    icon: 'book',
     live: true
   })
 ];

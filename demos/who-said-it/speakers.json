@@ -1,0 +1,1368 @@
+{
+  "version": 1,
+  "built": "2026-09-20",
+  "source": "Glyssen CharacterVerse.txt / CharacterDetail.txt, © SIL and Faith Comes By Hearing, MIT licence",
+  "minLines": 6,
+  "speakers": [
+    {
+      "id": "God",
+      "name": "God",
+      "testament": "both",
+      "books": [
+        "GEN",
+        "EXO",
+        "LEV",
+        "NUM",
+        "DEU",
+        "JOS",
+        "JDG",
+        "1SA",
+        "2SA",
+        "1KI",
+        "1CH",
+        "2CH",
+        "JOB",
+        "PSA",
+        "ISA",
+        "JER",
+        "EZK",
+        "HOS",
+        "JOL",
+        "AMO",
+        "OBA",
+        "JON",
+        "MIC",
+        "NAM",
+        "HAB",
+        "ZEP",
+        "ZEC",
+        "MAL",
+        "MAT",
+        "MRK",
+        "LUK",
+        "REV"
+      ],
+      "lines": 2935,
+      "group": false
+    },
+    {
+      "id": "Jesus",
+      "name": "Jesus",
+      "testament": "NT",
+      "books": [
+        "MAT",
+        "MRK",
+        "LUK",
+        "JHN",
+        "ACT",
+        "1CO",
+        "HEB",
+        "REV"
+      ],
+      "lines": 1808,
+      "group": false
+    },
+    {
+      "id": "Job",
+      "name": "Job",
+      "testament": "OT",
+      "books": [
+        "JOB"
+      ],
+      "lines": 843,
+      "group": false
+    },
+    {
+      "id": "Moses",
+      "name": "Moses",
+      "testament": "OT",
+      "books": [
+        "EXO",
+        "LEV",
+        "NUM",
+        "DEU"
+      ],
+      "lines": 631,
+      "group": false
+    },
+    {
+      "id": "Elihu, son of Barakel",
+      "name": "Elihu",
+      "testament": "OT",
+      "books": [
+        "JOB"
+      ],
+      "lines": 255,
+      "group": false
+    },
+    {
+      "id": "David",
+      "name": "David",
+      "testament": "OT",
+      "books": [
+        "1SA",
+        "2SA",
+        "1CH"
+      ],
+      "lines": 241,
+      "group": false
+    },
+    {
+      "id": "Eliphaz the Temanite",
+      "name": "Eliphaz the Temanite",
+      "testament": "OT",
+      "books": [
+        "JOB"
+      ],
+      "lines": 176,
+      "group": false
+    },
+    {
+      "id": "Peter (Simon)",
+      "name": "Peter",
+      "testament": "NT",
+      "books": [
+        "MAT",
+        "MRK",
+        "LUK",
+        "JHN",
+        "ACT"
+      ],
+      "lines": 98,
+      "group": false
+    },
+    {
+      "id": "Paul",
+      "name": "Paul",
+      "testament": "NT",
+      "books": [
+        "ACT"
+      ],
+      "lines": 98,
+      "group": false
+    },
+    {
+      "id": "Bildad the Shuhite",
+      "name": "Bildad the Shuhite",
+      "testament": "OT",
+      "books": [
+        "JOB"
+      ],
+      "lines": 82,
+      "group": false
+    },
+    {
+      "id": "Jacob (Israel)",
+      "name": "Jacob",
+      "testament": "OT",
+      "books": [
+        "GEN"
+      ],
+      "lines": 78,
+      "group": false
+    },
+    {
+      "id": "Zophar the Naamathite",
+      "name": "Zophar the Naamathite",
+      "testament": "OT",
+      "books": [
+        "JOB"
+      ],
+      "lines": 74,
+      "group": false
+    },
+    {
+      "id": "Wisdom",
+      "name": "Wisdom personified",
+      "testament": "OT",
+      "books": [
+        "PRO"
+      ],
+      "lines": 66,
+      "group": false
+    },
+    {
+      "id": "Joseph",
+      "name": "Joseph",
+      "testament": "OT",
+      "books": [
+        "GEN"
+      ],
+      "lines": 57,
+      "group": false
+    },
+    {
+      "id": "Samuel",
+      "name": "Samuel",
+      "testament": "OT",
+      "books": [
+        "1SA"
+      ],
+      "lines": 56,
+      "group": false
+    },
+    {
+      "id": "Solomon, king",
+      "name": "Solomon",
+      "testament": "OT",
+      "books": [
+        "1KI",
+        "2CH"
+      ],
+      "lines": 54,
+      "group": false
+    },
+    {
+      "id": "Daniel",
+      "name": "Daniel",
+      "testament": "OT",
+      "books": [
+        "DAN"
+      ],
+      "lines": 50,
+      "group": false
+    },
+    {
+      "id": "Saul",
+      "name": "Saul",
+      "testament": "OT",
+      "books": [
+        "1SA",
+        "1CH"
+      ],
+      "lines": 49,
+      "group": false
+    },
+    {
+      "id": "Balaam",
+      "name": "Balaam",
+      "testament": "OT",
+      "books": [
+        "NUM"
+      ],
+      "lines": 46,
+      "group": false
+    },
+    {
+      "id": "Hezekiah, king of Judah",
+      "name": "Hezekiah",
+      "testament": "OT",
+      "books": [
+        "2KI",
+        "2CH",
+        "ISA"
+      ],
+      "lines": 42,
+      "group": false
+    },
+    {
+      "id": "Joshua",
+      "name": "Joshua",
+      "testament": "OT",
+      "books": [
+        "EXO",
+        "JOS"
+      ],
+      "lines": 41,
+      "group": false
+    },
+    {
+      "id": "Rabshakeh",
+      "name": "The Rabshakeh (Assyrian envoy)",
+      "testament": "OT",
+      "books": [
+        "2KI",
+        "2CH",
+        "ISA"
+      ],
+      "lines": 40,
+      "group": false
+    },
+    {
+      "id": "disciples",
+      "name": "The disciples",
+      "testament": "NT",
+      "books": [
+        "MAT",
+        "MRK",
+        "LUK",
+        "JHN",
+        "ACT"
+      ],
+      "lines": 38,
+      "group": true
+    },
+    {
+      "id": "Stephen",
+      "name": "Stephen",
+      "testament": "NT",
+      "books": [
+        "ACT"
+      ],
+      "lines": 37,
+      "group": false
+    },
+    {
+      "id": "Israelites",
+      "name": "The Israelites",
+      "testament": "OT",
+      "books": [
+        "EXO",
+        "NUM",
+        "JOS",
+        "JDG",
+        "1SA"
+      ],
+      "lines": 29,
+      "group": true
+    },
+    {
+      "id": "John the Baptist",
+      "name": "John the Baptist",
+      "testament": "NT",
+      "books": [
+        "MAT",
+        "MRK",
+        "LUK",
+        "JHN"
+      ],
+      "lines": 29,
+      "group": false
+    },
+    {
+      "id": "Jeremiah",
+      "name": "Jeremiah",
+      "testament": "OT",
+      "books": [
+        "JER"
+      ],
+      "lines": 28,
+      "group": false
+    },
+    {
+      "id": "Abraham (Abram)",
+      "name": "Abraham",
+      "testament": "OT",
+      "books": [
+        "GEN"
+      ],
+      "lines": 26,
+      "group": false
+    },
+    {
+      "id": "Isaiah",
+      "name": "Isaiah",
+      "testament": "OT",
+      "books": [
+        "2KI",
+        "ISA"
+      ],
+      "lines": 25,
+      "group": false
+    },
+    {
+      "id": "Jews, the",
+      "name": "The Jews",
+      "testament": "NT",
+      "books": [
+        "JHN",
+        "ACT"
+      ],
+      "lines": 25,
+      "group": true
+    },
+    {
+      "id": "Yahweh's angel",
+      "name": "The angel of the Lord",
+      "testament": "OT",
+      "books": [
+        "GEN",
+        "NUM",
+        "JDG",
+        "2KI",
+        "ZEC"
+      ],
+      "lines": 23,
+      "group": false
+    },
+    {
+      "id": "Elisha",
+      "name": "Elisha",
+      "testament": "OT",
+      "books": [
+        "2KI"
+      ],
+      "lines": 23,
+      "group": false
+    },
+    {
+      "id": "Pharaoh (3rd)",
+      "name": "Pharaoh of the exodus",
+      "testament": "OT",
+      "books": [
+        "EXO"
+      ],
+      "lines": 22,
+      "group": false
+    },
+    {
+      "id": "Elijah",
+      "name": "Elijah",
+      "testament": "OT",
+      "books": [
+        "1KI",
+        "2KI",
+        "2CH"
+      ],
+      "lines": 22,
+      "group": false
+    },
+    {
+      "id": "Sadducees",
+      "name": "The Sadducees",
+      "testament": "NT",
+      "books": [
+        "MAT",
+        "MRK",
+        "LUK"
+      ],
+      "lines": 22,
+      "group": true
+    },
+    {
+      "id": "Jonathan",
+      "name": "Jonathan",
+      "testament": "OT",
+      "books": [
+        "1SA"
+      ],
+      "lines": 21,
+      "group": false
+    },
+    {
+      "id": "angel (one of the seven)",
+      "name": "One of the seven angels",
+      "testament": "NT",
+      "books": [
+        "REV"
+      ],
+      "lines": 20,
+      "group": false
+    },
+    {
+      "id": "Joshua (old)",
+      "name": "Joshua in old age",
+      "testament": "OT",
+      "books": [
+        "JOS"
+      ],
+      "lines": 19,
+      "group": false
+    },
+    {
+      "id": "Nebuchadnezzar, king of Babylon",
+      "name": "Nebuchadnezzar",
+      "testament": "OT",
+      "books": [
+        "JER",
+        "DAN"
+      ],
+      "lines": 19,
+      "group": false
+    },
+    {
+      "id": "Pilate",
+      "name": "Pilate",
+      "testament": "NT",
+      "books": [
+        "MAT",
+        "MRK",
+        "LUK",
+        "JHN"
+      ],
+      "lines": 18,
+      "group": false
+    },
+    {
+      "id": "Laban",
+      "name": "Laban",
+      "testament": "OT",
+      "books": [
+        "GEN"
+      ],
+      "lines": 17,
+      "group": false
+    },
+    {
+      "id": "Ahab, king of Israel",
+      "name": "Ahab",
+      "testament": "OT",
+      "books": [
+        "1KI",
+        "2CH"
+      ],
+      "lines": 16,
+      "group": false
+    },
+    {
+      "id": "Nehemiah",
+      "name": "Nehemiah",
+      "testament": "OT",
+      "books": [
+        "NEH"
+      ],
+      "lines": 16,
+      "group": false
+    },
+    {
+      "id": "Pharaoh (2nd)",
+      "name": "Pharaoh in Joseph's day",
+      "testament": "OT",
+      "books": [
+        "GEN"
+      ],
+      "lines": 15,
+      "group": false
+    },
+    {
+      "id": "Joab",
+      "name": "Joab",
+      "testament": "OT",
+      "books": [
+        "2SA",
+        "1KI",
+        "1CH"
+      ],
+      "lines": 15,
+      "group": false
+    },
+    {
+      "id": "Micaiah, son of Imlah",
+      "name": "Micaiah",
+      "testament": "OT",
+      "books": [
+        "1KI",
+        "2CH"
+      ],
+      "lines": 15,
+      "group": false
+    },
+    {
+      "id": "Gabriel",
+      "name": "Gabriel",
+      "testament": "both",
+      "books": [
+        "DAN",
+        "LUK"
+      ],
+      "lines": 15,
+      "group": false
+    },
+    {
+      "id": "Isaac (old)",
+      "name": "Isaac in old age",
+      "testament": "OT",
+      "books": [
+        "GEN"
+      ],
+      "lines": 14,
+      "group": false
+    },
+    {
+      "id": "angel",
+      "name": "An angel",
+      "testament": "both",
+      "books": [
+        "1KI",
+        "MAT",
+        "LUK",
+        "ACT"
+      ],
+      "lines": 14,
+      "group": true
+    },
+    {
+      "id": "Rebekah",
+      "name": "Rebekah",
+      "testament": "OT",
+      "books": [
+        "GEN"
+      ],
+      "lines": 13,
+      "group": false
+    },
+    {
+      "id": "immoral woman",
+      "name": "The immoral woman",
+      "testament": "OT",
+      "books": [
+        "PRO"
+      ],
+      "lines": 13,
+      "group": false
+    },
+    {
+      "id": "Festus, governor of Judea",
+      "name": "Festus",
+      "testament": "NT",
+      "books": [
+        "ACT"
+      ],
+      "lines": 13,
+      "group": false
+    },
+    {
+      "id": "Jethro (Reuel), Moses' father-in-law",
+      "name": "Jethro",
+      "testament": "OT",
+      "books": [
+        "EXO"
+      ],
+      "lines": 12,
+      "group": false
+    },
+    {
+      "id": "messengers from Jephthah",
+      "name": "The messengers from Jephthah",
+      "testament": "OT",
+      "books": [
+        "JDG"
+      ],
+      "lines": 12,
+      "group": true
+    },
+    {
+      "id": "Hannah",
+      "name": "Hannah",
+      "testament": "OT",
+      "books": [
+        "1SA"
+      ],
+      "lines": 12,
+      "group": false
+    },
+    {
+      "id": "Absalom, son of David",
+      "name": "Absalom",
+      "testament": "OT",
+      "books": [
+        "2SA"
+      ],
+      "lines": 12,
+      "group": false
+    },
+    {
+      "id": "Jonah",
+      "name": "Jonah",
+      "testament": "OT",
+      "books": [
+        "JON"
+      ],
+      "lines": 12,
+      "group": false
+    },
+    {
+      "id": "Gideon (Jerubbaal)",
+      "name": "Gideon",
+      "testament": "OT",
+      "books": [
+        "JDG"
+      ],
+      "lines": 11,
+      "group": false
+    },
+    {
+      "id": "Samson",
+      "name": "Samson",
+      "testament": "OT",
+      "books": [
+        "JDG"
+      ],
+      "lines": 11,
+      "group": false
+    },
+    {
+      "id": "Boaz",
+      "name": "Boaz",
+      "testament": "OT",
+      "books": [
+        "RUT"
+      ],
+      "lines": 11,
+      "group": false
+    },
+    {
+      "id": "Nathan",
+      "name": "Nathan",
+      "testament": "OT",
+      "books": [
+        "2SA",
+        "1KI",
+        "1CH"
+      ],
+      "lines": 11,
+      "group": false
+    },
+    {
+      "id": "Ahijah the prophet",
+      "name": "Ahijah the prophet",
+      "testament": "OT",
+      "books": [
+        "1KI"
+      ],
+      "lines": 11,
+      "group": false
+    },
+    {
+      "id": "Artaxerxes, king of Persia",
+      "name": "Artaxerxes",
+      "testament": "OT",
+      "books": [
+        "EZR",
+        "NEH"
+      ],
+      "lines": 11,
+      "group": false
+    },
+    {
+      "id": "cured man, blind from birth",
+      "name": "The man born blind",
+      "testament": "NT",
+      "books": [
+        "JHN"
+      ],
+      "lines": 11,
+      "group": false
+    },
+    {
+      "id": "Abraham's chief servant",
+      "name": "Abraham's chief servant",
+      "testament": "OT",
+      "books": [
+        "GEN"
+      ],
+      "lines": 10,
+      "group": false
+    },
+    {
+      "id": "Jehoshaphat, king of Judah",
+      "name": "Jehoshaphat",
+      "testament": "OT",
+      "books": [
+        "1KI",
+        "2CH"
+      ],
+      "lines": 10,
+      "group": false
+    },
+    {
+      "id": "Jehu, son of Nimshi",
+      "name": "Jehu",
+      "testament": "OT",
+      "books": [
+        "2KI"
+      ],
+      "lines": 10,
+      "group": false
+    },
+    {
+      "id": "Josiah, king of Judah",
+      "name": "Josiah",
+      "testament": "OT",
+      "books": [
+        "2KI",
+        "2CH"
+      ],
+      "lines": 10,
+      "group": false
+    },
+    {
+      "id": "Azariah, son of Oded",
+      "name": "Azariah",
+      "testament": "OT",
+      "books": [
+        "2CH"
+      ],
+      "lines": 10,
+      "group": false
+    },
+    {
+      "id": "daughter of Zion",
+      "name": "The daughter of Zion",
+      "testament": "OT",
+      "books": [
+        "LAM"
+      ],
+      "lines": 10,
+      "group": true
+    },
+    {
+      "id": "city clerk of Ephesus",
+      "name": "The city clerk of Ephesus",
+      "testament": "NT",
+      "books": [
+        "ACT"
+      ],
+      "lines": 10,
+      "group": false
+    },
+    {
+      "id": "Satan (Devil)",
+      "name": "Satan",
+      "testament": "both",
+      "books": [
+        "JOB",
+        "MAT",
+        "LUK"
+      ],
+      "lines": 9,
+      "group": false
+    },
+    {
+      "id": "singers in Judah",
+      "name": "The singers in Judah",
+      "testament": "OT",
+      "books": [
+        "ISA"
+      ],
+      "lines": 9,
+      "group": true
+    },
+    {
+      "id": "father of demon-possessed boy",
+      "name": "The father of the possessed boy",
+      "testament": "NT",
+      "books": [
+        "MAT",
+        "MRK",
+        "LUK"
+      ],
+      "lines": 9,
+      "group": false
+    },
+    {
+      "id": "Levite husband of concubine",
+      "name": "The Levite",
+      "testament": "OT",
+      "books": [
+        "JDG"
+      ],
+      "lines": 8,
+      "group": false
+    },
+    {
+      "id": "Achish, king of Gath",
+      "name": "Achish",
+      "testament": "OT",
+      "books": [
+        "1SA"
+      ],
+      "lines": 8,
+      "group": false
+    },
+    {
+      "id": "queen of Sheba",
+      "name": "The queen of Sheba",
+      "testament": "OT",
+      "books": [
+        "1KI",
+        "2CH"
+      ],
+      "lines": 8,
+      "group": false
+    },
+    {
+      "id": "Ben-Hadad, king of Aram",
+      "name": "Ben-Hadad",
+      "testament": "OT",
+      "books": [
+        "1KI",
+        "2KI",
+        "2CH"
+      ],
+      "lines": 8,
+      "group": false
+    },
+    {
+      "id": "Xerxes, king of Persia and Media (Ahasuerus)",
+      "name": "Xerxes",
+      "testament": "OT",
+      "books": [
+        "EST"
+      ],
+      "lines": 8,
+      "group": false
+    },
+    {
+      "id": "Pharisees, some",
+      "name": "Some of the Pharisees",
+      "testament": "NT",
+      "books": [
+        "MAT",
+        "MRK",
+        "LUK"
+      ],
+      "lines": 8,
+      "group": true
+    },
+    {
+      "id": "Mary, Jesus' mother",
+      "name": "Mary",
+      "testament": "NT",
+      "books": [
+        "LUK"
+      ],
+      "lines": 8,
+      "group": false
+    },
+    {
+      "id": "woman, Samaritan",
+      "name": "The Samaritan woman",
+      "testament": "NT",
+      "books": [
+        "JHN"
+      ],
+      "lines": 8,
+      "group": false
+    },
+    {
+      "id": "Tertullus, lawyer",
+      "name": "Tertullus",
+      "testament": "NT",
+      "books": [
+        "ACT"
+      ],
+      "lines": 8,
+      "group": false
+    },
+    {
+      "id": "chief cupbearer of Egypt",
+      "name": "The chief cupbearer of Egypt",
+      "testament": "OT",
+      "books": [
+        "GEN"
+      ],
+      "lines": 7,
+      "group": false
+    },
+    {
+      "id": "Esau",
+      "name": "Esau",
+      "testament": "OT",
+      "books": [
+        "GEN"
+      ],
+      "lines": 7,
+      "group": false
+    },
+    {
+      "id": "Leah",
+      "name": "Leah",
+      "testament": "OT",
+      "books": [
+        "GEN"
+      ],
+      "lines": 7,
+      "group": false
+    },
+    {
+      "id": "Rachel",
+      "name": "Rachel",
+      "testament": "OT",
+      "books": [
+        "GEN"
+      ],
+      "lines": 7,
+      "group": false
+    },
+    {
+      "id": "Balak",
+      "name": "Balak",
+      "testament": "OT",
+      "books": [
+        "NUM"
+      ],
+      "lines": 7,
+      "group": false
+    },
+    {
+      "id": "Jotham, son of Gideon (Jerubbaal)",
+      "name": "Jotham",
+      "testament": "OT",
+      "books": [
+        "JDG"
+      ],
+      "lines": 7,
+      "group": false
+    },
+    {
+      "id": "Philistines",
+      "name": "The Philistines",
+      "testament": "OT",
+      "books": [
+        "JDG",
+        "1SA"
+      ],
+      "lines": 7,
+      "group": true
+    },
+    {
+      "id": "Eli",
+      "name": "Eli",
+      "testament": "OT",
+      "books": [
+        "1SA"
+      ],
+      "lines": 7,
+      "group": false
+    },
+    {
+      "id": "Bathsheba",
+      "name": "Bathsheba",
+      "testament": "OT",
+      "books": [
+        "1KI"
+      ],
+      "lines": 7,
+      "group": false
+    },
+    {
+      "id": "Rehoboam, king",
+      "name": "Rehoboam",
+      "testament": "OT",
+      "books": [
+        "1KI",
+        "2CH"
+      ],
+      "lines": 7,
+      "group": false
+    },
+    {
+      "id": "Joram (Jehoram), king of Israel",
+      "name": "Joram",
+      "testament": "OT",
+      "books": [
+        "2KI"
+      ],
+      "lines": 7,
+      "group": false
+    },
+    {
+      "id": "Abijah, king of Judah",
+      "name": "Abijah",
+      "testament": "OT",
+      "books": [
+        "2CH"
+      ],
+      "lines": 7,
+      "group": false
+    },
+    {
+      "id": "man in linen above river",
+      "name": "The man clothed in linen",
+      "testament": "OT",
+      "books": [
+        "DAN"
+      ],
+      "lines": 7,
+      "group": false
+    },
+    {
+      "id": "Pharisees",
+      "name": "The Pharisees",
+      "testament": "NT",
+      "books": [
+        "MAT",
+        "JHN",
+        "ACT"
+      ],
+      "lines": 7,
+      "group": true
+    },
+    {
+      "id": "James",
+      "name": "James",
+      "testament": "NT",
+      "books": [
+        "ACT"
+      ],
+      "lines": 7,
+      "group": false
+    },
+    {
+      "id": "Judah",
+      "name": "Judah",
+      "testament": "OT",
+      "books": [
+        "GEN"
+      ],
+      "lines": 6,
+      "group": false
+    },
+    {
+      "id": "Abimelech 1, king of the Philistines (in Gerar)",
+      "name": "Abimelech, king of the Philistines",
+      "testament": "OT",
+      "books": [
+        "GEN"
+      ],
+      "lines": 6,
+      "group": false
+    },
+    {
+      "id": "explorers, ten",
+      "name": "The ten explorers",
+      "testament": "OT",
+      "books": [
+        "NUM"
+      ],
+      "lines": 6,
+      "group": true
+    },
+    {
+      "id": "Caleb",
+      "name": "Caleb",
+      "testament": "OT",
+      "books": [
+        "NUM",
+        "JOS",
+        "JDG"
+      ],
+      "lines": 6,
+      "group": false
+    },
+    {
+      "id": "Gibeonites",
+      "name": "The Gibeonites",
+      "testament": "OT",
+      "books": [
+        "JOS"
+      ],
+      "lines": 6,
+      "group": true
+    },
+    {
+      "id": "Naomi",
+      "name": "Naomi",
+      "testament": "OT",
+      "books": [
+        "RUT"
+      ],
+      "lines": 6,
+      "group": false
+    },
+    {
+      "id": "David (old)",
+      "name": "David in old age",
+      "testament": "OT",
+      "books": [
+        "1KI"
+      ],
+      "lines": 6,
+      "group": false
+    },
+    {
+      "id": "prostitute, one",
+      "name": "The prostitute",
+      "testament": "OT",
+      "books": [
+        "1KI"
+      ],
+      "lines": 6,
+      "group": false
+    },
+    {
+      "id": "Jezebel",
+      "name": "Jezebel",
+      "testament": "OT",
+      "books": [
+        "1KI",
+        "2KI"
+      ],
+      "lines": 6,
+      "group": false
+    },
+    {
+      "id": "Darius, king of Medes and Persians",
+      "name": "Darius",
+      "testament": "OT",
+      "books": [
+        "EZR",
+        "DAN"
+      ],
+      "lines": 6,
+      "group": false
+    },
+    {
+      "id": "Zedekiah, king of Judah",
+      "name": "Zedekiah",
+      "testament": "OT",
+      "books": [
+        "JER"
+      ],
+      "lines": 6,
+      "group": false
+    },
+    {
+      "id": "angel who talked with Zechariah",
+      "name": "The angel who talked with Zechariah",
+      "testament": "OT",
+      "books": [
+        "ZEC"
+      ],
+      "lines": 6,
+      "group": false
+    },
+    {
+      "id": "angels in white, two",
+      "name": "The angels in white",
+      "testament": "NT",
+      "books": [
+        "MAT",
+        "MRK"
+      ],
+      "lines": 6,
+      "group": true
+    },
+    {
+      "id": "rich young ruler",
+      "name": "The rich young ruler",
+      "testament": "NT",
+      "books": [
+        "MAT",
+        "MRK",
+        "LUK"
+      ],
+      "lines": 6,
+      "group": false
+    },
+    {
+      "id": "crowd preparing for Passover Feast",
+      "name": "The Passover crowd",
+      "testament": "NT",
+      "books": [
+        "MAT",
+        "MRK",
+        "LUK",
+        "JHN"
+      ],
+      "lines": 6,
+      "group": true
+    },
+    {
+      "id": "Elizabeth",
+      "name": "Elizabeth",
+      "testament": "NT",
+      "books": [
+        "LUK"
+      ],
+      "lines": 6,
+      "group": false
+    },
+    {
+      "id": "Martha",
+      "name": "Martha",
+      "testament": "NT",
+      "books": [
+        "LUK",
+        "JHN"
+      ],
+      "lines": 6,
+      "group": false
+    }
+  ],
+  "conflicts": {
+    "Caleb": [
+      "Israelites",
+      "explorers, ten"
+    ],
+    "David (old)": [
+      "David"
+    ],
+    "David": [
+      "David (old)"
+    ],
+    "Gabriel": [
+      "angel",
+      "angel who talked with Zechariah",
+      "angels in white, two"
+    ],
+    "God": [
+      "Jesus",
+      "Wisdom",
+      "Yahweh's angel"
+    ],
+    "Israelites": [
+      "Caleb",
+      "Joshua",
+      "explorers, ten"
+    ],
+    "Jesus": [
+      "God",
+      "Wisdom",
+      "Yahweh's angel"
+    ],
+    "Joshua (old)": [
+      "Joshua"
+    ],
+    "Joshua": [
+      "Israelites",
+      "Joshua (old)",
+      "explorers, ten"
+    ],
+    "Peter (Simon)": [
+      "disciples"
+    ],
+    "Pharisees, some": [
+      "Pharisees",
+      "Sadducees"
+    ],
+    "Pharisees": [
+      "Pharisees, some",
+      "Sadducees"
+    ],
+    "Sadducees": [
+      "Pharisees",
+      "Pharisees, some"
+    ],
+    "Wisdom": [
+      "God",
+      "Jesus"
+    ],
+    "Yahweh's angel": [
+      "God",
+      "Jesus",
+      "angel"
+    ],
+    "angel (one of the seven)": [
+      "angel",
+      "angel who talked with Zechariah",
+      "angels in white, two"
+    ],
+    "angel who talked with Zechariah": [
+      "Gabriel",
+      "angel",
+      "angel (one of the seven)"
+    ],
+    "angel": [
+      "Gabriel",
+      "Yahweh's angel",
+      "angel (one of the seven)",
+      "angel who talked with Zechariah",
+      "angels in white, two"
+    ],
+    "angels in white, two": [
+      "Gabriel",
+      "angel",
+      "angel (one of the seven)"
+    ],
+    "disciples": [
+      "Peter (Simon)"
+    ],
+    "explorers, ten": [
+      "Caleb",
+      "Israelites",
+      "Joshua"
+    ]
+  }
+}
