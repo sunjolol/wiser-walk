@@ -24,6 +24,7 @@
  * wrong for a visitor is the costlier error.
  */
 import type { BipolarView, Quiz, ResultView } from '../lib/engine/types';
+import { resultNotes } from '../lib/engine/types';
 import { quizHref, inviteHref } from '../lib/engine/registry';
 
 interface Props {
@@ -49,6 +50,15 @@ const card = {
   shape: view.shape,
   headline: view.headlineParts,
   summary: view.summary,
+  /*
+   * The sentence a named outcome carries, verbatim, drawn under the picture.
+   *
+   * The card is the part that travels furthest: it is posted where the page is not, and a
+   * reader of it never sees the note printed beside the card on the result page. So the
+   * name and the sentence leave together or not at all. A quiz whose outcomes carry no
+   * notes — the Compass — sends an empty list, and the card is drawn exactly as before.
+   */
+  notes: resultNotes(quiz, view),
   noClaimSpan: view.shape === 'bipolar' ? (view as BipolarView).noClaimSpan : null,
   rows: view.rows.map(r =>
     'left' in r
@@ -354,11 +364,46 @@ const card = {
        * so the space above it is not a constant.
        */
       const footY = H - pad - 44;
+
+      /*
+       * A named outcome's own sentence, between the picture and the link.
+       *
+       * Measured BEFORE the wheel is drawn and subtracted from the space the wheel is given,
+       * rather than written into whatever gap happens to be left: the verdict above runs to
+       * one line for some readers and three for others, and a sentence that came out of the
+       * data is not a fixed height either. Small type, and the muted ink, because it is a
+       * qualification of the name above it and not a second headline.
+       */
+      const NOTE_FONT = '20px Inter, system-ui, sans-serif';
+      const NOTE_LINE = 28;
+      const NOTE_BETWEEN = 10;              // two notes are two sentences, not one paragraph
+      const NOTE_GAP = 46;                  // clear of the link's cap height underneath
+      g.font = NOTE_FONT;
+      const noteBlocks = (data.notes || []).map(t => wrapWords(g, t.split(' '), w));
+      const noteRows = noteBlocks.reduce((n, b) => n + b.length, 0);
+      const noteH = noteRows
+        ? noteRows * NOTE_LINE + (noteBlocks.length - 1) * NOTE_BETWEEN + NOTE_GAP
+        : 0;
+      const bottom = footY - noteH;
+
       if (data.shape === 'bipolar') {
         const top = y + 10;
         const LABELS = 104;                 // room for a two-line rim label, top and bottom
-        const R = Math.max(120, Math.min(248, (footY - 58 - top - LABELS * 2) / 2));
+        const R = Math.max(120, Math.min(248, (bottom - 58 - top - LABELS * 2) / 2));
         drawWheel(g, W / 2, top + LABELS + R, R);
+      }
+
+      if (noteRows) {
+        g.fillStyle = P.mute;
+        g.font = NOTE_FONT;
+        let ny = bottom + NOTE_LINE;
+        noteBlocks.forEach(block => {
+          block.forEach(line => {
+            g.fillText(line.join(' '), x, ny);
+            ny += NOTE_LINE;
+          });
+          ny += NOTE_BETWEEN;
+        });
       }
 
       g.fillStyle = P.mute;

@@ -304,3 +304,58 @@ so the result does not hang on that choice either.
 - The right pole of Reasons rests on two figures and four verses. It is honest and it is thin.
 - The statements the audit reworded (six and ten) have been read against the six rules by one
   editor, not by the two critics the originals had.
+
+## 2026-09-20, the engineer: the four items under "For the engineer"
+
+Three applied, one decided against. Nothing the Theology Compass produces has changed: its share
+text is now asserted character for character against the value it had before this work, and all 18
+audited answer sheets still land on their own tradition. `npm run test` and `npm run build` pass in
+`site/`, `node audit/selftest.js` passes at the root, and `node site/scripts/sim-figures.mjs` is
+unmoved (worst Ruth 7.7%, ties 8.2%, thinnest Judith 1.1%).
+
+**1. The note travels with the name (cessationist F8, Catholic F8). Applied.** An outcome's `note`
+now goes wherever that outcome is named, not only on the result card and the figure page: it is a
+line of its own immediately above the link in the share text, and it is drawn in small wrapped type
+between the wheel and the link on the share card. The card measures the sentence first and gives
+the wheel what is left, so nothing overlaps at any length of verdict. The rule is the name: a
+result that names nobody carries no note, and a joint result carries one for each named figure that
+has one. The Compass's traditions carry no notes, so it adds nothing there.
+
+One thing the next person should know rather than discover: in the "near" and "loose" states the
+summary line prints the second-nearest name as well ("Nearest on the map: Abraham · Jesus"), and
+only the first-named figure's note travels, which is what the result page itself does, since it
+emphasises one card in the near state. If the sentence should travel with every name that is
+printed, it is one line in `namedNearest()` in `strategies/bipolar.ts`.
+
+**2. Name nobody when all eighteen answers are identical (psychometric F1b, F13). Applied.** A quiz
+may now set `uniformSheet: 'centre'`; the figure quiz does and no other quiz does. When every
+answer is the same and it is not "Unsure", the runner stops before it scores anything and says so:
+"You gave the same answer to every statement. Half of these statements pull one way and half the
+other, so the same answer to all of them cancels out and there is nothing to place." Two ways on:
+"Go back through them" returns to statement 1 with every answer kept, and "See the result anyway"
+scores the sheet at the middle of every axis, where the existing central state names nobody. An
+all-Unsure sheet already scores the middle and is left alone. The two-person `?with=` flow was
+checked from the interstitial and still lands on `/c/bible-figure/<theirs>.<yours>/`. The detection
+is `isUniformSheet()` in `engine/types.ts`, pure and tested headlessly.
+
+**3. Gifts: ties of three or more (psychometric G2). Applied.** The tie set is now every category
+within the tie margin of the top score, not the top two. Two, three or four are all named, in one
+list joined with commas and a final "and"; the two-name wording is word for word what it was. Five
+or more is not a verdict, so it takes the flat state and the flat state's own words. The ranking
+emphasises exactly as many rows as the headline names, counted from the view rather than from the
+state. Which categories were named is no longer decided by `localeCompare`, which is what the
+finding was about.
+
+**4. Narrower band words for the figure quiz (psychometric F9): not applied**, because the band
+thresholds live in bipolar.ts and are shared with the audited Compass, the lean words are already
+the mild tier, and the sentence "Change one answer and the name can change; read the rails, not the
+name" is already on the page. (It is in `outcomeScopeNote` in `bible-figure.ts`, printed above the
+figure cards on every result: "with three statements to an axis one changed answer can change the
+name: read the rails, not the name".)
+
+Files touched: `site/src/lib/engine/types.ts`, `site/src/lib/strategies/bipolar.ts` (share text and
+the list of named outcomes only: no scoring, no bands, no matching), `site/src/lib/strategies/
+category.ts`, `site/src/components/ShareBlock.astro`, `site/src/components/CategoryStack.astro`
+(one line: it assumed a tie was two names), `site/src/pages/q/[quiz].astro`,
+`site/src/styles/pages/quiz.css` (appended), `site/src/lib/quizzes/bible-figure.ts` (the one flag),
+`site/scripts/engine-test.mjs` (sections 14, 15 and 16).

@@ -409,6 +409,19 @@ export const bibleFigure: FigureQuiz = {
   codePrefix: 'BF',
 
   /*
+   * One answer, eighteen times, names nobody.
+   *
+   * Two of the three statements on each axis are keyed one way and one the other, so a
+   * reader who strongly agrees with all eighteen lands on 33 or 67 on every axis and is
+   * handed a name — Rahab, as it happens, and all eighteen strongly disagreed names Daniel
+   * and Mary jointly. That is a fact about how the statements are keyed, not about the
+   * reader, and this quiz names people. The runner asks the reader first and only then
+   * scores the sheet at the middle of every axis, where the result names nobody. See
+   * Quiz.uniformSheet in engine/types.ts.
+   */
+  uniformSheet: 'centre',
+
+  /*
    * What this quiz measures a reader against. The engine's default noun is "tradition",
    * which is the Compass's; here the outcomes are people, they publish at /figure/<slug>/,
    * and the scope note says in one sentence what the comparison is and is not.

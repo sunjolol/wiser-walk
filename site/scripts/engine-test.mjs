@@ -31,6 +31,28 @@ const {
   outcomeHref, parseCodes, compare, compareHref, inviteHref
 } = engine;
 
+/*
+ * The contracts themselves, bundled separately.
+ *
+ * The registry is what every page imports, and it deliberately re-exports URLs and the
+ * comparison rather than the whole of engine/types. The rules that live beside the fields
+ * they switch on — a sheet with no variation in it, and the sentence a named outcome
+ * carries — are imported from where they are written instead of being widened into the
+ * registry's surface for the sake of a test.
+ */
+const OUT_TYPES = resolve(ROOT, 'node_modules/.engine-test-types.mjs');
+await build({
+  entryPoints: [resolve(ROOT, 'src/lib/engine/types.ts')],
+  outfile: OUT_TYPES,
+  bundle: true,
+  format: 'esm',
+  platform: 'node',
+  target: 'node18',
+  logLevel: 'silent'
+});
+const { isUniformSheet, centresUniformSheets, resultNotes } =
+  await import(pathToFileURL(OUT_TYPES).href);
+
 let failures = 0;
 const fail = m => { failures++; console.log('  FAIL ' + m); };
 const ok = m => console.log('  ok   ' + m);
@@ -899,7 +921,221 @@ console.log('13. every quoted passage is a substring of the translation on disk'
   }
 }
 
+// ------------------------- 14. an outcome's own sentence travels with its name
+console.log('14. the note travels with the name it belongs to');
+{
+  const compass = getQuiz('theology-compass');
+  const bf = getQuiz('bible-figure');
+
+  /*
+   * The Compass first, byte for byte.
+   *
+   * Its traditions carry no notes, so nothing may be added to its share text — not a line,
+   * not a space. The expected value below was captured by running the share text BEFORE
+   * the note was wired in, from the audit's own Catholic answer sheet.
+   */
+  const sim = JSON.parse(readFileSync(resolve(ROOT, 'src/data/compass-audit.json'), 'utf8'))
+    .simulations.find(s => s.tradition === 'Catholic (Roman and Eastern)');
+  const was =
+    'My Theology Compass\n' +
+    '○○○○○○○○●○○ Grace: Monergist → Synergist\n' +
+    '●○○○○○○○○○○ Table: Sacramental → Memorial\n' +
+    '○●○○○○○○○○○ Gifts: Continuationist → Cessationist\n' +
+    '●○○○○○○○○○○ Kingdom: One people → Dispensational\n' +
+    '●○○○○○○○○○○ Authority: Bible & tradition → Scripture alone\n' +
+    '●○○○○○○○○○○ Worship: Liturgical → Free\n' +
+    'Nearest on the map (jointly): Catholic (Roman and Eastern) · Eastern Orthodox (approximate)\n' +
+    'https://wiserwalk.com/r/theology-compass/01ZO4A';
+  const now = shareTextFor(compass, scoreQuiz(compass, sim.answers), 'https://wiserwalk.com');
+  if (now !== was) fail('the Compass share text changed:\n' + now + '\n--- expected ---\n' + was);
+  else ok('the Compass share text is unchanged, character for character');
+
+  const jesus = bf.outcomes.find(o => o.slug === 'jesus');
+
+  // A result that names nobody carries no note. His own coordinates are the case: they sit
+  // inside the no-position band on every axis he is placed on, so the result is central.
+  const own = resultFor(bf, jesus.position);
+  if (own.named.length) fail(`a ${own.state} result named ${own.named.join(', ')}`);
+  else if (resultNotes(bf, own).length) fail('a result that names nobody carried a note');
+  else ok(`Jesus's own coordinates are a ${own.state} result: nobody named, no note`);
+
+  /*
+   * ...and a result that names him carries his sentence. Several reader sheets are tried
+   * rather than one, because where a figure is nearest depends on the roster: if the
+   * coordinates move, the first of these that still names him is used, and if none does
+   * that is itself worth failing on.
+   */
+  const CANDIDATES = [
+    [33, 33, 25, 67, 75, 50],
+    [83, 25, 33, 67, 75, 33],
+    [67, 25, 33, 33, 75, 33],
+    [58, 33, 33, 67, 67, 58]
+  ];
+  const reader = CANDIDATES.find(v => resultFor(bf, v).named[0] === 'jesus');
+  if (!reader) fail('no sheet in the list names Jesus any more — check the roster');
+  else {
+    const view = resultFor(bf, reader);
+    const lines = shareTextFor(bf, reader, 'https://wiserwalk.com').split('\n');
+    if (lines[lines.length - 2] !== jesus.note) {
+      fail('the note is not the line before the URL:\n' + lines.join('\n'));
+    } else if (!/temperament as the Gospels record it/.test(lines[lines.length - 2])) {
+      fail('the line before the URL is not his sentence: ' + lines[lines.length - 2]);
+    } else ok(`a ${view.state} result naming Jesus carries his sentence above the link`);
+  }
+
+  /*
+   * Two named jointly, two sentences. No pair on the roster ties often enough to rely on,
+   * so the second named figure is given a note here — the same trick 11b uses to prove a
+   * rule rather than a coincidence.
+   */
+  const tie = [[0, 33, 17, 0, 75, 33], [92, 33, 33, 67, 25, 17], [50, 25, 33, 33, 67, 58]]
+    .find(v => resultFor(bf, v).state === 'tie' && resultFor(bf, v).named[0] === 'jesus');
+  if (!tie) fail('no sheet in the list names Jesus jointly any more — check the roster');
+  else {
+    const second = resultFor(bf, tie).named[1];
+    const marked = {
+      ...bf,
+      outcomes: bf.outcomes.map(o => (o.slug === second ? { ...o, note: 'A second sentence.' } : o))
+    };
+    const lines = marked.strategy.shareText(marked, tie, 'https://wiserwalk.com').split('\n');
+    const last3 = lines.slice(-3, -1);
+    if (last3[0] !== jesus.note || last3[1] !== 'A second sentence.') {
+      fail('a joint result did not carry both notes:\n' + lines.join('\n'));
+    } else ok(`both named figures' sentences travel (Jesus and ${second}), in that order`);
+  }
+
+  // Every quiz: a note line is a whole line of its own, never glued to the link.
+  for (const q of QUIZZES) {
+    const values = q.groups.map((_, i) => (i % 2 ? 75 : 25));
+    const lines = shareTextFor(q, values, 'https://wiserwalk.com');
+    const view = resultFor(q, values);
+    const notes = resultNotes(q, view);
+    const want = notes.length ? notes.join('\n') + '\n' : '';
+    if (!lines.endsWith(`${want}https://wiserwalk.com/r/${q.slug}/${view.code}`)) {
+      fail(`${q.slug}: the notes do not sit immediately above the link:\n` + lines);
+    }
+  }
+  ok('on every quiz the notes, if any, are the lines immediately above the link');
+}
+
+// ---------------------- 15. the same answer to every statement names nobody
+console.log('15. a sheet with no variation in it');
+{
+  const compass = getQuiz('theology-compass');
+  const bf = getQuiz('bible-figure');
+  const n = bf.items.length;
+
+  // The predicate, on its own: what counts and what does not.
+  const cases = [
+    ['every answer strongly agree', new Array(n).fill(2), true],
+    ['every answer strongly disagree', new Array(n).fill(-2), true],
+    ['every answer agree', new Array(n).fill(1), true],
+    ['one answer different', new Array(n).fill(2).map((v, i) => (i === 7 ? 1 : v)), false],
+    ['every answer unsure', new Array(n).fill(0), false],
+    ['nothing answered', new Array(n).fill(null), false],
+    ['one left unanswered', new Array(n).fill(2).map((v, i) => (i === 3 ? null : v)), false]
+  ];
+  let wrong = 0;
+  for (const [what, sheet, want] of cases) {
+    if (isUniformSheet(sheet) !== want) { wrong++; fail(`isUniformSheet, ${what}: expected ${want}`); }
+  }
+  if (!wrong) ok(`isUniformSheet is right on all ${cases.length} cases`);
+
+  // Opt-in, and opted into by one quiz. The Compass must never centre anything.
+  if (!centresUniformSheets(bf)) fail('bible-figure does not ask for uniform sheets to be centred');
+  else if (centresUniformSheets(compass)) fail('the Compass asks for uniform sheets to be centred');
+  else ok('bible-figure opts in; the Compass does not, and its scoring is untouched');
+
+  /*
+   * Why it exists, in one line: the arithmetic names somebody on a sheet that says nothing
+   * about the reader, because two statements on each axis are keyed one way and one the
+   * other. The runner never scores such a sheet; this is what it would have said.
+   */
+  const agreed = resultFor(bf, scoreQuiz(bf, new Array(n).fill(2)));
+  const denied = resultFor(bf, scoreQuiz(bf, new Array(n).fill(-2)));
+  ok(`unchecked, all-agree would say "${agreed.summary}"`);
+  ok(`unchecked, all-disagree would say "${denied.summary}"`);
+
+  // What the reader gets instead if they ask for it anyway: the middle of every group.
+  const centred = bf.groups.map(() => 50);
+  const view = resultFor(bf, centred);
+  if (view.state !== 'central') fail('a centred sheet gave state ' + view.state);
+  else if (view.named.length) fail('a centred sheet named ' + view.named.join(', '));
+  else ok(`a centred sheet names nobody: "${view.summary}"`);
+
+  // And it is a real result link, so the invitation and the two-person page work from it.
+  const code = encodeFor(bf, centred);
+  const back = decodeFor(bf, code);
+  if (!back || back.join(',') !== centred.join(',')) fail('the centred code does not round-trip: ' + code);
+  else if (!parseCodes(bf, `${code}.${code}`)) fail('two centred codes are not a valid pair');
+  else ok(`the centred code ${code} round-trips and pairs for /c/`);
+}
+
+// --------------------------------- 16. level categories: name them all, up to four
+console.log('16. a unipolar tie names every category inside the margin');
+{
+  const sins = getQuiz('seven-deadly-sins');
+  const sg = getQuiz('spiritual-gifts');
+
+  /** A sheet that maxes exactly these groups and leaves the rest at no-net-agreement. */
+  const max = (quiz, keys) => quiz.items.map(it =>
+    keys.includes(quiz.groups[it.group].key) ? (it.direction === 1 ? 2 : -2) : 0);
+  const nameOf = (quiz, keys) =>
+    keys.map(k => quiz.groups.find(g => g.key === k).name).sort((a, b) => a.localeCompare(b));
+
+  // Two, word for word as it read before: the wording of the commonest tie must not move.
+  const two = resultFor(sins, scoreQuiz(sins, max(sins, ['pride', 'envy'])));
+  if (two.state !== 'tie') fail('two level categories gave state ' + two.state);
+  else if (two.headline !== 'Envy and pride') fail('two-way headline: ' + two.headline);
+  else if (two.summary !== 'Two came out level: envy and pride.') fail('two-way summary: ' + two.summary);
+  else ok(`two level: "${two.headline}" / "${two.summary}"`);
+
+  // Three. The old rule cut this to two and let localeCompare decide which two.
+  const three = ['serving', 'teaching', 'mercy'];
+  const v3 = resultFor(sg, scoreQuiz(sg, max(sg, three)));
+  const n3 = nameOf(sg, three);
+  const want3 = `Three came out level: ${n3[0]}, ${n3[1]} and ${n3[2]}.`;
+  if (v3.state !== 'tie') fail('three level categories gave state ' + v3.state);
+  else if (v3.named.length !== 3) fail('three level named ' + v3.named.length + ': ' + v3.named.join(','));
+  else if (v3.summary !== want3) fail(`three-way summary: "${v3.summary}" not "${want3}"`);
+  else if (!n3.every(name => v3.headline.includes(name))) fail('three-way headline: ' + v3.headline);
+  else ok(`three level: "${v3.headline}" / "${v3.summary}"`);
+
+  // Four, the last size that still reads as a finding.
+  const four = ['serving', 'teaching', 'mercy', 'giving'];
+  const v4 = resultFor(sg, scoreQuiz(sg, max(sg, four)));
+  const n4 = nameOf(sg, four);
+  const want4 = `Four came out level: ${n4[0]}, ${n4[1]}, ${n4[2]} and ${n4[3]}.`;
+  if (v4.state !== 'tie' || v4.named.length !== 4) fail(`four level gave ${v4.state}, ${v4.named.length} named`);
+  else if (v4.summary !== want4) fail(`four-way summary: "${v4.summary}" not "${want4}"`);
+  else ok(`four level: "${v4.summary}"`);
+
+  // Five is not a verdict. It is the flat state, in the flat state's own words.
+  const five = ['serving', 'teaching', 'mercy', 'giving', 'leading'];
+  const v5 = resultFor(sg, scoreQuiz(sg, max(sg, five)));
+  if (v5.state !== 'flat') fail('five level categories gave state ' + v5.state);
+  else if (v5.named.length) fail('a flat result named ' + v5.named.join(', '));
+  else if (v5.headline !== 'No single one stands out') fail('five-way headline: ' + v5.headline);
+  else if (v5.summary !== sg.unipolarCopy.flat) fail('five-way summary is not the quiz\'s flat copy');
+  else ok('five level is the flat state: nothing stands out, nothing named');
+
+  // A clear leader is still a clear leader, and still one name.
+  const clear = resultFor(sg, scoreQuiz(sg, max(sg, ['hospitality'])));
+  const hosp = sg.groups.find(g => g.key === 'hospitality').name;
+  if (clear.state !== 'clear') fail('one clear leader gave state ' + clear.state);
+  else if (clear.named.join(',') !== 'hospitality') fail('a clear result named ' + clear.named.join(','));
+  else if (clear.headline !== `${sg.unipolarCopy.headlineLead} ${hosp}`) fail('clear headline: ' + clear.headline);
+  else ok(`one clear leader: "${clear.headline}"`);
+
+  // The stack emphasises exactly the rows the headline names, however many that is.
+  const counts = [[two, 2], [v3, 3], [v4, 4], [v5, 0], [clear, 1]];
+  const off = counts.filter(([v, want]) => v.named.length !== want);
+  if (off.length) fail('named counts: ' + counts.map(([v, w]) => `${v.named.length}/${w}`).join(' '));
+  else ok('the view names 2, 3, 4, 0 and 1 rows to match its own headline');
+}
+
 rmSync(OUT, { force: true });
+rmSync(OUT_TYPES, { force: true });
 
 console.log('');
 if (failures) {

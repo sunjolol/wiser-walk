@@ -215,10 +215,35 @@ const breadcrumbs = isDraft
         </p>
       </div>
     </div>
+
+    {/*
+      Shown at the end, and only to a reader who gave the same answer to all of them, on a
+      quiz that asks for it (Quiz.uniformSheet). It is a question rather than a refusal: the
+      reader decides, and either way nobody is named on a sheet that says nothing.
+    */}
+    {quiz.uniformSheet === 'centre' && (
+      <div id="uniform" hidden>
+        <div class="uniform-box">
+          <p class="uniform-lede" tabindex="-1">
+            You gave the same answer to every statement. Half of these statements pull one
+            way and half the other, so the same answer to all of them cancels out and there
+            is nothing to place.
+          </p>
+          <div class="btn-row">
+            <button class="btn" id="uniform-again" type="button">Go back through them</button>
+            <button class="btn ghost" id="uniform-anyway" type="button">See the result anyway</button>
+          </div>
+        </div>
+      </div>
+    )}
   </div>
 
   <script>
     import { getQuiz, scoreQuiz, encodeFor, decodeFor } from '../../lib/engine/registry';
+    // Straight from the contracts, not through the registry: the rule about a sheet with no
+    // variation in it belongs beside the field that switches it on, and the runner is the
+    // only place that can act on it, because a result page is rendered from the code alone.
+    import { centresUniformSheets, isUniformSheet } from '../../lib/engine/types';
 
     const root = document.getElementById('runner');
     const quiz = getQuiz(root?.dataset.quiz);
@@ -289,8 +314,7 @@ const breadcrumbs = isDraft
         }, 180);
       }
 
-      function finish() {
-        const values = scoreQuiz(quiz, sheet);
+      function goToResult(values) {
         const code = encodeFor(quiz, values);
         // A note for the result page, which is served identically to the person who just
         // took the quiz and to anyone they send the link to. Tab-scoped, never sent.
@@ -308,6 +332,48 @@ const breadcrumbs = isDraft
         }
         window.location.href = `/r/${quiz.slug}/${code}/`;
       }
+
+      /*
+       * The end of a run.
+       *
+       * A sheet with the same answer on every statement is the one case where the
+       * arithmetic would name somebody on no information at all: on a quiz with two
+       * statements keyed one way and one the other on each axis, agreeing eighteen times
+       * lands on the same score on every axis and hands the reader a name that describes
+       * the keying rather than them. Where a quiz asks for it, the reader is told that and
+       * chooses. Everything else finishes exactly as it did.
+       */
+      function finish() {
+        if (centresUniformSheets(quiz) && isUniformSheet(sheet)) {
+          const box = $('uniform');
+          if (box) {
+            play.hidden = true;
+            box.hidden = false;
+            box.querySelector('.uniform-lede')?.focus?.();
+            return;
+          }
+        }
+        goToResult(scoreQuiz(quiz, sheet));
+      }
+
+      /*
+       * "See the result anyway": the middle of every group, which is the honest reading of
+       * a sheet with no variation in it, and the score at which this instrument already
+       * names nobody. The code is a real one, so the link, the invitation and the
+       * two-person page all work from here exactly as they do from any other result.
+       */
+      $('uniform-anyway')?.addEventListener('click', () => {
+        goToResult(quiz.groups.map(() => 50));
+      });
+
+      // Back through them, with every answer kept, from the first statement.
+      $('uniform-again')?.addEventListener('click', () => {
+        $('uniform').hidden = true;
+        play.hidden = false;
+        at = 0;
+        render();
+        $('statement').focus?.();
+      });
 
       $('start').addEventListener('click', () => {
         intro.hidden = true;

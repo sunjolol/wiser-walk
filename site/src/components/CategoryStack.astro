@@ -24,8 +24,11 @@ const { quiz, view, linked = true } = Astro.props;
 const rows = [...view.rows].sort((a, b) => a.rank - b.rank);
 
 // Only the top row is emphasised, and only when the result actually supports emphasising
-// one. On a tie two lead; on a flat result nothing does, because nothing did.
-const leading = view.state === 'flat' ? 0 : view.state === 'tie' ? 2 : 1;
+// one. On a tie every level category leads — two, three or four of them, however many came
+// out level — and on a flat result nothing does, because nothing did. Counted from the
+// view's own list of named categories rather than from the state, so a three-way tie cannot
+// end up with two rows emphasised and three named in the headline.
+const leading = view.named.length;
 ---
 <div class="stack-block">
   {view.state === 'flat' && (

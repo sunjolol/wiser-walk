@@ -4,7 +4,7 @@
  * fairness audit — see audit/fairness-report.md before changing any of them.
  */
 import { makeCodec } from '../engine/codec';
-import { outcomeNoun } from '../engine/types';
+import { notesFor, outcomeNoun } from '../engine/types';
 import type {
   AxisMask, BipolarRow, BipolarView, HeadlinePart, Quiz, ScoringStrategy, Sheet
 } from '../engine/types';
@@ -268,6 +268,21 @@ export function nearestState(
 }
 
 /**
+ * Which outcomes this result PRINTS BY NAME, in order, by slug.
+ *
+ * Nobody where every axis sits in the no-claim band; otherwise the names nearestLine()
+ * prints, which is two in every other state ("Nearest on the map: Abraham · Jesus"). The
+ * second name in the near state is context for the first, not a second verdict, and the page
+ * emphasises one card there. But an outcome's note goes wherever its NAME goes: the line is
+ * what gets pasted into a chat, and "· Jesus" without his sentence beside it is the same
+ * bare name whichever side of the dot it sits on.
+ */
+export function namedNearest(kind: NearestKind, near: Match[]): string[] {
+  if (kind === 'central') return [];
+  return near.slice(0, 2).map(m => m.slug);
+}
+
+/**
  * The one-line verdict. The noun comes from the quiz: the Compass's outcomes are traditions
  * and it says so, and a quiz whose outcomes are people says "figure" in the same sentences.
  * `outcomeNoun` defaults to "tradition", so the Compass's two lines are unchanged.
@@ -297,6 +312,7 @@ export const bipolar: ScoringStrategy = {
 
   result(quiz: Quiz, values: number[]): BipolarView {
     const near = nearest(quiz, values);
+    const kind = nearestState(quiz, values, near).kind;
     const steps = Math.max(1, quiz.config.radix - 1);
     const rows: BipolarRow[] = quiz.groups.map((g, i) => {
       const value = values[i] ?? 50;
@@ -318,9 +334,10 @@ export const bipolar: ScoringStrategy = {
     });
     return {
       shape: 'bipolar',
-      state: nearestState(quiz, values, near).kind,
+      state: kind,
       quizSlug: quiz.slug,
       code: this.encode(quiz, values),
+      named: namedNearest(kind, near),
       headline: headline(quiz, values),
       headlineParts: headlineParts(quiz, values),
       summary: nearestLine(quiz, values, near),
@@ -358,6 +375,13 @@ export const bipolar: ScoringStrategy = {
       nearestLine(quiz, values, near) +
         (st.kind === 'near' || st.kind === 'tie' ? ' (approximate)' : '')
     );
+    /*
+     * An outcome's own sentence goes with its name, here as on the page and on the card.
+     * Pasted into a chat, "nearest: Jesus" without the sentence beside it is the boast the
+     * sentence exists to prevent. A quiz whose outcomes carry no notes — the Compass — adds
+     * no lines at all, so its share text is byte for byte what it was.
+     */
+    for (const note of notesFor(quiz, namedNearest(st.kind, near))) lines.push(note);
     lines.push(`${origin}/r/${quiz.slug}/${this.encode(quiz, values)}`);
     return lines.join('\n');
   }

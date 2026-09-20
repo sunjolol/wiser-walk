@@ -212,6 +212,18 @@ export interface HeadlinePart {
 interface ViewBase {
   quizSlug: string;
   code: string;
+  /**
+   * The slugs this result prints BY NAME, in the order it prints them — none where nothing
+   * is named; on a ranked quiz one where one leads and several where several came out level;
+   * on a matched quiz the names its one-line verdict prints, because an outcome's note goes
+   * wherever its name goes.
+   *
+   * It exists so that the surfaces which print a name (the share text, the share card, the
+   * ranking) do not each decide for themselves how many names a state is worth. On a matched
+   * quiz these are outcome slugs; on a ranked one they are category slugs, and a ranked quiz
+   * that also lists outcomes must key them by the same slug or `resultNotes` will miss them.
+   */
+  named: string[];
   headline: string;
   /**
    * The headline broken into its clauses. The first thing a reader sees should say where
@@ -352,6 +364,21 @@ export interface Quiz {
    */
   codePrefix?: string;
 
+  /**
+   * What to do with a sheet where every answer is the same one.
+   *
+   * 'centre' means: score it at the middle of every group, so the result names nobody.
+   *
+   * Opt in only where the arithmetic would otherwise name somebody on no information. The
+   * figure quiz is the case it was written for: two of the three statements on each axis are
+   * keyed one way and one the other, so a reader who strongly agrees eighteen times lands on
+   * 33 or 67 on every axis and is handed a name — and that name is a fact about how the
+   * statements were keyed, not about the reader. The Compass sets nothing here and is
+   * untouched. See isUniformSheet, and the finish step of pages/q/[quiz].astro, which asks
+   * the reader before it does anything.
+   */
+  uniformSheet?: 'centre';
+
   /*
    * ---- What this quiz measures a reader AGAINST -------------------------------------
    *
@@ -388,6 +415,45 @@ export interface Quiz {
 }
 
 export const isLive = (q: Quiz) => q.status === 'live';
+
+/**
+ * Did the reader give the same answer to every statement?
+ *
+ * Pure, and about the SHEET alone, so it can be checked headlessly. Three answers are not
+ * this: an unfinished sheet (a null anywhere), a sheet with any variation at all, and a
+ * sheet of nothing but "Unsure / neither" — which already scores the middle of every group
+ * and so already names nobody. What is left is the one pattern that carries no information
+ * about the reader and still produces a confident-looking result.
+ */
+export function isUniformSheet(sheet: Sheet): boolean {
+  if (!sheet.length) return false;
+  const first = sheet[0];
+  if (first === null || first === undefined || first === 0) return false;
+  return sheet.every(a => a === first);
+}
+
+/** Does this quiz ask for such a sheet to be centred? See Quiz.uniformSheet. */
+export const centresUniformSheets = (q: Quiz) => q.uniformSheet === 'centre';
+
+/**
+ * The sentences that must travel with a result, in the order it names them.
+ *
+ * An Outcome.note is data, printed verbatim wherever that outcome is named. The rule is the
+ * name: a result that names nobody carries no note, and a result that names two carries one
+ * for each of them that has one. Both share surfaces read it from here rather than each
+ * deciding for itself, because a sentence that travels with a name on the page and not on
+ * the card someone posts is the fairness problem, not a formatting detail.
+ */
+export function notesFor(quiz: Quiz, slugs: string[]): string[] {
+  const byslug = new Map(quiz.outcomes.map(o => [o.slug, o.note]));
+  return slugs
+    .map(slug => byslug.get(slug))
+    .filter((note): note is string => Boolean(note));
+}
+
+/** The same, for a caller that already has the finished view. */
+export const resultNotes = (quiz: Quiz, view: ResultView): string[] =>
+  notesFor(quiz, view.named);
 
 /** The Compass's words, and the default for every quiz that does not say otherwise. */
 export const outcomeNoun = (q: Quiz) => q.outcomeNoun ?? 'tradition';

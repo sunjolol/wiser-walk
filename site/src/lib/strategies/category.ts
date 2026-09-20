@@ -6,6 +6,7 @@
  * strategy, so the permalink codec, the result page and the share card stay generic.
  */
 import { makeCodec } from '../engine/codec';
+import { resultNotes } from '../engine/types';
 import type { Quiz, ScoringStrategy, Sheet, UnipolarRow, UnipolarView } from '../engine/types';
 
 function spanOf(quiz: Quiz, group: number): number {
@@ -80,6 +81,25 @@ function nothingNamed(quiz: Quiz, values: number[]): boolean {
   return values.every(v => v - 50 <= floor);
 }
 
+/**
+ * How many level categories are still a result rather than a shrug.
+ *
+ * Above this the page would print a list as long as a hand and call it a verdict, which
+ * says less than saying nothing: thirteen gifts with five at the top is the flat state
+ * wearing a headline. Four is the largest list that still reads as "these, and not the
+ * others" in one breath.
+ */
+const MOST_NAMED = 4;
+
+/** "a", "a and b", "a, b and c" — commas, a final "and", and no comma before it. */
+function joinNames(names: string[]): string {
+  if (names.length < 2) return names[0] ?? '';
+  return `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`;
+}
+
+/** Said in words, because "3 came out level" is an arithmetic result, not a sentence. */
+const HOW_MANY = ['', '', 'Two', 'Three', 'Four'];
+
 export const category: ScoringStrategy = {
   id: 'category-highest',
   shape: 'unipolar',
@@ -112,10 +132,26 @@ export const category: ScoringStrategy = {
       strength: pull(quiz, values[i] ?? 50)
     }));
 
-    const flat = nothingNamed(quiz, values);
-    const tied =
-      ranked[1] !== undefined &&
-      Math.abs(ranked[0]!.score - ranked[1]!.score) <= tieMargin(quiz);
+    /*
+     * EVERY category inside the margin, not the top two.
+     *
+     * The tie used to be "is the second within the margin of the first", so a result where
+     * four gifts came out level named two of them — and which two was decided by
+     * localeCompare, the tiebreak in the sort above. Spelling is not a finding about a
+     * reader, and a reader who scored the same on administration, giving, mercy and serving
+     * was told they were "administration and giving" because a sorts before g. `ranked` is
+     * in descending score order, so everything inside the margin is a prefix of it.
+     */
+    const flatScores = nothingNamed(quiz, values);
+    const top = ranked[0]?.score ?? 50;
+    const level = ranked.filter(r => top - r.score <= tieMargin(quiz));
+    /*
+     * Five or more level is the flat state, and says so in the flat state's own words.
+     * Nothing stood out; a list of five is the instrument admitting that, at length.
+     */
+    const flat = flatScores || level.length > MOST_NAMED;
+    const tied = !flat && level.length > 1;
+    const names = level.map(r => r.name);
 
     /*
      * A quiz may put a lead in front of the leader's name ("Your answers pointed most to
@@ -141,8 +177,8 @@ export const category: ScoringStrategy = {
         'Nothing here rose far enough above the rest to name one, so none is named.';
     } else if (tied) {
       state = 'tie';
-      headline = led(`${ranked[0]!.name} and ${ranked[1]!.name}`);
-      summary = `Two came out level: ${ranked[0]!.name} and ${ranked[1]!.name}.`;
+      headline = led(joinNames(names));
+      summary = `${HOW_MANY[names.length]} came out level: ${joinNames(names)}.`;
     } else {
       state = 'clear';
       headline = led(ranked[0]!.name);
@@ -156,6 +192,10 @@ export const category: ScoringStrategy = {
       state,
       quizSlug: quiz.slug,
       code: this.encode(quiz, values),
+      // What the ranking emphasises: nothing on a flat result, every level category on a
+      // tie, the leader otherwise. The stack reads its lead rows from this rather than
+      // assuming a tie is two names.
+      named: flat ? [] : level.map(r => r.slug),
       headline,
       // A ranking has no side to colour by; the clause is the whole headline.
       headlineParts: [{ text: headline, side: 'centre' as const }],
@@ -197,6 +237,9 @@ export const category: ScoringStrategy = {
       for (let k = 0; k < CELLS; k++) bar += k < filled ? '█' : '░';
       lines.push(`${bar} ${g.name}`);
     });
+    // A named outcome's own sentence travels with it here too, by the same rule as the
+    // bipolar card. No ranked quiz lists outcomes today, so today this adds nothing.
+    for (const note of resultNotes(quiz, this.result(quiz, values))) lines.push(note);
     lines.push(`${origin}/r/${quiz.slug}/${this.encode(quiz, values)}`);
     return lines.join('\n');
   }
