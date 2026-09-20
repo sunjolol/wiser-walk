@@ -41,6 +41,47 @@ Note he had earlier rejected the word "wiser" as "weird to say"; he has since ov
 
 State: local git repo initialised, **one commit** `c8fd322`, 137 files tracked, `node_modules` excluded. Authored as `Light <serenitybackto@gmail.com>` — he was offered a GitHub noreply address to keep his email out of public history and **chose to keep his real email**. Do not change it.
 
+## THE RICHE PASS (shipped 2026-09-20): how every page is designed now. Read before touching any page
+
+On 2026-09-19 the owner rejected a first site-wide design pass (a panel behind each heading) as
+"INSANELY lazy", "SO boring" and "BARELY different from the original boring bland non-designed
+layout". He ordered: nothing but design until it is right, every page as refined as the result page,
+his original inspiration skins used as the reference, and **light theme by default**. The second
+pass he accepted with "Ship it" on 2026-09-20. It is live.
+
+- **Light is the default.** The site no longer follows the system setting. Dark happens only through
+  the bulb or a link ending in `?theme=dark` (which also persists). The game follows the same rule.
+- **The design language** comes from the skins in `C:/Users/Light/Desktop/claude/design and theme
+  examples` (Riche 5e character sheet, Epitaph, Rose Water, All Hope Abandon) and the locked demo.
+  Captures of them are in `design/refs/`. LOOK at them before designing anything.
+- **The kit** is `site/src/styles/kit.css` (tokens stay in `site.css`): the framed sheet on a striped
+  ground, the band (`Hero.astro`: full-bleed wash, a giant ghost italic word sized to its length, a dark
+  chip, two-ink headline, stat tiles), `SectionHead.astro` (lowercase italic display), the stripe card
+  (`Card.astro`), dark starry panels (`.dark`, which re-point the tokens so instruments recolour
+  themselves), `.feature`, `.spec` dotted lists, `.chips`, `.tiles`, the dark footer. Page groups have
+  their own stylesheets in `site/src/styles/pages/` (quiz, reference, prose, play).
+- **New instruments:** `CompassFeature.astro` (the flagship card, drawing a REAL audited answer sheet),
+  the tradition map on axis pages (all 18 traditions on one rail, numbered dots in computed lanes),
+  real compass and rails on tradition pages, `QuizPreview.astro`, a grouped and humanised changelog
+  on `/method/`, `/games/` index, and a Games nav item.
+- **Rules that held and must keep holding:** real data only on every tile and chart; both pole names
+  wherever an axis is drawn; the answering scale is never coloured blue to orange (agreement is not a
+  pole); no sources block on tradition pages; the result page instruments were not edited.
+- **How to see pages:** the in-app browser pane cannot screenshot while hidden. Use
+  `sh design/tools/shot.sh <url> <abs-out.png> <w> <h>` (headless Chrome), `-m` for a true phone
+  width through an iframe, and `python design/tools/crop.py` to slice tall captures. Judge every
+  page at 390 and 1360, light and dark, before calling it done.
+- **How it was made (worked; repeat it):** study the references as images, build ONE exemplar page
+  yourself, write a brief (`design/RICHE-PASS-BRIEF.md`), hand page groups to Opus builders with strict
+  file ownership, run adversarial screenshot critics (`design/CRITIQUE-ROUND-1.md`), verify their
+  findings, fix. About 2.5M Opus subagent tokens.
+- Known leftovers the critics raised and the owner has not ruled on: a colour seam inside the outcome
+  bars and the hatched 41-59 band drawn over a rail fill on tradition pages. Both live inside the
+  result page instruments; do not change them without asking.
+
+**The next-game brainstorm is parked** (pick was "Finish the Verse": first half of a verse, tap the
+real second half among four real ones from the same book; per-book landing pages for search).
+
 ## RESUMED 2026-09-17: the owner picked a direction. Read this before the paused section below
 
 The owner ended the pause wanting something fun-first and competitive in the spirit of GeoGuessr
