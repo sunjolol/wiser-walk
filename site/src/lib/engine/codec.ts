@@ -33,8 +33,8 @@ export function makeCodec(radix: number, slots: number, prefix = ''): Codec {
 
   const steps = radix - 1;
   const max = Math.pow(radix, slots);
-  if (!Number.isSafeInteger(max)) throw new Error(`radix^slots overflows: ${radix}^${slots}`);
   if (prefix && !/^[A-Z]{1,3}$/.test(prefix)) throw new Error(`bad code prefix: ${prefix}`);
+  if (!Number.isSafeInteger(max)) return makeWideCodec(radix, slots, prefix);
   const body = Math.max(6, max.toString(36).length);
   const length = prefix.length + body;
 
@@ -65,6 +65,61 @@ export function makeCodec(radix: number, slots: number, prefix = ''): Codec {
         n = Math.floor(n / radix);
       }
       return n === 0 ? out : null;
+    }
+  };
+}
+
+/**
+ * The same code, for a quiz whose radix^slots does not fit a double.
+ *
+ * Nineteen gifts at thirteen values each is 13^19, about 1.5e21, and a double holds integers
+ * exactly only to 2^53, about 9.0e15. Past that the arithmetic above silently drops low
+ * digits, which here means the last few gifts of somebody's result. So the wide codec counts
+ * in BigInt. It is a separate function, and it is only reached when the narrow one cannot
+ * work, so every code a live quiz has already handed out is produced and read exactly as
+ * before: the Compass's permalinks are the only copy of those results.
+ *
+ * No BigInt literals and no `**`: both need a newer compile target than this file should
+ * have to insist on.
+ */
+function makeWideCodec(radix: number, slots: number, prefix: string): Codec {
+  const steps = radix - 1;
+  const R = BigInt(radix);
+  const B36 = BigInt(36);
+  const ZERO = BigInt(0);
+  let max = BigInt(1);
+  for (let i = 0; i < slots; i++) max *= R;
+  const body = Math.max(6, max.toString(36).length);
+  const length = prefix.length + body;
+
+  return {
+    radix,
+    slots,
+    length,
+
+    encode(values: number[]): string {
+      let n = ZERO;
+      for (let i = 0; i < slots; i++) {
+        const v = values[i] ?? 50;
+        const step = Math.max(0, Math.min(steps, Math.round((v * steps) / 100)));
+        n = n * R + BigInt(step);
+      }
+      return prefix + n.toString(36).toUpperCase().padStart(body, '0');
+    },
+
+    decode(code: string): number[] | null {
+      if (typeof code !== 'string') return null;
+      if (code.length !== length || !/^[0-9A-Z]+$/i.test(code)) return null;
+      if (prefix && code.slice(0, prefix.length).toUpperCase() !== prefix) return null;
+      let n = ZERO;
+      for (const ch of code.slice(prefix.length)) n = n * B36 + BigInt(parseInt(ch, 36));
+      if (n >= max) return null;
+      const out: number[] = [];
+      for (let i = 0; i < slots; i++) {
+        out.unshift(Math.round((Number(n % R) * 100) / steps));
+        n = n / R;
+      }
+      return n === ZERO ? out : null;
     }
   };
 }
