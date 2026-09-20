@@ -1,81 +1,88 @@
-# Handoff: where work stopped on 2026-09-21 (weekly usage ran out)
+# Handoff (updated 2026-09-22): start the next session here
 
-Everything below is committed on the branch `build/three-new` and pushed. `main` and production
-are untouched since the Riche design pass. The site builds and all tests pass in this state.
-**Nothing on this branch has been shown to the owner yet. Do not merge without his say.**
+Branch `build/three-new` holds everything below, committed and pushed. `main` and production are
+unchanged since the Riche design pass. The site builds and every test passes.
+Preview of the branch: https://wiser-walk-7ureyjkaq-sunjo.vercel.app (a newer one is built on every
+push; find it through the GitHub deployments API as in earlier sessions).
 
-## Status on 2026-09-22: waiting on the owner
+**The owner has played the preview and said "Looks good".** He has NOT yet said to merge. Ask
+before merging to `main`: every push to `main` deploys to production.
 
-Calibration, the audit and the search fixes are done and committed; the branch is pushed and the
-preview is https://wiser-walk-7ureyjkaq-sunjo.vercel.app (may need his Vercel login). He has been
-given the preview, the two one-page instruments and the six decisions at the top of
-`audit/new-quizzes/AUDIT-LOG.md`. **Ask what he thought before doing anything else.** Still open:
-the citation pass (step 3 below; about sixteen Fable agents, so only with his go), four small engine
-items listed in the audit log, and merging, which is his call.
+## What the owner decided on 2026-09-22 (binding)
 
-## Done and safe on the branch
+1. **The spiritual gifts quiz includes ALL the gifts.** His words: "We include all gifts, just
+   because cessationists disagree doesn't mean we leave them out." So prophecy, healing, miracles,
+   tongues and interpretation of tongues go in, with wisdom, discernment (distinguishing between
+   spirits) and faith kept. Fairness is kept by DESCRIBING the disagreement in words both sides
+   accept (the Compass's Gifts axis page already does), not by leaving gifts out. The draft note and
+   the "deliberately not in this draft" copy must be rewritten to match.
+2. Figure quiz: three placed axes is enough for a figure to be a possible result. **Approved.**
+3. Mary the mother of Jesus keeps her Lead placement. **Approved.**
+4. and 6. **He did not understand these two questions** ("What? No idea what this means"). That is
+   on us: they were asked in jargon. Do not ask again in the same words. Decide them sensibly, then
+   tell him what you did in one plain sentence each, with the actual statement in front of him:
+   - (4) One discernment statement could be read as "having a hunch about people" or as "checking
+     things out carefully". Now that all gifts are in, settle it against the passage itself
+     (1 Corinthians 12:10, distinguishing between spirits) when the new statements are written.
+   - (6) Eight gifts have a statement of the form "people come to me for X" and five do not, so the
+     gifts are not all measured the same way. Write the missing ones so every gift has one.
+5. **Add Judith and Tobit to the figure roster.** His words: "Include them both." Their books are in
+   Catholic and Orthodox Bibles and not in Protestant ones, so each of their pages and result cards
+   says so in one plain sentence (the game already words this fairly: "In Catholic and Orthodox
+   Bibles. Protestant Bibles leave it out or print it as Apocrypha."). Evidence from the World English
+   Bible British Edition deuterocanon on disk (`demos/sounds-like-scripture/raw/eng-webbe_vpl.txt`,
+   book codes TOB and JDT), every verse opened, same rule as everyone else.
+6. **The other quizzes must be easy to find.** Done for the home page and footer on this branch
+   (every quiz is listed, drafts carry a "Draft" tab). Still to do: the `/quizzes/` page and the nav
+   should make them just as easy to reach, and once a quiz stops being a draft it should be as
+   prominent as the Compass.
 
-- **Who Said It?** (second game): finished, verified, tested. `demos/who-said-it/` (read its SPEC.md),
-  site route `/play/who-said-it/`, entry in `site/src/lib/games.ts`. 1,261 lines, 111 speakers.
-  Every run carries one line from Jesus, at least three New Testament lines, at most two per book.
-- **Two draft quizzes** wired as `status: 'draft'`: `site/src/lib/quizzes/bible-figure.ts` (with
-  `site/src/data/bible-figures.json`, figure pages at `/figure/<slug>/`) and
-  `site/src/lib/quizzes/spiritual-gifts.ts`. The instruments on one page each:
-  `audit/new-quizzes/figure-final.md` and `gifts-final.md`. Blueprint: `QUIZ-BLUEPRINTS.md`.
-  Owner decisions already taken: **Jesus IS on the figure list**; never print a percentage against a person.
-- **Research brief**: `research/BRIEF.md` (read this one; the other files are its evidence).
-- **Eight checked article drafts**: `audit/article-drafts/*.md` (each has a `.check.md`). Not published.
-- **The three live articles repaired** (BSB quotations, Ephesians 5:20 fairness fix, draft-quiz links
-  removed): changes listed in `audit/article-drafts/LIVE-ARTICLE-REPAIR.md`. On the branch only.
-- **Five fairness-audit reviews of the two quizzes, finished, NOT yet applied**:
-  `audit/new-quizzes/audit-{cessationist,pentecostal,catholic-orthodox,psychometric,evidence}.md`.
+## To do next, in this order
 
-## Stopped part-way (pick up here, in this order)
+1. **Gifts quiz, all gifts in.** Draft statements for prophecy, healing, miracles, tongues and
+   interpretation, plus the five missing "people come to me" statements (decision 6) and the
+   discernment fix (decision 4). Use the method that worked: two independent drafts, two adversarial
+   critics (loaded wording; plain language), one editor, the blueprint's six statement rules.
+   One real difficulty to solve honestly: rule 6 forbids counting devotion, and the obvious
+   statements for healing or tongues are about praying. Write about what has HAPPENED and what others
+   have said, not about how much someone prays. Pentecostal and cessationist reviewers must both
+   pass the result. Each new gift's page quotes its passage word for word and cites acts from Acts
+   and the letters. Keep the quiz under about fifty statements.
+2. **Figure quiz: add Judith and Tobit** (decision 5), then run `node site/scripts/sim-figures.mjs`
+   and keep the targets (no figure closest for more than 9% of realistic sheets, ties under 15%).
+3. **Four small engine items** from `audit/new-quizzes/AUDIT-LOG.md`: Jesus's note should travel with
+   the share text and share card; name no figure when all eighteen answers are identical; gifts ties
+   of three or more are cut to two alphabetically; consider narrower band words for the figure quiz.
+4. **Findability, the rest:** `/quizzes/` and the nav (decision 6 above).
+5. **Show him, then ask:** may the two quizzes leave draft status, and may the branch merge to `main`?
+   Who Said It? is finished and can ship with that merge.
+6. **Only with his go (it costs about sixteen Fable agents):** finish the citation pass
+   (`audit/citations/`: 13 of 18 tradition files written, only 2 contain `"verified_on"`).
+7. Parked, from `research/BRIEF.md`: daily set and share grid for Sounds Like Scripture, "who is
+   speaking in [chapter]" pages from the Glyssen data, canon pages, the eight article drafts in
+   `audit/article-drafts/` (none published), Finish the Verse.
 
-1. **Figure quiz calibration: DONE 2026-09-20, not yet shown to the owner.** It was: an axis with no
-   evidence stored as 50, so thinly evidenced figures sat at the centre and won — Mary of Nazareth
-   closest for 20% of simulated sheets, Jesus 14%, and half of all sheets tied. Now: an axis counts
-   only where BOTH sides name a position (the figure, because the text places them there; the reader,
-   because the score is outside the 41-59 no-position band), a figure needs four of six placed axes
-   to be a possible result, and the thresholds were measured rather than copied — tie 10 to 1, plus
-   a floor of two axes in common before a figure is named. Mary is now 8.6% and Jesus 3.3%, ties are
-   7.1%. Roster: Priscilla replaced by Barnabas, Thomas by Gideon, both for want of evidence; still
-   23 people, nine women, Jesus. The Compass is byte-identical (24 built pages and three rendered
-   result pages, and 4,091 engine results). Kept: `site/scripts/sim-figures.mjs` — RUN IT after any
-   change to a coordinate or a statement. Record: the "Calibration pass" section at the end of
-   `audit/new-quizzes/figures-verification.md`. **Left undone: Martha is closest for 1.1% of sheets
-   against a 1.5% floor** — she is crowded by Moses, Paul, David and Deborah and there is little more
-   of her in the text; and the evidence for moving Jesus's Lead coordinate from 50 to 40 is the one
-   judgement in the pass to question first.
-2. **Apply the audit: DONE 2026-09-20, not committed, not yet shown to the owner.** 106 findings:
-   81 applied, 7 moot after calibration, 3 rejected, 4 left for the owner or engineer, 11 minor and
-   left. Read `audit/new-quizzes/AUDIT-LOG.md`: six owner decisions are at its top (the gifts quiz's
-   1 Corinthians 12:8-10 split first). Six figure statements and ten gifts statements were reworded.
-   Jesus is no longer placed on Reasons (three reviewers), which leaves him, Mary the mother of Jesus
-   (renamed from "Mary of Nazareth"; slug unchanged) and Deborah placed on three axes, so
-   `minShownAxes` went from 4 to 3: owner decision 2. Simulator after: top figure 7.9%, ties 8.1%,
-   all four targets met, Martha 1.6%. The one-page instruments (`figure-final.md`, `gifts-final.md`)
-   show both quizzes as they now stand.
-3. **Citation pass: 13 of 18 tradition files written, only 2 verified.** Files in `audit/citations/`.
-   A file is finished only if it contains `"verified_on"`. Re-run the researcher for the five missing
-   traditions and the verifier for every file without `verified_on`. Nothing here is on the site yet;
-   tradition pages still get NO sources block until the owner has seen verified citations.
-4. **Search fixes from the brief (section 3): not started.** Exact titles and descriptions are in
-   `research/BRIEF.md`. Also remove the noindex draft pages from the sitemap.
-5. Then: build once, capture the new pages with `design/tools/shot.sh`, push the branch, give the
-   owner the preview link plus the two one-page instruments, and ask what he thinks.
+## What is on the branch
 
-## Workflow scripts (prompts are reusable even in a new session)
+- **Who Said It?** finished: `demos/who-said-it/` (SPEC.md), `/play/who-said-it/`, 1,261 lines, 111 speakers.
+- **Two draft quizzes**, calibrated and audit-closed: `site/src/lib/quizzes/bible-figure.ts` with
+  `site/src/data/bible-figures.json` and figure pages at `/figure/<slug>/`;
+  `site/src/lib/quizzes/spiritual-gifts.ts`. Read `audit/new-quizzes/figure-final.md`,
+  `gifts-final.md` and `AUDIT-LOG.md`. Blueprint: `QUIZ-BLUEPRINTS.md` (its "deliberately not in this
+  draft" section is now overruled by decision 1).
+- Standing owner rules for the figure quiz: **Jesus is on the list**; never a percentage against a person.
+- Search titles and descriptions (`site/src/lib/seo.ts`), drafts kept out of the sitemap.
+- The three live articles repaired (`audit/article-drafts/LIVE-ARTICLE-REPAIR.md`).
+- `research/BRIEF.md` and its evidence files.
 
-Resume by run id only works inside the same session. In a new session, re-invoke the script path and
-let it run fresh, or lift the prompts out of it.
+## Checks to run before any push
 
-- Calibrate, audit, apply: `C:\Users\Light\.claude\projects\C--Users-Light-Desktop-claude-theology-compass\d165a187-242d-400e-8992-aa2b0adf1fa0\workflows\scripts\quizzes-calibrate-and-audit-wf_0b423514-d5d.js` (run id `wf_0b423514-d5d`; the five audits completed and are cached, calibrate and apply did not).
-- Citation pass and article repair: `C:\Users\Light\.claude\projects\C--Users-Light-Desktop-claude-theology-compass-research\d165a187-242d-400e-8992-aa2b0adf1fa0\workflows\scripts\citation-pass-and-article-repair-wf_4d8ab5ad-d3b.js` (run id `wf_4d8ab5ad-d3b`; the repair completed).
+`npm run build` in `site/` (runs the engine tests), `node audit/selftest.js`,
+`node site/scripts/sim-figures.mjs`, and for the games `scripts/test-game.mjs` and `scripts/verify.mjs`
+in each of `demos/sounds-like-scripture/` and `demos/who-said-it/`.
+Pages are judged from captures: `sh design/tools/shot.sh` (see CLAUDE.md, "THE RICHE PASS").
 
-## Usage note
+## Pace
 
-This week's build cost roughly 2M Opus subagent tokens for Who Said It? and the quiz drafts, about 2M
-Fable for the research and articles, and an unfinished share of the citation pass and audits. The
-owner was at 98% when work stopped. Start the new week with the calibration (one Opus agent), not
-with a large fan-out.
+One agent at a time where one will do; Opus for building, Fable for wording and judgement. The owner
+watches his weekly usage closely.

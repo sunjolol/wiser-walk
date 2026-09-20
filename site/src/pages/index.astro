@@ -5,12 +5,11 @@ import Card from '../components/Card.astro';
 import SectionHead from '../components/SectionHead.astro';
 import CompassFeature from '../components/CompassFeature.astro';
 import Icon from '../components/Icon.astro';
-import { liveQuizzes, getQuiz, outcomeHref, quizHref } from '../lib/engine/registry';
+import { QUIZZES, getQuiz, outcomeHref, quizHref } from '../lib/engine/registry';
 import { liveGames } from '../lib/games';
 import slsMeta from '../games/sounds-like-scripture.meta.json';
 import { getCollection } from 'astro:content';
 
-const quizzes = liveQuizzes();
 const games = liveGames();
 const compass = getQuiz('theology-compass')!;
 const articles = (await getCollection('articles'))
@@ -18,7 +17,8 @@ const articles = (await getCollection('articles'))
   .sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf())
   .slice(0, 4);
 
-const otherQuizzes = quizzes.filter(q => q.slug !== compass.slug);
+// The owner found the other quizzes buried: list them all here. A draft says so on its tab.
+const otherQuizzes = QUIZZES.filter(q => q.slug !== compass.slug);
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -62,7 +62,7 @@ const jsonLd = {
     <div class="scards" style="margin-top:.9rem">
       {otherQuizzes.map(q => (
         <Card href={quizHref(q)} icon={q.icon} title={q.title} text={q.tagline}
-              meta={`${q.items.length} statements`} tab="Quiz" go="Take it" />
+              meta={`${q.items.length} statements`} tab={q.status === 'draft' ? 'Draft' : 'Quiz'} go="Take it" />
       ))}
     </div>
   )}
@@ -70,7 +70,7 @@ const jsonLd = {
   {games.length > 0 && (
     <>
       <SectionHead title="Games" kicker="Against the clock" href="/games/" more="All games" />
-      {games.map(g => (
+      {games.filter(g => g.slug === 'sounds-like-scripture').map(g => (
         <a class="gamecard" href={g.href}>
           <div class="feature-body">
             <h3>{g.title}</h3>
@@ -93,6 +93,13 @@ const jsonLd = {
           </div>
         </a>
       ))}
+      {games.some(g => g.slug !== 'sounds-like-scripture') && (
+        <div class="scards" style="margin-top:.9rem">
+          {games.filter(g => g.slug !== 'sounds-like-scripture').map(g => (
+            <Card href={g.href} icon={g.icon} title={g.title} text={g.tagline} meta="10 lines a run" tab="Game" go="Play" />
+          ))}
+        </div>
+      )}
     </>
   )}
 

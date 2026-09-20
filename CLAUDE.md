@@ -41,15 +41,18 @@ Note he had earlier rejected the word "wiser" as "weird to say"; he has since ov
 
 State: local git repo initialised, **one commit** `c8fd322`, 137 files tracked, `node_modules` excluded. Authored as `Light <serenitybackto@gmail.com>` — he was offered a GitHub noreply address to keep his email out of public history and **chose to keep his real email**. Do not change it.
 
-## WORK IN PROGRESS (stopped 2026-09-21 when weekly usage ran out): READ HANDOFF.md FIRST
+## WORK IN PROGRESS (as of 2026-09-22): READ HANDOFF.md FIRST
 
-Branch `build/three-new` (pushed, not merged, not yet shown to the owner) holds: the finished second game
-Who Said It?, two DRAFT quizzes (Who in the Bible are you most like?, with Jesus on the list by the
-owner's decision and never a percentage against a person; What are your spiritual gifts?), a research
-brief (`research/BRIEF.md`), eight checked article drafts, a repair of the three live articles, five
-finished but unapplied fairness-audit reviews, and a citation pass that is 13 of 18 written and 2 of 18
-verified. **`HANDOFF.md` at the repo root says exactly what is done, what stopped part-way, and the
-order to pick it up in.** Start with the figure-quiz calibration, with one agent, not a fan-out.
+Branch `build/three-new` (pushed, NOT merged) holds the finished second game Who Said It?, two
+calibrated and audit-closed DRAFT quizzes (Who in the Bible are you most like?; What are your
+spiritual gifts?), the research brief, article drafts and search fixes. The owner played the preview
+and said "Looks good", then decided: **the gifts quiz includes ALL the gifts** (prophecy, healing,
+miracles, tongues, interpretation: "just because cessationists disagree doesn't mean we leave them
+out"); **Judith and Tobit join the figure roster**; **Jesus stays on it**; never a percentage against a
+person; every quiz must be easy to find. Two audit questions he could not follow because they were
+asked in jargon: decide them sensibly and tell him in one plain sentence each.
+**`HANDOFF.md` at the repo root has the decisions, the ordered to-do list and the checks to run.**
+Ask before merging to `main`.
 
 ## THE RICHE PASS (shipped 2026-09-20): how every page is designed now. Read before touching any page
 
