@@ -1,0 +1,102 @@
+{
+  "tradition": "Southern Baptist (Calvinist)",
+  "slug": "southern-baptist-calvinist",
+  "audited_position": {
+    "grace": 8,
+    "table": 95,
+    "gifts": 75,
+    "kingdom": 58,
+    "authority": 95,
+    "worship": 95
+  },
+  "verified_on": "2026-09-21",
+  "cells": [
+    {
+      "axis": "grace",
+      "document": "Abstract of Principles (The Southern Baptist Theological Seminary)",
+      "date": "1858",
+      "section": "Article V, Election (see also Article VIII, Regeneration)",
+      "url": "https://www.sbts.edu/about/abstract/",
+      "excerpt": "Election is God's eternal choice of some persons unto everlasting life-not because of foreseen merit in them, but of His mere mercy in Christ",
+      "link_only": false,
+      "shows": "Election is stated as unconditional, resting on God's mercy and not on anything foreseen in the person, and Article VIII describes regeneration as the Spirit giving life to the dead.",
+      "agrees_with_coordinate": "supports",
+      "binding": "Binding on the faculty of Southern and Southeastern seminaries, who sign it; not binding on churches. It is the confession Calvinist Southern Baptists themselves point to.",
+      "verdict": "verified",
+      "verifier_note": "Raw HTML of sbts.edu/about/abstract/ fetched; excerpt present character for character, including the plain hyphen in \"life-not\" (the live page itself uses a hyphen, so the proposer’s punctuation worry is resolved). Page states the charter was adopted in 1858. Article V is unconditional election in the Calvinist wing’s own confession; fits grace=8."
+    },
+    {
+      "axis": "table",
+      "document": "Baptist Faith and Message 2000",
+      "date": "2000-06-14",
+      "section": "Article VII, Baptism and the Lord's Supper",
+      "url": "https://bfm.sbc.net/bfm2000/",
+      "excerpt": "The Lord’s Supper is a symbolic act of obedience",
+      "link_only": true,
+      "shows": "Both baptism and the Supper are called acts of obedience that symbolize and memorialize, and baptism is the immersion of a believer.",
+      "agrees_with_coordinate": "supports",
+      "binding": "Adopted by the Convention; binding on SBC entities and their employees, not on autonomous local churches. The public-domain Abstract of Principles, Articles XV and XVI (same URL as the grace cell), also calls both an 'ordinance' and baptism 'obligatory upon every believer', and can be quoted in full if a reproducible text is wanted.",
+      "verdict": "verified",
+      "verifier_note": "Raw HTML fetched; excerpt present in Article VII. Only change made: the straight apostrophe was corrected to the page’s typographic apostrophe (U+2019). The page does not print the adoption date; 2000-06-14 (Orlando) was confirmed separately from Baptist Press and the Lifeway tract title. The live page notes a 2023 amendment to Article VI only; Article VII is unaffected. Symbolic/memorial wording fits table=95. Link only: text is in copyright."
+    },
+    {
+      "axis": "authority",
+      "document": "Abstract of Principles (The Southern Baptist Theological Seminary)",
+      "date": "1858",
+      "section": "Article I, The Scriptures (see also Article XVIII, Liberty of Conscience)",
+      "url": "https://www.sbts.edu/about/abstract/",
+      "excerpt": "the only sufficient, certain and authoritative rule of all saving knowledge, faith and obedience",
+      "link_only": false,
+      "shows": "Scripture is named the only sufficient and authoritative rule, and Article XVIII frees the conscience from doctrines of men not contained in God's word.",
+      "agrees_with_coordinate": "supports",
+      "binding": "Binding on the signing seminary faculties; not binding on churches. BF&M 2000 Article I (https://bfm.sbc.net/bfm2000/, link only) is the Convention-wide parallel.",
+      "verdict": "verified",
+      "verifier_note": "Raw HTML fetched; excerpt present character for character in Article I, and Article XVIII reads as described. Fits authority=95."
+    }
+  ],
+  "rejected": [
+    {
+      "axis": "gifts",
+      "document": "International Mission Board trustees' policy on tongues and prayer language (as quoted in the Baptist Courier, 'South Carolina IMB trustees disagree on private prayer language policy')",
+      "date": "Policy adopted November 2005; article dated 2006-02-21; policy removed May 2015",
+      "section": "Policy on tongues and prayer language (no article number)",
+      "url": "https://baptistcourier.com/2006/02/south-carolina-imb-trustees-disagree-on-private-prayer-language-policy/",
+      "excerpt": "In terms of general practice, the majority of Southern Baptists do not accept what is referred to as 'private prayer language.'",
+      "link_only": false,
+      "shows": "An SBC mission agency described tongues in the New Testament as a real language and said most Southern Baptists do not accept a private prayer language; it does not say the gifts have ceased.",
+      "agrees_with_coordinate": "weaker",
+      "binding": "Not binding and no longer in force. A personnel policy of one SBC entity, read here second-hand through a state Baptist paper's quotation (the Baptist Press original returned HTTP 403). It is not a statement of the Calvinist wing in particular. The Baptist Faith and Message 2000 and the Abstract of Principles take no position on cessation; BF&M Article II.C says only that the Spirit 'bestows the spiritual gifts'. If the site wants strictly confessional citations, treat this cell as 'none found'.",
+      "verdict": "source unreliable",
+      "reason": "A state Baptist newspaper quoting a rescinded (2015) personnel policy of one SBC agency, not the document itself; the IMB/Baptist Press original could not be opened. It is not a statement of the Calvinist wing, and it does not teach cessation, so it cannot show gifts=75. The page sits behind a bot challenge, so the excerpt could only be seen through a summarising fetch, not confirmed character for character (quote-mark characters unconfirmed). No confessional statement exists: record as none found."
+    },
+    {
+      "axis": "kingdom",
+      "document": "Baptist Faith and Message 2000",
+      "date": "2000-06-14",
+      "section": "Article X, Last Things",
+      "url": "https://bfm.sbc.net/bfm2000/",
+      "excerpt": "Jesus Christ will return personally and visibly in glory to the earth",
+      "link_only": true,
+      "shows": "The confession affirms a personal, visible return, resurrection and judgment, and says nothing on the millennium, a rapture, or a distinction between Israel and the church.",
+      "agrees_with_coordinate": "supports",
+      "binding": "Adopted by the Convention; binding on SBC entities, not on local churches. It supports a near-middle coordinate only by its silence: the tradition's confessions name neither pole. The Abstract of Principles, Articles XIX and XX (opened at https://www.sbts.edu/about/abstract/), is equally silent.",
+      "verdict": "stretched",
+      "reason": "Excerpt is on the page (BF&M 2000 Art. X, raw HTML confirmed), but a personal, visible return is affirmed by every tradition on the axis. The cell argues from silence; silence does not document a coordinate of 58 or any position on Israel and the church. None found."
+    },
+    {
+      "axis": "worship",
+      "document": "Baptist Faith and Message 2000",
+      "date": "2000-06-14",
+      "section": "Article VI, The Church (see also Article VIII, The Lord's Day)",
+      "url": "https://bfm.sbc.net/bfm2000/",
+      "excerpt": "an autonomous local congregation of baptized believers",
+      "link_only": true,
+      "shows": "Each congregation is autonomous and governs itself under Christ, and the Lord's Day article asks only for 'exercises of worship and spiritual devotion' with no order of service, calendar or liturgy prescribed.",
+      "agrees_with_coordinate": "weaker",
+      "binding": "Adopted by the Convention; not binding on local churches. The document never addresses liturgy directly: the free-worship position is shown by congregational autonomy and by the absence of any prescribed form, not by an explicit statement. No SBC document rejecting set liturgy was found.",
+      "verdict": "stretched",
+      "reason": "Excerpt is on the page (BF&M 2000 Art. VI, raw HTML confirmed), but congregational autonomy is a statement about polity, not about liturgy; an autonomous congregation may use a set liturgy. The document never addresses forms of worship, as the proposer concedes, so it does not show worship=95. None found."
+    }
+  ],
+  "notes": "Verified 2026-09-21 by fetching each URL (raw HTML via curl for sbts.edu and bfm.sbc.net; baptistcourier.com returned a bot challenge to curl and was read only through WebFetch). 3 of 6 cells verified (grace, table, authority); 3 rejected (gifts, kingdom, worship). Southern Baptists have no confession binding on local churches; the Abstract of Principles (1858, public domain) binds signing seminary faculty, and BF&M 2000 (in copyright, link only) binds SBC entities. Gifts, kingdom and worship have no confessional statement behind them for this tradition and should show no source rather than a stretched one."
+}

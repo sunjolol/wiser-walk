@@ -41,6 +41,16 @@ Note he had earlier rejected the word "wiser" as "weird to say"; he has since ov
 
 State: local git repo initialised, **one commit** `c8fd322`, 137 files tracked, `node_modules` excluded. Authored as `Light <serenitybackto@gmail.com>` — he was offered a GitHub noreply address to keep his email out of public history and **chose to keep his real email**. Do not change it.
 
+## WORK IN PROGRESS (stopped 2026-09-21 when weekly usage ran out): READ HANDOFF.md FIRST
+
+Branch `build/three-new` (pushed, not merged, not yet shown to the owner) holds: the finished second game
+Who Said It?, two DRAFT quizzes (Who in the Bible are you most like?, with Jesus on the list by the
+owner's decision and never a percentage against a person; What are your spiritual gifts?), a research
+brief (`research/BRIEF.md`), eight checked article drafts, a repair of the three live articles, five
+finished but unapplied fairness-audit reviews, and a citation pass that is 13 of 18 written and 2 of 18
+verified. **`HANDOFF.md` at the repo root says exactly what is done, what stopped part-way, and the
+order to pick it up in.** Start with the figure-quiz calibration, with one agent, not a fan-out.
+
 ## THE RICHE PASS (shipped 2026-09-20): how every page is designed now. Read before touching any page
 
 On 2026-09-19 the owner rejected a first site-wide design pass (a panel behind each heading) as

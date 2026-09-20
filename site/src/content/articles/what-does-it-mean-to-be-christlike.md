@@ -4,7 +4,7 @@ description: Not a personality, not a mood, and not a set of manners — Scriptu
 published: 2026-09-02
 minutes: 7
 tags: [formation, discipleship]
-quizzes: [theology-compass, seven-deadly-sins]
+quizzes: [theology-compass]
 ---
 
 "Christ-like" is one of those words that gets used so often it stops meaning anything in
@@ -14,8 +14,8 @@ more encouraging than the vague version.
 
 ## It is a destination God has already chosen
 
-Romans 8:29 says those God foreknew he "predestined to be conformed to the image of his
-Son." Whatever else you make of that verse, notice what the goal is. The end God has in
+Romans 8:29 says, "those God foreknew, He also predestined to be conformed to the image of
+His Son." Whatever else you make of that verse, notice what the goal is. The end God has in
 view is not primarily your comfort, your usefulness, or even your happiness. It is your
 likeness to Christ. That reframes a great deal — including seasons that make no sense on
 any other reading.
@@ -41,13 +41,15 @@ that list have gone missing under pressure.
 
 ## It is imitation, and it is transformation
 
-1 John 2:6 puts the responsibility squarely on us: whoever claims to abide in him "ought to
-walk in the same way in which he walked." That is imitation, and it is deliberate. You look
+1 John 2:6 puts the responsibility squarely on us: whoever claims to abide in him "must
+walk as Jesus walked." That is imitation, and it is deliberate. You look
 at what he did and you do that.
 
-But 2 Corinthians 3:18 describes the same process from the other side: beholding the glory
-of the Lord, we "are being transformed into the same image from one degree of glory to
-another." That is passive — something being done to you while you look. Both are true at
+But 2 Corinthians 3:18 describes the same process from the other side: "we, who with
+unveiled faces all reflect the glory of the Lord, are being transformed into His image with
+intensifying glory." (The word rendered "reflect" can also mean to behold, as in a mirror,
+and many translations take it that way.) That is passive — something being done to you
+while you look. Both are true at
 once. You imitate, and you are changed; and the changing is not chiefly your achievement.
 
 The practical consequence is that attention matters as much as effort. What you spend your
@@ -75,3 +77,7 @@ That is worth saying because a great deal of Christian formation advice quietly 
 temperament is holier than another. It is not. What you are being conformed to is a person,
 not a personality type — and the family resemblance is real without the family being
 identical.
+
+---
+
+*Scripture quotations are from the Berean Standard Bible, which is in the public domain.*

@@ -4,7 +4,7 @@ description: Biblical joy is not cheerfulness, and it is not the opposite of sor
 published: 2026-09-01
 minutes: 6
 tags: [formation, joy]
-quizzes: [seven-deadly-sins]
+quizzes: []
 ---
 
 If you have ever been told to be more joyful while you were miserable, you already know the
@@ -16,8 +16,9 @@ right before anything else.
 
 The clearest evidence is that the New Testament repeatedly puts joy and sorrow in the same
 sentence without embarrassment. Paul describes himself as "sorrowful, yet always rejoicing"
-(2 Corinthians 6:10). James tells his readers to "count it all joy" when they meet trials
-(James 1:2) — count it, an act of reckoning, not a feeling that arrives on its own.
+(2 Corinthians 6:10). James writes, "Consider it pure joy, my brothers, when you encounter
+trials of many kinds" (James 1:2) — consider it, an act of reckoning, not a feeling that
+arrives on its own.
 
 So joy is not the absence of grief, and it is not a temperament. Some of the most joyful
 people you will meet are not especially sunny. Cheerfulness is a disposition; some people
@@ -25,9 +26,10 @@ have it and some do not. Joy is something else, available to both.
 
 ## It has an address
 
-Paul does not say "rejoice." He says "rejoice **in the Lord** always" (Philippians 4:4),
+Paul does not say "rejoice." He says "Rejoice **in the Lord** always" (Philippians 4:4),
 and the prepositional phrase is doing the work. Psalm 16:11 says the same thing from the
-other end: "in your presence there is fullness of joy." Biblical joy is not free-floating
+other end: "You will fill me with joy in Your presence, with eternal pleasures at Your
+right hand." Biblical joy is not free-floating
 positivity — it is a response to something, and the something is a person.
 
 This is why joy survives circumstances that cheerfulness does not. If your gladness is
@@ -37,7 +39,7 @@ does not move, it has somewhere to stand on a bad day.
 ## It is given, not manufactured
 
 Galatians 5:22 lists joy as fruit of the Spirit — grown, not achieved. Jesus speaks the
-same way in John 15:11: "that my joy may be in you, and that your joy may be full." His
+same way in John 15:11: "so that My joy may be in you and your joy may be complete." His
 joy, placed in them.
 
 That should take some pressure off. If joy is fruit, then the question is not "how do I
@@ -73,3 +75,7 @@ the dark without being scolded for it. Psalm 88 does not resolve.
 
 Joy that will not admit this is not the biblical kind. The real thing is durable enough to
 sit with someone in the dark and say nothing.
+
+---
+
+*Scripture quotations are from the Berean Standard Bible, which is in the public domain.*
