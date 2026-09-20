@@ -69,16 +69,8 @@
  */
 @media (min-width: 58rem) {
   .pnl--split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 17rem); gap: 2rem; align-items: start; }
-}
-/*
- * A panel of running text with no figures beside it would leave the same hole, so on a
- * wide screen it sets its paragraphs in two columns: two readable measures instead of one
- * measure and an empty half. Paragraphs never break across the gutter.
- */
-@media (min-width: 62rem) {
-  .pnl--cols .doc { max-width: none; column-count: 2; column-gap: 2.6rem; }
-  .pnl--cols .doc > p { break-inside: avoid; }
-  .pnl--cols .doc > p:first-of-type { margin-top: 0; }
+  /* a panel's own head belongs to the whole panel, not to its first column */
+  .pnl--split > .pnl-head { grid-column: 1 / -1; }
 }
 
 .pnl-aside { margin-top: 1.4rem; }
@@ -87,7 +79,9 @@
 .pnl-aside .tile { background: var(--shell); box-shadow: none; }
 @media (min-width: 58rem) {
   .pnl-aside { margin-top: .3rem; }
-  .pnl-aside .tiles { display: grid; grid-template-columns: 1fr; gap: .5rem; }
+  /* two across in a 17rem column: one tile per row left a single number stranded in a
+     tall narrow box, which reads as a column that ran out of things to say */
+  .pnl-aside .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(6.2rem, 1fr)); gap: .5rem; }
   .pnl-aside .tile { text-align: left; padding: .7rem .95rem .6rem; }
 }
 
@@ -101,41 +95,39 @@
 /* ================================================ the anchor / jump bar ===== */
 
 /*
- * A row of in-page links, directly under the band. On a phone it scrolls sideways inside
- * its own strip rather than stacking eight pills into a wall; from 46rem it wraps.
+ * A row of in-page links, directly under the band. It used to scroll sideways on a phone,
+ * which hid five of the method page's eight sections behind an edge with no affordance:
+ * a clipped chip reads as a bug, not as a scroller. It wraps at every width instead — two
+ * even columns at phone size so it composes as a block rather than a ragged run, a flowing
+ * row from 30rem. Nothing is ever off-screen.
  */
-.jump {
-  position: relative; margin: 1.1rem calc(-1 * var(--gut, 1.25rem)) 0;
-  padding: .1rem var(--gut, 1.25rem);
-  overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
-}
-.jump::-webkit-scrollbar { display: none; }
+.jump { position: relative; margin: 1.1rem 0 0; }
 .jump ul {
-  display: flex; gap: .4rem; margin: 0; padding: .25rem 0; list-style: none;
-  width: max-content;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .4rem; margin: 0; padding: .25rem 0; list-style: none;
+}
+@media (min-width: 30rem) {
+  .jump ul { display: flex; flex-wrap: wrap; }
 }
 .jump-label {
   margin: 0 0 .5rem; font-family: var(--ui); font-size: .58rem; font-weight: 700;
   letter-spacing: .16em; text-transform: uppercase; color: var(--ink-mute);
 }
 .jump a {
-  display: inline-flex; align-items: center; gap: .4rem; min-height: 44px;
-  padding: .5rem .8rem; border-radius: 11px; white-space: nowrap;
+  display: flex; align-items: center; gap: .4rem; min-height: 44px; height: 100%;
+  padding: .5rem .8rem; border-radius: 11px;
   box-shadow: inset 0 0 0 1.5px var(--rule-strong); text-decoration: none;
-  font-family: var(--ui); font-size: .64rem; font-weight: 700; letter-spacing: .09em;
-  text-transform: uppercase; color: var(--ink-soft); line-height: 1;
+  font-family: var(--ui); font-size: .68rem; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--ink-soft); line-height: 1.25;
   transition: box-shadow .18s ease, color .18s ease, background .18s ease;
 }
+@media (min-width: 30rem) { .jump a { display: inline-flex; white-space: nowrap; } }
 .jump a:hover { color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 0 0 1.5px var(--accent); }
 .jump a i {
   font-style: normal; font-variant-numeric: tabular-nums; color: var(--ink-mute);
   font-size: .9em; letter-spacing: .04em;
 }
 .jump a:hover i { color: var(--accent); }
-@media (min-width: 46rem) {
-  .jump { overflow: visible; margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0; }
-  .jump ul { flex-wrap: wrap; width: auto; }
-}
 
 /* ======================================================= the fact cards ===== */
 
@@ -146,6 +138,17 @@
  */
 .facts { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; gap: .75rem; }
 @media (min-width: 46rem) { .facts { grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); } }
+/*
+ * Five claims in a three-wide grid print two on the second row and an empty cell beside
+ * them, and pair a one-line card with a four-line one. Two even columns instead, and the
+ * odd last claim takes the full width and reads a size up: a closing statement rather than
+ * a card with a hole next to it.
+ */
+@media (min-width: 46rem) {
+  .facts--pair { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .facts--pair > li:last-child:nth-child(odd) { grid-column: 1 / -1; padding-right: 1.6rem; }
+  .facts--pair > li:last-child:nth-child(odd) > strong:first-child { font-size: 1.32rem; }
+}
 .facts > li {
   position: relative; overflow: hidden; background: var(--panel); border-radius: var(--r);
   box-shadow: var(--lift); padding: 1.05rem 1.1rem 1.15rem 1.35rem;
@@ -168,8 +171,7 @@
 /*
  * The document layout. One column on a phone; from 62rem a rail carries the contents and
  * the article's facts beside the reading column, because a 34rem measure inside a 70rem
- * sheet otherwise leaves half the paper blank. The rail cannot be sticky: the sheet frame
- * sets overflow:hidden at the same width, which would make position:sticky inert.
+ * sheet otherwise leaves half the paper blank.
  */
 .doc-layout { display: grid; gap: 1rem; grid-template-columns: 1fr; align-items: stretch; margin-top: 1.1rem; }
 @media (min-width: 62rem) {
@@ -178,17 +180,40 @@
 .doc-layout > .pnl { margin: 0; }
 
 /*
+ * The sheet frame clips its children so the band's ghost word can bleed off the edge. It
+ * did that with overflow:hidden, which also makes the sheet a scroll container and any
+ * position:sticky inside it inert. `clip` crops identically without becoming one, so the
+ * rail's contents can travel with the reader. It is scoped with :has to the pages that
+ * carry a reading rail, so no other page group's sheet changes behaviour; where :has is
+ * unsupported the rail simply scrolls away as it did before, which is not a fault.
+ */
+@media (min-width: 68rem) {
+  .sheet:has(.doc-layout) { overflow: clip; }
+}
+
+/*
  * The rail is the charcoal column from the Riche sheet: the facts about the piece, its
- * contents, and the way back, standing against the light reading panel. It stretches to
- * the panel's height on a wide screen with the ghost word anchored at its foot, because a
- * short rail beside a long article leaves a hole in the sheet.
- *
- * It cannot be sticky — kit.css sets overflow:hidden on .sheet at the same width, which
- * makes position:sticky inert — so it is composed to be read once, at the top.
+ * contents, and the way back, standing against the light reading panel. It runs the full
+ * height of the panel — a short charcoal block beside a long article leaves a hole in the
+ * sheet — and its contents stick to the top of the screen inside it, so the column is
+ * never the empty slab that a full-height rail otherwise becomes on a 3,000px article.
+ */
+/*
+ * `clip` rather than the kit's `hidden`: both crop the ghost word at the column's edge,
+ * but `hidden` makes the column a scroll container, and a sticky child of a container that
+ * never scrolls never moves. The selectors below are two levels deep for the same reason
+ * the sheet rule above exists — the kit lifts every child of a dark panel with
+ * `.dark > *`, which would otherwise win over a single class and hold this one at
+ * `position: relative`.
  */
 .doc-rail {
-  display: flex; flex-direction: column; padding: 1.2rem 1.15rem 1.3rem;
+  display: block; overflow: clip; padding: 1.2rem 1.15rem 1.3rem;
   border-radius: var(--r);
+}
+.doc-rail > .rail-stick { position: relative; z-index: 1; }
+@media (min-width: 62rem) {
+  /* the offset clears the sheet's top edge; the rail's own padding does the rest */
+  .doc-rail > .rail-stick { position: sticky; top: 1.4rem; }
 }
 .doc-rail .dark-ghost { font-size: clamp(4.5rem, 22vw, 7rem); left: -.05em; bottom: -.2em; }
 /* the reference's vertical gradient strip: it gives the tall column a spine */
@@ -206,7 +231,7 @@
 .rail-foot .btn { width: 100%; }
 @media (min-width: 62rem) {
   .doc-rail { padding: 1.5rem 1.4rem 1.6rem; }
-  .rail-foot { margin-top: auto; padding-top: 2rem; }
+  .rail-foot { margin-top: 1.5rem; }
 }
 
 /* the contents list: a real sequence, so it is numbered */
@@ -234,6 +259,12 @@
   font-variant-numeric: tabular-nums;
 }
 .toc-list a:hover { color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 0 0 1.5px var(--accent); }
+/*
+ * The section the reader is in. Marked by the page's own observer; with no script the
+ * attribute is simply never set and the list reads as a plain contents list.
+ */
+.toc-list a[aria-current] { color: var(--on-dark); background: rgba(255, 255, 255, .09); }
+.toc-list a[aria-current]::before { color: var(--orange-soft); }
 @media (min-width: 62rem) {
   .toc-list { display: grid; gap: .2rem; }
   .toc-list a {
@@ -241,6 +272,7 @@
     min-height: 0; border-left: 3px solid var(--rule); margin-left: 0;
   }
   .toc-list a:hover { box-shadow: none; border-left-color: var(--accent); }
+  .toc-list a[aria-current] { border-left-color: var(--orange-soft); }
 }
 
 /* the reading column itself */
@@ -394,38 +426,126 @@
 
 /* ================================================ the article index card ==== */
 
-.topicline { margin-top: 1.1rem; }
+/*
+ * The topics are a summary of the list they sit above — four short chips — so they ride
+ * under the section head as a labelled row. Given a section head of their own they were
+ * introduced by a heading physically larger than the content it announced.
+ */
+.topicline { margin-top: .9rem; }
+.topicline .jump-label { margin-bottom: .45rem; }
+.topicline .chips { margin-top: 0; }
 
 /* ============================================================== method ====== */
 
 /*
- * The audit changelog keeps its markup and its data; what changes is the surface it sits
- * on. Grouped lists become panels, the count becomes a tile-shaped badge, and an open
- * entry's before/after sits on the shell rather than floating on the page.
+ * The audit changelog: eighty-nine entries, published whole.
+ *
+ * Printed flat it was four thousand pixels of identical pills whose titles were internal
+ * keys. It is an index instead: each group opens with its own head and a count tile, the
+ * first six entries stand open, and the rest fold away behind one control — so the whole
+ * record is still one click from the page, but the page can be walked.
+ *
+ * A row leads with the plain label; the audit's key sits under it in small mono, because
+ * the label is for reading and the key is for citing. On a wide screen the two sit in a
+ * fixed left column with the reason beside them, which gives the list the label/value
+ * rhythm the reference sheets use instead of eighty-nine equal grey bars.
  */
-.method .changelog { margin: 0; }
-.method .cl-group {
-  margin: 0 0 .8rem; background: var(--panel); border-radius: var(--r); box-shadow: var(--lift);
-  padding: 1rem 1rem 1.1rem;
+.method .changelog { margin: .9rem 0 0; display: grid; gap: .9rem; }
+
+.method .clg {
+  background: var(--panel); border-radius: var(--r); box-shadow: var(--lift);
+  padding: 1.05rem 1rem 1.15rem; scroll-margin-top: 1.25rem;
 }
-.method .cl-group h3 {
-  margin: 0; font-family: var(--ui); font-size: .68rem; font-weight: 700; letter-spacing: .15em;
-  text-transform: uppercase; color: var(--ink-mute); scroll-margin-top: 1.25rem;
-  align-items: center;
+@media (min-width: 40rem) { .method .clg { padding: 1.4rem 1.45rem 1.5rem; border-radius: var(--r-lg); } }
+
+.method .clg-head {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem;
+  margin: 0 0 .9rem;
 }
-.method .cl-group h3::before {
-  content: ""; flex: none; width: 20px; height: 6px; border-radius: var(--r-pill);
-  background-image: var(--grad-r);
+.method .clg-kicker {
+  margin: 0 0 .1rem; font-family: var(--ui); font-size: .6rem; font-weight: 700;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--ink-mute);
 }
-.method .cl-count {
-  display: inline-flex; align-items: center; justify-content: center; min-width: 1.9rem;
-  padding: .12rem .45rem; border-radius: var(--r-pill); background: var(--shell);
-  color: var(--ink-soft); font-size: .62rem; letter-spacing: .06em;
+.method .clg-title {
+  margin: 0; font-family: var(--display); font-style: italic; font-weight: 400;
+  font-size: clamp(1.4rem, 5.6vw, 1.85rem); line-height: 1.04; letter-spacing: -.02em;
+  color: var(--ink);
 }
-.method .cl-list { gap: .35rem; margin-top: .8rem; }
-.method .cl { background: var(--shell); box-shadow: none; }
+.method .clg-title::after {
+  content: ""; display: block; width: 38px; height: 6px; margin-top: .5rem;
+  border-radius: var(--r-pill); background-image: var(--grad-r);
+}
+.method .clg-tile { flex: none; background: var(--shell); box-shadow: none; min-width: 4.6rem; }
+
+.method .cl-list { gap: .35rem; margin-top: 0; }
+.method .cl { background: var(--shell); box-shadow: none; border-radius: var(--r-sm); }
+.method .cl > summary {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .1rem .7rem;
+  align-items: start; padding: .7rem .85rem .75rem;
+}
+.method .cl-name {
+  grid-column: 1; font-family: var(--ui); font-size: .78rem; font-weight: 700;
+  color: var(--ink); line-height: 1.35; text-wrap: pretty;
+}
+.method .cl-key {
+  grid-column: 1; font-family: var(--mono); font-size: .64rem; letter-spacing: 0;
+  color: var(--ink-mute); overflow-wrap: anywhere; line-height: 1.5;
+}
+.method .cl-clause { grid-column: 1; font-size: .8rem; margin-top: .15rem; }
+.method .cl .chev { grid-column: 2; grid-row: 1 / span 3; margin: 0; align-self: center; }
+.method .cl > summary:hover .cl-name { color: var(--accent); }
+@media (min-width: 52rem) {
+  .method .cl > summary { grid-template-columns: 15.5rem minmax(0, 1fr) auto; column-gap: 1.1rem; }
+  .method .cl-name { grid-row: 1; }
+  .method .cl-key { grid-row: 2; }
+  .method .cl-clause { grid-column: 2; grid-row: 1 / span 2; margin-top: .1rem; }
+  .method .cl .chev { grid-column: 3; }
+}
 .method .cl-body pre { background: var(--panel); }
-@media (min-width: 40rem) { .method .cl-group { padding: 1.35rem 1.4rem 1.45rem; } }
+
+/* the rest of a group, folded: one control, sized and shaped like a chip, never a wall */
+.method .clg-more { margin-top: .5rem; }
+.method .clg-more > summary {
+  list-style: none; cursor: pointer; display: flex; align-items: center; gap: .55rem;
+  min-height: 44px; padding: .5rem .85rem; border-radius: 11px;
+  box-shadow: inset 0 0 0 1.5px var(--rule-strong);
+  font-family: var(--ui); font-size: .66rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--ink-soft);
+}
+.method .clg-more > summary::-webkit-details-marker { display: none; }
+.method .clg-more > summary:hover { color: var(--accent); box-shadow: inset 0 0 0 1.5px var(--accent); }
+.method .clg-more .chev {
+  width: 7px; height: 7px; flex: none; margin-left: auto; align-self: center;
+  border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
+  transform: rotate(45deg) translate(-2px, -2px); transition: transform .2s;
+}
+.method .clg-more[open] > summary .chev { transform: rotate(-135deg); }
+.method .clg-more .cl-list { margin-top: .5rem; }
+
+/* the group filter: even columns, so no single chip is ever stranded on a row of its own */
+.method .cl-filter-label { margin: 1.1rem 0 .5rem; }
+.method .cl-filter { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .4rem; }
+.method .cl-filter .chip-link { display: flex; justify-content: space-between; width: 100%; }
+@media (min-width: 40rem) { .method .cl-filter { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 62rem) { .method .cl-filter { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+
+/*
+ * The eleven refusals stand on the charcoal panel: they are the part of the record a site
+ * has every incentive to bury, so they are given the page's loudest surface rather than
+ * the same grey list as the changes that were agreed.
+ */
+.method .disputes .cl-list { margin-top: 1.1rem; }
+.method .disputes .cl { background: rgba(255, 255, 255, .07); }
+.method .disputes .cl-name { color: var(--on-dark); }
+.method .disputes .cl-key { color: var(--on-dark-mute); }
+.method .disputes .cl-clause { color: var(--on-dark-soft); }
+.method .disputes .cl-body { color: var(--on-dark-soft); }
+.method .disputes .cl-body h4 { color: var(--orange-soft); }
+.method .disputes .cl-body pre { background: rgba(0, 0, 0, .22); color: var(--on-dark); }
+.method .disputes .cl-body .cl-meta { color: var(--on-dark-mute); }
+.method .disputes .cl .chev { border-color: var(--on-dark-mute); }
+.method .disputes .cl > summary:hover .cl-name { color: var(--blue-soft); }
+.method .disputes .doc { color: var(--on-dark-soft); }
 
 /* the correction intake: a note, not a panel, but marked as belonging to the page */
 .method .correction {

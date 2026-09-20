@@ -399,3 +399,54 @@ body {
   .feature-art .wheel { max-width: 21rem; }
   .feature-art { align-items: stretch; }
 }
+
+/* ------------------------------------------------- corrections, round two */
+
+/* THE GHOST WORD fits its own length (Hero passes --len). On a phone it spans the band's
+   width along the top, like the reference hero; from 40rem it sits bottom right and is
+   never wider than about 36rem, so it cannot run behind the lede or the tile row. */
+.band-ghost { --len: 6; }
+@media (max-width: 39.99rem) {
+  .band-ghost { top: -.06em; bottom: auto; right: -.06em; font-size: min(40vw, calc(98vw / (var(--len) * .47))); }
+}
+@media (min-width: 40rem) {
+  .band-ghost { font-size: min(17rem, calc(36rem / (var(--len) * .47))); bottom: -.19em; right: -.03em; }
+}
+
+/* TILES are a real grid and their labels are readable: never under 10px, allowed to wrap. */
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(4.9rem, 1fr)); gap: .5rem; }
+.tile { min-width: 0; padding: .7rem .5rem .6rem; }
+.tile span { font-size: .64rem; letter-spacing: .1em; white-space: normal; line-height: 1.25; margin-top: .25rem; }
+@media (min-width: 40rem) {
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(6.4rem, max-content)); gap: .6rem; }
+  .tile { padding: .8rem 1.15rem .7rem; }
+  .tile span { font-size: .66rem; }
+}
+
+/* DARK PANELS IN THE DARK THEME. Charcoal on near-black has no presence (1.3:1), which flattens
+   every page. In the dark theme the same panels lift instead: a clearly lighter surface, tinted
+   by the spectrum, with a hairline of light on the edge. */
+:root[data-theme="dark"] .dark,
+:root[data-theme="dark"] .site-foot {
+  background-color: #2C2C38;
+  background-image:
+    linear-gradient(135deg, rgba(126, 186, 238, .13), rgba(240, 160, 111, .09) 70%, rgba(240, 160, 111, .13));
+  background-size: auto;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .07), 0 10px 26px rgba(0, 0, 0, .35);
+}
+:root[data-theme="dark"] .dark { --panel: #3A3A48; --shell: #24242E; }
+:root[data-theme="dark"] .band-chip, :root[data-theme="dark"] .scard-tag, :root[data-theme="dark"] .scard-tab {
+  background-color: #3A3A48; background-image: none; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08);
+}
+
+/* THE RESULT PAGE takes the band and the section-head voice, instruments untouched. */
+.result-band { margin-bottom: 1.6rem; }
+.result-band .verdict { max-width: 22ch; }
+.outcomes > h2, .depth-section > h2, .share-block > h2, .capture > h2 {
+  font-style: italic; font-size: clamp(1.8rem, 7.6vw, 2.6rem); line-height: 1; letter-spacing: -.02em;
+  margin-top: 3rem;
+}
+.outcomes > h2::after, .depth-section > h2::after, .share-block > h2::after, .capture > h2::after {
+  content: ""; display: block; width: 58px; height: 7px; margin-top: .65rem;
+  border-radius: var(--r-pill); background-image: var(--grad-r);
+}

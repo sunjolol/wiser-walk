@@ -48,11 +48,28 @@ const heading =
     ? `Same band on ${cmp.sameCount} of ${cmp.total}`
     : 'Two rankings, side by side';
 
+/*
+ * The page opens by saying, in plain words, what it is about to draw.
+ *
+ * A reader arriving from a link has never seen this instrument. Before any rail is
+ * shown they are told how many rows there are, that each row carries one marker per
+ * reader, and - the thing this page must never be mistaken for - that nothing here
+ * scores one of them against the other.
+ */
 const lede =
   cmp?.shape === 'bipolar'
+    ? `One row for each of the ${cmp.total} axes, and two markers on every row: one for each of you, ` +
+      'drawn where your own answers landed. Nothing here scores one of you against the other.'
+    : `One row for each of the ${cmp?.rows.length ?? 0} categories, ranked for each of you on the same ` +
+      'scale. Nothing here scores one of you against the other.';
+
+/** The fact under the section head: where the two are furthest apart, or that they are not. */
+const gapNote =
+  cmp?.shape === 'bipolar'
     ? cmp.widest
-      ? `Your widest gap is ${cmp.widest.name}.`
-      : 'You land in the same band on every axis.'
+      ? `Furthest apart on ${cmp.widest.name}; exactly together on ` +
+        `${cmp.rows.filter(r => r.gap === 0).length} of ${cmp.total}.`
+      : 'Every row puts the two of you on the same point.'
     : cmp?.sharedTop
       ? 'The category that came out strongest is the same one for both of you.'
       : 'The category that came out strongest is a different one for each of you.';
@@ -108,9 +125,10 @@ const tiles = quiz && cmp
     )}
 
     <SectionHead title="Side by side" kicker="Two results on one set of rails" />
+    <p class="tags">{gapNote}</p>
 
     <div
-      class="panel layered result-panel"
+      class="panel layered result-panel cmp-panel"
       data-role="overlay"
       data-quiz={quiz.slug}
       data-code-a={codeA}
@@ -120,7 +138,43 @@ const tiles = quiz && cmp
       <div class="veil" aria-hidden="true"></div>
 
       {cmp.shape === 'bipolar' ? (
-        <RailOverlay quiz={quiz} cmp={cmp} />
+        <Fragment>
+          {/*
+            The legend, written against what RailOverlay actually draws.
+
+            It draws identity as SHAPE - a filled disc for the first reader, a ring for
+            the second - and colours each marker by the side it landed on, blue toward
+            the left pole, orange toward the right, grey inside the band where the quiz
+            names neither. It shades the run between the two markers in neutral ink, and
+            hatches the band. The component's own legend is suppressed in play.css so
+            there is exactly one, and it says all four of those things. Colour is never
+            an identity here, which is the sentence a reader needs before the first row.
+          */}
+          <p class="ov-legend cmp-legend">
+            <span class="ov-key">
+              <span class="ov-mark ov-mark--solid" aria-hidden="true"></span>
+              <span><span data-who="a" data-self="you" data-other="them">the first</span>, a filled disc</span>
+            </span>
+            <span class="ov-key">
+              <span class="ov-mark ov-mark--ring" aria-hidden="true"></span>
+              <span><span data-who="b" data-self="you" data-other="them">the second</span>, a ring</span>
+            </span>
+            <span class="ov-key">
+              <span class="ov-mark ov-mark--run" aria-hidden="true"></span>
+              <span>the run between the two</span>
+            </span>
+            <span class="ov-key">
+              <span class="legend-swatch" aria-hidden="true"></span>
+              <span>the quiz names neither pole</span>
+            </span>
+          </p>
+          <p class="cmp-legend-note">
+            A marker is painted in the colour of the side it landed on — blue toward the
+            left pole, orange toward the right, grey inside the hatched band. The colour
+            says which side, never which person; the shape says which person.
+          </p>
+          <RailOverlay quiz={quiz} cmp={cmp} />
+        </Fragment>
       ) : (
         <div class="ov-columns">
           <div class="ov-column">

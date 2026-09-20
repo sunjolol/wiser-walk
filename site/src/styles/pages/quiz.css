@@ -11,17 +11,65 @@
 
 .qz-more { margin-top: .9rem; }
 
-/* the draft warning, kept word for word, with the flag the cards carry in the corner */
-.qz-draftnote {
-  margin: .15rem 0 1.05rem; max-width: 40rem; font-size: .92rem; color: var(--ink-soft);
+/*
+ * The flagship, as the HUB presents it — deliberately not the home page's card.
+ *
+ * The home page leads with the compass wheel drawn from a real answer sheet; a reader who
+ * has just scrolled past it learns nothing from meeting it again here. So the hub shows the
+ * other half of the same truth: what the instrument actually asks, six axes with both pole
+ * names, beside the facts and the way in. Same data, a different cut.
+ */
+.qz-flag { display: grid; grid-template-columns: 1fr; gap: .9rem; margin: 1.1rem 0 0; }
+.qz-flag-body {
+  position: relative; isolation: isolate; overflow: hidden;
+  display: flex; flex-direction: column;
+  background: var(--panel); border-radius: var(--r-lg); box-shadow: var(--lift);
+  padding: 1.35rem 1.2rem 1.45rem;
 }
-.qz-draftflag {
-  display: inline-flex; align-items: center; gap: .35rem; margin-right: .5rem;
-  padding: .3rem .6rem; border-radius: var(--r-pill);
-  background: var(--warn-bg); color: var(--warn-ink);
-  font-family: var(--ui); font-size: .56rem; font-weight: 700; letter-spacing: .14em;
-  text-transform: uppercase; line-height: 1; vertical-align: .08em;
+/* the kicker ink is tuned for a dark panel; on a light one it takes the warm ink */
+.qz-flag-body .feature-kicker { color: var(--warn-ink); }
+.qz-flag-body h3 {
+  margin: .55rem 0 .55rem; font-size: clamp(1.7rem, 7vw, 2.3rem);
+  line-height: 1.02; letter-spacing: -.015em;
 }
+.qz-flag-body > p { margin: 0; color: var(--ink-soft); max-width: 34rem; }
+.qz-flag-body .spec { margin-top: 1.1rem; }
+.qz-flag-body .btn-row { margin: 1.25rem 0 0; }
+.qz-flag-body .btn { flex: 1 1 auto; }
+.qz-flag .axpv-panel { margin: 0; }
+@media (min-width: 40rem) { .qz-flag-body { padding: 1.9rem 1.8rem 2rem; } }
+@media (min-width: 60rem) {
+  .qz-flag { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 1rem; align-items: stretch; }
+  .qz-flag-body { justify-content: center; }
+  .qz-flag-body .btn { flex: 0 0 auto; }
+  /* the axes fill the panel they are given rather than leaving a slab of empty charcoal
+     under them: six rows sharing the height, the note closing it off at the bottom */
+  .qz-flag .axpv-panel { display: flex; flex-direction: column; }
+  .qz-flag .axpv { flex: 1 1 auto; grid-auto-rows: minmax(0, 1fr); }
+  .qz-flag .axpv-row { align-content: center; }
+  .qz-flag .axpv-note { margin-top: 1.1rem; }
+}
+
+/*
+ * Drafts. One draft card stretched across the sheet leaves half a screen of bare ground, so
+ * the warning that used to hang above the row as a loose line becomes the row's other half:
+ * the same words, now a panel that says what a draft is and is not.
+ */
+.qz-draftrow { display: grid; grid-template-columns: 1fr; gap: .9rem; margin-top: 1.05rem; }
+@media (min-width: 52rem) {
+  .qz-draftrow { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
+}
+.qz-draftbox {
+  position: relative; isolation: isolate; overflow: hidden; margin: 0;
+  background: var(--panel); border-radius: var(--r-lg); box-shadow: var(--lift);
+  padding: 1.2rem 1.15rem 1.3rem;
+}
+.qz-draftbox .feature-kicker { color: var(--warn-ink); display: flex; align-items: center; gap: .4rem; }
+.qz-draftbox p { margin: .6rem 0 0; font-size: .92rem; color: var(--ink-soft); }
+.qz-draftbox .spec { margin-top: 1rem; }
+.qz-draftbox .spec dt { font-size: .58rem; letter-spacing: .12em; }
+.qz-draftbox .spec dd { font-size: .85rem; }
+.qz-drafts { align-content: start; }
 
 .qz-pledge .spec { max-width: 34rem; }
 
@@ -47,7 +95,9 @@
   text-decoration: none; color: inherit;
   transition: box-shadow .2s ease, transform .2s ease;
 }
-.axpv-row:hover { box-shadow: 0 10px 22px rgba(62, 134, 196, .16); transform: translateY(-2px); }
+/* one lift value for every card on these pages, kept here rather than repeated as a literal */
+.axpv, .rankpv { --hover-lift: 0 10px 22px rgba(62, 134, 196, .16); }
+.axpv-row:hover { box-shadow: var(--hover-lift); transform: translateY(-2px); }
 .axpv-name {
   font-family: var(--display); font-size: 1.2rem; line-height: 1.1; color: var(--ink);
 }
@@ -68,8 +118,56 @@
 .axpv-l { color: var(--accent); }
 .axpv-r { color: var(--warn-ink); text-align: right; }
 
-.catpv { margin-top: 0; gap: .5rem; }
-.catpv .chip-link { font-size: .66rem; letter-spacing: .12em; }
+/*
+ * The ranking preview, for a quiz with categories instead of axes.
+ *
+ * Seven bordered chips in a wide panel said nothing about the instrument, and read as a
+ * placeholder beside the Compass's six rails. These rows say what a ranking is: every
+ * category carries its own definition and its own empty ruler, cut into the number of
+ * scores the instrument can actually reach, and NOT painted in the pole colours — a ranking
+ * has no poles for blue and orange to mean.
+ */
+.rankpv { display: grid; grid-template-columns: 1fr; gap: .55rem; margin: 0; }
+@media (min-width: 46rem) {
+  .rankpv { grid-template-columns: 1fr 1fr; gap: .7rem; }
+  /* an odd count would otherwise leave the last cell an empty hole in the panel */
+  .rankpv-row:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+
+.rankpv-row {
+  display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 0 .6rem;
+  padding: .85rem .95rem .95rem; border-radius: var(--r);
+  background: var(--panel); box-shadow: var(--lift);
+  text-decoration: none; color: inherit;
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+.rankpv-row:hover { box-shadow: var(--hover-lift); transform: translateY(-2px); }
+.rankpv-name {
+  font-family: var(--display); font-size: 1.2rem; line-height: 1.1; color: var(--ink);
+  text-transform: capitalize;
+}
+.rankpv-row:hover .rankpv-name { color: var(--accent); }
+.rankpv-go { display: inline-flex; color: var(--ink-mute); }
+.rankpv-row:hover .rankpv-go { color: var(--accent); }
+.rankpv-note {
+  grid-column: 1 / -1; margin: .3rem 0 0; font-size: .8rem; line-height: 1.5;
+  color: var(--ink-soft);
+}
+/* the ruler each category is measured on, in neutral ink: one notch per reachable score */
+.rankpv-scale {
+  --slots: 9;
+  grid-column: 1 / -1; display: grid; grid-template-columns: auto 1fr auto;
+  align-items: center; gap: .5rem; margin: .7rem 0 0;
+}
+.rankpv-tick {
+  height: 9px; border-radius: 2px; background: var(--rule-strong);
+  -webkit-mask: repeating-linear-gradient(90deg, #000 0 calc(100% / var(--slots) - 3px), transparent calc(100% / var(--slots) - 3px) calc(100% / var(--slots)));
+  mask: repeating-linear-gradient(90deg, #000 0 calc(100% / var(--slots) - 3px), transparent calc(100% / var(--slots) - 3px) calc(100% / var(--slots)));
+}
+.rankpv-end {
+  font-family: var(--ui); font-size: .54rem; font-weight: 700; letter-spacing: .11em;
+  text-transform: uppercase; color: var(--ink-mute); line-height: 1;
+}
 
 .axpv-note { margin: 1rem 0 0; max-width: 42rem; font-size: .8rem; line-height: 1.55; color: var(--on-dark-mute); }
 
@@ -111,110 +209,191 @@
 .runner { margin: 1.5rem 0 0; }
 
 /*
- * While a statement is on screen the band steps aside: at 390x700 the header, the ghost
- * word and the tiles would push the answer scale under the fold, and the scale has to be
- * reachable without scrolling for the longest statement in the instrument. No script
- * change — the play panel's own hidden attribute drives it.
+ * While a statement is on screen the page steps aside and the instrument gets the frame.
+ *
+ * The band would push the answers under the fold at 390x700, and the site nav above and the
+ * four-column footer below made the screen a reader spends three minutes on look like a
+ * paragraph dropped into a home page. Both go while a run is in progress; the brand and the
+ * theme bulb stay, and Back still reads "Leave the quiz" on the first statement, so there is
+ * always a way out. No script change — the play panel's own hidden attribute drives all of it.
  */
 .page:has(#play:not([hidden])) .band { display: none; }
 .page:has(#play:not([hidden])) .runner { margin-top: .25rem; }
-.page:has(#play:not([hidden])) { padding-top: .9rem; }
+.page:has(#play:not([hidden])) { padding-top: .9rem; padding-bottom: 2.25rem; }
+.sheet:has(#play:not([hidden])) .site-head nav,
+.sheet:has(#play:not([hidden])) .site-foot { display: none; }
 
 #play { max-width: 44rem; margin: 0 auto; }
 
-.ask-top { margin: 0 0 .85rem; }
+/* ------------------------------------------------------- where you are */
+
+.ask-top { margin: 0 0 .8rem; }
 .ask-meta { display: flex; align-items: baseline; justify-content: space-between; gap: .8rem; }
+/* the quiz's name only appears where it fits whole: a title cut to an ellipsis reads as
+   something broken rather than as a label */
 .ask-quiz {
-  display: none; flex: none; max-width: 48%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  font-family: var(--ui); font-size: .55rem; font-weight: 700; letter-spacing: .16em;
-  text-transform: uppercase; color: var(--ink-mute); opacity: .75;
+  display: none; flex: none; max-width: 48%; overflow: hidden; text-overflow: ellipsis;
+  white-space: nowrap; font-family: var(--ui); font-size: .55rem; font-weight: 700;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--ink-mute);
 }
+@media (min-width: 30rem) { .ask-quiz { display: block; } }
+/*
+ * "Statement 13 of 18", read at a glance: the display face at reading size with tabular
+ * numerals, not a 9px tracked label that has to be hunted for.
+ */
 .count {
-  margin: 0 0 .45rem; font-family: var(--ui); font-size: .6rem; font-weight: 700;
-  letter-spacing: .15em; text-transform: uppercase; color: var(--ink-mute);
-  font-variant-numeric: tabular-nums;
+  margin: 0 0 .5rem; font-family: var(--display); font-style: italic; font-weight: 400;
+  font-size: clamp(1.05rem, 4.6vw, 1.4rem); line-height: 1; letter-spacing: -.01em;
+  text-transform: none; color: var(--ink); font-variant-numeric: tabular-nums;
 }
 /* one square pip per statement, cut out of the spectrum by a mask, filled as you go */
 .progress {
   --pips: 18;
-  height: 10px; border-radius: 0; background: var(--shell); overflow: hidden;
+  /* the unlit pips sit on the page, not on a panel, so --shell gave them nothing to read
+     against: at the same value as the ground the control looked like it had failed to draw */
+  height: 10px; border-radius: 0; background: var(--rule-strong); overflow: hidden;
   -webkit-mask: repeating-linear-gradient(90deg, #000 0 calc(100% / var(--pips) - 3px), transparent calc(100% / var(--pips) - 3px) calc(100% / var(--pips)));
   mask: repeating-linear-gradient(90deg, #000 0 calc(100% / var(--pips) - 3px), transparent calc(100% / var(--pips) - 3px) calc(100% / var(--pips)));
 }
-.progress i { background-image: var(--grad-r); background-size: 100% 100%; }
+/*
+ * The fill is the statements BEHIND you, which left pip one empty while statement one was on
+ * screen — a progress bar showing nothing reads as a control that failed. One pip of padding
+ * outside the width the script sets lights the statement you are answering as well, so the
+ * lit run always counts what the label says: thirteen pips at "Statement 13 of 18".
+ */
+.progress i {
+  box-sizing: content-box; padding-right: calc(100% / var(--pips));
+  background-image: var(--grad-r); background-size: 100% 100%;
+}
 
-/* the statement itself: display type on a panel carrying the faint wash */
+/* ---------------------------------------------------------- the statement */
+
 .ask {
   position: relative; isolation: isolate; overflow: hidden;
+  display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0 .5rem;
   background: var(--panel); border-radius: var(--r-lg); box-shadow: var(--lift);
   padding: 1rem 1rem 1.05rem; margin: 0 0 .75rem;
+  /* the stencil is stretched to the card instead of cropped to its centre, so the wash
+     crosses the whole panel rather than pooling in one corner. The dark theme keeps its own
+     much lower strength: the same texture there would be a smear, not a wash. */
+  --wash-op: .2;
+}
+:root[data-theme="dark"] .ask { --wash-op: .08; }
+.ask > .wash {
+  -webkit-mask-size: 100% 100%; mask-size: 100% 100%;
+  -webkit-mask-position: center; mask-position: center;
+}
+.ask-quote {
+  grid-row: 1; align-self: start; font-family: var(--display); font-style: italic;
+  font-size: 2.6rem; line-height: .74; color: var(--warn-ink); user-select: none;
 }
 .statement {
-  font-family: var(--display); font-size: clamp(1.14rem, 5.1vw, 1.85rem); line-height: 1.3;
-  margin: 0; min-height: 5.2em; text-wrap: pretty; color: var(--ink);
+  grid-row: 1; font-family: var(--display); font-size: clamp(1.14rem, 5.1vw, 1.85rem);
+  line-height: 1.3; margin: 0; min-height: 5.2em; text-wrap: pretty; color: var(--ink);
 }
-.statement:focus { outline: none; }
-.statement:focus-visible { outline: 2px solid var(--ink); outline-offset: 6px; border-radius: 4px; }
-
 /*
- * The answer scale. It runs from disagreement to agreement — NOT from one pole of an axis
- * to the other — so it is never painted blue to orange: the dot grows with the strength of
- * the answer, and a pressed pill goes charcoal.
+ * The statement is focused by script at the start of a run so a screen reader and the
+ * keyboard both land on it. A 2px box drawn around the words themselves read as a rendering
+ * fault on a card that already has an edge, so the CARD takes the focus ring instead: same
+ * indicator, drawn on the shape it belongs to.
+ */
+.statement:focus { outline: none; }
+.statement:focus-visible { outline: none; }
+.ask:has(.statement:focus-visible) { box-shadow: var(--lift), inset 0 0 0 2px var(--accent); }
+
+/* ------------------------------------------------------------ the answers
+ *
+ * Five answers, one thumb, and an instrument rather than five identical pills. Strength is
+ * written in INK, never in the pole colours: the scale runs from disagreement to agreement,
+ * which is not an axis, so blue and orange would be a lie about what is being measured.
+ *   · the edge bar and the mark grow with the strength of the answer
+ *   · "Unsure / neither" is the quiet middle — recessed ground, lighter ink, the smallest mark
+ *   · pressed is a key going down: the surface sinks, the mark fills, and the spectrum
+ *     underlines it — the same signal under all five, because it means "chosen", not "strong"
  */
 .scale { display: grid; grid-template-columns: 1fr; gap: .38rem; margin: 0; }
 #scale button {
   position: relative; display: flex; align-items: center; gap: .7rem; width: 100%;
-  padding: .55rem .9rem; min-height: 46px; border: 0; border-radius: 14px;
-  background: var(--panel); color: var(--ink); box-shadow: var(--lift);
+  padding: .55rem .9rem; min-height: 48px; border: 0; border-radius: 14px;
+  background-color: var(--panel); background-image: none;
+  background-repeat: no-repeat; background-position: 50% 100%; background-size: 100% 4px;
+  color: var(--ink); box-shadow: var(--lift), inset 3px 0 0 var(--ink-mute);
   font-family: var(--ui); font-size: .88rem; font-weight: 600; line-height: 1.2;
   text-align: left; cursor: pointer;
-  transition: box-shadow .15s ease, background-color .15s ease, color .15s ease;
+  transition: box-shadow .15s ease, background-color .15s ease, color .15s ease, transform .1s ease;
 }
 #scale button::before {
-  content: ""; flex: none; width: 24px; height: 24px; border-radius: 50%;
-  box-shadow: inset 0 0 0 2px var(--rule-strong);
+  content: ""; flex: none; width: 22px; height: 22px; border-radius: 50%;
+  box-shadow: inset 0 0 0 2.5px var(--ink-soft);
   transition: box-shadow .15s ease, background .15s ease;
 }
-/* the dot says how strong the answer is; the two middling answers and Unsure shrink */
-#scale button:nth-child(2)::before, #scale button:nth-child(4)::before { transform: scale(.78); }
-#scale button:nth-child(3)::before { transform: scale(.54); }
+/* the two strongly answers: a heavier edge and a heavier mark */
+#scale button:first-child, #scale button:last-child {
+  box-shadow: var(--lift), inset 6px 0 0 var(--ink);
+}
+#scale button:first-child::before, #scale button:last-child::before {
+  width: 26px; height: 26px; box-shadow: inset 0 0 0 5px var(--ink);
+}
+/* the middle: no edge, a recessed ground, the smallest mark, the quietest ink */
+#scale button:nth-child(3) {
+  background-color: var(--shell); color: var(--ink-mute); font-style: italic;
+  box-shadow: var(--lift);
+}
+#scale button:nth-child(3)::before {
+  width: 15px; height: 15px; box-shadow: inset 0 0 0 1.5px var(--ink-mute);
+}
 
-#scale button:hover { color: var(--accent); box-shadow: var(--lift), inset 0 0 0 1.5px var(--accent); }
-#scale button:hover::before { box-shadow: inset 0 0 0 2px var(--accent); }
+#scale button:hover { color: var(--accent); }
+#scale button:hover::before { box-shadow: inset 0 0 0 2.5px var(--accent); }
+#scale button:first-child:hover::before, #scale button:last-child:hover::before {
+  box-shadow: inset 0 0 0 5px var(--accent);
+}
+#scale button:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 
 #scale button[aria-pressed="true"] {
-  font-weight: 700;
-  background-color: var(--dark-fill); background-image: var(--dark-fill-img);
-  background-size: 420px; color: var(--on-dark); box-shadow: var(--lift);
+  font-weight: 700; color: var(--ink); background-color: var(--shell);
+  background-image: var(--grad-r);
+  box-shadow: inset 0 2px 5px var(--rule-strong), inset 3px 0 0 var(--ink-mute);
+  transform: translateY(1px);
 }
-:root[data-theme="dark"] #scale button[aria-pressed="true"] {
-  box-shadow: var(--lift), inset 0 0 0 1.5px var(--on-dark-mute);
+#scale button:first-child[aria-pressed="true"], #scale button:last-child[aria-pressed="true"] {
+  box-shadow: inset 0 2px 5px var(--rule-strong), inset 6px 0 0 var(--ink);
 }
-#scale button[aria-pressed="true"]::before {
-  background: var(--on-dark); box-shadow: inset 0 0 0 2px var(--on-dark);
+#scale button:nth-child(3)[aria-pressed="true"] {
+  color: var(--ink); font-style: italic; box-shadow: inset 0 2px 5px var(--rule-strong);
 }
-#scale button[aria-pressed="true"]:hover { color: var(--on-dark); box-shadow: var(--lift); }
+#scale button[aria-pressed="true"]::before { background: var(--ink); }
 
 .runner-foot { display: flex; align-items: center; gap: .8rem; margin-top: .7rem; }
 .runner-nav { flex: none; gap: 0; margin: 0; }
 .runner-nav .btn { font-size: .68rem; padding: .5rem 1rem; min-height: 44px; }
 .scale-hint { flex: 1; min-width: 0; margin: 0; font-size: .64rem; line-height: 1.45; color: var(--ink-mute); }
 
-/* the quiz's name only appears where it fits whole: a title cut to an ellipsis reads as
-   something broken rather than as a label */
-@media (min-width: 30rem) { .ask-quiz { display: block; } }
-
 @media (min-width: 34rem) {
-  .ask { padding: 1.5rem 1.6rem 1.6rem; }
+  .ask { padding: 1.5rem 1.6rem 1.6rem; gap: 0 .75rem; }
+  .ask-quote { font-size: 3.4rem; }
   .statement { min-height: 4.4em; }
   .scale { grid-template-columns: repeat(5, 1fr); gap: .5rem; }
   #scale button {
     flex-direction: column; justify-content: center; text-align: center;
-    gap: .55rem; padding: .95rem .45rem; min-height: 98px; font-size: .82rem;
+    gap: .55rem; padding: 1.1rem .45rem .95rem; min-height: 104px; font-size: .82rem;
+    /* in a row of five the edge that carries the weight is the top one */
+    box-shadow: var(--lift), inset 0 3px 0 var(--ink-mute);
   }
+  #scale button:first-child, #scale button:last-child {
+    box-shadow: var(--lift), inset 0 6px 0 var(--ink);
+  }
+  #scale button:nth-child(3) { box-shadow: var(--lift); }
+  #scale button[aria-pressed="true"] {
+    box-shadow: inset 0 2px 5px var(--rule-strong), inset 0 3px 0 var(--ink-mute);
+  }
+  #scale button:first-child[aria-pressed="true"], #scale button:last-child[aria-pressed="true"] {
+    box-shadow: inset 0 2px 5px var(--rule-strong), inset 0 6px 0 var(--ink);
+  }
+  #scale button:nth-child(3)[aria-pressed="true"] { box-shadow: inset 0 2px 5px var(--rule-strong); }
   /* the number keys really do answer, so the instrument says so */
   #scale button::after {
-    content: "1"; position: absolute; top: .5rem; right: .6rem;
+    content: "1"; position: absolute; top: .55rem; right: .6rem;
     font-family: var(--ui); font-size: .55rem; font-weight: 700; letter-spacing: .1em;
     color: var(--ink-mute);
   }
@@ -222,14 +401,13 @@
   #scale button:nth-child(3)::after { content: "3"; }
   #scale button:nth-child(4)::after { content: "4"; }
   #scale button:nth-child(5)::after { content: "5"; }
-  #scale button[aria-pressed="true"]::after { color: var(--on-dark-mute); }
   .runner-foot { gap: 1.4rem; }
   .scale-hint { font-size: .72rem; text-align: right; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .axpv-row, #scale button, .progress i { transition: none; }
-  .axpv-row:hover { transform: none; }
+  .axpv-row, .rankpv-row, #scale button, .progress i { transition: none; }
+  .axpv-row:hover, .rankpv-row:hover { transform: none; }
 }
 
 /* ================================================ wider than a phone: pair
@@ -256,5 +434,5 @@
   .qz-pledge-text p { max-width: 32rem; }
 }
 
-/* one draft on its own would otherwise stretch a stripe card the width of the sheet */
-@media (min-width: 46rem) { .qz-drafts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+/* the draft row is already two columns; its cards take the column they are given */
+@media (min-width: 52rem) { .qz-drafts { grid-template-columns: minmax(0, 1fr); } }

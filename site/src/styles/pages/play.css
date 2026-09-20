@@ -1,6 +1,73 @@
 /* play pages. Owned by one builder; see design/RICHE-PASS-BRIEF.md. Tokens only, phone first. */
 
+/* ------------------------------------------------- the game card on /games/ */
+/*
+ * Only the composed card on the games index takes these: the home page draws its own
+ * copy of the same markup inline and belongs to another builder.
+ *
+ * Two fixes. The drawing carries a real line out of the pool instead of three grey bars,
+ * so it reads as an illustration rather than as a skeleton that never loaded (the line
+ * only; no citation, so no run is spoiled). And the ghost word is sized to the art
+ * column, cropped by ONE edge, instead of running off both and rendering as "ripture?".
+ */
+.gamecard--quoted .dark-ghost {
+  font-size: clamp(4rem, 18vw, 5.2rem);
+  left: -.03em; right: auto; bottom: -.08em;
+}
+.gamecard--quoted .mock-card--line {
+  gap: .35rem; padding: 1.1rem 1.1rem 1.2rem;
+}
+.gamecard--quoted .mock-card--line q {
+  quotes: none; display: block;
+  font-family: var(--display); font-size: 1rem; line-height: 1.32;
+  color: var(--on-dark); text-wrap: pretty;
+}
+@media (min-width: 52rem) {
+  .gamecard--quoted .mock-card--line q { font-size: 1.06rem; }
+}
+
 /* ------------------------------------------------- the two-person overlay */
+
+/*
+ * One legend, and it describes what is drawn.
+ *
+ * RailOverlay ships its own legend naming two shapes. The page replaces it with one that
+ * also names the shaded run and states the colour rule, because a reader who is told
+ * "first = dark disc" and then sees an orange disc concludes the page is broken. The
+ * component is not edited; its legend is simply not drawn twice.
+ */
+.cmp-panel .ov-legend[data-role="legend"] { display: none; }
+
+.cmp-legend { margin-bottom: .5rem; row-gap: .45rem; }
+.cmp-legend .ov-key { align-items: flex-start; }
+.cmp-legend .ov-mark, .cmp-legend .legend-swatch { margin-top: .16rem; }
+/* the shaded run between the two markers, at the weight the rail draws it */
+.ov-mark--run {
+  flex: none; width: 26px; height: 12px; border-radius: 6px;
+  background: var(--ink-mute); opacity: .38;
+}
+.cmp-legend-note {
+  margin: 0 0 1.2rem; max-width: 64em;
+  font-size: .78rem; line-height: 1.5; color: var(--ink-mute);
+}
+
+/*
+ * The six rows have to scan as one set of rails, so the reading gets its own line on
+ * every row at phone width and a height that does not change from row to row. Letting
+ * the wrap decide meant one axis was a line taller than the other five.
+ */
+@media (max-width: 47.99rem) {
+  .rail--pair .rail-head { display: block; margin-bottom: .35rem; }
+  .rail--pair .rail-name { display: block; }
+  .rail--pair .rail-read {
+    display: block; margin-left: 0; text-align: left; margin-top: .1rem;
+    font-size: .76rem; line-height: 1.32; min-height: 2.64em;
+  }
+}
+
+/* the rails are the point of this panel, so the silhouette behind them is halved
+   in whichever theme is on, rather than pinned to one literal */
+.cmp-panel .wash { opacity: calc(var(--wash-op) / 2); }
 
 /*
  * The two mirrored pole panels on /c/. The result page's own .pole-panel names each pole

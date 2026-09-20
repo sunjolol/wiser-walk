@@ -4,8 +4,13 @@
  * words and a spec list of real facts, and a dark half carrying a drawing of the game.
  *
  * The home page builds this inline; the games index builds it through here, so the two
- * are siblings rather than a feature and a list. No real line is ever shown in the
- * drawing — nothing about a run can be spoiled by a card.
+ * are siblings rather than a feature and a list.
+ *
+ * The drawing shows a real line from the game's own pool when the game supplies one, and
+ * only the line: no reference, no verdict, no tier. A card still cannot tell anyone
+ * whether a line is in the Bible, so nothing about a run is spoiled — but the card stops
+ * reading as three grey bars that never finished loading. With no line it falls back to
+ * the bars.
  */
 import type { Game } from '../lib/games';
 
@@ -18,10 +23,12 @@ export interface Props {
   kicker: string;
   /** The two choices this game puts in front of a player, in its own words. */
   answers: [string, string];
+  /** One line quoted word for word from the game's pool. Never its citation. */
+  line?: string | null;
 }
-const { game, specs, ghost, kicker, answers } = Astro.props;
+const { game, specs, ghost, kicker, answers, line = null } = Astro.props;
 ---
-<a class="gamecard" href={game.href}>
+<a class="gamecard gamecard--quoted" href={game.href}>
   <div class="feature-body">
     <h3>{game.title}</h3>
     <p>{game.tagline}</p>
@@ -35,7 +42,11 @@ const { game, specs, ghost, kicker, answers } = Astro.props;
     <p class="feature-kicker">{kicker}</p>
     <div class="mock" aria-hidden="true">
       <div class="mock-fuse"><i></i></div>
-      <div class="mock-card"><span class="mock-q">“</span><i></i><i></i><i></i></div>
+      {line ? (
+        <div class="mock-card mock-card--line"><span class="mock-q">“</span><q>{line}</q></div>
+      ) : (
+        <div class="mock-card"><span class="mock-q">“</span><i></i><i></i><i></i></div>
+      )}
       <div class="mock-btns"><span>{answers[0]}</span><span>{answers[1]}</span></div>
     </div>
   </div>

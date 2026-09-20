@@ -86,32 +86,39 @@ const breadcrumbs = [
 >
   <Hero
     title={article.data.title}
-    eyebrow={`${article.data.minutes} min read`}
+    eyebrow="Article"
     icon="book"
     ghost={ghost}
     lede={article.data.description}
+    tiles={[
+      { n: article.data.minutes, label: 'Minutes' },
+      { n: contents.length, label: contents.length === 1 ? 'Section' : 'Sections' },
+      { n: article.data.tags.length, label: article.data.tags.length === 1 ? 'Topic' : 'Topics' }
+    ]}
     long
   />
 
   <div class="doc-layout">
     <aside class="doc-rail dark">
       <div class="dark-ghost" aria-hidden="true">{ghost}</div>
-      <p class="rail-tag">Article</p>
-      <dl class="spec spec--rail">
-        <div><dt>Published</dt><dd>{published}</dd></div>
-        <div><dt>Reading time</dt><dd>{article.data.minutes} min</dd></div>
-        {article.data.tags.length > 0 && (
-          <div><dt>Topics</dt><dd>{article.data.tags.join(', ')}</dd></div>
-        )}
-      </dl>
-      <nav aria-label="Contents">
-        <p class="toc-head">In this article</p>
-        <ol class="toc-list">
-          {contents.map(c => <li><a href={`#${c.id}`}>{c.label}</a></li>)}
-        </ol>
-      </nav>
-      <div class="rail-foot">
-        <a class="btn ghost" href="/articles/">All articles</a>
+      <div class="rail-stick">
+        <p class="rail-tag">Article</p>
+        <dl class="spec spec--rail">
+          <div><dt>Published</dt><dd>{published}</dd></div>
+          <div><dt>Reading time</dt><dd>{article.data.minutes} min</dd></div>
+          {article.data.tags.length > 0 && (
+            <div><dt>Topics</dt><dd>{article.data.tags.join(', ')}</dd></div>
+          )}
+        </dl>
+        <nav aria-label="Contents">
+          <p class="toc-head">In this article</p>
+          <ol class="toc-list">
+            {contents.map(c => <li><a href={`#${c.id}`}>{c.label}</a></li>)}
+          </ol>
+        </nav>
+        <div class="rail-foot">
+          <a class="btn ghost" href="/articles/">All articles</a>
+        </div>
       </div>
     </aside>
 
@@ -131,6 +138,42 @@ const breadcrumbs = [
       links={next}
     />
   )}
-
-  <div class="btn-row"><a class="btn ghost" href="/articles/">All articles</a></div>
 </Base>
+
+{/*
+ * The contents list marks the section the reader is in. It is an enhancement and nothing
+ * depends on it: without JavaScript every link still jumps, and the list simply carries no
+ * mark. The band of the viewport it watches is the top third, so a heading counts as
+ * "current" from the moment it settles near the top rather than when it leaves.
+ */}
+<script>
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('.toc-list a[href^="#"]'));
+  if (links.length && 'IntersectionObserver' in window) {
+    const sections = new Map<Element, HTMLAnchorElement>();
+    for (const a of links) {
+      const el = document.getElementById(decodeURIComponent(a.hash.slice(1)));
+      if (el) sections.set(el, a);
+    }
+    const order = Array.from(sections.keys());
+    const visible = new Set<Element>();
+    let current: HTMLAnchorElement | null = null;
+    const mark = (a: HTMLAnchorElement) => {
+      if (current === a) return;
+      if (current) current.removeAttribute('aria-current');
+      current = a;
+      a.setAttribute('aria-current', 'true');
+    };
+    const io = new IntersectionObserver(
+      entries => {
+        for (const e of entries) {
+          if (e.isIntersecting) visible.add(e.target);
+          else visible.delete(e.target);
+        }
+        const first = order.find(el => visible.has(el));
+        if (first) mark(sections.get(first)!);
+      },
+      { rootMargin: '0px 0px -66% 0px', threshold: 0 }
+    );
+    sections.forEach((_, el) => io.observe(el));
+  }
+</script>

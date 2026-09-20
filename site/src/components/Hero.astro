@@ -53,7 +53,7 @@ const hasLede = Boolean(lede) || Astro.slots.has('default');
 <header class:list={['band', long && 'band--long']}>
   <div class="wash" aria-hidden="true"></div>
   <div class="veil" aria-hidden="true"></div>
-  {ghost && <div class="band-ghost" aria-hidden="true">{ghost}</div>}
+  {ghost && <div class="band-ghost" aria-hidden="true" style={`--len:${Math.max(4, ghost.length)}`}>{ghost}</div>}
   {eyebrow && <p class="band-chip">{icon && <Icon name={icon} size={13} />}{eyebrow}</p>}
   <h1>{parts.map(p => p.tone ? <span class={`verdict-part--${p.tone}`}>{p.text}</span> : p.text)}</h1>
   {hasLede && <p class="lede">{lede ?? <slot />}</p>}

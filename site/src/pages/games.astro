@@ -21,7 +21,10 @@ const games = liveGames();
  * The facts under each game's title. They are per game because they are the game's own
  * rules; a game with nothing to say here falls back to its one-line meta.
  */
-const FACTS: Record<string, { specs: Array<{ k: string; v: string }>; ghost: string; kicker: string; answers: [string, string] }> = {
+const FACTS: Record<string, {
+  specs: Array<{ k: string; v: string }>; ghost: string; kicker: string;
+  answers: [string, string]; line?: string | null;
+}> = {
   'sounds-like-scripture': {
     specs: [
       { k: 'A run', v: 'ten lines, a few seconds each' },
@@ -31,7 +34,9 @@ const FACTS: Record<string, { specs: Array<{ k: string; v: string }>; ghost: str
     ],
     ghost: 'scripture?',
     kicker: 'In the Bible, or not',
-    answers: ['Not in the Bible', 'In the Bible']
+    answers: ['Not in the Bible', 'In the Bible'],
+    // One line from the built pool, word for word, with no citation beside it.
+    line: (slsMeta as { cover?: string | null }).cover ?? null
   }
 };
 
@@ -45,12 +50,15 @@ const breadcrumbs = [{ name: 'Home', url: '/' }, { name: 'Games', url: '/games/'
   description="Games played against the clock that count what you know, never how devout you are. Every line and every answer is real and citable."
   breadcrumbs={breadcrumbs}
 >
+  {/*
+    No accent on the title. Blue means the left pole of an axis everywhere else on the
+    site, and a one-word page title painted entirely in it makes the accent mean nothing.
+  */}
   <Hero
     title="Games"
     ghost="play"
     eyebrow="Against the clock"
     icon="scroll"
-    blue="Games"
     tiles={[
       { n: slsMeta.items, label: 'Lines' },
       { n: slsMeta.sources, label: 'Editions' },
@@ -73,6 +81,7 @@ const breadcrumbs = [{ name: 'Home', url: '/' }, { name: 'Games', url: '/games/'
       ghost={FACTS[g.slug]!.ghost}
       kicker={FACTS[g.slug]!.kicker}
       answers={FACTS[g.slug]!.answers}
+      line={FACTS[g.slug]!.line}
     />
   ))}
 

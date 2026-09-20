@@ -59,8 +59,11 @@ const outcomeHeading =
     noindex={true}
     ogType="article"
   >
-    <div class="prose result-head">
-      <p class="eyebrow"><Icon name={quiz.icon} size={15} /> {quiz.title}</p>
+    <header class="band band--long result-band">
+      <div class="wash" aria-hidden="true"></div>
+      <div class="veil" aria-hidden="true"></div>
+      <div class="band-ghost" aria-hidden="true" style="--len:6">result</div>
+      <p class="band-chip"><Icon name={quiz.icon} size={13} />{quiz.title} · your result</p>
       {/* The first thing a reader sees, in the same two colours as the compass and rails. */}
       <h1 class="verdict">
         {view.headlineParts.map((part, i) => (
@@ -72,10 +75,10 @@ const outcomeHeading =
         ))}
       </h1>
       <p class="lede">{view.summary}</p>
-      {quiz.status === 'draft' && (
-        <div class="note draft"><p><strong>Unaudited draft.</strong>{" " + quiz.draftNote}</p></div>
-      )}
-    </div>
+    </header>
+    {quiz.status === 'draft' && (
+      <div class="note draft"><p><strong>Unaudited draft.</strong>{" " + quiz.draftNote}</p></div>
+    )}
 
     <div class="panel layered result-panel">
       <div class="wash" aria-hidden="true"></div>

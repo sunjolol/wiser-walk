@@ -5,7 +5,7 @@ import SectionHead from '../../components/SectionHead.astro';
 import Icon from '../../components/Icon.astro';
 import CompassWheel from '../../components/CompassWheel.astro';
 import RailStack from '../../components/RailStack.astro';
-import OutcomeCards from '../../components/OutcomeCards.astro';
+import TraditionNeighbours from '../../components/TraditionNeighbours.astro';
 import CorrectionNote from '../../components/CorrectionNote.astro';
 import { theologyCompass } from '../../lib/quizzes/theology-compass';
 import { groupHref, quizHref, resultFor } from '../../lib/engine/registry';
@@ -68,7 +68,7 @@ const breadcrumbs = [
     tiles={[
       { n: quiz.groups.length, label: 'Axes' },
       { n: named, label: 'Poles named' },
-      { n: quiz.outcomes.length - 1, label: 'Others compared' }
+      { n: quiz.outcomes.length - 1, label: 'Others' }
     ]}
   >
     A sketch of where typical adherents land on the six axes, and how near the other
@@ -116,7 +116,7 @@ const breadcrumbs = [
     </div>
 
     <SectionHead title="The six axes" kicker="Both poles named on every rail" />
-    <div class="panel layered ref-panel">
+    <div class="panel layered ref-panel ref-panel--quiet">
       <div class="wash" aria-hidden="true"></div>
       <div class="veil" aria-hidden="true"></div>
       <RailStack quiz={quiz} view={view} />
@@ -130,24 +130,32 @@ const breadcrumbs = [
           answers are measured on. Nearness is not agreement: two families can land in the
           same band for different reasons.
         </p>
-        <OutcomeCards quiz={quiz} ranked={neighbours} leading={1} limit={6} />
+        <TraditionNeighbours ranked={neighbours} limit={6} />
       </>
     )}
 
     <section class="dark pledge ref-cta">
       <div class="dark-ghost" aria-hidden="true">{ghost}</div>
-      <p class="feature-kicker">
-        <Icon name="compass" size={13} /> {quiz.items.length} statements · about {quiz.minutes} minutes
-      </p>
-      <h2>See how near you land.</h2>
-      <p>
-        Answer the statements and your own position is drawn on these same six rails, with
-        the distance to this tradition and to {quiz.outcomes.length - 1} others.
-      </p>
-      <div class="btn-row">
-        <a class="btn" href={quizHref(quiz)}>Take the {quiz.title}</a>
-        <a class="btn ghost" href="/method/">How it was made fair</a>
+      <div class="ref-cta-say">
+        <p class="feature-kicker">
+          <Icon name="compass" size={13} /> {quiz.title}
+        </p>
+        <h2>See how near you land.</h2>
+        <p>
+          Answer the statements and your own position is drawn on these same six rails, with
+          the distance to this tradition and to {quiz.outcomes.length - 1} others.
+        </p>
+        <div class="btn-row">
+          <a class="btn" href={quizHref(quiz)}>Take the {quiz.title}</a>
+          <a class="btn ghost" href="/method/">How it was made fair</a>
+        </div>
       </div>
+      <dl class="spec ref-cta-spec">
+        <div><dt>Statements</dt><dd>{quiz.items.length}</dd></div>
+        <div><dt>Takes</dt><dd>About {quiz.minutes} minutes</dd></div>
+        <div><dt>Axes</dt><dd>{quiz.groups.length}, both poles named</dd></div>
+        <div><dt>Scored</dt><dd>On your own device</dd></div>
+      </dl>
     </section>
 
     <CorrectionNote subject={tradition.name} />

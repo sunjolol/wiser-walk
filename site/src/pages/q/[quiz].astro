@@ -31,6 +31,17 @@ const painted = quiz.title
   .split(/\s+/)
   .find(w => w.toLowerCase().replace(/[^a-z]/g, '') === ghost);
 
+/**
+ * A draft says so in the hero chip, where the facts about the instrument are, rather than
+ * only two thousand pixels further down: the hub's card already marks it DRAFT on its face,
+ * and a reader who starts here should not learn it later than a reader who starts there.
+ */
+const eyebrow = [
+  isDraft ? 'Unaudited draft' : null,
+  `${quiz.items.length} statements`,
+  `about ${quiz.minutes} minutes`
+].filter(Boolean).join(' · ');
+
 const tiles = [
   { n: quiz.items.length, label: 'Statements' },
   { n: quiz.groups.length, label: bipolar ? 'Axes' : 'Categories' },
@@ -72,7 +83,7 @@ const breadcrumbs = isDraft
     title={quiz.title}
     blue={painted}
     ghost={ghost}
-    eyebrow={`${quiz.items.length} statements · about ${quiz.minutes} minutes`}
+    eyebrow={eyebrow}
     icon={quiz.icon}
     lede={quiz.description}
     tiles={tiles}
@@ -101,6 +112,14 @@ const breadcrumbs = isDraft
         </p>
       </div>
 
+      {/* Before anything else it is honest about what this is — not after the reader has
+          already read the instrument's description and decided to take it. */}
+      {isDraft && (
+        <div class="note draft">
+          <p><strong>Unaudited draft.</strong>{" " + quiz.draftNote}</p>
+        </div>
+      )}
+
       <SectionHead
         title="What you will see"
         kicker={bipolar
@@ -125,12 +144,6 @@ const breadcrumbs = isDraft
           <div><dt>Scored</dt><dd>On your device; nothing is sent</dd></div>
         </dl>
       </section>
-
-      {isDraft && (
-        <div class="note draft">
-          <p><strong>Unaudited draft.</strong>{" " + quiz.draftNote}</p>
-        </div>
-      )}
 
       <section class="dark startbox">
         <div class="dark-ghost" aria-hidden="true">begin</div>
@@ -161,6 +174,9 @@ const breadcrumbs = isDraft
       <div class="ask layered">
         <div class="wash" aria-hidden="true"></div>
         <div class="veil" aria-hidden="true"></div>
+        {/* A flourish, not a citation: the statement is ours, and it opens the way the
+            reference sheets open a line — in the warm ink, in the display face. */}
+        <span class="ask-quote" aria-hidden="true">“</span>
         <p class="statement" id="statement" tabindex="-1"></p>
       </div>
 

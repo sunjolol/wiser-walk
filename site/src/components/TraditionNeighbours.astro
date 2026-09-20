@@ -1,0 +1,46 @@
+---
+/**
+ * "Nearest neighbours" on a tradition page — one list, one visual language.
+ *
+ * The result page's OutcomeCards are a different instrument for a different job: they answer
+ * "which of these is YOU", and their leader is marked by treatment because a reader is being
+ * handed one name. This list answers "what sits near this sketch", where no row is the
+ * reader's and the interesting thing is the shape of the falling-off. Reusing the cards here
+ * put two visual languages in one list — a saturated, textured, pole-coloured leader above
+ * five pastel bars — which read as a rendering fault.
+ *
+ * So: six identical rows, one neutral ink for every bar, and "closest" said in words on a
+ * chip rather than by painting one row differently. The two pole colours are not used at
+ * all, because a match percentage is not an axis and colouring it blue-to-orange would claim
+ * a direction the number does not have.
+ *
+ * The bar length is the true percentage, never rescaled: 87, 74, 72, 64 is a real spread and
+ * stretching it to fill the row would manufacture a gap the arithmetic does not have.
+ */
+import type { Ranked } from '../lib/engine/types';
+import { outcomeHref } from '../lib/engine/registry';
+
+interface Props {
+  ranked: Ranked[];
+  limit?: number;
+}
+
+const { ranked, limit = 6 } = Astro.props;
+const shown = ranked.slice(0, limit);
+const top = shown.length ? shown[0]!.score : 0;
+---
+<ol class="nbrs">
+  {shown.map((r, i) => (
+    <li class:list={['nbr', { 'is-closest': i === 0 && r.score === top }]}>
+      <a class="nbr-link" href={outcomeHref({ name: r.name, slug: r.slug })}>
+        <span class="nbr-rank" aria-hidden="true">{i + 1}</span>
+        <span class="nbr-name">{r.name}</span>
+        {i === 0 && r.score === top && <span class="nbr-chip">Closest</span>}
+        <span class="nbr-score">{r.score}%<i>match</i></span>
+        <span class="nbr-track" aria-hidden="true">
+          <span class="nbr-fill" style={`--v:${r.score}`}></span>
+        </span>
+      </a>
+    </li>
+  ))}
+</ol>

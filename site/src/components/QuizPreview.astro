@@ -16,6 +16,14 @@ import { groupHref } from '../lib/engine/registry';
 export interface Props { quiz: Quiz }
 const { quiz } = Astro.props;
 const bipolar = quiz.strategy.shape === 'bipolar';
+
+/**
+ * How many scores a single category can actually reach — the instrument's own granularity,
+ * read from the quiz's config rather than drawn as a smooth bar it cannot deliver. The
+ * ruler under each category is cut into exactly that many notches and left empty, because
+ * nothing has been answered yet and a filled one would be a number we do not have.
+ */
+const slots = Math.max(2, quiz.config.radix);
 ---
 <div class="axpv-panel dark">
   <div class="dark-ghost" aria-hidden="true">{bipolar ? 'axes' : 'each one'}</div>
@@ -35,16 +43,25 @@ const bipolar = quiz.strategy.shape === 'bipolar';
       ))}
     </div>
   ) : (
-    <ul class="chips catpv">
+    <div class="rankpv">
       {quiz.groups.map(g => (
-        <li><a class="chip-link" href={groupHref(quiz, g)}>{g.name}</a></li>
+        <a class="rankpv-row" href={groupHref(quiz, g)}>
+          <span class="rankpv-name">{g.name}</span>
+          <span class="rankpv-go" aria-hidden="true"><Icon name="arrow" size={14} /></span>
+          {g.summary && <span class="rankpv-note">{g.summary}</span>}
+          <span class="rankpv-scale" style={`--slots:${slots}`} aria-hidden="true">
+            <span class="rankpv-end">None</span>
+            <span class="rankpv-tick"></span>
+            <span class="rankpv-end">Strongest</span>
+          </span>
+        </a>
       ))}
-    </ul>
+    </div>
   )}
 
   <p class="axpv-note">
     {bipolar
       ? 'Neither end of an axis is the better one. Blue and orange only mark which end is which; read either name for what it says.'
-      : 'A ranking has no opposite end and no middle: each one is measured on its own, and the strongest is simply the strongest.'}
+      : 'A ranking has no opposite end and no middle: each one is measured on its own, on the ruler drawn under it. The strongest is the one you are told; if two come out level both are named, and if nothing rises far enough above the rest, none is.'}
   </p>
 </div>

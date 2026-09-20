@@ -8,6 +8,7 @@ import audit from '../data/compass-audit.json';
 import { theologyCompass } from '../lib/quizzes/theology-compass';
 
 import CorrectionNote from '../components/CorrectionNote.astro';
+import ChangeEntry from '../components/ChangeEntry.astro';
 
 const sheets = (audit.simulations ?? []) as Array<Record<string, any>>;
 const landed = sheets.filter(s => Array.isArray(s.answers) && s.answers.length);
@@ -45,14 +46,100 @@ sections.push({
 });
 const groups = sections.filter(s => s.entries.length);
 
-/** The opening clause of a reason, for a summary line that is readable while collapsed. */
+/**
+ * The opening clause of a reason, for a summary line that is readable while collapsed.
+ * It never ends inside a bracket or on an opened quotation mark: a line that stops at
+ * "('Effectual grace' excludes Lutheran…" reads as a truncation fault rather than a
+ * summary, so the cut moves back to the last clean boundary instead.
+ */
 const clause = (text: unknown) => {
   const s = String(text ?? '').trim().replace(/\s+/g, ' ');
   const cut = s.search(/[,;:]\s|\.\s/);
   let out = cut > 0 ? s.slice(0, cut) : s;
-  if (out.length > 104) out = out.slice(0, 100).replace(/\s+\S*$/, '') + '…';
-  return out;
+  let short = out.length < s.length;
+  if (out.length > 104) { out = out.slice(0, 100).replace(/\s+\S*$/, ''); short = true; }
+  for (const [open, close] of [['(', ')'], ['[', ']'], ['{', '}']] as const) {
+    const opens = out.split(open).length - 1;
+    const closes = out.split(close).length - 1;
+    if (opens > closes) { out = out.slice(0, out.lastIndexOf(open)); short = true; }
+  }
+  /* an apostrophe never follows a space, so only an opening quote can be left dangling */
+  const q = out.lastIndexOf("'");
+  if (q > 0 && /\s/.test(out[q - 1]!) && !out.slice(q + 1).includes("'")) { out = out.slice(0, q); short = true; }
+  out = out.replace(/[\s,;:.—-]+$/, '');
+  return short ? out + '…' : out;
 };
+
+/*
+ * A changelog target is an internal key: `axis:spirit:bands`, `tradition (added): Calvary
+ * Chapel`, `page copy / code: share text`. A reader should not have to decode one, and the
+ * site publishes that axis as "Gifts" rather than "spirit", so each key is translated to a
+ * plain label — mechanically, by the same rules for every entry, with nothing invented and
+ * nothing dropped. The raw key still prints beside it, small, for anyone citing an entry.
+ */
+const AXIS_NAME = new Map(theologyCompass.groups.map(g => [g.key, g.name]));
+const FIELD: Record<string, string> = {
+  name: 'axis name',
+  poles: 'pole names',
+  bands: 'band wording',
+  summary: 'summary',
+  history: 'history',
+  passages: 'passages',
+  readmore: 'further reading'
+};
+const sentence = (s: string) => s.replace(/_/g, ' ').replace(/^./, c => c.toUpperCase());
+
+/*
+ * Only these two parentheticals are pass markers. Everything else inside brackets is part
+ * of the name — "Anglican (broad)" and "Southern Baptist (typical)" are how those families
+ * are published — so the rule is a closed list rather than "strip any bracket".
+ */
+const MARKER: Record<string, string> = { repair: 'repair pass', added: 'added' };
+
+const plainLabel = (target: unknown) => {
+  const raw = String(target ?? '').trim();
+  const parts = raw.split(':').map(p => p.trim());
+  const note = (p: string) => {
+    const m = p.match(/^(.*?)\s*\(([^)]+)\)$/);
+    const mark = m && MARKER[m[2]!.trim().toLowerCase()];
+    return mark ? { text: m![1]!.trim(), note: mark } : { text: p, note: '' };
+  };
+  const first = note(parts[0] ?? '');
+  const last = note(parts[parts.length - 1] ?? '');
+  const tail = parts.length > 1 ? last.text : '';
+  const mark = [first.note, parts.length > 1 ? last.note : ''].filter(Boolean).join(' · ');
+
+  let label: string;
+  if (first.text === 'axis' && parts.length >= 3) {
+    const axis = AXIS_NAME.get(parts[1]!) ?? sentence(parts[1]!);
+    label = `${axis} axis · ${FIELD[last.text.toLowerCase()] ?? last.text}`;
+  } else if (first.text === 'statement' && tail) {
+    label = `Statement ${tail}`;
+  } else if (first.text === 'tradition' && tail) {
+    label = tail;
+  } else if (tail) {
+    label = `${sentence(first.text)} · ${tail.replace(/_/g, ' ')}`;
+  } else {
+    label = sentence(first.text);
+  }
+  return mark ? `${label} · ${mark}` : label;
+};
+
+/** How many entries of a group print before the rest are folded away. */
+const OPEN = 6;
+const pad = (n: number) => String(n).padStart(2, '0');
+
+/** One changelog entry, as the row component takes it. */
+const change = (c: Record<string, any>) => ({
+  target: String(c.target),
+  label: plainLabel(c.target),
+  clause: clause(c.why),
+  why: c.why,
+  before: c.before,
+  after: c.after,
+  status: c.status,
+  findings: Array.isArray(c.finding_ids) ? c.finding_ids.length : 0
+});
 
 /*
  * Every sheet's nearest tradition is its own — the check beside each name below is read
@@ -164,79 +251,68 @@ const breadcrumbs = [
 
     <SectionHead id="changelog" title="What the audit changed" kicker="Corrections happen in the open" />
 
-    <section class="pnl pnl--split">
-      <div>
-        <div class="doc">
-          <p>
-            Every change the fairness audit made is listed here, with the reason, so corrections
-            happen in the open.
-          </p>
-          <p class="tags">
-            {changelog.length} changes, grouped by what each one touched. Open one to read the
-            reason and see the wording before and after.
-          </p>
-        </div>
-        <ul class="chips">
-          {groups.map(g => (
-            <li>
-              <a class="chip-link" href={`#changed-${g.id}`}>{g.label} <small>{g.entries.length}</small></a>
-            </li>
-          ))}
-        </ul>
+    <section class="pnl">
+      <div class="doc">
+        <p>
+          Every change the fairness audit made is listed here, with the reason, so corrections
+          happen in the open. The {changelog.length} entries are grouped by what each one
+          touched, named in plain words, and keyed to the audit's own record — open one to read
+          the reason and see the wording before and after.
+        </p>
       </div>
-      <aside class="pnl-aside">
-        <ul class="tiles">
-          <li class="tile"><b>{changelog.length}</b><span>Changes</span></li>
-          <li class="tile"><b>{groups.length}</b><span>Groups</span></li>
-        </ul>
-      </aside>
+      <ul class="tiles">
+        <li class="tile"><b>{changelog.length}</b><span>Changes</span></li>
+        <li class="tile"><b>{groups.length}</b><span>Groups</span></li>
+        <li class="tile"><b>{disputed.length}</b><span>Not applied</span></li>
+      </ul>
+      <p class="jump-label cl-filter-label">Jump to a group</p>
+      <ul class="chips cl-filter">
+        {groups.map(g => (
+          <li>
+            <a class="chip-link" href={`#changed-${g.id}`}>{g.label} <small>{g.entries.length}</small></a>
+          </li>
+        ))}
+      </ul>
     </section>
 
     <div class="changelog">
-      {groups.map(g => (
-        <div class="cl-group">
-          <h3 id={`changed-${g.id}`}>{g.label} <span class="cl-count">{g.entries.length}</span></h3>
+      {groups.map((g, gi) => (
+        <section class="clg" id={`changed-${g.id}`}>
+          <div class="clg-head">
+            <div class="clg-text">
+              <p class="clg-kicker">Group {pad(gi + 1)} of {groups.length}</p>
+              <h3 class="clg-title">{g.label.toLowerCase()}</h3>
+            </div>
+            <span class="tile clg-tile"><b>{g.entries.length}</b><span>{g.entries.length === 1 ? 'Change' : 'Changes'}</span></span>
+          </div>
+
           <ul class="cl-list">
-            {g.entries.map(c => (
-              <li>
-                <details class="cl">
-                  <summary>
-                    <span class="cl-target">{c.target}</span>
-                    <span class="cl-clause">{clause(c.why)}</span>
-                    <span class="chev" aria-hidden="true"></span>
-                  </summary>
-                  <div class="cl-body">
-                    <p>{c.why}</p>
-                    {c.before && (
-                      <>
-                        <h4>Before</h4>
-                        <pre>{c.before}</pre>
-                      </>
-                    )}
-                    {c.after && (
-                      <>
-                        <h4>After</h4>
-                        <pre>{c.after}</pre>
-                      </>
-                    )}
-                    <p class="cl-meta">
-                      {c.status}
-                      {Array.isArray(c.finding_ids) && c.finding_ids.length > 0 && (
-                        <span> · raised by {c.finding_ids.length} {c.finding_ids.length === 1 ? 'finding' : 'findings'}</span>
-                      )}
-                    </p>
-                  </div>
-                </details>
-              </li>
-            ))}
+            {g.entries.slice(0, OPEN).map(c => <ChangeEntry {...change(c)} />)}
           </ul>
-        </div>
+
+          {g.entries.length > OPEN && (
+            <details class="clg-more">
+              <summary>
+                <span>The other {g.entries.length - OPEN} in {g.label.toLowerCase()}</span>
+                <span class="chev" aria-hidden="true"></span>
+              </summary>
+              <ul class="cl-list">
+                {g.entries.slice(OPEN).map(c => <ChangeEntry {...change(c)} />)}
+              </ul>
+            </details>
+          )}
+        </section>
       ))}
     </div>
 
     <SectionHead id="disputed" title="Kept but not applied" kicker="A record that only shows the agreements is not a record" />
 
-    <section class="pnl pnl--split">
+    <section class="pnl dark disputes">
+      <div class="dark-ghost" aria-hidden="true">kept</div>
+      <div class="pnl-head">
+        <p class="pnl-kicker"><Icon name="compass" size={13} /> Argued and refused</p>
+        <h2 class="pnl-title">The {disputed.length} that were not applied.</h2>
+      </div>
       <div class="doc">
         <p>
           These {disputed.length} findings were raised and argued through, and the audit
@@ -244,37 +320,19 @@ const breadcrumbs = [
           record that only shows the changes everyone agreed with is not a record.
         </p>
       </div>
-      <aside class="pnl-aside">
-        <ul class="tiles">
-          <li class="tile"><b>{disputed.length}</b><span>Disputes shown</span></li>
-        </ul>
-      </aside>
+      <ul class="cl-list">
+        {disputed.map(d => (
+          <ChangeEntry
+            target={String(d.target)}
+            label={plainLabel(d.target)}
+            clause={clause(d.proposed)}
+            proposed={d.proposed}
+            reason={d.reason}
+            findings={Array.isArray(d.finding_ids) ? d.finding_ids.length : 0}
+          />
+        ))}
+      </ul>
     </section>
-
-    <ul class="cl-list">
-      {disputed.map(d => (
-        <li>
-          <details class="cl">
-            <summary>
-              <span class="cl-target">{d.target}</span>
-              <span class="cl-clause">{clause(d.proposed)}</span>
-              <span class="chev" aria-hidden="true"></span>
-            </summary>
-            <div class="cl-body">
-              <h4>What was proposed</h4>
-              <p>{d.proposed}</p>
-              <h4>Why it was not applied</h4>
-              <p>{d.reason}</p>
-              {Array.isArray(d.finding_ids) && d.finding_ids.length > 0 && (
-                <p class="cl-meta">
-                  Raised by {d.finding_ids.length} {d.finding_ids.length === 1 ? 'finding' : 'findings'}
-                </p>
-              )}
-            </div>
-          </details>
-        </li>
-      ))}
-    </ul>
 
     <SectionHead id="the-test" title="The test that has to pass" kicker={`${landed.length} answer sheets, re-scored before anything ships`} />
 

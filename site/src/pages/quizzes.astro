@@ -13,7 +13,7 @@ import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
 import Card from '../components/Card.astro';
 import SectionHead from '../components/SectionHead.astro';
-import CompassFeature from '../components/CompassFeature.astro';
+import QuizPreview from '../components/QuizPreview.astro';
 import Icon from '../components/Icon.astro';
 import { QUIZZES, getQuiz, quizHref } from '../lib/engine/registry';
 
@@ -22,7 +22,10 @@ const drafts = QUIZZES.filter(q => q.status === 'draft');
 const compass = getQuiz('theology-compass')!;
 /** The flagship gets the feature card; anything else live falls to a stripe card. */
 const otherLive = live.filter(q => q.slug !== compass.slug);
-const statements = QUIZZES.reduce((n, q) => n + q.items.length, 0);
+/* Counted per shelf, not in one lump: a tile reading "32 statements" beside "1 published"
+   counts a draft's statements into the published quiz. */
+const liveStatements = live.reduce((n, q) => n + q.items.length, 0);
+const draftStatements = drafts.reduce((n, q) => n + q.items.length, 0);
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -54,8 +57,11 @@ const breadcrumbs = [
     eyebrow="Self-assessments"
     icon="compass"
     tiles={[
-      { n: QUIZZES.length, label: QUIZZES.length === 1 ? 'Quiz' : 'Quizzes' },
-      { n: statements, label: 'Statements' },
+      /* "Published" and "in draft", never a bare count of both: /about/ counts the audited
+         quiz alone, and two pages that disagree about how many quizzes exist is the kind of
+         thing a reader screenshots. */
+      { n: live.length, label: 'Published' },
+      { n: liveStatements, label: 'Statements' },
       { n: compass.outcomes.length, label: 'Traditions' },
       { n: drafts.length, label: 'In draft' }
     ]}
@@ -71,7 +77,29 @@ const breadcrumbs = [
     more="The method"
   />
 
-  <CompassFeature />
+  {/*
+    Not the home page's card again. The home page leads with the compass wheel drawn from a
+    real answer sheet; here the same quiz is shown by what it actually asks — six axes, both
+    pole names on every one — beside the facts and the way in.
+  */}
+  <section class="qz-flag">
+    <div class="qz-flag-body">
+      <p class="feature-kicker"><Icon name="compass" size={13} /> Six axes · both ends named</p>
+      <h3>{compass.title}</h3>
+      <p>{compass.description}</p>
+      <dl class="spec">
+        <div><dt>Takes</dt><dd>about {compass.minutes} minutes</dd></div>
+        <div><dt>Statements</dt><dd>{compass.items.length}, across {compass.groups.length} axes</dd></div>
+        <div><dt>Compares you with</dt><dd>{compass.outcomes.length} traditions</dd></div>
+        <div><dt>Reviewed by</dt><dd>20 adversarial reviewers</dd></div>
+      </dl>
+      <div class="btn-row">
+        <a class="btn" href={quizHref(compass)}>Start the quiz</a>
+        <a class="btn ghost" href="/method/">How it was made fair</a>
+      </div>
+    </div>
+    <QuizPreview quiz={compass} />
+  </section>
 
   {otherLive.length > 0 && (
     <div class="scards qz-more">
@@ -85,16 +113,27 @@ const breadcrumbs = [
   {drafts.length > 0 && (
     <>
       <SectionHead title="In draft" kicker="Written, not yet audited" />
-      <p class="qz-draftnote">
-        <span class="qz-draftflag"><Icon name="flame" size={13} /> Draft</span>
-        Written but not yet through the fairness audit. You can take them; treat the
-        results as a conversation starter rather than a verdict.
-      </p>
-      <div class="scards qz-drafts">
-        {drafts.map(q => (
-          <Card href={quizHref(q)} icon={q.icon} title={q.title} text={q.tagline}
-                meta={`${q.items.length} statements`} tab="Draft" go="Take it anyway" />
-        ))}
+      <div class="qz-draftrow">
+        <div class="scards qz-drafts">
+          {drafts.map(q => (
+            <Card href={quizHref(q)} icon={q.icon} title={q.title} text={q.tagline}
+                  meta={`${q.items.length} statements`} tab="Draft" go="Take it anyway" />
+          ))}
+        </div>
+        {/* The warning kept word for word, no longer a loose line above a half-empty row. */}
+        <aside class="qz-draftbox">
+          <p class="feature-kicker"><Icon name="flame" size={13} /> What draft means here</p>
+          <p>
+            Written but not yet through the fairness audit. You can take them; treat the
+            results as a conversation starter rather than a verdict.
+          </p>
+          <dl class="spec">
+            <div><dt>Audited</dt><dd>Not yet</dd></div>
+            <div><dt>Statements</dt><dd>{draftStatements}, written and unreviewed</dd></div>
+            <div><dt>In search</dt><dd>Not listed</dd></div>
+            <div><dt>Your result</dt><dd>Scored and shareable as usual</dd></div>
+          </dl>
+        </aside>
       </div>
     </>
   )}

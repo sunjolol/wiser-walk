@@ -5,20 +5,37 @@ import Card from '../components/Card.astro';
 import SectionHead from '../components/SectionHead.astro';
 import Icon from '../components/Icon.astro';
 import { getCollection } from 'astro:content';
-import { liveQuizzes, getQuiz } from '../lib/engine/registry';
+import { QUIZZES, liveQuizzes, getQuiz } from '../lib/engine/registry';
 import { liveGames } from '../lib/games';
+import audit from '../data/compass-audit.json';
 
 /*
  * The three counts below are read off the registry and the content collection, so the
  * page cannot drift out of date the way a typed number would.
  */
 const quizzes = liveQuizzes();
+/*
+ * A quiz that has not been through the audit is real, listed and countable — the quizzes
+ * index prints it — so this page counts it too rather than quietly reporting a smaller
+ * site. The two pages cannot disagree about how many quizzes exist.
+ */
+const drafts = QUIZZES.filter(q => q.status !== 'live');
 const games = liveGames();
 const articles = (await getCollection('articles')).filter(a => !a.data.draft);
 const compass = getQuiz('theology-compass')!;
 const game = games[0];
 
 const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
+
+/*
+ * The fairness figures are counted off the audit file the method page publishes, so this
+ * page cannot claim a number that page does not show.
+ */
+const changes = (audit.changelog ?? []).length;
+const refused = (audit.disputed ?? []).length;
+const sheets = (audit.simulations ?? []).filter(
+  (s: Record<string, any>) => Array.isArray(s.answers) && s.answers.length
+).length;
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -44,10 +61,10 @@ const breadcrumbs = [
     icon="compass"
     ghost="about"
     tiles={[
-      { n: quizzes.length, label: quizzes.length === 1 ? 'Quiz' : 'Quizzes' },
+      { n: quizzes.length + drafts.length, label: quizzes.length + drafts.length === 1 ? 'Quiz' : 'Quizzes' },
+      { n: drafts.length, label: 'In draft' },
       { n: games.length, label: games.length === 1 ? 'Game' : 'Games' },
-      { n: articles.length, label: articles.length === 1 ? 'Article' : 'Articles' },
-      { n: compass.outcomes.length, label: 'Traditions' }
+      { n: articles.length, label: articles.length === 1 ? 'Article' : 'Articles' }
     ]}
   >
       Wiser Walk is a place to understand yourself a little better — through quizzes worth
@@ -56,7 +73,7 @@ const breadcrumbs = [
 
   <SectionHead title="What this is" kicker="Three kinds of thing, one idea" />
 
-  <div class="pnl pnl--cols">
+  <section class="pnl pnl--split">
     <div class="doc doc--lead">
       <p>
         Self-assessments and short essays for Christians who would rather see themselves
@@ -68,7 +85,18 @@ const breadcrumbs = [
         The quizzes are the door. The articles are what is on the other side of it.
       </p>
     </div>
-  </div>
+    <aside class="pnl-aside">
+      <p class="pnl-kicker">The site, in facts</p>
+      <dl class="spec">
+        <div><dt>Quizzes</dt><dd>{quizzes.length} live, {drafts.length} in draft</dd></div>
+        <div><dt>Games</dt><dd>{plural(games.length, 'game', 'games')}</dd></div>
+        <div><dt>Articles</dt><dd>{plural(articles.length, 'piece', 'pieces')}</dd></div>
+        <div><dt>Scored</dt><dd>On your device</dd></div>
+        <div><dt>Accounts</dt><dd>None</dd></div>
+        <div><dt>Costs</dt><dd>Nothing</dd></div>
+      </dl>
+    </aside>
+  </section>
 
   <div class="scards" style="margin-top:.9rem">
     <Card
@@ -104,7 +132,7 @@ const breadcrumbs = [
 
   <SectionHead title="What this is not" kicker="Five things worth saying plainly" />
 
-  <ul class="facts">
+  <ul class="facts facts--pair">
     <li><strong>Not a verdict on your faith.</strong> No quiz here scores anyone as a better or worse Christian.</li>
     <li><strong>Not a recruiting tool.</strong> The Compass tells you where you already stand; it does not argue you toward a position.</li>
     <li><strong>Not a church.</strong> Nothing here substitutes for one.</li>
@@ -114,27 +142,38 @@ const breadcrumbs = [
 
   <SectionHead title="On fairness" kicker="The one failure this site cannot afford" />
 
-  <section class="pnl pnl--cols dark">
+  <section class="pnl pnl--split dark">
     <div class="dark-ghost" aria-hidden="true">fairness</div>
     <div class="pnl-head">
       <p class="pnl-kicker"><Icon name="compass" size={13} /> The standard</p>
       <h2 class="pnl-title">Described in terms its holders would recognise.</h2>
     </div>
-    <div class="doc">
-      <p>
-        The hardest part of a quiz like this is describing a position you disagree with in
-        terms its holders would recognise. That is the standard everything here is held to,
-        and the <a href="/method/">method page</a> shows the working — including the findings
-        that were raised and deliberately not applied.
-      </p>
-      <p>
-        If you hold a position and think it is described unfairly, that is worth hearing.
-        Being wrong about someone else's belief is the one failure this site cannot afford.
-      </p>
+    <div>
+      <div class="doc">
+        <p>
+          The hardest part of a quiz like this is describing a position you disagree with in
+          terms its holders would recognise. That is the standard everything here is held to,
+          and the <a href="/method/">method page</a> shows the working — including the findings
+          that were raised and deliberately not applied.
+        </p>
+        <p>
+          If you hold a position and think it is described unfairly, that is worth hearing.
+          Being wrong about someone else's belief is the one failure this site cannot afford.
+        </p>
+      </div>
+      <div class="btn-row">
+        <a class="btn" href="/method/">Read the method</a>
+        <a class="btn ghost" href="/method/#changelog">See what changed</a>
+      </div>
     </div>
-    <div class="btn-row">
-      <a class="btn" href="/method/">Read the method</a>
-      <a class="btn ghost" href="/method/#changelog">See what changed</a>
-    </div>
+    <aside class="pnl-aside">
+      <p class="pnl-kicker">The audit, in figures</p>
+      <dl class="spec">
+        <div><dt>Traditions on the map</dt><dd>{compass.outcomes.length}</dd></div>
+        <div><dt>Changes published</dt><dd>{changes}</dd></div>
+        <div><dt>Argued and refused</dt><dd>{refused}</dd></div>
+        <div><dt>Answer sheets re-tested</dt><dd>{sheets}</dd></div>
+      </dl>
+    </aside>
   </section>
 </Base>

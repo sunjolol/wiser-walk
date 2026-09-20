@@ -1,0 +1,75 @@
+---
+/**
+ * One row of the audit record: a change the audit made, or a finding it argued through and
+ * refused. Both shapes are the same object in the audit file, so they are one component.
+ *
+ * The row leads with a plain label and keeps the audit's own key beside it in small type,
+ * because a reader should not have to decode `axis:spirit:bands` and someone citing an
+ * entry should still be able to name it exactly. Nothing here is summarised away: the
+ * reason, the wording before and after, and the number of findings behind it are all in
+ * the body, which is collapsed until asked for.
+ */
+export interface Props {
+  /** The audit's own key for the thing that changed. */
+  target: string;
+  /** The plain-words label derived from that key by the page. */
+  label: string;
+  /** The opening clause of the reason, for reading while collapsed. */
+  clause: string;
+  /** A change: the reason, and the wording before and after. */
+  why?: string;
+  before?: string;
+  after?: string;
+  status?: string;
+  /** A dispute: what was proposed, and why it was refused. */
+  proposed?: string;
+  reason?: string;
+  findings?: number;
+}
+const { target, label, clause, why, before, after, status, proposed, reason, findings = 0 } =
+  Astro.props;
+---
+<li>
+  <details class="cl">
+    <summary>
+      <span class="cl-name">{label}</span>
+      <code class="cl-key">{target}</code>
+      <span class="cl-clause">{clause}</span>
+      <span class="chev" aria-hidden="true"></span>
+    </summary>
+    <div class="cl-body">
+      {why && <p>{why}</p>}
+      {before && (
+        <>
+          <h4>Before</h4>
+          <pre>{before}</pre>
+        </>
+      )}
+      {after && (
+        <>
+          <h4>After</h4>
+          <pre>{after}</pre>
+        </>
+      )}
+      {proposed && (
+        <>
+          <h4>What was proposed</h4>
+          <p>{proposed}</p>
+        </>
+      )}
+      {reason && (
+        <>
+          <h4>Why it was not applied</h4>
+          <p>{reason}</p>
+        </>
+      )}
+      {(status || findings > 0) && (
+        <p class="cl-meta">
+          {status}
+          {status && findings > 0 && <span> · </span>}
+          {findings > 0 && <span>raised by {findings} {findings === 1 ? 'finding' : 'findings'}</span>}
+        </p>
+      )}
+    </div>
+  </details>
+</li>

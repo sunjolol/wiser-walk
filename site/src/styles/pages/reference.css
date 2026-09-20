@@ -24,6 +24,15 @@
 @media (min-width: 40rem) { .ref-panel { padding: 1.6rem 1.6rem 1.8rem; } }
 .ref-panel .tl, .ref-panel .pg, .ref-panel .rails-block { margin-top: 0; }
 
+/* A rail is a hairline track with a small knob, and the wash at full strength put a
+   photographic silhouette behind six of them — the blue head was legible THROUGH the rails.
+   Data panels get a third of the wash a prose panel gets. */
+.ref-panel--quiet .wash { opacity: calc(var(--wash-op) / 3); }
+.ref-panel--quiet .veil { opacity: calc(var(--veil-op) / 2); }
+
+/* eight disclosure pills at 34px on the phone-first page */
+.ref-panel .pg .pill { min-height: 44px; padding-inline: .95rem; }
+
 .ref-note {
   margin: .35rem 0 0; max-width: 44rem; font-size: .88rem; color: var(--ink-mute);
 }
@@ -38,6 +47,7 @@
 
 /* the pole names as the band's lede: both printed, each in its own ink */
 .poleline { display: flex; flex-wrap: wrap; align-items: baseline; gap: .1rem .6rem; }
+.poleline-to { display: inline-flex; align-items: baseline; gap: .5rem; }
 .poleline b {
   font-family: var(--display); font-style: italic; font-weight: 400;
   font-size: clamp(1.45rem, 7.4vw, 2.2rem); line-height: 1.05; letter-spacing: -.015em;
@@ -66,7 +76,9 @@
 }
 .amap-ends .pole-r { text-align: right; }
 
-.amap-plot { --dot: 22px; --lane-h: 26px; --run: calc(100% - var(--dot)); }
+/* --dot and --lane-h are written on the element by AxisMap, which derives the lane
+   assignment from that same dot size; these are only a fallback if it ever stops. */
+.amap-plot { --dot: 22px; --lane-h: 29px; --run: calc(100% - var(--dot)); }
 .amap-rail {
   position: relative; height: 12px; border-radius: 6px; background: var(--shell);
   box-shadow: inset 0 1px 2px rgba(68, 68, 68, .08);
@@ -92,33 +104,49 @@
   left: calc(var(--run) * var(--pos) / 100);
   width: var(--dot); height: var(--dot); border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-family: var(--ui); font-weight: 700; font-size: .58rem; line-height: 1;
+  font-family: var(--ui); font-weight: 700; font-size: .62rem; line-height: 1;
   color: var(--on-grad); font-variant-numeric: tabular-nums;
 }
-/* the leader back to the rail, so a dot four lanes down still reads as a position */
-.amap-dot::before {
-  content: ""; position: absolute; left: 50%; bottom: 100%; width: 1px;
-  height: calc(var(--lane) * var(--lane-h) + 10px); background: var(--zone-edge);
+/* the leader back to the rail, so a dot four lanes down still reads as a position. Its own
+   layer, under the dots: see the note in AxisMap. */
+.amap-stems { position: absolute; inset: 0; }
+.amap-stem {
+  position: absolute; top: -10px; left: calc(var(--run) * var(--pos) / 100 + var(--dot) / 2);
+  width: 1px; height: calc(var(--lane) * var(--lane-h) + 10px); background: var(--zone-edge);
 }
 .amap-dot--left { background: var(--blue); }
 .amap-dot--right { background: var(--orange); }
-.amap-dot--centre { background: var(--ink-mute); color: var(--panel); }
+/* the neutral dot carried the panel's weakest text: dark grey numerals on mid grey. The
+   fill goes up to the soft ink and the numeral down to the panel's own charcoal. */
+.amap-dot--centre { background: var(--ink-soft); color: var(--dark-fill); }
 
 .amap-groups { display: grid; gap: 1.4rem; margin-top: 1.9rem; }
-@media (min-width: 62rem) { .amap-groups { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.6rem; } }
+/*
+ * Three columns, but not three EQUAL columns: an axis where eleven families sit toward one
+ * pole and two sit in the middle drew a column of eleven chips beside 450px of void. Each
+ * group is therefore as wide as its own count (floored so a group of two is still legible),
+ * and its chips flow into as many sub-columns as that width allows, so the three groups come
+ * out close to the same height whatever the split.
+ */
+@media (min-width: 62rem) {
+  .amap-groups { display: flex; align-items: flex-start; gap: 1.7rem; }
+  .amap-group { flex: var(--weight, 1) 1 10.5rem; min-width: 0; }
+  .amap-chips li { flex: 1 1 10.5rem; display: flex; }
+  .amap-chips .amap-chip { flex: 1; }
+}
 
 .amap-group-head {
   display: flex; align-items: center; gap: .3rem .55rem; margin: 0 0 .7rem;
   padding-bottom: .55rem; border-bottom: 2px dotted var(--rule-strong);
-  font-family: var(--ui); font-size: .62rem; font-weight: 700; letter-spacing: .13em;
+  font-family: var(--ui); font-size: .7rem; font-weight: 700; letter-spacing: .11em;
   text-transform: uppercase; line-height: 1.3;
 }
 .amap-group-name { color: var(--ink-soft); }
 .amap-group--left .amap-group-name { color: var(--accent); }
 .amap-group--right .amap-group-name { color: var(--warn-ink); }
 .amap-group-note {
-  font-weight: 600; font-size: .64rem; letter-spacing: .04em; text-transform: none;
-  color: var(--ink-mute);
+  font-weight: 600; font-size: .7rem; letter-spacing: .04em; text-transform: none;
+  color: var(--ink-mute); font-variant-numeric: tabular-nums;
 }
 .amap-group-count {
   margin-left: auto; min-width: 1.7rem; padding: .12rem .45rem; border-radius: var(--r-pill);
@@ -126,15 +154,16 @@
   font-variant-numeric: tabular-nums;
 }
 .amap-chips { margin-top: 0; gap: .4rem; }
-.amap-chip { padding: .5rem .72rem; gap: .5rem; font-size: .58rem; letter-spacing: .07em; }
+/* 9.3px was below any readable floor, and this list is the key to the whole plot */
+.amap-chip { padding: .5rem .72rem; gap: .55rem; font-size: .7rem; letter-spacing: .05em; }
 .amap-n {
-  flex: none; width: 19px; height: 19px; border-radius: 50%;
+  flex: none; width: 21px; height: 21px; border-radius: 50%;
   display: inline-flex; align-items: center; justify-content: center;
-  font-size: .56rem; font-weight: 700; color: var(--on-grad); font-variant-numeric: tabular-nums;
+  font-size: .64rem; font-weight: 700; color: var(--on-grad); font-variant-numeric: tabular-nums;
 }
 .amap-n--left { background: var(--blue); }
 .amap-n--right { background: var(--orange); }
-.amap-n--centre { background: var(--ink-mute); color: var(--panel); }
+.amap-n--centre { background: var(--ink-soft); color: var(--dark-fill); }
 .amap-empty { margin: 0; font-size: .86rem; font-style: italic; color: var(--ink-mute); }
 
 /* -------------------------------------------------------- the two cases ---- */
@@ -218,8 +247,13 @@
  * From 54rem there is room for the reference sheet's vertical strip: the spectrum poured
  * down the side of the panel with its label reading up it. The label is the instrument's
  * OWN heading, unhidden and rotated rather than a second copy in CSS content, so what the
- * strip says is what the document says. The min-height keeps a short panel taller than
- * its own label, because a clipped word is worse than no strip at all.
+ * strip says is what the document says.
+ *
+ * The label WRAPS, which is what fixed the passages panel. Set on one nowrap line at 8px it
+ * was 200px long, so the panel had to be held at 16rem to contain it and the ten passage
+ * chips were followed by 120px of empty panel with the strip running past its own content.
+ * Over two vertical lines the same words need half the run, so the panel can hug what is in
+ * it and the type can come up to a size a person can read.
  *
  * The strip is positioned against .tl / .pg, not the panel: .layered gives every direct
  * child position:relative so the texture layers can sit beneath them, which makes the
@@ -227,18 +261,19 @@
  * through the padding this rule adds.
  */
 @media (min-width: 54rem) {
-  .ref-panel--tl, .ref-panel--pg { padding-left: 4.7rem; min-height: 16rem; }
+  .ref-panel--tl, .ref-panel--pg { padding-left: 4.9rem; min-height: 9rem; }
   .ref-panel--tl .tl-head h3, .ref-panel--pg .pg-head h3 {
-    position: absolute; clip-path: none; overflow: visible; white-space: nowrap;
-    /* as tall as the panel, or as tall as its own words if those are longer */
-    width: auto; height: auto; min-height: 100%; margin: 0; left: -3.4rem; top: 0;
-    display: flex; align-items: center; justify-content: center;
+    position: absolute; clip-path: none; overflow: visible;
+    /* as tall as the panel; the words wrap into a second line rather than stretch it */
+    width: 2.7rem; height: auto; min-height: 100%; margin: 0; left: -3.6rem; top: 0;
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    white-space: normal; line-height: 1.25;
     writing-mode: vertical-rl; transform: rotate(180deg);
-    padding: .8rem .4rem; border-radius: 10px;
+    padding: .8rem .35rem; border-radius: 10px;
     /* blue to orange down the strip, the same direction the spectrum runs everywhere else */
     background-image: linear-gradient(to bottom, var(--blue), var(--orange));
     color: var(--on-grad);
-    font-size: .5rem; letter-spacing: .12em;
+    font-size: .64rem; letter-spacing: .1em;
   }
 }
 
@@ -263,17 +298,30 @@
 
 /* ------------------------------------------------------------- the pager ---- */
 
-.pager { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; margin: 1.6rem 0 0; }
+/*
+ * Two flat panels the same tone as the sheet had no visible edge at all. They are stripe
+ * cards now, in the kit's own language: a spectrum stripe down the leading edge, the axis
+ * name in display italic, and both of that axis's pole names under it — the same rule the
+ * rails follow, so a reader knows what the next page is about before opening it.
+ */
+.pager { display: grid; grid-template-columns: 1fr; gap: .7rem; margin: 1.8rem 0 0; }
+@media (min-width: 34rem) { .pager { grid-template-columns: 1fr 1fr; } }
 .pager-link {
+  position: relative; overflow: hidden;
   display: flex; flex-direction: column; justify-content: center; gap: .1rem;
-  min-height: 44px; padding: .85rem 1rem .9rem; border-radius: var(--r);
-  background: var(--panel); box-shadow: var(--lift); text-decoration: none;
-  transition: box-shadow .2s ease, transform .2s ease;
+  min-height: 44px; padding: .9rem 1rem 1rem 1.6rem; border-radius: var(--r);
+  background: var(--panel); box-shadow: var(--lift), inset 0 0 0 1px var(--rule);
+  text-decoration: none; transition: box-shadow .2s ease, transform .2s ease;
+}
+.pager-link::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 7px;
+  background-image: linear-gradient(to bottom, var(--blue), var(--orange));
 }
 .pager-link:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(62, 134, 196, .16); }
-.pager-link--next { text-align: right; }
+.pager-link--next { text-align: right; padding: .9rem 1.6rem 1rem 1rem; }
+.pager-link--next::before { left: auto; right: 0; }
 .pager-dir {
-  font-family: var(--ui); font-size: .56rem; font-weight: 700; letter-spacing: .15em;
+  font-family: var(--ui); font-size: .62rem; font-weight: 700; letter-spacing: .15em;
   text-transform: uppercase; color: var(--ink-mute);
 }
 .pager-link--prev .pager-dir::before { content: "← "; }
@@ -283,6 +331,34 @@
   color: var(--ink);
 }
 .pager-link:hover .pager-name { color: var(--accent); }
+.pager-poles {
+  display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .2rem;
+  font-family: var(--ui); font-size: .58rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; line-height: 1.3;
+}
+.pager-link--next .pager-poles { justify-content: flex-end; }
+.pager-poles i { font-style: normal; color: var(--ink-mute); }
+
+/* -------------------------------------------------- the correction note ---- */
+/*
+ * It hung under the pager as an unstyled orphan sentence on the bare sheet — the plain-text
+ * look the whole pass exists to kill. It is a dark note now, the same charcoal as the CTA
+ * above it, with the way in set as a chip rather than as a link inside a sentence.
+ */
+.ref .correction {
+  position: relative; margin: 1.4rem 0 0; padding: 1.05rem 1.2rem 1.1rem 3.8rem;
+  border-radius: var(--r); background-color: var(--dark-fill);
+  background-image: var(--dark-fill-img); background-size: 420px;
+  color: var(--on-dark-soft); font-size: .88rem; line-height: 1.55; max-width: none;
+}
+/* the medallion the stripe cards use, so the note reads as a thing on the page and not as
+   a sentence that fell out of one */
+.ref .correction::before {
+  content: ""; position: absolute; left: 1.15rem; top: 1.15rem;
+  width: 1.65rem; height: 1.65rem; border-radius: 50%;
+  background-image: linear-gradient(to bottom right, var(--blue), var(--orange));
+}
+.ref .correction a { color: var(--blue-soft); text-underline-offset: 3px; }
 
 /* ------------------------------------------------------ tradition pages ---- */
 
@@ -315,7 +391,81 @@
 /* the compass reads better with a little more air on the dark half at phone width */
 .trad-feature .feature-art { min-height: 19rem; }
 
+/* ----------------------------------------------------- nearest neighbours ---- */
+/*
+ * One row, six times. See the note in TraditionNeighbours: no pole colour, because a match
+ * percentage has no direction, and the closest one is said rather than painted.
+ */
+.nbrs { list-style: none; margin: 1.1rem 0 0; padding: 0; }
+.nbr + .nbr { margin-top: .2rem; }
+.nbr-link {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center; gap: .3rem .7rem;
+  padding: .8rem .25rem .85rem; border-bottom: 2px dotted var(--rule-strong);
+  text-decoration: none; color: inherit; min-height: 44px;
+  transition: background .18s ease;
+}
+.nbr:first-child .nbr-link { border-top: 2px dotted var(--rule-strong); }
+.nbr-link:hover { background: var(--accent-soft); }
+.nbr-rank {
+  font-family: var(--ui); font-size: .68rem; font-weight: 700; color: var(--ink-mute);
+  font-variant-numeric: tabular-nums; min-width: 1.1rem;
+}
+.nbr-name {
+  font-family: var(--display); font-size: 1.12rem; line-height: 1.2; color: var(--ink);
+  text-wrap: pretty;
+}
+.nbr-link:hover .nbr-name { color: var(--accent); }
+.nbr-chip {
+  grid-column: 2; justify-self: start; align-self: start;
+  padding: .28rem .6rem; border-radius: var(--r-pill); line-height: 1;
+  background-color: var(--dark-fill); background-image: var(--dark-fill-img);
+  background-size: 420px; color: var(--on-dark);
+  font-family: var(--ui); font-size: .56rem; font-weight: 700; letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.nbr-score {
+  grid-row: 1; grid-column: 3; text-align: right;
+  font-family: var(--ui); font-size: 1.02rem; font-weight: 700; color: var(--ink);
+  font-variant-numeric: tabular-nums; line-height: 1.1;
+}
+.nbr-score i {
+  font-style: normal; margin-left: .3rem; font-size: .58rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--ink-mute);
+}
+.nbr-track {
+  grid-column: 1 / -1; height: 6px; border-radius: 3px; background: var(--rule);
+  overflow: hidden; margin-top: .15rem;
+}
+/* the same ink on every row, closest included: the chip says which one is closest, and a
+   second fill treatment on one row is what made this list read as two components */
+.nbr-fill {
+  display: block; height: 100%; width: calc(var(--v) * 1%); border-radius: 3px;
+  background: var(--ink-mute);
+}
+@media (min-width: 46rem) {
+  .nbr-link { grid-template-columns: auto minmax(0, 1fr) auto auto; gap: .35rem 1rem; }
+  .nbr-chip { grid-row: 1; grid-column: 3; align-self: center; }
+  .nbr-score { grid-column: 4; min-width: 5.5rem; }
+  .nbr-name { font-size: 1.24rem; }
+}
+@media (prefers-reduced-motion: reduce) { .nbr-link { transition: none; } }
+
+/* ------------------------------------------------------------- the CTA ---- */
+
 .ref-cta { margin-top: 2.8rem; }
+.ref-cta .ref-cta-spec { margin-top: 1.6rem; }
+/* on charcoal the spec's accent blue goes muddy; the kicker's orange is the dark panel's
+   own label colour everywhere else on the site */
+.ref-cta .spec dt { color: var(--orange-soft); }
+.ref-cta .spec dd { color: var(--on-dark); }
+@media (min-width: 54rem) {
+  .ref-cta {
+    display: grid; grid-template-columns: minmax(0, 8fr) minmax(0, 5fr);
+    gap: 1.4rem 2.6rem; align-items: center;
+  }
+  .ref-cta .ref-cta-spec { margin-top: 0; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .pager-link { transition: none; }

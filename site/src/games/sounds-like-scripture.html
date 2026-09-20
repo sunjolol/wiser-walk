@@ -31,6 +31,8 @@
 
   --gutter: 16px;
   --col: 30rem;
+  /* the widescreen stage: a framed sheet, the same one the site draws round every page */
+  --stage: 62rem;
 }
 
 :root {
@@ -60,6 +62,8 @@
   --on-dark-soft: #B9B5AF;
   --blue-soft: #A9D0F3;
   --orange-soft: #F4B991;
+  --frame: #F2F2F2;
+  --frame-shadow: 0 22px 48px rgba(40, 40, 40, .12);
   color-scheme: light;
 }
 
@@ -90,6 +94,8 @@
   --band-wash: .1;
   --card-wash: .07;
   --dark-fill: #343441;
+  --frame: #1F1F26;
+  --frame-shadow: 0 22px 48px rgba(0, 0, 0, .45);
   color-scheme: dark;
 }
 
@@ -124,6 +130,18 @@ body {
 .screen { flex: 1; min-height: 0; display: flex; flex-direction: column; }
 /* several blocks below set display, which would beat the hidden attribute */
 [hidden] { display: none !important; }
+
+/*
+ * The two-part composition.
+ *
+ * On a phone the two .gcol wrappers are nothing: their blocks simply stack in source
+ * order, which is the reading order (the band, the question, the two run buttons, how a
+ * run goes, the note). From the stage width they become the two halves of one grid, so
+ * the same markup composes left and right with nothing duplicated and nothing hidden at
+ * one width and shown at another. The band sits outside .two and spans the whole sheet.
+ */
+.two { display: block; }
+.gcol { min-width: 0; }
 
 h1, h2, h3 {
   font-family: var(--display);
@@ -174,7 +192,24 @@ button { font: inherit; color: inherit; }
   background: var(--panel); background-image: none; color: var(--ink-soft);
   box-shadow: var(--lift); font-size: .72rem;
 }
-.btn:disabled { opacity: .45; cursor: not-allowed; }
+/*
+ * Locked, not greyed.
+ *
+ * Nothing is chosen for a reader on a first visit: the site never assumes which Bible
+ * someone reads. That rule stays, but a washed-out pill reads as broken, so a locked
+ * button keeps full-contrast ink on a quiet surface and SAYS what is missing. It also
+ * stays clickable — aria-disabled, not disabled — and a press sends focus to the
+ * question, which is the one thing left to do.
+ */
+.btn[aria-disabled="true"] {
+  background-image: none; background: var(--panel); color: var(--ink);
+  box-shadow: inset 0 0 0 2px var(--ink-mute), var(--lift);
+  font-size: .7rem; letter-spacing: .06em;
+}
+.btn.ghost[aria-disabled="true"] {
+  background: none; color: var(--ink-soft);
+  box-shadow: inset 0 0 0 1.5px var(--rule-strong);
+}
 .btn-col { display: grid; gap: .6rem; }
 .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
 
@@ -243,9 +278,11 @@ button { font: inherit; color: inherit; }
   display: block; font-family: var(--display); font-weight: 400; font-size: 1.35rem;
   line-height: 1.1; color: var(--ink); font-variant-numeric: tabular-nums;
 }
+/* 8px letterspaced caps is below any readable floor on a phone: the label is set at
+   ~11px and is allowed to wrap onto a second line rather than force its column wide. */
 .tile span {
-  display: block; margin-top: .1rem; font-family: var(--ui); font-size: .52rem; font-weight: 600;
-  letter-spacing: .13em; text-transform: uppercase; color: var(--ink-mute); white-space: nowrap;
+  display: block; margin-top: .15rem; font-family: var(--ui); font-size: .68rem; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--ink-mute); line-height: 1.2;
 }
 
 /* --------------------------------------------------------- section heads */
@@ -264,26 +301,41 @@ button { font: inherit; color: inherit; }
 
 /* ------------------------------------------------------------------- start */
 
-#screen-start { overflow-y: auto; justify-content: space-between; }
-.start-top { flex: 0 0 auto; }
-.start-body { padding: 0 0 1.25rem; }
+/*
+ * No push, no hole. The old layout pinned the buttons to the bottom of the viewport with
+ * space-between, which on anything taller than a phone opened a thousand pixels of bare
+ * ground between "how a run goes" and PLAY. The blocks simply flow, in this order:
+ * the band, the question, the two run buttons, how a run goes, the note.
+ */
+#screen-start { overflow-y: auto; padding-bottom: 1.25rem; }
 
-.canon { margin: 1.25rem 0 0; }
-.canon-chips { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .45rem; }
+/* ------------------------------------------------------------ the question
+   The first thing a reader is asked, so it is set as a question and not as a
+   9px label: a display line, one sentence of reason, and three chips big enough
+   to be obviously tappable. Chosen means FILLED, not merely outlined. */
+
+.canon { margin: 1.15rem 0 0; }
+.canon-q {
+  font-family: var(--display); font-weight: 400; font-style: italic;
+  font-size: clamp(1.32rem, 6.4vw, 1.6rem); line-height: 1.08; letter-spacing: -.015em;
+  margin: 0 0 .3rem; color: var(--ink);
+}
+.canon-why { margin: 0 0 .7rem; color: var(--ink-soft); font-size: .88rem; }
+.canon-chips { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; }
 .chip {
-  min-height: 48px; padding: .6rem .4rem;
-  border: 0; border-radius: 11px; background: none;
-  box-shadow: inset 0 0 0 1.5px var(--rule-strong);
-  font-family: var(--ui); font-size: .62rem; font-weight: 700;
-  letter-spacing: .1em; text-transform: uppercase; line-height: 1.2;
-  color: var(--ink-soft); cursor: pointer;
+  min-height: 56px; padding: .7rem .4rem;
+  border: 0; border-radius: 13px; background: var(--panel);
+  box-shadow: inset 0 0 0 1.5px var(--rule-strong), var(--lift);
+  font-family: var(--ui); font-size: .68rem; font-weight: 700;
+  letter-spacing: .07em; text-transform: uppercase; line-height: 1.2;
+  color: var(--ink); cursor: pointer;
   transition: box-shadow .18s ease, color .18s ease, background .18s ease;
 }
 .chip[aria-pressed="true"] {
-  color: var(--accent); background: var(--accent-soft);
-  box-shadow: inset 0 0 0 2px var(--accent);
+  color: var(--accent-ink); background: var(--accent);
+  box-shadow: inset 0 0 0 2px var(--accent), var(--lift);
 }
-.canon-note { margin: .8rem 0 0; }
+.canon-note { margin: .75rem 0 0; }
 
 /* the charcoal block from the reference sheets, set against the light panels */
 .howto {
@@ -293,8 +345,9 @@ button { font: inherit; color: inherit; }
   border-radius: var(--r); box-shadow: var(--lift);
 }
 .howto > *:not(.dark-ghost) { position: relative; z-index: 1; }
+/* cropped by ONE edge, so it still reads as a word rather than as a rendering fault */
 .dark-ghost {
-  position: absolute; z-index: 0; right: -.04em; bottom: -.26em;
+  position: absolute; z-index: 0; right: -.06em; bottom: -.03em;
   font-family: var(--display); font-style: italic; font-size: 5.5rem; line-height: .8;
   letter-spacing: -.04em; color: var(--ghost-dark); pointer-events: none; user-select: none;
 }
@@ -305,6 +358,14 @@ button { font: inherit; color: inherit; }
 .howto .spec > div:last-child { border-bottom: 0; }
 .howto .spec dt { color: var(--blue-soft); }
 .howto .spec dd { color: var(--on-dark-soft); font-size: .84rem; }
+/* the pool's real numbers, counted from the injected pool, sitting on the charcoal */
+.howto .tiles { margin-top: .9rem; }
+.howto .tile { background: rgba(255, 255, 255, .07); box-shadow: none; }
+.howto .tile b { color: var(--on-dark); }
+.howto .tile span { color: var(--on-dark-soft); }
+/* in the dark theme the charcoal panel sits close to the page, so it keeps a hairline
+   of its own and still reads as a panel rather than as a hole */
+:root[data-theme="dark"] .howto { box-shadow: inset 0 0 0 1px var(--rule-strong), var(--lift); }
 .banner {
   background: var(--accent-soft); border-radius: var(--r-sm);
   padding: .8rem .95rem; margin: 0 0 .9rem;
@@ -313,6 +374,11 @@ button { font: inherit; color: inherit; }
 .banner p { margin: 0; color: var(--ink-soft); font-size: .92rem; }
 .banner strong { color: var(--ink); font-weight: 600; font-family: var(--ui); }
 .start-actions { margin-top: 1.1rem; }
+.canon-hint {
+  margin: .6rem 0 0; text-align: center;
+  font-family: var(--ui); font-size: .66rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--ink-mute);
+}
 .foot { margin: 1.4rem 0 0; padding-bottom: calc(.5rem + env(safe-area-inset-bottom, 0px)); }
 
 /* -------------------------------------------------------------------- play */
@@ -444,7 +510,7 @@ button { font: inherit; color: inherit; }
 
 /* ------------------------------------------------------------------ result */
 
-#screen-result { overflow-y: auto; }
+#screen-result { overflow-y: auto; padding-bottom: 1.25rem; }
 .result-band { padding-bottom: 1.5rem; }
 .result-band .big {
   font-family: var(--display); font-size: clamp(3rem, 17vw, 4.2rem);
@@ -536,11 +602,56 @@ button { font: inherit; color: inherit; }
   .tile span { font-size: .55rem; }
 }
 
-/* Wide: the column stays a phone column, so it becomes a sheet standing on the striped
-   ground rather than a strip cut off by the top of the window. */
-@media (min-width: 64rem) and (min-height: 44rem) {
-  .app { padding-top: 1.4rem; padding-bottom: .4rem; }
-  .band { border-radius: 26px; }
+/* ------------------------------------------------------------- the stage
+   From 56rem the game stops being a phone column marooned in a wide window. It
+   becomes what every other page on the site is: a framed sheet on the striped
+   ground, holding a two-part composition — the game itself on the left, and on
+   the right the charcoal panel with how a run goes and the pool's own numbers. */
+
+@media (min-width: 56rem) {
+  .app {
+    height: auto; min-height: 0;
+    max-width: var(--stage);
+    margin: 2rem auto 2.5rem;
+    padding: 1.9rem 2rem 2rem;
+    background: var(--shell);
+    border: 9px solid var(--frame); border-radius: 34px;
+    box-shadow: var(--frame-shadow);
+  }
+  .screen { flex: 0 0 auto; }
+
+  /* each half flows on its own, so nothing is stranded at the top of a stretched row */
+  .two { display: grid; align-items: start; gap: 1.6rem 1.8rem; margin-top: 1.5rem; }
+
+  /* the band belongs to the sheet now, so it stops being full bleed */
+  .band { margin: 0; border-radius: var(--r-lg); padding: 1.9rem 1.8rem 1.7rem; }
+  .band h1 { max-width: 14ch; }
+
+  /* start: the question and the two buttons, beside the charcoal rail */
+  #screen-start .two { grid-template-columns: minmax(0, 1fr) minmax(0, .82fr); }
+  #screen-start .canon { margin-top: 0; }
+  #screen-start .howto { margin-top: 0; padding: 1.3rem 1.4rem 1.4rem; }
+  #screen-start .foot { margin-top: 1.2rem; }
+
+  /* result: what caught you, beside what fools you and what to do next */
+  #screen-result .two { grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr); }
+  #screen-result .result-actions { margin-top: 1.6rem; }
+  #screen-result .foot { margin-top: 1.4rem; }
+
+  /* the band's tiles stop stretching to the width of the sheet */
+  .band .tiles { grid-template-columns: repeat(3, minmax(0, 10rem)); }
+  .versus { grid-template-columns: repeat(2, minmax(0, 12rem)); }
+
+  /* play: one comfortable reading measure, with the two answers directly under it */
+  #screen-play { max-width: 38rem; width: 100%; margin: 0 auto; padding-top: .25rem; }
+  .stage { flex: 0 0 auto; min-height: 17rem; }
+  .card { flex: 1; }
+  .bar { padding-bottom: .25rem; }
+}
+
+@media (min-width: 72rem) {
+  .app { padding: 2.4rem 2.6rem 2.6rem; }
+  #screen-start .two, #screen-result .two { gap: 0 2.4rem; }
 }
 
 /* A phone, where the visible viewport is well under the screen: the band and the blocks
@@ -577,49 +688,54 @@ button { font: inherit; color: inherit; }
 <div class="app">
 
   <section class="screen" id="screen-start">
-    <div class="start-top">
-      <div class="band">
-        <div class="band-wash" aria-hidden="true"></div>
-        <div class="band-ghost" aria-hidden="true">scripture?</div>
-        <p class="band-chip">A wiserwalk game</p>
-        <h1>Sounds <span class="t-blue">Like</span> <span class="t-orange">Scripture</span></h1>
+        <div class="band">
+          <div class="band-wash" aria-hidden="true"></div>
+          <div class="band-ghost" aria-hidden="true">scripture?</div>
+          <p class="band-chip">A wiserwalk game</p>
+          <h1>Sounds <span class="t-blue">Like</span> <span class="t-orange">Scripture</span></h1>
 
-        <div class="banner" id="challengeBanner" hidden>
-          <p><strong id="challengeScore">0</strong> <span id="challengeWord">was their score</span> on these ten lines.</p>
+          <div class="banner" id="challengeBanner" hidden>
+            <p><strong id="challengeScore">0</strong> <span id="challengeWord">was their score</span> on these ten lines.</p>
+          </div>
+
+          <p class="lede" id="startLede">Ten lines. Some are in the Bible. Some only sound like it. You have seconds.</p>
         </div>
 
-        <p class="lede" id="startLede">Ten lines. Some are in the Bible. Some only sound like it. You have seconds.</p>
-
-        <ul class="tiles" id="startTiles"></ul>
-      </div>
-
-      <div class="canon">
-        <p class="kicker">Which Bible do you read?</p>
-        <div class="canon-chips" role="group" aria-label="Choose your canon">
-          <button type="button" class="chip" id="canon-protestant" data-canon="protestant" aria-pressed="false">Protestant</button>
-          <button type="button" class="chip" id="canon-catholic" data-canon="catholic" aria-pressed="false">Catholic</button>
-          <button type="button" class="chip" id="canon-orthodox" data-canon="orthodox" aria-pressed="false">Orthodox</button>
+    <div class="two">
+      <div class="gcol">
+        <div class="canon">
+          <h2 class="canon-q" id="canonQ">First, which Bible do you read?</h2>
+          <p class="canon-why">It decides which books count as Scripture here, so nothing is assumed for you.</p>
+          <div class="canon-chips" role="group" aria-labelledby="canonQ">
+            <button type="button" class="chip" id="canon-protestant" data-canon="protestant" aria-pressed="false">Protestant</button>
+            <button type="button" class="chip" id="canon-catholic" data-canon="catholic" aria-pressed="false">Catholic</button>
+            <button type="button" class="chip" id="canon-orthodox" data-canon="orthodox" aria-pressed="false">Orthodox</button>
+          </div>
+          <p class="small canon-note" id="canonNote" hidden></p>
         </div>
-        <p class="small canon-note" id="canonNote" hidden></p>
+
+        <div class="btn-col start-actions">
+          <button type="button" class="btn" id="btnPlay">Play</button>
+          <button type="button" class="btn ghost" id="btnDaily">Today's ten</button>
+          <p class="canon-hint" id="canonHint" hidden>Pick one of the three above</p>
+        </div>
       </div>
 
-      <div class="howto">
-        <span class="dark-ghost" aria-hidden="true">hard</span>
-        <p class="kicker">How a run goes</p>
-        <dl class="spec">
-          <div><dt>Ten lines</dt><dd>Eight to sixteen seconds each</dd></div>
-          <div><dt>Points</dt><dd>Speed, and a bonus for a streak</dd></div>
-          <div><dt>After each</dt><dd>The citation, and where to read it</dd></div>
-        </dl>
-      </div>
-    </div>
+      <div class="gcol">
+        <div class="howto">
+          <span class="dark-ghost" aria-hidden="true">hard</span>
+          <p class="kicker">How a run goes</p>
+          <dl class="spec">
+            <div><dt>Ten lines</dt><dd>Eight to sixteen seconds each</dd></div>
+            <div><dt>Points</dt><dd>Speed, and a bonus for a streak</dd></div>
+            <div><dt>After each</dt><dd>The citation, and where to read it</dd></div>
+            <div><dt>Your score</dt><dd>Stays in this browser</dd></div>
+          </dl>
+          <ul class="tiles" id="startTiles"></ul>
+        </div>
 
-    <div class="start-body">
-      <div class="btn-col start-actions">
-        <button type="button" class="btn" id="btnPlay">Play</button>
-        <button type="button" class="btn ghost" id="btnDaily">Today's ten</button>
+        <p class="small foot" id="footStart"></p>
       </div>
-      <p class="small foot" id="footStart"></p>
     </div>
   </section>
 
@@ -675,6 +791,8 @@ button { font: inherit; color: inherit; }
       </ul>
     </div>
 
+    <div class="two">
+      <div class="gcol">
     <div class="block" id="missBlock" hidden>
       <div class="ghead">
         <p class="kicker">Word for word, with the citation</p>
@@ -682,7 +800,9 @@ button { font: inherit; color: inherit; }
       </div>
       <ul class="misses" id="misses"></ul>
     </div>
+      </div>
 
+      <div class="gcol">
     <div class="block" id="fooledBlock" hidden>
       <div class="ghead">
         <p class="kicker">On this device, every run so far</p>
@@ -700,6 +820,8 @@ button { font: inherit; color: inherit; }
     </div>
 
     <p class="small foot" id="footResult"></p>
+      </div>
+    </div>
   </section>
 
 </div>
@@ -898,7 +1020,7 @@ function decodeChallenge(hash) {
     start: $('screen-start'), play: $('screen-play'), result: $('screen-result'),
     banner: $('challengeBanner'), bannerScore: $('challengeScore'), bannerWord: $('challengeWord'),
     lede: $('startLede'), canonNote: $('canonNote'), footStart: $('footStart'), footResult: $('footResult'),
-    startTiles: $('startTiles'),
+    startTiles: $('startTiles'), canonHint: $('canonHint'), canonQ: $('canonQ'),
     btnPlay: $('btnPlay'), btnDaily: $('btnDaily'),
     pips: $('pips'), scoreNow: $('scoreNow'), fuseFill: $('fuseFill'),
     card: $('card'), tintYes: $('tintYes'), tintNo: $('tintNo'),
@@ -970,6 +1092,40 @@ function decodeChallenge(hash) {
   /* -------------------------------------------------------------- start --- */
   function sourceOf(item) { return SOURCES[item.s] || {}; }
 
+  /*
+   * The two run buttons always say what they will do, or what is missing.
+   *
+   * No Bible is chosen for a first-time reader on purpose - the site never assumes
+   * anyone's canon - so on a first visit the buttons are LOCKED rather than greyed:
+   * full-contrast ink on a quiet surface, naming the one thing left to do. They stay
+   * clickable (aria-disabled, not disabled) and a press sends focus to the question.
+   */
+  function refreshActions() {
+    var locked = !state.canon;
+    el.btnPlay.setAttribute('aria-disabled', String(locked));
+    el.btnDaily.setAttribute('aria-disabled', String(locked));
+    if (locked) {
+      el.btnPlay.textContent = 'Choose your Bible to play';
+      el.btnDaily.textContent = "Choose your Bible for today's ten";
+      el.btnDaily.hidden = false;
+    } else if (state.challenge) {
+      el.btnPlay.textContent = 'Take the challenge';
+      el.btnDaily.hidden = true;
+    } else {
+      el.btnPlay.textContent = 'Play';
+      el.btnDaily.textContent = "Today's ten";
+      el.btnDaily.hidden = false;
+    }
+    if (!locked) el.canonHint.hidden = true;
+  }
+
+  function nudgeCanon() {
+    el.canonHint.hidden = false;
+    var first = $('canon-protestant');
+    try { first.focus(); } catch (e) {}
+    try { el.canonQ.scrollIntoView({ block: 'center' }); } catch (e) {}
+  }
+
   function setCanon(canon, remember) {
     state.canon = canon;
     ['protestant', 'catholic', 'orthodox'].forEach(function (c) {
@@ -981,8 +1137,7 @@ function decodeChallenge(hash) {
     el.footStart.textContent = FOOT + (orthodox ? ' ' + ORTHODOX_NOTE : '');
     el.footResult.textContent = el.footStart.textContent;
     if (remember) write(K.canon, canon);
-    el.btnPlay.disabled = !canon;
-    el.btnDaily.disabled = !canon;
+    refreshActions();
     publish();
   }
 
@@ -1374,10 +1529,12 @@ function decodeChallenge(hash) {
   });
 
   el.btnPlay.addEventListener('click', function () {
+    if (!state.canon) return nudgeCanon();
     if (state.challenge) startRun('challenge', state.challenge.seed);
     else startRun('free', seedFromRandom(Math.random()));
   });
   el.btnDaily.addEventListener('click', function () {
+    if (!state.canon) return nudgeCanon();
     state.challenge = null;
     startRun('daily', dailySeed(new Date()));
   });
@@ -1389,8 +1546,7 @@ function decodeChallenge(hash) {
     try { history.replaceState(null, '', linkBase()); } catch (e) {}
     el.banner.hidden = true;
     el.lede.hidden = false;
-    el.btnPlay.textContent = 'Play';
-    el.btnDaily.hidden = false;
+    refreshActions();
     showScreen('start');
   });
   el.btnCopyLink.addEventListener('click', function () { copy(challengeLink(), 'Challenge link copied'); });
@@ -1412,8 +1568,8 @@ function decodeChallenge(hash) {
      into this page, never typed: change the pool and they change with it. */
   el.startTiles.innerHTML =
     '<li class="tile"><b>' + (POOL.items || []).length.toLocaleString() + '</b><span>Lines</span></li>' +
-    '<li class="tile"><b>' + SOURCES.length + '</b><span>Sources</span></li>' +
-    '<li class="tile"><b>' + RUN_LENGTH + '</b><span>A run</span></li>';
+    '<li class="tile"><b>' + SOURCES.length + '</b><span>Editions</span></li>' +
+    '<li class="tile"><b>' + RUN_LENGTH + '</b><span>Lines a run</span></li>';
 
   var incoming = decodeChallenge(location.hash);
   var savedCanon = read(K.canon, null);
@@ -1424,8 +1580,6 @@ function decodeChallenge(hash) {
     el.bannerScore.textContent = incoming.score.toLocaleString();
     el.bannerWord.textContent = 'was their score';
     el.lede.hidden = true;
-    el.btnPlay.textContent = 'Take the challenge';
-    el.btnDaily.hidden = true;
     setCanon(incoming.canon, false);
   } else if (savedCanon === 'protestant' || savedCanon === 'catholic' || savedCanon === 'orthodox') {
     setCanon(savedCanon, false);

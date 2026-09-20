@@ -51,11 +51,35 @@ writeFileSync(out, html, 'utf8');
 /* The live site builds from its own copy (Vercel's root directory is site/, so it cannot see
    demos/). Generated but committed, like site/src/data/compass.json. Never hand-edit it.
    A fixture pool is never written to the site. */
+/*
+ * One line for the card the site draws on /games/.
+ *
+ * The drawing used to be three grey bars, which reads as a skeleton that never loaded.
+ * It shows a real line instead — and only the line. No reference, no verdict, no tier, so
+ * a card still cannot tell anyone whether a line is in the Bible. The choice is
+ * deterministic (hardest tier, nearest 78 characters, ties broken by id), so the card
+ * only changes when the pool does, and the text goes through the same display rule the
+ * game itself uses: typography only, no word altered.
+ */
+function coverLine(items) {
+  const display = t => String(t)
+    .replace(/[‘’]/g, "'").replace(/[“”]/g, '"')
+    .replace(/\b(LORD|GOD)('S)?\b/g, (m, w, s) => w.charAt(0) + w.slice(1).toLowerCase() + (s ? "'s" : ''));
+  const top = Math.max(...items.map(i => i.tier || 0));
+  const pick = items
+    .filter(i => (i.tier || 0) === top)
+    .map(i => ({ id: i.id, text: display(i.t) }))
+    .sort((a, b) =>
+      Math.abs(a.text.length - 78) - Math.abs(b.text.length - 78) || (a.id < b.id ? -1 : 1))[0];
+  return pick ? pick.text : null;
+}
+
 const siteDir = join(root, '..', '..', 'site', 'src', 'games');
 if (existsSync(siteDir) && !pool.fixture) {
   writeFileSync(join(siteDir, 'sounds-like-scripture.html'), html, 'utf8');
   writeFileSync(join(siteDir, 'sounds-like-scripture.meta.json'), JSON.stringify({
-    items: pool.items.length, sources: pool.sources.length, built: pool.built || null
+    items: pool.items.length, sources: pool.sources.length, built: pool.built || null,
+    cover: coverLine(pool.items)
   }, null, 2) + '\n', 'utf8');
   console.log('site    ' + resolve(siteDir));
 }

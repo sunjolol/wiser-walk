@@ -41,13 +41,25 @@ const placed = quiz.outcomes
   .sort((a, b) => a.value - b.value || a.name.localeCompare(b.name));
 
 /**
- * Lanes. A dot is 22px and the narrowest track this ships on is about 300px, so two dots
- * need roughly 8% of the run between them to stand side by side. Walking left to right,
- * each dot takes the first lane whose last dot is far enough away; anything closer drops to
- * a new lane. The number of lanes is therefore data, not a guess, and the same assignment
- * holds at every width because it is computed in percentages.
+ * Lanes, derived from the dot rather than guessed.
+ *
+ * A position is a percentage of the RUN — the track minus one dot — so whether two dots
+ * touch is arithmetic, and it is decided at the narrowest width the page ships on. The plot
+ * measures 315px inside the panel at a 390px viewport and about 285px on a 360px phone, so
+ * that 285 is the width the lanes are computed for; every wider screen inherits the same
+ * assignment and simply gets more air between the dots. The previous 8 was a round number
+ * rather than a measurement, and at 22px dots it left 1.4px between centres that should
+ * have been a dot apart — three pairs on the Grace axis merged into blobs.
+ *
+ * Nothing caps the lane count: when a lot of traditions share a corner of an axis the plot
+ * grows taller, because a taller plot is readable and a collision is not.
  */
-const GAP = 8;
+const DOT = 22; // px. Written onto the element too, so the CSS cannot drift from this
+const CLEAR = 7; // px of daylight required between two dots, horizontally and vertically
+const LANE = DOT + CLEAR; // px per lane row
+const NARROW = 285; // px — the plot's width on a 360px phone, the tightest case
+const GAP = ((DOT + CLEAR) / (NARROW - DOT)) * 100;
+
 const laneEnd: number[] = [];
 const marks = placed.map((p, i) => {
   let lane = laneEnd.findIndex(end => p.value - end >= GAP);
@@ -84,12 +96,22 @@ const bands: Array<{ side: Side; title: string; note?: string }> = [
     Decorative duplication: every dot's name, number and group is real text in the lists
     below, so a screen reader is given the lists rather than eighteen unreadable pips.
   */}
-  <div class="amap-plot" aria-hidden="true">
+  <div class="amap-plot" aria-hidden="true" style={`--dot:${DOT}px;--lane-h:${LANE}px`}>
     <div class="amap-rail">
       <span class="amap-zone"></span>
       <span class="amap-spine"></span>
     </div>
     <div class="amap-lanes">
+      {/*
+        The stems are their own layer, and it comes first so the dots paint over it. Drawn
+        from the dot, a stem ran up through every dot above it in the same column and struck
+        the numerals out; a dot is the thing being read, so nothing may cross one.
+      */}
+      <div class="amap-stems">
+        {marks.map(m => (
+          <span class="amap-stem" style={`--pos:${m.value};--lane:${m.lane}`}></span>
+        ))}
+      </div>
       {marks.map(m => (
         <span class={`amap-dot amap-dot--${m.side}`} style={`--pos:${m.value};--lane:${m.lane}`}>
           {m.n}
@@ -102,7 +124,10 @@ const bands: Array<{ side: Side; title: string; note?: string }> = [
     {bands.map(b => {
       const mine = marks.filter(m => m.side === b.side);
       return (
-        <section class={`amap-group amap-group--${b.side}`}>
+        <section
+          class={`amap-group amap-group--${b.side}`}
+          style={`--weight:${Math.max(1, mine.length)}`}
+        >
           <h3 class="amap-group-head">
             <span class="amap-group-name">{b.title}</span>
             {b.note && <span class="amap-group-note">{b.note}</span>}

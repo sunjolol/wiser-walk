@@ -76,6 +76,17 @@ const breadcrumbs = [
 
   <SectionHead title="Everything here" kicker="The slow work of formation" />
 
+  {topics.length > 0 && (
+    <div class="topicline">
+      <p class="jump-label">What the {articles.length} pieces are about</p>
+      <ul class="chips">
+        {topics.map(t => (
+          <li><span class="chip-link chip-static">{t} <small>{articles.filter(a => a.data.tags.includes(t)).length}</small></span></li>
+        ))}
+      </ul>
+    </div>
+  )}
+
   <div class="scards">
     {articles.map(a => (
       <Card
@@ -89,17 +100,6 @@ const breadcrumbs = [
       />
     ))}
   </div>
-
-  {topics.length > 0 && (
-    <>
-      <SectionHead title="Topics" kicker={`What the ${articles.length} pieces are about`} />
-      <ul class="chips topicline">
-        {topics.map(t => (
-          <li><span class="chip-link chip-static">{t} <small>{articles.filter(a => a.data.tags.includes(t)).length}</small></span></li>
-        ))}
-      </ul>
-    </>
-  )}
 
   {next.length > 0 && (
     <KeepGoing

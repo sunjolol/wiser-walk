@@ -110,6 +110,8 @@ const breadcrumbLd = {
       .ww-home:hover, .ww-more a:hover { text-decoration: underline; }
       .ww-more { margin: 1.4rem 0 0; text-align: center; }
       .ww-more a { color: var(--accent); font-weight: 600; }
+      /* on the stage the links sit in the right-hand column with the note, left aligned */
+      @media (min-width: 56rem) { #screen-result .ww-more { text-align: left; margin-top: 1.4rem; } }
     </style>
   </head>
   <body>

@@ -106,10 +106,14 @@ const breadcrumbs =
 >
   <Hero title={group.name} eyebrow={quiz.title} icon={quiz.icon} ghost={ghost} tiles={tiles}>
     {bipolar ? (
+      /* The arrow belongs to the second pole, not to the line: left free it wrapped to the
+         end of a full first line on the longer axes and pointed at nothing. */
       <span class="poleline">
         <b class="pole-l">{group.left}</b>
-        <i aria-hidden="true">↔</i>
-        <b class="pole-r">{group.right}</b>
+        <span class="poleline-to">
+          <i aria-hidden="true">↔</i>
+          <b class="pole-r">{group.right}</b>
+        </span>
       </span>
     ) : (
       quiz.tagline
@@ -200,7 +204,7 @@ const breadcrumbs =
           title="The passages"
           kicker="Argued from by both sides, assigned to neither"
         />
-        <div class="panel layered ref-panel ref-panel--pg">
+        <div class="panel layered ref-panel ref-panel--pg ref-panel--quiet">
           <div class="wash" aria-hidden="true"></div>
           <div class="veil" aria-hidden="true"></div>
           <PassagePills refs={passages} heading="h3" />
@@ -235,21 +239,37 @@ const breadcrumbs =
       </>
     )}
 
+    {/*
+      Two columns from 54rem. The dark panel used to put its words in the left 55% and
+      nothing but a clipped ghost in the right 45%; the facts that were crammed into the
+      kicker as a run-on line now hold that half as a spec list, which is where the kit
+      keeps facts.
+    */}
     <section class="dark pledge ref-cta">
       <div class="dark-ghost" aria-hidden="true">{ghost}</div>
-      <p class="feature-kicker">
-        <Icon name={quiz.icon} size={13} /> {quiz.items.length} statements · about {quiz.minutes} minutes
-      </p>
-      <h2>Where do you land?</h2>
-      <p>
-        {bipolar
-          ? 'Answer the statements and the whole map is drawn for you — every axis, and the traditions that sit nearest to where you land. Nothing you answer leaves your browser.'
-          : 'Answer the statements and every category is ranked by how much pull it has on you. Nothing you answer leaves your browser.'}
-      </p>
-      <div class="btn-row">
-        <a class="btn" href={quizHref(quiz)}>{takeIt}</a>
-        {quiz.status === 'live' && <a class="btn ghost" href="/method/">How it was made fair</a>}
+      <div class="ref-cta-say">
+        <p class="feature-kicker">
+          <Icon name={quiz.icon} size={13} /> {quiz.title}
+        </p>
+        <h2>Where do you land?</h2>
+        <p>
+          {bipolar
+            ? 'Answer the statements and the whole map is drawn for you — every axis, and the traditions that sit nearest to where you land.'
+            : 'Answer the statements and every category is ranked by how much pull it has on you.'}
+        </p>
+        <div class="btn-row">
+          <a class="btn" href={quizHref(quiz)}>{takeIt}</a>
+          {quiz.status === 'live' && <a class="btn ghost" href="/method/">How it was made fair</a>}
+        </div>
       </div>
+      <dl class="spec ref-cta-spec">
+        <div><dt>Statements</dt><dd>{quiz.items.length}</dd></div>
+        <div><dt>Takes</dt><dd>About {quiz.minutes} minutes</dd></div>
+        {bipolar && placed > 0 && (
+          <div><dt>Compares you with</dt><dd>{placed} traditions</dd></div>
+        )}
+        <div><dt>Scored</dt><dd>On your own device</dd></div>
+      </dl>
     </section>
 
     {(prev || next) && (
@@ -258,12 +278,26 @@ const breadcrumbs =
           <a class="pager-link pager-link--prev" href={groupHref(quiz, prev)}>
             <span class="pager-dir">Previous</span>
             <span class="pager-name">{prev.name}</span>
+            {prev.left && prev.right && (
+              <span class="pager-poles">
+                <b class="pole-l">{prev.left}</b>
+                <i aria-hidden="true">↔</i>
+                <b class="pole-r">{prev.right}</b>
+              </span>
+            )}
           </a>
         ) : <span></span>}
         {next && (
           <a class="pager-link pager-link--next" href={groupHref(quiz, next)}>
             <span class="pager-dir">Next</span>
             <span class="pager-name">{next.name}</span>
+            {next.left && next.right && (
+              <span class="pager-poles">
+                <b class="pole-l">{next.left}</b>
+                <i aria-hidden="true">↔</i>
+                <b class="pole-r">{next.right}</b>
+              </span>
+            )}
           </a>
         )}
       </nav>
