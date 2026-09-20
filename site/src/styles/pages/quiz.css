@@ -146,6 +146,10 @@
   grid-column: 1 / -1; margin: .3rem 0 0; font-size: .8rem; line-height: 1.5;
   color: var(--ink-soft);
 }
+/* a long definition arrives in paragraphs of three sentences; one sentence is one block and
+   looks exactly as it did before the split existed */
+.rankpv-para { display: block; }
+.rankpv-para + .rankpv-para { margin-top: .5rem; }
 /* the ruler each category is measured on, in neutral ink: one notch per reachable score */
 .rankpv-scale {
   --slots: 9;
@@ -552,6 +556,28 @@
 .result-note { margin-top: 1.2rem; }
 .quiz-frame p, .result-note p { font-size: .95rem; }
 
+/*
+ * The sentence that travels with the names in the headline, directly under the band.
+ *
+ * Tighter to the band than the notes under the ranking, and no wider than the lede it
+ * follows, because it qualifies the words a reader has just read rather than the page.
+ */
+.headline-note { margin: .9rem 0 0; max-width: 44rem; }
+.headline-note p { font-size: .95rem; }
+
+/*
+ * One line about how to read the statements, between the statement and the five answers.
+ *
+ * Small and quiet — the statement is the thing being answered — but above the buttons, since
+ * it is a rule for choosing and a reader who meets it underneath has met it too late. It
+ * takes the answer row's own top margin, so nothing below it moves.
+ */
+.scale-note {
+  margin: 0 0 .7rem; max-width: 44rem;
+  font-size: .72rem; line-height: 1.5; color: var(--ink-mute); text-wrap: pretty;
+}
+@media (min-width: 34rem) { .scale-note { font-size: .78rem; } }
+
 /* an outcome's own sentence, under its card, and only when that card is the closest */
 .outcome-note {
   margin: .55rem 0 0; padding-left: .2rem; max-width: 42rem;
@@ -610,3 +636,14 @@
 .uniform-box .btn { flex: 1 1 auto; }
 @media (min-width: 30rem) { .uniform-box .btn { flex: 0 0 auto; } }
 @media (min-width: 40rem) { .uniform-box { padding: 1.9rem 1.8rem 2rem; } }
+
+/* ---------------------------------------------------------------- quick start ----
+ * A quiz with a long frame (notes.introShort set) gets one sentence and a way in near the
+ * top of its intro, so a phone reader is not six screens from the start button. The long
+ * notes follow it unchanged.
+ */
+.quickstart { margin: 0 0 1.1rem; }
+.quickstart p { margin: 0 0 .95rem; font-size: 1.02rem; line-height: 1.55; color: var(--ink); }
+.quickstart .btn-row { margin: 0; }
+#before-you-start { scroll-margin-top: 1rem; }
+

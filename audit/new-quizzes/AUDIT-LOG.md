@@ -359,3 +359,50 @@ category.ts`, `site/src/components/ShareBlock.astro`, `site/src/components/Categ
 (one line: it assumed a tie was two names), `site/src/pages/q/[quiz].astro`,
 `site/src/styles/pages/quiz.css` (appended), `site/src/lib/quizzes/bible-figure.ts` (the one flag),
 `site/scripts/engine-test.mjs` (sections 14, 15 and 16).
+
+## 2026-09-22, the owner and a second wording pass: decisions 1, 4 and 6 are closed
+
+**Decision 1 (which gifts are in) — closed by the owner: all of them.** His words: "just because
+cessationists disagree doesn't mean we leave them out". None of the three options above was taken;
+the quiz now scores prophecy, healing, miracles, tongues, interpreting tongues and the word of
+knowledge beside the other thirteen, describes the disagreement in a note on the intro and on the
+result, and rules on it nowhere. Nothing marks the six out: no badge, no chip, no grouping, no
+separate section, and no field on their data that a renderer could later hang a label off.
+
+**Decision 4 (discernment, statement 35) — closed.** The statement is gone. "I decide something is
+off about a person before I could say what it is" is replaced by "I have raised a worry about
+something said to be from God, and the people I took it to later agreed": in 1 Corinthians 12:10,
+14:29 and 1 John 4:1 the thing weighed is a message or a claim to speak for God, never a first
+impression of a person, and the new sentence is silent about how the reader knew, so a Pentecostal
+and a cessationist can both answer it truthfully. A second discernment statement changed with it.
+
+**Decision 6 (gifts with no "people come to me" statement) — closed.** Recounted from
+`spiritual-gifts.ts` for this pass: seven of the thirteen had one and six had none, not eight and
+five. All six now have one, and so do all six new gifts, so every one of the nineteen has exactly
+one statement about what other people bring you, one about what you do or what happened, and one
+reverse item.
+
+**The numbers.** Two drafts, two critics, an editor, four adversarial reviews (Pentecostal,
+cessationist, Catholic and Orthodox, method and evidence) and a closing editor. The four reviews
+raised **55 findings and one observation: 1 blocker, 25 majors, 29 minors. 48 applied, 6
+part-applied, 1 rejected**, and the observation applied. **The one blocker is closed** (the tongues
+summary pointed back at the definition and granted the identification the statements were written
+not to grant; it now repeats the statements' own words and says what they cannot say). The
+instrument is nineteen gifts and fifty-seven statements, 38 keyed +1 and 19 keyed -1, longest
+statement 21 words. The whole record, with every finding and its verdict, is `gifts-all-final.md`;
+the data it was wired from is `gifts-all-final.json`; `gifts-final.md` describes the superseded
+thirteen-gift version and says so at the top.
+
+**After wiring, from the phone captures (the main editor, 2026-09-20).** Three changes, none to a
+statement. (1) The gifts draft note was cut to four sentences: as wired it repeated, at length, what
+the `disputed` and `omitted` notes say a few centimetres further down, and on a phone it stood as a
+wall between a reader and their own result. What it lost is still said once, in those two notes;
+the long version stays on record in `gifts-all-final.md` section 5. (2) The line under the result
+headline no longer repeats the headline. It reads "Tongues came out highest. Next: encouraging,
+evangelism, prophecy and the gift of faith.": every gift level on the second-highest score is
+named (up to four, and only those that clear the naming floor), not the first of them by spelling.
+(3) The quiz intro gained `notes.introShort` and a start button near the top. The frame, the
+disagreement and what is not scored are all still printed before the statements, below that
+button, and again with the result; but the only way in was under all of them, six screens down.
+Also by the main editor, and told to the owner in one sentence: wisdom displays as "the word of
+wisdom", as the closing editor recommended.

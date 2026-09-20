@@ -9,7 +9,7 @@ import AxisDepth from '../../../components/AxisDepth.astro';
 import ShareBlock from '../../../components/ShareBlock.astro';
 import EmailCapture from '../../../components/EmailCapture.astro';
 import { getQuiz, resultFor, decodeFor, outcomeHref } from '../../../lib/engine/registry';
-import { outcomeNounPlural, rankWord } from '../../../lib/engine/types';
+import { groupNoteFor, outcomeNounPlural, rankWord } from '../../../lib/engine/types';
 import { isConfigured } from '../../../lib/email/provider';
 import { readEnv } from '../../../lib/email/env';
 import { getCollection } from 'astro:content';
@@ -79,6 +79,16 @@ const silentAxes =
 /** A gift the reader came out low on needs its caveat beside it, not in a footer. */
 const showLow =
   view?.shape === 'unipolar' && Boolean(quiz?.notes?.low) && view.rows.some(r => r.below);
+
+/**
+ * The sentence that travels with the names in the headline, printed once directly under it.
+ *
+ * Under the headline rather than down with the other notes, because it qualifies the name a
+ * reader has just read in the largest type on the page, and because the share card draws it
+ * directly under the same words. It is an array so that "nobody was named" and "no quiz set
+ * one" are the same empty case, and never a stray empty box.
+ */
+const headlineNotes = quiz && view ? groupNoteFor(quiz, view.named, 'result') : [];
 ---
 {quiz && view ? (
   <Base
@@ -103,7 +113,18 @@ const showLow =
         ))}
       </h1>
       <p class="lede">{view.summary}</p>
-    </header>
+    </header>{/*
+      Hung off the band with no whitespace between them: an expression that renders nothing
+      still leaves the newline on each side of it, and the Compass's result page has to come
+      out of this change unchanged. The Compass sets no group note, so this renders nothing
+      and adds nothing — not a line, not a space.
+
+      The sentence that travels with the names just printed above it, once, whether one of
+      them was named or four. Never a badge and never a row: what it qualifies is the
+      headline, and the share card draws it under the same words.
+    */}{headlineNotes.map(note => (
+      <div class="note headline-note"><p>{note}</p></div>
+    ))}
     {quiz.status === 'draft' && (
       <div class="note draft"><p><strong>Unaudited draft.</strong>{" " + quiz.draftNote}</p></div>
     )}
@@ -133,12 +154,27 @@ const showLow =
       the point of the page, not a caveat about it.
     */}{showLow && <div class="note result-note"><p>{quiz.notes!.low}</p></div>}{quiz.notes?.result && (
       <div class="note result-note"><p>{quiz.notes.result}</p></div>
+    )}{quiz.notes?.disputed && (
+      <div class="note result-note">
+        <p>
+          {quiz.notes.disputed.text}
+          {/*
+            {' '} and not a literal space inside the fragment. Inside an expression the
+            compiler follows JSX whitespace rules and drops it, which on this page ran the
+            sentence straight into the link: "...you have not.The Theology Compass sets".
+          */}
+          {quiz.notes.disputed.href && quiz.notes.disputed.linkText && (
+            <>{' '}<a href={quiz.notes.disputed.href}>{quiz.notes.disputed.linkText}</a></>
+          )}
+        </p>
+      </div>
     )}{quiz.notes?.omitted && (
       <div class="note result-note">
         <p>
           {quiz.notes.omitted.text}
+          {/* Same rule as the note above: the space has to be an expression to survive. */}
           {quiz.notes.omitted.href && quiz.notes.omitted.linkText && (
-            <> <a href={quiz.notes.omitted.href}>{quiz.notes.omitted.linkText}</a></>
+            <>{' '}<a href={quiz.notes.omitted.href}>{quiz.notes.omitted.linkText}</a></>
           )}
         </p>
       </div>

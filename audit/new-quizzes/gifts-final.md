@@ -1,5 +1,13 @@
 # What are your spiritual gifts? The whole instrument on one page
 
+> **SUPERSEDED, 2026-09-22.** The owner overruled the decision to leave five gifts out, so the
+> instrument is now **nineteen gifts and fifty-seven statements**: prophecy, healing, miracles,
+> tongues, interpreting tongues and the word of knowledge were added, six "others" statements
+> replaced and discernment rewritten. **The current record is `gifts-all-final.md` beside this
+> file**, and the data it was wired from is `gifts-all-final.json`. Everything below describes the
+> thirteen-gift version and is kept as the record of it; where the two disagree, the other file is
+> the live one.
+
 Status: **draft, registered, five audit reviews applied (2026-09-20), not yet played by the owner.** Data file: `site/src/lib/quizzes/spiritual-gifts.ts`. Everything from "The copy around it" down to the running order is generated from that file, so the wording here is the wording a reader will meet. What the audit changed, and what it left for the owner, is in `AUDIT-LOG.md` beside this file.
 
 Thirteen gifts, three statements each, 39 statements, about 5 minutes. Every gift has statements keyed in both directions (26 keyed +1, 13 keyed -1). Longest statement: 19 words. Every quotation is verbatim from the World English Bible British Edition on disk and is machine-checked as a substring of it on every build.

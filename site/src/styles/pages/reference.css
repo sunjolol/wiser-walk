@@ -42,6 +42,9 @@
   margin: 0; font-family: var(--display); font-size: 1.22rem; line-height: 1.45;
   color: var(--ink); text-wrap: pretty;
 }
+/* a long definition comes in paragraphs of three sentences; the first keeps the panel's own
+   top edge, and the rest are separated by a line rather than run together */
+.ref-lead + .ref-lead { margin-top: .85rem; }
 
 .ref .correction { margin-top: 2rem; }
 

@@ -379,8 +379,8 @@ export const bibleFigure: FigureQuiz = {
   status: 'draft',
   draftNote:
     'This one is a draft. Its statements and placements have had five adversarial reviews, ' +
-    'not the full fairness audit the Theology Compass went through, and nobody has played it ' +
-    'yet. Every figure is placed by cited, recorded acts, and each reference has been checked ' +
+    'not the full fairness audit the Theology Compass went through. ' +
+    'Every figure is placed by cited, recorded acts, and each reference has been checked ' +
     'against the text: the references, not the placements, because where a figure sits is ' +
     'still an editor’s judgement. Two of the figures, Judith and Tobit, come from books that ' +
     'Catholic and Orthodox Bibles contain and Protestant Bibles leave out or print as ' +

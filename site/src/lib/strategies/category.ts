@@ -6,7 +6,7 @@
  * strategy, so the permalink codec, the result page and the share card stay generic.
  */
 import { makeCodec } from '../engine/codec';
-import { resultNotes } from '../engine/types';
+import { groupNoteFor, resultNotes } from '../engine/types';
 import type { Quiz, ScoringStrategy, Sheet, UnipolarRow, UnipolarView } from '../engine/types';
 
 function spanOf(quiz: Quiz, group: number): number {
@@ -76,8 +76,12 @@ function tieMargin(quiz: Quiz): number {
  * they were "Envy and gluttony" — the alphabetically first two of seven tied at the bottom.
  * The most emphatic denial the instrument accepts came back as an accusation.
  */
+function namingFloor(quiz: Quiz): number {
+  return quiz.config.namingFloor ?? 10;
+}
+
 function nothingNamed(quiz: Quiz, values: number[]): boolean {
-  const floor = quiz.config.namingFloor ?? 10;
+  const floor = namingFloor(quiz);
   return values.every(v => v - 50 <= floor);
 }
 
@@ -144,7 +148,17 @@ export const category: ScoringStrategy = {
      */
     const flatScores = nothingNamed(quiz, values);
     const top = ranked[0]?.score ?? 50;
-    const level = ranked.filter(r => top - r.score <= tieMargin(quiz));
+    /*
+     * Being close to the leader is not enough: a row must clear the naming floor ITSELF.
+     *
+     * The floor is the line below which this instrument says nothing stood out, and the
+     * leader has always had to clear it. A row a single rung behind had not, so on the gifts
+     * quiz a reader whose best other row was 75 was also told 67 — which is exactly what
+     * agreeing with everything scores, on every row, for everybody. Naming a row at the
+     * number a content-free sheet produces is naming the keying, not the reader.
+     */
+    const floor = namingFloor(quiz);
+    const level = ranked.filter(r => top - r.score <= tieMargin(quiz) && r.score - 50 > floor);
     /*
      * Five or more level is the flat state, and says so in the flat state's own words.
      * Nothing stood out; a list of five is the instrument admitting that, at length.
@@ -182,8 +196,21 @@ export const category: ScoringStrategy = {
     } else {
       state = 'clear';
       headline = led(ranked[0]!.name);
+      /*
+       * Under a lead the headline is already the sentence "Your answers pointed most to
+       * tongues", and the summary printed beneath it used to open by saying it again. It now
+       * says the one thing the headline does not: what came next. "Next" is every row on the
+       * second-highest score, not the first of them by spelling, and only rows that clear
+       * the naming floor themselves; more than four level is a crowd, not a runner-up, and
+       * is left unsaid. The summary is also the page's meta description, so it has to stand
+       * on its own: it names the leader in its own words.
+       */
+      const first = ranked[0]!.name;
+      const rest = ranked.slice(1);
+      const next = rest.filter(r => r.score === rest[0]?.score && r.score - 50 > floor);
+      const nextNames = next.length && next.length <= MOST_NAMED ? ` Next: ${joinNames(next.map(r => r.name))}.` : '';
       summary = lead
-        ? `${lead} ${ranked[0]!.name}. Next: ${ranked[1]?.name ?? '—'}.`
+        ? `${first.charAt(0).toUpperCase() + first.slice(1)} came out highest.${nextNames}`
         : `Strongest pull: ${ranked[0]!.name}. Next: ${ranked[1]?.name ?? '—'}.`;
     }
 
@@ -231,7 +258,8 @@ export const category: ScoringStrategy = {
      * message cannot carry with them. Omit shareTop and every row prints, as before.
      */
     const top = quiz.unipolarCopy?.shareTop;
-    (top ? ranked.slice(0, Math.max(1, top)) : ranked).forEach(({ g, v }) => {
+    const printed = top ? ranked.slice(0, Math.max(1, top)) : ranked;
+    printed.forEach(({ g, v }) => {
       const filled = Math.max(0, Math.min(CELLS, Math.round(((v - 50) / 50) * CELLS)));
       let bar = '';
       for (let k = 0; k < CELLS; k++) bar += k < filled ? '█' : '░';
@@ -240,6 +268,15 @@ export const category: ScoringStrategy = {
     // A named outcome's own sentence travels with it here too, by the same rule as the
     // bipolar card. No ranked quiz lists outcomes today, so today this adds nothing.
     for (const note of resultNotes(quiz, this.result(quiz, values))) lines.push(note);
+    /*
+     * ...and a sentence that travels with a GROUP name, against the rows this text actually
+     * printed rather than the rows the headline named. The share text prints the top three,
+     * so a gift the page did not name can still be pasted into a group chat by name — and it
+     * is the name travelling that the sentence has to travel with.
+     */
+    for (const note of groupNoteFor(quiz, printed.map(({ g }) => g.slug), 'share')) {
+      lines.push(note);
+    }
     lines.push(`${origin}/r/${quiz.slug}/${this.encode(quiz, values)}`);
     return lines.join('\n');
   }

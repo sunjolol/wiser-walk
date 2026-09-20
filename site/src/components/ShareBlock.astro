@@ -24,7 +24,7 @@
  * wrong for a visitor is the costlier error.
  */
 import type { BipolarView, Quiz, ResultView } from '../lib/engine/types';
-import { resultNotes } from '../lib/engine/types';
+import { groupNoteFor, resultNotes } from '../lib/engine/types';
 import { quizHref, inviteHref } from '../lib/engine/registry';
 
 interface Props {
@@ -57,8 +57,12 @@ const card = {
    * reader of it never sees the note printed beside the card on the result page. So the
    * name and the sentence leave together or not at all. A quiz whose outcomes carry no
    * notes — the Compass — sends an empty list, and the card is drawn exactly as before.
+   *
+   * A sentence that travels with a GROUP name rides the same path, for the same reason: the
+   * gifts draft names six gifts Christians disagree about, and the card is the surface that
+   * travels furthest from the page that explains them.
    */
-  notes: resultNotes(quiz, view),
+  notes: [...resultNotes(quiz, view), ...groupNoteFor(quiz, view.named, 'result')],
   noClaimSpan: view.shape === 'bipolar' ? (view as BipolarView).noClaimSpan : null,
   rows: view.rows.map(r =>
     'left' in r

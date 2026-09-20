@@ -12,6 +12,7 @@
 import Icon from './Icon.astro';
 import type { Quiz } from '../lib/engine/types';
 import { groupHref } from '../lib/engine/registry';
+import { paragraphs } from '../lib/prose';
 
 export interface Props {
   quiz: Quiz;
@@ -74,7 +75,18 @@ const slots = Math.max(2, quiz.config.radix);
         <a class="rankpv-row" href={groupHref(quiz, g)}>
           <span class="rankpv-name">{g.name}</span>
           <span class="rankpv-go" aria-hidden="true"><Icon name="arrow" size={14} /></span>
-          {g.summary && <span class="rankpv-note">{g.summary}</span>}
+          {/*
+            Whole, in paragraphs, never cut. Six of the gifts draft's nineteen definitions
+            run to a dozen sentences, and a dozen sentences in one block is a paragraph a
+            reader skips — which on THIS page means skipping the sentence saying the
+            statements cannot see what an event was. Broken at sentence ends, three to a
+            paragraph; a one-sentence definition comes out exactly as it did.
+          */}
+          {g.summary && (
+            <span class="rankpv-note">
+              {paragraphs(g.summary).map(p => <span class="rankpv-para">{p}</span>)}
+            </span>
+          )}
           <span class="rankpv-scale" style={`--slots:${slots}`} aria-hidden="true">
             <span class="rankpv-end">None</span>
             <span class="rankpv-tick"></span>

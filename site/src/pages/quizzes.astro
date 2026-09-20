@@ -19,7 +19,7 @@ import QuizFeature from '../components/QuizFeature.astro';
 import QuizIndexCard from '../components/QuizIndexCard.astro';
 import Icon from '../components/Icon.astro';
 import { QUIZZES, getQuiz, quizHref } from '../lib/engine/registry';
-import { outcomeNounPlural } from '../lib/engine/types';
+import { groupNounPlural, outcomeNounPlural } from '../lib/engine/types';
 import type { Quiz } from '../lib/engine/types';
 
 const compass = getQuiz('theology-compass')!;
@@ -49,22 +49,28 @@ const WORDS = [
 const word = (n: number) => WORDS[n] ?? String(n);
 
 const bipolar = (q: Quiz) => q.strategy.shape === 'bipolar';
-/** What a quiz's groups are called wherever the page has to name them in the plural. */
-const groupNoun = (q: Quiz) => (bipolar(q) ? 'axes' : 'categories');
+/**
+ * What a quiz's groups are called wherever the page has to name them in the plural.
+ *
+ * A bipolar quiz's are axes. A unipolar quiz's are "categories" unless it has a truer word
+ * of its own: the gifts draft's nineteen are gifts, and "19 categories" on its card is the
+ * engine's vocabulary leaking onto a reader's page.
+ */
+const groupWord = (q: Quiz) => (bipolar(q) ? 'axes' : groupNounPlural(q));
 /** The small-caps line over a feature block's title: what shape the instrument is. */
 /* Short enough to sit on one line beside a draft's chip at 360px: a kicker that wraps
    leaves one tracked uppercase word stranded under the chip. */
 const kicker = (q: Quiz) =>
   bipolar(q)
     ? `${word(q.groups.length)} axes · both ends named`
-    : `${word(q.groups.length)} categories · ranked`;
+    : `${word(q.groups.length)} ${groupNounPlural(q)} · ranked`;
 /**
  * The index card's line of facts, and the rotated tag on its stripe. Between them each
  * card carries its length, its size and its shape, and carries none of them twice: the tag
  * takes the minutes because a rotated tag has room for a word and a half, and a quiz whose
  * groups are called categories would run off the bottom of the stripe.
  */
-const facts = (q: Quiz) => `${q.items.length} statements · ${q.groups.length} ${groupNoun(q)}`;
+const facts = (q: Quiz) => `${q.items.length} statements · ${q.groups.length} ${groupWord(q)}`;
 const tag = (q: Quiz) => `${q.minutes} min`;
 
 /**
@@ -74,7 +80,7 @@ const tag = (q: Quiz) => `${q.minutes} min`;
  */
 const specs = (q: Quiz) => [
   { dt: 'Takes', dd: `about ${q.minutes} minutes` },
-  { dt: 'Statements', dd: `${q.items.length}, across ${q.groups.length} ${groupNoun(q)}` },
+  { dt: 'Statements', dd: `${q.items.length}, across ${q.groups.length} ${groupWord(q)}` },
   q.outcomes.length
     ? { dt: 'Compares you with', dd: `${q.outcomes.length} ${outcomeNounPlural(q)}` }
     : { dt: 'Names', dd: `the strongest of ${word(q.groups.length)}, in words` },

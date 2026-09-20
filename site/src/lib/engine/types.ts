@@ -60,6 +60,17 @@ export interface QuizGroup {
    * `history` is headed "How the argument unfolded", which is false for these.
    */
   acts?: Array<{ ref: string; what: string }>;
+  /**
+   * What to call that list, where "What it has looked like" and "N recorded acts, each
+   * cited" would be FALSE.
+   *
+   * The gifts draft has two: the New Testament calls no act a word of knowledge, and Acts
+   * never shows anyone interpreting tongues, so both summaries say the passages below are
+   * not acts — and a heading counting them as acts would contradict the paragraph directly
+   * above it. A group that says nothing keeps the page's own words exactly.
+   */
+  actsHeading?: string;
+  actsKicker?: string;
 }
 
 /**
@@ -321,6 +332,26 @@ export interface UnipolarCopy {
 export interface QuizNotes {
   /** On the quiz's intro, before the preview: what this instrument can and cannot see. */
   intro?: string;
+  /**
+   * One sentence of `intro`, printed with a start button near the TOP of the intro page.
+   *
+   * Without it the only start button sits under everything the quiz says about itself, which
+   * is right for a quiz that says little. The gifts draft says a great deal (its frame, the
+   * disagreement it describes, what it does not score), and on a phone that put the button
+   * six screens down. With this set, a reader meets the one sentence that matters and a way
+   * in; the full notes stay where they were, below, for the reader who wants them first,
+   * and the result page repeats them. A quiz that sets nothing is laid out as it always was.
+   */
+  introShort?: string;
+  /**
+   * One line above the answer scale, in the runner, on every statement.
+   *
+   * For how to READ the statements, never for how to feel about them. The gifts draft's says
+   * that disagreeing with a thing that never happened is an honest answer, because without it
+   * a reader reaches for "Unsure / neither" on every event statement — and that answer, with
+   * "disagree" on the reverse items, scores the same on all six of its disputed rows.
+   */
+  scale?: string;
   /** On the result page, under the ranking, in the same place for every reader. */
   result?: string;
   /** What a group coming out low means. Printed only where a low group is shown. */
@@ -332,8 +363,42 @@ export interface QuizNotes {
    */
   depthTitle?: string;
   depthNote?: string;
+  /**
+   * A disagreement the quiz DESCRIBES and does not settle, printed once with the intro and
+   * once with the result, above `omitted` in both places.
+   *
+   * Separate from `omitted` because they are two different admissions: "these statements have
+   * nothing to say about that" is a fact about the instrument, and "Christians reading the
+   * same passages disagree" is a fact about Christians. Running them together would read as
+   * the second being the reason for the first, which on the gifts draft is now false — all
+   * the gifts are in, and the disagreement is described rather than avoided.
+   */
+  disputed?: { text: string; linkText?: string; href?: string };
   /** Something the quiz leaves out on purpose, and where the disagreement is set out. */
   omitted?: { text: string; linkText?: string; href?: string };
+}
+
+/**
+ * A sentence that travels with certain GROUP names, by the same rule an Outcome.note travels
+ * with an outcome's: wherever one of those names is printed, the sentence is printed once —
+ * not once per name, and not at all when none of them is named.
+ *
+ * It exists because a qualification that appears beside a name on the result page and not on
+ * the picture someone posts is the fairness problem, not a formatting detail. The gifts draft
+ * is the case it was written for: six of its nineteen gifts are ones Christians disagree
+ * about, the quiz takes no side, and the six must therefore carry no badge, chip, grouping or
+ * separate section anywhere — nothing is attached to a row. One sentence in one place is the
+ * whole of it.
+ *
+ * A quiz that sets nothing here is byte-for-byte what it was before this existed.
+ */
+export interface GroupNote {
+  /** Group KEYS. Slugs are resolved from the quiz, so a rename cannot silently unhook this. */
+  groups: string[];
+  /** Under the headline on the result page, and on the share card. */
+  result: string;
+  /** One line of its own, immediately above the link, in the share text. */
+  share: string;
 }
 
 export interface Quiz {
@@ -408,8 +473,24 @@ export interface Quiz {
    */
   hideOutcomeScore?: boolean;
 
+  /*
+   * ---- What this quiz calls its own GROUPS -------------------------------------------
+   *
+   * A bipolar quiz's groups are axes and every page already says so. A unipolar quiz's are
+   * "categories" by default — the word the seven-deadly-sins draft is counted in — and a
+   * quiz whose categories have a real name of their own says it here, so the hub can print
+   * "19 gifts" rather than "19 categories". Nothing else changes, and a quiz that sets
+   * neither is counted in exactly the words it was counted in before.
+   */
+  /** Singular, lower case, mid-sentence: "category", "gift". */
+  groupNoun?: string;
+  /** Plural, lower case: "categories", "gifts". Headings capitalise it themselves. */
+  groupNounPlural?: string;
+
   /** Copy this quiz supplies for its own pages; see QuizNotes. */
   notes?: QuizNotes;
+  /** A sentence that travels with certain group names; see GroupNote. */
+  groupNote?: GroupNote;
   /** Unipolar copy that replaces the vice-shaped defaults; see UnipolarCopy. */
   unipolarCopy?: UnipolarCopy;
 }
@@ -454,6 +535,35 @@ export function notesFor(quiz: Quiz, slugs: string[]): string[] {
 /** The same, for a caller that already has the finished view. */
 export const resultNotes = (quiz: Quiz, view: ResultView): string[] =>
   notesFor(quiz, view.named);
+
+/**
+ * The sentence that travels with a set of group names, if any of them was printed.
+ *
+ * Returns a list so that every caller can concatenate it onto the outcome notes and keep one
+ * rule for both: a note is a whole line of its own, and it sits immediately above the link.
+ * It is one sentence however many of the named groups appear, because it is a sentence about
+ * the disagreement, not a label on a gift — and a label on a gift is the thing this quiz is
+ * forbidden to print.
+ *
+ * `slugs` is whatever that surface actually printed by name: the view's `named` on the page
+ * and the card, the rows the share text chose on the share text.
+ */
+export function groupNoteFor(
+  quiz: Quiz,
+  slugs: string[],
+  which: 'result' | 'share'
+): string[] {
+  const note = quiz.groupNote;
+  if (!note || !slugs.length) return [];
+  const travels = new Set(
+    quiz.groups.filter(g => note.groups.includes(g.key)).map(g => g.slug)
+  );
+  return slugs.some(s => travels.has(s)) ? [note[which]] : [];
+}
+
+/** The Compass's and the sins draft's word, and the default for every quiz. */
+export const groupNoun = (q: Quiz) => q.groupNoun ?? 'category';
+export const groupNounPlural = (q: Quiz) => q.groupNounPlural ?? 'categories';
 
 /** The Compass's words, and the default for every quiz that does not say otherwise. */
 export const outcomeNoun = (q: Quiz) => q.outcomeNoun ?? 'tradition';

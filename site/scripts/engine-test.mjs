@@ -50,7 +50,7 @@ await build({
   target: 'node18',
   logLevel: 'silent'
 });
-const { isUniformSheet, centresUniformSheets, resultNotes } =
+const { isUniformSheet, centresUniformSheets, groupNoteFor, resultNotes } =
   await import(pathToFileURL(OUT_TYPES).href);
 
 let failures = 0;
@@ -809,11 +809,265 @@ console.log('12. what are your spiritual gifts?');
 
     // The share card shows the top three. The bottom of a gifts ranking is the part a
     // reader would least want pasted anywhere, and the page's caveat cannot travel with it.
+    // A hospitality sheet prints hospitality, serving and teaching, none of which carries the
+    // travelling sentence, so the count is the title, three bars and the link.
     const lines = shareTextFor(sg, scoreQuiz(sg, sheet), 'https://wiserwalk.com').split('\n');
     if (lines.length !== 1 + (sg.unipolarCopy?.shareTop ?? sg.groups.length) + 1) {
       fail(`gifts share text has ${lines.length} lines:\n` + lines.join('\n'));
     } else ok(`gifts share text prints ${sg.unipolarCopy.shareTop} rows, not all ${sg.groups.length}`);
   }
+}
+
+// --------------------------------- 12b. nineteen gifts: the instrument's own shape
+console.log('12b. nineteen gifts, fifty-seven statements');
+{
+  const sg = getQuiz('spiritual-gifts');
+  const keyOf = i => sg.groups[sg.items[i].group].key;
+
+  if (sg.groups.length !== 19) fail(`expected 19 gifts, got ${sg.groups.length}`);
+  else if (sg.items.length !== 57) fail(`expected 57 statements, got ${sg.items.length}`);
+  else ok('19 gifts, 57 statements');
+
+  // Three each, one of them reverse-keyed. Two reverse items on one gift would score the
+  // reader's caution; none would score their agreeableness.
+  const wrong = sg.groups.filter((_, i) => {
+    const mine = sg.items.filter(it => it.group === i);
+    return mine.length !== 3 || mine.filter(it => it.direction === -1).length !== 1;
+  });
+  if (wrong.length) fail('gifts without exactly three statements and one reverse item: ' +
+                         wrong.map(g => g.key).join(','));
+  else ok('every gift has exactly three statements and exactly one keyed -1');
+
+  // Rule 1 of the blueprint, at the length the closing editor measured: 21 words, on
+  // discernment's "others" statement. Anything longer is a second claim wearing a comma.
+  const long = sg.items.filter(it => it.text.trim().split(/\s+/).length > 21);
+  if (long.length) fail('statements over 21 words: ' + long.map(it => `#${it.n}`).join(','));
+  else {
+    const most = Math.max(...sg.items.map(it => it.text.trim().split(/\s+/).length));
+    ok(`no statement is over 21 words (longest ${most})`);
+  }
+
+  /*
+   * The running order. A reader meets one statement at a time, and two in a row about the
+   * same thing announce what is being measured — which is the whole reason the gift is
+   * never named beside the statement. Three rounds of nineteen with different strides keep
+   * every gift apart from itself, and the pairs below apart from each other, because a
+   * reader who meets prophecy and then discernment reads one question asked twice.
+   */
+  const NEVER_ADJACENT = [
+    ['prophecy', 'knowledge'], ['prophecy', 'wisdom'], ['prophecy', 'discernment'],
+    ['prophecy', 'encouraging'],
+    ['knowledge', 'wisdom'], ['knowledge', 'discernment'], ['knowledge', 'teaching'],
+    ['healing', 'miracles'], ['healing', 'faith'], ['healing', 'mercy'],
+    ['miracles', 'faith'], ['miracles', 'mercy'],
+    ['tongues', 'interpretation']
+  ];
+  const banned = new Set(NEVER_ADJACENT.flatMap(([a, b]) => [`${a}|${b}`, `${b}|${a}`]));
+  let sameGift = 0, nearPair = [];
+  for (let i = 1; i < sg.items.length; i++) {
+    const a = keyOf(i - 1), b = keyOf(i);
+    if (a === b) { sameGift++; fail(`statements ${i} and ${i + 1} are both ${a}`); }
+    if (banned.has(`${a}|${b}`)) nearPair.push(`${i}/${i + 1} ${a}+${b}`);
+  }
+  if (!sameGift) ok('no two statements from one gift are adjacent in the running order');
+  if (nearPair.length) fail('neighbouring gifts sit side by side: ' + nearPair.join(', '));
+  else ok(`none of the ${NEVER_ADJACENT.length} near-pairs is ever adjacent`);
+
+  // The reader's last impression is not the contested ground.
+  const SIX = sg.groupNote.groups;
+  const last = keyOf(sg.items.length - 1);
+  if (SIX.includes(last)) fail(`the last statement is ${last}, one of the six`);
+  else ok(`the last statement is ${last}, not one of the six`);
+
+  /*
+   * NOTHING marks the six out. No badge, no chip, no grouping, no second-class placement —
+   * and the way that fails quietly is a field on the data that a renderer later hangs a
+   * label off. The only per-group difference in the file is the acts heading on the two
+   * gifts the New Testament records no act of, and it is about the LIST, not the gift.
+   */
+  const ABOUT_THE_LIST = ['actsHeading', 'actsKicker'];
+  const shape = g => Object.keys(g).filter(k => !ABOUT_THE_LIST.includes(k)).sort().join(',');
+  const plain = shape(sg.groups.find(g => g.key === 'serving'));
+  const marked = sg.groups.filter(g => shape(g) !== plain);
+  if (marked.length) fail('gifts carrying a field the other rows do not: ' +
+                          marked.map(g => `${g.key} (${shape(g)})`).join('; '));
+  else ok(`all 19 gifts carry the same fields: ${plain}`);
+
+  const headed = sg.groups.filter(g => g.actsHeading).map(g => g.key).sort();
+  if (headed.join(',') !== 'interpretation,knowledge') {
+    fail('the acts heading is set on: ' + headed.join(',') + ' (expected knowledge and interpretation)');
+  } else {
+    const k = sg.groups.find(g => g.key === 'knowledge');
+    if (k.actsHeading !== 'What Paul writes about it' || k.actsKicker !== '3 passages, each cited') {
+      fail(`knowledge heads its list "${k.actsHeading}" / "${k.actsKicker}"`);
+    } else ok(`knowledge and interpreting tongues head their list "${k.actsHeading}" (${k.actsKicker})`);
+  }
+}
+
+// ------------------------- 12c. nineteen gifts at radix 13: the wide codec
+console.log('12c. the wide codec carries nineteen gifts');
+{
+  const sg = getQuiz('spiritual-gifts');
+  const steps = sg.config.radix - 1;
+  const reach = Array.from({ length: sg.config.radix }, (_, s) => Math.round((s * 100) / steps));
+
+  // 13^19 is about 1.5e21 and a double holds integers exactly only to about 9.0e15. The
+  // narrow codec's arithmetic would silently drop the low digits — which here means the
+  // last few gifts of somebody's result — so this quiz must be on the BigInt codec.
+  if (Number.isSafeInteger(Math.pow(sg.config.radix, sg.groups.length))) {
+    fail('13^19 is a safe integer? then this test proves nothing');
+  } else ok('13^19 is past the safe-integer limit, so this quiz needs the wide codec');
+
+  // Every reachable value in every slot, walked so that no two slots hold the same value.
+  let bad = 0, n = 0;
+  for (let off = 0; off < sg.config.radix; off++) {
+    const values = sg.groups.map((_, i) => reach[(i + off) % sg.config.radix]);
+    const back = decodeFor(sg, encodeFor(sg, values));
+    n++;
+    if (!back || back.some((v, i) => v !== values[i])) {
+      bad++;
+      fail(`offset ${off} did not round-trip: ${back ? back.join(',') : 'null'} != ${values.join(',')}`);
+    }
+  }
+
+  /*
+   * The low digits, on their own. Two sheets identical but for the LAST gift must produce
+   * two different codes, both of which decode back exactly — that is the precise thing
+   * double arithmetic loses at this width, and it would lose it silently.
+   */
+  const base = sg.groups.map(() => 50);
+  const tail = base.map((v, i) => (i === sg.groups.length - 1 ? 100 : v));
+  const cb = encodeFor(sg, base), ct = encodeFor(sg, tail);
+  if (cb === ct) fail('two sheets differing only on the last gift encode to the same code');
+  else if (decodeFor(sg, ct).join(',') !== tail.join(',')) fail('the last gift did not survive the round trip');
+  else ok(`the last gift survives: ${cb} != ${ct}`);
+  if (!bad) ok(`${n} nineteen-gift codes round-trip exactly (length ${cb.length}, prefix ${sg.codePrefix})`);
+
+  // Junk of exactly the right length must 404, not invent nineteen scores. A wrong URL that
+  // decodes is worse than a wrong URL that fails, because the reader cannot tell.
+  const len = cb.length;
+  const body = len - sg.codePrefix.length;
+  const junk = [
+    'SG' + 'Z'.repeat(body),                       // in range of base 36, past 13^19
+    'XX' + cb.slice(sg.codePrefix.length),          // the right body, the wrong quiz
+    'SG' + '-'.repeat(body),
+    'SG' + '!'.repeat(body),
+    cb.slice(0, len - 1) + '.',
+    'S'.repeat(len)
+  ];
+  let leaked = 0;
+  for (const c of junk) {
+    if (c.length !== len) { fail(`junk code "${c}" is not ${len} characters`); continue; }
+    if (decodeFor(sg, c) !== null) { leaked++; fail(`decoded junk of the right length: ${c}`); }
+  }
+  if (!leaked) ok(`${junk.length} malformed ${len}-character codes all rejected`);
+
+  // ...and no other quiz's code opens this one, or a reader would meet a fabricated result.
+  for (const q of QUIZZES) {
+    if (q.slug === sg.slug) continue;
+    const foreign = encodeFor(q, q.groups.map(() => 50));
+    if (decodeFor(sg, foreign) !== null) fail(`a ${q.slug} code decoded under spiritual-gifts`);
+  }
+  ok('no other quiz\'s code decodes under spiritual-gifts');
+}
+
+// ------------- 12d. the naming floor, and the sentence that travels with six of the names
+console.log('12d. what is named, and what travels with the name');
+{
+  const sg = getQuiz('spiritual-gifts');
+  const SIX = sg.groupNote.groups;
+  const idx = key => sg.groups.findIndex(g => g.key === key);
+  /** A sheet that maxes these gifts and leaves the rest at no-net-agreement. */
+  const max = keys => sg.items.map(it =>
+    keys.includes(sg.groups[it.group].key) ? (it.direction === 1 ? 2 : -2) : 0);
+  const share = values => shareTextFor(sg, values, 'https://wiserwalk.com');
+  const noteResult = sg.groupNote.result;
+  const noteShare = sg.groupNote.share;
+  const countIn = (text, line) => text.split('\n').filter(l => l === line).length;
+
+  /*
+   * A row must clear the naming floor ITSELF, not merely sit within a rung of one that does.
+   *
+   * 67 is what agreeing with every statement scores, on every row, for everybody — so a 67
+   * named beside a 75 is the keying being named, not the reader. This is the one the owner
+   * was told about tongues: private use alone is +2, +2, -2, which is 67.
+   */
+  const near = sg.groups.map((_, i) => (i === idx('serving') ? 75 : i === idx('tongues') ? 67 : 50));
+  const nearView = resultFor(sg, near);
+  if (nearView.named.join(',') !== 'serving') {
+    fail('a 67 was named beside a 75: ' + nearView.named.join(','));
+  } else ok('a row at 67 is not named jointly with a leader at 75: "' + nearView.headline + '"');
+
+  // ...and the reader who agreed with all fifty-seven is told nothing stood out, which is
+  // true: every row of that sheet is the same 67.
+  const agreed = resultFor(sg, scoreQuiz(sg, sg.items.map(() => 2)));
+  if (agreed.state !== 'flat') fail('agreeing with everything gave state ' + agreed.state);
+  else if (agreed.named.length) fail('agreeing with everything named ' + agreed.named.join(','));
+  else ok('a reader who agrees with all 57 is flat: "' + agreed.headline + '"');
+
+  // ---- the sentence travels once when one of the six leads
+  const tv = scoreQuiz(sg, max(['tongues']));
+  const tongues = resultFor(sg, tv);
+  if (tongues.named.join(',') !== 'tongues') fail('a tongues sheet named ' + tongues.named.join(','));
+  else if (resultNotes(sg, tongues).length) fail('a gifts result carried an outcome note');
+  else if (groupNoteFor(sg, tongues.named, 'result').join('') !== noteResult) {
+    fail('tongues leading did not carry the sentence');
+  } else if (countIn(share(tv), noteShare) !== 1) {
+    fail('the share text did not carry the sentence once:\n' + share(tv));
+  } else ok('tongues leading: the sentence travels once, on the page and in the share text');
+
+  // ---- once, not twice, when two of the six come out level
+  const pv = scoreQuiz(sg, max(['tongues', 'healing']));
+  const pair = resultFor(sg, pv);
+  if (pair.state !== 'tie' || pair.named.length !== 2) {
+    fail(`two of the six gave ${pair.state}, ${pair.named.length} named`);
+  } else if (groupNoteFor(sg, pair.named, 'result').length !== 1) {
+    fail('two named gifts carried ' + groupNoteFor(sg, pair.named, 'result').length + ' sentences');
+  } else if (countIn(share(pv), noteShare) !== 1) {
+    fail('two named gifts put the sentence in the share text twice:\n' + share(pv));
+  } else ok(`two of the six level ("${pair.headline}"): one sentence, not two`);
+
+  // ---- not at all when none of the six is named or printed
+  const sv = scoreQuiz(sg, max(['serving']));
+  const serving = resultFor(sg, sv);
+  const printed = share(sv).split('\n').slice(1, 1 + sg.unipolarCopy.shareTop);
+  if (serving.named.join(',') !== 'serving') fail('a serving sheet named ' + serving.named.join(','));
+  else if (SIX.some(k => printed.some(l => l.endsWith(' ' + sg.groups[idx(k)].name)))) {
+    fail('one of the six reached the top three of a serving sheet:\n' + printed.join('\n'));
+  } else if (groupNoteFor(sg, serving.named, 'result').length) {
+    fail('serving leading carried the sentence');
+  } else if (share(sv).includes(noteShare)) {
+    fail('serving leading put the sentence in the share text:\n' + share(sv));
+  } else ok('serving leading, none of the six in the top three: no sentence anywhere');
+
+  /*
+   * ---- and in the SHARE TEXT when one of the six is second but not named.
+   *
+   * The share text prints the top three, so a gift the page never named by name is still
+   * pasted into a group chat by name — and it is the name travelling that the sentence has
+   * to travel with. Healing at 83 against a leader at 100 is outside the tie margin, so the
+   * page names serving alone and says nothing; the card someone posts says healing.
+   */
+  const second = sg.items.map(it => {
+    const k = sg.groups[it.group].key;
+    if (k === 'serving') return it.direction === 1 ? 2 : -2;
+    if (k === 'healing') return it.direction === 1 ? 2 : 0;
+    return 0;
+  });
+  const secondV = scoreQuiz(sg, second);
+  const secondView = resultFor(sg, secondV);
+  const lines = share(secondV).split('\n');
+  if (secondView.named.join(',') !== 'serving') {
+    fail('the second-place sheet named ' + secondView.named.join(','));
+  } else if (groupNoteFor(sg, secondView.named, 'result').length) {
+    fail('the page carried the sentence for a gift it did not name');
+  } else if (!lines[2].endsWith(' healing')) {
+    fail('healing is not the second row of the share text:\n' + lines.join('\n'));
+  } else if (countIn(share(secondV), noteShare) !== 1) {
+    fail('the share text did not carry the sentence once:\n' + lines.join('\n'));
+  } else if (lines[lines.length - 2] !== noteShare) {
+    fail('the sentence is not the line immediately above the link:\n' + lines.join('\n'));
+  } else ok('healing second in the share text: the sentence travels there and not on the page');
 }
 
 // ------------------------- 13. the gift quotations are verbatim, checked against the text
@@ -1004,12 +1258,21 @@ console.log('14. the note travels with the name it belongs to');
     } else ok(`both named figures' sentences travel (Jesus and ${second}), in that order`);
   }
 
-  // Every quiz: a note line is a whole line of its own, never glued to the link.
+  /*
+   * Every quiz: a note line is a whole line of its own, never glued to the link.
+   *
+   * Two kinds of sentence travel now. An outcome's goes with the names the RESULT chose; a
+   * group's goes with the names this TEXT printed, which on a quiz that shares only its top
+   * rows is a different list. Both end up in the same place, and this is the rule that says
+   * so, for every quiz at once.
+   */
   for (const q of QUIZZES) {
     const values = q.groups.map((_, i) => (i % 2 ? 75 : 25));
     const lines = shareTextFor(q, values, 'https://wiserwalk.com');
     const view = resultFor(q, values);
-    const notes = resultNotes(q, view);
+    const printed = lines.split('\n').slice(1, -1);
+    const shown = q.groups.filter(g => printed.some(l => l.endsWith(' ' + g.name))).map(g => g.slug);
+    const notes = [...resultNotes(q, view), ...groupNoteFor(q, shown, 'share')];
     const want = notes.length ? notes.join('\n') + '\n' : '';
     if (!lines.endsWith(`${want}https://wiserwalk.com/r/${q.slug}/${view.code}`)) {
       fail(`${q.slug}: the notes do not sit immediately above the link:\n` + lines);

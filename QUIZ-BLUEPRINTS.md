@@ -105,6 +105,14 @@ Statement rules (both quizzes), checked adversarially before anything is wired:
   Compass's own Gifts axis), a self-report cannot fairly measure them, and the owner has not yet
   decided how to include them without taking a side. The page must not imply they are lesser or
   that they have ceased. This is an open decision for the owner, flagged in the draft note.
+  - **OVERRULED by the owner on 2026-09-22: all the gifts are in.** His words: "just because
+    cessationists disagree doesn't mean we leave them out". The instrument is now nineteen gifts
+    and fifty-seven statements, with the word of knowledge added beside the five named above, and
+    the disagreement is described in a note on the intro and the result rather than avoided by
+    leaving gifts out. Nothing marks the six out anywhere — no badge, no grouping, no separate
+    section. The record of that pass, with every statement, every finding and the wording that
+    was shipped, is `audit/new-quizzes/gifts-all-final.md`; the data it was wired from is
+    `gifts-all-final.json`. The paragraph above is kept as the record of what was decided before.
 - Each gift's page reuses the existing `/axis/<quiz>/<group>/` route: the passage, what it has
   looked like in the recorded life of the early church (cited acts only, from Acts and the letters),
   and nothing invented.

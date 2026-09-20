@@ -9,8 +9,9 @@ import PassagePills from '../../../components/PassagePills.astro';
 import CorrectionNote from '../../../components/CorrectionNote.astro';
 import { QUIZZES, getQuiz, groupHref, quizHref } from '../../../lib/engine/registry';
 import {
-  capitalise, isSplitReadMore, outcomeNounPlural, readMoreAll
+  capitalise, groupNoun, groupNounPlural, isSplitReadMore, outcomeNounPlural, readMoreAll
 } from '../../../lib/engine/types';
+import { paragraphs } from '../../../lib/prose';
 
 /**
  * Long-form pages for a quiz's groups. The route is generic; only groups that carry
@@ -74,10 +75,15 @@ const tiles = [
   { n: statements, label: 'Statements' },
   ...(history.length ? [{ n: history.length, label: 'Moments' }] : []),
   ...(passages.length ? [{ n: passages.length, label: 'Passages' }] : []),
-  ...(acts.length ? [{ n: acts.length, label: 'Recorded acts' }] : []),
+  // "Recorded acts" is the truth for every group that has not said otherwise. The two that
+  // have — the word of knowledge and interpreting tongues — have no recorded act in the New
+  // Testament at all, so the tile counts what the list actually holds.
+  ...(acts.length
+    ? [{ n: acts.length, label: group.actsHeading ? 'Passages' : 'Recorded acts' }]
+    : []),
   ...(bipolar && placed
     ? [{ n: placed, label: capitalise(plural) }]
-    : [{ n: quiz.groups.length, label: 'Categories' }])
+    : [{ n: quiz.groups.length, label: capitalise(groupNounPlural(quiz)) }])
 ];
 
 /**
@@ -232,12 +238,19 @@ const breadcrumbs =
       <>
         <SectionHead
           title="What it means"
-          kicker={`Category ${index + 1} of ${quiz.groups.length}`}
+          kicker={`${capitalise(groupNoun(quiz))} ${index + 1} of ${quiz.groups.length}`}
         />
         <div class="panel layered ref-panel">
           <div class="wash" aria-hidden="true"></div>
           <div class="veil" aria-hidden="true"></div>
-          <p class="ref-lead">{group.summary}</p>
+          {/*
+            Whole, and in paragraphs. Nothing is cut and nothing is reordered — the break is
+            put at a sentence end, three sentences to a paragraph, because the gifts draft's
+            longest summaries run to twelve and twelve sentences of display serif in one
+            block at 390px is a wall. A summary of three or fewer comes out as the one
+            paragraph it already was, so the sins draft's pages are unchanged.
+          */}
+          {paragraphs(group.summary!).map(p => <p class="ref-lead">{p}</p>)}
         </div>
       </>
     )}{/*
@@ -246,9 +259,16 @@ const breadcrumbs =
       claim that these people had this gift; the page says what the text records.
     */}{acts.length > 0 && (
       <>
+        {/*
+          A group may name this list itself, because for two of the gifts the page's own
+          words are false: the New Testament calls no act a word of knowledge, Acts never
+          shows anyone interpreting tongues, and both summaries directly above say so. A
+          heading counting three of Paul's sentences as "3 recorded acts" would contradict
+          the paragraph it sits under. Every other group keeps these words exactly.
+        */}
         <SectionHead
-          title="What it has looked like"
-          kicker={`${acts.length} recorded acts, each cited`}
+          title={group.actsHeading ?? 'What it has looked like'}
+          kicker={group.actsKicker ?? `${acts.length} recorded acts, each cited`}
         />
         <div class="panel layered ref-panel ref-panel--quiet">
           <div class="wash" aria-hidden="true"></div>
@@ -334,7 +354,7 @@ const breadcrumbs =
         <p>
           {bipolar
             ? `Answer the statements and the whole map is drawn for you — every axis, and the ${plural} that sit nearest to where you land.`
-            : 'Answer the statements and every category is ranked by how much pull it has on you.'}
+            : `Answer the statements and every ${groupNoun(quiz)} is ranked by how much pull it has on you.`}
         </p>
         <div class="btn-row">
           <a class="btn" href={quizHref(quiz)}>{takeIt}</a>
