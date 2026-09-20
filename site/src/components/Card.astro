@@ -1,9 +1,10 @@
 ---
 /**
- * One card for a quiz, a game or an article. The whole card is the link (a 44px tap target
- * is not enough when the card is the only thing a thumb is aiming at), the icon sits in a
- * tinted chip, and the grey meta line ends in an arrow so the card reads as somewhere to go.
- * `feature` is for the first thing on a page: it takes the full row and the textured panel.
+ * The stripe card, for a quiz, a game or an article in a list.
+ *
+ * From the Epitaph reference: a vertical stripe with the spectrum poured through smoke, a
+ * rotated tag standing on it, a medallion overlapping its edge, and a dark tab in the top
+ * corner saying what kind of thing this is. The whole card is the link.
  */
 import Icon from './Icon.astro';
 
@@ -11,22 +12,23 @@ export interface Props {
   href: string;
   title: string;
   text: string;
+  /** The rotated tag on the stripe: "3 min", "18 statements". Keep it short. */
   meta?: string;
+  /** The corner tab: "Quiz", "Game", "Article", "Draft". */
+  tab?: string;
+  /** The words beside the arrow. */
+  go?: string;
   icon?: 'compass' | 'flame' | 'scroll' | 'book' | 'arrow';
   feature?: boolean;
 }
-const { href, title, text, meta, icon, feature = false } = Astro.props;
+const { href, title, text, meta, tab, go = 'Open', icon = 'book' } = Astro.props;
 ---
-<a class:list={['card', 'card-link', feature && 'card-feature layered']} href={href}>
-  {feature && <div class="wash" aria-hidden="true"></div>}
-  {feature && <div class="veil" aria-hidden="true"></div>}
-  <div class="card-top">
-    {icon && <span class="card-chip" aria-hidden="true"><Icon name={icon} size={19} /></span>}
-    <h3>{title}</h3>
-  </div>
+<a class="scard" href={href}>
+  <span class="scard-stripe" aria-hidden="true">{meta && <span class="scard-tag">{meta}</span>}</span>
+  <span class="scard-medal" aria-hidden="true"><Icon name={icon} size={20} /></span>
+  {tab && <span class="scard-tab">{tab}</span>}
+  <h3>{title}</h3>
   <p>{text}</p>
-  <p class="meta">
-    <span>{meta}</span>
-    <span class="card-go" aria-hidden="true"><Icon name="arrow" size={16} /></span>
-  </p>
+  <span class="scard-go">{go} <Icon name="arrow" size={14} /></span>
+  {meta && <span class="sr-only"> ({meta})</span>}
 </a>

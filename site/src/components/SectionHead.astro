@@ -1,0 +1,16 @@
+---
+/**
+ * A section heading: a whispered kicker, the title in lowercase italic display over a short
+ * spectrum rule, and an optional "all of these" link at the right. Taken from the reference
+ * skins, where every region of a page is announced in big italic type rather than a label.
+ */
+export interface Props { title: string; kicker?: string; href?: string; more?: string; id?: string }
+const { title, kicker, href, more, id } = Astro.props;
+---
+<div class="sect" id={id}>
+  <div class="sect-text">
+    {kicker && <p class="sect-kicker">{kicker}</p>}
+    <h2 class="sect-title">{title}</h2>
+  </div>
+  {href && more && <a class="sect-more" href={href}>{more} →</a>}
+</div>

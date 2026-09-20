@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Card from '../components/Card.astro';
+import { liveGames } from '../lib/games';
+
+const games = liveGames();
+const breadcrumbs = [{ name: 'Home', url: '/' }, { name: 'Games', url: '/games/' }];
+---
+<Base
+  title="Games"
+  description="Games played against the clock that count what you know, never how devout you are. Every line and every answer is real and citable."
+  breadcrumbs={breadcrumbs}
+>
+  <Hero title="Games" ghost="play" eyebrow="Against the clock" icon="scroll" blue="Games">
+    Short, hard, and honest about their sources. A game here counts what you know, never how
+    devout you are, and nothing about how you played leaves your browser.
+  </Hero>
+
+  <div class="scards" style="margin-top:2rem">
+    {games.map(g => (
+      <Card href={g.href} icon={g.icon} title={g.title} text={g.tagline} meta="10 lines a run" tab="Game" go="Play" />
+    ))}
+  </div>
+</Base>

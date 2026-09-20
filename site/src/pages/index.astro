@@ -1,25 +1,31 @@
 ---
+import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
 import Card from '../components/Card.astro';
-import Base from '../layouts/Base.astro';
+import SectionHead from '../components/SectionHead.astro';
+import CompassFeature from '../components/CompassFeature.astro';
 import Icon from '../components/Icon.astro';
-import { liveQuizzes } from '../lib/engine/registry';
+import { liveQuizzes, getQuiz, outcomeHref, quizHref } from '../lib/engine/registry';
 import { liveGames } from '../lib/games';
+import slsMeta from '../games/sounds-like-scripture.meta.json';
 import { getCollection } from 'astro:content';
 
 const quizzes = liveQuizzes();
 const games = liveGames();
+const compass = getQuiz('theology-compass')!;
 const articles = (await getCollection('articles'))
   .filter(a => !a.data.draft)
   .sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf())
   .slice(0, 4);
+
+const otherQuizzes = quizzes.filter(q => q.slug !== compass.slug);
 
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: 'Wiser Walk',
   url: 'https://wiserwalk.com/',
-  description: 'Quizzes and articles for understanding yourself, and your walk with God, a little better.'
+  description: 'Quizzes, games and articles for understanding yourself, and your walk with God, a little better.'
 };
 ---
 <Base
@@ -27,58 +33,103 @@ const jsonLd = {
   description="Quizzes, games and articles for understanding yourself, and your walk with God, a little better. Start with the Theology Compass."
   jsonLd={jsonLd}
 >
-  <Hero title="Know yourself a little better." blue="yourself" orange="better">
-      Quizzes worth taking and articles worth reading, for Christians who would rather see
-      themselves clearly than comfortably. Nothing you answer leaves your browser.
+  <Hero
+    title="Know yourself a little better."
+    blue="yourself"
+    orange="better."
+    ghost="wiser"
+    eyebrow="Quizzes · Games · Articles"
+    tiles={[
+      { n: compass.items.length, label: 'Statements' },
+      { n: compass.groups.length, label: 'Axes' },
+      { n: compass.outcomes.length, label: 'Traditions' },
+      { n: slsMeta.items, label: 'Game lines' }
+    ]}
+  >
+    Quizzes worth taking, games worth losing and articles worth reading, for Christians who
+    would rather see themselves clearly than comfortably. Nothing you answer leaves your browser.
     <Fragment slot="actions">
-      <a class="btn" href="/q/theology-compass/">Take the Theology Compass</a>
-      <a class="btn ghost" href="/play/sounds-like-scripture/">Play a game</a>
+      <a class="btn" href={quizHref(compass)}>Take the Theology Compass</a>
+      <a class="btn dark" href="/play/sounds-like-scripture/">Play a game</a>
     </Fragment>
   </Hero>
 
-  <div class="section-head"><h2>Quizzes</h2></div>
-  <div class="cards">
-    {quizzes.map((q, i) => (
-      <Card
-        href={`/q/${q.slug}/`}
-        icon={q.icon}
-        title={q.title}
-        text={q.tagline}
-        meta={`${q.items.length} statements · about ${q.minutes} minutes`}
-        feature={i === 0}
-      />
-    ))}
-  </div>
+  <SectionHead title="Quizzes" kicker="See where you stand" href="/quizzes/" more="All quizzes" />
+
+  <CompassFeature />
+
+  {otherQuizzes.length > 0 && (
+    <div class="scards" style="margin-top:.9rem">
+      {otherQuizzes.map(q => (
+        <Card href={quizHref(q)} icon={q.icon} title={q.title} text={q.tagline}
+              meta={`${q.items.length} statements`} tab="Quiz" go="Take it" />
+      ))}
+    </div>
+  )}
 
   {games.length > 0 && (
     <>
-      <div class="section-head"><h2>Games</h2></div>
-      <div class="cards">
-        {games.map(g => (
-          <Card href={g.href} icon={g.icon} title={g.title} text={g.tagline} meta={g.meta} />
-        ))}
-      </div>
+      <SectionHead title="Games" kicker="Against the clock" href="/games/" more="All games" />
+      {games.map(g => (
+        <a class="gamecard" href={g.href}>
+          <div class="feature-body">
+            <h3>{g.title}</h3>
+            <p>{g.tagline}</p>
+            <dl class="spec">
+              <div><dt>A run</dt><dd>ten lines, a few seconds each</dd></div>
+              <div><dt>The pool</dt><dd>{slsMeta.items} lines, quoted word for word</dd></div>
+              <div><dt>Your Bible</dt><dd>Protestant, Catholic or Orthodox</dd></div>
+            </dl>
+            <div class="btn-row"><span class="btn">Play now</span></div>
+          </div>
+          <div class="gamecard-art dark">
+            <div class="dark-ghost" aria-hidden="true">scripture?</div>
+            <p class="feature-kicker">In the Bible, or not</p>
+            <div class="mock" aria-hidden="true">
+              <div class="mock-fuse"><i></i></div>
+              <div class="mock-card"><span class="mock-q">“</span><i></i><i></i><i></i></div>
+              <div class="mock-btns"><span>Not in the Bible</span><span>In the Bible</span></div>
+            </div>
+          </div>
+        </a>
+      ))}
     </>
   )}
 
   {articles.length > 0 && (
     <>
-      <div class="section-head"><h2>Articles</h2></div>
-      <div class="cards">
+      <SectionHead title="Articles" kicker="The slow work of formation" href="/articles/" more="All articles" />
+      <div class="scards">
         {articles.map(a => (
-          <Card href={`/articles/${a.id}/`} icon="book" title={a.data.title} text={a.data.description} meta={`${a.data.minutes} min read`} />
+          <Card href={`/articles/${a.id}/`} icon="book" title={a.data.title} text={a.data.description}
+                meta={`${a.data.minutes} min read`} tab="Article" go="Read" />
         ))}
       </div>
-      <p><a href="/articles/">All articles →</a></p>
     </>
   )}
 
-  <div class="note">
+  <SectionHead title="The traditions" kicker="Eighteen families, each in its own words" />
+  <ul class="chips">
+    {compass.outcomes.map(o => (
+      <li><a class="chip-link" href={outcomeHref(o)}>{o.name}</a></li>
+    ))}
+  </ul>
+
+  <section class="dark pledge">
+    <div class="dark-ghost" aria-hidden="true">fair</div>
+    <p class="feature-kicker"><Icon name="compass" size={13} /> Why you can trust the results</p>
+    <h2>Fair to beliefs we do not hold.</h2>
     <p>
-      <strong>Why you can trust the results.</strong> The Theology Compass went through an
-      adversarial fairness audit: twenty reviewers, 522 findings, 424 applied. Every position
-      is described in words its own holders would accept.
-      <a href="/method/">Read the method →</a>
+      The Theology Compass went through an adversarial fairness audit before it was published.
+      Every position is described in words its own holders would accept, the changes are
+      public, and so are the disputes we did not resolve.
     </p>
-  </div>
+    <ul class="tiles">
+      <li class="tile"><b>20</b><span>Reviewers</span></li>
+      <li class="tile"><b>522</b><span>Findings</span></li>
+      <li class="tile"><b>424</b><span>Applied</span></li>
+      <li class="tile"><b>11</b><span>Disputes shown</span></li>
+    </ul>
+    <div class="btn-row"><a class="btn" href="/method/">Read the method</a></div>
+  </section>
 </Base>

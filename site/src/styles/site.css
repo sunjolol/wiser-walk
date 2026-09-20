@@ -93,34 +93,8 @@
  * other direction. Without the :not() guard, a reader on a dark phone who chose light would
  * keep getting dark.
  */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --page: #131319;
-    --shell: #1B1B21;
-    --panel: #24242B;
-    --ink: #EAE8E4;
-    --ink-soft: #B4B0AA;
-    --ink-mute: #8E8A84;
-    --accent: #7EBAEE;
-    --accent-soft: #1E2A38;
-    --accent-ink: #10131A;
-    --rule: rgba(234, 232, 228, .13);
-    --warn-bg: #33261C;
-    --warn-ink: #F0A06F;
-    --zone-hatch: rgba(190, 196, 205, .2);
-    --zone-edge: rgba(190, 196, 205, .34);
-    --tint-op: .4;
-    --wash-op: .05;
-    --veil-op: .08;
-    --veil-blend: overlay;
-    --dark-fill: #343441;
-    --dark-fill-img: none;
-    --card-ink: #EAE8E4;
-    --lift: 0 2px 6px rgba(0, 0, 0, .3);
-    --lift-soft: 0 0 12px rgba(0, 0, 0, .25);
-    color-scheme: dark;
-  }
-}
+/* The system setting no longer switches the theme: the owner wants light by default, so
+   dark is only ever an explicit choice (the bulb, or ?theme=dark). */
 
 :root[data-theme="dark"] {
   --page: #131319;

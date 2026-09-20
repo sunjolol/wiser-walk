@@ -68,9 +68,12 @@ const breadcrumbLd = {
 
     <script is:inline>
       try {
-        var t = localStorage.getItem('ww-theme');
-        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
-      } catch (e) {}
+        var q = new URLSearchParams(location.search).get('theme');
+        if (q === 'light' || q === 'dark') localStorage.setItem('ww-theme', q);
+        var t = q === 'light' || q === 'dark' ? q : localStorage.getItem('ww-theme');
+        if (t === 'dark') document.documentElement.dataset.theme = 'dark';
+        else document.documentElement.dataset.theme = 'light';
+      } catch (e) { document.documentElement.dataset.theme = 'light'; }
     </script>
 
     <meta property="og:site_name" content={siteName} />

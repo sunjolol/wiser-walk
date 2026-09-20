@@ -1,0 +1,401 @@
+/*
+ * kit.css — the composed layer.
+ *
+ * site.css holds the settled tokens and the result page's instruments. This file is the
+ * vocabulary every OTHER page is composed from, taken from the owner's reference skins
+ * (Riche 5e character sheet, Epitaph, Rose Water, All Hope Abandon) and the locked demo in
+ * design/demos/wiser-walk-riche.html:
+ *
+ *   the sheet      a framed shell on a striped ground (tablet up; a phone is full bleed)
+ *   the band       a full-bleed header: spectrum poured through smoke at full strength,
+ *                  a giant ghost word in italic display behind, a dark chip, stat tiles
+ *   dark panels    charcoal with the starfield, set against the light panels
+ *   stripe cards   a washed vertical stripe, a rotated tag, a medallion, a corner tab
+ *   spec lists     label and value on a dotted rule
+ *   chip grids     bordered uppercase pills
+ *   section heads  lowercase italic display with a spectrum rule
+ *
+ * Phone first. Nothing here styles a phone by undoing a desktop rule.
+ * Tokens only: no colour in this file is a literal except inside the token blocks below.
+ */
+
+:root {
+  --stripe: rgba(68, 68, 68, .032);
+  --ghost: rgba(255, 255, 255, .62);
+  --ghost-dark: rgba(255, 255, 255, .055);
+  --band-wash: .5;
+  --band-veil: .5;
+  --rule-strong: rgba(68, 68, 68, .2);
+  --frame: #F2F2F2;
+  --frame-shadow: 0 22px 48px rgba(40, 40, 40, .12);
+  /* ink that sits on a dark panel, in both themes */
+  --on-dark: #ECEAE6;
+  --on-dark-soft: #B9B5AF;
+  --on-dark-mute: #8F8B86;
+  --blue-soft: #A9D0F3;
+  --orange-soft: #F4B991;
+}
+:root[data-theme="dark"] {
+  --stripe: rgba(255, 255, 255, .018);
+  --ghost: rgba(255, 255, 255, .045);
+  --ghost-dark: rgba(255, 255, 255, .04);
+  --band-wash: .07;
+  --band-veil: .08;
+  --rule-strong: rgba(234, 232, 228, .2);
+  --frame: #1F1F26;
+  --frame-shadow: 0 22px 48px rgba(0, 0, 0, .45);
+}
+
+/* ------------------------------------------------------------- the sheet */
+
+body {
+  background-image: repeating-linear-gradient(135deg, var(--stripe) 0 1px, transparent 1px 8px);
+}
+.wrap { --gut: 1.25rem; }
+.page { --top: 1.75rem; padding-bottom: .5rem; }
+@media (min-width: 40rem) {
+  .wrap { --gut: 1.75rem; }
+  .page { --top: 2.5rem; }
+}
+@media (min-width: 68rem) {
+  .sheet {
+    max-width: 70rem; margin: 2rem auto 2.5rem; background: var(--shell);
+    border: 9px solid var(--frame); border-radius: 34px; overflow: hidden;
+    box-shadow: var(--frame-shadow);
+  }
+  .sheet .site-foot { margin-top: 4rem; }
+}
+
+/* header: the nav items become pills, the current one filled */
+.site-head nav a {
+  padding: .42rem .7rem; border-radius: var(--r-pill);
+  transition: background .18s ease, color .18s ease;
+}
+.site-head nav a:hover { background: var(--accent-soft); }
+.site-head nav a[aria-current="page"] { background: var(--accent-soft); color: var(--accent); }
+@media (max-width: 29.99rem) {
+  .site-head nav { gap: .15rem; margin: 0 -.5rem; overflow-x: auto; scrollbar-width: none; }
+  .site-head nav::-webkit-scrollbar { display: none; }
+  .site-head nav a { padding: .5rem .62rem; white-space: nowrap; }
+}
+@media (min-width: 30rem) { .site-head nav { gap: .25rem; } }
+
+/* --------------------------------------------------------------- the band */
+
+.band {
+  position: relative; isolation: isolate; overflow: hidden;
+  margin: calc(-1 * var(--top)) calc(-1 * var(--gut)) 0;
+  padding: 2.1rem var(--gut) 2.2rem;
+  background: var(--panel);
+  border-radius: 0 0 30px 30px;
+  box-shadow: var(--lift);
+}
+.band > .wash { opacity: var(--band-wash); }
+.band > .veil { opacity: var(--band-veil); }
+.band > *:not(.wash):not(.veil):not(.band-ghost) { position: relative; z-index: 2; }
+.band-ghost {
+  position: absolute; z-index: 1; right: -.05em; bottom: -.2em;
+  font-family: var(--display); font-style: italic; font-weight: 400;
+  font-size: clamp(7.5rem, 40vw, 17rem); line-height: .8; letter-spacing: -.045em;
+  color: var(--ghost); white-space: nowrap; pointer-events: none; user-select: none;
+}
+.band-chip {
+  display: inline-flex; align-items: center; gap: .45rem; margin: 0 0 1.15rem;
+  padding: .55rem .9rem; border-radius: var(--r-pill);
+  background-color: var(--dark-fill); background-image: var(--dark-fill-img);
+  background-size: 420px; color: var(--on-dark);
+  font-family: var(--ui); font-size: .6rem; font-weight: 700; letter-spacing: .16em;
+  text-transform: uppercase; line-height: 1;
+}
+.band-chip .icon { color: var(--orange-soft); }
+.band h1 {
+  font-size: clamp(2.35rem, 10.6vw, 4.4rem); line-height: 1.02; letter-spacing: -.022em;
+  margin: 0 0 .85rem; max-width: 14ch;
+}
+.band.band--long h1 { max-width: 20ch; font-size: clamp(2rem, 8.4vw, 3.5rem); }
+.band .lede { max-width: 33rem; margin: 0; font-size: 1.04rem; color: var(--ink-soft); }
+.band .btn-row { margin: 1.4rem 0 0; }
+.band .btn-row .btn { flex: 1 1 auto; }
+@media (min-width: 30rem) { .band .btn-row .btn { flex: 0 0 auto; } }
+@media (min-width: 40rem) {
+  .band { padding: 3.4rem var(--gut) 3.2rem; border-radius: 0 0 38px 38px; }
+  .band .lede { font-size: 1.14rem; }
+}
+@media (min-width: 68rem) { .band { padding-left: 3rem; padding-right: 3rem; margin-left: calc(-1 * var(--gut)); margin-right: calc(-1 * var(--gut)); } }
+
+/* stat tiles: a number in display type over a whispered label */
+.tiles { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.6rem 0 0; padding: 0; list-style: none; }
+.tile {
+  background: var(--panel); border-radius: 14px; box-shadow: var(--lift);
+  padding: .62rem .8rem .55rem; min-width: 4.3rem; text-align: center; flex: 1 1 4.3rem;
+}
+.tile b {
+  display: block; font-family: var(--display); font-weight: 400; font-size: 1.4rem;
+  line-height: 1.1; color: var(--ink); font-variant-numeric: tabular-nums;
+}
+.tile span {
+  display: block; margin-top: .15rem; font-family: var(--ui); font-size: .54rem; font-weight: 600;
+  letter-spacing: .13em; text-transform: uppercase; color: var(--ink-mute); white-space: nowrap;
+}
+@media (min-width: 40rem) {
+  .tiles { gap: .6rem; }
+  .tile { flex: 0 0 auto; padding: .75rem 1.1rem .65rem; min-width: 5.6rem; }
+  .tile b { font-size: 1.7rem; }
+  .tile span { font-size: .58rem; }
+}
+
+/* ---------------------------------------------------------- section heads */
+
+.sect { display: flex; align-items: flex-end; gap: .9rem; margin: 3rem 0 1.1rem; }
+.sect-text { flex: 1; min-width: 0; }
+.sect-kicker {
+  margin: 0 0 .2rem; font-family: var(--ui); font-size: .62rem; font-weight: 700;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--ink-mute);
+}
+.sect-title {
+  margin: 0; font-family: var(--display); font-style: italic; font-weight: 400;
+  font-size: clamp(2.1rem, 9.5vw, 3.1rem); line-height: .95; letter-spacing: -.02em;
+  color: var(--ink); text-transform: lowercase;
+}
+.sect-title::after {
+  content: ""; display: block; width: 58px; height: 7px; margin-top: .65rem;
+  border-radius: var(--r-pill); background-image: var(--grad-r);
+}
+.sect-more {
+  flex: none; font-family: var(--ui); font-size: .64rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; text-decoration: none; color: var(--accent);
+  padding: .6rem 0 .2rem; min-height: 44px; display: inline-flex; align-items: flex-end;
+}
+.sect-more:hover { text-decoration: underline; }
+
+/* ------------------------------------------------------------ dark panels */
+
+.dark {
+  /* re-point the tokens, so any instrument placed inside (the compass, a rail) draws itself
+     for a dark ground without a second set of rules */
+  --panel: #2A2A33; --shell: #1F1F26; --ink: var(--on-dark); --ink-soft: var(--on-dark-soft);
+  --ink-mute: var(--on-dark-mute); --accent: var(--blue-soft); --warn-ink: var(--orange-soft);
+  --zone-hatch: rgba(190, 196, 205, .2); --zone-edge: rgba(190, 196, 205, .34);
+  --rule: rgba(234, 232, 228, .14); --rule-strong: rgba(234, 232, 228, .24);
+  --accent-soft: rgba(126, 186, 238, .14);
+  position: relative; isolation: isolate; overflow: hidden;
+  background-color: var(--dark-fill); background-image: var(--dark-fill-img); background-size: 520px;
+  color: var(--on-dark); border-radius: var(--r-lg); box-shadow: var(--lift);
+}
+:root[data-theme="dark"] .dark { background-color: #2A2A33; }
+.dark h2, .dark h3 { color: var(--on-dark); }
+.dark p { color: var(--on-dark-soft); }
+.dark a:not(.btn):not(.chip-link) { color: var(--blue-soft); }
+.dark .tile { background: rgba(255, 255, 255, .07); box-shadow: none; }
+.dark-ghost {
+  position: absolute; z-index: 0; pointer-events: none; user-select: none;
+  font-family: var(--display); font-style: italic; font-weight: 400; white-space: nowrap;
+  color: var(--ghost-dark); line-height: .8; letter-spacing: -.04em;
+}
+.dark > *:not(.dark-ghost) { position: relative; z-index: 1; }
+
+/* the feature: a dark half carrying the instrument, a light half carrying the words */
+.feature {
+  display: grid; grid-template-columns: 1fr; border-radius: var(--r-lg); overflow: hidden;
+  background: var(--panel); box-shadow: var(--lift); text-decoration: none; color: inherit;
+}
+.feature-art {
+  border-radius: 0; box-shadow: none; min-height: 17rem; padding: 1.4rem 1.2rem 1.2rem;
+  display: flex; flex-direction: column;
+}
+.feature-art .dark-ghost { font-size: clamp(6rem, 30vw, 9.5rem); left: -.04em; top: .02em; }
+.feature-kicker {
+  margin: 0; font-family: var(--ui); font-size: .6rem; font-weight: 700; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--orange-soft);
+}
+.feature-art .wheel { margin: auto; width: 100%; max-width: 15.5rem; }
+.feature-art .wheel-plot { margin-top: 1.4rem; }
+.feature-art .wheel figcaption, .feature-art .wheel-caption { display: none; }
+.feature-note { margin: .6rem 0 0; font-size: .72rem; color: var(--on-dark-mute); text-align: center; }
+.feature-body { padding: 1.35rem 1.2rem 1.45rem; display: flex; flex-direction: column; }
+.feature-body h3 {
+  margin: 0 0 .55rem; font-size: clamp(1.7rem, 7vw, 2.3rem); line-height: 1.02; letter-spacing: -.015em;
+}
+.feature-body > p { margin: 0 0 .2rem; color: var(--ink-soft); }
+.feature-body .btn-row { margin: 1.2rem 0 0; }
+.feature-body .btn { flex: 1 1 auto; }
+@media (min-width: 52rem) {
+  .feature { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+  .feature-art { min-height: 24rem; padding: 1.8rem; }
+  .feature-body { padding: 2.2rem 2.2rem 2.3rem; justify-content: center; }
+  .feature-body .btn { flex: 0 0 auto; }
+}
+
+/* ------------------------------------------------------------- spec lists */
+
+.spec { margin: 1rem 0 0; padding: 0; }
+.spec > div {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+  padding: .6rem 0; border-bottom: 2px dotted var(--rule-strong);
+}
+.spec > div:first-child { border-top: 2px dotted var(--rule-strong); }
+.spec dt {
+  font-family: var(--ui); font-size: .62rem; font-weight: 700; letter-spacing: .13em;
+  text-transform: uppercase; color: var(--accent); flex: none;
+}
+.spec dd { margin: 0; text-align: right; font-size: .92rem; color: var(--ink-soft); }
+
+/* ------------------------------------------------------------- chip grids */
+
+.chips { display: flex; flex-wrap: wrap; gap: .45rem; margin: 1rem 0 0; padding: 0; list-style: none; }
+.chip-link {
+  display: inline-flex; align-items: center; gap: .4rem; min-height: 44px; padding: .55rem .85rem;
+  border-radius: 10px; box-shadow: inset 0 0 0 1.5px var(--rule-strong);
+  font-family: var(--ui); font-size: .62rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; text-decoration: none; color: var(--ink-soft); line-height: 1.25;
+  transition: box-shadow .18s ease, color .18s ease, background .18s ease;
+}
+.chip-link:hover { color: var(--accent); box-shadow: inset 0 0 0 1.5px var(--accent); background: var(--accent-soft); }
+.chip-link small { font-size: 1em; font-weight: 600; color: var(--ink-mute); letter-spacing: .06em; }
+.chip-link .pole-l { color: var(--accent); }
+.chip-link .pole-r { color: var(--warn-ink); }
+
+/* ----------------------------------------------------------- stripe cards */
+
+.scards { display: grid; gap: .9rem; grid-template-columns: 1fr; }
+@media (min-width: 46rem) { .scards { grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr)); } }
+.scard {
+  position: relative; display: block; overflow: hidden; min-height: 9.5rem;
+  background: var(--panel); border-radius: var(--r); box-shadow: var(--lift);
+  padding: 1.15rem 1.1rem 1.2rem 4.9rem; color: inherit; text-decoration: none;
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+.scard:hover { box-shadow: 0 10px 22px rgba(62, 134, 196, .16); transform: translateY(-2px); }
+.scard-stripe {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 2.6rem; background: var(--shell);
+  display: flex; align-items: flex-end; justify-content: center; padding-bottom: .8rem;
+}
+.scard-stripe::before {
+  content: ""; position: absolute; inset: 0; background: var(--grad);
+  -webkit-mask: url("/tex/smokey.png") center / 340px no-repeat; mask: url("/tex/smokey.png") center / 340px no-repeat;
+  opacity: .95;
+}
+.scard-tag {
+  position: relative; writing-mode: vertical-rl; transform: rotate(180deg);
+  background-color: var(--dark-fill); color: var(--on-dark); border-radius: 7px; padding: .55rem .32rem;
+  font-family: var(--ui); font-size: .54rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; white-space: nowrap; line-height: 1;
+}
+.scard-medal {
+  position: absolute; left: 1.35rem; top: 1rem; width: 2.75rem; height: 2.75rem; border-radius: 50%;
+  background: var(--panel); color: var(--accent); display: inline-flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 0 4px var(--panel), 0 0 0 6px var(--rule);
+}
+.scard-tab {
+  position: absolute; right: 0; top: 0; background-color: var(--dark-fill); color: var(--on-dark);
+  font-family: var(--ui); font-size: .54rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  padding: .5rem .75rem; border-radius: 0 0 0 10px; line-height: 1;
+}
+.scard h3 { margin: .1rem 0 .4rem; font-size: 1.32rem; line-height: 1.08; padding-right: 3.4rem; color: var(--ink); }
+.scard:hover h3 { color: var(--accent); }
+.scard p { margin: 0; font-size: .92rem; color: var(--ink-soft); }
+.scard-go {
+  display: inline-flex; align-items: center; gap: .35rem; margin-top: .8rem;
+  font-family: var(--ui); font-size: .62rem; font-weight: 700; letter-spacing: .13em;
+  text-transform: uppercase; color: var(--accent);
+}
+.scard-go .icon { transition: transform .2s ease; }
+.scard:hover .scard-go .icon { transform: translateX(3px); }
+
+/* ------------------------------------------- the game card (home, games) */
+
+.gamecard { display: grid; grid-template-columns: 1fr; gap: 0; border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--lift); background: var(--panel); text-decoration: none; color: inherit; }
+.gamecard-art { border-radius: 0; box-shadow: none; padding: 1.4rem 1.2rem 1.5rem; }
+.gamecard-art .dark-ghost { font-size: clamp(5.5rem, 28vw, 9rem); right: -.05em; bottom: -.18em; }
+/* a drawing of the game, not the game: no real line is shown, so nothing is spoiled */
+.mock { margin: 1.1rem auto 0; max-width: 17rem; }
+.mock-fuse { height: 7px; border-radius: var(--r-pill); background: rgba(255, 255, 255, .1); overflow: hidden; }
+.mock-fuse i { display: block; width: 62%; height: 100%; border-radius: inherit; background-image: var(--grad-r); }
+.mock-card {
+  margin: .7rem 0; border-radius: 16px; background: rgba(255, 255, 255, .07); padding: 1.1rem 1rem 1.2rem;
+  display: grid; gap: .5rem;
+}
+.mock-card i { display: block; height: 9px; border-radius: var(--r-pill); background: rgba(255, 255, 255, .2); }
+.mock-card i:nth-child(2) { width: 88%; } .mock-card i:nth-child(3) { width: 94%; } .mock-card i:nth-child(4) { width: 52%; }
+.mock-q { font-family: var(--display); font-style: italic; font-size: 2.2rem; line-height: .6; color: var(--orange-soft); height: 1rem; }
+.mock-btns { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+.mock-btns span {
+  border-radius: 12px; padding: .7rem .4rem; text-align: center; color: var(--on-grad);
+  font-family: var(--ui); font-size: .54rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; line-height: 1.3;
+}
+.mock-btns span:first-child { background: var(--orange); } .mock-btns span:last-child { background: var(--blue); }
+@media (min-width: 52rem) {
+  .gamecard { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+  .gamecard-art { order: 2; padding: 2rem 1.8rem; display: flex; flex-direction: column; justify-content: center; }
+}
+
+/* ------------------------------------------------------ the method banner */
+
+.pledge { margin: 3rem 0 0; padding: 1.6rem 1.25rem 1.7rem; }
+.pledge .dark-ghost { font-size: clamp(6rem, 30vw, 11rem); right: -.04em; top: -.12em; }
+.pledge h2 {
+  margin: .5rem 0 .7rem; font-style: italic; font-size: clamp(1.9rem, 8.4vw, 2.8rem); line-height: 1; letter-spacing: -.02em;
+}
+.pledge p { max-width: 34rem; margin: 0; }
+.pledge .btn-row { margin: 1.3rem 0 0; }
+@media (min-width: 40rem) { .pledge { padding: 2.4rem 2.2rem 2.5rem; } }
+
+/* ------------------------------------------------------------------ footer */
+
+.site-foot {
+  position: relative; isolation: isolate; overflow: hidden; margin-top: 3.5rem;
+  background-color: var(--dark-fill); background-image: var(--dark-fill-img); background-size: 520px;
+  color: var(--on-dark-soft); border-radius: 30px 30px 0 0;
+}
+:root[data-theme="dark"] .site-foot { background-color: #1F1F26; }
+.site-foot .wrap { position: relative; z-index: 1; padding-top: 2.4rem; padding-bottom: 6.2rem; }
+.foot-ghost {
+  position: absolute; z-index: 0; left: -.04em; bottom: -.24em; pointer-events: none; user-select: none;
+  font-family: var(--display); font-style: italic; font-size: clamp(5.5rem, 27vw, 13rem); line-height: .8;
+  letter-spacing: -.04em; white-space: nowrap; color: var(--ghost-dark);
+}
+.foot-brand { font-family: var(--display); font-size: 1.5rem; color: var(--on-dark); margin: 0 0 .5rem; }
+.foot-brand span { font-style: italic; background: var(--grad-r); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.site-foot p { max-width: 36rem; margin: 0 0 .8rem; color: var(--on-dark-soft); }
+.site-foot a { color: var(--on-dark); }
+.foot-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem 1rem; margin: 1.8rem 0 0; }
+.foot-cols h4 {
+  margin: 0 0 .5rem; font-family: var(--ui); font-size: .58rem; font-weight: 700; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--orange-soft);
+}
+.foot-cols ul { margin: 0; padding: 0; list-style: none; }
+.foot-cols li a { display: inline-flex; min-height: 36px; align-items: center; text-decoration: none; font-size: .9rem; color: var(--on-dark-soft); }
+.foot-cols li a:hover { color: var(--on-dark); text-decoration: underline; }
+@media (min-width: 40rem) { .foot-cols { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .scard, .scard-go .icon, .chip-link, .site-head nav a { transition: none; }
+  .scard:hover { transform: none; }
+}
+
+/* --------------------------------------------------- corrections, pass two */
+
+/* On the sheet the column IS the sheet: the band must reach both edges of the frame, so the
+   wrap stops capping itself and takes a wider gutter instead. */
+@media (min-width: 68rem) {
+  .sheet .wrap { max-width: none; --gut: 3.25rem; padding-left: var(--gut); padding-right: var(--gut); }
+  .band { padding-left: var(--gut); padding-right: var(--gut); }
+}
+
+/* Phone: the tiles would sit on top of a bottom-anchored ghost word, so it rides high and
+   right instead, behind the chip and the first line of the headline. */
+@media (max-width: 39.99rem) {
+  .band-ghost { top: -.04em; bottom: auto; right: -.1em; font-size: 40vw; }
+}
+
+/* tiles never strand one alone on a row */
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(4.4rem, 1fr)); }
+@media (min-width: 40rem) { .tiles { display: flex; } }
+
+.scards { grid-template-columns: 1fr; }
+@media (min-width: 46rem) { .scards { grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); } }
+
+@media (min-width: 52rem) {
+  .feature-art .wheel { max-width: 21rem; }
+  .feature-art { align-items: stretch; }
+}

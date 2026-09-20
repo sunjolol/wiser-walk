@@ -1,0 +1,54 @@
+---
+/**
+ * The Theology Compass, presented as the flagship: a dark half carrying a real compass and a
+ * light half carrying the words, the spec list, the six axes and the way in.
+ *
+ * The compass drawn here is a REAL result: one of the eighteen answer sheets published with
+ * the audit, scored by the same engine a reader's answers go through, and labelled as the
+ * example it is. Nothing on this card is a mock-up of data.
+ */
+import CompassWheel from './CompassWheel.astro';
+import { getQuiz, scoreQuiz, resultFor, groupHref, quizHref } from '../lib/engine/registry';
+import audit from '../data/compass-audit.json';
+import type { BipolarView } from '../lib/engine/types';
+
+const compass = getQuiz('theology-compass')!;
+const EXAMPLE = 'Anglican (broad)';
+const sheet = (audit.simulations as Array<Record<string, any>>).find(s => s.tradition === EXAMPLE && Array.isArray(s.answers));
+const exampleView = sheet ? (resultFor(compass, scoreQuiz(compass, sheet.answers)) as BipolarView) : null;
+---
+<div class="feature">
+  <div class="feature-art dark">
+    <div class="dark-ghost" aria-hidden="true">compass</div>
+    <p class="feature-kicker">The flagship · audited</p>
+    {exampleView && <CompassWheel view={exampleView} />}
+    {exampleView && <p class="feature-note">A real result: the audit's published {EXAMPLE} answer sheet.</p>}
+  </div>
+  <div class="feature-body">
+    <h3>{compass.title}</h3>
+    <p>
+      Eighteen statements place you on six axes of Christian belief, then show which
+      traditions sit nearest. Every position is described in words its own holders would accept.
+    </p>
+    <dl class="spec">
+      <div><dt>Takes</dt><dd>about {compass.minutes} minutes</dd></div>
+      <div><dt>Compares you with</dt><dd>{compass.outcomes.length} traditions</dd></div>
+      <div><dt>Reviewed by</dt><dd>20 adversarial reviewers</dd></div>
+    </dl>
+    <ul class="chips" aria-label="The six axes">
+      {compass.groups.map(g => (
+        <li>
+          <a class="chip-link" href={groupHref(compass, g)}>
+            {g.name}
+            <small><span class="pole-l">{g.left}</span> ↔ <span class="pole-r">{g.right}</span></small>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <div class="btn-row">
+      <a class="btn" href={quizHref(compass)}>Start the quiz</a>
+      <a class="btn ghost" href="/method/">How it was made fair</a>
+    </div>
+  </div>
+</div>
+

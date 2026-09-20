@@ -1,5 +1,12 @@
 ---
 import '../styles/site.css';
+import '../styles/kit.css';
+import '../styles/pages/quiz.css';
+import '../styles/pages/reference.css';
+import '../styles/pages/prose.css';
+import '../styles/pages/play.css';
+import { liveQuizzes } from '../lib/engine/registry';
+import { liveGames } from '../lib/games';
 
 export interface Props {
   title: string;
@@ -42,11 +49,14 @@ const fullTitle = title === siteName ? title : `${title} — ${siteName}`;
 
 const NAV = [
   { href: '/quizzes/', label: 'Quizzes' },
+  { href: '/games/', label: 'Games' },
   { href: '/articles/', label: 'Articles' },
   { href: '/method/', label: 'Method' },
   { href: '/about/', label: 'About' }
 ];
 const here = Astro.url.pathname;
+const footQuizzes = liveQuizzes();
+const footGames = liveGames();
 const isCurrent = (href: string) => here === href || here.startsWith(href.replace(/\/$/, '') + '/');
 ---
 <!doctype html>
@@ -66,16 +76,19 @@ const isCurrent = (href: string) => here === href || here.startsWith(href.replac
     */}
     <script is:inline>
       try {
-        var t = localStorage.getItem('ww-theme');
-        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
-      } catch (e) {}
+        var q = new URLSearchParams(location.search).get('theme');
+        if (q === 'light' || q === 'dark') localStorage.setItem('ww-theme', q);
+        var t = q === 'light' || q === 'dark' ? q : localStorage.getItem('ww-theme');
+        if (t === 'dark') document.documentElement.dataset.theme = 'dark';
+        else document.documentElement.dataset.theme = 'light';
+      } catch (e) { document.documentElement.dataset.theme = 'light'; }
     </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&display=swap"
     />
 
     <meta property="og:site_name" content={siteName} />
@@ -115,6 +128,7 @@ const isCurrent = (href: string) => here === href || here.startsWith(href.replac
     </script>
   </head>
   <body>
+    <div class="sheet">
     <header class="site-head">
       <div class="wrap">
         <a class="brand" href="/">Wiser <span>Walk</span></a>
@@ -140,16 +154,51 @@ const isCurrent = (href: string) => here === href || here.startsWith(href.replac
     <main class="wrap page"><slot /></main>
 
     <footer class="site-foot">
+      <div class="foot-ghost" aria-hidden="true">wiser walk</div>
       <div class="wrap">
+        <p class="foot-brand">Wiser <span>Walk</span></p>
         <p>
-          Wiser Walk — quizzes and articles for understanding yourself, and your walk with God, a little better.
+          Quizzes, games and articles for understanding yourself, and your walk with God, a
+          little better.
         </p>
         <p>
-          Nothing you answer leaves your browser: every quiz is scored on your own device, and
+          Nothing you answer leaves your browser: everything is scored on your own device, and
           a result link only ever carries your scores. <a href="/method/">How this was made</a>.
         </p>
+        <div class="foot-cols">
+          <div>
+            <h4>Quizzes</h4>
+            <ul>
+              {footQuizzes.map(q => <li><a href={`/q/${q.slug}/`}>{q.title}</a></li>)}
+              <li><a href="/quizzes/">All quizzes</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Games</h4>
+            <ul>
+              {footGames.map(g => <li><a href={g.href}>{g.title}</a></li>)}
+              <li><a href="/games/">All games</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Read</h4>
+            <ul>
+              <li><a href="/articles/">Articles</a></li>
+              <li><a href="/method/">Method</a></li>
+              <li><a href="/method/#changelog">Audit changelog</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Site</h4>
+            <ul>
+              <li><a href="/about/">About</a></li>
+              <li><a href="/method/#your-answers">Your answers</a></li>
+            </ul>
+          </div>
+        </div>
       </div>
     </footer>
+    </div>
 
     <script is:inline>
       (function () {
@@ -161,7 +210,7 @@ const isCurrent = (href: string) => here === href || here.startsWith(href.replac
         // With nothing stored the page follows the system, so "what is showing" is not the
         // same question as "what was chosen".
         var showing = function () {
-          return root.dataset.theme || (media.matches ? 'dark' : 'light');
+          return root.dataset.theme === 'dark' ? 'dark' : 'light';
         };
         var paint = function () {
           var light = showing() === 'light';
@@ -176,7 +225,6 @@ const isCurrent = (href: string) => here === href || here.startsWith(href.replac
           paint();
         });
         // Keep following the system until the reader has actually chosen.
-        media.addEventListener('change', function () { if (!root.dataset.theme) paint(); });
         paint();
       })();
     </script>

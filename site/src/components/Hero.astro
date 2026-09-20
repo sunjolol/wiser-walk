@@ -1,16 +1,17 @@
 ---
 /**
- * The page header every page shares.
+ * The band: every page's header.
  *
- * It is the result page's panel, reused: the soft grey panel with the spectrum poured
- * through the smoke texture and the veil over it, a short spectrum mark, an eyebrow, the
- * display headline, a lede. Before this existed only the result page looked finished and
- * every other page was a bare heading on the page ground; now they are one family.
+ * Full bleed on a phone, rounded at the bottom, with the spectrum poured through the smoke
+ * stencil at the strength the locked demo uses for a header (not the whisper the data
+ * panels use). Behind the words sits one giant ghost word in italic display, cropped by the
+ * band's edge, which is the single most recognisable move in the owner's reference skins.
+ * On top: a dark chip for the eyebrow, the headline in two inks, a lede, buttons, and a row
+ * of stat tiles when the page has real numbers worth leading with.
  *
  * `blue` and `orange` colour one phrase each inside the title, in the same two inks the
- * result verdict uses, so the home page headline and a reader's verdict speak alike.
- * The lede is the default slot (so it can carry links) or the `lede` prop for computed text.
- * Anything in the "actions" slot lands under the lede: buttons, mostly.
+ * result verdict uses. The lede is the default slot (so it can carry links) or the `lede`
+ * prop for computed text. Buttons go in the "actions" slot.
  */
 import Icon from './Icon.astro';
 
@@ -21,8 +22,14 @@ export interface Props {
   lede?: string;
   blue?: string;
   orange?: string;
+  /** The ghost word behind the headline. Lowercase reads best. */
+  ghost?: string;
+  /** Real numbers only. */
+  tiles?: Array<{ n: string | number; label: string }>;
+  /** Long titles (an article, a tradition's full name) get a calmer size and a wider measure. */
+  long?: boolean;
 }
-const { title, eyebrow, icon, lede, blue, orange } = Astro.props;
+const { title, eyebrow, icon, lede, blue, orange, ghost, tiles = [], long = false } = Astro.props;
 
 type Part = { text: string; tone: '' | 'left' | 'right' };
 let parts: Part[] = [{ text: title, tone: '' }];
@@ -43,12 +50,17 @@ paint(orange, 'right');
 
 const hasLede = Boolean(lede) || Astro.slots.has('default');
 ---
-<header class="panel layered hero">
+<header class:list={['band', long && 'band--long']}>
   <div class="wash" aria-hidden="true"></div>
   <div class="veil" aria-hidden="true"></div>
-  <div class="hero-mark" aria-hidden="true"></div>
-  {eyebrow && <p class="eyebrow">{icon && <Icon name={icon} size={15} />} {eyebrow}</p>}
+  {ghost && <div class="band-ghost" aria-hidden="true">{ghost}</div>}
+  {eyebrow && <p class="band-chip">{icon && <Icon name={icon} size={13} />}{eyebrow}</p>}
   <h1>{parts.map(p => p.tone ? <span class={`verdict-part--${p.tone}`}>{p.text}</span> : p.text)}</h1>
   {hasLede && <p class="lede">{lede ?? <slot />}</p>}
   {Astro.slots.has('actions') && <div class="btn-row"><slot name="actions" /></div>}
+  {tiles.length > 0 && (
+    <ul class="tiles">
+      {tiles.map(t => <li class="tile"><b>{t.n}</b><span>{t.label}</span></li>)}
+    </ul>
+  )}
 </header>
