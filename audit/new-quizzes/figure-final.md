@@ -1,10 +1,11 @@
 # Who in the Bible are you most like? The instrument as it now stands, on one page
 
-Status: **draft, registered, calibrated, five audit reviews applied (2026-09-20), not yet played by
-the owner.** Statements and copy: `site/src/lib/quizzes/bible-figure.ts`. Figures:
+Status: **draft, registered, calibrated, five audit reviews applied (2026-09-20); Judith and Tobit
+added 2026-09-22 on the owner's decision.** Statements and copy:
+`site/src/lib/quizzes/bible-figure.ts`. Figures:
 `audit/new-quizzes/figures.verified.json`, flattened by `site/scripts/build-data.mjs` into
-`site/src/data/bible-figures.json` (never hand-edit the copy). Twenty-two people and Jesus, nine
-women, 239 cited references and 48 verbatim quotations, all machine-checked against the World
+`site/src/data/bible-figures.json` (never hand-edit the copy). Twenty-four people and Jesus, ten
+women, 267 cited references and 70 verbatim quotations, all machine-checked against the World
 English Bible British Edition on every build. Every finding and its verdict: `AUDIT-LOG.md`.
 
 **Sign convention (the Compass's).** A score of 0 is the left pole, 100 the right. `-1` means
@@ -94,6 +95,8 @@ reader's own axis is left out too when their score is inside 41-59. Changes from
 | Martha | 35 | 15 | 35 | 35 | 40 | not shown | 5 |
 | Mary Magdalene | 25 | 35 | 75 | not shown | not shown | 35 | 4 |
 | Barnabas | 35 | 25 | 85 | 30 | not shown | 35 | 5 |
+| Judith | 40 | 40 | 15 | 25 | not shown | 10 | 5 |
+| Tobit | 30 | 35 | 35 | both ends | 25 | 30 | 5 |
 | Jesus | both ends | 40 | 40 | both ends | not placed | 40 | 3 |
 
 Every axis still has figures on both sides (the blueprint's rule). The thinnest side is the right
@@ -165,7 +168,7 @@ By the same rule as everyone else, from the four Gospels only, sixteen cited act
   the cited moments that place them there. It asks about temperament, not virtue.
 - **Share title:** Who in the Bible my answers sat nearest *(was "Who in the Bible I am most
   like", which beside the name of Jesus reads as a boast his note cannot travel with)*
-- **Scope note under the result (permanent):** Scored against the 22 people listed here, and Jesus,
+- **Scope note under the result (permanent):** Scored against the 24 people listed here, and Jesus,
   on the axes of temperament where the text places them and your own answers name a position. Each
   place is an editor's reading of a few recorded acts, not a measurement, and with three statements
   to an axis one changed answer can change the name: read the rails, not the name. Nearness is not
@@ -174,9 +177,9 @@ By the same rule as everyone else, from the four Gospels only, sixteen cited act
   reviews, not the full fairness audit the Theology Compass went through, and nobody has played it
   yet. Every figure is placed by cited, recorded acts, and each reference has been checked against
   the text: the references, not the placements, because where a figure sits is still an editor's
-  judgement. Every figure comes from the books all Christians share. Judith, Tobit, the Maccabees
-  and others from the books Catholic and Orthodox Bibles also contain are not in it yet; that is a
-  limit of the draft, not a judgement about those books. You are compared to each person only on
+  judgement. Two of the figures, Judith and Tobit, come from books that Catholic and Orthodox
+  Bibles contain and Protestant Bibles leave out or print as Apocrypha; their cards and their
+  pages say so. You are compared to each person only on
   the axes where the text places them and your own answers name a position: where the text shows
   nothing, or shows both ends, that axis is left out rather than counted as a match in the middle.
   No percentage is ever shown against a person. Neither end of any axis is the better one. Treat
@@ -187,10 +190,15 @@ By the same rule as everyone else, from the four Gospels only, sixteen cited act
   the blueprint): Landing nearest Jesus here is about temperament as the Gospels record it, not a
   measure of holiness; every Christian is called to be like him in character, whatever their
   temperament.
+- **The sentence that accompanies Judith and Tobit wherever they appear** (`OUTCOME_NOTES` in
+  `bible-figure.ts`, one map by slug, the same mechanism as Jesus's): The book of Judith is in
+  Catholic and Orthodox Bibles. Protestant Bibles leave it out or print it as Apocrypha. And the
+  same for Tobit. It is the wording the Sounds Like Scripture game uses, which the owner approved:
+  it says where the book is printed and takes no side about whether it belongs there.
 
 ## What the owner should know before playing it
 
-1. **Jesus is on the list and will seldom come up**: about one sheet in sixty. He is matched on
+1. **Jesus is on the list and will seldom come up**: about one sheet in seventy-five. He is matched on
    Voice, Lead and Plans only, because on the other three the Gospels show both ends or, on
    Reasons, say he knew what was coming. One reviewer's test was that he be named no more often
    than the median figure; he is named less than half as often.
@@ -199,10 +207,21 @@ By the same rule as everyone else, from the four Gospels only, sixteen cited act
 3. **Martha**: the text supports one further act and no more. John 11:28 (she called her sister
    secretly) is now on her Voice axis, pointing the other way from the rest. She moved from 1.1% to
    1.6% mostly because the audit took Luke 10:40 off three axes it did not show, which left her
-   with milder, better-founded coordinates. What is left unused: her statements of belief (John
+   with milder, better-founded coordinates (1.5% since Judith and Tobit joined). What is left
+   unused: her statements of belief (John
    11:22, 11:24, 11:27), which are faith and not temperament, and "Martha served" (John 12:2),
    which shows neither pole of any axis.
 4. **Three people are placed on only three axes** (Jesus, Mary the mother of Jesus, Deborah). That
    is honest about the text and it is the first thing to decide: see `AUDIT-LOG.md`.
 5. The result sentences, thresholds and share card are the engine's; four engine changes the
    reviewers asked for are listed for the engineer at the end of `AUDIT-LOG.md`.
+6. **Judith and Tobit are on the list and will seldom come up**: Judith about one sheet in ninety,
+   Tobit about one in thirty-five. Each carries a sentence saying which Bibles hold her or his
+   book, wherever the name appears. See the dated section at the end of `figures-notes.md`.
+7. **One calibration target now fails and no coordinate was moved to fix it.** The simulator wants
+   every figure to come out closest for at least 1.5% of realistic sheets; Judith comes out at
+   1.1%, Jesus at 1.3% and Martha at 1.5%. Two more figures divide the same hundred per cent, so
+   an even share falls from 4.3% to 4.0%, and Judith sits in the roster's most crowded corner, near
+   David and Deborah. Whether a fixed 1.5% floor is still the right target on a roster of
+   twenty-five is a decision for the owner; moving a coordinate to clear it would be inventing a
+   reading of the text to hit a number.

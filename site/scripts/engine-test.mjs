@@ -637,12 +637,27 @@ console.log('11. who in the Bible are you most like?');
     else if (!jesus.note || !/temperament/.test(jesus.note)) fail('Jesus carries no note');
     else ok('Jesus is on the roster and carries his note: "' + jesus.note.slice(0, 48) + '..."');
 
+    // Judith and Tobit are on the roster by the owner's decision, from books Protestant
+    // Bibles do not carry. Each says so in one sentence that travels with the outcome, so a
+    // reader never meets the name without being told where the book is printed.
+    let canon = 0;
+    for (const slug of ['judith', 'tobit']) {
+      const f = bf.outcomes.find(o => o.slug === slug);
+      if (!f) { fail(`${slug} is not on the roster`); continue; }
+      const want = `The book of ${f.name} is in Catholic and Orthodox Bibles. ` +
+        'Protestant Bibles leave it out or print it as Apocrypha.';
+      if (f.note !== want) fail(`${f.name} does not carry the canon note: ${f.note ?? '(none)'}`);
+      else canon++;
+    }
+    if (canon === 2) ok('Judith and Tobit each carry the sentence saying which Bibles hold their book');
+
     // The roster's own promises: both Testaments, at least nine women, and Jesus. Checked
     // by name because there is no field for either, and a calibration pass that quietly
     // dropped a woman to fix a distribution would be the worst way to hit a number.
     const women = [
       'Deborah', 'Esther', 'Ruth', 'Hannah', 'Abigail', 'Rahab',
-      'Mary the mother of Jesus', 'Martha', 'Mary Magdalene', 'Priscilla', 'Sarah', 'Miriam'
+      'Mary the mother of Jesus', 'Martha', 'Mary Magdalene', 'Priscilla', 'Sarah', 'Miriam',
+      'Judith'
     ].filter(n => bf.outcomes.some(o => o.name === n));
     if (women.length < 9) fail(`only ${women.length} women on the roster: ${women.join(', ')}`);
     else ok(`${women.length} women on the roster of ${bf.outcomes.length}`);
@@ -782,14 +797,47 @@ console.log('12. what are your spiritual gifts?');
 // ------------------------- 13. the gift quotations are verbatim, checked against the text
 console.log('13. every quoted passage is a substring of the translation on disk');
 {
-  // The file is the one demos/sounds-like-scripture downloads; it is gitignored, so it is
-  // absent on the deploy host. Missing means "not checked here", never "checked and fine".
+  // Both files are ones demos/sounds-like-scripture downloads, and both are gitignored, so
+  // both are absent on the deploy host. Missing means "not checked here", never "checked and
+  // fine". They hold different books, and a reference can only be checked against the file
+  // that has its book: verses-all.json carries the sixty-six, and the verse-per-line file
+  // carries the deuterocanon, which is where Judith and Tobit come from. The parsing of the
+  // second is audit/tools/webbe.mjs's, which is how those two entries were verified by hand.
   const versePath = resolve(ROOT, '../demos/sounds-like-scripture/work/verses-all.json');
-  if (!existsSync(versePath)) {
-    console.log('  skip  verses-all.json is not on disk (it is gitignored) — quotations unchecked');
+  const vplPath = resolve(ROOT, '../demos/sounds-like-scripture/raw/eng-webbe_vpl.txt');
+  /** Books read from the verse-per-line file, by the name a reference uses. */
+  const VPL_BOOKS = { Tobit: 'TOB', Judith: 'JDT' };
+
+  const haveVerses = existsSync(versePath);
+  const haveVpl = existsSync(vplPath);
+  const byRef = new Map();
+  if (haveVerses) {
+    for (const v of JSON.parse(readFileSync(versePath, 'utf8'))) {
+      if (v.src === 'webbe') byRef.set(v.ref, v.text);
+    }
   } else {
-    const verses = JSON.parse(readFileSync(versePath, 'utf8')).filter(v => v.src === 'webbe');
-    const byRef = new Map(verses.map(v => [v.ref, v.text]));
+    console.log('  skip  verses-all.json is not on disk (it is gitignored) — the sixty-six books are unchecked');
+  }
+  if (haveVpl) {
+    const names = Object.fromEntries(Object.entries(VPL_BOOKS).map(([name, code]) => [code, name]));
+    for (const line of readFileSync(vplPath, 'utf8').split(/\r?\n/)) {
+      const m = /^([A-Z0-9]{3}) (\d+):(\d+) (.*)$/.exec(line);
+      if (m && names[m[1]]) byRef.set(`${names[m[1]]} ${m[2]}:${m[3]}`, m[4].trim());
+    }
+  } else {
+    console.log('  skip  eng-webbe_vpl.txt is not on disk (it is gitignored) — Judith and Tobit are unchecked');
+  }
+
+  /** True when this reference's book lives only in a file that is not on disk. */
+  const unloaded = ref => {
+    const book = /^(.+?)\s\d+:/.exec(ref)?.[1];
+    if (!book) return false;
+    return VPL_BOOKS[book] ? !haveVpl : !haveVerses;
+  };
+
+  if (!byRef.size) {
+    console.log('  skip  no translation file is on disk — quotations unchecked');
+  } else {
     /** "1 Peter 4:9-10" -> the text of 4:9 and 4:10, joined. */
     const textOf = ref => {
       const m = /^(.+?)\s(\d+):(\d+)(?:-(\d+))?$/.exec(ref);
@@ -803,10 +851,11 @@ console.log('13. every quoted passage is a substring of the translation on disk'
       return out.length ? out.join(' ') : null;
     };
     const norm = s => s.replace(/[’‘]/g, "'").replace(/[“”]/g, '"').replace(/\s+/g, ' ').trim();
-    let checked = 0, missing = 0;
+    let checked = 0, missing = 0, skipped = 0;
     for (const q of QUIZZES) {
       for (const g of q.groups) {
         for (const src of g.quoted ?? []) {
+          if (unloaded(src.ref)) { skipped++; continue; }
           const text = textOf(src.ref);
           if (!text) { missing++; fail(`${q.slug}/${g.key}: ${src.ref} is not in the WEBBE file`); continue; }
           if (!norm(text).includes(norm(src.text))) {
@@ -815,18 +864,22 @@ console.log('13. every quoted passage is a substring of the translation on disk'
         }
       }
     }
-    if (checked && !missing) ok(`${checked} quotations are verbatim substrings of their cited verses`);
+    if (checked && !missing) {
+      ok(`${checked} quotations are verbatim substrings of their cited verses` +
+         (skipped ? ` (${skipped} skipped: their book's file is not on disk)` : ''));
+    }
 
     // The figure roster, held to the same standard the verifier held it to by hand: every
     // reference must resolve in the translation on disk, and every quotation must be a
     // verbatim substring of the verses it cites. A calibration pass that added evidence is
     // exactly when this stops being theoretical.
     const bf = getQuiz('bible-figure');
-    let refs = 0, quotes = 0, badRef = 0, badQuote = 0;
+    let refs = 0, quotes = 0, badRef = 0, badQuote = 0, unchecked = 0;
     for (const f of bf.outcomes) {
       for (const g of bf.groups) {
         for (const e of f.evidence[g.key] ?? []) {
           if (!e.ref) continue;
+          if (unloaded(e.ref)) { unchecked++; continue; }
           const text = textOf(e.ref);
           refs++;
           if (!text) { badRef++; fail(`${f.name}/${g.key}: ${e.ref} is not in the WEBBE file`); continue; }
@@ -840,7 +893,8 @@ console.log('13. every quoted passage is a substring of the translation on disk'
       }
     }
     if (!badRef && !badQuote) {
-      ok(`${refs} figure references all resolve, and all ${quotes} of their quotations are verbatim`);
+      ok(`${refs} figure references all resolve, and all ${quotes} of their quotations are verbatim` +
+         (unchecked ? ` (${unchecked} skipped: their book's file is not on disk)` : ''));
     }
   }
 }

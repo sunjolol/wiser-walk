@@ -81,6 +81,26 @@ export const JESUS_NOTE =
   'of holiness; every Christian is called to be like him in character, whatever their temperament.';
 
 /**
+ * Which Bibles hold a figure's book, said once and the same way every time. The wording is
+ * the game's, which the owner approved: it states where the book is printed and takes no
+ * side about whether it belongs there.
+ */
+const canonNote = (book: string) =>
+  `The book of ${book} is in Catholic and Orthodox Bibles. ` +
+  'Protestant Bibles leave it out or print it as Apocrypha.';
+
+/**
+ * A figure's own sentence, by slug, travelling with the outcome wherever it appears: the
+ * result card, the figure page, and any other surface that reads `outcome.note`. A map, not
+ * a chain of tests in the loop below, so adding a figure who needs one is adding a line here.
+ */
+const OUTCOME_NOTES: Record<string, string> = {
+  jesus: JESUS_NOTE,
+  judith: canonNote('Judith'),
+  tobit: canonNote('Tobit')
+};
+
+/**
  * Axis order is the engine's position order: pace, voice, lead, conflict, doubt, plan.
  *
  * The fifth axis keeps the blueprint's key `doubt` internally, but its reader-facing name
@@ -271,7 +291,7 @@ const outcomes: FigureOutcome[] = data.figures.map(f => ({
   position: f.position,
   mask: maskFor(f.name, f.position, f.evidence as Record<string, FigureEvidence[]>),
   who: f.who,
-  ...(f.slug === 'jesus' ? { note: JESUS_NOTE } : {}),
+  ...(OUTCOME_NOTES[f.slug] ? { note: OUTCOME_NOTES[f.slug] } : {}),
   evidence: f.evidence as Record<string, FigureEvidence[]>
 }));
 
@@ -284,7 +304,7 @@ const outcomes: FigureOutcome[] = data.figures.map(f => ({
  * maxDistance  the largest distance between any two listed figures under the same
  *              evidence-masked rule the engine matches with. It sets BAR LENGTH only on
  *              this quiz; hideOutcomeScore means it never prints as a number.
- * tieUnits     1, not the Compass's 10. Twenty-three figures crowd a space where the two
+ * tieUnits     1, not the Compass's 10. Twenty-five figures crowd a space where the two
  *              closest are about fifteen units apart, and a reader is measured only on the
  *              axes they and the figure both name — so at 10 units more than half of all
  *              readers had a second figure inside the window and "jointly" became the
@@ -307,6 +327,15 @@ const outcomes: FigureOutcome[] = data.figures.map(f => ({
  *              of four would take all three off the results, which the owner's decision about
  *              Jesus and the blueprint's nine women both rule out. Measured at 3: no figure
  *              closest for more than 9%, ties 8%. THE OWNER'S CALL: see AUDIT-LOG.md, top.
+ *
+ * MEASURED AGAIN on 2026-09-22, after Judith and Tobit were added by the owner's decision
+ * (25 figures, 10,000 realistic sheets): worst 7.7% (Ruth), ties 8.2%, central 1.3%, all
+ * inside their targets. The simulator's fourth target, that every figure comes out closest
+ * for at least 1.5% of sheets, now fails: Judith 1.1%, Jesus 1.3%, Martha 1.5%. Nothing here
+ * and no coordinate was changed to move those numbers. Two more figures divide the same
+ * hundred per cent, so an even share falls from 4.3% to 4.0%, and Judith sits in the most
+ * crowded corner of the roster, near David and Deborah. Whether the floor is still the right
+ * target on a roster this size is the owner's call, not a thing to fix in the config.
  */
 const perAxis = groups.map((_, g) => items.filter(it => it.group === g).length);
 if (new Set(perAxis).size !== 1) {
@@ -353,10 +382,10 @@ export const bibleFigure: FigureQuiz = {
     'not the full fairness audit the Theology Compass went through, and nobody has played it ' +
     'yet. Every figure is placed by cited, recorded acts, and each reference has been checked ' +
     'against the text: the references, not the placements, because where a figure sits is ' +
-    'still an editor’s judgement. Every figure comes from the books all Christians share. ' +
-    'Judith, Tobit, the Maccabees and others from the books Catholic and Orthodox Bibles also ' +
-    'contain are not in it yet; that is a limit of the draft, not a judgement about those ' +
-    'books. You are compared to each person only on the axes where the text places them and ' +
+    'still an editor’s judgement. Two of the figures, Judith and Tobit, come from books that ' +
+    'Catholic and Orthodox Bibles contain and Protestant Bibles leave out or print as ' +
+    'Apocrypha; their cards and their pages say so. ' +
+    'You are compared to each person only on the axes where the text places them and ' +
     'your own answers name a position: where the text shows nothing, or shows both ends, that ' +
     'axis is left out rather than counted as a match in the middle. No percentage is ever ' +
     'shown against a person. Neither end of any axis is the better one. ' +
