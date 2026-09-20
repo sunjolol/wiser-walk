@@ -9,6 +9,7 @@ import AxisDepth from '../../../components/AxisDepth.astro';
 import ShareBlock from '../../../components/ShareBlock.astro';
 import EmailCapture from '../../../components/EmailCapture.astro';
 import { getQuiz, resultFor, decodeFor, outcomeHref } from '../../../lib/engine/registry';
+import { outcomeNounPlural, rankWord } from '../../../lib/engine/types';
 import { isConfigured } from '../../../lib/email/provider';
 import { readEnv } from '../../../lib/email/env';
 import { getCollection } from 'astro:content';
@@ -51,6 +52,23 @@ const outcomeHeading =
   view?.shape === 'bipolar' && view.state === 'loose'
     ? 'Loose neighbours, not matches'
     : 'Closest on the map';
+
+/*
+ * What the reader was scored against, in this quiz's own noun. The Compass's sentence is
+ * the default and is printed unchanged; a quiz whose outcomes are people supplies its own,
+ * because "a sketch of typical adherents" is not true of a person in the Gospels.
+ */
+const scopeNote =
+  quiz?.outcomeScopeNote ??
+  `Scored against the listed ${outcomeNounPlural(quiz!)} only — a sketch of typical adherents, ` +
+    'not official teaching, and not a complete list of Christian traditions.';
+
+/** No number against an outcome where the quiz forbids it: the rank is said in words. */
+const hideScore = Boolean(quiz?.hideOutcomeScore);
+
+/** A gift the reader came out low on needs its caveat beside it, not in a footer. */
+const showLow =
+  view?.shape === 'unipolar' && Boolean(quiz?.notes?.low) && view.rows.some(r => r.below);
 ---
 {quiz && view ? (
   <Base
@@ -92,7 +110,29 @@ const outcomeHeading =
       ) : (
         <CategoryStack quiz={quiz} view={view} />
       )}
-    </div>
+    </div>{/*
+      These three hang off the end of the panel above with no whitespace between them. An
+      expression that renders nothing still leaves the newline on each side of it, and
+      three of those are three stray spaces in the Compass's result page — the one page on
+      the site that has to come out of this change unchanged.
+
+      A quiz may carry two sentences of its own about what its ranking is: what a low row
+      means, and what the whole page is and is not. They sit here, directly under the
+      ranking, rather than in a footer a reader has already scrolled past — the gifts draft
+      asks the reader to take the result to somebody who has watched them serve, and that is
+      the point of the page, not a caveat about it.
+    */}{showLow && <div class="note result-note"><p>{quiz.notes!.low}</p></div>}{quiz.notes?.result && (
+      <div class="note result-note"><p>{quiz.notes.result}</p></div>
+    )}{quiz.notes?.omitted && (
+      <div class="note result-note">
+        <p>
+          {quiz.notes.omitted.text}
+          {quiz.notes.omitted.href && quiz.notes.omitted.linkText && (
+            <> <a href={quiz.notes.omitted.href}>{quiz.notes.omitted.linkText}</a></>
+          )}
+        </p>
+      </div>
+    )}
 
     {/*
       Only when the quiz has OUTCOMES — named things measured against, which is a separate
@@ -119,10 +159,10 @@ const outcomeHeading =
               every axis, so none of this is a claim about what you believe.
             </p>
             <ul class="ranked">
-              {view.ranked.slice(0, 5).map(r => (
+              {view.ranked.slice(0, 5).map((r, i) => (
                 <li>
-                  <span><a href={outcomeHref({ name: r.name, slug: r.slug })}>{r.name}</a></span>
-                  <span>{r.score}%</span>
+                  <span><a href={outcomeHref(quiz, { name: r.name, slug: r.slug })}>{r.name}</a></span>
+                  <span>{hideScore ? rankWord(i) : `${r.score}%`}</span>
                 </li>
               ))}
             </ul>
@@ -133,7 +173,7 @@ const outcomeHeading =
             <p class="tags">
               {view.state === 'loose'
                 ? 'Nothing on the list is a close fit. These are the nearest, and "nearest" is doing a lot of work.'
-                : 'Scored against the listed traditions only — a sketch of typical adherents, not official teaching, and not a complete list of Christian traditions.'}
+                : scopeNote}
             </p>
             <OutcomeCards
               quiz={quiz}
@@ -147,11 +187,26 @@ const outcomeHeading =
 
     {view.shape === 'bipolar' && depthOrder.some(r => quiz.groups.find(g => g.slug === r.slug)?.summary) && (
       <section class="depth-section">
+        {/*
+          A quiz may name these panels itself. The Compass's two lines are kept as literal
+          markup rather than moved into a default string: a text node keeps its own line
+          breaks in the built HTML, so writing the same sentence on one line would change
+          every Compass result page by a newline. Same words, same bytes.
+        */}
+        {quiz.notes?.depthTitle || quiz.notes?.depthNote ? (
+          <Fragment>
+            <h2>{quiz.notes.depthTitle ?? 'Where these differences come from'}</h2>
+            <p class="tags">{quiz.notes.depthNote}</p>
+          </Fragment>
+        ) : (
+          <Fragment>
         <h2>Where these differences come from</h2>
         <p class="tags">
           Each one is a real disagreement between Christians who read the same Bible. Both
           cases below are stated by people who hold them.
         </p>
+          </Fragment>
+        )}
         {depthOrder.map((row, i) => <AxisDepth quiz={quiz} row={row} open={i === 0} />)}
       </section>
     )}

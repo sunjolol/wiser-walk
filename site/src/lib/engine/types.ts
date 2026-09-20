@@ -43,6 +43,23 @@ export interface QuizGroup {
   history?: Array<{ when: string; what: string }>;
   passages?: string[];
   readMore?: ReadMore;
+  /**
+   * The passage(s) this group is named FROM, quoted verbatim, with the reference and the
+   * translation the quotation was taken from.
+   *
+   * Deliberately not `passages`: that list is headed "Passages both sides argue from",
+   * carries no text of its own and is assigned to neither pole. A gift's listing verse is
+   * the opposite — it is the definition, it is quoted, and it belongs to this group alone.
+   */
+  quoted?: Array<{ ref: string; text: string }>;
+  /** The translation `quoted` was taken from, named on the page beside it. */
+  quotedFrom?: string;
+  /**
+   * Recorded acts that show what this group has looked like, each a reference and one
+   * neutral sentence. Never a quotation unless `quoted` carries it, and never a timeline:
+   * `history` is headed "How the argument unfolded", which is false for these.
+   */
+  acts?: Array<{ ref: string; what: string }>;
 }
 
 /**
@@ -81,6 +98,13 @@ export interface Outcome {
   /** Bipolar strategies place outcomes in group-space; category strategies do not. */
   position?: number[];
   description?: string;
+  /** One line identifying who or what this is, under the name. Never a virtue word. */
+  who?: string;
+  /**
+   * A sentence that travels with this outcome wherever it is named: under its card when it
+   * is the closest, and under the band on its own page. It is data, printed verbatim.
+   */
+  note?: string;
 }
 
 /**
@@ -229,6 +253,45 @@ export interface ScoringStrategy {
   shareText(quiz: Quiz, values: number[], origin: string): string;
 }
 
+/**
+ * Copy a unipolar quiz supplies for itself, because the strategy's defaults were written
+ * for VICES. "Leaned away" printed beside "Be hospitable to one another" reads as a verdict
+ * on the reader, and a bare one-word headline ("Hospitality") reads as one too. A quiz that
+ * sets nothing here keeps the strategy's own words exactly.
+ */
+export interface UnipolarCopy {
+  /** Replaces pull()'s words: below no-net-agreement, level with it, then four rising. */
+  strength?: { below: string; level: string; above: [string, string, string, string] };
+  /** Put in front of the leader's name, so the largest type is not a bare verdict. */
+  headlineLead?: string;
+  /** Replaces the strategy's flat-state summary. */
+  flat?: string;
+  /** How many rows the share text prints, highest first. Omit for all of them. */
+  shareTop?: number;
+}
+
+/**
+ * Prose a quiz supplies for pages that would otherwise have to know which quiz they are
+ * rendering. Every field is optional and every page falls back to what it printed before.
+ */
+export interface QuizNotes {
+  /** On the quiz's intro, before the preview: what this instrument can and cannot see. */
+  intro?: string;
+  /** On the result page, under the ranking, in the same place for every reader. */
+  result?: string;
+  /** What a group coming out low means. Printed only where a low group is shown. */
+  low?: string;
+  /**
+   * The heading and the line above the per-axis panels on the result page. The Compass's
+   * are about a disagreement between Christians, which is true of the Compass's axes and
+   * false of a quiz whose axes are temperament; a quiz that says nothing keeps them.
+   */
+  depthTitle?: string;
+  depthNote?: string;
+  /** Something the quiz leaves out on purpose, and where the disagreement is set out. */
+  omitted?: { text: string; linkText?: string; href?: string };
+}
+
 export interface Quiz {
   slug: string;
   title: string;
@@ -256,6 +319,54 @@ export interface Quiz {
    * at most one such quiz across the whole site.
    */
   codePrefix?: string;
+
+  /*
+   * ---- What this quiz measures a reader AGAINST -------------------------------------
+   *
+   * The Compass measures distance to traditions, and for a year the pages said so in
+   * words: "no tradition is named", "Scored against the listed traditions only", "Where
+   * the traditions sit". A quiz whose outcomes are people needed none of those sentences
+   * to be rewritten — it needed them to stop being typed into the pages at all.
+   *
+   * Every field below defaults to the Compass's existing word, so the Compass's output is
+   * byte-for-byte what it was before these existed.
+   */
+  /** Singular, lower case, as it appears mid-sentence: "tradition", "figure". */
+  outcomeNoun?: string;
+  /** Plural, lower case: "traditions", "figures". Headings capitalise it themselves. */
+  outcomeNounPlural?: string;
+  /** The sentence under the outcome list saying what the comparison is and is not. */
+  outcomeScopeNote?: string;
+  /** First URL segment of an outcome's own page: /tradition/<slug>/, /figure/<slug>/. */
+  outcomePathBase?: string;
+  /**
+   * NEVER PRINT A NUMBER BESIDE AN OUTCOME.
+   *
+   * The site's standing rule kills any person-to-person or person-to-saint percentage, and
+   * "84% like Jesus" is the clearest case of why. Where this is set, every surface — the
+   * outcome cards, the result page, the outcome's own page, the compare page, the share
+   * text and the share card — ranks in words and keeps the bar length, and shows no score.
+   */
+  hideOutcomeScore?: boolean;
+
+  /** Copy this quiz supplies for its own pages; see QuizNotes. */
+  notes?: QuizNotes;
+  /** Unipolar copy that replaces the vice-shaped defaults; see UnipolarCopy. */
+  unipolarCopy?: UnipolarCopy;
 }
 
 export const isLive = (q: Quiz) => q.status === 'live';
+
+/** The Compass's words, and the default for every quiz that does not say otherwise. */
+export const outcomeNoun = (q: Quiz) => q.outcomeNoun ?? 'tradition';
+export const outcomeNounPlural = (q: Quiz) => q.outcomeNounPlural ?? 'traditions';
+export const outcomePathBase = (q: Quiz) => q.outcomePathBase ?? 'tradition';
+/** For a heading or a tile label: "Traditions", "Figures". */
+export const capitalise = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+/**
+ * Where a score is not printable, the position is still worth saying — in words, because a
+ * rank is not a measurement of a person. "Closest" is the only one that claims anything.
+ */
+const RANK_WORDS = ['Closest', 'Next', 'Third', 'Fourth', 'Fifth', 'Sixth'];
+export const rankWord = (i: number) => RANK_WORDS[i] ?? 'Further off';

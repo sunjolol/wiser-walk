@@ -1,6 +1,6 @@
 ---
 /**
- * "Closest on the map" — the traditions, as cards you can read at a glance.
+ * "Closest on the map" — the outcomes, as cards you can read at a glance.
  *
  * A plain name-and-number list made the reader do the comparing. The card and the bar are
  * therefore the same object: each card is filled from the left to its own match, so the
@@ -12,10 +12,17 @@
  * data does not have, on the one screen where a reader is deciding which church to look at.
  * The closest one is marked instead, by treatment rather than by exaggeration.
  *
+ * WHERE THE OUTCOMES ARE PEOPLE, NO NUMBER IS PRINTED AT ALL (quiz.hideOutcomeScore). The
+ * bar keeps its length, because length is the ranking; the meta line says the position in
+ * words. "84% like Jesus" is the sentence this site exists not to print, and a percentage
+ * against a person is a claim the instrument cannot make — six temperament axes cannot
+ * measure how like someone you are.
+ *
  * The skew, the asymmetric radius and the gradient on the leader are the theme's own card
  * language; the layered fill is the rails' and the compass's.
  */
 import type { Quiz, Ranked } from '../lib/engine/types';
+import { rankWord } from '../lib/engine/types';
 import { outcomeHref } from '../lib/engine/registry';
 
 interface Props {
@@ -28,20 +35,31 @@ interface Props {
 
 const { quiz, ranked, leading = 1, limit = 5 } = Astro.props;
 const shown = ranked.slice(0, limit);
+const hideScore = Boolean(quiz.hideOutcomeScore);
+
+/**
+ * An outcome's own sentence travels with it; printed under the card when it is closest.
+ * It hangs off the end of the link's own line below, with no whitespace between: an
+ * expression that renders nothing still leaves the newline on each side of it, and on a
+ * quiz with no notes — the Compass — that is a stray space inside every card in the list.
+ */
+const noteFor = (slug: string) => quiz.outcomes.find(o => o.slug === slug)?.note;
 ---
 <ol class="outcomes-list">
   {shown.map((r, i) => (
     <li class:list={['outcome', { 'is-lead': i < leading }]}>
-      <a href={outcomeHref({ name: r.name, slug: r.slug })} class="outcome-card">
+      <a href={outcomeHref(quiz, { name: r.name, slug: r.slug })} class="outcome-card">
         <span class="outcome-fill" style={`--v:${r.score}`} aria-hidden="true"></span>
         {i < leading && <span class="outcome-bloom" aria-hidden="true"></span>}
         <span class="outcome-body">
           <span class="outcome-name">{r.name}</span>
           <span class="outcome-meta">
-            {r.score}% match{i < leading && <span class="outcome-tag"> · closest</span>}
+            {hideScore
+              ? rankWord(i)
+              : <>{r.score}% match{i < leading && <span class="outcome-tag"> · closest</span>}</>}
           </span>
         </span>
-      </a>
+      {/* tight against the link's close: see noteFor above */}</a>{i < leading && noteFor(r.slug) && <p class="outcome-note">{noteFor(r.slug)}</p>}
     </li>
   ))}
 </ol>

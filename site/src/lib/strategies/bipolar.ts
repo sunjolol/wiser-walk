@@ -4,6 +4,7 @@
  * fairness audit — see audit/fairness-report.md before changing any of them.
  */
 import { makeCodec } from '../engine/codec';
+import { outcomeNoun } from '../engine/types';
 import type { BipolarRow, BipolarView, HeadlinePart, Quiz, ScoringStrategy, Sheet } from '../engine/types';
 
 /** Items per group fixes the raw range, so a group with more items still maps to 0..100. */
@@ -178,10 +179,16 @@ export function nearestState(
   return { kind: 'near', names };
 }
 
+/**
+ * The one-line verdict. The noun comes from the quiz: the Compass's outcomes are traditions
+ * and it says so, and a quiz whose outcomes are people says "figure" in the same sentences.
+ * `outcomeNoun` defaults to "tradition", so the Compass's two lines are unchanged.
+ */
 export function nearestLine(quiz: Quiz, values: number[], near: Match[]): string {
   const st = nearestState(quiz, values, near);
-  if (st.kind === 'central') return 'Near the center on every axis, so no tradition is named';
-  if (st.kind === 'loose') return `No listed tradition is a close fit. Nearest, loosely: ${st.names.join(', ')}`;
+  const noun = outcomeNoun(quiz);
+  if (st.kind === 'central') return `Near the center on every axis, so no ${noun} is named`;
+  if (st.kind === 'loose') return `No listed ${noun} is a close fit. Nearest, loosely: ${st.names.join(', ')}`;
   return `Nearest on the map${st.kind === 'tie' ? ' (jointly)' : ''}: ${st.names.join(' · ')}`;
 }
 

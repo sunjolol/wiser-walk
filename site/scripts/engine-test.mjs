@@ -7,7 +7,7 @@
  * copy of the same rules. Both must pass.
  */
 import { build } from 'esbuild';
-import { readFileSync, rmSync } from 'node:fs';
+import { existsSync, readFileSync, rmSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
@@ -28,7 +28,7 @@ await build({
 const engine = await import(pathToFileURL(OUT).href);
 const {
   QUIZZES, getQuiz, scoreQuiz, resultFor, encodeFor, decodeFor, shareTextFor, groupHref,
-  parseCodes, compare, compareHref, inviteHref
+  outcomeHref, parseCodes, compare, compareHref, inviteHref
 } = engine;
 
 let failures = 0;
@@ -508,6 +508,209 @@ console.log('9. the two-person overlay');
   else if (/[^A-Z0-9.]/.test(codesPart)) {
     fail('compareHref carries something other than codes: ' + codesPart);
   } else ok('a comparison URL is two codes and nothing else');
+}
+
+// ------------------------------------------------- 10. every group is keyed both ways
+console.log('10. every group in every quiz is keyed in both directions');
+{
+  // The registry throws on this at module load, so reaching here means it held. Printing
+  // the counts is what makes a silent data edit visible in the test log rather than only
+  // in a thrown build error.
+  for (const q of QUIZZES) {
+    const bad = q.groups.filter((_, i) => {
+      const dirs = q.items.filter(it => it.group === i).map(it => it.direction);
+      return !dirs.includes(1) || !dirs.includes(-1);
+    });
+    if (bad.length) fail(`${q.slug}: groups keyed one way only: ${bad.map(g => g.key).join(',')}`);
+    else {
+      const fwd = q.items.filter(it => it.direction === 1).length;
+      ok(`${q.slug}: all ${q.groups.length} groups keyed both ways (${fwd} of ${q.items.length} forward)`);
+    }
+  }
+}
+
+// ---------------------------------- 11. the figure quiz: people, not percentages
+console.log('11. who in the Bible are you most like?');
+{
+  const bf = getQuiz('bible-figure');
+  if (!bf) fail('bible-figure not registered');
+  else {
+    // The audit's answer sheets prove the Compass; a figure has no answer sheet, so the
+    // equivalent proof is that its OWN coordinates return it. If a figure's position does
+    // not land on that figure, the page for it would open by naming somebody else.
+    let landed = 0;
+    for (const f of bf.outcomes) {
+      const top = resultFor(bf, f.position).ranked[0];
+      if (top.slug === f.slug) landed++;
+      else fail(`${f.name}'s own coordinates land on ${top.name}`);
+    }
+    if (landed === bf.outcomes.length) {
+      ok(`all ${landed} figures' own coordinates return that figure first`);
+    }
+
+    // Two figures at the same point are indistinguishable for ever: whichever sorts first
+    // wins every reader, and the other is unreachable. Checked as an exact tie, which is
+    // the only version of the problem the data can be wrong about.
+    const seen = new Map();
+    let dupes = 0;
+    for (const f of bf.outcomes) {
+      const key = f.position.join(',');
+      if (seen.has(key)) { dupes++; fail(`${f.name} and ${seen.get(key)} share the position ${key}`); }
+      seen.set(key, f.name);
+    }
+    if (!dupes) ok(`all ${bf.outcomes.length} figures sit at distinct positions`);
+
+    // The closest pair, printed rather than asserted: it is a fact about the roster the
+    // owner should see move, and the tie rule is 10 units.
+    let closest = { d: Infinity, a: '', b: '' };
+    for (let i = 0; i < bf.outcomes.length; i++) {
+      for (let j = i + 1; j < bf.outcomes.length; j++) {
+        const d = Math.sqrt(bf.outcomes[i].position.reduce(
+          (s, v, k) => s + (v - bf.outcomes[j].position[k]) ** 2, 0
+        ));
+        if (d < closest.d) closest = { d, a: bf.outcomes[i].name, b: bf.outcomes[j].name };
+      }
+    }
+    ok(`closest pair: ${closest.a} and ${closest.b}, ${closest.d.toFixed(1)} units apart ` +
+       `(tie rule ${bf.config.tieUnits})`);
+
+    // Every figure needs a cell on every axis, and a cell must be one of the two honest
+    // kinds: cited acts, or a single "the text does not show this" with a null reference.
+    // A figure with neither would have a coordinate resting on nothing at all.
+    let cells = 0, cited = 0, silent = 0;
+    for (const f of bf.outcomes) {
+      for (const g of bf.groups) {
+        const items = f.evidence?.[g.key];
+        cells++;
+        if (!Array.isArray(items) || !items.length) {
+          fail(`${f.name} has no evidence on ${g.key}`);
+        } else if (items.every(e => e.ref)) {
+          cited++;
+          const wrong = items.filter(e => e.toward !== 'left' && e.toward !== 'right');
+          if (wrong.length) fail(`${f.name}/${g.key}: a cited act points at no pole`);
+        } else if (items.length === 1 && !items[0].ref && !items[0].toward) {
+          silent++;
+        } else {
+          fail(`${f.name}/${g.key}: mixes cited acts with a "not shown" item`);
+        }
+      }
+    }
+    ok(`${cells} evidence cells: ${cited} cited, ${silent} "the text does not show this"`);
+
+    // Evidence is keyed by group KEY and URLs are built from group SLUG. On this quiz they
+    // differ on the fifth axis (keyed `doubt`, published `reasons`), which is the same trap
+    // the Compass sprang with `spirit`/`gifts`.
+    const keys = bf.groups.map(g => g.key).join(',');
+    const slugs = bf.groups.map(g => g.slug).join(',');
+    if (keys === slugs) fail('bible-figure keys and slugs are identical — the doubt/reasons rename is gone');
+    else if (!slugs.includes('reasons') || !keys.includes('doubt')) {
+      fail(`bible-figure axis identities are wrong: keys ${keys}, slugs ${slugs}`);
+    } else ok('the fifth axis is keyed "doubt" and published as "reasons"');
+
+    // No number against a person, at the source: the quiz declares it, and its outcome
+    // pages live under their own path so /tradition/ stays the Compass's.
+    if (!bf.hideOutcomeScore) fail('bible-figure does not set hideOutcomeScore');
+    else ok('bible-figure sets hideOutcomeScore: no percentage against a person');
+    const compass = getQuiz('theology-compass');
+    const fh = outcomeHref(bf, bf.outcomes[0]);
+    const th = outcomeHref(compass, compass.outcomes[0]);
+    if (fh !== `/figure/${bf.outcomes[0].slug}/`) fail('figure outcome href: ' + fh);
+    else if (th !== `/tradition/${compass.outcomes[0].slug}/`) fail('tradition outcome href moved: ' + th);
+    else ok(`outcome pages: ${fh} and ${th}`);
+
+    // The share text is a surface like any other, and it must not carry a score either.
+    const share = shareTextFor(bf, [42, 50, 58, 67, 50, 33], 'https://wiserwalk.com');
+    if (/\d+%/.test(share)) fail('the figure share text prints a percentage:\n' + share);
+    else ok('the figure share text prints no percentage');
+
+    // Jesus is on the roster by the owner's decision, and carries one sentence that must
+    // travel with him wherever he is named.
+    const jesus = bf.outcomes.find(o => o.slug === 'jesus');
+    if (!jesus) fail('Jesus is not on the roster');
+    else if (!jesus.note || !/temperament/.test(jesus.note)) fail('Jesus carries no note');
+    else ok('Jesus is on the roster and carries his note: "' + jesus.note.slice(0, 48) + '..."');
+  }
+}
+
+// -------------------------------------------- 12. the gifts quiz: words, not verdicts
+console.log('12. what are your spiritual gifts?');
+{
+  const sg = getQuiz('spiritual-gifts');
+  const sins = getQuiz('seven-deadly-sins');
+  if (!sg) fail('spiritual-gifts not registered');
+  else {
+    const sheet = sg.items.map(it =>
+      sg.groups[it.group].key === 'hospitality' ? (it.direction === 1 ? 2 : -2) : 0
+    );
+    const res = resultFor(sg, scoreQuiz(sg, sheet));
+    if (res.ranked[0].slug !== 'hospitality') fail('hospitality sheet ranked ' + res.ranked[0].slug);
+    else ok(`hospitality sheet -> "${res.headline}"`);
+
+    // The vice words must not reach a gift. "Leaned away" beside "Be hospitable to one
+    // another" is the failure this quiz's own strength words exist to prevent.
+    const words = res.rows.map(r => r.strength);
+    if (words.some(w => /leaned away|pull/.test(w))) {
+      fail('the vice strength words reached the gifts quiz: ' + [...new Set(words)].join(' / '));
+    } else ok('gift rows read in this quiz\'s own words: ' + [...new Set(words)].join(' / '));
+    // ...and the sins quiz keeps the defaults it was written with.
+    const sinWords = resultFor(sins, scoreQuiz(sins, sins.items.map(it => (it.direction === 1 ? 1 : -1))))
+      .rows.map(r => r.strength);
+    if (!sinWords.some(w => /pull/.test(w))) fail('the sins quiz lost its own words: ' + sinWords.join(','));
+    else ok('the seven-deadly-sins draft keeps the strategy defaults');
+
+    // Every gift needs its listing passage and its recorded acts, or the group page would
+    // publish a name with nothing behind it.
+    const thin = sg.groups.filter(g => !g.quoted?.length || !g.acts?.length);
+    if (thin.length) fail('gifts with no passage or no acts: ' + thin.map(g => g.key).join(','));
+    else ok(`all ${sg.groups.length} gifts carry a quoted passage and at least one recorded act`);
+
+    // The share card shows the top three. The bottom of a gifts ranking is the part a
+    // reader would least want pasted anywhere, and the page's caveat cannot travel with it.
+    const lines = shareTextFor(sg, scoreQuiz(sg, sheet), 'https://wiserwalk.com').split('\n');
+    if (lines.length !== 1 + (sg.unipolarCopy?.shareTop ?? sg.groups.length) + 1) {
+      fail(`gifts share text has ${lines.length} lines:\n` + lines.join('\n'));
+    } else ok(`gifts share text prints ${sg.unipolarCopy.shareTop} rows, not all ${sg.groups.length}`);
+  }
+}
+
+// ------------------------- 13. the gift quotations are verbatim, checked against the text
+console.log('13. every quoted passage is a substring of the translation on disk');
+{
+  // The file is the one demos/sounds-like-scripture downloads; it is gitignored, so it is
+  // absent on the deploy host. Missing means "not checked here", never "checked and fine".
+  const versePath = resolve(ROOT, '../demos/sounds-like-scripture/work/verses-all.json');
+  if (!existsSync(versePath)) {
+    console.log('  skip  verses-all.json is not on disk (it is gitignored) — quotations unchecked');
+  } else {
+    const verses = JSON.parse(readFileSync(versePath, 'utf8')).filter(v => v.src === 'webbe');
+    const byRef = new Map(verses.map(v => [v.ref, v.text]));
+    /** "1 Peter 4:9-10" -> the text of 4:9 and 4:10, joined. */
+    const textOf = ref => {
+      const m = /^(.+?)\s(\d+):(\d+)(?:-(\d+))?$/.exec(ref);
+      if (!m) return null;
+      const [, book, ch, from, to] = m;
+      const out = [];
+      for (let v = Number(from); v <= Number(to ?? from); v++) {
+        const t = byRef.get(`${book} ${ch}:${v}`);
+        if (t) out.push(t);
+      }
+      return out.length ? out.join(' ') : null;
+    };
+    const norm = s => s.replace(/[’‘]/g, "'").replace(/[“”]/g, '"').replace(/\s+/g, ' ').trim();
+    let checked = 0, missing = 0;
+    for (const q of QUIZZES) {
+      for (const g of q.groups) {
+        for (const src of g.quoted ?? []) {
+          const text = textOf(src.ref);
+          if (!text) { missing++; fail(`${q.slug}/${g.key}: ${src.ref} is not in the WEBBE file`); continue; }
+          if (!norm(text).includes(norm(src.text))) {
+            fail(`${q.slug}/${g.key}: the quotation is not in ${src.ref}:\n    ${src.text}\n    ${text}`);
+          } else checked++;
+        }
+      }
+    }
+    if (checked && !missing) ok(`${checked} quotations are verbatim substrings of their cited verses`);
+  }
 }
 
 rmSync(OUT, { force: true });

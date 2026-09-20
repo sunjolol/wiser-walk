@@ -1,0 +1,280 @@
+---
+/**
+ * One person from the Bible, as the figure quiz places them.
+ *
+ * This is the tradition page's sibling, and deliberately so: the same band, the same dark
+ * feature half with the instrument on it, the same rails, the same neighbour list, the same
+ * dark way back into the quiz. What differs is what the page is made of. A tradition's
+ * position is a sketch of where adherents land; a figure's position is an ARGUMENT FROM THE
+ * TEXT, so the page prints the argument — every cited act that put the figure where they
+ * are, grouped by axis, with both pole names on every heading.
+ *
+ * Rules this page keeps, in the order it would be wrong to break them:
+ *
+ * 1. **No percentage against a person, anywhere.** The quiz sets hideOutcomeScore, so the
+ *    neighbour list ranks by bar length and says "Closest" in words. "84% like Jesus" is the
+ *    sentence this site exists not to print.
+ * 2. **Every sentence comes from the data.** No commentary is written here. The `did` lines,
+ *    the quotations, the references, the band adjectives and the axis summaries are all in
+ *    the quiz or in bible-figures.json; this file arranges them.
+ * 3. **Two kinds of middle, never conflated.** A coordinate at 50 because the text records
+ *    acts toward BOTH poles is said to be that; a coordinate at 50 because the text records
+ *    nothing on that axis is said to be that. The data tells them apart (a not-shown cell is
+ *    a single item with a null ref), and so does the page.
+ * 4. **noindex while the quiz is a draft**, and no breadcrumb trail either: a trail is a
+ *    claim about where a page sits in a site search engines are invited to read.
+ */
+import Base from '../../layouts/Base.astro';
+import Hero from '../../components/Hero.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import Icon from '../../components/Icon.astro';
+import CompassWheel from '../../components/CompassWheel.astro';
+import RailStack from '../../components/RailStack.astro';
+import TraditionNeighbours from '../../components/TraditionNeighbours.astro';
+import CorrectionNote from '../../components/CorrectionNote.astro';
+import { bibleFigure } from '../../lib/quizzes/bible-figure';
+import type { FigureEvidence, FigureOutcome } from '../../lib/quizzes/bible-figure';
+import { groupHref, quizHref, resultFor } from '../../lib/engine/registry';
+import type { BipolarView } from '../../lib/engine/types';
+
+export function getStaticPaths() {
+  return bibleFigure.outcomes.map(f => ({ params: { slug: f.slug }, props: { figure: f } }));
+}
+
+const { figure } = Astro.props as { figure: FigureOutcome };
+const quiz = bibleFigure;
+const isDraft = quiz.status === 'draft';
+
+/**
+ * The figure's own view, built by the SAME call the result page makes for a reader. The
+ * coordinates are the data; everything drawn here — the compass, the rails, the band
+ * adjectives, the distance to every other figure — is what the engine says about them.
+ */
+const view = resultFor(quiz, figure.position) as BipolarView;
+
+/** A figure is its own nearest neighbour at zero distance; that is arithmetic, not news. */
+const neighbours = view.ranked.filter(r => r.slug !== figure.slug);
+const named = view.rows.filter(r => !r.noClaim).length;
+
+/** The ghost word is one word of the name — the first real one, never anything invented. */
+const ghost = (figure.name.match(/[A-Za-z]{4,}/g) ?? [figure.name])[0]!.toLowerCase();
+
+/**
+ * The evidence, in the engine's axis order, joined to the row the engine produced. Evidence
+ * is keyed by group KEY, and the URL by group SLUG; on this quiz the fifth axis is keyed
+ * `doubt` and published as `reasons`, so mixing them up would 404 and lose the cell.
+ */
+const axes = quiz.groups.map((group, i) => {
+  const row = view.rows[i]!;
+  const items: FigureEvidence[] = figure.evidence[group.key] ?? [];
+  const cited = items.filter(e => e.ref);
+  return {
+    group,
+    row,
+    items,
+    cited,
+    /** The text records acts toward both poles — a different fact from recording none. */
+    bothEnds: cited.some(e => e.toward === 'left') && cited.some(e => e.toward === 'right'),
+    /** The data's not-shown cell: one item, no reference, no direction. */
+    notShown: cited.length === 0
+  };
+});
+
+const momentCount = axes.reduce((n, a) => n + a.cited.length, 0);
+const silentAxes = axes.filter(a => a.notShown).length;
+
+const jsonLd = isDraft
+  ? null
+  : {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: `${figure.name} on ${quiz.title}`,
+      description: `Where the recorded acts of ${figure.name} place them on six axes of temperament.`,
+      url: new URL(`/figure/${figure.slug}/`, Astro.site).href
+    };
+
+const breadcrumbs = isDraft
+  ? null
+  : [
+      { name: 'Home', url: '/' },
+      { name: 'Quizzes', url: '/quizzes/' },
+      { name: quiz.title, url: quizHref(quiz) },
+      { name: figure.name, url: `/figure/${figure.slug}/` }
+    ];
+---
+<Base
+  title={`${figure.name}: ${figure.who}`}
+  description={`${figure.name} — ${figure.who}. Where ${momentCount} cited, recorded acts place them on six axes of temperament. Neither end of any axis is the better one.`}
+  noindex={isDraft}
+  jsonLd={jsonLd}
+  breadcrumbs={breadcrumbs}
+>
+  <Hero
+    title={figure.name}
+    eyebrow={`${quiz.title} · figure`}
+    icon={quiz.icon}
+    ghost={ghost}
+    long
+    lede={figure.who}
+    tiles={[
+      { n: quiz.groups.length, label: 'Axes' },
+      { n: momentCount, label: 'Cited acts' },
+      { n: named, label: 'Poles named' },
+      { n: quiz.outcomes.length - 1, label: 'Others' }
+    ]}
+  />
+
+  <div class="ref ref--figure">
+    {/* The outcome's own sentence, directly under the band, before anything is drawn. */}
+    {figure.note && (
+      <aside class="caveat caveat--note">
+        <span class="caveat-mark" aria-hidden="true"><Icon name={quiz.icon} size={18} /></span>
+        <div>
+          <p class="caveat-label">Read this first</p>
+          <p>{figure.note}</p>
+        </div>
+      </aside>
+    )}
+
+    <aside class="caveat">
+      <span class="caveat-mark" aria-hidden="true"><Icon name="compass" size={18} /></span>
+      <div>
+        <p class="caveat-label">What this is</p>
+        <p>
+          Six axes of <strong>temperament, not virtue</strong>: neither end of any of them is
+          the better one. Every coordinate below is argued from cited, recorded acts, and
+          where the text shows nothing the page says so instead of guessing.
+        </p>
+      </div>
+    </aside>
+
+    {isDraft && quiz.draftNote && (
+      <div class="note draft ref-draft">
+        <p><strong>Unaudited draft.</strong>{' ' + quiz.draftNote}</p>
+      </div>
+    )}
+
+    <div class="feature trad-feature">
+      <div class="feature-art dark">
+        <div class="dark-ghost" aria-hidden="true">{ghost}</div>
+        <p class="feature-kicker">The record, drawn</p>
+        <CompassWheel view={view} />
+        <p class="feature-note">
+          Each arm is one axis; length is how far from the centre the recorded acts sit.
+        </p>
+      </div>
+      <div class="feature-body">
+        <p class="feature-kicker trad-kicker">In the quiz's own words</p>
+        <h3 class="trad-verdict">
+          {view.headlineParts.map((part, i) => (
+            <><span class={`verdict-part verdict-part--${part.side}`}>{part.text}</span>{i < view.headlineParts.length - 1 && <span class="verdict-sep">, </span>}</>
+          ))}
+        </h3>
+        <dl class="spec">
+          {view.rows.map(row => (
+            <div>
+              <dt><a href={groupHref(quiz, row)}>{row.name}</a></dt>
+              <dd>{row.band}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </div>
+
+    <SectionHead title="The six axes" kicker="Both poles named on every rail" />
+    <div class="panel layered ref-panel ref-panel--quiet">
+      <div class="wash" aria-hidden="true"></div>
+      <div class="veil" aria-hidden="true"></div>
+      <RailStack quiz={quiz} view={view} />
+    </div>
+
+    <SectionHead
+      title="The moments behind each axis"
+      kicker={`${momentCount} cited acts, grouped by axis`}
+    />
+    <p class="ref-note">
+      Each line is one recorded act and the reference it is taken from. The sentence says
+      what the person did; where it is in quotation marks it is verbatim from the World
+      English Bible British Edition.
+      {silentAxes > 0 && ` On ${silentAxes} of the six the text records nothing, and that axis is left at the centre rather than filled in.`}
+    </p>
+
+    <div class="moments">
+      {axes.map(axis => (
+        <section class:list={['moment-axis', { 'is-silent': axis.notShown }]}>
+          <h3 class="moment-head">
+            <a href={groupHref(quiz, axis.group)}>{axis.group.name}</a>
+            <span class="moment-poles">
+              <b class="pole-l">{axis.group.left}</b>
+              <i aria-hidden="true">↔</i>
+              <b class="pole-r">{axis.group.right}</b>
+            </span>
+          </h3>
+          <p class="moment-band">{axis.row.band}</p>
+
+          {axis.bothEnds && (
+            <p class="moment-note">
+              The text records acts toward both ends of this axis, which is why this
+              coordinate sits where it does — not because nothing is recorded.
+            </p>
+          )}
+
+          <ol class="moment-list">
+            {axis.items.map(item => (
+              <li class:list={['moment', item.toward ? `moment--${item.toward}` : 'moment--none']}>
+                {item.ref
+                  ? <p class="moment-ref">
+                      <span class="moment-cite">{item.ref}</span>
+                      <span class="moment-toward">
+                        toward {item.toward === 'left' ? axis.group.left : axis.group.right}
+                      </span>
+                    </p>
+                  : <p class="moment-ref"><span class="moment-cite">No record</span></p>}
+                <p class="moment-did">{item.did}</p>
+                {item.quote && <blockquote class="moment-quote">{item.quote}</blockquote>}
+              </li>
+            ))}
+          </ol>
+        </section>
+      ))}
+    </div>
+
+    {neighbours.length > 0 && (
+      <>
+        <SectionHead title="Nearest on the map" kicker="By the same arithmetic the quiz uses" />
+        <p class="ref-note">
+          Distance between two sets of coordinates across every axis, on the same scale a
+          reader's answers are measured on. No number is shown against a person, and nearness
+          is not likeness: two people can land in the same band for different reasons.
+        </p>
+        <TraditionNeighbours quiz={quiz} ranked={neighbours} limit={6} />
+      </>
+    )}
+
+    <section class="dark pledge ref-cta">
+      <div class="dark-ghost" aria-hidden="true">{ghost}</div>
+      <div class="ref-cta-say">
+        <p class="feature-kicker">
+          <Icon name={quiz.icon} size={13} /> {quiz.title}
+        </p>
+        <h2>See who you land nearest.</h2>
+        <p>
+          Answer {quiz.items.length} plain statements about yourself — none of them mentions
+          the Bible — and your own position is drawn on these same six rails, with the
+          distance to {figure.name} and to {quiz.outcomes.length - 1} others.
+        </p>
+        <div class="btn-row">
+          <a class="btn" href={quizHref(quiz)}>Take the quiz</a>
+        </div>
+      </div>
+      <dl class="spec ref-cta-spec">
+        <div><dt>Statements</dt><dd>{quiz.items.length}</dd></div>
+        <div><dt>Takes</dt><dd>About {quiz.minutes} minutes</dd></div>
+        <div><dt>Axes</dt><dd>{quiz.groups.length}, both poles named</dd></div>
+        <div><dt>Scored</dt><dd>On your own device</dd></div>
+      </dl>
+    </section>
+
+    <CorrectionNote subject={figure.name} />
+  </div>
+</Base>

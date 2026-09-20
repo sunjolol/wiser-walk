@@ -1,6 +1,19 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import vercel from '@astrojs/vercel';
+import { QUIZZES } from './src/lib/engine/registry.ts';
+import { outcomePathBase } from './src/lib/engine/types.ts';
+
+/**
+ * Every URL prefix owned by a quiz that is still a draft: its intro, its group pages and
+ * the pages of its outcomes. A live quiz contributes nothing, so /tradition/ stays in the
+ * sitemap exactly as it is.
+ */
+const draftPrefixes = QUIZZES.filter(q => q.status === 'draft').flatMap(q => [
+  `/q/${q.slug}/`,
+  `/axis/${q.slug}/`,
+  ...(q.outcomes.length ? [`/${outcomePathBase(q)}/`] : [])
+]);
 
 // Everything is static except result pages, which are rendered on demand from the code
 // in the URL — so any valid code has a permanent page without pre-building millions.
@@ -15,10 +28,17 @@ export default defineConfig({
   integrations: [
     sitemap({
       // Result and comparison pages are per-person and carry noindex; keep them out of the
-      // sitemap too.
+      // sitemap too. So does every page belonging to a DRAFT quiz: its intro, its group
+      // pages and its outcome pages all render `noindex`, and a sitemap entry for a page
+      // that asks not to be indexed is a contradiction we were publishing — the
+      // seven-deadly-sins draft was listed in all nine of its URLs.
+      //
+      // The prefixes are derived from the registry rather than typed here, so a quiz that
+      // goes live, or a new draft, needs no edit in this file.
       filter: page => {
         const path = new URL(page).pathname;
-        return !path.startsWith('/r/') && !path.startsWith('/c/');
+        if (path.startsWith('/r/') || path.startsWith('/c/')) return false;
+        return !draftPrefixes.some(prefix => path.startsWith(prefix));
       }
     })
   ],

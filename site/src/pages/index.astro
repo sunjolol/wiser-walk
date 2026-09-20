@@ -111,7 +111,7 @@ const jsonLd = {
   <SectionHead title="The traditions" kicker="Eighteen families, each in its own words" />
   <ul class="chips">
     {compass.outcomes.map(o => (
-      <li><a class="chip-link" href={outcomeHref(o)}>{o.name}</a></li>
+      <li><a class="chip-link" href={outcomeHref(compass, o)}>{o.name}</a></li>
     ))}
   </ul>
 

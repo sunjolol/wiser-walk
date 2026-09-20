@@ -436,3 +436,33 @@
 
 /* the draft row is already two columns; its cards take the column they are given */
 @media (min-width: 52rem) { .qz-drafts { grid-template-columns: minmax(0, 1fr); } }
+
+/* ==========================================================================
+   Copy a quiz carries about its own ranking
+   (the gifts draft: the frame before, the caveat after, the omission said out loud)
+   ========================================================================== */
+
+/* on the intro these sit between the draft note and the preview; on the result they sit
+   directly under the ranking, because a reader who scrolls no further has still read them */
+.quiz-frame, .result-note { margin-top: 1.1rem; max-width: 44rem; }
+.result-note { margin-top: 1.2rem; }
+.quiz-frame p, .result-note p { font-size: .95rem; }
+
+/* an outcome's own sentence, under its card, and only when that card is the closest */
+.outcome-note {
+  margin: .55rem 0 0; padding-left: .2rem; max-width: 42rem;
+  font-size: .88rem; line-height: 1.45; color: var(--ink-soft); text-wrap: pretty;
+}
+
+/*
+ * Sentence case, not title case, on a ranked row.
+ *
+ * site.css title-cases these because the sins data stores single lowercase words ("pride"),
+ * where capitalize and sentence case are the same thing. A gift can be three words — the
+ * gifts draft names one "the gift of faith" on purpose, so a reader who comes out low does
+ * not read "you do not believe" — and "The Gift Of Faith" turns a name into a label.
+ * Overridden here rather than edited there: the rule is right for the quiz it was written
+ * for, and single-word names come out exactly as before.
+ */
+.tier-name { display: inline-block; text-transform: none; }
+.tier-name::first-letter { text-transform: uppercase; }

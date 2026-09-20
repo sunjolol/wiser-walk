@@ -8,7 +8,9 @@ import HistoryTimeline from '../../../components/HistoryTimeline.astro';
 import PassagePills from '../../../components/PassagePills.astro';
 import CorrectionNote from '../../../components/CorrectionNote.astro';
 import { QUIZZES, getQuiz, groupHref, quizHref } from '../../../lib/engine/registry';
-import { isSplitReadMore, readMoreAll } from '../../../lib/engine/types';
+import {
+  capitalise, isSplitReadMore, outcomeNounPlural, readMoreAll
+} from '../../../lib/engine/types';
 
 /**
  * Long-form pages for a quiz's groups. The route is generic; only groups that carry
@@ -44,6 +46,26 @@ const statements = quiz.items.filter(it => it.group === index).length;
 const placed = quiz.outcomes.filter(o => Array.isArray(o.position)).length;
 
 /**
+ * What this quiz places on its rails, in its own noun: traditions on the Compass, figures
+ * on the figure quiz. The default is "traditions", so every Compass sentence is unchanged.
+ */
+const plural = outcomeNounPlural(quiz);
+/**
+ * The Compass calls its eighteen outcomes "families" in this one kicker, because they are
+ * tradition families rather than denominations. Another quiz has no families, so it uses
+ * its own plural; the Compass's word is kept exactly.
+ */
+const collective = quiz.outcomeNounPlural ?? 'families';
+
+/**
+ * A unipolar group may carry the passage it is NAMED FROM, quoted, and the recorded acts
+ * that show what it has looked like. Both are this group's own — unlike `passages`, which
+ * is a list of references both poles of an axis argue from and is assigned to neither.
+ */
+const quoted = group.quoted ?? [];
+const acts = group.acts ?? [];
+
+/**
  * Tiles are counts of things that are on this page, taken from the data. Nothing here is
  * a headline number invented to fill a row: if an axis carries no chronology, that tile
  * does not appear.
@@ -52,8 +74,9 @@ const tiles = [
   { n: statements, label: 'Statements' },
   ...(history.length ? [{ n: history.length, label: 'Moments' }] : []),
   ...(passages.length ? [{ n: passages.length, label: 'Passages' }] : []),
+  ...(acts.length ? [{ n: acts.length, label: 'Recorded acts' }] : []),
   ...(bipolar && placed
-    ? [{ n: placed, label: 'Traditions' }]
+    ? [{ n: placed, label: capitalise(plural) }]
     : [{ n: quiz.groups.length, label: 'Categories' }])
 ];
 
@@ -130,8 +153,8 @@ const breadcrumbs =
     {bipolar && placed > 0 && (
       <>
         <SectionHead
-          title="Where the traditions sit"
-          kicker={`All ${placed} families on one rail`}
+          title={`Where the ${plural} sit`}
+          kicker={`All ${placed} ${collective} on one rail`}
         />
         <section class="dark amap-panel">
           <div class="dark-ghost" aria-hidden="true">{ghost}</div>
@@ -143,7 +166,40 @@ const breadcrumbs =
       </>
     )}
 
-    {parts ? (
+    {/*
+      This block and the one after it hang off their neighbours with no whitespace between
+      them. An expression that renders nothing still leaves the newline on each side of it,
+      and on a quiz with no quotations — every quiz but the gifts draft — those newlines are
+      stray spaces in a page that has to come out of this change unchanged.
+
+      The passage this group is NAMED FROM, quoted, ABOVE the plain description rather than
+      below it: a gift's name is not a heading someone chose, it is a word in a list in a
+      letter, so the list's own words come first and the description answers them. A unipolar group's name is not a
+      heading someone chose: it is a word in a list in a letter, and the honest thing is to
+      print the list's own words and say which translation they are. Nothing is added.
+    */}{quoted.length > 0 && (
+      <>
+        <SectionHead
+          title={quoted.length > 1 ? 'The passages it is named from' : 'The passage it is named from'}
+          kicker={group.quotedFrom ?? 'Quoted in full'}
+        />
+        <section class="dark quoted-panel">
+          <div class="dark-ghost" aria-hidden="true">{ghost}</div>
+          <p class="feature-kicker">
+            <Icon name={quiz.icon} size={13} /> In the list's own words
+          </p>
+          <ul class="quoted">
+            {quoted.map(q => (
+              <li class="quoted-item">
+                <blockquote class="quoted-text">{q.text}</blockquote>
+                <p class="quoted-ref">{q.ref}</p>
+              </li>
+            ))}
+          </ul>
+          {group.quotedFrom && <p class="quoted-from">{group.quotedFrom}</p>}
+        </section>
+      </>
+    )}{parts ? (
       <>
         <SectionHead title="The two cases" kicker="Each stated by people who hold it" />
         <div class="cases">
@@ -182,6 +238,29 @@ const breadcrumbs =
           <div class="wash" aria-hidden="true"></div>
           <div class="veil" aria-hidden="true"></div>
           <p class="ref-lead">{group.summary}</p>
+        </div>
+      </>
+    )}{/*
+      What it has looked like, in recorded acts only. Each row is a reference and one
+      sentence saying what somebody DID — never an inference about a reader, and never a
+      claim that these people had this gift; the page says what the text records.
+    */}{acts.length > 0 && (
+      <>
+        <SectionHead
+          title="What it has looked like"
+          kicker={`${acts.length} recorded acts, each cited`}
+        />
+        <div class="panel layered ref-panel ref-panel--quiet">
+          <div class="wash" aria-hidden="true"></div>
+          <div class="veil" aria-hidden="true"></div>
+          <ol class="acts">
+            {acts.map(a => (
+              <li class="act">
+                <p class="act-ref">{a.ref}</p>
+                <p class="act-what">{a.what}</p>
+              </li>
+            ))}
+          </ol>
         </div>
       </>
     )}
@@ -254,7 +333,7 @@ const breadcrumbs =
         <h2>Where do you land?</h2>
         <p>
           {bipolar
-            ? 'Answer the statements and the whole map is drawn for you — every axis, and the traditions that sit nearest to where you land.'
+            ? `Answer the statements and the whole map is drawn for you — every axis, and the ${plural} that sit nearest to where you land.`
             : 'Answer the statements and every category is ranked by how much pull it has on you.'}
         </p>
         <div class="btn-row">
@@ -266,7 +345,7 @@ const breadcrumbs =
         <div><dt>Statements</dt><dd>{quiz.items.length}</dd></div>
         <div><dt>Takes</dt><dd>About {quiz.minutes} minutes</dd></div>
         {bipolar && placed > 0 && (
-          <div><dt>Compares you with</dt><dd>{placed} traditions</dd></div>
+          <div><dt>Compares you with</dt><dd>{placed} {plural}</dd></div>
         )}
         <div><dt>Scored</dt><dd>On your own device</dd></div>
       </dl>

@@ -20,6 +20,7 @@
  * outside of. Using the rails' outward-snapped span would have drawn it inside.
  */
 import type { Quiz, QuizGroup } from '../lib/engine/types';
+import { outcomeNoun } from '../lib/engine/types';
 import { outcomeHref } from '../lib/engine/registry';
 import { namesNoPosition, noClaimRange } from '../lib/strategies/bipolar';
 
@@ -32,6 +33,9 @@ interface Props {
 
 const { quiz, group, index } = Astro.props;
 const [lo, hi] = noClaimRange();
+
+/** Whatever this quiz places on its rails: traditions on the Compass, figures elsewhere. */
+const noun = outcomeNoun(quiz);
 
 type Side = 'left' | 'centre' | 'right';
 
@@ -83,7 +87,7 @@ const bands: Array<{ side: Side; title: string; note?: string }> = [
 <div class="amap" style={`--lanes:${lanes};--zone-lo:${lo};--zone-hi:${hi}`}>
   <p class="amap-legend">
     <span class="legend-swatch" aria-hidden="true"></span>
-    Each dot is one tradition, numbered left to right. In the hatched middle the quiz
+    Each dot is one {noun}, numbered left to right. In the hatched middle the quiz
     names neither pole.
   </p>
 
@@ -137,7 +141,7 @@ const bands: Array<{ side: Side; title: string; note?: string }> = [
             <ul class="chips amap-chips">
               {mine.map(m => (
                 <li>
-                  <a class="chip-link amap-chip" href={outcomeHref({ name: m.name, slug: m.slug })}>
+                  <a class="chip-link amap-chip" href={outcomeHref(quiz, { name: m.name, slug: m.slug })}>
                     <b class={`amap-n amap-n--${m.side}`}>{m.n}</b>
                     <span>{m.name}</span>
                   </a>
@@ -145,7 +149,7 @@ const bands: Array<{ side: Side; title: string; note?: string }> = [
               ))}
             </ul>
           ) : (
-            <p class="amap-empty">No listed tradition sits here on this axis.</p>
+            <p class="amap-empty">No listed {noun} sits here on this axis.</p>
           )}
         </section>
       );

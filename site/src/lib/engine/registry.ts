@@ -2,11 +2,14 @@
  * The quiz registry. Adding a quiz means adding one import and one array entry —
  * every route, the codec, the result page and the share card pick it up from here.
  */
-import type { Outcome, Quiz, QuizGroup, Sheet } from './types';
+import type { Quiz, Sheet } from './types';
+import { outcomePathBase } from './types';
 import { theologyCompass } from '../quizzes/theology-compass';
 import { sevenDeadlySins } from '../quizzes/seven-deadly-sins';
+import { bibleFigure } from '../quizzes/bible-figure';
+import { spiritualGifts } from '../quizzes/spiritual-gifts';
 
-export const QUIZZES: Quiz[] = [theologyCompass, sevenDeadlySins];
+export const QUIZZES: Quiz[] = [theologyCompass, sevenDeadlySins, bibleFigure, spiritualGifts];
 
 /** Live quizzes only: what the hub lists and what search engines are invited to index. */
 export const liveQuizzes = () => QUIZZES.filter(q => q.status === 'live');
@@ -23,29 +26,20 @@ export const shareTextFor = (quiz: Quiz, values: number[], origin: string) =>
   quiz.strategy.shareText(quiz, values, origin);
 
 /**
- * URLs are built HERE and nowhere else.
+ * URLs are built in urls.ts and nowhere else, and re-exported here so that every page
+ * keeps importing its URLs from one module. They live one file down because a quiz data
+ * file needs them too, and a quiz importing the registry that imports the quiz is a cycle.
  *
- * A group carries both a `key` (its identity in the audited source) and a `slug` (its
- * identity in a URL), and on the Compass they differ: the axis keyed `spirit` is published
- * at /axis/theology-compass/gifts/, and `tradition` at .../authority/. Any page that
- * reached for `key` would 404 on two of six axes. These helpers make that mistake
- * unavailable rather than merely discouraged.
- */
-export const quizHref = (quiz: Quiz) => `/q/${quiz.slug}/`;
-/**
  * The two-person overlay's URLs live in compare.ts beside the rules they encode, and are
- * re-exported here so every page keeps importing its URLs from one module.
+ * re-exported for the same reason.
  */
+export { quizHref, groupHref, resultHref, outcomeHref } from './urls';
 export {
   MAX_CODES, CODE_SEPARATOR, parseCodes, compare, compareHref, inviteHref
 } from './compare';
 export type {
   BipolarComparison, BipolarPairRow, Comparison, UnipolarComparison, UnipolarPairRow
 } from './compare';
-export const groupHref = (quiz: Quiz, group: QuizGroup) => `/axis/${quiz.slug}/${group.slug}/`;
-export const resultHref = (quiz: Quiz, code: string) => `/r/${quiz.slug}/${code}/`;
-/** Outcome pages are not namespaced by quiz yet; validate() enforces that they can't collide. */
-export const outcomeHref = (outcome: Outcome) => `/tradition/${outcome.slug}/`;
 
 /**
  * Sanity checks that would otherwise only surface as a wrong result. Called at module
@@ -112,10 +106,6 @@ function validate(quiz: Quiz): void {
 }
 
 /**
- * Outcome pages live at a site-wide /tradition/<slug>/, so a slug reused by a second quiz
- * would overwrite the first quiz's page. Checked across the whole registry, not per quiz.
- */
-/**
  * Result codes must not be interchangeable between quizzes. A code prefix is what keeps
  * them apart, so prefixes must be unique, and at most one quiz may go without one — the
  * Compass, whose permalinks predate the prefix and are the only copy of a reader's result.
@@ -138,22 +128,64 @@ function validateCodePrefixes(quizzes: Quiz[]): void {
   }
 }
 
+/**
+ * An outcome page lives at /<base>/<slug>/, where the base belongs to the quiz. Two quizzes
+ * that share a base must not share a slug, or one would overwrite the other's page; two
+ * quizzes with different bases may both have a "john" without colliding.
+ */
 function validateOutcomeSlugs(quizzes: Quiz[]): void {
   const owner = new Map<string, string>();
-  quizzes.forEach(q =>
+  quizzes.forEach(q => {
+    const base = outcomePathBase(q);
+    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(base)) {
+      throw new Error(`quiz "${q.slug}" has an unusable outcome path base ${JSON.stringify(base)}`);
+    }
+    const seen = new Set<string>();
     q.outcomes.forEach(o => {
-      const prior = owner.get(o.slug);
+      if (!o.slug || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(o.slug)) {
+        throw new Error(`quiz "${q.slug}": outcome "${o.name}" has an unusable slug ${JSON.stringify(o.slug)}`);
+      }
+      if (seen.has(o.slug)) {
+        throw new Error(`quiz "${q.slug}": two outcomes share the slug "${o.slug}"`);
+      }
+      seen.add(o.slug);
+
+      const path = `${base}/${o.slug}`;
+      const prior = owner.get(path);
       if (prior && prior !== q.slug) {
         throw new Error(
           `outcome slug "${o.slug}" is claimed by both "${prior}" and "${q.slug}" — ` +
-          'one would overwrite the other at /tradition/<slug>/'
+          `one would overwrite the other at /${path}/`
         );
       }
-      owner.set(o.slug, q.slug);
-    })
-  );
+      owner.set(path, q.slug);
+    });
+  });
+}
+
+/**
+ * A bipolar quiz matches a reader to its outcomes by distance, so every outcome needs a
+ * position of the right width. A missing coordinate would be read as 50 and the figure
+ * would be quietly placed at the centre of an axis nobody argued about.
+ */
+function validateOutcomePositions(quiz: Quiz): void {
+  if (quiz.strategy.shape !== 'bipolar') return;
+  quiz.outcomes.forEach(o => {
+    if (!Array.isArray(o.position) || o.position.length !== quiz.groups.length) {
+      throw new Error(
+        `quiz "${quiz.slug}": outcome "${o.slug}" has ${o.position?.length ?? 0} coordinates ` +
+        `for ${quiz.groups.length} groups`
+      );
+    }
+    o.position.forEach((v, i) => {
+      if (!Number.isFinite(v) || v < 0 || v > 100) {
+        throw new Error(`quiz "${quiz.slug}": outcome "${o.slug}" has ${v} on group ${i}`);
+      }
+    });
+  });
 }
 
 QUIZZES.forEach(validate);
+QUIZZES.forEach(validateOutcomePositions);
 validateOutcomeSlugs(QUIZZES);
 validateCodePrefixes(QUIZZES);

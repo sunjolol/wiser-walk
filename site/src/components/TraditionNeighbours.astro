@@ -17,26 +17,34 @@
  * The bar length is the true percentage, never rescaled: 87, 74, 72, 64 is a real spread and
  * stretching it to fill the row would manufacture a gap the arithmetic does not have.
  */
-import type { Ranked } from '../lib/engine/types';
+import type { Quiz, Ranked } from '../lib/engine/types';
 import { outcomeHref } from '../lib/engine/registry';
 
 interface Props {
+  /** Whose outcomes these are: it owns the URL segment and the no-number rule. */
+  quiz: Quiz;
   ranked: Ranked[];
   limit?: number;
 }
 
-const { ranked, limit = 6 } = Astro.props;
+const { quiz, ranked, limit = 6 } = Astro.props;
 const shown = ranked.slice(0, limit);
 const top = shown.length ? shown[0]!.score : 0;
+/*
+ * Where the outcomes are people the score is not printed anywhere, here included. The rank
+ * numeral and the bar length still say the order, which is the honest part: this row sits
+ * nearer that one. What it must never say is how near, as a number, about a person.
+ */
+const hideScore = Boolean(quiz.hideOutcomeScore);
 ---
 <ol class="nbrs">
   {shown.map((r, i) => (
     <li class:list={['nbr', { 'is-closest': i === 0 && r.score === top }]}>
-      <a class="nbr-link" href={outcomeHref({ name: r.name, slug: r.slug })}>
+      <a class="nbr-link" href={outcomeHref(quiz, { name: r.name, slug: r.slug })}>
         <span class="nbr-rank" aria-hidden="true">{i + 1}</span>
         <span class="nbr-name">{r.name}</span>
         {i === 0 && r.score === top && <span class="nbr-chip">Closest</span>}
-        <span class="nbr-score">{r.score}%<i>match</i></span>
+        {hideScore ? '' : <span class="nbr-score">{r.score}%<i>match</i></span>}
         <span class="nbr-track" aria-hidden="true">
           <span class="nbr-fill" style={`--v:${r.score}`}></span>
         </span>

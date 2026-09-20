@@ -12,6 +12,7 @@ import Base from '../../layouts/Base.astro';
 import SectionHead from '../../components/SectionHead.astro';
 import QuizPreview from '../../components/QuizPreview.astro';
 import { QUIZZES, getQuiz } from '../../lib/engine/registry';
+import { capitalise, outcomeNounPlural } from '../../lib/engine/types';
 
 export function getStaticPaths() {
   return QUIZZES.map(q => ({ params: { quiz: q.slug } }));
@@ -45,7 +46,9 @@ const eyebrow = [
 const tiles = [
   { n: quiz.items.length, label: 'Statements' },
   { n: quiz.groups.length, label: bipolar ? 'Axes' : 'Categories' },
-  ...(quiz.outcomes.length ? [{ n: quiz.outcomes.length, label: 'Traditions' }] : []),
+  ...(quiz.outcomes.length
+    ? [{ n: quiz.outcomes.length, label: capitalise(outcomeNounPlural(quiz)) }]
+    : []),
   { n: `${quiz.minutes}m`, label: 'To take' }
 ];
 
@@ -117,6 +120,26 @@ const breadcrumbs = isDraft
       {isDraft && (
         <div class="note draft">
           <p><strong>Unaudited draft.</strong>{" " + quiz.draftNote}</p>
+        </div>
+      )}{/*
+        Hung off the end of the draft block with no whitespace between them, and the same
+        between the two. An expression that renders nothing still leaves the newline on
+        each side of it, and those newlines come out as stray spaces in every built page —
+        including the Compass's, which must come out of this change unchanged.
+
+        A quiz may say what it can and cannot see BEFORE the reader starts, not after they
+        have answered. The gifts draft's frame is the clearest case: Scripture lists gifts
+        and gives no test for them, so the page says so first and the result repeats it.
+      */}{quiz.notes?.intro && (
+        <div class="note quiz-frame"><p>{quiz.notes.intro}</p></div>
+      )}{quiz.notes?.omitted && (
+        <div class="note quiz-frame">
+          <p>
+            {quiz.notes.omitted.text}
+            {quiz.notes.omitted.href && quiz.notes.omitted.linkText && (
+              <> <a href={quiz.notes.omitted.href}>{quiz.notes.omitted.linkText}</a></>
+            )}
+          </p>
         </div>
       )}
 

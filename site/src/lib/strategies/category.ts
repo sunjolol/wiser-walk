@@ -34,13 +34,22 @@ function codecFor(quiz: Quiz) {
  * and worth keeping.
  */
 const ABOVE = ['', 'a slight pull', 'a clear pull', 'a strong pull', 'the strongest here'];
+const BELOW = 'leaned away';
+const LEVEL = 'no pull either way';
 
+/**
+ * The words above were written for VICES, where "leaned away" is good news. A quiz whose
+ * categories are gifts supplies its own through `unipolarCopy.strength`; one that supplies
+ * nothing keeps these exactly, so the seven-deadly-sins draft is unchanged.
+ */
 export function pull(quiz: Quiz, score: number): string {
-  if (score < 50) return 'leaned away';
-  if (score === 50) return 'no pull either way';
+  const words = quiz.unipolarCopy?.strength;
+  const above = words ? words.above : ABOVE.slice(1);
+  if (score < 50) return words?.below ?? BELOW;
+  if (score === 50) return words?.level ?? LEVEL;
   const half = Math.max(1, (quiz.config.radix - 1) / 2);
-  const above = ((score - 50) / 50) * half;
-  return ABOVE[Math.min(4, Math.max(1, Math.ceil((above / half) * 4)))]!;
+  const over = ((score - 50) / 50) * half;
+  return above[Math.min(3, Math.max(0, Math.ceil((over / half) * 4) - 1))]!;
 }
 
 /**
@@ -108,6 +117,16 @@ export const category: ScoringStrategy = {
       ranked[1] !== undefined &&
       Math.abs(ranked[0]!.score - ranked[1]!.score) <= tieMargin(quiz);
 
+    /*
+     * A quiz may put a lead in front of the leader's name ("Your answers pointed most to
+     * serving"), because on a gifts quiz the largest type on the page would otherwise be a
+     * bare one-word verdict about a person. Without a lead the name is capitalised, exactly
+     * as it was.
+     */
+    const lead = quiz.unipolarCopy?.headlineLead;
+    const name = (s: string) => (lead ? s : s.charAt(0).toUpperCase() + s.slice(1));
+    const led = (s: string) => (lead ? `${lead} ${s}` : name(s));
+
     let headline: string;
     let summary: string;
     let state: UnipolarView['state'];
@@ -117,16 +136,19 @@ export const category: ScoringStrategy = {
       headline = 'No single one stands out';
       // True whether the reader answered neutrally throughout or denied every statement
       // outright. The old copy ("your answers sit near the middle") was false for the second.
-      summary = 'Nothing here rose far enough above the rest to name one, so none is named.';
+      summary =
+        quiz.unipolarCopy?.flat ??
+        'Nothing here rose far enough above the rest to name one, so none is named.';
     } else if (tied) {
       state = 'tie';
-      headline = `${ranked[0]!.name} and ${ranked[1]!.name}`;
-      headline = headline.charAt(0).toUpperCase() + headline.slice(1);
+      headline = led(`${ranked[0]!.name} and ${ranked[1]!.name}`);
       summary = `Two came out level: ${ranked[0]!.name} and ${ranked[1]!.name}.`;
     } else {
       state = 'clear';
-      headline = ranked[0]!.name.charAt(0).toUpperCase() + ranked[0]!.name.slice(1);
-      summary = `Strongest pull: ${ranked[0]!.name}. Next: ${ranked[1]?.name ?? '—'}.`;
+      headline = led(ranked[0]!.name);
+      summary = lead
+        ? `${lead} ${ranked[0]!.name}. Next: ${ranked[1]?.name ?? '—'}.`
+        : `Strongest pull: ${ranked[0]!.name}. Next: ${ranked[1]?.name ?? '—'}.`;
     }
 
     return {
@@ -162,7 +184,14 @@ export const category: ScoringStrategy = {
      * nobody should later "unify" them.
      */
     const CELLS = 11;
-    ranked.forEach(({ g, v }) => {
+    /*
+     * A quiz may print only its top rows. On a gifts quiz the bottom of the ranking is the
+     * part a reader would least want pasted into a group chat, and the low rows carry a
+     * caveat on the page ("a pattern these statements did not find") that a bar in a text
+     * message cannot carry with them. Omit shareTop and every row prints, as before.
+     */
+    const top = quiz.unipolarCopy?.shareTop;
+    (top ? ranked.slice(0, Math.max(1, top)) : ranked).forEach(({ g, v }) => {
       const filled = Math.max(0, Math.min(CELLS, Math.round(((v - 50) / 50) * CELLS)));
       let bar = '';
       for (let k = 0; k < CELLS; k++) bar += k < filled ? '█' : '░';
