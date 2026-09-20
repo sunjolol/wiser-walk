@@ -54,6 +54,8 @@ const here = Astro.url.pathname;
 const footQuizzes = QUIZZES;
 const footGames = liveGames();
 const isCurrent = (href: string) => here === href || here.startsWith(href.replace(/\/$/, '') + '/');
+/** Computed at build, so the footer cannot be caught printing last year. */
+const year = new Date().getFullYear();
 
 /**
  * The nav.
@@ -92,7 +94,8 @@ const NAV: Array<{
     ]
   },
   { href: '/articles/', label: 'Articles' },
-  { href: '/method/', label: 'Method' },
+  // No Method. It is a page about how the work was done, and the nav is for the things a
+  // reader came for; /about/ links to it in one sentence, so it stays reachable and crawlable.
   { href: '/about/', label: 'About' }
 ];
 ---
@@ -218,48 +221,77 @@ const NAV: Array<{
 
     <main class="wrap page"><slot /></main>
 
+    {/*
+      The footer, rebuilt 2026-09-20.
+      It was a wall of eleven links under two paragraphs, half of them about how the site was
+      made. What a footer is for is the way back into the things a reader came for, so it now
+      holds three groups and nothing else: every quiz, every game, and the two pages that are
+      neither. The Quizzes group is the wide one because quiz titles are sentences, and none
+      of them is allowed to wrap.
+    */}
     <footer class="site-foot">
       <div class="foot-ghost" aria-hidden="true">wiser walk</div>
       <div class="wrap">
-        <p class="foot-brand">Wiser <span>Walk</span></p>
-        <p>
-          Quizzes, games and articles for understanding yourself, and your walk with God, a
-          little better.
-        </p>
-        <p>
-          Nothing you answer leaves your browser: everything is scored on your own device, and
-          a result link only ever carries your scores. <a href="/method/">How this was made</a>.
-        </p>
+        <div class="foot-top">
+          <div class="foot-say">
+            <p class="foot-brand">Wiser <span>Walk</span></p>
+            <p class="foot-line">
+              Quizzes, games and articles for understanding yourself, and your walk with God,
+              a little better.
+            </p>
+          </div>
+
+          {/*
+            Sign-up, on every page. It posts to the same endpoint the result page's form does,
+            with no quiz and no result code — the endpoint already treats both as optional, so
+            a plain address is a plain address. With JavaScript off the browser posts the form
+            and the endpoint redirects back here with the outcome in the query; the script
+            below reads it. With no provider configured the endpoint answers in dev and says
+            so in production, so nothing here can quietly swallow an address.
+          */}
+          <form class="foot-signup" id="foot-signup" method="post" action="/api/subscribe">
+            <input type="hidden" name="back" value={here} />
+            {/* Hidden from people, irresistible to naive bots. Not a CAPTCHA and never will be. */}
+            <p class="hp" aria-hidden="true">
+              <label>Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+            </p>
+            <p class="foot-signup-say">New quizzes and games by email, now and then.</p>
+            <div class="foot-signup-row">
+              <label class="sr-only" for="foot-email">Your email address</label>
+              <input id="foot-email" type="email" name="email" required autocomplete="email"
+                     inputmode="email" placeholder="you@example.com" />
+              <button class="btn" type="submit">Sign up</button>
+            </div>
+            <p class="foot-signup-status" id="foot-signup-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+
         <div class="foot-cols">
-          <div>
+          <div class="foot-col">
             <h4>Quizzes</h4>
             <ul>
-              {footQuizzes.map(q => <li><a href={`/q/${q.slug}/`}>{q.title}{q.status === 'draft' ? ' (draft)' : ''}</a></li>)}
+              {footQuizzes.map(q => <li><a href={`/q/${q.slug}/`}>{q.title}</a></li>)}
               <li><a href="/quizzes/">All quizzes</a></li>
             </ul>
           </div>
-          <div>
+          <div class="foot-col">
             <h4>Games</h4>
             <ul>
               {footGames.map(g => <li><a href={g.href}>{g.title}</a></li>)}
               <li><a href="/games/">All games</a></li>
             </ul>
           </div>
-          <div>
-            <h4>Read</h4>
+          <div class="foot-col">
+            <h4>More</h4>
             <ul>
               <li><a href="/articles/">Articles</a></li>
-              <li><a href="/method/">Method</a></li>
-              <li><a href="/method/#changelog">Audit changelog</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4>Site</h4>
-            <ul>
               <li><a href="/about/">About</a></li>
-              <li><a href="/method/#your-answers">Your answers</a></li>
             </ul>
           </div>
+        </div>
+
+        <div class="foot-bar">
+          <p>© {year} Wiser Walk</p>
         </div>
       </div>
     </footer>
@@ -293,6 +325,69 @@ const NAV: Array<{
           var s = open.querySelector('summary');
           if (s) s.focus();
         });
+      })();
+
+      /*
+       * The footer sign-up. The same three states the result page's form has — sending,
+       * already on the list, and a failure the reader can act on — against the same
+       * endpoint. With this script blocked the form still posts and still works; the
+       * endpoint redirects back with the outcome in the query.
+       */
+      (function () {
+        var form = document.getElementById('foot-signup');
+        var status = document.getElementById('foot-signup-status');
+        if (!form || !status) return;
+        var button = form.querySelector('button[type="submit"]');
+        var say = function (text, kind) {
+          status.textContent = text;
+          status.className = 'foot-signup-status is-' + kind;
+        };
+
+        form.addEventListener('submit', function (event) {
+          event.preventDefault();
+          var data = {};
+          new FormData(form).forEach(function (v, k) { data[k] = v; });
+          button.disabled = true;
+          say('Sending…', 'busy');
+
+          fetch('/api/subscribe', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify(data)
+          })
+            .then(function (res) {
+              return res.json().catch(function () { return {}; }).then(function (body) {
+                return { ok: res.ok, body: body };
+              });
+            })
+            .then(function (r) {
+              if (r.ok && r.body.ok) {
+                form.hidden = true;
+                say(
+                  r.body.already
+                    ? 'You are already on the list.'
+                    : 'Check your inbox for a confirmation email.',
+                  'ok'
+                );
+              } else {
+                button.disabled = false;
+                say(r.body.error || 'That did not go through. Try again in a moment.', 'bad');
+              }
+            })
+            .catch(function () {
+              button.disabled = false;
+              say('That did not go through. Try again in a moment.', 'bad');
+            });
+        });
+
+        // The no-JS path comes back with ?sub= in the query. The result page's own form
+        // reads the same parameter, so leave it to that one where both are on the page.
+        if (document.getElementById('capture-form')) return;
+        var sub = new URLSearchParams(location.search).get('sub');
+        if (sub === 'ok') say('Check your inbox for a confirmation email.', 'ok');
+        else if (sub === 'already') say('You are already on the list.', 'ok');
+        else if (sub === 'error') say('That did not go through. Try again in a moment.', 'bad');
+        if (sub) history.replaceState(null, '', location.pathname);
       })();
 
       (function () {

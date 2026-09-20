@@ -48,24 +48,6 @@
   .qz-flag .axpv-note { margin-top: 1.1rem; }
 }
 
-/*
- * Drafts. The warning that used to hang above the row as a loose line is a panel of its own:
- * the same words, now saying what a draft is and is not. (It is laid out in the findability
- * block at the foot of this file, where the blocks it introduces are.)
- */
-.qz-draftbox {
-  position: relative; isolation: isolate; overflow: hidden; margin: 0;
-  background: var(--panel); border-radius: var(--r-lg); box-shadow: var(--lift);
-  padding: 1.2rem 1.15rem 1.3rem;
-}
-.qz-draftbox .feature-kicker { color: var(--warn-ink); display: flex; align-items: center; gap: .4rem; }
-.qz-draftbox p { margin: .6rem 0 0; font-size: .92rem; color: var(--ink-soft); }
-.qz-draftbox .spec { margin-top: 1rem; }
-.qz-draftbox .spec dt { font-size: .58rem; letter-spacing: .12em; }
-.qz-draftbox .spec dd { font-size: .85rem; }
-
-.qz-pledge .spec { max-width: 34rem; }
-
 /* ============================================ the quiz page: what you see */
 
 /*
@@ -89,7 +71,7 @@
   transition: box-shadow .2s ease, transform .2s ease;
 }
 /* one lift value for every card on these pages, kept here rather than repeated as a literal */
-.axpv, .rankpv { --hover-lift: 0 10px 22px rgba(62, 134, 196, .16); }
+.axpv { --hover-lift: 0 10px 22px rgba(62, 134, 196, .16); }
 .axpv-row:hover { box-shadow: var(--hover-lift); transform: translateY(-2px); }
 .axpv-name {
   font-family: var(--display); font-size: 1.2rem; line-height: 1.1; color: var(--ink);
@@ -114,57 +96,50 @@
 /*
  * The ranking preview, for a quiz with categories instead of axes.
  *
- * Seven bordered chips in a wide panel said nothing about the instrument, and read as a
- * placeholder beside the Compass's six rails. These rows say what a ranking is: every
- * category carries its own definition and its own empty ruler, cut into the number of
- * scores the instrument can actually reach, and NOT painted in the pole colours — a ranking
- * has no poles for blue and orange to mean.
+ * ONE GRID OF EQUAL CELLS. Not pills: a pill is as wide as its own words, so nineteen gifts
+ * came out ragged, half of them two lines tall, and "administration" ran over the pill beside
+ * it. Here every cell on a row is the same width and the same height (grid-auto-rows: 1fr),
+ * so "the word of knowledge" wraps inside its own cell and nothing around it moves.
+ *
+ * Not the pole colours either, and no ruler: a ranking has no two ends for blue and orange
+ * to mean, and a scale drawn before a single statement is answered is a measurement we do
+ * not have. Nineteen over four columns leaves a last row of three, left-aligned, which is
+ * what a grid does; no cell is ever stretched to fill the gap, because a lone wide cell
+ * reads as a heading.
  */
-.rankpv { display: grid; grid-template-columns: 1fr; gap: .55rem; margin: 0; }
-@media (min-width: 46rem) {
-  .rankpv { grid-template-columns: 1fr 1fr; gap: .7rem; }
-  /* an odd count would otherwise leave the last cell an empty hole in the panel */
-  .rankpv-row:last-child:nth-child(odd) { grid-column: 1 / -1; }
+.rankgrid {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: 1fr; gap: .4rem; margin: 0; padding: 0; list-style: none;
 }
+/* the item is a grid so the link fills the row's height, whatever its neighbour wrapped to */
+.rankgrid > li { display: grid; }
+@media (min-width: 26rem) { .rankgrid { gap: .45rem; } }
+/* Two columns on a phone, four above it. Four rather than three because of the counts these
+   quizzes actually have: nineteen over four leaves a last row of three, and nineteen over
+   three leaves one cell on a row of its own. */
+@media (min-width: 46rem) { .rankgrid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 
-.rankpv-row {
-  display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 0 .6rem;
-  padding: .85rem .95rem .95rem; border-radius: var(--r);
-  background: var(--panel); box-shadow: var(--lift);
-  text-decoration: none; color: inherit;
-  transition: box-shadow .2s ease, transform .2s ease;
+.rankgrid-cell {
+  display: flex; align-items: center; min-height: 48px; min-width: 0;
+  padding: .6rem .7rem; border-radius: 10px;
+  box-shadow: inset 0 0 0 1.5px var(--rule-strong);
+  font-size: .82rem; font-weight: 600; line-height: 1.25; letter-spacing: 0;
+  color: var(--ink-soft); text-decoration: none; text-align: left;
+  overflow-wrap: anywhere; text-wrap: pretty;
+  transition: box-shadow .18s ease, color .18s ease, background .18s ease;
 }
-.rankpv-row:hover { box-shadow: var(--hover-lift); transform: translateY(-2px); }
-.rankpv-name {
-  font-family: var(--display); font-size: 1.2rem; line-height: 1.1; color: var(--ink);
-  text-transform: capitalize;
+/* the data stores these names lowercase ("showing mercy"), and sentence case is what they
+   are: title case turns a name into a label and tracked uppercase turns it into a tag.
+   ::first-letter needs a block container, which a flex cell is not — hence the span */
+.rankgrid-name { display: block; min-width: 0; }
+.rankgrid-name::first-letter { text-transform: uppercase; }
+.rankgrid-cell:hover {
+  color: var(--accent); box-shadow: inset 0 0 0 1.5px var(--accent); background: var(--accent-soft);
 }
-.rankpv-row:hover .rankpv-name { color: var(--accent); }
-.rankpv-go { display: inline-flex; color: var(--ink-mute); }
-.rankpv-row:hover .rankpv-go { color: var(--accent); }
-.rankpv-note {
-  grid-column: 1 / -1; margin: .3rem 0 0; font-size: .8rem; line-height: 1.5;
-  color: var(--ink-soft);
-}
-/* a long definition arrives in paragraphs of three sentences; one sentence is one block and
-   looks exactly as it did before the split existed */
-.rankpv-para { display: block; }
-.rankpv-para + .rankpv-para { margin-top: .5rem; }
-/* the ruler each category is measured on, in neutral ink: one notch per reachable score */
-.rankpv-scale {
-  --slots: 9;
-  grid-column: 1 / -1; display: grid; grid-template-columns: auto 1fr auto;
-  align-items: center; gap: .5rem; margin: .7rem 0 0;
-}
-.rankpv-tick {
-  height: 9px; border-radius: 2px; background: var(--rule-strong);
-  -webkit-mask: repeating-linear-gradient(90deg, #000 0 calc(100% / var(--slots) - 3px), transparent calc(100% / var(--slots) - 3px) calc(100% / var(--slots)));
-  mask: repeating-linear-gradient(90deg, #000 0 calc(100% / var(--slots) - 3px), transparent calc(100% / var(--slots) - 3px) calc(100% / var(--slots)));
-}
-.rankpv-end {
-  font-family: var(--ui); font-size: .54rem; font-weight: 700; letter-spacing: .11em;
-  text-transform: uppercase; color: var(--ink-mute); line-height: 1;
-}
+/* on the charcoal panel the names take the panel's ink, like the axis names beside them;
+   kit.css excludes this class from the rule that paints every dark-panel link blue */
+.dark .rankgrid-cell { color: var(--on-dark); }
+@media (min-width: 46rem) { .rankgrid-cell { font-size: .86rem; padding: .7rem .85rem; } }
 
 .axpv-note { margin: 1rem 0 0; max-width: 42rem; font-size: .8rem; line-height: 1.55; color: var(--on-dark-mute); }
 
@@ -179,11 +154,11 @@
 }
 .howto .spec { margin-top: 1.15rem; }
 /* these values are sentences, not two words, so they take a smaller size to hold one line */
-.howto .spec dt, .qz-pledge .spec dt { font-size: .58rem; letter-spacing: .12em; }
-.howto .spec dd, .qz-pledge .spec dd { font-size: .85rem; }
+.howto .spec dt { font-size: .58rem; letter-spacing: .12em; }
+.howto .spec dd { font-size: .85rem; }
 @media (min-width: 34rem) {
-  .howto .spec dt, .qz-pledge .spec dt { font-size: .62rem; }
-  .howto .spec dd, .qz-pledge .spec dd { font-size: .92rem; }
+  .howto .spec dt { font-size: .62rem; }
+  .howto .spec dd { font-size: .92rem; }
 }
 
 /* ------------------------------------------------------------ the way in */
@@ -403,8 +378,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .axpv-row, .rankpv-row, #scale button, .progress i { transition: none; }
-  .axpv-row:hover, .rankpv-row:hover { transform: none; }
+  .axpv-row, .rankgrid-cell, #scale button, .progress i { transition: none; }
+  .axpv-row:hover { transform: none; }
 }
 
 /* ================================================ wider than a phone: pair
@@ -422,13 +397,6 @@
   .startbox { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1.5rem 2.5rem; align-items: center; }
   .startbox h2 { font-size: clamp(2rem, 3.4vw, 2.6rem); }
   .startbox .btn-row { margin: 0; }
-
-  /* the facts move up beside the claim; the button stays under the words it belongs to */
-  .qz-pledge { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: .5rem 3rem; }
-  .qz-pledge-text { grid-column: 1; grid-row: 1; }
-  .qz-pledge .spec { grid-column: 2; grid-row: 1 / span 2; margin-top: .35rem; max-width: none; align-self: center; }
-  .qz-pledge .btn-row { grid-column: 1; grid-row: 2; margin: .4rem 0 0; }
-  .qz-pledge-text p { max-width: 32rem; }
 }
 
 /* ==========================================================================
@@ -490,59 +458,18 @@
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08);
 }
 
-/* what a quiz measures you against, in its own words, under the facts it belongs to */
-.qz-scope {
-  margin: .9rem 0 0; max-width: 34rem; font-size: .78rem; line-height: 1.5;
-  color: var(--ink-mute);
-}
-
 /* one block after another, each the same distance from the last */
-.qz-flag + .qz-flag, .qz-draftnote + .qz-flag { margin-top: 1rem; }
+.qz-flag + .qz-flag { margin-top: 1rem; }
 
-/*
- * The preview on a RANKING's feature block: the real category names, every one of them, on
- * the empty ruler they are all measured against. Not rails, which would draw a centre and
- * two poles that a ranking does not have; and not the quiz page's rows, which carry a
- * definition apiece and would bury the next quiz down the page.
- */
-.rankpv-brief { display: flex; flex-direction: column; }
-/* a grid rather than a wrapped row: equal cells never strand the last category alone on a
-   line of its own, and the names stay the data's, never abbreviated to make them fit */
-.rankpv-brief .chips {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(6.8rem, 1fr));
-  margin: 0; gap: .45rem;
-}
-/* a shade bigger than a chip in a list, and centred in its cell: these are the instrument,
-   not a row of links at the bottom of a page */
-.rankpv-brief .chip-link {
-  justify-content: center; text-align: center; font-size: .65rem; padding: .7rem .95rem;
-}
-.rankpv-brief .rankpv-scale { margin-top: 1.1rem; }
 @media (min-width: 60rem) {
   /*
    * Seven one-word categories cannot fill a panel stretched to the height of the words
-   * beside them: spread out they strand the last chip on a line of its own, and centred
-   * they huddle in the middle of a slab of charcoal. So a ranking's panel is NOT stretched
-   * — it takes its own height and sits against the middle of the block. A bipolar quiz's
-   * rails are left exactly as they were, filling the panel they are given.
+   * beside them: spread out they leave bands of empty charcoal between the rows. So a
+   * ranking's panel is NOT stretched — it takes its own height and sits against the middle
+   * of the block. A bipolar quiz's rails are left exactly as they were, filling the panel
+   * they are given.
    */
-  .qz-flag:has(.rankpv-brief) { align-items: center; }
-  .qz-flag .rankpv-brief { flex: none; }
-}
-
-/*
- * The draft note, full width above the blocks: its words on one side, its facts on the
- * other, so it reads as a panel rather than as a column of text with a list under it.
- */
-.qz-draftnote { margin-top: 1.05rem; }
-@media (min-width: 52rem) {
-  /* two cells, not four: the words are one block, so the kicker cannot be pushed away from
-     the sentence under it by a list in the other column */
-  .qz-draftnote {
-    display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
-    gap: 0 2.6rem; align-items: center;
-  }
-  .qz-draftnote .spec { margin-top: 0; }
+  .qz-flag:has(.rankgrid) { align-items: center; }
 }
 
 /* ==========================================================================
@@ -555,6 +482,51 @@
 .quiz-frame, .result-note { margin-top: 1.1rem; max-width: 44rem; }
 .result-note { margin-top: 1.2rem; }
 .quiz-frame p, .result-note p { font-size: .95rem; }
+
+/*
+ * THE FOLD. The same notes, in one panel the reader opens.
+ *
+ * A quiz that says a great deal about what it can and cannot see used to say all of it
+ * between the reader and the start button, and again between the reader and their own
+ * result. Nothing is cut: every word is in the DOM whether the panel is open or shut, so it
+ * is there for a screen reader, for find-in-page and for anyone who prints the thing. What
+ * changes is who decides when to read it.
+ *
+ * It has to read as a control and not as a line of text, so it is a panel with a lifted
+ * edge, a summary at tap size, a drawn caret that turns, and its own focus ring.
+ */
+.frame-fold {
+  margin: 1.1rem 0 0; max-width: 44rem;
+  background: var(--panel); border-radius: var(--r); box-shadow: var(--lift);
+}
+.result-fold { margin-top: 1.3rem; }
+.frame-fold > summary {
+  list-style: none; cursor: pointer;
+  display: flex; align-items: center; gap: .9rem; justify-content: space-between;
+  min-height: 52px; padding: .8rem 1.05rem;
+  font-family: var(--ui); font-size: .88rem; font-weight: 600; line-height: 1.35;
+  color: var(--ink); border-radius: var(--r);
+}
+.frame-fold > summary::-webkit-details-marker { display: none; }
+.frame-fold > summary::marker { content: ""; }
+.frame-fold > summary:hover { color: var(--accent); }
+.frame-fold > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -3px; }
+/* drawn, not a character: the glyph escapes were mangled once already on this site */
+.frame-fold-caret {
+  flex: none; width: 8px; height: 8px; margin-right: .2rem;
+  border-right: 2.5px solid var(--accent); border-bottom: 2.5px solid var(--accent);
+  transform: rotate(45deg) translate(-2px, -2px); transition: transform .2s ease;
+}
+.frame-fold[open] .frame-fold-caret { transform: rotate(-135deg) translate(-2px, -2px); }
+.frame-fold-body { padding: .2rem 1.05rem 1.1rem; }
+.frame-fold-body p {
+  margin: 0 0 .85rem; font-size: .95rem; line-height: 1.6; color: var(--ink-soft);
+  text-wrap: pretty;
+}
+.frame-fold-body p:last-child { margin-bottom: 0; }
+/* the anchor lands on the summary, not under the header, when the button is followed
+   without JavaScript */
+#before-you-start { scroll-margin-top: 1rem; }
 
 /*
  * The sentence that travels with the names in the headline, directly under the band.
@@ -640,10 +612,9 @@
 /* ---------------------------------------------------------------- quick start ----
  * A quiz with a long frame (notes.introShort set) gets one sentence and a way in near the
  * top of its intro, so a phone reader is not six screens from the start button. The long
- * notes follow it unchanged.
+ * notes follow it, folded (see .frame-fold above).
  */
 .quickstart { margin: 0 0 1.1rem; }
 .quickstart p { margin: 0 0 .95rem; font-size: 1.02rem; line-height: 1.55; color: var(--ink); }
 .quickstart .btn-row { margin: 0; }
-#before-you-start { scroll-margin-top: 1rem; }
 

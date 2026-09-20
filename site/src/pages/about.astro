@@ -84,6 +84,9 @@ const breadcrumbs = [
       <p>
         The quizzes are the door. The articles are what is on the other side of it.
       </p>
+      {/* Method left the nav, so this is the way to it: one plain sentence, on the page a
+          reader goes to when they want to know who is behind the thing. */}
+      <p><a href="/method/">How the quizzes are made and checked</a>.</p>
     </div>
     <aside class="pnl-aside">
       <p class="pnl-kicker">The site, in facts</p>
@@ -91,8 +94,6 @@ const breadcrumbs = [
         <div><dt>Quizzes</dt><dd>{quizzes.length} live, {drafts.length} in draft</dd></div>
         <div><dt>Games</dt><dd>{plural(games.length, 'game', 'games')}</dd></div>
         <div><dt>Articles</dt><dd>{plural(articles.length, 'piece', 'pieces')}</dd></div>
-        <div><dt>Scored</dt><dd>On your device</dd></div>
-        <div><dt>Accounts</dt><dd>None</dd></div>
         <div><dt>Costs</dt><dd>Nothing</dd></div>
       </dl>
     </aside>
@@ -130,14 +131,18 @@ const breadcrumbs = [
     />
   </div>
 
-  <SectionHead title="What this is not" kicker="Five things worth saying plainly" />
+  <SectionHead title="What this is not" kicker="Four things worth saying plainly" />
 
+  {/*
+    No promises about storage or accounts here. Sign-in with saved results is something the
+    owner intends to build, and a page that has spent years saying "no accounts" cannot then
+    ship one. What is kept, and when, belongs on /method/ where it can be kept current.
+  */}
   <ul class="facts facts--pair">
     <li><strong>Not a verdict on your faith.</strong> No quiz here scores anyone as a better or worse Christian.</li>
     <li><strong>Not a recruiting tool.</strong> The Compass tells you where you already stand; it does not argue you toward a position.</li>
     <li><strong>Not a church.</strong> Nothing here substitutes for one.</li>
-    <li><strong>Not collecting your answers.</strong> No accounts, and no record of what you answered — every quiz is scored on your own device, so your answers never leave your browser.</li>
-    <li><strong>Not a mailing list you get put on.</strong> There is one, and it is entirely opt-in: nothing is sent to it unless you type your address into the form and ask. If you never do, nothing about you leaves your browser at all. <a href="/method/#your-answers">What is sent, exactly</a>.</li>
+    <li><strong>Not a mailing list you get put on.</strong> There is one, and it is entirely opt-in: nothing is sent unless you type your address in and ask.</li>
   </ul>
 
   <SectionHead title="On fairness" kicker="The one failure this site cannot afford" />

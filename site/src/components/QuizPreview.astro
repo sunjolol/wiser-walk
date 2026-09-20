@@ -8,34 +8,23 @@
  * refuses to ship. A unipolar quiz has no poles and no centre, so it previews its
  * categories as a flat grid; giving it rails would be the same class of error in the other
  * direction.
+ *
+ * The ranking grid, rewritten 2026-09-20. It used to be wrapped pills sized to their own
+ * words, which at nineteen gifts came out ragged, half of them two lines tall, and one
+ * running over the pill beside it. Now it is a plain grid of equal cells — equal width and
+ * equal height on a row — so a long name wraps inside its cell and nothing moves. No
+ * number is printed beside a name: the grid is in quiz order, the result is a ranking, and
+ * a "01" against the first gift would read as a rank before a single statement is answered.
  */
 import Icon from './Icon.astro';
 import type { Quiz } from '../lib/engine/types';
 import { groupHref } from '../lib/engine/registry';
-import { paragraphs } from '../lib/prose';
 
 export interface Props {
   quiz: Quiz;
-  /**
-   * The hub shows one of these beside every quiz on the page, so a unipolar quiz's
-   * categories are drawn as the kit's chips with one shared ruler under them rather than as
-   * a row apiece carrying its own definition. Thirteen definitions belong on the quiz's own
-   * page, where a reader has chosen that quiz; in a stack of feature blocks they bury the
-   * next quiz down. A bipolar quiz previews the same way either side of this flag: six rails
-   * with both pole names is already the compact form.
-   */
-  compact?: boolean;
 }
-const { quiz, compact = false } = Astro.props;
+const { quiz } = Astro.props;
 const bipolar = quiz.strategy.shape === 'bipolar';
-
-/**
- * How many scores a single category can actually reach — the instrument's own granularity,
- * read from the quiz's config rather than drawn as a smooth bar it cannot deliver. The
- * ruler under each category is cut into exactly that many notches and left empty, because
- * nothing has been answered yet and a filled one would be a number we do not have.
- */
-const slots = Math.max(2, quiz.config.radix);
 ---
 <div class="axpv-panel dark">
   <div class="dark-ghost" aria-hidden="true">{bipolar ? 'axes' : 'each one'}</div>
@@ -54,52 +43,23 @@ const slots = Math.max(2, quiz.config.radix);
         </a>
       ))}
     </div>
-  ) : compact ? (
-    <div class="rankpv-brief">
-      <ul class="chips">
-        {quiz.groups.map(g => (
-          <li><a class="chip-link" href={groupHref(quiz, g)}>{g.name}</a></li>
-        ))}
-      </ul>
-      {/* The ruler every one of them is measured on, empty because nothing is answered yet,
-          cut into the number of scores this instrument can actually reach. */}
-      <span class="rankpv-scale" style={`--slots:${slots}`} aria-hidden="true">
-        <span class="rankpv-end">None</span>
-        <span class="rankpv-tick"></span>
-        <span class="rankpv-end">Strongest</span>
-      </span>
-    </div>
   ) : (
-    <div class="rankpv">
+    <ul class="rankgrid">
       {quiz.groups.map(g => (
-        <a class="rankpv-row" href={groupHref(quiz, g)}>
-          <span class="rankpv-name">{g.name}</span>
-          <span class="rankpv-go" aria-hidden="true"><Icon name="arrow" size={14} /></span>
-          {/*
-            Whole, in paragraphs, never cut. Six of the gifts draft's nineteen definitions
-            run to a dozen sentences, and a dozen sentences in one block is a paragraph a
-            reader skips — which on THIS page means skipping the sentence saying the
-            statements cannot see what an event was. Broken at sentence ends, three to a
-            paragraph; a one-sentence definition comes out exactly as it did.
-          */}
-          {g.summary && (
-            <span class="rankpv-note">
-              {paragraphs(g.summary).map(p => <span class="rankpv-para">{p}</span>)}
-            </span>
-          )}
-          <span class="rankpv-scale" style={`--slots:${slots}`} aria-hidden="true">
-            <span class="rankpv-end">None</span>
-            <span class="rankpv-tick"></span>
-            <span class="rankpv-end">Strongest</span>
-          </span>
-        </a>
+        <li>
+          {/* The name is a block of its own inside the cell: ::first-letter, which is what
+              capitalises these lowercase names, does not apply to a flex container. */}
+          <a class="rankgrid-cell" href={groupHref(quiz, g)}>
+            <span class="rankgrid-name">{g.name}</span>
+          </a>
+        </li>
       ))}
-    </div>
+    </ul>
   )}
 
   <p class="axpv-note">
     {bipolar
       ? 'Neither end of an axis is the better one. Blue and orange only mark which end is which; read either name for what it says.'
-      : 'A ranking has no opposite end and no middle: each one is measured on its own, on the ruler drawn under it. The strongest is the one you are told; if a few come out level they are all named, and if nothing rises far enough above the rest, none is.'}
+      : 'Each one is measured on its own. Open any name to read what it means.'}
   </p>
 </div>

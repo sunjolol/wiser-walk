@@ -259,7 +259,10 @@ body {
 :root[data-theme="dark"] .dark { background-color: #2A2A33; }
 .dark h2, .dark h3 { color: var(--on-dark); }
 .dark p { color: var(--on-dark-soft); }
-.dark a:not(.btn):not(.chip-link) { color: var(--blue-soft); }
+/* A link inside a dark panel is blue, EXCEPT the instruments' own cells: blue on this site
+   is the left pole of an axis, and a panel of nineteen names in pole ink says something the
+   data does not. Those set their own ink and their own hover. */
+.dark a:not(.btn):not(.chip-link):not(.rankgrid-cell) { color: var(--blue-soft); }
 .dark .tile { background: rgba(255, 255, 255, .07); box-shadow: none; }
 .dark-ghost {
   position: absolute; z-index: 0; pointer-events: none; user-select: none;
@@ -417,6 +420,10 @@ body {
 /* ------------------------------------------------------------------ footer */
 
 .site-foot {
+  /* the footer is a dark panel in both themes, so it takes the dark panel's hairline: the
+     light theme's rule ink is invisible on charcoal, which is how the separators here came
+     out as nothing at all */
+  --rule-strong: rgba(234, 232, 228, .22);
   position: relative; isolation: isolate; overflow: hidden; margin-top: 3.5rem;
   background-color: var(--dark-fill); background-image: var(--dark-fill-img); background-size: 520px;
   color: var(--on-dark-soft); border-radius: 30px 30px 0 0;
@@ -432,15 +439,70 @@ body {
 .foot-brand span { font-style: italic; background: var(--grad-r); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .site-foot p { max-width: 36rem; margin: 0 0 .8rem; color: var(--on-dark-soft); }
 .site-foot a { color: var(--on-dark); }
-.foot-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem 1rem; margin: 1.8rem 0 0; }
-.foot-cols h4 {
-  margin: 0 0 .5rem; font-family: var(--ui); font-size: .58rem; font-weight: 700; letter-spacing: .16em;
-  text-transform: uppercase; color: var(--orange-soft);
+
+/* the brand and the sign-up share the top row; a dotted rule closes it off, the way the
+   spec lists rule off a fact from the next one */
+.foot-top {
+  display: grid; grid-template-columns: 1fr; gap: 1.6rem;
+  padding-bottom: 1.5rem; border-bottom: 2px dotted var(--rule-strong);
 }
-.foot-cols ul { margin: 0; padding: 0; list-style: none; }
-.foot-cols li a { display: inline-flex; min-height: 36px; align-items: center; text-decoration: none; font-size: .9rem; color: var(--on-dark-soft); }
-.foot-cols li a:hover { color: var(--on-dark); text-decoration: underline; }
-@media (min-width: 40rem) { .foot-cols { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.foot-line { margin: 0; max-width: 30rem; font-size: .92rem; }
+@media (min-width: 52rem) {
+  .foot-top { grid-template-columns: minmax(0, 1fr) minmax(0, 20rem); gap: 2.5rem; align-items: start; }
+}
+
+/* capped while it is stacked under the brand: a field running the whole width of a tablet
+   reads as the page's main business, which it is not */
+.foot-signup { margin: 0; max-width: 28rem; }
+.foot-signup-say {
+  margin: 0 0 .7rem; max-width: 24rem; font-size: .88rem; color: var(--on-dark-soft);
+}
+.foot-signup-row { display: flex; flex-direction: column; gap: .5rem; }
+@media (min-width: 26rem) { .foot-signup-row { flex-direction: row; } }
+.foot-signup-row input {
+  flex: 1 1 auto; min-width: 0; min-height: 46px;
+  font-family: var(--text); font-size: 1rem;   /* 16px, or iOS zooms the page on focus */
+  padding: .7rem .95rem; border-radius: var(--r-pill);
+  border: 0; background: rgba(255, 255, 255, .09); color: var(--on-dark);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1);
+}
+.foot-signup-row input::placeholder { color: var(--on-dark-mute); }
+.foot-signup-row input:focus-visible { outline: 2px solid var(--blue-soft); outline-offset: 2px; }
+.foot-signup-row .btn { flex: none; }
+.foot-signup-status { margin: .6rem 0 0; min-height: 1.2em; font-size: .82rem; }
+.foot-signup-status.is-ok { color: var(--blue-soft); }
+.foot-signup-status.is-bad { color: var(--orange-soft); }
+.foot-signup-status.is-busy { color: var(--on-dark-mute); }
+
+/* three groups, not a wall: quizzes wide because their titles are sentences, then games,
+   then the two pages that are neither */
+.foot-cols { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin: 1.5rem 0 0; }
+.foot-col h4 {
+  margin: 0 0 .5rem; padding-bottom: .4rem; border-bottom: 2px dotted var(--rule-strong);
+  font-family: var(--display); font-style: italic; font-weight: 400; text-transform: lowercase;
+  font-size: 1.28rem; line-height: 1; letter-spacing: -.01em; color: var(--on-dark);
+}
+.foot-col ul { margin: 0; padding: 0; list-style: none; }
+.foot-col li a {
+  display: flex; align-items: center; min-height: 44px; padding: .2rem 0;
+  text-decoration: none; font-size: .88rem; line-height: 1.3; color: var(--on-dark-soft);
+}
+.foot-col li a:hover { color: var(--on-dark); text-decoration: underline; }
+@media (min-width: 48rem) {
+  .foot-cols { grid-template-columns: minmax(0, 2fr) minmax(0, 1.2fr) minmax(0, 1fr); gap: 2rem; }
+  /* a quiz title is a sentence and must read as one line: the column above is sized for the
+     longest of them, and this makes a wrap show up as an overflow rather than hide as two
+     quiet lines nobody notices */
+  .foot-col li a { white-space: nowrap; min-height: 40px; }
+}
+
+.foot-bar {
+  margin-top: 1.6rem; padding-top: 1rem; border-top: 2px dotted var(--rule-strong);
+}
+.foot-bar p {
+  margin: 0; font-family: var(--ui); font-size: .62rem; font-weight: 600; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--on-dark-mute);
+}
 
 @media (prefers-reduced-motion: reduce) {
   .scard, .scard-go .icon, .chip-link, .site-head nav a { transition: none; }

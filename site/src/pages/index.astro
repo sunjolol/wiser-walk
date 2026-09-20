@@ -4,7 +4,6 @@ import Hero from '../components/Hero.astro';
 import Card from '../components/Card.astro';
 import SectionHead from '../components/SectionHead.astro';
 import CompassFeature from '../components/CompassFeature.astro';
-import Icon from '../components/Icon.astro';
 import { QUIZZES, getQuiz, outcomeHref, quizHref } from '../lib/engine/registry';
 import { liveGames } from '../lib/games';
 import slsMeta from '../games/sounds-like-scripture.meta.json';
@@ -18,7 +17,9 @@ const articles = (await getCollection('articles'))
   .slice(0, 4);
 
 // The owner found the other quizzes buried: list them all here. A draft says so on its tab.
-const otherQuizzes = QUIZZES.filter(q => q.slug !== compass.slug);
+// Published quizzes before drafts: a draft should never sit ahead of a finished quiz.
+const otherQuizzes = QUIZZES.filter(q => q.slug !== compass.slug)
+  .sort((a, b) => Number(a.status === 'draft') - Number(b.status === 'draft'));
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -47,7 +48,7 @@ const jsonLd = {
     ]}
   >
     Quizzes worth taking, games worth losing and articles worth reading, for Christians who
-    would rather see themselves clearly than comfortably. Nothing you answer leaves your browser.
+    would rather see themselves clearly than comfortably.
     <Fragment slot="actions">
       <a class="btn" href={quizHref(compass)}>Take the Theology Compass</a>
       <a class="btn dark" href="/play/sounds-like-scripture/">Play a game</a>
@@ -121,22 +122,4 @@ const jsonLd = {
       <li><a class="chip-link" href={outcomeHref(compass, o)}>{o.name}</a></li>
     ))}
   </ul>
-
-  <section class="dark pledge">
-    <div class="dark-ghost" aria-hidden="true">fair</div>
-    <p class="feature-kicker"><Icon name="compass" size={13} /> Why you can trust the results</p>
-    <h2>Fair to beliefs we do not hold.</h2>
-    <p>
-      The Theology Compass went through an adversarial fairness audit before it was published.
-      Every position is described in words its own holders would accept, the changes are
-      public, and so are the disputes we did not resolve.
-    </p>
-    <ul class="tiles">
-      <li class="tile"><b>20</b><span>Reviewers</span></li>
-      <li class="tile"><b>522</b><span>Findings</span></li>
-      <li class="tile"><b>424</b><span>Applied</span></li>
-      <li class="tile"><b>11</b><span>Disputes</span></li>
-    </ul>
-    <div class="btn-row"><a class="btn" href="/method/">Read the method</a></div>
-  </section>
 </Base>

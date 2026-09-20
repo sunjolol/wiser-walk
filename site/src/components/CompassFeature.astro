@@ -10,6 +10,7 @@
 import CompassWheel from './CompassWheel.astro';
 import { getQuiz, scoreQuiz, resultFor, groupHref, quizHref } from '../lib/engine/registry';
 import audit from '../data/compass-audit.json';
+import { outcomeNoun } from '../lib/engine/types';
 import type { BipolarView } from '../lib/engine/types';
 
 const compass = getQuiz('theology-compass')!;
@@ -20,9 +21,12 @@ const exampleView = sheet ? (resultFor(compass, scoreQuiz(compass, sheet.answers
 <div class="feature">
   <div class="feature-art dark">
     <div class="dark-ghost" aria-hidden="true">compass</div>
-    <p class="feature-kicker">The flagship · audited</p>
+    <p class="feature-kicker">The flagship</p>
     {exampleView && <CompassWheel view={exampleView} />}
-    {exampleView && <p class="feature-note">A real result: the audit's published {EXAMPLE} answer sheet.</p>}
+    {/* The caption stays: this wheel is drawn from a real published answer sheet, and a
+        picture of data has to say whose data it is. How that sheet came to be is /method/'s
+        business, not the home page's. */}
+    {exampleView && <p class="feature-note">A real result: the published {EXAMPLE} answer sheet.</p>}
   </div>
   <div class="feature-body">
     <h3>{compass.title}</h3>
@@ -30,10 +34,13 @@ const exampleView = sheet ? (resultFor(compass, scoreQuiz(compass, sheet.answers
       Eighteen statements place you on six axes of Christian belief, then show which
       traditions sit nearest. Every position is described in words its own holders would accept.
     </p>
+    {/* The same three rows the hub gives every quiz: how long, how big, what you come away
+        with. No reviewer count — that is how the thing was made, and it belongs on /method/
+        with the rest of the working. */}
     <dl class="spec">
       <div><dt>Takes</dt><dd>about {compass.minutes} minutes</dd></div>
-      <div><dt>Compares you with</dt><dd>{compass.outcomes.length} traditions</dd></div>
-      <div><dt>Reviewed by</dt><dd>20 adversarial reviewers</dd></div>
+      <div><dt>Statements</dt><dd>{compass.items.length}, across {compass.groups.length} axes</dd></div>
+      <div><dt>You get</dt><dd>the {outcomeNoun(compass)} nearest you, of {compass.outcomes.length}</dd></div>
     </dl>
     <ul class="chips" aria-label="The six axes">
       {compass.groups.map(g => (
@@ -47,7 +54,6 @@ const exampleView = sheet ? (resultFor(compass, scoreQuiz(compass, sheet.answers
     </ul>
     <div class="btn-row">
       <a class="btn" href={quizHref(compass)}>Start the quiz</a>
-      <a class="btn ghost" href="/method/">How it was made fair</a>
     </div>
   </div>
 </div>

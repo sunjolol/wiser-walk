@@ -81,6 +81,18 @@ const showLow =
   view?.shape === 'unipolar' && Boolean(quiz?.notes?.low) && view.rows.some(r => r.below);
 
 /**
+ * Whether this quiz has anything to fold at all.
+ *
+ * The notes below are a quiz's own words about how to read its ranking, and they are still
+ * printed in full — inside one <details> under the result rather than as four stacked
+ * panels between the reader and their own result. A quiz that sets none of them (the
+ * Compass) renders nothing here, exactly as it did.
+ */
+const folded = Boolean(
+  showLow || quiz?.notes?.result || quiz?.notes?.disputed || quiz?.notes?.omitted
+);
+
+/**
  * The sentence that travels with the names in the headline, printed once directly under it.
  *
  * Under the headline rather than down with the other notes, because it qualifies the name a
@@ -152,32 +164,39 @@ const headlineNotes = quiz && view ? groupNoteFor(quiz, view.named, 'result') : 
       ranking, rather than in a footer a reader has already scrolled past — the gifts draft
       asks the reader to take the result to somebody who has watched them serve, and that is
       the point of the page, not a caveat about it.
-    */}{showLow && <div class="note result-note"><p>{quiz.notes!.low}</p></div>}{quiz.notes?.result && (
-      <div class="note result-note"><p>{quiz.notes.result}</p></div>
-    )}{quiz.notes?.disputed && (
-      <div class="note result-note">
-        <p>
-          {quiz.notes.disputed.text}
-          {/*
-            {' '} and not a literal space inside the fragment. Inside an expression the
-            compiler follows JSX whitespace rules and drops it, which on this page ran the
-            sentence straight into the link: "...you have not.The Theology Compass sets".
-          */}
-          {quiz.notes.disputed.href && quiz.notes.disputed.linkText && (
-            <>{' '}<a href={quiz.notes.disputed.href}>{quiz.notes.disputed.linkText}</a></>
+    */}{folded && (
+      <details class="frame-fold result-fold">
+        <summary>
+          <span>How to read this result</span>
+          <span class="frame-fold-caret" aria-hidden="true"></span>
+        </summary>
+        <div class="frame-fold-body">
+          {showLow && <p>{quiz.notes!.low}</p>}
+          {quiz.notes?.result && <p>{quiz.notes.result}</p>}
+          {quiz.notes?.disputed && (
+            <p>
+              {quiz.notes.disputed.text}
+              {/*
+                {' '} and not a literal space inside the fragment. Inside an expression the
+                compiler follows JSX whitespace rules and drops it, which on this page ran the
+                sentence straight into the link: "...you have not.The Theology Compass sets".
+              */}
+              {quiz.notes.disputed.href && quiz.notes.disputed.linkText && (
+                <>{' '}<a href={quiz.notes.disputed.href}>{quiz.notes.disputed.linkText}</a></>
+              )}
+            </p>
           )}
-        </p>
-      </div>
-    )}{quiz.notes?.omitted && (
-      <div class="note result-note">
-        <p>
-          {quiz.notes.omitted.text}
-          {/* Same rule as the note above: the space has to be an expression to survive. */}
-          {quiz.notes.omitted.href && quiz.notes.omitted.linkText && (
-            <>{' '}<a href={quiz.notes.omitted.href}>{quiz.notes.omitted.linkText}</a></>
+          {quiz.notes?.omitted && (
+            <p>
+              {quiz.notes.omitted.text}
+              {/* Same rule as the note above: the space has to be an expression to survive. */}
+              {quiz.notes.omitted.href && quiz.notes.omitted.linkText && (
+                <>{' '}<a href={quiz.notes.omitted.href}>{quiz.notes.omitted.linkText}</a></>
+              )}
+            </p>
           )}
-        </p>
-      </div>
+        </div>
+      </details>
     )}
 
     {/*

@@ -66,6 +66,40 @@ for (const q of QUIZZES) {
      `radix ${q.config.radix}, strategy ${q.strategy.id}`);
 }
 
+// ------------------------------------------- 1b. what is published and what is not
+/*
+ * Publication status is not a cosmetic field. A live quiz is indexable, sits in the
+ * sitemap and takes the flagship's block on the hub; a draft is noindex and its prefixes
+ * are cut from the sitemap by astro.config.mjs, which derives them from this same list.
+ * The three named here were settled by the owner on 2026-09-20: the figure and gifts
+ * quizzes were released, and the seven deadly sins stays a draft until it has had its own
+ * audit. A status flipped by accident is a page published or unpublished by accident.
+ */
+console.log('1b. publication status');
+{
+  const want = {
+    'theology-compass': 'live',
+    'bible-figure': 'live',
+    'spiritual-gifts': 'live',
+    'seven-deadly-sins': 'draft'
+  };
+  for (const [slug, status] of Object.entries(want)) {
+    const q = getQuiz(slug);
+    if (!q) fail(`${slug} is not in the registry`);
+    else if (q.status !== status) fail(`${slug} is '${q.status}', expected '${status}'`);
+    else ok(`${slug} is ${status}`);
+  }
+  // The prefixes astro.config.mjs cuts out of the sitemap, computed the same way it does.
+  const draftPrefixes = QUIZZES.filter(q => q.status === 'draft').map(q => `/q/${q.slug}/`);
+  if (!draftPrefixes.includes('/q/seven-deadly-sins/')) {
+    fail('the sins draft is no longer among the prefixes kept out of the sitemap');
+  } else if (draftPrefixes.some(p => p === '/q/bible-figure/' || p === '/q/spiritual-gifts/')) {
+    fail('a released quiz is still being cut from the sitemap');
+  } else {
+    ok('the sitemap cuts the sins draft and nothing else: ' + draftPrefixes.join(', '));
+  }
+}
+
 // ------------------------------------------------------- 2. codec round-trips
 console.log('2. codec round-trips');
 for (const q of QUIZZES) {

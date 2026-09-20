@@ -21,6 +21,21 @@ export const SEO: Record<string, { title: string; description: string }> = {
     description:
       '18 statements, 3 minutes. See where you sit on six questions that divide Christians and which of 18 traditions land nearest. Audited for fairness.'
   },
+  /*
+   * The two quizzes released on 2026-09-20. Neither has been through the Compass's audit, so
+   * neither description says a word about fairness, reviewers or an audit: each states only
+   * what the page holds and how long it takes.
+   */
+  '/q/bible-figure/': {
+    title: 'Which Bible character are you most like? 18 statements, 3 minutes',
+    description:
+      '18 statements about how you act, speak, lead and argue. The result names which of 25 figures, Jesus among them, sits nearest, with the acts cited.'
+  },
+  '/q/spiritual-gifts/': {
+    title: 'Spiritual gifts test: all 19 gifts the New Testament names',
+    description:
+      '57 plain statements about what you do and what has happened, ranked across 19 gifts, healing, prophecy and tongues among them. About 8 minutes.'
+  },
   '/axis/theology-compass/grace/': {
     title: 'Monergism vs synergism: which denominations hold which view',
     description:

@@ -376,7 +376,12 @@ export const bibleFigure: FigureQuiz = {
     'shows the cited moments that place them there. It asks about temperament, not virtue.',
   icon: 'scroll',
   minutes: 3,
-  status: 'draft',
+  status: 'live',
+  /*
+   * Kept, and no longer printed anywhere: only a quiz with status 'draft' prints this. It is
+   * the record of what this quiz has and has not been through — five adversarial reviews,
+   * not the Compass's audit — and no live page may claim otherwise.
+   */
   draftNote:
     'This one is a draft. Its statements and placements have had five adversarial reviews, ' +
     'not the full fairness audit the Theology Compass went through. ' +

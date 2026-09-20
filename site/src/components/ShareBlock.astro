@@ -11,8 +11,8 @@
  * The card is always drawn in the LIGHT palette. A shared image is seen on a stranger's
  * timeline, not against this page, and it should look the same to everyone.
  *
- * The link comes second, in a field that selects itself, because the link IS the result —
- * nothing is stored on our side.
+ * The link comes second, in a field that selects itself, because the link IS the result:
+ * the scores are encoded in it and the page is rendered from it.
  *
  * There is no plain-text version. A row of filled and empty circles is not a standard
  * anyone reads, and the owner has said so twice; a picture and a link are the two things
@@ -111,7 +111,7 @@ const card = {
   <div class="compare-row" data-mine-show hidden>
     <p class="share-note">
       Send this to someone else and, when they finish, you both see your answers on the same
-      rails. Nothing is stored on our side.
+      rails.
     </p>
     <div class="share-link">
       <input data-role="invite-url" type="text" readonly value={invite} spellcheck="false"
@@ -121,9 +121,9 @@ const card = {
   </div>
 
   <p class="share-note" data-role="note"
-     data-visitor={`Someone sent you this. ${quiz.items.length} statements, about ${quiz.minutes} minutes, scored in your own browser.`}
-     data-mine="This link is your whole result. Nothing is stored on our side, so keep it if you want to come back to it."
-  >Someone sent you this. {quiz.items.length} statements, about {quiz.minutes} minutes, scored in your own browser.</p>
+     data-visitor={`Someone sent you this. ${quiz.items.length} statements, about ${quiz.minutes} minutes.`}
+     data-mine="Keep this link to come back to your result."
+  >Someone sent you this. {quiz.items.length} statements, about {quiz.minutes} minutes.</p>
 
   <script type="application/json" data-role="data" set:html={JSON.stringify(card)}></script>
 </section>

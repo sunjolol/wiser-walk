@@ -38,15 +38,14 @@ const draft = quiz.status === 'draft';
       {spec.map(s => <div><dt>{s.dt}</dt><dd>{s.dd}</dd></div>)}
     </dl>
     {/*
-      The sentence a quiz carries about what it measures you against, printed verbatim where
-      the data has one. The figure quiz's is the owner-approved wording — the people listed,
-      and Jesus, and never a number against a person — so it is quoted, never paraphrased.
+      No scope note here. The figure quiz's is five sentences about what nearness is and is
+      not, which belongs beside a result that has named somebody — where the result page
+      prints it, verbatim — and not in front of a reader still deciding whether to start.
     */}
-    {quiz.outcomeScopeNote && <p class="qz-scope">{quiz.outcomeScopeNote}</p>}
     <div class="btn-row">
       <a class="btn" href={href}>Start the quiz</a>
       <slot name="more" />
     </div>
   </div>
-  <QuizPreview quiz={quiz} compact />
+  <QuizPreview quiz={quiz} />
 </section>

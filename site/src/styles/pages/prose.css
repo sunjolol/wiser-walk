@@ -431,9 +431,12 @@
  * under the section head as a labelled row. Given a section head of their own they were
  * introduced by a heading physically larger than the content it announced.
  */
-.topicline { margin-top: .9rem; }
+/* and a clear gap under them: sitting flush on the first card they read as a caption on it
+   rather than as a summary of the whole list */
+.topicline { margin-top: .9rem; margin-bottom: 1.75rem; }
 .topicline .jump-label { margin-bottom: .45rem; }
 .topicline .chips { margin-top: 0; }
+@media (min-width: 40rem) { .topicline { margin-bottom: 2.25rem; } }
 
 /* ============================================================== method ====== */
 

@@ -358,7 +358,6 @@ const breadcrumbs =
         </p>
         <div class="btn-row">
           <a class="btn" href={quizHref(quiz)}>{takeIt}</a>
-          {quiz.status === 'live' && <a class="btn ghost" href="/method/">How it was made fair</a>}
         </div>
       </div>
       <dl class="spec ref-cta-spec">
@@ -367,7 +366,6 @@ const breadcrumbs =
         {bipolar && placed > 0 && (
           <div><dt>Compares you with</dt><dd>{placed} {plural}</dd></div>
         )}
-        <div><dt>Scored</dt><dd>On your own device</dd></div>
       </dl>
     </section>
 

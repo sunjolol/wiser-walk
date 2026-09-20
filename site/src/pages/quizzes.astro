@@ -17,9 +17,8 @@ import Hero from '../components/Hero.astro';
 import SectionHead from '../components/SectionHead.astro';
 import QuizFeature from '../components/QuizFeature.astro';
 import QuizIndexCard from '../components/QuizIndexCard.astro';
-import Icon from '../components/Icon.astro';
 import { QUIZZES, getQuiz, quizHref } from '../lib/engine/registry';
-import { groupNounPlural, outcomeNounPlural } from '../lib/engine/types';
+import { groupNounPlural, outcomeNoun } from '../lib/engine/types';
 import type { Quiz } from '../lib/engine/types';
 
 const compass = getQuiz('theology-compass')!;
@@ -27,18 +26,12 @@ const compass = getQuiz('theology-compass')!;
 const ordered = [compass, ...QUIZZES.filter(q => q.slug !== compass.slug)];
 const live = ordered.filter(q => q.status === 'live');
 const drafts = ordered.filter(q => q.status === 'draft');
+/* Published first, drafts after, in one list: one head covers the lot and a draft is marked
+   on its own card and its own block, which is all a reader needs to know about it here. */
+const shelf = [...live, ...drafts];
 /* Counted per shelf, not in one lump: a tile reading "32 statements" beside "1 published"
    counts a draft's statements into the published quiz. */
 const liveStatements = live.reduce((n, q) => n + q.items.length, 0);
-const draftStatements = drafts.reduce((n, q) => n + q.items.length, 0);
-
-/**
- * An audit is not in the quiz data, so a quiz claims one only by being named here, by hand.
- * This is the one line on the page that is typed rather than counted, and it stays that way
- * on purpose: a draft must not inherit a sentence about twenty reviewers by being added to
- * an array. When another quiz passes the same audit, add it here in the same breath.
- */
-const REVIEWED: Record<string, string> = { 'theology-compass': '20 adversarial reviewers' };
 
 /** Small numbers read as words, the way the quizzes' own taglines write them. */
 const WORDS = [
@@ -74,19 +67,21 @@ const facts = (q: Quiz) => `${q.items.length} statements · ${q.groups.length} $
 const tag = (q: Quiz) => `${q.minutes} min`;
 
 /**
- * The spec rows beside a quiz. Bipolar quizzes are matched against a list of outcomes and
- * say how long it is; a unipolar quiz has none — it ranks a reader's own categories — so it
- * says what it names instead, rather than printing "0 traditions" from an empty array.
+ * Three rows: how long it takes, how big it is, and what you come away with. All three are
+ * read off the quiz, so a new quiz brings its own and nothing here is typed per quiz. The
+ * last row is the one a reader is actually deciding on, and it is the same sentence for
+ * every quiz of a shape: a bipolar quiz names the nearest of its outcomes, a ranking names
+ * the reader's strongest.
  */
 const specs = (q: Quiz) => [
   { dt: 'Takes', dd: `about ${q.minutes} minutes` },
   { dt: 'Statements', dd: `${q.items.length}, across ${q.groups.length} ${groupWord(q)}` },
-  q.outcomes.length
-    ? { dt: 'Compares you with', dd: `${q.outcomes.length} ${outcomeNounPlural(q)}` }
-    : { dt: 'Names', dd: `the strongest of ${word(q.groups.length)}, in words` },
-  // The site's standing rule, printed where a reader decides whether to take the thing.
-  ...(q.hideOutcomeScore ? [{ dt: 'Never shown', dd: 'a number against a person' }] : []),
-  ...(REVIEWED[q.slug] ? [{ dt: 'Reviewed by', dd: REVIEWED[q.slug]! }] : [])
+  {
+    dt: 'You get',
+    dd: q.outcomes.length
+      ? `the ${outcomeNoun(q)} nearest you, of ${q.outcomes.length}`
+      : `your strongest ${groupNounPlural(q)}, ranked`
+  }
 ];
 
 const jsonLd = {
@@ -110,7 +105,7 @@ const breadcrumbs = [
 ---
 <Base
   title="Quizzes"
-  description="Self-assessments for Christians who would rather see themselves clearly than comfortably. Scored in your browser; nothing is stored."
+  description="Self-assessments for Christians who would rather see themselves clearly than comfortably."
   jsonLd={jsonLd}
   breadcrumbs={breadcrumbs}
 >
@@ -132,7 +127,7 @@ const breadcrumbs = [
     ]}
   >
     Self-assessments for Christians who would rather see themselves clearly than
-    comfortably. Each one is scored entirely in your browser.
+    comfortably.
   </Hero>
 
   {/*
@@ -150,7 +145,7 @@ const breadcrumbs = [
   </div>
 
   <div class="qz-index">
-    {ordered.map(q => (
+    {shelf.map(q => (
       <QuizIndexCard
         href={quizHref(q)}
         icon={q.icon}
@@ -164,71 +159,13 @@ const breadcrumbs = [
   </div>
 
   {/*
-    Then the same feature block for each quiz, published first. The head says "the flagship"
-    only while there is one published quiz to be the flagship of.
+    Then the same feature block for each quiz, published first and a draft after. One head
+    over the lot: a draft carries its own chip on its own block, which says everything the
+    two heads and the panel of explanation between them used to say at length.
   */}
-  <SectionHead
-    title={live.length > 1 ? 'Published' : 'The flagship'}
-    kicker="Audited before it was published"
-    href="/method/"
-    more="The method"
-  />
+  <SectionHead title="What each one asks" kicker="One block each" />
 
-  {live.map(q => (
-    <QuizFeature quiz={q} kicker={kicker(q)} spec={specs(q)} href={quizHref(q)}>
-      {/* The Compass is the only quiz with an audit to show, so it is the only one with the
-          button that shows it. */}
-      {q.slug === compass.slug && (
-        <a slot="more" class="btn ghost" href="/method/">How it was made fair</a>
-      )}
-    </QuizFeature>
+  {shelf.map(q => (
+    <QuizFeature quiz={q} kicker={kicker(q)} spec={specs(q)} href={quizHref(q)} />
   ))}
-
-  {drafts.length > 0 && (
-    <>
-      <SectionHead title="In draft" kicker="Written, not yet audited" id="in-draft" />
-
-      {/* The warning, once, above the blocks it applies to, in the words it has always had. */}
-      <aside class="qz-draftbox qz-draftnote">
-        <div class="qz-draftnote-text">
-          <p class="feature-kicker"><Icon name="flame" size={13} /> What draft means here</p>
-          <p>
-            Written but not yet through the fairness audit. You can take them; treat the
-            results as a conversation starter rather than a verdict.
-          </p>
-        </div>
-        <dl class="spec">
-          <div><dt>Audited</dt><dd>Not yet</dd></div>
-          {/* A count, and nothing about review: two of these drafts have had five adversarial
-              reviews each, which "written and unreviewed" made into a false line. What each
-              one has been through is on its own page, in its own words. */}
-          <div><dt>Statements</dt><dd>{draftStatements}, across {word(drafts.length)} drafts</dd></div>
-          <div><dt>In search</dt><dd>Not listed</dd></div>
-          <div><dt>Your result</dt><dd>Scored and shareable as usual</dd></div>
-        </dl>
-      </aside>
-
-      {drafts.map(q => (
-        <QuizFeature quiz={q} kicker={kicker(q)} spec={specs(q)} href={quizHref(q)} />
-      ))}
-    </>
-  )}
-
-  <section class="dark pledge qz-pledge">
-    <div class="dark-ghost" aria-hidden="true">yours</div>
-    <div class="qz-pledge-text">
-      <p class="feature-kicker"><Icon name="scroll" size={13} /> What happens to your answers</p>
-      <h2>Nothing you answer leaves your browser.</h2>
-      <p>
-        No account, no email, nothing stored — a result link carries your scores and nothing
-        else, which is also why you have to keep the link if you want the result.
-      </p>
-    </div>
-    <dl class="spec">
-      <div><dt>Scored</dt><dd>On your own device</dd></div>
-      <div><dt>Stored</dt><dd>Nothing, at either end</dd></div>
-      <div><dt>Result link</dt><dd>Your scores, nothing else</dd></div>
-    </dl>
-    <div class="btn-row"><a class="btn" href="/method/#your-answers">What is kept</a></div>
-  </section>
 </Base>

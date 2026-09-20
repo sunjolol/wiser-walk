@@ -1,5 +1,5 @@
 /**
- * What are your spiritual gifts? A DRAFT.
+ * What are your spiritual gifts?
  *
  * Nineteen gifts, three statements each — exactly one reverse-keyed and exactly one about
  * what other people bring you or say of you — scored by the same highest-category strategy
@@ -16,8 +16,8 @@
  *     psychometric, evidence) closed in audit/new-quizzes/AUDIT-LOG.md. The six gifts added
  *     on 2026-09-22 went through the same shape a second time — two drafts, two critics, an
  *     editor, four adversarial reviews and a closing editor — in gifts-all-final.md. That is
- *     still not the Compass's audit, and the owner has not played them. That is why status
- *     is 'draft'.
+ *     still NOT the Compass's twenty-reviewer audit. The owner played it and released it on
+ *     2026-09-20, so status is 'live'; no page may claim it was audited.
  *
  * All the gifts are in, by the OWNER'S DECISION of 2026-09-22: prophecy, healing, miracles,
  * tongues, interpreting tongues and the word of knowledge are measured, named and ranked
@@ -132,7 +132,7 @@ export const giftSources: Record<string, GiftSource[]> = {
 /** The plain description that follows the quotation in each summary. */
 const PLAIN: Record<string, string> = {
   serving:
-    'Romans says service and 1 Corinthians says helps, and this draft treats them as one: doing the practical work that other people’s work depends on.',
+    'Romans says service and 1 Corinthians says helps, and this quiz treats them as one: doing the practical work that other people’s work depends on.',
   teaching: 'Making a thing understood, and staying with a person until it is.',
   encouraging:
     'The translation quoted here says exhorting where many others say encouraging: speaking so that someone takes heart and keeps going.',
@@ -574,13 +574,12 @@ export const spiritualGifts: Quiz = {
     'and to people who know you.',
   icon: 'scroll',
   minutes: 8,
-  status: 'draft',
+  status: 'live',
   /*
-   * Short on purpose. The draft note prints above the result on a phone, and the first
-   * wiring of it said at length what notes.disputed and notes.omitted say a few centimetres
-   * further down: which gifts are here, that apostles are not scored, and that Christians
-   * disagree about six of them. Said twice, it was a wall between a reader and their own
-   * result. What only THIS note can say is that the quiz is a draft and what that means.
+   * Kept, and no longer printed anywhere: only a quiz with status 'draft' prints this. It
+   * stays as the record of what this quiz has and has not been through, so that nothing has
+   * to be rewritten if it ever goes back into draft. What it must never become is a line on
+   * a live page claiming an audit this quiz has not had.
    */
   draftNote:
     'This one is a draft. Its statements have had adversarial reviews, not the full ' +
