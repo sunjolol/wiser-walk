@@ -74,7 +74,7 @@ to another project", inside his weekly token limit. Tick items here as they ship
       "The Sower.jpg") in `site/public/img/CREDITS.md` once round 2 has finished with that file. The
       Articles band was switched to it on 2026-09-21 (commit `ad6394c`, shipped from a clean worktree while
       round 2 was running): when round 2 is committed, rebase `seo/discoverability` onto `origin/main`.
-- [ ] **Article reading redesign (asked 2026-09-21, from his iPhone SE):** unboxed prose on a phone, a
+- [x] **Article reading redesign (SHIPPED 2026-09-21, `fe3c4cb`; the worktree is removed):** unboxed prose on a phone, a
       dotted-line contents list instead of bubbles, a reading progress bar on phone and desktop, an "In
       short" answer at the top of each article, a better end-of-article sequence (quiz, keep reading,
       share, all articles). Being built in the isolated worktree `C:/Users/Light/AppData/Local/Temp/ww-articles`
@@ -88,3 +88,8 @@ to another project", inside his weekly token limit. Tick items here as they ship
 - [ ] Editor's judgement calls left for the owner: the Mainline profile says nothing about sexuality (the
       Compass has no axis for it); the National Baptist "kingdom" reading rests on preaching tradition, not
       a confession, and the profile says so.
+- [ ] Article redesign leftovers (small): no article uses a Markdown blockquote, so the new quotation style
+      shows nowhere yet (Scripture is quoted inline); the "Updated" date line has never rendered (no article
+      has `updated:`); the desktop scroll-spy rule is segmented between rows; body images would need a rehype
+      plugin for lazy loading and dimensions. The build guard now REQUIRES an `answer:` (30 to 70 words) in
+      every article's front matter: every new article must have one.
