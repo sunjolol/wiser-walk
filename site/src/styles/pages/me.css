@@ -45,6 +45,16 @@
   margin: .9rem 0 0; max-width: 28rem; font-size: 1rem; line-height: 1.5;
   color: rgba(255, 255, 255, .94); text-shadow: 0 1px 12px rgba(12, 22, 44, .45);
 }
+/* the site's run, in the band: one short line, never congratulated */
+.me-streak {
+  display: inline-flex; align-items: center; gap: .4rem; margin: .8rem 0 0;
+  padding: .34rem .78rem; border-radius: var(--r-pill);
+  font-family: var(--ui); font-size: .62rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: #FFD2B0;
+  background: rgba(16, 26, 48, .34); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .28);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+.me-streak[hidden] { display: none; }
 @media (min-width: 46rem) {
   .me-band { padding: 3.6rem var(--gut) 3.8rem; margin-bottom: 2.4rem; }
 }
@@ -209,13 +219,83 @@
   margin: 0; font-family: var(--display); font-weight: 400; color: #fff;
   font-size: 1.4rem; line-height: 1.1; letter-spacing: -.012em;
 }
+.mgame--blue { --room-ink: var(--blue-soft); }
 .mgame-best {
   margin: .55rem 0 0; font-family: var(--display); font-size: 1.15rem; line-height: 1.2;
-  color: var(--orange-soft); font-variant-numeric: tabular-nums;
+  color: var(--room-ink); font-variant-numeric: tabular-nums;
 }
 .mgame .mroom-facts { margin-top: .6rem; }
 .mgame .mroom-go { margin-top: .3rem; }
 @media (min-width: 40rem) { .me-games-row { grid-template-columns: 1fr 1fr; gap: 1rem; } }
+
+/* ------------------------------------------------------------------- the daily ---- */
+/*
+ * TODAY'S TEN in the game's room (2026-09-21): the way in, what today came to, the run of
+ * days, and the week behind it. Every box keeps its height whether or not the script finds
+ * anything, so a room does not jump as the page settles.
+ */
+.mgame-today {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .35rem .7rem;
+  margin: .8rem 0 0; min-height: 2.15rem;
+}
+.mgame-today-k {
+  font-family: var(--ui); font-size: .58rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: rgba(255, 255, 255, .56);
+}
+.mgame-today-state { display: inline-flex; align-items: center; gap: .55rem; }
+/* Solid, in the room's own ink, for the same reason it is solid on /games/: it is the one
+   thing in the room that does something other than open the game, and an outline pill over
+   the tinted "Play" read as a second of the same thing. */
+.mgame-pill {
+  display: inline-flex; align-items: center; min-height: 2.15rem; padding: .4rem .8rem;
+  border-radius: var(--r-pill); text-decoration: none;
+  color: #17181d; background: var(--room-ink);
+  font-family: var(--ui); font-size: .58rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase;
+  transition: background .18s ease;
+}
+.mgame-pill:hover { background: color-mix(in srgb, var(--room-ink) 84%, #fff); }
+.mgame-score {
+  font-family: var(--display); font-size: 1.1rem; line-height: 1; color: var(--room-ink);
+  font-variant-numeric: tabular-nums;
+}
+/* Ten marks, in line order: filled is right, hollow is wrong, and a brighter edge is an
+   answer given in under three seconds — the three things the game itself shows. */
+.mgame-sq { display: inline-flex; gap: 3px; }
+.mgame-sq i {
+  display: block; width: 7px; height: 16px; border-radius: 2px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .3);
+}
+.mgame-sq i.is-on { background: var(--room-ink); box-shadow: none; }
+.mgame-sq i.is-fast { box-shadow: inset 0 0 0 1px #fff; }
+.mgame-sq i.is-on.is-fast { box-shadow: 0 0 0 1px rgba(255, 255, 255, .85); }
+/* On a phone a way in has to look like a button and be 44px, which is what touch.css does
+   to "Play" in this same room. The daily's pill matches that height, and is solid where
+   "Play" is tinted, so the two are never mistaken for each other. */
+@media (max-width: 45.99rem) {
+  .mgame-today { min-height: 44px; }
+  .mgame-pill { min-height: 44px; padding: .55rem 1.05rem; font-size: .66rem; letter-spacing: .12em; }
+}
+
+.mgame-streak {
+  margin: .55rem 0 0; font-family: var(--ui); font-size: .6rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; color: rgba(255, 255, 255, .72);
+}
+.mgame-streak[hidden], .mgame-week[hidden] { display: none; }
+
+/* the week: seven days, played or not, with today last */
+.mgame-week { display: flex; align-items: center; gap: .5rem; margin: .5rem 0 0; }
+.mgame-week-k {
+  font-family: var(--ui); font-size: .55rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: rgba(255, 255, 255, .46);
+}
+.mgame-week-row { display: inline-flex; gap: 4px; }
+.mgame-week-row i {
+  display: block; width: 8px; height: 8px; border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .34);
+}
+.mgame-week-row i.is-on { background: var(--room-ink); box-shadow: none; }
+.mgame-week-row i.is-today { box-shadow: 0 0 0 1.5px rgba(255, 255, 255, .5); }
 
 /* ------------------------------------------------------------- what is coming ---- */
 .me-keep { margin: 2.6rem 0 0; padding: 1.5rem 1.35rem 1.6rem; }
@@ -244,6 +324,6 @@
 .me-clear-btn:hover { color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--rule-strong); }
 
 @media (prefers-reduced-motion: reduce) {
-  .mroom-go .icon, .me-keep-go .icon, .mroom-past > summary::after { transition: none; }
+  .mroom-go .icon, .me-keep-go .icon, .mroom-past > summary::after, .mgame-pill { transition: none; }
   .mroom-go:hover .icon, .me-keep-go:hover .icon { transform: none; }
 }

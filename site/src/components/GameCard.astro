@@ -20,6 +20,11 @@
  * Neither drawing was always like this. The names card used to be grey bars over four
  * invented names with one lit up as though it were correct: it read as a screen that had
  * not loaded, and the one thing it did say was untrue.
+ *
+ * WHY THE CARD IS NOT ONE BIG LINK any more (2026-09-21). Today's ten needs its own way in,
+ * and a link inside a link is not a thing a browser can do. So the title carries the link
+ * and its ::after covers the card: tapping anywhere still opens the game, and the one
+ * element that sits above that cover — the daily's way in — goes straight into today's ten.
  */
 import Icon from './Icon.astro';
 import type { Game } from '../lib/games';
@@ -34,6 +39,8 @@ export interface Props {
   facts?: string[];
   /** How long a run takes, in the game's own words: "2 min a run". */
   clock?: string;
+  /** Whether this game deals a daily ten, and so gets a Today line. */
+  daily?: boolean;
   /**
    * The drawing: a real line, under it either the two fixed answers or four real names.
    *
@@ -47,14 +54,14 @@ export interface Props {
     | { kind: 'binary'; answers: [string, string]; line?: string | null }
     | { kind: 'names'; names?: string[] | null; line?: string | null };
 }
-const { game, icon, ink, facts = [], clock, preview } = Astro.props;
+const { game, icon, ink, facts = [], clock, preview, daily = false } = Astro.props;
 ---
-<a class={`gcard gcard--${ink}`} href={game.href}>
+<article class={`gcard gcard--${ink}`}>
   <div class="gcard-say">
     <span class="gcard-mark"><Icon name={icon} size={20} /></span>
     {/* h2: with no section head over them, each game IS a section of this page, and a page
         that runs h1 straight to h3 reads as a level missing to a screen reader. */}
-    <h2>{game.title}</h2>
+    <h2><a class="gcard-link" href={game.href}>{game.title}</a></h2>
     <p>{game.tagline}</p>
     {(clock || facts.length > 0) && (
       <ul class="gcard-facts">
@@ -62,7 +69,25 @@ const { game, icon, ink, facts = [], clock, preview } = Astro.props;
         {facts.map(f => <li>{f}</li>)}
       </ul>
     )}
-    <span class="gcard-go">Play <Icon name="arrow" size={14} /></span>
+
+    {/*
+      Today's ten. The server writes the way in, because the build's date is not the
+      reader's; the browser fills in what this device did with today, into a box that
+      already has its height.
+    */}
+    {daily && (
+      <p class="gcard-today" data-role="row" data-game={game.slug}>
+        {/* The label is only needed once there is a number beside it: "Today's ten" over a
+            button that already reads "Play today's ten" is the same words twice. */}
+        <span class="gcard-today-k" data-role="k" hidden>Today’s ten</span>
+        <span class="gcard-today-state" data-role="state">
+          <a class="gcard-pill" href={`${game.href}#today`}>Play today’s ten</a>
+        </span>
+      </p>
+    )}
+
+    {/* The title is the link; this is the sign that says so. */}
+    <span class="gcard-go" aria-hidden="true">Play <Icon name="arrow" size={14} /></span>
   </div>
 
   {preview && (
@@ -84,4 +109,4 @@ const { game, icon, ink, facts = [], clock, preview } = Astro.props;
       )}
     </div>
   )}
-</a>
+</article>

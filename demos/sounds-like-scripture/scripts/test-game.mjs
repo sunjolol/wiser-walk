@@ -26,7 +26,11 @@ const source = page.slice(a + START.length, b);
 const EXPORTS = [
   'RUN_LENGTH', 'TIER_WEIGHT', 'mulberry32', 'dailySeed', 'seedFromRandom', 'wordCount',
   'displayText', 'isInBible', 'workKey', 'fuseFor', 'scoreFor', 'drawRun', 'timeBucket',
-  'encodeChallenge', 'decodeChallenge'
+  'encodeChallenge', 'decodeChallenge',
+  'DAILY_KEY', 'DAILY_KEEP', 'DAY_MS', 'dayIndex', 'dayKey', 'dayNumber', 'keyIndex',
+  'msToNextDay', 'countdownText', 'padMarks', 'emptyDaily', 'readDaily', 'recordDaily',
+  'streak', 'dailyMarks', 'squaresFromMarks', 'countRight', 'groupNumber', 'streakLine',
+  'dailyShareText', 'isTodayHash'
 ];
 const L = new Function('"use strict";' + source + '\nreturn {' + EXPORTS.join(',') + '};')();
 
@@ -311,6 +315,244 @@ test('a decoded challenge replays the same ten lines', () => {
   const theirs = L.drawRun(pool, { seed: 987654, canon: 'orthodox' });
   const mine = L.drawRun(pool, { seed: back.seed, canon: back.canon });
   assert.deepEqual(mine.map((i) => i.id), theirs.map((i) => i.id));
+});
+
+/* ---------------------------------------------------------------- the daily */
+
+const DAY = 86400000;
+const keyAt = (base, offset) => L.dayKey(new Date(base + offset * DAY));
+
+/* A store the tests own: the same two methods the browser's is used through. */
+function fakeStore(seed) {
+  let value = seed === undefined ? null : seed;
+  return {
+    getItem() { return value; },
+    setItem(key, v) { value = v; },
+    written() { return value; }
+  };
+}
+
+/* Storage blocked, as in a private window: every call throws. */
+function blockedStore() {
+  return {
+    getItem() { throw new Error('blocked'); },
+    setItem() { throw new Error('blocked'); }
+  };
+}
+
+const row = (extra) => Object.assign(
+  { n: 1, score: 100, marks: '1111100000', fast: '0000000000' }, extra || {});
+
+test('day one is 2026-09-21 and the number turns at UTC midnight', () => {
+  assert.equal(L.dayNumber(new Date(Date.UTC(2026, 8, 21))), 1);
+  assert.equal(L.dayNumber(new Date(Date.UTC(2026, 8, 21, 23, 59, 59, 999))), 1);
+  assert.equal(L.dayNumber(new Date(Date.UTC(2026, 8, 22))), 2);
+  assert.equal(L.dayNumber(new Date(Date.UTC(2026, 8, 22, 0, 0, 0, 1))), 2);
+  assert.equal(L.dayNumber(new Date(Date.UTC(2026, 9, 21))), 31);
+  assert.equal(L.dayNumber(new Date(Date.UTC(2027, 8, 21))), 366);
+});
+
+test('the day key is the UTC date as yyyymmdd, and matches the run seed', () => {
+  const d = new Date(Date.UTC(2026, 8, 21, 22, 30));
+  assert.equal(L.dayKey(d), '20260921');
+  assert.equal(L.dayKey(new Date(Date.UTC(2026, 11, 5))), '20261205');
+  assert.equal(String(L.dailySeed(d)), L.dayKey(d));
+  assert.equal(L.keyIndex('20260921'), L.dayIndex(d));
+  for (const junk of ['', 'x', '2026092', '202609211', '20261301', '20260230', null]) {
+    assert.equal(L.keyIndex(junk), null, 'accepted ' + junk);
+  }
+});
+
+test('only the first completed run of a day is recorded', () => {
+  const store = fakeStore();
+  const when = new Date(Date.UTC(2026, 8, 21, 9, 0));
+  const first = L.recordDaily(store, when, {
+    score: 1420, marks: '1111111011', fast: '1010000000', canon: 'protestant'
+  });
+  assert.equal(first.recorded, true);
+  assert.deepEqual(first.record, {
+    n: 1, score: 1420, marks: '1111111011', fast: '1010000000', canon: 'p'
+  });
+
+  const again = L.recordDaily(store, new Date(Date.UTC(2026, 8, 21, 21, 0)), {
+    score: 1900, marks: '1111111111', fast: '1111111111', canon: 'protestant'
+  });
+  assert.equal(again.recorded, false);
+  assert.equal(again.record.score, 1420, 'practice must not overwrite the record');
+  assert.equal(JSON.parse(store.written()).days['20260921'].score, 1420);
+
+  const next = L.recordDaily(store, new Date(Date.UTC(2026, 8, 22, 1, 0)), {
+    score: 900, marks: '1100000000', fast: '0000000000', canon: 'catholic'
+  });
+  assert.equal(next.recorded, true);
+  assert.equal(next.record.n, 2);
+  assert.equal(Object.keys(JSON.parse(store.written()).days).length, 2);
+});
+
+test('a malformed score or marks is fixed, never stored as given', () => {
+  const store = fakeStore();
+  const rec = L.recordDaily(store, new Date(Date.UTC(2026, 8, 21)), {
+    score: -5, marks: '11', fast: 'xxxxxxxxxxxxxx'
+  }).record;
+  assert.equal(rec.score, 0);
+  assert.equal(rec.marks, '1100000000');
+  assert.equal(rec.fast, '0000000000');
+  assert.equal(rec.canon, undefined, 'no canon given, none stored');
+  assert.equal(L.padMarks('1'.repeat(40)).length, 10);
+});
+
+test('the store keeps at most four hundred days', () => {
+  const today = Date.UTC(2027, 5, 1);
+  const days = {};
+  for (let i = 400; i >= 1; i--) days[keyAt(today, -i)] = row();
+  const store = fakeStore(JSON.stringify({ v: 1, days }));
+
+  const out = L.recordDaily(store, new Date(today), { score: 10, marks: '1000000000', fast: '' });
+  const keys = Object.keys(out.days.days);
+  assert.equal(keys.length, L.DAILY_KEEP);
+  assert.ok(!keys.includes(keyAt(today, -400)), 'the oldest day should have gone');
+  assert.ok(keys.includes(keyAt(today, -399)), 'the next oldest should have stayed');
+  assert.ok(keys.includes(L.dayKey(new Date(today))), 'today should be there');
+  assert.equal(Object.keys(JSON.parse(store.written()).days).length, L.DAILY_KEEP);
+});
+
+test('a malformed store reads as empty and is never thrown over', () => {
+  const empty = { v: 1, days: {} };
+  assert.deepEqual(L.readDaily(fakeStore()), empty);
+  assert.deepEqual(L.readDaily(fakeStore('')), empty);
+  assert.deepEqual(L.readDaily(fakeStore('{oh no')), empty);
+  assert.deepEqual(L.readDaily(fakeStore('null')), empty);
+  assert.deepEqual(L.readDaily(fakeStore('[]')), empty);
+  assert.deepEqual(L.readDaily(fakeStore('"a string"')), empty);
+  assert.deepEqual(L.readDaily(fakeStore(JSON.stringify({ v: 2, days: { 20260921: row() } }))), empty,
+    'a version this code does not know is not read');
+  assert.deepEqual(L.readDaily(fakeStore(JSON.stringify({ v: 1 }))), empty);
+  assert.deepEqual(L.readDaily(fakeStore(JSON.stringify({ v: 1, days: 'no' }))), empty);
+  assert.deepEqual(L.readDaily(null), empty);
+
+  /* junk keys and junk rows are dropped; the real ones beside them survive */
+  const mixed = L.readDaily(fakeStore(JSON.stringify({
+    v: 1, days: { 20260921: row(), notaday: row(), 20261301: row(), 20260922: 7 }
+  })));
+  assert.deepEqual(Object.keys(mixed.days), ['20260921']);
+});
+
+test('a store that throws leaves the game working', () => {
+  const store = blockedStore();
+  assert.deepEqual(L.readDaily(store), { v: 1, days: {} });
+  const out = L.recordDaily(store, new Date(Date.UTC(2026, 8, 21)), {
+    score: 500, marks: '1111100000', fast: '0000000000', canon: 'orthodox'
+  });
+  assert.equal(out.recorded, true, 'the run still counts for this session');
+  assert.equal(out.record.score, 500);
+  assert.deepEqual(L.streak(out.days.days, new Date(Date.UTC(2026, 8, 21))), { current: 1, best: 1 });
+});
+
+test('a streak runs to today or yesterday, and a gap simply starts it again', () => {
+  const today = Date.UTC(2026, 8, 30);
+  const at = new Date(today);
+  const days = (...offsets) => {
+    const d = {};
+    for (const o of offsets) d[keyAt(today, o)] = row();
+    return d;
+  };
+  assert.deepEqual(L.streak(days(0), at), { current: 1, best: 1 });
+  assert.deepEqual(L.streak(days(-1), at), { current: 1, best: 1 });
+  assert.deepEqual(L.streak(days(-2), at), { current: 0, best: 1 });
+  assert.deepEqual(L.streak(days(0, -1, -2), at), { current: 3, best: 3 });
+  assert.deepEqual(L.streak(days(-1, -2, -3), at), { current: 3, best: 3 });
+  assert.deepEqual(L.streak(days(0, -1, -3, -4, -5, -6), at), { current: 2, best: 4 });
+  assert.deepEqual(L.streak(days(-4, -5, -6), at), { current: 0, best: 3 });
+  assert.deepEqual(L.streak({}, at), { current: 0, best: 0 });
+  assert.deepEqual(L.streak(null, at), { current: 0, best: 0 });
+  /* a streak across a month end, and the whole stored object in place of the map */
+  const turn = Date.UTC(2026, 9, 1);
+  assert.deepEqual(
+    L.streak({ v: 1, days: { [keyAt(turn, 0)]: row(), [keyAt(turn, -1)]: row() } }, new Date(turn)),
+    { current: 2, best: 2 });
+});
+
+test('the countdown runs to the next UTC midnight', () => {
+  assert.equal(L.msToNextDay(new Date(Date.UTC(2026, 8, 21, 0, 0, 0))), DAY);
+  assert.equal(L.msToNextDay(new Date(Date.UTC(2026, 8, 21, 23, 59, 59, 0))), 1000);
+  assert.equal(L.msToNextDay(new Date(Date.UTC(2026, 8, 21, 16, 48, 0))), (7 * 60 + 12) * 60000);
+  assert.equal(L.countdownText((7 * 60 + 12) * 60000), '7h 12m');
+  assert.equal(L.countdownText(60 * 60000), '1h 0m');
+  assert.equal(L.countdownText(12 * 60000 + 30000), '12m');
+  assert.equal(L.countdownText(59000), 'under a minute');
+  assert.equal(L.countdownText(0), 'under a minute');
+  assert.equal(L.countdownText(-5000), 'under a minute');
+});
+
+test('the squares and the count come from the two stored strings', () => {
+  assert.equal(L.squaresFromMarks('1101111011', '1000100000'), '⚡✅❌✅⚡✅✅❌✅✅');
+  assert.equal(L.countRight('1101111011'), 8);
+  assert.equal(L.countRight('0000000000'), 0);
+  assert.equal(L.squaresFromMarks('', ''), '❌❌❌❌❌❌❌❌❌❌');
+  const answers = [
+    { ok: true, timedOut: false, secs: 1.2 }, { ok: true, timedOut: false, secs: 4 },
+    { ok: false, timedOut: false, secs: 2 }, { ok: false, timedOut: true, secs: 16 },
+    { ok: true, timedOut: false, secs: 2.9 }, { ok: true, timedOut: false, secs: 3 },
+    { ok: true, timedOut: false, secs: 9 }, { ok: true, timedOut: false, secs: 5 },
+    { ok: true, timedOut: false, secs: 6 }, { ok: true, timedOut: false, secs: 7 }
+  ];
+  /* "fast" is what the contract says: answered under three seconds, right or wrong.
+     A wrong answer still prints as a cross, so line three carries no bolt. */
+  assert.deepEqual(L.dailyMarks(answers), { marks: '1100111111', fast: '1010100000' });
+  assert.equal(L.squaresFromMarks('1100111111', '1010100000').charAt(2), '❌');
+  assert.deepEqual(L.dailyMarks([]), { marks: '0000000000', fast: '0000000000' });
+});
+
+test('thousands separators do not depend on where the copy happened', () => {
+  assert.equal(L.groupNumber(0), '0');
+  assert.equal(L.groupNumber(999), '999');
+  assert.equal(L.groupNumber(1420), '1,420');
+  assert.equal(L.groupNumber(1234567), '1,234,567');
+  assert.equal(L.streakLine(1), 'Streak: 1 day');
+  assert.equal(L.streakLine(3), 'Streak: 3 days');
+});
+
+test('the copied daily names the day, the score, the squares and the way back in', () => {
+  const base = { n: 12, score: 1420, marks: '1101111011', fast: '1000100000' };
+  const head = 'Sounds Like Scripture #12\n1,420 · 8/10\n⚡✅❌✅⚡✅✅❌✅✅';
+  const tail = 'https://wiserwalk.com/play/sounds-like-scripture/#today';
+
+  assert.equal(L.dailyShareText({ ...base, streak: 0 }), head + '\n' + tail);
+  assert.equal(L.dailyShareText({ ...base, streak: 1 }), head + '\n' + tail,
+    'one day is not a streak, so the line is left out');
+  assert.equal(L.dailyShareText({ ...base, streak: 3 }), head + '\nStreak: 3 days\n' + tail);
+  assert.equal(L.dailyShareText({ ...base, streak: 3 }).split('\n').length, 5);
+  /* no line of the game's text ever travels with a result */
+  for (const item of pool.items.slice(0, 40)) {
+    assert.ok(!L.dailyShareText({ ...base, streak: 3 }).includes(item.t));
+  }
+});
+
+test('today\'s ten is the same ten for two players, however they got there', () => {
+  const early = new Date(Date.UTC(2026, 8, 21, 0, 5));
+  const late = new Date(Date.UTC(2026, 8, 21, 23, 50));
+  assert.equal(L.dailySeed(early), L.dailySeed(late));
+  assert.equal(L.dayNumber(early), L.dayNumber(late));
+  for (const canon of CANONS) {
+    const mine = L.drawRun(pool, { seed: L.dailySeed(early), canon, exclude: [] });
+    const theirs = L.drawRun(pool, { seed: L.dailySeed(late), canon, exclude: [] });
+    assert.deepEqual(mine.map((i) => i.id), theirs.map((i) => i.id));
+  }
+  /* and the next day is a different ten */
+  const tomorrow = L.dailySeed(new Date(Date.UTC(2026, 8, 22, 12)));
+  assert.notDeepEqual(
+    L.drawRun(pool, { seed: L.dailySeed(early), canon: 'protestant' }).map((i) => i.id),
+    L.drawRun(pool, { seed: tomorrow, canon: 'protestant' }).map((i) => i.id));
+});
+
+test('the deep link into today never collides with a challenge link', () => {
+  for (const h of ['#today', 'today', '#TODAY', ' #today ']) {
+    assert.equal(L.isTodayHash(h), true, 'rejected ' + h);
+    assert.equal(L.decodeChallenge(h), null);
+  }
+  for (const h of ['', '#', '#todays', '#d=p1.0.0000000000', null, 42]) {
+    assert.equal(L.isTodayHash(h), false, 'accepted ' + h);
+  }
 });
 
 /* ------------------------------------------------------------ page shape -- */

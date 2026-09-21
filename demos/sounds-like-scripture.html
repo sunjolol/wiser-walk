@@ -374,6 +374,51 @@ button { font: inherit; color: inherit; }
 .banner p { margin: 0; color: var(--ink-soft); font-size: .92rem; }
 .banner strong { color: var(--ink); font-weight: 600; font-family: var(--ui); }
 .start-actions { margin-top: 1.1rem; }
+
+/* ---------------------------------------------------------------- the daily
+   Before it is played, today's ten is the loudest button on the screen with one
+   quiet line under it. After it is played, that button is replaced by the record:
+   the day's number, the score, the ten squares, the streak, and how long the set
+   has left. The panel is quiet on purpose, because by then the thing left to do
+   is a free run, and that is the button underneath. */
+
+.daily-sub {
+  margin: .45rem 0 0; text-align: center;
+  font-family: var(--ui); font-size: .64rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--ink-mute);
+}
+.daily {
+  background: var(--panel); border-radius: var(--r); box-shadow: var(--lift);
+  padding: .95rem 1rem 1rem;
+}
+.daily-chip {
+  display: inline-flex; align-items: center; margin: 0 0 .65rem;
+  padding: .45rem .78rem; border-radius: var(--r-pill);
+  background-color: var(--dark-fill); color: var(--on-dark);
+  font-family: var(--ui); font-size: .56rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; line-height: 1;
+}
+.daily-score { display: flex; align-items: baseline; gap: .65rem; margin: 0; }
+.daily-score b {
+  font-family: var(--display); font-weight: 400; font-size: 2.1rem; line-height: 1;
+  color: var(--ink); font-variant-numeric: tabular-nums;
+}
+.daily-score span {
+  font-family: var(--ui); font-size: .64rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--ink-mute);
+}
+.daily .squares { margin-top: .8rem; }
+.daily .sq { max-width: 1.9rem; background: var(--shell); box-shadow: none; }
+.daily-lines {
+  display: flex; flex-wrap: wrap; gap: .2rem 1rem; margin: .85rem 0 0;
+  font-family: var(--ui); font-size: .66rem; font-weight: 700;
+  letter-spacing: .09em; text-transform: uppercase;
+}
+.daily-lines p { margin: 0; }
+.daily-streak { color: var(--accent); }
+.daily-next { color: var(--ink-mute); }
+.daily .btn { margin-top: .95rem; }
+
 .canon-hint {
   margin: .6rem 0 0; text-align: center;
   font-family: var(--ui); font-size: .66rem; font-weight: 700; letter-spacing: .1em;
@@ -529,6 +574,13 @@ button { font: inherit; color: inherit; }
   font-size: .85rem;
 }
 .sq .bolt { position: absolute; right: 2px; bottom: 1px; width: .55em; height: .55em; color: var(--accent); }
+
+/* one line under the squares: the streak a recorded daily just extended, or the
+   sentence that says a practice run changed nothing */
+.daily-note {
+  margin: .95rem 0 0; font-family: var(--ui); font-size: .82rem; font-weight: 600;
+  color: var(--ink-soft);
+}
 
 /* two scores, no names, never a percentage between them */
 .versus { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; margin-top: .9rem; }
@@ -715,8 +767,23 @@ button { font: inherit; color: inherit; }
         </div>
 
         <div class="btn-col start-actions">
-          <button type="button" class="btn" id="btnPlay">Play</button>
-          <button type="button" class="btn ghost" id="btnDaily">Today's ten</button>
+          <div class="daily" id="dailyPanel" hidden>
+            <p class="daily-chip" id="dailyChip">Today's ten</p>
+            <p class="daily-score"><b id="dailyScore">0</b><span id="dailyRight">0 / 10</span></p>
+            <div class="squares" id="dailySquares"></div>
+            <div class="daily-lines">
+              <p class="daily-streak" id="dailyStreak" hidden></p>
+              <p class="daily-next" id="dailyNext"></p>
+            </div>
+            <button type="button" class="btn quiet" id="btnPractice">Practice today's ten</button>
+          </div>
+
+          <div id="dailyNew">
+            <button type="button" class="btn" id="btnDaily">Today's ten</button>
+            <p class="daily-sub" id="dailySub"></p>
+          </div>
+
+          <button type="button" class="btn ghost" id="btnPlay">Play</button>
           <p class="canon-hint" id="canonHint" hidden>Pick one of the three above</p>
         </div>
       </div>
@@ -776,10 +843,11 @@ button { font: inherit; color: inherit; }
     <div class="band result-band">
       <div class="band-wash" aria-hidden="true"></div>
       <div class="band-ghost" aria-hidden="true">ten</div>
-      <p class="band-chip">Your ten</p>
+      <p class="band-chip" id="resultChip">Your ten</p>
       <p class="big" id="finalScore">0</p>
       <p class="big-label">Points</p>
       <div class="squares" id="squares"></div>
+      <p class="daily-note" id="dailyNote" hidden></p>
       <div class="versus" id="versus" hidden>
         <div><span>You</span><b id="vsYou">0</b></div>
         <div><span>Them</span><b id="vsThem">0</b></div>
@@ -995,6 +1063,218 @@ function decodeChallenge(hash) {
   }
   return { canon: LETTER_CANON[m[1]], seed: seed, score: score, marks: marks };
 }
+
+/* ----------------------------------------------------------------- the daily
+
+   Today's ten is already the same ten for everyone, seeded by the UTC date. What
+   follows is the record of it: one row a day, written once, kept in the browser
+   under the key below and shaped so that accounts can sync it later unchanged.
+
+     { "v": 1, "days": { "<yyyymmdd UTC>": {
+         "n": <day number>, "score": <int>,
+         "marks": "<ten characters of 1 or 0, in line order, 1 = right>",
+         "fast":  "<ten characters of 1 or 0, 1 = answered under three seconds>",
+         "canon": "p" | "c" | "o" } } }
+
+   Only the FIRST completed run of a day is recorded. Play the same ten again and
+   it is practice: the record does not move. A streak counts days played, which is
+   knowledge, never devotion, so nothing here nags, reminds, or ranks anyone.
+
+   Every function takes its storage as an argument, so this block stays pure and
+   the tests can hand it a fake one that throws. */
+
+var DAILY_KEY = 'sls.daily';
+var DAILY_VERSION = 1;
+var DAILY_KEEP = 400;
+var DAY_MS = 86400000;
+/* Day #1 is 2026-09-21 (UTC). */
+var DAY_ONE_INDEX = Math.floor(Date.UTC(2026, 8, 21) / DAY_MS);
+var GAME_TITLE = 'Sounds Like Scripture';
+var DAILY_URL = 'https://wiserwalk.com/play/sounds-like-scripture/#today';
+
+/* Whole UTC days since the epoch: the one number every day rule below is built on. */
+function dayIndex(date) {
+  return Math.floor(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()) / DAY_MS);
+}
+
+function dayKey(date) {
+  var m = date.getUTCMonth() + 1, d = date.getUTCDate();
+  return String(date.getUTCFullYear()) + (m < 10 ? '0' : '') + m + (d < 10 ? '0' : '') + d;
+}
+
+function dayNumber(date) {
+  return dayIndex(date) - DAY_ONE_INDEX + 1;
+}
+
+/* A key back to a day index, or null if it is not a real date. Nothing trusts a
+   stored key: the value can be hand-edited, or left by an older version. */
+function keyIndex(key) {
+  var s = String(key);
+  if (!/^\d{8}$/.test(s)) return null;
+  var y = +s.slice(0, 4), m = +s.slice(4, 6), d = +s.slice(6, 8);
+  var utc = Date.UTC(y, m - 1, d);
+  var back = new Date(utc);
+  if (back.getUTCFullYear() !== y || back.getUTCMonth() !== m - 1 || back.getUTCDate() !== d) return null;
+  return Math.floor(utc / DAY_MS);
+}
+
+function msToNextDay(date) {
+  return (dayIndex(date) + 1) * DAY_MS - date.getTime();
+}
+
+/* "7h 12m", then "12m", then a plain sentence rather than a row of zeroes. */
+function countdownText(ms) {
+  var total = Math.max(0, Math.floor(ms / 1000));
+  var h = Math.floor(total / 3600);
+  var m = Math.floor((total % 3600) / 60);
+  if (h > 0) return h + 'h ' + m + 'm';
+  if (m > 0) return m + 'm';
+  return 'under a minute';
+}
+
+function padMarks(value) {
+  var out = String(value == null ? '' : value).replace(/[^01]/g, '0').slice(0, RUN_LENGTH);
+  while (out.length < RUN_LENGTH) out += '0';
+  return out;
+}
+
+function emptyDaily() { return { v: DAILY_VERSION, days: {} }; }
+
+/* Malformed JSON, a wrong version, a junk key or a junk row: all read as empty,
+   and nothing here ever throws. */
+function readDaily(store) {
+  var out = emptyDaily(), raw, parsed, k, rec;
+  if (!store) return out;
+  try { raw = store.getItem(DAILY_KEY); } catch (e) { return out; }
+  if (typeof raw !== 'string' || !raw) return out;
+  try { parsed = JSON.parse(raw); } catch (e) { return out; }
+  if (!parsed || typeof parsed !== 'object' || parsed.v !== DAILY_VERSION) return out;
+  if (!parsed.days || typeof parsed.days !== 'object') return out;
+  for (k in parsed.days) {
+    if (!Object.prototype.hasOwnProperty.call(parsed.days, k)) continue;
+    if (keyIndex(k) === null) continue;
+    rec = parsed.days[k];
+    if (!rec || typeof rec !== 'object') continue;
+    out.days[k] = rec;
+  }
+  return out;
+}
+
+/* result: { score, marks, fast, canon }. Returns the whole store, the day's record
+   and whether this run was the one that set it. */
+function recordDaily(store, date, result) {
+  var data = readDaily(store), key = dayKey(date), i;
+  if (Object.prototype.hasOwnProperty.call(data.days, key)) {
+    return { days: data, record: data.days[key], recorded: false };
+  }
+  var r = result || {};
+  var rec = {
+    n: dayNumber(date),
+    score: Math.max(0, Math.round(Number(r.score) || 0)),
+    marks: padMarks(r.marks),
+    fast: padMarks(r.fast)
+  };
+  if (r.canon) rec.canon = String(r.canon).charAt(0);
+  data.days[key] = rec;
+
+  /* Keys are yyyymmdd, so sorting them as text sorts them by date. */
+  var keys = Object.keys(data.days).sort();
+  for (i = 0; i < keys.length - DAILY_KEEP; i++) delete data.days[keys[i]];
+
+  try { store.setItem(DAILY_KEY, JSON.stringify(data)); } catch (e) { /* fine */ }
+  return { days: data, record: rec, recorded: true };
+}
+
+/* days: the days map, or the whole stored object. The current streak is the run of
+   consecutive days ending today or yesterday; a run that ended earlier is over, and
+   the count simply starts again. */
+function streak(days, date) {
+  var map = (days && days.days && typeof days.days === 'object') ? days.days : (days || {});
+  var have = {}, list = [], k, idx, i;
+  for (k in map) {
+    if (!Object.prototype.hasOwnProperty.call(map, k)) continue;
+    if (!map[k] || typeof map[k] !== 'object') continue;
+    idx = keyIndex(k);
+    if (idx === null || have[idx]) continue;
+    have[idx] = true;
+    list.push(idx);
+  }
+  list.sort(function (a, b) { return a - b; });
+
+  var best = 0, run = 0;
+  for (i = 0; i < list.length; i++) {
+    run = (i > 0 && list[i] === list[i - 1] + 1) ? run + 1 : 1;
+    if (run > best) best = run;
+  }
+
+  var today = dayIndex(date);
+  var at = have[today] ? today : (have[today - 1] ? today - 1 : null);
+  var current = 0;
+  while (at !== null && have[at]) { current++; at--; }
+  return { current: current, best: best };
+}
+
+/* The two stored strings, from the answers of one run. */
+function dailyMarks(answers) {
+  var marks = '', fast = '', i, a;
+  for (i = 0; i < RUN_LENGTH; i++) {
+    a = answers && answers[i];
+    marks += (a && a.ok) ? '1' : '0';
+    fast += (a && !a.timedOut && typeof a.secs === 'number' && a.secs < 3) ? '1' : '0';
+  }
+  return { marks: marks, fast: fast };
+}
+
+function squaresFromMarks(marks, fast) {
+  var m = padMarks(marks), f = padMarks(fast), out = '', i;
+  for (i = 0; i < RUN_LENGTH; i++) {
+    out += m.charAt(i) === '1' ? (f.charAt(i) === '1' ? '⚡' : '✅') : '❌';
+  }
+  return out;
+}
+
+function countRight(marks) {
+  var m = padMarks(marks), n = 0, i;
+  for (i = 0; i < RUN_LENGTH; i++) if (m.charAt(i) === '1') n++;
+  return n;
+}
+
+/* Thousands separators, computed rather than left to a locale, so the copied text
+   is the same wherever it was copied. */
+function groupNumber(n) {
+  var v = Math.round(Number(n) || 0);
+  var sign = v < 0 ? '-' : '';
+  var s = String(Math.abs(v)), out = '', i = s.length, c = 0;
+  while (i--) {
+    out = s.charAt(i) + out;
+    if (++c % 3 === 0 && i > 0) out = ',' + out;
+  }
+  return sign + out;
+}
+
+function streakLine(n) {
+  return 'Streak: ' + n + (n === 1 ? ' day' : ' days');
+}
+
+/* opts: { n, score, marks, fast, squares, correct, streak, title, url }.
+   The streak line is left out below two days: one day is not a streak. */
+function dailyShareText(opts) {
+  var o = opts || {};
+  var right = (typeof o.correct === 'number') ? o.correct : countRight(o.marks);
+  var lines = [
+    (o.title || GAME_TITLE) + ' #' + o.n,
+    groupNumber(o.score) + ' · ' + right + '/' + RUN_LENGTH,
+    o.squares || squaresFromMarks(o.marks, o.fast)
+  ];
+  if (o.streak >= 2) lines.push(streakLine(o.streak));
+  lines.push(o.url || DAILY_URL);
+  return lines.join('\n');
+}
+
+/* The deep link straight into today's ten. A challenge hash is never this. */
+function isTodayHash(hash) {
+  return typeof hash === 'string' && /^#?today$/i.test(hash.trim());
+}
 /*__LOGIC_END__*/
 
 /* ------------------------------------------------------------------ the app */
@@ -1021,7 +1301,11 @@ function decodeChallenge(hash) {
     banner: $('challengeBanner'), bannerScore: $('challengeScore'), bannerWord: $('challengeWord'),
     lede: $('startLede'), canonNote: $('canonNote'), footStart: $('footStart'), footResult: $('footResult'),
     startTiles: $('startTiles'), canonHint: $('canonHint'), canonQ: $('canonQ'),
-    btnPlay: $('btnPlay'), btnDaily: $('btnDaily'),
+    btnPlay: $('btnPlay'), btnDaily: $('btnDaily'), btnPractice: $('btnPractice'),
+    dailyPanel: $('dailyPanel'), dailyNew: $('dailyNew'), dailySub: $('dailySub'),
+    dailyChip: $('dailyChip'), dailyScore: $('dailyScore'), dailyRight: $('dailyRight'),
+    dailySquares: $('dailySquares'), dailyStreak: $('dailyStreak'), dailyNext: $('dailyNext'),
+    resultChip: $('resultChip'), dailyNote: $('dailyNote'),
     pips: $('pips'), scoreNow: $('scoreNow'), fuseFill: $('fuseFill'),
     card: $('card'), tintYes: $('tintYes'), tintNo: $('tintNo'),
     line: $('lineText'), dragHint: $('dragHint'), reveal: $('reveal'),
@@ -1036,6 +1320,11 @@ function decodeChallenge(hash) {
 
   /* ---- storage, always defensive: the game works with storage blocked ---- */
   var K = { canon: 'sls.canon', seen: 'sls.seen', best: 'sls.best', fooled: 'sls.fooled' };
+  /* The daily record is read and written through the pure functions above, which take
+     the store as an argument; in a private window even reaching for it can throw. */
+  function store() {
+    try { return localStorage; } catch (e) { return null; }
+  }
   function read(key, fallback) {
     try {
       var raw = localStorage.getItem(key);
@@ -1061,9 +1350,18 @@ function decodeChallenge(hash) {
     streak: 0,
     answers: [],
     phase: 'idle',
-    challenge: null
+    challenge: null,
+    /* the moment a daily run was started, so a run that crosses UTC midnight is
+       recorded against the day whose ten it actually played */
+    when: null,
+    daily: null
   };
   var timerId = null;
+  var clockId = null;
+  /* The UTC day the start screen was last drawn for. A tab can be left open across
+     midnight, and when it is, the screen must be drawn again rather than keep
+     yesterday's score under today's name. */
+  var shownDay = '';
   var lineStart = 0;
   var lineFuse = 0;
 
@@ -1079,10 +1377,14 @@ function decodeChallenge(hash) {
       run: state.run,
       answers: state.answers,
       challenge: state.challenge,
+      daily: state.daily,
       logic: {
         mulberry32: mulberry32, drawRun: drawRun, isInBible: isInBible, fuseFor: fuseFor,
         scoreFor: scoreFor, displayText: displayText, workKey: workKey,
-        encodeChallenge: encodeChallenge, decodeChallenge: decodeChallenge
+        encodeChallenge: encodeChallenge, decodeChallenge: decodeChallenge,
+        dayKey: dayKey, dayNumber: dayNumber, msToNextDay: msToNextDay,
+        readDaily: readDaily, recordDaily: recordDaily, streak: streak,
+        dailyMarks: dailyMarks, dailyShareText: dailyShareText
       },
       answer: answer,
       next: nextLine
@@ -1104,19 +1406,81 @@ function decodeChallenge(hash) {
     var locked = !state.canon;
     el.btnPlay.setAttribute('aria-disabled', String(locked));
     el.btnDaily.setAttribute('aria-disabled', String(locked));
+
+    /* Three states, and the biggest button is always the best thing left to do:
+       today's ten if it is unplayed, a free run once it is done, and the challenge
+       on its own when someone arrived by a challenge link. */
+    var record = state.challenge ? null : todayRecord();
+    el.dailyPanel.hidden = !record;
+    el.dailyNew.hidden = !!record || !!state.challenge;
+
     if (locked) {
+      el.btnPlay.className = 'btn ghost';
       el.btnPlay.textContent = 'Choose your Bible to play';
       el.btnDaily.textContent = "Choose your Bible for today's ten";
-      el.btnDaily.hidden = false;
     } else if (state.challenge) {
+      el.btnPlay.className = 'btn';
       el.btnPlay.textContent = 'Take the challenge';
-      el.btnDaily.hidden = true;
     } else {
+      el.btnPlay.className = record ? 'btn' : 'btn ghost';
       el.btnPlay.textContent = 'Play';
       el.btnDaily.textContent = "Today's ten";
-      el.btnDaily.hidden = false;
+    }
+
+    if (record) paintDaily(record);
+    else if (!el.dailyNew.hidden) {
+      el.dailySub.textContent = '#' + dayNumber(new Date()) + ' · the same ten for everyone';
     }
     if (!locked) el.canonHint.hidden = true;
+    shownDay = dayKey(new Date());
+    tickClock();
+  }
+
+  function todayRecord() {
+    return readDaily(store()).days[dayKey(new Date())] || null;
+  }
+
+  /* The ten squares, drawn from the two stored strings exactly as the result screen
+     draws them from a live run. */
+  function squareCells(marks, fast) {
+    var m = String(marks || ''), f = String(fast || ''), out = '', i, ok;
+    for (i = 0; i < RUN_LENGTH; i++) {
+      ok = m.charAt(i) === '1';
+      out += '<div class="sq">' + (ok ? ICON.tick : ICON.cross) +
+             (ok && f.charAt(i) === '1' ? ICON.bolt : '') + '</div>';
+    }
+    return out;
+  }
+
+  function paintDaily(record) {
+    var now = new Date();
+    el.dailyChip.textContent = "Today's ten, #" + record.n;
+    el.dailyScore.textContent = Number(record.score || 0).toLocaleString();
+    el.dailyRight.textContent = countRight(record.marks) + ' / ' + RUN_LENGTH;
+    el.dailySquares.innerHTML = squareCells(record.marks, record.fast);
+    var run = streak(readDaily(store()).days, now);
+    el.dailyStreak.hidden = run.current < 1;
+    el.dailyStreak.textContent = streakLine(run.current);
+  }
+
+  /* The countdown to the next set, and the watch on the day itself.
+     The day is compared rather than the countdown, because the countdown never
+     reaches zero: a second after midnight it is a whole day again. When the day
+     turns, the start screen is simply drawn again, with no reload - refreshActions
+     reads the store afresh, finds no record for the new day, and the button and
+     the new number come back. */
+  function tickClock() {
+    if (state.screen !== 'start') return stopClock();
+    var now = new Date();
+    if (shownDay && dayKey(now) !== shownDay) return refreshActions();
+    if (!el.dailyPanel.hidden) {
+      el.dailyNext.textContent = 'New ten in ' + countdownText(msToNextDay(now));
+    }
+    if (clockId === null) clockId = setInterval(tickClock, 1000);
+  }
+
+  function stopClock() {
+    if (clockId !== null) { clearInterval(clockId); clockId = null; }
   }
 
   function nudgeCanon() {
@@ -1146,6 +1510,7 @@ function decodeChallenge(hash) {
     el.start.hidden = name !== 'start';
     el.play.hidden = name !== 'play';
     el.result.hidden = name !== 'result';
+    if (name === 'start') tickClock(); else stopClock();
     publish();
   }
 
@@ -1164,9 +1529,11 @@ function decodeChallenge(hash) {
     write(K.seen, uniq);
   }
 
-  function startRun(mode, seed) {
+  function startRun(mode, seed, when) {
     state.mode = mode;
     state.seed = seed;
+    state.when = when || null;
+    state.daily = null;
     state.run = drawRun(POOL, {
       seed: seed,
       canon: state.canon,
@@ -1351,10 +1718,24 @@ function decodeChallenge(hash) {
     write(K.fooled, tally);
   }
 
+  /* The first completed run of a day is the record; a later run of the same ten is
+     practice and changes nothing, including the streak. */
+  function recordToday() {
+    state.daily = null;
+    if (state.mode !== 'daily' || !state.when) return;
+    var m = dailyMarks(state.answers);
+    var done = recordDaily(store(), state.when, {
+      score: state.score, marks: m.marks, fast: m.fast, canon: state.canon
+    });
+    var run = streak(done.days.days, state.when);
+    state.daily = { record: done.record, recorded: done.recorded, streak: run.current };
+  }
+
   function finish() {
     state.phase = 'done';
     clearTimeout(timerId);
     if (state.mode === 'free') rememberSeen(state.run.map(function (it) { return it.id; }));
+    recordToday();
 
     var correct = 0, totalSecs = 0;
     state.answers.forEach(function (a) { if (a.ok) correct++; totalSecs += a.secs; });
@@ -1367,12 +1748,21 @@ function decodeChallenge(hash) {
     el.statAvg.textContent = (totalSecs / Math.max(1, state.answers.length)).toFixed(1) + 's';
     el.statBest.textContent = best.toLocaleString();
 
-    var sq = '';
-    state.answers.forEach(function (a) {
-      sq += '<div class="sq">' + (a.ok ? ICON.tick : ICON.cross) +
-            (a.ok && a.secs < 3 ? ICON.bolt : '') + '</div>';
-    });
-    el.squares.innerHTML = sq;
+    var marks = dailyMarks(state.answers);
+    el.squares.innerHTML = squareCells(marks.marks, marks.fast);
+
+    /* On a daily, the band names the day and says where the streak now stands. A
+       practice run says plainly that today's record did not move. */
+    if (state.daily) {
+      el.resultChip.textContent = "Today's ten, #" + state.daily.record.n;
+      el.dailyNote.hidden = false;
+      el.dailyNote.textContent = state.daily.recorded
+        ? streakLine(state.daily.streak)
+        : "Practice. Today's result stays " + Number(state.daily.record.score).toLocaleString() + '.';
+    } else {
+      el.resultChip.textContent = 'Your ten';
+      el.dailyNote.hidden = true;
+    }
 
     if (state.challenge) {
       el.versus.hidden = false;
@@ -1422,11 +1812,23 @@ function decodeChallenge(hash) {
     return encodeChallenge(linkBase(), state.canon, state.seed, state.score, state.answers);
   }
 
+  /* A daily copies the day, the score, the squares, the streak and the way back in.
+     A practice run copies the day's RECORD, not the practice score: that is what
+     "today's result" means, and it is the number the streak was built on. Anything
+     else keeps the text it always had. */
   function resultText() {
-    var squares = state.answers.map(function (a) {
-      return a.ok ? (a.secs < 3 ? '⚡' : '✅') : '❌';
-    }).join('');
-    return 'Sounds Like Scripture — ' + state.score.toLocaleString() + '\n' + squares + '\n' + challengeLink();
+    if (state.daily) {
+      return dailyShareText({
+        n: state.daily.record.n,
+        score: state.daily.record.score,
+        marks: state.daily.record.marks,
+        fast: state.daily.record.fast,
+        streak: state.daily.streak
+      });
+    }
+    var marks = dailyMarks(state.answers);
+    return GAME_TITLE + ' — ' + state.score.toLocaleString() + '\n' +
+           squaresFromMarks(marks.marks, marks.fast) + '\n' + challengeLink();
   }
 
   function toast(msg) {
@@ -1533,11 +1935,16 @@ function decodeChallenge(hash) {
     if (state.challenge) startRun('challenge', state.challenge.seed);
     else startRun('free', seedFromRandom(Math.random()));
   });
-  el.btnDaily.addEventListener('click', function () {
+  function startDaily() {
     if (!state.canon) return nudgeCanon();
     state.challenge = null;
-    startRun('daily', dailySeed(new Date()));
-  });
+    /* one Date for the seed and for the record, so a run that begins seconds before
+       UTC midnight is filed under the day whose ten it played */
+    var now = new Date();
+    startRun('daily', dailySeed(now), now);
+  }
+  el.btnDaily.addEventListener('click', startDaily);
+  el.btnPractice.addEventListener('click', startDaily);
   el.btnNo.addEventListener('click', function () { answer(false); });
   el.btnYes.addEventListener('click', function () { answer(true); });
   el.btnNext.addEventListener('click', nextLine);
@@ -1591,5 +1998,10 @@ function decodeChallenge(hash) {
 
   showScreen('start');
   publish();
+
+  /* /play/sounds-like-scripture/#today goes straight into today's ten. A challenge
+     hash is never "#today", so the two never meet. With no Bible chosen yet this
+     asks the question first, exactly as the button does. */
+  if (isTodayHash(location.hash)) startDaily();
 })();
 </script>

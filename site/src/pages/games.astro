@@ -21,10 +21,13 @@ import GameCard from '../components/GameCard.astro';
 import Icon from '../components/Icon.astro';
 import type { IconName } from '../lib/icons';
 import { liveGames } from '../lib/games';
+import { DAILY_GAMES } from '../lib/daily';
 import slsMeta from '../games/sounds-like-scripture.meta.json';
 import wsiMeta from '../games/who-said-it.meta.json';
 
 const games = liveGames();
+/* The band's own way in is today's ten, not a cold start: the first game that deals one. */
+const firstDaily = games.find(g => DAILY_GAMES.includes(g.slug));
 
 /**
  * What each game shows on its card. The mark and the ink keep two dark cards from reading
@@ -115,10 +118,11 @@ const breadcrumbs = [{ name: 'Home', url: '/' }, { name: 'Games', url: '/games/'
     ]}
   >
     Short, hard, and honest about their sources. A game here counts what you know, never how
-    devout you are, and every line is quoted from a real edition.
-    {games[0] && (
-      <a slot="actions" class="btn" href={games[0].href}>
-        Play {games[0].title} <Icon name="arrow" size={15} />
+    devout you are, and every line is quoted from a real edition. Both games deal the same
+    ten lines to everyone each day.
+    {(firstDaily || games[0]) && (
+      <a slot="actions" class="btn" href={firstDaily ? `${firstDaily.href}#today` : games[0].href}>
+        {firstDaily ? 'Play today’s ten' : `Play ${games[0].title}`} <Icon name="arrow" size={15} />
       </a>
     )}
   </Hero>
@@ -134,8 +138,51 @@ const breadcrumbs = [{ name: 'Home', url: '/' }, { name: 'Games', url: '/games/'
           clock={s ? '2 min a run' : undefined}
           facts={s?.facts}
           preview={s?.preview}
+          daily={DAILY_GAMES.includes(g.slug)}
         />
       );
     })}
   </div>
+
+  <script>
+    /*
+     * Today's ten, on each card. Read only: the games record their own runs, and this
+     * fills in what this device did with today into a line that already has its height.
+     */
+    import { todayFor, rightCount } from '../lib/daily';
+
+    document.querySelectorAll('.gcard-today[data-role="row"]').forEach(row => {
+      const rec = todayFor(row.dataset.game);
+      const state = row.querySelector('[data-role="state"]');
+      if (!rec || !state) return;
+      state.textContent = '';
+      if (rec.score > 0) {
+        const score = document.createElement('span');
+        score.className = 'gcard-score';
+        score.textContent = rec.score.toLocaleString();
+        state.appendChild(score);
+      }
+      /* Ten marks: filled is right, hollow is wrong, a brighter edge is under three
+         seconds — the same three things the game shows on its own result screen. */
+      const box = document.createElement('span');
+      box.className = 'gcard-sq';
+      box.setAttribute('aria-hidden', 'true');
+      for (let i = 0; i < 10; i++) {
+        const sq = document.createElement('i');
+        if (rec.marks[i] === '1') sq.className = 'is-on';
+        if (rec.fast[i] === '1') sq.className += ' is-fast';
+        box.appendChild(sq);
+      }
+      state.appendChild(box);
+      const said = document.createElement('span');
+      said.className = 'sr-only';
+      // "points" gives the score a unit and keeps the two numbers apart when they are read
+      // aloud one after the other.
+      said.textContent = `${rec.score > 0 ? 'points, ' : ''}${rightCount(rec.marks)} of 10 right`;
+      state.appendChild(said);
+      const label = row.querySelector('[data-role="k"]');
+      if (label) label.hidden = false;
+      row.classList.add('is-played');
+    });
+  </script>
 </Base>

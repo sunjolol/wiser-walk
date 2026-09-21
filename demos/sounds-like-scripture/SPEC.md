@@ -264,6 +264,85 @@ bottom bar. Then widen: on desktop the play column stays about 30rem wide and ce
   Bible, British Edition." plus the Orthodox canon note when that canon is chosen.
 
 Pure logic (PRNG, draw, truth-under-canon, fuse, scoring, link encode and decode, display
-normalisation) lives in one clearly marked block of `game.src.html` between the comment lines
-`/*__LOGIC_START__*/` and `/*__LOGIC_END__*/`, with no DOM access, so `test-game.mjs` can
-extract and test it under Node.
+normalisation, the whole daily set below) lives in one clearly marked block of `game.src.html`
+between the comment lines `/*__LOGIC_START__*/` and `/*__LOGIC_END__*/`, with no DOM access, so
+`test-game.mjs` can extract and test it under Node.
+
+## The daily set
+
+Today's ten was always the same ten for everyone. What this adds is the record of it: a number,
+a result, a streak, and a way straight back in. Who Said It? carries the same set, function for
+function, so the site reads both games through one rule. No accounts and no server: the browser
+holds it, and accounts will sync exactly the shape below when they arrive.
+
+### What is stored
+
+Key `sls.daily` (`wsi.daily` in the sibling). Every read and write is in `try`/`catch`, and the
+game works unchanged with storage blocked.
+
+```json
+{ "v": 1, "days": { "<yyyymmdd UTC>": {
+    "n": 1, "score": 1420,
+    "marks": "1101111011",
+    "fast":  "1000100000",
+    "canon": "p" } } }
+```
+
+- `marks`: ten characters of `1` or `0`, in line order, `1` meaning called right.
+- `fast`: ten characters, `1` meaning answered under three seconds, right or wrong. A bolt is
+  drawn only where `marks` and `fast` are both `1`, which is what the result screen already did.
+- `canon` is this game's only extra field (`p`, `c` or `o`); Who Said It? has no canon and
+  stores none.
+- **Only the first completed run of a UTC day is recorded.** A later run of the same ten is
+  practice: it never overwrites the record, and it does not touch the streak.
+- At most the latest 400 days are kept. Keys are `yyyymmdd`, so sorting them as text sorts them
+  by date. Malformed JSON, an unknown `v`, a key that is not a real date or a row that is not an
+  object all read as empty, never as an error.
+- **Day number.** Day #1 is 2026-09-21 (UTC); `n` is whole UTC days since then, plus one. The
+  run seed is unchanged: still the UTC date as `yyyymmdd`.
+- **Streak.** The number of consecutive UTC days, ending today or yesterday, that have a record.
+  A run that ended before yesterday is over and the count simply starts again; nothing says a
+  streak was lost. Best streak is the longest run in the stored days. The site's own streak is
+  the same rule over the union of both games' days. It counts games played, which is knowledge,
+  never devotion: no reminders, no leaderboard, no guilt.
+- A run is filed under the day it was **started**, so a run begun seconds before UTC midnight
+  belongs to the day whose ten it played.
+
+### What a player sees
+
+- **Start, unplayed.** "Today's ten" is the primary button, with one line under it:
+  `#12 · the same ten for everyone`. "Play" is beside it, quieter. With no Bible chosen yet both
+  buttons still say so, and pressing either asks the question first.
+- **Start, played.** A panel in its place: `Today's ten, #12`, the score, the ten squares as the
+  result screen draws them, `Streak: 3 days` (hidden at zero, singular at one),
+  `New ten in 7h 12m` counting down to the next UTC midnight, and a quiet
+  "Practice today's ten". "Play" becomes the primary button, because by then it is the
+  thing left to do. At UTC midnight the start screen draws itself again with no reload and the
+  button comes back: the clock watches the **day**, not the countdown, because the countdown
+  never reaches zero - a second after midnight it is a whole day again.
+- **Result.** The band chip reads `Today's ten, #12`, and one line under the squares carries
+  either the streak or, for a practice run, `Practice. Today's result stays 1,420.`
+
+### The copied result
+
+"Copy result" on a daily copies exactly this, and the streak line is left out below two days
+(one day is not a streak):
+
+```
+Sounds Like Scripture #12
+1,420 · 8/10
+⚡✅❌✅⚡✅✅❌✅✅
+Streak: 3 days
+https://wiserwalk.com/play/sounds-like-scripture/#today
+```
+
+Thousands separators are computed, not left to a locale, so the text is the same wherever it was
+copied. A practice run copies the day's **record**, not the practice score: that is what "today's
+result" means, and it is the number the streak was built on. A run that is not a daily keeps the
+text it always had, and "Copy challenge link" keeps working on a daily.
+
+### The deep link
+
+`/play/sounds-like-scripture/#today` goes straight into today's ten, asking for the Bible first
+if none has been chosen, exactly as the button does. `#d=` challenge links are untouched: a
+challenge hash is never `#today`.

@@ -111,6 +111,16 @@
 }
 .gcard--blue::before { background: radial-gradient(85% 60% at 6% 0%, rgba(126, 186, 238, .2), transparent 62%); }
 
+/*
+ * The card is a card, and its title is the link that covers it. Today's ten needs a way in
+ * of its own, and a link inside a link is not a thing a browser can do: the title's ::after
+ * spreads over the whole card, and the one element raised above it is the daily's pill.
+ */
+.gcard-link { color: inherit; text-decoration: none; }
+.gcard-link::after { content: ""; position: absolute; inset: 0; z-index: 1; border-radius: 24px; }
+.gcard-link:focus-visible { outline: none; }
+.gcard-link:focus-visible::after { outline: 2px solid var(--game-ink); outline-offset: -5px; }
+
 .gcard-mark {
   display: grid; place-items: center; width: 2.6rem; height: 2.6rem; margin: 0 0 .85rem;
   border-radius: 14px; color: #17181d; background: var(--game-ink);
@@ -134,6 +144,61 @@
   border-radius: 999px; color: rgba(255, 255, 255, .92);
   background: rgba(255, 255, 255, .1); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .15);
 }
+/*
+ * TODAY'S TEN on the card (2026-09-21). Both games deal the same ten lines to everyone each
+ * day; this is the way straight into today's, and — once today has been played on this
+ * device — what happened. The box keeps its height either way, so the card does not jump
+ * when the script fills it in.
+ */
+/* The ROW is not raised above the card's cover, only the pill is: a raised row is a band
+   across the card that swallows taps and opens nothing. */
+.gcard-today {
+  position: relative;
+  display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .7rem;
+  margin: .95rem 0 0; min-height: 2.15rem;
+}
+.gcard-today-k {
+  font-family: var(--ui); font-size: .6rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: rgba(255, 255, 255, .58);
+}
+.gcard-today-state { display: inline-flex; align-items: center; gap: .55rem; }
+/* Solid, in the game's own ink. It is the one thing on the card that does something other
+   than open the game, and the game's own start screen makes today's ten its first button
+   too; an outline pill sat above the tinted "Play" read as a second of the same thing. */
+.gcard-pill {
+  position: relative; z-index: 2;
+  display: inline-flex; align-items: center; min-height: 2.15rem; padding: .4rem .85rem;
+  border-radius: var(--r-pill); text-decoration: none;
+  color: #17181d; background: var(--game-ink);
+  font-family: var(--ui); font-size: .6rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase;
+  transition: background .18s ease;
+}
+.gcard-pill:hover { background: color-mix(in srgb, var(--game-ink) 84%, #fff); }
+.gcard-score {
+  font-family: var(--display); font-size: 1.15rem; line-height: 1; color: var(--game-ink);
+  font-variant-numeric: tabular-nums;
+}
+/* Ten marks, in line order: filled is right, hollow is wrong, and a brighter edge is an
+   answer given in under three seconds — the three things the game itself shows. */
+.gcard-sq { display: inline-flex; gap: 3px; }
+.gcard-sq i {
+  display: block; width: 7px; height: 17px; border-radius: 2px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .3);
+}
+.gcard-sq i.is-on { background: var(--game-ink); box-shadow: none; }
+.gcard-sq i.is-fast { box-shadow: inset 0 0 0 1px #fff; }
+.gcard-sq i.is-on.is-fast { box-shadow: 0 0 0 1px rgba(255, 255, 255, .85); }
+/*
+ * On a phone a way in has to look like a button and be 44px, which is what touch.css does
+ * to "Play" on this same card. The daily's pill matches that height, and is solid where
+ * "Play" is tinted, so the two are never mistaken for each other.
+ */
+@media (max-width: 45.99rem) {
+  .gcard-today { min-height: 44px; }
+  .gcard-pill { min-height: 44px; padding: .55rem 1.05rem; font-size: .66rem; letter-spacing: .12em; }
+}
+
 .gcard-go {
   display: inline-flex; align-items: center; gap: .45rem; margin: 1.1rem 0 0;
   font-family: var(--ui); font-size: .72rem; font-weight: 700; letter-spacing: .13em;
@@ -175,6 +240,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .gcard, .gcard-go .icon, .gcard-names span { transition: none; }
+  .gcard, .gcard-go .icon, .gcard-names span, .gcard-pill { transition: none; }
   .gcard:hover { transform: none; }
 }

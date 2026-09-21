@@ -179,6 +179,44 @@ const jsonLd = {
         <h2 id="hm-games">games</h2>
         <a class="hm-more" href="/games/">All games <Icon name="arrow" size={13} /></a>
       </header>
+
+      {/*
+        TODAY'S TEN. Both games already deal the same ten lines to everyone on a given UTC
+        day; what was missing was anywhere on the site that says so. This strip is that
+        place: the day's number, a way straight in, and — once a day has been played on this
+        device — what happened, in the game's own ink.
+
+        What the SERVER renders is two plain ways in, because the build's date is not the
+        reader's: a page built on Monday must not tell a Tuesday reader it is day one. The
+        number, the squares, the streak and the countdown are all filled in by the browser,
+        into boxes that already have their height, so nothing below this moves.
+      */}
+      <div class="today" data-today>
+        <p class="today-kicker">
+          Today’s ten<span class="today-no" data-role="no" hidden></span>
+        </p>
+        <ul class="today-list">
+          {[sls, wsi].filter(Boolean).map(g => (
+            <li class:list={['today-row', `today-row--${g!.slug === 'who-said-it' ? 'blue' : 'orange'}`]}>
+              <a class="today-go" href={`${g!.href}#today`} data-role="row" data-game={g!.slug}>
+                <span class="today-name">{g!.title}</span>
+                <span class="today-state" data-role="state">
+                  <span class="today-pill">Play today’s ten</span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+        <p class="today-foot">
+          {/* The mark is drawn here rather than built in the script: a line mark is a
+              picture, and a picture belongs in the markup. Only its number is filled in. */}
+          <span class="today-streak" data-role="streak" hidden>
+            <Icon name="flame" size={13} /><span data-role="streak-days"></span>
+          </span>
+          <span class="today-next" data-role="next"></span>
+        </p>
+      </div>
+
       <div class="hm-games">
         {sls && (
           <a class="game" href={sls.href}>
@@ -249,6 +287,99 @@ const jsonLd = {
       </div>
     </section>
   )}
+  <script>
+    /*
+     * Today's ten, filled in from what this device has kept.
+     *
+     * Everything here is read, never written: the games record their own runs. The boxes
+     * already exist at their final height, so this only ever changes words inside them.
+     */
+    import { dayNumber, todayFor, siteStreak, msToNextDay, countdownWords, dayWords, rightCount } from '../lib/daily';
+
+    const strip = document.querySelector('[data-today]');
+    if (strip) {
+      const pick = (root, role) => root.querySelector(`[data-role="${role}"]`);
+      const INK = { 'sounds-like-scripture': 'orange', 'who-said-it': 'blue' };
+
+      /** Ten marks: filled for right, hollow for wrong, a brighter edge for under three seconds. */
+      const squares = (rec) => {
+        const box = document.createElement('span');
+        box.className = 'today-sq';
+        box.setAttribute('aria-hidden', 'true');
+        for (let i = 0; i < 10; i++) {
+          const sq = document.createElement('i');
+          if (rec.marks[i] === '1') sq.className = 'is-on';
+          if (rec.fast[i] === '1') sq.className += ' is-fast';
+          box.appendChild(sq);
+        }
+        return box;
+      };
+
+      /* The way in, exactly as the server wrote it, so a day that rolls over under an open
+         tab can be put back rather than left showing yesterday's squares. */
+      const ways = new Map();
+      strip.querySelectorAll('[data-role="state"]').forEach(s => ways.set(s, s.innerHTML));
+
+      const paint = () => {
+        const now = new Date();
+        const n = dayNumber(now);
+        const no = pick(strip, 'no');
+        if (no && n >= 1) {
+          no.textContent = `#${n.toLocaleString()}`;
+          no.hidden = false;
+        }
+
+        strip.querySelectorAll('[data-role="row"]').forEach(row => {
+          const state = pick(row, 'state');
+          if (!state) return;
+          const rec = todayFor(row.dataset.game, undefined, now);
+          if (!rec) {
+            state.innerHTML = ways.get(state) ?? '';
+            row.classList.remove('is-played');
+            return;
+          }
+          state.textContent = '';
+          if (rec.score > 0) {
+            const score = document.createElement('span');
+            score.className = 'today-score';
+            score.textContent = rec.score.toLocaleString();
+            state.appendChild(score);
+          }
+          state.appendChild(squares(rec));
+          // What the squares say, for anyone who cannot see them.
+          const said = document.createElement('span');
+          said.className = 'sr-only';
+          said.textContent = `${rec.score > 0 ? 'points, ' : ''}${rightCount(rec.marks)} of 10 right`;
+          state.appendChild(said);
+          row.classList.add('is-played');
+        });
+
+        const streak = pick(strip, 'streak');
+        const days = siteStreak(undefined, now);
+        if (streak) {
+          if (days >= 1) pick(streak, 'streak-days').textContent = dayWords(days);
+          streak.hidden = days < 1;
+        }
+        return n;
+      };
+
+      /**
+       * The clock, to the minute. A countdown that never moves is a picture of a clock, and
+       * a tab left open past UTC midnight would otherwise show yesterday's run as today's.
+       */
+      const next = pick(strip, 'next');
+      let painted = paint();
+      const tick = () => {
+        const now = new Date();
+        if (next) next.textContent = `New ten in ${countdownWords(msToNextDay(now))}`;
+        if (dayNumber(now) !== painted) painted = paint();
+      };
+
+      tick();
+      setInterval(tick, 30000);
+    }
+  </script>
+
   <script>
     // The quiz rail: arrows, a fade that only shows where there is more to see, and drag with a
     // mouse (touch already scrolls it). A drag must not also count as a click on the card.

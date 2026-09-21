@@ -23,6 +23,8 @@ import Icon from '../components/Icon.astro';
 import { QUIZZES, quizHref } from '../lib/engine/registry';
 import { artFor } from '../lib/art';
 import { liveGames } from '../lib/games';
+import { DAILY_GAMES } from '../lib/daily';
+import type { IconName } from '../lib/icons';
 
 /* Finished quizzes first, drafts last, as everywhere else on the site. */
 const quizzes = [...QUIZZES].sort(
@@ -38,6 +40,16 @@ const GAME_BEST: Record<string, string> = {
   'sounds-like-scripture': 'sls.best',
   'who-said-it': 'wsi.best'
 };
+
+/**
+ * Each game's mark and ink, the same pair it wears on /games/ and on the home page. Two
+ * rooms side by side in one colour with one borrowed play arrow on both read as a form;
+ * and the ink has work to do here, because the daily's marks are drawn in it.
+ */
+const GAME_FACE: Record<string, { icon: IconName; ink: 'orange' | 'blue' }> = {
+  'sounds-like-scripture': { icon: 'scroll', ink: 'orange' },
+  'who-said-it': { icon: 'quote', ink: 'blue' }
+};
 const games = liveGames();
 ---
 <Base
@@ -52,6 +64,11 @@ const games = liveGames();
       <p class="me-chip"><Icon name="users" size={14} /> On this device</p>
       <h1>My <em>results.</em></h1>
       <p class="me-count" id="me-count">Everything you finish here waits for you on this page.</p>
+      {/* Filled in by the script, and shown only once there is a run to show. It counts
+          days on which a daily was played, which is knowledge, and nothing else. */}
+      <p class="me-streak" id="me-streak" hidden>
+        <Icon name="flame" size={14} /><span data-role="days"></span>
+      </p>
     </div>
   </section>
 
@@ -106,17 +123,46 @@ const games = liveGames();
     <section class="me-games" aria-label="Games">
       <h2 class="me-head">games</h2>
       <div class="me-games-row">
-        {games.map(game => (
-          <article class="mgame" data-best={GAME_BEST[game.slug] ?? ''}>
-            <span class="mroom-mark mroom-mark--orange"><Icon name="play" size={18} /></span>
+        {games.map(game => {
+          const face = GAME_FACE[game.slug] ?? { icon: 'play' as IconName, ink: 'orange' as const };
+          const daily = DAILY_GAMES.includes(game.slug);
+          return (
+          <article class:list={['mgame', `mgame--${face.ink}`]} data-game={game.slug} data-best={GAME_BEST[game.slug] ?? ''}>
+            <span class:list={['mroom-mark', `mroom-mark--${face.ink}`]}><Icon name={face.icon} size={18} /></span>
             <h3>{game.title}</h3>
             {/* The best score is the game's own, read from where the game keeps it. Until
                 there is one, the room says how long a run takes and nothing else. */}
             <p class="mgame-best" data-role="best" hidden></p>
+
+            {/*
+              Today's ten, and what this device has done with the days before it. The server
+              writes the way in, because the build's date is not the reader's; the browser
+              fills in the rest, into boxes that already have their height.
+            */}
+            {daily && (
+              <>
+                <p class="mgame-today" data-role="row">
+                  {/* The label is only needed once there is a number beside it: "Today's ten"
+                      over a button that already reads "Play today's ten" is the same words twice. */}
+                  <span class="mgame-today-k" data-role="k" hidden>Today’s ten</span>
+                  <span class="mgame-today-state" data-role="state">
+                    <a class="mgame-pill" href={`${game.href}#today`}>Play today’s ten</a>
+                  </span>
+                </p>
+                <p class="mgame-streak" data-role="streak" hidden></p>
+                <p class="mgame-week" data-role="week" hidden>
+                  <span class="mgame-week-k">Last seven days</span>
+                  <span class="mgame-week-row" data-role="week-row" aria-hidden="true"></span>
+                  <span class="sr-only" data-role="week-said"></span>
+                </p>
+              </>
+            )}
+
             <ul class="mroom-facts" data-role="run"><li><Icon name="clock" size={13} /> 2 min a run</li></ul>
             <a class="mroom-go" href={game.href}>Play <Icon name="arrow" size={14} /></a>
           </article>
-        ))}
+          );
+        })}
       </div>
     </section>
   )}
@@ -138,6 +184,94 @@ const games = liveGames();
   <script>
     import { getQuiz, resultFor, decodeFor } from '../lib/engine/registry';
     import { clearShelf, readableResults } from '../lib/shelf';
+    import {
+      todayFor, streakFor, bestStreakFor, siteStreak, recentDays, rightCount, dayWords
+    } from '../lib/daily';
+
+    /*
+     * THE DAILY. What this device has done with today's ten, and with the week behind it.
+     * Read only: each game records its own runs, and nothing here writes anything back.
+     *
+     * A streak here counts days on which a daily was finished. That is knowledge, never
+     * devotion, so it is never congratulated and a broken run is never mourned: the number
+     * simply says what it is.
+     */
+    document.querySelectorAll('.mgame[data-game]').forEach(card => {
+      const game = card.dataset.game;
+      const pick = role => card.querySelector(`[data-role="${role}"]`);
+      const row = pick('row');
+      if (!row) return;
+
+      const rec = todayFor(game);
+      const state = pick('state');
+      if (rec && state) {
+        state.textContent = '';
+        if (rec.score > 0) {
+          const score = document.createElement('span');
+          score.className = 'mgame-score';
+          score.textContent = rec.score.toLocaleString();
+          state.appendChild(score);
+        }
+        /* Filled is right, hollow is wrong, a brighter edge is under three seconds. */
+        const box = document.createElement('span');
+        box.className = 'mgame-sq';
+        box.setAttribute('aria-hidden', 'true');
+        for (let i = 0; i < 10; i++) {
+          const sq = document.createElement('i');
+          if (rec.marks[i] === '1') sq.className = 'is-on';
+          if (rec.fast[i] === '1') sq.className += ' is-fast';
+          box.appendChild(sq);
+        }
+        state.appendChild(box);
+        const said = document.createElement('span');
+        said.className = 'sr-only';
+        // "points" gives the score a unit and keeps the two numbers apart when they are read
+      // aloud one after the other.
+      said.textContent = `${rec.score > 0 ? 'points, ' : ''}${rightCount(rec.marks)} of 10 right`;
+        state.appendChild(said);
+        const label = pick('k');
+        if (label) label.hidden = false;
+        row.classList.add('is-played');
+      }
+
+      const now = streakFor(game);
+      const best = bestStreakFor(game);
+      const streak = pick('streak');
+      if (streak && (now >= 1 || best >= 1)) {
+        streak.textContent = now >= 1
+          ? `${dayWords(now)} in a row${best > now ? ` · best ${dayWords(best)}` : ''}`
+          : `Best run: ${dayWords(best)}`;
+        streak.hidden = false;
+      }
+
+      // The week, gaps and all: a row that quietly left the empty days out would be a
+      // picture of a habit nobody has.
+      const week = recentDays(game, 7);
+      const played = week.filter(d => d.record).length;
+      const weekBox = pick('week');
+      if (weekBox && played > 0) {
+        const marks = pick('week-row');
+        marks.textContent = '';
+        week.forEach(day => {
+          const mark = document.createElement('i');
+          if (day.record) mark.className = 'is-on';
+          if (day.today) mark.className += ' is-today';
+          marks.appendChild(mark);
+        });
+        pick('week-said').textContent = `${played} of the last 7 days played.`;
+        weekBox.hidden = false;
+      }
+    });
+
+    /* The site's own run: a day counts if either daily was finished. */
+    {
+      const line = document.getElementById('me-streak');
+      const days = siteStreak();
+      if (line && days >= 1) {
+        line.querySelector('[data-role="days"]').textContent = `${dayWords(days)} in a row`;
+        line.hidden = false;
+      }
+    }
 
     const rooms = [...document.querySelectorAll('.mroom')];
     if (rooms.length) {
@@ -247,9 +381,12 @@ const games = liveGames();
 
         const count = document.getElementById('me-count');
         if (count) {
+          // "No quizzes yet" rather than "nothing saved yet": the games keep their own
+          // record below, and a page that says nothing is saved above a three-day run is
+          // telling the reader something they can see is untrue.
           count.textContent = taken
             ? `${taken} of ${rooms.length} quizzes taken`
-            : 'Nothing saved yet. Take one, and it will be here when you come back.';
+            : 'No quizzes taken yet. Take one, and it will be here when you come back.';
         }
         const clearRow = document.getElementById('me-clear-row');
         if (clearRow) clearRow.hidden = !saved.length;

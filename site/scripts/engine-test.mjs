@@ -1579,6 +1579,251 @@ console.log('17. the shelf keeps, dedupes, caps and refuses junk');
   rmSync(OUT_SHELF, { force: true });
 }
 
+// --------------------------------------- 18. the daily set: days, records and streaks
+console.log('18. the daily counts days, records the first run only, and never throws');
+{
+  /*
+   * The storage contract both games write and every surface reads. Bundled on its own like
+   * the shelf, and exercised against a fake store: a streak is arithmetic on dates, and
+   * arithmetic on dates is exactly the kind of thing that is right in September and wrong
+   * on the first of the month.
+   */
+  const OUT_DAILY = resolve(ROOT, 'node_modules/.engine-test-daily.mjs');
+  await build({
+    entryPoints: [resolve(ROOT, 'src/lib/daily.ts')],
+    outfile: OUT_DAILY,
+    bundle: true,
+    format: 'esm',
+    platform: 'node',
+    target: 'node18',
+    logLevel: 'silent'
+  });
+  const daily = await import(pathToFileURL(OUT_DAILY).href);
+  const {
+    DAILY_KEYS, DAILY_CAP, DAY_ONE_KEY, dayKey, dayNumber, keyTime, isDayKey, shiftKey,
+    msToNextDay, countdownWords, parseDaily, readDaily, saveDaily, recordDay, todayFor,
+    rightCount, streakFor, bestStreakFor, siteStreak, bestSiteStreak, recentDays, dayWords
+  } = daily;
+
+  const SLS = 'sounds-like-scripture';
+  const WSI = 'who-said-it';
+
+  /** Storage, faked: a plain map, and a way to look at what was written. */
+  const fake = (seed = {}) => {
+    const data = { ...seed };
+    return {
+      getItem: k => (k in data ? data[k] : null),
+      setItem: (k, v) => { data[k] = v; },
+      removeItem: k => { delete data[k]; },
+      raw: k => (k in data ? data[k] : null)
+    };
+  };
+  /** A log in the contract's exact shape, from a list of day keys. */
+  const logOf = (keys, extra = {}) => JSON.stringify({
+    v: 1,
+    days: Object.fromEntries(keys.map(k => [k, {
+      n: 0, score: 1000, marks: '1111100000', fast: '1000000000', ...extra
+    }]))
+  });
+  const utc = iso => new Date(iso + 'T12:00:00Z');
+
+  // the day, and its number -------------------------------------------------------------
+  {
+    if (dayKey(new Date('2026-09-21T23:59:59Z')) !== '20260921') fail('dayKey at the end of a UTC day: ' + dayKey(new Date('2026-09-21T23:59:59Z')));
+    else if (dayKey(new Date('2026-09-22T00:00:00Z')) !== '20260922') fail('dayKey at UTC midnight: ' + dayKey(new Date('2026-09-22T00:00:00Z')));
+    else if (dayKey(new Date('2027-01-05T06:00:00Z')) !== '20270105') fail('dayKey pads: ' + dayKey(new Date('2027-01-05T06:00:00Z')));
+    else ok('a day is its UTC date, yyyymmdd, exactly as the games already seed it');
+
+    if (dayNumber(DAY_ONE_KEY) !== 1) fail('day one is #' + dayNumber(DAY_ONE_KEY));
+    else if (dayNumber('20260922') !== 2) fail('the second day is #' + dayNumber('20260922'));
+    else if (dayNumber('20261001') !== 11) fail('the first of October is #' + dayNumber('20261001'));
+    else if (dayNumber('20270921') !== 366) fail('a year on is #' + dayNumber('20270921'));
+    else if (dayNumber(utc('2026-09-23')) !== 3) fail('a Date is numbered too: #' + dayNumber(utc('2026-09-23')));
+    else ok('day #1 is 2026-09-21 and the count is whole UTC days from it');
+
+    // A day that does not exist is not quietly moved to one that does.
+    if (isDayKey('20260231')) fail('31 February was accepted as a day');
+    else if (isDayKey('2026-09-21') || isDayKey('abc') || isDayKey('202609211')) fail('a non-key was accepted as a day');
+    else if (!isDayKey('20260229')) { /* 2026 is not a leap year */ ok('a day that does not exist is not a day'); }
+    else fail('29 February 2026 was accepted, and 2026 is not a leap year');
+
+    if (shiftKey('20260301', -1) !== '20260228') fail('a day back over a month end: ' + shiftKey('20260301', -1));
+    else if (shiftKey('20261231', 1) !== '20270101') fail('a day on over a year end: ' + shiftKey('20261231', 1));
+    else ok('a day back or on crosses months and years');
+  }
+
+  // the clock ---------------------------------------------------------------------------
+  {
+    const ms = msToNextDay(new Date('2026-09-21T18:48:00Z'));
+    if (ms !== (5 * 60 + 12) * 60000) fail('time to the next ten: ' + ms);
+    else if (countdownWords(ms) !== '5h 12m') fail('the countdown reads: ' + countdownWords(ms));
+    else if (countdownWords(41 * 60000) !== '41m') fail('under an hour reads: ' + countdownWords(41 * 60000));
+    // the same sentence the games print, so the strip and the game never disagree
+    else if (countdownWords(40000) !== 'under a minute') fail('the last minute reads: ' + countdownWords(40000));
+    else if (countdownWords(0) !== 'under a minute') fail('a spent clock reads: ' + countdownWords(0));
+    else ok('the next ten arrives at UTC midnight, and the countdown says so in h and m');
+  }
+
+  // what parses, and what starts empty --------------------------------------------------
+  {
+    if (Object.keys(parseDaily('{not json')).length) fail('malformed JSON did not start empty');
+    else if (Object.keys(parseDaily(JSON.stringify({ v: 2, days: { '20260921': {} } }))).length) fail('a wrong version was read anyway');
+    else if (Object.keys(parseDaily(JSON.stringify({ v: 1, days: [1, 2] }))).length) fail('a list of days was read as days');
+    else if (Object.keys(parseDaily('[1,2,3]')).length) fail('a list was read as a log');
+    else if (Object.keys(parseDaily(null)).length) fail('nothing stored did not start empty');
+    else ok('malformed storage, or a version this code does not know, starts empty');
+
+    const mixed = parseDaily(JSON.stringify({
+      v: 1,
+      days: { '20260921': { score: 1240, marks: 'xx1101111011zz', fast: 7, canon: 'C' }, '20260231': {}, 'nope': {}, '20260922': 5 }
+    }));
+    const day = mixed['20260921'];
+    if (Object.keys(mixed).length !== 1) fail('junk keys survived: ' + Object.keys(mixed).join(','));
+    else if (day.marks !== '1101111011') fail('marks were not tidied to ten of 1 and 0: ' + day.marks);
+    else if (day.fast !== '') fail('a fast field that is not a string became: ' + day.fast);
+    else if (day.canon !== 'c') fail('the canon letter: ' + day.canon);
+    else if (day.n !== 1) fail('the day number was not derived from the key: ' + day.n);
+    else if (day.score !== 1240) fail('the score: ' + day.score);
+    else ok('a bad day key, a day that is not an object and stray characters are all dropped');
+
+    if (rightCount('1101111011') !== 8) fail('right count: ' + rightCount('1101111011'));
+    else if (rightCount('') !== 0) fail('no marks counted as ' + rightCount(''));
+    else ok('the marks count what was right');
+  }
+
+  // the first run of a day is the record ------------------------------------------------
+  {
+    const store = fake();
+    recordDay(SLS, { score: 900, marks: '1111100000', fast: '0000000000' }, '20260921', store);
+    recordDay(SLS, { score: 2500, marks: '1111111111', fast: '1111111111' }, '20260921', store);
+    const log = readDaily(SLS, store);
+    if (Object.keys(log).length !== 1) fail('two runs of one day kept ' + Object.keys(log).length + ' records');
+    else if (log['20260921'].score !== 900) fail('practice overwrote the first run: ' + log['20260921'].score);
+    else ok('the first completed run of a day is the record, and practice never replaces it');
+
+    recordDay(SLS, { score: 1100, marks: '1111111000', fast: '0000000000' }, '20260922', store);
+    if (Object.keys(readDaily(SLS, store)).length !== 2) fail('the next day did not get its own record');
+    else if (readDaily(WSI, store)['20260921']) fail('one game\'s record landed in the other game\'s key');
+    else ok('each day and each game keeps its own record');
+
+    // what was written is the contract, character for character
+    const raw = JSON.parse(store.raw(DAILY_KEYS[SLS]));
+    if (raw.v !== 1) fail('the written version is ' + raw.v);
+    else if (!raw.days || raw.days['20260921'].marks !== '1111100000') fail('the written shape is not { v, days }');
+    else ok('what is written back is the { v, days } the contract names');
+  }
+
+  // today ------------------------------------------------------------------------------
+  {
+    const store = fake({ [DAILY_KEYS[SLS]]: logOf(['20260921', '20260922']) });
+    if (todayFor(SLS, store, utc('2026-09-22'))?.n !== 2) fail('today was not found');
+    else if (todayFor(SLS, store, utc('2026-09-23'))) fail('a day with no record returned one');
+    else if (todayFor('not-a-game', store, utc('2026-09-22'))) fail('an unknown game returned a record');
+    else ok('today is today\'s record, or nothing at all');
+  }
+
+  // the streak --------------------------------------------------------------------------
+  {
+    const run = (keys, on) => streakFor(SLS, fake({ [DAILY_KEYS[SLS]]: logOf(keys) }), utc(on));
+
+    if (run(['20260919', '20260920', '20260921'], '2026-09-21') !== 3) fail('three days ending today: ' + run(['20260919', '20260920', '20260921'], '2026-09-21'));
+    else if (run(['20260919', '20260920'], '2026-09-21') !== 2) fail('a run ending yesterday: ' + run(['20260919', '20260920'], '2026-09-21'));
+    else if (run(['20260918', '20260919'], '2026-09-21') !== 0) fail('a run that ended before yesterday: ' + run(['20260918', '20260919'], '2026-09-21'));
+    else if (run([], '2026-09-21') !== 0) fail('nothing played is a streak of ' + run([], '2026-09-21'));
+    else if (run(['20260921'], '2026-09-21') !== 1) fail('one day is a streak of ' + run(['20260921'], '2026-09-21'));
+    else ok('a streak ends today or yesterday, and one that ended earlier is 0');
+
+    // a gap breaks it, and the days before the gap are not counted
+    if (run(['20260915', '20260916', '20260920', '20260921'], '2026-09-21') !== 2) {
+      fail('a gap did not break the run: ' + run(['20260915', '20260916', '20260920', '20260921'], '2026-09-21'));
+    } else ok('a gap breaks the run, and only the days since it are counted');
+
+    // over a month end, where the arithmetic is easiest to get wrong
+    if (run(['20260929', '20260930', '20261001'], '2026-10-01') !== 3) {
+      fail('a run over a month end: ' + run(['20260929', '20260930', '20261001'], '2026-10-01'));
+    } else ok('a run counts across the end of a month');
+
+    const store = fake({ [DAILY_KEYS[SLS]]: logOf(['20260921', '20260922', '20260923', '20261001']) });
+    if (bestStreakFor(SLS, store) !== 3) fail('the best run in the log: ' + bestStreakFor(SLS, store));
+    else if (streakFor(SLS, store, utc('2026-10-01')) !== 1) fail('the current run beside a longer old one: ' + streakFor(SLS, store, utc('2026-10-01')));
+    else ok('the best streak is the longest run in the log, current or not');
+  }
+
+  // the site's streak, across both games ------------------------------------------------
+  {
+    const store = fake({
+      [DAILY_KEYS[SLS]]: logOf(['20260921', '20260923']),
+      [DAILY_KEYS[WSI]]: logOf(['20260922', '20260923'])
+    });
+    if (siteStreak(store, utc('2026-09-23')) !== 3) fail('the site streak over the union: ' + siteStreak(store, utc('2026-09-23')));
+    else if (streakFor(SLS, store, utc('2026-09-23')) !== 1) fail('one game\'s own streak was widened: ' + streakFor(SLS, store, utc('2026-09-23')));
+    else if (bestSiteStreak(store) !== 3) fail('the best site streak: ' + bestSiteStreak(store));
+    else ok('a day counts for the site if either daily was finished');
+  }
+
+  // the last seven days -----------------------------------------------------------------
+  {
+    const store = fake({ [DAILY_KEYS[SLS]]: logOf(['20260918', '20260921']) });
+    const week = recentDays(SLS, 7, store, utc('2026-09-21'));
+    if (week.length !== 7) fail('the stretch is ' + week.length + ' days');
+    else if (week[0].key !== '20260915' || week[6].key !== '20260921') fail('the stretch runs ' + week[0].key + ' to ' + week[6].key);
+    else if (!week[6].today || week[5].today) fail('today is not the last day of the stretch');
+    else if (week.filter(d => d.record).length !== 2) fail('the stretch found ' + week.filter(d => d.record).length + ' played days');
+    else if (week[0].n !== -5) fail('a day before the set began is numbered ' + week[0].n);
+    else ok('the last seven days include the days nobody played');
+  }
+
+  // the cap -----------------------------------------------------------------------------
+  {
+    const keys = [];
+    for (let i = 0; i < DAILY_CAP + 40; i++) keys.push(dayKey(keyTime(DAY_ONE_KEY) + i * 86400000));
+    const store = fake({ [DAILY_KEYS[SLS]]: logOf(keys) });
+    const log = readDaily(SLS, store);
+    const kept = Object.keys(log).sort();
+    if (kept.length !== DAILY_CAP) fail('the cap held ' + kept.length + ', not ' + DAILY_CAP);
+    else if (kept[kept.length - 1] !== keys[keys.length - 1]) fail('the cap dropped the newest day');
+    else if (kept[0] !== keys[40]) fail('the cap kept the wrong stretch, from ' + kept[0]);
+    else ok('the log keeps the latest ' + DAILY_CAP + ' days and drops the oldest');
+  }
+
+  // nothing throws ----------------------------------------------------------------------
+  {
+    const broken = {
+      getItem() { throw new Error('blocked'); },
+      setItem() { throw new Error('blocked'); },
+      removeItem() { throw new Error('blocked'); }
+    };
+    try {
+      readDaily(SLS, broken);
+      todayFor(SLS, broken, utc('2026-09-21'));
+      recordDay(SLS, { score: 1, marks: '1000000000' }, '20260921', broken);
+      saveDaily(SLS, {}, broken);
+      streakFor(SLS, broken, utc('2026-09-21'));
+      siteStreak(broken, utc('2026-09-21'));
+      recentDays(SLS, 7, broken, utc('2026-09-21'));
+      ok('blocked storage is a no-op, never an error');
+    } catch (e) {
+      fail('blocked storage threw: ' + e.message);
+    }
+    try {
+      readDaily(SLS, null);
+      if (siteStreak(null, utc('2026-09-21')) !== 0) fail('no storage returned a streak');
+      else ok('no storage at all, as on the server, reads as nothing played');
+    } catch (e) {
+      fail('no storage threw: ' + e.message);
+    }
+  }
+
+  // the words -----------------------------------------------------------------------------
+  {
+    if (dayWords(1) !== '1 day') fail('one day reads: ' + dayWords(1));
+    else if (dayWords(3) !== '3 days') fail('three days read: ' + dayWords(3));
+    else ok('one day is a day and the rest are days');
+  }
+
+  rmSync(OUT_DAILY, { force: true });
+}
+
 rmSync(OUT, { force: true });
 rmSync(OUT_TYPES, { force: true });
 

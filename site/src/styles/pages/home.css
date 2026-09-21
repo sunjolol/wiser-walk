@@ -223,6 +223,87 @@
   background: linear-gradient(180deg, rgba(18, 17, 15, .4), rgba(18, 17, 15, .6) 40%, rgba(18, 17, 15, .76));
 }
 @media (min-width: 46rem) { .hm-night { padding: 3.2rem var(--gut) 3rem; } }
+/*
+ * TODAY'S TEN (2026-09-21). The strip above the two cards, on the band's own ground: no
+ * panel, no box, just the band's white type with a hairline of the brand under it.
+ *
+ * It is written for a phone first and kept SHORT on purpose. The two cards below are the
+ * layout the owner approved, and a strip that pushed them off the screen would be paying
+ * for a habit with the thing the habit is for. Head, two rows and a foot come to about
+ * 120px at 390, and every box already has its height before the script fills it in, so
+ * nothing below moves when the played state arrives.
+ */
+.today { position: relative; margin: 0 0 .5rem; padding: 0 0 .35rem; }
+.today::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+  background-image: var(--grad-r); opacity: .55;
+}
+.today-kicker {
+  display: flex; align-items: baseline; gap: .45rem; margin: 0 0 .15rem; line-height: 1;
+  font-family: var(--ui); font-size: .62rem; font-weight: 700; letter-spacing: .16em;
+  text-transform: uppercase; color: rgba(255, 255, 255, .82);
+}
+/* the day's number is the one piece of display type in the strip, so the strip has a face */
+.today-no {
+  font-family: var(--display); font-style: italic; font-size: .95rem; font-weight: 400;
+  letter-spacing: -.01em; text-transform: none; color: #fff; font-variant-numeric: tabular-nums;
+}
+.today-list { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
+.today-row { --game-ink: var(--orange-soft); }
+.today-row--blue { --game-ink: var(--blue-soft); }
+.today-go {
+  display: flex; align-items: center; justify-content: space-between; gap: .7rem;
+  min-height: 2.4rem; text-decoration: none; color: #fff;
+}
+.today-name {
+  flex: 1 1 auto; min-width: 0; font-family: var(--display); font-weight: 400;
+  font-size: clamp(.92rem, 3.6vw, 1.05rem); line-height: 1.15; color: #fff;
+}
+.today-state { flex: none; display: inline-flex; align-items: center; gap: .5rem; }
+/* the way in, in the game's own ink: a ghost pill, so it never competes with the cards' buttons */
+.today-pill {
+  display: inline-flex; align-items: center; padding: .34rem .68rem; border-radius: var(--r-pill);
+  font-family: var(--ui); font-size: .58rem; font-weight: 700; letter-spacing: .09em;
+  text-transform: uppercase; color: var(--game-ink);
+  box-shadow: inset 0 0 0 1.2px currentColor;
+}
+.today-go:hover .today-pill { color: #fff; }
+.today-score {
+  font-family: var(--display); font-size: 1rem; line-height: 1; color: var(--game-ink);
+  font-variant-numeric: tabular-nums;
+}
+/* Ten marks, in line order. Filled is right, hollow is wrong, and a brighter edge is an
+   answer given in under three seconds — the same three things the game itself shows. */
+.today-sq { display: inline-flex; gap: 2.5px; }
+.today-sq i {
+  display: block; width: 6px; height: 14px; border-radius: 2px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .3);
+}
+.today-sq i.is-on { background: var(--game-ink); box-shadow: none; }
+.today-sq i.is-fast { box-shadow: inset 0 0 0 1px #fff; }
+.today-sq i.is-on.is-fast { box-shadow: 0 0 0 1px rgba(255, 255, 255, .85); }
+.today-foot {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .9rem; margin: .25rem 0 0;
+  min-height: .8rem;
+  font-family: var(--ui); font-size: .6rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: rgba(255, 255, 255, .62);
+}
+.today-streak { display: inline-flex; align-items: center; gap: .3rem; color: var(--orange-soft); }
+.today-streak[hidden] { display: none; }
+@media (min-width: 46rem) {
+  .today { margin-bottom: 1.1rem; padding-bottom: .85rem; }
+  .today-kicker { font-size: .64rem; }
+  .today-no { font-size: 1.1rem; }
+  .today-go { min-height: 2.4rem; }
+  .today-sq i { width: 7px; height: 16px; }
+  .today-score { font-size: 1.1rem; }
+  .today-foot { font-size: .62rem; }
+}
+/* side by side, the two rows sit on one line of the band rather than stacking */
+@media (min-width: 62rem) {
+  .today-list { grid-template-columns: 1fr 1fr; gap: 0 2.4rem; }
+}
+
 .hm-games { display: grid; grid-template-columns: 1fr; gap: .9rem; }
 .game {
   display: grid; grid-template-columns: 1fr; gap: 1.2rem; align-items: start; padding: 1.35rem 1.3rem 1.5rem;
@@ -283,30 +364,6 @@
 
 /* the articles ("morning") are drawn by pages/reads.css, which the articles pages share */
 .hm-morning { margin: 3.4rem 0 0; }
-
-/* --------------------------------------------------------------------- traditions ---- */
-.hm-trads {
-  position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr; gap: 1.6rem;
-  margin: 3.4rem 0 .5rem; padding: 1.7rem 1.4rem 1.6rem; border-radius: 24px;
-  background: var(--panel); box-shadow: var(--lift);
-}
-.hm-trads::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 6px; background-image: linear-gradient(180deg, var(--blue), var(--orange)); }
-.hm-trads h2 { margin: 0; font-family: var(--display); font-weight: 400; font-size: clamp(1.6rem, 6vw, 2.1rem); line-height: 1.1; color: var(--ink); text-wrap: balance; }
-.hm-trads-say p { margin: .6rem 0 1.1rem; color: var(--ink-soft); max-width: 24rem; }
-.hm-trads-say .btn { display: inline-flex; align-items: center; gap: .5rem; }
-.hm-trads-list { margin: 0; padding: 0; list-style: none; columns: 1; column-gap: 1.6rem; }
-.hm-trads-list li { break-inside: avoid; }
-.hm-trads-list a {
-  display: flex; align-items: baseline; gap: .55rem; min-height: 40px; padding: .42rem 0; text-decoration: none;
-  font-size: .93rem; line-height: 1.35; color: var(--ink-soft);
-}
-.hm-trads-list a::before { content: ""; flex: none; width: 6px; height: 6px; border-radius: 50%; transform: translateY(-2px); background-image: var(--grad); }
-.hm-trads-list a:hover { color: var(--accent); }
-@media (min-width: 34rem) { .hm-trads-list { columns: 2; } }
-@media (min-width: 58rem) {
-  .hm-trads { grid-template-columns: minmax(0, 19rem) minmax(0, 1fr); gap: 2.6rem; padding: 2.3rem 2.4rem 2.1rem 2.6rem; align-items: start; }
-  .hm-trads-list a { min-height: 0; padding: .3rem 0; }
-}
 
 @media (prefers-reduced-motion: reduce) {
   .room, .game, .read-pic img, .hm-more .icon, .room-go .icon, .mock-names span { transition: none; }

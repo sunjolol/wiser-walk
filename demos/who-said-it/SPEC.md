@@ -94,6 +94,24 @@ tier 2 otherwise. A missing or malformed verdict drops the line.
 - Pool shape mirrors the sibling: `{version, built, speakers:[{id,name,testament,books}],
   conflicts:{id:[ids]}, items:[{id,t,sp,ref,tr,tier,book}]}`.
 
+## The daily set
+
+The sibling's daily set, function for function: read
+`demos/sounds-like-scripture/SPEC.md`, section "The daily set", which is the contract for both
+games. Only three things differ here.
+
+- The key is `wsi.daily`, and no `canon` field is ever written, because this game has no canon.
+- The copied daily reads `Who Said It? #12`, and its last line is
+  `https://wiserwalk.com/play/who-said-it/#today`.
+- The deep link `/play/who-said-it/#today` starts today's ten at once, with no question first.
+  `#w=` challenge links are untouched.
+
+Everything else is the same and is tested the same way in `scripts/test-game.mjs`: day #1 is
+2026-09-21 (UTC), `n` is whole UTC days since then plus one, the seed stays the UTC date as
+`yyyymmdd`, only the first completed run of a day is recorded and a later run of the same ten is
+practice, at most 400 days are kept, a streak is the run of consecutive days ending today or
+yesterday, and the whole thing survives storage that is blocked or full of junk.
+
 ## The card the site draws
 
 `build-page.mjs` writes `cover` and `coverNames` into the site metadata: one real line and the
