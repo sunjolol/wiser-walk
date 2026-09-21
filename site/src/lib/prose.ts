@@ -31,12 +31,32 @@ export const hasMore = (text: string): boolean =>
  * have gifts of healings?" (1 Corinthians 12:30)) and a verse reference in brackets both
  * stay where they are. A summary of three sentences or fewer comes back as one paragraph,
  * exactly as it was.
+ *
+ * A WRITER'S OWN BREAKS WIN, AND THE COUNT STILL GUARDS THE LENGTH (2026-09-21).
+ *
+ * Counting to three is blind to meaning: the gifts were rewritten as four themed blocks (what
+ * it is, an ordinary week, how you notice it, the gift it gets confused with) and the
+ * arithmetic cut across every one of them, leaving nine pages ending on a one-sentence
+ * paragraph. Honouring the writer's blocks alone is not the answer either: one of them runs
+ * to seven sentences, which is the wall this function exists to prevent.
+ *
+ * So both. A blank line in the source is a break that is always taken, and a block longer
+ * than `per` is then broken inside itself, so no paragraph ever spans two themes and none
+ * runs long. A block that ends on one spare sentence folds it back into the paragraph before
+ * it, because a lone sentence under a paragraph of three reads as something the page dropped.
+ * Text with no blank line behaves exactly as it always did, apart from that fold.
  */
 export function paragraphs(text: string, per = 3): string[] {
-  const sentences = text.trim().split(/(?<=[.?!])\s+(?=[A-Z“"])/);
   const out: string[] = [];
-  for (let i = 0; i < sentences.length; i += per) {
-    out.push(sentences.slice(i, i + per).join(' '));
+  for (const block of text.trim().split(/\n{2,}/).map(s => s.trim()).filter(Boolean)) {
+    const sentences = block.split(/(?<=[.?!])\s+(?=[A-Z“"])/);
+    const start = out.length;
+    for (let i = 0; i < sentences.length; i += per) {
+      out.push(sentences.slice(i, i + per).join(' '));
+    }
+    if (out.length - start > 1 && sentences.length % per === 1) {
+      out.splice(out.length - 2, 2, out.slice(-2).join(' '));
+    }
   }
   return out;
 }

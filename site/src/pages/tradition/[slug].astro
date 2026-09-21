@@ -9,7 +9,11 @@ import TraditionNeighbours from '../../components/TraditionNeighbours.astro';
 import CorrectionNote from '../../components/CorrectionNote.astro';
 import { theologyCompass } from '../../lib/quizzes/theology-compass';
 import { groupHref, quizHref, resultFor } from '../../lib/engine/registry';
+import { clip } from '../../lib/seo';
 import type { BipolarView } from '../../lib/engine/types';
+import profilesA from '../../data/tradition-profiles-a.json';
+import profilesB from '../../data/tradition-profiles-b.json';
+import '../../styles/pages/tradition.css';
 
 export function getStaticPaths() {
   return theologyCompass.outcomes.map(t => ({ params: { slug: t.slug }, props: { tradition: t } }));
@@ -18,6 +22,33 @@ export function getStaticPaths() {
 const { tradition } = Astro.props;
 const quiz = theologyCompass;
 const position = tradition.position ?? [];
+
+/**
+ * THE PROFILE (2026-09-21).
+ *
+ * Every one of these eighteen pages used to open with the same two hundred words about what
+ * a sketch is, and then say nothing at all in words about the tradition it is named for:
+ * eighteen pages that were half identical to each other, competing with each other for the
+ * one query each of them should own ("what do Lutherans believe"). The instruments were
+ * never the problem. The silence was.
+ *
+ * So each tradition now carries a written profile, and it sits high on the page as plain
+ * visible text under headings a person would recognise. The honest caveat is still here and
+ * is said ONCE, in one line, rather than in a paragraph repeated eighteen times.
+ *
+ * The profiles are split across two files only because two people wrote them; they are one
+ * map keyed by the built slug, and a tradition with no entry renders exactly as it did
+ * before, instruments and all.
+ */
+type Profile = {
+  in_a_sentence: string;
+  what_marks_it_out: string[];
+  did_you_know: { text: string; source: string }[];
+  family: string;
+  read: { placed_from: string; open: { title: string; note: string }[] };
+};
+const profiles = { ...profilesA, ...profilesB } as unknown as Record<string, Profile | undefined>;
+const profile = profiles[tradition.slug];
 
 /**
  * The tradition's own view, built by the SAME call the result page makes for a reader.
@@ -119,7 +150,18 @@ for (const row of view.rows) {
   phrases.push(phrase);
   used += cost;
 }
-const description = lead + phrases.join(', ') + '.';
+const bandDescription = lead + phrases.join(', ') + '.';
+
+/*
+ * The description a person reads in a search result.
+ *
+ * The band-word sentence above is accurate and completely uninviting: "Where Eastern
+ * Orthodox adherents typically land: firmly synergist, sacramental...". Nobody clicks a
+ * list of adjectives. A tradition that has a written profile therefore leads with its own
+ * opening sentence, which is the same sentence at the top of the page, so the snippet and
+ * the page agree. The band sentence stays as the fallback for anything not yet written.
+ */
+const description = profile ? clip(profile.in_a_sentence) : bandDescription;
 
 /*
  * WebPage, not Article: see the same note on the axis template. Nothing on this page is
@@ -169,19 +211,34 @@ const breadcrumbs = [
       { n: quiz.outcomes.length - 1, label: 'Others' }
     ]}
   >
-    A sketch of where typical adherents land on the six axes, and how near the other
-    families sit.
+    {/* A band with a profile takes no lede: the tradition's own opening sentence is two
+        inches below it, and a summary stacked on a summary is the templated feel the whole
+        pass exists to remove. A page with no profile keeps the line it had. */}
+    {!profile && (
+      <Fragment>
+        A sketch of where typical adherents land on the six axes, and how near the other
+        families sit.
+      </Fragment>
+    )}
   </Hero>
 
   <div class="ref ref--trad">
+    {profile && (
+      <section class="tlead">
+        <h2 class="tlead-label">{searchName} in a sentence</h2>
+        <p class="tlead-say">{profile.in_a_sentence}</p>
+      </section>
+    )}
+
+    {/* The honest caveat, said ONCE and in one line. It used to run to a paragraph, word
+        for word identical on all eighteen pages, directly above the thing it qualified. */}
     <aside class="caveat">
       <span class="caveat-mark" aria-hidden="true"><Icon name="compass" size={18} /></span>
       <div>
-        <p class="caveat-label">Read this first</p>
+        <p class="caveat-label">How to read the six rails below</p>
         <p>
-          This is an approximate sketch of where typical adherents land, <strong>not official
-          teaching</strong>, and not a claim that everyone in the tradition agrees. It exists
-          so the quiz has something to measure distance against.
+          They are a sketch of where typical adherents land, <strong>not official
+          teaching</strong>, and not a claim that everyone agrees.
         </p>
       </div>
     </aside>
@@ -218,7 +275,45 @@ const breadcrumbs = [
       </div>
     </div>
 
-    <SectionHead title="The six axes" kicker="Both poles named on every rail" />
+    {profile && (
+      <>
+        {/* The page's substance, in plain visible text. First paragraph set as a lead, the
+            rest at reading size: a profile printed entirely in the display face is a wall
+            of serif on a phone. */}
+        <SectionHead title="What marks it out" kicker="In plain words" />
+        <div class="panel layered tprose">
+          <div class="wash" aria-hidden="true"></div>
+          <div class="veil" aria-hidden="true"></div>
+          {profile.what_marks_it_out.map((para, i) => (
+            <p class:list={['tprose-p', i === 0 && 'tprose-p--lead']}>{para}</p>
+          ))}
+        </div>
+
+        {profile.did_you_know.length > 0 && (
+          <>
+            <SectionHead title="Did you know?" kicker="Worth knowing" />
+            <ul class="tfacts">
+              {profile.did_you_know.map(fact => (
+                <li class="tfact">
+                  <span class="tfact-mark" aria-hidden="true"><Icon name="sparkle" size={16} /></span>
+                  <p class="tfact-text">{fact.text}</p>
+                  <p class="tfact-src">{fact.source}</p>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+
+        <SectionHead title="Where it came from" kicker="Its roots, and its near relatives" />
+        <div class="panel layered tprose tprose--short">
+          <div class="wash" aria-hidden="true"></div>
+          <div class="veil" aria-hidden="true"></div>
+          <p class="tprose-p">{profile.family}</p>
+        </div>
+      </>
+    )}
+
+    <SectionHead title="Where it sits on all six questions" kicker="Both poles named on every rail" />
     <div class="panel layered ref-panel ref-panel--quiet">
       <div class="wash" aria-hidden="true"></div>
       <div class="veil" aria-hidden="true"></div>
@@ -227,13 +322,37 @@ const breadcrumbs = [
 
     {neighbours.length > 0 && (
       <>
-        <SectionHead title="Nearest neighbours" kicker="By the same arithmetic the quiz uses" />
+        <SectionHead title="Which traditions are closest?" kicker="Measured across all six" />
         <p class="ref-note">
-          Distance between two sketches across every axis, on the same scale a reader's
-          answers are measured on. Nearness is not agreement: two families can land in the
-          same band for different reasons.
+          Nearness is not agreement: two families can land in the same band for different
+          reasons.
         </p>
         <TraditionNeighbours quiz={quiz} ranked={neighbours} limit={6} />
+      </>
+    )}
+
+    {profile && (
+      <>
+        {/* What was actually read to place this tradition, in its own confessions and
+            standard works, plus two documents a curious reader can open tonight. */}
+        <SectionHead title="What we read" kicker="Sources, and where to go next" />
+        <div class="tread">
+          <div class="tread-src">
+            <p class="tread-label">Read to place this tradition</p>
+            <p class="tread-cite">{profile.read.placed_from}</p>
+          </div>
+          {profile.read.open.length > 0 && (
+            <ul class="tread-open">
+              {profile.read.open.map(doc => (
+                <li>
+                  <span class="tread-mark" aria-hidden="true"><Icon name="book" size={15} /></span>
+                  <p class="tread-title">{doc.title}</p>
+                  <p class="tread-note">{doc.note}</p>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </>
     )}
 

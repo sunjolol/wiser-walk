@@ -32,6 +32,31 @@ export interface QuizGroup {
   left?: string;
   right?: string;
   bands?: string[];
+  /**
+   * ---- What a person who arrived from a search came for -----------------------------
+   *
+   * All four are optional, all four are generic (an axis or a gift), and all four are
+   * rendered as VISIBLE text on the group's page in one place, pages/axis/[quiz]/[axis].
+   * A group that sets none of them produces the page it produced before these existed.
+   *
+   * They exist because the pages used to open on the site's own filing vocabulary and
+   * bury the answer under it. Someone typing "have the gifts ceased" wants the answer in
+   * the first screen, in words they used themselves; a search engine wants the same thing
+   * in plain HTML under a heading, which is why none of this hides behind a pop-out.
+   */
+  /** The question a searcher types, used as the H2 over the answer block. Plain words. */
+  question?: string;
+  /** 40 to 50 words answering it, with both views named where there are two. */
+  shortAnswer?: string;
+  /** Two or three sentences: what actually changes depending on the answer. */
+  whyItMatters?: string;
+  /**
+   * Up to three true, specific, interesting details. `source` is what it was checked
+   * against — a confession, a council, a date, a named work — and is printed small beside
+   * the text, because a surprising claim with nothing behind it is the one thing these
+   * pages cannot afford.
+   */
+  didYouKnow?: Array<{ text: string; source: string }>;
   /** Long-form content for the group's own page. */
   summary?: string;
   /**

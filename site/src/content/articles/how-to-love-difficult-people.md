@@ -33,7 +33,7 @@ practised.
 Jesus anticipates the objection. "If you love those who love you, what credit is that to
 you? Even sinners love those who love them" (Luke 6:32).
 
-The ground he gives is God's character, not the other person's merit: "He is kind to the
+The ground He gives is God's character, not the other person's merit: "He is kind to the
 ungrateful and wicked" (Luke 6:35). Paul makes it personal. It was "when we were enemies of
 God" that "we were reconciled to Him through the death of His Son" (Romans 5:10). In that
 relationship, you were the difficult one. John's summary is seven
@@ -73,7 +73,7 @@ It does not mean calling bad behaviour good. The same chapter opens its section 
 "Love must be sincere. Detest what is evil; cling to what is good" (Romans 12:9). And
 Matthew 18 does not end at the private conversation; verses 16–17 bring in one or two
 others, then the church. If someone is harming you, involving other people is the procedure
-Jesus himself describes. What Romans 12:17 forbids is repaying evil for
+Jesus Himself describes. What Romans 12:17 forbids is repaying evil for
 evil.
 
 Christians read one point differently. Some hold that

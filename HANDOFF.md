@@ -48,6 +48,23 @@ same day** (domain verified by a TXT record he added at SiteGround; checked from
 records are untouched; sitemap submitted; home page indexing requested). Nothing more to do but wait: the
 description refreshes in days, the icon on Google's schedule, and sitelinks cannot be forced.
 
+**DISCOVERABILITY IS NOW THE WHOLE JOB (his words, 2026-09-21: the project "HINGES on it being discoverable
+through normal searches"; he has no social following and will not market).** Everything is in `design/seo/`:
+the audit (seven lenses, a skeptic, a completeness critic), `TASKS.md` (HIS ANSWERS to all fifteen open items,
+his steer, and the order of work: NOTHING on it may be dropped; tick items as they ship), `OWNER-ACTIONS.md`
+(his one-time tasks: Bing import, request indexing, Brave, faith.tools, GitHub/Ko-fi links, a monthly
+five-minute check, and an honest timeline), `ROUND-1-BRIEF.md` / `ROUND-2-BRIEF.md`. **Round 1 is LIVE**
+(`e16a341`: search titles, H1s and descriptions for 79 pages, internal links, 404, article feed, IndexNow,
+cache headers, the `seo-test.mjs` build guard). **Round 2 was running when this was written** (axis pages in
+everyday words with a direct answer, 18 tradition profiles, expanded gift pages, a Reformation Day article,
+contact and reuse line on /about/, reverent capitals everywhere): check `git log` and `TASKS.md` for where it
+got to. HIS STEER, binding: engaging, fun, easy to read; jargon always explained; stop hedging every line for
+fairness; SEO and ranking first, substance VISIBLE on the page (pop-outs and hovers only for repeated
+boilerplate); do NOT over-audit (one writer + one editor per family at most); capitalise God, Jesus, the Holy
+Spirit and Their pronouns in all the site's own words, never inside quotations. Work on branch
+`seo/discoverability`, push to `main` when a round passes its tests. NEVER let agents run `git stash/reset/
+checkout`: one did mid-build on 2026-09-21 and silently destroyed another agent's edits.
+
 **ACCOUNTS ARE BUILT AND LIVE BUT HIDDEN ON `main` (pushed 2026-09-21, `08e64af`, his go).** He said he will make
 the Resend account and follow the README "later"; it is ready "in case the site gains popularity". Do not
 chase him. `/method/` and `/about/` keep today's wording until the keys are set. Read

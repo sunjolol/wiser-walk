@@ -9,7 +9,8 @@ import PassagePills from '../../../components/PassagePills.astro';
 import CorrectionNote from '../../../components/CorrectionNote.astro';
 import { QUIZZES, getQuiz, groupHref, quizHref } from '../../../lib/engine/registry';
 import {
-  capitalise, groupNoun, groupNounPlural, isSplitReadMore, outcomeNounPlural, readMoreAll
+  capitalise, groupNoun, groupNounPlural, isSplitReadMore, outcomeNoun, outcomeNounPlural,
+  readMoreAll
 } from '../../../lib/engine/types';
 import { paragraphs } from '../../../lib/prose';
 import { artFor } from '../../../lib/art';
@@ -67,6 +68,41 @@ const collective = quiz.outcomeNounPlural ?? 'families';
  */
 const quoted = group.quoted ?? [];
 const acts = group.acts ?? [];
+
+/**
+ * THE ANSWER BLOCK, AND WHY IT IS AT THE TOP AND NOT BEHIND ANYTHING (2026-09-21).
+ *
+ * Someone arrives here having typed "have the gifts of the spirit ceased" or "predestination
+ * vs free will". The page used to open on a chart and make them read four hundred words of
+ * an essay before anything answered them. So a group may now carry the question in the words
+ * a person actually types, a forty-to-fifty word answer naming both views, and a short
+ * paragraph on what changes depending on which is true.
+ *
+ * All of it is plain visible HTML under a heading, on purpose: a search engine gives full
+ * weight to what is on the page and little or none to what sits inside a pop-out, a hover or
+ * a closed panel, and the substance a reader came for is exactly what must not be hidden.
+ * The first screen stays clean by ORDER — answer first, depth below — not by concealment.
+ *
+ * Every field is optional and generic. The gifts will use the same three, and a group that
+ * carries none of them renders the page exactly as it rendered before this existed.
+ */
+const answer = group.shortAnswer;
+const dyk = group.didYouKnow ?? [];
+
+/**
+ * Headings a searcher would recognise, rather than the site's own filing labels.
+ *
+ * "Where the traditions sit" and "The two cases" were internal vocabulary: true, short, and
+ * meaningless to anyone who had not already read the rest of the site. These say what the
+ * section answers. They stay derived from the quiz's own nouns, so the figure quiz's axes
+ * and the gifts get sentences about figures and gifts rather than about traditions.
+ */
+const mapTitle = `Where does each ${outcomeNoun(quiz)} sit?`;
+const caseTitle = 'What does each side believe?';
+const historyTitle = 'How did this disagreement develop?';
+const passagesTitle = bipolar
+  ? 'Which Bible passages do both sides argue from?'
+  : 'Which Bible passages are these?';
 
 /**
  * Tiles are counts of things that are on this page, taken from the data. Nothing here is
@@ -139,6 +175,29 @@ const giftPhrase = /gift/.test(group.name)
 /** The first passage this group is named from. Every gift has one; an axis has none. */
 const firstRef = quoted[0]?.ref;
 
+/*
+ * The heading over the whole description, and why it is no longer "What is X?".
+ *
+ * A bipolar group lands here only when its summary could not be split safely, and "What is
+ * Pace?" would be the site's own filing label asked as a question; it is still two sides, so
+ * it is still that question.
+ *
+ * A unipolar group with an answer block above it has ALREADY been asked what it is, in the
+ * words a person types ("What is the spiritual gift of mercy?"). Asking it again four
+ * hundred words later as "What is showing mercy?" read as a stutter and split one search
+ * between two headings. So the second heading asks the next question instead, which is what
+ * the description underneath actually answers: what it looks like in an ordinary church. A
+ * group with no answer block — the sins draft — keeps the question it always had.
+ */
+const namedSubject = isGift
+  ? giftHeading.charAt(0).toLowerCase() + giftHeading.slice(1)
+  : group.name;
+const meansTitle = bipolar
+  ? caseTitle
+  : group.shortAnswer
+    ? `What does ${namedSubject} look like in a church?`
+    : `What is ${group.name}?`;
+
 const heading = bipolar
   ? `${group.name}: ${group.left} or ${group.right}`
   : isGift
@@ -158,12 +217,21 @@ const title = bipolar
  * their lists are passages about the gift rather than acts of it.
  */
 const actsWord = group.actsHeading ? 'passages on it' : 'recorded acts';
-const metaDescription = isGift
-  ? clip(
-      `${cap(group.name)} in ${firstRef}, quoted in full, with ${acts.length} ${actsWord}, ` +
-      'each cited. Part of a free spiritual gifts test, all 19 gifts.'
-    )
-  : clip(group.summary!);
+/*
+ * The short answer wherever one is written: it was composed to be read cold by somebody who
+ * has not seen the page, which is exactly what a search listing is, and it says what the
+ * gift IS rather than what the page contains. The old sentence described the furniture
+ * ("quoted in full, with four recorded acts, each cited") to a reader who had not yet been
+ * told what the gift was. seo.ts still overrides both of the Compass's shapes; the count
+ * sentence stays as the fallback for a group that carries no answer.
+ */
+const metaDescription = clip(
+  group.shortAnswer ??
+    (isGift
+      ? `${cap(group.name)} in ${firstRef}, quoted in full, with ${acts.length} ${actsWord}, ` +
+        'each cited. Part of a free spiritual gifts test, all 19 gifts.'
+      : group.summary!)
+);
 const ghost = group.name.toLowerCase();
 /* An axis wears its parent quiz's picture: it is a page ABOUT that quiz. */
 const art = artFor(quiz.slug);
@@ -186,7 +254,7 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
   name: heading,
-  description: clip(group.summary!, 200),
+  description: clip(group.shortAnswer ?? group.summary!, 200),
   url: new URL(groupHref(quiz, group), Astro.site).href,
   isPartOf: [
     { '@id': siteId },
@@ -267,10 +335,36 @@ const breadcrumbs =
       </div>
     )}
 
+    {/*
+      The answer, first, in the words the question was asked in. See the note above the
+      `answer` const: this is visible crawlable text and it is deliberately above the
+      instruments, because a chart is not an answer to a question somebody typed.
+    */}
+    {answer && (
+      <>
+        {/* No question written: the kicker would repeat the heading word for word. */}
+        <SectionHead
+          title={group.question ?? 'The short answer'}
+          kicker={group.question ? 'The short answer' : undefined}
+        />
+        <div class="panel layered ref-panel answer">
+          <div class="wash" aria-hidden="true"></div>
+          <div class="veil" aria-hidden="true"></div>
+          <p class="answer-lead">{answer}</p>
+          {group.whyItMatters && (
+            <div class="answer-why">
+              <h3>Why it matters</h3>
+              <p>{group.whyItMatters}</p>
+            </div>
+          )}
+        </div>
+      </>
+    )}
+
     {bipolar && placed > 0 && (
       <>
         <SectionHead
-          title={`Where the ${plural} sit`}
+          title={mapTitle}
           kicker={`All ${placed} ${collective} on one rail`}
         />
         <section class="dark amap-panel">
@@ -297,7 +391,7 @@ const breadcrumbs =
     */}{quoted.length > 0 && (
       <>
         <SectionHead
-          title={quoted.length > 1 ? 'The passages it is named from' : 'The passage it is named from'}
+          title="Where does the Bible name it?"
           kicker={group.quotedFrom ?? 'Quoted in full'}
         />
         <section class="dark quoted-panel">
@@ -318,7 +412,7 @@ const breadcrumbs =
       </>
     )}{parts ? (
       <>
-        <SectionHead title="The two cases" kicker="Each stated by people who hold it" />
+        <SectionHead title={caseTitle} kicker="Each case stated by people who hold it" />
         <div class="cases">
           <article class="case case--left">
             <span class="case-tag" aria-hidden="true">Left pole</span>
@@ -348,7 +442,7 @@ const breadcrumbs =
     ) : (
       <>
         <SectionHead
-          title="What it means"
+          title={meansTitle}
           kicker={`${capitalise(groupNoun(quiz))} ${index + 1} of ${quiz.groups.length}`}
         />
         <div class="panel layered ref-panel">
@@ -365,6 +459,32 @@ const breadcrumbs =
         </div>
       </>
     )}{/*
+      Three true things, each with what it was checked against printed beside it.
+
+      Hung off its neighbours with no whitespace, like the blocks above, because an
+      expression that renders nothing still leaves the newline on each side of it. Every
+      item is data: nothing here is written in the template, and a group with no items
+      produces no section at all.
+    */}{dyk.length > 0 && (
+      <>
+        <SectionHead
+          title="Did you know?"
+          kicker={`${dyk.length} things worth knowing, each with its source`}
+        />
+        <div class="panel layered ref-panel ref-panel--quiet dyk-panel">
+          <div class="wash" aria-hidden="true"></div>
+          <div class="veil" aria-hidden="true"></div>
+          <ul class="dyk">
+            {dyk.map(k => (
+              <li class="dyk-item">
+                <p class="dyk-text">{k.text}</p>
+                <p class="dyk-source">{k.source}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </>
+    )}{/*
       What it has looked like, in recorded acts only. Each row is a reference and one
       sentence saying what somebody DID — never an inference about a reader, and never a
       claim that these people had this gift; the page says what the text records.
@@ -376,9 +496,15 @@ const breadcrumbs =
           shows anyone interpreting tongues, and both summaries directly above say so. A
           heading counting three of Paul's sentences as "3 recorded acts" would contradict
           the paragraph it sits under. Every other group keeps these words exactly.
+
+          The question is WHO, not what. "What does it look like?" was one word away from the
+          heading over the description above it, and two headings that ask the same thing
+          four hundred words apart split one search between them. This list is not another
+          description: it is named people doing the thing, each with the verse it is recorded
+          in, which is its own question and the one a reader has next.
         */}
         <SectionHead
-          title={group.actsHeading ?? 'What it has looked like'}
+          title={group.actsHeading ?? 'Who did this in the Bible?'}
           kicker={group.actsKicker ?? `${acts.length} recorded acts, each cited`}
         />
         <div class="panel layered ref-panel ref-panel--quiet">
@@ -398,7 +524,7 @@ const breadcrumbs =
 
     {history.length > 0 && (
       <>
-        <SectionHead title="How it unfolded" kicker="In order, with dates and sources" />
+        <SectionHead title={historyTitle} kicker="In order, with dates and sources" />
         <div class="panel layered ref-panel ref-panel--tl">
           <div class="wash" aria-hidden="true"></div>
           <div class="veil" aria-hidden="true"></div>
@@ -411,7 +537,7 @@ const breadcrumbs =
       <>
         <SectionHead
           id="sources"
-          title="The passages"
+          title={passagesTitle}
           kicker="Argued from by both sides, assigned to neither"
         />
         <div class="panel layered ref-panel ref-panel--pg ref-panel--quiet">

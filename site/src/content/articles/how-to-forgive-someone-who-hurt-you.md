@@ -57,7 +57,7 @@ and still keep your distance from them, and where you are not safe, you should.
 ## Where Christians differ
 
 Jesus says, "if he repents, forgive him" (Luke 17:3). He also says, "if you hold anything
-against another, forgive it" (Mark 11:25), with no condition mentioned, and prays for his
+against another, forgive it" (Mark 11:25), with no condition mentioned, and prays for His
 executioners while they are still at work (Luke 23:34). Christians weigh these differently.
 Some hold that forgiveness in the full sense is a transaction that needs the offender's
 repentance, as God's forgiveness does, and that what you owe an unrepentant person is a

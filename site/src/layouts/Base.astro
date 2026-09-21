@@ -444,7 +444,20 @@ const NAV: Array<{
         </nav>
       </div>
       <div class="wrap foot-bar">
-        <p>© {year} Wiser Walk</p>
+        {/*
+          One line, in the row that already exists (2026-09-21). What people may do with the
+          site belongs where a reader instinctively looks for the small print; the licence,
+          and the two things here that were never ours to license, are on /about/ under the
+          heading this points at.
+
+          It shares the copyright's paragraph on purpose: a second <p> would stack a second
+          stamp of uppercase micro-type under the first, and this is a footnote, not an
+          announcement. And it is four words because the row is uppercase micro-type with
+          .14em of tracking, which gives a phone about fifty characters a line: "Free to
+          print, quote and share, with credit" wrapped and left "with credit" hanging on a
+          line of its own, which is the kind of orphan the owner has thrown out before.
+        */}
+        <p>© {year} Wiser Walk · <a href="/about/#use">Free to use, with credit</a></p>
       </div>
     </footer>
     </div>

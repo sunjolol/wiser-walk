@@ -79,35 +79,49 @@ export const SEO: Record<string, { title: string; description: string }> = {
     description:
       'One line of speech from the Bible and four names under it. Job or his friends? Peter or Paul? Ten lines a run, over 1,200 real lines, free to play.'
   },
+  /*
+   * The six Compass axis pages, re-aimed 2026-09-21 at the words people actually type.
+   *
+   * The previous set led with the vocabulary of the argument \u2014 "monergism vs synergism",
+   * "cessationist vs continuationist" \u2014 which is what the holders call it and not what a
+   * searcher calls it. Almost nobody types monergism; a great many people type
+   * "predestination vs free will", "have the gifts of the spirit ceased", "is communion
+   * the real body of christ", "what is the rapture", "sola scriptura". So the everyday
+   * phrase leads and the term of art follows it, on the page as well as here: each page
+   * now opens on the same question and answers it in forty to fifty words.
+   *
+   * Every description still says only what the page really holds \u2014 both cases in their own
+   * words, and all 18 traditions placed on that axis \u2014 and still picks no winner.
+   */
   '/axis/theology-compass/grace/': {
-    title: 'Monergism vs synergism: which denominations hold which view',
+    title: 'Predestination vs free will: what each church believes',
     description:
-      'Does God alone bring a person to faith, or does the person cooperate? Both cases in their holders\u2019 own words, and where 18 traditions sit. No winner picked.'
+      'Does God alone bring someone to faith (monergism), or does each person freely cooperate (synergism)? Both cases in their own words, and 18 traditions placed.'
   },
   '/axis/theology-compass/table/': {
-    title: 'Real presence vs memorial: what churches believe about communion',
+    title: 'Real presence vs symbol: what churches believe on communion',
     description:
-      'Is Christ truly present in the Supper, or is it a remembrance? The sacramental and memorial views in their own words, and where 18 traditions sit.'
+      'Is Christ truly present in the bread and the cup, or is the Supper a remembrance? The sacramental and memorial views, and where 18 traditions sit.'
   },
   '/axis/theology-compass/gifts/': {
-    title: 'Cessationist vs continuationist: which denominations are which',
+    title: 'Have the gifts ceased? Speaking in tongues and prophecy',
     description:
-      'Have tongues, prophecy and healing ceased? Both cases fairly put, the passages each side reads, and where 18 traditions sit.'
+      'Cessationists say the sign gifts ended with the apostles; continuationists say tongues, prophecy and healing continue. Both cases, and 18 traditions placed.'
   },
   '/axis/theology-compass/kingdom/': {
-    title: 'Dispensationalism or one people of God: where churches stand',
+    title: 'Israel, the church and the rapture: one people or two?',
     description:
-      'Is there one people of God across both Testaments, or do Israel and the church remain distinct? Both views in their own words, and where 18 traditions sit.'
+      'Dispensationalists expect a rapture and a literal kingdom for Israel; others say the church inherits the promises to Abraham. Both views, and 18 traditions.'
   },
   '/axis/theology-compass/authority/': {
-    title: 'Scripture alone vs Scripture and tradition: where churches stand',
+    title: 'Bible alone vs Bible and tradition: who has the last word?',
     description:
-      'Is the Bible read within the church\u2019s tradition, or is Scripture alone the final authority? Both cases fairly put, and where 18 traditions sit.'
+      'Is Scripture the only infallible authority, or is it read within the creeds, councils and teaching of the church? Both cases, and 18 traditions placed.'
   },
   '/axis/theology-compass/worship/': {
-    title: 'Liturgical vs free worship: which churches worship how',
+    title: 'Liturgy or free worship: why church services differ',
     description:
-      'A set order and the church calendar, or freedom of form? Both cases in their holders\u2019 own words, and where 18 traditions sit.'
+      'A set order, the church calendar and communion every Sunday, or a service each congregation shapes for itself? Both cases, and where 18 traditions sit.'
   },
 
   /*
@@ -158,7 +172,7 @@ export const SEO: Record<string, { title: string; description: string }> = {
   },
 
   /*
-   * The eleven articles, added 2026-09-21.
+   * The twelve articles, added 2026-09-21.
    *
    * Every one of them fell through to the Base default, so what shipped was the reader's
    * title plus the brand ("How to become more patient \u2014 Wiser Walk"). The bare phrases the
@@ -221,6 +235,13 @@ export const SEO: Record<string, { title: string; description: string }> = {
     title: 'What are spiritual gifts in the Bible? All four lists',
     description:
       'The New Testament gives four lists of gifts, one stated purpose, and no method for finding yours. That tells you more than it seems to.'
+  },
+  /* Added with the article itself (2026-09-21). "Reformation Day" is a seasonal query that
+     peaks in the last week of October, so the page has to be indexed weeks before it. */
+  '/articles/what-was-the-reformation-about/': {
+    title: 'What was the Reformation about? The five real arguments',
+    description:
+      'Indulgences lit the fire in 1517. Underneath were five questions about grace, communion, authority and worship, and churches still answer them differently.'
   },
   '/articles/what-does-it-mean-to-be-christlike/': {
     title: 'What does it mean to be Christ-like? Not a personality',

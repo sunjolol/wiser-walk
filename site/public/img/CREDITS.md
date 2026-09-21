@@ -53,8 +53,9 @@ Gustave Doré`.
 
 ## Public domain paintings: one for each article (`articles/<article id>.jpg`, Wikimedia Commons)
 
-The quizzes wear Doré's engravings; the articles wear paintings, in colour. Every painter died
-more than a century ago. The credit prints under the picture on the article's own page.
+The quizzes wear Doré's engravings; the articles wear paintings, in colour. Every painter has
+been dead long enough for the work to be out of copyright; the most recent of them, Karl
+Aspelin, died in 1932. The credit prints under the picture on the article's own page.
 
 | article | painting | Commons file |
 |---|---|---|
@@ -69,16 +70,46 @@ more than a century ago. The credit prints under the picture on the article's ow
 | how-to-tame-your-tongue | Pieter Bruegel the Elder, The Tower of Babel, 1563 | `Pieter Bruegel the Elder - The Tower of Babel (Vienna) - Google Art Project - edited.jpg` |
 | what-are-spiritual-gifts | Jean II Restout, Pentecost, 1732. A gallery photograph with some glare; cropped out of its frame; replace if a cleaner scan turns up | `Restout - La Pentecôte 01.jpg` |
 | what-the-bible-says-about-worry | Rembrandt, Christ in the Storm on the Sea of Galilee, 1633 | `Rembrandt Christ in the Storm on the Lake of Galilee.jpg` |
+| what-was-the-reformation-about | Karl Aspelin (1857–1932), Luther Burns the Papal Bull in Wittenberg, 1885 | `Karl Aspelin-Luther uppbränner den påfliga bullan.jpg` |
 
-`reads-harvest.jpg` is the band of `/articles/` itself rather than any one article: **Vincent van
-Gogh, The Harvest (De oogst), 1888**, Van Gogh Museum, from Wikimedia Commons. It is deliberately
-none of the eleven above, because every one of those articles is listed on that page and the band
-would otherwise wear the same picture twice. The exact Commons filename was not written down when
-it was added and has not been confirmed since; Commons holds several scans of this painting, and
-any of them can stand in if the file is ever replaced.
+Two pictures belong to no article. Both are Van Gogh, both are out of copyright, and both came
+from Wikimedia Commons.
+
+`reads-sower.jpg` is the band of `/articles/` and the Articles social card: **Vincent van Gogh,
+The Sower, Arles, June 1888**, Kröller-Müller Museum, Otterlo. Commons file `The Sower.jpg`. It
+replaced The Harvest on the Articles band on 2026-09-21. Note that `how-to-become-more-patient`
+also wears a Sower: that is the **November 1888** painting, the one with the green sky and the
+tree across it, and the two are different canvases that only share a name. The band's is the blue
+field under a low sun.
+
+`reads-harvest.jpg` is the band of `/about/`: **Vincent van Gogh, The Harvest (De oogst), 1888**,
+Van Gogh Museum. The exact Commons filename was not written down when it was added and has not
+been confirmed since; Commons holds several scans of this painting, and any of them can stand in
+if the file is ever replaced.
+
+Neither is any of the twelve above, on purpose: every one of those articles is listed on
+`/articles/`, and the band would otherwise wear the same picture twice.
 
 
 Each painting has a 560 px `-card.jpg` copy beside it for the article cards (quality 68). When a painting is added or replaced, make its card copy too, or the card will 404.
+
+**ASPECT RATIO IS THE CONSTRAINT HERE, and it is not obvious.** The band draws an article's
+painting in a slot that is WIDE on a phone (full width by 12.5rem, about 1.95:1) and
+PORTRAIT on a desktop (one grid column, about 0.9:1). Those pull in opposite directions, so
+a painting only survives both if it is roughly **1.15 to 1.4:1 with its subject near the
+centre** — which is what every article picture that works already is. A 1.7:1 panorama was
+tried here first and the desktop band cropped it to 52% of its width: bare floor tiles and a
+wall. Check a new painting at 390 AND at 1360 before calling it done.
+
+The Reformation picture's Commons page
+(https://commons.wikimedia.org/wiki/File:Karl_Aspelin-Luther_uppbr%C3%A4nner_den_p%C3%A5fliga_bullan.jpg)
+states **Public domain** (the author died in 1932, so life plus 70 years or fewer) and the
+photograph of it carries the Creative Commons **Public Domain Mark 1.0** with no CC BY-SA
+claim. That last point is why this file and not a better-composed one: the two museum
+photographs of August Noack's *Religionsgespräch zu Marburg* on Commons, and Lucas Cranach
+the Younger's Wittenberg altarpiece predella, were all considered, and the Noack scans put
+CC BY-SA on the photograph, which is a share-alike condition the site should not take on for
+a header picture. Resized from 2871 px to **1300 px wide, JPEG quality 75, 217 KB**.
 
 ## Public domain painting: the account pages (`account-threshold.jpg`)
 

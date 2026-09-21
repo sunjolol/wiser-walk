@@ -274,7 +274,7 @@ export function nearestState(
  * prints, which is two in every other state ("Nearest on the map: Abraham · Jesus"). The
  * second name in the near state is context for the first, not a second verdict, and the page
  * emphasises one card there. But an outcome's note goes wherever its NAME goes: the line is
- * what gets pasted into a chat, and "· Jesus" without his sentence beside it is the same
+ * what gets pasted into a chat, and "· Jesus" without His sentence beside it is the same
  * bare name whichever side of the dot it sits on.
  */
 export function namedNearest(kind: NearestKind, near: Match[]): string[] {

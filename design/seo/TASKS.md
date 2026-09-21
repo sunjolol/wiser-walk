@@ -26,20 +26,20 @@ to another project", inside his weekly token limit. Tick items here as they ship
 
 ## Order of work (highest pay first)
 
-- [ ] **0. Round 1 live** (titles, H1s, descriptions for 79 pages; links; 404; feed; IndexNow; guard). Tell
+- [x] **0. Round 1 live (shipped 2026-09-21, commit e16a341; he was told he can request indexing)** (titles, H1s, descriptions for 79 pages; links; 404; feed; IndexNow; guard). Tell
       him when it is live: he is waiting on it to request indexing (OWNER-ACTIONS step 2).
-- [ ] **0b. Reverent capitals pass** over all existing copy (sources, then rebuild; quotations untouched).
-- [ ] **2 + 9. Axis pages** (six Compass axes first): everyday words beside the holders' terms ("speaking
+- [x] **0b. Reverent capitals pass (round 2; sweep of all built pages found no true misses; `design/tools/reverent-check.mjs`)** over all existing copy (sources, then rebuild; quotations untouched).
+- [x] **2 + 9. Axis pages (round 2)** (six Compass axes first): everyday words beside the holders' terms ("speaking
       in tongues", "free will", "predestination", "infant baptism"), every term explained in a phrase, and
       a 40 to 50 word direct answer under a question heading at the top. Same for the articles' openings.
-- [ ] **1. The 18 tradition pages**: cut the repeated ~200-word explainer to a line or two (it is the same
+- [x] **1. The 18 tradition pages (round 2: similarity 48% -> 22%, ~340 -> ~980 words each)**: cut the repeated ~200-word explainer to a line or two (it is the same
       words on all 18, which is what makes them near-duplicates), and give each page its own short, lively profile: what marks this tradition out, where it
       sits and why, a genuinely interesting true detail, and the audit's own sources
       (`compass-audit.json` `simulations[].sources`) shown as what was read. Unique per page, and all of it VISIBLE on the page.
-- [ ] **3. The thin gift pages** (nine under 240 words: teaching, mercy, serving, giving, leading,
+- [x] **3. The thin gift pages (round 2: all 19 now 700+ words)** (nine under 240 words: teaching, mercy, serving, giving, leading,
       encouraging, helps, administration, hospitality or whichever measure thin): expand to the standard
       of the long ones, article-like, from New Testament text already bundled.
-- [ ] **7. Reformation Day page (31 October)**: must be live and indexed weeks ahead. Built from the axis
+- [x] **7. Reformation Day article (round 2; Advent and Lent still to come)**: must be live and indexed weeks ahead. Built from the axis
       content: what the Reformation actually argued about, both sides in plain words. Then Advent, then Lent.
 - [ ] **8. Eight to twelve hand-built comparison pages** ("Lutheran vs Reformed", "Orthodox vs Catholic",
       "Calvinist vs Arminian", "Baptist vs Presbyterian" ...), with a HOME on the site that feels planned:
@@ -48,12 +48,12 @@ to another project", inside his weekly token limit. Tick items here as they ship
 - [ ] **4. Printable spiritual gifts test**: judged worth it (strongest demand signal in the audit; what
       ranks is gated, paid or scanned; low effort as a print stylesheet + a print page of the 57
       statements with a scoring key). Do not call it a PDF.
-- [ ] **5. Say what people may do with the site**: one line in the footer and a sentence on /about/
+- [x] **5. Say what people may do with the site (round 2, on /about/ and in the footer)**: one line in the footer and a sentence on /about/
       ("Use it. Print anything here for a class, a small group or a church, or quote it, as long as you say
       where it came from and link back."), CC BY 4.0 for the words and data, not the Bible text or the
       paintings. One plain line in the footer; the detail lives on /about/.
 - [ ] **6. The 18-tradition table as a dataset**: CSV download + `Dataset` markup + a small page.
-- [ ] **10. Contact on /about/**: info@wiserwalk.com (he made the mailbox).
+- [x] **10. Contact on /about/ (round 2)**: info@wiserwalk.com (he made the mailbox).
 - [ ] **11. Seven deadly sins: audit and publish.** A LEAN audit (one drafter-critic pass, one editor),
       then `status: 'live'`, indexable, its own search title and card. Rename pending (`FOOT_SHORT`).
 - [ ] **12. /method/**: a short readable trust page; the 13,000-word log behind a link.
@@ -65,8 +65,26 @@ to another project", inside his weekly token limit. Tick items here as they ship
 
 ## Also open from round 1 (small)
 
-- [ ] H2 headings on axis and tradition pages still use the site's private vocabulary ("Where the
+- [x] H2 headings on axis and tradition pages still use the site's private vocabulary ("Where the
       traditions sit", "The two cases"): fold into items 2 and 1.
 - [ ] A visible link to the article feed at the foot of /articles/.
 - [ ] `AxisMap.astro` draws figures whose mask on an axis is none/both: check it is not an unintended
       placement claim (fold into item 3's neighbour, the figure-axis pages).
+- [ ] Record `reads-sower.jpg` (Van Gogh, The Sower, June 1888, public domain, Wikimedia Commons file
+      "The Sower.jpg") in `site/public/img/CREDITS.md` once round 2 has finished with that file. The
+      Articles band was switched to it on 2026-09-21 (commit `ad6394c`, shipped from a clean worktree while
+      round 2 was running): when round 2 is committed, rebase `seo/discoverability` onto `origin/main`.
+- [ ] **Article reading redesign (asked 2026-09-21, from his iPhone SE):** unboxed prose on a phone, a
+      dotted-line contents list instead of bubbles, a reading progress bar on phone and desktop, an "In
+      short" answer at the top of each article, a better end-of-article sequence (quiz, keep reading,
+      share, all articles). Being built in the isolated worktree `C:/Users/Light/AppData/Local/Temp/ww-articles`
+      (branch `feat/article-reading`, brief in its `design/ARTICLE-READING-BRIEF.md`). `site/node_modules`
+      there is a JUNCTION: remove it with `[System.IO.Directory]::Delete(path, $false)` BEFORE removing the
+      worktree, never with rm -rf. Ship by pushing that branch to `main`, then rebase `seo/discoverability`.
+- [ ] From round 2's integrator: the worship axis never says "worship band" or "contemporary worship" (the
+      words a modern searcher types); three round-1 titles run 63 to 65 characters (/articles/,
+      /axis/spiritual-gifts/interpretation/, /q/theology-compass/); the /about/ fairness panel's three
+      buttons wrap two-and-one at 1360.
+- [ ] Editor's judgement calls left for the owner: the Mainline profile says nothing about sexuality (the
+      Compass has no axis for it); the National Baptist "kingdom" reading rests on preaching tradition, not
+      a confession, and the profile says so.

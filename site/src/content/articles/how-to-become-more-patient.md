@@ -20,7 +20,7 @@ brothers" (James 5:9). Waiting badly and treating people badly travel together.
 
 ## Where it starts
 
-Patience is first a description of God. When the LORD proclaims his own name to
+Patience is first a description of God. When the LORD proclaims His own name to
 [Moses](/figure/moses/), the
 words are "compassionate and gracious, slow to anger, abounding in loving devotion and
 faithfulness" (Exodus 34:6).

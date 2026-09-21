@@ -56,7 +56,7 @@ word. Let someone else have it. Paul puts the principle as "in humility consider
 more important than yourselves" (Philippians 2:3), and rests it on Christ, who "humbled
 Himself and became obedient to death" (Philippians 2:8).
 
-**Do the job beneath your position.** When Jesus washes the disciples' feet he does not
+**Do the job beneath your position.** When Jesus washes the disciples' feet He does not
 pretend to have no rank. "You call Me Teacher and Lord, and rightly so, because I am"
 (John 13:13). Then: "I have set you an example so that you should do as I have done for
 you" (John 13:15). Humility is not denying your standing; it is what you do with it. Find

@@ -83,8 +83,8 @@ case: your ordinary word should hold without reinforcement. Notice how often you
 
 You will fail at this; James 3:2 says so in advance. That is no reason to shrug. Jesus
 warns that people "will give an account on the day of judgment for every careless word
-they have spoken" (Matthew 12:36). He is answering Pharisees who had just slandered his
-work, but it is the careless word he names. Progress tends to look like a shorter gap between the remark and the apology, and
+they have spoken" (Matthew 12:36). He is answering Pharisees who had just slandered His
+work, but it is the careless word He names. Progress tends to look like a shorter gap between the remark and the apology, and
 later a pause before the remark.
 
 ## Where this connects

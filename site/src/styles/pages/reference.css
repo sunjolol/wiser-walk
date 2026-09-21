@@ -169,6 +169,77 @@
 .amap-n--centre { background: var(--ink-soft); color: var(--dark-fill); }
 .amap-empty { margin: 0; font-size: .86rem; font-style: italic; color: var(--ink-mute); }
 
+/* ------------------------------------------ section heads on an axis page ---- */
+/*
+ * The kit lowercases a section title, and that was right while these titles were two-word
+ * filing labels ("the two cases"). They are questions now, and the questions carry names:
+ * lowercasing them prints "god", "christ", "the bible" and "the spirit" on a site whose
+ * standing rule is that those words are capitalised wherever it speaks. Nothing else about
+ * the head changes — the display italic, the size, the spectrum rule under it all stay —
+ * and the rule is scoped to the axis pages so no other page group moves.
+ */
+.ref--axis .sect-title { text-transform: none; }
+
+/* --------------------------------------------- the answer, first thing ---- */
+/*
+ * The block directly under the band: the question a person typed, answered in forty to
+ * fifty words, with what changes underneath it.
+ *
+ * It is the largest prose on the page on purpose, and it is plain visible HTML rather than
+ * a pop-out, because it is the thing the reader came for and the thing a search engine
+ * weighs. Nothing new is invented here: the panel, the texture layers, the dotted rule and
+ * the small uppercase label are all the kit's, so this reads as another room of the same
+ * house rather than a box somebody bolted on.
+ */
+.answer-lead {
+  margin: 0; font-family: var(--display); font-size: 1.3rem; line-height: 1.42;
+  color: var(--ink); text-wrap: pretty;
+}
+/* 44rem is the measure the rest of this file already uses for prose in a wide panel
+   (.ref-note, the between-the-poles note). This is the one paragraph on the page people
+   read from the first word to the last, so it keeps that measure instead of running the
+   full width of the sheet, and the paragraph under it ends on the same line. */
+@media (min-width: 40rem) {
+  .answer-lead { font-size: 1.5rem; line-height: 1.38; max-width: 44rem; }
+}
+.answer-why {
+  margin: 1.15rem 0 0; padding: 1.05rem 0 0; border-top: 2px dotted var(--rule-strong);
+}
+.answer-why h3 {
+  margin: 0 0 .4rem; font-family: var(--ui); font-size: .6rem; font-weight: 700;
+  letter-spacing: .15em; text-transform: uppercase; color: var(--ink-mute);
+}
+.answer-why p {
+  margin: 0; max-width: 44rem; font-size: .95rem; color: var(--ink-soft); text-wrap: pretty;
+}
+
+/* ------------------------------------------------------------ did you know ---- */
+/*
+ * Three true things, each with what it was checked against printed under it. The source
+ * line is small and quiet but never hidden: a surprising claim with nothing behind it is
+ * the one thing a page about somebody else's belief cannot afford.
+ */
+.dyk { list-style: none; margin: 0; padding: 0; }
+.dyk-item { padding: .9rem 0 1rem; border-bottom: 2px dotted var(--rule-strong); }
+.dyk-item:first-child { border-top: 2px dotted var(--rule-strong); }
+.dyk-item:last-child { border-bottom: 0; padding-bottom: 0; }
+.dyk-text {
+  margin: 0; font-family: var(--display); font-size: 1.05rem; line-height: 1.45;
+  color: var(--ink); text-wrap: pretty;
+}
+.dyk-source {
+  margin: .4rem 0 0; font-size: .76rem; line-height: 1.4; color: var(--ink-mute);
+  text-wrap: pretty;
+}
+@media (min-width: 54rem) {
+  .dyk { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 1.5rem; }
+  .dyk-item {
+    padding: 0 0 .2rem; border-bottom: 0;
+    border-top: 2px dotted var(--rule-strong); padding-top: 1rem;
+  }
+  .dyk-item:last-child { padding-bottom: .2rem; }
+}
+
 /* -------------------------------------------------------- the two cases ---- */
 
 .cases { display: grid; gap: .9rem; margin-top: 1.15rem; }

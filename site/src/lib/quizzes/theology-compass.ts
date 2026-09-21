@@ -16,6 +16,12 @@ const groups: QuizGroup[] = data.axes.map(a => ({
   left: a.left,
   right: a.right,
   bands: a.bands,
+  // The reader-facing fields, written in audit/compass-data.revised.json and mapped to
+  // camelCase by scripts/build-data.mjs. Optional: an axis without them renders as before.
+  question: a.question,
+  shortAnswer: a.shortAnswer,
+  whyItMatters: a.whyItMatters,
+  didYouKnow: a.didYouKnow,
   summary: a.summary,
   summaryParts: a.summaryParts,
   history: a.history,

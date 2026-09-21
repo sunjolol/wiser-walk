@@ -1,0 +1,162 @@
+/*
+ * The tradition page's own words (2026-09-21).
+ *
+ * reference.css still owns every instrument on this page: the compass, the six rails, the
+ * neighbours list, the caveat, the way in. Nothing here touches any of them. This file adds
+ * only what the written profile needs, because until now these eighteen pages said nothing
+ * at all in prose and had no vocabulary for saying it.
+ *
+ * Four pieces, phone first, tokens only:
+ *
+ *   .tlead    the opening sentence, directly under the band, set as a statement
+ *   .tprose   the profile and the family note: a lead line, then paragraphs at reading size
+ *   .tfacts   "Did you know?" as marked cards, each carrying its own source
+ *   .tread    what was read: the citations on the dark ground the site keeps for the
+ *             things it only carries, and beside them two documents to open next
+ *
+ * The rule the rest of the site follows holds here too: blue is the left pole of an axis
+ * and orange the right, so neither is used on anything that is not a position. The marks in
+ * this file are the accent and the full spectrum, never one pole's ink alone.
+ */
+
+/* ------------------------------------------------------------- the lead ---- */
+/*
+ * The one sentence a searcher came for, above everything else on the page. Set in the
+ * display face because it is a statement, not the opening of an essay.
+ */
+.tlead { margin: 1.5rem 0 0; }
+
+.tlead-label {
+  margin: 0 0 .55rem; display: flex; align-items: center; gap: .55rem;
+  font-family: var(--ui); font-size: .62rem; font-weight: 700; letter-spacing: .16em;
+  text-transform: uppercase; line-height: 1.3; color: var(--accent);
+}
+/* the kit's short spectrum rule, laid on its side beside the label */
+.tlead-label::before {
+  content: ""; flex: none; width: 26px; height: 5px; border-radius: var(--r-pill);
+  background-image: var(--grad-r);
+}
+
+.tlead-say {
+  margin: 0; max-width: 42rem; color: var(--ink);
+  font-family: var(--display); font-size: clamp(1.3rem, 5.6vw, 1.85rem);
+  line-height: 1.34; letter-spacing: -.005em; text-wrap: pretty;
+}
+
+/* ------------------------------------------------------------ the prose ---- */
+/*
+ * A profile printed entirely in the display face is twenty lines of serif at 390px, which
+ * is the wall the gift pages already hit. First paragraph leads; the rest is body text at
+ * reading size, on the panel's own texture.
+ */
+.tprose { margin: 1.1rem 0 0; padding: 1.3rem 1.15rem 1.4rem; }
+@media (min-width: 40rem) { .tprose { padding: 1.9rem 1.9rem 2rem; } }
+
+.tprose-p {
+  margin: 0; max-width: 44rem; color: var(--ink-soft);
+  font-size: .97rem; line-height: 1.62; text-wrap: pretty;
+}
+.tprose-p + .tprose-p { margin-top: 1.05rem; }
+
+.tprose-p--lead {
+  font-family: var(--display); font-size: clamp(1.1rem, 4.5vw, 1.3rem);
+  line-height: 1.45; color: var(--ink);
+}
+/* one hairline, between the lead and the body it opens. Not between every paragraph: that
+   turns four points into a table of four rows. */
+.tprose-p--lead + .tprose-p {
+  margin-top: 1.15rem; padding-top: 1.15rem; border-top: 1px solid var(--rule);
+}
+
+/*
+ * The family note is one unbroken paragraph of six or eight sentences, and set in the
+ * display face at 390px it came out as nineteen lines of serif with no change of weight
+ * anywhere: the same wall the gift pages hit. It keeps the reading face and takes the full
+ * ink instead, which is enough to mark it as its own block without making it a headline.
+ * The display face now appears twice on the page (the opening sentence, the profile's lead)
+ * rather than three times, which is better typography as well as better reading.
+ */
+.tprose--short { padding-bottom: 1.3rem; }
+@media (min-width: 40rem) { .tprose--short { padding-bottom: 1.9rem; } }
+.tprose--short .tprose-p { font-size: 1rem; line-height: 1.66; color: var(--ink); }
+
+/* ------------------------------------------------------ did you know? ---- */
+/*
+ * Cards, because these are separate facts rather than a passage. Each carries the source it
+ * was checked against, in small type on a hairline, so the interesting claim and the thing
+ * that backs it are never more than a card apart.
+ */
+.tfacts { list-style: none; margin: 1.15rem 0 0; padding: 0; display: grid; gap: .8rem; }
+@media (min-width: 52rem) {
+  .tfacts {
+    grid-template-columns: repeat(auto-fit, minmax(17.5rem, 1fr));
+    gap: 1rem; align-items: start;
+  }
+}
+
+.tfact {
+  position: relative; overflow: hidden;
+  background: var(--panel); border-radius: var(--r); box-shadow: var(--lift);
+  padding: 1.1rem 1.15rem 1.15rem 1.55rem;
+}
+/* the full spectrum down the leading edge, as the pager cards wear it */
+.tfact::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 6px;
+  background-image: linear-gradient(to bottom, var(--blue), var(--orange));
+}
+.tfact-mark {
+  display: grid; place-items: center; width: 2rem; height: 2rem; margin: 0 0 .75rem;
+  border-radius: 11px; background: var(--accent); color: var(--accent-ink);
+}
+.tfact-text {
+  margin: 0; font-size: .95rem; line-height: 1.6; color: var(--ink-soft); text-wrap: pretty;
+}
+.tfact-src {
+  margin: .8rem 0 0; padding-top: .65rem; border-top: 1px solid var(--rule);
+  font-family: var(--ui); font-size: .67rem; font-weight: 500; line-height: 1.5;
+  letter-spacing: .015em; color: var(--ink-mute); text-wrap: pretty;
+}
+
+/* -------------------------------------------------------- what we read ---- */
+
+.tread { margin: 1.15rem 0 0; display: grid; gap: .8rem; }
+@media (min-width: 54rem) {
+  .tread { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1rem; align-items: start; }
+}
+
+/*
+ * The citation string is the one thing in this block that nobody here wrote, so it sits on
+ * the charcoal the site keeps for borrowed text, exactly as a quoted verse does.
+ */
+.tread-src {
+  border-radius: var(--r); padding: 1.15rem 1.2rem 1.25rem;
+  background-color: var(--dark-fill); background-image: var(--dark-fill-img);
+  background-size: 420px; color: var(--on-dark);
+}
+.tread-label {
+  margin: 0 0 .55rem; font-family: var(--ui); font-size: .58rem; font-weight: 700;
+  letter-spacing: .17em; text-transform: uppercase; line-height: 1.3; color: var(--blue-soft);
+}
+.tread-cite {
+  margin: 0; font-size: .87rem; line-height: 1.62; color: var(--on-dark-soft);
+  text-wrap: pretty;
+}
+
+.tread-open { list-style: none; margin: 0; padding: 0; display: grid; gap: .7rem; }
+.tread-open li {
+  position: relative; background: var(--panel); border-radius: var(--r);
+  box-shadow: var(--lift); padding: 1rem 1.1rem 1.05rem 3.35rem;
+}
+.tread-mark {
+  position: absolute; left: 1.05rem; top: 1.05rem;
+  display: grid; place-items: center; width: 1.8rem; height: 1.8rem; border-radius: 50%;
+  background-image: var(--grad); color: var(--on-grad);
+}
+.tread-title {
+  margin: 0; font-family: var(--display); font-size: 1.1rem; line-height: 1.25;
+  color: var(--ink); text-wrap: pretty;
+}
+.tread-note {
+  margin: .32rem 0 0; font-size: .87rem; line-height: 1.55; color: var(--ink-mute);
+  text-wrap: pretty;
+}

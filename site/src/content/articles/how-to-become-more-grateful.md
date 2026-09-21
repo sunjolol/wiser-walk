@@ -25,7 +25,7 @@ That is the shape of what follows.
 In Romans 1:21, [Paul](/figure/paul/) describes the beginning of human ruin in two clauses:
 people "neither
 glorified Him as God nor gave thanks to Him." Thanklessness sits right at the origin, alongside
-refusing God his place. That is a striking pairing. Ingratitude is not presented as a minor
+refusing God His place. That is a striking pairing. Ingratitude is not presented as a minor
 lapse of manners but as a way of misreading reality — receiving constantly and
 acknowledging nothing.
 

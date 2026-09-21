@@ -30,8 +30,8 @@ whatever virtues appeal to you. There is a specific likeness in view, and it has
 ## The likeness has content
 
 Philippians 2:5–8 is the densest description. Paul tells the church to have the mind that
-was in Christ Jesus, and then says what that mind did: he did not grasp at equality with
-God, he emptied himself, he took the form of a servant, he humbled himself, he obeyed to
+was in Christ Jesus, and then says what that mind did: He did not grasp at equality with
+God, He emptied Himself, He took the form of a servant, He humbled Himself, He obeyed to
 the point of death. Every verb moves downward.
 
 That is the shape of the likeness — not primarily serenity or wisdom or moral achievement,
@@ -45,9 +45,9 @@ that list have gone missing under pressure.
 
 ## It is imitation, and it is transformation
 
-1 John 2:6 puts the responsibility squarely on us: whoever claims to abide in him "must
+1 John 2:6 puts the responsibility squarely on us: whoever claims to abide in Him "must
 walk as Jesus walked." That is imitation, and it is deliberate. You look
-at what he did and you do that.
+at what He did and you do that.
 
 But 2 Corinthians 3:18 describes the same process from the other side: "we, who with
 unveiled faces all reflect the glory of the Lord, are being transformed into His image with

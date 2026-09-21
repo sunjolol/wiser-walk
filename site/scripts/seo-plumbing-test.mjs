@@ -397,7 +397,7 @@ const config = await bundle('astro.config.mjs', 'node_modules/.seo-plumbing-conf
 
   // And against the articles that actually ship.
   const real = config.articleLastmod(pathToFileURL(join(ROOT, 'src/content/articles') + '/'));
-  is(real.size, 11, 'all eleven published articles have a date');
+  is(real.size, 12, 'all twelve published articles have a date');
   const bad = [...real.entries()].filter(([, d]) => !/^\d{4}-\d{2}-\d{2}$/.test(d));
   is(bad, [], 'every one of them is a plain calendar date');
   is(config.articleLastmod(pathToFileURL(join(scratch, 'no-such-dir') + '/')).size, 0, 'a missing directory is not a crash');

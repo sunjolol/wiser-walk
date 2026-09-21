@@ -47,7 +47,7 @@ loose from trust.
 
 Luke's account of [Martha](/figure/martha/) shows what that looks like. She is doing good
 work, hosting Jesus,
-and he tells her, "you are worried and upset about many things. But only one thing is
+and He tells her, "you are worried and upset about many things. But only one thing is
 necessary" (Luke 10:41-42). The contrast is between many things and one, and the one is
 what her sister Mary was doing: sitting "at the Lord’s feet listening to His message"
 (Luke 10:39).

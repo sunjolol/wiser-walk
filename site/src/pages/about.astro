@@ -50,11 +50,25 @@ const sheets = (audit.simulations ?? []).filter(
   (s: Record<string, any>) => Array.isArray(s.answers) && s.answers.length
 ).length;
 
+/*
+ * The address people write to when something here is wrong. One constant, printed twice on
+ * this page (once in the prose, once as the button beside it), so the two can never drift.
+ * It is a real mailbox the owner made; nothing on the site sends to it automatically.
+ */
+const CONTACT = 'info@wiserwalk.com';
+
+/* Creative Commons Attribution 4.0: the licence the words and the quiz data are published
+   under, said once here and marked up so a machine reading the page can see it too. It
+   covers what this site wrote. The Bible text and the pictures are public-domain works that
+   were never ours to license, which the section below says plainly. */
+const LICENCE = 'https://creativecommons.org/licenses/by/4.0/';
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'AboutPage',
   name: 'About Wiser Walk',
-  url: new URL('/about/', Astro.site).href
+  url: new URL('/about/', Astro.site).href,
+  license: LICENCE
 };
 
 const breadcrumbs = [
@@ -201,9 +215,23 @@ const breadcrumbs = [
           If you hold a position and think it is described unfairly, that is worth hearing.
           Being wrong about someone else's belief is the one failure this site cannot afford.
         </p>
+        {/*
+          Contact, and the only address on the site (the owner's steer, 2026-09-21). It sits
+          in the fairness section rather than under a "Contact" heading of its own, because
+          this is the message worth getting: a reader who recognises their own church in a
+          description and can say what it gets wrong. The line asks for the three things that
+          make a correction actionable, so an email arrives ready to act on instead of
+          starting a conversation.
+        */}
+        <p>
+          Write to <a href={`mailto:${CONTACT}`}>{CONTACT}</a>. Quote the line, say what it
+          should say instead, and name the confession, catechism or standard work you would
+          look it up in. That is enough to act on.
+        </p>
       </div>
       <div class="btn-row">
-        <a class="btn" href="/method/">Read the method</a>
+        <a class="btn" href={`mailto:${CONTACT}`}>Email a correction</a>
+        <a class="btn ghost" href="/method/">Read the method</a>
         <a class="btn ghost" href="/method/#changelog">See what changed</a>
       </div>
     </div>
@@ -214,6 +242,58 @@ const breadcrumbs = [
         <div><dt>Changes published</dt><dd>{changes}</dd></div>
         <div><dt>Argued and refused</dt><dd>{refused}</dd></div>
         <div><dt>Answer sheets re-tested</dt><dd>{sheets}</dd></div>
+      </dl>
+    </aside>
+  </section>
+
+  {/*
+    What a reader may do with all of this (the owner's decision, 2026-09-21). The id is what
+    the one line in the footer points at, so the link lands on the permission rather than at
+    the top of the page.
+
+    The permission comes first and in plain words, because that is the sentence a Sunday
+    school teacher standing at a photocopier needs. The licence name and the two exceptions
+    follow underneath, on the same page and as visible text rather than behind a link: they
+    are the answer to "yes, but really?", and a reader who has to click for that has been
+    told half of something. There is no block of legal text, and there is not going to be.
+  */}
+  <SectionHead id="use" title="Take it with you" kicker="What you may do with everything here" />
+
+  <section class="pnl pnl--split">
+    <div class="doc doc--lead">
+      <p>
+        <strong>Use it.</strong> Print anything here for a class, a small group or a church,
+        or quote it, as long as you say where it came from and link back.
+      </p>
+      <p>
+        That is a real permission and not a slogan. The writing on this site and the data
+        behind the quizzes are published under a Creative Commons
+        <a href={LICENCE} rel="license">Attribution 4.0 licence</a>, which lets anyone copy,
+        print, translate, adapt and hand on the work, for money or not, on one condition:
+        credit Wiser Walk and link to where you found it.
+      </p>
+      <p>
+        Two things here were never ours to give away, and both are already free. The Bible
+        text is the Berean Standard Bible and the World English Bible, British Edition, and
+        the people who made each of them put it into the public domain. The paintings and
+        engravings are public-domain works too, each credited under the picture it belongs
+        to. Nobody needs our permission for any of that, or anyone else's.
+      </p>
+      <p>
+        No permission form, no request needed. If you do something interesting with it,
+        <a href={`mailto:${CONTACT}`}>tell us</a>, because it is good to know.
+      </p>
+    </div>
+    <aside class="pnl-aside">
+      {/* No mark on this kicker: the two other light asides on this page carry none, and a
+          lone icon here would read as an accident rather than a decision. */}
+      <p class="pnl-kicker">In short</p>
+      <dl class="spec spec--quiet">
+        <div><dt>The writing</dt><dd>CC BY 4.0</dd></div>
+        <div><dt>The quiz data</dt><dd>CC BY 4.0</dd></div>
+        <div><dt>Bible text</dt><dd>Public domain</dd></div>
+        <div><dt>Pictures</dt><dd>Public domain</dd></div>
+        <div><dt>Asking first</dt><dd>Not needed</dd></div>
       </dl>
     </aside>
   </section>

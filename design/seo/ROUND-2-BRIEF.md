@@ -93,3 +93,36 @@ spots something unfair or wrong). One line saying what people may do with the si
 anything here for a class, a small group or a church, or quote it, as long as you say where it came from
 and link back." with the detail (CC BY 4.0 for the words and the data; not the Bible text, not the
 paintings) one click away on `/about/`, and a short footer line linking there. No block of legal text.
+
+## The shared contract (so writers can work at the same time)
+
+A quiz is data, so the new reader-facing fields are GENERIC, optional fields on any group (an axis or a
+gift), typed once in `site/src/lib/engine/types.ts` and rendered once in
+`site/src/pages/axis/[quiz]/[axis].astro`:
+
+```ts
+question?: string;        // the searcher's question, used as the H2 over the answer block
+shortAnswer?: string;     // 40 to 50 words, visible text directly under the H1 band
+whyItMatters?: string;    // two or three sentences
+didYouKnow?: { text: string; source: string }[];   // up to three; `source` is printed small
+```
+
+The AXIS writer owns `types.ts`, the axis template and `build-data.mjs` (the Compass's source is
+snake_case in `audit/compass-data.revised.json`: `question`, `short_answer`, `why_it_matters`,
+`did_you_know`, mapped to the camelCase above). The GIFTS writer only writes data using the camelCase
+names on each gift's group object. Tradition profiles are a separate JSON keyed by the built slug.
+
+## Reverent capitals are part of every writer's job on the files they own
+
+Each writer also re-reads EVERY existing sentence in the files they own and capitalises the Names of
+God, Jesus and the Holy Spirit and the pronouns referring to Them, judging the referent sentence by
+sentence (Paul, Moses, a reader stay lower-case), never inside a quotation. The REVERENCE editor covers
+every file no writer owns. List each change as before -> after in your report.
+
+## Working together
+
+Several agents work in ONE tree at the same time. Touch only the files you own. **NEVER run `git
+stash`, `git reset`, `git checkout`, `git clean` or `git restore`**: earlier today one agent's stash
+silently destroyed another's work. Do not commit or push. No `npm install`. Do not run `astro build` or
+`npm run build` while others are writing (the integrator builds); `node scripts/build-data.mjs` and the
+unit tests are fine. Dev servers only on the port you are given, stopped when you finish.

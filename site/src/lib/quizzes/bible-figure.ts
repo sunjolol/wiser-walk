@@ -37,8 +37,8 @@
  *   both ends   two or three items with real refs and opposing `toward` values
  *   not shown   exactly one item, ref null, toward null, did "The text does not show this."
  *               One cell says more than the stock sentence: Jesus on Reasons, where the
- *               Gospels say he knew what was coming (John 18:4), so neither pole describes
- *               him and the cell says why instead of only saying "not shown".
+ *               Gospels say He knew what was coming (John 18:4), so neither pole describes
+ *               Him and the cell says why instead of only saying "not shown".
  * Neither is a place the person stood, so neither is counted when a reader is matched. That
  * is the evidence mask: see maskFor() below, and AxisMask in engine/types.ts.
  */
@@ -73,12 +73,12 @@ export interface FigureQuiz extends Quiz {
 }
 
 /**
- * The one sentence that goes wherever Jesus appears as a result: his card, his figure page,
+ * The one sentence that goes wherever Jesus appears as a result: His card, His figure page,
  * the share card. The same every time. Do not shorten it and do not decorate it.
  */
 export const JESUS_NOTE =
   'Landing nearest Jesus here is about temperament as the Gospels record it, not a measure ' +
-  'of holiness; every Christian is called to be like him in character, whatever their temperament.';
+  'of holiness; every Christian is called to be like Him in character, whatever their temperament.';
 
 /**
  * Which Bibles hold a figure's book, said once and the same way every time. The wording is
@@ -249,9 +249,9 @@ if (data.axisOrder.join(',') !== keys.join(',')) {
  *          figure had the fewest records, which is a false claim about that person.
  *   both   cited acts point to both poles AND they do not resolve into a position — the
  *          coordinate lands in the band where this instrument names no pole for anybody
- *          (41-59, from BAND_EDGES). True of Jesus on three axes: he heals on the spot and
- *          he prays all night before choosing; he overturns the tables and he restores
- *          Peter. That is a real finding about the record and a real refusal to place him,
+ *          (41-59, from BAND_EDGES). True of Jesus on three axes: He heals on the spot and
+ *          He prays all night before choosing; He overturns the tables and He restores
+ *          Peter. That is a real finding about the record and a real refusal to place Him,
  *          and it is not the same as a reader who is mildly in the middle.
  *   shown  everything else: the acts place this figure, and the coordinate says where.
  *          Acts pointing both ways still count as SHOWN when the weight of them carried
@@ -322,8 +322,8 @@ const outcomes: FigureOutcome[] = data.figures.map(f => ({
  * minShownAxes 3 of 6. See validateOutcomeMasks in engine/registry.ts. It was 4 until the
  *              audit was applied. Three reviewers (cessationist, Catholic and Orthodox,
  *              evidence) found that Jesus cannot honestly be placed on Reasons, because the
- *              Gospels say he knew what was coming; that leaves him placed on three axes, and
- *              the same reading of the text leaves his mother and Deborah on three. A floor
+ *              Gospels say He knew what was coming; that leaves Him placed on three axes, and
+ *              the same reading of the text leaves His mother and Deborah on three. A floor
  *              of four would take all three off the results, which the owner's decision about
  *              Jesus and the blueprint's nine women both rule out. Measured at 3: no figure
  *              closest for more than 9%, ties 8%. THE OWNER'S CALL: see AUDIT-LOG.md, top.
@@ -409,7 +409,7 @@ export const bibleFigure: FigureQuiz = {
     minMatchAxes: 2
   },
   // Not "I am most like": pasted into a chat beside the name of Jesus, that sentence is a
-  // boast the note on his card cannot travel with (both audits' F8).
+  // boast the note on His card cannot travel with (both audits' F8).
   shareTitle: 'Who in the Bible my answers sat nearest',
   codePrefix: 'BF',
 

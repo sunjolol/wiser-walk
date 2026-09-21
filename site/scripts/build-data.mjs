@@ -62,6 +62,18 @@ const axes = src.axes.map((a, i) => {
     left: a.left_pole,
     right: a.right_pole,
     bands: a.bands,
+    /*
+     * The four reader-facing fields, snake_case upstream and camelCase in the engine.
+     * Each is omitted when the audit source has not written it, so an axis that carries
+     * none of them produces exactly the object it produced before they existed — and the
+     * page renders exactly what it rendered before.
+     */
+    ...(a.question ? { question: a.question } : {}),
+    ...(a.short_answer ? { shortAnswer: a.short_answer } : {}),
+    ...(a.why_it_matters ? { whyItMatters: a.why_it_matters } : {}),
+    ...(Array.isArray(a.did_you_know) && a.did_you_know.length
+      ? { didYouKnow: a.did_you_know.map(k => ({ text: k.text, source: k.source })) }
+      : {}),
     summary: a.fair_summary,
     // Verified: every sentence of the audited summary is used exactly once.
     summaryParts: {
