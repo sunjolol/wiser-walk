@@ -61,8 +61,10 @@ cease and tongues are restrained "when the perfect comes," which they read as th
 to Paul's instruction, "be eager to prophesy, and do not forbid speaking in tongues"
 (1 Corinthians 14:39); and to the lack of any passage announcing a withdrawal.
 
-Many Reformed and Baptist Christians, among others, hold that the sign gifts (tongues,
-prophecy, healing, miracles) were given to confirm the apostles and their message while the
+Many Reformed and Baptist Christians, among others, hold that the sign gifts
+([tongues](/axis/spiritual-gifts/tongues/), [prophecy](/axis/spiritual-gifts/prophecy/),
+[healing](/axis/spiritual-gifts/healing/), [miracles](/axis/spiritual-gifts/miracles/))
+were given to confirm the apostles and their message while the
 church's foundation was being laid, and ceased once it was. They cite Hebrews 2:3–4, where
 salvation "was affirmed by God through signs, wonders, various miracles, and gifts of the
 Holy Spirit"; 2 Corinthians 12:12, "The marks of a true apostle—signs, wonders, and
@@ -93,5 +95,7 @@ you did. If others were built up, do it again.
 
 ## Where this connects
 
-Whether the sign gifts continue is one of the six axes of the Theology Compass. Its axis
-page sets out both positions at greater length, each in its holders' own terms.
+Whether the sign gifts continue is one of the six axes of the
+[Theology Compass](/q/theology-compass/).
+[Its axis page](/axis/theology-compass/gifts/) sets out both positions at greater length,
+each in its holders' own terms.

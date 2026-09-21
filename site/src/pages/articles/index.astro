@@ -8,9 +8,17 @@ import { getCollection } from 'astro:content';
 import { getQuiz, quizHref } from '../../lib/engine/registry';
 import { liveGames } from '../../lib/games';
 
+/*
+ * Newest first, and then by title. Seven of the eleven articles share a publication date, and
+ * a sort with no tie-break leaves those seven in whatever order the file system handed them
+ * over — which is not the same order on Windows as on Vercel's Linux builder. The hub and the
+ * "More to read" block were shuffling between the two. The home page already sorted this way;
+ * the other call sites simply never copied the second clause.
+ */
 const articles = (await getCollection('articles'))
   .filter(a => !a.data.draft)
-  .sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf());
+  .sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf()
+    || a.data.title.localeCompare(b.data.title));
 
 /* Every number on this page is counted off the collection, never typed in. */
 const minutes = articles.reduce((n, a) => n + a.data.minutes, 0);

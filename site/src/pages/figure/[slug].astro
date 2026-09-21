@@ -37,6 +37,7 @@ import type { FigureEvidence, FigureOutcome } from '../../lib/quizzes/bible-figu
 import { groupHref, quizHref, resultFor } from '../../lib/engine/registry';
 import type { BipolarView } from '../../lib/engine/types';
 import { artFor, artForOutcome } from '../../lib/art';
+import { clip } from '../../lib/seo';
 
 export function getStaticPaths() {
   return bibleFigure.outcomes.map(f => ({ params: { slug: f.slug }, props: { figure: f } }));
@@ -201,14 +202,65 @@ const bothAxes = axes.filter(a => a.bothEnds).length;
 /** The axes this person is actually matched on. Never all six for every figure. */
 const matchedAxes = placedAxes.length;
 
+/**
+ * THE TITLE AND THE DESCRIPTION (2026-09-21).
+ *
+ * The pages that rank for these people are titled around "in the Bible" and "character",
+ * and this one was titled "What was Rahab like?", a narrower phrasing than anyone types.
+ * So the name and "in the Bible" go first, and what the page actually holds follows.
+ * ", with verses" is added only where it fits inside the width a result is rendered at,
+ * which is why a long name simply stops after the count.
+ *
+ * What the description may NOT say: that the page reads a personality off a person. It
+ * holds recorded acts, each cited, and the axes are temperament rather than virtue, so
+ * that is the word it uses. It also does not say "beside 24 others": the page lists six
+ * neighbours, not twenty-four.
+ */
+const base = `${figure.name} in the Bible: ${momentCount} recorded acts`;
+const title = base.length + 13 <= 60 ? `${base}, with verses` : base;
+const description = clip(
+  `${momentCount} recorded acts of ${figure.name}, each with its verse, and what they ` +
+  'show about temperament. Part of a free Bible character quiz.'
+);
+
+/*
+ * WebPage, not Article. The page was declaring itself an Article while carrying none of
+ * an article's properties, and its own head said og:type website at the same time. It is
+ * a reference page about a person, which is what WebPage and `about` a Person say.
+ *
+ * The plate is declared the page's primary image ONLY where it is this person's own.
+ * Five figures have no usable plate and wear the quiz's picture instead, which is Doré's
+ * Moses; telling a machine that the primary image of a page about Rahab is an engraving
+ * of Moses breaking the tablets is a small untruth, and a small untruth in markup is
+ * still one. `artForOutcome` hands back the quiz's own object when it falls back, so the
+ * question is answered by identity: if this is a different object, it was drawn for this
+ * person. If that ever stops being true the check fails towards saying nothing, which is
+ * the right way for it to fail.
+ */
+const ownPlate = art !== quizArt;
+const siteId = new URL('/#website', Astro.site).href;
 const jsonLd = isDraft
   ? null
   : {
       '@context': 'https://schema.org',
-      '@type': 'Article',
-      headline: `${figure.name} on ${quiz.title}`,
-      description: `Where the recorded acts of ${figure.name} place them on six axes of temperament.`,
-      url: new URL(`/figure/${figure.slug}/`, Astro.site).href
+      '@type': 'WebPage',
+      name: `${figure.name} on ${quiz.title}`,
+      description,
+      url: new URL(`/figure/${figure.slug}/`, Astro.site).href,
+      isPartOf: [
+        { '@id': siteId },
+        { '@type': 'Quiz', name: quiz.title, url: new URL(quizHref(quiz), Astro.site).href }
+      ],
+      about: { '@type': 'Person', name: figure.name },
+      ...(ownPlate && art
+        ? {
+            primaryImageOfPage: {
+              '@type': 'ImageObject',
+              url: new URL(art.src, Astro.site).href,
+              caption: art.alt
+            }
+          }
+        : {})
     };
 
 const breadcrumbs = isDraft
@@ -221,8 +273,8 @@ const breadcrumbs = isDraft
     ];
 ---
 <Base
-  title={`What was ${figure.name} like? ${momentCount} recorded acts, with verses`}
-  description={`${momentCount} recorded acts of ${figure.name}, each with its verse, show how ${figure.name} acted, spoke and led. Take the free quiz: which Bible figure are you most like?`}
+  title={title}
+  description={description}
   noindex={isDraft}
   jsonLd={jsonLd}
   breadcrumbs={breadcrumbs}

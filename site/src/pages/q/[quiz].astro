@@ -14,14 +14,36 @@ import Icon from '../../components/Icon.astro';
 import SectionHead from '../../components/SectionHead.astro';
 import QuizPreview from '../../components/QuizPreview.astro';
 import OutcomeIndex from '../../components/OutcomeIndex.astro';
+import ReadCard from '../../components/ReadCard.astro';
+import { getCollection } from 'astro:content';
 import { QUIZZES, getQuiz } from '../../lib/engine/registry';
-import { capitalise, groupNounPlural, outcomeNounPlural, outcomePathBase } from '../../lib/engine/types';
+import { capitalise, groupNounPlural, outcomeNounPlural } from '../../lib/engine/types';
+import '../../styles/pages/reads.css';
 
 export function getStaticPaths() {
   return QUIZZES.map(q => ({ params: { quiz: q.slug } }));
 }
 
 const quiz = getQuiz(Astro.params.quiz)!;
+
+/*
+ * THE OTHER HALF OF THE LOOP.
+ *
+ * An article names the quizzes it belongs beside in its own front matter, and the article
+ * template has always read that list to draw its "Keep going" block. Nothing read it the
+ * other way, so every link between the two ran one way: eleven articles pointed at the
+ * quizzes and not one quiz pointed back at an article on its own subject.
+ *
+ * So this is the same list, read backwards. No second list to keep in step: an article that
+ * names this quiz appears here the day it is written, and one that does not, does not.
+ * Three at most, and sorted by date and then by slug so that two articles published on the
+ * same day come out in the same order on every machine that builds the site.
+ */
+const readNext = (await getCollection('articles'))
+  .filter(a => !a.data.draft && a.data.quizzes.includes(quiz.slug))
+  .sort((a, b) =>
+    b.data.published.valueOf() - a.data.published.valueOf() || a.id.localeCompare(b.id))
+  .slice(0, 3);
 const isDraft = quiz.status === 'draft';
 const bipolar = quiz.strategy.shape === 'bipolar';
 
@@ -80,7 +102,8 @@ const jsonLd = isDraft
       name: quiz.title,
       description: quiz.description,
       url: new URL(`/q/${quiz.slug}/`, Astro.site).href,
-      numberOfQuestions: quiz.items.length,
+      // `numberOfQuestions` is not a schema.org property at all: the term 404s, so this block
+      // was publishing one invalid predicate. The count is on the page as a tile anyway.
       educationalLevel: 'general',
       about: { '@type': 'Thing', name: 'Christian belief and self-understanding' }
     };
@@ -294,9 +317,39 @@ const breadcrumbs = isDraft
         </div>
       </section>
 
-      {/* The traditions, each a way in to its own page. Only the Compass's outcomes are
-          traditions; the figures have their own index on the quiz's axis pages. */}
-      {outcomePathBase(quiz) === 'tradition' && quiz.outcomes.length > 0 && <OutcomeIndex quiz={quiz} />}
+      {/*
+        Every outcome, each a way in to its own page.
+
+        This used to be the Compass's alone: the figures were said to have their own index on
+        this quiz's axis pages, which was true and was not enough. Those six axis pages are the
+        ONLY route to the twenty-five figure pages, so the site's longest, most cited family sat
+        three taps from the home page while the Compass's traditions sat two. The test is the
+        data — a quiz with outcomes has pages for them — not which quiz this is. A quiz whose
+        strategy reads no outcomes prints nothing here, as it always did.
+      */}
+      {quiz.outcomes.length > 0 && <OutcomeIndex quiz={quiz} />}
+
+      {/* The articles written alongside this quiz, as the paintings they are — the same
+          cards, in the same grid, that the foot of an article and of a result already use.
+          Below the last way in, so nothing to read stands between a reader and the start
+          button. A quiz no article has named yet prints nothing. */}
+      {readNext.length > 0 && (
+        <section class="qreads">
+          <SectionHead
+            title="Read next"
+            kicker="Alongside this quiz"
+            href="/articles/"
+            more="All articles"
+          />
+          <div class="hm-reads reads-foot">
+            {readNext.map(a => (
+              <ReadCard id={a.id} title={a.data.title} description={a.data.description}
+                        minutes={a.data.minutes} image={a.data.image} imageAlt={a.data.imageAlt}
+                        imagePosition={a.data.imagePosition} />
+            ))}
+          </div>
+        </section>
+      )}
     </div>
 
     <div id="play" hidden>

@@ -12,6 +12,15 @@ const articles = defineCollection({
     title: z.string(),
     description: z.string(),
     published: z.coerce.date(),
+    /**
+     * The day the piece was last genuinely rewritten, where that has happened. Optional, and
+     * deliberately unset on every article today: it is the ONLY date the sitemap stamps as
+     * `lastmod` and the only one the article's `dateModified` is allowed to come from, so a
+     * value here has to be a real edit rather than the day of a deploy. Google uses lastmod
+     * only where it is verifiably accurate, and a build timestamp on ninety-seven pages is
+     * how a site teaches it to ignore the field.
+     */
+    updated: z.coerce.date().optional(),
     minutes: z.number().int().positive(),
     tags: z.array(z.string()).default([]),
     quizzes: z.array(z.string()).default([]),

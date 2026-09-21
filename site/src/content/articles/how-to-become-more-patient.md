@@ -20,11 +20,13 @@ brothers" (James 5:9). Waiting badly and treating people badly travel together.
 
 ## Where it starts
 
-Patience is first a description of God. When the LORD proclaims his own name to Moses, the
+Patience is first a description of God. When the LORD proclaims his own name to
+[Moses](/figure/moses/), the
 words are "compassionate and gracious, slow to anger, abounding in loving devotion and
 faithfulness" (Exodus 34:6).
 
-Paul reads his own life by that light. He calls himself the worst of sinners and says he was
+[Paul](/figure/paul/) reads his own life by that light. He calls himself the worst of sinners
+and says he was
 shown mercy so that in him "Christ Jesus might display His perfect patience as an example to
 those who would believe in Him" (1 Timothy 1:16). His starting point is not that he ought to
 be patient. It is that someone has been patient with him.
@@ -40,7 +42,8 @@ his own words in somebody else's mouth.
 Galatians 5:22 lists patience among the fruit of the Spirit, which is grown and
 not manufactured. Colossians 3:12 tells the church to "clothe yourselves with hearts of
 compassion, kindness, humility, gentleness, and patience," which is something you do on
-purpose. Christian traditions explain how God's work and human effort fit together in
+purpose. Christian traditions explain
+[how God's work and human effort fit together](/axis/theology-compass/grace/) in
 different terms, but none of them says this fruit grows without the Spirit, and none says
 you are excused from getting dressed.
 
@@ -85,5 +88,6 @@ another, and no verse above asks that of anyone.
 The old list of capital vices names wrath, and the writers above keep setting patience
 against anger. Ecclesiastes points at a second root: "a patient spirit is better than a
 proud one" (Ecclesiastes 7:8). Impatience often assumes that my time matters more than
-yours. If you want to see which of the seven has the most pull on you, that quiz is the
+yours. If you want to see which of the seven has the most pull on you,
+[that quiz](/q/seven-deadly-sins/) is the
 natural next step.

@@ -12,7 +12,7 @@ imagePosition: "50% 60%"
 ---
 
 Contentment is usually pictured as a temperament: some people are easily pleased and the
-rest of us are not. Paul writes, "I have learned to be content regardless of my
+rest of us are not. [Paul](/figure/paul/) writes, "I have learned to be content regardless of my
 circumstances" (Philippians 4:11). Learned, and he says so twice in two verses. A thing
 that was learned can be learned by someone else.
 
@@ -86,5 +86,7 @@ contentment inside ordinary work and ownership. Both hold to Hebrews 13:5.
 ## Where this connects
 
 Greed and envy are two of the seven capital vices, and discontent feeds both: one wants
-more, the other wants yours. The seven deadly sins quiz will show which has more pull on
-you, and the article on gratitude covers the same ground from the other side.
+more, the other wants yours. [The seven deadly sins quiz](/q/seven-deadly-sins/) will show
+which has more pull on
+you, and [the article on gratitude](/articles/how-to-become-more-grateful/) covers the same
+ground from the other side.

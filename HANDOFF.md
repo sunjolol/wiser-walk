@@ -48,14 +48,14 @@ same day** (domain verified by a TXT record he added at SiteGround; checked from
 records are untouched; sitemap submitted; home page indexing requested). Nothing more to do but wait: the
 description refreshes in days, the icon on Google's schedule, and sitelinks cannot be forced.
 
-**ACCOUNTS ARE BUILT, HIDDEN, AND WAITING ON HIM (2026-09-21), on local branch `feature/accounts`** (rebased
-on `origin/main`; NOT pushed; it has no upstream on purpose, so a bare `git push` cannot deploy). Read
+**ACCOUNTS ARE BUILT AND LIVE BUT HIDDEN ON `main` (pushed 2026-09-21, `08e64af`, his go).** He said he will make
+the Resend account and follow the README "later"; it is ready "in case the site gains popularity". Do not
+chase him. `/method/` and `/about/` keep today's wording until the keys are set. Read
 `design/accounts/BUILD-BRIEF.md` + `FIX-ROUND-1.md` (spec and rulings) and `site/src/lib/account/README.md` (his
 numbered setup steps: fifteen with Resend, seventeen with Brevo). The flow is his: email-only box, the emailed
 link lands on a set-a-password page, then email + password, "forgot" sends the same kind of link, Google later.
-NEXT STEPS, IN ORDER: (1) get his go to push the HIDDEN code to `main` (nothing visible changes; Supabase's
-email hook can only reach production because Vercel previews are behind a login wall); (2) he chooses the sender
-(Resend recommended, Brevo possible) and works through the README; (3) he tests at the unlinked
+NEXT STEPS WHEN HE IS READY: (1) DONE: the hidden code is on `main`; (2) he makes the Resend account (his
+choice, 2026-09-21) and works through the README; (3) he tests at the unlinked
 `wiserwalk.com/account/sign-up/`; once signed in, his own `/me/` shows the signed-in version while the public
 sees nothing; he can see signed-out visitors' entry points on a Vercel PREVIEW build; (4) with his go, flip
 `ACCOUNT_LINKS_LIVE` in `site/src/lib/account/config.ts`, run `npm run test:switches` (it must pass), push.

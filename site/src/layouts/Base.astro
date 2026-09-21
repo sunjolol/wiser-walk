@@ -61,7 +61,18 @@ const breadcrumbLd =
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const siteName = 'Wiser Walk';
 const seo = SEO[Astro.url.pathname];
-const fullTitle = seo ? seo.title : title === siteName ? title : `${title} — ${siteName}`;
+/*
+ * The brand suffix, now conditional.
+ *
+ * " — Wiser Walk" was appended to every title that seo.ts did not override, which cost 13
+ * characters on 80 pages and pushed most of them past the width a result is rendered at:
+ * the National Baptist tradition page shipped a 118-character title. Nobody is searching
+ * the brand yet, so on a long title the suffix is pure cost and the distinguishing words
+ * are the ones that have to survive. It is kept wherever there is room for it, which is
+ * where it does the small job it was added for.
+ */
+const withBrand = title === siteName ? title : `${title} — ${siteName}`;
+const fullTitle = seo ? seo.title : withBrand.length <= 60 ? withBrand : title;
 const metaDescription = seo ? seo.description : description;
 /* What a feed shows: the search title where there is one (it is the inviting one), and the
    page's own card. Absolute URLs, because a crawler does not resolve a relative image. */
@@ -158,6 +169,12 @@ const NAV: Array<{
     <link rel="icon" type="image/png" sizes="96x96" href="/icon-96.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    {/*
+      Feed autodiscovery, on every page rather than on the articles alone: a reader who
+      wants to follow the writing is as likely to be standing on a quiz as on the hub, and
+      a browser or a reader app looks for this tag wherever it lands.
+    */}
+    <link rel="alternate" type="application/rss+xml" title="Wiser Walk articles" href="/articles/feed.xml" />
 
     {/*
       Applied before first paint, so a reader who chose a theme never sees the other one

@@ -4,6 +4,8 @@ import Base from '../../layouts/Base.astro';
 import SectionHead from '../../components/SectionHead.astro';
 import NextUp from '../../components/NextUp.astro';
 import ReadCard from '../../components/ReadCard.astro';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { getCollection, render } from 'astro:content';
 import { getQuiz } from '../../lib/engine/registry';
 import { liveGames } from '../../lib/games';
@@ -32,9 +34,20 @@ const ghost =
 /* Contents from the rendered headings — the article's own h2s, in the order they appear. */
 const contents = headings.filter(h => h.depth === 2).map(h => ({ id: h.slug, label: h.text }));
 
+/*
+ * The date, printed and marked up, and both read off the same instant.
+ *
+ * `published: 2026-09-20` in the front matter is midnight UTC, and rendering it in the build
+ * machine's own zone turned it into "19 September" on any machine west of Greenwich. Nobody
+ * noticed while it was only words on a page; the moment the same date is also published as a
+ * <time datetime>, a visible date and a structured one that disagree is exactly what Google
+ * asks a page not to do. So the rail is pinned to UTC, which is the zone the front matter is
+ * written in. Vercel builds in UTC, so nothing on the live site moves.
+ */
 const published = article.data.published.toLocaleDateString('en-GB', {
-  day: 'numeric', month: 'long', year: 'numeric'
+  day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC'
 });
+const publishedISO = article.data.published.toISOString().slice(0, 10);
 
 /*
  * Where to go next. Articles and quizzes cross-link in both directions, so the quizzes
@@ -63,19 +76,97 @@ const nextGames = liveGames();
  */
 const everything = (await getCollection('articles'))
   .filter(a => !a.data.draft && a.id !== article.id)
-  .sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf());
+  .sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf()
+    || a.data.title.localeCompare(b.data.title));
 const shares = (a: (typeof everything)[number]) =>
   a.data.tags.some(t => article.data.tags.includes(t));
 const moreReads = [...everything.filter(shares), ...everything.filter(a => !shares(a))].slice(0, 3);
 
+/*
+ * The painting's real pixel size, read out of the file's own JPEG header rather than typed
+ * anywhere, so the markup can never describe a picture that has since been re-exported. This
+ * page is prerendered, so the read happens at build time; a file that cannot be parsed, or
+ * cannot be found, simply gives the image no dimensions, which is what "if known" means.
+ *
+ * Anchored on the working directory rather than on `import.meta.url`: the dev server patches
+ * node's fs and a read resolved against the module's own URL fails there with an opaque
+ * filesystem error. `astro dev` and `astro build` both run from site/, which is also Vercel's
+ * root directory, so the same path is right in both.
+ */
+function jpegSize(publicPath: string): { width: number; height: number } | null {
+  try {
+    const b = readFileSync(join(process.cwd(), 'public', publicPath));
+    if (b.readUInt16BE(0) !== 0xffd8) return null;
+    let i = 2;
+    // Written as "length >" rather than "< b.length": a `<` followed by an identifier in an
+    // Astro frontmatter is read as the start of a tag, and the page compiles into nonsense.
+    while (b.length > i + 9) {
+      if (b[i] !== 0xff) { i++; continue; }
+      const marker = b[i + 1];
+      if (marker === 0xff) { i++; continue; }
+      // A start-of-frame marker carries the size. The four in that range that are not frame
+      // headers (DHT, JPG, DAC, DNL) are stepped over like any other segment.
+      if (marker >= 0xc0 && marker <= 0xcf && marker !== 0xc4 && marker !== 0xc8 && marker !== 0xcc) {
+        return { width: b.readUInt16BE(i + 7), height: b.readUInt16BE(i + 5) };
+      }
+      if (marker === 0x01 || (marker >= 0xd0 && marker <= 0xd9)) { i += 2; continue; }
+      i += 2 + b.readUInt16BE(i + 2);
+    }
+  } catch {}
+  return null;
+}
+
+const url = new URL(`/articles/${article.id}/`, Astro.site).href;
+
+/*
+ * One Organization, named once and pointed at twice. The home page publishes the full node
+ * under the same @id, so an engine that has read both pages holds one entity rather than two
+ * that happen to share a name. The owner stays faceless: the author here is the site, which
+ * is a type Google names explicitly for organisations, not a stand-in for a person.
+ */
+const ORGANISATION = {
+  '@type': 'Organization',
+  '@id': 'https://wiserwalk.com/#organization',
+  name: 'Wiser Walk',
+  url: 'https://wiserwalk.com/',
+  logo: {
+    '@type': 'ImageObject',
+    url: 'https://wiserwalk.com/icon-512.png',
+    width: 512,
+    height: 512
+  }
+};
+
+const painting = article.data.image;
+const paintingSize = painting ? jpegSize(painting) : null;
+
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'Article',
+  '@type': 'BlogPosting',
   headline: article.data.title,
   description: article.data.description,
+  url,
+  mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+  ...(painting
+    ? {
+        image: {
+          '@type': 'ImageObject',
+          url: new URL(painting, Astro.site).href,
+          ...(paintingSize ?? {}),
+          ...(article.data.imageAlt ? { caption: article.data.imageAlt } : {})
+        }
+      }
+    : {}),
   datePublished: article.data.published.toISOString().slice(0, 10),
-  url: new URL(`/articles/${article.id}/`, Astro.site).href,
-  publisher: { '@type': 'Organization', name: 'Wiser Walk' }
+  /* Only a real rewrite gets a dateModified. A deploy is not an edit, and there is no field
+     here that a build timestamp could fill. */
+  ...(article.data.updated
+    ? { dateModified: article.data.updated.toISOString().slice(0, 10) }
+    : {}),
+  author: ORGANISATION,
+  publisher: { '@id': ORGANISATION['@id'] },
+  isPartOf: { '@id': 'https://wiserwalk.com/#website' },
+  inLanguage: 'en'
 };
 
 const breadcrumbs = [
@@ -121,7 +212,7 @@ import '../../styles/pages/reads.css';
           long piece is the way through it, so the rail is the date, the contents and the
           way back, and the repeat is gone (the dawn pass, 2026-09-21).
         */}
-        <p class="rail-when">Published {published}</p>
+        <p class="rail-when">Published <time datetime={publishedISO}>{published}</time></p>
         <nav aria-label="Contents">
           <p class="toc-head">In this article</p>
           <ol class="toc-list">

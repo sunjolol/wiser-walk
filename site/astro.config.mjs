@@ -1,3 +1,4 @@
+import { readdirSync, readFileSync } from 'node:fs';
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import vercel from '@astrojs/vercel';
@@ -14,6 +15,51 @@ const draftPrefixes = QUIZZES.filter(q => q.status === 'draft').flatMap(q => [
   `/axis/${q.slug}/`,
   ...(q.outcomes.length ? [`/${outcomePathBase(q)}/`] : [])
 ]);
+
+/**
+ * The one date on this site a crawler can check for itself.
+ *
+ * Google uses `lastmod` only where it is "consistently and verifiably accurate", so stamping
+ * all ninety-seven pages with the build date would teach it to discount the field for the
+ * whole domain. The articles are the only pages carrying a real date of their own, written in
+ * their front matter by hand, so they are the only ones that get one: `updated` where a piece
+ * has genuinely been rewritten, `published` otherwise. Everything else goes out with no
+ * lastmod at all, which is the honest answer rather than a guess.
+ *
+ * The front matter is read here with a regex rather than through the content collection,
+ * because a config file runs before `astro:content` exists. It reads exactly the two date
+ * fields and nothing else, and a file it cannot make sense of is simply left out.
+ *
+ * Exported so scripts/seo-plumbing-test.mjs can drive it against fixture front matter.
+ */
+export function articleLastmod(dir) {
+  const dates = new Map();
+  let files;
+  try {
+    files = readdirSync(dir);
+  } catch {
+    return dates;
+  }
+  for (const file of files) {
+    if (!file.endsWith('.md')) continue;
+    const matter = /^---\r?\n([\s\S]*?)\r?\n---/.exec(readFileSync(new URL(file, dir), 'utf8'));
+    if (!matter) continue;
+    const block = matter[1];
+    // A draft has no page, so it can have no sitemap entry either.
+    if (/^draft:[ \t]*true[ \t]*$/m.test(block)) continue;
+    const field = name => {
+      const m = new RegExp(`^${name}:[ \\t]*(.+?)[ \\t]*$`, 'm').exec(block);
+      return m ? m[1].replace(/^['"]|['"]$/g, '') : '';
+    };
+    const date = field('updated') || field('published');
+    // A date we cannot read is a date we do not publish.
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) continue;
+    dates.set(`/articles/${file.slice(0, -3)}/`, date);
+  }
+  return dates;
+}
+
+const lastmod = articleLastmod(new URL('./src/content/articles/', import.meta.url));
 
 // Everything is static except result pages, which are rendered on demand from the code
 // in the URL — so any valid code has a permanent page without pre-building millions.
@@ -49,11 +95,19 @@ export default defineConfig({
       // it carries noindex, and there is nothing on it for anybody else to find. So is every
       // /account/ page: they are one person's own door, they carry noindex, and one of them
       // is opened from an email with a one-time token in its address.
+      // The articles' feed is a feed, not a page: a reader subscribes to it, nobody lands on
+      // it from a search result, and it is announced in the head of every page instead.
       filter: page => {
         const path = new URL(page).pathname;
         if (path.startsWith('/r/') || path.startsWith('/c/') || path === '/me/') return false;
         if (path.startsWith('/account/')) return false;
+        if (path === '/articles/feed.xml') return false;
         return !draftPrefixes.some(prefix => path.startsWith(prefix));
+      },
+      serialize: item => {
+        const date = lastmod.get(new URL(item.url).pathname);
+        if (date) item.lastmod = date;
+        return item;
       }
     })
   ],

@@ -1,0 +1,49 @@
+---
+/**
+ * The page for an address that is not here.
+ *
+ * Vercel's own answer is eighty bytes of plain text with a request id in it and no way back,
+ * which is what every mistyped link, every link broken in half by a chat app and every stale
+ * bookmark has been landing on. A shared result link already has its own recovery page inside
+ * /r/, and that one says the thing only it can say; this is the general case, so it says one
+ * honest line and then gets out of the way.
+ *
+ * Small on purpose. The band's night ground, four ways back as buttons rather than a row of
+ * small links a thumb cannot hit, and nothing else: a reader here did not choose to be here
+ * and is owed the shortest possible route out.
+ *
+ * Astro writes it as 404.html and Vercel serves it for anything unmatched; nothing has to be
+ * declared anywhere for that to happen.
+ */
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Icon from '../components/Icon.astro';
+
+/* Every one of these is a real hub that exists today. */
+const WAYS = [
+  { href: '/quizzes/', label: 'Quizzes', icon: 'compass' as const },
+  { href: '/games/', label: 'Games', icon: 'scroll' as const },
+  { href: '/articles/', label: 'Articles', icon: 'book' as const },
+  { href: '/me/', label: 'My results', icon: 'users' as const }
+];
+---
+<Base
+  title="Page not found"
+  description="That address is not on Wiser Walk. Here are the quizzes, the games, the articles and your own results."
+  noindex={true}
+>
+  <Hero
+    title="There is nothing at this address."
+    eyebrow="Page not found"
+    icon="path"
+    kind="night"
+    lede="The link may have been mistyped, or cut in half on its way to you. Everything on the site is a tap away from here."
+    long
+  >
+    <Fragment slot="actions">
+      {WAYS.map(w => (
+        <a class="btn" href={w.href}>{w.label} <Icon name={w.icon} size={15} /></a>
+      ))}
+    </Fragment>
+  </Hero>
+</Base>

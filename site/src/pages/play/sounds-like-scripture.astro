@@ -28,7 +28,7 @@ const cut = fragment.indexOf(SPLIT);
 if (cut === -1) throw new Error('sounds-like-scripture.html: no </style> to split on');
 if (fragment.includes('/*__POOL__*/')) throw new Error('sounds-like-scripture.html: the pool was never injected');
 
-const head = fragment.slice(0, cut + SPLIT.length).replace(/<title>[\s\S]*?<\/title>/, '');
+let head = fragment.slice(0, cut + SPLIT.length).replace(/<title>[\s\S]*?<\/title>/, '');
 let body = fragment.slice(cut + SPLIT.length);
 
 // The standalone demo has nowhere to link to; the live page does. Both swaps fail the build
@@ -37,6 +37,23 @@ const swap = (html: string, find: string, put: string) => {
   if (!html.includes(find)) throw new Error(`sounds-like-scripture.html: expected markup not found: ${find}`);
   return html.replace(find, () => put);
 };
+
+/*
+ * One Google Fonts request for the whole site.
+ *
+ * The generated document asks for its own weight list, which is not the layout's, so a reader
+ * crossing from any other page pays for a second render-blocking stylesheet that delivers the
+ * same faces. The two strings have to be character-identical or the browser keeps two cache
+ * entries, which is the whole point of matching them. The fragment is generated and must never
+ * be hand-edited, so the swap happens here, on the copy this page serves, and fails the build
+ * if the source markup ever moves.
+ */
+const FONTS_GAME =
+  'https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap';
+const FONTS_LAYOUT =
+  'https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&display=swap';
+head = swap(head, FONTS_GAME, FONTS_LAYOUT);
+
 body = swap(
   body,
   '<p class="band-chip">A wiserwalk game</p>',
@@ -48,12 +65,16 @@ body = swap(
   '<p class="small ww-more"><a href="/q/theology-compass/">Take the Theology Compass</a><span aria-hidden="true"> · </span><a href="/">More from Wiser Walk</a></p>\n    <p class="small foot" id="footResult"></p>'
 );
 
+/* The full trail, as every other template publishes one. It used to skip /games/, which is a
+   real indexable hub with its own place in the sitemap, so the one rich result this site can
+   realistically earn was being published a step short. */
 const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Home', item: new URL('/', Astro.site).href },
-    { '@type': 'ListItem', position: 2, name: title, item: canonical }
+    { '@type': 'ListItem', position: 2, name: 'Games', item: new URL('/games/', Astro.site).href },
+    { '@type': 'ListItem', position: 3, name: title, item: canonical }
   ]
 };
 /* Search and social: the inviting title and description, and this game's own card. */
@@ -71,6 +92,9 @@ const ogImage = new URL(ogImageFor('/play/sounds-like-scripture/'), Astro.site).
     <title>{seoEntry ? socialTitle : `${title} — ${siteName}`}</title>
     <meta name="description" content={socialDescription} />
     <link rel="canonical" href={canonical} />
+    {/* The same feed autodiscovery the layout gives every other page: a reader app that
+        lands here should still find the articles. */}
+    <link rel="alternate" type="application/rss+xml" title="Wiser Walk articles" href="/articles/feed.xml" />
     <meta name="robots" content="max-image-preview:large" />
     {/* The same icon links as layouts/Base.astro: this page is its own document. */}
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
@@ -96,6 +120,10 @@ const ogImage = new URL(ogImageFor('/play/sounds-like-scripture/'), Astro.site).
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    {/* The two the layout sets for every other page, and that this hand-written head had
+        drifted away from. The comment at the top of this file claims parity; now it holds. */}
+    <meta property="og:image:alt" content={socialTitle} />
+    <meta property="og:locale" content="en_GB" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={ogImage} />
     <meta name="twitter:title" content={socialTitle} />

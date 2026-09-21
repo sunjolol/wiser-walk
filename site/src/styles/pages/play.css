@@ -178,3 +178,24 @@
   .gcard, .gcard-go .icon, .gcard-names span { transition: none; }
   .gcard:hover { transform: none; }
 }
+
+/* ---- the words under the cards, at /games/ (2026-09-21) --------------------
+ *
+ * Plain panels from the kit (.stack--2 from pages/prose.css), one to a game, so the block
+ * reads as the page explaining itself rather than as two more cards competing with the two
+ * above it. Only the way in and the closing line are drawn here.
+ */
+.ghub + .sect { margin-top: 2.6rem; }
+.gsay-go { margin: 1.1rem 0 0; }
+.gsay-go a {
+  display: inline-flex; align-items: center; gap: .45rem; text-decoration: none;
+  font-family: var(--ui); font-size: .7rem; font-weight: 700; letter-spacing: .13em;
+  text-transform: uppercase; color: var(--accent);
+}
+.gsay-go a .icon { transition: transform .18s ease; }
+.gsay-go a:hover .icon { transform: translateX(3px); }
+.gsay-foot {
+  margin: 1.4rem 0 0; max-width: 44rem;
+  font-size: .92rem; line-height: 1.6; color: var(--ink-mute);
+}
+@media (prefers-reduced-motion: reduce) { .gsay-go a .icon { transition: none; } }

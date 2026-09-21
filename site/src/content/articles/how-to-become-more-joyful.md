@@ -19,7 +19,8 @@ right before anything else.
 ## Joy is not cheerfulness
 
 The clearest evidence is that the New Testament repeatedly puts joy and sorrow in the same
-sentence without embarrassment. Paul describes himself as "sorrowful, yet always rejoicing"
+sentence without embarrassment. [Paul](/figure/paul/) describes himself as "sorrowful, yet
+always rejoicing"
 (2 Corinthians 6:10). James writes, "Consider it pure joy, my brothers, when you encounter
 trials of many kinds" (James 1:2) — consider it, an act of reckoning, not a feeling that
 arrives on its own.
@@ -61,9 +62,11 @@ your strength" — is said to people who have just wept at hearing the Law read.
 denial of what they feel. It is a reminder of what is also true, offered in the middle of
 it. Naming both is more honest than naming either alone.
 
-**Cut the things that flatten it.** This is unglamorous. Sleep, resentment you are nursing,
+**Cut the things that flatten it.** This is unglamorous. Sleep,
+[resentment you are nursing](/articles/how-to-forgive-someone-who-hurt-you/),
 the fourth hour of scrolling. None of these is a great sin, and all of them reliably
-smother joy. Sloth in the old sense — acedia, the listlessness that will not do the good it
+smother joy. [Sloth in the old sense](/q/seven-deadly-sins/) — acedia, the listlessness that
+will not do the good it
 knows — is joy's most common quiet enemy.
 
 **Do something for someone.** Joy is remarkably difficult to find while looking directly at

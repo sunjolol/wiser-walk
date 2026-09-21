@@ -20,9 +20,11 @@ whether or not you are in the mood.
 
 ## What it is not
 
-Humility is not a low opinion of yourself. Paul's instruction in Romans 12:3 is "Do not
+Humility is not a low opinion of yourself. [Paul](/figure/paul/)'s instruction in Romans 12:3
+is "Do not
 think of yourself more highly than you ought, but think of yourself with sober judgment."
-The standard is sober, not low. The next verses say that people have different gifts and
+The standard is sober, not low. The next verses say that people have
+[different gifts](/articles/what-are-spiritual-gifts/) and
 should use them (Romans 12:4–6). Someone who denies a real ability is no nearer to sober
 judgment than someone who inflates it.
 
@@ -88,6 +90,8 @@ yours.
 
 ## Where this connects
 
-Pride comes first in the traditional list of seven capital vices. The seven deadly sins
-quiz shows which of them has the most pull on you. The article on being Christ-like
+Pride comes first in the traditional list of seven capital vices.
+[The seven deadly sins quiz](/q/seven-deadly-sins/) shows which of them has the most pull
+on you.
+[The article on being Christ-like](/articles/what-does-it-mean-to-be-christlike/)
 spends longer on Philippians 2:5–8, where every verb moves downward.

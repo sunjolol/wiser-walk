@@ -17,7 +17,7 @@ nothing happened, which would be a lie. Scripture asks for neither.
 
 ## It is a debt, and you cancel it
 
-When Peter asks how many times he has to forgive, and offers seven,
+When [Peter](/figure/peter/) asks how many times he has to forgive, and offers seven,
 Jesus answers "seventy-seven times" and then tells a story about money (Matthew 18:21–35).
 A servant owes his king "ten thousand talents", a sum nobody could repay. The king forgives
 it. The servant then goes out and chokes a colleague over "a hundred denarii".
@@ -36,7 +36,8 @@ for forgiveness "from your heart" (Matthew 18:35).
 
 ## Three things it is not
 
-**It is not pretending you were not hurt.** Joseph's brothers sold him (Genesis 37:28).
+**It is not pretending you were not hurt.** [Joseph](/figure/joseph/)'s brothers sold him
+(Genesis 37:28).
 Years later, with every means of repaying them, he says, "Am I in the place of God?" and
 then, in the next breath, "what you intended against me for evil" (Genesis 50:19–20). He names it as evil.
 He also wept when the subject came up (Genesis 50:17). Forgiving did not require him to
@@ -86,5 +87,6 @@ Make the same decision again.
 ## Where this connects
 
 Wrath, in the old list of capital vices, covers the grievance kept warm as well as the
-flash of temper. If you want to see which of the seven has the most pull on you, the quiz is the
+flash of temper. If you want to see which of the seven has the most pull on you,
+[the quiz](/q/seven-deadly-sins/) is the
 natural next step.

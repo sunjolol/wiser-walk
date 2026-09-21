@@ -43,12 +43,102 @@ const ghost =
 const side = (row: { value: number; noClaim: boolean }) =>
   row.noClaim ? 'none' : row.value < 50 ? 'left' : 'right';
 
+/**
+ * THE NAME A PERSON TYPES (2026-09-21).
+ *
+ * A tradition's full name carries a parenthetical so a reader can tell two near
+ * neighbours apart, and it made the National Baptist page's title 118 characters, of
+ * which Google renders about sixty. Nobody searches "National Baptist (NBC USA /
+ * historically Black Baptist)". So the title and the description use the name without it.
+ *
+ * EXCEPT where dropping it would make two pages say the same thing: the two Southern
+ * Baptist sketches differ only inside their brackets, and "Southern Baptist beliefs"
+ * twice would be one page competing with itself and a reader unable to tell which is
+ * which. That is worked out from the data rather than listed here, so a tradition added
+ * or renamed later cannot quietly collide.
+ */
+const strip = (n: string) => n.replace(/\s*\([^)]*\)/g, '').trim();
+const stripped = strip(tradition.name);
+const collides = quiz.outcomes.filter(o => strip(o.name) === stripped).length > 1;
+const searchName = collides ? tradition.name : stripped;
+
+/**
+ * The title, as many of the six topics as there is room for.
+ *
+ * The name goes first because it is the distinctive part and the part that survives
+ * truncation; the topics follow in the quiz's own axis order and simply stop when the
+ * line reaches the width a result is rendered at. Nothing is dropped for being awkward,
+ * only for not fitting.
+ */
+const TOPICS = ['grace', 'communion', 'gifts', 'authority', 'worship'];
+let title = `${searchName} beliefs`;
+for (const topic of TOPICS) {
+  const next = `${title}${title.endsWith('beliefs') ? ': ' : ', '}${topic}`;
+  if (next.length > 60) break;
+  title = next;
+}
+
+/**
+ * The description, in this tradition's OWN band words.
+ *
+ * All eighteen used to carry one sentence with the name swapped, which is the thing
+ * Google's own guidance tells you not to do, and forty-two of its characters went on a
+ * caveat that is already the first thing on the page. The band adjectives are audited
+ * wording and are printed verbatim; only the little joining phrase after each one is
+ * written here, and it is skipped where the band already carries its own topic ("Scripture
+ * alone" does not need "on authority" after it).
+ *
+ * Which axes appear is arithmetic, not editing: the quiz's own axis order, as many as fit
+ * in the width a snippet is rendered at, and stop. Nothing is chosen for making a
+ * tradition look one way or another, and an axis where the instrument names no position
+ * is left out entirely, because naming one there would be the exact claim the hatched
+ * band exists to refuse.
+ */
+const SAYS: Record<string, { say: string; has: RegExp }> = {
+  grace: { say: ' on grace', has: /grace/i },
+  table: { say: ' at the table', has: /table/i },
+  gifts: { say: ' on the gifts', has: /gift/i },
+  kingdom: { say: ' on Israel and the church', has: /israel/i },
+  authority: { say: ' on authority', has: /scripture|authority/i },
+  worship: { say: ' in worship', has: /worship/i }
+};
+const says = (row: { slug: string; band: string }) => {
+  const rule = SAYS[row.slug];
+  return rule && !rule.has.test(row.band) ? row.band + rule.say : row.band;
+};
+
+const DESC_MAX = 158;
+const lead = `Where ${searchName} adherents typically land: `;
+const phrases: string[] = [];
+let used = lead.length + 1; // the full stop
+for (const row of view.rows) {
+  if (row.noClaim) continue;
+  const phrase = says(row);
+  const cost = phrase.length + (phrases.length ? 2 : 0); // ", "
+  if (used + cost > DESC_MAX) continue;
+  phrases.push(phrase);
+  used += cost;
+}
+const description = lead + phrases.join(', ') + '.';
+
+/*
+ * WebPage, not Article: see the same note on the axis template. Nothing on this page is
+ * an article, and it was declaring itself one while carrying none of an article's
+ * properties. `about` is the tradition itself, which is what the page is genuinely about
+ * and the one thing a machine reading it should come away with.
+ */
+const siteId = new URL('/#website', Astro.site).href;
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'Article',
-  headline: `${tradition.name} on the Theology Compass`,
-  description: `Where ${tradition.name} sits on six axes of Christian belief.`,
-  url: new URL(`/tradition/${tradition.slug}/`, Astro.site).href
+  '@type': 'WebPage',
+  name: `${tradition.name} on the Theology Compass`,
+  description,
+  url: new URL(`/tradition/${tradition.slug}/`, Astro.site).href,
+  isPartOf: [
+    { '@id': siteId },
+    { '@type': 'Quiz', name: quiz.title, url: new URL(quizHref(quiz), Astro.site).href }
+  ],
+  about: { '@type': 'Thing', name: tradition.name }
 };
 
 // There is no traditions index, and the site's nav has none: a tradition page exists
@@ -62,8 +152,8 @@ const breadcrumbs = [
 ];
 ---
 <Base
-  title={`${tradition.name} beliefs on six questions that divide Christians`}
-  description={`Where ${tradition.name} typically sits on grace, communion, spiritual gifts, authority and worship, beside 17 other traditions. A sketch of adherents, not official teaching.`}
+  title={title}
+  description={description}
   jsonLd={jsonLd}
   breadcrumbs={breadcrumbs}
 >

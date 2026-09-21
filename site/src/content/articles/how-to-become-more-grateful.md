@@ -22,7 +22,8 @@ That is the shape of what follows.
 
 ## Why ingratitude is treated so seriously
 
-In Romans 1:21, Paul describes the beginning of human ruin in two clauses: people "neither
+In Romans 1:21, [Paul](/figure/paul/) describes the beginning of human ruin in two clauses:
+people "neither
 glorified Him as God nor gave thanks to Him." Thanklessness sits right at the origin, alongside
 refusing God his place. That is a striking pairing. Ingratitude is not presented as a minor
 lapse of manners but as a way of misreading reality — receiving constantly and
@@ -81,7 +82,8 @@ The practice will still be there when you can pick it up.
 
 ## Where this connects
 
-Thanklessness is close kin to two of the old capital vices — pride, which cannot bear to
+Thanklessness is close kin to two of
+[the old capital vices](/q/seven-deadly-sins/) — pride, which cannot bear to
 be indebted, and envy, which resents that someone else received more.
 
 ---

@@ -22,7 +22,8 @@ you, bless those who curse you, pray for those who mistreat you." None of the fo
 feeling. You can do good to someone whose voice sets your teeth on edge. You can pray for
 someone you would cross the street to avoid.
 
-Paul's description works the same way. "Love is patient, love is kind" (1 Corinthians 13:4),
+[Paul](/figure/paul/)'s description works the same way. "Love is patient, love is kind"
+(1 Corinthians 13:4),
 and a verse later it "keeps no account of wrongs" (13:5). That is a list of behaviours.
 Neither passage tells you to enjoy the person's company. Liking is temperament. Love, as these passages use the word, is conduct, and conduct can be
 practised.
@@ -75,7 +76,8 @@ others, then the church. If someone is harming you, involving other people is th
 Jesus himself describes. What Romans 12:17 forbids is repaying evil for
 evil.
 
-Christians read one point differently. Some hold that forgiveness, like God's, is granted
+Christians read one point differently. Some hold that
+[forgiveness](/articles/how-to-forgive-someone-who-hurt-you/), like God's, is granted
 when the offender repents, pointing to "if he repents, forgive him" (Luke 17:3), while a
 readiness to forgive is kept in the meantime. Others hold that forgiveness is given from
 your side regardless, pointing to "Forgive as the Lord forgave you" (Colossians 3:13), and

@@ -13,6 +13,7 @@ import {
 } from '../../../lib/engine/types';
 import { paragraphs } from '../../../lib/prose';
 import { artFor } from '../../../lib/art';
+import { clip } from '../../../lib/seo';
 
 /**
  * Long-form pages for a quiz's groups. The route is generic; only groups that carry
@@ -105,25 +106,104 @@ const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 /* A gift's page is what someone searching "gift of tongues" or "spiritual gift of mercy" wants:
    the title says so. Other ranked quizzes keep the plain name. */
 const isGift = quiz.slug === 'spiritual-gifts';
-const title = bipolar
+
+/**
+ * THE HEADING, AND THE TITLE, AND WHY THEY ARE NOT THE SAME STRING (2026-09-21).
+ *
+ * These pages used to put the subject in the <title> and the site's own filing label in
+ * the <h1>: /axis/theology-compass/table/ shipped "Table" as its heading under a title
+ * about real presence and the memorial view, and /axis/spiritual-gifts/prophecy/ shipped
+ * "prophecy", in lower case. Somebody arriving from a search met a single word that did
+ * not obviously belong to what they had clicked.
+ *
+ * So the heading now says what the page is. On a bipolar axis it is the string the title
+ * has always used, with BOTH pole names in it and neither of them first by preference —
+ * the two inks are the site's own, blue for the left pole and orange for the right, and
+ * neither ink means better. On a gift it is the form a person says out loud, "The gift of
+ * prophecy". The short name is inside the heading in every case, so the filing label is
+ * not lost anywhere; the chip above it stays the quiz, which is the one thing the heading
+ * does not say.
+ *
+ * The title keeps its own job, which is to be findable: "spiritual gift of prophecy" is
+ * what people type, and the passage after the colon is what makes all nineteen different
+ * from one another instead of nineteen copies of one tail.
+ */
+const namedInFull = group.name.startsWith('the ');
+const giftHeading = namedInFull ? cap(group.name) : `The gift of ${group.name}`;
+/** The searchable form of the same gift, for the title only. */
+const giftPhrase = /gift/.test(group.name)
+  ? cap(group.name)
+  : namedInFull
+    ? `${cap(group.name)}, a spiritual gift`
+    : `The spiritual gift of ${group.name}`;
+/** The first passage this group is named from. Every gift has one; an axis has none. */
+const firstRef = quoted[0]?.ref;
+
+const heading = bipolar
   ? `${group.name}: ${group.left} or ${group.right}`
   : isGift
-    ? (group.name.startsWith('the gift of') ? `${cap(group.name)}: the passage and what it looks like` : `${cap(group.name)} as a spiritual gift: the passage and what it looks like`)
+    ? giftHeading
     : group.name;
+const title = bipolar
+  ? heading
+  : isGift
+    ? (firstRef ? `${giftPhrase}: ${firstRef}` : giftPhrase)
+    : group.name;
+
+/*
+ * A gift's description, built from that gift's own data so that no two of the nineteen
+ * are the same sentence with one word swapped. The passage is the one the page quotes;
+ * the count is the list the page actually prints, and it is called what the page calls it
+ * — two of the gifts have no recorded act in the New Testament at all and say so, so
+ * their lists are passages about the gift rather than acts of it.
+ */
+const actsWord = group.actsHeading ? 'passages on it' : 'recorded acts';
 const metaDescription = isGift
-  ? `What the New Testament says about ${group.name}: the passage that names it, quoted, and where Acts and the letters show it. Part of a free spiritual gifts test.`
-  : group.summary!.slice(0, 155);
+  ? clip(
+      `${cap(group.name)} in ${firstRef}, quoted in full, with ${acts.length} ${actsWord}, ` +
+      'each cited. Part of a free spiritual gifts test, all 19 gifts.'
+    )
+  : clip(group.summary!);
 const ghost = group.name.toLowerCase();
 /* An axis wears its parent quiz's picture: it is a page ABOUT that quiz. */
 const art = artFor(quiz.slug);
 
+/*
+ * WebPage, not Article.
+ *
+ * It was typed Article and carried none of Article's properties — no author, no date, no
+ * publisher, no image — while its own head said og:type website. Nothing here is an
+ * article in any ordinary sense: it is a reference page about a subject, which is what
+ * WebPage means. `about` names the subject, and on a bipolar axis it names BOTH poles and
+ * neither first, because a machine reading this page must not be told that one end of a
+ * disagreement is what the page is about and the other is not.
+ *
+ * The WebSite id is the one the home page publishes. The two strings have to stay
+ * identical or the graph does not join up.
+ */
+const siteId = new URL('/#website', Astro.site).href;
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'Article',
-  headline: title,
-  description: group.summary!.slice(0, 200),
+  '@type': 'WebPage',
+  name: heading,
+  description: clip(group.summary!, 200),
   url: new URL(groupHref(quiz, group), Astro.site).href,
-  isPartOf: { '@type': 'Quiz', name: quiz.title, url: new URL(quizHref(quiz), Astro.site).href },
+  isPartOf: [
+    { '@id': siteId },
+    { '@type': 'Quiz', name: quiz.title, url: new URL(quizHref(quiz), Astro.site).href }
+  ],
+  about: bipolar
+    ? [{ '@type': 'Thing', name: group.left }, { '@type': 'Thing', name: group.right }]
+    : { '@type': 'Thing', name: isGift ? giftHeading : group.name },
+  ...(art
+    ? {
+        primaryImageOfPage: {
+          '@type': 'ImageObject',
+          url: new URL(art.src, Astro.site).href,
+          caption: art.alt
+        }
+      }
+    : {}),
   // Both poles' works, in the order the audit lists them. The page is an argument about
   // what other people believe, so the works it rests on are part of the record.
   ...(reading.length ? { citation: reading } : {})
@@ -137,7 +217,10 @@ const breadcrumbs =
         { name: 'Home', url: '/' },
         { name: 'Quizzes', url: '/quizzes/' },
         { name: quiz.title, url: quizHref(quiz) },
-        { name: group.name, url: groupHref(quiz, group) }
+        // The gifts are stored in lower case, because they are words in a list in a
+        // letter. A trail is shown in a search result, and "prophecy" in the middle of a
+        // line of capitalised steps reads as a mistake rather than as a decision.
+        { name: isGift ? cap(group.name) : group.name, url: groupHref(quiz, group) }
       ];
 ---
 <Base
@@ -148,7 +231,9 @@ const breadcrumbs =
   breadcrumbs={breadcrumbs}
 >
   <Hero
-    title={group.name}
+    title={heading}
+    blue={bipolar ? group.left : undefined}
+    orange={bipolar ? group.right : undefined}
     eyebrow={quiz.title}
     icon={quiz.icon}
     kind={art ? 'engraving' : 'night'}
@@ -156,27 +241,24 @@ const breadcrumbs =
     imageAlt={art?.alt}
     imagePosition={art?.objectPosition}
     imageLift={art?.lift}
+    long={heading.length > 24}
     tiles={tiles}
-  >
-    {bipolar ? (
-      /* The arrow belongs to the second pole, not to the line: left free it wrapped to the
-         end of a full first line on the longer axes and pointed at nothing. */
-      <span class="poleline">
-        <b class="pole-l">{group.left}</b>
-        <span class="poleline-to">
-          <i aria-hidden="true">↔</i>
-          <b class="pole-r">{group.right}</b>
-        </span>
-      </span>
-    ) : (
-      /* Nothing. A group with no poles used to print the QUIZ's tagline here, so a page
-         about tongues opened on "Fifty-seven statements, nineteen gifts, and a conversation
-         to have afterwards" — a line that says nothing about tongues and repeats the tile
-         beneath it. The gift's own words are the section under the band, where they are not
-         a caption on somebody else's picture. */
-      null
-    )}
-  </Hero>
+  />
+  {/*
+    The band has no lede, on either shape of page.
+
+    A bipolar axis used to print its two poles here, under a one-word heading, in a line
+    with an arrow between them. The heading now says them itself, in the same two inks and
+    in the same order, so the line under it was the same eight words again and the band
+    read as a stutter at 390 and at 1360 alike. Both poles are still printed
+    unconditionally, which is the rule; they are printed once.
+
+    A group with no poles used to print the QUIZ's tagline here, so a page about tongues
+    opened on "Fifty-seven statements, nineteen gifts, and a conversation to have
+    afterwards" — a line that says nothing about tongues and repeats the tile beneath it.
+    The gift's own words are the section under the band, where they are not a caption on
+    somebody else's picture.
+  */}
 
   <div class="ref ref--axis">
     {quiz.status === 'draft' && quiz.draftNote && (

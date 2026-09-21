@@ -8,7 +8,16 @@
  * each name can be opened, because on a phone a list of names does not look tappable. So each
  * row carries an arrow, and the line above says what a tap does.
  *
- * Generic: the nouns, the count and the links come from the quiz.
+ * Generic: the nouns, the count, the mark and the links come from the quiz.
+ *
+ * TWO KINDS OF OUTCOME, told apart by the data and never by the quiz's name. An Outcome may
+ * carry `who` — "One line identifying who or what this is, under the name", which is how the
+ * figure pages print it under their own heading. Where the outcomes carry one, the row prints
+ * it too, because a list of twenty-five bare first names asks a reader to already know them;
+ * and the sentence above the list says what is in the rows rather than making the Compass's
+ * promise about describing a people in their own words, which is true of a tradition's page
+ * and would be false of a person's. Where they carry none, this block is word for word what
+ * it was.
  */
 import Icon from './Icon.astro';
 import { outcomeHref } from '../lib/engine/registry';
@@ -18,17 +27,30 @@ import type { Quiz } from '../lib/engine/types';
 interface Props { quiz: Quiz; }
 const { quiz } = Astro.props;
 const nouns = outcomeNounPlural(quiz);
+const identified = quiz.outcomes.some(o => o.who);
+const groupCount =
+  ['zero','one','two','three','four','five','six','seven','eight','nine','ten'][quiz.groups.length]
+  ?? quiz.groups.length;
 ---
-<section class="oidx" aria-labelledby="oidx-h">
+<section class:list={['oidx', identified && 'oidx--who']} aria-labelledby="oidx-h">
   <div class="oidx-say">
-    <span class="oidx-mark"><Icon name="compass" size={20} /></span>
-    <h2 id="oidx-h">{quiz.outcomes.length} {nouns}, each in its own words</h2>
-    <p>Where each one stands on the {['zero','one','two','three','four','five','six','seven','eight','nine','ten'][quiz.groups.length] ?? quiz.groups.length} questions, described the way its own people would.</p>
+    <span class="oidx-mark"><Icon name={quiz.icon} size={20} /></span>
+    {identified
+      ? <h2 id="oidx-h">{quiz.outcomes.length} {nouns}, one page each</h2>
+      : <h2 id="oidx-h">{quiz.outcomes.length} {nouns}, each in its own words</h2>}
+    {identified
+      ? <p>One line on each, and where they stand on the {groupCount} axes.</p>
+      : <p>Where each one stands on the {groupCount} questions, described the way its own people would.</p>}
     <p class="oidx-hint"><Icon name="arrow" size={14} /> Tap any of them to read more.</p>
   </div>
   <ul class="oidx-list">
     {quiz.outcomes.map(o => (
-      <li><a href={outcomeHref(quiz, o)}><span>{o.name}</span><Icon name="arrow" size={14} /></a></li>
+      <li>
+        <a href={outcomeHref(quiz, o)}>
+          <span class="oidx-name">{o.name}{o.who && <small>{o.who}</small>}</span>
+          <Icon name="arrow" size={14} />
+        </a>
+      </li>
     ))}
   </ul>
 </section>
@@ -57,11 +79,33 @@ const nouns = outcomeNounPlural(quiz);
   .oidx-list a :global(.icon) { flex: none; color: var(--accent); transition: transform .18s ease; }
   .oidx-list a:hover { color: var(--accent); }
   .oidx-list a:hover :global(.icon) { transform: translateX(3px); }
+
+  /*
+   * The one-line identifier, where an outcome carries one. It is written to follow the name
+   * ("Paul" then "Pharisee of Tarsus, tentmaker, apostle to the nations"), which is how the
+   * outcome's own band prints it, so it sets as a second line under the name and in the
+   * quiet ink. The row then grows to two or three lines, so the arrow rides at the top of it
+   * rather than floating beside the middle of a paragraph.
+   */
+  .oidx-name { display: block; min-width: 0; }
+  .oidx-name small {
+    display: block; margin-top: .14rem; font-size: .78rem; line-height: 1.38;
+    color: var(--ink-mute); text-wrap: pretty;
+  }
+  .oidx--who .oidx-list a { align-items: flex-start; padding: .75rem .2rem; }
+  .oidx--who .oidx-list a :global(.icon) { margin-top: .3rem; }
+
   @media (min-width: 40rem) {
     .oidx-list { columns: 2; column-gap: 2rem; }
     .oidx-list li { break-inside: avoid; }
     .oidx-list li + li { border-top: 0; }
     .oidx-list li { border-bottom: 1px solid var(--rule); }
+    /* A name with a line under it needs the whole column at this width; two columns of
+       three-line rows read as a wall. It splits one breakpoint later instead. */
+    .oidx--who .oidx-list { columns: 1; }
+  }
+  @media (min-width: 58rem) {
+    .oidx--who .oidx-list { columns: 2; column-gap: 2.4rem; }
   }
   @media (min-width: 58rem) {
     .oidx { grid-template-columns: minmax(0, 19rem) minmax(0, 1fr); gap: 2.6rem; padding: 2.3rem 2.4rem 2rem 2.6rem; align-items: start; }

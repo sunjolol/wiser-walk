@@ -4,7 +4,7 @@ description: Not a personality, not a mood, and not a set of manners — Scriptu
 published: 2026-09-02
 minutes: 7
 tags: [formation, discipleship]
-quizzes: [theology-compass]
+quizzes: [theology-compass, bible-figure]
 image: /img/articles/what-does-it-mean-to-be-christlike.jpg
 imageAlt: "Jesus kneels to wash Peter’s feet while the other disciples look on"
 imageCredit: "Ford Madox Brown, Jesus Washing Peter’s Feet, 1852–56"
@@ -64,7 +64,8 @@ intend it.
 
 If you want something concrete enough to actually check:
 
-- **What happens when you are wronged?** This is where the likeness shows most reliably,
+- **What happens [when you are wronged](/articles/how-to-forgive-someone-who-hurt-you/)?**
+  This is where the likeness shows most reliably,
   because it is where pretending is hardest.
 - **Where do you sit when you get to choose?** Philippians 2 is about direction of travel.
   Given a free choice of position, which way do you move?
@@ -73,12 +74,13 @@ If you want something concrete enough to actually check:
 
 ## One thing it does not mean
 
-It does not mean a single personality. The apostles remained recognisably themselves; Peter
-did not become John. The likeness is not a flattening. It shows up in Paul's arguing and in
+It does not mean a single personality. The apostles remained recognisably themselves;
+[Peter](/figure/peter/) did not become John. The likeness is not a flattening. It shows up in
+[Paul](/figure/paul/)'s arguing and in
 John's tenderness, in the same direction of travel and the same fruit, worn differently.
 
 That is worth saying because a great deal of Christian formation advice quietly assumes one
-temperament is holier than another. It is not. What you are being conformed to is a person,
+[temperament is holier than another](/q/bible-figure/). It is not. What you are being conformed to is a person,
 not a personality type — and the family resemblance is real without the family being
 identical.
 

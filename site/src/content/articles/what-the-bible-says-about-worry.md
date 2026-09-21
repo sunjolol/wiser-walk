@@ -35,7 +35,8 @@ boundary on it. Today's is yours to deal with. Tomorrow's is not here.
 
 ## Concern is not the problem
 
-The word Paul uses when he writes "Be anxious for nothing" (Philippians 4:6) belongs to the
+The word [Paul](/figure/paul/) uses when he writes "Be anxious for nothing"
+(Philippians 4:6) belongs to the
 same Greek word family he uses, approvingly, two chapters earlier. Timothy is commended as
 someone "who will genuinely care for your needs" (Philippians 2:20). Paul lists among his
 own burdens "the pressure of my concern for all the churches" (2 Corinthians 11:28), and he
@@ -44,7 +45,8 @@ is not confessing a fault.
 So Scripture does not ask for indifference. The warning is against care that has come
 loose from trust.
 
-Luke's account of Martha shows what that looks like. She is doing good work, hosting Jesus,
+Luke's account of [Martha](/figure/martha/) shows what that looks like. She is doing good
+work, hosting Jesus,
 and he tells her, "you are worried and upset about many things. But only one thing is
 necessary" (Luke 10:41-42). The contrast is between many things and one, and the one is
 what her sister Mary was doing: sitting "at the Lord’s feet listening to His message"
@@ -61,7 +63,8 @@ from a comfortable man.
 Verse 7 does not say the request will be granted. It says "the peace of God, which surpasses all understanding, will guard your hearts and your
 minds in Christ Jesus." The guard is posted over the person, not over the outcome.
 
-Peter gives the same instruction with a different verb: "Cast all your anxiety on Him, because He
+[Peter](/figure/peter/) gives the same instruction with a different verb: "Cast all your
+anxiety on Him, because He
 cares for you" (1 Peter 5:7). The verse before it reads "Humble yourselves, therefore, under
 God’s mighty hand" (1 Peter 5:6), and the two belong together. Worry often assumes that
 everything depends on you. Handing it over admits that it does not.

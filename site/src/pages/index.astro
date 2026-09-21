@@ -30,6 +30,7 @@ import { groupNounPlural } from '../lib/engine/types';
 import type { BipolarView } from '../lib/engine/types';
 import { liveGames } from '../lib/games';
 import { SEO } from '../lib/seo';
+import { SUPPORT_URL, SUPPORT_READY } from '../lib/support';
 import slsMeta from '../games/sounds-like-scripture.meta.json';
 import wsiMeta from '../games/who-said-it.meta.json';
 import audit from '../data/compass-audit.json';
@@ -83,7 +84,19 @@ const jsonLd = {
         url: 'https://wiserwalk.com/icon-512.png',
         width: 512,
         height: 512
-      }
+      },
+      /*
+       * The two places on the open web that are genuinely this site's: the public repository
+       * it is built in and the page giving goes to. Both already point back here, which is
+       * the only thing that makes `sameAs` worth anything — it is a claim about identity, and
+       * a one-way claim is just an assertion. Nothing goes in this list that the owner does
+       * not run. The giving link comes from lib/support.ts so there is one copy of it, and it
+       * drops out entirely if giving is ever switched off.
+       */
+      sameAs: [
+        'https://github.com/sunjolol/wiser-walk',
+        ...(SUPPORT_READY ? [SUPPORT_URL] : [])
+      ]
     }
   ]
 };

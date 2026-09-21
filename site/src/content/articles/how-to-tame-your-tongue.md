@@ -60,7 +60,8 @@ wise" (Proverbs 10:19). This is arithmetic, not a rule of silence. The easiest s
 
 **Give every sentence a job.** "Let no unwholesome talk come out of your mouths, but only
 what is helpful for building up the one in need and bringing grace to those who listen"
-(Ephesians 4:29). A few verses earlier Paul requires truthful speech (Ephesians 4:25), so
+(Ephesians 4:29). A few verses earlier [Paul](/figure/paul/) requires truthful speech
+(Ephesians 4:25), so
 this is no licence for flattery, and a hard word can pass. A true remark made in order to wound cannot.
 
 **Be no fuel.** "Without wood, a fire goes out; without gossip, a conflict ceases"
@@ -89,5 +90,6 @@ later a pause before the remark.
 ## Where this connects
 
 Hard words usually have an old vice behind them: wrath, envy, or the pride that needs the
-last word. The seven-sins quiz is one way to see which. The article on gratitude covers the
+last word. [The seven-sins quiz](/q/seven-deadly-sins/) is one way to see which.
+[The article on gratitude](/articles/how-to-become-more-grateful/) covers the
 tongue's better use: thanks, said aloud to the person.
