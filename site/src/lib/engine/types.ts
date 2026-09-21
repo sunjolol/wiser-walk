@@ -406,7 +406,15 @@ export interface Quiz {
   title: string;
   /** One line under the title on the hub. */
   tagline: string;
+  /** Written for a search result: it is the page's meta description and its JSON-LD. */
   description: string;
+  /**
+   * The words in the band on the quiz's own page, where `description` is not what a reader
+   * standing in front of the quiz needs. The Compass's search line ends on how the
+   * instrument was made, and the gifts quiz's ends on the same sentence its own note
+   * repeats directly underneath. Falls back to `description`.
+   */
+  intro?: string;
   /** A line mark from components/Icon.astro. Never an emoji — see that file. */
   icon: 'compass' | 'flame' | 'scroll' | 'book' | 'apple' | 'users' | 'sparkle';
   minutes: number;

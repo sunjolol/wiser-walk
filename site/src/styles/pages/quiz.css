@@ -7,46 +7,7 @@
  * segmented progress, and the answer scale.
  */
 
-/* ===================================================== the hub, /quizzes/ */
-
-/*
- * The feature block, as the HUB presents a quiz — deliberately not the home page's card.
- *
- * The home page leads with the compass wheel drawn from a real answer sheet; a reader who
- * has just scrolled past it learns nothing from meeting it again here. So the hub shows the
- * other half of the same truth: what the instrument actually asks, six axes with both pole
- * names, beside the facts and the way in. Same data, a different cut.
- */
-.qz-flag { display: grid; grid-template-columns: 1fr; gap: .9rem; margin: 1.1rem 0 0; }
-.qz-flag-body {
-  position: relative; isolation: isolate; overflow: hidden;
-  display: flex; flex-direction: column;
-  background: var(--panel); border-radius: var(--r-lg); box-shadow: var(--lift);
-  padding: 1.35rem 1.2rem 1.45rem;
-}
-/* the kicker ink is tuned for a dark panel; on a light one it takes the warm ink */
-.qz-flag-body .feature-kicker { color: var(--warn-ink); }
-.qz-flag-body h3 {
-  margin: .55rem 0 .55rem; font-size: clamp(1.7rem, 7vw, 2.3rem);
-  line-height: 1.02; letter-spacing: -.015em;
-}
-.qz-flag-body > p { margin: 0; color: var(--ink-soft); max-width: 34rem; }
-.qz-flag-body .spec { margin-top: 1.1rem; }
-.qz-flag-body .btn-row { margin: 1.25rem 0 0; }
-.qz-flag-body .btn { flex: 1 1 auto; }
-.qz-flag .axpv-panel { margin: 0; }
-@media (min-width: 40rem) { .qz-flag-body { padding: 1.9rem 1.8rem 2rem; } }
-@media (min-width: 60rem) {
-  .qz-flag { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 1rem; align-items: stretch; }
-  .qz-flag-body { justify-content: center; }
-  .qz-flag-body .btn { flex: 0 0 auto; }
-  /* the axes fill the panel they are given rather than leaving a slab of empty charcoal
-     under them: six rows sharing the height, the note closing it off at the bottom */
-  .qz-flag .axpv-panel { display: flex; flex-direction: column; }
-  .qz-flag .axpv { flex: 1 1 auto; grid-auto-rows: minmax(0, 1fr); }
-  .qz-flag .axpv-row { align-content: center; }
-  .qz-flag .axpv-note { margin-top: 1.1rem; }
-}
+/* The hub, /quizzes/, is drawn by the DAWN PASS block at the foot of this file. */
 
 /* ============================================ the quiz page: what you see */
 
@@ -143,38 +104,12 @@
 
 .axpv-note { margin: 1rem 0 0; max-width: 42rem; font-size: .8rem; line-height: 1.55; color: var(--on-dark-mute); }
 
-/* ------------------------------------------------------- how to answer */
-
-.howto { margin: 1.1rem 0 0; }
-.howto-lede { margin: 0; max-width: 34rem; color: var(--ink-soft); }
-/* the display face carried into the sentence, the way the reference sheets do it */
-.howto-lede b {
-  font-family: var(--display); font-style: italic; font-weight: 400;
-  font-size: 1.32em; line-height: 1; color: var(--ink);
-}
-.howto .spec { margin-top: 1.15rem; }
-/* these values are sentences, not two words, so they take a smaller size to hold one line */
-.howto .spec dt { font-size: .58rem; letter-spacing: .12em; }
-.howto .spec dd { font-size: .85rem; }
-@media (min-width: 34rem) {
-  .howto .spec dt { font-size: .62rem; }
-  .howto .spec dd { font-size: .92rem; }
-}
-
-/* ------------------------------------------------------------ the way in */
-
-.startbox { margin: 1.6rem 0 0; padding: 1.5rem 1.25rem 1.6rem; }
-.startbox .dark-ghost { font-size: clamp(5.5rem, 28vw, 9rem); right: -.05em; bottom: -.2em; }
-.startbox h2 {
-  margin: .5rem 0 .6rem; font-style: italic; letter-spacing: -.02em;
-  font-size: clamp(1.7rem, 7.6vw, 2.4rem); line-height: 1.05;
-  font-variant-numeric: tabular-nums;
-}
-.startbox p { max-width: 30rem; margin: 0; }
-.startbox .btn-row { margin: 1.35rem 0 0; }
-.startbox .btn { flex: 1 1 auto; font-size: .88rem; padding: 1rem 1.7rem; min-height: 54px; }
-@media (min-width: 30rem) { .startbox .btn { flex: 0 0 auto; } }
-@media (min-width: 40rem) { .startbox { padding: 2.2rem 2rem 2.3rem; } }
+/* ------------------------------------------------------- how to answer
+ *
+ * The prose panel and the dotted spec list that used to stand here were replaced in the
+ * dawn pass by three marked points; see the block at the foot of this file. The runner's
+ * own rules below are untouched.
+ */
 
 /* ================================================== the runner: one thumb */
 
@@ -382,95 +317,8 @@
   .axpv-row:hover { transform: none; }
 }
 
-/* ================================================ wider than a phone: pair
- *
- * Every block above is a single column on a phone. From 52rem the page stops stretching
- * one column across the whole sheet and pairs the parts that belong together — prose with
- * its facts, the invitation with the button — the way the reference sheets set a text
- * block beside a stat block instead of running either the full width.
- */
-@media (min-width: 52rem) {
-  .howto { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 2.4rem; align-items: start; }
-  .howto-lede { max-width: none; }
-  .howto .spec { margin-top: -.35rem; }
-
-  .startbox { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1.5rem 2.5rem; align-items: center; }
-  .startbox h2 { font-size: clamp(2rem, 3.4vw, 2.6rem); }
-  .startbox .btn-row { margin: 0; }
-}
-
-/* ==========================================================================
-   FINDABILITY: the index of every quiz, and a feature block for each of them
-   (one block, owned by one builder; the rules above are untouched)
-   ========================================================================== */
-
-/*
- * The index head sits directly under the band, so it does not take the kit's 3rem of air:
- * that gap is for separating two blocks of content, and here it would push the fourth quiz
- * off a phone screen. Everything else about it is the kit's section head.
- */
-.qz-indexhead { margin-top: 1.5rem; margin-bottom: .85rem; }
-
-/*
- * Every quiz, one equal card each. Two columns from 46rem; an odd one out takes the full
- * width rather than leaving a hole beside it, the way the ranking preview already does.
- */
-.qz-index { display: grid; grid-template-columns: 1fr; gap: .7rem; }
-@media (min-width: 46rem) {
-  .qz-index { grid-template-columns: 1fr 1fr; gap: .8rem; }
-  .qz-index .scard:last-child:nth-child(odd) { grid-column: 1 / -1; }
-}
-
-/*
- * The card itself: the kit's stripe card at index height. Four of these have to fit inside
- * about a screen and a half of a phone, or the index is not doing the one job it has.
- */
-.qz-index .scard { min-height: 6.6rem; padding: .9rem 1rem 1rem 4.4rem; }
-.qz-index .scard-medal { left: 1.1rem; top: .85rem; width: 2.5rem; height: 2.5rem; }
-/* the tag is short by construction (see tag() on the page), and set a shade smaller still,
-   because the stripe on a card this height is only about 90px of room */
-.qz-index .scard-tag { font-size: .52rem; letter-spacing: .1em; padding: .45rem .32rem; }
-.qz-index .scard h3 { margin: 0 0 .3rem; font-size: 1.15rem; padding-right: 3.3rem; }
-/* the tagline is a line of orientation, not the description: two lines, then it stops */
-.qz-index .scard p {
-  font-size: .87rem; line-height: 1.45;
-  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
-}
-/* the facts stand where "Take it →" usually does: counted, so in the quiet ink, with the
-   arrow left in the accent because the card is still the way in */
-.qzx-facts { margin-top: .5rem; color: var(--ink-mute); font-size: .58rem; letter-spacing: .11em; }
-.qzx-facts .icon { color: var(--accent); }
-.scard:hover .qzx-facts { color: var(--ink-soft); }
-
-/*
- * A draft's chip, on the feature block it belongs to. The dark chip the band and the cards
- * already use, at label size, in front of the kicker rather than in a corner: a reader who
- * reads one line of that block has read it.
- */
-.qz-chip {
-  display: inline-flex; align-items: center; margin-right: .5rem; padding: .3rem .5rem;
-  border-radius: var(--r-pill); background-color: var(--dark-fill);
-  background-image: var(--dark-fill-img); background-size: 420px; color: var(--on-dark);
-  font-size: .55rem; letter-spacing: .16em; line-height: 1;
-}
-:root[data-theme="dark"] .qz-chip {
-  background-color: #3A3A48; background-image: none;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08);
-}
-
-/* one block after another, each the same distance from the last */
-.qz-flag + .qz-flag { margin-top: 1rem; }
-
-@media (min-width: 60rem) {
-  /*
-   * Seven one-word categories cannot fill a panel stretched to the height of the words
-   * beside them: spread out they leave bands of empty charcoal between the rows. So a
-   * ranking's panel is NOT stretched — it takes its own height and sits against the middle
-   * of the block. A bipolar quiz's rails are left exactly as they were, filling the panel
-   * they are given.
-   */
-  .qz-flag:has(.rankgrid) { align-items: center; }
-}
+/* The two blocks that used to widen here — the prose panel and the way in — are the three
+   marked points and the room now; both do their own widening in the dawn pass block below. */
 
 /* ==========================================================================
    Copy a quiz carries about its own ranking
@@ -609,12 +457,266 @@
 @media (min-width: 30rem) { .uniform-box .btn { flex: 0 0 auto; } }
 @media (min-width: 40rem) { .uniform-box { padding: 1.9rem 1.8rem 2rem; } }
 
-/* ---------------------------------------------------------------- quick start ----
- * A quiz with a long frame (notes.introShort set) gets one sentence and a way in near the
- * top of its intro, so a phone reader is not six screens from the start button. The long
- * notes follow it, folded (see .frame-fold above).
- */
-.quickstart { margin: 0 0 1.1rem; }
-.quickstart p { margin: 0 0 .95rem; font-size: 1.02rem; line-height: 1.55; color: var(--ink); }
-.quickstart .btn-row { margin: 0; }
+/* The quick start became .qgo in the dawn pass, and every quiz has one now rather than only
+   the ones with a long frame; see the intro block at the foot of this file. */
 
+
+/* ==========================================================================
+   DAWN PASS: hubs — the quiz hub at /quizzes/ (2026-09-21)
+
+   One room per quiz, at the size the home page gives its own. A room is a
+   picture with the words standing on the dark foot of it: the plate fills the
+   card, a gradient brings it down to near-solid at the bottom, and the mark,
+   the title, one line, the counted facts and the way in sit on that. Each room
+   sets its own --room-ink (page-side, from the quiz's slug), so the mark, the
+   kicker and the go link differ from room to room and no two read alike.
+
+   Phone first: a room is as tall as it needs and no taller, and all four are
+   inside about two screens. Nothing here is squeezed into a row.
+   ========================================================================== */
+
+/* the head, tight under the band: this gap separates a band from its page, not
+   two blocks of content, so it does not take the kit's 3rem of air */
+.qhub-head { margin: 1.5rem 0 .95rem; }
+.qhub-kicker {
+  margin: 0 0 .1rem; font-family: var(--ui); font-size: .62rem; font-weight: 700;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--ink-mute);
+}
+.qhub-title {
+  margin: 0; font-family: var(--display); font-style: italic; font-weight: 400;
+  font-size: clamp(2.3rem, 9vw, 3.3rem); line-height: 1; letter-spacing: -.02em; color: var(--ink);
+}
+
+.qroom {
+  --room-ink: var(--blue-soft);
+  position: relative; isolation: isolate; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  min-height: 19rem; border-radius: 24px; text-decoration: none; color: #fff;
+  background: #15161c; box-shadow: 0 10px 30px rgba(20, 24, 40, .16);
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+.qroom:hover { transform: translateY(-3px); box-shadow: 0 16px 38px rgba(20, 24, 40, .24); }
+.qroom > img {
+  position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover;
+  object-position: var(--img-pos, 50% 20%);
+  /* printed soft, the way the home page prints the same plates: a hard black plate
+     fights everything else on the sheet */
+  filter: sepia(.34) contrast(.9) brightness(var(--img-lift, 1.06));
+  -webkit-user-drag: none;
+}
+/* the plate is brought down to near-solid under the words, so white type is readable
+   on a phone without a slab drawn over the picture */
+.qroom--pic { background: #2a2622; }
+.qroom--pic::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  /* the second layer is flat and normally zero: a plate printed unusually light gets it
+     turned up from the page, so its whole face goes down and the type stays readable */
+  background:
+    linear-gradient(180deg, rgba(38, 33, 28, 0) 26%, rgba(38, 33, 28, .74) 58%, rgba(34, 30, 26, .96)),
+    linear-gradient(180deg, rgba(30, 26, 22, var(--room-dim, 0)), rgba(30, 26, 22, var(--room-dim, 0)));
+}
+/* a quiz art.ts has no picture for keeps the night ground rather than a blank card: the
+   Compass is deliberately absent from that file, and a new quiz may be too for a while */
+.qroom--night {
+  background-color: #141a27;
+  background-image: radial-gradient(120% 90% at 85% 10%, rgba(126, 186, 238, .2), transparent 60%), var(--dark-fill-img);
+  background-size: auto, 520px;
+}
+.qroom-body { position: relative; padding: 1.35rem 1.3rem 1.4rem; }
+.qroom-mark {
+  display: grid; place-items: center; width: 2.6rem; height: 2.6rem; margin: 0 0 .85rem;
+  border-radius: 14px; color: #17181d; background: var(--room-ink);
+}
+.qroom-kicker {
+  margin: 0 0 .25rem; font-family: var(--ui); font-size: .6rem; font-weight: 700;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--room-ink);
+}
+.qroom h3 {
+  margin: 0; font-family: var(--display); font-weight: 400; color: #fff;
+  font-size: clamp(1.55rem, 6.2vw, 1.95rem); line-height: 1.08; letter-spacing: -.012em;
+  text-wrap: balance;
+}
+.qroom-say {
+  margin: .55rem 0 0; max-width: 26rem; font-size: .95rem; line-height: 1.5;
+  color: rgba(255, 255, 255, .85); text-wrap: balance;
+}
+.qroom-facts {
+  display: flex; flex-wrap: wrap; gap: .4rem; margin: .95rem 0 0; padding: 0; list-style: none;
+  font-family: var(--ui); font-size: .62rem; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.qroom-facts li {
+  display: inline-flex; align-items: center; gap: .35rem; padding: .36rem .62rem;
+  border-radius: 999px; color: rgba(255, 255, 255, .92);
+  background: rgba(255, 255, 255, .12); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16);
+}
+.qroom-go {
+  display: inline-flex; align-items: center; gap: .45rem; margin: 1.05rem 0 0;
+  font-family: var(--ui); font-size: .7rem; font-weight: 700; letter-spacing: .13em;
+  text-transform: uppercase; color: var(--room-ink);
+}
+.qroom-go .icon { transition: transform .18s ease; }
+.qroom:hover .qroom-go .icon { transform: translateX(3px); }
+/* a draft says so once, in the corner, and nothing else about it is different */
+.qroom-tab {
+  position: absolute; top: 0; right: 0; z-index: 1; padding: .45rem .9rem;
+  border-radius: 0 24px 0 14px; font-family: var(--ui); font-size: .58rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase; color: #17181d; background: var(--room-ink);
+}
+
+/* the flagship: an instrument on the night ground, with a real answer sheet drawn on it.
+   .dark re-points the tokens, so the wheel draws itself for this ground unaided. */
+.qroom--flag {
+  --room-ink: var(--blue-soft);
+  justify-content: flex-start; min-height: 0; margin: 0 0 .85rem;
+  background-color: #141a27;
+  background-image: radial-gradient(120% 90% at 85% 10%, rgba(126, 186, 238, .22), transparent 60%), var(--dark-fill-img);
+  background-size: auto, 520px;
+  box-shadow: 0 10px 30px rgba(20, 24, 40, .16);
+}
+:root[data-theme="dark"] .qroom--flag { background-color: #141a27; }
+.qroom--flag .qroom-body { margin-top: 0; }
+/* the wheel's labels hang outside its circle, so the room leaves them room to hang in */
+.qroom-wheel { padding: 1.4rem 3.4rem 0; }
+.qroom--flag .wheel-plot { max-width: 15.5rem; margin: 1.6rem auto 0; }
+.qroom--flag .wheel figcaption, .qroom--flag .wheel-cap { display: none; }
+.qroom-note { margin: 1.5rem 0 0; text-align: center; font-size: .72rem; color: rgba(255, 255, 255, .6); }
+
+.qhub-rooms { display: grid; grid-template-columns: 1fr; gap: .85rem; }
+
+@media (min-width: 44rem) {
+  .qhub-rooms { gap: .95rem; }
+  .qroom--pic { min-height: 23rem; }
+  .qroom-body { padding: 1.6rem 1.5rem 1.6rem; }
+}
+/* A tablet holds two rooms on a row, and an odd one out takes the whole width rather than
+   leaving a hole beside it: three rooms with a gap where the fourth would be reads as a
+   card that failed to load. */
+@media (min-width: 44rem) and (max-width: 59.99rem) {
+  .qhub-rooms { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .qhub-rooms > .qroom:last-child:nth-child(odd) { grid-column: 1 / -1; min-height: 20rem; }
+}
+@media (min-width: 60rem) {
+  /* rooms widen before they multiply: a room narrower than about 16rem squeezes its title
+     onto four lines, which is the squeezed card the owner has already rejected */
+  .qhub-rooms { grid-template-columns: repeat(auto-fit, minmax(16.5rem, 1fr)); }
+  /* the flagship takes a whole row, so its wheel has room for the labels outside the circle */
+  .qroom--flag { flex-direction: row; align-items: center; min-height: 23rem; margin-bottom: .95rem; }
+  .qroom--flag .qroom-wheel { order: 1; flex: 0 0 50%; padding: .6rem 6.5rem 1.6rem 5.5rem; }
+  .qroom--flag .wheel-plot { max-width: 19rem; margin-top: 2.2rem; }
+  .qroom--flag .qroom-body { flex: 1; padding: 2.2rem 0 2.2rem 2.4rem; }
+  .qroom--flag h3 { font-size: 2.5rem; }
+  .qroom--flag .qroom-say { font-size: 1.02rem; }
+  .qroom--pic { min-height: 26rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qroom, .qroom-go .icon { transition: none; }
+  .qroom:hover { transform: none; }
+}
+
+/* ==========================================================================
+   DAWN PASS: the quiz intro — everything inside #intro (2026-09-21)
+
+   A quiz's own page had the reader read four blocks before it offered them
+   anything to press: a tinted note, a preview, a panel of prose over a dotted
+   spec list, and only then the way in. "making the user scroll to get to the
+   [main] button is bad design."
+
+   So: the button first, under the band; then what the quiz will show you, in
+   the instrument's own picture; then how to answer as three marked points; then
+   the way in again as a room. The runner below the intro is untouched.
+   ========================================================================== */
+
+/* --------------------------------------------------------- one line before you start ---- */
+/*
+ * The sentence a long-framed quiz says before anything else. The start button is in the
+ * band above it now, so this is a line of type and nothing else: set in the display face
+ * at reading size, because it is the first thing on the page that is not a heading.
+ */
+.qgo-say {
+  margin: 1.3rem 0 0; max-width: 40rem; font-family: var(--display);
+  font-size: 1.14rem; line-height: 1.4; color: var(--ink); text-wrap: pretty;
+}
+@media (min-width: 46rem) { .qgo-say { font-size: 1.24rem; } }
+
+/* ----------------------------------------------------------- a note before you start ---- */
+/*
+ * A quiz that says something about itself before you start says it as a note with a mark,
+ * not as a slab of tinted text. Same words, same place, a shape a reader can see the edge of.
+ */
+#intro .quiz-frame {
+  position: relative; overflow: hidden; margin: 1.2rem 0 0; padding: .9rem 1.05rem .95rem 1.2rem;
+  border-radius: var(--r); background: var(--panel); box-shadow: var(--lift, none);
+  color: var(--ink-soft);
+}
+#intro .quiz-frame::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: var(--accent);
+}
+#intro .quiz-frame p { font-size: .92rem; line-height: 1.55; }
+
+/* the draft caution takes the same shape, and keeps its warm ground: it is the one note on
+   the page that is a caution rather than a description */
+#intro .note.draft {
+  position: relative; overflow: hidden; margin: 1.2rem 0 0; border-radius: var(--r);
+  padding: .95rem 1.1rem 1rem 1.2rem; box-shadow: none;
+}
+#intro .note.draft::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: var(--warn-ink);
+}
+
+/* ------------------------------------------------------------- how to answer ---- */
+
+.howto-line {
+  margin: 1.1rem 0 0; max-width: 34rem; font-family: var(--display); font-style: italic;
+  font-size: clamp(1.25rem, 5.4vw, 1.6rem); line-height: 1.25; color: var(--ink);
+  text-wrap: balance;
+}
+
+.steps { list-style: none; margin: 1.2rem 0 0; padding: 0; display: grid; gap: .6rem; }
+.step {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: .95rem;
+  padding: .95rem 1.1rem 1rem; border-radius: var(--r);
+  background: var(--panel); box-shadow: var(--lift);
+}
+.step-say b {
+  display: block; font-family: var(--display); font-weight: 400; font-size: 1.16rem;
+  line-height: 1.15; color: var(--ink);
+}
+.step-say p { margin: .2rem 0 0; font-size: .89rem; line-height: 1.45; color: var(--ink-soft); text-wrap: pretty; }
+
+/*
+ * The marks are drawn from the things they stand for, not chosen from a set of pictures:
+ * the five-step scale, the quiet middle of it, and the way back through it.
+ */
+.step-mark {
+  flex: none; display: grid; place-items: center; width: 2.7rem; height: 2.7rem;
+  border-radius: 14px; background: var(--shell); box-shadow: inset 0 0 0 1px var(--rule);
+}
+.step-mark--scale { display: flex; align-items: flex-end; gap: 2px; padding: 0 .45rem .72rem; }
+.step-mark--scale i {
+  display: block; width: 4px; border-radius: 2px; background: var(--ink-mute);
+}
+.step-mark--scale i:nth-child(1), .step-mark--scale i:nth-child(5) { height: 15px; background: var(--ink); }
+.step-mark--scale i:nth-child(2), .step-mark--scale i:nth-child(4) { height: 10px; }
+.step-mark--scale i:nth-child(3) { height: 5px; }
+.step-mark--middle::before {
+  content: ""; width: 14px; height: 14px; border-radius: 50%;
+  box-shadow: inset 0 0 0 2px var(--ink-soft);
+}
+.step-mark--back { color: var(--accent); }
+.step-mark--back .icon { transform: rotate(180deg); }
+
+@media (min-width: 44rem) {
+  .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8rem; }
+  /* standing side by side they are read as a row, so the mark goes above the words and
+     every card starts at the same place whatever its sentence wrapped to */
+  .step { grid-template-columns: 1fr; align-items: start; gap: .8rem; padding: 1.2rem 1.25rem 1.3rem; }
+}
+
+/* ------------------------------------------------------------- the room at the foot ---- */
+/* .wayin is drawn by pages/reference.css; both files are loaded on every page, and one
+   room drawn once is better than the same room drawn twice in two stylesheets. */
+.qway { margin-top: 2.2rem; }
+.qway h2 { font-variant-numeric: tabular-nums; }
+.qway .btn { font-size: .88rem; padding: 1rem 1.7rem; min-height: 54px; }

@@ -1,6 +1,8 @@
 ---
+import '../../../styles/pages/reads.css';
 import Base from '../../../layouts/Base.astro';
 import Icon from '../../../components/Icon.astro';
+import SectionHead from '../../../components/SectionHead.astro';
 import CompassWheel from '../../../components/CompassWheel.astro';
 import OutcomeCards from '../../../components/OutcomeCards.astro';
 import RailStack from '../../../components/RailStack.astro';
@@ -8,10 +10,14 @@ import CategoryStack from '../../../components/CategoryStack.astro';
 import AxisDepth from '../../../components/AxisDepth.astro';
 import ShareBlock from '../../../components/ShareBlock.astro';
 import EmailCapture from '../../../components/EmailCapture.astro';
-import { getQuiz, resultFor, decodeFor, outcomeHref } from '../../../lib/engine/registry';
+import NextUp from '../../../components/NextUp.astro';
+import ReadCard from '../../../components/ReadCard.astro';
+import { QUIZZES, getQuiz, resultFor, decodeFor, outcomeHref } from '../../../lib/engine/registry';
 import { groupNoteFor, outcomeNounPlural, rankWord } from '../../../lib/engine/types';
 import { isConfigured } from '../../../lib/email/provider';
 import { readEnv } from '../../../lib/email/env';
+import { artFor } from '../../../lib/art';
+import { liveGames } from '../../../lib/games';
 import { getCollection } from 'astro:content';
 
 // Rendered on demand: any valid code has a permanent page, without pre-building
@@ -101,6 +107,28 @@ const folded = Boolean(
  * one" are the same empty case, and never a stray empty box.
  */
 const headlineNotes = quiz && view ? groupNoteFor(quiz, view.named, 'result') : [];
+
+/*
+ * The band's picture: the plate this QUIZ wears on the home page, on /me/ and on its own
+ * intro, read off art.ts so a reader never meets two faces for one quiz. The Compass has
+ * none on purpose — it is an instrument, and every page draws it on the starry ground.
+ *
+ * Deliberately NOT the named outcome's own plate. It was tried and taken out again: the
+ * figure quiz's verdict names more than one person even when one is clearly nearest
+ * ("Nearest on the map: Joseph · Abigail"), so putting the first one's face behind the
+ * headline would quietly make that one the answer — and the same rule that forbids a
+ * percentage against a person forbids that. A figure's plate belongs on the figure's own
+ * page, where the picture's subject is the subject.
+ */
+const art = quiz ? artFor(quiz.slug) : null;
+
+/*
+ * Where to go once the result has been read. The OTHER quizzes, then the games, as rooms
+ * with their own pictures — a finished result is the point at which someone is most
+ * willing to do another thing and least likely to find one.
+ */
+const otherQuizzes = quiz ? QUIZZES.filter(q => q.slug !== quiz.slug) : [];
+const games = liveGames();
 ---
 {quiz && view ? (
   <Base
@@ -109,22 +137,59 @@ const headlineNotes = quiz && view ? groupNoteFor(quiz, view.named, 'result') : 
     noindex={true}
     ogType="article"
   >
-    <header class="band band--long result-band">
-      <div class="wash" aria-hidden="true"></div>
-      <div class="veil" aria-hidden="true"></div>
-      <div class="band-ghost" aria-hidden="true" style="--len:6">result</div>
-      <p class="band-chip"><Icon name={quiz.icon} size={13} />{quiz.title} · your result</p>
-      {/* The first thing a reader sees, in the same two colours as the compass and rails. */}
-      <h1 class="verdict">
-        {view.headlineParts.map((part, i) => (
-          <>
-            <span class={`verdict-part verdict-part--${part.side}`}>{part.text}</span>
-            {i < view.headlineParts.length - 1 && <span class="verdict-sep">,</span>}
-            {i < view.headlineParts.length - 1 && ' '}
-          </>
-        ))}
-      </h1>
-      <p class="lede">{view.summary}</p>
+    {/*
+      THE DAWN PASS, 2026-09-21. This was the last band on the site still wearing the pale
+      wash and a giant grey ghost word. It is built out of the kit's own picture-band
+      classes now — the quiz's plate printed soft, or the starry ground where the quiz is
+      an instrument rather than a person — and the verdict keeps its two inks, because
+      kit.css lifts them to the soft blue and #FFD2B0 wherever a band carries a picture.
+    */}
+    <header
+      class:list={[
+        'band', 'band--long', 'band--pic', 'result-band',
+        art ? 'band--engraving' : 'band--night',
+        art && 'band--has-img'
+      ]}
+    >
+      {art && (
+        <img
+          class="band-img"
+          src={art.src}
+          alt=""
+          style={[
+            `object-position:${art.objectPosition}`,
+            art.lift ? `--img-lift:${art.lift}` : ''
+          ].filter(Boolean).join(';')}
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+        />
+      )}
+      <div class="band-in">
+        <p class="band-chip"><Icon name={quiz.icon} size={13} />{quiz.title} · your result</p>
+        {/* The first thing a reader sees, in the same two colours as the compass and rails. */}
+        <h1 class="verdict">
+          {view.headlineParts.map((part, i) => (
+            <>
+              <span class={`verdict-part verdict-part--${part.side}`}>{part.text}</span>
+              {i < view.headlineParts.length - 1 && <span class="verdict-sep">,</span>}
+              {i < view.headlineParts.length - 1 && ' '}
+            </>
+          ))}
+        </h1>
+        <p class="lede">{view.summary}</p>
+
+        {/*
+          Only for the reader who just finished this, told apart the same way the share
+          block tells them apart: a tab-scoped note the runner left behind. A visitor
+          opening someone else's link sees nothing here, because nothing of theirs was
+          saved. It stands in the band as a glass pill, carrying the same mark as the
+          header's own My results link, so the two read as the same place.
+        */}
+        <p class="saved-pill" id="saved-note" hidden>
+          <Icon name="users" size={14} /> Saved to <a href="/me/">My results</a>
+        </p>
+      </div>
     </header>{/*
       Hung off the band with no whitespace between them: an expression that renders nothing
       still leaves the newline on each side of it, and the Compass's result page has to come
@@ -141,14 +206,6 @@ const headlineNotes = quiz && view ? groupNoteFor(quiz, view.named, 'result') : 
       <div class="note draft"><p><strong>Unaudited draft.</strong>{" " + quiz.draftNote}</p></div>
     )}
 
-    {/*
-      Only for the reader who just finished this, told apart the same way the share block
-      tells them apart: a tab-scoped note the runner left behind. A visitor opening someone
-      else's link sees nothing here, because nothing of theirs was saved.
-    */}
-    <p class="saved-note" id="saved-note" hidden>
-      <Icon name="users" size={14} /> Saved to <a href="/me/">My results</a>
-    </p>
     <script is:inline define:vars={{ savedQuizSlug: quiz.slug, savedQuizCode: view.code }}>
       try {
         if (sessionStorage.getItem('ww:took:' + savedQuizSlug) === savedQuizCode) {
@@ -250,7 +307,10 @@ const headlineNotes = quiz && view ? groupNoteFor(quiz, view.named, 'result') : 
           </details>
         ) : (
           <>
-            <h2>{outcomeHeading}</h2>
+            <SectionHead
+              title={outcomeHeading}
+              kicker={`Measured against ${quiz.outcomes.length} ${outcomeNounPlural(quiz)}`}
+            />
             <p class="tags">
               {view.state === 'loose'
                 ? 'Nothing on the list is a close fit. These are the nearest, and "nearest" is doing a lot of work.'
@@ -277,12 +337,18 @@ const headlineNotes = quiz && view ? groupNoteFor(quiz, view.named, 'result') : 
         */}
         {quiz.notes?.depthTitle || quiz.notes?.depthNote ? (
           <Fragment>
-            <h2>{quiz.notes.depthTitle ?? 'Where these differences come from'}</h2>
+            <SectionHead
+              title={quiz.notes.depthTitle ?? 'Where these differences come from'}
+              kicker={`${depthOrder.length} axes, the strongest lean first`}
+            />
             <p class="tags">{quiz.notes.depthNote}</p>
           </Fragment>
         ) : (
           <Fragment>
-        <h2>Where these differences come from</h2>
+        <SectionHead
+          title="Where these differences come from"
+          kicker={`${depthOrder.length} axes, the strongest lean first`}
+        />
         <p class="tags">
           Each one is a real disagreement between Christians who read the same Bible. Both
           cases below are stated by people who hold them.
@@ -297,16 +363,32 @@ const headlineNotes = quiz && view ? groupNoteFor(quiz, view.named, 'result') : 
 
     <EmailCapture quiz={quiz} view={view} enabled={emailOn} />
 
+    {/*
+      The way on. A result used to end on the email form and, for some quizzes, three grey
+      cards of article titles — which is a dead end dressed as a list. The other quizzes and
+      the games stand here as rooms wearing their own pictures, and the articles written
+      alongside this quiz stand under them as the paintings they are.
+    */}
+    {(otherQuizzes.length > 0 || games.length > 0) && (
+      <section class="nextup">
+        <SectionHead title="Keep going" kicker="Take another, or play one" />
+        <NextUp quizzes={otherQuizzes} games={games} />
+      </section>
+    )}
+
     {related.length > 0 && (
       <section>
-        <h2>Where to go from here</h2>
-        <div class="cards">
+        <SectionHead
+          title="Worth reading"
+          kicker="Written alongside this quiz"
+          href="/articles/"
+          more="All articles"
+        />
+        <div class="hm-reads reads-foot">
           {related.map(a => (
-            <div class="card">
-              <h3><a href={`/articles/${a.id}/`}>{a.data.title}</a></h3>
-              <p>{a.data.description}</p>
-              <p class="meta">{a.data.minutes} min read</p>
-            </div>
+            <ReadCard id={a.id} title={a.data.title} description={a.data.description}
+                      minutes={a.data.minutes} image={a.data.image} imageAlt={a.data.imageAlt}
+                      imagePosition={a.data.imagePosition} />
           ))}
         </div>
       </section>

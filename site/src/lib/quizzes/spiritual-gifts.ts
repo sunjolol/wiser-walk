@@ -572,6 +572,12 @@ export const spiritualGifts: Quiz = {
     'in its passage’s own words. Fifty-seven plain statements about what you do and what has ' +
     'happened. Scripture gives no test for gifts, so take the result to your pastor or priest ' +
     'and to people who know you.',
+  /* The third sentence of the search line is said again, in the quiz's own words, in the
+     note directly under the band (notes.introShort). Once is enough. */
+  intro:
+    'Nineteen gifts the New Testament names, prophecy, healing and tongues among them, each ' +
+    'in its passage’s own words. Fifty-seven plain statements about what you do and what has ' +
+    'happened.',
   icon: 'scroll',
   minutes: 8,
   status: 'live',

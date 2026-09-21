@@ -387,10 +387,8 @@
 .trad-kicker { color: var(--accent); }
 .trad-verdict { text-wrap: balance; }
 .trad-verdict .verdict-sep { color: var(--ink-mute); }
-.trad-feature .spec { margin-top: 1.25rem; }
-.trad-feature .spec dt a { color: inherit; text-decoration: none; }
-.trad-feature .spec dt a:hover { text-decoration: underline; }
-.trad-feature .spec dd { font-family: var(--display); font-size: 1.02rem; color: var(--ink); }
+/* The six readings under the verdict are .axlist now, not a dotted spec list; see the dawn
+   pass block at the foot of this file. */
 
 /* the compass reads better with a little more air on the dark half at phone width */
 .trad-feature .feature-art { min-height: 19rem; }
@@ -455,21 +453,8 @@
 }
 @media (prefers-reduced-motion: reduce) { .nbr-link { transition: none; } }
 
-/* ------------------------------------------------------------- the CTA ---- */
-
-.ref-cta { margin-top: 2.8rem; }
-.ref-cta .ref-cta-spec { margin-top: 1.6rem; }
-/* on charcoal the spec's accent blue goes muddy; the kicker's orange is the dark panel's
-   own label colour everywhere else on the site */
-.ref-cta .spec dt { color: var(--orange-soft); }
-.ref-cta .spec dd { color: var(--on-dark); }
-@media (min-width: 54rem) {
-  .ref-cta {
-    display: grid; grid-template-columns: minmax(0, 8fr) minmax(0, 5fr);
-    gap: 1.4rem 2.6rem; align-items: center;
-  }
-  .ref-cta .ref-cta-spec { margin-top: 0; }
-}
+/* The way back into the quiz is .wayin now — a room with a picture in it, not a dark slab
+   with a spec list beside it. See the dawn pass block at the foot of this file. */
 
 @media (prefers-reduced-motion: reduce) {
   .pager-link { transition: none; }
@@ -601,3 +586,352 @@
 .moment-quote::before { content: "“"; color: var(--orange); }
 .moment-quote::after { content: "”"; color: var(--orange); }
 .caveat--note .caveat-label { color: var(--warn-ink); }
+
+/* ==========================================================================
+   DAWN PASS: reference (2026-09-21)
+
+   The home page's language, carried onto the pages that describe somebody
+   else's belief: pictures, marks that mean something, pills, hairlines.
+
+   NOTHING AUDITED MOVES. Every instrument above — the tradition map, the
+   rails, the compass, the passage pills, the timeline — is untouched, and so
+   is every audited sentence. What changes is what stands AROUND them.
+
+   Three rules run through all of it:
+     · no dotted rule is ever decoration. Space, or one hairline of the brand.
+     · a mark only where it does work. The disc beside an axis is the pole the
+       record points at; it is not a picture of the axis.
+     · the way back into the quiz is a room with a picture in it, not a slab.
+
+   `.wayin` is defined here and also used by the quiz intro: both stylesheets
+   are loaded on every page by Base.astro, and one room drawn once is better
+   than the same room drawn twice in two files.
+   ========================================================================== */
+
+/* ------------------------------------------------------- the dots come out ---- */
+/*
+ * "you over-used the dotted lines". These lists all read as rows whether or not
+ * something is drawn between them, so the dots go and the space does the work;
+ * where a line genuinely helps a reader hold a column together it is one hairline.
+ */
+.ref .reading-col li,
+.ref .reading-col li:first-child,
+.ref .act, .ref .act:first-child,
+.ref .moment, .ref .moment:last-child,
+.ref .nbr-link, .ref .nbr:first-child .nbr-link,
+.ref .axis-note--between { border: 0; }
+.ref .amap-group-head { border-bottom: 1px solid var(--rule-strong); }
+.ref .ref-panel .tl-item { border-top: 1px solid var(--rule); }
+
+/* --------------------------------------------------------------- the notes ---- */
+/*
+ * The caveat was a wide slab of tinted prose, which is what a reader skims past.
+ * It is a panel now with one solid edge and a marked tile, so it reads as a note
+ * somebody wrote rather than as a legal box. Every word inside it is unchanged.
+ */
+.ref .caveat {
+  position: relative; overflow: hidden; align-items: flex-start;
+  gap: .9rem; margin: 1.3rem 0 0; padding: .95rem 1.1rem 1rem 1.25rem;
+  border-radius: var(--r); background: var(--panel); box-shadow: var(--lift);
+}
+.ref .caveat::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px;
+  background: var(--accent);
+}
+.ref .caveat--note::before { background: var(--warn-ink); }
+.ref .caveat-mark {
+  width: 2.2rem; height: 2.2rem; border-radius: 11px; box-shadow: none;
+  background: var(--accent); color: var(--accent-ink);
+}
+.ref .caveat--note .caveat-mark { background: var(--warn-ink); color: var(--warn-bg); }
+.ref .caveat-label { font-size: .58rem; letter-spacing: .17em; color: var(--ink-mute); }
+.ref .caveat p:last-child { font-size: .9rem; line-height: 1.55; }
+/* An outcome's OWN sentence is not a disclaimer, and on Jesus's page it sits directly above
+   one. It is set in the display face so the two notes are not read as one box repeated. */
+.ref .caveat--note p:last-child {
+  font-family: var(--display); font-size: 1.08rem; line-height: 1.4; color: var(--ink);
+}
+
+/* ------------------------------------------------- the reading of each axis ---- */
+/*
+ * The dotted spec list under the compass, as a quiet two-column list. The disc is
+ * the only thing added and it is data: which pole this axis's reading points at,
+ * hollow where the quiz names no pole at all.
+ */
+.axlist { list-style: none; margin: 1.15rem 0 0; padding: 0; }
+.axlist li + li { border-top: 1px solid var(--rule); }
+/*
+ * On a phone the two "columns" are stacked, because two columns of words inside the half
+ * of a feature block is how "rooted in Scripture and tradition" ends up printed over the
+ * word AUTHORITY. The row only splits in two where there is room for two.
+ */
+.axlist a {
+  display: grid; grid-template-columns: auto minmax(0, 1fr);
+  align-items: center; gap: .15rem .7rem; min-height: 44px; padding: .55rem 0;
+  text-decoration: none; color: inherit;
+}
+.axlist-dot { grid-row: 1 / span 2; }
+@media (min-width: 34rem) {
+  .axlist a { grid-template-columns: auto auto minmax(0, 1fr); }
+  .axlist-dot { grid-row: 1; }
+  .axlist-read { text-align: right; }
+}
+.axlist-dot { width: 9px; height: 9px; border-radius: 50%; }
+.axlist-dot--left { background: var(--blue); }
+.axlist-dot--right { background: var(--orange); }
+/* the acts go both ways and do not settle: both ends, in one disc */
+.axlist-dot--both { background-image: linear-gradient(to right, var(--blue) 50%, var(--orange) 50%); }
+.axlist-dot--none { box-shadow: inset 0 0 0 2px var(--ink-mute); }
+.axlist-name {
+  font-family: var(--ui); font-size: .62rem; font-weight: 700; letter-spacing: .13em;
+  text-transform: uppercase; color: var(--ink-mute);
+}
+.axlist a:hover .axlist-name { color: var(--accent); }
+.axlist-read {
+  min-width: 0; font-family: var(--display); font-size: 1.02rem; line-height: 1.25;
+  color: var(--ink); text-wrap: pretty;
+}
+
+/* ------------------------------------------------------ further reading ---- */
+.ref .reading-col li { position: relative; padding: .5rem 0 .5rem 1.05rem; }
+/* the marker takes the pole the column belongs to, because the books do: Bondage of the
+   Will argues one side and Arminius the other, and the list is already split that way */
+.ref .reading-col li::before {
+  content: ""; position: absolute; left: 0; top: 1.02rem; width: 7px; height: 7px;
+  border-radius: 50%; background-image: var(--grad);
+}
+.ref .reading-col--left li::before { background: var(--blue); background-image: none; }
+.ref .reading-col--right li::before { background: var(--orange); background-image: none; }
+.ref .reading-col li:last-child { padding-bottom: .5rem; }
+
+/* -------------------------------------------------------- between the poles ---- */
+.ref .axis-note--between { padding: 1.5rem 0 .2rem; }
+.ref .axis-note--between::before {
+  content: ""; display: block; width: 4.5rem; height: 3px; border-radius: 2px;
+  margin: 0 auto 1.1rem; background-image: var(--grad-r);
+}
+
+/* -------------------------------------------------------- cited references ---- */
+/*
+ * A reference is a chip, not a line of tracked grey: it is the thing a reader
+ * checks us on, so it gets the shape everything else checkable on this site has.
+ */
+.ref .act-ref, .ref .moment-cite {
+  display: inline-flex; align-items: center; justify-self: start; width: fit-content;
+  padding: .25rem .55rem; border-radius: var(--r-pill);
+  background: var(--accent-soft); color: var(--accent); font-size: .58rem; letter-spacing: .12em;
+}
+.ref .moment--right .moment-cite { background: var(--warn-bg); color: var(--warn-ink); }
+/* "No record" is not a reference, so it is not painted like one: a hollow chip in the quiet
+   ink. On the dark theme a filled one in --shell was all but invisible on the card. */
+.ref .moment--none .moment-cite {
+  background: transparent; color: var(--ink-mute); box-shadow: inset 0 0 0 1px var(--rule-strong);
+}
+.ref .act { padding: .75rem 0 .8rem; }
+.ref .act + .act { border-top: 1px solid var(--rule); }
+.ref .act-what { margin-top: .4rem; }
+@media (min-width: 54rem) { .ref .act-what { margin-top: 0; } }
+
+/* ------------------------------------------------------ quoted scripture ---- */
+/*
+ * "handsome dark quotation panels with a quote mark". A line quoted from the text
+ * is the one thing on these pages nobody wrote, so it is set apart on the dark
+ * ground the site keeps for the things it only carries.
+ */
+.ref .moment-quote {
+  position: relative; margin: .65rem 0 .15rem; padding: .8rem 1rem .85rem 2.5rem;
+  border-radius: var(--r-sm); background-color: var(--dark-fill);
+  background-image: var(--dark-fill-img); background-size: 420px;
+  color: var(--on-dark); font-size: 1rem; line-height: 1.4; text-wrap: pretty;
+}
+.ref .moment-quote::before {
+  content: "“"; position: absolute; left: .62rem; top: .28rem; font-family: var(--display);
+  font-size: 2.2rem; line-height: 1; color: var(--orange-soft);
+}
+/* the closing mark stays in the flow, or a quotation that runs to the end of a line reads
+   as one that was cut off */
+.ref .moment-quote::after {
+  content: "”"; margin-left: .08em; font-family: var(--display); font-size: 1.3em;
+  line-height: 0; vertical-align: -.12em; color: var(--orange-soft);
+}
+/* the listing verse on a gift page already sits on charcoal; it gets the same mark */
+.quoted-item { position: relative; padding-left: 1.9rem; }
+.quoted-item::before {
+  content: "“"; position: absolute; left: 0; top: -.15rem; font-family: var(--display);
+  font-size: 2.4rem; line-height: 1; color: var(--orange-soft);
+}
+.quoted-text::before, .quoted-text::after { content: ""; }
+
+/* ------------------------------------------------- the moments, by axis ---- */
+/*
+ * One card per axis with a mark that says which way the record points: blue for
+ * the left pole, orange for the right, split where the acts go both ways, hollow
+ * where the text shows nothing. Six identical icons would have been decoration.
+ */
+/* a card is as tall as its own evidence. Stretched to its neighbour's height it ended in a
+   hand's depth of empty panel, which reads as something that failed to load */
+@media (min-width: 62rem) { .moments { align-items: start; } }
+.ref .moment-axis { padding: 1.2rem 1.15rem 1.25rem; }
+.ref .moment-head {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .1rem .75rem;
+  align-items: center;
+}
+.moment-medal {
+  grid-row: 1 / span 2; display: grid; place-items: center;
+  width: 2.3rem; height: 2.3rem; border-radius: 50%; color: var(--on-grad);
+}
+.moment-medal--left { background: var(--blue); }
+.moment-medal--left .icon { transform: rotate(180deg); }
+.moment-medal--right { background: var(--orange); }
+.moment-medal--both { background-image: linear-gradient(to right, var(--blue) 50%, var(--orange) 50%); }
+.moment-medal--none { box-shadow: inset 0 0 0 2px var(--rule-strong); }
+.moment-medal--both .icon, .moment-medal--none .icon { display: none; }
+.ref .moment-poles { grid-column: 2; }
+.ref .moment-band {
+  margin: .5rem 0 0; font-family: var(--display); font-style: italic; font-size: 1.05rem;
+  letter-spacing: 0; text-transform: none; color: var(--ink-soft);
+}
+.ref .moment-note { margin-top: .7rem; border-radius: var(--r-sm); font-size: .84rem; }
+.ref .moment { padding: .8rem 0 .85rem .85rem; }
+.ref .moment + .moment { border-top: 1px solid var(--rule); }
+.ref .moment-did { margin-top: .45rem; }
+
+/* ------------------------------------------------- the vertical strip comes out ---- */
+/*
+ * From the tablet up, the timeline and the passages panels each carried their own heading
+ * again, rotated up a gradient strip down their left edge: "HOW THE ARGUMENT UNFOLDED"
+ * under a section head that already says "how it unfolded". Say a thing once. The heading
+ * goes back to being read-only-by-a-screen-reader at every width, the panels get their
+ * gutter back, and the eight passage pills no longer sit beside a hand's width of nothing.
+ */
+@media (min-width: 54rem) {
+  .ref .ref-panel--tl, .ref .ref-panel--pg { padding-left: 1.6rem; min-height: 0; }
+  .ref .ref-panel--tl .tl-head h3, .ref .ref-panel--pg .pg-head h3 {
+    position: absolute; left: auto; top: auto; width: 1px; height: 1px; min-height: 0;
+    margin: -1px; padding: 0; display: block; overflow: hidden; clip-path: inset(50%);
+    white-space: nowrap; background-image: none; border-radius: 0; writing-mode: horizontal-tb;
+    transform: none;
+  }
+}
+
+/* ----------------------------------------------------------- a long definition ---- */
+/*
+ * The display face is a LEAD, not a body face. A gift whose summary runs to twelve
+ * sentences was printed entirely in it, which at 390px is twenty lines of serif with no
+ * change of weight anywhere: a wall, and unreadable on a phone. The first paragraph keeps
+ * the lead; the rest is set in the text face at reading size. Not a word is cut.
+ */
+.ref .ref-lead + .ref-lead {
+  margin-top: .9rem; font-family: var(--text); font-size: .97rem; line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+/* ------------------------------------------------------- the correction bar ---- */
+/*
+ * It used to be charcoal, which put three dark blocks in a row at the foot of every page:
+ * the room, this, and the footer's photograph. It is a quiet panel now — still a designed
+ * bar with its mark, but it no longer competes with the way in directly above it.
+ */
+.ref .correction {
+  padding: .9rem 1.1rem .95rem 3.6rem; background-color: var(--panel); background-image: none;
+  box-shadow: var(--lift); color: var(--ink-mute); font-size: .84rem;
+}
+.ref .correction a { color: var(--accent); }
+.ref .correction-mark { top: .85rem; width: 1.8rem; height: 1.8rem; color: var(--on-grad); }
+
+/* ------------------------------------------------------------- neighbours ---- */
+.ref .nbr + .nbr .nbr-link { border-top: 1px solid var(--rule); }
+.ref .nbr-rank {
+  display: grid; place-items: center; width: 1.7rem; height: 1.7rem; border-radius: 50%;
+  background: var(--shell); color: var(--ink-mute); font-size: .62rem; min-width: 0;
+}
+.ref .nbr:first-child .nbr-rank { background-image: var(--grad); color: var(--on-grad); }
+
+/* ==============================================================================
+   THE WAY IN: a room with the quiz's own picture in it
+   (the foot of every reference page, and the foot of a quiz's intro)
+   ============================================================================== */
+
+.wayin {
+  position: relative; isolation: isolate; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  min-height: 21rem; margin: 2.6rem 0 0; padding: 1.5rem 1.35rem 1.6rem;
+  border-radius: 24px; color: #fff; background: #15161c;
+}
+.wayin-img {
+  position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover;
+}
+/* the engraving, printed soft, exactly as the home page's rooms print theirs */
+.wayin--pic .wayin-img { filter: sepia(.34) contrast(.9) brightness(var(--img-lift, 1.06)); }
+.wayin--pic { background: #2a2622; }
+.wayin--pic::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, rgba(38, 33, 28, 0) 22%, rgba(38, 33, 28, .76) 58%, rgba(32, 28, 24, .96));
+}
+/*
+ * No plate: the night ground the instruments are drawn on, with first light coming up one
+ * corner of it. This is what a page gets when the picture it would otherwise use is already
+ * somewhere on it — and a dawn sky is not the alternative, because the footer under every
+ * one of these blocks is a photograph of one.
+ */
+.wayin--night {
+  background-color: #141a27; background-image: var(--dark-fill-img); background-size: 520px;
+}
+.wayin--night::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(90% 70% at 88% 6%, rgba(126, 186, 238, .3), transparent 62%),
+    radial-gradient(80% 60% at 6% 100%, rgba(240, 160, 111, .24), transparent 60%);
+}
+/* A room with no picture in it needs something on the side the picture would have taken, or
+   it is a wide dark rectangle with words in one corner. The ghost word is the kit's own
+   answer to that, and it is always a real word from the page it is on. */
+.wayin-ghost {
+  position: absolute; z-index: 0; right: -.04em; bottom: -.18em; pointer-events: none;
+  user-select: none; font-family: var(--display); font-style: italic; font-weight: 400;
+  font-size: clamp(5.5rem, 26vw, 11rem); line-height: .8; letter-spacing: -.04em;
+  white-space: nowrap; color: rgba(255, 255, 255, .055);
+}
+.wayin-in { position: relative; z-index: 1; }
+.wayin-mark {
+  display: grid; place-items: center; width: 2.6rem; height: 2.6rem; margin: 0 0 .85rem;
+  border-radius: 14px; color: #17181d; background: var(--room-ink, var(--blue-soft));
+}
+.wayin--pic .wayin-mark { background: #EADFCB; }
+.wayin-kicker {
+  margin: 0 0 .3rem; font-family: var(--ui); font-size: .6rem; font-weight: 700;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--room-ink, var(--blue-soft));
+}
+.wayin--pic .wayin-kicker { color: #EADFCB; }
+.wayin h2 {
+  margin: 0; font-family: var(--display); font-weight: 400; color: #fff;
+  font-size: clamp(1.75rem, 7.6vw, 2.4rem); line-height: 1.05; letter-spacing: -.015em;
+  text-wrap: balance;
+}
+.wayin-say {
+  margin: .6rem 0 0; max-width: 30rem; font-size: .95rem; line-height: 1.5;
+  color: rgba(255, 255, 255, .85); text-wrap: pretty;
+}
+/* the facts as glass pills, the way the rooms on the home page carry theirs */
+.wayin-facts {
+  display: flex; flex-wrap: wrap; gap: .4rem; margin: 1rem 0 0; padding: 0; list-style: none;
+  font-family: var(--ui); font-size: .62rem; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.wayin-facts li {
+  display: inline-flex; align-items: center; gap: .35rem; padding: .36rem .62rem;
+  border-radius: 999px; color: rgba(255, 255, 255, .92);
+  background: rgba(255, 255, 255, .12); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16);
+}
+.wayin .btn-row { margin: 1.25rem 0 0; }
+.wayin .btn { flex: 1 1 auto; box-shadow: 0 6px 20px rgba(12, 22, 44, .3); }
+@media (min-width: 30rem) { .wayin .btn { flex: 0 0 auto; } }
+@media (min-width: 52rem) {
+  .wayin { min-height: 22rem; padding: 2.2rem 2.2rem 2.3rem; }
+  .wayin-in { max-width: 34rem; }
+  /* the words keep the left of the room and the picture is left room to be seen */
+  .wayin--pic::after {
+    background: linear-gradient(100deg, rgba(34, 29, 25, .96) 26%, rgba(36, 31, 26, .74) 54%, rgba(38, 33, 28, .3));
+  }
+  .wayin h2 { font-size: clamp(2rem, 3.4vw, 2.7rem); }
+}

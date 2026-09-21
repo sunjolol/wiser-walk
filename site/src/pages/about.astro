@@ -1,12 +1,12 @@
 ---
 import Hero from '../components/Hero.astro';
 import Base from '../layouts/Base.astro';
-import Card from '../components/Card.astro';
 import SectionHead from '../components/SectionHead.astro';
 import Icon from '../components/Icon.astro';
 import { getCollection } from 'astro:content';
 import { QUIZZES, liveQuizzes, getQuiz } from '../lib/engine/registry';
 import { liveGames } from '../lib/games';
+import { artFor } from '../lib/art';
 import audit from '../data/compass-audit.json';
 
 /*
@@ -26,6 +26,18 @@ const compass = getQuiz('theology-compass')!;
 const game = games[0];
 
 const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
+
+/*
+ * The pictures for the three rooms below.
+ *
+ * The quizzes wear Doré's engravings everywhere on this site, so the quizzes room takes
+ * one from art.ts rather than a photograph: the band above this is already the dawn sky,
+ * and the same picture twice on one page has been rejected once already. The games take
+ * the manuscript page they are drawn on everywhere else, and the articles take the
+ * painting the articles index opens with — colour, where the quizzes are ink.
+ */
+const quizPic = artFor('bible-figure');
+const READS_PIC = '/img/reads-harvest.jpg';
 
 /*
  * The fairness figures are counted off the audit file the method page publishes, so this
@@ -59,7 +71,9 @@ const breadcrumbs = [
     title="About"
     eyebrow="Wiser Walk"
     icon="compass"
-    ghost="about"
+    kind="photo"
+    image="/img/sky-rays.jpg"
+    imagePosition="24% 14%"
     tiles={[
       { n: quizzes.length + drafts.length, label: quizzes.length + drafts.length === 1 ? 'Quiz' : 'Quizzes' },
       { n: drafts.length, label: 'In draft' },
@@ -90,7 +104,7 @@ const breadcrumbs = [
     </div>
     <aside class="pnl-aside">
       <p class="pnl-kicker">The site, in facts</p>
-      <dl class="spec">
+      <dl class="spec spec--quiet">
         <div><dt>Quizzes</dt><dd>{quizzes.length} live, {drafts.length} in draft</dd></div>
         <div><dt>Games</dt><dd>{plural(games.length, 'game', 'games')}</dd></div>
         <div><dt>Articles</dt><dd>{plural(articles.length, 'piece', 'pieces')}</dd></div>
@@ -99,37 +113,55 @@ const breadcrumbs = [
     </aside>
   </section>
 
-  <div class="scards" style="margin-top:.9rem">
-    <Card
-      href="/quizzes/"
-      icon={compass.icon}
-      title="Quizzes"
-      text={compass.tagline}
-      meta={plural(quizzes.length, 'quiz', 'quizzes')}
-      tab="Take one"
-      go="All quizzes"
-    />
+  {/*
+    The three kinds of thing, as rooms (the dawn pass, 2026-09-21). They were three stripe
+    cards, which is the shape every list on the site had worn out; each one now carries the
+    picture that kind of thing wears everywhere else, so the page shows what it describes.
+    The pictures are decorative: each card is one link, and its title says where it goes.
+  */}
+  <ul class="ab-rooms">
+    <li>
+      <a class="ab-room ab-room--ink" href="/quizzes/">
+        <img src={quizPic!.src} alt="" loading="lazy" decoding="async"
+             width="820" height="1029" style={`object-position:${quizPic!.objectPosition}`} />
+        <span class="nx-body">
+          <span class="nx-mark" aria-hidden="true"><Icon name={compass.icon} size={18} /></span>
+          <span class="nx-kind">{plural(quizzes.length, 'quiz', 'quizzes')}</span>
+          <b class="nx-title">Quizzes</b>
+          <span class="nx-say">{compass.tagline}</span>
+          <span class="nx-go">All quizzes <Icon name="arrow" size={14} /></span>
+        </span>
+      </a>
+    </li>
     {game && (
-      <Card
-        href="/games/"
-        icon={game.icon}
-        title="Games"
-        text={game.tagline}
-        meta={plural(games.length, 'game', 'games')}
-        tab="Play"
-        go="All games"
-      />
+      <li>
+        <a class="ab-room" href="/games/">
+          <img src="/img/game-manuscript.jpg" alt="" loading="lazy" decoding="async"
+               width="1400" height="858" style="object-position:50% 40%" />
+          <span class="nx-body">
+            <span class="nx-mark" aria-hidden="true"><Icon name={game.icon} size={18} /></span>
+            <span class="nx-kind">{plural(games.length, 'game', 'games')}</span>
+            <b class="nx-title">Games</b>
+            <span class="nx-say">{game.tagline}</span>
+            <span class="nx-go">All games <Icon name="arrow" size={14} /></span>
+          </span>
+        </a>
+      </li>
     )}
-    <Card
-      href="/articles/"
-      icon="book"
-      title="Articles"
-      text="Plain, practical writing on Christian formation: gratitude, joy, and what it actually means to be Christ-like."
-      meta={plural(articles.length, 'piece', 'pieces')}
-      tab="Read"
-      go="All articles"
-    />
-  </div>
+    <li>
+      <a class="ab-room" href="/articles/">
+        <img src={READS_PIC} alt="" loading="lazy" decoding="async"
+             width="1280" height="1011" style="object-position:50% 46%" />
+        <span class="nx-body">
+          <span class="nx-mark" aria-hidden="true"><Icon name="book" size={18} /></span>
+          <span class="nx-kind">{plural(articles.length, 'piece', 'pieces')}</span>
+          <b class="nx-title">Articles</b>
+          <span class="nx-say">Plain, practical writing on Christian formation: gratitude, joy, and what it actually means to be Christ-like.</span>
+          <span class="nx-go">All articles <Icon name="arrow" size={14} /></span>
+        </span>
+      </a>
+    </li>
+  </ul>
 
   <SectionHead title="What this is not" kicker="Four things worth saying plainly" />
 
@@ -173,7 +205,7 @@ const breadcrumbs = [
     </div>
     <aside class="pnl-aside">
       <p class="pnl-kicker">The audit, in figures</p>
-      <dl class="spec">
+      <dl class="spec spec--quiet">
         <div><dt>Traditions on the map</dt><dd>{compass.outcomes.length}</dd></div>
         <div><dt>Changes published</dt><dd>{changes}</dd></div>
         <div><dt>Argued and refused</dt><dd>{refused}</dd></div>

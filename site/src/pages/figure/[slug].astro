@@ -36,6 +36,7 @@ import { bibleFigure } from '../../lib/quizzes/bible-figure';
 import type { FigureEvidence, FigureOutcome } from '../../lib/quizzes/bible-figure';
 import { groupHref, quizHref, resultFor } from '../../lib/engine/registry';
 import type { BipolarView } from '../../lib/engine/types';
+import { artFor, artForOutcome } from '../../lib/art';
 
 export function getStaticPaths() {
   return bibleFigure.outcomes.map(f => ({ params: { slug: f.slug }, props: { figure: f } }));
@@ -58,6 +59,16 @@ const named = view.rows.filter(r => !r.noClaim).length;
 
 /** The ghost word is one word of the name — the first real one, never anything invented. */
 const ghost = (figure.name.match(/[A-Za-z]{4,}/g) ?? [figure.name])[0]!.toLowerCase();
+/* Doré's own plate of this person where one exists and shows nothing violent; the quiz's
+   picture where it does not. A page never pretends to a portrait the plates do not hold. */
+const art = artForOutcome(quiz.slug, figure.slug);
+/**
+ * The picture for the room at the foot: the QUIZ's own plate, and only when this page is
+ * not already showing it in the band. A page that shows one picture twice is the mistake
+ * the owner has already rejected once; null here means the room takes the sky instead.
+ */
+const quizArt = artFor(quiz.slug);
+const wayArt = quizArt && quizArt.src !== art?.src ? quizArt : null;
 
 /**
  * The evidence, in the engine's axis order, joined to the row the engine produced. Evidence
@@ -110,6 +121,15 @@ const reading = (a: (typeof axes)[number]) =>
     ? 'not placed'
     : a.notShown ? 'not shown in the text' : a.bothEnds ? 'recorded at both ends' : a.row.band;
 
+/**
+ * The mark beside an axis, and the disc beside its reading: which way the record points.
+ * It is the same fact the rail draws, and it is never a judgement — blue is the left pole
+ * and orange the right, and neither is the better one. An axis the acts do not settle gets
+ * both halves; an axis the text is silent on gets a hollow ring, not a colour.
+ */
+const pointing = (a: (typeof axes)[number]) =>
+  a.bothEnds ? 'both' : a.mask !== 'shown' ? 'none' : a.row.value < 50 ? 'left' : 'right';
+
 const blocksFor = (a: (typeof axes)[number]) =>
   a.bothEnds
     ? [
@@ -122,16 +142,6 @@ const momentCount = axes.reduce((n, a) => n + a.cited.length, 0);
 const silentAxes = axes.filter(a => a.notShown && !a.explained).length;
 const explainedAxes = axes.filter(a => a.explained).length;
 const bothAxes = axes.filter(a => a.bothEnds).length;
-/** Which axes are left out of the match, in words, so the sentence is true of every figure. */
-const leftOutParts = [
-  silentAxes > 0 ? 'the axes the text is silent on' : '',
-  bothAxes > 0 ? 'the axes where the text shows both ends' : '',
-  explainedAxes > 0 ? 'the axis where neither end describes what it records' : ''
-].filter(Boolean);
-const leftOut =
-  leftOutParts.length > 1
-    ? leftOutParts.slice(0, -1).join(', ') + ' and ' + leftOutParts[leftOutParts.length - 1]
-    : leftOutParts[0] ?? '';
 /** The axes this person is actually matched on. Never all six for every figure. */
 const matchedAxes = axes.filter(a => a.mask === 'shown').length;
 
@@ -165,7 +175,11 @@ const breadcrumbs = isDraft
     title={figure.name}
     eyebrow={`${quiz.title} · figure`}
     icon={quiz.icon}
-    ghost={ghost}
+    kind={art ? 'engraving' : 'night'}
+    image={art?.src}
+    imageAlt={art?.alt}
+    imagePosition={art?.objectPosition}
+    imageLift={art?.lift}
     long
     lede={figure.who}
     tiles={[
@@ -192,15 +206,16 @@ const breadcrumbs = isDraft
       <span class="caveat-mark" aria-hidden="true"><Icon name="compass" size={18} /></span>
       <div>
         <p class="caveat-label">What this is</p>
+        {/*
+          Two sentences, not five. Which axes a reader is matched on, and which are left
+          out, used to be spelled out here as well — and then again under the compass, and
+          again over the moments, where a reader meets the axes themselves and the sentence
+          is actually needed. It is said once now, there.
+        */}
         <p>
           Six axes of <strong>temperament, not virtue</strong>: neither end of any of them is
           the better one. Every coordinate below is argued from cited, recorded acts, and
           where the text shows nothing the page says so instead of guessing.
-          {matchedAxes < quiz.groups.length && (
-            <> A reader is measured against {figure.name} on {matchedAxes} of the
-            {' ' + quiz.groups.length} — {leftOut} are left out rather than counted as
-            a position in the middle.</>
-          )}
         </p>
       </div>
     </aside>
@@ -229,14 +244,19 @@ const breadcrumbs = isDraft
             <><span class={`verdict-part verdict-part--${part.side}`}>{part.text}</span>{i < view.headlineParts.length - 1 && <span class="verdict-sep">, </span>}</>
           ))}
         </h3>
-        <dl class="spec">
+        {/* Six axes and what the record says on each, on hairlines rather than dotted
+            rules. Every word of the reading is the quiz's own; the disc repeats the rail. */}
+        <ul class="axlist">
           {axes.map(axis => (
-            <div>
-              <dt><a href={groupHref(quiz, axis.row)}>{axis.row.name}</a></dt>
-              <dd>{reading(axis)}</dd>
-            </div>
+            <li>
+              <a href={groupHref(quiz, axis.row)}>
+                <span class:list={['axlist-dot', `axlist-dot--${pointing(axis)}`]} aria-hidden="true"></span>
+                <span class="axlist-name">{axis.row.name}</span>
+                <span class="axlist-read">{reading(axis)}</span>
+              </a>
+            </li>
           ))}
-        </dl>
+        </ul>
       </div>
     </div>
 
@@ -264,6 +284,10 @@ const breadcrumbs = isDraft
       {axes.map(axis => (
         <section class:list={['moment-axis', { 'is-silent': axis.notShown, 'is-both': axis.bothEnds }]}>
           <h3 class="moment-head">
+            {/* A mark that does work: the pole the acts point at, in that pole's own ink. */}
+            <span class:list={['moment-medal', `moment-medal--${pointing(axis)}`]} aria-hidden="true">
+              <Icon name="arrow" size={13} />
+            </span>
             <a href={groupHref(quiz, axis.group)}>{axis.group.name}</a>
             <span class="moment-poles">
               <b class="pole-l">{axis.group.left}</b>
@@ -350,27 +374,40 @@ const breadcrumbs = isDraft
       </>
     )}
 
-    <section class="dark pledge ref-cta">
-      <div class="dark-ghost" aria-hidden="true">{ghost}</div>
-      <div class="ref-cta-say">
-        <p class="feature-kicker">
-          <Icon name={quiz.icon} size={13} /> {quiz.title}
-        </p>
+    {/* The way back into the quiz, as a room. It carries the QUIZ's own plate rather than
+        this person's, because this person's is already in the band above and no page shows
+        one picture twice. A figure who has no plate of their own is already wearing the
+        quiz's, so that page's room is the night ground instead. */}
+    <section class:list={['wayin', wayArt ? 'wayin--pic' : 'wayin--night']}>
+      {!wayArt && <div class="wayin-ghost" aria-hidden="true">{ghost}</div>}
+      {wayArt && (
+        <img
+          class="wayin-img"
+          src={wayArt.src}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          style={`object-position:${wayArt.objectPosition}${wayArt.lift ? `;--img-lift:${wayArt.lift}` : ''}`}
+        />
+      )}
+      <div class="wayin-in">
+        <span class="wayin-mark" aria-hidden="true"><Icon name={quiz.icon} size={20} /></span>
+        <p class="wayin-kicker">{quiz.title}</p>
         <h2>See who you land nearest.</h2>
-        <p>
+        <p class="wayin-say">
           Answer {quiz.items.length} plain statements about yourself — none of them mentions
           the Bible — and your own position is drawn on these same six rails, with the
           distance to {figure.name} and to {quiz.outcomes.length - 1} others.
         </p>
+        <ul class="wayin-facts">
+          <li><Icon name="scroll" size={13} /> {quiz.items.length} statements</li>
+          <li><Icon name="clock" size={13} /> About {quiz.minutes} minutes</li>
+          <li><Icon name="users" size={13} /> {quiz.outcomes.length} people</li>
+        </ul>
         <div class="btn-row">
           <a class="btn" href={quizHref(quiz)}>Take the quiz</a>
         </div>
       </div>
-      <dl class="spec ref-cta-spec">
-        <div><dt>Statements</dt><dd>{quiz.items.length}</dd></div>
-        <div><dt>Takes</dt><dd>About {quiz.minutes} minutes</dd></div>
-        <div><dt>Axes</dt><dd>{quiz.groups.length}, both poles named</dd></div>
-      </dl>
     </section>
 
     <CorrectionNote subject={figure.name} />

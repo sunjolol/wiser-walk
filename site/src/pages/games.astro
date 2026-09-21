@@ -1,47 +1,85 @@
 ---
 /**
- * The games index: a sibling of the home page, not a list of plain cards.
+ * The games hub, recomposed for the dawn pass (2026-09-21).
  *
- * The band, then the same composed game card the home page draws, then the charcoal
- * block that says where the lines come from. Every number on this page is counted from
- * the built game's own metadata, never typed.
+ * What stood here: one composed card for the first game, the second game dropped underneath
+ * as a plain stripe card a tenth the size, and then a charcoal block explaining how the
+ * lines were gathered. Two games of equal standing shown as a headliner and a footnote, and
+ * a page whose job is to get someone playing ending on process talk.
+ *
+ * Now both games get the same room: a dark card carrying its own mark, its own ink, the
+ * counted facts and a small drawing of what a player actually meets. Play is in the band and
+ * again on every card. Where the lines come from is said once, in the band's own line, and
+ * in full after every answer inside the game.
+ *
+ * Every number on this page is read from the built game's metadata; nothing is typed but the
+ * rules a game states on its own page (a run is ten lines, about two minutes).
  */
 import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
-import SectionHead from '../components/SectionHead.astro';
 import GameCard from '../components/GameCard.astro';
-import Card from '../components/Card.astro';
 import Icon from '../components/Icon.astro';
+import type { IconName } from '../lib/icons';
 import { liveGames } from '../lib/games';
 import slsMeta from '../games/sounds-like-scripture.meta.json';
+import wsiMeta from '../games/who-said-it.meta.json';
 
 const games = liveGames();
 
 /**
- * The facts under each game's title. They are per game because they are the game's own
- * rules; a game with nothing to say here falls back to its one-line meta.
+ * What each game shows on its card. The mark and the ink keep two dark cards from reading
+ * as one; `run` is the length of a run, which each game states on its own page; the facts
+ * are counted off the built pool; and `preview` is the drawing (see GameCard for why only
+ * the binary game may show a real line).
  */
-const FACTS: Record<string, {
-  specs: Array<{ k: string; v: string }>; ghost: string; kicker: string;
-  answers: [string, string]; line?: string | null;
-}> = {
+type CardSpec = {
+  icon: IconName;
+  ink: 'orange' | 'blue';
+  run: number;
+  /** The size of this game's pool, for the band's count across every game. */
+  items: number;
+  facts: string[];
+  preview:
+    | { kind: 'binary'; answers: [string, string]; line?: string | null }
+    | { kind: 'names'; names: string[] };
+};
+
+const SPEC: Record<string, CardSpec> = {
   'sounds-like-scripture': {
-    specs: [
-      { k: 'A run', v: 'ten lines, a few seconds each' },
-      { k: 'The pool', v: `${slsMeta.items} lines, quoted word for word` },
-      { k: 'Drawn from', v: `${slsMeta.sources} public-domain editions` },
-      { k: 'Your Bible', v: 'Protestant, Catholic or Orthodox' }
+    icon: 'scroll',
+    ink: 'orange',
+    run: 10,
+    items: slsMeta.items,
+    /* Short enough to stand on one row of pills at 390: three long ones stacked into three
+       rows and pushed the drawing off the screen. */
+    facts: [`${slsMeta.items} real lines`, `${slsMeta.sources} editions`],
+    preview: {
+      kind: 'binary',
+      answers: ['Not in the Bible', 'In the Bible'],
+      // One line from the built pool, word for word, with no citation beside it.
+      line: (slsMeta as { cover?: string | null }).cover ?? null
+    }
+  },
+  'who-said-it': {
+    icon: 'quote',
+    ink: 'blue',
+    run: 10,
+    items: wsiMeta.items || 0,
+    facts: [
+      ...(wsiMeta.items ? [`${wsiMeta.items} real lines`] : []),
+      ...(wsiMeta.speakers ? [`${wsiMeta.speakers} speakers`] : [])
     ],
-    ghost: 'scripture?',
-    kicker: 'In the Bible, or not',
-    answers: ['Not in the Bible', 'In the Bible'],
-    // One line from the built pool, word for word, with no citation beside it.
-    line: (slsMeta as { cover?: string | null }).cover ?? null
+    preview: { kind: 'names', names: ['Job', 'Eliphaz', 'Peter', 'Pilate'] }
   }
 };
 
-const composed = games.filter(g => FACTS[g.slug]);
-const plain = games.filter(g => !FACTS[g.slug]);
+/* Every live game gets a room, drawn or not: a game whose drawing nobody has made yet still
+   belongs on the hub, and the card simply carries its words and its way in. */
+const specs = games.map(g => SPEC[g.slug]);
+/** Counted across the whole shelf, so the band never reports one game's pool as the site's. */
+const totalLines = specs.reduce((n, s) => n + (s?.items ?? 0), 0);
+const runs = specs.filter(Boolean).map(s => s!.run);
+const sameRun = runs.length > 0 && runs.every(r => r === runs[0]);
 
 const breadcrumbs = [{ name: 'Home', url: '/' }, { name: 'Games', url: '/games/' }];
 ---
@@ -56,56 +94,39 @@ const breadcrumbs = [{ name: 'Home', url: '/' }, { name: 'Games', url: '/games/'
   */}
   <Hero
     title="Games"
-    ghost="play"
     eyebrow="Against the clock"
     icon="scroll"
+    kind="night"
+    image="/img/game-manuscript.jpg"
+    imagePosition="50% 24%"
     tiles={[
-      { n: slsMeta.items, label: 'Lines' },
-      { n: slsMeta.sources, label: 'Editions' },
-      { n: 10, label: 'Lines a run' }
+      { n: games.length, label: games.length === 1 ? 'Game' : 'Games' },
+      ...(totalLines ? [{ n: totalLines, label: 'Real lines' }] : []),
+      ...(sameRun ? [{ n: runs[0]!, label: 'Lines a run' }] : [])
     ]}
   >
     Short, hard, and honest about their sources. A game here counts what you know, never how
-    devout you are.
+    devout you are, and every line is quoted from a real edition.
+    {games[0] && (
+      <a slot="actions" class="btn" href={games[0].href}>
+        Play {games[0].title} <Icon name="arrow" size={15} />
+      </a>
+    )}
   </Hero>
 
-  <SectionHead
-    title="Playable now"
-    kicker={games.length === 1 ? 'One game so far' : `${games.length} games so far`}
-  />
-
-  {composed.map(g => (
-    <GameCard
-      game={g}
-      specs={FACTS[g.slug]!.specs}
-      ghost={FACTS[g.slug]!.ghost}
-      kicker={FACTS[g.slug]!.kicker}
-      answers={FACTS[g.slug]!.answers}
-      line={FACTS[g.slug]!.line}
-    />
-  ))}
-
-  {plain.length > 0 && (
-    <div class="scards" style="margin-top:.9rem">
-      {plain.map(g => (
-        <Card href={g.href} icon={g.icon} title={g.title} text={g.tagline} meta={g.meta} tab="Game" go="Play" />
-      ))}
-    </div>
-  )}
-
-  <section class="dark pledge">
-    <div class="dark-ghost" aria-hidden="true">quoted</div>
-    <p class="feature-kicker"><Icon name="scroll" size={13} /> Where the lines come from</p>
-    <h2>Every line is quoted, never written.</h2>
-    <p>
-      Each line is lifted word for word out of a public-domain edition and checked back
-      against the file it came from. The readers who rated them for difficulty were shown
-      the lines by number, with no idea which book any of them was in. After every answer
-      you get the exact reference and a link to the file it was taken from.
-    </p>
-    <div class="btn-row">
-      <a class="btn" href="/method/#the-game">How the game was made</a>
-      <a class="btn ghost" href="/quizzes/">Take a quiz instead</a>
-    </div>
-  </section>
+  <div class="ghub">
+    {games.map((g, i) => {
+      const s = SPEC[g.slug];
+      return (
+        <GameCard
+          game={g}
+          icon={s?.icon ?? g.icon}
+          ink={s?.ink ?? (i % 2 === 0 ? 'orange' : 'blue')}
+          clock={s ? '2 min a run' : undefined}
+          facts={s?.facts}
+          preview={s?.preview}
+        />
+      );
+    })}
+  </div>
 </Base>

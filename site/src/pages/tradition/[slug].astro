@@ -35,6 +35,14 @@ const named = view.rows.filter(r => !r.noClaim).length;
 const ghost =
   (tradition.name.match(/[A-Za-z]{4,}/g) ?? [tradition.name])[0]!.toLowerCase();
 
+/**
+ * Which pole a reading points at, for the small disc beside it. Not a judgement and not a
+ * fourth encoding: it is the same fact the rail under it draws, said once more where the
+ * rail is not. Hollow inside the band where the instrument names no pole at all.
+ */
+const side = (row: { value: number; noClaim: boolean }) =>
+  row.noClaim ? 'none' : row.value < 50 ? 'left' : 'right';
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Article',
@@ -63,7 +71,7 @@ const breadcrumbs = [
     title={tradition.name}
     eyebrow={`${quiz.title} · tradition`}
     icon="compass"
-    ghost={ghost}
+    kind="night"
     long
     tiles={[
       { n: quiz.groups.length, label: 'Axes' },
@@ -104,14 +112,19 @@ const breadcrumbs = [
             <><span class={`verdict-part verdict-part--${part.side}`}>{part.text}</span>{i < view.headlineParts.length - 1 && <span class="verdict-sep">, </span>}</>
           ))}
         </h3>
-        <dl class="spec">
+        {/* Six axes, each with its reading, on hairlines rather than on dotted rules. The
+            disc says which pole the reading points at; the band words are the audited ones. */}
+        <ul class="axlist">
           {view.rows.map(row => (
-            <div>
-              <dt><a href={groupHref(quiz, row)}>{row.name}</a></dt>
-              <dd>{row.band}</dd>
-            </div>
+            <li>
+              <a href={groupHref(quiz, row)}>
+                <span class:list={['axlist-dot', `axlist-dot--${side(row)}`]} aria-hidden="true"></span>
+                <span class="axlist-name">{row.name}</span>
+                <span class="axlist-read">{row.band}</span>
+              </a>
+            </li>
           ))}
-        </dl>
+        </ul>
       </div>
     </div>
 
@@ -134,26 +147,28 @@ const breadcrumbs = [
       </>
     )}
 
-    <section class="dark pledge ref-cta">
-      <div class="dark-ghost" aria-hidden="true">{ghost}</div>
-      <div class="ref-cta-say">
-        <p class="feature-kicker">
-          <Icon name="compass" size={13} /> {quiz.title}
-        </p>
+    {/* The way back into the quiz, as a room on the night ground the Compass is always
+        drawn on. Not a dawn sky: the footer directly below this block is a photograph of
+        one, and two skies stacked read as the same picture used twice. */}
+    <section class="wayin wayin--night">
+      <div class="wayin-ghost" aria-hidden="true">{ghost}</div>
+      <div class="wayin-in">
+        <span class="wayin-mark" aria-hidden="true"><Icon name="compass" size={20} /></span>
+        <p class="wayin-kicker">{quiz.title}</p>
         <h2>See how near you land.</h2>
-        <p>
+        <p class="wayin-say">
           Answer the statements and your own position is drawn on these same six rails, with
           the distance to this tradition and to {quiz.outcomes.length - 1} others.
         </p>
+        <ul class="wayin-facts">
+          <li><Icon name="scroll" size={13} /> {quiz.items.length} statements</li>
+          <li><Icon name="clock" size={13} /> About {quiz.minutes} minutes</li>
+          <li><Icon name="compass" size={13} /> {quiz.groups.length} axes, both poles named</li>
+        </ul>
         <div class="btn-row">
           <a class="btn" href={quizHref(quiz)}>Take the {quiz.title}</a>
         </div>
       </div>
-      <dl class="spec ref-cta-spec">
-        <div><dt>Statements</dt><dd>{quiz.items.length}</dd></div>
-        <div><dt>Takes</dt><dd>About {quiz.minutes} minutes</dd></div>
-        <div><dt>Axes</dt><dd>{quiz.groups.length}, both poles named</dd></div>
-      </dl>
     </section>
 
     <CorrectionNote subject={tradition.name} />

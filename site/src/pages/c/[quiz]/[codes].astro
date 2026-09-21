@@ -23,11 +23,14 @@ import Hero from '../../../components/Hero.astro';
 import SectionHead from '../../../components/SectionHead.astro';
 import RailOverlay from '../../../components/RailOverlay.astro';
 import CategoryStack from '../../../components/CategoryStack.astro';
+import NextUp from '../../../components/NextUp.astro';
 import {
-  getQuiz, parseCodes, compare, resultHref, groupHref, inviteHref
+  QUIZZES, getQuiz, parseCodes, compare, resultHref, groupHref, inviteHref
 } from '../../../lib/engine/registry';
 import { groupNounPlural } from '../../../lib/engine/types';
 import { firstSentence } from '../../../lib/prose';
+import { artFor } from '../../../lib/art';
+import { liveGames } from '../../../lib/games';
 
 export const prerender = false;
 
@@ -52,17 +55,21 @@ const heading =
 /*
  * The page opens by saying, in plain words, what it is about to draw.
  *
- * A reader arriving from a link has never seen this instrument. Before any rail is
- * shown they are told how many rows there are, that each row carries one marker per
- * reader, and - the thing this page must never be mistaken for - that nothing here
- * scores one of them against the other.
+ * A reader arriving from a link has never seen this instrument. Before any rail is shown
+ * they are told how many rows there are and - the thing this page must never be mistaken
+ * for - that nothing here scores one of them against the other.
+ *
+ * It used to spell out the markers as well, and then the key directly under it spelled the
+ * same markers out again, better. The band keeps the size of the thing and the promise; how
+ * a marker is drawn belongs to the key beside the drawing.
  */
 const lede =
   cmp?.shape === 'bipolar'
-    ? `One row for each of the ${cmp.total} axes, and two markers on every row: one for each of you, ` +
-      'drawn where your own answers landed. Nothing here scores one of you against the other.'
-    : `One row for each of the ${cmp?.rows.length ?? 0} ${quiz ? groupNounPlural(quiz) : 'categories'}, ` +
-      'ranked for each of you on the same scale. Nothing here scores one of you against the other.';
+    ? `Both of you on the same ${cmp.total} rows, each drawn where your own answers landed. ` +
+      'Nothing here scores one of you against the other.'
+    : `Both of you ranked on the same ${cmp?.rows.length ?? 0} ` +
+      `${quiz ? groupNounPlural(quiz) : 'categories'}. ` +
+      'Nothing here scores one of you against the other.';
 
 /** The fact under the section head: where the two are furthest apart, or that they are not. */
 const gapNote =
@@ -86,6 +93,10 @@ const widestParts = widestGroup?.summaryParts;
 
 const inviteUrlA = quiz ? `${Astro.site!.origin}${inviteHref(quiz, codeA)}` : '';
 const inviteUrlB = quiz ? `${Astro.site!.origin}${inviteHref(quiz, codeB)}` : '';
+
+/* The way on, as on a single result: the other quizzes and the games as rooms. */
+const otherQuizzes = quiz ? QUIZZES.filter(q => q.slug !== quiz.slug) : [];
+const games = liveGames();
 
 // Counts, never a score between the two people: how many axes the quiz has, how many
 // statements produced them, and — for a bipolar quiz — how many rows put the two in the
@@ -113,7 +124,11 @@ const tiles = quiz && cmp
       title={heading}
       eyebrow={quiz.title}
       icon={quiz.icon}
-      ghost="both"
+      kind={artFor(quiz.slug) ? 'engraving' : 'night'}
+      image={artFor(quiz.slug)?.src}
+      imageAlt={artFor(quiz.slug)?.alt}
+      imagePosition={artFor(quiz.slug)?.objectPosition}
+      imageLift={artFor(quiz.slug)?.lift}
       lede={lede}
       tiles={tiles}
       long={true}
@@ -222,6 +237,7 @@ const tiles = quiz && cmp
       </div>
     </section>
 
+
     <section class="dark pledge invite-block">
       <div class="dark-ghost" aria-hidden="true">send</div>
       <p class="feature-kicker"><Icon name="compass" size={13} /> Add a third reader</p>
@@ -237,6 +253,17 @@ const tiles = quiz && cmp
         <button class="btn ghost" data-role="copy-invite" type="button">Copy link</button>
       </div>
     </section>
+
+    {/*
+      Under the invite, not above it: sending this on is what this page is for, and the way
+      to the rest of the site comes after it rather than in front of it.
+    */}
+    {(otherQuizzes.length > 0 || games.length > 0) && (
+      <section class="nextup">
+        <SectionHead title="Keep going" kicker="Take another, or play one" />
+        <NextUp quizzes={otherQuizzes} games={games} />
+      </section>
+    )}
 
     <script>
       /*

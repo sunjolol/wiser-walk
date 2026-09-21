@@ -8,7 +8,9 @@
  * the question screen is the whole page without the script having to learn a new rule.
  */
 import Hero from '../../components/Hero.astro';
+import { artFor } from '../../lib/art';
 import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
 import SectionHead from '../../components/SectionHead.astro';
 import QuizPreview from '../../components/QuizPreview.astro';
 import { QUIZZES, getQuiz } from '../../lib/engine/registry';
@@ -31,8 +33,8 @@ const bipolar = quiz.strategy.shape === 'bipolar';
 const folded = Boolean(quiz.notes?.introShort);
 
 /**
- * The ghost word behind the band is taken from the quiz's own title — the last word long
- * enough to read at 40vw — so a new quiz brings its own and none is ever invented here.
+ * One word of the quiz's own title is painted in the band's second ink — the last word long
+ * enough to carry it — so a new quiz brings its own and none is ever invented here.
  */
 const words = quiz.title.toLowerCase().replace(/[^a-z\s]/g, ' ').split(/\s+/).filter(Boolean);
 const ghost = [...words].reverse().find(w => w.length >= 5) ?? words[words.length - 1] ?? quiz.slug;
@@ -40,16 +42,25 @@ const painted = quiz.title
   .split(/\s+/)
   .find(w => w.toLowerCase().replace(/[^a-z]/g, '') === ghost);
 
+/** The quiz's own plate. Null for the Compass, which is drawn as an instrument, not a scene. */
+const art = artFor(quiz.slug);
+
 /**
  * A draft says so in the hero chip, where the facts about the instrument are, rather than
  * only two thousand pixels further down: the hub's card already marks it DRAFT on its face,
  * and a reader who starts here should not learn it later than a reader who starts there.
+ *
+ * On a draft the chip says THAT AND NOTHING ELSE. The statement count and the minutes are
+ * already two of the tiles directly under it, and all three facts in one chip wrapped it
+ * onto two lines at 390px.
+ *
+ * On a live quiz the chip used to carry the count and the minutes, which are the first and
+ * last of the tiles at the foot of the same band: the band opened on two facts and closed
+ * on the same two. It carries the site's own word for what this is instead — the word the
+ * hub's band uses — so a reader who lands here first learns the kind of thing they are
+ * looking at, and each fact is printed once.
  */
-const eyebrow = [
-  isDraft ? 'Unaudited draft' : null,
-  `${quiz.items.length} statements`,
-  `about ${quiz.minutes} minutes`
-].filter(Boolean).join(' · ');
+const eyebrow = isDraft ? 'Unaudited draft' : 'Self-assessment';
 
 const tiles = [
   { n: quiz.items.length, label: 'Statements' },
@@ -90,16 +101,31 @@ const breadcrumbs = isDraft
   jsonLd={jsonLd}
   breadcrumbs={breadcrumbs}
 >
+  {/* The quiz's own Doré plate, printed soft. The Compass has none: it is an instrument,
+      so it wears the dark starry ground every page draws it on. */}
   <Hero
     title={quiz.title}
     blue={painted}
-    ghost={ghost}
     eyebrow={eyebrow}
     icon={quiz.icon}
-    lede={quiz.description}
+    kind={art ? 'engraving' : 'night'}
+    image={art?.src}
+    imageAlt={art?.alt}
+    imagePosition={art?.objectPosition}
+    imageLift={art?.lift}
+    lede={quiz.intro ?? quiz.description}
     tiles={tiles}
     long={quiz.title.length > 24}
-  />
+  >
+    {/*
+      THE START BUTTON, IN THE BAND. "making the user scroll to get to the [main] button is
+      bad design", and on a phone every other place is below the fold. It is a plain
+      [data-start] control, which the runner's script already binds alongside the one at the
+      foot, and the band is hidden the moment play begins, so it cannot linger over a
+      statement. Without JavaScript the noscript note below says so, as it always has.
+    */}
+    <button class="btn" type="button" data-start slot="actions">Start the quiz</button>
+  </Hero>
 
   <div class="runner" id="runner" data-quiz={quiz.slug}>
     <noscript>
@@ -126,7 +152,10 @@ const breadcrumbs = isDraft
           already read the instrument's description and decided to take it. */}
       {isDraft && (
         <div class="note draft">
-          <p><strong>Unaudited draft.</strong>{" " + quiz.draftNote}</p>
+          {/* No bold "Unaudited draft." lead any more. The chip in the band says it, and
+              the note's own first sentence says it again; a third printing of the same two
+              words inside forty pixels reads as a stammer. */}
+          <p>{quiz.draftNote}</p>
         </div>
       )}{/*
         Hung off the end of the draft block with no whitespace between them, and the same
@@ -137,16 +166,13 @@ const breadcrumbs = isDraft
         A quiz may say what it can and cannot see BEFORE the reader starts, not after they
         have answered. The gifts draft's frame is the clearest case: Scripture lists gifts
         and gives no test for them, so the page says so first and the result repeats it.
-      */}{folded ? (
+      */}{/*
+        A quiz with a long frame says one sentence of it here, under the band. The start
+        button is in the band above, and the rest of the frame is the panel directly below
+        this line, which says on its face what is inside it — so the "Read this first"
+        button that used to stand between the two is gone: it opened the thing under it.
+      */}{folded && <p class="qgo-say">{quiz.notes!.introShort}</p>}{folded ? (
         <>
-          <section class="quickstart panel">
-            <p>{quiz.notes!.introShort}</p>
-            <div class="btn-row">
-              <button class="btn" type="button" data-start>Start the quiz</button>
-              <a class="btn ghost" href="#before-you-start" data-open-frame>Read this first</a>
-            </div>
-          </section>
-
           {/*
             THE FRAME, FOLDED. Three notes — what the quiz can see, the disagreement it
             describes and does not settle, and what it leaves out — used to stand open above
@@ -218,33 +244,52 @@ const breadcrumbs = isDraft
       />
       <QuizPreview quiz={quiz} />
 
+      {/*
+        HOW TO ANSWER, as three marked points rather than a panel of prose over a dotted
+        spec list. Each mark is drawn from the thing it stands for: the five-step scale, the
+        quiet middle, the way back. Nothing here is decoration standing in for a sentence.
+      */}
       <SectionHead title="How to answer" kicker="Five answers, none of them right" />
-      <section class="howto panel layered">
-        <div class="wash" aria-hidden="true"></div>
-        <div class="veil" aria-hidden="true"></div>
-        <p class="howto-lede">
-          <b>Answer honestly rather than correctly</b> — there is no score to win. If a
-          statement does not land either way, say so; “Unsure” is a real answer and is
-          counted as one.
-        </p>
-        <dl class="spec">
-          <div><dt>Scale</dt><dd>Five, strongly disagree to strongly agree</dd></div>
-          <div><dt>Going back</dt><dd>Any time, one statement at a time</dd></div>
-          <div><dt>Keyboard</dt><dd>Keys 1 to 5, if you have one</dd></div>
-        </dl>
-      </section>
+      <p class="howto-line">Answer honestly rather than correctly. There is no score to win.</p>
+      <ul class="steps">
+        <li class="step">
+          <span class="step-mark step-mark--scale" aria-hidden="true">
+            <i></i><i></i><i></i><i></i><i></i>
+          </span>
+          <div class="step-say">
+            <b>Five answers</b>
+            <p>Strongly disagree through to strongly agree.</p>
+          </div>
+        </li>
+        <li class="step">
+          <span class="step-mark step-mark--middle" aria-hidden="true"></span>
+          <div class="step-say">
+            <b>Unsure is one of them</b>
+            <p>It counts as an answer and pushes you neither way.</p>
+          </div>
+        </li>
+        <li class="step">
+          <span class="step-mark step-mark--back" aria-hidden="true"><Icon name="arrow" size={16} /></span>
+          <div class="step-say">
+            <b>Go back any time</b>
+            <p>One statement at a time. Keys 1 to 5 work as well.</p>
+          </div>
+        </li>
+      </ul>
 
-      <section class="dark startbox">
-        <div class="dark-ghost" aria-hidden="true">begin</div>
-        <div class="startbox-text">
-          <p class="feature-kicker">When you are ready</p>
+      {/* The way in again at the foot, as a room on the night ground. Not the quiz's own
+          plate, which is already in the band at the top of this page, and not a dawn sky,
+          which is what the footer under this block is a photograph of. */}
+      <section class="wayin wayin--night qway">
+        <div class="wayin-ghost" aria-hidden="true">begin</div>
+        <div class="wayin-in">
+          <span class="wayin-mark" aria-hidden="true"><Icon name={quiz.icon} size={20} /></span>
+          <p class="wayin-kicker">When you are ready</p>
           <h2>{quiz.items.length} statements, about {quiz.minutes} minutes.</h2>
-          <p>
-            You can stop at any point, and go back at any point.
-          </p>
-        </div>
-        <div class="btn-row">
-          <button class="btn" id="start" type="button">Start the quiz</button>
+          <p class="wayin-say">You can stop at any point, and go back at any point.</p>
+          <div class="btn-row">
+            <button class="btn" id="start" type="button">Start the quiz</button>
+          </div>
         </div>
       </section>
     </div>

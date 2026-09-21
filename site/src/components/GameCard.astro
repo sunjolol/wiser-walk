@@ -1,53 +1,78 @@
 ---
 /**
- * The composed game card, exactly as the home page draws it: a light half carrying the
- * words and a spec list of real facts, and a dark half carrying a drawing of the game.
+ * One game, the way the hub shows it: a dark card carrying the words, the counted facts and
+ * a small drawing of the game itself.
  *
- * The home page builds this inline; the games index builds it through here, so the two
- * are siblings rather than a feature and a list.
+ * Redrawn for the dawn pass (2026-09-21). It used to be a light panel with a dotted spec
+ * list beside a dark art half — a form, not a room. Now the whole card is the game's own
+ * night, with its mark and its ink, and the drawing sits beside the words rather than under
+ * a rule: what a player actually meets when they tap Play, at a glance.
  *
- * The drawing shows a real line from the game's own pool when the game supplies one, and
- * only the line: no reference, no verdict, no tier. A card still cannot tell anyone
- * whether a line is in the Bible, so nothing about a run is spoiled — but the card stops
- * reading as three grey bars that never finished loading. With no line it falls back to
- * the bars.
+ * TWO DRAWINGS, and which one a game gets is a matter of honesty, not taste.
+ *
+ *   binary  the two answers are the same for every line ("in the Bible" / "not in the
+ *           Bible"), so a REAL line out of the pool can be shown above them without
+ *           telling anyone the answer. Nothing is spoiled and the card stops reading as
+ *           three grey bars that never loaded.
+ *   names   four names under a line would say one of those four said it. We do not know
+ *           that of any particular line here, so this drawing shows no real line: the card
+ *           carries the shape of the question and the names, and the game keeps its own.
  */
+import Icon from './Icon.astro';
 import type { Game } from '../lib/games';
+import type { IconName } from '../lib/icons';
 
 export interface Props {
   game: Game;
-  /** Label and value, both taken from the game's own data. */
-  specs: Array<{ k: string; v: string }>;
-  /** The ghost word behind the drawing, and the small line above it. */
-  ghost: string;
-  kicker: string;
-  /** The two choices this game puts in front of a player, in its own words. */
-  answers: [string, string];
-  /** One line quoted word for word from the game's pool. Never its citation. */
-  line?: string | null;
+  /** The mark and the ink, so no two cards read alike. */
+  icon: IconName;
+  ink: 'orange' | 'blue';
+  /** Short, counted facts. Each one comes off the built game's own metadata. */
+  facts?: string[];
+  /** How long a run takes, in the game's own words: "2 min a run". */
+  clock?: string;
+  /**
+   * The drawing: the two fixed answers, or four names under a line we do not quote.
+   *
+   * Optional, and on purpose. A game added to lib/games.ts before anyone has drawn it still
+   * gets its room here — its words, its mark and its way in — rather than disappearing off
+   * the hub because a page-side map has no entry for it.
+   */
+  preview?:
+    | { kind: 'binary'; answers: [string, string]; line?: string | null }
+    | { kind: 'names'; names: string[] };
 }
-const { game, specs, ghost, kicker, answers, line = null } = Astro.props;
+const { game, icon, ink, facts = [], clock, preview } = Astro.props;
 ---
-<a class="gamecard gamecard--quoted" href={game.href}>
-  <div class="feature-body">
-    <h3>{game.title}</h3>
+<a class={`gcard gcard--${ink}`} href={game.href}>
+  <div class="gcard-say">
+    <span class="gcard-mark"><Icon name={icon} size={20} /></span>
+    {/* h2: with no section head over them, each game IS a section of this page, and a page
+        that runs h1 straight to h3 reads as a level missing to a screen reader. */}
+    <h2>{game.title}</h2>
     <p>{game.tagline}</p>
-    <dl class="spec">
-      {specs.map(s => <div><dt>{s.k}</dt><dd>{s.v}</dd></div>)}
-    </dl>
-    <div class="btn-row"><span class="btn">Play now</span></div>
+    {(clock || facts.length > 0) && (
+      <ul class="gcard-facts">
+        {clock && <li><Icon name="clock" size={13} /> {clock}</li>}
+        {facts.map(f => <li>{f}</li>)}
+      </ul>
+    )}
+    <span class="gcard-go">Play <Icon name="arrow" size={14} /></span>
   </div>
-  <div class="gamecard-art dark">
-    <div class="dark-ghost" aria-hidden="true">{ghost}</div>
-    <p class="feature-kicker">{kicker}</p>
+
+  {preview && (
     <div class="mock" aria-hidden="true">
       <div class="mock-fuse"><i></i></div>
-      {line ? (
-        <div class="mock-card mock-card--line"><span class="mock-q">“</span><q>{line}</q></div>
+      {preview.kind === 'binary' && preview.line ? (
+        <div class="mock-card mock-card--line"><span class="mock-q">“</span><q>{preview.line}</q></div>
       ) : (
-        <div class="mock-card"><span class="mock-q">“</span><i></i><i></i><i></i></div>
+        <div class="mock-card"><span class="mock-q">“</span><i></i><i></i>{preview.kind === 'binary' && <i></i>}</div>
       )}
-      <div class="mock-btns"><span>{answers[0]}</span><span>{answers[1]}</span></div>
+      {preview.kind === 'binary' ? (
+        <div class="mock-btns"><span>{preview.answers[0]}</span><span>{preview.answers[1]}</span></div>
+      ) : (
+        <div class="gcard-names">{preview.names.map(n => <span>{n}</span>)}</div>
+      )}
     </div>
-  </div>
+  )}
 </a>

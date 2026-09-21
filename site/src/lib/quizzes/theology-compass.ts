@@ -44,6 +44,12 @@ export const theologyCompass: Quiz = {
     'Eighteen statements place you on six axes of Christian belief, then show which ' +
     'traditions sit nearest. Every position is described in words its own holders ' +
     'would accept, and the whole instrument has been through an adversarial fairness audit.',
+  /* The band says what the reader gets. How the instrument was made belongs on /method/,
+     which is where the search line's last clause sends anyone who wants it. */
+  intro:
+    'Eighteen statements place you on six axes of Christian belief, then show which ' +
+    'traditions sit nearest. Every position is described in words its own holders ' +
+    'would accept.',
   icon: 'compass',
   minutes: 3,
   status: 'live',

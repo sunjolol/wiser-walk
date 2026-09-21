@@ -15,10 +15,10 @@
  * pole names and a colour that means something. A mark earns its place where it does real
  * work — telling two quizzes apart on the hub.
  */
+import type { IconName } from '../lib/icons';
+
 interface Props {
-  name:
-    | 'compass' | 'flame' | 'scroll' | 'book' | 'arrow'
-    | 'users' | 'sparkle' | 'mail' | 'pencil' | 'clock' | 'quote' | 'play' | 'path' | 'apple';
+  name: IconName;
   size?: number;
   class?: string;
 }

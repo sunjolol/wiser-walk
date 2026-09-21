@@ -1,0 +1,153 @@
+---
+/**
+ * What to do next, drawn as rooms.
+ *
+ * A finished result, a comparison and the foot of an article are the three places on this
+ * site where a reader is most likely to stop. All three used to end on a flat list of
+ * links. This draws the same information as a set of small rooms in the home page's
+ * language — each one carrying the picture that belongs to that quiz or game, its own mark
+ * and one short line — so the next thing is a place to walk into rather than a line of text.
+ *
+ * Every picture comes from lib/art.ts, the single place that says which plate belongs to
+ * which quiz, so a reader never meets two different faces for one thing. A quiz with no
+ * plate (the Compass, which is an instrument rather than a person) gets the dark starry
+ * ground instead, exactly as its band and its feature card do. The games share the
+ * manuscript page their own band and the home page's night section are drawn on.
+ *
+ * The pictures are decorative here and carry no alt text on purpose: a card is one link,
+ * and a plate described in full would be read out before the title of the thing it leads
+ * to. What the picture shows is written down in art.ts, and said out loud on the page the
+ * link goes to, where the picture is the subject rather than the wallpaper.
+ *
+ * Nothing here invents a destination, a count or a description: the title, the line and
+ * every fact are read off the registry and the games list.
+ *
+ * Drafts are left out. A quiz that has not been through its fairness audit is a poor thing
+ * to push someone into at the moment they are most willing to go, and it is kept out of
+ * everything that travels for the same reason.
+ */
+import Icon from './Icon.astro';
+import type { IconName } from '../lib/icons';
+import type { Quiz } from '../lib/engine/types';
+import type { Game } from '../lib/games';
+import { quizHref } from '../lib/engine/registry';
+import { artFor } from '../lib/art';
+
+export interface Props {
+  /** Quizzes to offer, in order. Drafts are dropped here rather than by every caller. */
+  quizzes?: Quiz[];
+  games?: Game[];
+  /** At most this many rooms, so the row never breaks into an orphan. */
+  limit?: number;
+}
+
+const { quizzes = [], games = [], limit = 4 } = Astro.props;
+
+/*
+ * The manuscript page the games are drawn on everywhere else on the site.
+ *
+ * Two games standing side by side would otherwise show the identical photograph twice in
+ * one row, which is a thing the owner has already rejected on another page. There is only
+ * one manuscript, so each game takes a different part of the page: the illuminated initial
+ * and the gold, or the ruled lines lower down. Both are written-on vellum, neither is the
+ * blank margin — a picture that fades into empty space has been rejected too.
+ */
+const GAME_PIC = '/img/game-manuscript.jpg';
+const GAME_CROPS = ['16% 22%', '54% 80%'];
+
+/**
+ * The first sentences of a tagline, up to a hook that can stand alone.
+ *
+ * A game's tagline is three sentences, which is a paragraph in a card this size, and its
+ * first sentence alone can be four words ("A line appears."). So sentences are taken until
+ * there is enough of one to read, and the card's own clamp handles the rest.
+ */
+const hook = (text: string) => {
+  const parts = text.split(/(?<=[.?!])\s+/);
+  let out = '';
+  for (const part of parts) {
+    out = out ? `${out} ${part}` : part;
+    if (out.length >= 40) break;
+  }
+  return out.trim();
+};
+
+interface Room {
+  href: string;
+  title: string;
+  kind: string;
+  icon: IconName;
+  say: string;
+  facts: string[];
+  go: string;
+  image?: string;
+  imagePosition?: string;
+  imageLift?: number;
+}
+
+const rooms: Room[] = [
+  ...quizzes
+    .filter(q => q.status === 'live')
+    .map((q): Room => {
+      const art = artFor(q.slug);
+      return {
+        href: quizHref(q),
+        title: q.title,
+        kind: 'Quiz',
+        icon: q.icon as IconName,
+        say: q.tagline,
+        facts: [`${q.minutes} min`, `${q.items.length} statements`],
+        go: 'Take it',
+        image: art?.src,
+        imagePosition: art?.objectPosition,
+        imageLift: art?.lift
+      };
+    }),
+  ...games.map((g, i): Room => ({
+    href: g.href,
+    title: g.title,
+    kind: 'Game',
+    icon: g.icon as IconName,
+    say: hook(g.tagline),
+    facts: ['2 min a run'],
+    go: 'Play',
+    image: GAME_PIC,
+    imagePosition: GAME_CROPS[i % GAME_CROPS.length]
+  }))
+].slice(0, limit);
+---
+{rooms.length > 0 && (
+  <ul class="nx">
+    {rooms.map(room => (
+      <li>
+        <a class:list={['nx-room', !room.image && 'nx-room--night']} href={room.href}>
+          {room.image && (
+            <img
+              class="nx-img"
+              src={room.image}
+              alt=""
+              loading="lazy"
+              decoding="async"
+              width="820"
+              height="1029"
+              style={[
+                room.imagePosition ? `object-position:${room.imagePosition}` : '',
+                room.imageLift ? `--img-lift:${room.imageLift}` : ''
+              ].filter(Boolean).join(';') || undefined}
+            />
+          )}
+          <span class="nx-body">
+            <span class="nx-mark" aria-hidden="true"><Icon name={room.icon} size={18} /></span>
+            <span class="nx-kind">{room.kind}</span>
+            <b class="nx-title">{room.title}</b>
+            <span class="nx-say">{room.say}</span>
+            <span class="nx-facts">
+              {room.facts.map(f => <span>{f}</span>)}
+            </span>
+            <span class="nx-go">{room.go} <Icon name="arrow" size={14} /></span>
+          </span>
+        </a>
+      </li>
+    ))}
+  </ul>
+)}

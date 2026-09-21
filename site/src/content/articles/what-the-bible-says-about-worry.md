@@ -1,6 +1,6 @@
 ---
 title: What the Bible says about worry
-description: '"Do not worry" comes with reasons attached, and with something to do instead. A careful reading of four passages.'
+description: '“Do not worry” comes with reasons attached, and with something to do instead. A careful reading of four passages.'
 published: 2026-09-20
 minutes: 6
 tags: [formation, worry]

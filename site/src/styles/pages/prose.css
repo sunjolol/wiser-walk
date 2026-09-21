@@ -572,3 +572,331 @@
   .gocard, .toc-list a, .jump a { transition: none; }
   .gocard:hover { transform: none; }
 }
+
+/* ==========================================================================
+ * DAWN PASS: results and prose                                  (2026-09-21)
+ * ==========================================================================
+ *
+ * One marked block, holding everything the result pages, the comparison, an
+ * article, /about/ and /method/ needed to join the family the home page,
+ * /support/ and /me/ set: pictures carrying the page, a mark wherever a box
+ * would otherwise have to be read to be understood, space instead of dotted
+ * rules, and the next thing to do drawn as a place rather than as a link.
+ *
+ * Nothing here touches an instrument. The rails, the wheel, the outcome cards,
+ * the category stack and the share card are drawn exactly as they were; this is
+ * the room they stand in.
+ * ------------------------------------------------------------------------ */
+
+/* ---------------------------------------------------- what to do next ----- */
+
+/*
+ * The rooms. One per live quiz or game, each carrying its own picture: the same
+ * plate the home page, /me/ and that quiz's own band already use, so a reader
+ * meets one face per thing. The Compass has no plate and takes the starry
+ * ground its instrument is always drawn on.
+ *
+ * Stacked on a phone rather than railed: four rooms on a rail hide two of them
+ * behind an edge, and a card that is off-screen is a card nobody takes. Two
+ * across from 34rem and four from 62rem, so the row is four, two by two, or a
+ * column, and never leaves one card stranded on a line of its own.
+ */
+.nx { list-style: none; margin: 1.1rem 0 0; padding: 0; display: grid; gap: .7rem; }
+/*
+ * auto-fit rather than a fixed count: a page with three rooms and a four-column grid
+ * prints a quarter of the sheet empty beside them, which reads as something failing to
+ * load. The tracks collapse to however many rooms there are, four at most in a 70rem
+ * sheet, and an odd one on the last row widens instead of standing in a hole.
+ */
+@media (min-width: 34rem) {
+  .nx { grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: .8rem; }
+}
+.nx > li { display: flex; }
+
+.nx-room {
+  position: relative; isolation: isolate; overflow: hidden; flex: 1;
+  display: flex; align-items: flex-end; min-height: 10rem;
+  border-radius: var(--r); box-shadow: var(--lift); text-decoration: none;
+  background-color: #1f1b17; color: var(--on-dark);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+@media (min-width: 34rem) { .nx-room { min-height: 13.5rem; } }
+.nx-room:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(40, 40, 40, .16); }
+.nx-room:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* the plate, printed in the same ink as every other engraving on the site */
+.nx-img {
+  position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover;
+  filter: sepia(.34) contrast(.94) brightness(var(--img-lift, 1.02)) grayscale(.15);
+}
+.nx-room::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, rgba(20, 17, 14, .3) 0 32%, rgba(18, 15, 12, .78) 76%, rgba(16, 13, 11, .93));
+}
+/* no picture: the Compass's own ground, so it reads as an instrument beside the plates */
+.nx-room--night {
+  background-color: var(--dark-fill); background-image: var(--dark-fill-img); background-size: 420px;
+}
+.nx-room--night::after {
+  background:
+    radial-gradient(85% 100% at 88% 6%, rgba(126, 186, 238, .26), transparent 62%),
+    linear-gradient(180deg, transparent 30%, rgba(16, 16, 22, .74));
+}
+
+.nx-body { display: block; padding: .9rem .95rem 1rem; }
+.nx-mark {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 2rem; height: 2rem; border-radius: 11px; margin: 0 0 .55rem;
+  background: rgba(255, 255, 255, .17); color: #FFD2B0;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .3);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+.nx-room--night .nx-mark { color: var(--blue-soft); }
+.nx-kind {
+  display: block; font-family: var(--ui); font-size: .54rem; font-weight: 700;
+  letter-spacing: .18em; text-transform: uppercase; color: rgba(255, 255, 255, .66);
+}
+.nx-title {
+  display: block; margin: .18rem 0 0; font-family: var(--display); font-weight: 400;
+  font-size: 1.16rem; line-height: 1.12; letter-spacing: -.01em; color: #fff;
+  text-wrap: balance;
+}
+.nx-say {
+  display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden; margin: .35rem 0 0; font-size: .84rem; line-height: 1.45;
+  color: rgba(255, 255, 255, .8); text-wrap: pretty;
+}
+.nx-facts { display: flex; flex-wrap: wrap; gap: .3rem; margin: .6rem 0 0; }
+.nx-facts > span {
+  display: inline-flex; align-items: center; padding: .28rem .5rem; border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, .13); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .2);
+  font-family: var(--ui); font-size: .52rem; font-weight: 700; letter-spacing: .11em;
+  text-transform: uppercase; color: rgba(255, 255, 255, .85); line-height: 1;
+}
+.nx-go {
+  display: inline-flex; align-items: center; gap: .4rem; margin: .7rem 0 0;
+  font-family: var(--ui); font-size: .62rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: #FFD2B0;
+}
+.nx-room--night .nx-go { color: var(--blue-soft); }
+.nx-go .icon { transition: transform .18s ease; }
+.nx-room:hover .nx-go .icon { transform: translateX(3px); }
+
+/* ------------------------------------------------- the result page room --- */
+
+/*
+ * The band. The result page was the last one on the pale wash with a grey ghost
+ * word behind it; it wears the same picture band as everything else now, built
+ * out of the kit's own classes. The verdict keeps its two inks: kit.css lifts
+ * .verdict-part--left and --right to the soft blue and #FFD2B0 on a picture,
+ * which is the pair the home page's own headline uses.
+ */
+.result-band .lede { max-width: 34rem; }
+/*
+ * kit.css lifts the two pole inks for a picture band but has no cause to know about the
+ * third: a clause that names no pole is drawn in --ink, which is the LIGHT theme's charcoal
+ * and would print dark grey on a dark band. The separator between clauses is the same case.
+ */
+.band--pic h1 .verdict-part--centre { color: #fff; }
+.band--pic h1 .verdict-sep { color: rgba(255, 255, 255, .6); }
+/* two of the four quizzes have titles long enough to wrap the chip onto a second line */
+.result-band .band-chip { line-height: 1.4; max-width: 100%; letter-spacing: .12em; }
+
+/*
+ * "Saved to My results", for the reader who has just finished. A glass pill
+ * carrying the same mark as the header's My results link, so the two read as
+ * the same place. It is hidden until the page can prove who is looking, and
+ * hidden has to mean hidden: inline-flex would otherwise beat the attribute.
+ */
+.saved-pill {
+  display: inline-flex; align-items: center; gap: .45rem; margin: 1.15rem 0 0;
+  padding: .5rem .85rem; border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, .16); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .32);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  font-family: var(--ui); font-size: .6rem; font-weight: 700; letter-spacing: .13em;
+  text-transform: uppercase; color: #fff; line-height: 1;
+}
+.saved-pill[hidden] { display: none; }
+.saved-pill .icon { color: #FFD2B0; flex: none; }
+.saved-pill a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+
+/* the sentence a named outcome carries, directly under the headline it qualifies */
+.headline-note { margin-top: 1.2rem; }
+
+/*
+ * A section head already carries 3rem above it, so the block it announces does
+ * not need its own 2.5rem on top of that.
+ */
+.sect + .tags { margin: -.45rem 0 1.05rem; max-width: var(--measure); }
+.outcomes, .depth-section, .share-block, .capture { margin-top: 0; }
+
+/*
+ * "How to read this result": the quiz's own words about its ranking, folded. It
+ * stood as a bare line on the page ground; it is a quiet panel now, which is
+ * what something worth opening looks like everywhere else here.
+ */
+.result-fold {
+  background: var(--panel); border-radius: var(--r); box-shadow: var(--lift);
+  padding: .1rem .3rem; margin-top: 1.1rem;
+}
+.result-fold > summary { padding: .85rem .8rem; }
+.result-fold .frame-fold-body { padding: 0 .8rem .95rem; }
+.result-fold .frame-fold-body p { margin: 0 0 .7rem; font-size: .92rem; line-height: 1.62; color: var(--ink-soft); }
+.result-fold .frame-fold-body p:last-child { margin-bottom: 0; }
+
+/* ------------------------------------------------------- the email room --- */
+
+/*
+ * The offer, as a dark room with the mail mark and one field.
+ *
+ * It used to be a light panel carrying a heading, a field, a button and five
+ * lines of small print, which read as a form bolted to the foot of a result.
+ * The words are unchanged — they were only just made true — but they are set as
+ * a room now: the mark, the offer at reading size, the field and its button on
+ * one line, and the detail small and calm underneath.
+ *
+ * Deliberately NOT the footer's photograph. The footer is on this page too, and
+ * the same picture twice on one page has already been rejected once.
+ */
+.capture {
+  position: relative; isolation: isolate; overflow: hidden;
+  padding: 1.5rem 1.15rem 1.6rem; border-radius: var(--r-lg); box-shadow: var(--lift);
+  background-color: var(--dark-fill); background-image: var(--dark-fill-img); background-size: 520px;
+  color: var(--on-dark);
+}
+:root[data-theme="dark"] .capture { background-color: #2A2A33; }
+@media (min-width: 40rem) { .capture { padding: 2rem 1.95rem 2.1rem; } }
+.capture > *:not(.dark-ghost) { position: relative; z-index: 1; }
+.capture .dark-ghost { font-size: clamp(5rem, 26vw, 9rem); right: -.05em; bottom: -.22em; }
+.cap-mark {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 2.4rem; height: 2.4rem; border-radius: 13px; margin: 0 0 .8rem;
+  background: rgba(255, 255, 255, .09); color: var(--orange-soft);
+}
+.capture h2 {
+  margin: 0; font-family: var(--display); font-style: italic; font-weight: 400;
+  font-size: clamp(1.6rem, 6.6vw, 2.1rem); line-height: 1.04; letter-spacing: -.02em;
+  color: var(--on-dark); text-wrap: balance;
+}
+.capture h2::after {
+  content: ""; display: block; width: 46px; height: 6px; margin-top: .6rem;
+  border-radius: var(--r-pill); background-image: var(--grad-r);
+}
+.capture-offer { margin: .95rem 0 1.15rem; font-size: 1rem; line-height: 1.6; color: var(--on-dark-soft); max-width: 34rem; }
+.capture-form { max-width: 31rem; }
+.capture-row input {
+  background: rgba(255, 255, 255, .08); color: var(--on-dark);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .18);
+}
+.capture-row input::placeholder { color: var(--on-dark-mute); }
+.capture-status.is-ok { color: var(--blue-soft); }
+.capture-status.is-bad { color: var(--orange-soft); }
+.capture-status.is-busy { color: var(--on-dark-mute); }
+.capture-small {
+  margin: 1.25rem 0 0; max-width: 40rem; font-size: .76rem; line-height: 1.6;
+  color: var(--on-dark-mute); text-wrap: pretty;
+}
+.capture-small a { color: var(--blue-soft); }
+
+/* --------------------------------------------- reads at the page foot ----- */
+
+/*
+ * Articles at the foot of a result or of another article, as the paintings they
+ * are. Three across is as wide as they go: a fourth column cuts each picture
+ * down to a thumbnail, and the painting is the point of the card.
+ */
+.reads-foot { margin-top: 1.2rem; }
+.reads-foot.hm-reads { gap: 1.7rem; }
+@media (min-width: 40rem) {
+  /*
+   * auto-fit, not three fixed columns: a quiz with two articles written alongside it would
+   * otherwise print two paintings and an empty third of the sheet, which reads as a fault
+   * rather than as a grid. The tracks collapse to however many cards there are.
+   */
+  .reads-foot.hm-reads { grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1.9rem 1.3rem; }
+}
+
+/* ---------------------------------------------------- quiet spec lists ---- */
+
+/*
+ * The label-and-value lists, without the dotted rule. Dots used as decoration
+ * have been called out once already; these say the same thing with space, one
+ * hairline between rows and a short piece of the spectrum at the top.
+ */
+.spec--quiet { position: relative; padding-top: .7rem; }
+.spec--quiet::before {
+  content: ""; position: absolute; left: 0; top: 0; width: 34px; height: 5px;
+  border-radius: var(--r-pill); background-image: var(--grad-r);
+}
+.spec--quiet > div { border: 0; padding: .55rem 0; }
+/* the kit puts the top dotted rule on :first-child, which outweighs the line above */
+.spec--quiet > div:first-child { border-top: 0; }
+.spec--quiet > div + div { box-shadow: inset 0 1px 0 var(--rule); }
+
+/* the correction note ended on a dotted rule too */
+.method .correction { border-top: 0; padding-top: 0; margin-top: 2.4rem; }
+.method .correction::before {
+  content: ""; display: block; width: 46px; height: 6px; margin: 0 0 1.1rem;
+  border-radius: var(--r-pill); background-image: var(--grad-r);
+}
+
+/* ------------------------------------------------------ the about rooms --- */
+
+/*
+ * The three kinds of thing this site is made of, on /about/. They were three
+ * stripe cards, which is the shape every other list on the site had already
+ * worn out. They are rooms now, wearing the pictures the quizzes, the games and
+ * the articles wear everywhere else, so the page shows what it is describing.
+ */
+.ab-rooms { list-style: none; margin: 1.1rem 0 0; padding: 0; display: grid; gap: .8rem; }
+@media (min-width: 46rem) { .ab-rooms { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.ab-rooms > li { display: flex; }
+.ab-room {
+  position: relative; isolation: isolate; overflow: hidden; flex: 1;
+  display: flex; align-items: flex-end; min-height: 13rem;
+  border-radius: var(--r-lg); box-shadow: var(--lift); text-decoration: none;
+  background-color: #1f1b17; color: var(--on-dark);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.ab-room:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(40, 40, 40, .16); }
+.ab-room:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.ab-room img {
+  position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover;
+}
+.ab-room--ink img { filter: sepia(.34) contrast(.94) brightness(var(--img-lift, 1.04)) grayscale(.15); }
+.ab-room::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, rgba(18, 18, 24, .24) 0 28%, rgba(16, 14, 12, .8) 74%, rgba(14, 12, 10, .94));
+}
+.ab-room .nx-body { padding: 1rem 1.05rem 1.1rem; }
+.ab-room .nx-title { font-size: 1.34rem; }
+.ab-room .nx-say { -webkit-line-clamp: 3; line-clamp: 3; }
+
+/* --------------------------------------------------- the article column --- */
+
+/*
+ * The rail carried the article's published date, reading time and topics as a
+ * spec list, directly under a band that had just printed the same three facts
+ * as tiles. What a reader needs beside a long piece is the way through it, so
+ * the rail is the contents, the tag and the way back, and the repeat is gone.
+ */
+.rail-when {
+  margin: -.55rem 0 0; font-family: var(--ui); font-size: .72rem; font-weight: 500;
+  color: var(--on-dark-mute); letter-spacing: .01em;
+}
+.doc-rail .toc-head:first-of-type { margin-top: 1.1rem; }
+@media (max-width: 61.99rem) {
+  /* on a phone the rail sits above the first sentence, so it stays short and
+     reads as a contents list rather than as a dossier to get past */
+  .doc-rail { padding: 1.1rem 1.1rem 1.2rem; }
+  .doc-rail .rail-foot { margin-top: 1.1rem; }
+}
+
+/* the foot of an article: the rooms first, then the paintings */
+.doc-next { margin-top: 1.5rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .nx-room, .ab-room, .nx-go .icon { transition: none; }
+  .nx-room:hover, .ab-room:hover { transform: none; }
+  .nx-room:hover .nx-go .icon { transform: none; }
+}

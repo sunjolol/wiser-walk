@@ -68,10 +68,14 @@ export const sevenDeadlySins: Quiz = {
   icon: 'apple',
   minutes: 2,
   status: 'draft',
+  /* The words "unaudited draft" are not in here. Every page that prints this note labels it
+     itself — as the band's chip on the quiz's own page, as the note's bold lead everywhere
+     else — and the sentence that used to open this said the same two words a second time
+     within a line of the first. */
   draftNote:
-    'This one is an unaudited draft. The seven vices and their definitions are historical, ' +
-    'but these statements have not been through the adversarial fairness audit the Theology ' +
-    'Compass went through. Treat the result as a conversation starter, not a verdict.',
+    'The seven vices and their definitions are historical, but these statements have not ' +
+    'been through the adversarial fairness audit the Theology Compass went through. Treat ' +
+    'the result as a conversation starter, not a verdict.',
   items,
   groups,
   outcomes: [],

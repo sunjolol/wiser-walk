@@ -205,7 +205,8 @@ body {
 }
 .band > .wash { opacity: var(--band-wash); }
 .band > .veil { opacity: var(--band-veil); }
-.band > *:not(.wash):not(.veil):not(.band-ghost) { position: relative; z-index: 2; }
+/* .band-img is out: a band's picture is a negative-z layer, not part of the stack of words */
+.band > *:not(.wash):not(.veil):not(.band-ghost):not(.band-img) { position: relative; z-index: 2; }
 .band-ghost {
   position: absolute; z-index: 1; right: -.05em; bottom: -.2em;
   font-family: var(--display); font-style: italic; font-weight: 400;
@@ -250,12 +251,150 @@ body {
   display: block; margin-top: .15rem; font-family: var(--ui); font-size: .54rem; font-weight: 600;
   letter-spacing: .13em; text-transform: uppercase; color: var(--ink-mute); white-space: nowrap;
 }
+/* Four tiles across a 390px screen leave about 80px each, and a label of three tracked
+   uppercase words ("axes matched on") was being cut off mid-word at the tile's edge. Below
+   the tablet it wraps instead; the tiles are flex items and stretch to the tallest. */
+@media (max-width: 39.99rem) {
+  .tile span { white-space: normal; text-wrap: balance; }
+}
 @media (min-width: 40rem) {
   .tiles { gap: .6rem; }
   .tile { flex: 0 0 auto; padding: .75rem 1.1rem .65rem; min-width: 5.6rem; }
   .tile b { font-size: 1.7rem; }
   .tile span { font-size: .58rem; }
 }
+
+/* ----------------------------------------------- the band, with a picture
+ *
+ * THE DAWN PASS, 2026-09-21. Every inner page wore the pale wash above, which is most of
+ * what the owner meant by "a soup of dullness": the same header, page after page, with a
+ * different giant grey word behind it. A band now carries a picture instead, and the kind
+ * of picture chooses its treatment. Nothing below undoes the wash: the result page builds
+ * the same markup by hand and has to keep it.
+ *
+ * The words are in .band-in, in one column, so a painting can take a side of its own.
+ */
+.band--pic {
+  color: #fff; background: #1a1a20;
+  padding-top: 2.4rem; padding-bottom: 2.5rem;
+}
+.band--pic > .band-img {
+  position: absolute; inset: 0; z-index: -2;
+  width: 100%; height: 100%; object-fit: cover;
+}
+.band--pic::after { content: ""; position: absolute; inset: 0; z-index: -1; }
+@media (min-width: 40rem) { .band--pic { padding-top: 3.6rem; padding-bottom: 3.6rem; } }
+
+/* the chip becomes glass, because a solid charcoal pill on a photograph reads as a patch */
+.band--pic .band-chip,
+:root[data-theme="dark"] .band--pic .band-chip {
+  background-color: rgba(255, 255, 255, .17); background-image: none; color: #fff;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .36);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+.band--pic .band-chip .icon { color: #FFD2B0; }
+.band--pic h1 { color: #fff; text-shadow: 0 2px 22px rgba(10, 16, 32, .42); }
+/* the two inks, lifted for white type: the same pair the home hero uses */
+.band--pic h1 .verdict-part--left { color: var(--blue-soft); }
+.band--pic h1 .verdict-part--right { color: #FFD2B0; }
+.band--pic .lede { color: rgba(255, 255, 255, .93); text-shadow: 0 1px 12px rgba(10, 16, 32, .5); }
+.band--pic .lede a { color: #fff; text-decoration-color: rgba(255, 255, 255, .55); }
+.band--pic .btn { box-shadow: 0 6px 22px rgba(10, 16, 32, .34); }
+.band--pic .tiles { margin-top: 1.5rem; }
+.band--pic .tile {
+  background: rgba(255, 255, 255, .13); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .26);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+.band--pic .tile b { color: #fff; }
+.band--pic .tile span { color: rgba(255, 255, 255, .76); }
+/* who painted it. One line, small, never a caption dressed up as copy. */
+.band-credit {
+  margin: 1.15rem 0 0; max-width: 30rem; font-size: .76rem; font-style: italic;
+  line-height: 1.45; color: rgba(255, 255, 255, .62); text-wrap: pretty;
+}
+
+/* ---- photo: the dawn sky. Cool at the words, warm at the far edge. */
+/* A phone shows the photograph's whole height, and this one has the sun in its foot, so the
+   warm end of the wash has to be heavy enough to carry white type over it. */
+.band--photo { background: #38536f; }
+.band--photo::after {
+  background:
+    radial-gradient(135% 95% at 16% 30%, rgba(11, 25, 50, .74), transparent 70%),
+    linear-gradient(180deg, rgba(11, 25, 50, .44), rgba(14, 26, 48, .3) 40%, rgba(32, 18, 10, .66));
+}
+@media (min-width: 46rem) {
+  .band--photo::after {
+    background:
+      linear-gradient(94deg, rgba(9, 22, 46, .8), rgba(9, 22, 46, .44) 50%, rgba(40, 24, 12, .14)),
+      linear-gradient(180deg, rgba(9, 22, 46, .2), rgba(26, 16, 10, .3));
+  }
+}
+
+/* ---- engraving: a Doré plate printed soft, exactly as the home page's rooms print theirs */
+.band--engraving { background: #2a2622; }
+/* lifted a little further than the home page's rooms lift theirs: a band shows a narrow
+   slice of a tall plate, and the darkest plates turn to mud under a wash meant for a card */
+.band--engraving > .band-img { filter: sepia(.34) contrast(.94) brightness(var(--img-lift, 1.08)); }
+.band--engraving::after {
+  background:
+    radial-gradient(150% 110% at 10% 32%, rgba(28, 24, 19, .9), rgba(28, 24, 19, .26) 76%),
+    linear-gradient(180deg, rgba(42, 36, 29, .3), rgba(26, 22, 18, .6));
+}
+@media (min-width: 46rem) {
+  .band--engraving::after {
+    background:
+      linear-gradient(94deg, rgba(26, 22, 18, .95), rgba(26, 22, 18, .62) 54%, rgba(30, 26, 21, .16)),
+      linear-gradient(180deg, rgba(42, 36, 29, .26), rgba(26, 22, 18, .46));
+  }
+}
+
+/* ---- night: the Compass's own ground, and what a page with no picture of its own wears */
+.band--night {
+  background-color: var(--dark-fill); background-image: var(--dark-fill-img); background-size: 520px;
+}
+.band--night::after {
+  background:
+    radial-gradient(90% 120% at 86% 4%, rgba(126, 186, 238, .3), transparent 62%),
+    radial-gradient(70% 90% at 98% 96%, rgba(240, 160, 111, .16), transparent 64%);
+}
+/* With a picture (the games' manuscript page) the picture IS the ground, so the starfield and
+   the token that carries it are dropped: left in, the dark theme's lighter charcoal showed
+   through the picture and the same band read two different weights in the two themes. */
+.band--night.band--has-img { background-color: #12110f; background-image: none; }
+.band--night.band--has-img > .band-img { opacity: .5; }
+.band--night.band--has-img::after {
+  background:
+    radial-gradient(125% 95% at 84% 6%, rgba(126, 186, 238, .14), transparent 60%),
+    linear-gradient(100deg, rgba(14, 13, 11, .86), rgba(14, 13, 11, .56) 58%, rgba(14, 13, 11, .72));
+}
+
+/* ---- painting: in colour, and kept whole.
+ * A headline across a painting's subject ruins the painting, so the picture takes a side of
+ * the band and the words take the other. On a phone there is only one side: the picture
+ * goes above, masked into the dark ground, and the words sit under it. /support/ does this.
+ */
+.band--painting { background: #24201b; padding: 0 0 2.6rem; }
+.band--painting > .band-img {
+  position: relative; inset: auto; z-index: 0; display: block;
+  width: 100%; height: 12.5rem; object-fit: cover;
+  -webkit-mask-image: linear-gradient(180deg, #000 66%, transparent);
+  mask-image: linear-gradient(180deg, #000 66%, transparent);
+}
+.band--painting::after { content: none; }
+.band--painting .band-in { margin-top: -1.4rem; padding: 0 var(--gut); }
+@media (min-width: 46rem) {
+  .band--painting {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.04fr);
+    align-items: center; padding: 0; min-height: 23rem;
+  }
+  .band--painting > .band-img {
+    order: 2; height: 100%; min-height: 23rem;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 36%);
+    mask-image: linear-gradient(90deg, transparent, #000 36%);
+  }
+  .band--painting .band-in { order: 1; margin: 0; padding: 2.9rem 0 2.9rem var(--gut); max-width: 32rem; }
+}
+@media (min-width: 68rem) { .band--painting .band-in { padding-left: 3rem; } }
 
 /* ---------------------------------------------------------- section heads */
 
@@ -474,24 +613,28 @@ body {
 /* the walk */
 .foot-dawn { position: relative; isolation: isolate; overflow: hidden; }
 /* On a phone the picture is drawn a little larger than the band and hung from its foot, so the
-   walker stands clear above the words instead of behind them. */
-.foot-dawn > img { position: absolute; left: 0; top: -25%; z-index: -2; width: 100%; height: 125%; object-fit: cover; object-position: 12% 50%; }
+   walker stands clear above the words instead of behind them.
+   2026-09-21: the band used to open on eleven rem of sky before the kicker, with two rem under
+   the sign-up — the owner asked for about half that, and for the words and the field to sit in
+   the middle of the band instead of at its foot. The crop was raised with them (the walker sits
+   high in the frame, so taking less of the sky keeps him, and loses only empty gradient). */
+.foot-dawn > img { position: absolute; left: 0; top: -14%; z-index: -2; width: 100%; height: 114%; object-fit: cover; object-position: 12% 42%; }
 @media (min-width: 52rem) { .foot-dawn > img { top: 0; height: 100%; object-position: 30% 42%; } }
 .foot-dawn::after {
   content: ""; position: absolute; inset: 0; z-index: -1;
   background:
-    linear-gradient(180deg, rgba(28, 28, 35, 0) 30%, rgba(28, 28, 35, .78) 72%, var(--dark-fill) 100%),
+    linear-gradient(180deg, rgba(28, 28, 35, 0) 14%, rgba(28, 28, 35, .78) 52%, var(--dark-fill) 100%),
     linear-gradient(90deg, rgba(40, 22, 8, 0) 28%, rgba(40, 22, 8, .66));
 }
 :root[data-theme="dark"] .foot-dawn::after {
   background:
-    linear-gradient(180deg, rgba(44, 44, 56, 0) 38%, rgba(44, 44, 56, .7) 78%, #2C2C38 100%),
+    linear-gradient(180deg, rgba(44, 44, 56, 0) 18%, rgba(44, 44, 56, .7) 56%, #2C2C38 100%),
     linear-gradient(90deg, rgba(40, 22, 8, 0) 30%, rgba(40, 22, 8, .5));
 }
 /* .site-foot in the selector on purpose: an older `.site-foot .wrap` rule elsewhere sets the
    wrap's top padding, and it was winning, which put the words at the top of the band on the
    brightest part of the sky. They belong low, on the dark of the hill. */
-.site-foot .foot-dawn-in { display: grid; grid-template-columns: 1fr; gap: 1.3rem; padding-top: 11rem; padding-bottom: 2.2rem; }
+.site-foot .foot-dawn-in { display: grid; grid-template-columns: 1fr; gap: 1.3rem; padding-top: 5.4rem; padding-bottom: 5.4rem; }
 .foot-kicker {
   display: inline-flex; align-items: center; gap: .45rem; margin: 0 0 .5rem;
   font-family: var(--ui); font-size: .68rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
@@ -526,8 +669,15 @@ body {
 .foot-signup-row input:focus-visible { outline: 2px solid var(--blue-soft); outline-offset: 2px; }
 .foot-signup-row .btn { flex: none; }
 .foot-signup-status { margin: .6rem 0 0; min-height: 1.2em; font-size: .82rem; }
-.foot-signup-status.is-ok { color: var(--blue-soft); }
-.foot-signup-status.is-bad { color: var(--orange-soft); }
+/* the thank-you takes the field's place and must be impossible to miss on the photograph */
+.foot-signup-row[hidden] { display: none; }
+.foot-signup-status.is-ok {
+  margin-top: 0; padding: .85rem 1.1rem; border-radius: 16px; font-size: .98rem; line-height: 1.45; font-weight: 600;
+  color: #fff; background: rgba(16, 26, 20, .62); box-shadow: inset 0 0 0 1.5px rgba(160, 230, 180, .55);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); text-wrap: balance;
+}
+.foot-signup-status.is-ok::before { content: "¹3 a0 a0"; color: #A8F0BE; font-weight: 700; }
+.foot-signup-status.is-bad { color: #FFD9BF; font-weight: 600; text-shadow: 0 1px 8px rgba(30, 14, 4, .6); }
 .foot-signup-status.is-busy { color: rgba(255, 255, 255, .7); }
 
 /* the ways back in */

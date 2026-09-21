@@ -1,9 +1,11 @@
 ---
 import Hero from '../../components/Hero.astro';
 import Base from '../../layouts/Base.astro';
-import KeepGoing from '../../components/KeepGoing.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import NextUp from '../../components/NextUp.astro';
+import ReadCard from '../../components/ReadCard.astro';
 import { getCollection, render } from 'astro:content';
-import { getQuiz, quizHref } from '../../lib/engine/registry';
+import { getQuiz } from '../../lib/engine/registry';
 import { liveGames } from '../../lib/games';
 
 export async function getStaticPaths() {
@@ -36,30 +38,35 @@ const published = article.data.published.toLocaleDateString('en-GB', {
 
 /*
  * Where to go next. Articles and quizzes cross-link in both directions, so the quizzes
- * this article names in its front matter come first, then the flagship and the game, with
- * anything already listed dropped rather than printed twice.
+ * this article names in its front matter come first, then the flagship, with anything
+ * already listed dropped rather than printed twice, and the games after them.
+ *
+ * They are drawn as rooms wearing their own pictures (the dawn pass, 2026-09-21). They
+ * used to be a list of dark boxes carrying three lines of text each, which is the shape
+ * the owner has called "a soup of dullness" — and the foot of an article is the one place
+ * on the page where a reader has finished and is deciding whether to stay.
  */
-const related = article.data.quizzes.map(getQuiz).filter(Boolean);
+const named = article.data.quizzes.map(getQuiz).filter(Boolean);
 const compass = getQuiz('theology-compass');
-const game = liveGames()[0];
+const seen = new Set<string>();
+const nextQuizzes = [...named, compass].filter(q => {
+  if (!q || seen.has(q.slug)) return false;
+  seen.add(q.slug);
+  return true;
+}) as NonNullable<ReturnType<typeof getQuiz>>[];
+const nextGames = liveGames();
 
-type Go = { href: string; title: string; meta?: string; text?: string; icon?: any };
-const next: Go[] = [];
-const add = (g: Go) => { if (!next.some(x => x.href === g.href)) next.push(g); };
-
-[...related, compass].forEach(q => {
-  if (!q) return;
-  add({
-    href: quizHref(q),
-    title: q.title,
-    meta: q.status === 'draft'
-      ? `Quiz · ${q.items.length} statements · unaudited draft`
-      : `Quiz · ${q.items.length} statements · about ${q.minutes} minutes`,
-    text: q.tagline,
-    icon: q.icon
-  });
-});
-if (game) add({ href: game.href, title: game.title, meta: 'Game · against the clock', text: game.tagline, icon: game.icon });
+/*
+ * And the other articles. Ones sharing a topic with this piece first, then the rest by
+ * date, so a short list is never padded with something unrelated but is never empty
+ * either. Three, because they are printed as the paintings they are.
+ */
+const everything = (await getCollection('articles'))
+  .filter(a => !a.data.draft && a.id !== article.id)
+  .sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf());
+const shares = (a: (typeof everything)[number]) =>
+  a.data.tags.some(t => article.data.tags.includes(t));
+const moreReads = [...everything.filter(shares), ...everything.filter(a => !shares(a))].slice(0, 3);
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -89,7 +96,11 @@ import '../../styles/pages/reads.css';
     title={article.data.title}
     eyebrow="Article"
     icon="book"
-    ghost={ghost}
+    kind={article.data.image ? 'painting' : 'night'}
+    image={article.data.image}
+    imageAlt={article.data.imageAlt}
+    imagePosition={article.data.imagePosition}
+    credit={article.data.imageCredit}
     lede={article.data.description}
     tiles={[
       { n: article.data.minutes, label: 'Minutes' },
@@ -104,13 +115,13 @@ import '../../styles/pages/reads.css';
       <div class="dark-ghost" aria-hidden="true">{ghost}</div>
       <div class="rail-stick">
         <p class="rail-tag">Article</p>
-        <dl class="spec spec--rail">
-          <div><dt>Published</dt><dd>{published}</dd></div>
-          <div><dt>Reading time</dt><dd>{article.data.minutes} min</dd></div>
-          {article.data.tags.length > 0 && (
-            <div><dt>Topics</dt><dd>{article.data.tags.join(', ')}</dd></div>
-          )}
-        </dl>
+        {/*
+          The reading time and the topics used to be repeated here as a spec list, directly
+          under a band that had just printed both as tiles. What a reader wants beside a
+          long piece is the way through it, so the rail is the date, the contents and the
+          way back, and the repeat is gone (the dawn pass, 2026-09-21).
+        */}
+        <p class="rail-when">Published {published}</p>
         <nav aria-label="Contents">
           <p class="toc-head">In this article</p>
           <ol class="toc-list">
@@ -124,27 +135,32 @@ import '../../styles/pages/reads.css';
     </aside>
 
     <div class="pnl">
+      {/* The painting moved into the band on 2026-09-21 (the dawn pass), with its credit.
+          Drawing it here as well put the same picture on the page twice. */}
       <article class="doc doc--lead">
-        {article.data.image && (
-          <figure class="doc-art">
-            <img src={article.data.image} alt={article.data.imageAlt ?? ''} decoding="async"
-                 style={article.data.imagePosition ? `object-position:${article.data.imagePosition}` : undefined} />
-            {article.data.imageCredit && <figcaption>{article.data.imageCredit}</figcaption>}
-          </figure>
-        )}
         <Content />
       </article>
     </div>
   </div>
 
-  {next.length > 0 && (
-    <KeepGoing
-      title="Keep going."
-      kicker="Where this leads"
-      ghost="next"
-      lede="Reading about yourself and seeing where you actually stand are two different things. These take a few minutes each."
-      links={next}
-    />
+  {(nextQuizzes.length > 0 || nextGames.length > 0) && (
+    <section class="doc-next">
+      <SectionHead title="Keep going" kicker="Where this leads" />
+      <NextUp quizzes={nextQuizzes} games={nextGames} />
+    </section>
+  )}
+
+  {moreReads.length > 0 && (
+    <section>
+      <SectionHead title="More to read" kicker="From the same shelf" href="/articles/" more="All articles" />
+      <div class="hm-reads reads-foot">
+        {moreReads.map(a => (
+          <ReadCard id={a.id} title={a.data.title} description={a.data.description}
+                    minutes={a.data.minutes} image={a.data.image} imageAlt={a.data.imageAlt}
+                    imagePosition={a.data.imagePosition} />
+        ))}
+      </div>
+    </section>
   )}
 </Base>
 

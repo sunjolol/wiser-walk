@@ -12,6 +12,7 @@ import {
   capitalise, groupNoun, groupNounPlural, isSplitReadMore, outcomeNounPlural, readMoreAll
 } from '../../../lib/engine/types';
 import { paragraphs } from '../../../lib/prose';
+import { artFor } from '../../../lib/art';
 
 /**
  * Long-form pages for a quiz's groups. The route is generic; only groups that carry
@@ -102,6 +103,8 @@ const next = at >= 0 && at < siblings.length - 1 ? siblings[at + 1] : null;
 
 const title = bipolar ? `${group.name}: ${group.left} or ${group.right}` : group.name;
 const ghost = group.name.toLowerCase();
+/* An axis wears its parent quiz's picture: it is a page ABOUT that quiz. */
+const art = artFor(quiz.slug);
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -133,7 +136,17 @@ const breadcrumbs =
   jsonLd={jsonLd}
   breadcrumbs={breadcrumbs}
 >
-  <Hero title={group.name} eyebrow={quiz.title} icon={quiz.icon} ghost={ghost} tiles={tiles}>
+  <Hero
+    title={group.name}
+    eyebrow={quiz.title}
+    icon={quiz.icon}
+    kind={art ? 'engraving' : 'night'}
+    image={art?.src}
+    imageAlt={art?.alt}
+    imagePosition={art?.objectPosition}
+    imageLift={art?.lift}
+    tiles={tiles}
+  >
     {bipolar ? (
       /* The arrow belongs to the second pole, not to the line: left free it wrapped to the
          end of a full first line on the longer axes and pointed at nothing. */
@@ -145,7 +158,12 @@ const breadcrumbs =
         </span>
       </span>
     ) : (
-      quiz.tagline
+      /* Nothing. A group with no poles used to print the QUIZ's tagline here, so a page
+         about tongues opened on "Fifty-seven statements, nineteen gifts, and a conversation
+         to have afterwards" — a line that says nothing about tongues and repeats the tile
+         beneath it. The gift's own words are the section under the band, where they are not
+         a caption on somebody else's picture. */
+      null
     )}
   </Hero>
 
@@ -339,34 +357,36 @@ const breadcrumbs =
     )}
 
     {/*
-      Two columns from 54rem. The dark panel used to put its words in the left 55% and
-      nothing but a clipped ghost in the right 45%; the facts that were crammed into the
-      kicker as a run-on line now hold that half as a spec list, which is where the kit
-      keeps facts.
+      The way back into the quiz, as a room on the night ground.
+
+      Two pictures it must NOT be. Not the plate in the band at the top of this page: a page
+      never shows one picture twice. Not a dawn sky either: the footer directly under this
+      block is a photograph of one, and two skies stacked is the same mistake wearing a
+      different file name. So it is the night the instruments are drawn on, with first light
+      coming up one corner. Every fact in the pills is counted from the registry.
     */}
-    <section class="dark pledge ref-cta">
-      <div class="dark-ghost" aria-hidden="true">{ghost}</div>
-      <div class="ref-cta-say">
-        <p class="feature-kicker">
-          <Icon name={quiz.icon} size={13} /> {quiz.title}
-        </p>
+    <section class="wayin wayin--night">
+      <div class="wayin-ghost" aria-hidden="true">{ghost}</div>
+      <div class="wayin-in">
+        <span class="wayin-mark" aria-hidden="true"><Icon name={quiz.icon} size={20} /></span>
+        <p class="wayin-kicker">{quiz.title}</p>
         <h2>Where do you land?</h2>
-        <p>
+        <p class="wayin-say">
           {bipolar
             ? `Answer the statements and the whole map is drawn for you — every axis, and the ${plural} that sit nearest to where you land.`
             : `Answer the statements and every ${groupNoun(quiz)} is ranked by how much pull it has on you.`}
         </p>
+        <ul class="wayin-facts">
+          <li><Icon name="scroll" size={13} /> {quiz.items.length} statements</li>
+          <li><Icon name="clock" size={13} /> About {quiz.minutes} minutes</li>
+          {bipolar && placed > 0 && (
+            <li><Icon name="users" size={13} /> {placed} {plural}</li>
+          )}
+        </ul>
         <div class="btn-row">
           <a class="btn" href={quizHref(quiz)}>{takeIt}</a>
         </div>
       </div>
-      <dl class="spec ref-cta-spec">
-        <div><dt>Statements</dt><dd>{quiz.items.length}</dd></div>
-        <div><dt>Takes</dt><dd>About {quiz.minutes} minutes</dd></div>
-        {bipolar && placed > 0 && (
-          <div><dt>Compares you with</dt><dd>{placed} {plural}</dd></div>
-        )}
-      </dl>
     </section>
 
     {(prev || next) && (

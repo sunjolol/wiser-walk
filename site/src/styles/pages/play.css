@@ -1,31 +1,5 @@
 /* play pages. Owned by one builder; see design/RICHE-PASS-BRIEF.md. Tokens only, phone first. */
 
-/* ------------------------------------------------- the game card on /games/ */
-/*
- * Only the composed card on the games index takes these: the home page draws its own
- * copy of the same markup inline and belongs to another builder.
- *
- * Two fixes. The drawing carries a real line out of the pool instead of three grey bars,
- * so it reads as an illustration rather than as a skeleton that never loaded (the line
- * only; no citation, so no run is spoiled). And the ghost word is sized to the art
- * column, cropped by ONE edge, instead of running off both and rendering as "ripture?".
- */
-.gamecard--quoted .dark-ghost {
-  font-size: clamp(4rem, 18vw, 5.2rem);
-  left: -.03em; right: auto; bottom: -.08em;
-}
-.gamecard--quoted .mock-card--line {
-  gap: .35rem; padding: 1.1rem 1.1rem 1.2rem;
-}
-.gamecard--quoted .mock-card--line q {
-  quotes: none; display: block;
-  font-family: var(--display); font-size: 1rem; line-height: 1.32;
-  color: var(--on-dark); text-wrap: pretty;
-}
-@media (min-width: 52rem) {
-  .gamecard--quoted .mock-card--line q { font-size: 1.06rem; }
-}
-
 /* ------------------------------------------------- the two-person overlay */
 
 /*
@@ -99,4 +73,110 @@
 .invite-block.dark .share-link .btn.ghost {
   color: var(--blue-soft);
   box-shadow: inset 0 0 0 1.5px var(--blue-soft);
+}
+
+/* ==========================================================================
+   DAWN PASS: hubs — the games hub at /games/ (2026-09-21)
+
+   Both games get the same room, and a room here is the game's own night: a
+   nearly solid dark card on the pale sheet, its mark and its ink at the top
+   left, the counted facts as pills, Play in plain sight, and a small drawing
+   of the game beside the words.
+
+   The card does not repeat the band's manuscript. The owner has already
+   rejected one page for wearing the same picture twice (the support page's
+   band against the footer's), and the band overhead is that picture: these
+   cards continue its night instead of printing it again.
+   ========================================================================== */
+
+.ghub { display: grid; grid-template-columns: 1fr; gap: .95rem; margin: 1.5rem 0 0; }
+
+.gcard {
+  --game-ink: var(--orange-soft);
+  position: relative; isolation: isolate; overflow: hidden;
+  display: grid; grid-template-columns: 1fr; gap: 1.25rem; align-items: start;
+  padding: 1.4rem 1.3rem 1.5rem; border-radius: 24px;
+  text-decoration: none; color: #fff;
+  background-color: #17161c; background-image: var(--dark-fill-img); background-size: 520px;
+  box-shadow: 0 10px 30px rgba(20, 24, 40, .16), inset 0 0 0 1px rgba(255, 255, 255, .07);
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+.gcard--blue { --game-ink: var(--blue-soft); }
+.gcard:hover { transform: translateY(-3px); box-shadow: 0 16px 38px rgba(20, 24, 40, .24), inset 0 0 0 1px rgba(255, 255, 255, .12); }
+/* a warm or cool bloom in the corner behind the mark, so the two cards differ in
+   temperature and not only in one small square of colour */
+.gcard::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: radial-gradient(85% 60% at 6% 0%, rgba(240, 160, 111, .2), transparent 62%);
+}
+.gcard--blue::before { background: radial-gradient(85% 60% at 6% 0%, rgba(126, 186, 238, .2), transparent 62%); }
+
+.gcard-mark {
+  display: grid; place-items: center; width: 2.6rem; height: 2.6rem; margin: 0 0 .85rem;
+  border-radius: 14px; color: #17181d; background: var(--game-ink);
+}
+.gcard h2 {
+  margin: 0; font-family: var(--display); font-weight: 400; color: #fff;
+  font-size: clamp(1.6rem, 6.4vw, 2.1rem); line-height: 1.06; letter-spacing: -.014em;
+  text-wrap: balance;
+}
+.gcard p {
+  margin: .55rem 0 0; max-width: 30rem; font-size: .95rem; line-height: 1.5;
+  color: rgba(255, 255, 255, .84); text-wrap: pretty;
+}
+.gcard-facts {
+  display: flex; flex-wrap: wrap; gap: .4rem; margin: .95rem 0 0; padding: 0; list-style: none;
+  font-family: var(--ui); font-size: .62rem; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.gcard-facts li {
+  display: inline-flex; align-items: center; gap: .35rem; padding: .36rem .62rem;
+  border-radius: 999px; color: rgba(255, 255, 255, .92);
+  background: rgba(255, 255, 255, .1); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .15);
+}
+.gcard-go {
+  display: inline-flex; align-items: center; gap: .45rem; margin: 1.1rem 0 0;
+  font-family: var(--ui); font-size: .72rem; font-weight: 700; letter-spacing: .13em;
+  text-transform: uppercase; color: var(--game-ink);
+}
+.gcard-go .icon { transition: transform .18s ease; }
+.gcard:hover .gcard-go .icon { transform: translateX(3px); }
+
+/* the drawing. .mock and its parts come from the kit; only what this card adds is here */
+.gcard .mock { margin: 0 auto; width: 100%; max-width: 17rem; }
+.gcard .mock-card--line { gap: .35rem; padding: 1.1rem 1.1rem 1.2rem; }
+.gcard .mock-card--line q {
+  quotes: none; display: block;
+  font-family: var(--display); font-size: 1rem; line-height: 1.32;
+  color: var(--on-dark); text-wrap: pretty;
+}
+/* four names, none of them chosen: the card shows the shape of the question, and the
+   game keeps the answer (see GameCard) */
+.gcard-names { display: grid; grid-template-columns: 1fr 1fr; gap: .45rem; }
+.gcard-names span {
+  display: grid; place-items: center; min-height: 2.1rem; border-radius: 10px;
+  font-family: var(--ui); font-size: .62rem; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: rgba(255, 255, 255, .9);
+  background: rgba(255, 255, 255, .1); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14);
+}
+.gcard-names span:nth-child(2) { background: var(--blue); color: #17181d; box-shadow: none; }
+.gcard--blue .mock-q { color: var(--blue-soft); }
+.gcard--blue .mock-fuse i { width: 38%; }
+
+@media (min-width: 52rem) {
+  /* the words get the wider half and the drawing is centred against them, so neither
+     column leaves a hole under the other */
+  .gcard {
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: 2rem; align-items: center; padding: 1.9rem 1.9rem 2rem;
+  }
+  /* a card with no drawing yet takes the whole width rather than leaving an empty column */
+  .gcard:not(:has(.mock)) { grid-template-columns: 1fr; }
+  .gcard .mock { max-width: 19rem; }
+  .gcard .mock-card--line q { font-size: 1.06rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gcard, .gcard-go .icon { transition: none; }
+  .gcard:hover { transform: none; }
 }

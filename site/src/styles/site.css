@@ -288,7 +288,11 @@ a { color: var(--accent); text-underline-offset: 2px; }
 /* -------------------------------------------------------------- buttons */
 
 .btn {
-  display: inline-flex; align-items: center; justify-content: center;
+  /* A mark inside a button sits half a space off the label. Without this the arrow on
+     "Play Sounds Like Scripture" printed against the E, because uppercase tracking is the
+     only thing that was holding them apart. The home page had been setting this on its own
+     buttons for the same reason; now every button gets it. */
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
   font-family: var(--ui); font-size: .82rem; font-weight: 700;
   letter-spacing: .1em; text-transform: uppercase; text-decoration: none;
   padding: .8rem 1.5rem; min-height: 44px; border-radius: var(--r-pill);
@@ -776,7 +780,11 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .tl-item {
   position: relative; display: grid; gap: .1rem .8rem;
   grid-template-columns: 1fr; padding: .65rem 0 .65rem 1.1rem;
-  border-top: 1px dashed var(--zone-edge); font-size: .86rem; color: var(--ink-soft);
+  /* A hairline, not a dashed one. The axis pages already overrode this to solid in the dawn
+     pass; the result page kept the dashes, so one reader met the same timeline drawn two
+     ways. Dashes between every row of a list are the decoration the owner asked us to stop
+     using. */
+  border-top: 1px solid var(--rule); font-size: .86rem; color: var(--ink-soft);
 }
 .tl-item:first-child { border-top: 0; padding-top: .1rem; }
 /* one continuous rule down the gutter, broken at neither end of the list */

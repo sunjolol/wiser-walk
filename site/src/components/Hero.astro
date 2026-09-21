@@ -2,34 +2,70 @@
 /**
  * The band: every page's header.
  *
- * Full bleed on a phone, rounded at the bottom, with the spectrum poured through the smoke
- * stencil at the strength the locked demo uses for a header (not the whisper the data
- * panels use). Behind the words sits one giant ghost word in italic display, cropped by the
- * band's edge, which is the single most recognisable move in the owner's reference skins.
- * On top: a dark chip for the eyebrow, the headline in two inks, a lede, buttons, and a row
- * of stat tiles when the page has real numbers worth leading with.
+ * REDRAWN 2026-09-21 (the dawn pass). The band used to be a pale wash with a giant ghost
+ * word behind it, and every inner page wore the same one — which is most of what the owner
+ * meant by "a soup of dullness". The home page, /support/ and /me/ showed the way out: a
+ * PICTURE, white display type over it, a glass chip with a mark, and the page's action in
+ * the band rather than below the fold.
  *
- * `blue` and `orange` colour one phrase each inside the title, in the same two inks the
- * result verdict uses. The lede is the default slot (so it can carry links) or the `lede`
- * prop for computed text. Buttons go in the "actions" slot.
+ * So a band now takes a `kind`, and the kind chooses the treatment:
+ *
+ *   photo      a photograph (the dawn sky) under a cool-to-warm scrim
+ *   engraving  a Doré plate printed soft sepia under a warm dark gradient, as the home rooms
+ *   painting   a painting in colour, kept WHOLE: it takes one side of the band and the words
+ *              take the other (the picture above and the words below on a phone), because a
+ *              painting with a headline across its subject is a ruined painting
+ *   night      the dark starry ground — the Compass's own, and the fallback for a page with
+ *              no picture of its own, so nothing is left on the old pale wash
+ *
+ * With no `kind` at all the old wash is still drawn, because the result page composes the
+ * same `.band` markup by hand and must not change.
+ *
+ * `blue` and `orange` colour one phrase each inside the title. On a picture they become the
+ * home hero's two inks (a soft blue and #FFD2B0) so white type keeps its contrast.
+ * The lede is the default slot (so it can carry links) or the `lede` prop. Buttons go in the
+ * "actions" slot, and on a phone they sit above the fold.
  */
 import Icon from './Icon.astro';
+import type { IconName } from '../lib/icons';
 
 export interface Props {
   title: string;
   eyebrow?: string;
-  icon?: 'compass' | 'flame' | 'scroll' | 'book' | 'arrow';
+  icon?: IconName;
   lede?: string;
   blue?: string;
   orange?: string;
-  /** The ghost word behind the headline. Lowercase reads best. */
+  /** The ghost word behind the headline. Drawn only on a band with no picture and no kind. */
   ghost?: string;
   /** Real numbers only. */
   tiles?: Array<{ n: string | number; label: string }>;
   /** Long titles (an article, a tradition's full name) get a calmer size and a wider measure. */
   long?: boolean;
+  /** The picture's treatment. Omit it only where the old wash is wanted. */
+  kind?: 'photo' | 'engraving' | 'painting' | 'night';
+  /** Path under public/. A `night` band may have one (it sits dark behind the stars) or none. */
+  image?: string;
+  /** Decorative by default: a band's picture repeats what the headline already says. */
+  imageAlt?: string;
+  /** CSS object-position, so a face is not cropped out by the band's shape. */
+  imagePosition?: string;
+  /** Brightness for THIS plate, where its printing is unusually light or dark. 1 is as it is. */
+  imageLift?: number;
+  /** One small line naming the picture. Used by the articles, whose paintings are credited. */
+  credit?: string;
+  /** The band of the page the reader landed on is above the fold: its picture is not lazy. */
+  eager?: boolean;
 }
-const { title, eyebrow, icon, lede, blue, orange, ghost, tiles = [], long = false } = Astro.props;
+const {
+  title, eyebrow, icon, lede, blue, orange, ghost, tiles = [], long = false,
+  kind, image, imageAlt = '', imagePosition, imageLift, credit, eager = true
+} = Astro.props;
+
+const imgStyle = [
+  imagePosition ? `object-position:${imagePosition}` : '',
+  imageLift ? `--img-lift:${imageLift}` : ''
+].filter(Boolean).join(';') || undefined;
 
 type Part = { text: string; tone: '' | 'left' | 'right' };
 let parts: Part[] = [{ text: title, tone: '' }];
@@ -48,19 +84,56 @@ const paint = (phrase: string | undefined, tone: 'left' | 'right') => {
 paint(blue, 'left');
 paint(orange, 'right');
 
-const hasLede = Boolean(lede) || Astro.slots.has('default');
+/*
+ * The lede, resolved rather than assumed.
+ *
+ * `Astro.slots.has('default')` is true for a slot that was passed and renders nothing — a
+ * page saying `{bipolar ? <poleline/> : null}` passes one either way — and that printed an
+ * empty <p class="lede"> with its own margins: a blank run between the title and the tiles,
+ * which is the empty space the owner keeps rejecting. So the slot is rendered first and
+ * measured, and a band with nothing to say simply has no lede.
+ */
+const slotHtml = Astro.slots.has('default') ? await Astro.slots.render('default') : '';
+const hasLede = Boolean(lede) || slotHtml.trim().length > 0;
+/* A picture band is dark and composed; a band with no kind keeps the old wash and ghost. */
+const pic = Boolean(kind);
+const wash = !pic;
 ---
-<header class:list={['band', long && 'band--long']}>
-  <div class="wash" aria-hidden="true"></div>
-  <div class="veil" aria-hidden="true"></div>
-  {ghost && <div class="band-ghost" aria-hidden="true" style={`--len:${Math.max(4, ghost.length)}`}>{ghost}</div>}
-  {eyebrow && <p class="band-chip">{icon && <Icon name={icon} size={13} />}{eyebrow}</p>}
-  <h1>{parts.map(p => p.tone ? <span class={`verdict-part--${p.tone}`}>{p.text}</span> : p.text)}</h1>
-  {hasLede && <p class="lede">{lede ?? <slot />}</p>}
-  {Astro.slots.has('actions') && <div class="btn-row"><slot name="actions" /></div>}
-  {tiles.length > 0 && (
-    <ul class="tiles">
-      {tiles.map(t => <li class="tile"><b>{t.n}</b><span>{t.label}</span></li>)}
-    </ul>
+<header
+  class:list={[
+    'band',
+    long && 'band--long',
+    pic && 'band--pic',
+    kind && `band--${kind}`,
+    image && 'band--has-img'
+  ]}
+>
+  {wash && <div class="wash" aria-hidden="true"></div>}
+  {wash && <div class="veil" aria-hidden="true"></div>}
+  {wash && ghost && (
+    <div class="band-ghost" aria-hidden="true" style={`--len:${Math.max(4, ghost.length)}`}>{ghost}</div>
   )}
+  {image && (
+    <img
+      class="band-img"
+      src={image}
+      alt={imageAlt}
+      style={imgStyle}
+      loading={eager ? 'eager' : 'lazy'}
+      fetchpriority={eager ? 'high' : undefined}
+      decoding="async"
+    />
+  )}
+  <div class="band-in">
+    {eyebrow && <p class="band-chip">{icon && <Icon name={icon} size={13} />}{eyebrow}</p>}
+    <h1>{parts.map(p => p.tone ? <span class={`verdict-part--${p.tone}`}>{p.text}</span> : p.text)}</h1>
+    {hasLede && <p class="lede">{lede ?? <Fragment set:html={slotHtml} />}</p>}
+    {Astro.slots.has('actions') && <div class="btn-row"><slot name="actions" /></div>}
+    {tiles.length > 0 && (
+      <ul class="tiles">
+        {tiles.map(t => <li class="tile"><b>{t.n}</b><span>{t.label}</span></li>)}
+      </ul>
+    )}
+    {credit && <p class="band-credit">{credit}</p>}
+  </div>
 </header>
