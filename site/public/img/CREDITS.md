@@ -78,6 +78,8 @@ it was added and has not been confirmed since; Commons holds several scans of th
 any of them can stand in if the file is ever replaced.
 
 
+Each painting has a 560 px `-card.jpg` copy beside it for the article cards (quality 68). When a painting is added or replaced, make its card copy too, or the card will 404.
+
 ## Unsplash (free to use under the Unsplash licence; replace with Envato equivalents at will)
 
 | file | what it shows | Unsplash photo id |

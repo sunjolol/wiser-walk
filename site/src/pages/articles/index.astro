@@ -85,8 +85,10 @@ import ReadCard from '../../components/ReadCard.astro';
     <div class="topicline">
       <p class="jump-label">What the {articles.length} pieces are about</p>
       <ul class="chips">
-        {topics.map(t => (
-          <li><span class="chip-link chip-static">{t} <small>{articles.filter(a => a.data.tags.includes(t)).length}</small></span></li>
+        {/* No counts, and no tag that nearly every piece carries: a row of boxes each reading
+            "1" told a reader nothing, and "formation" is already the page's own kicker. */}
+        {topics.filter(t => articles.filter(a => a.data.tags.includes(t)).length < articles.length * 0.6).map(t => (
+          <li><span class="chip-link chip-static">{t}</span></li>
         ))}
       </ul>
     </div>
