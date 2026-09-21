@@ -13,8 +13,9 @@ import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
 import SectionHead from '../../components/SectionHead.astro';
 import QuizPreview from '../../components/QuizPreview.astro';
+import OutcomeIndex from '../../components/OutcomeIndex.astro';
 import { QUIZZES, getQuiz } from '../../lib/engine/registry';
-import { capitalise, groupNounPlural, outcomeNounPlural } from '../../lib/engine/types';
+import { capitalise, groupNounPlural, outcomeNounPlural, outcomePathBase } from '../../lib/engine/types';
 
 export function getStaticPaths() {
   return QUIZZES.map(q => ({ params: { quiz: q.slug } }));
@@ -292,6 +293,10 @@ const breadcrumbs = isDraft
           </div>
         </div>
       </section>
+
+      {/* The traditions, each a way in to its own page. Only the Compass's outcomes are
+          traditions; the figures have their own index on the quiz's axis pages. */}
+      {outcomePathBase(quiz) === 'tradition' && quiz.outcomes.length > 0 && <OutcomeIndex quiz={quiz} />}
     </div>
 
     <div id="play" hidden>

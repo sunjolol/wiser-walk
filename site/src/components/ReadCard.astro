@@ -20,8 +20,10 @@ interface Props {
   image?: string;
   imageAlt?: string;
   imagePosition?: string;
+  /** The article's topics, so a list can be filtered by them. */
+  tags?: string[];
 }
-const { id, title, description, minutes, image, imageAlt, imagePosition } = Astro.props;
+const { id, title, description, minutes, image, imageAlt, imagePosition, tags } = Astro.props;
 /*
  * A card is about 330px wide, and the paintings are 1200. Eleven of them at full size made
  * /articles/ a 2.3 MB page on a phone. Every painting under /img/articles/ has a 560px
@@ -32,7 +34,7 @@ const cardImage = image && image.startsWith('/img/articles/') && image.endsWith(
   ? image.replace(/\.jpg$/, '-card.jpg')
   : image;
 ---
-<a class="read" href={`/articles/${id}/`}>
+<a class="read" href={`/articles/${id}/`} data-tags={tags?.length ? tags.join('|') : undefined}>
   <span class={image ? 'read-pic' : 'read-pic read-pic--none'}>
     {image && (
       <img src={cardImage} alt={imageAlt ?? ''} loading="lazy" decoding="async"

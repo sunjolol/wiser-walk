@@ -13,6 +13,7 @@
  *              art is one family and the subjects are not
  *   night      the games sit on a dark band over an old manuscript page, because they are played with the text
  *   morning    the articles are paintings first and words second: colour, where the quizzes are ink
+ *   (the traditions list moved to the foot of the Compass's own page, 2026-09-21)
  *   the walk   the footer opens on the walker at dawn, and asks for an address there
  *
  * Every number is computed from the registry. Every picture is free to use (Unsplash) or in
@@ -248,21 +249,6 @@ const jsonLd = {
       </div>
     </section>
   )}
-
-  {/* ------------------------------------------------------------------- traditions */}
-  <section class="hm-trads" aria-labelledby="hm-trads">
-    <div class="hm-trads-say">
-      <span class="room-mark room-mark--blue"><Icon name="compass" size={20} /></span>
-      <h2 id="hm-trads">{compass.outcomes.length} traditions, each in its own words</h2>
-      <p>Where each one stands on the six questions, described the way its own people would.</p>
-      <a class="btn" href={quizHref(compass)}>See where you sit <Icon name="arrow" size={15} /></a>
-    </div>
-    <ul class="hm-trads-list">
-      {compass.outcomes.map(o => (
-        <li><a href={outcomeHref(compass, o)}>{o.name}</a></li>
-      ))}
-    </ul>
-  </section>
   <script>
     // The quiz rail: arrows, a fade that only shows where there is more to see, and drag with a
     // mouse (touch already scrolls it). A drag must not also count as a click on the card.

@@ -54,6 +54,7 @@ const breadcrumbs = [
 ];
 import '../../styles/pages/reads.css';
 import ReadCard from '../../components/ReadCard.astro';
+const filterTopics = topics.filter(t => articles.filter(x => x.data.tags.includes(t)).length < articles.length * 0.6);
 ---
 <Base
   title="Articles"
@@ -75,29 +76,35 @@ import ReadCard from '../../components/ReadCard.astro';
       { n: topics.length, label: 'Topics' }
     ]}
   >
-      Practical writing on formation — the slow business of becoming someone different.
-      Every claim is tied to a text you can check.
+      Short, practical reads on becoming someone different, a little at a time.
   </Hero>
 
   <SectionHead title="Everything here" kicker="The slow work of formation" />
 
-  {topics.length > 0 && (
-    <div class="topicline">
-      <p class="jump-label">What the {articles.length} pieces are about</p>
-      <ul class="chips">
-        {/* No counts, and no tag that nearly every piece carries: a row of boxes each reading
-            "1" told a reader nothing, and "formation" is already the page's own kicker. */}
-        {topics.filter(t => articles.filter(a => a.data.tags.includes(t)).length < articles.length * 0.6).map(t => (
-          <li><span class="chip-link chip-static">{t}</span></li>
+  {/*
+    The topic chips FILTER the list (the owner, 2026-09-21: on a phone nobody should have to
+    scroll eleven cards to find the one about worry). Tap one or several; a card stays if it
+    has ANY of the chosen topics; "All" clears. Without JavaScript the chips do nothing and
+    every article shows, which is the page as it was. "formation" is left out: nearly every
+    piece carries it, so it filters nothing.
+  */}
+  {filterTopics.length > 0 && (
+    <div class="topicline" data-topic-filter>
+      <p class="jump-label" id="topic-label">Show articles about</p>
+      <ul class="topic-chips" role="group" aria-labelledby="topic-label">
+        <li><button type="button" class="topic-chip is-on" data-topic="" aria-pressed="true">All</button></li>
+        {filterTopics.map(t => (
+          <li><button type="button" class="topic-chip" data-topic={t} aria-pressed="false">{t}</button></li>
         ))}
       </ul>
+      <p class="topic-count" role="status" aria-live="polite" data-topic-count></p>
     </div>
   )}
 
   <div class="hm-reads">
     {articles.map(a => (
       <ReadCard id={a.id} title={a.data.title} description={a.data.description} minutes={a.data.minutes}
-                image={a.data.image} imageAlt={a.data.imageAlt} imagePosition={a.data.imagePosition} />
+                image={a.data.image} imageAlt={a.data.imageAlt} imagePosition={a.data.imagePosition} tags={a.data.tags} />
     ))}
   </div>
 
@@ -110,4 +117,41 @@ import ReadCard from '../../components/ReadCard.astro';
       links={next}
     />
   )}
+  <script>
+    const box = document.querySelector('[data-topic-filter]');
+    if (box) {
+      const chips = [...box.querySelectorAll('.topic-chip')];
+      const cards = [...document.querySelectorAll('.hm-reads .read')];
+      const count = box.querySelector('[data-topic-count]');
+      const chosen = new Set();
+      const paint = () => {
+        chips.forEach(c => {
+          const on = c.dataset.topic ? chosen.has(c.dataset.topic) : chosen.size === 0;
+          c.classList.toggle('is-on', on);
+          c.setAttribute('aria-pressed', String(on));
+        });
+        let shown = 0;
+        cards.forEach(card => {
+          const tags = (card.dataset.tags || '').split('|');
+          const keep = chosen.size === 0 || tags.some(t => chosen.has(t));
+          card.hidden = !keep;
+          if (keep) shown++;
+        });
+        if (count) count.textContent = chosen.size === 0 ? '' : `Showing ${shown} of ${cards.length}`;
+        const hash = chosen.size ? '#topic=' + [...chosen].map(encodeURIComponent).join(',') : '';
+        history.replaceState(null, '', location.pathname + location.search + hash);
+      };
+      chips.forEach(c => c.addEventListener('click', () => {
+        const t = c.dataset.topic;
+        if (!t) chosen.clear();
+        else if (chosen.has(t)) chosen.delete(t);
+        else chosen.add(t);
+        paint();
+      }));
+      // a link such as /articles/#topic=worry,patience opens already filtered
+      const m = /^#topic=(.+)$/.exec(location.hash);
+      if (m) m[1].split(',').map(decodeURIComponent).forEach(t => { if (chips.some(c => c.dataset.topic === t)) chosen.add(t); });
+      paint();
+    }
+  </script>
 </Base>

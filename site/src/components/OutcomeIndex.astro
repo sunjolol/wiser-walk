@@ -1,0 +1,70 @@
+---
+/**
+ * Every outcome of a quiz, as a list of ways in to their own pages.
+ *
+ * It stood on the home page as "18 traditions, each in its own words", with a button that
+ * went to the quiz. The owner moved it to the foot of the quiz's own page (2026-09-21), under
+ * the last call to start, and asked for the button to give way to a plain line saying that
+ * each name can be opened, because on a phone a list of names does not look tappable. So each
+ * row carries an arrow, and the line above says what a tap does.
+ *
+ * Generic: the nouns, the count and the links come from the quiz.
+ */
+import Icon from './Icon.astro';
+import { outcomeHref } from '../lib/engine/registry';
+import { outcomeNounPlural } from '../lib/engine/types';
+import type { Quiz } from '../lib/engine/types';
+
+interface Props { quiz: Quiz; }
+const { quiz } = Astro.props;
+const nouns = outcomeNounPlural(quiz);
+---
+<section class="oidx" aria-labelledby="oidx-h">
+  <div class="oidx-say">
+    <span class="oidx-mark"><Icon name="compass" size={20} /></span>
+    <h2 id="oidx-h">{quiz.outcomes.length} {nouns}, each in its own words</h2>
+    <p>Where each one stands on the {['zero','one','two','three','four','five','six','seven','eight','nine','ten'][quiz.groups.length] ?? quiz.groups.length} questions, described the way its own people would.</p>
+    <p class="oidx-hint"><Icon name="arrow" size={14} /> Tap any of them to read more.</p>
+  </div>
+  <ul class="oidx-list">
+    {quiz.outcomes.map(o => (
+      <li><a href={outcomeHref(quiz, o)}><span>{o.name}</span><Icon name="arrow" size={14} /></a></li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .oidx {
+    position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr; gap: 1.2rem;
+    margin: 2.2rem 0 .5rem; padding: 1.7rem 1.4rem 1.3rem; border-radius: 24px;
+    background: var(--panel); box-shadow: var(--lift);
+  }
+  .oidx::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 6px; background-image: linear-gradient(180deg, var(--blue), var(--orange)); }
+  .oidx-mark { display: grid; place-items: center; width: 2.6rem; height: 2.6rem; margin: 0 0 .85rem; border-radius: 14px; color: #17181d; background: var(--blue); }
+  .oidx h2 { margin: 0; font-family: var(--display); font-weight: 400; font-size: clamp(1.6rem, 6vw, 2.1rem); line-height: 1.1; color: var(--ink); text-wrap: balance; }
+  .oidx-say p { margin: .6rem 0 0; color: var(--ink-soft); max-width: 24rem; text-wrap: balance; }
+  .oidx-say .oidx-hint {
+    display: inline-flex; align-items: center; gap: .5rem; margin-top: 1rem; padding: .5rem .9rem; border-radius: 999px;
+    font-family: var(--ui); font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--accent); background: var(--accent-soft);
+  }
+  .oidx-list { margin: 0; padding: 0; list-style: none; }
+  .oidx-list li + li { border-top: 1px solid var(--rule); }
+  .oidx-list a {
+    display: flex; align-items: center; justify-content: space-between; gap: .8rem; min-height: 48px; padding: .55rem .2rem;
+    text-decoration: none; font-size: .96rem; line-height: 1.35; color: var(--ink);
+  }
+  .oidx-list a :global(.icon) { flex: none; color: var(--accent); transition: transform .18s ease; }
+  .oidx-list a:hover { color: var(--accent); }
+  .oidx-list a:hover :global(.icon) { transform: translateX(3px); }
+  @media (min-width: 40rem) {
+    .oidx-list { columns: 2; column-gap: 2rem; }
+    .oidx-list li { break-inside: avoid; }
+    .oidx-list li + li { border-top: 0; }
+    .oidx-list li { border-bottom: 1px solid var(--rule); }
+  }
+  @media (min-width: 58rem) {
+    .oidx { grid-template-columns: minmax(0, 19rem) minmax(0, 1fr); gap: 2.6rem; padding: 2.3rem 2.4rem 2rem 2.6rem; align-items: start; }
+  }
+  @media (prefers-reduced-motion: reduce) { .oidx-list a :global(.icon) { transition: none; } }
+</style>

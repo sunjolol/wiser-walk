@@ -55,3 +55,16 @@
   /* a slide lines up with the page's own gutter, never flush against the screen's edge */
   body .hm-rail-track { scroll-padding-left: 0; }
 }
+
+/* THE HEADER'S TWO ICONS (the owner, 2026-09-21): bigger, so a thumb finds them, and the
+   profile mark pushed to the right end of the nav row so it stands directly under the bulb. */
+@media (max-width: 45.99rem) {
+  body .theme-toggle { min-width: 48px; min-height: 48px; }
+  body .theme-toggle svg { width: 26px; height: 26px; }
+  body .site-head nav a.nav-me { min-width: 48px; min-height: 48px; justify-content: center; padding: 0; }
+  body .site-head nav a.nav-me .icon { width: 24px; height: 24px; }
+}
+@media (max-width: 29.99rem) {
+  /* measured, not guessed: with this margin the mark's centre sits on the bulb's (331px of 375) */
+  body .site-head nav a.nav-me { margin-left: auto; margin-right: -.5rem; }
+}
