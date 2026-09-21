@@ -141,6 +141,22 @@ const headlineNotes = quiz && view ? groupNoteFor(quiz, view.named, 'result') : 
       <div class="note draft"><p><strong>Unaudited draft.</strong>{" " + quiz.draftNote}</p></div>
     )}
 
+    {/*
+      Only for the reader who just finished this, told apart the same way the share block
+      tells them apart: a tab-scoped note the runner left behind. A visitor opening someone
+      else's link sees nothing here, because nothing of theirs was saved.
+    */}
+    <p class="saved-note" id="saved-note" hidden>
+      <Icon name="users" size={14} /> Saved to <a href="/me/">My results</a>
+    </p>
+    <script is:inline define:vars={{ savedQuizSlug: quiz.slug, savedQuizCode: view.code }}>
+      try {
+        if (sessionStorage.getItem('ww:took:' + savedQuizSlug) === savedQuizCode) {
+          document.getElementById('saved-note').hidden = false;
+        }
+      } catch (e) {}
+    </script>
+
     <div class="panel layered result-panel">
       <div class="wash" aria-hidden="true"></div>
       <div class="veil" aria-hidden="true"></div>

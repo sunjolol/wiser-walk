@@ -10,7 +10,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "data": "node scripts/build-data.mjs",
-    "test": "node scripts/build-data.mjs && node scripts/engine-test.mjs"
+    "test": "node scripts/build-data.mjs && node scripts/engine-test.mjs && node scripts/email-test.mjs"
   },
   "dependencies": {
     "astro": "^5.1.1",

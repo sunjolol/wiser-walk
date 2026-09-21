@@ -1,0 +1,286 @@
+---
+/**
+ * My results.
+ *
+ * The owner: finding an old result is impossible today, and that feels bad. It does — a
+ * result lives in its URL and nowhere else, so closing the tab loses it. Accounts come
+ * later; this needs none. Every finished quiz saves itself on the device, and this page is
+ * where they are.
+ *
+ * What the SERVER renders is the invitation: one room per quiz, every one of them saying
+ * "Take it". What the BROWSER does is fill in the rooms a reader has actually finished,
+ * from the shelf, scored back through the same engine the result page uses. That order
+ * matters: with the script blocked, or with storage blocked, or on a brand-new device, the
+ * page is still a set of doorways rather than an empty box apologising for itself.
+ *
+ * Nothing here prints a number against a person. The figure quiz's result carries a name,
+ * and a name travels with its own words — the view's headline and summary, verbatim, and
+ * nothing else.
+ */
+import '../styles/pages/me.css';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { QUIZZES, quizHref } from '../lib/engine/registry';
+import { artFor } from '../lib/art';
+import { liveGames } from '../lib/games';
+
+/* Finished quizzes first, drafts last, as everywhere else on the site. */
+const quizzes = [...QUIZZES].sort(
+  (a, b) => Number(a.status === 'draft') - Number(b.status === 'draft')
+);
+
+/**
+ * What each game already keeps on the device, from its own SPEC: a personal best, written
+ * by the game and read here. Nothing is written back, and a game that keeps nothing simply
+ * has no key, so its room shows the way in and no score.
+ */
+const GAME_BEST: Record<string, string> = {
+  'sounds-like-scripture': 'sls.best',
+  'who-said-it': 'wsi.best'
+};
+const games = liveGames();
+---
+<Base
+  title="My results"
+  description="Every quiz you have finished on this device, and the games you have played."
+  noindex={true}
+>
+  <section class="me-band">
+    <img class="me-band-img" src="/img/sky-rays.jpg" alt="" width="1800" height="1200"
+         fetchpriority="high" decoding="async" />
+    <div class="me-band-in">
+      <p class="me-chip"><Icon name="users" size={14} /> On this device</p>
+      <h1>My <em>results.</em></h1>
+      <p class="me-count" id="me-count">Everything you finish here waits for you on this page.</p>
+    </div>
+  </section>
+
+  <section class="me-rooms" id="me-rooms" aria-label="Quizzes">
+    {quizzes.map((quiz, i) => {
+      const art = artFor(quiz.slug);
+      const href = quizHref(quiz);
+      return (
+        <article class:list={['mroom', !art && 'mroom--plain', `mroom--${quiz.slug}`]} data-quiz={quiz.slug} data-href={href}>
+          {art && (
+            /* The first two rooms are on screen the moment the band is scrolled past, and a
+               room whose picture has not arrived is a flat brown box with no quiz in it.
+               Those two load with the page; the rest wait until they are near. */
+            <img src={art.src} alt={art.alt} loading={i < 2 ? 'eager' : 'lazy'} decoding="async"
+                 width="1000" height="1255" style={`object-position:${art.objectPosition}`} />
+          )}
+          <div class="mroom-body">
+            <span class="mroom-mark"><Icon name={quiz.icon} size={20} /></span>
+            <h2>{quiz.title}</h2>
+
+            {/* Filled in by the script from the shelf, and shown only when there is one. */}
+            <div class="mroom-has" data-role="has" hidden>
+              <p class="mroom-verdict" data-role="headline"></p>
+              <p class="mroom-say" data-role="summary"></p>
+              <p class="mroom-when" data-role="when"></p>
+              <div class="mroom-acts">
+                <a class="mroom-go" data-role="see" href={href}>See the result <Icon name="arrow" size={14} /></a>
+                <a class="mroom-again" href={href}>Take it again</a>
+              </div>
+              <details class="mroom-past" data-role="past" hidden>
+                <summary><span data-role="past-count"></span></summary>
+                <ul data-role="past-list"></ul>
+              </details>
+            </div>
+
+            {/* What a reader who has not taken it sees, and what everyone sees first. */}
+            <div class="mroom-none" data-role="none">
+              <p class="mroom-say">{quiz.tagline}</p>
+              <ul class="mroom-facts">
+                <li><Icon name="clock" size={13} /> {quiz.minutes} min</li>
+                {quiz.status === 'draft' && <li>Draft</li>}
+              </ul>
+              <a class="mroom-go" href={href}>Take it <Icon name="arrow" size={14} /></a>
+            </div>
+          </div>
+        </article>
+      );
+    })}
+  </section>
+
+  {games.length > 0 && (
+    <section class="me-games" aria-label="Games">
+      <h2 class="me-head">games</h2>
+      <div class="me-games-row">
+        {games.map(game => (
+          <article class="mgame" data-best={GAME_BEST[game.slug] ?? ''}>
+            <span class="mroom-mark mroom-mark--orange"><Icon name="play" size={18} /></span>
+            <h3>{game.title}</h3>
+            {/* The best score is the game's own, read from where the game keeps it. Until
+                there is one, the room says how long a run takes and nothing else. */}
+            <p class="mgame-best" data-role="best" hidden></p>
+            <ul class="mroom-facts" data-role="run"><li><Icon name="clock" size={13} /> 2 min a run</li></ul>
+            <a class="mroom-go" href={game.href}>Play <Icon name="arrow" size={14} /></a>
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <section class="dark me-keep">
+    <span class="mroom-mark mroom-mark--blue"><Icon name="mail" size={20} /></span>
+    <h2>Kept on this device.</h2>
+    <p>
+      These are saved on this device only. Accounts are on the way, so you can keep them for
+      good and see them anywhere. Leave your email and we will tell you when.
+    </p>
+    <a class="me-keep-go" href="#foot-signup">Leave your email <Icon name="arrow" size={14} /></a>
+  </section>
+
+  <p class="me-clear" hidden id="me-clear-row">
+    <button class="me-clear-btn" id="me-clear" type="button">Clear my results from this device</button>
+  </p>
+
+  <script>
+    import { getQuiz, resultFor, decodeFor } from '../lib/engine/registry';
+    import { clearShelf, readableResults } from '../lib/shelf';
+
+    const rooms = [...document.querySelectorAll('.mroom')];
+    if (rooms.length) {
+      const pick = (root, role) => root.querySelector(`[data-role="${role}"]`);
+
+      /** Plain words. A date stamp is a machine's way of saying when. */
+      const whenWords = (iso) => {
+        const d = new Date(iso);
+        if (Number.isNaN(d.getTime())) return '';
+        const now = new Date();
+        const day = (x) => new Date(x.getFullYear(), x.getMonth(), x.getDate()).getTime();
+        const days = Math.round((day(now) - day(d)) / 86400000);
+        if (days <= 0) return 'today';
+        if (days === 1) return 'yesterday';
+        if (days < 7) return `${days} days ago`;
+        const sameYear = d.getFullYear() === now.getFullYear();
+        return d.toLocaleDateString('en-GB', {
+          day: 'numeric',
+          month: 'long',
+          ...(sameYear ? {} : { year: 'numeric' })
+        });
+      };
+
+      /**
+       * The same, with the clock where the day alone would not tell two runs apart. A list
+       * of earlier results that reads "today, today, today" is a list of nothing.
+       */
+      const whenExactly = (iso) => {
+        const words = whenWords(iso);
+        if (words !== 'today' && words !== 'yesterday') return words;
+        const t = new Date(iso).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+        return `${words} at ${t}`;
+      };
+
+      const paint = () => {
+        const saved = readableResults();
+        const byQuiz = new Map();
+        saved.forEach(e => {
+          if (!byQuiz.has(e.quiz)) byQuiz.set(e.quiz, []);
+          byQuiz.get(e.quiz).push(e);
+        });
+
+        let taken = 0;
+        rooms.forEach(room => {
+          const slug = room.dataset.quiz;
+          const quiz = getQuiz(slug);
+          const runs = (quiz && byQuiz.get(slug)) || [];
+          const has = pick(room, 'has');
+          const none = pick(room, 'none');
+          const latest = runs[0];
+
+          if (!latest) {
+            room.classList.remove('is-taken');
+            room.style.order = '';
+            has.hidden = true;
+            none.hidden = false;
+            return;
+          }
+
+          const values = decodeFor(quiz, latest.code);
+          const view = resultFor(quiz, values);
+          taken++;
+
+          pick(room, 'headline').textContent = view.headline;
+          pick(room, 'summary').textContent = view.summary;
+          pick(room, 'when').textContent = `Taken ${whenWords(latest.at)}`;
+          pick(room, 'see').setAttribute('href', `/r/${slug}/${latest.code}/`);
+
+          const past = pick(room, 'past');
+          const older = runs.slice(1);
+          const SHOWN = 8;
+          if (older.length) {
+            pick(room, 'past-count').textContent =
+              older.length === 1 ? '1 earlier result' : `${older.length} earlier results`;
+            const list = pick(room, 'past-list');
+            list.textContent = '';
+            older.slice(0, SHOWN).forEach(run => {
+              const li = document.createElement('li');
+              const a = document.createElement('a');
+              a.href = `/r/${slug}/${run.code}/`;
+              a.textContent = whenExactly(run.at);
+              li.appendChild(a);
+              list.appendChild(li);
+            });
+            // The summary counts every earlier run; the list shows the most recent eight.
+            // Saying "39 earlier results" over a list of eight would be the page telling a
+            // small lie about itself, so the rest are counted out loud instead.
+            if (older.length > SHOWN) {
+              const li = document.createElement('li');
+              li.className = 'mroom-past-rest';
+              li.textContent = `${older.length - SHOWN} older ones are not listed`;
+              list.appendChild(li);
+            }
+            past.hidden = false;
+          } else {
+            past.hidden = true;
+            past.open = false;
+          }
+
+          has.hidden = false;
+          none.hidden = true;
+          room.classList.add('is-taken');
+          // What you have done comes before what you have not. Set rather than sorted, so
+          // nothing is moved in the document and nothing jumps as the script runs.
+          room.style.order = '-1';
+        });
+
+        const count = document.getElementById('me-count');
+        if (count) {
+          count.textContent = taken
+            ? `${taken} of ${rooms.length} quizzes taken`
+            : 'Nothing saved yet. Take one, and it will be here when you come back.';
+        }
+        const clearRow = document.getElementById('me-clear-row');
+        if (clearRow) clearRow.hidden = !saved.length;
+      };
+
+      paint();
+
+      document.getElementById('me-clear')?.addEventListener('click', () => {
+        const sure = window.confirm(
+          'Clear every result saved on this device? The links themselves still work if you have them.'
+        );
+        if (!sure) return;
+        clearShelf();
+        paint();
+        // The dot in the header is painted once, on load, by an inline script in the layout.
+        // Without this it would go on saying there is something here while the page says
+        // there is not, until the next page load.
+        document.querySelector('.site-head .nav-me')?.classList.remove('has-saved');
+      });
+
+      /* A game writes its own best score; this only reads it. */
+      document.querySelectorAll('.mgame').forEach(card => {
+        const key = card.dataset.best;
+        if (!key) return;
+        let best = null;
+        try { best = JSON.parse(localStorage.getItem(key)); } catch (e) {}
+        if (typeof best !== 'number' || !Number.isFinite(best) || best <= 0) return;
+        const line = card.querySelector('[data-role="best"]');
+        line.textContent = `Your best: ${best.toLocaleString()}`;
+        line.hidden = false;
+      });
+    }
+  </script>
+</Base>

@@ -213,12 +213,12 @@
   margin: 3.2rem calc(-1 * var(--gut)) 0; padding: 0 var(--gut) 2.4rem;
   border-radius: 30px; background: #151412; color: #fff;
 }
-/* The hourglass and the old book are the subject, so they are given a place of their own at
-   the head of the band, above the cards, and fade into the dark on the two inner sides. As a
-   full background they sat behind the cards and only the flowers beside them showed. */
+/* A chess board and its clock: a game, against time. The picture has a place of its own at
+   the head of the band, above the cards, and fades into the dark on the two inner sides. It is
+   printed dark and warm, like an old icon, so it belongs to the night band and not to a park. */
 .hm-night-img {
   position: absolute; top: 0; right: 0; z-index: -2; width: 100%; height: 15.5rem;
-  object-fit: cover; object-position: 30% 58%; filter: contrast(.94) brightness(1.08);
+  object-fit: cover; object-position: 50% 42%; filter: sepia(.45) saturate(.85) contrast(1.05) brightness(.72);
   -webkit-mask-image: linear-gradient(180deg, #000 52%, transparent);
   mask-image: linear-gradient(180deg, #000 52%, transparent);
 }
@@ -229,7 +229,7 @@
 .hm-night .hm-head { min-height: 12.5rem; align-content: end; padding-top: 2rem; }
 @media (min-width: 46rem) {
   .hm-night-img {
-    width: 66%; height: 19rem; object-position: 30% 56%;
+    width: 70%; height: 20rem; object-position: 50% 40%;
     -webkit-mask-image: linear-gradient(90deg, transparent, #000 42%), linear-gradient(180deg, #000 58%, transparent);
     -webkit-mask-composite: source-in;
     mask-image: linear-gradient(90deg, transparent, #000 42%), linear-gradient(180deg, #000 58%, transparent);
@@ -271,26 +271,8 @@
   .game .mock { max-width: none; }
 }
 
-/* ------------------------------------------------------------------------ morning ---- */
+/* the articles ("morning") are drawn by pages/reads.css, which the articles pages share */
 .hm-morning { margin: 3.4rem 0 0; }
-.hm-reads { display: grid; grid-template-columns: 1fr; gap: 1.6rem; }
-.read { display: block; text-decoration: none; color: var(--ink); }
-.read-pic { position: relative; display: block; overflow: hidden; border-radius: 20px; aspect-ratio: 3 / 2; box-shadow: var(--lift); }
-.read-pic img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; filter: contrast(.92) saturate(.88) brightness(1.04); }
-.read-pic::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(135deg, rgba(126, 186, 238, .14), rgba(240, 160, 111, .12)); }
-.read-time { z-index: 1; }
-.read:hover .read-pic img { transform: scale(1.04); }
-.read-time {
-  position: absolute; left: .7rem; bottom: .7rem; display: inline-flex; align-items: center; gap: .35rem;
-  padding: .34rem .62rem; border-radius: 999px; color: #fff; background: rgba(18, 20, 28, .62);
-  font-family: var(--ui); font-size: .6rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
-  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
-}
-.read h3 { margin: .95rem 0 0; font-family: var(--display); font-weight: 400; font-size: 1.45rem; line-height: 1.12; color: var(--ink); text-wrap: balance; }
-.read p { margin: .45rem 0 0; font-size: .95rem; line-height: 1.55; color: var(--ink-soft);
-  display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-.read .room-go { color: var(--accent); margin-top: .7rem; }
-@media (min-width: 46rem) { .hm-reads { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.4rem; } }
 
 /* --------------------------------------------------------------------- traditions ---- */
 .hm-trads {

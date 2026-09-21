@@ -1,57 +1,98 @@
-# Email capture — what has to be true before this works
+# Switching sign-up on
 
-The code is done; three things live in your MailerLite account and one in Vercel.
+The code is done. Everything below happens in a Brevo account and in Vercel, and only you
+can do it. Until it is done, `/api/subscribe` answers 503 in production and the two sign-up
+forms collect nothing.
 
-## 1. Vercel environment variables
+**Why Brevo.** The free plan holds an unlimited number of contacts and sends 300 emails a
+day, it has an API and SMTP, and the same account can later send the sign-in and account
+emails. Nothing has to move when accounts arrive. (MailerLite still works in the code, but
+that account belongs to your other business, so it is not used.)
 
-Set these on the project (Settings → Environment Variables), for Production **and** Preview:
+## 1. Make the account and the list
 
-| name | required | what it is |
+1. Sign up at **brevo.com** and confirm the address. Free plan is enough.
+2. **Contacts → Lists → Create a list.** Call it `Wiser Walk`. Open it and note the **id**
+   (a number, shown in the list's URL and in the list settings).
+3. **Contacts → Settings → Contact attributes → Add an attribute.** Add three, all of type
+   *Text*, named exactly:
+
+   | attribute | example | what it is for |
+   |---|---|---|
+   | `QUIZ` | `theology-compass` | which quiz the reader finished, so the right series goes out |
+   | `RESULT_CODE` | `01VJSE` | rebuilds their link: `wiserwalk.com/r/{QUIZ}/{RESULT_CODE}/` |
+   | `RESULT_HEADLINE` | `Monergist-leaning, sacramental-leaning` | their result in words, so a template need not decode anything |
+
+   Brevo ignores attributes it does not recognise, so a typo here means the emails have
+   nothing to personalise with and nothing tells you.
+
+## 2. Make an API key
+
+**Your name (top right) → SMTP & API → API keys → Generate a new API key.** Copy it now;
+Brevo shows it once. It is a password: it goes in Vercel and nowhere else, never in the
+repository.
+
+## 3. Put it in Vercel
+
+**Project → Settings → Environment Variables.** Add these for **Production** and
+**Preview**:
+
+| name | required | value |
 |---|---|---|
-| `MAILERLITE_API_KEY` | yes | An API token from MailerLite → Integrations → API. |
-| `MAILERLITE_GROUP_ID` | no | The numeric id of the group new subscribers join. Omit and they land ungrouped. |
+| `BREVO_API_KEY` | yes | the key from step 2 |
+| `BREVO_LIST_ID` | yes | the list id from step 1 (a number) |
+| `BREVO_DOI_TEMPLATE_ID` | no | see step 4 |
+| `BREVO_DOI_REDIRECT` | no | where a confirmed reader lands. Default `https://wiserwalk.com/?sub=confirmed` |
 
-With no key set, `/api/subscribe` uses a console provider that logs and **does not subscribe
-anyone**. In production that path returns `503` and the form says sign-up is not switched on,
-rather than accepting an address and dropping it.
+Then **redeploy** (Deployments → the latest one → Redeploy). Environment variables are
+read when the function starts, so nothing changes until a deploy happens.
 
-## 2. Custom fields in MailerLite
+## 4. Optional: ask people to confirm first (double opt-in)
 
-Create these three fields (Subscribers → Fields), type *text*, with exactly these names.
-MailerLite silently ignores fields it does not recognise, so a typo here means the follow-up
-series has nothing to personalise with and nobody finds out.
+Without this, an address is added the moment someone types it and no email is sent. With
+it, Brevo emails them a link and the address only joins the list when they click it. It
+costs you a few sign-ups and buys you a list that nobody can fill with other people's
+addresses, and inbox providers treat it better.
 
-| field | example | why the series needs it |
-|---|---|---|
-| `quiz` | `theology-compass` | Which series to send. |
-| `result_code` | `01VJSE` | Rebuilds the reader's result link: `wiserwalk.com/r/{quiz}/{result_code}/` |
-| `result_headline` | `Monergist-leaning, sacramental-leaning` | The plain-language result, so a template need not decode anything. |
+To switch it on: **Campaigns → Templates → New template**, build a short "confirm your
+address" email containing Brevo's `{{ doubleoptin }}` confirmation link, save and
+**activate** it, note its **id**, and set `BREVO_DOI_TEMPLATE_ID` to that id in Vercel.
+Redeploy.
 
-## 3. Double opt-in must be ON
+The site's copy works either way: it says the first email *may* ask you to confirm, and
+never promises a confirmation mail that might not be sent.
 
-Enable it under MailerLite → Settings → Subscribe settings. The form on the result page tells
-the reader to expect a confirmation email. If double opt-in is off, that sentence is false and
-must be changed before deploying — see `site/src/components/EmailCapture.astro`.
+## 5. Check it worked
 
-## 4. Check API access is available on your plan
-
-MailerLite has gated API access by plan and by account approval in the past. Send one test
-request after setting the key:
+Use a real address you can open, and a `+` tag so it is easy to delete afterwards:
 
 ```bash
-curl -s -o /dev/null -w "%{http_code}\n" -X POST https://connect.mailerlite.com/api/subscribers -H "authorization: Bearer $MAILERLITE_API_KEY" -H "content-type: application/json" -d '{"email":"you+test@example.com"}'
+curl -s -o /dev/null -w "%{http_code}\n" -X POST https://wiserwalk.com/api/subscribe \
+  -H "content-type: application/json" \
+  -d '{"email":"you+test@example.com"}'
 ```
 
-`201` is a new subscriber, `200` an existing one. `401`/`403` means the token or the plan is
-the problem, not the code.
+`200` means it went through; the contact appears under Contacts within a few seconds (or
+the confirmation email arrives, with double opt-in on). `503` means the key is not set on
+that environment, or the deploy has not happened yet. `400` means the address itself was
+refused. Delete the test contact afterwards.
 
 ## What is actually sent
 
-Only the address the reader typed, plus the quiz slug, the result code and the headline —
-and only when they submit the form. The code is validated by decoding it through the engine
-before it is forwarded, so an edited URL cannot write arbitrary text into a subscriber field.
-Quiz answers themselves are never sent anywhere by anything.
+Only the address the reader typed, plus the quiz slug, the result code and the headline,
+and only when they submit a form. The code is decoded through the engine before it is
+forwarded, so an edited URL cannot write arbitrary text onto a contact. Quiz answers
+themselves are never sent anywhere.
 
-`/about` and `/method` describe this to the reader. If the offer changes, change those too —
-they used to promise there was no email list, and quietly contradicting published copy is the
-one thing this site cannot afford.
+`/about` and `/method` describe this to the reader. If the offer changes, change those
+too: quietly contradicting published copy is the one thing this site cannot afford.
+
+## If you ever go back to MailerLite
+
+The MailerLite provider is still in `provider.ts` and still works. Remove `BREVO_API_KEY`
+from Vercel and set `MAILERLITE_API_KEY` (and optionally `MAILERLITE_GROUP_ID`) instead,
+then redeploy. Its custom fields are lowercase (`quiz`, `result_code`, `result_headline`)
+and have to exist in that account. Brevo wins whenever both keys are set.
+
+`EMAIL_PREVIEW=1` in a local `.env` runs a console provider that subscribes nobody, for
+working on the forms.

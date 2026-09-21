@@ -82,6 +82,45 @@ body {
   .site-head nav a { padding: .5rem .4rem; white-space: nowrap; }
 }
 @media (min-width: 30rem) { .site-head nav { gap: .25rem; } }
+/*
+ * 480px to 544px: the nav is one row beside the brand and the bulb again, and the six items
+ * only just fit in it. Measured rather than guessed — at 480px the roomier padding pushed the
+ * row to 521px and the page scrolled sideways, which it did by a few pixels even before "My
+ * results" was added. So the phone's tighter padding holds a little longer.
+ */
+@media (min-width: 30rem) and (max-width: 33.99rem) {
+  .site-head nav { gap: 0; }
+  .site-head nav a, .navmenu > summary { padding: .5rem .3rem; }
+}
+
+/* ------------------------------------------------------------- my results
+ *
+ * The last nav item, and the only one carrying a mark.
+ *
+ * THE WORD IS THE PROBLEM. Below 30rem the nav is a horizontal scroller already holding
+ * four items and two carets; between 30rem and 46rem it is a plain row beside the brand and
+ * the bulb, and "My results" is two words more than that row can hold — at 480px it ran off
+ * the edge and at 560px it wrapped to two lines and shoved the bulb out. So the mark stands
+ * alone until there is genuinely room for the word, and the link carries an aria-label at
+ * every width: its name never depends on how wide the screen happens to be.
+ *
+ * The dot is added by the inline script in Base.astro when the shelf has something on it.
+ * It says so without a number, and without the script it is not there at all.
+ */
+.site-head nav a.nav-me { position: relative; gap: .4rem; padding: .5rem .45rem; white-space: nowrap; }
+.site-head nav a.nav-me .icon { flex: none; }
+.nav-me-word { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); }
+.nav-me-dot { display: none; }
+.nav-me.has-saved .nav-me-dot {
+  display: block; position: absolute; top: .3rem; right: .1rem;
+  width: 7px; height: 7px; border-radius: 50%; background-image: var(--grad-r);
+  box-shadow: 0 0 0 2px var(--panel);
+}
+@media (min-width: 46rem) {
+  .site-head nav a.nav-me { padding: .42rem .7rem; }
+  .nav-me-word { position: static; width: auto; height: auto; margin: 0; clip-path: none; }
+  .nav-me.has-saved .nav-me-dot { top: .42rem; right: .3rem; }
+}
 
 /* --------------------------------------------------------- the nav menus
  *
@@ -396,8 +435,9 @@ body {
 .mock-card i:nth-child(2) { width: 88%; } .mock-card i:nth-child(3) { width: 94%; } .mock-card i:nth-child(4) { width: 52%; }
 .mock-q { font-family: var(--display); font-style: italic; font-size: 2.2rem; line-height: .6; color: var(--orange-soft); height: 1rem; }
 .mock-btns { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+/* a grid cell, so a one-line label is centred beside a two-line one instead of hanging from the top */
 .mock-btns span {
-  border-radius: 12px; padding: .7rem .4rem; text-align: center; color: var(--on-grad);
+  display: grid; place-items: center; border-radius: 12px; padding: .7rem .4rem; text-align: center; color: var(--on-grad);
   font-family: var(--ui); font-size: .54rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; line-height: 1.3;
 }
 .mock-btns span:first-child { background: var(--orange); } .mock-btns span:last-child { background: var(--blue); }
@@ -502,6 +542,20 @@ body {
 .foot-line { margin: 0; max-width: 22rem; font-size: .92rem; line-height: 1.55; color: var(--on-dark-soft); }
 .site-foot a { color: var(--on-dark); }
 
+/* the one pill down here: outlined, quiet, and it warms rather than shouts on a hover */
+.site-foot a.foot-support {
+  display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; margin: 1rem 0 0;
+  padding: .55rem 1.05rem; border-radius: var(--r-pill); text-decoration: none;
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .28);
+  font-family: var(--ui); font-size: .66rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase;
+  color: var(--on-dark); transition: box-shadow .18s ease, background .18s ease, color .18s ease;
+}
+.site-foot a.foot-support .icon { color: var(--orange-soft); }
+.site-foot a.foot-support:hover {
+  color: #fff; background: rgba(255, 255, 255, .07); box-shadow: inset 0 0 0 1.5px var(--orange-soft);
+}
+@media (prefers-reduced-motion: reduce) { .site-foot a.foot-support { transition: none; } }
+
 .foot-cols { display: grid; grid-template-columns: 1fr; gap: 1.7rem; }
 .foot-col { --col-ink: var(--blue-soft); }
 .foot-col--orange { --col-ink: var(--orange-soft); }
@@ -554,6 +608,14 @@ body {
 
 /* THE RESULT PAGE takes the band and the section-head voice, instruments untouched. */
 .result-band { margin-bottom: 1.6rem; }
+/* One line, and only for the reader who just finished: this result is on their shelf now. */
+.saved-note {
+  display: flex; align-items: center; gap: .45rem; margin: -.6rem 0 1.4rem;
+  font-family: var(--ui); font-size: .64rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--ink-mute);
+}
+.saved-note .icon { color: var(--accent); flex: none; }
+.saved-note a { color: var(--accent); }
 .result-band .verdict { max-width: 22ch; }
 .outcomes > h2, .depth-section > h2, .share-block > h2, .capture > h2 {
   font-style: italic; font-size: clamp(1.8rem, 7.6vw, 2.6rem); line-height: 1; letter-spacing: -.02em;

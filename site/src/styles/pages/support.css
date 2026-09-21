@@ -1,0 +1,221 @@
+/* =====================================================================================
+ * /support/ (2026-09-20).
+ *
+ * Built in the home page's language: a photographic band with white display type, rounded
+ * rooms under it, a mark on every box, and one button. Tokens come from site.css and
+ * kit.css; the only literals here are the inks of the photograph's own overlay, which is
+ * how home.css handles its bands too.
+ *
+ * Phone first. Every block starts at 390px and widens.
+ * ===================================================================================== */
+
+/* ---------------------------------------------------------------- the band ---- */
+/*
+ * The walker at first light: the same picture the footer opens on, because this page is
+ * that footer's sentence said at length. The photograph is bright at the top, so white
+ * type cannot simply be laid over it. Instead the picture is drawn taller than the band
+ * and hung above it, which puts the figure and the skyline clear ABOVE the words, and the
+ * dark of the hills under them.
+ */
+.sp-band {
+  position: relative; isolation: isolate; overflow: hidden;
+  margin: calc(-1 * var(--top)) calc(-1 * var(--gut)) 0;
+  padding: 11.5rem var(--gut) 5.8rem;
+  border-radius: 0 0 30px 30px;
+  color: #fff;
+  background: #3A2A1C;
+}
+/* the X keeps the figure clear of the chip and the headline below him */
+.sp-band-img {
+  position: absolute; left: 0; top: -22%; z-index: -2;
+  width: 100%; height: 122%; object-fit: cover; object-position: 22% 50%;
+}
+.sp-band::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    linear-gradient(180deg, rgba(38, 24, 12, 0) 30%, rgba(30, 20, 12, .72) 62%, rgba(24, 16, 10, .93)),
+    linear-gradient(90deg, rgba(34, 20, 8, .3), rgba(34, 20, 8, 0) 60%);
+}
+.sp-band-in { max-width: 38rem; }
+
+.sp-chip {
+  display: inline-flex; align-items: center; gap: .45rem; margin: 0 0 1.1rem;
+  padding: .42rem .85rem; border-radius: var(--r-pill);
+  font-family: var(--ui); font-size: .62rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: #fff;
+  background: rgba(255, 255, 255, .16);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .34);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+.sp-band h1 {
+  margin: 0; max-width: 13ch;
+  font-family: var(--display); font-weight: 400; color: #fff;
+  font-size: clamp(2.45rem, 11vw, 4.3rem); line-height: 1.02; letter-spacing: -.02em;
+  text-shadow: 0 2px 22px rgba(22, 14, 6, .45);
+}
+.sp-band h1 em { font-style: italic; color: #FFD2B0; }
+.sp-lede {
+  margin: 1.05rem 0 0; max-width: 31rem; font-size: 1.04rem; line-height: 1.55;
+  color: rgba(255, 255, 255, .94); text-shadow: 0 1px 12px rgba(22, 14, 6, .5);
+}
+/*
+ * From the tablet up the words move OUT of the picture instead of sitting on it. The
+ * photograph is landscape and the figure stands about a third of the way across it, so at
+ * this shape he cannot be moved out from under a headline — no crop can put him past the
+ * middle. The footer solved the same picture the same way: he keeps the left, the words
+ * take the right, and the wash runs across rather than down.
+ */
+@media (min-width: 46rem) {
+  .sp-band { padding: 7.5rem var(--gut) 7rem; border-radius: 0 0 38px 38px; }
+  .sp-band-img { top: 0; height: 100%; object-position: 28% 56%; }
+  .sp-band::after {
+    background:
+      linear-gradient(90deg, rgba(34, 20, 8, 0) 24%, rgba(30, 18, 10, .74) 58%, rgba(24, 16, 10, .9)),
+      linear-gradient(180deg, rgba(40, 26, 14, .26), rgba(22, 15, 9, .5));
+  }
+  .sp-band-in { margin-left: 45%; max-width: 31rem; }
+  .sp-band h1 { font-size: clamp(2.5rem, 5.6vw, 4rem); max-width: 12ch; }
+  .sp-lede { font-size: 1.1rem; }
+}
+@media (min-width: 68rem) {
+  .sp-band { padding-left: 3rem; padding-right: 3rem; }
+}
+
+/* ------------------------------------------------------------ three reasons ---- */
+/* They rise out of the band's lower edge, the way the quizzes rise out of the sky on the
+   home page, so the ask and the reasons read as one movement rather than two sections. */
+.sp-reasons {
+  position: relative; z-index: 1; margin-top: -3.4rem;
+  display: grid; grid-template-columns: 1fr; gap: .9rem;
+}
+.sp-room {
+  position: relative; isolation: isolate; overflow: hidden;
+  border-radius: 24px; background: var(--panel); box-shadow: var(--lift);
+  padding: 1.3rem 1.25rem 1.4rem;
+}
+/* a soft light of the room's own ink in the corner: colour, without a second photograph.
+   A radial, not a disc — a hard circle edge inside a card reads as a mistake. */
+.sp-room::before {
+  content: ""; position: absolute; z-index: -1; right: -4rem; top: -4.5rem;
+  width: 13rem; height: 13rem; pointer-events: none;
+  background: radial-gradient(closest-side, var(--room-ink), transparent 78%);
+  opacity: .42;
+}
+/* the same light reads stronger against a dark panel than a pale one */
+:root[data-theme="dark"] .sp-room::before { opacity: .3; }
+.sp-room:nth-child(1) { --room-ink: var(--blue); }
+.sp-room:nth-child(2) { --room-ink: var(--orange); }
+/*
+ * The third carries both inks, but only where both ENDS of the gradient can be seen.
+ *
+ * It used to pour the gradient through a soft round hole. The mask keeps the middle of the
+ * blue-to-orange ramp and throws both ends away, and the middle of that ramp is grey: the
+ * card came out with a neutral smudge in the corner beside a blue one and an orange one,
+ * which reads as colour that failed to load rather than as the brand's own move. So the
+ * glow is one ink, and the mark — a small square where the whole ramp is on show, corner
+ * to corner — is where the two meet.
+ */
+.sp-room:nth-child(3) { --room-ink: var(--blue); }
+.sp-room:nth-child(3) .sp-mark { background-image: var(--grad); }
+
+.sp-mark {
+  display: grid; place-items: center; width: 2.6rem; height: 2.6rem;
+  border-radius: 14px; color: #1C1C23; background: var(--room-ink, var(--blue));
+}
+.sp-room h2 {
+  margin: .9rem 0 0; font-family: var(--display); font-weight: 400; color: var(--ink);
+  font-size: 1.42rem; line-height: 1.1; letter-spacing: -.012em;
+}
+.sp-room p { margin: .5rem 0 0; font-size: .95rem; line-height: 1.55; color: var(--ink-soft); }
+
+@media (min-width: 46rem) {
+  .sp-reasons { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin-top: -4.6rem; }
+  .sp-room { padding: 1.5rem 1.4rem 1.6rem; }
+}
+
+/* -------------------------------------------------------------- who it is ---- */
+/* The quiet one. No photograph, no glow: one hairline of the brand's two colours, and a
+   paragraph set a size larger than the rooms above it, because it is the personal part. */
+.sp-who {
+  position: relative; overflow: hidden; margin: 1.6rem 0 0;
+  border-radius: 24px; background: var(--panel); box-shadow: var(--lift);
+  padding: 1.35rem 1.25rem 1.5rem 1.55rem;
+}
+.sp-who::before {
+  content: ""; position: absolute; inset: 0 auto 0 0; width: 6px;
+  background-image: linear-gradient(180deg, var(--blue), var(--orange));
+}
+.sp-mark--quiet {
+  width: 2.4rem; height: 2.4rem; border-radius: 12px;
+  color: var(--accent); background: var(--accent-soft);
+}
+.sp-who h2 {
+  margin: .85rem 0 0; font-family: var(--display); font-style: italic; font-weight: 400;
+  font-size: clamp(1.65rem, 6.6vw, 2.15rem); line-height: 1.05; letter-spacing: -.02em;
+  color: var(--ink);
+}
+.sp-who p {
+  margin: .65rem 0 0; max-width: 36rem; font-size: 1rem; line-height: 1.6; color: var(--ink-soft);
+}
+@media (min-width: 46rem) { .sp-who { padding: 2rem 2.2rem 2.1rem 2.5rem; } }
+/* wide, the panel would be a heading with a hole beside it: the title takes a column of
+   its own and the paragraph stands next to it */
+@media (min-width: 52rem) {
+  .sp-who {
+    display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+    column-gap: 2.6rem; align-items: start;
+  }
+  .sp-who .sp-mark--quiet { grid-column: 1; grid-row: 1; }
+  .sp-who h2 { grid-column: 1; grid-row: 2; margin-top: .8rem; }
+  .sp-who p { grid-column: 2; grid-row: 1 / span 2; margin-top: .15rem; font-size: 1.04rem; }
+}
+
+/* --------------------------------------------------------------- the one ask ---- */
+/*
+ * The dark panel, so the one button on the page is the brightest thing on it. The page
+ * runs light from the rooms down, and this is the only place it turns; the footer below
+ * opens on a photograph, so the two dark surfaces never run together.
+ */
+.sp-give {
+  margin: 1.5rem 0 0; border-radius: 24px;
+  padding: 2rem 1.3rem 2.1rem; text-align: center;
+}
+.sp-give .dark-ghost {
+  right: -.04em; bottom: -.22em;
+  font-size: clamp(5.5rem, 26vw, 9.5rem);
+}
+.sp-btn {
+  display: inline-flex; align-items: center; gap: .55rem;
+  padding: .95rem 1.9rem; min-height: 52px; font-size: .86rem;
+  box-shadow: 0 8px 24px rgba(10, 10, 16, .38);
+}
+/* Not a faded version of the live button: a control that is plainly not ready yet, and
+   legible while it says so. */
+.sp-btn:disabled {
+  opacity: 1; background-image: none; background-color: rgba(255, 255, 255, .1);
+  color: var(--on-dark-soft); box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .2);
+}
+.sp-small { margin: .95rem 0 0; font-size: .82rem; }
+.sp-give .sp-small { color: var(--on-dark-mute); }
+.sp-alt { margin: 1.15rem 0 0; font-size: .95rem; }
+.sp-alt a { font-weight: 600; text-decoration: none; text-wrap: balance; }
+.sp-alt a:hover { text-decoration: underline; }
+/* Narrower than everything above it, on purpose. Full width, one small pill in the middle
+   of a dark slab reads as an empty panel; held in, it reads as the point of the page. */
+@media (min-width: 46rem) {
+  .sp-give { max-width: 44rem; margin-left: auto; margin-right: auto; padding: 2.8rem 2.2rem 2.9rem; }
+  .sp-btn { padding: 1.05rem 2.3rem; min-height: 56px; font-size: .9rem; }
+}
+
+/* ------------------------------------------------------------------ the fine ---- */
+.sp-fine {
+  margin: 1.5rem 0 .5rem; max-width: 42em;
+  font-size: .78rem; line-height: 1.6; color: var(--ink-mute);
+}
+/* held to the same column as the panel above it, so the page does not end on two
+   different left edges */
+@media (min-width: 46rem) {
+  .sp-fine { max-width: 44rem; margin-left: auto; margin-right: auto; text-align: center; }
+}
+
+@media (prefers-reduced-motion: reduce) { .sp-alt .icon { transition: none; } }

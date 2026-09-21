@@ -1,0 +1,37 @@
+/* =====================================================================================
+ * The read card: an article shown as a painting first and words second. Shared by the home
+ * page, the articles index and the foot of an article.
+ *
+ * The quizzes wear Dore's engravings; the articles wear paintings, in colour. Cousins, not
+ * twins: one hand-made, old-world family of pictures across the site without one style being
+ * worn out. The paintings are printed as they are (no wash, no softening): the painters did
+ * the colour work already.
+ * ===================================================================================== */
+.hm-reads { display: grid; grid-template-columns: 1fr; gap: 1.8rem; }
+.read { display: block; text-decoration: none; color: var(--ink); }
+.read-pic { position: relative; display: block; overflow: hidden; border-radius: 20px; aspect-ratio: 3 / 2; box-shadow: var(--lift); background: var(--shell); }
+.read-pic img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+.read:hover .read-pic img { transform: scale(1.04); }
+.read-time {
+  position: absolute; left: .7rem; bottom: .7rem; z-index: 1; display: inline-flex; align-items: center; gap: .35rem;
+  padding: .34rem .62rem; border-radius: 999px; color: #fff; background: rgba(18, 20, 28, .62);
+  font-family: var(--ui); font-size: .6rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.read h3 { margin: .95rem 0 0; font-family: var(--display); font-weight: 400; font-size: 1.45rem; line-height: 1.12; color: var(--ink); text-wrap: balance; }
+.read p { margin: .45rem 0 0; font-size: .95rem; line-height: 1.55; color: var(--ink-soft);
+  display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.read .read-go {
+  display: inline-flex; align-items: center; gap: .45rem; margin: .7rem 0 0; color: var(--accent);
+  font-family: var(--ui); font-size: .7rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase;
+}
+.read .read-go .icon { transition: transform .18s ease; }
+.read:hover .read-go .icon { transform: translateX(3px); }
+@media (min-width: 40rem) { .hm-reads { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 1.4rem; } }
+@media (min-width: 60rem) { .hm-reads { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+/* the painting at the head of an article, with its credit */
+.doc-art { margin: 0 0 1.6rem; }
+.doc-art img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 20px; box-shadow: var(--lift); }
+.doc-art figcaption { margin: .55rem .2rem 0; font-size: .78rem; color: var(--ink-mute); font-style: italic; }
+@media (prefers-reduced-motion: reduce) { .read-pic img, .read .read-go .icon { transition: none; } .read:hover .read-pic img { transform: none; } }

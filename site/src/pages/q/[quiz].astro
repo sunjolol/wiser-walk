@@ -315,6 +315,9 @@ const breadcrumbs = isDraft
     // variation in it belongs beside the field that switches it on, and the runner is the
     // only place that can act on it, because a result page is rendered from the code alone.
     import { centresUniformSheets, isUniformSheet } from '../../lib/engine/types';
+    // A finished result is kept on this device, so it can be found again on /me/. It never
+    // leaves the browser, and a blocked or full storage is a no-op rather than an error.
+    import { addResult } from '../../lib/shelf';
 
     const root = document.getElementById('runner');
     const quiz = getQuiz(root?.dataset.quiz);
@@ -390,6 +393,11 @@ const breadcrumbs = isDraft
         // A note for the result page, which is served identically to the person who just
         // took the quiz and to anyone they send the link to. Tab-scoped, never sent.
         try { sessionStorage.setItem('ww:took:' + quiz.slug, code); } catch (e) {}
+
+        // The shelf, so this result can be found again long after the tab is closed. Saved
+        // before either branch below: a reader who finishes into a comparison has still
+        // finished, and their own result belongs to them either way.
+        addResult(quiz.slug, code);
 
         // An invitation sends you to the two-person page instead, with the inviter first.
         // Cleared on the way out so a second run of the quiz in the same tab is just a

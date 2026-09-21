@@ -74,11 +74,18 @@ const offer =
       inside it would be hidden along with the thing it is reporting on. */}
   <p class="capture-status" id="capture-status" role="status" aria-live="polite"></p>
 
+  {/*
+    The line about confirming used to promise a confirmation email outright. That is only
+    true when the provider's double opt-in is switched on, and whether it is lives in an
+    account setting rather than in this repository. The wording below is true either way,
+    and stays true if the provider changes again.
+  */}
   <p class="capture-small">
     Your answers stay in your browser, as always. Subscribing sends two things and nothing
     else: the address you type, and the code from this page's link, so the emails can be
-    about your result rather than a generic one. One email to confirm first, and every one
-    after it has an unsubscribe link. <a href="/method/#your-answers">The full detail</a>.
+    about your result rather than a generic one. The first email may ask you to confirm the
+    address, and every email has an unsubscribe link.
+    <a href="/method/#your-answers">The full detail</a>.
   </p>
 </section>
 
@@ -113,7 +120,7 @@ const offer =
           say(
             body.already
               ? 'You are already on the list — nothing has changed.'
-              : 'Check your inbox for a confirmation email. It has to be clicked before anything else is sent.',
+              : 'Thank you. Look out for an email from us; the first one may ask you to confirm.',
             'ok'
           );
         } else {
@@ -129,7 +136,7 @@ const offer =
     // The no-JS path redirects back here with the outcome in the query string.
     const params = new URLSearchParams(location.search);
     const sub = params.get('sub');
-    if (sub === 'ok') say('Check your inbox for a confirmation email.', 'ok');
+    if (sub === 'ok') say('Thank you. Look out for an email from us; the first one may ask you to confirm.', 'ok');
     else if (sub === 'already') say('You are already on the list — nothing has changed.', 'ok');
     else if (sub === 'error') say(params.get('why') || 'That did not go through.', 'bad');
     if (sub) history.replaceState(null, '', location.pathname);

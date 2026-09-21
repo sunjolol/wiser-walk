@@ -11,17 +11,19 @@
  *              looks like the next: the compass is an instrument on a night ground, the
  *              figures, the gifts and the seven are three Doré engravings in one ink, so the
  *              art is one family and the subjects are not
- *   night      the games sit on a dark band with an hourglass and an old book: a clock and a text
- *   morning    the articles are photographs first and words second
+ *   night      the games sit on a dark band over a chess board and its clock: a game, against time
+ *   morning    the articles are paintings first and words second: colour, where the quizzes are ink
  *   the walk   the footer opens on the walker at dawn, and asks for an address there
  *
  * Every number is computed from the registry. Every picture is free to use (Unsplash) or in
  * the public domain (Doré 1866); the credits are in public/img/CREDITS.md.
  */
 import '../styles/pages/home.css';
+import '../styles/pages/reads.css';
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import CompassWheel from '../components/CompassWheel.astro';
+import ReadCard from '../components/ReadCard.astro';
 import { QUIZZES, getQuiz, scoreQuiz, resultFor, outcomeHref, quizHref } from '../lib/engine/registry';
 import { groupNounPlural } from '../lib/engine/types';
 import type { BipolarView } from '../lib/engine/types';
@@ -48,14 +50,9 @@ const exampleView = sheet ? (resultFor(compass, scoreQuiz(compass, sheet.answers
 
 const articles = (await getCollection('articles'))
   .filter(a => !a.data.draft)
-  .sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf())
-  .slice(0, 3);
-/* Until articles carry their own picture in front matter, the page pairs them by subject. */
-const articleArt = (id: string) =>
-  id.includes('grateful') ? { src: '/img/art-gratitude.jpg', alt: 'Two open hands held out together, palms up' }
-  : id.includes('joy') ? { src: '/img/art-joy.jpg', alt: 'A woman dancing in a field with the sun low behind her' }
-  : { src: '/img/art-walk.jpg', alt: 'A line of footprints along a beach at sunrise' };
-
+  .sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf() || a.data.title.localeCompare(b.data.title));
+const articleCount = articles.length;
+const shownArticles = articles.slice(0, 3);
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
@@ -72,7 +69,7 @@ const jsonLd = {
   <section class="hm-hero">
     <img class="hm-hero-img" src="/img/sky-rays.jpg" alt="" width="1800" height="1200" fetchpriority="high" decoding="async" />
     <div class="hm-hero-in">
-      <p class="hm-chip"><Icon name="path" size={14} /> {QUIZZES.length} quizzes · {games.length} games · {articles.length} articles</p>
+      <p class="hm-chip"><Icon name="path" size={14} /> {QUIZZES.length} quizzes · {games.length} games · {articleCount} articles</p>
       <h1>Know yourself<br />a little <em>better.</em></h1>
       <p class="hm-lede">
         Quizzes and Bible games for Christians who would rather see themselves clearly than
@@ -121,7 +118,7 @@ const jsonLd = {
       <div class="hm-rail-track" data-rail-track tabindex="0" role="group" aria-label="More quizzes">
         {figures && (
           <a class="room room--figures" href={quizHref(figures)}>
-            <img src="/img/dore-moses.jpg" alt="Gustave Doré’s engraving of Moses breaking the tablets of the law" loading="lazy" decoding="async" width="1000" height="1255" />
+            <img src="/img/dore-moses.jpg" alt="Gustave Doré’s engraving of Moses breaking the tablets of the law" loading="lazy" decoding="async" width="820" height="1029" />
             <div class="room-body">
               <span class="room-mark"><Icon name="users" size={20} /></span>
               <h3>{figures.title}</h3>
@@ -153,7 +150,7 @@ const jsonLd = {
 
         {sins && (
           <a class="room room--sins" href={quizHref(sins)}>
-            <img src="/img/dore-eden.jpg" alt="Gustave Doré’s engraving of Adam and Eve driven out of Eden" loading="lazy" decoding="async" width="1000" height="1256" />
+            <img src="/img/dore-eden.jpg" alt="Gustave Doré’s engraving of Adam and Eve driven out of Eden" loading="lazy" decoding="async" width="820" height="1029" />
             {sins.status === 'draft' && <span class="room-tab">Draft</span>}
             <div class="room-body">
               <span class="room-mark"><Icon name="apple" size={20} /></span>
@@ -175,7 +172,7 @@ const jsonLd = {
   {/* ------------------------------------------------------------------------ night */}
   {(sls || wsi) && (
     <section class="hm-night" aria-labelledby="hm-games">
-      <img class="hm-night-img" src="/img/game-hourglass.jpg" alt="" loading="lazy" decoding="async" width="1600" height="1067" />
+      <img class="hm-night-img" src="/img/game-chess.jpg" alt="" loading="lazy" decoding="async" width="1600" height="1066" />
       <header class="hm-head hm-head--dark">
         <p class="hm-kicker">Against the clock</p>
         <h2 id="hm-games">games</h2>
@@ -230,23 +227,13 @@ const jsonLd = {
       <header class="hm-head">
         <p class="hm-kicker">The slow work of formation</p>
         <h2 id="hm-articles">articles</h2>
-        <a class="hm-more" href="/articles/">All articles <Icon name="arrow" size={13} /></a>
+        <a class="hm-more" href="/articles/">All {articleCount} articles <Icon name="arrow" size={13} /></a>
       </header>
       <div class="hm-reads">
-        {articles.map(a => {
-          const art = articleArt(a.id);
-          return (
-            <a class="read" href={`/articles/${a.id}/`}>
-              <span class="read-pic">
-                <img src={art.src} alt={art.alt} loading="lazy" decoding="async" width="1100" height="733" />
-                <span class="read-time"><Icon name="clock" size={12} /> {a.data.minutes} min</span>
-              </span>
-              <h3>{a.data.title}</h3>
-              <p>{a.data.description}</p>
-              <span class="room-go">Read <Icon name="arrow" size={14} /></span>
-            </a>
-          );
-        })}
+        {shownArticles.map(a => (
+          <ReadCard id={a.id} title={a.data.title} description={a.data.description} minutes={a.data.minutes}
+                    image={a.data.image} imageAlt={a.data.imageAlt} imagePosition={a.data.imagePosition} />
+        ))}
       </div>
     </section>
   )}

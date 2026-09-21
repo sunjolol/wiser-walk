@@ -1431,6 +1431,154 @@ console.log('16. a unipolar tie names every category inside the margin');
   else ok('the view names 2, 3, 4, 0 and 1 rows to match its own headline');
 }
 
+// ------------------------------------------ 17. the shelf: results kept on the device
+console.log('17. the shelf keeps, dedupes, caps and refuses junk');
+{
+  /*
+   * Bundled on its own, the way the contracts are: /me/ and the quiz runner both import it
+   * as a module, and its whole point is that it can be exercised without a browser. The
+   * fake store below is the only storage it ever sees here.
+   */
+  const OUT_SHELF = resolve(ROOT, 'node_modules/.engine-test-shelf.mjs');
+  await build({
+    entryPoints: [resolve(ROOT, 'src/lib/shelf.ts')],
+    outfile: OUT_SHELF,
+    bundle: true,
+    format: 'esm',
+    platform: 'node',
+    target: 'node18',
+    logLevel: 'silent'
+  });
+  const shelf = await import(pathToFileURL(OUT_SHELF).href);
+  const {
+    SHELF_KEY, SHELF_CAP, addResult, listResults, latestPerQuiz, historyFor,
+    removeResult, clearShelf, readableResults, parseShelf
+  } = shelf;
+
+  /** Storage, faked: three methods and a way to look at what was written. */
+  const fake = (initial = null) => {
+    let data = initial;
+    return {
+      getItem: k => (k === SHELF_KEY ? data : null),
+      setItem: (k, v) => { if (k === SHELF_KEY) data = v; },
+      removeItem: k => { if (k === SHELF_KEY) data = null; },
+      raw: () => data
+    };
+  };
+  const at = (iso) => new Date(iso);
+
+  // add, list, latest, history --------------------------------------------------------
+  {
+    const store = fake();
+    addResult('theology-compass', 'AAA', at('2026-09-18T10:00:00Z'), store);
+    addResult('bible-figure', 'BBB', at('2026-09-19T10:00:00Z'), store);
+    addResult('theology-compass', 'CCC', at('2026-09-20T10:00:00Z'), store);
+
+    const all = listResults(store);
+    if (all.length !== 3) fail('three saves gave ' + all.length + ' entries');
+    else if (all.map(e => e.code).join(',') !== 'CCC,BBB,AAA') fail('not newest first: ' + all.map(e => e.code).join(','));
+    else ok('three results list newest first');
+
+    const latest = latestPerQuiz(store);
+    if (latest.get('theology-compass')?.code !== 'CCC') fail('latest compass: ' + latest.get('theology-compass')?.code);
+    else if (latest.get('bible-figure')?.code !== 'BBB') fail('latest figure: ' + latest.get('bible-figure')?.code);
+    else if (latest.size !== 2) fail('latest per quiz returned ' + latest.size + ' quizzes');
+    else ok('the latest result for each quiz is the newest one');
+
+    const history = historyFor('theology-compass', store);
+    if (history.map(e => e.code).join(',') !== 'CCC,AAA') fail('compass history: ' + history.map(e => e.code).join(','));
+    else ok('one quiz\'s history is its own runs, newest first');
+  }
+
+  // the same finish twice ---------------------------------------------------------------
+  {
+    const store = fake();
+    addResult('theology-compass', 'AAA', at('2026-09-20T10:00:00Z'), store);
+    addResult('theology-compass', 'AAA', at('2026-09-20T10:00:20Z'), store);
+    if (listResults(store).length !== 1) fail('the same result twice inside a minute kept ' + listResults(store).length);
+    else ok('the same result saved twice inside a minute is one entry');
+
+    addResult('theology-compass', 'AAA', at('2026-09-20T11:30:00Z'), store);
+    if (listResults(store).length !== 2) fail('the same result an hour later kept ' + listResults(store).length);
+    else ok('the same result an hour later is a second finish');
+  }
+
+  // the cap -----------------------------------------------------------------------------
+  {
+    const store = fake();
+    for (let i = 0; i < SHELF_CAP + 25; i++) {
+      addResult('theology-compass', 'C' + i, new Date(Date.UTC(2026, 0, 1) + i * 3600000), store);
+    }
+    const all = listResults(store);
+    if (all.length !== SHELF_CAP) fail(`the cap held ${all.length}, not ${SHELF_CAP}`);
+    else if (all[0].code !== 'C' + (SHELF_CAP + 24)) fail('the cap dropped the newest, not the oldest: ' + all[0].code);
+    else ok(`the shelf caps at ${SHELF_CAP} and drops the oldest`);
+  }
+
+  // remove and clear --------------------------------------------------------------------
+  {
+    const store = fake();
+    addResult('theology-compass', 'AAA', at('2026-09-18T10:00:00Z'), store);
+    addResult('bible-figure', 'BBB', at('2026-09-19T10:00:00Z'), store);
+    removeResult('theology-compass', 'AAA', null, store);
+    const left = listResults(store);
+    if (left.length !== 1 || left[0].code !== 'BBB') fail('remove left ' + left.map(e => e.code).join(','));
+    else ok('one result comes off the shelf and the others stay');
+
+    clearShelf(store);
+    if (listResults(store).length) fail('clear left ' + listResults(store).length + ' entries');
+    else if (store.raw() !== null) fail('clear left the key behind');
+    else ok('clear takes the lot');
+  }
+
+  // nothing throws ----------------------------------------------------------------------
+  {
+    if (parseShelf('{not json').length) fail('malformed JSON did not start empty');
+    else if (parseShelf('{"quiz":"x"}').length) fail('an object that is not a list did not start empty');
+    else if (parseShelf('[1,2,3]').length) fail('a list of numbers did not start empty');
+    else if (parseShelf('[{"quiz":"a","code":"B","at":"not a date"}]').length) fail('an unparseable date was kept');
+    else ok('malformed storage starts empty rather than throwing');
+
+    const broken = {
+      getItem() { throw new Error('blocked'); },
+      setItem() { throw new Error('blocked'); },
+      removeItem() { throw new Error('blocked'); }
+    };
+    try {
+      listResults(broken);
+      addResult('theology-compass', 'AAA', at('2026-09-20T10:00:00Z'), broken);
+      clearShelf(broken);
+      ok('blocked storage is a no-op, never an error');
+    } catch (e) {
+      fail('blocked storage threw: ' + e.message);
+    }
+  }
+
+  // junk cannot render a result ---------------------------------------------------------
+  {
+    const compass = getQuiz('theology-compass');
+    const real = encodeFor(compass, compass.groups.map((_, i) => (i % 2 ? 67 : 33)));
+    const store = fake();
+    addResult('theology-compass', real, at('2026-09-20T10:00:00Z'), store);
+    addResult('theology-compass', 'ZZZZZZZZ', at('2026-09-19T10:00:00Z'), store);
+    addResult('not-a-quiz', real, at('2026-09-18T10:00:00Z'), store);
+
+    if (listResults(store).length !== 3) fail('the shelf did not keep what it was given');
+    const shown = readableResults(store);
+    if (shown.length !== 1) fail('readable results returned ' + shown.length + ': ' + shown.map(e => e.code).join(','));
+    else if (shown[0].code !== real) fail('the readable result is not the real one: ' + shown[0].code);
+    else ok('a junk code and an unknown quiz are dropped before anything is drawn');
+
+    // and the one that survived still decodes to the scores it was saved with
+    const back = decodeFor(compass, shown[0].code);
+    if (!back || back.join(',') !== compass.groups.map((_, i) => (i % 2 ? 67 : 33)).join(',')) {
+      fail('the kept code does not decode back: ' + shown[0].code);
+    } else ok('the kept code decodes back to the result it was saved from');
+  }
+
+  rmSync(OUT_SHELF, { force: true });
+}
+
 rmSync(OUT, { force: true });
 rmSync(OUT_TYPES, { force: true });
 

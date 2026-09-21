@@ -52,6 +52,8 @@ const breadcrumbs = [
   { name: 'Home', url: '/' },
   { name: 'Articles', url: '/articles/' }
 ];
+import '../../styles/pages/reads.css';
+import ReadCard from '../../components/ReadCard.astro';
 ---
 <Base
   title="Articles"
@@ -87,17 +89,10 @@ const breadcrumbs = [
     </div>
   )}
 
-  <div class="scards">
+  <div class="hm-reads">
     {articles.map(a => (
-      <Card
-        href={`/articles/${a.id}/`}
-        icon="book"
-        title={a.data.title}
-        text={a.data.description}
-        meta={`${a.data.minutes} min read`}
-        tab="Article"
-        go="Read"
-      />
+      <ReadCard id={a.id} title={a.data.title} description={a.data.description} minutes={a.data.minutes}
+                image={a.data.image} imageAlt={a.data.imageAlt} imagePosition={a.data.imagePosition} />
     ))}
   </div>
 

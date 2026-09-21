@@ -73,6 +73,8 @@ const year = new Date().getFullYear();
 const NAV: Array<{
   href: string;
   label: string;
+  /** A mark instead of the word, where the row is too tight for both. See "My results". */
+  icon?: 'users';
   items?: Array<{ href: string; label: string; tag?: string }>;
 }> = [
   {
@@ -80,7 +82,9 @@ const NAV: Array<{
     label: 'Quizzes',
     items: [
       { href: '/quizzes/', label: 'All quizzes' },
-      ...QUIZZES.map(q => ({
+      // Finished quizzes before drafts, as on the home page, /quizzes/, /me/ and the footer.
+      // The menu was the one place a draft sat in the middle of the live ones.
+      ...footQuizzes.map(q => ({
         href: quizHref(q),
         label: q.title,
         tag: q.status === 'draft' ? 'Draft' : undefined
@@ -98,7 +102,14 @@ const NAV: Array<{
   { href: '/articles/', label: 'Articles' },
   // No Method. It is a page about how the work was done, and the nav is for the things a
   // reader came for; /about/ links to it in one sentence, so it stays reachable and crawlable.
-  { href: '/about/', label: 'About' }
+  { href: '/about/', label: 'About' },
+  /*
+   * Last, and the only item with a mark: the row already holds four items and two carets,
+   * and until 46rem "My results" is two words more than it can take. Below that the mark
+   * stands alone — the link keeps an aria-label at every width, so its name never depends
+   * on what is currently on screen. The widths are measured in kit.css, under "my results".
+   */
+  { href: '/me/', label: 'My results', icon: 'users' }
 ];
 ---
 <!doctype html>
@@ -203,6 +214,13 @@ const NAV: Array<{
                 </ul>
               </div>
             </details>
+          ) : n.icon ? (
+            <a class="nav-me" href={n.href} aria-label={n.label}
+               aria-current={isCurrent(n.href) ? 'page' : undefined}>
+              <Icon name={n.icon} size={16} />
+              <span class="nav-me-word">{n.label}</span>
+              <span class="nav-me-dot" aria-hidden="true"></span>
+            </a>
           ) : (
             <a href={n.href} aria-current={isCurrent(n.href) ? 'page' : undefined}>{n.label}</a>
           ))}
@@ -272,6 +290,12 @@ const NAV: Array<{
             Quizzes, games and articles for understanding yourself, and your walk with God,
             a little better.
           </p>
+          {/*
+            One quiet pill, not a second call to action: the sign-up above it is the footer's
+            loud thing, and two gradients in one footer would leave a reader choosing between
+            them instead of reading either.
+          */}
+          <a class="foot-support" href="/support/"><Icon name="sparkle" size={14} /> Support Wiser Walk</a>
         </div>
 
         <nav class="foot-cols" aria-label="Site">
@@ -370,10 +394,13 @@ const NAV: Array<{
             .then(function (r) {
               if (r.ok && r.body.ok) {
                 form.hidden = true;
+                // True whether or not the provider's double opt-in is switched on: that
+                // lives in an account setting, not in this repository, so the line may not
+                // promise a confirmation email outright.
                 say(
                   r.body.already
                     ? 'You are already on the list.'
-                    : 'Check your inbox for a confirmation email.',
+                    : 'Thank you. Look out for an email from us; the first one may ask you to confirm.',
                   'ok'
                 );
               } else {
@@ -391,10 +418,27 @@ const NAV: Array<{
         // reads the same parameter, so leave it to that one where both are on the page.
         if (document.getElementById('capture-form')) return;
         var sub = new URLSearchParams(location.search).get('sub');
-        if (sub === 'ok') say('Check your inbox for a confirmation email.', 'ok');
+        if (sub === 'ok') say('Thank you. Look out for an email from us; the first one may ask you to confirm.', 'ok');
         else if (sub === 'already') say('You are already on the list.', 'ok');
         else if (sub === 'error') say('That did not go through. Try again in a moment.', 'bad');
         if (sub) history.replaceState(null, '', location.pathname);
+      })();
+
+      /*
+       * A dot on "My results" when there is something behind it.
+       *
+       * The key is read raw rather than through lib/shelf, because this runs inline on every
+       * page and importing the engine to count a list would be a module for a dot. It reads
+       * and never writes; with this script blocked the item is a plain link, which is what it
+       * already is.
+       */
+      (function () {
+        var item = document.querySelector('.site-head .nav-me');
+        if (!item) return;
+        try {
+          var saved = JSON.parse(localStorage.getItem('ww.shelf.v1'));
+          if (Array.isArray(saved) && saved.length) item.classList.add('has-saved');
+        } catch (e) {}
       })();
 
       (function () {

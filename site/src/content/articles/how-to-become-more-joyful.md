@@ -5,6 +5,10 @@ published: 2026-09-01
 minutes: 6
 tags: [formation, joy]
 quizzes: []
+image: /img/articles/how-to-become-more-joyful.jpg
+imageAlt: "A father crouches with open arms as a small child takes first steps towards him"
+imageCredit: "Vincent van Gogh, First Steps (after Millet), 1890"
+imagePosition: "50% 60%"
 ---
 
 If you have ever been told to be more joyful while you were miserable, you already know the

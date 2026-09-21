@@ -76,6 +76,7 @@ const breadcrumbs = [
   { name: 'Articles', url: '/articles/' },
   { name: article.data.title, url: `/articles/${article.id}/` }
 ];
+import '../../styles/pages/reads.css';
 ---
 <Base
   title={article.data.title}
@@ -124,6 +125,13 @@ const breadcrumbs = [
 
     <div class="pnl">
       <article class="doc doc--lead">
+        {article.data.image && (
+          <figure class="doc-art">
+            <img src={article.data.image} alt={article.data.imageAlt ?? ''} decoding="async"
+                 style={article.data.imagePosition ? `object-position:${article.data.imagePosition}` : undefined} />
+            {article.data.imageCredit && <figcaption>{article.data.imageCredit}</figcaption>}
+          </figure>
+        )}
         <Content />
       </article>
     </div>

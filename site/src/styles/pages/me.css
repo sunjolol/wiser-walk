@@ -1,0 +1,249 @@
+/* =====================================================================================
+ * My results (2026-09-20).
+ *
+ * The same language as the home page, written again rather than borrowed: home.css belongs
+ * to the home page and is loaded only there. A sky band with white display type, rooms with
+ * a 24px radius and a picture each, a mark on anything that would otherwise have to be read
+ * to be understood.
+ *
+ * Phone first; every block starts at 360px and widens after. Tokens only.
+ * ===================================================================================== */
+
+/* -------------------------------------------------------------------- the sky ---- */
+.me-band {
+  position: relative; isolation: isolate; overflow: hidden;
+  margin: calc(-1 * var(--top)) calc(-1 * var(--gut)) 1.9rem;
+  padding: 2.6rem var(--gut) 2.8rem;
+  border-radius: 0 0 30px 30px;
+  color: #fff; background: #6f9fc9;
+}
+.me-band-img {
+  position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%;
+  object-fit: cover; object-position: 42% 62%;
+}
+.me-band::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(90% 70% at 30% 40%, rgba(18, 32, 58, .48), transparent 74%),
+    linear-gradient(180deg, rgba(18, 30, 56, .34), rgba(18, 30, 56, .06) 55%, rgba(30, 20, 14, .22));
+}
+.me-chip {
+  display: inline-flex; align-items: center; gap: .45rem; margin: 0 0 1rem;
+  padding: .42rem .85rem; border-radius: var(--r-pill);
+  font-family: var(--ui); font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: #fff; background: rgba(255, 255, 255, .16);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .34);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+.me-band h1 {
+  margin: 0; font-family: var(--display); font-weight: 400; color: #fff;
+  font-size: clamp(2.6rem, 12vw, 4.4rem); line-height: 1.02; letter-spacing: -.02em;
+  text-shadow: 0 2px 22px rgba(12, 22, 44, .38);
+}
+.me-band h1 em { font-style: italic; color: #FFD2B0; }
+.me-count {
+  margin: .9rem 0 0; max-width: 28rem; font-size: 1rem; line-height: 1.5;
+  color: rgba(255, 255, 255, .94); text-shadow: 0 1px 12px rgba(12, 22, 44, .45);
+}
+@media (min-width: 46rem) {
+  .me-band { padding: 3.6rem var(--gut) 3.8rem; margin-bottom: 2.4rem; }
+}
+
+/* ------------------------------------------------------------------- the rooms ---- */
+/* A flex column, so a room the reader has finished can be lifted to the front with `order`
+   without a single node moving in the document. */
+.me-rooms { display: flex; flex-direction: column; gap: .9rem; }
+
+.mroom {
+  --room-ink: var(--blue-soft);
+  position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column;
+  min-height: 16rem; border-radius: 24px; color: #fff;
+  background: #2a2622; box-shadow: 0 10px 30px rgba(20, 24, 40, .16);
+}
+.mroom > img {
+  position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover;
+  filter: sepia(.34) contrast(.9) brightness(1.02);
+}
+.mroom::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, rgba(38, 33, 28, .1) 22%, rgba(38, 33, 28, .78) 58%, rgba(34, 30, 26, .96));
+}
+/* A finished room carries four more lines than an empty one, so its words start further up
+   the plate — and a Doré sky is white. The scrim rises to meet them. */
+.mroom.is-taken::after {
+  background: linear-gradient(180deg, rgba(38, 33, 28, .2) 6%, rgba(38, 33, 28, .84) 36%, rgba(34, 30, 26, .96) 68%);
+}
+/* the Compass has no engraving: it is an instrument, on the night ground it is always drawn on */
+.mroom--plain {
+  background-color: #141a27;
+  background-image: radial-gradient(120% 90% at 85% 8%, rgba(126, 186, 238, .22), transparent 60%), var(--dark-fill-img);
+  background-size: auto, 520px;
+  min-height: 0;
+}
+.mroom--plain::after { display: none; }
+.mroom--bible-figure { --room-ink: #EADFCB; }
+.mroom--spiritual-gifts { --room-ink: #FFC98F; }
+.mroom--seven-deadly-sins { --room-ink: #F2A596; }
+/* the Thessalonica plate is the palest of the three; printed darker it joins the other two */
+.mroom--spiritual-gifts > img { filter: sepia(.34) contrast(.9) brightness(.88); }
+
+.mroom-body { position: relative; margin-top: auto; padding: 1.3rem 1.25rem 1.35rem; }
+.mroom-mark {
+  display: grid; place-items: center; width: 2.6rem; height: 2.6rem; margin: 0 0 .8rem;
+  border-radius: 14px; color: #17181d; background: var(--room-ink);
+}
+.mroom-mark--blue { background: var(--blue); }
+.mroom-mark--orange { background: var(--orange); }
+.mroom h2 {
+  margin: 0; font-family: var(--display); font-weight: 400; color: #fff;
+  font-size: clamp(1.45rem, 5.8vw, 1.85rem); line-height: 1.08; letter-spacing: -.012em; text-wrap: balance;
+}
+.mroom-say {
+  margin: .5rem 0 0; max-width: 30rem; font-size: .94rem; line-height: 1.5; color: rgba(255, 255, 255, .82);
+  display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+.mroom-facts {
+  display: flex; flex-wrap: wrap; gap: .4rem; margin: .9rem 0 0; padding: 0; list-style: none;
+  font-family: var(--ui); font-size: .62rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+}
+.mroom-facts li {
+  display: inline-flex; align-items: center; gap: .35rem; padding: .36rem .62rem; border-radius: var(--r-pill);
+  color: rgba(255, 255, 255, .92); background: rgba(255, 255, 255, .12);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16);
+}
+.mroom-go {
+  display: inline-flex; align-items: center; gap: .45rem; min-height: 44px; text-decoration: none;
+  font-family: var(--ui); font-size: .7rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase;
+  color: var(--room-ink);
+}
+.mroom-go .icon { transition: transform .18s ease; }
+.mroom-go:hover .icon { transform: translateX(3px); }
+
+/* A finished room has TWO things that want to be the headline — the quiz's name and the
+   reader's own verdict. The verdict wins: the quiz's name steps down to a kicker, which is
+   also how the result page itself prints it, in the chip above the verdict. */
+.mroom.is-taken h2 {
+  font-family: var(--ui); font-size: .62rem; font-weight: 700; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--room-ink); margin-bottom: .1rem;
+  /* A close, dense shadow as well as the soft one: the kicker is the smallest type on the
+     card and it can land on the white of a Doré sky, where a diffuse glow alone loses it. */
+  text-shadow: 0 1px 2px rgba(18, 14, 10, .92), 0 2px 14px rgba(18, 14, 10, .7);
+}
+
+/* what a finished quiz says: the verdict first, in the face the result page gives it */
+.mroom-verdict {
+  margin: .55rem 0 0; font-family: var(--display); font-weight: 400; color: #fff;
+  font-size: clamp(1.5rem, 6.4vw, 2rem); line-height: 1.06; letter-spacing: -.015em; text-wrap: balance;
+  display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+.mroom-has .mroom-say { -webkit-line-clamp: 2; line-clamp: 2; margin-top: .45rem; }
+.mroom-when {
+  margin: .75rem 0 0; font-family: var(--ui); font-size: .6rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase; color: rgba(255, 255, 255, .62);
+}
+.mroom-acts { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem 1.2rem; margin-top: .3rem; }
+.mroom-again {
+  display: inline-flex; align-items: center; min-height: 44px; text-decoration: none;
+  font-family: var(--ui); font-size: .68rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+  color: rgba(255, 255, 255, .72);
+}
+.mroom-again:hover { color: #fff; }
+
+/* earlier runs: shut, quiet, and never in the way of the latest one */
+.mroom-past { margin: .55rem 0 0; }
+.mroom-past > summary {
+  display: inline-flex; align-items: center; gap: .4rem; min-height: 40px; cursor: pointer;
+  font-family: var(--ui); font-size: .64rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+  color: rgba(255, 255, 255, .62); list-style: none;
+}
+.mroom-past > summary::-webkit-details-marker { display: none; }
+.mroom-past > summary::marker { content: ""; }
+.mroom-past > summary::after {
+  content: ""; width: 7px; height: 7px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
+  transform: translateY(-2px) rotate(45deg); transition: transform .18s ease;
+}
+.mroom-past[open] > summary::after { transform: translateY(1px) rotate(-135deg); }
+.mroom-past > summary:hover { color: #fff; }
+.mroom-past ul { margin: .2rem 0 0; padding: 0; list-style: none; }
+.mroom-past li a {
+  display: inline-flex; align-items: center; min-height: 40px; text-decoration: none;
+  font-size: .88rem; color: rgba(255, 255, 255, .8); border-bottom: 1px solid transparent;
+}
+.mroom-past li a:hover { color: #fff; border-bottom-color: currentColor; }
+/* Not a link, because there is nothing behind it: the count the list could not hold. */
+.mroom-past li.mroom-past-rest {
+  padding: .5rem 0 .1rem; font-family: var(--ui); font-size: .62rem; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase; color: rgba(255, 255, 255, .5);
+}
+
+@media (min-width: 46rem) {
+  .me-rooms { gap: 1rem; }
+  .mroom { min-height: 18rem; }
+  .mroom--plain { min-height: 0; }
+  .mroom-body { padding: 1.6rem 1.6rem 1.7rem; }
+}
+/* Two across, rather than four letterboxes with a verdict in the left third of each. A grid
+   row stretches its cells to the same height, so a room with a history stays level with the
+   one beside it, and `order` still lifts the finished ones to the front. */
+@media (min-width: 58rem) {
+  .me-rooms { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+  .mroom, .mroom--plain { min-height: 21rem; }
+  .mroom-verdict { font-size: 1.85rem; }
+}
+
+/* ---------------------------------------------------------------------- games ---- */
+.me-head {
+  margin: 2.6rem 0 1rem; font-family: var(--display); font-style: italic; font-weight: 400;
+  font-size: clamp(2rem, 8vw, 2.7rem); line-height: 1; letter-spacing: -.02em;
+  color: var(--ink); text-transform: lowercase;
+}
+.me-games-row { display: grid; grid-template-columns: 1fr; gap: .9rem; }
+.mgame {
+  --room-ink: var(--orange-soft);
+  position: relative; overflow: hidden; padding: 1.25rem 1.2rem 1.3rem; border-radius: 22px;
+  color: #fff; background-color: var(--dark-fill); background-image: var(--dark-fill-img); background-size: 520px;
+  box-shadow: var(--lift);
+}
+:root[data-theme="dark"] .mgame { background-color: #2C2C38; }
+.mgame h3 {
+  margin: 0; font-family: var(--display); font-weight: 400; color: #fff;
+  font-size: 1.4rem; line-height: 1.1; letter-spacing: -.012em;
+}
+.mgame-best {
+  margin: .55rem 0 0; font-family: var(--display); font-size: 1.15rem; line-height: 1.2;
+  color: var(--orange-soft); font-variant-numeric: tabular-nums;
+}
+.mgame .mroom-facts { margin-top: .6rem; }
+.mgame .mroom-go { margin-top: .3rem; }
+@media (min-width: 40rem) { .me-games-row { grid-template-columns: 1fr 1fr; gap: 1rem; } }
+
+/* ------------------------------------------------------------- what is coming ---- */
+.me-keep { margin: 2.6rem 0 0; padding: 1.5rem 1.35rem 1.6rem; }
+.me-keep h2 {
+  margin: 0; font-family: var(--display); font-style: italic; font-weight: 400;
+  font-size: clamp(1.7rem, 7vw, 2.2rem); line-height: 1.05; letter-spacing: -.02em;
+}
+.me-keep p { margin: .6rem 0 0; max-width: 34rem; }
+.me-keep-go {
+  display: inline-flex; align-items: center; gap: .45rem; min-height: 44px; margin-top: .5rem;
+  text-decoration: none; font-family: var(--ui); font-size: .7rem; font-weight: 700;
+  letter-spacing: .13em; text-transform: uppercase;
+}
+.me-keep-go .icon { transition: transform .18s ease; }
+.me-keep-go:hover .icon { transform: translateX(3px); }
+@media (min-width: 46rem) { .me-keep { padding: 2rem 2rem 2.1rem; } }
+
+/* --------------------------------------------------------------------- clearing ---- */
+.me-clear { margin: 1.6rem 0 .5rem; text-align: center; }
+.me-clear-btn {
+  min-height: 44px; padding: .55rem 1.1rem; border: 0; border-radius: var(--r-pill); cursor: pointer;
+  background: none; box-shadow: inset 0 0 0 1.5px var(--rule);
+  font-family: var(--ui); font-size: .64rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--ink-mute); transition: color .18s ease, box-shadow .18s ease;
+}
+.me-clear-btn:hover { color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--rule-strong); }
+
+@media (prefers-reduced-motion: reduce) {
+  .mroom-go .icon, .me-keep-go .icon, .mroom-past > summary::after { transition: none; }
+  .mroom-go:hover .icon, .me-keep-go:hover .icon { transform: none; }
+}

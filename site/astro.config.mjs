@@ -35,9 +35,11 @@ export default defineConfig({
       //
       // The prefixes are derived from the registry rather than typed here, so a quiz that
       // goes live, or a new draft, needs no edit in this file.
+      // /me/ is the same contradiction in a different shape: it is one reader's own shelf,
+      // it carries noindex, and there is nothing on it for anybody else to find.
       filter: page => {
         const path = new URL(page).pathname;
-        if (path.startsWith('/r/') || path.startsWith('/c/')) return false;
+        if (path.startsWith('/r/') || path.startsWith('/c/') || path === '/me/') return false;
         return !draftPrefixes.some(prefix => path.startsWith(prefix));
       }
     })

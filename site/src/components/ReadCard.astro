@@ -1,0 +1,29 @@
+---
+/**
+ * An article as a painting first and words second. The picture, its alt text and the crop
+ * come from the article's own front matter; an article with no picture yet falls back to the
+ * walker at dawn rather than to an empty box.
+ */
+import Icon from './Icon.astro';
+
+interface Props {
+  id: string;
+  title: string;
+  description: string;
+  minutes: number;
+  image?: string;
+  imageAlt?: string;
+  imagePosition?: string;
+}
+const { id, title, description, minutes, image, imageAlt, imagePosition } = Astro.props;
+---
+<a class="read" href={`/articles/${id}/`}>
+  <span class="read-pic">
+    <img src={image ?? '/img/hero-dawn.jpg'} alt={imageAlt ?? ''} loading="lazy" decoding="async"
+         style={imagePosition ? `object-position:${imagePosition}` : undefined} />
+    <span class="read-time"><Icon name="clock" size={12} /> {minutes} min</span>
+  </span>
+  <h3>{title}</h3>
+  <p>{description}</p>
+  <span class="read-go">Read <Icon name="arrow" size={14} /></span>
+</a>

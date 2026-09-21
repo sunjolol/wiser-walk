@@ -5,6 +5,10 @@ published: 2026-09-02
 minutes: 7
 tags: [formation, discipleship]
 quizzes: [theology-compass]
+image: /img/articles/what-does-it-mean-to-be-christlike.jpg
+imageAlt: "Jesus kneels to wash Peter’s feet while the other disciples look on"
+imageCredit: "Ford Madox Brown, Jesus Washing Peter’s Feet, 1852–56"
+imagePosition: "40% 45%"
 ---
 
 "Christ-like" is one of those words that gets used so often it stops meaning anything in

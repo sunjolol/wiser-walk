@@ -1,0 +1,129 @@
+---
+/**
+ * /support/ — the page that asks.
+ *
+ * Short on purpose. A band, three reasons, who is behind it, one button. No process talk,
+ * no counters, no invented numbers, no urgency: the reader either found something here
+ * worth keeping or did not, and the honest version of this page trusts that.
+ *
+ * The giving link does not exist yet. It comes from PUBLIC_SUPPORT_URL through
+ * lib/support.ts, and with nothing set the button renders disabled and says so, which is
+ * why this page can be reviewed today.
+ *
+ * Words are the editor's, verbatim. Layout, marks and the picture are this file's.
+ */
+import '../styles/pages/support.css';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { SUPPORT_URL, SUPPORT_READY } from '../lib/support';
+
+/* A mark each, because three grey boxes in a column have to be read to be told apart. */
+const REASONS = [
+  {
+    mark: 'users',
+    title: 'Keeps it free.',
+    body: 'Hosting, tools and the hours. Support is what lets this stay free to use.'
+  },
+  {
+    mark: 'pencil',
+    title: 'Pays for the next one.',
+    body:
+      'A quiz takes weeks of reading, writing and checking before it goes up. A game is ' +
+      'built from thousands of real lines, every one checked against its source.'
+  },
+  {
+    mark: 'quote',
+    title: 'Keeps it careful.',
+    body:
+      'Every belief here is described the way the people who hold it would describe it. ' +
+      'That kind of care is slow, and it is the point.'
+  }
+] as const;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Support Wiser Walk',
+  url: new URL('/support/', Astro.site).href,
+  description: 'Why Wiser Walk asks for support, and what a gift pays for.'
+};
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Support', url: '/support/' }
+];
+---
+<Base
+  title="Support"
+  description="Every quiz, game and article on Wiser Walk is free. Here is what support pays for, who is behind it, and how to give once or monthly."
+  jsonLd={jsonLd}
+  breadcrumbs={breadcrumbs}
+>
+  {/* ------------------------------------------------------------------- the band */}
+  <section class="sp-band">
+    <img
+      class="sp-band-img"
+      src="/img/hero-dawn.jpg"
+      alt=""
+      width="2000"
+      height="1335"
+      fetchpriority="high"
+      decoding="async"
+    />
+    <div class="sp-band-in">
+      <p class="sp-chip"><Icon name="path" size={14} /> Support</p>
+      <h1>Keep Wiser Walk <em>free.</em></h1>
+      <p class="sp-lede">
+        Every quiz, game and article here is free. If one of them has been worth something
+        to you, you can help keep it that way.
+      </p>
+    </div>
+  </section>
+
+  {/* --------------------------------------------------------------- three reasons */}
+  <section class="sp-reasons" aria-label="What support pays for">
+    {REASONS.map(r => (
+      <article class="sp-room">
+        <span class="sp-mark"><Icon name={r.mark} size={20} /></span>
+        <h2>{r.title}</h2>
+        <p>{r.body}</p>
+      </article>
+    ))}
+  </section>
+
+  {/* ------------------------------------------------------------------- who it is */}
+  <section class="sp-who" aria-labelledby="sp-who-h">
+    <span class="sp-mark sp-mark--quiet"><Icon name="path" size={18} /></span>
+    <h2 id="sp-who-h">Who you are supporting</h2>
+    <p>
+      Wiser Walk is made by one person, not a company. There is no team and no investor
+      behind it. There is someone who thinks Christians deserve honest tools for knowing
+      themselves, and who would like to keep making them.
+    </p>
+  </section>
+
+  {/* ---------------------------------------------------------------- the one ask */}
+  <section class="sp-give dark" aria-label="Give">
+    <span class="dark-ghost" aria-hidden="true">give</span>
+    {SUPPORT_READY ? (
+      <a class="btn sp-btn" href={SUPPORT_URL}>Give once or monthly <Icon name="arrow" size={16} /></a>
+    ) : (
+      <button class="btn sp-btn" type="button" disabled>Giving opens soon</button>
+    )}
+    {/* "It takes about a minute" is true of a giving page that exists. Until one does, the
+        line under the button says what is actually the case. */}
+    <p class="sp-small">
+      {SUPPORT_READY
+        ? 'Any amount helps. It takes about a minute.'
+        : 'The giving page is still being set up.'}
+    </p>
+    <p class="sp-alt">
+      <a href="/quizzes/">Not the moment? Sending a quiz to a friend helps too.</a>
+    </p>
+  </section>
+
+  <p class="sp-fine">
+    Wiser Walk is not a registered charity, so gifts are not tax-deductible. Payments are
+    taken by our payment provider; your card details never reach this site.
+  </p>
+</Base>

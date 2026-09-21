@@ -16,6 +16,11 @@ export const SEO: Record<string, { title: string; description: string }> = {
     description:
       'Find where your beliefs sit among 18 Christian traditions, test whether a line is really in the Bible, and read on gratitude and joy. Every claim cited.'
   },
+  '/support/': {
+    title: 'Support Wiser Walk',
+    description:
+      'Every quiz, game and article on Wiser Walk is free. If one has been worth something to you, you can help keep it that way, once or monthly.'
+  },
   '/q/theology-compass/': {
     title: 'Theology Compass: which Christian denomination are your beliefs closest to?',
     description:

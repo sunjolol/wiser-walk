@@ -5,6 +5,10 @@ published: 2026-09-03
 minutes: 6
 tags: [formation, gratitude]
 quizzes: []
+image: /img/articles/how-to-become-more-grateful.jpg
+imageAlt: "Two field workers stand with heads bowed in prayer at dusk"
+imageCredit: "Jean-François Millet, The Angelus, 1857–59"
+imagePosition: "50% 40%"
 ---
 
 Most of us treat gratitude as a mood. It arrives when things go well and leaves when they
