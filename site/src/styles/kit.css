@@ -278,9 +278,12 @@ body {
   color: #fff; background: #1a1a20;
   padding-top: 2.4rem; padding-bottom: 2.5rem;
 }
+/* The picture overscans the band by two pixels each side (the band clips it). Set exactly to the
+   band's edge, a band whose width lands on half a pixel let its own dark ground show through the
+   last column as a hairline down the right-hand side, which the owner spotted on every article. */
 .band--pic > .band-img {
-  position: absolute; inset: 0; z-index: -2;
-  width: 100%; height: 100%; object-fit: cover;
+  position: absolute; inset: 0 -2px; z-index: -2;
+  width: calc(100% + 4px); max-width: none; height: 100%; object-fit: cover;
 }
 .band--pic::after { content: ""; position: absolute; inset: 0; z-index: -1; }
 @media (min-width: 40rem) { .band--pic { padding-top: 3.6rem; padding-bottom: 3.6rem; } }
@@ -373,10 +376,23 @@ body {
  * the band and the words take the other. On a phone there is only one side: the picture
  * goes above, masked into the dark ground, and the words sit under it. /support/ does this.
  */
-.band--painting { background: #24201b; padding: 0 0 2.6rem; }
+/* The words' side is the site's own starry ground, not a flat brown: warmed a little so it meets
+   an oil painting rather than fighting it, with the two brand inks glowing faintly from its
+   corners the way the night band's do. The owner, 2026-09-21: keep the painting whole on the
+   right, but the left must not be "just a boring dark brown background". The texture is named
+   directly because the dark theme's token drops it, and this band wants the stars in both. */
+.band--painting {
+  padding: 0 0 2.6rem; background-color: #1e1b1d;
+  background-image:
+    radial-gradient(85% 120% at 0% 0%, rgba(126, 186, 238, .2), transparent 58%),
+    radial-gradient(62% 90% at 30% 108%, rgba(240, 160, 111, .2), transparent 60%),
+    linear-gradient(rgba(38, 30, 24, .14), rgba(38, 30, 24, .14)),
+    url("/tex/starry.png");
+  background-size: auto, auto, auto, 520px;
+}
 .band--painting > .band-img {
   position: relative; inset: auto; z-index: 0; display: block;
-  width: 100%; height: 12.5rem; object-fit: cover;
+  width: calc(100% + 4px); margin-left: -2px; height: 12.5rem; object-fit: cover;
   -webkit-mask-image: linear-gradient(180deg, #000 66%, transparent);
   mask-image: linear-gradient(180deg, #000 66%, transparent);
 }
@@ -388,7 +404,7 @@ body {
     align-items: center; padding: 0; min-height: 23rem;
   }
   .band--painting > .band-img {
-    order: 2; height: 100%; min-height: 23rem;
+    order: 2; width: calc(100% + 2px); margin-left: 0; height: 100%; min-height: 23rem;
     -webkit-mask-image: linear-gradient(90deg, transparent, #000 36%);
     mask-image: linear-gradient(90deg, transparent, #000 36%);
   }
