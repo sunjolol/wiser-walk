@@ -13,7 +13,10 @@
  * PUBLIC_ prefix because /support/ is a static page: the value is inlined at build time,
  * which is the only way a page with no server behind it can carry one.
  */
-const raw = (import.meta.env.PUBLIC_SUPPORT_URL as string | undefined) ?? '';
+/** The owner's Ko-fi page, enabled for donations on 2026-09-21. Ko-fi takes no platform cut on gifts. */
+const DEFAULT_URL = 'https://ko-fi.com/sunjolol';
+
+const raw = (import.meta.env.PUBLIC_SUPPORT_URL as string | undefined) ?? DEFAULT_URL;
 
 export const SUPPORT_URL = raw.trim();
 

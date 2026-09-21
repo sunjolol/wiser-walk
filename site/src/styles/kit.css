@@ -625,3 +625,6 @@ body {
   content: ""; display: block; width: 58px; height: 7px; margin-top: .65rem;
   border-radius: var(--r-pill); background-image: var(--grad-r);
 }
+
+/* short copy is balanced, so it never ends on one stranded word */
+.foot-line, .foot-dawn-say p { text-wrap: balance; }

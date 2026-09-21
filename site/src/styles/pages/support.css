@@ -219,3 +219,20 @@
 }
 
 @media (prefers-reduced-motion: reduce) { .sp-alt .icon { transition: none; } }
+
+/* ---- 2026-09-21, the owner's notes ---------------------------------------------------
+ * The way to give is in the band, so nobody scrolls to find it; the ask sits above the "who"
+ * panel; that panel has no mark, and its heading and its words are centred against each
+ * other; and no line on this page may end on one stranded word.
+ */
+.sp-band-cta { margin: 1.4rem 0 0; }
+.sp-band-cta .btn { display: inline-flex; align-items: center; gap: .5rem; box-shadow: 0 6px 22px rgba(30, 14, 4, .35); }
+.sp-lede, .sp-room p, .sp-who p, .sp-small, .sp-alt, .sp-fine { text-wrap: balance; }
+.sp-band h1, .sp-room h2, .sp-who h2 { text-wrap: balance; }
+.sp-give { margin-top: 1.4rem; }
+.sp-who { margin-top: 1.4rem; }
+@media (min-width: 52rem) {
+  .sp-who { align-items: center; }
+  .sp-who h2 { grid-column: 1; grid-row: 1; margin-top: 0; align-self: center; }
+  .sp-who p { grid-column: 2; grid-row: 1; margin-top: 0; align-self: center; }
+}

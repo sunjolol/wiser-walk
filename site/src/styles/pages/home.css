@@ -210,43 +210,33 @@
 /* -------------------------------------------------------------------------- night ---- */
 .hm-night {
   position: relative; isolation: isolate; overflow: hidden;
-  margin: 3.2rem calc(-1 * var(--gut)) 0; padding: 0 var(--gut) 2.4rem;
-  border-radius: 30px; background: #151412; color: #fff;
+  margin: 3.2rem calc(-1 * var(--gut)) 0; padding: 2.6rem var(--gut) 2.4rem;
+  border-radius: 30px; background: #12100e; color: #fff;
 }
-/* A chess board and its clock: a game, against time. The picture has a place of its own at
-   the head of the band, above the cards, and fades into the dark on the two inner sides. It is
-   printed dark and warm, like an old icon, so it belongs to the night band and not to a park. */
+/* An old wooden chess clock, across the whole ground: a game, against time. The owner asked for
+   the first band's manner back (one picture behind everything, dark enough not to pull the
+   eye) after a version that gave the picture a slot of its own and faded it into blank space. */
 .hm-night-img {
-  position: absolute; top: 0; right: 0; z-index: -2; width: 100%; height: 15.5rem;
-  object-fit: cover; object-position: 50% 42%; filter: sepia(.45) saturate(.85) contrast(1.05) brightness(.72);
-  -webkit-mask-image: linear-gradient(180deg, #000 52%, transparent);
-  mask-image: linear-gradient(180deg, #000 52%, transparent);
+  position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 42%; filter: sepia(.25) saturate(.95) brightness(.9);
 }
 .hm-night::after {
-  content: ""; position: absolute; inset: 0 0 auto 0; height: 15.5rem; z-index: -1;
-  background: linear-gradient(90deg, rgba(21, 20, 18, .82), rgba(21, 20, 18, .25) 60%, rgba(21, 20, 18, 0));
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(110% 95% at 50% 45%, rgba(18, 16, 14, .18), rgba(18, 16, 14, .78) 80%),
+    linear-gradient(180deg, rgba(18, 16, 14, .34), rgba(18, 16, 14, .5));
 }
-.hm-night .hm-head { min-height: 12.5rem; align-content: end; padding-top: 2rem; }
-@media (min-width: 46rem) {
-  .hm-night-img {
-    width: 70%; height: 20rem; object-position: 50% 40%;
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 42%), linear-gradient(180deg, #000 58%, transparent);
-    -webkit-mask-composite: source-in;
-    mask-image: linear-gradient(90deg, transparent, #000 42%), linear-gradient(180deg, #000 58%, transparent);
-    mask-composite: intersect;
-  }
-  .hm-night::after { display: none; }
-  .hm-night .hm-head { min-height: 15rem; }
-}
+@media (min-width: 46rem) { .hm-night { padding: 3.2rem var(--gut) 3rem; } }
 .hm-games { display: grid; grid-template-columns: 1fr; gap: .9rem; }
 .game {
   display: grid; grid-template-columns: 1fr; gap: 1.2rem; align-items: start; padding: 1.35rem 1.3rem 1.5rem;
   border-radius: 22px; text-decoration: none; color: #fff;
-  background: rgba(30, 28, 26, .66); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1);
-  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  /* see-through on purpose, and barely blurred: the clock behind is the point of the band */
+  background: rgba(22, 20, 18, .58); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .13);
+  -webkit-backdrop-filter: blur(1.5px); backdrop-filter: blur(1.5px);
   transition: transform .22s ease, background .22s ease;
 }
-.game:hover { transform: translateY(-3px); background: rgba(40, 37, 34, .78); }
+.game:hover { transform: translateY(-3px); background: rgba(30, 27, 24, .7); }
 .game p { margin: .55rem 0 0; font-size: .95rem; line-height: 1.5; color: rgba(255, 255, 255, .82); }
 .game .room-go { color: var(--orange-soft); }
 .game:nth-child(2) .room-go { color: var(--blue-soft); }
@@ -260,7 +250,6 @@
 .mock-names span:nth-child(2) { background: var(--blue); color: #17181d; box-shadow: none; }
 .mock--names .mock-fuse i { width: 38%; }
 @media (min-width: 46rem) {
-  .hm-night { padding-bottom: 3rem; }
   .hm-games { grid-template-columns: 1fr 1fr; gap: 1rem; }
 }
 /* side by side, the words get the wider half and the preview is centred against them, so
@@ -303,3 +292,6 @@
   .room:hover, .game:hover { transform: none; }
   .read:hover .read-pic img { transform: none; }
 }
+
+/* short copy is balanced, so it never ends on one stranded word */
+.hm-lede, .room-say, .game p, .hm-trads-say p, .read p { text-wrap: balance; }

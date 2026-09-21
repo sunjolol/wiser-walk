@@ -40,6 +40,6 @@ more than a century ago. The credit prints under the picture on the article's ow
 |---|---|---|
 | sky-rays.jpg | sun rays through blue and orange cloud (home hero) | photo-1514519273132-6a1abd48302c |
 | hero-dawn.jpg | a lone walker on a hill before layered mountains at first light (footer) | photo-1786897162869-b0ccd067affd |
-| game-chess.jpg | two players at an outdoor chess board with an old analogue chess clock (games band; printed dark and warm in CSS) | photo-1603037833672-35f4d722d5db |
+| game-clock.jpg | an antique wooden chess clock with two dials (games band; printed dark and warm in CSS, the cards over it are see-through) | photo-1764250244454-e063cef0f730 |
 
 All were resized and recompressed for the web (quality 68-80, progressive JPEG).

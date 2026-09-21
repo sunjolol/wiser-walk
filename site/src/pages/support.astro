@@ -77,6 +77,11 @@ const breadcrumbs = [
         Every quiz, game and article here is free. If one of them has been worth something
         to you, you can help keep it that way.
       </p>
+      {SUPPORT_READY && (
+        <p class="sp-band-cta">
+          <a class="btn sp-btn" href={SUPPORT_URL} rel="noopener">Give once or monthly <Icon name="arrow" size={16} /></a>
+        </p>
+      )}
     </div>
   </section>
 
@@ -91,22 +96,11 @@ const breadcrumbs = [
     ))}
   </section>
 
-  {/* ------------------------------------------------------------------- who it is */}
-  <section class="sp-who" aria-labelledby="sp-who-h">
-    <span class="sp-mark sp-mark--quiet"><Icon name="path" size={18} /></span>
-    <h2 id="sp-who-h">Who you are supporting</h2>
-    <p>
-      Wiser Walk is made by one person, not a company. There is no team and no investor
-      behind it. There is someone who thinks Christians deserve honest tools for knowing
-      themselves, and who would like to keep making them.
-    </p>
-  </section>
-
   {/* ---------------------------------------------------------------- the one ask */}
   <section class="sp-give dark" aria-label="Give">
     <span class="dark-ghost" aria-hidden="true">give</span>
     {SUPPORT_READY ? (
-      <a class="btn sp-btn" href={SUPPORT_URL}>Give once or monthly <Icon name="arrow" size={16} /></a>
+      <a class="btn sp-btn" href={SUPPORT_URL} rel="noopener">Give once or monthly <Icon name="arrow" size={16} /></a>
     ) : (
       <button class="btn sp-btn" type="button" disabled>Giving opens soon</button>
     )}
@@ -122,8 +116,18 @@ const breadcrumbs = [
     </p>
   </section>
 
+  {/* ------------------------------------------------------------------- who it is */}
+  <section class="sp-who" aria-labelledby="sp-who-h">
+    <h2 id="sp-who-h">Who you are supporting</h2>
+    <p>
+      Wiser Walk is made by one person, not a company. There is no team and no investor
+      behind it. There is someone who thinks Christians deserve honest tools for knowing
+      themselves, and who would like to keep making them.
+    </p>
+  </section>
+
   <p class="sp-fine">
     Wiser Walk is not a registered charity, so gifts are not tax-deductible. Payments are
-    taken by our payment provider; your card details never reach this site.
+    taken by Ko-fi; your card details never reach this site.
   </p>
 </Base>

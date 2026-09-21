@@ -166,6 +166,12 @@ h1 { font-size: clamp(1.85rem, 7vw, 2.9rem); }
 h2 { font-size: clamp(1.35rem, 4.5vw, 1.75rem); margin-top: 2.5rem; }
 h3 { font-size: 1.15rem; margin-top: 1.75rem; }
 p { margin: 0 0 1rem; }
+/* NO ONE-WORD LAST LINES. The owner: "stop letting lines wrap on a single word, that looks
+   super sloppy". `pretty` asks the browser to avoid a short last line in running text; `balance`
+   evens the lines of anything short (headings, ledes, card text), which removes the orphan in
+   every browser that has it, including the ones that do not know `pretty` yet. */
+p, li, dd, dt, figcaption, blockquote { text-wrap: pretty; }
+h1, h2, h3, h4, .lede, .band p, .feature-body > p, .scard p, .note p { text-wrap: balance; }
 a { color: var(--accent); text-underline-offset: 2px; }
 
 .lede { font-size: 1.05rem; color: var(--ink-soft); text-wrap: pretty; }
