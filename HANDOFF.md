@@ -14,25 +14,47 @@ plan was put to him; **ask what he decided before building any of it.**
 until `MAILERLITE_API_KEY` is set in Vercel (Settings, Environment Variables; Production and Preview),
 and double opt-in must be ON in MailerLite. Steps: `site/src/lib/email/README.md`. Only he can do it.
 
-## 2026-09-21: the whole redesign is LIVE (every merge had the owner's yes)
+## START HERE (written at the end of the 2026-09-21 session)
 
-`main` carries: the photographic home page and footer; the quiz rail with Doré engravings; a painting for
-every article and ELEVEN articles (cards load 560px `-card.jpg` copies); "My results" (`/me/`); `/support/`
-giving to his Ko-fi page, with "Donate" in the header; Brevo sign-up SWITCHED ON (he set the keys; the
-thank-you now stays on screen); and the DAWN PASS: a picture band on every page (`Hero.astro` kinds photo /
-engraving / painting / night), hubs rebuilt as rooms, quiz intros and reference pages re-dressed around
-their instruments, a what-next rail on results, 18 per-figure Doré plates (`site/public/img/figures/`), a
-tally in place of the wheel on sparse figure pages (Jesus, Mary), and a real question on the Who Said It?
-card. Design brief and the owner's complaints in one place: `design/DAWN-PASS-BRIEF.md`. Working captures
-are gitignored (`design/shots/dawn/`, `design/shots/qa/`): never commit hundreds of MB of screenshots.
-His small standing rulings: the home page's example wheel is the Eastern Orthodox sheet; the games band
-uses the manuscript picture with slightly see-through cards; one footer quiz title is cut short BY HAND as a
-stopgap (`FOOT_SHORT` in `Base.astro`) until he renames that quiz; no one-word last lines; the main action
-is never below the fold; no picture that fades into blank space or repeats on one page; no credit lines he
-has to look at on `/support/`.
-**Next, in the order he approved:** the daily game set (he wants the site to feel like "a self-perpetuating
-game": each day's set, a knowledge streak, a shareable grid), then accounts (email first, then set a
-password; Supabase proposed, he must create the project), then the profile. Ask before building accounts.
+**Live on `main` (every merge had the owner's yes):** the whole redesign, site-wide picture bands, 11
+articles with a topic FILTER on `/articles/`, "My results" (`/me/`), `/support/` giving to his Ko-fi with
+"Donate" in the header, Brevo sign-up switched on, 42 social cards (`site/public/og/`, drawn by
+`node design/og/render.mjs site`; home card = his pick "D") and rewritten search titles and descriptions
+(`site/src/lib/seo.ts`), phone touch targets (`site/src/styles/touch.css`), the traditions list moved to
+the foot of the Compass page (`OutcomeIndex.astro`).
+
+**NOT live, waiting for his feedback: THE DAILY SET.** Branch `design/home-dawn` = `main` + ONE commit
+("The daily set..."). Preview: find the newest Preview deployment for that branch through the GitHub
+deployments API (last one: https://wiser-walk-66b56zxs5-sunjo.vercel.app, superseded by the rebase).
+His words: "For the streak indicator, leave that as a preview for now, I have some changes I want to go
+over before pushing that live." **Ask for that feedback first. Do NOT merge the daily set until he says.**
+What it is: first completed run of today's ten is recorded, later runs are practice; days numbered from
+#1 = 2026-09-21 UTC; streak = consecutive days (no guilt copy); `#today` deep link; share text with the
+day number; a Today strip on the home games band, `/games/` and `/me/`. Storage contract `sls.daily` /
+`wsi.daily` documented in `demos/sounds-like-scripture/SPEC.md` and mirrored in `site/src/lib/daily.ts`.
+
+**After that, in his order: accounts.** Email-only sign-up box, the emailed link lands on a set-a-password
+page, then email + password, "forgot password" sends the same kind of link, Google later. Proposed:
+Supabase Auth (free tier) with Brevo SMTP. HE must create the Supabase project and set its keys in Vercel
+(I cannot create accounts or enter keys): give him numbered steps like the Brevo ones. Then the profile
+(cross-quiz page that fills in as people do more; sync `ww.shelf.v1`, `sls.daily`, `wsi.daily`, game bests).
+
+**How to ship a small fix while the design branch holds unreleased work** (done twice this session):
+commit the fix on the design branch, `git worktree add --detach <tmp> origin/main`, cherry-pick it there,
+push `HEAD:main`, remove the worktree, then `git rebase origin/main` on the design branch (git drops the
+duplicate) and `git push --force-with-lease origin HEAD:design/home-dawn`. To stage only your part of a
+file someone else is editing: build the blob from `git show HEAD:<file>` plus your edit and
+`git update-index --cacheinfo`.
+
+**His standing rulings from this session** (also in `design/DAWN-PASS-BRIEF.md`): no one-word last lines;
+main action never below the fold on a phone; no picture that fades into blank space, repeats on one page,
+or needs a credit line on `/support/`; less empty sky above a band's words; buttons, not tiny text links,
+on a phone; chips that look tappable must do something; the home example wheel is the Eastern Orthodox
+sheet; games band = manuscript with slightly see-through cards; `FOOT_SHORT` in `Base.astro` is a
+hand-made stopgap until he renames the sins quiz. Working captures are gitignored; never commit them.
+Small leftovers: "2168 real lines" prints without a thousands separator; a hash change to `#today` on an
+already-open game page does not start the daily; five figures (Deborah, Hannah, Abigail, Rahab, Barnabas)
+have no Doré plate; two weak scans noted in `site/public/img/CREDITS.md`.
 
 ## Done on 2026-09-20 (his six decisions of 2026-09-22 in the older notes, all carried out)
 
