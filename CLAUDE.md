@@ -94,13 +94,14 @@ never pays for ads or has to build a social following.
     and a footer "Support Wiser Walk" button; the giving link is `PUBLIC_SUPPORT_URL` (button disabled
     until set). Recommended to him: Ko-fi (no platform cut; card fees of about 3% exist everywhere;
     Venmo personal accounts are not meant for this). He must open the account and give the link.
-- **Design language, accepted in direction on 2026-09-20 ("definitely the right direction", then
-  "almost there"):** branch `design/home-dawn`, NOT merged. Sky hero; the Compass as a full-width
+- **Design language, accepted and LIVE since 2026-09-21** (merged from `design/home-dawn` with his
+  yes). No one-word last lines anywhere: he called orphans "super sloppy" (`text-wrap` rules in
+  `site.css`). Sky hero; the Compass as a full-width
   room; other quizzes on a scroll rail, each with a Doré engraving printed soft sepia; games on a dark
   band over a chess board and clock; ARTICLES WEAR PUBLIC-DOMAIN PAINTINGS IN COLOUR (front matter
   `image`, `imageAlt`, `imageCredit`, `imagePosition`; he loves the old-art look but does not want
   the engraving style over-used, and wants colour); the footer opens on a walker at dawn with the
-  sign-up. Credits: `site/public/img/CREDITS.md`. Ask before merging to `main`.
+  sign-up. Credits: `site/public/img/CREDITS.md`. Giving goes to his Ko-fi page (`site/src/lib/support.ts`).
 
 **Models: Opus is the default for every agent; in a Workflow an `agent()` with no `model` inherits
 Fable, so set `model: 'opus'` explicitly.** Fable only where its judgement is the point. The owner
