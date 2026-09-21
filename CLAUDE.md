@@ -45,10 +45,18 @@ State: local git repo initialised, **one commit** `c8fd322`, 137 files tracked, 
 
 The redesign is LIVE on `main` (picture bands site-wide, 11 articles with a topic filter, `/me/`,
 `/support/` to his Ko-fi, Donate in the header, Brevo sign-up on, 42 social cards and new search copy).
-**The DAILY SET is built but NOT live:** branch `design/home-dawn` = `main` + one commit; the owner wants
-to give feedback on its preview (the streak indicator especially) before it ships. Ask for that first.
-Then accounts (email, then set a password; Supabase proposed; he must create the project). Seven deadly
-sins is still an unaudited draft. **`HANDOFF.md` has the state, the next steps and how to ship a small
+**The DAILY SET's display was REJECTED on 2026-09-21 and the feature is SHELVED** on branch
+`shelved/daily-set` (= `main` + one commit; the same commit is still on origin as `design/home-dawn`).
+The concept and the back-end are fine (`site/src/lib/daily.ts`, the `sls.daily` / `wsi.daily` storage
+contract, the games' recording logic: keep them). The presentation is, in his words, not salvageable and
+needs "a totally new approach": he dislikes the placement; the score, rank and button feel "super clumsy,
+especially on mobile, like it was an afterthought rather than an integral feature"; the hit/miss marks look
+"super scuffed" and "glitchy" (weird outlines, spacing, mixed sizes and colours); and "Today's Ten" does
+not say what it is: call it **"Today's Challenge"**. When it resumes, throw away every piece of its display,
+design it as a first-class feature phone first, and show him a mock-up of the marks and the placement
+BEFORE building. Do not raise it until he does, or until accounts are done.
+**NOW: accounts, on branch `feature/accounts`** (email only, then set a password; Supabase + Brevo; he
+must create the Supabase project and paste the keys). Seven deadly sins is still an unaudited draft. **`HANDOFF.md` has the state, the next steps and how to ship a small
 fix without releasing the branch.**
 
 ## THE OWNER'S DIRECTION CHANGED ON 2026-09-20. This overrides older sections below

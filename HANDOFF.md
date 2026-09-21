@@ -23,17 +23,23 @@ articles with a topic FILTER on `/articles/`, "My results" (`/me/`), `/support/`
 (`site/src/lib/seo.ts`), phone touch targets (`site/src/styles/touch.css`), the traditions list moved to
 the foot of the Compass page (`OutcomeIndex.astro`).
 
-**NOT live, waiting for his feedback: THE DAILY SET.** Branch `design/home-dawn` = `main` + ONE commit
-("The daily set..."). Preview: find the newest Preview deployment for that branch through the GitHub
-deployments API (last one: https://wiser-walk-66b56zxs5-sunjo.vercel.app, superseded by the rebase).
-His words: "For the streak indicator, leave that as a preview for now, I have some changes I want to go
-over before pushing that live." **Ask for that feedback first. Do NOT merge the daily set until he says.**
+**SHELVED on 2026-09-21: THE DAILY SET.** He reviewed the preview and rejected its DISPLAY outright; the
+concept and back-end stay. It lives on local branch `shelved/daily-set` (= `main` + ONE commit, "The daily
+set..."; the same commit is still on origin as `design/home-dawn`). His complaints: the placement; the
+score, rank and button feel "super clumsy, especially on mobile, like it was an afterthought rather than
+an integral feature"; the hit/miss marks look "super scuffed" and "glitchy" (weird outlines and spacing,
+mixed sizes and colours); "Today's Ten" does not explain itself, so it becomes **"Today's Challenge"**.
+"It needs a totally new approach." He will circle back after sign-up. When he does: keep `daily.ts`, the
+storage contract and the games' recording logic; discard every display piece (home strip, `/games/` strip,
+`/me/` block, the in-game marks); mock up the marks and the placement for him BEFORE building.
 What it is: first completed run of today's ten is recorded, later runs are practice; days numbered from
 #1 = 2026-09-21 UTC; streak = consecutive days (no guilt copy); `#today` deep link; share text with the
 day number; a Today strip on the home games band, `/games/` and `/me/`. Storage contract `sls.daily` /
 `wsi.daily` documented in `demos/sounds-like-scripture/SPEC.md` and mirrored in `site/src/lib/daily.ts`.
 
-**After that, in his order: accounts.** Email-only sign-up box, the emailed link lands on a set-a-password
+**NOW, by his word on 2026-09-21 ("Let's move on to the sign up feature"): accounts, on branch
+`feature/accounts`** (cut from live `main`; it has no upstream on purpose, so a bare `git push` cannot
+deploy). Email-only sign-up box, the emailed link lands on a set-a-password
 page, then email + password, "forgot password" sends the same kind of link, Google later. Proposed:
 Supabase Auth (free tier) with Brevo SMTP. HE must create the Supabase project and set its keys in Vercel
 (I cannot create accounts or enter keys): give him numbered steps like the Brevo ones. Then the profile
