@@ -418,146 +418,117 @@ body {
 @media (min-width: 40rem) { .pledge { padding: 2.4rem 2.2rem 2.5rem; } }
 
 /* ------------------------------------------------------------------ footer */
-
+/*
+ * Redrawn 2026-09-20 after the owner's verdict on the last one ("even more wall-of-text...
+ * not even any color... over-used the dotted lines"). It opens on a photograph, the heads
+ * carry a mark and an ink each, links answer a hover with colour and movement, and the only
+ * rule left is one hairline of the brand's own gradient above the last line.
+ */
 .site-foot {
-  /* the footer is a dark panel in both themes, so it takes the dark panel's hairline: the
-     light theme's rule ink is invisible on charcoal, which is how the separators here came
-     out as nothing at all */
-  --rule-strong: rgba(234, 232, 228, .22);
   position: relative; isolation: isolate; overflow: hidden; margin-top: 3.5rem;
   background-color: var(--dark-fill); background-image: var(--dark-fill-img); background-size: 520px;
   color: var(--on-dark-soft); border-radius: 30px 30px 0 0;
 }
 :root[data-theme="dark"] .site-foot { background-color: #1F1F26; }
-.site-foot .wrap { position: relative; z-index: 1; padding-top: 2.4rem; padding-bottom: 6.2rem; }
-.foot-ghost {
-  position: absolute; z-index: 0; left: -.04em; bottom: -.24em; pointer-events: none; user-select: none;
-  font-family: var(--display); font-style: italic; font-size: clamp(5.5rem, 27vw, 13rem); line-height: .8;
-  letter-spacing: -.04em; white-space: nowrap; color: var(--ghost-dark);
-}
-.foot-brand { font-family: var(--display); font-size: 1.5rem; color: var(--on-dark); margin: 0 0 .5rem; }
-.foot-brand span { font-style: italic; background: var(--grad-r); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.site-foot p { max-width: 36rem; margin: 0 0 .8rem; color: var(--on-dark-soft); }
-.site-foot a { color: var(--on-dark); }
 
-/* the brand and the sign-up share the top row; a dotted rule closes it off, the way the
-   spec lists rule off a fact from the next one */
-.foot-top {
-  display: grid; grid-template-columns: 1fr; gap: 1.6rem;
-  padding-bottom: 1.5rem; border-bottom: 2px dotted var(--rule-strong);
+/* the walk */
+.foot-dawn { position: relative; isolation: isolate; overflow: hidden; }
+.foot-dawn > img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: 30% 42%; }
+.foot-dawn::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    linear-gradient(180deg, rgba(28, 28, 35, 0) 38%, rgba(28, 28, 35, .7) 78%, var(--dark-fill) 100%),
+    linear-gradient(90deg, rgba(40, 22, 8, 0) 30%, rgba(40, 22, 8, .5));
 }
-.foot-line { margin: 0; max-width: 30rem; font-size: .92rem; }
+:root[data-theme="dark"] .foot-dawn::after {
+  background:
+    linear-gradient(180deg, rgba(44, 44, 56, 0) 38%, rgba(44, 44, 56, .7) 78%, #2C2C38 100%),
+    linear-gradient(90deg, rgba(40, 22, 8, 0) 30%, rgba(40, 22, 8, .5));
+}
+.foot-dawn-in { display: grid; grid-template-columns: 1fr; gap: 1.3rem; padding-top: 8.5rem; padding-bottom: 2.2rem; }
+.foot-kicker {
+  display: inline-flex; align-items: center; gap: .45rem; margin: 0 0 .5rem;
+  font-family: var(--ui); font-size: .62rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
+  color: #FFE3CC;
+}
+.foot-dawn h2 {
+  margin: 0; font-family: var(--display); font-style: italic; font-weight: 400; color: #fff;
+  font-size: clamp(2.3rem, 9vw, 3.4rem); line-height: 1; letter-spacing: -.02em; text-shadow: 0 2px 20px rgba(30, 14, 4, .45);
+}
+.foot-dawn-say p:last-child { margin: .6rem 0 0; font-size: 1rem; color: rgba(255, 255, 255, .92); text-shadow: 0 1px 12px rgba(30, 14, 4, .5); }
 @media (min-width: 52rem) {
-  .foot-top { grid-template-columns: minmax(0, 1fr) minmax(0, 20rem); gap: 2.5rem; align-items: start; }
+  .foot-dawn-in { grid-template-columns: minmax(0, 1fr) minmax(0, 25rem); gap: 3rem; align-items: end; padding-top: 7.5rem; padding-bottom: 2.8rem; }
+  /* the walker stands at the left of the frame, so the words go to the right of him */
+  .foot-dawn-say { grid-column: 2; grid-row: 1; }
+  .foot-signup { grid-column: 2; grid-row: 2; }
+  .foot-dawn-in { grid-template-rows: auto auto; row-gap: 1.2rem; }
 }
 
-/* capped while it is stacked under the brand: a field running the whole width of a tablet
-   reads as the page's main business, which it is not */
 .foot-signup { margin: 0; max-width: 28rem; }
-.foot-signup-say {
-  margin: 0 0 .7rem; max-width: 24rem; font-size: .88rem; color: var(--on-dark-soft);
-}
-.foot-signup-row { display: flex; flex-direction: column; gap: .5rem; }
+.foot-signup-row { position: relative; display: flex; flex-direction: column; gap: .5rem; }
 @media (min-width: 26rem) { .foot-signup-row { flex-direction: row; } }
+.foot-signup-icon { position: absolute; left: 1rem; top: 23px; transform: translateY(-50%); color: rgba(255, 255, 255, .75); pointer-events: none; display: grid; }
 .foot-signup-row input {
   flex: 1 1 auto; min-width: 0; min-height: 46px;
   font-family: var(--text); font-size: 1rem;   /* 16px, or iOS zooms the page on focus */
-  padding: .7rem .95rem; border-radius: var(--r-pill);
-  border: 0; background: rgba(255, 255, 255, .09); color: var(--on-dark);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1);
+  padding: .7rem .95rem .7rem 2.7rem; border-radius: var(--r-pill);
+  border: 0; background: rgba(20, 16, 12, .5); color: #fff;
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .4);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
 }
-.foot-signup-row input::placeholder { color: var(--on-dark-mute); }
+.foot-signup-row input::placeholder { color: rgba(255, 255, 255, .7); }
 .foot-signup-row input:focus-visible { outline: 2px solid var(--blue-soft); outline-offset: 2px; }
 .foot-signup-row .btn { flex: none; }
 .foot-signup-status { margin: .6rem 0 0; min-height: 1.2em; font-size: .82rem; }
 .foot-signup-status.is-ok { color: var(--blue-soft); }
 .foot-signup-status.is-bad { color: var(--orange-soft); }
-.foot-signup-status.is-busy { color: var(--on-dark-mute); }
+.foot-signup-status.is-busy { color: rgba(255, 255, 255, .7); }
 
-/* three groups, not a wall: quizzes wide because their titles are sentences, then games,
-   then the two pages that are neither */
-.foot-cols { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin: 1.5rem 0 0; }
-.foot-col h4 {
-  margin: 0 0 .5rem; padding-bottom: .4rem; border-bottom: 2px dotted var(--rule-strong);
-  font-family: var(--display); font-style: italic; font-weight: 400; text-transform: lowercase;
-  font-size: 1.28rem; line-height: 1; letter-spacing: -.01em; color: var(--on-dark);
+/* the ways back in */
+.foot-ghost {
+  position: absolute; z-index: 0; left: -.04em; bottom: -.24em; pointer-events: none; user-select: none;
+  font-family: var(--display); font-style: italic; font-size: clamp(5.5rem, 27vw, 13rem); line-height: .8;
+  letter-spacing: -.04em; white-space: nowrap; color: var(--ghost-dark);
 }
+.foot-main { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr; gap: 2rem; padding-top: 1.6rem; padding-bottom: 1.2rem; }
+.foot-brand { font-family: var(--display); font-size: 1.7rem; color: var(--on-dark); margin: 0 0 .5rem; }
+.foot-brand span { font-style: italic; background: var(--grad-r); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.foot-line { margin: 0; max-width: 22rem; font-size: .92rem; line-height: 1.55; color: var(--on-dark-soft); }
+.site-foot a { color: var(--on-dark); }
+
+.foot-cols { display: grid; grid-template-columns: 1fr; gap: 1.7rem; }
+.foot-col { --col-ink: var(--blue-soft); }
+.foot-col--orange { --col-ink: var(--orange-soft); }
+.foot-col h4 {
+  display: flex; align-items: center; gap: .55rem; margin: 0 0 .45rem;
+  font-family: var(--ui); font-size: .66rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--col-ink);
+}
+.foot-mark { display: grid; place-items: center; width: 1.75rem; height: 1.75rem; border-radius: 9px; color: #1c1c23; background: var(--col-ink); }
 .foot-col ul { margin: 0; padding: 0; list-style: none; }
 .foot-col li a {
-  display: flex; align-items: center; min-height: 44px; padding: .2rem 0;
-  text-decoration: none; font-size: .88rem; line-height: 1.3; color: var(--on-dark-soft);
+  display: inline-flex; align-items: center; gap: .4rem; min-height: 44px; padding: .2rem 0;
+  text-decoration: none; font-size: .93rem; line-height: 1.3; color: var(--on-dark-soft);
+  transition: color .15s ease, transform .15s ease;
 }
-.foot-col li a:hover { color: var(--on-dark); text-decoration: underline; }
+.foot-col li a:hover { color: var(--col-ink); transform: translateX(3px); }
+.foot-col li a.foot-all { color: var(--on-dark); font-family: var(--ui); font-size: .66rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+.foot-col li a.foot-all:hover { color: var(--col-ink); }
 @media (min-width: 48rem) {
-  .foot-cols { grid-template-columns: minmax(0, 2fr) minmax(0, 1.2fr) minmax(0, 1fr); gap: 2rem; }
-  /* a quiz title is a sentence and must read as one line: the column above is sized for the
-     longest of them, and this makes a wrap show up as an overflow rather than hide as two
-     quiet lines nobody notices */
-  .foot-col li a { white-space: nowrap; min-height: 40px; }
+  .foot-main { grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); gap: 3rem; padding-top: 2.2rem; }
+  .foot-cols { grid-template-columns: minmax(0, 2fr) minmax(0, 1.25fr) minmax(0, .9fr); gap: 1.5rem; }
+  /* a quiz title is a sentence and must read as one line */
+  .foot-col li a { white-space: nowrap; min-height: 38px; }
 }
 
-.foot-bar {
-  margin-top: 1.6rem; padding-top: 1rem; border-top: 2px dotted var(--rule-strong);
-}
+/* the one rule in the footer: a hairline of the brand's own gradient */
+.foot-bar { position: relative; z-index: 1; padding-top: 1.1rem; padding-bottom: 6rem; }
+.foot-bar::before { content: ""; display: block; height: 2px; margin: 0 0 1rem; border-radius: 2px; background-image: var(--grad-r); opacity: .7; }
 .foot-bar p {
   margin: 0; font-family: var(--ui); font-size: .62rem; font-weight: 600; letter-spacing: .14em;
   text-transform: uppercase; color: var(--on-dark-mute);
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .scard, .scard-go .icon, .chip-link, .site-head nav a { transition: none; }
-  .scard:hover { transform: none; }
-}
-
-/* --------------------------------------------------- corrections, pass two */
-
-/* On the sheet the column IS the sheet: the band must reach both edges of the frame, so the
-   wrap stops capping itself and takes a wider gutter instead. */
-@media (min-width: 68rem) {
-  .sheet .wrap { max-width: none; --gut: 3.25rem; padding-left: var(--gut); padding-right: var(--gut); }
-  .band { padding-left: var(--gut); padding-right: var(--gut); }
-}
-
-/* Phone: the tiles would sit on top of a bottom-anchored ghost word, so it rides high and
-   right instead, behind the chip and the first line of the headline. */
-@media (max-width: 39.99rem) {
-  .band-ghost { top: -.04em; bottom: auto; right: -.1em; font-size: 40vw; }
-}
-
-/* tiles never strand one alone on a row */
-.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(4.4rem, 1fr)); }
-@media (min-width: 40rem) { .tiles { display: flex; } }
-
-.scards { grid-template-columns: 1fr; }
-@media (min-width: 46rem) { .scards { grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); } }
-
-@media (min-width: 52rem) {
-  .feature-art .wheel { max-width: 21rem; }
-  .feature-art { align-items: stretch; }
-}
-
-/* ------------------------------------------------- corrections, round two */
-
-/* THE GHOST WORD fits its own length (Hero passes --len). On a phone it spans the band's
-   width along the top, like the reference hero; from 40rem it sits bottom right and is
-   never wider than about 36rem, so it cannot run behind the lede or the tile row. */
-.band-ghost { --len: 6; }
-@media (max-width: 39.99rem) {
-  .band-ghost { top: -.06em; bottom: auto; right: -.06em; font-size: min(40vw, calc(98vw / (var(--len) * .47))); }
-}
-@media (min-width: 40rem) {
-  .band-ghost { font-size: min(17rem, calc(36rem / (var(--len) * .47))); bottom: -.19em; right: -.03em; }
-}
-
-/* TILES are a real grid and their labels are readable: never under 10px, allowed to wrap. */
-.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(4.9rem, 1fr)); gap: .5rem; }
-.tile { min-width: 0; padding: .7rem .5rem .6rem; }
-.tile span { font-size: .64rem; letter-spacing: .1em; white-space: normal; line-height: 1.25; margin-top: .25rem; }
-@media (min-width: 40rem) {
-  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(6.4rem, max-content)); gap: .6rem; }
-  .tile { padding: .8rem 1.15rem .7rem; }
-  .tile span { font-size: .66rem; }
-}
+@media (prefers-reduced-motion: reduce) { .foot-col li a { transition: none; } .foot-col li a:hover { transform: none; } }
 
 /* DARK PANELS IN THE DARK THEME. Charcoal on near-black has no presence (1.3:1), which flattens
    every page. In the dark theme the same panels lift instead: a clearly lighter surface, tinted

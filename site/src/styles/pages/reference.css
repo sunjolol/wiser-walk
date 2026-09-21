@@ -354,11 +354,12 @@
   background-image: var(--dark-fill-img); background-size: 420px;
   color: var(--on-dark-soft); font-size: .88rem; line-height: 1.55; max-width: none;
 }
-/* the medallion the stripe cards use, so the note reads as a thing on the page and not as
-   a sentence that fell out of one */
-.ref .correction::before {
-  content: ""; position: absolute; left: 1.15rem; top: 1.15rem;
-  width: 1.65rem; height: 1.65rem; border-radius: 50%;
+/* A pencil in the medallion, so the bar says what it is for at a glance. It used to be an
+   empty gradient disc, which marked the bar as a thing and said nothing about which thing. */
+.correction-mark { display: none; }
+.ref .correction-mark {
+  display: grid; place-items: center; position: absolute; left: 1.05rem; top: 1rem;
+  width: 1.9rem; height: 1.9rem; border-radius: 50%; color: #26262c;
   background-image: linear-gradient(to bottom right, var(--blue), var(--orange));
 }
 .ref .correction a { color: var(--blue-soft); text-underline-offset: 3px; }

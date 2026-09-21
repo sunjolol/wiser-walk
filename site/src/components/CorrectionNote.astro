@@ -15,12 +15,15 @@ interface Props {
   subject: string;
 }
 
+import Icon from './Icon.astro';
+
 const { subject } = Astro.props;
 const href =
   'https://github.com/sunjolol/wiser-walk/issues/new?title=' +
   encodeURIComponent(`Correction: ${subject}`);
 ---
 <p class="correction">
+  <span class="correction-mark" aria-hidden="true"><Icon name="pencil" size={15} /></span>
   <a href={href} rel="noopener">Suggest a correction</a>. Corrections that are applied are
   recorded in the <a href="/method/#changelog">public changelog</a>.
 </p>

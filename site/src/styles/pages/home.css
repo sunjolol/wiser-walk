@@ -1,0 +1,272 @@
+/* =====================================================================================
+ * The home page (2026-09-20). One idea: the brand's blue-to-orange is a sky at first light.
+ * Phone first; every block below is written for 360px and widened after.
+ *
+ * Tokens come from site.css and kit.css. The only new inks are each quiz's own, declared on
+ * its room, so the four rooms cannot drift back into looking like one another.
+ * ===================================================================================== */
+
+/* ------------------------------------------------------------------------- the sky ---- */
+.hm-hero {
+  position: relative; isolation: isolate; overflow: hidden;
+  margin: calc(-1 * var(--top)) calc(-1 * var(--gut)) 0;
+  padding: 3.4rem var(--gut) 9.5rem;
+  border-radius: 0 0 30px 30px;
+  text-align: center; color: #fff;
+  background: #6f9fc9;
+}
+.hm-hero-img {
+  position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%;
+  object-fit: cover; object-position: 38% 60%;
+}
+/* a little night at the top for the type, a little warmth kept at the horizon */
+.hm-hero::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(90% 60% at 50% 38%, rgba(18, 32, 58, .46), transparent 72%),
+    linear-gradient(180deg, rgba(18, 30, 56, .34), rgba(18, 30, 56, 0) 46%, rgba(30, 20, 14, .18));
+}
+.hm-hero-in { max-width: 40rem; margin: 0 auto; }
+.hm-chip {
+  display: inline-flex; align-items: center; gap: .45rem; margin: 0 0 1.2rem;
+  padding: .42rem .85rem; border-radius: 999px;
+  font-family: var(--ui); font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: #fff; background: rgba(255, 255, 255, .16);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .34);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+.hm-hero h1 {
+  margin: 0; font-family: var(--display); font-weight: 400; color: #fff;
+  font-size: clamp(2.55rem, 11.5vw, 4.9rem); line-height: 1.02; letter-spacing: -.02em;
+  text-shadow: 0 2px 22px rgba(12, 22, 44, .38);
+}
+.hm-hero h1 em { font-style: italic; color: #FFD2B0; }
+.hm-lede {
+  margin: 1.1rem auto 0; max-width: 31rem; font-size: 1.04rem; line-height: 1.55;
+  color: rgba(255, 255, 255, .94); text-shadow: 0 1px 12px rgba(12, 22, 44, .45);
+}
+.hm-cta { display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem; margin: 1.6rem 0 0; }
+.hm-cta .btn { display: inline-flex; align-items: center; gap: .5rem; box-shadow: 0 6px 22px rgba(12, 22, 44, .28); }
+.hm-btn-glass {
+  display: inline-flex; align-items: center; gap: .5rem; min-height: 46px; padding: .7rem 1.35rem;
+  border-radius: 999px; text-decoration: none; color: #fff;
+  font-family: var(--ui); font-size: .74rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  background: rgba(16, 26, 48, .34); box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .55);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+.hm-btn-glass:hover { background: rgba(16, 26, 48, .5); }
+@media (min-width: 46rem) { .hm-hero { padding: 5rem var(--gut) 12.5rem; } }
+
+/* ------------------------------------------------------------------ section heads ---- */
+.hm-head { position: relative; display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 0 1rem; margin: 0 0 1.1rem; }
+.hm-kicker {
+  grid-column: 1 / -1; margin: 0 0 .1rem; font-family: var(--ui); font-size: .62rem; font-weight: 700;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--ink-mute);
+}
+.hm-head h2 {
+  margin: 0; font-family: var(--display); font-style: italic; font-weight: 400;
+  font-size: clamp(2.3rem, 9vw, 3.3rem); line-height: 1; letter-spacing: -.02em; color: var(--ink);
+}
+.hm-more {
+  display: inline-flex; align-items: center; gap: .4rem; min-height: 44px; text-decoration: none;
+  font-family: var(--ui); font-size: .64rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase;
+  color: var(--accent);
+}
+.hm-more .icon, .room-go .icon { transition: transform .18s ease; }
+.hm-more:hover .icon, .room:hover .room-go .icon, .game:hover .room-go .icon, .read:hover .room-go .icon { transform: translateX(3px); }
+/* the quizzes' head stands ON the sky, so the rooms rise out of the hero's lower edge */
+.hm-head--over { color: #fff; }
+.hm-head--over h2, .hm-head--dark h2 { color: #fff; text-shadow: 0 2px 18px rgba(12, 22, 44, .4); }
+.hm-head--over .hm-kicker, .hm-head--dark .hm-kicker { color: rgba(255, 255, 255, .82); }
+.hm-head--over .hm-more, .hm-head--dark .hm-more { color: #fff; }
+
+/* --------------------------------------------------------------------- four rooms ---- */
+.hm-rooms { position: relative; z-index: 1; margin-top: -8.2rem; }
+@media (min-width: 46rem) { .hm-rooms { margin-top: -10.4rem; } }
+.hm-bento { display: grid; grid-template-columns: 1fr; gap: .9rem; }
+
+.room {
+  --room-ink: var(--blue-soft);
+  position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column;
+  min-height: 21rem; border-radius: 24px; text-decoration: none; color: #fff;
+  background: #15161c; box-shadow: 0 10px 30px rgba(20, 24, 40, .16);
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+.room:hover { transform: translateY(-3px); box-shadow: 0 16px 38px rgba(20, 24, 40, .24); }
+.room > img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+.room-body { position: relative; margin-top: auto; padding: 1.35rem 1.3rem 1.4rem; }
+.room-mark {
+  display: grid; place-items: center; width: 2.6rem; height: 2.6rem; margin: 0 0 .85rem;
+  border-radius: 14px; color: #17181d; background: var(--room-ink);
+}
+.room-mark--blue { background: var(--blue); }
+.room-mark--orange { background: var(--orange); }
+.room-kicker {
+  margin: 0 0 .25rem; font-family: var(--ui); font-size: .6rem; font-weight: 700; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--room-ink);
+}
+.room h3, .game h3 {
+  margin: 0; font-family: var(--display); font-weight: 400; color: #fff;
+  font-size: clamp(1.55rem, 6.2vw, 1.95rem); line-height: 1.08; letter-spacing: -.012em; text-wrap: balance;
+}
+.room-say { margin: .55rem 0 0; max-width: 26rem; font-size: .95rem; line-height: 1.5; color: rgba(255, 255, 255, .84); }
+.room-facts {
+  display: flex; flex-wrap: wrap; gap: .4rem; margin: .95rem 0 0; padding: 0; list-style: none;
+  font-family: var(--ui); font-size: .62rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+}
+.room-facts li {
+  display: inline-flex; align-items: center; gap: .35rem; padding: .36rem .62rem; border-radius: 999px;
+  color: rgba(255, 255, 255, .92); background: rgba(255, 255, 255, .12); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16);
+}
+.room-go {
+  display: inline-flex; align-items: center; gap: .45rem; margin: 1.05rem 0 0;
+  font-family: var(--ui); font-size: .7rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase;
+  color: var(--room-ink);
+}
+.room-tab {
+  position: absolute; top: 0; right: 0; padding: .45rem .9rem; border-radius: 0 24px 0 14px;
+  font-family: var(--ui); font-size: .58rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  color: #17181d; background: var(--room-ink);
+}
+
+/* the compass: an instrument on a night ground */
+.room--compass {
+  --room-ink: var(--blue-soft);
+  background-color: #141a27; background-image: radial-gradient(120% 90% at 85% 10%, rgba(126, 186, 238, .22), transparent 60%), var(--dark-fill-img);
+  background-size: auto, 520px;
+}
+.room--compass .room-wheel { order: -1; padding: 1.4rem 3.4rem 0; }
+/* the wheel's labels hang outside its circle, so the room leaves them a margin to hang in */
+.room--compass .wheel-plot { max-width: 15.5rem; margin: 1.6rem auto 0; }
+.room--compass .wheel figcaption, .room--compass .wheel-cap { display: none; }
+.room-note { margin: 1.5rem 0 0; text-align: center; font-size: .72rem; color: rgba(255, 255, 255, .6); }
+.room--compass .room-body { margin-top: 0; }
+
+/* the figures: an engraving, ink on paper, read from the foot of the plate */
+.room--figures { --room-ink: #EADFCB; min-height: 27rem; background: #1b1a18; }
+.room--figures > img { object-position: 50% 18%; filter: sepia(.28) contrast(1.05); }
+.room--figures::after, .room--gifts::after, .room--sins::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, rgba(14, 13, 12, 0) 30%, rgba(14, 13, 12, .78) 68%, rgba(14, 13, 12, .94));
+}
+
+/* the gifts: one flame, standing to the right of the words and above them */
+.room--gifts { --room-ink: #FFC27A; background: #0b0706; }
+.room--gifts > img { inset: auto; top: -6%; right: -30%; width: 118%; height: auto; }
+.room--gifts::after { background: linear-gradient(180deg, rgba(11, 7, 6, 0) 22%, rgba(11, 7, 6, .8) 56%, rgba(11, 7, 6, .96) 74%); }
+
+/* the seven: Bosch's wheel, turning off the top corner of the card */
+.room--sins { --room-ink: #F08D7E; background: #0e0d0c; }
+.room--sins > img { inset: auto; top: -34%; right: -30%; width: 104%; height: auto; border-radius: 50%; }
+.room--sins::after { background: linear-gradient(180deg, rgba(14, 13, 12, 0) 20%, rgba(14, 13, 12, .86) 50%, rgba(14, 13, 12, .97) 66%); }
+
+@media (min-width: 46rem) {
+  .hm-bento { grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 1rem; }
+  /* the flagship takes the whole first row, so its wheel has room for the labels that hang
+     outside the circle; the three picture rooms stand in a row beneath it */
+  .room--compass { grid-column: 1 / -1; flex-direction: row; align-items: center; min-height: 23rem; }
+  .room--compass .room-wheel { order: 1; flex: 0 0 50%; padding: .6rem 6.5rem 1.6rem 5.5rem; }
+  .room--compass .wheel-plot { max-width: 19rem; margin-top: 2.2rem; }
+  .room--compass .room-body { flex: 1; padding: 2.2rem 0 2.2rem 2.4rem; }
+  .room--compass h3 { font-size: 2.5rem; }
+  .room--compass .room-say { font-size: 1.02rem; }
+  .room--figures { grid-column: span 5; min-height: 27rem; }
+  .room--gifts { grid-column: span 4; min-height: 27rem; }
+  .room--sins { grid-column: span 3; min-height: 27rem; }
+  .room--sins h3 { font-size: 1.5rem; }
+  .room--sins > img { top: -14%; right: -42%; width: 128%; }
+  .room--gifts > img { top: 0; right: -34%; width: 128%; }
+  .room-body { padding: 1.6rem 1.5rem 1.6rem; }
+}
+@media (min-width: 46rem) and (max-width: 61.99rem) {
+  .room--figures, .room--gifts { grid-column: span 6; }
+  .room--sins { grid-column: 1 / -1; min-height: 16rem; }
+  .room--sins > img { top: -60%; right: -8%; width: 56%; }
+}
+
+/* -------------------------------------------------------------------------- night ---- */
+.hm-night {
+  position: relative; isolation: isolate; overflow: hidden;
+  margin: 3.2rem calc(-1 * var(--gut)) 0; padding: 2.6rem var(--gut) 2.4rem;
+  border-radius: 30px; background: #12110f; color: #fff;
+}
+.hm-night-img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; opacity: .82; }
+.hm-night::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, rgba(18, 17, 15, .38), rgba(18, 17, 15, .74) 34%, rgba(18, 17, 15, .95) 70%);
+}
+.hm-games { display: grid; grid-template-columns: 1fr; gap: .9rem; }
+.game {
+  display: grid; grid-template-columns: 1fr; gap: 1.2rem; align-items: start; padding: 1.35rem 1.3rem 1.5rem;
+  border-radius: 22px; text-decoration: none; color: #fff;
+  background: rgba(30, 28, 26, .66); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  transition: transform .22s ease, background .22s ease;
+}
+.game:hover { transform: translateY(-3px); background: rgba(40, 37, 34, .78); }
+.game p { margin: .55rem 0 0; font-size: .95rem; line-height: 1.5; color: rgba(255, 255, 255, .82); }
+.game .room-go { color: var(--orange-soft); }
+.game:nth-child(2) .room-go { color: var(--blue-soft); }
+.game .mock { margin: 0 auto; width: 100%; max-width: 17rem; }
+.mock-names { display: grid; grid-template-columns: 1fr 1fr; gap: .45rem; }
+.mock-names span {
+  display: grid; place-items: center; min-height: 2.1rem; border-radius: 10px;
+  font-family: var(--ui); font-size: .62rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: rgba(255, 255, 255, .9); background: rgba(255, 255, 255, .1); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14);
+}
+.mock-names span:nth-child(2) { background: var(--blue); color: #17181d; box-shadow: none; }
+.mock--names .mock-fuse i { width: 38%; }
+@media (min-width: 46rem) {
+  .hm-night { padding: 3.2rem var(--gut) 3rem; }
+  .hm-games { grid-template-columns: 1fr 1fr; gap: 1rem; }
+}
+@media (min-width: 62rem) { .game { grid-template-columns: minmax(0, 1fr) 15rem; padding: 1.7rem 1.6rem; } }
+
+/* ------------------------------------------------------------------------ morning ---- */
+.hm-morning { margin: 3.4rem 0 0; }
+.hm-reads { display: grid; grid-template-columns: 1fr; gap: 1.6rem; }
+.read { display: block; text-decoration: none; color: var(--ink); }
+.read-pic { position: relative; display: block; overflow: hidden; border-radius: 20px; aspect-ratio: 3 / 2; box-shadow: var(--lift); }
+.read-pic img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+.read:hover .read-pic img { transform: scale(1.04); }
+.read-time {
+  position: absolute; left: .7rem; bottom: .7rem; display: inline-flex; align-items: center; gap: .35rem;
+  padding: .34rem .62rem; border-radius: 999px; color: #fff; background: rgba(18, 20, 28, .62);
+  font-family: var(--ui); font-size: .6rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.read h3 { margin: .95rem 0 0; font-family: var(--display); font-weight: 400; font-size: 1.45rem; line-height: 1.12; color: var(--ink); text-wrap: balance; }
+.read p { margin: .45rem 0 0; font-size: .95rem; line-height: 1.55; color: var(--ink-soft);
+  display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.read .room-go { color: var(--accent); margin-top: .7rem; }
+@media (min-width: 46rem) { .hm-reads { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.4rem; } }
+
+/* --------------------------------------------------------------------- traditions ---- */
+.hm-trads {
+  position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr; gap: 1.6rem;
+  margin: 3.4rem 0 .5rem; padding: 1.7rem 1.4rem 1.6rem; border-radius: 24px;
+  background: var(--panel); box-shadow: var(--lift);
+}
+.hm-trads::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 6px; background-image: linear-gradient(180deg, var(--blue), var(--orange)); }
+.hm-trads h2 { margin: 0; font-family: var(--display); font-weight: 400; font-size: clamp(1.6rem, 6vw, 2.1rem); line-height: 1.1; color: var(--ink); text-wrap: balance; }
+.hm-trads-say p { margin: .6rem 0 1.1rem; color: var(--ink-soft); max-width: 24rem; }
+.hm-trads-say .btn { display: inline-flex; align-items: center; gap: .5rem; }
+.hm-trads-list { margin: 0; padding: 0; list-style: none; columns: 1; column-gap: 1.6rem; }
+.hm-trads-list li { break-inside: avoid; }
+.hm-trads-list a {
+  display: flex; align-items: baseline; gap: .55rem; min-height: 40px; padding: .42rem 0; text-decoration: none;
+  font-size: .93rem; line-height: 1.35; color: var(--ink-soft);
+}
+.hm-trads-list a::before { content: ""; flex: none; width: 6px; height: 6px; border-radius: 50%; transform: translateY(-2px); background-image: var(--grad); }
+.hm-trads-list a:hover { color: var(--accent); }
+@media (min-width: 34rem) { .hm-trads-list { columns: 2; } }
+@media (min-width: 58rem) {
+  .hm-trads { grid-template-columns: minmax(0, 19rem) minmax(0, 1fr); gap: 2.6rem; padding: 2.3rem 2.4rem 2.1rem 2.6rem; align-items: start; }
+  .hm-trads-list a { min-height: 0; padding: .3rem 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .room, .game, .read-pic img, .hm-more .icon, .room-go .icon { transition: none; }
+  .room:hover, .game:hover { transform: none; }
+  .read:hover .read-pic img { transform: none; }
+}
