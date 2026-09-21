@@ -237,37 +237,42 @@
   .sp-who p { grid-column: 2; grid-row: 1; margin-top: 0; align-self: center; }
 }
 
-/* ---- 2026-09-21, second round of the owner's notes ------------------------------------
- * A picture of its own (the footer's walker was here too, and the footer is on this page):
- * Millet's Gleaners, who live on what a harvest leaves for them. The painting is NOT laid
- * under the words: it takes one side of the band and the words take the other, so nothing
- * is stretched, no sky is repeated, and there is no empty run above the chip. The ask is
- * already in the band, so the second one goes back to the foot of the page.
+/* ---- 2026-09-21, third round of the owner's notes --------------------------------------
+ * One photograph across the WHOLE band (he did not want a picture that stops and leaves a
+ * blank side, nor a painting that needs a credit line): a hand held out to the sun over still
+ * water, in the brand's own blue and orange. The hand keeps the middle; on a wide screen the
+ * words stand to its right over the calm water, on a phone they stand under it on the dark of
+ * the sleeve and the lake. The band also keeps clear room under its button, because the three
+ * reasons rise over its foot and were crowding it.
  */
-/* the reasons rise over the band's foot, so the band keeps room under its button for them */
-.sp-band { padding: 0 0 5.6rem; background: #2B2118; }
-.sp-band::after { display: none; }
+.sp-band { padding: 16.5rem var(--gut) 8rem; background: #0d1524; }
+/* on a phone the picture takes the head of the band, so the hand and the sun stand ABOVE the
+   words, and it melts into the band's own night blue beneath them */
 .sp-band-img {
-  position: relative; left: auto; top: auto; z-index: 0; display: block;
-  width: 100%; height: 15rem; object-fit: cover; object-position: 50% 62%;
-  -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent);
-  mask-image: linear-gradient(180deg, #000 70%, transparent);
+  position: absolute; left: 0; top: 0; z-index: -2; display: block;
+  width: 100%; height: 27rem; object-fit: cover; object-position: 42% 50%;
+  -webkit-mask-image: linear-gradient(180deg, #000 62%, transparent); mask-image: linear-gradient(180deg, #000 62%, transparent);
 }
-.sp-band-in { position: relative; max-width: none; margin: -1.2rem 0 0; padding: 0 var(--gut); }
+.sp-band::after {
+  display: block; content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, rgba(13, 21, 36, 0) 9rem, rgba(13, 21, 36, .55) 15rem, rgba(13, 21, 36, .9) 21rem);
+}
+.sp-band-in { position: relative; max-width: 34rem; margin: 0; padding: 0; }
 @media (min-width: 46rem) {
-  .sp-band { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr); align-items: center; padding: 0; min-height: 25rem; }
-  .sp-band-img {
-    order: 2; height: 100%; min-height: 25rem; object-position: 56% 60%;
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 26%);
-    mask-image: linear-gradient(90deg, transparent, #000 26%);
+  .sp-band { display: block; min-height: 0; padding: 4.2rem var(--gut) 9.5rem; }
+  .sp-band-img { order: 0; height: 100%; min-height: 0; object-position: 50% 46%; -webkit-mask-image: none; mask-image: none; }
+  .sp-band::after {
+    background:
+      linear-gradient(90deg, rgba(12, 18, 30, 0) 40%, rgba(12, 18, 30, .5) 64%, rgba(10, 15, 26, .74)),
+      linear-gradient(180deg, rgba(12, 18, 30, .1), rgba(12, 18, 30, .36));
   }
-  .sp-band-in { order: 1; margin: 0; padding: 2.6rem 0 5.4rem var(--gut); max-width: 30rem; }
+  .sp-band-in { order: 0; margin: 0 0 0 58%; padding: 0; max-width: 27rem; }
 }
-@media (min-width: 68rem) { .sp-band-in { padding-left: 3.25rem; } }
-.sp-credit { margin: 1.3rem 0 0; font-size: .74rem; font-style: italic; color: var(--ink-mute); text-align: center; }
-.sp-fine { margin: .35rem auto .1rem; }
+@media (min-width: 68rem) { .sp-band { padding-left: 3.25rem; padding-right: 3.25rem; } .sp-band-in { padding-left: 0; } }
+.sp-fine { margin: 1.3rem auto .1rem; }
 .sp-who { margin-top: 1.4rem; }
 .sp-give { margin-top: 1.4rem; }
+
 /* half the air between the small print and the footer, on this page only */
 main:has(.sp-fine) + .site-foot { margin-top: 2rem; }
 
