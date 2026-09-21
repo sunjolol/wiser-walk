@@ -3,6 +3,7 @@ title: How to become more grateful
 description: Gratitude in Scripture is a practice before it is a feeling — which is good news, because practices can be learned.
 published: 2026-09-03
 minutes: 6
+answer: "Scripture treats gratitude as a practice before it is a feeling, which is why it can be commanded at all. Name particular things rather than everything, fold thanks into your asking, say it out loud to the person, and keep it up on the days your mood disagrees."
 tags: [formation, gratitude]
 quizzes: []
 image: /img/articles/how-to-become-more-grateful.jpg

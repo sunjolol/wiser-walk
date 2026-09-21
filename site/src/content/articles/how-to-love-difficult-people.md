@@ -3,6 +3,7 @@ title: How to love people you find difficult
 description: Scripture commands love for difficult people in verbs, not feelings, which means it can be done before it is felt.
 published: 2026-09-20
 minutes: 7
+answer: "Scripture gives this command in verbs rather than feelings: do good, bless, pray. The reason given is God's kindness to the ungrateful, not the other person's merit. So pray for them by name, do one ordinary good thing, stop keeping the account, and talk to them rather than about them."
 tags: [formation, love]
 quizzes: []
 image: /img/articles/how-to-love-difficult-people.jpg

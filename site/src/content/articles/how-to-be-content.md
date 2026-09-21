@@ -3,6 +3,7 @@ title: How to be content with what you have
 description: Paul says he learned contentment, which means it can be learned. Scripture is specific about what it rests on and what it costs.
 published: 2026-09-20
 minutes: 6
+answer: "Paul says he learned contentment, in plenty and in need. It rests not on having enough but on God's promise never to leave you, which is why it survives a change in what you have. Ask for a portion, not a pile, name the want, and give some away."
 tags: [formation, contentment]
 quizzes: [seven-deadly-sins]
 image: /img/articles/how-to-be-content.jpg

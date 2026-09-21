@@ -1,0 +1,228 @@
+---
+/**
+ * How far through the article you are, and where you are in it.
+ *
+ * Three instruments, one measurement, one scroll handler (2026-09-21):
+ *
+ *   the line     a 3px bar of the brand's own spectrum fixed to the very top of the
+ *                viewport, filling as the ARTICLE BODY is read. Not the page: the band
+ *                above it has not been read yet and the footer below it is not the article,
+ *                and a bar that is a third full before the first sentence is a bar that
+ *                lies. Drawn with scaleX, so nothing on the page moves when it changes.
+ *
+ *   the bar      below 62rem, where there is no rail beside the reader, a slim row that
+ *                arrives once the band has scrolled away: the section being read, how much
+ *                is left, and a tap that drops the contents down over the page. It retires
+ *                when the article ends. It carries the line on its own top edge, so the two
+ *                are one object rather than two things stuck to the same screen.
+ *
+ *   the pace     from 62rem the same figure in the rail, under the date.
+ *
+ * It also marks the contents list as the reader moves: the same mark in both places, and
+ * the ink is the only thing that changes between the two states. An outline in one state
+ * and a fill in the other is exactly the mismatch that got the daily set's marks thrown out.
+ *
+ * NOTHING HERE IS LOAD-BEARING. With the script blocked the line sits at zero
+ * width, the bar never appears, the pace stays hidden, and the contents list at the top of
+ * the article still jumps, because it is ordinary anchors in the HTML. The bar's own list is
+ * CLONED from that one at the moment it is first opened, so the page ships one set of links
+ * for a crawler to read rather than two.
+ *
+ * The handler is passive and does nothing but read two numbers and set two transforms,
+ * behind a requestAnimationFrame gate. Measuring happens on load and on resize, never on
+ * scroll: a getBoundingClientRect per scroll event is how a reading page starts to stutter.
+ */
+export interface Props {
+  /** The element whose height the progress is measured against. */
+  target?: string;
+  /** The article's stated reading time, which the "x min left" figure is a share of. */
+  minutes: number;
+}
+const { target = '#article-body', minutes } = Astro.props;
+---
+<div class="rprog" aria-hidden="true"><i></i></div>
+
+<div class="rbar" data-target={target} data-minutes={minutes}>
+  <div class="wrap rbar-in">
+    <button class="rbar-btn" type="button" aria-expanded="false" aria-controls="rbar-panel">
+      <span class="sr-only">Contents. You are reading: </span>
+      <span class="rbar-now"></span>
+      <span class="rbar-left"></span>
+      <span class="rbar-chev" aria-hidden="true"></span>
+    </button>
+  </div>
+  <div class="rbar-panel" id="rbar-panel" hidden>
+    <nav class="wrap" aria-label="Jump to a section"></nav>
+  </div>
+</div>
+
+<script is:inline>
+  /*
+   * Deferred to DOMContentLoaded on purpose. This component is the first thing in the body,
+   * so an inline script here runs BEFORE the article it measures exists, and every lookup
+   * below would come back null. Asked for after the document is parsed instead, which is
+   * still long before the reader has scrolled anywhere.
+   */
+  function readingProgress() {
+    var prog = document.querySelector('.rprog i');
+    var bar = document.querySelector('.rbar');
+    if (!prog || !bar) return;
+
+    var body = document.querySelector(bar.getAttribute('data-target'));
+    var band = document.querySelector('.band');
+    if (!body) return;
+
+    var minutes = parseFloat(bar.getAttribute('data-minutes')) || 0;
+    var btn = bar.querySelector('.rbar-btn');
+    var now = bar.querySelector('.rbar-now');
+    var left = bar.querySelector('.rbar-left');
+    var panel = bar.querySelector('.rbar-panel');
+    var nest = panel.querySelector('nav');
+    var pace = document.querySelector('.side-pace');
+    var paceFill = pace ? pace.querySelector('i') : null;
+    var paceLeft = pace ? pace.querySelector('.side-pace-left') : null;
+
+    /* The contents rows, paired with the headings they point at. A row whose heading is no
+       longer on the page is dropped rather than left to mark nothing. */
+    var heads = [];
+    var rows = [].slice.call(document.querySelectorAll('.toc-list a[href^="#"]'));
+    rows.forEach(function (a) {
+      var el = document.getElementById(decodeURIComponent(a.hash.slice(1)));
+      if (el) heads.push({ a: a, el: el, label: a.getAttribute('data-label') || '' });
+    });
+
+    var top = 0, span = 1, bandEnd = 0, current = null, on = false, ticking = false;
+
+    function measure() {
+      var r = body.getBoundingClientRect();
+      var y = window.pageYOffset;
+      top = r.top + y;
+      /* 100% is the article's last line sitting on the foot of the screen. A piece shorter
+         than the screen is read the moment it is reached, so its span is a single pixel
+         rather than a negative number. */
+      span = Math.max(1, body.offsetHeight - window.innerHeight);
+      bandEnd = band ? band.getBoundingClientRect().bottom + y : top;
+    }
+
+    /*
+     * The LIST is marked only once a heading has actually gone past, so the contents does
+     * not open with a row lit up that nobody has read. The BAR is a different question: it
+     * always names a section, and before the first heading has gone by that is the first
+     * one, because an empty row reads as something that failed to load.
+     */
+    function mark(h) {
+      var name = h || heads[0];
+      if (now && name && now.textContent !== name.label) now.textContent = name.label;
+      if (current === h) return;
+      if (current) current.a.removeAttribute('aria-current');
+      current = h;
+      if (h) h.a.setAttribute('aria-current', 'true');
+    }
+
+    function shut() {
+      if (!btn) return;
+      btn.setAttribute('aria-expanded', 'false');
+      panel.hidden = true;
+    }
+
+    function paint() {
+      ticking = false;
+      var y = window.pageYOffset;
+      var p = (y - top) / span;
+      p = p < 0 ? 0 : p > 1 ? 1 : p;
+
+      prog.style.transform = 'scaleX(' + p + ')';
+      if (paceFill) paceFill.style.transform = 'scaleX(' + p + ')';
+
+      var rem = Math.ceil(minutes * (1 - p));
+      var say = rem >= 1 ? rem + ' min left' : 'Finished';
+      if (left) left.textContent = say;
+      if (paceLeft) paceLeft.textContent = say;
+      /* The rail's pace waits until the reader has actually started. At the top of the page
+         it would sit directly under "6 min read" saying "6 min left", which is the same fact
+         printed twice and an empty track under it. */
+      if (pace && pace.hidden && p > 0) pace.hidden = false;
+
+      /* The heading that has most recently passed under the bar is the one being read. The
+         96px is the bar's own height plus a little, so a heading counts as current from the
+         moment it settles below it rather than when it leaves the screen. */
+      var found = null;
+      for (var i = 0; i < heads.length; i++) {
+        if (heads[i].el.getBoundingClientRect().top <= 96) found = heads[i];
+      }
+      mark(found);
+
+      /* The bar arrives with the ARTICLE, not with the end of the band. Between the two sits
+         the contents list, and a bar naming the first section while the reader is looking at
+         the list that names all of them is the same fact printed twice. */
+      var want = y > Math.max(bandEnd, top) - 56 && p < 0.999;
+      if (want !== on) {
+        on = want;
+        bar.classList.toggle('is-on', on);
+        if (!on) shut();
+      }
+    }
+
+    function tick() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(paint);
+    }
+
+    function remeasure() { measure(); paint(); }
+
+    measure();
+    paint();
+    window.addEventListener('scroll', tick, { passive: true });
+    window.addEventListener('resize', remeasure, { passive: true });
+    window.addEventListener('load', remeasure);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(remeasure);
+
+    if (btn) {
+      btn.addEventListener('click', function () {
+        var open = btn.getAttribute('aria-expanded') === 'true';
+        if (open) { shut(); return; }
+        if (!nest.firstChild) {
+          var src = document.querySelector('.toc-list');
+          if (src) {
+            var copy = src.cloneNode(true);
+            copy.removeAttribute('id');
+            nest.appendChild(copy);
+            [].slice.call(nest.querySelectorAll('a')).forEach(function (a) {
+              a.addEventListener('click', shut);
+            });
+          }
+        }
+        /* The clone is marked fresh every time it opens: it was copied once and the reader
+           has moved on since. */
+        var copies = [].slice.call(nest.querySelectorAll('a'));
+        copies.forEach(function (a) { a.removeAttribute('aria-current'); });
+        for (var i = 0; i < heads.length; i++) {
+          if (heads[i] === current && copies[i]) copies[i].setAttribute('aria-current', 'true');
+        }
+        btn.setAttribute('aria-expanded', 'true');
+        panel.hidden = false;
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key !== 'Escape' || panel.hidden) return;
+        shut();
+        btn.focus();
+      });
+
+      /* A tap on the article behind it closes it, which is what a reader who has changed
+         their mind does next. The bar's own button is excluded or this would fight it. */
+      document.addEventListener('click', function (e) {
+        if (panel.hidden) return;
+        if (e.target.closest && e.target.closest('.rbar')) return;
+        shut();
+      });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', readingProgress);
+  } else {
+    readingProgress();
+  }
+</script>

@@ -205,5 +205,42 @@ console.log('2. sitemap');
   }
 }
 
+// ---- every published article answers its own title, where both readers can see it
+console.log('3. articles');
+{
+  /*
+   * The "In short" block. An article's title asks a question and the block answers it in
+   * forty to fifty words of the article's own content: the reader gets the point before
+   * deciding to read on, and a search engine has a short self-contained passage it can lift
+   * whole. It is front matter (`answer`), so it is the one part of the reading page that can
+   * silently go missing when somebody adds an article, and nothing else on the page would
+   * look wrong without it.
+   *
+   * The band is 30 to 70 rather than 40 to 50: the target is the house rule for writing one,
+   * and this is the point at which a passage has stopped being a snippet.
+   */
+  const articles = [...built].filter(([path]) => /^\/articles\/[^/]+\/$/.test(path));
+  let bad = 0;
+  if (!articles.length) { fail('no article pages in the build'); bad++; }
+  for (const [path, html] of articles) {
+    const block = /<aside[^>]*\bclass=["'][^"']*\binshort\b[^"']*["'][^>]*>[\s\S]*?<\/aside>/i.exec(html);
+    if (!block) {
+      fail(path + ': no "In short" answer — add `answer:` to its front matter');
+      bad++;
+      continue;
+    }
+    const ps = [...block[0].matchAll(/<p[^>]*>([\s\S]*?)<\/p>/gi)];
+    const answer = ps.length
+      ? decode(ps[ps.length - 1][1].replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim()
+      : '';
+    const words = answer ? answer.split(' ').length : 0;
+    if (words < 30 || words > 70) {
+      fail(path + ': the "In short" answer is ' + words + ' words (40 to 50 is the target)');
+      bad++;
+    }
+  }
+  if (!bad) ok(articles.length + ' articles, every one answering its own title in a quotable passage');
+}
+
 console.log(failures ? '\nseo guard: ' + failures + ' problem(s)' : '\nseo guard: all checks passed');
 process.exit(failures ? 1 : 0);

@@ -3,6 +3,7 @@ title: How to forgive someone who hurt you
 description: Forgiveness in Scripture is a debt cancelled, not a feeling summoned, and it is a separate thing from trusting the person again.
 published: 2026-09-20
 minutes: 6
+answer: "Forgiveness is a debt cancelled, not a feeling summoned: someone owes you and you stop collecting, as God has stopped collecting from you. It does not require pretending you were not hurt, giving up on justice, or trusting the person again. Say what happened, then hand over the case."
 tags: [formation, forgiveness]
 quizzes: [seven-deadly-sins]
 image: /img/articles/how-to-forgive-someone-who-hurt-you.jpg

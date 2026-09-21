@@ -3,6 +3,7 @@ title: What are spiritual gifts?
 description: The New Testament gives four lists of gifts, one stated purpose, and no method for finding yours. That tells you more than it seems to.
 published: 2026-09-20
 minutes: 6
+answer: "The New Testament gives four lists of gifts, no two alike and none complete. The Spirit apportions them as He determines, and they are given for the common good rather than for their holder. No passage explains how to find yours, so the instruction is to serve and ask afterwards."
 tags: [gifts, church]
 quizzes: [spiritual-gifts, theology-compass]
 image: /img/articles/what-are-spiritual-gifts.jpg

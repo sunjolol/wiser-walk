@@ -169,15 +169,11 @@
 /* ==================================================== the reading column ==== */
 
 /*
- * The document layout. One column on a phone; from 62rem a rail carries the contents and
- * the article's facts beside the reading column, because a 34rem measure inside a 70rem
- * sheet otherwise leaves half the paper blank.
+ * The ARTICLE's own layout — the grid, the rail, the contents and the reading furniture —
+ * was rebuilt in the reading pass and lives in one marked block at the foot of this file.
+ * Everything from here to the end of this section is the vocabulary /about/ and /method/
+ * share with it: the column itself, its headings, lists, quotations and links.
  */
-.doc-layout { display: grid; gap: 1rem; grid-template-columns: 1fr; align-items: stretch; margin-top: 1.1rem; }
-@media (min-width: 62rem) {
-  .doc-layout { grid-template-columns: 17rem minmax(0, 1fr); gap: 1.4rem; }
-}
-.doc-layout > .pnl { margin: 0; }
 
 /*
  * The sheet frame clips its children so the band's ghost word can bleed off the edge. It
@@ -189,90 +185,6 @@
  */
 @media (min-width: 68rem) {
   .sheet:has(.doc-layout) { overflow: clip; }
-}
-
-/*
- * The rail is the charcoal column from the Riche sheet: the facts about the piece, its
- * contents, and the way back, standing against the light reading panel. It runs the full
- * height of the panel — a short charcoal block beside a long article leaves a hole in the
- * sheet — and its contents stick to the top of the screen inside it, so the column is
- * never the empty slab that a full-height rail otherwise becomes on a 3,000px article.
- */
-/*
- * `clip` rather than the kit's `hidden`: both crop the ghost word at the column's edge,
- * but `hidden` makes the column a scroll container, and a sticky child of a container that
- * never scrolls never moves. The selectors below are two levels deep for the same reason
- * the sheet rule above exists — the kit lifts every child of a dark panel with
- * `.dark > *`, which would otherwise win over a single class and hold this one at
- * `position: relative`.
- */
-.doc-rail {
-  display: block; overflow: clip; padding: 1.2rem 1.15rem 1.3rem;
-  border-radius: var(--r);
-}
-.doc-rail > .rail-stick { position: relative; z-index: 1; }
-@media (min-width: 62rem) {
-  /* the offset clears the sheet's top edge; the rail's own padding does the rest */
-  .doc-rail > .rail-stick { position: sticky; top: 1.4rem; }
-}
-.doc-rail .dark-ghost { font-size: clamp(4.5rem, 22vw, 7rem); left: -.05em; bottom: -.2em; }
-/* the reference's vertical gradient strip: it gives the tall column a spine */
-.doc-rail::after {
-  content: ""; position: absolute; z-index: 0; left: 0; top: 2.6rem; bottom: 2.6rem; width: 5px;
-  border-radius: 0 var(--r-pill) var(--r-pill) 0; background-image: linear-gradient(to bottom, var(--blue), var(--orange));
-  opacity: .5;
-}
-.rail-tag {
-  margin: 0 0 1rem; font-family: var(--ui); font-size: .58rem; font-weight: 700;
-  letter-spacing: .18em; text-transform: uppercase; color: var(--orange-soft);
-}
-.doc-rail .spec dd { color: var(--on-dark); }
-.rail-foot { margin-top: 1.4rem; }
-.rail-foot .btn { width: 100%; }
-@media (min-width: 62rem) {
-  .doc-rail { padding: 1.5rem 1.4rem 1.6rem; }
-  .rail-foot { margin-top: 1.5rem; }
-}
-
-/* the contents list: a real sequence, so it is numbered */
-.toc { background: var(--panel); border-radius: var(--r); box-shadow: var(--lift); padding: 1rem 1.05rem 1.15rem; }
-.toc-head {
-  margin: 1.1rem 0 .65rem; font-family: var(--ui); font-size: .58rem; font-weight: 700;
-  letter-spacing: .16em; text-transform: uppercase; color: var(--ink-mute);
-}
-.spec--rail { margin-top: 0; }
-.spec--rail dt { font-size: .56rem; letter-spacing: .14em; }
-.spec--rail dd { font-size: .82rem; }
-.spec--rail > div { padding: .45rem 0; }
-.toc-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .4rem; counter-reset: toc; }
-.toc-list li { counter-increment: toc; }
-.toc-list a {
-  display: inline-flex; align-items: baseline; gap: .45rem; min-height: 44px;
-  padding: .45rem .7rem; border-radius: 10px; text-decoration: none;
-  box-shadow: inset 0 0 0 1.5px var(--rule-strong);
-  font-family: var(--ui); font-size: .72rem; font-weight: 600; color: var(--ink-soft);
-  line-height: 1.35; transition: box-shadow .18s ease, color .18s ease, background .18s ease;
-}
-.toc-list a::before {
-  content: counter(toc, decimal-leading-zero); flex: none;
-  font-size: .62rem; font-weight: 700; letter-spacing: .06em; color: var(--accent);
-  font-variant-numeric: tabular-nums;
-}
-.toc-list a:hover { color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 0 0 1.5px var(--accent); }
-/*
- * The section the reader is in. Marked by the page's own observer; with no script the
- * attribute is simply never set and the list reads as a plain contents list.
- */
-.toc-list a[aria-current] { color: var(--on-dark); background: rgba(255, 255, 255, .09); }
-.toc-list a[aria-current]::before { color: var(--orange-soft); }
-@media (min-width: 62rem) {
-  .toc-list { display: grid; gap: .2rem; }
-  .toc-list a {
-    box-shadow: none; border-radius: 9px; padding: .5rem .55rem; align-items: flex-start;
-    min-height: 0; border-left: 3px solid var(--rule); margin-left: 0;
-  }
-  .toc-list a:hover { box-shadow: none; border-left-color: var(--accent); }
-  .toc-list a[aria-current] { border-left-color: var(--orange-soft); }
 }
 
 /* the reading column itself */
@@ -872,26 +784,6 @@
 .ab-room .nx-title { font-size: 1.34rem; }
 .ab-room .nx-say { -webkit-line-clamp: 3; line-clamp: 3; }
 
-/* --------------------------------------------------- the article column --- */
-
-/*
- * The rail carried the article's published date, reading time and topics as a
- * spec list, directly under a band that had just printed the same three facts
- * as tiles. What a reader needs beside a long piece is the way through it, so
- * the rail is the contents, the tag and the way back, and the repeat is gone.
- */
-.rail-when {
-  margin: -.55rem 0 0; font-family: var(--ui); font-size: .72rem; font-weight: 500;
-  color: var(--on-dark-mute); letter-spacing: .01em;
-}
-.doc-rail .toc-head:first-of-type { margin-top: 1.1rem; }
-@media (max-width: 61.99rem) {
-  /* on a phone the rail sits above the first sentence, so it stays short and
-     reads as a contents list rather than as a dossier to get past */
-  .doc-rail { padding: 1.1rem 1.1rem 1.2rem; }
-  .doc-rail .rail-foot { margin-top: 1.1rem; }
-}
-
 /* the foot of an article: the rooms first, then the paintings */
 .doc-next { margin-top: 1.5rem; }
 
@@ -899,4 +791,442 @@
   .nx-room, .ab-room, .nx-go .icon { transition: none; }
   .nx-room:hover, .ab-room:hover { transform: none; }
   .nx-room:hover .nx-go .icon { transform: none; }
+}
+
+/* ==========================================================================
+ * THE READING PASS: an article on a phone                       (2026-09-21)
+ * ==========================================================================
+ *
+ * The owner, reviewing /articles/how-to-become-more-joyful/ at 375 x 667:
+ * the contents bubbles should span the full width and each should be only as
+ * tall as its text needs; better still, no bubbles at all, dotted lines
+ * between them; and it makes no sense to put the article inside a content box
+ * on a screen that is already narrow, because the box spends width the reader
+ * has not got.
+ *
+ * So, on a phone:
+ *
+ *   the article  sits straight on the page inside the page's own gutter. No
+ *                card, no inner padding, no radius round the prose. The sheet
+ *                comes back at 46rem, where there is paper to spare.
+ *   the contents a compact light block directly under the band: the date and
+ *                the reading time on one line, then the sections as full-width
+ *                rows on dotted rules, each only as tall as its own text and
+ *                never under 44px of tap height.
+ *   the rail     gone. It is a desktop sidebar, and from 62rem the SAME
+ *                element becomes it: charcoal, sticky, with the tag, the pace
+ *                and the way back. One set of links in the HTML either way.
+ *   the bar      a slim row at the top once the band has scrolled away,
+ *                carrying the progress line, where you are and what is left.
+ *
+ * Everything an article does that /about/ and /method/ must not inherit is
+ * under .doc--article; the layout classes below are the article's alone.
+ * ------------------------------------------------------------------------ */
+
+/* ------------------------------------------------------------ the layout - */
+
+/*
+ * The gaps here are measured rather than chosen: at 375 x 667 the band ends at
+ * about 690px, and the reader has to reach the first sentence of the piece
+ * inside the screen after that one. Every rem between the band and the
+ * standfirst is spent against that.
+ */
+.doc-layout {
+  display: grid; grid-template-columns: 1fr; align-items: stretch;
+  gap: 1.15rem; margin-top: 1.2rem;
+}
+
+/* No panel on a phone: the prose takes the page's own gutter and all the width
+   between it. From 46rem the sheet returns, because by then it costs nothing. */
+.art-sheet { position: relative; }
+@media (min-width: 46rem) {
+  .art-sheet {
+    background: var(--panel); border-radius: var(--r-lg); box-shadow: var(--lift);
+    padding: 2rem 1.9rem 2.1rem;
+  }
+}
+@media (min-width: 68rem) { .art-sheet { padding: 2.4rem 2.3rem 2.5rem; } }
+
+/*
+ * Tablet, where there is not yet room for a rail beside the column: the head
+ * matter keeps the reading measure rather than stretching across the page. A
+ * row of six hundred pixels with a title at one end and a chevron at the other
+ * is a settings screen, and a contents list is not one.
+ */
+@media (min-width: 46rem) and (max-width: 61.99rem) {
+  .doc-rail { max-width: 36rem; }
+}
+
+/* ---------------------------------------------- the head matter, on a phone */
+
+.doc-rail { position: relative; }
+.rail-ghost { display: none; }
+/* the band directly above has just said ARTICLE in its chip */
+.side-tag { display: none; }
+/* the way back is at the FOOT of the piece on a phone, where a reader who has
+   finished is actually standing */
+.side-foot { display: none; }
+.side-pace { display: none; }
+
+.side-when {
+  margin: 0 0 .3rem; font-family: var(--ui); font-size: .74rem; font-weight: 500;
+  letter-spacing: .01em; color: var(--ink-soft);
+}
+.side-dot { margin: 0 .3rem; color: var(--ink-mute); }
+.side-read { white-space: nowrap; }
+
+/* ------------------------------------------------------- the contents ----- */
+
+.toc { position: relative; margin: 1.15rem 0 0; padding-top: .9rem; }
+.toc::before {
+  content: ""; position: absolute; left: 0; top: 0; width: 34px; height: 5px;
+  border-radius: var(--r-pill); background-image: var(--grad-r);
+}
+.toc-head {
+  display: flex; align-items: baseline; justify-content: space-between; gap: .75rem;
+  margin: 0 0 .2rem; font-family: var(--ui); font-size: .6rem; font-weight: 700;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--ink-soft);
+}
+/* the label is the thing; the count is the footnote to it. Same ink as the label
+   beside it: --ink-mute measures 3.03:1 on the page ground and fails AA at this
+   size, and two identical eyebrow labels on one line at two different greys read
+   as a mistake rather than as a hierarchy. The lighter weight carries the rank. */
+.toc-count { flex: none; font-weight: 600; letter-spacing: .1em; color: var(--ink-soft); }
+
+.toc-list { list-style: none; margin: 0; padding: 0; }
+/*
+ * A row is as tall as its own text and no taller, with 44px as the floor a
+ * thumb needs. The rule between rows is the kit's dotted one, which is what
+ * the owner asked for in place of the bubbles.
+ */
+.toc-list a {
+  display: flex; align-items: center; gap: .75rem;
+  min-height: 44px; padding: .55rem 0; text-decoration: none; color: var(--ink);
+  border-top: 2px dotted var(--rule-strong);
+  transition: color .18s ease;
+}
+.toc-list li:last-child a { border-bottom: 2px dotted var(--rule-strong); }
+.toc-num {
+  flex: none; width: 1.45rem; font-family: var(--ui); font-size: .66rem; font-weight: 700;
+  letter-spacing: .06em; color: var(--ink-soft); font-variant-numeric: tabular-nums;
+}
+.toc-label {
+  flex: 1 1 auto; min-width: 0; font-family: var(--ui); font-size: .92rem; font-weight: 600;
+  line-height: 1.35; text-wrap: pretty;
+}
+.toc-chev {
+  flex: none; width: 7px; height: 7px; margin-right: .15rem;
+  border-right: 2px solid var(--ink-mute); border-bottom: 2px solid var(--ink-mute);
+  transform: rotate(-45deg); opacity: .75;
+}
+.toc-list a:hover { color: var(--accent); }
+.toc-list a:hover .toc-num { color: var(--accent); }
+.toc-list a:hover .toc-chev { border-color: var(--accent); opacity: 1; }
+/*
+ * The section being read. THE INK IS THE ONLY THING THAT CHANGES between the
+ * two states: same row, same rule, same number in the same place. A mark that
+ * is an outline in one state and a fill in the other is the mismatch that got
+ * the daily set's marks thrown out, and it is not repeated here.
+ */
+.toc-list a[aria-current] { color: var(--accent); }
+.toc-list a[aria-current] .toc-num { color: var(--accent); }
+
+/* ------------------------------------------ the rail, from the desktop up -- */
+
+@media (min-width: 62rem) {
+  .doc-layout { grid-template-columns: 16.5rem minmax(0, 1fr); gap: 1.5rem; margin-top: 1.2rem; }
+
+  /*
+   * The charcoal column from the Riche sheet, built by hand rather than by the
+   * kit's .dark class: the same element is a light block on a phone, and a
+   * class in the markup cannot be taken off at a breakpoint. The tokens are
+   * re-pointed here exactly as .dark re-points them, so everything inside
+   * recolours itself without a second set of rules.
+   *
+   * `clip`, never `hidden`: both crop the ghost word at the column's edge, but
+   * `hidden` makes the column a scroll container and a sticky child of a
+   * container that never scrolls never moves.
+   */
+  .doc-rail {
+    --ink: var(--on-dark); --ink-soft: var(--on-dark-soft); --ink-mute: var(--on-dark-mute);
+    --accent: var(--blue-soft); --rule: rgba(234, 232, 228, .14);
+    --rule-strong: rgba(234, 232, 228, .22);
+    isolation: isolate; overflow: hidden; overflow: clip;
+    padding: 1.5rem 1.4rem 1.6rem; border-radius: var(--r-lg);
+    background-color: var(--dark-fill); background-image: var(--dark-fill-img);
+    background-size: 520px; color: var(--on-dark); box-shadow: var(--lift);
+  }
+  :root[data-theme="dark"] .doc-rail {
+    background-color: #2C2C38;
+    background-image:
+      linear-gradient(135deg, rgba(126, 186, 238, .13), rgba(240, 160, 111, .09) 70%, rgba(240, 160, 111, .13));
+    background-size: auto;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .07), 0 10px 26px rgba(0, 0, 0, .35);
+  }
+  .rail-ghost {
+    display: block; position: absolute; z-index: 0; left: -.05em; top: -.06em;
+    font-family: var(--display); font-style: italic; font-weight: 400; white-space: nowrap;
+    font-size: clamp(4.5rem, 8vw, 6.5rem); line-height: .8; letter-spacing: -.04em;
+    color: var(--ghost-dark); pointer-events: none; user-select: none;
+  }
+  /* the offset clears the sheet's top edge; the rail's own padding does the rest */
+  .side-stick { position: sticky; top: 1.4rem; z-index: 1; }
+
+  .side-tag {
+    display: block; margin: 0 0 .9rem; font-family: var(--ui); font-size: .58rem;
+    font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--orange-soft);
+  }
+  /* two clean lines in a 16.5rem column: on one line the date and the reading
+     time wrapped with the separator leading the second line */
+  .side-when { font-size: .72rem; }
+  .side-dot { display: none; }
+  .side-read { display: block; margin-top: .12rem; }
+
+  /* how far through, beside the reader rather than over them */
+  .side-pace { display: block; margin: .95rem 0 0; }
+  /*
+   * Its box is kept even while it is waiting. The script unhides it the moment the
+   * reader starts, and with `hidden` left to mean `display: none` that unhiding shoved
+   * the whole contents list 41px down the rail on the first scroll: a jump in the one
+   * part of the page that is meant to sit still. Invisible, so nothing is said twice,
+   * and still `hidden` to a screen reader, so nothing is announced that is not there.
+   *
+   * The `!important` is answering one: site.css carries a blanket
+   * `[hidden] { display: none !important; }`, and without a matching flag this rule is
+   * simply dead. It gives the element its box back and nothing else — `visibility:
+   * hidden` still keeps it out of sight and out of the accessibility tree.
+   */
+  .side-pace[hidden] { display: block !important; visibility: hidden; }
+  .side-pace-track {
+    display: block; height: 4px; border-radius: var(--r-pill);
+    background: rgba(255, 255, 255, .12); overflow: hidden;
+  }
+  .side-pace-track i {
+    display: block; height: 100%; width: 100%; transform: scaleX(0); transform-origin: 0 50%;
+    background-image: var(--grad-r);
+  }
+  .side-pace-left {
+    display: block; margin-top: .45rem; font-family: var(--ui); font-size: .56rem;
+    font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: var(--on-dark-mute);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .toc { margin-top: 1.45rem; }
+  /* a rule that is always there and only ever changes ink: the scroll-spy mark */
+  .toc-list a {
+    border-top: 0; border-left: 2px solid var(--rule);
+    padding: .48rem 0 .48rem .72rem; min-height: 0; gap: .55rem;
+    color: var(--on-dark-soft);
+  }
+  .toc-list li:last-child a { border-bottom: 0; }
+  .toc-list li + li a { margin-top: .14rem; }
+  /* the number is the ordinal, not the title: a step quieter than the words beside it */
+  .toc-num { width: 1.2rem; font-size: .6rem; color: var(--ink-mute); }
+  .toc-label { font-size: .84rem; line-height: 1.34; }
+  .toc-chev { display: none; }
+  .toc-list a:hover { color: var(--on-dark); border-left-color: var(--accent); }
+  .toc-list a:hover .toc-num { color: var(--accent); }
+  .toc-list a[aria-current] { color: var(--on-dark); border-left-color: var(--orange-soft); }
+  .toc-list a[aria-current] .toc-num { color: var(--orange-soft); }
+
+  .side-foot { display: block; margin-top: 1.5rem; }
+  .side-foot .btn { width: 100%; }
+}
+
+/* ------------------------------------------------- the reading column ----- */
+
+/*
+ * Type for reading, and nothing else on the site inherits it. 18px on a phone
+ * at a 1.7 line, paragraphs 1.2em apart, ink at full strength rather than the
+ * softened grey the shorter pages use, and a measure that stops at about 66
+ * characters once there is room to exceed it.
+ */
+.doc--article {
+  max-width: none; font-size: 1.125rem; line-height: 1.7; color: var(--ink);
+  text-wrap: pretty;
+}
+.doc--article > p { margin: 0 0 1.2em; }
+@media (min-width: 46rem) { .doc--article { max-width: 36rem; font-size: 1.08rem; } }
+
+/* the standfirst: the first paragraph, a step larger, on the spectrum */
+.doc--article.doc--lead > p:first-of-type {
+  margin: 0 0 1.5rem; padding-left: 1.05rem; font-size: 1.22rem; line-height: 1.52;
+  color: var(--ink);
+}
+@media (min-width: 46rem) {
+  .doc--article.doc--lead > p:first-of-type { font-size: 1.26rem; padding-left: 1.3rem; }
+}
+
+/*
+ * A heading big enough to land on while skimming, with room above it, and far
+ * enough below the top of the screen that the sticky bar cannot sit on it when
+ * the contents jumps here.
+ */
+.doc--article h2 {
+  font-size: clamp(1.62rem, 7.2vw, 2.05rem); line-height: 1.1;
+  margin: 2.7rem 0 .9rem; scroll-margin-top: 4.3rem;
+}
+.doc--article h3 { margin: 2.1rem 0 .55rem; scroll-margin-top: 4.3rem; }
+@media (min-width: 62rem) {
+  .doc--article h2, .doc--article h3 { scroll-margin-top: 1.5rem; }
+}
+
+/* a link in running text says so without being shouted at */
+.doc--article a { text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
+.doc--article a:hover { text-decoration-thickness: 2.5px; }
+
+/*
+ * A quotation is a quotation, not a box. The washed panel it used to sit in
+ * cost 2.3rem of width on a phone to say what a bar of the spectrum says for
+ * nothing, and the serif reads better with no tint under it.
+ */
+.doc--article blockquote {
+  overflow: visible; margin: 1.75rem 0; padding: .15rem 0 .15rem 1.2rem;
+  background: none; border-radius: 0;
+  font-size: 1.24rem; line-height: 1.45; color: var(--ink);
+}
+.doc--article blockquote::before {
+  inset: .16em auto .16em 0; width: 6px; height: auto; z-index: 0;
+  background-image: var(--grad); -webkit-mask: none; mask: none; opacity: 1;
+  border-radius: var(--r-pill);
+}
+.doc--article blockquote cite { color: var(--ink-mute); }
+
+/* the source note an article signs off with */
+.doc--article hr { margin: 2.4rem 0 1.5rem; }
+.doc--article hr + p { font-size: .88rem; line-height: 1.6; color: var(--ink-soft); }
+
+/* a picture in the body, if ever there is one: never wider than the column */
+.doc--article img { display: block; width: 100%; height: auto; margin: 1.7rem 0; border-radius: var(--r); }
+
+/* ----------------------------------------------------------- in short ----- */
+
+/*
+ * The answer to the question the title asks, in the article's own words, at
+ * the top of the body: the reader has the point before deciding to read on,
+ * and a search engine has a short passage it can quote whole. A card with the
+ * spectrum poured through the smoke, so it is a designed object rather than a
+ * grey box, and the article's own voice rather than a second headline.
+ */
+.inshort {
+  position: relative; isolation: isolate; overflow: hidden;
+  margin: 0 0 1.5rem; padding: 1rem 1.05rem 1.1rem; border-radius: var(--r);
+  background: var(--panel); box-shadow: var(--lift);
+}
+/* The smoke, drawn larger than the card and at rather less than a band's
+   strength: at full strength on a box this small the texture reads as two
+   coloured stains rather than as a wash. */
+.inshort::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; background: var(--grad);
+  -webkit-mask: url("/tex/smokey.png") center / 190% 190% no-repeat;
+  mask: url("/tex/smokey.png") center / 190% 190% no-repeat;
+  opacity: calc(var(--wash-op) * .62);
+}
+.inshort::after {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 5px;
+  background-image: var(--grad-r);
+}
+/* the same ink as "In this article" directly above it: both are the eyebrow on a
+   block, and --ink-mute is 3.35:1 on a panel, which fails AA at 9.6px */
+.inshort-head {
+  margin: 0 0 .45rem; font-family: var(--ui); font-size: .6rem; font-weight: 700;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--ink-soft);
+}
+.inshort p:last-child {
+  margin: 0; font-family: var(--display); font-style: italic; font-weight: 400;
+  font-size: 1.08rem; line-height: 1.4; color: var(--ink); text-wrap: pretty;
+}
+@media (min-width: 46rem) {
+  /* inside the sheet it is an inset rather than a card laid on the page */
+  .inshort { background: var(--shell); box-shadow: none; padding: 1.15rem 1.25rem 1.25rem; }
+  .inshort p:last-child { font-size: 1.14rem; }
+}
+
+/* ------------------------------------------------- how far through it ----- */
+
+/*
+ * The line. Three pixels of the brand's own spectrum at the very top of the
+ * viewport, filling as the article body is read. Drawn with a transform, so it
+ * moves nothing on the page; empty and invisible without the script.
+ */
+.rprog { position: fixed; inset: 0 0 auto; z-index: 60; height: 3px; pointer-events: none; }
+.rprog i {
+  display: block; width: 100%; height: 100%; transform: scaleX(0); transform-origin: 0 50%;
+  background-image: var(--grad-r);
+}
+
+/*
+ * The bar, below 62rem: the widths with no rail beside the reader. It carries
+ * the line on its own top edge, so the two read as one object stuck to the top
+ * of the screen rather than two. It arrives when the band has gone and retires
+ * when the article ends.
+ */
+.rbar {
+  position: fixed; inset: 0 0 auto; z-index: 55; padding-top: 3px;
+  background: var(--panel);
+  box-shadow: 0 8px 20px rgba(40, 40, 40, .1), inset 0 -1px 0 var(--rule);
+  transform: translateY(-101%); visibility: hidden;
+  transition: transform .24s ease, visibility .24s;
+}
+.rbar.is-on { transform: none; visibility: visible; }
+@supports ((-webkit-backdrop-filter: blur(12px)) or (backdrop-filter: blur(12px))) {
+  .rbar { background: rgba(238, 238, 238, .9); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+  :root[data-theme="dark"] .rbar { background: rgba(36, 36, 43, .92); }
+}
+@media (min-width: 62rem) { .rbar { display: none; } }
+
+.rbar-btn {
+  display: flex; align-items: center; gap: .75rem; width: 100%;
+  min-height: 46px; padding: .3rem 0; border: 0; background: none; cursor: pointer;
+  font-family: var(--ui); color: var(--ink); text-align: left;
+}
+.rbar-now {
+  flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-size: .84rem; font-weight: 600; line-height: 1.3;
+}
+/* "4 min left" is the figure the reader asked for, not decoration, and it is the
+   smallest type on the bar: --ink-mute puts it at about 3.3:1 on the bar's own
+   paper, which is not readable on a phone held at arm's length in daylight */
+.rbar-left {
+  flex: none; font-size: .58rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--ink-soft); font-variant-numeric: tabular-nums;
+}
+.rbar-chev {
+  flex: none; width: 7px; height: 7px; margin: -3px .1rem 0 0;
+  border-right: 2px solid var(--ink-mute); border-bottom: 2px solid var(--ink-mute);
+  transform: rotate(45deg); transition: transform .2s ease;
+}
+.rbar-btn[aria-expanded="true"] .rbar-chev { margin-top: 2px; transform: rotate(-135deg); }
+
+.rbar-panel {
+  max-height: min(58vh, 26rem); overflow-y: auto; overscroll-behavior: contain;
+  padding-bottom: .8rem; box-shadow: inset 0 1px 0 var(--rule);
+}
+.rbar-panel .toc-list li:first-child a { border-top: 0; }
+
+/* -------------------------------------------------- the end of a piece ---- */
+
+/*
+ * Where a reader decides to stay or go. Two buttons, both real tap targets,
+ * and nobody else's script on the page: a phone with a share sheet gets its
+ * own share sheet, and everything else copies the address and says so.
+ */
+/*
+ * A dotted rule, not another piece of the spectrum. Three of the articles sign off on a
+ * markdown rule, which already draws one, and two spectrum pills inside a hundred and
+ * thirty pixels read as a repeat rather than as a mark. The piece opens on the contents'
+ * dotted rules and closes on the same line.
+ */
+.art-end {
+  display: flex; flex-wrap: wrap; gap: .6rem; align-items: center;
+  margin: 2rem 0 0; padding-top: 1.5rem; border-top: 2px dotted var(--rule-strong);
+}
+.art-end .btn { flex: 1 1 11rem; }
+@media (min-width: 34rem) { .art-end .btn { flex: 0 0 auto; } }
+/* inside the sheet it lines up under the column it belongs to, not under the paper */
+@media (min-width: 46rem) { .art-end { max-width: 36rem; } }
+.art-share.is-said { background: var(--accent-soft); }
+
+@media (prefers-reduced-motion: reduce) {
+  .toc-list a, .rbar, .rbar-chev { transition: none; }
 }

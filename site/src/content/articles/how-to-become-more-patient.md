@@ -3,6 +3,7 @@ title: How to become more patient
 description: Scripture means two things by patience — being slow to anger with people and being steady while you wait — and gives practice for both.
 published: 2026-09-20
 minutes: 7
+answer: "Scripture means two things by patience: being slow to anger with people, and staying steady while you wait. Both begin with God's patience towards you. So count what you were shown before you count what you are owed, slow the first ten seconds, overlook something, and wait like a farmer."
 tags: [formation, patience]
 quizzes: [seven-deadly-sins]
 image: /img/articles/how-to-become-more-patient.jpg

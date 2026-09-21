@@ -22,6 +22,21 @@ const articles = defineCollection({
      */
     updated: z.coerce.date().optional(),
     minutes: z.number().int().positive(),
+    /**
+     * The article's own answer to the question its title asks, in forty to fifty words,
+     * printed at the top of the body as "In short".
+     *
+     * It exists for two readers at once. A person on a phone gets the point before deciding
+     * whether to read on; a search engine has a short, self-contained passage to quote, which
+     * is what a featured snippet is made of. It must be written FROM THE ARTICLE'S OWN
+     * CONTENT — no claim may appear here that the piece does not make below — because a
+     * summary that says more than the article is exactly the kind of thing this site is not
+     * allowed to publish.
+     *
+     * Optional so that a draft can exist without one; every published article has one, and
+     * scripts/seo-test.mjs fails the build if a published article loses it.
+     */
+    answer: z.string().optional(),
     tags: z.array(z.string()).default([]),
     quizzes: z.array(z.string()).default([]),
     draft: z.boolean().default(false),

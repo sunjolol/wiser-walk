@@ -3,6 +3,7 @@ title: What does it mean to be Christ-like?
 description: Not a personality, not a mood, and not a set of manners — Scripture is unusually concrete about what the likeness consists of.
 published: 2026-09-02
 minutes: 7
+answer: "Not a personality, not a mood. The end God has in view for you is likeness to His Son, and Philippians 2 gives that likeness a direction: downward, to the lowest place, on purpose. You imitate Christ, and you are changed while you look at Him. Both are true at once."
 tags: [formation, discipleship]
 quizzes: [theology-compass, bible-figure]
 image: /img/articles/what-does-it-mean-to-be-christlike.jpg

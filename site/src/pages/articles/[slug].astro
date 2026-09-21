@@ -4,6 +4,8 @@ import Base from '../../layouts/Base.astro';
 import SectionHead from '../../components/SectionHead.astro';
 import NextUp from '../../components/NextUp.astro';
 import ReadCard from '../../components/ReadCard.astro';
+import ReadingProgress from '../../components/ReadingProgress.astro';
+import Icon from '../../components/Icon.astro';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { getCollection, render } from 'astro:content';
@@ -21,7 +23,7 @@ const { article } = Astro.props;
 const { Content, headings } = await render(article);
 
 /*
- * The ghost word behind the band is the article's own subject, read off its slug rather
+ * The ghost word behind the rail is the article's own subject, read off its slug rather
  * than written by hand, so a new article arrives with one already: the last segment
  * ("grateful", "joyful", "christlike"), falling back to the longest segment when that one
  * is too short to carry display type.
@@ -31,8 +33,14 @@ const last = segments[segments.length - 1] ?? '';
 const ghost =
   last.length >= 4 ? last : segments.reduce((a, b) => (b.length > a.length ? b : a), '');
 
-/* Contents from the rendered headings — the article's own h2s, in the order they appear. */
-const contents = headings.filter(h => h.depth === 2).map(h => ({ id: h.slug, label: h.text }));
+/*
+ * Contents from the rendered headings — the article's own h2s, in the order they appear.
+ * The number is written out here rather than drawn by a CSS counter, because the reading
+ * bar clones this list into itself and a counter would restart inside the copy.
+ */
+const contents = headings
+  .filter(h => h.depth === 2)
+  .map((h, i) => ({ id: h.slug, label: h.text, n: String(i + 1).padStart(2, '0') }));
 
 /*
  * The date, printed and marked up, and both read off the same instant.
@@ -44,10 +52,14 @@ const contents = headings.filter(h => h.depth === 2).map(h => ({ id: h.slug, lab
  * asks a page not to do. So the rail is pinned to UTC, which is the zone the front matter is
  * written in. Vercel builds in UTC, so nothing on the live site moves.
  */
-const published = article.data.published.toLocaleDateString('en-GB', {
-  day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC'
-});
-const publishedISO = article.data.published.toISOString().slice(0, 10);
+const day = (d: Date) =>
+  d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+const iso = (d: Date) => d.toISOString().slice(0, 10);
+const published = day(article.data.published);
+const publishedISO = iso(article.data.published);
+/* Only a real rewrite has an `updated`; nothing prints where there has not been one. */
+const updated = article.data.updated ? day(article.data.updated) : null;
+const updatedISO = article.data.updated ? iso(article.data.updated) : null;
 
 /*
  * Where to go next. Articles and quizzes cross-link in both directions, so the quizzes
@@ -119,6 +131,30 @@ function jpegSize(publicPath: string): { width: number; height: number } | null 
 const url = new URL(`/articles/${article.id}/`, Astro.site).href;
 
 /*
+ * How many words the piece actually is, counted off its own source rather than typed into
+ * the front matter where it would go stale on the first edit. The markup is stripped rather
+ * than parsed: link text is kept and the address dropped, pictures and fences go entirely,
+ * and the marker characters are removed one at a time so that a hyphenated word stays one
+ * word. It is an honest count of the prose, which is what wordCount is for.
+ */
+const plain = article.body
+  ? article.body
+      .replace(/```[\s\S]*?```/g, ' ')
+      .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')
+      .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
+      .replace(/^\s*-{3,}\s*$/gm, ' ')
+      .replace(/[#>*_`~]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
+  : '';
+const wordCount = plain ? plain.split(' ').length : 0;
+
+/* The shelf this piece sits on, for a search engine that wants to group a site's writing.
+   It is the article's own first topic, never one invented here. */
+const topic = article.data.tags[0];
+const articleSection = topic ? topic.charAt(0).toUpperCase() + topic.slice(1) : null;
+
+/*
  * One Organization, named once and pointed at twice. The home page publishes the full node
  * under the same @id, so an engine that has read both pages holds one entity rather than two
  * that happen to share a name. The owner stays faceless: the author here is the site, which
@@ -157,12 +193,14 @@ const jsonLd = {
         }
       }
     : {}),
-  datePublished: article.data.published.toISOString().slice(0, 10),
+  datePublished: publishedISO,
   /* Only a real rewrite gets a dateModified. A deploy is not an edit, and there is no field
      here that a build timestamp could fill. */
-  ...(article.data.updated
-    ? { dateModified: article.data.updated.toISOString().slice(0, 10) }
-    : {}),
+  ...(updatedISO ? { dateModified: updatedISO } : {}),
+  ...(wordCount ? { wordCount } : {}),
+  /* The same minutes the band prints, in the form schema.org asks for. */
+  timeRequired: `PT${article.data.minutes}M`,
+  ...(articleSection ? { articleSection } : {}),
   author: ORGANISATION,
   publisher: { '@id': ORGANISATION['@id'] },
   isPartOf: { '@id': 'https://wiserwalk.com/#website' },
@@ -183,6 +221,8 @@ import '../../styles/pages/reads.css';
   jsonLd={jsonLd}
   breadcrumbs={breadcrumbs}
 >
+  <ReadingProgress minutes={article.data.minutes} />
+
   <Hero
     title={article.data.title}
     eyebrow="Article"
@@ -202,48 +242,92 @@ import '../../styles/pages/reads.css';
   />
 
   <div class="doc-layout">
-    <aside class="doc-rail dark">
-      <div class="dark-ghost" aria-hidden="true">{ghost}</div>
-      <div class="rail-stick">
-        <p class="rail-tag">Article</p>
-        {/*
-          The reading time and the topics used to be repeated here as a spec list, directly
-          under a band that had just printed both as tiles. What a reader wants beside a
-          long piece is the way through it, so the rail is the date, the contents and the
-          way back, and the repeat is gone (the dawn pass, 2026-09-21).
-        */}
-        <p class="rail-when">Published <time datetime={publishedISO}>{published}</time></p>
-        <nav aria-label="Contents">
-          <p class="toc-head">In this article</p>
-          <ol class="toc-list">
-            {contents.map(c => <li><a href={`#${c.id}`}>{c.label}</a></li>)}
-          </ol>
-        </nav>
-        <div class="rail-foot">
+    {/*
+      One element, two skins (2026-09-21). On a phone it is a compact light block sitting
+      directly under the band — the date, then the way through the piece as full-width rows
+      on dotted rules. From 62rem the same element becomes the charcoal rail beside the
+      reading column, sticky, with the tag, the pace and the way back that a phone has no
+      room for. The owner's words on the old one: the bubbles should span the full width,
+      each only as tall as its text needs, and dotted lines rather than bubbles.
+    */}
+    <aside class="doc-rail">
+      <div class="rail-ghost" aria-hidden="true">{ghost}</div>
+      <div class="side-stick">
+        <p class="side-tag">Article</p>
+        {/* The reading time is one thing and must wrap as one: left to itself it put the
+            numeral at the end of a line and "min read" on the next. */}
+        <p class="side-when">
+          Published <time datetime={publishedISO}>{published}</time>
+          <span class="side-dot" aria-hidden="true">·</span>
+          <span class="side-read">{article.data.minutes} min read</span>
+        </p>
+        {updated && (
+          <p class="side-when side-when--upd">
+            Updated <time datetime={updatedISO}>{updated}</time>
+          </p>
+        )}
+        {/* Filled in by ReadingProgress, and absent entirely without it. */}
+        <div class="side-pace" hidden>
+          <span class="side-pace-track"><i></i></span>
+          <span class="side-pace-left"></span>
+        </div>
+
+        {contents.length > 0 && (
+          <nav class="toc" id="contents" aria-label="Contents">
+            <p class="toc-head">
+              In this article
+              <span class="toc-count">{contents.length} {contents.length === 1 ? 'section' : 'sections'}</span>
+            </p>
+            <ol class="toc-list" id="toc-list">
+              {contents.map(c => (
+                <li>
+                  <a href={`#${c.id}`} data-label={c.label}>
+                    <span class="toc-num">{c.n}</span>
+                    <span class="toc-label">{c.label}</span>
+                    <span class="toc-chev" aria-hidden="true"></span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        )}
+
+        <div class="side-foot">
           <a class="btn ghost" href="/articles/">All articles</a>
         </div>
       </div>
     </aside>
 
-    <div class="pnl">
-      {/* The painting moved into the band on 2026-09-21 (the dawn pass), with its credit.
-          Drawing it here as well put the same picture on the page twice. */}
-      <article class="doc doc--lead">
+    {/*
+      No panel on a phone. The owner: it makes no sense to put the article inside a content
+      box when the screen is already narrow, because the box takes width the reader does not
+      have to spare. So the prose sits straight on the page inside the page's own gutter, and
+      the sheet comes back only from 46rem, where there is paper to spare.
+    */}
+    <div class="art-sheet">
+      <article class="doc doc--lead doc--article" id="article-body">
+        {article.data.answer && (
+          <aside class="inshort" aria-label="In short">
+            <p class="inshort-head">In short</p>
+            <p>{article.data.answer}</p>
+          </aside>
+        )}
         <Content />
       </article>
+
     </div>
   </div>
 
   {(nextQuizzes.length > 0 || nextGames.length > 0) && (
     <section class="doc-next">
-      <SectionHead title="Keep going" kicker="Where this leads" />
+      <SectionHead title="Try one" kicker="Where this leads" />
       <NextUp quizzes={nextQuizzes} games={nextGames} />
     </section>
   )}
 
   {moreReads.length > 0 && (
     <section>
-      <SectionHead title="More to read" kicker="From the same shelf" href="/articles/" more="All articles" />
+      <SectionHead title="Keep reading" kicker="From the same shelf" />
       <div class="hm-reads reads-foot">
         {moreReads.map(a => (
           <ReadCard id={a.id} title={a.data.title} description={a.data.description}
@@ -253,42 +337,68 @@ import '../../styles/pages/reads.css';
       </div>
     </section>
   )}
-</Base>
+  {/*
+    The foot of the piece, in the order a reader meets it: the thing to do next, the
+    other articles, then the two quiet buttons. The share control is hidden until the
+    script can tell which of the two it is; with no script there is nothing to press
+    that would not have done nothing.
+  */}
+  <div class="art-end">
+    <button class="btn ghost art-share" type="button" hidden
+            data-title={article.data.title} data-url={url}>
+      <span class="art-share-say">Copy link</span>
+    </button>
+    <a class="btn ghost art-back" href="/articles/">All articles <Icon name="arrow" size={14} /></a>
+  </div>
 
-{/*
- * The contents list marks the section the reader is in. It is an enhancement and nothing
- * depends on it: without JavaScript every link still jumps, and the list simply carries no
- * mark. The band of the viewport it watches is the top third, so a heading counts as
- * "current" from the moment it settles near the top rather than when it leaves.
- */}
-<script>
-  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('.toc-list a[href^="#"]'));
-  if (links.length && 'IntersectionObserver' in window) {
-    const sections = new Map<Element, HTMLAnchorElement>();
-    for (const a of links) {
-      const el = document.getElementById(decodeURIComponent(a.hash.slice(1)));
-      if (el) sections.set(el, a);
-    }
-    const order = Array.from(sections.keys());
-    const visible = new Set<Element>();
-    let current: HTMLAnchorElement | null = null;
-    const mark = (a: HTMLAnchorElement) => {
-      if (current === a) return;
-      if (current) current.removeAttribute('aria-current');
-      current = a;
-      a.setAttribute('aria-current', 'true');
-    };
-    const io = new IntersectionObserver(
-      entries => {
-        for (const e of entries) {
-          if (e.isIntersecting) visible.add(e.target);
-          else visible.delete(e.target);
+  {/*
+    Sharing the piece, with nothing from anybody else on the page.
+
+    A phone that has the share sheet gets the share sheet, which is the one the reader
+    already knows and the only route to the app they actually use. Everything else copies
+    the address and says so. No network, no icons from a social network, no script but
+    this one: an article that loads a tracker in order to be shared is not worth sharing.
+
+    It sits directly under the button it wires up, so it runs the moment that button
+    exists and needs no listener to tell it the page is ready.
+  */}
+  <script is:inline>
+    (function () {
+      var btn = document.querySelector('.art-share');
+      if (!btn) return;
+      var say = btn.querySelector('.art-share-say');
+      var title = btn.getAttribute('data-title') || document.title;
+      var url = btn.getAttribute('data-url') || location.href;
+      var sheet = typeof navigator.share === 'function';
+      var clip = navigator.clipboard && navigator.clipboard.writeText;
+      if (!sheet && !clip) return;
+
+      if (sheet) say.textContent = 'Share this article';
+      btn.hidden = false;
+
+      var resting = say.textContent;
+      var timer = 0;
+      var said = function (text) {
+        say.textContent = text;
+        btn.classList.add('is-said');
+        window.clearTimeout(timer);
+        timer = window.setTimeout(function () {
+          say.textContent = resting;
+          btn.classList.remove('is-said');
+        }, 2400);
+      };
+
+      btn.addEventListener('click', function () {
+        if (sheet) {
+          navigator.share({ title: title, url: url }).catch(function () {});
+          return;
         }
-        const first = order.find(el => visible.has(el));
-        if (first) mark(sections.get(first)!);
-      },
-      { rootMargin: '0px 0px -66% 0px', threshold: 0 }
-    );
-    sections.forEach((_, el) => io.observe(el));
-  }
-</script>
+        navigator.clipboard.writeText(url).then(
+          function () { said('Link copied'); },
+          function () { said('Could not copy'); }
+        );
+      });
+    })();
+  </script>
+
+</Base>

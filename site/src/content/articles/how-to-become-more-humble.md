@@ -3,6 +3,7 @@ title: How to become more humble
 description: Scripture rarely tells anyone to feel humble; it tells them to take a seat, pick up a towel and keep quiet about a gift.
 published: 2026-09-20
 minutes: 6
+answer: "Humility is not a low opinion of yourself but a sober one, and it stops measuring you against other people. Scripture commands actions rather than feelings: take the lower seat, do the job beneath your position, leave some good unreported, and say your faults aloud to someone."
 tags: [formation, humility]
 quizzes: [seven-deadly-sins]
 image: /img/articles/how-to-become-more-humble.jpg
