@@ -127,7 +127,23 @@ const NAV: Array<{
     <title>{fullTitle}</title>
     <meta name="description" content={metaDescription} />
     <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex, follow" />}
+    {/*
+      A page that may be indexed also says its picture may be shown large. Without this a search
+      engine keeps to a thumbnail, or to nothing; with it the painting on an article or the card
+      on a quiz can appear beside the result and in Discover.
+    */}
+    {noindex
+      ? <meta name="robots" content="noindex, follow" />
+      : <meta name="robots" content="max-image-preview:large" />}
+    {/*
+      The site icon (design/icon/render.mjs draws it). Google only shows a favicon whose side is
+      a multiple of 48 px, which is why 48, 96 and 192 are all offered and the .ico leads with 48.
+      No web manifest: this is a website, not an app (see CLAUDE.md).
+    */}
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/icon-96.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     {/*
       Applied before first paint, so a reader who chose a theme never sees the other one

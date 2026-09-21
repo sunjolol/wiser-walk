@@ -29,6 +29,7 @@ import { QUIZZES, getQuiz, scoreQuiz, resultFor, outcomeHref, quizHref } from '.
 import { groupNounPlural } from '../lib/engine/types';
 import type { BipolarView } from '../lib/engine/types';
 import { liveGames } from '../lib/games';
+import { SEO } from '../lib/seo';
 import slsMeta from '../games/sounds-like-scripture.meta.json';
 import wsiMeta from '../games/who-said-it.meta.json';
 import audit from '../data/compass-audit.json';
@@ -54,12 +55,37 @@ const articles = (await getCollection('articles'))
   .sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf() || a.data.title.localeCompare(b.data.title));
 const articleCount = articles.length;
 const shownArticles = articles.slice(0, 3);
+/*
+ * Two things a search engine reads here and nowhere else: the site's NAME (so a result is
+ * headed "Wiser Walk" rather than the bare domain) and its LOGO. The description is the one
+ * the page's own meta tag carries (lib/seo.ts), so the two can never disagree.
+ */
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  name: 'Wiser Walk',
-  url: 'https://wiserwalk.com/',
-  description: 'Quizzes, games and articles for understanding yourself, and your walk with God, a little better.'
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': 'https://wiserwalk.com/#website',
+      name: 'Wiser Walk',
+      alternateName: ['WiserWalk', 'wiserwalk.com'],
+      url: 'https://wiserwalk.com/',
+      description: SEO['/'].description,
+      inLanguage: 'en',
+      publisher: { '@id': 'https://wiserwalk.com/#organization' }
+    },
+    {
+      '@type': 'Organization',
+      '@id': 'https://wiserwalk.com/#organization',
+      name: 'Wiser Walk',
+      url: 'https://wiserwalk.com/',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://wiserwalk.com/icon-512.png',
+        width: 512,
+        height: 512
+      }
+    }
+  ]
 };
 ---
 <Base

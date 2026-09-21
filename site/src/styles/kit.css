@@ -196,7 +196,7 @@ body {
 /* --------------------------------------------------------------- the band */
 
 .band {
-  position: relative; isolation: isolate; overflow: hidden;
+  position: relative; isolation: isolate; overflow: hidden; overflow: clip;
   margin: calc(-1 * var(--top)) calc(-1 * var(--gut)) 0;
   padding: 2.1rem var(--gut) 2.2rem;
   background: var(--panel);
@@ -430,7 +430,7 @@ body {
   --zone-hatch: rgba(190, 196, 205, .2); --zone-edge: rgba(190, 196, 205, .34);
   --rule: rgba(234, 232, 228, .14); --rule-strong: rgba(234, 232, 228, .24);
   --accent-soft: rgba(126, 186, 238, .14);
-  position: relative; isolation: isolate; overflow: hidden;
+  position: relative; isolation: isolate; overflow: hidden; overflow: clip;
   background-color: var(--dark-fill); background-image: var(--dark-fill-img); background-size: 520px;
   color: var(--on-dark); border-radius: var(--r-lg); box-shadow: var(--lift);
 }
@@ -611,15 +611,23 @@ body {
  * carry a mark and an ink each, links answer a hover with colour and movement, and the only
  * rule left is one hairline of the brand's own gradient above the last line.
  */
+/*
+ * overflow: clip, not hidden, on every box that holds a ghost word. The word hangs below the
+ * box on purpose and is cut off at its edge. With `hidden` that overhang makes the box
+ * scrollable, and a link to an anchor inside it (the footer's #foot-signup, from /me/) scrolls
+ * the BOX as well as the page: the heading slid up out of the footer and a blank strip opened
+ * under it. `clip` cuts the same way and cannot be scrolled. `hidden` stays first for a browser
+ * that does not know `clip`; flow-root keeps the block formatting context `hidden` was giving.
+ */
 .site-foot {
-  position: relative; isolation: isolate; overflow: hidden; margin-top: 3.5rem;
+  position: relative; isolation: isolate; overflow: hidden; overflow: clip; display: flow-root; margin-top: 3.5rem;
   background-color: var(--dark-fill); background-image: var(--dark-fill-img); background-size: 520px;
   color: var(--on-dark-soft); border-radius: 30px 30px 0 0;
 }
 :root[data-theme="dark"] .site-foot { background-color: #1F1F26; }
 
 /* the walk */
-.foot-dawn { position: relative; isolation: isolate; overflow: hidden; }
+.foot-dawn { position: relative; isolation: isolate; overflow: hidden; overflow: clip; display: flow-root; }
 /* On a phone the picture is drawn a little larger than the band and hung from its foot, so the
    walker stands clear above the words instead of behind them.
    2026-09-21: the band used to open on eleven rem of sky before the kicker, with two rem under
@@ -657,7 +665,10 @@ body {
   .site-foot .foot-dawn-in { grid-template-columns: minmax(0, 1fr) minmax(0, 25rem); gap: 3rem; align-items: center; align-content: center; padding-top: 3.6rem; padding-bottom: 3.6rem; min-height: 19rem; }
   /* the walker stands at the left of the frame, so the words go to the right of him */
   .foot-dawn-say { grid-column: 2; grid-row: 1; }
-  .foot-signup { grid-column: 2; grid-row: 2; }
+  /* A link to #foot-signup (from /me/) should arrive with the heading above the field in view,
+   not with the field jammed against the top of the screen. */
+.foot-signup { scroll-margin-top: 9.5rem; }
+.foot-signup { grid-column: 2; grid-row: 2; }
   .site-foot .foot-dawn-in { grid-template-rows: auto auto; row-gap: 1.2rem; }
 }
 

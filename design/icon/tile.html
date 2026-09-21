@@ -1,0 +1,34 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;width:512px;height:512px;overflow:hidden}
+  .t{width:512px;height:512px;position:relative;display:grid;place-items:center;font-family:'DM Serif Display',serif}
+  /* A: the wordmark's own move. Dark ground, italic W in the blue-to-orange of "Walk". */
+  .A{background:#3b3a38}
+  .A b{font-style:italic;font-weight:400;font-size:400px;line-height:1;margin-top:-34px;margin-left:-14px;
+       background:linear-gradient(100deg,#7EBAEE 12%,#F0A06F 88%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  /* B: the gradient is the ground, the letter is paper. */
+  .B{background:linear-gradient(135deg,#7EBAEE,#F0A06F)}
+  .B b{font-weight:400;font-size:380px;line-height:1;margin-top:-30px;color:#fffdf9;text-shadow:0 6px 18px rgba(68,68,68,.18)}
+  /* C: dawn. A sun coming up over a hill with a path to it. No letter. */
+  .C{background:linear-gradient(180deg,#7EBAEE 0%,#bcd3e6 38%,#f6c9a4 62%,#F0A06F 100%)}
+  /* D: light ground like the site's panels, dark upright W, gradient rule beneath (the "walk"). */
+  .D{background:#f1efec}
+  .D b{font-weight:400;font-size:360px;line-height:1;margin-top:-78px;color:#444}
+  .D i{position:absolute;left:96px;right:96px;bottom:92px;height:34px;border-radius:17px;background:linear-gradient(90deg,#7EBAEE,#F0A06F)}
+</style></head>
+<body><script>
+  const k = new URLSearchParams(location.search).get('k') || 'A';
+  const t = document.createElement('div'); t.className = 't ' + k;
+  if (k === 'C') {
+    t.innerHTML = `<svg viewBox="0 0 512 512" width="512" height="512" style="position:absolute;inset:0">
+      <circle cx="256" cy="300" r="112" fill="#fff6ea"/>
+      <path d="M0 330 C120 250 210 300 256 318 C330 346 420 270 512 316 L512 512 L0 512 Z" fill="#3b3a38"/>
+      <path d="M214 512 C232 430 250 372 262 322 C270 372 300 430 330 512 Z" fill="#f1efec"/>
+    </svg>`;
+  } else {
+    t.innerHTML = '<b>W</b>' + (k === 'D' ? '<i></i>' : '');
+  }
+  document.body.appendChild(t);
+</script></body></html>
