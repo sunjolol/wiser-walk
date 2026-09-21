@@ -24,7 +24,7 @@ export const CARDS = {
     h: 'See where you|*actually* stand.', s: 'Free Christian quizzes. Most take three minutes.' },
   games: { v: 'left', tone: 'night', img: '/img/game-manuscript.jpg', pos: '50% 20%', k: 'Bible games',
     h: 'Is that line really|in the *Bible?*', s: 'Two fast, free games. Ten lines a run.' },
-  articles: { v: 'left', tone: 'painting', img: '/img/reads-harvest.jpg', pos: '50% 50%', k: 'Articles',
+  articles: { v: 'left', tone: 'painting', img: '/img/reads-sower.jpg', pos: '62% 12%', k: 'Articles',
     h: 'The slow work|of *becoming.*', s: 'Short reads on gratitude, patience, forgiveness and more.' },
   support: { v: 'right', tone: 'dawn', img: '/img/support-hand.jpg', pos: '40% 45%',
     h: 'Keep Wiser|Walk *free.*', s: 'Every quiz, game and article is free. You can help keep it that way.' },
