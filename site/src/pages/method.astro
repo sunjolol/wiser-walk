@@ -8,6 +8,7 @@ import audit from '../data/compass-audit.json';
 import { theologyCompass } from '../lib/quizzes/theology-compass';
 
 import CorrectionNote from '../components/CorrectionNote.astro';
+import { ACCOUNTS_READY } from '../lib/account/config';
 import ChangeEntry from '../components/ChangeEntry.astro';
 
 const sheets = (audit.simulations ?? []) as Array<Record<string, any>>;
@@ -401,6 +402,16 @@ const breadcrumbs = [
     <SectionHead id="your-answers" title="Your answers" kicker="What leaves your browser, and when" />
 
     <div class="stack stack--2">
+      {/*
+        Two truths, and the page prints whichever one is true of THIS build. Until the account
+        keys are set there is no account to have, so a reader gets exactly the words the site
+        has carried all along ("there is no account, and nothing about your result is stored on
+        our side"). The moment accounts can exist, even unlinked, that sentence is false, and
+        the second version takes its place. The owner's condition for shipping the hidden
+        account code was that nothing about the site changes; this is how that holds here.
+      */}
+      {ACCOUNTS_READY ? (
+        <Fragment>
       <section class="pnl">
         <div class="pnl-head">
           <p class="pnl-kicker">Scored on your device</p>
@@ -467,6 +478,53 @@ const breadcrumbs = [
           </p>
         </div>
       </section>
+        </Fragment>
+      ) : (
+        <Fragment>
+      <section class="pnl">
+        <div class="pnl-head">
+          <p class="pnl-kicker">Scored on your device</p>
+          <h2 class="pnl-title">Nothing is sent.</h2>
+        </div>
+        <div class="doc">
+          <p>
+            Every quiz is scored in your browser. Answers are never sent to a server, there is no
+            account, and nothing about your result is stored on our side. A result link carries
+            only your scores, encoded — which is also why a broken link cannot be recovered.
+          </p>
+          <p>
+            A result you finish is now saved in your own browser, so you can find it again on
+            <a href="/me/">My results</a>. It stays on that device and is not sent anywhere, and
+            clearing the lot is one button on that page.
+          </p>
+        </div>
+      </section>
+
+      <section class="pnl">
+        <div class="pnl-head">
+          <p class="pnl-kicker">The two exceptions</p>
+          <h2 class="pnl-title">Only if you ask for it.</h2>
+        </div>
+        <div class="doc">
+          <p>
+            There are two exceptions, and each only happens if you ask for it. At the foot of
+            every page you can sign up for news of new quizzes and games; that sends our email
+            provider the address you typed and nothing else. And at the bottom
+            of a result page you can request a short follow-up series about the axes you leaned on
+            hardest. If you fill that form in, two things are sent to our email provider: the
+            address you typed, and the code from your result link. The code is what makes the
+            emails about <em>your</em> result rather than a generic one. Nothing else is sent, and
+            if you fill in neither form, nothing leaves your browser at all.
+          </p>
+          <p>
+            This page used to say there was no email list. There is one now; saying otherwise
+            while running one would be the same kind of dishonesty the rest of this page exists to
+            rule out.
+          </p>
+        </div>
+      </section>
+        </Fragment>
+      )}
 
       <section class="pnl">
         <div class="pnl-head">
@@ -493,14 +551,14 @@ const breadcrumbs = [
     <div class="stack stack--2">
       <section class="pnl">
         <div class="pnl-head">
-          <p class="pnl-kicker">On your device</p>
+          <p class="pnl-kicker">{ACCOUNTS_READY ? 'On your device' : 'On your device, nowhere else'}</p>
           <h2 class="pnl-title">Four things in local storage.</h2>
         </div>
         <div class="doc">
           <p>
             <a href="/play/sounds-like-scripture/">Sounds Like Scripture</a> is scored in your browser
             like everything else here. To avoid showing you the same line twice, it keeps four
-            things in your browser's own storage: the Bible you
+            things in your browser's own storage{ACCOUNTS_READY ? '' : ', on your device and nowhere else'}: the Bible you
             chose, your best score, which lines you have already seen, and a tally of which
             sources have fooled you. Clearing your browser's site data erases all of it. A
             challenge link carries the run's number, one score and ten answer times, with no name
@@ -541,7 +599,7 @@ const breadcrumbs = [
             the wrong mouth, <a
               href="https://github.com/sunjolol/wiser-walk/issues/new?title=Correction%3A%20Who%20Said%20It%3F"
               rel="noopener">tell us</a> with the reference and we will look. Like its sibling, the
-            game keeps three things in your browser's own storage: your best
+            game keeps three things in your browser's own storage{ACCOUNTS_READY ? '' : ' and nowhere else'}: your best
             score, which lines you have already seen, and the tally of which pairs of speakers you
             mix up.
           </p>

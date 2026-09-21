@@ -6,6 +6,7 @@ import Icon from '../components/Icon.astro';
 import { getCollection } from 'astro:content';
 import { QUIZZES, liveQuizzes, getQuiz } from '../lib/engine/registry';
 import { liveGames } from '../lib/games';
+import { ACCOUNTS_READY } from '../lib/account/config';
 import { artFor } from '../lib/art';
 import audit from '../data/compass-audit.json';
 
@@ -175,7 +176,9 @@ const breadcrumbs = [
     <li><strong>Not a verdict on your faith.</strong> No quiz here scores anyone as a better or worse Christian.</li>
     <li><strong>Not a recruiting tool.</strong> The Compass tells you where you already stand; it does not argue you toward a position.</li>
     <li><strong>Not a church.</strong> Nothing here substitutes for one.</li>
-    <li><strong>Not a mailing list you get put on.</strong> There is one. Nothing is sent unless you type your address in yourself, the box you type it into says what will come, and one link in any email stops it.</li>
+    {ACCOUNTS_READY
+      ? <li><strong>Not a mailing list you get put on.</strong> There is one. Nothing is sent unless you type your address in yourself, the box you type it into says what will come, and one link in any email stops it.</li>
+      : <li><strong>Not a mailing list you get put on.</strong> There is one, and it is entirely opt-in: nothing is sent unless you type your address in and ask.</li>}
   </ul>
 
   <SectionHead title="On fairness" kicker="The one failure this site cannot afford" />
