@@ -80,6 +80,21 @@ any of them can stand in if the file is ever replaced.
 
 Each painting has a 560 px `-card.jpg` copy beside it for the article cards (quality 68). When a painting is added or replaced, make its card copy too, or the card will 404.
 
+## Public domain painting: the account pages (`account-threshold.jpg`)
+
+Added 2026-09-21. **John Atkinson Grimshaw (1836–1893), "A November Morning", signed and dated
+1883, oil on canvas, 50.8 × 75.9 cm.** From Wikimedia Commons,
+`File:A November Morning.webp` (https://commons.wikimedia.org/wiki/File:A_November_Morning.webp),
+which states **Public domain** and names the artist; Grimshaw died more than a century ago, so
+the painting is out of copyright everywhere. The Commons file credits a Sotheby's catalogue
+photograph of the original. Resized from 2880 px to **1500 px wide, JPEG quality 67, 286 KB**.
+
+A lane at first light with a gate standing open in a stone wall, a house among bare trees and
+leaves on the road. It means "come in" without a word of church vocabulary, it is a painting in
+colour rather than another engraving, and it is on no other page: the five account flow pages
+share it so they read as one movement, and `/account/` and `/account/setup/` wear the dark
+starry ground instead because they are not a doorway.
+
 ## Unsplash (free to use under the Unsplash licence; replace with Envato equivalents at will)
 
 | file | what it shows | Unsplash photo id |

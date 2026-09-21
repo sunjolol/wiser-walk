@@ -9,6 +9,7 @@ import '../styles/touch.css';
 import { QUIZZES, quizHref } from '../lib/engine/registry';
 import { liveGames } from '../lib/games';
 import { SEO, ogImageFor } from '../lib/seo';
+import { ACCOUNTS_READY } from '../lib/account/config';
 import Icon from '../components/Icon.astro';
 
 export interface Props {
@@ -16,6 +17,16 @@ export interface Props {
   description: string;
   /** Result pages and unaudited drafts stay out of the index; content pages do not. */
   noindex?: boolean;
+  /**
+   * The page's referrer policy, where the default is not safe enough.
+   *
+   * /account/password/ is opened from an email with a one-time token in its address. Its
+   * own inline script cleans the address bar before anything in the body runs, but the
+   * stylesheet request in the head is issued during head parse, before that script, and
+   * would carry the token in its Referer header. This closes that one gap, and it has to
+   * live here because it is a head tag and pages cannot add those.
+   */
+  referrer?: string | null;
   /** JSON-LD for this page, serialised into a script tag. */
   jsonLd?: Record<string, unknown> | null;
   /**
@@ -29,7 +40,8 @@ export interface Props {
 }
 
 const {
-  title, description, noindex = false, jsonLd = null, breadcrumbs = null, ogType = 'website'
+  title, description, noindex = false, jsonLd = null, breadcrumbs = null, ogType = 'website',
+  referrer = null
 } = Astro.props;
 
 const breadcrumbLd =
@@ -124,6 +136,8 @@ const NAV: Array<{
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {/* As early as head allows: it has to be read before the first request this page makes. */}
+    {referrer && <meta name="referrer" content={referrer} />}
     <title>{fullTitle}</title>
     <meta name="description" content={metaDescription} />
     <link rel="canonical" href={canonical} />
@@ -160,6 +174,52 @@ const NAV: Array<{
       } catch (e) { document.documentElement.dataset.theme = 'light'; }
     </script>
 
+    {ACCOUNTS_READY && (
+      /*
+        Whether there is an account behind this browser, read here for the same reason the
+        theme is: the pages that show it must be right on the first paint rather than flick
+        from one state to the other. It is one small key holding an address and an expiry,
+        written when somebody signs in; no network, no library, and a storage that refuses
+        to be read simply leaves the attribute off.
+
+        Its own tag, and not a second try inside the theme's: with no project behind the
+        build there is no account to be in, and then this is not on the page at all rather
+        than on it doing nothing. It also answers a different question from the links
+        switch. A browser that IS signed in must see its account whatever the public can
+        see, so everything signed-in asks ACCOUNTS_READY and this attribute, and only what
+        a signed-OUT reader is shown waits for ACCOUNTS_VISIBLE.
+      */
+      <script is:inline>
+        try {
+          var acct = JSON.parse(localStorage.getItem('ww.acct.v1'));
+          if (acct && acct.e) document.documentElement.dataset.account = 'in';
+        } catch (e) {}
+      </script>
+    )}
+
+    {import.meta.env.DEV && (
+      /*
+        Development only, and compiled out of anything that is ever served: ?as=in puts the
+        browser into the signed-in chrome without a real account, and ?as=out takes it back
+        out again. It exists so the two states can be looked at side by side while they are
+        being designed, which is the only way to be sure neither of them jumps.
+      */
+      <script is:inline>
+        try {
+          var as = new URLSearchParams(location.search).get('as');
+          if (as === 'in') {
+            localStorage.setItem('ww.acct.v1', JSON.stringify({ e: 'you@example.com', x: 0 }));
+            localStorage.setItem('ww.acct.synced', new Date().toISOString());
+            document.documentElement.dataset.account = 'in';
+          } else if (as === 'out') {
+            localStorage.removeItem('ww.acct.v1');
+            localStorage.removeItem('ww.acct.synced');
+            delete document.documentElement.dataset.account;
+          }
+        } catch (e) {}
+      </script>
+    )}
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -192,11 +252,19 @@ const NAV: Array<{
       // recorded, and a pair of codes is not recorded either: two people who compared
       // results would otherwise be joined up in a log, which is exactly what a page that
       // stores nothing must not do by the back door.
+      // An account page's address can carry a one-time token, because it is opened from an
+      // email and an email client is not to be trusted with a fragment. The path is all that
+      // is ever counted for those, so the query and the hash go before the view is sent.
       // The queue stub is the same one the Vercel adapter injects; defining it again is a no-op.
       window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
       window.va('beforeSend', function (event) {
         try {
           var u = new URL(event.url);
+          if (u.pathname.indexOf('/account/') === 0) {
+            u.search = '';
+            u.hash = '';
+            return Object.assign({}, event, { url: u.toString() });
+          }
           var m = u.pathname.match(/^\/(r|c)\/([^/]+)\/[^/]+\/?$/);
           if (m) {
             u.pathname = '/' + m[1] + '/' + m[2] + '/';
@@ -471,10 +539,25 @@ const NAV: Array<{
        * page and importing the engine to count a list would be a module for a dot. It reads
        * and never writes; with this script blocked the item is a plain link, which is what it
        * already is.
+       *
+       * Signed in, there is something behind it whatever this particular browser has stored,
+       * so the mark carries the SAME dot: one mark, one size, one fill. A second badge, or a
+       * ring here and a fill there, is the row of mismatched state marks the owner threw out.
+       * The link itself does not change either. /me/ is where an account lives as well as
+       * where the device's own results do, so the door is the same door in both states.
+       *
+       * The attribute is the whole test, and no build flag is needed beside it: it is only
+       * ever written by the head script above, which is only on the page when there is a
+       * project behind the build. Signed in is signed in whether or not the public can see
+       * the way in yet.
        */
       (function () {
         var item = document.querySelector('.site-head .nav-me');
         if (!item) return;
+        if (document.documentElement.dataset.account === 'in') {
+          item.classList.add('has-saved');
+          return;
+        }
         try {
           var saved = JSON.parse(localStorage.getItem('ww.shelf.v1'));
           if (Array.isArray(saved) && saved.length) item.classList.add('has-saved');
@@ -507,6 +590,84 @@ const NAV: Array<{
         // Keep following the system until the reader has actually chosen.
         paint();
       })();
+    </script>{ACCOUNTS_READY && (
+    /*
+      Results finished on this device, handed on to the account.
+
+      The quiz runner saves to the shelf and sends the reader to their result in the same
+      breath, so the upload cannot happen there: a request started on the way out of a page
+      is cancelled with the page. The runner says "ww:finished" instead; this puts the finish
+      on a short queue, and the next page load empties it.
+
+      It is here for a browser that is SIGNED IN, which is a different question from whether
+      the public can see the way in, so it is gated on there being a project at all and on
+      the hint key this browser holds. The owner has to be able to finish a quiz on the live
+      domain and watch it reach his account while the entry points are still switched off.
+
+      TWO THINGS ABOUT THIS BLOCK, both learned the hard way on 2026-09-21.
+
+      It is the ONLY processed <script> in this file, and it has to stay the only one. Astro
+      hoists every processed script in a component and renders a marker for each; with more
+      than one, and one of them inside a conditional as this is, the markers cross and a page
+      loads the wrong script. It was watched happening on the quiz page, which shipped the
+      account listener in place of the runner. Everything else here is is:inline, which is
+      not hoisted and not affected. If a second processed script is ever wanted in this
+      layout, take the conditional off this one first and check what each page actually
+      loads.
+
+      And it imports nothing at the top. The first version did, and put the whole 141 KB quiz
+      engine on every page on the site: lib/account/session used to import a runtime value
+      from shelf.ts, which imports the registry. session.ts is pure now, so that particular
+      trap is gone, but the two key names are still written out here rather than imported,
+      because this chunk is loaded by every page that a signed-in reader opens and the right
+      size for it is as close to nothing as it can be. The keys are defined in
+      lib/account/session and must not diverge from it, exactly as the dot on "My results"
+      above reads ww.shelf.v1 raw.
+
+      Finally, it is hung off the script above with no whitespace between them, and this
+      note is INSIDE the expression rather than beside it. An expression that renders
+      nothing still leaves the whitespace on each side of it, and with no project behind
+      the build every page on the site has to come out of this change exactly as it went
+      in, down to the byte.
+    */
+    <script>
+      const HINT = 'ww.acct.v1';
+      const QUEUE = 'ww.acct.queue';
+      const read = key => {
+        try { return localStorage.getItem(key); } catch (e) { return null; }
+      };
+
+      if (read(HINT)) {
+        let waiting = 0;
+        try {
+          const queued = JSON.parse(read(QUEUE) || '[]');
+          waiting = Array.isArray(queued) ? queued.length : 0;
+        } catch (e) {
+          /* blocked or hand-edited storage has nothing to send */
+        }
+        // The runner's own element, so the listener is attached on the page a quiz is taken
+        // on and nowhere else. Loading happens now; the reader is eighteen statements away
+        // from needing it, and the write itself has to be there the instant they finish.
+        const running = document.getElementById('runner');
+
+        if (waiting || running) {
+          import('../lib/account/sync')
+            .then(m => {
+              if (running) {
+                document.addEventListener('ww:finished', event => {
+                  const e = event.detail;
+                  if (e && e.quiz && e.code && e.at) m.queueResult(e);
+                });
+              }
+              if (waiting) m.flushQueue();
+            })
+            .catch(() => {
+              /* Silent by design: the queue keeps its entries and the next page load tries
+                 again. Nothing a reader is doing depends on this having happened. */
+            });
+        }
+      }
     </script>
+    )}
   </body>
 </html>

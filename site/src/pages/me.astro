@@ -3,15 +3,25 @@
  * My results.
  *
  * The owner: finding an old result is impossible today, and that feels bad. It does — a
- * result lives in its URL and nowhere else, so closing the tab loses it. Accounts come
- * later; this needs none. Every finished quiz saves itself on the device, and this page is
- * where they are.
+ * result lives in its URL and nowhere else, so closing the tab loses it. Every finished quiz
+ * saves itself on the device, and this page is where they are.
  *
  * What the SERVER renders is the invitation: one room per quiz, every one of them saying
  * "Take it". What the BROWSER does is fill in the rooms a reader has actually finished,
  * from the shelf, scored back through the same engine the result page uses. That order
  * matters: with the script blocked, or with storage blocked, or on a brand-new device, the
  * page is still a set of doorways rather than an empty box apologising for itself.
+ *
+ * An account changes nothing about that order. The device's own shelf is still what paints
+ * this page, first and always; the account is asked for what it holds afterwards, and the
+ * page is repainted only if it turns out to hold more. A reader who is offline, or signed
+ * out, or has never heard of an account, sees exactly what they saw before.
+ *
+ * Two switches, asked two different questions. What a SIGNED-IN browser is shown asks only
+ * whether there is a project behind the build, so the owner can sign in on the live domain
+ * and see his own account working while the public still sees today's page. What a
+ * SIGNED-OUT reader is shown — the invitation, the box, the way in — waits for the links
+ * to be switched on.
  *
  * Nothing here prints a number against a person. The figure quiz's result carries a name,
  * and a name travels with its own words — the view's headline and summary, verbatim, and
@@ -23,6 +33,7 @@ import Icon from '../components/Icon.astro';
 import { QUIZZES, quizHref } from '../lib/engine/registry';
 import { artFor } from '../lib/art';
 import { liveGames } from '../lib/games';
+import { ACCOUNTS_READY, ACCOUNTS_VISIBLE } from '../lib/account/config';
 
 /* Finished quizzes first, drafts last, as everywhere else on the site. */
 const quizzes = [...QUIZZES].sort(
@@ -31,8 +42,9 @@ const quizzes = [...QUIZZES].sort(
 
 /**
  * What each game already keeps on the device, from its own SPEC: a personal best, written
- * by the game and read here. Nothing is written back, and a game that keeps nothing simply
- * has no key, so its room shows the way in and no score.
+ * by the game and read here. A game that keeps nothing simply has no key, so its room shows
+ * the way in and no score. Signed in, the best of the two — this device's and the account's
+ * — is written back both ways, which is the only thing a game puts in an account.
  */
 const GAME_BEST: Record<string, string> = {
   'sounds-like-scripture': 'sls.best',
@@ -42,14 +54,29 @@ const games = liveGames();
 ---
 <Base
   title="My results"
-  description="Every quiz you have finished on this device, and the games you have played."
+  description={ACCOUNTS_VISIBLE
+    ? 'Every quiz you have finished, and the games you have played.'
+    : 'Every quiz you have finished on this device, and the games you have played.'}
   noindex={true}
 >
   <section class="me-band">
     <img class="me-band-img" src="/img/sky-rays.jpg" alt="" width="1800" height="1200"
          fetchpriority="high" decoding="async" />
     <div class="me-band-in">
-      <p class="me-chip"><Icon name="users" size={14} /> On this device</p>
+      {ACCOUNTS_READY ? (
+        /*
+          Both chips are here and the layout has already said which one applies, in the
+          attribute it writes before the page is painted. Same mark, same size, same fill:
+          the state changes the word and nothing else. The signed-out word is today's word,
+          so a reader who has no account reads what they have always read.
+        */
+        <>
+          <p class="me-chip me-chip--out"><Icon name="users" size={14} /> On this device</p>
+          <p class="me-chip me-chip--in"><Icon name="users" size={14} /> Saved to your account</p>
+        </>
+      ) : (
+        <p class="me-chip"><Icon name="users" size={14} /> On this device</p>
+      )}
       <h1>My <em>results.</em></h1>
       <p class="me-count" id="me-count">Everything you finish here waits for you on this page.</p>
     </div>
@@ -121,27 +148,135 @@ const games = liveGames();
     </section>
   )}
 
-  <section class="dark me-keep">
-    <span class="mroom-mark mroom-mark--blue"><Icon name="mail" size={20} /></span>
-    <h2>Kept on this device.</h2>
-    <p>
-      These are saved on this device only. Accounts are on the way, so you can keep them for
-      good and see them anywhere. Leave your email and we will tell you when.
-    </p>
-    <a class="me-keep-go" href="#foot-signup">Leave your email <Icon name="arrow" size={14} /></a>
-  </section>
+  {!ACCOUNTS_VISIBLE && (
+    /*
+      Today's panel, unchanged, and still what a signed-out reader gets until the way in is
+      switched on. Where there IS a project it takes the --out class as well, so the same
+      rule that hides the invitation from somebody signed in hides this from him too: he
+      must not be told accounts are on the way while he is using one.
+    */
+    <section class:list={['dark', 'me-keep', ACCOUNTS_READY && 'me-keep--out']}>
+      <span class="mroom-mark mroom-mark--blue"><Icon name="mail" size={20} /></span>
+      <h2>Kept on this device.</h2>
+      <p>
+        These are saved on this device only. Accounts are on the way, so you can keep them for
+        good and see them anywhere. Leave your email and we will tell you when.
+      </p>
+      <a class="me-keep-go" href="#foot-signup">Leave your email <Icon name="arrow" size={14} /></a>
+    </section>
+  )}
+
+  {ACCOUNTS_VISIBLE && (
+    /*
+      The invitation: what a reader WITHOUT an account is asked, so it waits for the links
+      to be live. Its twin below is what somebody signed in sees, and which of the two is on
+      screen is settled before the first paint, from the attribute the layout writes in
+      <head>, so nobody ever watches one state swap for the other.
+    */
+    <section class="dark me-keep me-keep--out">
+      <span class="mroom-mark mroom-mark--blue"><Icon name="mail" size={20} /></span>
+      {/*
+        "Keep them for good." has nothing to point at on a page that says "Nothing saved
+        yet", so the longer line is what the server prints and the script shortens it once
+        it knows there is something on the shelf.
+      */}
+      <h2 data-role="join-head">Keep your results for good.</h2>
+      <p>
+        With an account they follow you to any phone or laptop you sign in on, and build up
+        into one picture of yourself as you take more.
+      </p>
+      <p class="me-keep-small">
+        We will email you a link to set a password. We will also send you a note now and
+        then when there is a new quiz, game or article. You can stop those at any time and
+        keep your account.
+      </p>
+      {/*
+        A GET to the sign-up page, so the form still does something with the script
+        blocked: it lands on the page that asks the same question, with the address it was
+        given. With the script running, the submit is handled here and the reader never
+        sees that page at all.
+      */}
+      <form class="me-join" id="me-join" method="get" action="/account/sign-up/">
+        <div class="capture-row">
+          <label class="sr-only" for="me-join-email">Your email address</label>
+          <input id="me-join-email" type="email" name="email" required autocomplete="email"
+                 inputmode="email" placeholder="you@example.com" />
+          <button class="btn" type="submit">Email me a link</button>
+        </div>
+        <p class="capture-status" id="me-join-status" role="status" aria-live="polite"></p>
+      </form>
+      <p class="me-keep-alt">
+        Already have one? <a class="btn ghost" href="/account/sign-in/">Sign in</a>
+      </p>
+    </section>
+  )}
+
+  {ACCOUNTS_READY && (
+    /*
+      And what somebody signed in sees. Gated on there being a project and nothing else: a
+      browser with an account behind it gets its account whether or not the public can see
+      the way in, which is how the owner tests the whole of it on the live domain first.
+    */
+    <section class="dark me-keep me-keep--in">
+      <span class="mroom-mark mroom-mark--blue"><Icon name="users" size={20} /></span>
+      <h2>Saved to your account.</h2>
+      <p class="me-who" data-role="who">&nbsp;</p>
+      <p>
+        Everything on this page is kept in your account as well as on this device, so it is
+        here on anything else you sign in on.
+      </p>
+      {/* Only ever shown when the account has refused a new result for want of room. The
+          panel's own quiet type, which is what the line before a form is set in: it is an
+          explanation of where the newest results are, not an alarm. */}
+      <p class="me-keep-small" data-role="full" hidden>
+        Your account is full. New results are kept on this device only.
+      </p>
+      <p class="me-synced" data-role="synced">&nbsp;</p>
+      <a class="btn ghost" href="/account/">Your account</a>
+    </section>
+  )}
 
   <p class="me-clear" hidden id="me-clear-row">
     <button class="me-clear-btn" id="me-clear" type="button">Clear my results from this device</button>
+    {/* Clearing the device cannot fail in a way worth saying out loud; clearing an account
+        can, and then the button has to be able to say so. So the line exists only where
+        there is an account to fail. */}
+    {ACCOUNTS_READY && (
+      <span class="me-clear-say" id="me-clear-say" role="status" aria-live="polite"></span>
+    )}
   </p>
 
   <script>
     import { getQuiz, resultFor, decodeFor } from '../lib/engine/registry';
     import { clearShelf, readableResults } from '../lib/shelf';
+    // One tiny pure module: the reader of a 60-byte key. Everything that can actually talk
+    // to an account is fetched on demand, below, and only when there is an account to talk
+    // to.
+    import { readHint } from '../lib/account/session';
+
+    /** When this page and the account last agreed. Written here, read here, nowhere else. */
+    const SYNCED_KEY = 'ww.acct.synced';
 
     const rooms = [...document.querySelectorAll('.mroom')];
     if (rooms.length) {
       const pick = (root, role) => root.querySelector(`[data-role="${role}"]`);
+      /*
+       * The attribute the layout writes in <head>, and nothing beside it. It is only ever
+       * written where there is a project behind the build, so it answers the whole question
+       * on its own — and it answers the right one: a browser that is signed in gets its
+       * account whether or not the public can see the way in yet.
+       */
+      const signedIn = () => document.documentElement.dataset.account === 'in';
+
+      /**
+       * How many results the account holds, once it has been asked.
+       *
+       * The device keeps the most recent two hundred and the account keeps the lot, so the
+       * two numbers can honestly differ. When they do, the page says so out loud rather than
+       * quietly showing the smaller one — the same honesty as the "39 older ones are not
+       * listed" line inside a room.
+       */
+      let serverTotal = 0;
 
       /** Plain words. A date stamp is a machine's way of saying when. */
       const whenWords = (iso) => {
@@ -253,34 +388,215 @@ const games = liveGames();
         }
         const clearRow = document.getElementById('me-clear-row');
         if (clearRow) clearRow.hidden = !saved.length;
+        const clearBtn = document.getElementById('me-clear');
+        if (clearBtn) {
+          clearBtn.textContent = signedIn()
+            ? 'Clear my results everywhere'
+            : 'Clear my results from this device';
+        }
+
+        // "Keep them for good" wants something to point at, and on a page that has just
+        // said "Nothing saved yet" there is nothing. The server prints the longer line and
+        // this shortens it once the shelf turns out to hold something.
+        const joinHead = document.querySelector('[data-role="join-head"]');
+        if (joinHead) {
+          joinHead.textContent = saved.length
+            ? 'Keep them for good.'
+            : 'Keep your results for good.';
+        }
+
+        // Only when the account genuinely holds more than the shelf can. Saying it when the
+        // two agree would be a page talking about itself for no reason.
+        const synced = document.querySelector('[data-role="synced"]');
+        if (synced && serverTotal > saved.length) {
+          synced.textContent =
+            `${saved.length} shown here, ${serverTotal} saved to your account.`;
+        }
       };
 
       paint();
 
-      document.getElementById('me-clear')?.addEventListener('click', () => {
+      /* ------------------------------------------------------------------ the account -- */
+
+      /* The same three states, and the same say() shape, as the site's two other forms. */
+      const sayJoin = (text, kind) => {
+        const status = document.getElementById('me-join-status');
+        if (!status) return;
+        status.textContent = text;
+        status.className = 'capture-status' + (kind ? ` is-${kind}` : '');
+      };
+      const sayClear = (text, kind) => {
+        const status = document.getElementById('me-clear-say');
+        if (!status) return;
+        status.textContent = text;
+        status.className = 'me-clear-say' + (kind ? ` is-${kind}` : '');
+      };
+
+      /**
+       * Ask the account what it holds, and repaint if it held more.
+       *
+       * Everything above has already run, so this cannot delay a single thing on the page.
+       * A failure says nothing at all: the reader's results are genuinely on the screen in
+       * front of them, and an error about syncing would be the page worrying out loud.
+       *
+       * Results and the three game values the games put in an account are both settled
+       * inside syncNow, which owns those rules and is tested against them. This page only
+       * asks, and then draws whatever came back.
+       */
+      const catchUp = async () => {
+        const who = document.querySelector('[data-role="who"]');
+        const hint = readHint();
+        if (who && hint) who.textContent = hint.email;
+
+        const synced = document.querySelector('[data-role="synced"]');
+        // What the last visit managed, so the line holds something while this one is in
+        // flight rather than sitting blank and then filling in. It says where the results
+        // went, not what the machinery did: nobody reading their own results came here to
+        // hear the word synced.
+        let before = null;
+        try { before = localStorage.getItem(SYNCED_KEY); } catch (e) {}
+        if (synced && before && whenExactly(before)) {
+          synced.textContent = `Saved to your account ${whenExactly(before)}.`;
+        }
+
+        try {
+          const { syncNow } = await import('../lib/account/sync');
+          const done = await syncNow();
+
+          // The account has told this browser it is not signed in: the account was deleted,
+          // or signed out from somewhere else, and sync has dropped the hint. Everything
+          // keyed on the attribute goes back to the signed-out page, which is the true one.
+          // Only a real refusal gets here; an unreachable server leaves the hint alone.
+          if (!readHint()) {
+            delete document.documentElement.dataset.account;
+            // The mark in the header was lit for the account. What is behind it now is
+            // whatever this device holds, which is the rule the layout paints everywhere
+            // else; without this it would go on saying there is something until the next
+            // page load.
+            if (!readableResults().length) {
+              document.querySelector('.site-head .nav-me')?.classList.remove('has-saved');
+            }
+            paint();
+            return;
+          }
+
+          // Said whether or not the rest of the sync went through: a full account is the
+          // one failure a reader can do something about, and it explains why a result they
+          // finished on another device is not here.
+          if (done && done.full) {
+            const full = document.querySelector('[data-role="full"]');
+            if (full) full.hidden = false;
+          }
+
+          if (done && done.ok) {
+            serverTotal = typeof done.serverTotal === 'number' ? done.serverTotal : 0;
+            try { localStorage.setItem(SYNCED_KEY, new Date().toISOString()); } catch (e) {}
+            // Said before the repaint, because where the account holds more than this device
+            // can the repaint has something more useful to put on the same line.
+            if (synced) synced.textContent = 'Saved to your account just now.';
+            paint();
+            // A best score can come down from the account as well as go up to it.
+            paintGames();
+          }
+        } catch (e) {
+          /* Offline, or the account is down. The page is already right. */
+        }
+      };
+
+      if (signedIn()) catchUp();
+
+      const join = document.getElementById('me-join');
+      join?.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const field = document.getElementById('me-join-email');
+        const button = join.querySelector('button[type="submit"]');
+        const email = (field?.value ?? '').trim();
+        if (!email) {
+          sayJoin('Type the address you want the link sent to.', 'bad');
+          field?.focus();
+          return;
+        }
+        button.disabled = true;
+        sayJoin('Sending…', 'busy');
+        let done = { ok: false, say: 'That did not go through. Try again in a moment.' };
+        try {
+          const { requestLink } = await import('../lib/account/client');
+          done = await requestLink(email);
+        } catch (e) {}
+        if (done.ok) {
+          // Handed over in this tab's own storage, which is where the page that prints it
+          // back looks for it, and is the same thing the sign-up and forgotten-password
+          // pages do. Never in the address: an address in a URL is an address in the
+          // browser's history and in a server's log, for nothing.
+          try { sessionStorage.setItem('ww.acct.to', email); } catch (e) {}
+          window.location.href = '/account/check-email/';
+          return;
+        }
+        button.disabled = false;
+        sayJoin(done.say || 'That did not go through. Try again in a moment.', 'bad');
+      });
+
+      document.getElementById('me-clear')?.addEventListener('click', async () => {
+        const button = document.getElementById('me-clear');
+        const everywhere = signedIn();
         const sure = window.confirm(
-          'Clear every result saved on this device? The links themselves still work if you have them.'
+          everywhere
+            ? 'Clear every result, on this device and in your account? This cannot be undone. The links themselves still work if you have them.'
+            : 'Clear every result saved on this device? The links themselves still work if you have them.'
         );
         if (!sure) return;
+
+        if (everywhere) {
+          /*
+           * The account first, and the device only if that worked. The obvious order is the
+           * wrong one: clearing here and failing there puts everything back at the next
+           * sync, and a reader watching that happen is right to decide the button is broken.
+           */
+          button.disabled = true;
+          sayClear('Clearing…', 'busy');
+          let done = { ok: false, say: 'That did not go through. Try again in a moment.' };
+          try {
+            const { clearEverywhere } = await import('../lib/account/sync');
+            done = await clearEverywhere();
+          } catch (e) {}
+          button.disabled = false;
+          if (!done.ok) {
+            sayClear(done.say || 'That did not go through. Try again in a moment.', 'bad');
+            return;
+          }
+          serverTotal = 0;
+        }
+
         clearShelf();
+        sayClear('', '');
         paint();
+        paintGames();
         // The dot in the header is painted once, on load, by an inline script in the layout.
         // Without this it would go on saying there is something here while the page says
-        // there is not, until the next page load.
-        document.querySelector('.site-head .nav-me')?.classList.remove('has-saved');
+        // there is not, until the next page load. Signed in it stays: the account is still
+        // behind the mark, and the next load would light it again anyway.
+        if (!everywhere) {
+          document.querySelector('.site-head .nav-me')?.classList.remove('has-saved');
+        }
       });
 
       /* A game writes its own best score; this only reads it. */
-      document.querySelectorAll('.mgame').forEach(card => {
-        const key = card.dataset.best;
-        if (!key) return;
-        let best = null;
-        try { best = JSON.parse(localStorage.getItem(key)); } catch (e) {}
-        if (typeof best !== 'number' || !Number.isFinite(best) || best <= 0) return;
-        const line = card.querySelector('[data-role="best"]');
-        line.textContent = `Your best: ${best.toLocaleString()}`;
-        line.hidden = false;
-      });
+      function paintGames() {
+        document.querySelectorAll('.mgame').forEach(card => {
+          const key = card.dataset.best;
+          if (!key) return;
+          let best = null;
+          try { best = JSON.parse(localStorage.getItem(key)); } catch (e) {}
+          const line = card.querySelector('[data-role="best"]');
+          if (typeof best !== 'number' || !Number.isFinite(best) || best <= 0) {
+            line.hidden = true;
+            return;
+          }
+          line.textContent = `Your best: ${best.toLocaleString()}`;
+          line.hidden = false;
+        });
+      }
+      paintGames();
     }
   </script>
 </Base>

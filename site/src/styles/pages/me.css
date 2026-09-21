@@ -217,6 +217,18 @@
 .mgame .mroom-go { margin-top: .3rem; }
 @media (min-width: 40rem) { .me-games-row { grid-template-columns: 1fr 1fr; gap: 1rem; } }
 
+/* --------------------------------------------------------------- the account ----
+ *
+ * The page has two faces once accounts exist, and the layout has already chosen between
+ * them in <head>, before a pixel is drawn. So both are in the document and the attribute on
+ * <html> decides which one is displayed: no flash of the wrong state, no second request, and
+ * nothing moving after the fact. With no account at all only one of each is rendered, and
+ * none of this applies.
+ */
+.me-chip--in { display: none; }
+:root[data-account="in"] .me-chip--out { display: none; }
+:root[data-account="in"] .me-chip--in { display: inline-flex; }
+
 /* ------------------------------------------------------------- what is coming ---- */
 .me-keep { margin: 2.6rem 0 0; padding: 1.5rem 1.35rem 1.6rem; }
 .me-keep h2 {
@@ -233,6 +245,46 @@
 .me-keep-go:hover .icon { transform: translateX(3px); }
 @media (min-width: 46rem) { .me-keep { padding: 2rem 2rem 2.1rem; } }
 
+/* ------------------------------------------------- the same panel, signed in or out ---- */
+.me-keep--in { display: none; }
+:root[data-account="in"] .me-keep--out { display: none; }
+:root[data-account="in"] .me-keep--in { display: block; }
+/* Evened rather than merely un-orphaned: these are three and four line blocks, and `pretty`
+   still left "take more." alone on a line at 390. */
+.me-keep--out p, .me-keep--in p { text-wrap: balance; }
+
+/* What is read before anything is typed: what the address is for, and what else it brings.
+   Quieter than the sentence above it, because it answers a question rather than asking one.
+   The panel has re-pointed the ink tokens for its own dark ground, so these ask for the
+   ordinary ones and get the dark ones. */
+.me-keep .me-keep-small {
+  margin-top: .8rem; font-size: .85rem; line-height: 1.5; max-width: 32rem;
+  color: var(--ink-mute); text-wrap: pretty;
+}
+
+/* The field is the kit's own: the same 46px pill and the same 16px type that stops iOS
+   zooming the page on focus, drawn for a dark ground without a second set of rules. */
+.me-join { margin: 1.15rem 0 0; max-width: 30rem; }
+.me-join .capture-status { margin-top: .6rem; }
+
+.me-keep .me-keep-alt {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .7rem;
+  margin-top: 1.2rem; font-size: .9rem; color: var(--ink-mute);
+}
+
+/* The address, printed back in the face the site uses for a name. It holds its line from
+   the first paint, so nothing below it moves when the script fills it in. */
+.me-keep .me-who {
+  margin-top: .5rem; font-family: var(--display); font-size: 1.15rem; line-height: 1.3;
+  color: var(--ink); min-height: 1.3em;
+}
+.me-keep .me-synced {
+  margin-top: .9rem; font-family: var(--ui); font-size: .64rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--ink-mute);
+  min-height: 1.4em;
+}
+.me-keep .btn.ghost { margin-top: .6rem; }
+
 /* --------------------------------------------------------------------- clearing ---- */
 .me-clear { margin: 1.6rem 0 .5rem; text-align: center; }
 .me-clear-btn {
@@ -242,6 +294,13 @@
   color: var(--ink-mute); transition: color .18s ease, box-shadow .18s ease;
 }
 .me-clear-btn:hover { color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--rule-strong); }
+/* Clearing an account can fail, and the button has to be able to say so. Block, so it sits
+   under the button rather than beside it, and taking no room at all until it has something
+   to report: this is the foot of the page, where a reserved empty line is just a gap. */
+.me-clear-say { display: block; margin: .5rem 0 0; font-size: .85rem; }
+.me-clear-say:empty { display: none; }
+.me-clear-say.is-bad { color: var(--warn-ink); }
+.me-clear-say.is-busy { color: var(--ink-mute); }
 
 @media (prefers-reduced-motion: reduce) {
   .mroom-go .icon, .me-keep-go .icon, .mroom-past > summary::after { transition: none; }

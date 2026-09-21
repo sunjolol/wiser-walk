@@ -208,6 +208,59 @@ export function clearShelf(store: ShelfStore | null = browserStore()): void {
 }
 
 /**
+ * Two shelves, made one. Pure: it touches no storage and belongs to no device.
+ *
+ * An account makes this necessary. A reader signs in on a phone that holds nine results and
+ * an account that holds fourteen, and the honest answer is all of them — a sync must never
+ * be able to lose a result somebody finished. So the merge is a union, and the only things
+ * that leave are the ones that were never two results in the first place.
+ *
+ *   tombstones   a result the reader asked to delete, given here as the entry it deleted.
+ *                It wins over both sides: otherwise the other device would push it back and
+ *                the delete button would look broken.
+ *   the same run the rule `addResult` already applies, applied across devices. Two saves of
+ *                one finish inside SAME_RUN_MS are one finish, and the EARLIER is kept,
+ *                because that is when they actually finished; the later one is the round
+ *                trip, not the moment.
+ *
+ * The cap is the device's, not the account's. When the account holds more than SHELF_CAP,
+ * /me/ says so out loud rather than quietly pretending the rest never happened.
+ */
+export function mergeShelves(
+  local: ShelfEntry[],
+  remote: ShelfEntry[],
+  tombstones: ShelfEntry[] = []
+): ShelfEntry[] {
+  const tidy = (list: unknown): ShelfEntry[] => {
+    if (!Array.isArray(list)) return [];
+    const out: ShelfEntry[] = [];
+    for (const item of list) {
+      const entry = tidyEntry(item);
+      if (entry) out.push(entry);
+    }
+    return out;
+  };
+
+  const sameRun = (a: ShelfEntry, b: ShelfEntry) =>
+    a.quiz === b.quiz &&
+    a.code === b.code &&
+    Math.abs(Date.parse(a.at) - Date.parse(b.at)) < SAME_RUN_MS;
+
+  const gone = tidy(tombstones);
+  const all = [...tidy(local), ...tidy(remote)]
+    .filter(e => !gone.some(t => sameRun(t, e)))
+    // Oldest first, so the entry kept out of each run is the earliest one.
+    .sort((a, b) => Date.parse(a.at) - Date.parse(b.at));
+
+  const kept: ShelfEntry[] = [];
+  for (const entry of all) {
+    if (kept.some(k => sameRun(k, entry))) continue;
+    kept.push(entry);
+  }
+  return kept.sort(byNewest).slice(0, SHELF_CAP);
+}
+
+/**
  * Can this entry still be turned back into a result?
  *
  * The quiz must exist and the code must decode for it. A code from a quiz that has since

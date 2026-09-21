@@ -7,4 +7,5 @@
  */
 export type IconName =
   | 'compass' | 'flame' | 'scroll' | 'book' | 'arrow'
-  | 'users' | 'sparkle' | 'mail' | 'pencil' | 'clock' | 'quote' | 'play' | 'path' | 'apple';
+  | 'users' | 'sparkle' | 'mail' | 'pencil' | 'clock' | 'quote' | 'play' | 'path' | 'apple'
+  | 'key' | 'door' | 'bin';

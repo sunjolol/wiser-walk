@@ -37,6 +37,17 @@ What it is: first completed run of today's ten is recorded, later runs are pract
 day number; a Today strip on the home games band, `/games/` and `/me/`. Storage contract `sls.daily` /
 `wsi.daily` documented in `demos/sounds-like-scripture/SPEC.md` and mirrored in `site/src/lib/daily.ts`.
 
+**Shipped to `main` on 2026-09-21 (commit `eeca88b`, his go): the site icon** (he picked candidate B: a white DM
+Serif W on the blue-to-orange; source and the cutter are `design/icon/`, run `node design/icon/render.mjs`),
+`max-image-preview:large` on indexable pages, WebSite + Organization (logo) structured data on the home page,
+and the footer fix: boxes holding a ghost word use `overflow: clip`, because with `hidden` the overhanging word
+made the footer scrollable and a jump to `#foot-signup` scrolled it inside itself (108 px). **`feature/accounts`
+was cut before this, so rebase it onto `origin/main` before it is merged; expect a small conflict in the head of
+`Base.astro`.** Google was still showing the OLD description because it had not recrawled. **He set up Search Console the
+same day** (domain verified by a TXT record he added at SiteGround; checked from outside: the mail, A and www
+records are untouched; sitemap submitted; home page indexing requested). Nothing more to do but wait: the
+description refreshes in days, the icon on Google's schedule, and sitelinks cannot be forced.
+
 **NOW, by his word on 2026-09-21 ("Let's move on to the sign up feature"): accounts, on branch
 `feature/accounts`** (cut from live `main`; it has no upstream on purpose, so a bare `git push` cannot
 deploy). Email-only sign-up box, the emailed link lands on a set-a-password

@@ -125,5 +125,35 @@ const { name, size = 20, class: cls = '' } = Astro.props;
       <circle cx="17.6" cy="5.2" r="1.7" />
       <path d="M4 21h16" />
     </>
+  )}{/*
+    Added 2026-09-21 for the account pages. Three boxes there would otherwise have to be read
+    to be told apart: the one that changes a password, the one that ends a session on this
+    browser, and the one that removes everything. Same 24 grid, same 1.6 stroke, so they sit
+    with the fourteen above. A bin is drawn rather than avoided for the same reason the seven
+    deadly sins got a bitten fruit: it is the one picture everybody reads at a glance.
+
+    These four blocks are hung straight off the `)}` above, with no line break between them,
+    and so is each one off the last. An expression that renders nothing still leaves the
+    whitespace on either side of it in the output, so writing them on their own lines put
+    four more blank lines inside EVERY icon on EVERY page of the site. The same trick is
+    used for the same reason in src/pages/r/[quiz]/[code].astro.
+  */}{name === 'key' && (
+    <>
+      <circle cx="7.6" cy="16.4" r="3.8" />
+      <path d="M10.3 13.7 19.4 4.6" />
+      <path d="M16.6 7.4l2.2 2.2M19 5l2.4 2.4" />
+    </>
+  )}{name === 'door' && (
+    <>
+      <path d="M14.4 3.2H6.6a1.4 1.4 0 0 0-1.4 1.4v14.8a1.4 1.4 0 0 0 1.4 1.4h7.8" />
+      <path d="M11 12h9.4M17.6 8.8 20.8 12l-3.2 3.2" />
+    </>
+  )}{name === 'bin' && (
+    <>
+      <path d="M4.4 6.6h15.2" />
+      <path d="M9.4 6.6V4.9a1.5 1.5 0 0 1 1.5-1.5h2.2a1.5 1.5 0 0 1 1.5 1.5v1.7" />
+      <path d="M6.4 6.6l.9 12.2a1.9 1.9 0 0 0 1.9 1.8h5.6a1.9 1.9 0 0 0 1.9-1.8l.9-12.2" />
+      <path d="M10.4 10.4v6.4M13.6 10.4v6.4" />
+    </>
   )}
 </svg>

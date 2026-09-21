@@ -404,37 +404,61 @@ const breadcrumbs = [
       <section class="pnl">
         <div class="pnl-head">
           <p class="pnl-kicker">Scored on your device</p>
-          <h2 class="pnl-title">Nothing is sent.</h2>
+          <h2 class="pnl-title">Your answers stay here.</h2>
         </div>
         <div class="doc">
           <p>
-            Every quiz is scored in your browser. Answers are never sent to a server, there is no
-            account, and nothing about your result is stored on our side. A result link carries
-            only your scores, encoded — which is also why a broken link cannot be recovered.
+            Every quiz is scored in your browser, and the answers themselves are never sent
+            anywhere. A result link carries your scores, encoded, and nothing else. That is also
+            why a broken link cannot be recovered.
           </p>
           <p>
-            A result you finish is now saved in your own browser, so you can find it again on
-            <a href="/me/">My results</a>. It stays on that device and is not sent anywhere, and
-            clearing the lot is one button on that page.
+            A result you finish is saved in your own browser, so you can find it again on
+            <a href="/me/">My results</a>. Clearing the lot is one button on that page.
           </p>
         </div>
       </section>
 
       <section class="pnl">
         <div class="pnl-head">
-          <p class="pnl-kicker">The two exceptions</p>
+          <p class="pnl-kicker">If you have an account</p>
+          <h2 class="pnl-title">What it keeps.</h2>
+        </div>
+        <div class="doc">
+          <p>
+            An account exists so your results are not stranded on one device. What it holds is
+            the address you signed up with, the same result codes your browser already keeps and
+            the date of each one, and three things from the games: your best score in each, and
+            the Bible you chose for Sounds Like Scripture. Not your answers, which never leave
+            your browser either way.
+          </p>
+          <p>
+            This browser also keeps a short note of being signed in and of what it has already
+            sent up, so the page knows where it stands before it asks. Clearing your browser's
+            site data erases that note.
+          </p>
+          <p>
+            One button on <a href="/me/">My results</a> clears every result from this device and
+            from every other device you sign in on. A cleared result leaves a marker behind, and
+            that marker is how your other devices know to drop it too: which quiz, which code and
+            when, and nothing else. It is erased ninety days later, or when you delete your
+            account, whichever comes first. Deleting the account takes the rest with it.
+          </p>
+        </div>
+      </section>
+
+      <section class="pnl">
+        <div class="pnl-head">
+          <p class="pnl-kicker">The email list</p>
           <h2 class="pnl-title">Only if you ask for it.</h2>
         </div>
         <div class="doc">
           <p>
-            There are two exceptions, and each only happens if you ask for it. At the foot of
-            every page you can sign up for news of new quizzes and games; that sends our email
-            provider the address you typed and nothing else. And at the bottom
-            of a result page you can request a short follow-up series about the axes you leaned on
-            hardest. If you fill that form in, two things are sent to our email provider: the
-            address you typed, and the code from your result link. The code is what makes the
-            emails about <em>your</em> result rather than a generic one. Nothing else is sent, and
-            if you fill in neither form, nothing leaves your browser at all.
+            At the foot of every page you can sign up for news of new quizzes and games; that
+            sends our email provider the address you typed and nothing else. At the bottom of a
+            result page you can ask for a short follow-up series about the axes you leaned on
+            hardest, which sends the address and the code from your result link, because the code
+            is what makes those emails about <em>your</em> result rather than a generic one.
           </p>
           <p>
             This page used to say there was no email list. There is one now; saying otherwise
@@ -469,14 +493,14 @@ const breadcrumbs = [
     <div class="stack stack--2">
       <section class="pnl">
         <div class="pnl-head">
-          <p class="pnl-kicker">On your device, nowhere else</p>
+          <p class="pnl-kicker">On your device</p>
           <h2 class="pnl-title">Four things in local storage.</h2>
         </div>
         <div class="doc">
           <p>
             <a href="/play/sounds-like-scripture/">Sounds Like Scripture</a> is scored in your browser
             like everything else here. To avoid showing you the same line twice, it keeps four
-            things in your browser's own storage, on your device and nowhere else: the Bible you
+            things in your browser's own storage: the Bible you
             chose, your best score, which lines you have already seen, and a tally of which
             sources have fooled you. Clearing your browser's site data erases all of it. A
             challenge link carries the run's number, one score and ten answer times, with no name
@@ -517,7 +541,7 @@ const breadcrumbs = [
             the wrong mouth, <a
               href="https://github.com/sunjolol/wiser-walk/issues/new?title=Correction%3A%20Who%20Said%20It%3F"
               rel="noopener">tell us</a> with the reference and we will look. Like its sibling, the
-            game keeps three things in your browser's own storage and nowhere else: your best
+            game keeps three things in your browser's own storage: your best
             score, which lines you have already seen, and the tally of which pairs of speakers you
             mix up.
           </p>

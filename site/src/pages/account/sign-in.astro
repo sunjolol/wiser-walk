@@ -1,0 +1,155 @@
+---
+/**
+ * Sign in. Email and the password they chose.
+ *
+ * One message covers both fields whatever goes wrong, so nothing here tells a stranger
+ * which addresses have accounts. The two ways out — a forgotten password and no account at
+ * all — are pills rather than small underlined links, because on a phone nothing that is
+ * not shaped like a button looks like one.
+ */
+import '../../styles/pages/account.css';
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import AccountBand from '../../components/AccountBand.astro';
+import { ACCOUNTS_READY } from '../../lib/account/config';
+---
+<Base
+  title="Sign in"
+  description="Sign in to Wiser Walk with your email and password."
+  noindex={true}
+>
+  {!ACCOUNTS_READY ? (
+    <AccountBand
+      eyebrow="Your account"
+      icon="users"
+      title="Accounts are not switched on yet."
+      accent="not switched on yet."
+      lede="Everything you finish is still saved on this device in the meantime, and it is all on one page."
+    >
+      <p class="ac-acts">
+        <a class="btn ac-btn" href="/me/">See my results <Icon name="arrow" size={16} /></a>
+      </p>
+    </AccountBand>
+  ) : (
+    <>
+      <AccountBand
+        eyebrow="Welcome back"
+        icon="users"
+        title="Sign in."
+        accent="in."
+        lede="Your email, and the password you chose when you made the account."
+      >
+        {/*
+          GOOGLE GOES HERE, LATER, AND NOTHING MOVES WHEN IT DOES.
+          One 52px control of its own above the fields, then a hairline of the brand's
+          gradient with the word "or" across it, then the form exactly as it stands. The
+          two rules that hold that layout (.ac-or and its line) are already written in
+          account.css, so adding the button is one element, not a relayout:
+
+            <button class="btn ac-btn ac-btn--plain" type="button" id="ac-google">
+              Continue with Google
+            </button>
+            <p class="ac-or"><span>or</span></p>
+
+          It is not rendered until it works: a control that does nothing is worse than a
+          control that is not there.
+        */}
+        <form class="ac-form" id="ac-form" novalidate>
+          {/* Hidden from people, irresistible to naive bots. Not a CAPTCHA and never will be. */}
+          <p class="hp" aria-hidden="true">
+            <label>Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+          </p>
+          <div class="ac-row">
+            <span class="ac-cell">
+              <label class="sr-only" for="ac-email">Your email address</label>
+              <span class="ac-cell-icon" aria-hidden="true"><Icon name="mail" size={17} /></span>
+              <input class="ac-field" id="ac-email" name="email" type="email" required
+                     autocomplete="email" inputmode="email" placeholder="you@example.com" />
+            </span>
+            <span class="ac-cell">
+              <label class="sr-only" for="ac-pw">Your password</label>
+              <span class="ac-cell-icon" aria-hidden="true"><Icon name="key" size={17} /></span>
+              <input class="ac-field ac-field--pw" id="ac-pw" name="password" type="password" required
+                     autocomplete="current-password" placeholder="Your password" />
+              <button class="ac-show" type="button" data-show="ac-pw" aria-pressed="false">Show</button>
+            </span>
+            <button class="btn ac-btn" id="ac-go" type="submit">Sign in</button>
+          </div>
+        </form>
+        <p class="ac-status" id="ac-status" role="status" aria-live="polite"></p>
+        <p class="ac-acts">
+          <a class="ac-go" href="/account/forgot/">Forgotten your password?</a>
+        </p>
+      </AccountBand>
+
+      <section class="ac-solo ac-room">
+        <span class="ac-mark"><Icon name="users" size={20} /></span>
+        <h2>No account yet?</h2>
+        <p>
+          It takes an email address and about a minute, and everything you have already
+          finished on this device comes with you.
+        </p>
+        <p class="ac-acts">
+          <a class="btn ghost" href="/account/sign-up/">Make an account <Icon name="arrow" size={16} /></a>
+        </p>
+      </section>
+    </>
+  )}
+
+  <script>
+    import { signIn, sayFor } from '../../lib/account/client';
+
+    const form = document.getElementById('ac-form');
+    if (form) {
+      const status = document.getElementById('ac-status');
+      const button = document.getElementById('ac-go');
+
+      const say = (text, kind) => {
+        status.textContent = text;
+        status.className = 'ac-status' + (kind ? ' is-' + kind : '');
+      };
+      const busy = on => {
+        button.disabled = on;
+        button.textContent = on ? 'Signing in…' : 'Sign in';
+      };
+
+      document.querySelectorAll('.ac-show').forEach(toggle => {
+        toggle.addEventListener('click', () => {
+          const field = document.getElementById(toggle.dataset.show);
+          const showing = field.type === 'text';
+          field.type = showing ? 'password' : 'text';
+          toggle.setAttribute('aria-pressed', String(!showing));
+          toggle.textContent = showing ? 'Show' : 'Hide';
+        });
+      });
+
+      form.addEventListener('submit', event => {
+        event.preventDefault();
+        if (button.disabled) return;
+        // The honeypot. A bot that fills it is told nothing and nothing is sent.
+        if (form.elements.website && form.elements.website.value) {
+          say(sayFor('wrong'), 'bad');
+          return;
+        }
+
+        busy(true);
+        say('Signing in…', 'busy');
+        signIn(document.getElementById('ac-email').value, document.getElementById('ac-pw').value).then(done => {
+          if (done.ok) {
+            location.href = '/me/';
+            return;
+          }
+          busy(false);
+          say(done.say, 'bad');
+        });
+      });
+
+      /* Screenshot switches. Dev only: the whole block goes when the site is built. */
+      if (import.meta.env.DEV) {
+        const state = new URLSearchParams(location.search).get('state');
+        if (state === 'busy') { busy(true); say('Signing in…', 'busy'); }
+        if (state === 'error') say(sayFor('wrong'), 'bad');
+      }
+    }
+  </script>
+</Base>

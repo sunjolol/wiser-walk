@@ -365,8 +365,8 @@ const breadcrumbs = isDraft
     // variation in it belongs beside the field that switches it on, and the runner is the
     // only place that can act on it, because a result page is rendered from the code alone.
     import { centresUniformSheets, isUniformSheet } from '../../lib/engine/types';
-    // A finished result is kept on this device, so it can be found again on /me/. It never
-    // leaves the browser, and a blocked or full storage is a no-op rather than an error.
+    // A finished result is kept on this device, so it can be found again on /me/. A blocked
+    // or full storage is a no-op rather than an error.
     import { addResult } from '../../lib/shelf';
 
     const root = document.getElementById('runner');
@@ -447,7 +447,19 @@ const breadcrumbs = isDraft
         // The shelf, so this result can be found again long after the tab is closed. Saved
         // before either branch below: a reader who finishes into a comparison has still
         // finished, and their own result belongs to them either way.
-        addResult(quiz.slug, code);
+        //
+        // One instant, used twice. The device's copy of a finish and the account's have to
+        // carry the same moment, and two calls to new Date() a breath apart are two separate
+        // finishes to anything that later compares them.
+        const at = new Date().toISOString();
+        addResult(quiz.slug, code, at);
+        // Said out loud rather than done here. An account, where there is one, listens for
+        // this and puts the finish on its queue; with accounts switched off nothing is
+        // listening and this page carries none of that code at all. The event is dispatched
+        // synchronously, so the queue is written before the navigation below.
+        document.dispatchEvent(
+          new CustomEvent('ww:finished', { detail: { quiz: quiz.slug, code, at } })
+        );
 
         // An invitation sends you to the two-person page instead, with the inviter first.
         // Cleared on the way out so a second run of the quiz in the same tab is just a

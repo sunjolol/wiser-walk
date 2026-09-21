@@ -1,0 +1,196 @@
+---
+/**
+ * Sign up. One field, one email address.
+ *
+ * The owner's rule for this flow is "simple and fool-proof": the box asks for an email and
+ * nothing else, the link that arrives lands on a page where a password is chosen, and from
+ * then on it is email and password like everything else. So there is no password field
+ * here, no confirm field, no username and no tick boxes.
+ *
+ * The page is built like /support/, because /support/ is the other page whose whole job is
+ * asking for something: a picture band with the ask INSIDE it, three reasons rising out of
+ * its foot, one line of small print. What an account is for is said in the reasons; what
+ * holding an address actually means is said in the band, above the fold, before anybody
+ * types a character.
+ */
+import '../../styles/pages/account.css';
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import AccountBand from '../../components/AccountBand.astro';
+import { ACCOUNTS_READY } from '../../lib/account/config';
+
+/* A mark and an ink each, because three grey boxes in a column have to be read to be told
+   apart. One claim per room, and every one of them is something the account really does. */
+const REASONS = [
+  {
+    mark: 'users' as const,
+    title: 'Everything in one place.',
+    body:
+      'Every quiz and game you finish is kept with your account, not just in the browser ' +
+      'you happened to be using at the time.'
+  },
+  {
+    mark: 'compass' as const,
+    title: 'A picture that fills in.',
+    body:
+      'The more you do, the more the site can show you about yourself, drawn from all of ' +
+      'it at once rather than one quiz at a time.'
+  },
+  {
+    mark: 'mail' as const,
+    title: 'You hear when there is more.',
+    body:
+      'New quizzes, new games and new articles, whenever they are finished. You can stop ' +
+      'those at any time and keep your account.'
+  }
+];
+---
+<Base
+  title="Sign up"
+  description="Make a Wiser Walk account so your results follow you to any device."
+  noindex={true}
+>
+  {!ACCOUNTS_READY ? (
+    <AccountBand
+      eyebrow="Your account"
+      icon="users"
+      title="Accounts are not switched on yet."
+      accent="not switched on yet."
+      lede="Everything you finish is still saved on this device in the meantime, and it is all on one page."
+    >
+      <p class="ac-acts">
+        <a class="btn ac-btn" href="/me/">See my results <Icon name="arrow" size={16} /></a>
+      </p>
+    </AccountBand>
+  ) : (
+    <AccountBand
+      eyebrow="Your account"
+      icon="users"
+      title="Keep your results for good."
+      accent="for good."
+      lede="They follow you to any device, and you hear when there is something new to try."
+    >
+      <form class="ac-form" id="ac-form" novalidate>
+        {/* Hidden from people, irresistible to naive bots. Not a CAPTCHA and never will be. */}
+        <p class="hp" aria-hidden="true">
+          <label>Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+        </p>
+        <div class="ac-row ac-row--one">
+          <span class="ac-cell">
+            <label class="sr-only" for="ac-email">Your email address</label>
+            <span class="ac-cell-icon" aria-hidden="true"><Icon name="mail" size={17} /></span>
+            <input class="ac-field" id="ac-email" name="email" type="email" required
+                   autocomplete="email" inputmode="email" placeholder="you@example.com" />
+          </span>
+          <button class="btn ac-btn" id="ac-go" type="submit">Email me a link</button>
+        </div>
+      </form>
+      {/* Outside the form, so hiding the field on success never hides the answer with it. */}
+      <p class="ac-status" id="ac-status" role="status" aria-live="polite"></p>
+      {/*
+        The whole of what holding an address means, read before anybody types. It is in the
+        band rather than at the foot of the page on purpose: a disclosure below the fold is
+        a disclosure nobody read.
+      */}
+      <p class="ac-small">
+        We will email you a link to set a password. We will also send you a note now and
+        then when there is a new quiz, game or article. You can stop those at any time and
+        keep your account.
+      </p>
+      <p class="ac-acts">
+        <a class="ac-go" href="/account/sign-in/">I already have an account</a>
+      </p>
+    </AccountBand>
+  )}
+
+  {ACCOUNTS_READY && (
+    <>
+      <section class="ac-rooms" aria-label="What an account is for">
+        {REASONS.map(r => (
+          <article class="ac-room">
+            <span class="ac-mark"><Icon name={r.mark} size={20} /></span>
+            <h2>{r.title}</h2>
+            <p>{r.body}</p>
+          </article>
+        ))}
+      </section>
+
+      <p class="ac-fine">
+        An account keeps your email address, the results you have taken and your best
+        scores in the games. Your answers themselves are never sent anywhere: a quiz is
+        still worked out in your browser. One button on your account page deletes the lot.
+      </p>
+    </>
+  )}
+
+  <script>
+    import { requestLink, sayFor } from '../../lib/account/client';
+
+    const form = document.getElementById('ac-form');
+    if (form) {
+      const status = document.getElementById('ac-status');
+      const button = document.getElementById('ac-go');
+      const field = document.getElementById('ac-email');
+      const row = form.querySelector('.ac-row');
+
+      /* The box on /me/ is a real GET form pointed at this page, so if its own script never
+         loaded the browser lands here with the address already typed. Put it back in the
+         field rather than asking for it twice. The layout strips the whole query before a
+         page view is counted, and this page is out of the index. */
+      try {
+        const passed = new URL(location.href).searchParams.get('email');
+        if (passed && !field.value) field.value = passed.trim();
+      } catch (e) {}
+
+      const say = (text, kind) => {
+        status.textContent = text;
+        status.className = 'ac-status' + (kind ? ' is-' + kind : '');
+      };
+      /* Busy is said in words as well as by the button being out of action: a control that
+         only greys out looks broken rather than working. */
+      const busy = on => {
+        button.disabled = on;
+        button.textContent = on ? 'Sending…' : 'Email me a link';
+      };
+
+      form.addEventListener('submit', event => {
+        event.preventDefault();
+        if (button.disabled) return;
+        // The honeypot. A bot that fills it gets the same page a person gets, and we send
+        // nothing at all.
+        if (form.elements.website && form.elements.website.value) {
+          row.hidden = true;
+          // Word for word what the next page says, so the two never drift apart, and true
+          // of a bot as well: nothing was sent, and nothing is claimed to have been.
+          say('If that address is right, a link should reach it within a minute. It works for an hour, and only once.', 'ok');
+          return;
+        }
+
+        const email = field.value.trim();
+        busy(true);
+        say('Sending…', 'busy');
+
+        requestLink(email).then(done => {
+          if (!done.ok) {
+            busy(false);
+            say(done.say, 'bad');
+            return;
+          }
+          // The next page prints the address back, because the commonest failure in this
+          // whole flow is a typo and showing it is the fix. It is not put in the URL.
+          try { sessionStorage.setItem('ww.acct.to', email); } catch (e) {}
+          location.href = '/account/check-email/';
+        });
+      });
+
+      /* Screenshot switches, so the states below can be captured and judged. Only ever in
+         a local dev build: `import.meta.env.DEV` is replaced with false when the site is
+         built, and this whole block goes with it. */
+      if (import.meta.env.DEV) {
+        const state = new URLSearchParams(location.search).get('state');
+        if (state === 'busy') { busy(true); say('Sending…', 'busy'); }
+        if (state === 'error') say(sayFor('cooldown'), 'bad');
+      }
+    }
+  </script>
+</Base>

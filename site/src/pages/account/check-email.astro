@@ -1,0 +1,178 @@
+---
+/**
+ * Check your email.
+ *
+ * Somebody lands here having just acted, and leaves again within a minute. It still has to
+ * be a page: the address is printed back big, because the commonest failure in this whole
+ * flow is a typo and showing it is the fix, and the one panel says what to look for and how
+ * to ask again.
+ *
+ * The address comes out of sessionStorage, written by the page that sent the email, NOT out
+ * of the URL. It is the reader's own address and it would only ever have been in their own
+ * address bar, but it would also have been in a server log, and there is no reason for it
+ * to be.
+ *
+ * `?k=recovery` says the email was a password reset rather than a sign-up. All it changes is
+ * where "Not that address?" goes back to, and it carries nothing personal. It does NOT name
+ * the email that arrived: a sign-up box that is given an address which already has an
+ * account sends a different email, and the site cannot be told which without telling a
+ * stranger who has an account here.
+ */
+import '../../styles/pages/account.css';
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import AccountBand from '../../components/AccountBand.astro';
+import { ACCOUNTS_READY } from '../../lib/account/config';
+---
+<Base
+  title="Check your email"
+  description="What to look for in your inbox, and how to ask again."
+  noindex={true}
+>
+  {!ACCOUNTS_READY ? (
+    <AccountBand
+      eyebrow="Your account"
+      icon="users"
+      title="Accounts are not switched on yet."
+      accent="not switched on yet."
+      lede="Everything you finish is still saved on this device in the meantime, and it is all on one page."
+    >
+      <p class="ac-acts">
+        <a class="btn ac-btn" href="/me/">See my results <Icon name="arrow" size={16} /></a>
+      </p>
+    </AccountBand>
+  ) : (
+    <>
+      <AccountBand
+        eyebrow="Sent"
+        icon="mail"
+        title="Check your email."
+        accent="email."
+        lede="If that address is right, a link should reach it within a minute. It works for an hour, and only once."
+      >
+        <div class="ac-to">
+          {/* Held at the same height signed out, so nothing moves when the script fills it in. */}
+          <p class="ac-to-addr" id="ac-to">the address you gave us</p>
+          <a class="ac-go" id="ac-back" href="/account/sign-up/">Not that address?</a>
+        </div>
+      </AccountBand>
+
+      <section class="ac-panel dark" aria-labelledby="ac-look">
+        <span class="dark-ghost" aria-hidden="true">inbox</span>
+        <span class="ac-mark"><Icon name="mail" size={20} /></span>
+        <h2 id="ac-look">What to look for.</h2>
+        {/*
+          ONE ROW, AND ONLY WHAT THE SITE CAN ALWAYS KEEP. The address this site sends from
+          changes with a setting, and the subject line depends on whether the reader already
+          had an account, which this page deliberately cannot know: saying so would tell a
+          stranger which addresses have accounts here. A named subject that does not arrive
+          is worse than no subject at all, so the paragraph describes it instead.
+        */}
+        <ul class="ac-from">
+          <li><b>From</b> <span>Wiser Walk</span></li>
+        </ul>
+        <p>
+          If it is not there in a minute, look in your spam folder. The subject line is
+          about your password. The email has a six-digit code in it too, for anybody whose
+          button will not open.
+        </p>
+        <p class="ac-again">
+          <button class="btn ac-btn" id="ac-again" type="button" disabled>Send it again</button>
+        </p>
+        {/* Beside the button it belongs to, not four hundred pixels up the page. */}
+        <p class="ac-status" id="ac-status" role="status" aria-live="polite"></p>
+        <p class="ac-acts">
+          <a class="ac-go" href="/account/password/">Type the code instead</a>
+        </p>
+      </section>
+    </>
+  )}
+
+  <script>
+    import { requestLink, requestReset, sayFor } from '../../lib/account/client';
+
+    const addr = document.getElementById('ac-to');
+    if (addr) {
+      const status = document.getElementById('ac-status');
+      const again = document.getElementById('ac-again');
+      const back = document.getElementById('ac-back');
+
+      // The only thing `?k=recovery` changes: where "Not that address?" goes back to. It
+      // says nothing about the email itself, because the site cannot know which one was sent.
+      const recovery = new URLSearchParams(location.search).get('k') === 'recovery';
+      if (recovery) back.setAttribute('href', '/account/forgot/');
+
+      let email = '';
+      try { email = sessionStorage.getItem('ww.acct.to') || ''; } catch (e) {}
+      if (email) addr.textContent = email;
+
+      const say = (text, kind) => {
+        status.textContent = text;
+        status.className = 'ac-status' + (kind ? ' is-' + kind : '');
+      };
+
+      /*
+       * Sixty seconds, in words, counted down in tabular figures so the line does not
+       * twitch. Sixty because that is Supabase's own cooldown per address: a resend inside
+       * it is refused, and a button that is refused is worse than a button that waits.
+       */
+      let left = 0;
+      let timer = 0;
+      const tick = () => {
+        if (left > 0) {
+          again.disabled = true;
+          again.textContent = 'Send it again in ' + left + 's';
+          left -= 1;
+          return;
+        }
+        window.clearInterval(timer);
+        again.disabled = false;
+        again.textContent = 'Send it again';
+      };
+      const hold = seconds => {
+        left = seconds;
+        window.clearInterval(timer);
+        tick();
+        timer = window.setInterval(tick, 1000);
+      };
+
+      again.addEventListener('click', () => {
+        if (again.disabled || !email) {
+          if (!email) say('We do not know which address to send to. Go back and put it in again.', 'bad');
+          return;
+        }
+        again.disabled = true;
+        again.textContent = 'Sending…';
+        say('Sending…', 'busy');
+        (recovery ? requestReset(email) : requestLink(email)).then(done => {
+          if (!done.ok) {
+            again.disabled = false;
+            again.textContent = 'Send it again';
+            say(done.say, 'bad');
+            return;
+          }
+          say('Sent again. Look for it in a moment.', 'ok');
+          hold(60);
+        });
+      });
+
+      // They asked for an email one second ago, so the wait starts now rather than on the
+      // first press.
+      hold(60);
+
+      /* Screenshot switches. Dev only: the whole block goes when the site is built. */
+      if (import.meta.env.DEV) {
+        const state = new URLSearchParams(location.search).get('state');
+        if (state) {
+          addr.textContent = 'reader@example.com';
+          window.clearInterval(timer);
+          again.disabled = false;
+          again.textContent = 'Send it again';
+        }
+        if (state === 'error') say(sayFor('cooldown'), 'bad');
+        if (state === 'sent') say('Sent again. Look for it in a moment.', 'ok');
+        if (state === 'busy') { again.disabled = true; again.textContent = 'Sending…'; say('Sending…', 'busy'); }
+      }
+    }
+  </script>
+</Base>

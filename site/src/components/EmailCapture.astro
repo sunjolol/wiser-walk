@@ -129,7 +129,7 @@ const offer =
           form.hidden = true;
           say(
             body.already
-              ? 'You are already on the list — nothing has changed.'
+              ? 'You are already on the list. Nothing has changed.'
               : 'Thank you. Look out for an email from us; the first one may ask you to confirm.',
             'ok'
           );
@@ -139,7 +139,7 @@ const offer =
         }
       } catch {
         button.disabled = false;
-        say('That did not go through — you may be offline. Try again in a moment.', 'bad');
+        say('That did not go through. You may be offline; try again in a moment.', 'bad');
       }
     });
 
@@ -147,7 +147,7 @@ const offer =
     const params = new URLSearchParams(location.search);
     const sub = params.get('sub');
     if (sub === 'ok') say('Thank you. Look out for an email from us; the first one may ask you to confirm.', 'ok');
-    else if (sub === 'already') say('You are already on the list — nothing has changed.', 'ok');
+    else if (sub === 'already') say('You are already on the list. Nothing has changed.', 'ok');
     else if (sub === 'error') say(params.get('why') || 'That did not go through.', 'bad');
     if (sub) history.replaceState(null, '', location.pathname);
   }

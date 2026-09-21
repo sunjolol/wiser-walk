@@ -16,6 +16,7 @@ import { QUIZZES, getQuiz, resultFor, decodeFor, outcomeHref } from '../../../li
 import { groupNoteFor, outcomeNounPlural, rankWord } from '../../../lib/engine/types';
 import { isConfigured } from '../../../lib/email/provider';
 import { readEnv } from '../../../lib/email/env';
+import { ACCOUNTS_VISIBLE } from '../../../lib/account/config';
 import { artFor } from '../../../lib/art';
 import { liveGames } from '../../../lib/games';
 import { getCollection } from 'astro:content';
@@ -189,6 +190,23 @@ const games = liveGames();
         <p class="saved-pill" id="saved-note" hidden>
           <Icon name="users" size={14} /> Saved to <a href="/me/">My results</a>
         </p>
+        {/*
+          And, for the reader who has just finished and has no account, the one step that
+          makes that saving permanent. It is shown by the same test as the pill above it, so
+          a visitor opening somebody else's link is never asked to keep a result that was
+          never theirs, and it is hidden again the moment there IS an account. The pill
+          above says the result is on this device; this says the thing that is actually
+          different about an account, which is every other device.
+
+          The initial hiding is an inline style rather than the `hidden` attribute because
+          .btn-row is display:flex, which beats the attribute, and the rule that would fix
+          that lives in a stylesheet this page shares with every other reference page.
+        */}
+        {ACCOUNTS_VISIBLE && (
+          <p class="btn-row" id="keep-row" style="display:none">
+            <a class="btn" href="/account/sign-up/">Keep it on every device</a>
+          </p>
+        )}
       </div>
     </header>{/*
       Hung off the band with no whitespace between them: an expression that renders nothing
@@ -206,10 +224,26 @@ const games = liveGames();
       <div class="note draft"><p><strong>Unaudited draft.</strong>{" " + quiz.draftNote}</p></div>
     )}
 
+    {import.meta.env.DEV && (
+      /* Development only, and compiled out of anything that is ever served: ?took=1 says
+         this reader just finished, which is the one state the two things below are drawn
+         in. Without it they can only be looked at by playing a quiz through by hand. */
+      <script is:inline define:vars={{ devSlug: quiz.slug, devCode: view.code }}>
+        try {
+          if (new URLSearchParams(location.search).get('took') === '1') {
+            sessionStorage.setItem('ww:took:' + devSlug, devCode);
+          }
+        } catch (e) {}
+      </script>
+    )}
+
     <script is:inline define:vars={{ savedQuizSlug: quiz.slug, savedQuizCode: view.code }}>
       try {
         if (sessionStorage.getItem('ww:took:' + savedQuizSlug) === savedQuizCode) {
           document.getElementById('saved-note').hidden = false;
+          // Already signed in: it is kept for good already, and there is nothing to ask for.
+          var keep = document.getElementById('keep-row');
+          if (keep && document.documentElement.dataset.account !== 'in') keep.style.display = '';
         }
       } catch (e) {}
     </script>

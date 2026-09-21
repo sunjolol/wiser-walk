@@ -1,0 +1,115 @@
+---
+/**
+ * Forgotten your password.
+ *
+ * The same shape as signing up, one field and one button, because it is the same act: an
+ * address goes in and a link comes back. Nothing here says whether that address has an
+ * account, and the page says the same thing either way.
+ */
+import '../../styles/pages/account.css';
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import AccountBand from '../../components/AccountBand.astro';
+import { ACCOUNTS_READY } from '../../lib/account/config';
+---
+<Base
+  title="Forgotten your password"
+  description="We will email you a link to choose a new password."
+  noindex={true}
+>
+  {!ACCOUNTS_READY ? (
+    <AccountBand
+      eyebrow="Your account"
+      icon="users"
+      title="Accounts are not switched on yet."
+      accent="not switched on yet."
+      lede="Everything you finish is still saved on this device in the meantime, and it is all on one page."
+    >
+      <p class="ac-acts">
+        <a class="btn ac-btn" href="/me/">See my results <Icon name="arrow" size={16} /></a>
+      </p>
+    </AccountBand>
+  ) : (
+    <AccountBand
+      eyebrow="Your password"
+      icon="key"
+      title="Forgotten your password?"
+      accent="password?"
+      lede="Put your email address in and we will send you a link to choose a new one."
+    >
+      <form class="ac-form" id="ac-form" novalidate>
+        {/* Hidden from people, irresistible to naive bots. Not a CAPTCHA and never will be. */}
+        <p class="hp" aria-hidden="true">
+          <label>Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+        </p>
+        <div class="ac-row ac-row--one">
+          <span class="ac-cell">
+            <label class="sr-only" for="ac-email">Your email address</label>
+            <span class="ac-cell-icon" aria-hidden="true"><Icon name="mail" size={17} /></span>
+            <input class="ac-field" id="ac-email" name="email" type="email" required
+                   autocomplete="email" inputmode="email" placeholder="you@example.com" />
+          </span>
+          <button class="btn ac-btn" id="ac-go" type="submit">Email me a link</button>
+        </div>
+      </form>
+      <p class="ac-status" id="ac-status" role="status" aria-live="polite"></p>
+      <p class="ac-small">
+        The link lands on a page where you choose a new password, and works for an hour.
+        Until you choose one, your old password still works.
+      </p>
+      <p class="ac-acts">
+        <a class="ac-go" href="/account/sign-in/">Back to sign in</a>
+      </p>
+    </AccountBand>
+  )}
+
+  <script>
+    import { requestReset, sayFor } from '../../lib/account/client';
+
+    const form = document.getElementById('ac-form');
+    if (form) {
+      const status = document.getElementById('ac-status');
+      const button = document.getElementById('ac-go');
+      const field = document.getElementById('ac-email');
+
+      const say = (text, kind) => {
+        status.textContent = text;
+        status.className = 'ac-status' + (kind ? ' is-' + kind : '');
+      };
+      const busy = on => {
+        button.disabled = on;
+        button.textContent = on ? 'Sending…' : 'Email me a link';
+      };
+
+      form.addEventListener('submit', event => {
+        event.preventDefault();
+        if (button.disabled) return;
+        // The honeypot. A bot that fills it gets the page a person gets, and nothing is sent.
+        if (form.elements.website && form.elements.website.value) {
+          location.href = '/account/check-email/?k=recovery';
+          return;
+        }
+
+        const email = field.value.trim();
+        busy(true);
+        say('Sending…', 'busy');
+        requestReset(email).then(done => {
+          if (!done.ok) {
+            busy(false);
+            say(done.say, 'bad');
+            return;
+          }
+          try { sessionStorage.setItem('ww.acct.to', email); } catch (e) {}
+          location.href = '/account/check-email/?k=recovery';
+        });
+      });
+
+      /* Screenshot switches. Dev only: the whole block goes when the site is built. */
+      if (import.meta.env.DEV) {
+        const state = new URLSearchParams(location.search).get('state');
+        if (state === 'busy') { busy(true); say('Sending…', 'busy'); }
+        if (state === 'error') say(sayFor('cooldown'), 'bad');
+      }
+    }
+  </script>
+</Base>

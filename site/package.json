@@ -6,16 +6,17 @@
   "scripts": {
     "predev": "node scripts/build-data.mjs",
     "dev": "astro dev",
-    "prebuild": "node scripts/build-data.mjs && node scripts/engine-test.mjs",
+    "prebuild": "node scripts/build-data.mjs && node scripts/engine-test.mjs && node scripts/account-test.mjs && node scripts/auth-test.mjs",
     "build": "astro build",
     "preview": "astro preview",
     "data": "node scripts/build-data.mjs",
-    "test": "node scripts/build-data.mjs && node scripts/engine-test.mjs && node scripts/email-test.mjs"
+    "test": "node scripts/build-data.mjs && node scripts/engine-test.mjs && node scripts/account-test.mjs && node scripts/auth-test.mjs && node scripts/email-test.mjs"
   },
   "dependencies": {
-    "astro": "^5.1.1",
     "@astrojs/sitemap": "^3.2.1",
-    "@astrojs/vercel": "^8.0.1"
+    "@astrojs/vercel": "^8.0.1",
+    "@supabase/supabase-js": "^2.116.0",
+    "astro": "^5.1.1"
   },
   "engines": {
     "node": "22.x"

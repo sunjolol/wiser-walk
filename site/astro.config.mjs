@@ -25,6 +25,16 @@ export default defineConfig({
   // stripped from result-page paths before the view is sent (see the beforeSend hook in
   // src/layouts/Base.astro). Described on /method/ under "Your answers".
   adapter: vercel({ webAnalytics: { enabled: true } }),
+  // Which Vercel environment this build is for, carried into the bundle as a plain value.
+  // Vercel sets VERCEL_ENV for the build machine, not for the browser, and src/lib/account/
+  // config.ts needs it to show the account's public entry points on a PREVIEW deployment and
+  // nowhere else: the owner can open a preview, nobody else can. Anywhere without the
+  // variable — a local build, a test bundled by esbuild — this is the empty string.
+  vite: {
+    define: {
+      __WW_VERCEL_ENV__: JSON.stringify(process.env.VERCEL_ENV ?? '')
+    }
+  },
   integrations: [
     sitemap({
       // Result and comparison pages are per-person and carry noindex; keep them out of the
@@ -36,10 +46,13 @@ export default defineConfig({
       // The prefixes are derived from the registry rather than typed here, so a quiz that
       // goes live, or a new draft, needs no edit in this file.
       // /me/ is the same contradiction in a different shape: it is one reader's own shelf,
-      // it carries noindex, and there is nothing on it for anybody else to find.
+      // it carries noindex, and there is nothing on it for anybody else to find. So is every
+      // /account/ page: they are one person's own door, they carry noindex, and one of them
+      // is opened from an email with a one-time token in its address.
       filter: page => {
         const path = new URL(page).pathname;
         if (path.startsWith('/r/') || path.startsWith('/c/') || path === '/me/') return false;
+        if (path.startsWith('/account/')) return false;
         return !draftPrefixes.some(prefix => path.startsWith(prefix));
       }
     })

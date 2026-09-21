@@ -21,6 +21,12 @@ export interface Subscription {
   code?: string;
   /** Plain-language summary of the result, so a mail template need not decode anything. */
   headline?: string;
+  /**
+   * Where the address came from: `account`, or nothing for the result-page form. One
+   * attribute rather than a second list, because a second list id is a second thing to
+   * keep in step and it splits the audience the whole list exists to reach.
+   */
+  source?: string;
 }
 
 export type SubscribeOutcome =
@@ -30,6 +36,16 @@ export type SubscribeOutcome =
 export interface EmailProvider {
   readonly id: string;
   subscribe(sub: Subscription): Promise<SubscribeOutcome>;
+  /**
+   * Stop sending them the notes, keep the contact. This is what the on/off control on
+   * /account/ does, and it must not touch the account itself.
+   */
+  removeFromList(email: string): Promise<SubscribeOutcome>;
+  /**
+   * Forget them entirely. Only account deletion calls this, and it is the difference
+   * between a site that says "one button deletes it all" and one that means it.
+   */
+  deleteContact(email: string): Promise<SubscribeOutcome>;
 }
 
 /**
@@ -42,8 +58,9 @@ export interface EmailProvider {
  */
 const TIMEOUT_MS = 8000;
 
-/** A POST with a deadline. Never throws: the caller gets a Response or null. */
-async function postJson(
+/** A request with a deadline. Never throws: the caller gets a Response or null. */
+async function requestJson(
+  method: string,
   url: string,
   headers: Record<string, string>,
   body: unknown,
@@ -53,9 +70,9 @@ async function postJson(
   const timer = setTimeout(() => ac.abort(), timeoutMs);
   try {
     return await fetch(url, {
-      method: 'POST',
+      method,
       headers: { 'content-type': 'application/json', accept: 'application/json', ...headers },
-      body: JSON.stringify(body),
+      ...(body === undefined ? {} : { body: JSON.stringify(body) }),
       signal: ac.signal
     });
   } catch {
@@ -67,12 +84,26 @@ async function postJson(
   }
 }
 
+/**
+ * A POST with a deadline. Exported because the account emails in send.ts need exactly this
+ * behaviour, and two copies of a timeout are two places for one of them to be dropped.
+ */
+export function postJson(
+  url: string,
+  headers: Record<string, string>,
+  body: unknown,
+  timeoutMs: number
+): Promise<Response | null> {
+  return requestJson('POST', url, headers, body, timeoutMs);
+}
+
 /** The attributes a mail template can personalise with. Empty ones are not sent. */
 function attributesFor(sub: Subscription): Record<string, string> | undefined {
   const attrs: Record<string, string> = {};
   if (sub.quiz) attrs.QUIZ = sub.quiz;
   if (sub.code) attrs.RESULT_CODE = sub.code;
   if (sub.headline) attrs.RESULT_HEADLINE = sub.headline;
+  if (sub.source) attrs.SOURCE = sub.source;
   return Object.keys(attrs).length ? attrs : undefined;
 }
 
@@ -158,6 +189,54 @@ export function brevo(apiKey: string, opts: BrevoOptions = {}): EmailProvider {
         return { ok: false, retryable: true, message: 'The email service is busy. Try again shortly.' };
       }
       return { ok: false, retryable: false, message: 'Sign-up failed.' };
+    },
+
+    /**
+     * Off the list, still a contact.
+     *
+     * With no list configured there is no list to come off, and reporting a failure for a
+     * state that is already true would leave the toggle on /account/ stuck.
+     */
+    async removeFromList(email) {
+      if (!listId) return { ok: true, already: true };
+      const res = await postJson(
+        `https://api.brevo.com/v3/contacts/lists/${listId}/contacts/remove`,
+        { 'api-key': apiKey },
+        { emails: [email] },
+        timeoutMs
+      );
+      if (!res) return { ok: false, retryable: true, message: 'Could not reach the email service.' };
+      if (res.status === 200 || res.status === 201 || res.status === 204) return { ok: true, already: false };
+      // A contact Brevo has never heard of, or one already off the list, is the state that
+      // was asked for. Calling that a failure would make a working toggle look broken.
+      if (res.status === 400 || res.status === 404) return { ok: true, already: true };
+      if (res.status === 401 || res.status === 403) {
+        return { ok: false, retryable: false, message: 'The email service refused our key.' };
+      }
+      if (res.status === 429 || res.status >= 500) {
+        return { ok: false, retryable: true, message: 'The email service is busy. Try again shortly.' };
+      }
+      return { ok: false, retryable: false, message: 'That did not go through.' };
+    },
+
+    async deleteContact(email) {
+      const res = await requestJson(
+        'DELETE',
+        `https://api.brevo.com/v3/contacts/${encodeURIComponent(email)}`,
+        { 'api-key': apiKey },
+        undefined,
+        timeoutMs
+      );
+      if (!res) return { ok: false, retryable: true, message: 'Could not reach the email service.' };
+      if (res.status === 204 || res.status === 200) return { ok: true, already: false };
+      if (res.status === 404) return { ok: true, already: true };
+      if (res.status === 401 || res.status === 403) {
+        return { ok: false, retryable: false, message: 'The email service refused our key.' };
+      }
+      if (res.status === 429 || res.status >= 500) {
+        return { ok: false, retryable: true, message: 'The email service is busy. Try again shortly.' };
+      }
+      return { ok: false, retryable: false, message: 'That did not go through.' };
     }
   };
 }
@@ -212,6 +291,17 @@ function mailerlite(apiKey: string, groupId?: string): EmailProvider {
         return { ok: false, retryable: false, message: 'Sign-up is misconfigured. This is our fault, not yours.' };
       }
       return { ok: false, retryable: false, message: 'Sign-up failed.' };
+    },
+
+    // Removal is not wired here. MailerLite has endpoints for both, but this site does not
+    // run on MailerLite and an untested delete path is worse than an honest refusal: the
+    // account page reports that the list was not changed, which is true, instead of saying
+    // somebody has been forgotten when they have not.
+    async removeFromList() {
+      return { ok: false, retryable: false, message: 'This email service cannot remove contacts.' };
+    },
+    async deleteContact() {
+      return { ok: false, retryable: false, message: 'This email service cannot remove contacts.' };
     }
   };
 }
@@ -224,9 +314,17 @@ const consoleProvider: EmailProvider = {
   id: 'console',
   async subscribe(sub) {
     console.log(
-      `[email] no provider configured — NOT subscribed. quiz=${sub.quiz ?? '-'} code=${sub.code ?? '-'}`
+      `[email] no provider configured — NOT subscribed. quiz=${sub.quiz ?? '-'} code=${sub.code ?? '-'} source=${sub.source ?? '-'}`
     );
     return { ok: true, already: false };
+  },
+  async removeFromList() {
+    console.log('[email] no provider configured — NOT removed from any list.');
+    return { ok: true, already: true };
+  },
+  async deleteContact() {
+    console.log('[email] no provider configured — NO contact to delete.');
+    return { ok: true, already: true };
   }
 };
 

@@ -1,0 +1,180 @@
+---
+/**
+ * The owner's self-check. Nothing links to it.
+ *
+ * He is going to paste values into two dashboards and a hosting panel, in an order that
+ * matters, and the failure he cannot debug is the quiet one: everything looks right and
+ * nobody can sign in. So this page asks the server to run every check and prints the answers
+ * as a numbered ladder of plain sentences, each naming the thing to go and do.
+ *
+ * It works when nothing else does. `/api/auth/health` answers whether or not accounts are
+ * switched on, because saying what is missing is the whole point of it, so this page renders
+ * its band and its ladder in both states.
+ *
+ * ONE MARK, ONE SIZE, ONE PLACE. Every line carries the same ring, drawn on the same grid
+ * at the same weight; what is inside it says whether that line is done, still to do, or
+ * wants looking at, and each of the three has one calm ink. Nothing is a fill in one state
+ * and an outline in another, and the state is printed as a word under the name as well, so
+ * nothing at all rests on reading a picture. A column of marks carrying its states through
+ * three different outlines is exactly what was rejected as scuffed and glitchy.
+ *
+ * The lines come back in whatever order the checks finished in, and are shown in the order
+ * he actually does the work: step order. The step itself is named in the sentence, because
+ * two checks can belong to one step and a column of badges reading 15, 15, 13, 8 looks like
+ * a fault rather than a list.
+ */
+import '../../styles/pages/account.css';
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import AccountBand from '../../components/AccountBand.astro';
+---
+<Base
+  title="Account setup"
+  description="Whether the account setup is finished, in plain words."
+  noindex={true}
+>
+  <AccountBand
+    kind="night"
+    ghost="setup"
+    eyebrow="Setup"
+    icon="path"
+    title="Is it switched on?"
+    accent="switched on?"
+    lede="Every check, run just now, and what to do about the ones that are not done."
+  />
+
+  <p class="ac-count" id="ac-count">Checking…</p>
+  <ol class="ac-steps" id="ac-steps"></ol>
+
+  <p class="ac-built">
+    Nothing on the site links to this page. The steps themselves, with the values to paste
+    and the screen each one is on, are in <code>site/src/lib/account/README.md</code>.
+  </p>
+
+  <p class="ac-foot">
+    <a class="btn ghost" href="/account/sign-up/">Open the sign-up page <Icon name="arrow" size={16} /></a>
+  </p>
+
+  <script>
+    const list = document.getElementById('ac-steps');
+    const count = document.getElementById('ac-count');
+
+    /* The state in a word. It is printed for all three, so the reader never has to know
+       that a missing word means anything. */
+    const WORD = { ok: 'done', todo: 'to do', bad: 'needs a look' };
+
+    /*
+     * The mark. One ring in all three states, so size, weight and position never move; what
+     * changes is the stroke inside it and the one ink the row is drawn in. Same language as
+     * the site's other marks: a 24 grid, 1.6 stroke, round ends, no fill.
+     */
+    const NS = 'http://www.w3.org/2000/svg';
+    const INSIDE = {
+      ok: 'M8.3 12.2l2.6 2.6 5-5.6',        // a tick
+      todo: '',                              // nothing yet: the ring on its own
+      bad: 'M12 7.7v4.6M12 15.9h.01'         // look at this
+    };
+    const mark = state => {
+      const svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('viewBox', '0 0 24 24');
+      svg.setAttribute('width', '22');
+      svg.setAttribute('height', '22');
+      svg.setAttribute('fill', 'none');
+      svg.setAttribute('stroke', 'currentColor');
+      svg.setAttribute('stroke-width', '1.6');
+      svg.setAttribute('stroke-linecap', 'round');
+      svg.setAttribute('stroke-linejoin', 'round');
+      svg.setAttribute('aria-hidden', 'true');
+
+      const ring = document.createElementNS(NS, 'circle');
+      ring.setAttribute('cx', '12');
+      ring.setAttribute('cy', '12');
+      ring.setAttribute('r', '8.6');
+      svg.appendChild(ring);
+
+      if (INSIDE[state]) {
+        const inside = document.createElementNS(NS, 'path');
+        inside.setAttribute('d', INSIDE[state]);
+        svg.appendChild(inside);
+      }
+      return svg;
+    };
+
+    /* PUBLIC_SUPABASE_URL and its kind, set in <code> so a line may break inside them. */
+    const ENV = /\b[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)+\b/g;
+    const sentence = (into, text) => {
+      let at = 0;
+      let found;
+      ENV.lastIndex = 0;
+      while ((found = ENV.exec(text))) {
+        if (found.index > at) into.appendChild(document.createTextNode(text.slice(at, found.index)));
+        const name = document.createElement('code');
+        name.textContent = found[0];
+        into.appendChild(name);
+        at = found.index + found[0].length;
+      }
+      if (at < text.length) into.appendChild(document.createTextNode(text.slice(at)));
+    };
+
+    const row = check => {
+      const state = WORD[check.state] ? check.state : 'bad';
+      const li = document.createElement('li');
+      li.className = 'ac-step ac-step--' + state;
+
+      const tile = document.createElement('span');
+      tile.className = 'ac-step-mark';
+      tile.appendChild(mark(state));
+      li.appendChild(tile);
+
+      const body = document.createElement('div');
+
+      const name = document.createElement('p');
+      name.className = 'ac-step-name';
+      name.textContent = check.name;
+      body.appendChild(name);
+
+      /* Its own line. Beside the name it wrapped as "NEEDS / A LOOK", which is a phrase
+         broken in half and reads as something gone wrong. */
+      const word = document.createElement('p');
+      word.className = 'ac-step-state';
+      word.textContent = WORD[state];
+      body.appendChild(word);
+
+      const say = document.createElement('p');
+      say.className = 'ac-step-say';
+      sentence(say, String(check.say || ''));
+      if (typeof check.step === 'number' && check.step > 0) {
+        const where = document.createElement('span');
+        where.className = 'ac-step-where';
+        where.textContent = ' Step ' + check.step + ' of the instructions.';
+        say.appendChild(where);
+      }
+      body.appendChild(say);
+
+      li.appendChild(body);
+      return li;
+    };
+
+    fetch('/api/auth/health', { headers: { accept: 'application/json' }, cache: 'no-store' })
+      .then(res => res.json())
+      .then(body => {
+        const checks = Array.isArray(body && body.checks) ? body.checks : [];
+        if (!checks.length) {
+          count.textContent = 'The check answered, but with nothing in it.';
+          return;
+        }
+        const done = checks.filter(c => c.state === 'ok').length;
+        count.textContent = done + ' of ' + checks.length + ' done';
+        list.textContent = '';
+        /* In the order he does them. A check that cannot say which step it belongs to goes
+           last rather than to the top, where it would look like the place to start. */
+        checks
+          .map((check, i) => ({ check, i }))
+          .sort((a, b) => (a.check.step || 99) - (b.check.step || 99) || a.i - b.i)
+          .forEach(({ check }) => list.appendChild(row(check)));
+      })
+      .catch(() => {
+        count.textContent = 'The check did not answer. Reload the page in a moment.';
+      });
+  </script>
+</Base>

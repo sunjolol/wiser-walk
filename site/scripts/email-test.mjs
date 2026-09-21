@@ -24,7 +24,7 @@ await build({
   logLevel: 'silent'
 });
 
-const { brevo, getProvider, isConfigured, looksLikeEmail } = await import(pathToFileURL(OUT).href);
+const { brevo, getProvider, isConfigured, looksLikeEmail, postJson } = await import(pathToFileURL(OUT).href);
 
 let failures = 0;
 const fail = m => { failures++; console.log('  FAIL ' + m); };
@@ -244,6 +244,119 @@ console.log('9. what counts as an address');
     else fail(`accepts ${JSON.stringify(bad)}`);
   }
 }
+
+// ------------------------------------------------- 10. where an address came from
+console.log('10. the source attribute');
+{
+  const calls = stub(() => reply(201, { id: 46 }));
+  await brevo('k', { listId: 7 }).subscribe({ email: 'reader@example.com', source: 'account' });
+  is(calls[0].body.attributes, { SOURCE: 'account' }, 'an account sign-up is marked as one');
+
+  const both = stub(() => reply(201, { id: 47 }));
+  await brevo('k', { listId: 7 }).subscribe({ ...SUB, source: 'account' });
+  is(both[0].body.attributes, {
+    QUIZ: 'theology-compass',
+    RESULT_CODE: '01VJSE',
+    RESULT_HEADLINE: 'Monergist-leaning, sacramental-leaning',
+    SOURCE: 'account'
+  }, 'it rides alongside the result attributes rather than replacing them');
+
+  const plain = stub(() => reply(201, { id: 48 }));
+  await brevo('k', {}).subscribe({ email: 'reader@example.com' });
+  is(plain[0].body.attributes, undefined, 'and is absent when nothing set it');
+}
+
+// -------------------------------------------------- 11. taking somebody off a list
+console.log('11. removing from the list');
+{
+  const calls = stub(() => reply(204, undefined));
+  const out = await brevo('key-not-real', { listId: 7 }).removeFromList('reader@example.com');
+  is(out, { ok: true, already: false }, '204 is removed');
+  is(calls[0].url, 'https://api.brevo.com/v3/contacts/lists/7/contacts/remove', 'the list-removal endpoint');
+  is(calls[0].init.method, 'POST', 'method');
+  is(calls[0].init.headers['api-key'], 'key-not-real', 'api-key header');
+  is(calls[0].body, { emails: ['reader@example.com'] }, 'body');
+  if (JSON.stringify({ url: calls[0].url, body: calls[0].body }).includes('key-not-real')) {
+    fail('the key appears outside the header');
+  } else ok('the key appears in no url and no body');
+}
+{
+  const calls = stub(() => reply(204, undefined));
+  is(await brevo('k', {}).removeFromList('reader@example.com'), { ok: true, already: true }, 'no list means nothing to come off');
+  is(calls.length, 0, 'and no request is made at all');
+}
+{
+  stub(() => reply(400, { code: 'invalid_parameter' }));
+  is(
+    await brevo('k', { listId: 7 }).removeFromList('reader@example.com'),
+    { ok: true, already: true },
+    'somebody who was never on the list is already in the state that was asked for'
+  );
+  stub(() => reply(401, { code: 'unauthorized' }));
+  is((await brevo('k', { listId: 7 }).removeFromList('r@e.com')).ok, false, 'a refused key fails');
+  stub(() => reply(503, {}));
+  is((await brevo('k', { listId: 7 }).removeFromList('r@e.com')).retryable, true, 'a busy service is worth retrying');
+}
+
+// ------------------------------------------------------ 12. forgetting somebody
+console.log('12. deleting a contact');
+{
+  const calls = stub(() => reply(204, undefined));
+  const out = await brevo('key-not-real', { listId: 7 }).deleteContact('reader@example.com');
+  is(out, { ok: true, already: false }, '204 is deleted');
+  is(calls[0].url, 'https://api.brevo.com/v3/contacts/reader%40example.com', 'the contact endpoint, address escaped');
+  is(calls[0].init.method, 'DELETE', 'method');
+  is(calls[0].init.headers['api-key'], 'key-not-real', 'api-key header');
+  is(calls[0].init.body, undefined, 'a delete carries no body');
+  if (calls[0].url.includes('key-not-real')) fail('the key appears in the url');
+  else ok('the key appears in no url');
+}
+{
+  stub(() => reply(404, {}));
+  is(
+    await brevo('k', {}).deleteContact('reader@example.com'),
+    { ok: true, already: true },
+    'a contact Brevo never held is already forgotten'
+  );
+  stub(() => reply(401, { code: 'unauthorized' }));
+  is((await brevo('k', {}).deleteContact('r@e.com')).ok, false, 'a refused key fails rather than claiming success');
+}
+{
+  // Deleting an account must never depend on a mailing list being reachable, but it must
+  // also never report that somebody was forgotten when they were not.
+  globalThis.fetch = async () => { throw new TypeError('fetch failed'); };
+  const out = await brevo('k', {}).deleteContact('r@e.com');
+  is({ ok: out.ok, retryable: out.retryable }, { ok: false, retryable: true }, 'an unreachable service is an honest failure');
+}
+{
+  globalThis.fetch = realFetch;
+  const console_ = getProvider({});
+  is((await console_.removeFromList('r@e.com')).ok, true, 'with no provider there is no list to come off');
+  is((await console_.deleteContact('r@e.com')).ok, true, 'and no contact to delete');
+  // That `ok` is the stand-in saying "nothing to do", not "somebody was forgotten", and it
+  // reads the same as a real removal. So the id is what /api/auth/delete checks before it
+  // tells a reader their address came off the list: a name, not a status.
+  is(console_.id, 'console', 'and it says plainly which provider it is');
+  is(getProvider({ EMAIL_PREVIEW: '1', BREVO_API_KEY: 'k' }).id, 'console', 'preview mode is the stand-in too');
+  const ml = getProvider({ MAILERLITE_API_KEY: 'm' });
+  is((await ml.deleteContact('r@e.com')).ok, false, 'MailerLite says plainly that it cannot, rather than pretending');
+}
+
+// ---------------------------------------------------------- 13. the shared POST
+console.log('13. postJson is shared, not copied');
+{
+  const calls = stub(() => reply(200, { fine: true }));
+  const res = await postJson('https://example.test/thing', { 'x-test': '1' }, { a: 1 }, 1000);
+  is(res.status, 200, 'it returns the response');
+  is(calls[0].init.method, 'POST', 'method');
+  is(calls[0].init.headers['content-type'], 'application/json', 'content type');
+  is(calls[0].init.headers['x-test'], '1', 'the caller’s headers survive');
+  is(calls[0].body, { a: 1 }, 'body');
+  if (calls[0].init.signal) ok('the request carries an abort signal');
+  else fail('no abort signal, so the deadline cannot be enforced');
+}
+
+globalThis.fetch = realFetch;
 
 console.log(failures === 0 ? '\nemail: all checks passed' : `\nemail: ${failures} FAILED`);
 process.exit(failures === 0 ? 0 : 1);
