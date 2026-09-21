@@ -211,32 +211,27 @@
 .hm-night {
   position: relative; isolation: isolate; overflow: hidden;
   margin: 3.2rem calc(-1 * var(--gut)) 0; padding: 2.6rem var(--gut) 2.4rem;
-  border-radius: 30px; background: #12100e; color: #fff;
+  border-radius: 30px; background: #12110f; color: #fff;
 }
-/* An old wooden chess clock, across the whole ground: a game, against time. The owner asked for
-   the first band's manner back (one picture behind everything, dark enough not to pull the
-   eye) after a version that gave the picture a slot of its own and faded it into blank space. */
-.hm-night-img {
-  position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%;
-  object-fit: cover; object-position: 50% 42%; filter: sepia(.25) saturate(.95) brightness(.9);
-}
+/* The owner tried an hourglass, a chess board and a chess clock here and came back to the
+   first picture: an old manuscript page across the whole ground, dark enough not to pull the
+   eye. The games are played with the text, and this is the text. */
+.hm-night-img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; opacity: .82; }
 .hm-night::after {
   content: ""; position: absolute; inset: 0; z-index: -1;
-  background:
-    radial-gradient(110% 95% at 50% 45%, rgba(18, 16, 14, .18), rgba(18, 16, 14, .78) 80%),
-    linear-gradient(180deg, rgba(18, 16, 14, .34), rgba(18, 16, 14, .5));
+  background: linear-gradient(180deg, rgba(18, 17, 15, .38), rgba(18, 17, 15, .74) 34%, rgba(18, 17, 15, .95) 70%);
 }
 @media (min-width: 46rem) { .hm-night { padding: 3.2rem var(--gut) 3rem; } }
 .hm-games { display: grid; grid-template-columns: 1fr; gap: .9rem; }
 .game {
   display: grid; grid-template-columns: 1fr; gap: 1.2rem; align-items: start; padding: 1.35rem 1.3rem 1.5rem;
   border-radius: 22px; text-decoration: none; color: #fff;
-  /* see-through on purpose, and barely blurred: the clock behind is the point of the band */
-  background: rgba(22, 20, 18, .58); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .13);
-  -webkit-backdrop-filter: blur(1.5px); backdrop-filter: blur(1.5px);
+  /* only slightly see-through: the page behind is a ground, and the cards are what is read */
+  background: rgba(28, 26, 24, .9); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
   transition: transform .22s ease, background .22s ease;
 }
-.game:hover { transform: translateY(-3px); background: rgba(30, 27, 24, .7); }
+.game:hover { transform: translateY(-3px); background: rgba(36, 33, 30, .94); }
 .game p { margin: .55rem 0 0; font-size: .95rem; line-height: 1.5; color: rgba(255, 255, 255, .82); }
 .game .room-go { color: var(--orange-soft); }
 .game:nth-child(2) .room-go { color: var(--blue-soft); }

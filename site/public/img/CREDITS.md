@@ -34,12 +34,14 @@ more than a century ago. The credit prints under the picture on the article's ow
 | what-are-spiritual-gifts | Jean II Restout, Pentecost, 1732. A gallery photograph with some glare; cropped out of its frame; replace if a cleaner scan turns up | `Restout - La Pentecôte 01.jpg` |
 | what-the-bible-says-about-worry | Rembrandt, Christ in the Storm on the Sea of Galilee, 1633 | `Rembrandt Christ in the Storm on the Lake of Galilee.jpg` |
 
+| (the Support page) | Jean-François Millet, The Gleaners, 1857 (`support-gleaners.jpg`) | `Jean-François Millet - Gleaners - Google Art Project 2.jpg` |
+
 ## Unsplash (free to use under the Unsplash licence; replace with Envato equivalents at will)
 
 | file | what it shows | Unsplash photo id |
 |---|---|---|
 | sky-rays.jpg | sun rays through blue and orange cloud (home hero) | photo-1514519273132-6a1abd48302c |
 | hero-dawn.jpg | a lone walker on a hill before layered mountains at first light (footer) | photo-1786897162869-b0ccd067affd |
-| game-clock.jpg | an antique wooden chess clock with two dials (games band; printed dark and warm in CSS, the cards over it are see-through) | photo-1764250244454-e063cef0f730 |
+| game-manuscript.jpg | an illuminated manuscript leaf (games band; the owner tried an hourglass, a chess board and a chess clock and came back to this) | photo-1602660187275-7275b639d7ea |
 
 All were resized and recompressed for the web (quality 68-80, progressive JPEG).

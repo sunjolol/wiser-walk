@@ -236,3 +236,38 @@
   .sp-who h2 { grid-column: 1; grid-row: 1; margin-top: 0; align-self: center; }
   .sp-who p { grid-column: 2; grid-row: 1; margin-top: 0; align-self: center; }
 }
+
+/* ---- 2026-09-21, second round of the owner's notes ------------------------------------
+ * A picture of its own (the footer's walker was here too, and the footer is on this page):
+ * Millet's Gleaners, who live on what a harvest leaves for them. The painting is NOT laid
+ * under the words: it takes one side of the band and the words take the other, so nothing
+ * is stretched, no sky is repeated, and there is no empty run above the chip. The ask is
+ * already in the band, so the second one goes back to the foot of the page.
+ */
+/* the reasons rise over the band's foot, so the band keeps room under its button for them */
+.sp-band { padding: 0 0 5.6rem; background: #2B2118; }
+.sp-band::after { display: none; }
+.sp-band-img {
+  position: relative; left: auto; top: auto; z-index: 0; display: block;
+  width: 100%; height: 15rem; object-fit: cover; object-position: 50% 62%;
+  -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent);
+  mask-image: linear-gradient(180deg, #000 70%, transparent);
+}
+.sp-band-in { position: relative; max-width: none; margin: -1.2rem 0 0; padding: 0 var(--gut); }
+@media (min-width: 46rem) {
+  .sp-band { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr); align-items: center; padding: 0; min-height: 25rem; }
+  .sp-band-img {
+    order: 2; height: 100%; min-height: 25rem; object-position: 56% 60%;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 26%);
+    mask-image: linear-gradient(90deg, transparent, #000 26%);
+  }
+  .sp-band-in { order: 1; margin: 0; padding: 2.6rem 0 5.4rem var(--gut); max-width: 30rem; }
+}
+@media (min-width: 68rem) { .sp-band-in { padding-left: 3.25rem; } }
+.sp-credit { margin: 1.3rem 0 0; font-size: .74rem; font-style: italic; color: var(--ink-mute); text-align: center; }
+.sp-fine { margin: .35rem auto .1rem; }
+.sp-who { margin-top: 1.4rem; }
+.sp-give { margin-top: 1.4rem; }
+/* half the air between the small print and the footer, on this page only */
+main:has(.sp-fine) + .site-foot { margin-top: 2rem; }
+

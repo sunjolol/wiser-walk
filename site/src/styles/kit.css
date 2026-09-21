@@ -491,7 +491,7 @@ body {
 /* .site-foot in the selector on purpose: an older `.site-foot .wrap` rule elsewhere sets the
    wrap's top padding, and it was winning, which put the words at the top of the band on the
    brightest part of the sky. They belong low, on the dark of the hill. */
-.site-foot .foot-dawn-in { display: grid; grid-template-columns: 1fr; gap: 1.3rem; padding-top: 14.5rem; padding-bottom: 2.2rem; }
+.site-foot .foot-dawn-in { display: grid; grid-template-columns: 1fr; gap: 1.3rem; padding-top: 11rem; padding-bottom: 2.2rem; }
 .foot-kicker {
   display: inline-flex; align-items: center; gap: .45rem; margin: 0 0 .5rem;
   font-family: var(--ui); font-size: .68rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
@@ -503,7 +503,7 @@ body {
 }
 .foot-dawn-say p:last-child { margin: .6rem 0 0; font-size: 1rem; color: rgba(255, 255, 255, .92); text-shadow: 0 1px 12px rgba(30, 14, 4, .5); }
 @media (min-width: 52rem) {
-  .site-foot .foot-dawn-in { grid-template-columns: minmax(0, 1fr) minmax(0, 25rem); gap: 3rem; align-items: end; padding-top: 7.5rem; padding-bottom: 2.8rem; }
+  .site-foot .foot-dawn-in { grid-template-columns: minmax(0, 1fr) minmax(0, 25rem); gap: 3rem; align-items: center; align-content: center; padding-top: 3.6rem; padding-bottom: 3.6rem; min-height: 19rem; }
   /* the walker stands at the left of the frame, so the words go to the right of him */
   .foot-dawn-say { grid-column: 2; grid-row: 1; }
   .foot-signup { grid-column: 2; grid-row: 2; }
@@ -628,3 +628,15 @@ body {
 
 /* short copy is balanced, so it never ends on one stranded word */
 .foot-line, .foot-dawn-say p { text-wrap: balance; }
+
+/* THE DARK HAIRLINE at the footer's rounded top corners. The footer's charcoal ground (and its
+   starry tile, which is opaque) sat behind the photograph, and where the corner is
+   anti-aliased a pixel of it showed round the curve as a dark outline. In the light theme the
+   ground is now drawn by a layer that STARTS BELOW the curve, so there is nothing dark behind
+   the corner to bleed. */
+:root:not([data-theme="dark"]) .site-foot { background: none; }
+:root:not([data-theme="dark"]) .site-foot::before {
+  content: ""; position: absolute; inset: 5rem 0 0 0; z-index: -3;
+  background-color: var(--dark-fill); background-image: var(--dark-fill-img); background-size: 520px;
+}
+.foot-dawn { border-radius: 30px 30px 0 0; }
