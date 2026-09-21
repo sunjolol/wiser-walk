@@ -42,7 +42,7 @@ const sls = games.find(g => g.slug === 'sounds-like-scripture');
 const wsi = games.find(g => g.slug === 'who-said-it');
 
 /* The wheel is a REAL result: a published, audited answer sheet scored by the live engine. */
-const EXAMPLE = 'Anglican (broad)';
+const EXAMPLE = 'Eastern Orthodox';
 const sheet = (audit.simulations as Array<Record<string, any>>).find(
   s => s.tradition === EXAMPLE && Array.isArray(s.answers)
 );

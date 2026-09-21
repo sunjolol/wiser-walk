@@ -14,7 +14,7 @@ import { outcomeNoun } from '../lib/engine/types';
 import type { BipolarView } from '../lib/engine/types';
 
 const compass = getQuiz('theology-compass')!;
-const EXAMPLE = 'Anglican (broad)';
+const EXAMPLE = 'Eastern Orthodox';
 const sheet = (audit.simulations as Array<Record<string, any>>).find(s => s.tradition === EXAMPLE && Array.isArray(s.answers));
 const exampleView = sheet ? (resultFor(compass, scoreQuiz(compass, sheet.answers)) as BipolarView) : null;
 ---

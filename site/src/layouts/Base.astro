@@ -393,7 +393,11 @@ const NAV: Array<{
             })
             .then(function (r) {
               if (r.ok && r.body.ok) {
-                form.hidden = true;
+                // Hide the FIELD, never the form: the status line lives inside the form, and
+                // hiding the form hid the thank-you with it, so a reader who had just signed
+                // up saw the box vanish and nothing else.
+                var row = form.querySelector('.foot-signup-row');
+                if (row) row.hidden = true;
                 // True whether or not the provider's double opt-in is switched on: that
                 // lives in an account setting, not in this repository, so the line may not
                 // promise a confirmation email outright.
