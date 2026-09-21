@@ -94,6 +94,17 @@ tier 2 otherwise. A missing or malformed verdict drops the line.
 - Pool shape mirrors the sibling: `{version, built, speakers:[{id,name,testament,books}],
   conflicts:{id:[ids]}, items:[{id,t,sp,ref,tr,tier,book}]}`.
 
+## The card the site draws
+
+`build-page.mjs` writes `cover` and `coverNames` into the site metadata: one real line and the
+four real names under it, chosen by the rules above with the shuffle replaced by speaker id so
+nothing moves between builds. The names are sorted alphabetically and the metadata never records
+which of them spoke, so neither the file nor the order can hand anyone an answer. It shows the
+first screen of the game and nothing the first screen does not. The line is picked from the
+hardest tier, from a speaker with a plain personal name, near seventy-eight characters, and only
+where three distractors exist; a fixture pool writes neither field, so a placeholder can never
+print as a real line.
+
 ## Files
 
 ```

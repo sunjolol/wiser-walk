@@ -935,3 +935,125 @@
   }
   .wayin h2 { font-size: clamp(2rem, 3.4vw, 2.7rem); }
 }
+
+/* ==============================================================================
+   SPARSE RECORD (2026-09-21)
+   The tally that stands in for the compass on a figure the text barely places.
+
+   The wheel draws each axis as a ray whose length is the lean. On Jesus that is
+   three arms at a fifth of their length and three directions with no arm at all:
+   an honest drawing that reads as a broken one. The tally is the SAME facts in
+   the same dark language, counted and drawn as rows.
+
+   Nothing here softens anything. Every word beside a rail is the page's own
+   reading of that axis, both pole names print under every rail as they do
+   everywhere else on this site, and an axis carrying no coordinate draws no
+   position: two hollow rings toward the two ends where the acts go both ways, a
+   hatched empty rail where the text is silent.
+
+   Scoped to .feature-art, which is a .dark panel: the inks are the soft pair the
+   dark ground uses, blue for the left pole and orange for the right, neither the
+   better one.
+   ============================================================================== */
+
+.feature-art .tally { display: flex; flex-direction: column; margin-top: .85rem; }
+
+/* the count, as the panel's own headline: the fact a reader came for, in one line */
+.tally-count {
+  margin: 0; font-family: var(--display); font-style: italic; font-weight: 400;
+  font-size: clamp(1.7rem, 8.5vw, 2.3rem); line-height: 1.02; letter-spacing: -.02em;
+  color: var(--on-dark); text-wrap: balance;
+}
+.tally-count i { font-style: italic; color: var(--on-dark-mute); }
+
+.tally-rows { list-style: none; margin: 1.15rem 0 0; padding: 0; display: grid; gap: .85rem; }
+/* the pole ink for this row, set once and used by the tint and the knob. A row the record
+   does not place takes the quiet ink, because no pole is being named. */
+.tally-row { --pole: var(--on-dark-mute); display: grid; gap: .32rem; }
+.tally-row--left { --pole: var(--blue-soft); }
+.tally-row--right { --pole: var(--orange-soft); }
+
+.tally-ax {
+  margin: 0; display: flex; flex-wrap: wrap; align-items: baseline;
+  justify-content: space-between; gap: .1rem .7rem;
+}
+.tally-name {
+  font-family: var(--ui); font-size: .58rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--on-dark-mute);
+}
+/*
+ * The reading is a LABEL here, not a headline. Set in the display face it made the dark
+ * half a second copy of the list of readings in the light half beside it, in the same
+ * voice — "everything is templated" in one block. One display line is enough for this
+ * panel: the count. The dark half is the picture, the light half is the words.
+ */
+.tally-read {
+  min-width: 0; font-family: var(--ui); font-size: .68rem; font-weight: 600;
+  letter-spacing: .01em; line-height: 1.35; color: var(--on-dark-soft);
+  text-align: right; text-wrap: balance;
+}
+
+.tally-track {
+  position: relative; height: 10px; border-radius: 5px;
+  background: rgba(255, 255, 255, .085);
+}
+.tally-spine {
+  position: absolute; left: 50%; top: -3px; bottom: -3px; width: 1px;
+  background: rgba(255, 255, 255, .3); transform: translateX(-.5px);
+}
+/* the lean, growing OUT of the middle toward the pole it names, exactly as the rails draw
+   it: a short tint is a mild record and looks like one */
+.tally-tint {
+  position: absolute; top: 0; bottom: 0; border-radius: 5px;
+  left: calc(var(--from) * 1%); width: calc(var(--span) * 1%);
+  background: var(--pole); opacity: .5;
+}
+/* the knob carries a ring of the panel's own ground, so it stays a knob where it overlaps
+   its own tint. The dark theme repaints the panel without repainting --dark-fill, so it
+   names the ground it actually has. */
+.tally-dot {
+  position: absolute; top: 50%; left: calc(var(--pos) * 1%);
+  width: 13px; height: 13px; margin: -6.5px 0 0 -6.5px; border-radius: 50%;
+  background: var(--pole); box-shadow: 0 0 0 2.5px var(--dark-fill);
+}
+:root[data-theme="dark"] .tally-dot { box-shadow: 0 0 0 2.5px #2A2A33; }
+
+/* both ends: two HOLLOW rings, and deliberately not knobs. The acts go one way and the
+   other and the text settles nowhere, so there is no coordinate to draw and these are a
+   mark rather than a measurement. */
+.tally-end {
+  position: absolute; top: 50%; width: 11px; height: 11px; margin: -5.5px 0 0 -5.5px;
+  border-radius: 50%;
+}
+.tally-end--l { left: 22%; box-shadow: inset 0 0 0 2px var(--blue-soft); }
+.tally-end--r { left: 78%; box-shadow: inset 0 0 0 2px var(--orange-soft); }
+
+/* silent: a hollow, hatched rail with nothing on it, hatched the same way the no-claim
+   band is hatched everywhere else */
+.tally-row--none .tally-track {
+  background-color: transparent;
+  background-image: repeating-linear-gradient(135deg, var(--zone-hatch) 0 3px, transparent 3px 6px);
+  box-shadow: inset 0 0 0 1px var(--zone-edge);
+}
+.tally-row--none .tally-spine { display: none; }
+
+.tally-poles {
+  margin: 0; display: flex; justify-content: space-between; gap: .35rem .7rem;
+  font-family: var(--ui); font-size: .58rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; line-height: 1.3;
+}
+.tally-poles span:first-child { color: var(--blue-soft); }
+.tally-poles span:last-child { color: var(--orange-soft); text-align: right; }
+
+.tally-why {
+  margin: 1.15rem 0 0; font-size: .76rem; line-height: 1.5; color: var(--on-dark-mute);
+  text-wrap: pretty;
+}
+
+/* the dark half is a column of rows now, not a square instrument, so it hugs its content
+   instead of holding a wheel's worth of height */
+.trad-feature .feature-art:has(.tally) { min-height: 0; }
+/* the ghost word sits at the top of a feature's dark half, where the wheel left it room.
+   The count line starts there instead, so the word goes to the foot and stays what it is:
+   something behind the panel rather than something printed through its headline. */
+.feature-art:has(.tally) .dark-ghost { top: auto; left: -.04em; bottom: -.16em; }

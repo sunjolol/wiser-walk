@@ -562,7 +562,8 @@ body {
 .gamecard { display: grid; grid-template-columns: 1fr; gap: 0; border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--lift); background: var(--panel); text-decoration: none; color: inherit; }
 .gamecard-art { border-radius: 0; box-shadow: none; padding: 1.4rem 1.2rem 1.5rem; }
 .gamecard-art .dark-ghost { font-size: clamp(5.5rem, 28vw, 9rem); right: -.05em; bottom: -.18em; }
-/* a drawing of the game, not the game: no real line is shown, so nothing is spoiled */
+/* a drawing of one real question out of the game: the line a player would be shown, and
+   the answers under it. Never which answer is right (see components/GameCard.astro) */
 .mock { margin: 1.1rem auto 0; max-width: 17rem; }
 .mock-fuse { height: 7px; border-radius: var(--r-pill); background: rgba(255, 255, 255, .1); overflow: hidden; }
 .mock-fuse i { display: block; width: 62%; height: 100%; border-radius: inherit; background-image: var(--grad-r); }
@@ -572,6 +573,13 @@ body {
 }
 .mock-card i { display: block; height: 9px; border-radius: var(--r-pill); background: rgba(255, 255, 255, .2); }
 .mock-card i:nth-child(2) { width: 88%; } .mock-card i:nth-child(3) { width: 94%; } .mock-card i:nth-child(4) { width: 52%; }
+/* the card carrying a real line, on every page that draws a game */
+.mock-card--line { gap: .35rem; padding: 1.1rem 1.1rem 1.2rem; }
+.mock-card--line q {
+  quotes: none; display: block;
+  font-family: var(--display); font-size: 1rem; line-height: 1.32;
+  color: var(--on-dark); text-wrap: pretty;
+}
 .mock-q { font-family: var(--display); font-style: italic; font-size: 2.2rem; line-height: .6; color: var(--orange-soft); height: 1rem; }
 .mock-btns { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
 /* a grid cell, so a one-line label is centred beside a two-line one instead of hanging from the top */

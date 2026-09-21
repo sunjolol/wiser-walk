@@ -191,9 +191,13 @@ const jsonLd = {
               </ul>
               <span class="room-go">Play <Icon name="arrow" size={14} /></span>
             </div>
+            {/* One real line out of the built pool, word for word and with no citation
+                beside it, over the two answers every line in this game gets. */}
             <div class="mock" aria-hidden="true">
               <div class="mock-fuse"><i></i></div>
-              <div class="mock-card"><span class="mock-q">“</span><i></i><i></i><i></i></div>
+              {slsMeta.cover
+                ? <div class="mock-card mock-card--line"><span class="mock-q">“</span><q>{slsMeta.cover}</q></div>
+                : <div class="mock-card"><span class="mock-q">“</span><i></i><i></i><i></i></div>}
               <div class="mock-btns"><span>Not in the Bible</span><span>In the Bible</span></div>
             </div>
           </a>
@@ -210,10 +214,17 @@ const jsonLd = {
               </ul>
               <span class="room-go">Play <Icon name="arrow" size={14} /></span>
             </div>
+            {/* The same real question the game asks: one real line, and the four real
+                names under it, alphabetical and none of them marked. Both come off the
+                built pool's metadata, which never records which of the four spoke. */}
             <div class="mock mock--names" aria-hidden="true">
               <div class="mock-fuse"><i></i></div>
-              <div class="mock-card"><span class="mock-q">“</span><i></i><i></i></div>
-              <div class="mock-names"><span>Job</span><span>Eliphaz</span><span>Peter</span><span>Pilate</span></div>
+              {wsiMeta.cover
+                ? <div class="mock-card mock-card--line"><span class="mock-q">“</span><q>{wsiMeta.cover}</q></div>
+                : <div class="mock-card"><span class="mock-q">“</span><i></i><i></i></div>}
+              <div class="mock-names">
+                {(wsiMeta.coverNames?.length ? wsiMeta.coverNames : ['', '', '', '']).map(n => <span>{n}</span>)}
+              </div>
             </div>
           </a>
         )}

@@ -29,8 +29,8 @@ const games = liveGames();
 /**
  * What each game shows on its card. The mark and the ink keep two dark cards from reading
  * as one; `run` is the length of a run, which each game states on its own page; the facts
- * are counted off the built pool; and `preview` is the drawing (see GameCard for why only
- * the binary game may show a real line).
+ * are counted off the built pool; and `preview` is the drawing, whose line and names come
+ * off that same metadata so a card is one real question out of the game and nothing typed.
  */
 type CardSpec = {
   icon: IconName;
@@ -41,7 +41,7 @@ type CardSpec = {
   facts: string[];
   preview:
     | { kind: 'binary'; answers: [string, string]; line?: string | null }
-    | { kind: 'names'; names: string[] };
+    | { kind: 'names'; names?: string[] | null; line?: string | null };
 };
 
 const SPEC: Record<string, CardSpec> = {
@@ -69,7 +69,16 @@ const SPEC: Record<string, CardSpec> = {
       ...(wsiMeta.items ? [`${wsiMeta.items} real lines`] : []),
       ...(wsiMeta.speakers ? [`${wsiMeta.speakers} speakers`] : [])
     ],
-    preview: { kind: 'names', names: ['Job', 'Eliphaz', 'Peter', 'Pilate'] }
+    /*
+     * One real line and the four real names under it, both straight out of the built
+     * pool's metadata, which never records which of the four spoke. Alphabetical, and
+     * none of them marked: the card asks exactly what the first screen of the game asks.
+     */
+    preview: {
+      kind: 'names',
+      line: (wsiMeta as { cover?: string | null }).cover ?? null,
+      names: (wsiMeta as { coverNames?: string[] | null }).coverNames ?? null
+    }
   }
 };
 

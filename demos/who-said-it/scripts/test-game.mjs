@@ -7,10 +7,13 @@
  *
  *   node scripts/test-game.mjs
  */
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import assert from 'node:assert/strict';
+/* The card the site draws is built here, so it is tested here. Importing this runs
+   nothing: build-page.mjs only builds when it is the program. */
+import { coverFor, coverNames } from './build-page.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, '..');
@@ -35,6 +38,15 @@ const L = new Function('"use strict";' + source + '\nreturn {' + EXPORTS.join(',
 const pool = JSON.parse(readFileSync(join(root, 'work', 'fixture-pool.json'), 'utf8'));
 const byId = {};
 for (const s of pool.speakers) byId[s.id] = s;
+
+/* The shipped pool and the metadata the site reads, for the card tests at the foot.
+   Both are committed, so a missing one is a broken checkout and should fail loudly. */
+const realPoolPath = join(root, 'pool.json');
+const metaPath = join(root, '..', '..', 'site', 'src', 'games', 'who-said-it.meta.json');
+assert.ok(existsSync(realPoolPath), 'pool.json is missing');
+assert.ok(existsSync(metaPath), 'the site metadata is missing: run scripts/build-page.mjs');
+const realPool = JSON.parse(readFileSync(realPoolPath, 'utf8'));
+const meta = JSON.parse(readFileSync(metaPath, 'utf8'));
 
 /* One rng per line, exactly as the page builds it. */
 const optionsAt = (item, seed, i) =>
@@ -472,6 +484,77 @@ test('storage keys cannot collide with the sibling game', () => {
 test('the swap points the site route needs are present', () => {
   assert.ok(page.includes('<p class="band-chip">A wiserwalk game</p>'));
   assert.ok(page.includes('<p class="small foot" id="footResult"></p>'));
+});
+
+/* ----------------------------------------------------------- the site card -- */
+
+/*
+ * The card on /games/ and on the home page shows one real line and the four real
+ * names under it. These tests are the guard on the one thing that could go wrong
+ * there: the card saying, by order or by what it stores, which name is right.
+ */
+
+test('the four names are four, distinct, sorted, and include the speaker', () => {
+  const byName = {};
+  for (const s of realPool.speakers) byName[s.id] = s.name;
+
+  /* every item that can make a card, not only the one the card uses */
+  let checked = 0;
+  for (const item of realPool.items) {
+    const names = coverNames(realPool, item);
+    if (!names) continue;
+    checked++;
+    assert.equal(names.length, 4, item.id + ' must offer four names');
+    assert.equal(new Set(names).size, 4, item.id + ' repeats a name');
+    assert.deepEqual(names, [...names].sort((a, b) => a.localeCompare(b, 'en')),
+      item.id + ' is not in alphabetical order');
+    assert.ok(names.includes(byName[item.sp]),
+      item.id + ' leaves the real speaker out of its own question');
+    if (checked > 200) break;
+  }
+  assert.ok(checked > 100, 'too few items could make a card to test anything');
+});
+
+test('the chosen cover is a real line, hardest tier, a named individual speaking', () => {
+  const cover = coverFor(realPool);
+  assert.ok(cover, 'the real pool must yield a cover');
+  const item = realPool.items.find(i => i.id === cover.id);
+  assert.ok(item, 'the cover must come from an item in the pool');
+  assert.equal(item.tier, Math.max(...realPool.items.map(i => i.tier || 0)));
+  assert.equal(cover.text, L.displayText(item.t),
+    'the cover text must be the game’s own display of the verbatim line');
+  const speaker = realPool.speakers.find(s => s.id === item.sp);
+  assert.match(speaker.name, /^[A-Z][A-Za-z'-]*$/, 'the cover speaker must be a named individual');
+  assert.deepEqual(cover.names, coverNames(realPool, item));
+});
+
+test('the cover choice does not move on its own', () => {
+  assert.deepEqual(coverFor(realPool), coverFor(realPool));
+});
+
+test('the published metadata never says which name is right', () => {
+  const cover = coverFor(realPool);
+  assert.equal(meta.cover, cover.text, 'site meta is stale: rerun scripts/build-page.mjs');
+  assert.deepEqual(meta.coverNames, cover.names, 'site meta is stale: rerun scripts/build-page.mjs');
+
+  const speaker = realPool.speakers.find(
+    s => s.id === realPool.items.find(i => i.id === cover.id).sp).name;
+  /* the speaker's name may appear once, as one of the four; nothing else in the file
+     may point at it, and no key may hint at an answer */
+  const keys = Object.keys(meta);
+  for (const k of keys) {
+    assert.ok(!/answer|correct|truth|speaker(?!s$)|said/i.test(k),
+      'metadata key "' + k + '" would tell the card the answer');
+  }
+  assert.equal(meta.coverNames.filter(n => n === speaker).length, 1);
+  const rest = JSON.stringify({ ...meta, coverNames: undefined });
+  assert.ok(!rest.includes(speaker), 'the speaker is named outside the four options');
+  assert.equal(typeof meta.speakers, 'number', 'speakers is the count, not a name');
+});
+
+test('a fixture pool offers no cover and no names', () => {
+  assert.equal(coverFor({ speakers: [], items: [] }), null);
+  assert.equal(coverNames(pool, { sp: 'nobody', book: 'JOB' }), null);
 });
 
 if (process.exitCode) {

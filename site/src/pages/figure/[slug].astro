@@ -138,12 +138,68 @@ const blocksFor = (a: (typeof axes)[number]) =>
       ]
     : [{ label: null, side: null, items: a.items }];
 
+/**
+ * A RECORD THE WHEEL CANNOT DRAW.
+ *
+ * The compass draws each axis as a ray whose length is how far from the middle the
+ * coordinate sits. That is honest, and on most figures it is a picture. On a figure the
+ * text places mildly, or on very few axes, it is six stubs in a huddle round the pin —
+ * which does not read as "the Gospels say little about this"; it reads as a chart that
+ * failed. Jesus is the case: three axes placed, every one of them at 40, so each arm is a
+ * fifth of its length and three directions have no arm at all.
+ *
+ * So: when the record is SPARSE the panel draws a TALLY of the same facts instead. Nothing
+ * is softened and no coordinate moves; the same three states the rest of the page uses are
+ * simply set out as rows rather than as a wheel.
+ *
+ * Sparse = among the axes the text actually PLACES this figure on, no coordinate is 15 or
+ * more points from the middle. Computed here from the mask the page already derived, so a
+ * figure that moves in the data moves in and out of this by itself; no slug is listed.
+ */
+const LEAN_UNITS = 15;
+const placedAxes = axes.filter(a => a.mask === 'shown');
+const sparse = placedAxes.every(a => Math.abs(a.row.value - 50) < LEAN_UNITS);
+
+/**
+ * One row per axis, in quiz order, with the geometry taken from the integer step exactly
+ * as RailStack takes it — so the tally and the rails further down the page cannot draw the
+ * same coordinate in two different places.
+ *
+ * `both` and `none` carry no coordinate at all (the person is not anywhere on that axis),
+ * so neither draws a position: both ends gets two hollow rings toward the two ends, which
+ * are a mark and not a measurement, and an axis the text is silent on gets a hatched rail
+ * with nothing on it.
+ */
+const tally = axes.map(a => {
+  const at = (a.row.step / a.row.steps) * 100;
+  return {
+    axis: a,
+    state: a.mask === 'shown' ? 'placed' : a.bothEnds ? 'both' : 'none',
+    side: pointing(a),
+    pole: a.row.value < 50 ? a.group.left : a.group.right,
+    at,
+    from: Math.min(at, 50),
+    span: Math.abs(at - 50),
+    reading: reading(a)
+  };
+});
+
+/** Why there is no wheel, in the page's own plain words. Every number is counted above. */
+const sparseWhy =
+  placedAxes.length === 0
+    ? `The text does not place ${figure.name} anywhere on the ${quiz.groups.length}, so a wheel would have nothing to draw.`
+    : `The text places ${figure.name} on ${
+        placedAxes.length === quiz.groups.length
+          ? `all ${placedAxes.length}`
+          : `${placedAxes.length} of the ${quiz.groups.length}`
+      }, and on none of them far from the middle, so a wheel would have almost nothing to draw.`;
+
 const momentCount = axes.reduce((n, a) => n + a.cited.length, 0);
 const silentAxes = axes.filter(a => a.notShown && !a.explained).length;
 const explainedAxes = axes.filter(a => a.explained).length;
 const bothAxes = axes.filter(a => a.bothEnds).length;
 /** The axes this person is actually matched on. Never all six for every figure. */
-const matchedAxes = axes.filter(a => a.mask === 'shown').length;
+const matchedAxes = placedAxes.length;
 
 const jsonLd = isDraft
   ? null
@@ -202,24 +258,6 @@ const breadcrumbs = isDraft
       </aside>
     )}
 
-    <aside class="caveat">
-      <span class="caveat-mark" aria-hidden="true"><Icon name="compass" size={18} /></span>
-      <div>
-        <p class="caveat-label">What this is</p>
-        {/*
-          Two sentences, not five. Which axes a reader is matched on, and which are left
-          out, used to be spelled out here as well — and then again under the compass, and
-          again over the moments, where a reader meets the axes themselves and the sentence
-          is actually needed. It is said once now, there.
-        */}
-        <p>
-          Six axes of <strong>temperament, not virtue</strong>: neither end of any of them is
-          the better one. Every coordinate below is argued from cited, recorded acts, and
-          where the text shows nothing the page says so instead of guessing.
-        </p>
-      </div>
-    </aside>
-
     {isDraft && quiz.draftNote && (
       <div class="note draft ref-draft">
         <p><strong>Unaudited draft.</strong>{' ' + quiz.draftNote}</p>
@@ -230,12 +268,65 @@ const breadcrumbs = isDraft
       <div class="feature-art dark">
         <div class="dark-ghost" aria-hidden="true">{ghost}</div>
         <p class="feature-kicker">The record, drawn</p>
-        <CompassWheel view={view} />
-        <p class="feature-note">
-          Each arm is one axis; length is how far from the centre the recorded acts sit.
-          {matchedAxes < quiz.groups.length &&
-            ` An axis the text does not place ${figure.name} on has no arm.`}
-        </p>
+        {sparse ? (
+          /*
+            The tally: the same three states, counted and drawn. Both pole names print on
+            every row, exactly as they do on every rail, and the words beside each one are
+            the page's own reading of that axis rather than anything written for here.
+          */
+          <div class="tally">
+            <p class="tally-count">Placed on {matchedAxes} <i>of {quiz.groups.length}</i></p>
+            <ul class="tally-rows">
+              {tally.map(t => (
+                <li
+                  class:list={['tally-row', `tally-row--${t.state}`, `tally-row--${t.side}`]}
+                  style={`--pos:${t.at};--from:${t.from};--span:${t.span}`}
+                >
+                  <p class="tally-ax">
+                    <span class="tally-name">{t.axis.row.name}</span>
+                    <span class="tally-read">{t.reading}</span>
+                  </p>
+                  <div
+                    class="tally-track"
+                    role="img"
+                    aria-label={
+                      t.state === 'placed'
+                        ? `${t.axis.row.name}: ${t.reading}, toward ${t.pole}`
+                        : `${t.axis.row.name}: ${t.reading}, so no position is drawn`
+                    }
+                  >
+                    <span class="tally-spine" aria-hidden="true"></span>
+                    {t.state === 'placed' && (
+                      <>
+                        <span class="tally-tint" aria-hidden="true"></span>
+                        <span class="tally-dot" aria-hidden="true"></span>
+                      </>
+                    )}
+                    {t.state === 'both' && (
+                      <>
+                        <span class="tally-end tally-end--l" aria-hidden="true"></span>
+                        <span class="tally-end tally-end--r" aria-hidden="true"></span>
+                      </>
+                    )}
+                  </div>
+                  <p class="tally-poles">
+                    <span>{t.axis.group.left}</span><span>{t.axis.group.right}</span>
+                  </p>
+                </li>
+              ))}
+            </ul>
+            <p class="tally-why">{sparseWhy}</p>
+          </div>
+        ) : (
+          <>
+            <CompassWheel view={view} />
+            <p class="feature-note">
+              Each arm is one axis; length is how far from the centre the recorded acts sit.
+              {matchedAxes < quiz.groups.length &&
+                ` An axis the text does not place ${figure.name} on has no arm.`}
+            </p>
+          </>
+        )}
       </div>
       <div class="feature-body">
         <p class="feature-kicker trad-kicker">In the quiz's own words</p>
@@ -259,6 +350,30 @@ const breadcrumbs = isDraft
         </ul>
       </div>
     </div>
+
+    {/*
+      What the six axes ARE, under the record rather than over it. Above the picture it was
+      the second panel a reader had to get past before anything was shown; here it lands
+      where a reader has just seen the drawing and is about to read the rails. The outcome's
+      own sentence stays above, because that one travels with the name.
+    */}
+    <aside class="caveat">
+      <span class="caveat-mark" aria-hidden="true"><Icon name="compass" size={18} /></span>
+      <div>
+        <p class="caveat-label">What this is</p>
+        {/*
+          Two sentences, not five. Which axes a reader is matched on, and which are left
+          out, used to be spelled out here as well — and then again under the compass, and
+          again over the moments, where a reader meets the axes themselves and the sentence
+          is actually needed. It is said once now, there.
+        */}
+        <p>
+          Six axes of <strong>temperament, not virtue</strong>: neither end of any of them is
+          the better one. Every coordinate below is argued from cited, recorded acts, and
+          where the text shows nothing the page says so instead of guessing.
+        </p>
+      </div>
+    </aside>
 
     <SectionHead title="The six axes" kicker="Both poles named on every rail" />
     <div class="panel layered ref-panel ref-panel--quiet">

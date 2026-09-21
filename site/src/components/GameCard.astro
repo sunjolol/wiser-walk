@@ -8,15 +8,18 @@
  * night, with its mark and its ink, and the drawing sits beside the words rather than under
  * a rule: what a player actually meets when they tap Play, at a glance.
  *
- * TWO DRAWINGS, and which one a game gets is a matter of honesty, not taste.
+ * TWO DRAWINGS, and both show a real question.
  *
- *   binary  the two answers are the same for every line ("in the Bible" / "not in the
- *           Bible"), so a REAL line out of the pool can be shown above them without
- *           telling anyone the answer. Nothing is spoiled and the card stops reading as
- *           three grey bars that never loaded.
- *   names   four names under a line would say one of those four said it. We do not know
- *           that of any particular line here, so this drawing shows no real line: the card
- *           carries the shape of the question and the names, and the game keeps its own.
+ *   binary  a real line, and the two answers that are the same for every line ("in the
+ *           Bible" / "not in the Bible").
+ *   names   a real line, and the four real names a player would meet under it, in
+ *           alphabetical order with none of them marked. The game's own build writes
+ *           both into its metadata (`cover`, `coverNames`) and never writes which name
+ *           is right, so the card asks the question and keeps the answer.
+ *
+ * Neither drawing was always like this. The names card used to be grey bars over four
+ * invented names with one lit up as though it were correct: it read as a screen that had
+ * not loaded, and the one thing it did say was untrue.
  */
 import Icon from './Icon.astro';
 import type { Game } from '../lib/games';
@@ -32,15 +35,17 @@ export interface Props {
   /** How long a run takes, in the game's own words: "2 min a run". */
   clock?: string;
   /**
-   * The drawing: the two fixed answers, or four names under a line we do not quote.
+   * The drawing: a real line, under it either the two fixed answers or four real names.
    *
    * Optional, and on purpose. A game added to lib/games.ts before anyone has drawn it still
    * gets its room here — its words, its mark and its way in — rather than disappearing off
-   * the hub because a page-side map has no entry for it.
+   * the hub because a page-side map has no entry for it. `line` and `names` are optional
+   * for the same reason: a pool still on its development fixture publishes neither, and the
+   * card falls back to the shape of the question rather than printing something invented.
    */
   preview?:
     | { kind: 'binary'; answers: [string, string]; line?: string | null }
-    | { kind: 'names'; names: string[] };
+    | { kind: 'names'; names?: string[] | null; line?: string | null };
 }
 const { game, icon, ink, facts = [], clock, preview } = Astro.props;
 ---
@@ -63,7 +68,7 @@ const { game, icon, ink, facts = [], clock, preview } = Astro.props;
   {preview && (
     <div class="mock" aria-hidden="true">
       <div class="mock-fuse"><i></i></div>
-      {preview.kind === 'binary' && preview.line ? (
+      {preview.line ? (
         <div class="mock-card mock-card--line"><span class="mock-q">“</span><q>{preview.line}</q></div>
       ) : (
         <div class="mock-card"><span class="mock-q">“</span><i></i><i></i>{preview.kind === 'binary' && <i></i>}</div>
@@ -71,7 +76,11 @@ const { game, icon, ink, facts = [], clock, preview } = Astro.props;
       {preview.kind === 'binary' ? (
         <div class="mock-btns"><span>{preview.answers[0]}</span><span>{preview.answers[1]}</span></div>
       ) : (
-        <div class="gcard-names">{preview.names.map(n => <span>{n}</span>)}</div>
+        <div class="gcard-names">
+          {(preview.names && preview.names.length > 0
+            ? preview.names
+            : ['', '', '', '']).map(n => <span>{n}</span>)}
+        </div>
       )}
     </div>
   )}

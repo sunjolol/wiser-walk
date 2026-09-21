@@ -237,14 +237,39 @@
 .game .room-go { color: var(--orange-soft); }
 .game:nth-child(2) .room-go { color: var(--blue-soft); }
 .game .mock { margin: 0 auto; width: 100%; max-width: 17rem; }
+/*
+ * The line is quoted, so it is never cut. Two game cards stand side by side in this band
+ * and each one puts its drawing in a narrow column beside its words, which is the layout
+ * the owner approved; at that width a line of about eighty characters needs five lines of
+ * type, and the drawing has the vertical room for them because it sits centred against a
+ * taller column of words. The type steps down a little to keep it in that room. The clamp
+ * is only a stop on a pool that one day holds a much longer line: it does not bite here,
+ * and an ellipsis through a quotation would read as an altered line.
+ */
+.game .mock-card--line q {
+  font-size: .88rem; line-height: 1.3;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 6; line-clamp: 6;
+  overflow: hidden;
+}
+/* stacked, the drawing has the card's whole width and the line needs two or three lines */
+@media (max-width: 61.999rem) {
+  .game .mock-card--line q { font-size: 1rem; -webkit-line-clamp: 4; line-clamp: 4; }
+}
+/* Four names, all four the same. One of them used to be painted blue, which claimed an
+   answer the site is never told; and the names themselves were invented. Both are gone. */
 .mock-names { display: grid; grid-template-columns: 1fr 1fr; gap: .45rem; }
 .mock-names span {
-  display: grid; place-items: center; min-height: 2.1rem; border-radius: 10px;
-  font-family: var(--ui); font-size: .62rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  display: grid; place-items: center; min-height: 2.1rem; padding: .3rem .4rem;
+  border-radius: 10px; text-align: center;
+  font-family: var(--ui); font-size: .6rem; font-weight: 700; letter-spacing: .07em;
+  text-transform: uppercase; line-height: 1.25;
   color: rgba(255, 255, 255, .9); background: rgba(255, 255, 255, .1); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14);
+  transition: color .18s ease, box-shadow .18s ease;
 }
-.mock-names span:nth-child(2) { background: var(--blue); color: #17181d; box-shadow: none; }
+/* the card's own ink, and only under the pointer: the four stay equal */
+.game:hover .mock-names span { color: var(--blue-soft); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .26); }
 .mock--names .mock-fuse i { width: 38%; }
+.mock--names .mock-q { color: var(--blue-soft); }
 @media (min-width: 46rem) {
   .hm-games { grid-template-columns: 1fr 1fr; gap: 1rem; }
 }
@@ -284,7 +309,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .room, .game, .read-pic img, .hm-more .icon, .room-go .icon { transition: none; }
+  .room, .game, .read-pic img, .hm-more .icon, .room-go .icon, .mock-names span { transition: none; }
   .room:hover, .game:hover { transform: none; }
   .read:hover .read-pic img { transform: none; }
 }
