@@ -65,6 +65,11 @@
   body .site-head nav a.nav-me .icon { width: 24px; height: 24px; }
 }
 @media (max-width: 29.99rem) {
-  /* measured, not guessed: with this margin the mark's centre sits on the bulb's (331px of 375) */
-  body .site-head nav a.nav-me { margin-left: auto; margin-right: -.5rem; }
+  /* The nav row is a sideways scroller, so it clips whatever pokes past its own box. It was
+     100% wide and shifted half a rem left, which left its right edge 8px short of the bulb's;
+     pulling the mark out with a negative margin put it under the bulb but let the scroller
+     cut the right side of its "you are here" circle. The row is now a rem wider instead, so
+     the mark sits under the bulb (both centred at 331 of 375) INSIDE the box, and nothing is cut. */
+  body .site-head nav { width: calc(100% + 1rem); }
+  body .site-head nav a.nav-me { margin-left: auto; margin-right: .5rem; }
 }
