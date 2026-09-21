@@ -41,14 +41,15 @@ Note he had earlier rejected the word "wiser" as "weird to say"; he has since ov
 
 State: local git repo initialised, **one commit** `c8fd322`, 137 files tracked, `node_modules` excluded. Authored as `Light <serenitybackto@gmail.com>` — he was offered a GitHub noreply address to keep his email out of public history and **chose to keep his real email**. Do not change it.
 
-## WHERE THINGS STAND (2026-09-20, late): READ HANDOFF.md FIRST
+## WHERE THINGS STAND (end of 2026-09-21): READ HANDOFF.md FIRST
 
-**Merged and live on 2026-09-20 with the owner's yes:** Who Said It? (second game); "Who in the Bible
-are you most like?" (25 figures with Judith and Tobit, Jesus on the list, never a percentage against
-a person) and "What are your spiritual gifts?" (all nineteen gifts, fifty-seven statements, the
-disagreement described and never ruled on), both now `live`; the quizzes index and header menus; a
-recomposed footer with an email sign-up. Seven deadly sins is still an unaudited draft.
-`main` equals `build/three-new` apart from notes. **`HANDOFF.md` has the state and what is next.**
+The redesign is LIVE on `main` (picture bands site-wide, 11 articles with a topic filter, `/me/`,
+`/support/` to his Ko-fi, Donate in the header, Brevo sign-up on, 42 social cards and new search copy).
+**The DAILY SET is built but NOT live:** branch `design/home-dawn` = `main` + one commit; the owner wants
+to give feedback on its preview (the streak indicator especially) before it ships. Ask for that first.
+Then accounts (email, then set a password; Supabase proposed; he must create the project). Seven deadly
+sins is still an unaudited draft. **`HANDOFF.md` has the state, the next steps and how to ship a small
+fix without releasing the branch.**
 
 ## THE OWNER'S DIRECTION CHANGED ON 2026-09-20. This overrides older sections below
 
