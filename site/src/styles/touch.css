@@ -1,0 +1,57 @@
+/* =====================================================================================
+ * Touch: what a phone needs that a pointer does not (2026-09-21, the owner's notes).
+ *
+ * 1. "PLAY", "READ", "TAKE IT", "ALL 11 ARTICLES" were small caps text links. With a mouse the
+ *    whole card lights up on hover and says it can be clicked; on a phone nothing does, so the
+ *    way in has to LOOK like a button. Below 46rem each becomes a pill in its own ink (tinted
+ *    and outlined with currentColor, so every room keeps its colour without a rule per room),
+ *    44px tall, with type a size up.
+ * 2. THE QUIZ RAIL's arrows and fades sat ON the cards. On the second slide the back arrow and
+ *    the left fade covered the card's own edge and its headline. On a phone the arrows now
+ *    stand in a row of their own under the rail, the left fade is gone, and the right fade is a
+ *    sliver. An arrow with nowhere to go is dimmed rather than removed, so the row never jumps.
+ *
+ * Selectors start with `body` so they win over the page stylesheets whatever order the
+ * bundler puts them in. Loaded from Base.astro.
+ * ===================================================================================== */
+@media (max-width: 45.99rem) {
+  body .room-go,
+  body .read .read-go,
+  body .gcard-go,
+  body .qroom-go,
+  body .mroom-go,
+  body .nx-go,
+  body .scard-go {
+    display: inline-flex; align-items: center; gap: .5rem;
+    min-height: 44px; padding: .55rem 1.15rem; border-radius: 999px; font-size: .78rem; letter-spacing: .12em;
+    background: color-mix(in srgb, currentColor 16%, transparent);
+    box-shadow: inset 0 0 0 1.5px currentColor;
+  }
+  body .room-go .icon, body .read .read-go .icon { width: 16px; height: 16px; }
+  body .read .read-go { margin-top: .9rem; }
+
+  body .hm-more,
+  body .sect-more {
+    display: inline-flex; align-items: center; gap: .4rem; text-decoration: none;
+    min-height: 44px; padding: .5rem 1rem; border-radius: 999px; font-size: .7rem;
+    background: color-mix(in srgb, currentColor 14%, transparent);
+    box-shadow: inset 0 0 0 1.5px currentColor;
+  }
+  /* the head is a two-column grid; a pill needs the title to give it room */
+  body .hm-head { align-items: center; row-gap: .35rem; }
+
+  /* the rail */
+  body .hm-rail { display: grid; grid-template-columns: 1fr auto auto; column-gap: .6rem; row-gap: .2rem; }
+  body .hm-rail-track { grid-column: 1 / -1; margin-bottom: -.6rem; }
+  body .hm-rail::before { display: none; }
+  body .hm-rail::after { width: 1.1rem; bottom: 3.6rem; }
+  body .hm-rail-btn {
+    position: static; transform: none; width: 46px; height: 46px; grid-row: 2;
+    box-shadow: 0 4px 12px rgba(20, 24, 40, .18);
+  }
+  body .hm-rail-btn--prev { grid-column: 2; transform: scaleX(-1); }
+  body .hm-rail-btn--next { grid-column: 3; margin-right: var(--gut); }
+  body .hm-rail-btn[hidden] { display: grid; opacity: .42; pointer-events: none; filter: grayscale(.6); }
+  /* a slide lines up with the page's own gutter, never flush against the screen's edge */
+  body .hm-rail-track { scroll-padding-left: 0; }
+}
