@@ -14,19 +14,25 @@ plan was put to him; **ask what he decided before building any of it.**
 until `MAILERLITE_API_KEY` is set in Vercel (Settings, Environment Variables; Production and Preview),
 and double opt-in must be ON in MailerLite. Steps: `site/src/lib/email/README.md`. Only he can do it.
 
-## 2026-09-21: the redesign is LIVE (merged with the owner's yes)
+## 2026-09-21: the whole redesign is LIVE (every merge had the owner's yes)
 
-`design/home-dawn` was fast-forwarded into `main` and checked in production: the photographic home
-page and footer, the quiz rail with Doré engravings, a painting for every article, ELEVEN articles,
-"My results" (`/me/`, device-only, noindex, out of the sitemap), `/support/` giving to the owner's
-Ko-fi page (https://ko-fi.com/sunjolol), a Brevo email provider, and a site-wide rule against
-one-word last lines (`text-wrap: pretty` / `balance`; he called orphans "super sloppy").
-**Sign-up still answers "not switched on" in production** until he adds `BREVO_API_KEY` and
-`BREVO_LIST_ID` in Vercel (he has the Brevo account and key; he asked where to put it and was told:
-project, Settings, Environment Variables, Production and Preview, then redeploy).
-Next, in the order put to him: carry the look to `/quizzes/`, `/games/`, quiz intros and results; the
-daily game set; accounts (email first, then set a password; Supabase proposed); the profile. His
-answers are in `CLAUDE.md` under "THE OWNER'S DIRECTION CHANGED". Ask before building accounts.
+`main` carries: the photographic home page and footer; the quiz rail with Doré engravings; a painting for
+every article and ELEVEN articles (cards load 560px `-card.jpg` copies); "My results" (`/me/`); `/support/`
+giving to his Ko-fi page, with "Donate" in the header; Brevo sign-up SWITCHED ON (he set the keys; the
+thank-you now stays on screen); and the DAWN PASS: a picture band on every page (`Hero.astro` kinds photo /
+engraving / painting / night), hubs rebuilt as rooms, quiz intros and reference pages re-dressed around
+their instruments, a what-next rail on results, 18 per-figure Doré plates (`site/public/img/figures/`), a
+tally in place of the wheel on sparse figure pages (Jesus, Mary), and a real question on the Who Said It?
+card. Design brief and the owner's complaints in one place: `design/DAWN-PASS-BRIEF.md`. Working captures
+are gitignored (`design/shots/dawn/`, `design/shots/qa/`): never commit hundreds of MB of screenshots.
+His small standing rulings: the home page's example wheel is the Eastern Orthodox sheet; the games band
+uses the manuscript picture with slightly see-through cards; one footer quiz title is cut short BY HAND as a
+stopgap (`FOOT_SHORT` in `Base.astro`) until he renames that quiz; no one-word last lines; the main action
+is never below the fold; no picture that fades into blank space or repeats on one page; no credit lines he
+has to look at on `/support/`.
+**Next, in the order he approved:** the daily game set (he wants the site to feel like "a self-perpetuating
+game": each day's set, a knowledge streak, a shareable grid), then accounts (email first, then set a
+password; Supabase proposed, he must create the project), then the profile. Ask before building accounts.
 
 ## Done on 2026-09-20 (his six decisions of 2026-09-22 in the older notes, all carried out)
 
