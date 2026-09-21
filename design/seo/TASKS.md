@@ -93,3 +93,7 @@ to another project", inside his weekly token limit. Tick items here as they ship
       has `updated:`); the desktop scroll-spy rule is segmented between rows; body images would need a rehype
       plugin for lazy loading and dimensions. The build guard now REQUIRES an `answer:` (30 to 70 words) in
       every article's front matter: every new article must have one.
+- [ ] **Posting (owner, optional, his biggest lever):** the verified list with drafts is `WHERE-TO-POST.md`
+      (2026-09-21). Waiting on him: a licence for the GitHub repo (needed for the two curated GitHub lists) and
+      whether he wants help turning `demos/sounds-like-scripture.html` into an itch.io upload (cover image, tags).
+
