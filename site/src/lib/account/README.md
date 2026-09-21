@@ -30,14 +30,14 @@ site.
    can clear them everywhere from there. That is you only. Every other visitor sees the
    site exactly as it is today.
 3. **You can look at what visitors will get, before they get it.** Vercel builds a preview
-   copy of any branch that is not the live one, and on a preview the doors are open: the
-   header offers to sign in, `/me/` invites you to keep your results, and the result page
-   offers to keep it on every device. Only somebody logged in to Vercel can open a preview,
+   copy of any branch that is not the live one, and on a preview the doors are open: the top
+   of `/me/` (where the header's My results mark leads) invites you to keep your results for
+   good or to sign in, and the result page offers to keep it on every device. Only somebody logged in to Vercel can open a preview,
    so it is still nobody but you. Sign-up itself will not work there, for the reason in
    move 2, so look rather than test. If there is no preview to hand when you want one, ask
    me and I will push a branch so Vercel builds one.
 4. **You say go.** One line in the code changes, the site deploys, and the doors appear for
-   everybody: the header mark, the invitation on `/me/`, the button on a result page.
+   everybody: the invitation at the top of `/me/` and the button on a result page.
 
 ## The one choice to make first: who sends the account emails
 
@@ -422,8 +422,8 @@ preview build.
 8. Go back to **https://wiserwalk.com/account/setup/** and check the line about emails
    Supabase has asked for. It should now say one went out.
 
-*Done when:* all eight work. Then tell me, and the doors go on: the header mark, `/me/` and
-the result page start pointing at these pages. That is one line of code and a deploy,
+*Done when:* all eight work. Then tell me, and the doors go on: the top of `/me/` and the result
+page start pointing at these pages. That is one line of code and a deploy,
 and until you say so it stays off.
 
 ---

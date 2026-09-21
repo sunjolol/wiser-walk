@@ -17,6 +17,12 @@
  * page is repainted only if it turns out to hold more. A reader who is offline, or signed
  * out, or has never heard of an account, sees exactly what they saw before.
  *
+ * Where the account is ASKED for matters as much as what it does. It lives in the band at
+ * the top, under the headline, in both states: it was a panel at the foot of a three
+ * thousand pixel page, sitting on the footer's own sign-up box, and a phone showed two
+ * email fields with two different buttons one above the other. There is one box now, and
+ * it is on the first screen.
+ *
  * Two switches, asked two different questions. What a SIGNED-IN browser is shown asks only
  * whether there is a project behind the build, so the owner can sign in on the live domain
  * and see his own account working while the public still sees today's page. What a
@@ -78,7 +84,83 @@ const games = liveGames();
         <p class="me-chip"><Icon name="users" size={14} /> On this device</p>
       )}
       <h1>My <em>results.</em></h1>
-      <p class="me-count" id="me-count">Everything you finish here waits for you on this page.</p>
+      <p class="me-count" id="me-count">Everything you finish here waits for you on this page.</p>{ACCOUNTS_VISIBLE && (
+        /*
+          Hung off the paragraph above with no whitespace between them, and the same again
+          between the two blocks below, because an expression that renders nothing still
+          leaves the whitespace on each side of it. With no project behind the build this
+          page has to come out of the change exactly as it went in, down to the byte, and
+          two blank lines here cost it two spaces.
+
+          The invitation, INSIDE the band, on the first screen of a phone. It was a dark
+          panel three thousand pixels down, landing on the footer's own sign-up box, so a
+          phone showed two email fields one above the other and the account read as an
+          afterthought. It is the first thing this page has to say about itself, so it is
+          said where the page starts. Its twin below is what somebody signed in sees, and
+          which of the two is on screen is settled before the first paint, from the
+          attribute the layout writes in <head>.
+
+          The field, the button and the small print are the account pages' own, so the box
+          here and the box on /account/sign-up/ read as one thing rather than two designs
+          for one job.
+        */
+        <div class="me-ask me-ask--out">
+          {/*
+            "Keep them for good." has nothing to point at on a page that has just said
+            "Nothing saved yet", so the longer line is what the server prints and the
+            script shortens it once it knows there is something on the shelf.
+          */}
+          <p class="me-ask-say" data-role="join-head">Keep your results for good, on every device.</p>
+          {/*
+            A GET to the sign-up page, so the form still does something with the script
+            blocked: it lands on the page that asks the same question, with the address it
+            was given. With the script running, the submit is handled here and the reader
+            never sees that page at all.
+          */}
+          <form class="me-join" id="me-join" method="get" action="/account/sign-up/">
+            <div class="me-join-row">
+              <span class="me-join-cell">
+                <label class="sr-only" for="me-join-email">Your email address</label>
+                <span class="me-join-icon" aria-hidden="true"><Icon name="mail" size={17} /></span>
+                <input class="me-join-field" id="me-join-email" type="email" name="email" required
+                       autocomplete="email" inputmode="email" placeholder="you@example.com" />
+              </span>
+              <button class="btn me-join-btn" type="submit">Email me a link</button>
+            </div>
+          </form>
+          {/* Outside the form, and holding its line from the first paint, so an answer
+              landing never shunts the small print down the screen. */}
+          <p class="me-join-status" id="me-join-status" role="status" aria-live="polite"></p>
+          <p class="me-ask-small">
+            We will email you a link to set a password. We will also send you a note now
+            and then when there is a new quiz, game or article. You can stop those at any
+            time and keep your account.
+          </p>
+          <p class="me-ask-alt">
+            Already have an account? <a class="me-ask-go" href="/account/sign-in/">Sign in</a>
+          </p>
+        </div>
+      )}{ACCOUNTS_READY && (
+        /*
+          And what somebody signed in sees, in the same place and the same shell. Gated on
+          there being a project and nothing else: a browser with an account behind it gets
+          its account whether or not the public can see the way in, which is how the owner
+          tests the whole of it on the live domain first.
+        */
+        <div class="me-ask me-ask--in">
+          <p class="me-who"><span data-role="who-pre">Signed in as</span> <span class="me-who-at" data-role="who"></span></p>
+          {/* Only ever shown when the account has refused a new result for want of room.
+              The quiet type, because it is an explanation of where the newest results are,
+              not an alarm. */}
+          <p class="me-ask-small" data-role="full" hidden>
+            Your account is full. New results are kept on this device only.
+          </p>
+          <p class="me-synced" data-role="synced">&nbsp;</p>
+          <p class="me-ask-alt">
+            <a class="me-ask-go" href="/account/">Your account</a>
+          </p>
+        </div>
+      )}
     </div>
   </section>
 
@@ -166,76 +248,6 @@ const games = liveGames();
     </section>
   )}
 
-  {ACCOUNTS_VISIBLE && (
-    /*
-      The invitation: what a reader WITHOUT an account is asked, so it waits for the links
-      to be live. Its twin below is what somebody signed in sees, and which of the two is on
-      screen is settled before the first paint, from the attribute the layout writes in
-      <head>, so nobody ever watches one state swap for the other.
-    */
-    <section class="dark me-keep me-keep--out">
-      <span class="mroom-mark mroom-mark--blue"><Icon name="mail" size={20} /></span>
-      {/*
-        "Keep them for good." has nothing to point at on a page that says "Nothing saved
-        yet", so the longer line is what the server prints and the script shortens it once
-        it knows there is something on the shelf.
-      */}
-      <h2 data-role="join-head">Keep your results for good.</h2>
-      <p>
-        With an account they follow you to any phone or laptop you sign in on, and build up
-        into one picture of yourself as you take more.
-      </p>
-      <p class="me-keep-small">
-        We will email you a link to set a password. We will also send you a note now and
-        then when there is a new quiz, game or article. You can stop those at any time and
-        keep your account.
-      </p>
-      {/*
-        A GET to the sign-up page, so the form still does something with the script
-        blocked: it lands on the page that asks the same question, with the address it was
-        given. With the script running, the submit is handled here and the reader never
-        sees that page at all.
-      */}
-      <form class="me-join" id="me-join" method="get" action="/account/sign-up/">
-        <div class="capture-row">
-          <label class="sr-only" for="me-join-email">Your email address</label>
-          <input id="me-join-email" type="email" name="email" required autocomplete="email"
-                 inputmode="email" placeholder="you@example.com" />
-          <button class="btn" type="submit">Email me a link</button>
-        </div>
-        <p class="capture-status" id="me-join-status" role="status" aria-live="polite"></p>
-      </form>
-      <p class="me-keep-alt">
-        Already have one? <a class="btn ghost" href="/account/sign-in/">Sign in</a>
-      </p>
-    </section>
-  )}
-
-  {ACCOUNTS_READY && (
-    /*
-      And what somebody signed in sees. Gated on there being a project and nothing else: a
-      browser with an account behind it gets its account whether or not the public can see
-      the way in, which is how the owner tests the whole of it on the live domain first.
-    */
-    <section class="dark me-keep me-keep--in">
-      <span class="mroom-mark mroom-mark--blue"><Icon name="users" size={20} /></span>
-      <h2>Saved to your account.</h2>
-      <p class="me-who" data-role="who">&nbsp;</p>
-      <p>
-        Everything on this page is kept in your account as well as on this device, so it is
-        here on anything else you sign in on.
-      </p>
-      {/* Only ever shown when the account has refused a new result for want of room. The
-          panel's own quiet type, which is what the line before a form is set in: it is an
-          explanation of where the newest results are, not an alarm. */}
-      <p class="me-keep-small" data-role="full" hidden>
-        Your account is full. New results are kept on this device only.
-      </p>
-      <p class="me-synced" data-role="synced">&nbsp;</p>
-      <a class="btn ghost" href="/account/">Your account</a>
-    </section>
-  )}
-
   <p class="me-clear" hidden id="me-clear-row">
     <button class="me-clear-btn" id="me-clear" type="button">Clear my results from this device</button>
     {/* Clearing the device cannot fail in a way worth saying out loud; clearing an account
@@ -247,7 +259,7 @@ const games = liveGames();
   </p>
 
   <script>
-    import { getQuiz, resultFor, decodeFor } from '../lib/engine/registry';
+    import { getQuiz, resultFor, decodeFor, scoreQuiz, encodeFor } from '../lib/engine/registry';
     import { clearShelf, readableResults } from '../lib/shelf';
     // One tiny pure module: the reader of a 60-byte key. Everything that can actually talk
     // to an account is fetched on demand, below, and only when there is an account to talk
@@ -256,6 +268,35 @@ const games = liveGames();
 
     /** When this page and the account last agreed. Written here, read here, nowhere else. */
     const SYNCED_KEY = 'ww.acct.synced';
+
+    if (import.meta.env.DEV) {
+      /*
+       * Screenshot switch, and only ever in a local dev build: `import.meta.env.DEV` is
+       * replaced with false when the site is built and this whole block goes with it.
+       * ?seed=1 puts two real finished results on the shelf so the page can be judged as
+       * somebody with a history sees it; ?seed=0 takes them off again. The codes are made
+       * by the engine itself rather than typed in, so they decode like any other.
+       */
+      try {
+        const seed = new URLSearchParams(location.search).get('seed');
+        if (seed === '0') localStorage.removeItem('ww.shelf.v1');
+        if (seed === '1') {
+          const now = Date.now();
+          const rows = [['theology-compass', 0], ['spiritual-gifts', 3 * 86400000]].map(
+            ([slug, ago], n) => {
+              const quiz = getQuiz(slug);
+              const sheet = quiz.items.map((_, i) => [2, -1, 1, -2, 2, 1][(i + n) % 6]);
+              return {
+                quiz: slug,
+                code: encodeFor(quiz, scoreQuiz(quiz, sheet)),
+                at: new Date(now - ago).toISOString()
+              };
+            }
+          );
+          localStorage.setItem('ww.shelf.v1', JSON.stringify(rows));
+        }
+      } catch (e) {}
+    }
 
     const rooms = [...document.querySelectorAll('.mroom')];
     if (rooms.length) {
@@ -401,8 +442,8 @@ const games = liveGames();
         const joinHead = document.querySelector('[data-role="join-head"]');
         if (joinHead) {
           joinHead.textContent = saved.length
-            ? 'Keep them for good.'
-            : 'Keep your results for good.';
+            ? 'Keep them for good, on every device.'
+            : 'Keep your results for good, on every device.';
         }
 
         // Only when the account genuinely holds more than the shelf can. Saying it when the
@@ -423,7 +464,7 @@ const games = liveGames();
         const status = document.getElementById('me-join-status');
         if (!status) return;
         status.textContent = text;
-        status.className = 'capture-status' + (kind ? ` is-${kind}` : '');
+        status.className = 'me-join-status' + (kind ? ` is-${kind}` : '');
       };
       const sayClear = (text, kind) => {
         const status = document.getElementById('me-clear-say');
@@ -447,6 +488,12 @@ const games = liveGames();
         const who = document.querySelector('[data-role="who"]');
         const hint = readHint();
         if (who && hint) who.textContent = hint.email;
+        // No address to print means no sentence: "Signed in as" on its own is worse than a
+        // line that quietly holds its space. The line is reserved either way.
+        if (!hint) {
+          const pre = document.querySelector('[data-role="who-pre"]');
+          if (pre) pre.textContent = '';
+        }
 
         const synced = document.querySelector('[data-role="synced"]');
         // What the last visit managed, so the line holds something while this one is in
@@ -506,6 +553,9 @@ const games = liveGames();
       if (signedIn()) catchUp();
 
       const join = document.getElementById('me-join');
+      // The answer sits over the small print (see me.css). Touching the field again takes it
+      // away, so what the address is for is back in view before anything is sent a second time.
+      document.getElementById('me-join-email')?.addEventListener('input', () => sayJoin('', ''));
       join?.addEventListener('submit', async (event) => {
         event.preventDefault();
         const field = document.getElementById('me-join-email');
@@ -597,6 +647,27 @@ const games = liveGames();
         });
       }
       paintGames();
+
+      if (import.meta.env.DEV) {
+        /*
+         * The other screenshot switches, and out of every built page with the block above:
+         * the three things the ask can say that only a network can normally produce. They
+         * are here so the reserved line, the busy button and the two longest sentences the
+         * band ever prints can be looked at rather than guessed at.
+         */
+        const state = new URLSearchParams(location.search).get('state');
+        const button = document.querySelector('#me-join button[type="submit"]');
+        if (state === 'busy' && button) { button.disabled = true; sayJoin('Sending…', 'busy'); }
+        if (state === 'error') {
+          sayJoin('Give it a minute before asking again. If an email was sent, it is in your inbox by now.', 'bad');
+        }
+        if (state === 'full') {
+          const full = document.querySelector('[data-role="full"]');
+          if (full) full.hidden = false;
+          const synced = document.querySelector('[data-role="synced"]');
+          if (synced) synced.textContent = '2 shown here, 214 saved to your account.';
+        }
+      }
     }
   </script>
 </Base>

@@ -48,13 +48,23 @@ same day** (domain verified by a TXT record he added at SiteGround; checked from
 records are untouched; sitemap submitted; home page indexing requested). Nothing more to do but wait: the
 description refreshes in days, the icon on Google's schedule, and sitelinks cannot be forced.
 
-**NOW, by his word on 2026-09-21 ("Let's move on to the sign up feature"): accounts, on branch
-`feature/accounts`** (cut from live `main`; it has no upstream on purpose, so a bare `git push` cannot
-deploy). Email-only sign-up box, the emailed link lands on a set-a-password
-page, then email + password, "forgot password" sends the same kind of link, Google later. Proposed:
-Supabase Auth (free tier) with Brevo SMTP. HE must create the Supabase project and set its keys in Vercel
-(I cannot create accounts or enter keys): give him numbered steps like the Brevo ones. Then the profile
-(cross-quiz page that fills in as people do more; sync `ww.shelf.v1`, `sls.daily`, `wsi.daily`, game bests).
+**ACCOUNTS ARE BUILT, HIDDEN, AND WAITING ON HIM (2026-09-21), on local branch `feature/accounts`** (rebased
+on `origin/main`; NOT pushed; it has no upstream on purpose, so a bare `git push` cannot deploy). Read
+`design/accounts/BUILD-BRIEF.md` + `FIX-ROUND-1.md` (spec and rulings) and `site/src/lib/account/README.md` (his
+numbered setup steps: fifteen with Resend, seventeen with Brevo). The flow is his: email-only box, the emailed
+link lands on a set-a-password page, then email + password, "forgot" sends the same kind of link, Google later.
+NEXT STEPS, IN ORDER: (1) get his go to push the HIDDEN code to `main` (nothing visible changes; Supabase's
+email hook can only reach production because Vercel previews are behind a login wall); (2) he chooses the sender
+(Resend recommended, Brevo possible) and works through the README; (3) he tests at the unlinked
+`wiserwalk.com/account/sign-up/`; once signed in, his own `/me/` shows the signed-in version while the public
+sees nothing; he can see signed-out visitors' entry points on a Vercel PREVIEW build; (4) with his go, flip
+`ACCOUNT_LINKS_LIVE` in `site/src/lib/account/config.ts`, run `npm run test:switches` (it must pass), push.
+NOTHING HAS RUN AGAINST A REAL SUPABASE PROJECT: expect small fixes after his first real sign-up (watch for:
+the admin delete call's headers, whether the emails-per-hour limit applies with the hook on, schema.sql's first
+run). My calls he has not ruled on: marketing is a plain notice read before typing, with an off switch on
+`/account/` (no tick box); deleting an account also removes the mailing contact; a signed-out `/me/` asks for
+an email in the band AND the footer still has its newsletter box. After accounts: the profile (cross-quiz page;
+sync `sls.daily` / `wsi.daily` when Today's Challenge returns).
 
 **How to ship a small fix while the design branch holds unreleased work** (done twice this session):
 commit the fix on the design branch, `git worktree add --detach <tmp> origin/main`, cherry-pick it there,

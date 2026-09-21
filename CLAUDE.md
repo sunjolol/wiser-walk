@@ -55,8 +55,23 @@ especially on mobile, like it was an afterthought rather than an integral featur
 not say what it is: call it **"Today's Challenge"**. When it resumes, throw away every piece of its display,
 design it as a first-class feature phone first, and show him a mock-up of the marks and the placement
 BEFORE building. Do not raise it until he does, or until accounts are done.
-**NOW: accounts, on branch `feature/accounts`** (email only, then set a password; Supabase + Brevo; he
-must create the Supabase project and paste the keys). Seven deadly sins is still an unaudited draft. **`HANDOFF.md` has the state, the next steps and how to ship a small
+**NOW: accounts, BUILT on branch `feature/accounts` (2026-09-21), hidden, waiting on the owner.** Read
+`design/accounts/BUILD-BRIEF.md` (the binding spec) and `site/src/lib/account/README.md` (his numbered
+setup steps) before touching any of it. What is settled: Supabase Auth + Postgres on the free plan;
+`@supabase/supabase-js` in the browser by dynamic import only (`site/src/lib/account/client.ts`); WE send
+the account emails (Supabase's Send Email hook calls `/api/auth/email`, which sends through
+`site/src/lib/email/send.ts`: Resend if `RESEND_API_KEY` is set, else Brevo; Resend is the recommendation
+because Brevo's free plan rewrites every link, records the links people click, and stamps its name on the
+email); the emailed link lands on `/account/password/`, which calls nothing until the person submits;
+`/me/` is the account's home and still paints from the device shelf first. TWO SWITCHES keep it hidden:
+`ACCOUNTS_READY` (the two `PUBLIC_SUPABASE_*` values) and the committed constant `ACCOUNT_LINKS_LIVE`
+(false). A signed-in browser sees the account either way, so he can test on the live domain; a Vercel
+PREVIEW build shows signed-out visitors' entry points (`IS_PREVIEW`); production shows none until the
+constant is flipped WITH HIS GO, and `npm run test:switches` must pass before that flip. Vercel previews
+sit behind a login wall, so Supabase's hook can only reach production: the hidden code has to be on `main`
+for his first real test. Nothing has run against a real Supabase project yet. My calls he has not ruled
+on: marketing is a plain notice with an off switch on `/account/` (no tick box); deleting an account also
+removes the mailing contact. Seven deadly sins is still an unaudited draft. **`HANDOFF.md` has the state, the next steps and how to ship a small
 fix without releasing the branch.**
 
 ## THE OWNER'S DIRECTION CHANGED ON 2026-09-20. This overrides older sections below

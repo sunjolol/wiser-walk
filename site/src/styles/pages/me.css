@@ -229,6 +229,166 @@
 :root[data-account="in"] .me-chip--out { display: none; }
 :root[data-account="in"] .me-chip--in { display: inline-flex; }
 
+/* ------------------------------------------------------------- the ask, in the band ----
+ *
+ * The account belongs to the top of this page, not the bottom of it. As a panel at the foot
+ * it landed on the footer's own sign-up box and a phone showed two email fields with two
+ * different buttons, one above the other: an afterthought, which is exactly what it is not.
+ *
+ * So it sits in the band under the headline, where it is read on the first screen at 390,
+ * and the one thing between it and the first quiz room is the band's own lower edge. Two
+ * faces, ONE shell: the signed-out ask and the signed-in lines are the same box in the same
+ * place, and the attribute on <html> chooses between them before a pixel is drawn.
+ *
+ * It is NOT a card laid on the photograph. The band's own wash deepens towards its foot
+ * instead, the way the account pages' band does, so the sky carries the form rather than
+ * something else being parked on top of the sky. The sunset is at its brightest exactly
+ * where the field lands, and a field is no use if the placeholder cannot be read.
+ */
+.me-ask { position: relative; margin: 1.2rem 0 0; max-width: 30rem; }
+.me-ask--in { display: none; }
+:root[data-account="in"] .me-ask--out { display: none; }
+:root[data-account="in"] .me-ask--in { display: block; }
+/* Scoped, and scoped carefully. `--out` exists only where the links are switched on, and
+   the attribute only where somebody is signed in, so a build with a project behind it but
+   the links still off is left exactly as it is today. */
+.me-band:has(.me-ask--out)::after,
+:root[data-account="in"] .me-band::after {
+  background:
+    radial-gradient(90% 70% at 30% 40%, rgba(18, 32, 58, .48), transparent 74%),
+    linear-gradient(180deg,
+      rgba(18, 30, 56, .34),
+      rgba(18, 30, 56, .08) 30%,
+      rgba(26, 19, 14, .58) 66%,
+      rgba(26, 19, 14, .76));
+}
+/* The band's foot exists to hold the wash off the headline. With the ask standing in it
+   there is already something between the words and the edge, and the old measure leaves a
+   strip of empty sky under a page asking for something. */
+.me-band:has(.me-ask--out) { padding-bottom: 2.2rem; }
+:root[data-account="in"] .me-band { padding-bottom: 2.2rem; }
+@media (min-width: 46rem) {
+  .me-band:has(.me-ask--out) { padding-bottom: 3.1rem; }
+  :root[data-account="in"] .me-band { padding-bottom: 3.1rem; }
+  .me-ask { max-width: 33rem; }
+}
+
+/* Why the address is worth giving. One sentence, evened rather than merely un-orphaned. */
+.me-ask-say {
+  margin: 0; font-size: 1.04rem; line-height: 1.45; color: #fff;
+  text-shadow: 0 1px 12px rgba(12, 22, 44, .5); text-wrap: balance;
+}
+
+/*
+ * The field, the button and the small print are /account/sign-up/'s, written again here
+ * rather than borrowed: account.css belongs to the account pages and is loaded only there.
+ * Same 46px pill, same 16px type that stops iOS zooming the page on focus, same 52px
+ * primary. The two boxes have to read as one system, because they are one thing.
+ */
+.me-join { margin: .85rem 0 0; }
+.me-join-row { display: flex; flex-direction: column; gap: .55rem; }
+.me-join-cell { position: relative; flex: 1 1 auto; min-width: 0; }
+/* z-index, because a field carrying `backdrop-filter` makes its own stacking context and
+   paints over an absolutely positioned sibling that came before it in the document. */
+.me-join-icon {
+  position: absolute; z-index: 2; left: 1rem; top: 50%; transform: translateY(-50%);
+  display: grid; color: rgba(255, 255, 255, .75); pointer-events: none;
+}
+.me-join-field {
+  display: block; width: 100%; min-height: 46px;
+  font-family: var(--text); font-size: 1rem;   /* 16px, or iOS zooms the page on focus */
+  padding: .7rem .95rem .7rem 2.75rem; border-radius: var(--r-pill);
+  border: 0; background: rgba(20, 16, 12, .52); color: #fff;
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .42);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+.me-join-field::placeholder { color: rgba(255, 255, 255, .7); }
+.me-join-field:focus-visible { outline: 2px solid var(--blue-soft); outline-offset: 2px; }
+.me-join-btn {
+  padding: .95rem 1.9rem; min-height: 52px; font-size: .86rem;
+  box-shadow: 0 8px 24px rgba(10, 10, 16, .38);
+}
+/* Not a 45%-opacity ghost: a control that is plainly out of action and legible while it is.
+   What it is doing is said in words on the line directly under it, which is what actually
+   tells the reader. */
+.me-join-btn:disabled {
+  opacity: 1; cursor: default; background-image: none;
+  background-color: rgba(255, 255, 255, .14); color: rgba(255, 255, 255, .8);
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .24);
+}
+/* Side by side only where both still fit: a 390 phone gets the full-width button the
+   owner's rule asks for, and the box is 30rem wide before the row is worth trying. */
+@media (min-width: 34rem) {
+  .me-join-row { flex-direction: row; align-items: center; gap: .5rem; }
+  .me-join-row .me-join-btn { flex: none; }
+}
+
+/* The answer is printed WHERE the small print is, not in a gap held open above it. Holding
+   two empty lines under the button stopped the jump but left a dead band in the middle of the
+   ask on a phone, which reads as a spacing mistake. So the status is taken out of the flow and
+   laid over the small print's first lines, and the small print (always the taller of the two)
+   goes invisible, keeping its room, for as long as there is something to say. Nothing moves,
+   and nothing is empty. The small print has been read by then: it is there before anything is
+   typed, and it comes back the moment the field is touched again (see the script). */
+.me-join-status {
+  position: absolute; left: 0; right: 0; margin: .5rem 0 0; font-size: .85rem; line-height: 1.45;
+  color: rgba(255, 255, 255, .84); text-shadow: 0 1px 10px rgba(22, 14, 6, .5);
+  text-wrap: balance;
+}
+.me-join-status:not(:empty) + .me-ask-small { visibility: hidden; }
+.me-join-status.is-busy { color: rgba(255, 255, 255, .78); }
+.me-join-status.is-bad {
+  color: #FFD9BF; font-weight: 600; text-shadow: 0 1px 8px rgba(30, 14, 4, .6);
+}
+
+/* What is read BEFORE anything is typed: what the address is for, and what else it brings.
+   Small, but never small enough to hide in. */
+.me-ask-small {
+  margin: .5rem 0 0; max-width: 29rem; font-size: .82rem; line-height: 1.55;
+  color: rgba(255, 255, 255, .82); text-shadow: 0 1px 10px rgba(22, 14, 6, .55);
+  text-wrap: balance;
+}
+/* Signed in there is no reserved line above it to take up the slack, so it keeps its own. */
+.me-ask--in .me-ask-small { margin-top: .55rem; }
+
+/* The second way on, and the way through to the account: a glass pill at every width, never
+   a twelve pixel underlined link on a phone. */
+.me-ask-alt {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .55rem .75rem;
+  margin: .95rem 0 0; font-size: .9rem; line-height: 1.4; color: rgba(255, 255, 255, .9);
+  text-shadow: 0 1px 10px rgba(22, 14, 6, .55);
+}
+.me-ask-go {
+  display: inline-flex; align-items: center; gap: .45rem; min-height: 44px;
+  padding: .55rem 1.15rem; border-radius: var(--r-pill); text-decoration: none;
+  /* a shade heavier than the account pages' pill: theirs stands on a band washed almost
+     to black, this one on a lit cloud, and the ring is what says it is a control */
+  background: rgba(255, 255, 255, .15); color: #fff;
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .44);
+  font-family: var(--ui); font-size: .68rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase;
+  transition: background .18s ease, box-shadow .18s ease;
+}
+.me-ask-go:hover {
+  background: rgba(255, 255, 255, .2); box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .54);
+}
+
+/* Who this is. The address holds its line from the first paint, so nothing moves when the
+   script fills it in, and it may break anywhere: a long address must not force a ragged
+   short line above it. */
+.me-who {
+  margin: 0; font-size: 1.04rem; line-height: 1.45; color: #fff;
+  min-height: 1.45em; text-shadow: 0 1px 12px rgba(12, 22, 44, .5); text-wrap: pretty;
+}
+.me-who-at { font-weight: 600; overflow-wrap: anywhere; }
+/* Where the results went, and how many of them the account holds when it holds more than
+   this device shows. Plain sentences, so they are set as sentences. */
+.me-synced {
+  margin: .55rem 0 0; font-size: .85rem; line-height: 1.5;
+  color: rgba(255, 255, 255, .84); min-height: 1.5em;
+  text-shadow: 0 1px 10px rgba(22, 14, 6, .55); text-wrap: balance;
+}
+
 /* ------------------------------------------------------------- what is coming ---- */
 .me-keep { margin: 2.6rem 0 0; padding: 1.5rem 1.35rem 1.6rem; }
 .me-keep h2 {
@@ -245,45 +405,9 @@
 .me-keep-go:hover .icon { transform: translateX(3px); }
 @media (min-width: 46rem) { .me-keep { padding: 2rem 2rem 2.1rem; } }
 
-/* ------------------------------------------------- the same panel, signed in or out ---- */
-.me-keep--in { display: none; }
+/* Today's panel is hidden from somebody signed in: he must not be told accounts are on the
+   way while he is using one. */
 :root[data-account="in"] .me-keep--out { display: none; }
-:root[data-account="in"] .me-keep--in { display: block; }
-/* Evened rather than merely un-orphaned: these are three and four line blocks, and `pretty`
-   still left "take more." alone on a line at 390. */
-.me-keep--out p, .me-keep--in p { text-wrap: balance; }
-
-/* What is read before anything is typed: what the address is for, and what else it brings.
-   Quieter than the sentence above it, because it answers a question rather than asking one.
-   The panel has re-pointed the ink tokens for its own dark ground, so these ask for the
-   ordinary ones and get the dark ones. */
-.me-keep .me-keep-small {
-  margin-top: .8rem; font-size: .85rem; line-height: 1.5; max-width: 32rem;
-  color: var(--ink-mute); text-wrap: pretty;
-}
-
-/* The field is the kit's own: the same 46px pill and the same 16px type that stops iOS
-   zooming the page on focus, drawn for a dark ground without a second set of rules. */
-.me-join { margin: 1.15rem 0 0; max-width: 30rem; }
-.me-join .capture-status { margin-top: .6rem; }
-
-.me-keep .me-keep-alt {
-  display: flex; flex-wrap: wrap; align-items: center; gap: .7rem;
-  margin-top: 1.2rem; font-size: .9rem; color: var(--ink-mute);
-}
-
-/* The address, printed back in the face the site uses for a name. It holds its line from
-   the first paint, so nothing below it moves when the script fills it in. */
-.me-keep .me-who {
-  margin-top: .5rem; font-family: var(--display); font-size: 1.15rem; line-height: 1.3;
-  color: var(--ink); min-height: 1.3em;
-}
-.me-keep .me-synced {
-  margin-top: .9rem; font-family: var(--ui); font-size: .64rem; font-weight: 700;
-  letter-spacing: .12em; text-transform: uppercase; color: var(--ink-mute);
-  min-height: 1.4em;
-}
-.me-keep .btn.ghost { margin-top: .6rem; }
 
 /* --------------------------------------------------------------------- clearing ---- */
 .me-clear { margin: 1.6rem 0 .5rem; text-align: center; }
@@ -303,6 +427,6 @@
 .me-clear-say.is-busy { color: var(--ink-mute); }
 
 @media (prefers-reduced-motion: reduce) {
-  .mroom-go .icon, .me-keep-go .icon, .mroom-past > summary::after { transition: none; }
+  .mroom-go .icon, .me-keep-go .icon, .mroom-past > summary::after, .me-ask-go { transition: none; }
   .mroom-go:hover .icon, .me-keep-go:hover .icon { transform: none; }
 }

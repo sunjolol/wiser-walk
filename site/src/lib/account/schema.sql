@@ -224,14 +224,14 @@ create trigger results_row_cap
   before insert or update on public.results
   for each row execute function public.results_row_cap();
 
--- The same count again, once the rows are actually in.
+-- The same count again, once the rows are actually in. Belt and braces.
 --
--- A BEFORE trigger cannot see the other rows of its own statement: every row of a
--- single insert of fifty thousand looks at the table as it was before the
--- statement began, finds it empty, and is waved through. One request is all the
--- ceiling above would have cost. An AFTER trigger runs when the statement's rows
--- are all in place, so the first row it looks at sees the whole lot, refuses, and
--- the statement is rolled back entire.
+-- Postgres lets a BEFORE row trigger see the rows its own statement has already
+-- put in, so the trigger above should stop a single insert of fifty thousand at
+-- row two thousand by itself. This second look does not rest on that: it runs when
+-- the rows are in place, counts what is really there, and if the ceiling has been
+-- passed by any route it refuses and the whole statement is rolled back. It costs
+-- one more count per row on a table that holds two thousand rows a person at most.
 drop trigger if exists results_row_cap_after on public.results;
 create trigger results_row_cap_after
   after insert on public.results
@@ -248,11 +248,27 @@ create table if not exists public.game_stats (
   key        text        not null check (key in (
                 'sls.best', 'sls.seen', 'sls.fooled', 'sls.canon',
                 'wsi.best', 'wsi.seen', 'wsi.mix')),
-  -- Small on purpose: these are scores and short lists, never anything long.
-  value      jsonb       not null check (pg_column_size(value) < 64000),
+  -- Small on purpose. What v1 puts in here is two numbers and one short word, so eight
+  -- kilobytes is already far more than it needs. The first version of this file allowed
+  -- just under 64 KB, which is Postgres's own limit for an index entry rather than a size
+  -- anything here has a reason to be: one account could have filled the free plan's
+  -- database on its own without a single row ever looking wrong.
+  --
+  -- Raise it when the seen-lists are kept in the account as well. sls.seen and wsi.seen
+  -- are lists of the lines a player has already been shown, and those do grow.
+  value      jsonb       not null constraint game_stats_value_small
+                                  check (pg_column_size(value) < 8192),
   updated_at timestamptz not null default now(),
   primary key (user_id, key)
 );
+
+-- And the same ceiling for a table that is already there from an earlier run of this file,
+-- which would otherwise keep the old one. Both names are dropped: the first version left
+-- the check unnamed, so Postgres called it game_stats_value_check.
+alter table public.game_stats drop constraint if exists game_stats_value_check;
+alter table public.game_stats drop constraint if exists game_stats_value_small;
+alter table public.game_stats add  constraint game_stats_value_small
+  check (pg_column_size(value) < 8192);
 
 alter table public.game_stats enable row level security;
 
