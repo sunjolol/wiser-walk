@@ -55,14 +55,20 @@ const breadcrumbLd = {
     { '@type': 'ListItem', position: 2, name: title, item: canonical }
   ]
 };
+/* Search and social: the inviting title and description, and this game's own card. */
+import { SEO, ogImageFor } from '../../lib/seo';
+const seoEntry = SEO['/play/who-said-it/'];
+const socialTitle = seoEntry?.title ?? title;
+const socialDescription = seoEntry?.description ?? description;
+const ogImage = new URL(ogImageFor('/play/who-said-it/'), Astro.site).href;
 ---
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>{`${title} — ${siteName}`}</title>
-    <meta name="description" content={description} />
+    <title>{seoEntry ? socialTitle : `${title} — ${siteName}`}</title>
+    <meta name="description" content={socialDescription} />
     <link rel="canonical" href={canonical} />
 
     <script is:inline>
@@ -77,12 +83,16 @@ const breadcrumbLd = {
 
     <meta property="og:site_name" content={siteName} />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
+    <meta property="og:title" content={socialTitle} />
+    <meta property="og:description" content={socialDescription} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:title" content={socialTitle} />
+    <meta name="twitter:description" content={socialDescription} />
 
     <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
 

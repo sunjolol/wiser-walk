@@ -7,7 +7,7 @@ import '../styles/pages/prose.css';
 import '../styles/pages/play.css';
 import { QUIZZES, quizHref } from '../lib/engine/registry';
 import { liveGames } from '../lib/games';
-import { SEO } from '../lib/seo';
+import { SEO, ogImageFor } from '../lib/seo';
 import Icon from '../components/Icon.astro';
 
 export interface Props {
@@ -50,6 +50,10 @@ const siteName = 'Wiser Walk';
 const seo = SEO[Astro.url.pathname];
 const fullTitle = seo ? seo.title : title === siteName ? title : `${title} — ${siteName}`;
 const metaDescription = seo ? seo.description : description;
+/* What a feed shows: the search title where there is one (it is the inviting one), and the
+   page's own card. Absolute URLs, because a crawler does not resolve a relative image. */
+const socialTitle = seo ? seo.title : title;
+const ogImage = new URL(ogImageFor(Astro.url.pathname), Astro.site).href;
 
 const here = Astro.url.pathname;
 // Finished quizzes before drafts, here as on the home page.
@@ -148,11 +152,17 @@ const NAV: Array<{
 
     <meta property="og:site_name" content={siteName} />
     <meta property="og:type" content={ogType} />
-    <meta property="og:title" content={title} />
+    <meta property="og:title" content={socialTitle} />
     <meta property="og:description" content={metaDescription} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={socialTitle} />
+    <meta property="og:locale" content="en_GB" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:title" content={socialTitle} />
     <meta name="twitter:description" content={metaDescription} />
 
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}

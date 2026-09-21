@@ -101,7 +101,18 @@ const at = siblings.findIndex(g => g.slug === group.slug);
 const prev = at > 0 ? siblings[at - 1] : null;
 const next = at >= 0 && at < siblings.length - 1 ? siblings[at + 1] : null;
 
-const title = bipolar ? `${group.name}: ${group.left} or ${group.right}` : group.name;
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+/* A gift's page is what someone searching "gift of tongues" or "spiritual gift of mercy" wants:
+   the title says so. Other ranked quizzes keep the plain name. */
+const isGift = quiz.slug === 'spiritual-gifts';
+const title = bipolar
+  ? `${group.name}: ${group.left} or ${group.right}`
+  : isGift
+    ? (group.name.startsWith('the gift of') ? `${cap(group.name)}: the passage and what it looks like` : `${cap(group.name)} as a spiritual gift: the passage and what it looks like`)
+    : group.name;
+const metaDescription = isGift
+  ? `What the New Testament says about ${group.name}: the passage that names it, quoted, and where Acts and the letters show it. Part of a free spiritual gifts test.`
+  : group.summary!.slice(0, 155);
 const ghost = group.name.toLowerCase();
 /* An axis wears its parent quiz's picture: it is a page ABOUT that quiz. */
 const art = artFor(quiz.slug);
@@ -131,7 +142,7 @@ const breadcrumbs =
 ---
 <Base
   title={title}
-  description={group.summary!.slice(0, 155)}
+  description={metaDescription}
   noindex={quiz.status === 'draft'}
   jsonLd={jsonLd}
   breadcrumbs={breadcrumbs}
