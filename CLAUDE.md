@@ -73,9 +73,34 @@ never pays for ads or has to build a social following.
 - **Email capture is NOT switched on in production:** `/api/subscribe` answers 503 "Sign-up is not
   switched on yet" because `MAILERLITE_API_KEY` is not set in Vercel (see `site/src/lib/email/README.md`).
   Only the owner can set it. Until then the footer form and the result-page form collect nothing.
-- A staged plan for accounts and revenue was put to him on 2026-09-20 (results shelf on the device
-  first, then email-link sign-in with sync, then the profile; church group plan as the main revenue
-  bet). **Ask what he decided before building any of it.**
+- **His answers to the plan (2026-09-20, late), binding:**
+  - **Email provider: NOT MailerLite** (that account is his other business's). Must be free to start.
+    Built: a Brevo provider (`site/src/lib/email/`, chosen when `BREVO_API_KEY` is set; free plan 300
+    emails a day). He must make the Brevo account and set `BREVO_API_KEY` + `BREVO_LIST_ID` in Vercel
+    himself (steps in `site/src/lib/email/README.md`). Until then sign-up answers "not switched on".
+  - **Step 1, "My results" on the device: approved and BUILT** (`/me/`, `site/src/lib/shelf.ts`).
+  - **Step 2, accounts: he finds email-link-only sign-in "SUPER annoying".** Wanted: the sign-up box
+    asks for an email only; the emailed link lands on a page where they SET A PASSWORD; after that
+    they sign in with email and password; "forgot password" sends the same kind of link; Google
+    sign-in later. Keep it simple and fool-proof. Proposed stack: Supabase Auth (free tier) with
+    Brevo SMTP for its emails. He must create the Supabase project and set its keys; ask before
+    building.
+  - **Step 3, the profile: approved.** Engagement: he especially wants the **daily game set** and
+    wants the whole site to feel like "a self-perpetuating game" people return to for novelty. Lean
+    into that wherever possible (still: count knowledge, never devotion).
+  - **Articles: he wants them published so he can review them.** The eight checked drafts are
+    published on `design/home-dawn`. More should follow.
+  - **Money: donations first**, ads only if donations fail, a paid plan maybe later. Built: `/support/`
+    and a footer "Support Wiser Walk" button; the giving link is `PUBLIC_SUPPORT_URL` (button disabled
+    until set). Recommended to him: Ko-fi (no platform cut; card fees of about 3% exist everywhere;
+    Venmo personal accounts are not meant for this). He must open the account and give the link.
+- **Design language, accepted in direction on 2026-09-20 ("definitely the right direction", then
+  "almost there"):** branch `design/home-dawn`, NOT merged. Sky hero; the Compass as a full-width
+  room; other quizzes on a scroll rail, each with a Doré engraving printed soft sepia; games on a dark
+  band over a chess board and clock; ARTICLES WEAR PUBLIC-DOMAIN PAINTINGS IN COLOUR (front matter
+  `image`, `imageAlt`, `imageCredit`, `imagePosition`; he loves the old-art look but does not want
+  the engraving style over-used, and wants colour); the footer opens on a walker at dawn with the
+  sign-up. Credits: `site/public/img/CREDITS.md`. Ask before merging to `main`.
 
 **Models: Opus is the default for every agent; in a Workflow an `agent()` with no `model` inherits
 Fable, so set `model: 'opus'` explicitly.** Fable only where its judgement is the point. The owner

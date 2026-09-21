@@ -14,6 +14,19 @@ plan was put to him; **ask what he decided before building any of it.**
 until `MAILERLITE_API_KEY` is set in Vercel (Settings, Environment Variables; Production and Preview),
 and double opt-in must be ON in MailerLite. Steps: `site/src/lib/email/README.md`. Only he can do it.
 
+## Branch `design/home-dawn` (pushed, NOT merged): the redesign and step one of accounts
+
+The owner called the direction right on 2026-09-20 and gave three rounds of notes, all applied. On the
+branch: the photographic home page and footer, a scroll rail for the quizzes, Doré engravings for the
+quiz rooms, a painting for every article, the eight checked article drafts PUBLISHED (11 articles),
+"My results" (`/me/`, device-only shelf), `/support/` with a footer button (link not yet supplied), and
+a Brevo email provider. His answers about email, passwords, the daily game set and donations are in
+`CLAUDE.md` under "THE OWNER'S DIRECTION CHANGED". **Waiting on him:** his verdict on the latest
+preview, a Brevo account and keys, a giving link (Ko-fi recommended), and a go for accounts (Supabase).
+**Ask before merging to `main`.** Next builds he has approved in principle: carry the look to
+`/quizzes/`, `/games/`, the quiz intros and result pages; the daily game set; accounts (email first,
+then set a password); the profile.
+
 ## Done on 2026-09-20 (his six decisions of 2026-09-22 in the older notes, all carried out)
 
 1. **Spiritual gifts: all gifts in.** Nineteen gifts, fifty-seven statements, about eight minutes.
