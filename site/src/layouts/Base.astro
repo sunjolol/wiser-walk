@@ -55,6 +55,7 @@ const here = Astro.url.pathname;
 // Finished quizzes before drafts, here as on the home page.
 const footQuizzes = [...QUIZZES].sort((a, b) => Number(a.status === 'draft') - Number(b.status === 'draft'));
 const footGames = liveGames();
+const FOOT_SHORT: Record<string, string> = { 'seven-deadly-sins': 'Which of the 7 deadly sins are…' };
 const isCurrent = (href: string) => here === href || here.startsWith(href.replace(/\/$/, '') + '/');
 /** Computed at build, so the footer cannot be caught printing last year. */
 const year = new Date().getFullYear();
@@ -102,7 +103,8 @@ const NAV: Array<{
   { href: '/articles/', label: 'Articles' },
   // No Method. It is a page about how the work was done, and the nav is for the things a
   // reader came for; /about/ links to it in one sentence, so it stays reachable and crawlable.
-  { href: '/about/', label: 'About' },
+  // The owner's call (2026-09-21): the header's last word is the way to give. About stays in the footer.
+  { href: '/support/', label: 'Donate' },
   /*
    * Last, and the only item with a mark: the row already holds four items and two carets,
    * and until 46rem "My results" is two words more than it can take. Below that the mark
@@ -302,7 +304,14 @@ const NAV: Array<{
           <div class="foot-col foot-col--blue">
             <h4><span class="foot-mark"><Icon name="compass" size={15} /></span> Quizzes</h4>
             <ul>
-              {footQuizzes.map(q => <li><a href={`/q/${q.slug}/`}>{q.title}</a></li>)}
+              {/*
+                ONE title is cut short here BY HAND, by the owner's instruction (2026-09-21): at full
+                length it ran into the Games column. It is a stopgap, not a rule: he plans to replace
+                that quiz's title with a shorter one, and then this map goes. Do not add to it.
+              */}
+              {footQuizzes.map(q => (
+                <li><a href={`/q/${q.slug}/`} title={FOOT_SHORT[q.slug] ? q.title : undefined}>{FOOT_SHORT[q.slug] ?? q.title}</a></li>
+              ))}
               <li><a class="foot-all" href="/quizzes/">All quizzes <Icon name="arrow" size={12} /></a></li>
             </ul>
           </div>
