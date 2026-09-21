@@ -9,13 +9,14 @@
  *   sky        the hero is a real dawn sky, and the quizzes rise out of its lower edge
  *   four rooms each quiz has its own picture, its own ink and its own mark, so none of them
  *              looks like the next: the compass is an instrument on a night ground, the
- *              figures are a Doré engraving, the gifts are a flame, the seven are Bosch's wheel
- *   night      the games sit on a dark manuscript band, because they are played, not read
+ *              figures, the gifts and the seven are three Doré engravings in one ink, so the
+ *              art is one family and the subjects are not
+ *   night      the games sit on a dark band with an hourglass and an old book: a clock and a text
  *   morning    the articles are photographs first and words second
  *   the walk   the footer opens on the walker at dawn, and asks for an address there
  *
  * Every number is computed from the registry. Every picture is free to use (Unsplash) or in
- * the public domain (Doré 1866, Bosch c. 1500); the credits are in public/img/CREDITS.md.
+ * the public domain (Doré 1866); the credits are in public/img/CREDITS.md.
  */
 import '../styles/pages/home.css';
 import Base from '../layouts/Base.astro';
@@ -51,9 +52,9 @@ const articles = (await getCollection('articles'))
   .slice(0, 3);
 /* Until articles carry their own picture in front matter, the page pairs them by subject. */
 const articleArt = (id: string) =>
-  id.includes('grateful') ? { src: '/img/art-gratitude.jpg', alt: 'An open notebook, a pen and a cup of coffee on a wooden table' }
-  : id.includes('joy') ? { src: '/img/art-joy.jpg', alt: 'Ears of wheat with the sun low behind them' }
-  : { src: '/img/art-path.jpg', alt: 'A footpath through tall trees with light coming through' };
+  id.includes('grateful') ? { src: '/img/art-gratitude.jpg', alt: 'Two open hands held out together, palms up' }
+  : id.includes('joy') ? { src: '/img/art-joy.jpg', alt: 'A woman dancing in a field with the sun low behind her' }
+  : { src: '/img/art-walk.jpg', alt: 'A line of footprints along a beach at sunrise' };
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -92,7 +93,6 @@ const jsonLd = {
       <a class="hm-more" href="/quizzes/">All quizzes <Icon name="arrow" size={13} /></a>
     </header>
 
-    <div class="hm-bento">
       <a class="room room--compass dark" href={quizHref(compass)}>
         <div class="room-body">
           <span class="room-mark"><Icon name="compass" size={20} /></span>
@@ -112,60 +112,70 @@ const jsonLd = {
         </div>
       </a>
 
-      {figures && (
-        <a class="room room--figures" href={quizHref(figures)}>
-          <img src="/img/dore-moses.jpg" alt="Gustave Doré’s engraving of Moses breaking the tablets of the law" loading="lazy" decoding="async" width="1000" height="1255" />
-          <div class="room-body">
-            <span class="room-mark"><Icon name="users" size={20} /></span>
-            <h3>{figures.title}</h3>
-            <p class="room-say">Eighteen plain statements about you. None of them mentions the Bible.</p>
-            <ul class="room-facts">
-              <li><Icon name="clock" size={13} /> {figures.minutes} min</li>
-              <li>{figures.outcomes.length} figures</li>
-            </ul>
-            <span class="room-go">Find yours <Icon name="arrow" size={14} /></span>
-          </div>
-        </a>
-      )}
+    {/*
+      The other quizzes stand on a rail, because there will be more than four. Each keeps a
+      width it can breathe in, the rail runs off the right edge behind a fade, and it moves by
+      swipe, by drag, by the arrows or by the keyboard. Nothing is squeezed to fit a row.
+    */}
+    <div class="hm-rail" data-rail>
+      <div class="hm-rail-track" data-rail-track tabindex="0" role="group" aria-label="More quizzes">
+        {figures && (
+          <a class="room room--figures" href={quizHref(figures)}>
+            <img src="/img/dore-moses.jpg" alt="Gustave Doré’s engraving of Moses breaking the tablets of the law" loading="lazy" decoding="async" width="1000" height="1255" />
+            <div class="room-body">
+              <span class="room-mark"><Icon name="users" size={20} /></span>
+              <h3>{figures.title}</h3>
+              <p class="room-say">Eighteen plain statements about you. None of them mentions the Bible.</p>
+              <ul class="room-facts">
+                <li><Icon name="clock" size={13} /> {figures.minutes} min</li>
+                <li>{figures.outcomes.length} figures</li>
+              </ul>
+              <span class="room-go">Find yours <Icon name="arrow" size={14} /></span>
+            </div>
+          </a>
+        )}
 
-      {gifts && (
-        <a class="room room--gifts" href={quizHref(gifts)}>
-          <img src="/img/gifts-flame.jpg" alt="A single candle flame against the dark" loading="lazy" decoding="async" width="1400" height="933" />
-          <div class="room-body">
-            <span class="room-mark"><Icon name="sparkle" size={20} /></span>
-            <h3>{gifts.title}</h3>
-            <p class="room-say">All {gifts.groups.length} {groupNounPlural(gifts)} the New Testament names.</p>
-            <ul class="room-facts">
-              <li><Icon name="clock" size={13} /> {gifts.minutes} min</li>
-              <li>{gifts.items.length} statements</li>
-            </ul>
-            <span class="room-go">Take it <Icon name="arrow" size={14} /></span>
-          </div>
-        </a>
-      )}
+        {gifts && (
+          <a class="room room--gifts" href={quizHref(gifts)}>
+            <img src="/img/dore-paul.jpg" alt="Gustave Doré’s engraving of Paul preaching to a gathered church at Thessalonica" loading="lazy" decoding="async" width="565" height="696" />
+            <div class="room-body">
+              <span class="room-mark"><Icon name="sparkle" size={20} /></span>
+              <h3>{gifts.title}</h3>
+              <p class="room-say">All {gifts.groups.length} {groupNounPlural(gifts)} the New Testament names.</p>
+              <ul class="room-facts">
+                <li><Icon name="clock" size={13} /> {gifts.minutes} min</li>
+                <li>{gifts.items.length} statements</li>
+              </ul>
+              <span class="room-go">Take it <Icon name="arrow" size={14} /></span>
+            </div>
+          </a>
+        )}
 
-      {sins && (
-        <a class="room room--sins" href={quizHref(sins)}>
-          <img src="/img/bosch-sins.jpg" alt="Hieronymus Bosch’s painted wheel of the seven deadly sins" loading="lazy" decoding="async" width="900" height="887" />
-          {sins.status === 'draft' && <span class="room-tab">Draft</span>}
-          <div class="room-body">
-            <span class="room-mark"><Icon name="flame" size={20} /></span>
-            <h3>{sins.title}</h3>
-            <ul class="room-facts">
-              <li><Icon name="clock" size={13} /> {sins.minutes} min</li>
-              <li>{sins.items.length} statements</li>
-            </ul>
-            <span class="room-go">Take it <Icon name="arrow" size={14} /></span>
-          </div>
-        </a>
-      )}
+        {sins && (
+          <a class="room room--sins" href={quizHref(sins)}>
+            <img src="/img/dore-eden.jpg" alt="Gustave Doré’s engraving of Adam and Eve driven out of Eden" loading="lazy" decoding="async" width="1000" height="1256" />
+            {sins.status === 'draft' && <span class="room-tab">Draft</span>}
+            <div class="room-body">
+              <span class="room-mark"><Icon name="apple" size={20} /></span>
+              <h3>{sins.title}</h3>
+              <ul class="room-facts">
+                <li><Icon name="clock" size={13} /> {sins.minutes} min</li>
+                <li>{sins.items.length} statements</li>
+              </ul>
+              <span class="room-go">Take it <Icon name="arrow" size={14} /></span>
+            </div>
+          </a>
+        )}
+      </div>
+      <button class="hm-rail-btn hm-rail-btn--prev" type="button" data-rail-prev aria-label="Scroll the quizzes back" hidden><Icon name="arrow" size={18} /></button>
+      <button class="hm-rail-btn hm-rail-btn--next" type="button" data-rail-next aria-label="Scroll to more quizzes" hidden><Icon name="arrow" size={18} /></button>
     </div>
   </section>
 
   {/* ------------------------------------------------------------------------ night */}
   {(sls || wsi) && (
     <section class="hm-night" aria-labelledby="hm-games">
-      <img class="hm-night-img" src="/img/game-manuscript.jpg" alt="" loading="lazy" decoding="async" width="1400" height="858" />
+      <img class="hm-night-img" src="/img/game-hourglass.jpg" alt="" loading="lazy" decoding="async" width="1600" height="1067" />
       <header class="hm-head hm-head--dark">
         <p class="hm-kicker">Against the clock</p>
         <h2 id="hm-games">games</h2>
@@ -255,4 +265,42 @@ const jsonLd = {
       ))}
     </ul>
   </section>
+  <script>
+    // The quiz rail: arrows, a fade that only shows where there is more to see, and drag with a
+    // mouse (touch already scrolls it). A drag must not also count as a click on the card.
+    document.querySelectorAll('[data-rail]').forEach(rail => {
+      const track = rail.querySelector('[data-rail-track]');
+      const prev = rail.querySelector('[data-rail-prev]');
+      const next = rail.querySelector('[data-rail-next]');
+      if (!track || !prev || !next) return;
+      const sync = () => {
+        const max = track.scrollWidth - track.clientWidth;
+        const more = max > 4;
+        prev.hidden = !more || track.scrollLeft < 8;
+        next.hidden = !more || track.scrollLeft > max - 8;
+        rail.classList.toggle('has-prev', !prev.hidden);
+        rail.classList.toggle('has-next', !next.hidden);
+      };
+      const step = dir => track.scrollBy({ left: dir * Math.max(260, track.clientWidth * 0.7), behavior: 'smooth' });
+      prev.addEventListener('click', () => step(-1));
+      next.addEventListener('click', () => step(1));
+      track.addEventListener('scroll', sync, { passive: true });
+      window.addEventListener('resize', sync);
+      let down = false, moved = 0, startX = 0, startLeft = 0;
+      track.addEventListener('pointerdown', e => {
+        if (e.pointerType !== 'mouse' || e.button !== 0) return;
+        down = true; moved = 0; startX = e.clientX; startLeft = track.scrollLeft;
+      });
+      window.addEventListener('pointermove', e => {
+        if (!down) return;
+        const dx = e.clientX - startX;
+        moved = Math.max(moved, Math.abs(dx));
+        if (moved > 4) { track.classList.add('is-dragging'); track.scrollLeft = startLeft - dx; }
+      });
+      window.addEventListener('pointerup', () => { down = false; setTimeout(() => track.classList.remove('is-dragging'), 0); });
+      track.addEventListener('click', e => { if (moved > 6) { e.preventDefault(); e.stopPropagation(); } }, true);
+      track.addEventListener('dragstart', e => e.preventDefault());
+      sync();
+    });
+  </script>
 </Base>

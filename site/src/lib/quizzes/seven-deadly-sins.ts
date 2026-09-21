@@ -1,5 +1,5 @@
 /**
- * Which of the seven are you weakest to? — the engine's second quiz.
+ * Which of the 7 deadly sins are you weakest to? — the engine's second quiz.
  *
  * Its purpose right now is to prove the seams are real: a different scoring strategy
  * (highest-category-wins), a different group count, a different radix, running through
@@ -59,13 +59,13 @@ const items: QuizItem[] = RAW.map(([key, text, direction], i) => ({
 
 export const sevenDeadlySins: Quiz = {
   slug: 'seven-deadly-sins',
-  title: 'Which of the seven are you weakest to?',
+  title: 'Which of the 7 deadly sins are you weakest to?',
   tagline: 'Fourteen statements against Gregory the Great’s old list.',
   description:
     'The seven capital vices as Gregory the Great fixed them around 590 — pride, envy, ' +
     'wrath, sloth, greed, gluttony, lust. Fourteen statements, and an honest look at which ' +
     'one has the most pull on you.',
-  icon: 'flame',
+  icon: 'apple',
   minutes: 2,
   status: 'draft',
   draftNote:
@@ -86,6 +86,6 @@ export const sevenDeadlySins: Quiz = {
     // of difference, and calling that "level" would throw away something real.
     tieSteps: 0
   },
-  shareTitle: 'Which of the seven I am weakest to',
+  shareTitle: 'Which of the 7 deadly sins I am weakest to',
   codePrefix: 'S'
 };

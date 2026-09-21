@@ -83,7 +83,6 @@
 /* --------------------------------------------------------------------- four rooms ---- */
 .hm-rooms { position: relative; z-index: 1; margin-top: -8.2rem; }
 @media (min-width: 46rem) { .hm-rooms { margin-top: -10.4rem; } }
-.hm-bento { display: grid; grid-template-columns: 1fr; gap: .9rem; }
 
 .room {
   --room-ink: var(--blue-soft);
@@ -142,58 +141,102 @@
 .room-note { margin: 1.5rem 0 0; text-align: center; font-size: .72rem; color: rgba(255, 255, 255, .6); }
 .room--compass .room-body { margin-top: 0; }
 
-/* the figures: an engraving, ink on paper, read from the foot of the plate */
-.room--figures { --room-ink: #EADFCB; min-height: 27rem; background: #1b1a18; }
-.room--figures > img { object-position: 50% 18%; filter: sepia(.28) contrast(1.05); }
-.room--figures::after, .room--gifts::after, .room--sins::after {
-  content: ""; position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(180deg, rgba(14, 13, 12, 0) 30%, rgba(14, 13, 12, .78) 68%, rgba(14, 13, 12, .94));
+/* THE RAIL. Three engravings in one ink: the Dore plates are a single family, so the rooms
+   read as a set, and what tells them apart is the scene, the mark and the ink of the mark.
+   They are printed soft (sepia, lifted blacks), because a hard black plate fights the pale
+   sheet. */
+.hm-rail { position: relative; margin: .9rem calc(-1 * var(--gut)) 0 0; }
+.hm-rail-track {
+  display: flex; gap: .9rem; overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  padding: .3rem var(--gut) 1.6rem 0; margin-bottom: -1.2rem; cursor: grab;
+}
+.hm-rail-track::-webkit-scrollbar { display: none; }
+.hm-rail-track.is-dragging { cursor: grabbing; scroll-snap-type: none; }
+.hm-rail-track.is-dragging .room { pointer-events: none; }
+.hm-rail-track:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 24px; }
+.hm-rail .room { flex: 0 0 min(80vw, 20rem); min-height: 25rem; scroll-snap-align: start; user-select: none; -webkit-user-drag: none; }
+.hm-rail .room img { -webkit-user-drag: none; }
+.hm-rail .room--figures { flex-basis: min(84vw, 24rem); }
+/* the fade says there is more; it is only drawn on a side that has more */
+.hm-rail::before, .hm-rail::after {
+  content: ""; position: absolute; top: 0; bottom: 0; width: 4.5rem; z-index: 2; pointer-events: none;
+  opacity: 0; transition: opacity .2s ease;
+}
+.hm-rail::after { right: 0; background: linear-gradient(90deg, transparent, var(--shell) 88%); }
+.hm-rail::before { left: 0; background: linear-gradient(270deg, transparent, var(--shell) 88%); }
+.hm-rail.has-next::after, .hm-rail.has-prev::before { opacity: 1; }
+@media (max-width: 45.99rem) { .hm-rail::before, .hm-rail::after { width: 2.4rem; } .hm-rail-btn { width: 42px; height: 42px; } }
+.hm-rail-btn {
+  position: absolute; top: 50%; z-index: 3; transform: translateY(-50%);
+  display: grid; place-items: center; width: 46px; height: 46px; padding: 0; border: 0; border-radius: 50%;
+  cursor: pointer; color: var(--on-grad); background-image: var(--grad); box-shadow: 0 6px 18px rgba(20, 24, 40, .28);
+}
+.hm-rail-btn[hidden] { display: none; }
+.hm-rail-btn--next { right: .7rem; }
+.hm-rail-btn--prev { left: -.4rem; transform: translateY(-50%) scaleX(-1); }
+.hm-rail-btn:hover { filter: brightness(1.05); }
+@media (min-width: 46rem) {
+  .hm-rail { margin-top: 1rem; }
+  .hm-rail-track { gap: 1rem; }
+  .hm-rail .room { min-height: 27rem; }
 }
 
-/* the gifts: one flame, standing to the right of the words and above them */
-.room--gifts { --room-ink: #FFC27A; background: #0b0706; }
-.room--gifts > img { inset: auto; top: -6%; right: -30%; width: 118%; height: auto; }
-.room--gifts::after { background: linear-gradient(180deg, rgba(11, 7, 6, 0) 22%, rgba(11, 7, 6, .8) 56%, rgba(11, 7, 6, .96) 74%); }
-
-/* the seven: Bosch's wheel, turning off the top corner of the card */
-.room--sins { --room-ink: #F08D7E; background: #0e0d0c; }
-.room--sins > img { inset: auto; top: -34%; right: -30%; width: 104%; height: auto; border-radius: 50%; }
-.room--sins::after { background: linear-gradient(180deg, rgba(14, 13, 12, 0) 20%, rgba(14, 13, 12, .86) 50%, rgba(14, 13, 12, .97) 66%); }
+.room--figures { --room-ink: #EADFCB; }
+.room--gifts { --room-ink: #FFC98F; }
+.room--sins { --room-ink: #F2A596; }
+.room--figures, .room--gifts, .room--sins { background: #2a2622; }
+.room--figures > img, .room--gifts > img, .room--sins > img { filter: sepia(.34) contrast(.9) brightness(1.06); }
+.room--figures > img { object-position: 50% 18%; }
+.room--gifts > img { object-position: 42% 22%; filter: sepia(.34) contrast(.9) brightness(.9); }
+.room--sins > img { object-position: 50% 12%; }
+.room--figures::after, .room--gifts::after, .room--sins::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, rgba(38, 33, 28, 0) 28%, rgba(38, 33, 28, .74) 62%, rgba(34, 30, 26, .95));
+}
 
 @media (min-width: 46rem) {
-  .hm-bento { grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 1rem; }
-  /* the flagship takes the whole first row, so its wheel has room for the labels that hang
-     outside the circle; the three picture rooms stand in a row beneath it */
-  .room--compass { grid-column: 1 / -1; flex-direction: row; align-items: center; min-height: 23rem; }
+  /* the flagship takes a whole row, so its wheel has room for the labels that hang outside
+     the circle */
+  .room--compass { flex-direction: row; align-items: center; min-height: 23rem; }
   .room--compass .room-wheel { order: 1; flex: 0 0 50%; padding: .6rem 6.5rem 1.6rem 5.5rem; }
   .room--compass .wheel-plot { max-width: 19rem; margin-top: 2.2rem; }
   .room--compass .room-body { flex: 1; padding: 2.2rem 0 2.2rem 2.4rem; }
   .room--compass h3 { font-size: 2.5rem; }
   .room--compass .room-say { font-size: 1.02rem; }
-  .room--figures { grid-column: span 5; min-height: 27rem; }
-  .room--gifts { grid-column: span 4; min-height: 27rem; }
-  .room--sins { grid-column: span 3; min-height: 27rem; }
-  .room--sins h3 { font-size: 1.5rem; }
-  .room--sins > img { top: -14%; right: -42%; width: 128%; }
-  .room--gifts > img { top: 0; right: -34%; width: 128%; }
   .room-body { padding: 1.6rem 1.5rem 1.6rem; }
-}
-@media (min-width: 46rem) and (max-width: 61.99rem) {
-  .room--figures, .room--gifts { grid-column: span 6; }
-  .room--sins { grid-column: 1 / -1; min-height: 16rem; }
-  .room--sins > img { top: -60%; right: -8%; width: 56%; }
 }
 
 /* -------------------------------------------------------------------------- night ---- */
 .hm-night {
   position: relative; isolation: isolate; overflow: hidden;
-  margin: 3.2rem calc(-1 * var(--gut)) 0; padding: 2.6rem var(--gut) 2.4rem;
-  border-radius: 30px; background: #12110f; color: #fff;
+  margin: 3.2rem calc(-1 * var(--gut)) 0; padding: 0 var(--gut) 2.4rem;
+  border-radius: 30px; background: #151412; color: #fff;
 }
-.hm-night-img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; opacity: .82; }
+/* The hourglass and the old book are the subject, so they are given a place of their own at
+   the head of the band, above the cards, and fade into the dark on the two inner sides. As a
+   full background they sat behind the cards and only the flowers beside them showed. */
+.hm-night-img {
+  position: absolute; top: 0; right: 0; z-index: -2; width: 100%; height: 15.5rem;
+  object-fit: cover; object-position: 30% 58%; filter: contrast(.94) brightness(1.08);
+  -webkit-mask-image: linear-gradient(180deg, #000 52%, transparent);
+  mask-image: linear-gradient(180deg, #000 52%, transparent);
+}
 .hm-night::after {
-  content: ""; position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(180deg, rgba(18, 17, 15, .38), rgba(18, 17, 15, .74) 34%, rgba(18, 17, 15, .95) 70%);
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 15.5rem; z-index: -1;
+  background: linear-gradient(90deg, rgba(21, 20, 18, .82), rgba(21, 20, 18, .25) 60%, rgba(21, 20, 18, 0));
+}
+.hm-night .hm-head { min-height: 12.5rem; align-content: end; padding-top: 2rem; }
+@media (min-width: 46rem) {
+  .hm-night-img {
+    width: 66%; height: 19rem; object-position: 30% 56%;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 42%), linear-gradient(180deg, #000 58%, transparent);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(90deg, transparent, #000 42%), linear-gradient(180deg, #000 58%, transparent);
+    mask-composite: intersect;
+  }
+  .hm-night::after { display: none; }
+  .hm-night .hm-head { min-height: 15rem; }
 }
 .hm-games { display: grid; grid-template-columns: 1fr; gap: .9rem; }
 .game {
@@ -217,17 +260,25 @@
 .mock-names span:nth-child(2) { background: var(--blue); color: #17181d; box-shadow: none; }
 .mock--names .mock-fuse i { width: 38%; }
 @media (min-width: 46rem) {
-  .hm-night { padding: 3.2rem var(--gut) 3rem; }
+  .hm-night { padding-bottom: 3rem; }
   .hm-games { grid-template-columns: 1fr 1fr; gap: 1rem; }
 }
-@media (min-width: 62rem) { .game { grid-template-columns: minmax(0, 1fr) 15rem; padding: 1.7rem 1.6rem; } }
+/* side by side, the words get the wider half and the preview is centred against them, so
+   neither column leaves a hole under the other */
+@media (min-width: 62rem) {
+  .game { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 1.6rem; align-items: center; padding: 1.7rem 1.7rem; }
+  .game h3 { font-size: 1.7rem; }
+  .game .mock { max-width: none; }
+}
 
 /* ------------------------------------------------------------------------ morning ---- */
 .hm-morning { margin: 3.4rem 0 0; }
 .hm-reads { display: grid; grid-template-columns: 1fr; gap: 1.6rem; }
 .read { display: block; text-decoration: none; color: var(--ink); }
 .read-pic { position: relative; display: block; overflow: hidden; border-radius: 20px; aspect-ratio: 3 / 2; box-shadow: var(--lift); }
-.read-pic img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+.read-pic img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; filter: contrast(.92) saturate(.88) brightness(1.04); }
+.read-pic::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(135deg, rgba(126, 186, 238, .14), rgba(240, 160, 111, .12)); }
+.read-time { z-index: 1; }
 .read:hover .read-pic img { transform: scale(1.04); }
 .read-time {
   position: absolute; left: .7rem; bottom: .7rem; display: inline-flex; align-items: center; gap: .35rem;

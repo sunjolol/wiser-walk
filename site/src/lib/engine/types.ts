@@ -408,7 +408,7 @@ export interface Quiz {
   tagline: string;
   description: string;
   /** A line mark from components/Icon.astro. Never an emoji — see that file. */
-  icon: 'compass' | 'flame' | 'scroll' | 'book';
+  icon: 'compass' | 'flame' | 'scroll' | 'book' | 'apple' | 'users' | 'sparkle';
   minutes: number;
   /** 'live' appears on the hub and is indexable; 'draft' is reachable but noindex. */
   status: 'live' | 'draft';

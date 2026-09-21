@@ -188,13 +188,16 @@ a { color: var(--accent); text-underline-offset: 2px; }
   padding-top: .85rem; padding-bottom: .85rem;
 }
 .brand {
-  font-family: var(--display); font-size: 1.35rem; line-height: 1.1;
-  color: var(--ink); text-decoration: none; letter-spacing: -.01em; margin-right: auto;
+  font-family: var(--display); font-size: 1.7rem; line-height: 1.1;
+  color: var(--ink); text-decoration: none; letter-spacing: 0; margin-right: auto;
 }
+/* On the light header the pale spectrum washed out beside the dark "Wiser". Same hues, same
+   saturation, less light, so it holds its own. The dark theme keeps the pale pair. */
 .brand span {
   font-style: italic;
-  background: var(--grad-r); -webkit-background-clip: text; background-clip: text; color: transparent;
+  background: linear-gradient(to right, #4C9BE3, #EA834A); -webkit-background-clip: text; background-clip: text; color: transparent;
 }
+:root[data-theme="dark"] .brand span { background: var(--grad-r); -webkit-background-clip: text; background-clip: text; }
 .site-head nav { display: flex; gap: .9rem; align-items: center; font-family: var(--ui); font-size: .8rem; }
 .site-head nav a { color: var(--ink-mute); text-decoration: none; font-weight: 600; }
 .site-head nav a:hover, .site-head nav a[aria-current="page"] { color: var(--accent); }

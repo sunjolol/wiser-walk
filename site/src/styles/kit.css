@@ -433,23 +433,29 @@ body {
 
 /* the walk */
 .foot-dawn { position: relative; isolation: isolate; overflow: hidden; }
-.foot-dawn > img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: 30% 42%; }
+/* On a phone the picture is drawn a little larger than the band and hung from its foot, so the
+   walker stands clear above the words instead of behind them. */
+.foot-dawn > img { position: absolute; left: 0; top: -25%; z-index: -2; width: 100%; height: 125%; object-fit: cover; object-position: 12% 50%; }
+@media (min-width: 52rem) { .foot-dawn > img { top: 0; height: 100%; object-position: 30% 42%; } }
 .foot-dawn::after {
   content: ""; position: absolute; inset: 0; z-index: -1;
   background:
-    linear-gradient(180deg, rgba(28, 28, 35, 0) 38%, rgba(28, 28, 35, .7) 78%, var(--dark-fill) 100%),
-    linear-gradient(90deg, rgba(40, 22, 8, 0) 30%, rgba(40, 22, 8, .5));
+    linear-gradient(180deg, rgba(28, 28, 35, 0) 30%, rgba(28, 28, 35, .78) 72%, var(--dark-fill) 100%),
+    linear-gradient(90deg, rgba(40, 22, 8, 0) 28%, rgba(40, 22, 8, .66));
 }
 :root[data-theme="dark"] .foot-dawn::after {
   background:
     linear-gradient(180deg, rgba(44, 44, 56, 0) 38%, rgba(44, 44, 56, .7) 78%, #2C2C38 100%),
     linear-gradient(90deg, rgba(40, 22, 8, 0) 30%, rgba(40, 22, 8, .5));
 }
-.foot-dawn-in { display: grid; grid-template-columns: 1fr; gap: 1.3rem; padding-top: 8.5rem; padding-bottom: 2.2rem; }
+/* .site-foot in the selector on purpose: an older `.site-foot .wrap` rule elsewhere sets the
+   wrap's top padding, and it was winning, which put the words at the top of the band on the
+   brightest part of the sky. They belong low, on the dark of the hill. */
+.site-foot .foot-dawn-in { display: grid; grid-template-columns: 1fr; gap: 1.3rem; padding-top: 14.5rem; padding-bottom: 2.2rem; }
 .foot-kicker {
   display: inline-flex; align-items: center; gap: .45rem; margin: 0 0 .5rem;
-  font-family: var(--ui); font-size: .62rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
-  color: #FFE3CC;
+  font-family: var(--ui); font-size: .68rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
+  color: #fff; text-shadow: 0 1px 10px rgba(30, 14, 4, .6);
 }
 .foot-dawn h2 {
   margin: 0; font-family: var(--display); font-style: italic; font-weight: 400; color: #fff;
@@ -457,11 +463,11 @@ body {
 }
 .foot-dawn-say p:last-child { margin: .6rem 0 0; font-size: 1rem; color: rgba(255, 255, 255, .92); text-shadow: 0 1px 12px rgba(30, 14, 4, .5); }
 @media (min-width: 52rem) {
-  .foot-dawn-in { grid-template-columns: minmax(0, 1fr) minmax(0, 25rem); gap: 3rem; align-items: end; padding-top: 7.5rem; padding-bottom: 2.8rem; }
+  .site-foot .foot-dawn-in { grid-template-columns: minmax(0, 1fr) minmax(0, 25rem); gap: 3rem; align-items: end; padding-top: 7.5rem; padding-bottom: 2.8rem; }
   /* the walker stands at the left of the frame, so the words go to the right of him */
   .foot-dawn-say { grid-column: 2; grid-row: 1; }
   .foot-signup { grid-column: 2; grid-row: 2; }
-  .foot-dawn-in { grid-template-rows: auto auto; row-gap: 1.2rem; }
+  .site-foot .foot-dawn-in { grid-template-rows: auto auto; row-gap: 1.2rem; }
 }
 
 .foot-signup { margin: 0; max-width: 28rem; }
@@ -490,7 +496,7 @@ body {
   font-family: var(--display); font-style: italic; font-size: clamp(5.5rem, 27vw, 13rem); line-height: .8;
   letter-spacing: -.04em; white-space: nowrap; color: var(--ghost-dark);
 }
-.foot-main { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr; gap: 2rem; padding-top: 1.6rem; padding-bottom: 1.2rem; }
+.site-foot .foot-main { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr; gap: 2rem; padding-top: 1.6rem; padding-bottom: 1.2rem; }
 .foot-brand { font-family: var(--display); font-size: 1.7rem; color: var(--on-dark); margin: 0 0 .5rem; }
 .foot-brand span { font-style: italic; background: var(--grad-r); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .foot-line { margin: 0; max-width: 22rem; font-size: .92rem; line-height: 1.55; color: var(--on-dark-soft); }
@@ -515,14 +521,14 @@ body {
 .foot-col li a.foot-all { color: var(--on-dark); font-family: var(--ui); font-size: .66rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
 .foot-col li a.foot-all:hover { color: var(--col-ink); }
 @media (min-width: 48rem) {
-  .foot-main { grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); gap: 3rem; padding-top: 2.2rem; }
+  .site-foot .foot-main { grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); gap: 3rem; padding-top: 2.2rem; }
   .foot-cols { grid-template-columns: minmax(0, 2fr) minmax(0, 1.25fr) minmax(0, .9fr); gap: 1.5rem; }
   /* a quiz title is a sentence and must read as one line */
   .foot-col li a { white-space: nowrap; min-height: 38px; }
 }
 
 /* the one rule in the footer: a hairline of the brand's own gradient */
-.foot-bar { position: relative; z-index: 1; padding-top: 1.1rem; padding-bottom: 6rem; }
+.site-foot .foot-bar { position: relative; z-index: 1; padding-top: 1.1rem; padding-bottom: 5rem; }
 .foot-bar::before { content: ""; display: block; height: 2px; margin: 0 0 1rem; border-radius: 2px; background-image: var(--grad-r); opacity: .7; }
 .foot-bar p {
   margin: 0; font-family: var(--ui); font-size: .62rem; font-weight: 600; letter-spacing: .14em;
