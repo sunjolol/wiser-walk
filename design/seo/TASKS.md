@@ -68,7 +68,10 @@ to another project", inside his weekly token limit. Tick items here as they ship
 - [x] **10. Contact on /about/ (round 2)**: info@wiserwalk.com (he made the mailbox).
 - [ ] **11. Seven deadly sins: audit and publish.** A LEAN audit (one drafter-critic pass, one editor),
       then `status: 'live'`, indexable, its own search title and card. Rename pending (`FOOT_SHORT`).
-- [ ] **12. /method/**: a short readable trust page; the 13,000-word log behind a link.
+- [x] **12. /method/ (DONE 2026-09-21 on `seo/discoverability`)**: 12,881 words -> about 1,250. The audit log and
+      the refused findings moved whole to `/method/changelog/` (same grouping, same rows), linked from the
+      audit paragraph, from /about/ and from every correction note; the 18-sheet list panel was cut (the
+      sentence above it says the same thing). The "Your answers" and games disclosures are untouched.
 - [ ] **14. Article engine**: two a month, topics chosen from Bing's free Keyword Research once he has
       imported the site (OWNER-ACTIONS step 6); every article opens with the direct answer.
 - [ ] **13. Self-host the two fonts** (after the content work; before/after captures).

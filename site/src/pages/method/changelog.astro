@@ -1,0 +1,266 @@
+---
+/**
+ * The audit's own record: every change the fairness audit made, and the eleven findings it
+ * argued through and refused. It was the middle of /method/ until 2026-09-21, eleven thousand
+ * words between a reader and the four things that page exists to say; it is the same record,
+ * whole, on its own page, and /method/ links here in one line.
+ */
+import Hero from '../../components/Hero.astro';
+import Base from '../../layouts/Base.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import Icon from '../../components/Icon.astro';
+import audit from '../../data/compass-audit.json';
+import { theologyCompass } from '../../lib/quizzes/theology-compass';
+import CorrectionNote from '../../components/CorrectionNote.astro';
+import ChangeEntry from '../../components/ChangeEntry.astro';
+
+const disputed = (audit.disputed ?? []) as Array<Record<string, any>>;
+const changelog = (audit.changelog ?? []) as Array<Record<string, any>>;
+
+/*
+ * The changelog is published whole, not summarised. Entries are grouped by what they
+ * touched, which is the first segment of the audit's own `target` string, so the grouping
+ * is read off the data rather than assigned by hand. Anything the patterns below do not
+ * claim falls through to "Other" and is still printed: an entry must never be able to
+ * disappear because nobody wrote a bucket for it.
+ */
+const head = (target: unknown) => String(target ?? '').split(':')[0]!.trim();
+
+const BUCKETS: Array<{ id: string; label: string; test: RegExp }> = [
+  { id: 'axes', label: 'Axes', test: /^axis\b/i },
+  { id: 'statements', label: 'Statements', test: /^statements?\b/i },
+  { id: 'traditions', label: 'Traditions', test: /^tradition\b/i },
+  { id: 'scoring', label: 'Scoring', test: /^scoring\b/i },
+  { id: 'page-copy', label: 'Page copy', test: /^page copy\b/i }
+];
+
+const claimed = new Set<Record<string, any>>();
+const sections = BUCKETS.map(b => {
+  const entries = changelog.filter(c => b.test.test(head(c.target)));
+  entries.forEach(c => claimed.add(c));
+  return { ...b, entries };
+});
+sections.push({
+  id: 'other',
+  label: 'Other',
+  test: /^$/,
+  entries: changelog.filter(c => !claimed.has(c))
+});
+const groups = sections.filter(s => s.entries.length);
+
+/**
+ * The opening clause of a reason, for a summary line that is readable while collapsed.
+ * It never ends inside a bracket or on an opened quotation mark: a line that stops at
+ * "('Effectual grace' excludes Lutheran…" reads as a truncation fault rather than a
+ * summary, so the cut moves back to the last clean boundary instead.
+ */
+const clause = (text: unknown) => {
+  const s = String(text ?? '').trim().replace(/\s+/g, ' ');
+  const cut = s.search(/[,;:]\s|\.\s/);
+  let out = cut > 0 ? s.slice(0, cut) : s;
+  let short = out.length < s.length;
+  if (out.length > 104) { out = out.slice(0, 100).replace(/\s+\S*$/, ''); short = true; }
+  for (const [open, close] of [['(', ')'], ['[', ']'], ['{', '}']] as const) {
+    const opens = out.split(open).length - 1;
+    const closes = out.split(close).length - 1;
+    if (opens > closes) { out = out.slice(0, out.lastIndexOf(open)); short = true; }
+  }
+  /* an apostrophe never follows a space, so only an opening quote can be left dangling */
+  const q = out.lastIndexOf("'");
+  if (q > 0 && /\s/.test(out[q - 1]!) && !out.slice(q + 1).includes("'")) { out = out.slice(0, q); short = true; }
+  out = out.replace(/[\s,;:.—-]+$/, '');
+  return short ? out + '…' : out;
+};
+
+/*
+ * A changelog target is an internal key: `axis:spirit:bands`, `tradition (added): Calvary
+ * Chapel`, `page copy / code: share text`. A reader should not have to decode one, and the
+ * site publishes that axis as "Gifts" rather than "spirit", so each key is translated to a
+ * plain label — mechanically, by the same rules for every entry, with nothing invented and
+ * nothing dropped. The raw key still prints beside it, small, for anyone citing an entry.
+ */
+const AXIS_NAME = new Map(theologyCompass.groups.map(g => [g.key, g.name]));
+const FIELD: Record<string, string> = {
+  name: 'axis name',
+  poles: 'pole names',
+  bands: 'band wording',
+  summary: 'summary',
+  history: 'history',
+  passages: 'passages',
+  readmore: 'further reading'
+};
+const sentence = (s: string) => s.replace(/_/g, ' ').replace(/^./, c => c.toUpperCase());
+
+/*
+ * Only these two parentheticals are pass markers. Everything else inside brackets is part
+ * of the name — "Anglican (broad)" and "Southern Baptist (typical)" are how those families
+ * are published — so the rule is a closed list rather than "strip any bracket".
+ */
+const MARKER: Record<string, string> = { repair: 'repair pass', added: 'added' };
+
+const plainLabel = (target: unknown) => {
+  const raw = String(target ?? '').trim();
+  const parts = raw.split(':').map(p => p.trim());
+  const note = (p: string) => {
+    const m = p.match(/^(.*?)\s*\(([^)]+)\)$/);
+    const mark = m && MARKER[m[2]!.trim().toLowerCase()];
+    return mark ? { text: m![1]!.trim(), note: mark } : { text: p, note: '' };
+  };
+  const first = note(parts[0] ?? '');
+  const last = note(parts[parts.length - 1] ?? '');
+  const tail = parts.length > 1 ? last.text : '';
+  const mark = [first.note, parts.length > 1 ? last.note : ''].filter(Boolean).join(' · ');
+
+  let label: string;
+  if (first.text === 'axis' && parts.length >= 3) {
+    const axis = AXIS_NAME.get(parts[1]!) ?? sentence(parts[1]!);
+    label = `${axis} axis · ${FIELD[last.text.toLowerCase()] ?? last.text}`;
+  } else if (first.text === 'statement' && tail) {
+    label = `Statement ${tail}`;
+  } else if (first.text === 'tradition' && tail) {
+    label = tail;
+  } else if (tail) {
+    label = `${sentence(first.text)} · ${tail.replace(/_/g, ' ')}`;
+  } else {
+    label = sentence(first.text);
+  }
+  return mark ? `${label} · ${mark}` : label;
+};
+
+/** How many entries of a group print before the rest are folded away. */
+const OPEN = 6;
+const pad = (n: number) => String(n).padStart(2, '0');
+
+/** One changelog entry, as the row component takes it. */
+const change = (c: Record<string, any>) => ({
+  target: String(c.target),
+  label: plainLabel(c.target),
+  clause: clause(c.why),
+  why: c.why,
+  before: c.before,
+  after: c.after,
+  status: c.status,
+  findings: Array.isArray(c.finding_ids) ? c.finding_ids.length : 0
+});
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'What the audit changed',
+  description: 'Every change the fairness audit made to the Theology Compass, with the reason, and the findings it refused.',
+  url: new URL('/method/changelog/', Astro.site).href
+};
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Method', url: '/method/' },
+  { name: 'What changed', url: '/method/changelog/' }
+];
+---
+<Base
+  title="What the audit changed"
+  description={`Every one of the ${changelog.length} changes the fairness audit made to the Theology Compass, with the reason and the wording before and after, and the ${disputed.length} findings it refused.`}
+  jsonLd={jsonLd}
+  breadcrumbs={breadcrumbs}
+>
+  <Hero
+    title="What the audit changed"
+    eyebrow="The record"
+    icon="compass"
+    blue="changed"
+    kind="night"
+    tiles={[
+      { n: changelog.length, label: 'Changes' },
+      { n: groups.length, label: 'Groups' },
+      { n: disputed.length, label: 'Not applied' }
+    ]}
+  >
+      Every change the fairness audit made to the Theology Compass, with the reason, and the
+      findings it argued through and refused. <a href="/method/">How the audit worked</a> is on
+      the method page.
+  </Hero>
+
+  <div class="method">
+    <SectionHead id="changelog" title="What the audit changed" kicker="Corrections happen in the open" />
+
+    <section class="pnl">
+      <div class="doc">
+        <p>
+          Every change the fairness audit made is listed here, with the reason, so corrections
+          happen in the open. The {changelog.length} entries are grouped by what each one
+          touched, named in plain words, and keyed to the audit's own record — open one to read
+          the reason and see the wording before and after.
+        </p>
+      </div>
+      <p class="jump-label cl-filter-label">Jump to a group</p>
+      <ul class="chips cl-filter">
+        {groups.map(g => (
+          <li>
+            <a class="chip-link" href={`#changed-${g.id}`}>{g.label} <small>{g.entries.length}</small></a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <div class="changelog">
+      {groups.map((g, gi) => (
+        <section class="clg" id={`changed-${g.id}`}>
+          <div class="clg-head">
+            <div class="clg-text">
+              <p class="clg-kicker">Group {pad(gi + 1)} of {groups.length}</p>
+              <h3 class="clg-title">{g.label.toLowerCase()}</h3>
+            </div>
+            <span class="tile clg-tile"><b>{g.entries.length}</b><span>{g.entries.length === 1 ? 'Change' : 'Changes'}</span></span>
+          </div>
+
+          <ul class="cl-list">
+            {g.entries.slice(0, OPEN).map(c => <ChangeEntry {...change(c)} />)}
+          </ul>
+
+          {g.entries.length > OPEN && (
+            <details class="clg-more">
+              <summary>
+                <span>The other {g.entries.length - OPEN} in {g.label.toLowerCase()}</span>
+                <span class="chev" aria-hidden="true"></span>
+              </summary>
+              <ul class="cl-list">
+                {g.entries.slice(OPEN).map(c => <ChangeEntry {...change(c)} />)}
+              </ul>
+            </details>
+          )}
+        </section>
+      ))}
+    </div>
+
+    <SectionHead id="disputed" title="Kept but not applied" kicker="A record that only shows the agreements is not a record" />
+
+    <section class="pnl dark disputes">
+      <div class="dark-ghost" aria-hidden="true">kept</div>
+      <div class="pnl-head">
+        <p class="pnl-kicker"><Icon name="compass" size={13} /> Argued and refused</p>
+        <h2 class="pnl-title">The {disputed.length} that were not applied.</h2>
+      </div>
+      <div class="doc">
+        <p>
+          These {disputed.length} findings were raised and argued through, and the audit
+          decided against acting on them. They are kept here rather than dropped, because a
+          record that only shows the changes everyone agreed with is not a record.
+        </p>
+      </div>
+      <ul class="cl-list">
+        {disputed.map(d => (
+          <ChangeEntry
+            target={String(d.target)}
+            label={plainLabel(d.target)}
+            clause={clause(d.proposed)}
+            proposed={d.proposed}
+            reason={d.reason}
+            findings={Array.isArray(d.finding_ids) ? d.finding_ids.length : 0}
+          />
+        ))}
+      </ul>
+    </section>
+
+    <CorrectionNote subject="Audit changelog" />
+  </div>
+</Base>
