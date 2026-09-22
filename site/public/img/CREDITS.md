@@ -126,6 +126,12 @@ colour rather than another engraving, and it is on no other page: the five accou
 share it so they read as one movement, and `/account/` and `/account/setup/` wear the dark
 starry ground instead because they are not a doorway.
 
+## Public-domain paintings used on hubs
+
+| file | what it shows | source |
+|---|---|---|
+| reads-sower.jpg | Vincent van Gogh, The Sower, June 1888 (the Articles band, full width, no credit printed on the page) | public domain; Wikimedia Commons file "The Sower.jpg" |
+
 ## Unsplash (free to use under the Unsplash licence; replace with Envato equivalents at will)
 
 | file | what it shows | Unsplash photo id |

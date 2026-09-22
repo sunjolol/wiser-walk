@@ -14,7 +14,43 @@ plan was put to him; **ask what he decided before building any of it.**
 until `MAILERLITE_API_KEY` is set in Vercel (Settings, Environment Variables; Production and Preview),
 and double opt-in must be ON in MailerLite. Steps: `site/src/lib/email/README.md`. Only he can do it.
 
-## START HERE (written at the end of the 2026-09-21 session)
+## START HERE (written at the end of the SECOND 2026-09-21 session; supersedes the section below where they differ)
+
+**Everything below this line, plus the itch.io kit, is on branch `seo/discoverability`, pushed to origin, NOT on
+`main`. The owner has been shown captures and asked for his go before the push to production; do not push it
+without that.** Every commit passed `npm run build` (prebuild tests + the SEO guard), `npm run test:switches` and
+`node audit/selftest.js`. The API refused agents for most of the session (529 overloads on every Opus call, three
+times), so items 4, 6, 11, 12 and 13 were done by hand in the main session.
+
+Done on the branch, in the order he set:
+1. **itch.io kit** (`65a147a`): `design/itch/README.md` (his steps, page text, tags), `design/itch/upload/` (the game with
+   its challenge links pointed at wiserwalk.com, a 630x500 cover, four screenshots). HE uploads it.
+2. **Item 8, twelve comparison pages** (`268d187`): `/compare/` and `/compare/<pair>/`, content as JSON in
+   `site/src/data/comparisons/` (brief `design/seo/COMPARE-BRIEF.md`, audited positions in
+   `design/seo/compare-pairs.generated.md`), loader `site/src/lib/comparisons.ts`, `CompareRoom` on the Compass page,
+   `CompareBlock` on the tradition pages, the Articles dropdown, the footer link, SEO guard check 4, thirteen social
+   cards. Four files were edited by an Opus editor before the API died; the other eight were fact-read by the main
+   session and five uncertain claims cut. Content is 1,100 to 1,300 words a page.
+3. **Item 4, the printable gifts test** (`be8d2e5`): `/q/spiritual-gifts/print/`, from the quiz's own data, print
+   stylesheet, key on its own sheet, "Print it for a group" in the quiz band. Also the feed line on `/articles/`.
+4. **Item 6, the dataset** (`1f7b879`): `/data/theology-compass/` + `/data/theology-compass-traditions.csv`, Dataset
+   JSON-LD, linked from the tradition index on the Compass page.
+5. **Item 12, /method/** (`3f7b2c7`): 12,881 words -> ~1,250; the log and refusals moved whole to `/method/changelog/`.
+6. **Item 13, fonts** (`28309a0`): self-hosted in `site/public/fonts/`; `design/tools/fonts.md`.
+7. **Item 11, seven deadly sins LIVE** (`b92a783`): lean audit by hand, seven sourced profiles with WEBBE verses
+   inserted by script (`engine-test.mjs` checks them), status flipped, draft note gone, engine tests updated.
+8. Small leftovers: two long titles trimmed, the /about/ buttons shortened, the Sower credited, the did-you-know
+   kicker fixed for one item.
+
+**Still open on `design/seo/TASKS.md`:** item 14 (article engine: two a month; ASK HIM for his Bing Keyword Research
+numbers first), item 15 (later), the owner's judgement calls and the article-redesign leftovers at the foot of the
+file, and his optional posting list (`WHERE-TO-POST.md`).
+
+**Lessons:** `astro preview` does not work with the Vercel adapter (use the `site` launch config, port 4321); the
+Bash tool turns `\\n` inside a heredoc into a real newline (build escapes with `chr(92)` or use the Write tool);
+`didYouKnow` on a group is an array of `{text, source}`; the engine test pins every quiz's status.
+
+## START HERE (written at the end of the first 2026-09-21 session)
 
 **Live on `main` (every merge had the owner's yes):** the whole redesign, site-wide picture bands, 11
 articles with a topic FILTER on `/articles/`, "My results" (`/me/`), `/support/` giving to his Ko-fi with

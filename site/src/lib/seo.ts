@@ -35,7 +35,7 @@ export const SEO: Record<string, { title: string; description: string }> = {
       'Is that line really in the Bible, or does it only sound like it? And who said it? Two fast, free Bible games from over 2,000 real lines. Two minutes a run.'
   },
   '/articles/': {
-    title: 'Christian articles on gratitude, patience, forgiveness and worry',
+    title: 'Christian articles: gratitude, patience, forgiveness, worry',
     description:
       'Short, practical reads on becoming more grateful, patient, humble and content, on forgiving someone who hurt you, and on what the Bible says about worry.'
   },
@@ -62,7 +62,7 @@ export const SEO: Record<string, { title: string; description: string }> = {
       'Every quiz, game and article on Wiser Walk is free. If one has been worth something to you, you can help keep it that way, once or monthly.'
   },
   '/q/theology-compass/': {
-    title: 'Theology Compass: which Christian denomination fits your beliefs?',
+    title: 'Theology Compass: which denomination fits your beliefs?',
     description:
       '18 statements, 3 minutes. See which of 18 Christian traditions sits nearest your beliefs, from Catholic and Orthodox to Baptist and Pentecostal. Free.'
   },

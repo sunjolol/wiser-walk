@@ -471,7 +471,7 @@ const breadcrumbs =
       <>
         <SectionHead
           title="Did you know?"
-          kicker={`${dyk.length} things worth knowing, each with its source`}
+          kicker={dyk.length === 1 ? 'One thing worth knowing, with its source' : `${dyk.length} things worth knowing, each with its source`}
         />
         <div class="panel layered ref-panel ref-panel--quiet dyk-panel">
           <div class="wash" aria-hidden="true"></div>
