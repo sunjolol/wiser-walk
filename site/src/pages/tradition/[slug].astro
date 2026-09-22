@@ -7,6 +7,7 @@ import CompassWheel from '../../components/CompassWheel.astro';
 import RailStack from '../../components/RailStack.astro';
 import TraditionNeighbours from '../../components/TraditionNeighbours.astro';
 import CorrectionNote from '../../components/CorrectionNote.astro';
+import CompareBlock from '../../components/CompareBlock.astro';
 import { theologyCompass } from '../../lib/quizzes/theology-compass';
 import { groupHref, quizHref, resultFor } from '../../lib/engine/registry';
 import { clip } from '../../lib/seo';
@@ -329,7 +330,13 @@ const breadcrumbs = [
         </p>
         <TraditionNeighbours quiz={quiz} ranked={neighbours} limit={6} />
       </>
-    )}
+    )}{/*
+      And the pairs written out in full, where this tradition is one of the two. It follows
+      the nearness list because that list raises the question and cannot answer it: distance
+      is a number, and what a reader wants is what the difference actually IS. A tradition
+      with no comparison page written yet renders nothing here. Hung with no whitespace on
+      either side, so those pages come out of this change exactly as they went in.
+    */}<CompareBlock slug={tradition.slug} />
 
     {profile && (
       <>

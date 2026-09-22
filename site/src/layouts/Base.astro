@@ -128,7 +128,21 @@ const NAV: Array<{
       ...footGames.map(g => ({ href: g.href, label: g.title, tag: undefined }))
     ]
   },
-  { href: '/articles/', label: 'Articles' },
+  /*
+   * Articles opens a menu for the same reason Quizzes and Games do: the comparison pages
+   * ("Lutheran vs Reformed") are writing, they are the only part of the site with no home
+   * in the row, and a reader who wanted them had no way to learn they existed. Two items,
+   * built exactly like the other two menus, so the phone's scroller, the keyboard and the
+   * close-on-open script all already handle it.
+   */
+  {
+    href: '/articles/',
+    label: 'Articles',
+    items: [
+      { href: '/articles/', label: 'All articles' },
+      { href: '/compare/', label: 'Compare traditions' }
+    ]
+  },
   // No Method. It is a page about how the work was done, and the nav is for the things a
   // reader came for; /about/ links to it in one sentence, so it stays reachable and crawlable.
   // The owner's call (2026-09-21): the header's last word is the way to give. About stays in the footer.
@@ -438,6 +452,8 @@ const NAV: Array<{
             <h4><span class="foot-mark"><Icon name="book" size={15} /></span> More</h4>
             <ul>
               <li><a href="/articles/">Articles</a></li>
+              {/* The comparison pages are writing, and this is where the writing lives. */}
+              <li><a href="/compare/">Compare traditions</a></li>
               <li><a href="/about/">About</a></li>
             </ul>
           </div>

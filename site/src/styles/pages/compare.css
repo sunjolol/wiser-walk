@@ -1,0 +1,297 @@
+/*
+ * compare.css — /compare/ and /compare/<pair>/.
+ *
+ * Phone first. Tokens only; no colour here is a literal, so the dark theme recolours the
+ * page by re-pointing the tokens and nothing in this file has to know about it.
+ *
+ * THE ONE RULE THAT SHAPES EVERYTHING HERE: on a comparison page the two traditions are
+ * told apart by SHAPE, never by colour. Blue and orange mean which POLE of an axis a
+ * marker sits on, everywhere on this site, and the rails on this page are covered in both.
+ * So the two sides of every difference carry a filled disc and a ring — the same two glyphs
+ * the rails draw — and neither side is ever tinted, edged or headed in a pole's colour.
+ */
+
+/* ------------------------------------------------------------------ the page */
+
+.cmpx { margin-top: 1.4rem; }
+/* No one-word last lines anywhere on this site. */
+.cmpx p, .cmpx li, .cmpx h2, .cmpx h3, .cmpx h4 { text-wrap: pretty; }
+
+.cmpx-note {
+  margin: -.35rem 0 1.1rem; max-width: 46em;
+  font-size: .86rem; line-height: 1.55; color: var(--ink-mute);
+}
+
+/* ------------------------------------------------------------------ the rails */
+
+/*
+ * One key, and it describes what is drawn. RailOverlay ships its own naming two shapes;
+ * this page replaces it with one that names the two traditions, links each to its own page
+ * and states the colour rule. The component is not edited; its key is simply not drawn
+ * twice. (/c/ does the identical thing in play.css.)
+ */
+.cmpx-rails .ov-legend[data-role="legend"] { display: none; }
+.cmpx-rails { margin-top: 1.1rem; }
+/* the rails are the point of this panel, so the silhouette behind them is halved */
+.cmpx-rails .wash { opacity: calc(var(--wash-op) / 2); }
+
+.cmpx-key {
+  display: flex; flex-wrap: wrap; gap: .5rem 1.1rem; margin: 0 0 .5rem;
+  font-size: .8rem; color: var(--ink-mute);
+}
+.cmpx-who {
+  display: inline-flex; align-items: flex-start; gap: .45rem;
+  font-family: var(--ui); font-weight: 600; color: var(--ink); text-decoration: none;
+}
+a.cmpx-who { color: var(--accent); }
+a.cmpx-who:hover { text-decoration: underline; }
+.cmpx-who--plain { font-weight: 500; color: var(--ink-mute); }
+.cmpx-key .ov-mark, .cmpx-key .legend-swatch { margin-top: .16rem; }
+
+.cmpx-key-note {
+  margin: 0 0 1.2rem; max-width: 64em;
+  font-size: .78rem; line-height: 1.5; color: var(--ink-mute);
+}
+
+.cmpx-drawn {
+  display: flex; align-items: flex-start; gap: .55rem;
+  margin: 1.4rem 0 0; padding-top: 1rem; border-top: 1px solid var(--rule);
+  font-size: .84rem; line-height: 1.55; color: var(--ink-soft);
+}
+.cmpx-drawn .icon { flex: none; margin-top: .18rem; color: var(--accent); }
+
+/* ------------------------------------------------------------------ shared ground */
+
+.cmpx-common { margin: 0; padding: 0; list-style: none; }
+.cmpx-common li {
+  display: grid; grid-template-columns: auto 1fr; gap: .7rem;
+  padding: .85rem 0; border-bottom: 1px solid var(--rule);
+}
+.cmpx-common li:first-child { border-top: 1px solid var(--rule); }
+.cmpx-common p { margin: 0; color: var(--ink-soft); line-height: 1.6; }
+.cmpx-tick {
+  display: grid; place-items: center; flex: none;
+  width: 1.7rem; height: 1.7rem; border-radius: 50%;
+  background: var(--accent-soft); color: var(--accent);
+}
+
+/* ------------------------------------------------------------------ the differences */
+
+.cmpx-diffs { display: flex; flex-direction: column; gap: 1.1rem; }
+
+.cmpx-diff {
+  position: relative; overflow: hidden;
+  padding: 1.15rem 1.1rem 1.2rem; border-radius: var(--r-lg);
+  background: var(--panel); box-shadow: var(--lift);
+}
+/* the spectrum as a rule along the top: the axis has two poles and the card says so */
+.cmpx-diff::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 5px;
+  background-image: var(--grad-r);
+}
+
+.cmpx-diff-h {
+  margin: .35rem 0 .5rem;
+  font-family: var(--display); font-weight: 400; font-style: italic;
+  font-size: clamp(1.45rem, 5.4vw, 1.85rem); line-height: 1.12; color: var(--ink);
+}
+.cmpx-diff-h a { color: inherit; text-decoration: none; }
+.cmpx-diff-h a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 4px; }
+
+/* The axis under the heading, with BOTH pole names. This is the one place on the page a
+   reader meets an axis with no rail beside it, so the rule holds here too. */
+.cmpx-axis {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: .3rem .7rem;
+  margin: 0 0 1rem; padding-bottom: .9rem; border-bottom: 1px solid var(--rule);
+}
+.cmpx-axis-name {
+  font-family: var(--ui); font-size: .68rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--accent);
+}
+.cmpx-axis-poles {
+  font-family: var(--ui); font-size: .72rem; font-weight: 600; color: var(--ink-soft);
+}
+.cmpx-axis-poles i { font-style: normal; color: var(--ink-mute); padding: 0 .1rem; }
+
+.cmpx-two { display: grid; grid-template-columns: 1fr; gap: .85rem; }
+.cmpx-side {
+  padding: .85rem .9rem .95rem; border-radius: var(--r-sm);
+  background: var(--shell);
+  font-size: .89rem; line-height: 1.6; color: var(--ink-soft);
+}
+.cmpx-side p { margin: 0; }
+.cmpx-side h4 {
+  display: flex; align-items: center; gap: .5rem; margin: 0 0 .15rem;
+  font-family: var(--ui); font-size: .72rem; font-weight: 700; letter-spacing: .09em;
+  text-transform: uppercase; color: var(--ink);
+}
+/* the audited band adjective, so the prose and the rail above cannot drift apart */
+.cmpx-band {
+  margin: 0 0 .55rem !important;
+  font-family: var(--ui); font-size: .7rem; font-weight: 600; color: var(--ink-mute);
+}
+
+/*
+ * The two glyphs, drawn to match the rails exactly: a filled disc for the first tradition
+ * and a ring with a small centre for the second. Ink, never a pole colour.
+ */
+.cmpx-glyph {
+  flex: none; width: 13px; height: 13px; border-radius: 50%;
+  background: var(--ink-soft);
+}
+.cmpx-glyph--ring {
+  position: relative; background: var(--shell); border: 2.5px solid var(--ink-soft);
+}
+.cmpx-glyph--ring::after {
+  content: ""; position: absolute; inset: 0; margin: auto;
+  width: 4px; height: 4px; border-radius: 50%; background: var(--ink-soft);
+}
+
+.cmpx-plain {
+  margin: .95rem 0 0; padding: .8rem .9rem; border-radius: var(--r-sm);
+  background: var(--accent-soft);
+  font-size: .92rem; line-height: 1.55; color: var(--ink);
+}
+.cmpx-plain span {
+  display: block; margin-bottom: .2rem;
+  font-family: var(--ui); font-size: .6rem; font-weight: 700; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--accent);
+}
+
+@media (min-width: 46rem) {
+  .cmpx-diff { padding: 1.5rem 1.5rem 1.6rem; }
+  .cmpx-two { grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+  .cmpx-side { padding: 1rem 1.05rem 1.1rem; }
+}
+
+/* ------------------------------------------------------------------ beyond */
+
+.cmpx-beyond { margin: 0; padding: 0; list-style: none; display: grid; gap: .9rem; }
+.cmpx-beyond li {
+  position: relative; padding: 1.1rem 1.1rem 1.15rem 1.1rem; border-radius: var(--r);
+  background: var(--panel); box-shadow: var(--lift-soft);
+}
+.cmpx-beyond-mark {
+  display: grid; place-items: center; width: 2.1rem; height: 2.1rem; margin-bottom: .6rem;
+  border-radius: 11px; background: var(--warn-bg); color: var(--warn-ink);
+}
+.cmpx-beyond h3 {
+  margin: 0 0 .4rem;
+  font-family: var(--ui); font-size: .95rem; font-weight: 700; color: var(--ink);
+}
+.cmpx-beyond p { margin: 0; font-size: .9rem; line-height: 1.6; color: var(--ink-soft); }
+@media (min-width: 52rem) {
+  .cmpx-beyond { grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); }
+}
+
+/* ------------------------------------------------------------------ the story */
+
+.cmpx-story { padding: 1.3rem 1.15rem 1.4rem; border-radius: var(--r-lg); }
+.cmpx-story-p { margin: 0 0 .95rem; color: var(--ink-soft); line-height: 1.68; }
+.cmpx-story-p:last-child { margin-bottom: 0; }
+/* the first paragraph set as a lead; a whole history in the display face is a wall of
+   serif on a phone, which is the lesson the tradition profiles already learned */
+.cmpx-story-p--lead {
+  font-family: var(--display); font-style: italic; font-weight: 400;
+  font-size: 1.12rem; line-height: 1.45; color: var(--ink);
+}
+@media (min-width: 46rem) {
+  .cmpx-story { padding: 1.9rem 2rem 2rem; }
+  .cmpx-story-p--lead { font-size: 1.25rem; }
+}
+
+/* ------------------------------------------------------------------ on a Sunday */
+
+.cmpx-sunday {
+  display: grid; grid-template-columns: auto 1fr; gap: .9rem; align-items: start;
+  padding: 1.15rem 1.15rem 1.2rem; border-radius: var(--r);
+  background: var(--shell); box-shadow: inset 3px 0 0 var(--accent);
+}
+.cmpx-sunday-mark {
+  display: grid; place-items: center; width: 2.3rem; height: 2.3rem; flex: none;
+  border-radius: 12px; background: var(--accent-soft); color: var(--accent);
+}
+.cmpx-sunday p { margin: 0; font-size: .95rem; line-height: 1.65; color: var(--ink-soft); }
+
+/* ------------------------------------------------------------------ did you know */
+
+.cmpx-fact {
+  position: relative; isolation: isolate; overflow: hidden;
+  margin: 1.6rem 0 0; padding: 1.15rem 1.15rem 1.25rem; border-radius: var(--r-lg);
+  background: var(--panel); box-shadow: var(--lift);
+}
+.cmpx-fact::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; background: var(--grad);
+  -webkit-mask: url("/tex/smokey.png") center / 190% 190% no-repeat;
+  mask: url("/tex/smokey.png") center / 190% 190% no-repeat;
+  opacity: calc(var(--wash-op) * .62);
+}
+.cmpx-fact-label {
+  display: flex; align-items: center; gap: .45rem; margin: 0 0 .45rem;
+  font-family: var(--ui); font-size: .6rem; font-weight: 700; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--ink-soft);
+}
+.cmpx-fact-text {
+  margin: 0; font-family: var(--display); font-style: italic; font-weight: 400;
+  font-size: 1.08rem; line-height: 1.45; color: var(--ink);
+}
+@media (min-width: 46rem) { .cmpx-fact-text { font-size: 1.16rem; } }
+
+/* ------------------------------------------------------------------ what we read */
+
+.cmpx-read { margin: 0; padding: 0; list-style: none; }
+.cmpx-read li { padding: .9rem 0; border-bottom: 1px solid var(--rule); }
+.cmpx-read li:first-child { border-top: 1px solid var(--rule); }
+/*
+ * Which side a document belongs to, as a word rather than a colour: these are the two
+ * traditions again, and a coloured pill here would be the identity-by-colour this page
+ * refuses. "Both" takes the accent, because it is the one that says something different.
+ */
+.cmpx-read-side {
+  display: inline-block; margin-bottom: .35rem; padding: .2rem .55rem; border-radius: var(--r-pill);
+  font-family: var(--ui); font-size: .6rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--ink-soft);
+  background: var(--shell); box-shadow: inset 0 0 0 1px var(--rule);
+}
+.cmpx-read-side--both { color: var(--accent); background: var(--accent-soft); box-shadow: none; }
+.cmpx-read-title { margin: 0; font-family: var(--ui); font-weight: 700; font-size: .95rem; color: var(--ink); }
+.cmpx-read-note { margin: .2rem 0 0; font-size: .87rem; line-height: 1.55; color: var(--ink-soft); }
+
+/* ------------------------------------------------------------------ the way on */
+
+.cmpx-way { margin-top: 2.6rem; }
+.cmpx-more { margin-top: .5rem; }
+
+.cmpx-cards { display: grid; grid-template-columns: 1fr; gap: .9rem; }
+@media (min-width: 40rem) { .cmpx-cards { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 62rem) { .cmpx-cards { grid-template-columns: repeat(3, 1fr); } }
+
+/* ------------------------------------------------------------------ the hub */
+
+.cmpx-hub-say {
+  margin: 0 0 .5rem; max-width: 44em;
+  font-size: 1rem; line-height: 1.65; color: var(--ink-soft);
+}
+.cmpx-shelf { margin-top: .5rem; }
+
+.cmpx-trads { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0; padding: 0; list-style: none; }
+.cmpx-trads a {
+  display: inline-flex; align-items: center; gap: .4rem; min-height: 44px;
+  padding: .45rem .85rem; border-radius: var(--r-pill);
+  background: var(--panel); box-shadow: inset 0 0 0 1px var(--rule);
+  font-family: var(--ui); font-size: .82rem; font-weight: 600; color: var(--ink-soft);
+  text-decoration: none;
+}
+.cmpx-trads a:hover { color: var(--accent); background: var(--accent-soft); box-shadow: none; }
+.cmpx-trads .icon { flex: none; opacity: .7; }
+
+/* ------------------------------------------------------------------ dark */
+
+/*
+ * The one place the dark theme needs telling: --shell is darker than --panel in the light
+ * theme and lighter in neither, so the inset sides of a difference would sit on the panel
+ * with no separation. A hairline does the job the tone does in light.
+ */
+:root[data-theme="dark"] .cmpx-side { box-shadow: inset 0 0 0 1px var(--rule); }
+:root[data-theme="dark"] .cmpx-glyph--ring { background: var(--panel); }
+:root[data-theme="dark"] .cmpx-sunday { box-shadow: inset 3px 0 0 var(--accent), inset 0 0 0 1px var(--rule); }

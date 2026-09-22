@@ -1,0 +1,323 @@
+---
+/**
+ * Two traditions, side by side.
+ *
+ * A person types "Lutheran vs Reformed" and gets either a forum argument or a page written
+ * by one of the two sides. This answers the question in the first screen, then draws both
+ * traditions on the site's own audited rails, then tells the story. Everything in words is
+ * the pair's own JSON file; everything on the instrument is the audited Compass data, and
+ * the two can never disagree, because nothing here re-states a position in prose that the
+ * rails also draw.
+ *
+ * THREE RULES THIS PAGE INHERITS AND MUST NOT BREAK.
+ *
+ * 1. **Both pole names on every rail.** RailOverlay does that unconditionally; the small
+ *    axis line under each difference heading does it again, because that line is the one
+ *    place a reader meets an axis without the rail beside it.
+ * 2. **Colour is never identity.** Blue and orange mean WHICH POLE everywhere on this site.
+ *    The two traditions are told apart by SHAPE — a filled disc and a ring — on the rails,
+ *    in the key above them and on the two panels of every difference. Painting one
+ *    tradition blue would collide with the poles the same markers sit on.
+ * 3. **Never "agree", never a percentage.** Two traditions land in the same band, or they
+ *    do not. The count printed is "same band on 4 of 6", which is a statement about the
+ *    instrument's categories rather than about the people in them.
+ */
+import Base from '../../layouts/Base.astro';
+import Hero from '../../components/Hero.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import Icon from '../../components/Icon.astro';
+import Card from '../../components/Card.astro';
+import RailOverlay from '../../components/RailOverlay.astro';
+import CorrectionNote from '../../components/CorrectionNote.astro';
+import { compare, groupHref, quizHref } from '../../lib/engine/registry';
+import type { BipolarComparison } from '../../lib/engine/compare';
+import {
+  COMPARISONS, COMPARE_QUIZ, axisOf, compareHref, otherComparisons, traditionOf
+} from '../../lib/comparisons';
+import type { Comparison } from '../../lib/comparisons';
+import '../../styles/pages/compare.css';
+
+export function getStaticPaths() {
+  return COMPARISONS.map(c => ({ params: { pair: c.slug }, props: { c } }));
+}
+
+const { c } = Astro.props as { c: Comparison };
+const quiz = COMPARE_QUIZ;
+
+const tradA = traditionOf(c.a);
+const tradB = traditionOf(c.b);
+const hrefA = `/tradition/${tradA.slug}/`;
+const hrefB = `/tradition/${tradB.slug}/`;
+
+/*
+ * The two markers, from the SAME call a reader's own result makes. The tradition page hands
+ * one position vector to resultFor; this hands two to compare, which calls resultFor twice.
+ * Nothing about the positions is restated here, so a change in the audited data moves this
+ * page without anybody remembering that it exists.
+ */
+const cmp = compare(quiz, tradA.position ?? [], tradB.position ?? []) as BipolarComparison;
+const rowFor = (axis: string) => cmp.rows.find(r => r.slug === axis);
+
+/** Written as "4 of 6", never as a share and never as a score. */
+const sameSay = `${cmp.sameCount} of ${cmp.total}`;
+
+/**
+ * Small counts are spelled out in a kicker, because a kicker is set in uppercase micro-type
+ * and "2 OF THE SIX AXES" puts a numeral next to a word for the same kind of thing in the
+ * same four words. The six is already a word; the other one has to match it.
+ */
+const COUNT = ['no', 'one', 'two', 'three', 'four', 'five', 'six'];
+const spell = (n: number) => COUNT[n] ?? String(n);
+const capital = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+const url = new URL(compareHref(c.slug), Astro.site).href;
+const others = otherComparisons(c);
+
+/*
+ * WebPage rather than Article, for the reason the axis and tradition templates give: an
+ * Article carries a byline and dates, this page has neither, and declaring one while
+ * carrying none of its properties tells a machine something untrue. What a machine should
+ * come away with is that this page is ABOUT two named traditions, which `about` says.
+ */
+const siteId = new URL('/#website', Astro.site).href;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: c.h1,
+  description: c.description,
+  url,
+  isPartOf: [
+    { '@id': siteId },
+    { '@type': 'Quiz', name: quiz.title, url: new URL(quizHref(quiz), Astro.site).href }
+  ],
+  about: [
+    { '@type': 'Thing', name: tradA.name },
+    { '@type': 'Thing', name: tradB.name }
+  ],
+  inLanguage: 'en'
+};
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Compare', url: '/compare/' },
+  { name: `${c.labelA} vs ${c.labelB}`, url: compareHref(c.slug) }
+];
+---
+<Base title={c.searchTitle} description={c.description} jsonLd={jsonLd} breadcrumbs={breadcrumbs}>
+  <Hero
+    title={c.h1}
+    eyebrow="Compare"
+    icon="compass"
+    kind="night"
+    long
+    tiles={[
+      { n: sameSay, label: 'Same band' },
+      { n: c.differences.length, label: c.differences.length === 1 ? 'Difference' : 'Differences' },
+      { n: c.sources.length, label: 'Sources read' }
+    ]}
+  />
+
+  <div class="cmpx">
+    {/* The answer, in the article's own shape: the reader has the point before deciding to
+        read on, and a search engine has a passage it can lift whole. */}
+    <aside class="inshort" aria-label="In short">
+      <p class="inshort-head">In short</p>
+      <p>{c.answer}</p>
+    </aside>
+
+    <SectionHead title="Where the two land" kicker={`Six audited axes · same band on ${sameSay}`} />
+
+    <div class="panel layered ref-panel ref-panel--quiet cmpx-rails">
+      <div class="wash" aria-hidden="true"></div>
+      <div class="veil" aria-hidden="true"></div>
+
+      {/*
+        The key, written against what RailOverlay actually draws, and replacing the
+        component's own (hidden in compare.css, exactly as /c/ hides it). The two traditions
+        are told apart by SHAPE; the colour of a marker is the side of the axis it landed on
+        and says nothing about which tradition it is. That sentence has to come before the
+        first rail, or a reader reads the colours as team colours.
+      */}
+      <p class="cmpx-key">
+        <a class="cmpx-who" href={hrefA}>
+          <span class="ov-mark ov-mark--solid" aria-hidden="true"></span>{c.labelA}
+        </a>
+        <a class="cmpx-who" href={hrefB}>
+          <span class="ov-mark ov-mark--ring" aria-hidden="true"></span>{c.labelB}
+        </a>
+        <span class="cmpx-who cmpx-who--plain">
+          <span class="ov-mark ov-mark--run" aria-hidden="true"></span>the run between them
+        </span>
+        <span class="cmpx-who cmpx-who--plain">
+          <span class="legend-swatch" aria-hidden="true"></span>the quiz names neither pole
+        </span>
+      </p>
+      <p class="cmpx-key-note">
+        A marker takes the colour of the side it landed on — blue toward the left pole,
+        orange toward the right. The shape says which tradition; the colour never does.
+      </p>
+
+      <RailOverlay quiz={quiz} cmp={cmp} nameA={c.labelA} nameB={c.labelB} />
+
+      <p class="cmpx-drawn"><Icon name="compass" size={15} /> {c.drawn}</p>
+    </div>
+
+    {/* A pair that shares no band at all still shares a great deal, and "what they share /
+        in the same band on 0 of 6" read as a heading arguing with its own kicker. */}
+    <SectionHead
+      title="What they share"
+      kicker={cmp.sameCount > 0 ? `In the same band on ${sameSay}` : 'What the six rails do not show'}
+    />
+    <ul class="cmpx-common">
+      {c.common.map(line => (
+        <li><span class="cmpx-tick" aria-hidden="true"><Icon name="sparkle" size={14} /></span><p>{line}</p></li>
+      ))}
+    </ul>
+
+    <SectionHead
+      title="Where they differ"
+      kicker={`${capital(spell(c.differences.length))} of the six axes`}
+    />
+    <p class="cmpx-note">
+      Both sides below are stated the way people who hold them would state them. Landing in
+      the same band is not agreeing, and landing in different ones is not a verdict.
+    </p>
+
+    <div class="cmpx-diffs">
+      {c.differences.map(d => {
+        const axis = axisOf(d.axis);
+        const row = rowFor(d.axis);
+        return (
+          <article class="cmpx-diff">
+            <h3 class="cmpx-diff-h"><a href={groupHref(quiz, axis)}>{d.heading}</a></h3>
+            {/* The axis, with BOTH poles named, and each side's audited band. This is the
+                one place a reader meets an axis with no rail beside it. */}
+            <p class="cmpx-axis">
+              <span class="cmpx-axis-name">{axis.name}</span>
+              <span class="cmpx-axis-poles">{axis.left} <i aria-hidden="true">↔</i> {axis.right}</span>
+            </p>
+
+            <div class="cmpx-two">
+              <section class="cmpx-side cmpx-side--a">
+                <h4><span class="cmpx-glyph cmpx-glyph--solid" aria-hidden="true"></span>{c.labelA}</h4>
+                {row && <p class="cmpx-band">{row.a.band}</p>}
+                <p>{d.a}</p>
+              </section>
+              <section class="cmpx-side cmpx-side--b">
+                <h4><span class="cmpx-glyph cmpx-glyph--ring" aria-hidden="true"></span>{c.labelB}</h4>
+                {row && <p class="cmpx-band">{row.b.band}</p>}
+                <p>{d.b}</p>
+              </section>
+            </div>
+
+            <p class="cmpx-plain"><span>In plain words</span>{d.plain}</p>
+          </article>
+        );
+      })}
+    </div>
+
+    {c.beyond_the_compass.length > 0 && (
+      <>
+        <SectionHead title="Beyond the compass" kicker="What the six axes do not measure" />
+        <p class="cmpx-note">
+          The Compass measures six things, not everything. These differences are real and
+          sit outside all six.
+        </p>
+        <ul class="cmpx-beyond">
+          {c.beyond_the_compass.map(item => (
+            <li>
+              <span class="cmpx-beyond-mark" aria-hidden="true"><Icon name="scroll" size={16} /></span>
+              <h3>{item.heading}</h3>
+              <p>{item.text}</p>
+            </li>
+          ))}
+        </ul>
+      </>
+    )}
+
+    <SectionHead title="How they came to differ" kicker="The short history" />
+    <div class="panel layered cmpx-story">
+      <div class="wash" aria-hidden="true"></div>
+      <div class="veil" aria-hidden="true"></div>
+      {c.story.map((para, i) => (
+        <p class:list={['cmpx-story-p', i === 0 && 'cmpx-story-p--lead']}>{para}</p>
+      ))}
+    </div>
+
+    {/* "Walking in", not "On a Sunday": .sect-title is set lowercase across the site, and a
+        proper noun printed as "on a sunday" reads as a typing error rather than as a style.
+        The phrase people search for is in the kicker above it, which is set in capitals. */}
+    <SectionHead title="Walking in" kicker="What a visitor would notice on a Sunday" />
+    <div class="cmpx-sunday">
+      <span class="cmpx-sunday-mark" aria-hidden="true"><Icon name="users" size={18} /></span>
+      <p>{c.on_a_sunday}</p>
+    </div>
+
+    <section class="cmpx-fact">
+      <p class="cmpx-fact-label"><Icon name="sparkle" size={14} /> Did you know?</p>
+      <p class="cmpx-fact-text">{c.did_you_know}</p>
+    </section>
+
+    <SectionHead title="What we read" kicker="Where these positions come from" />
+    <ul class="cmpx-read">
+      {c.sources.map(s => (
+        <li>
+          <span class:list={['cmpx-read-side', `cmpx-read-side--${s.side}`]}>
+            {s.side === 'a' ? c.labelA : s.side === 'b' ? c.labelB : 'Both'}
+          </span>
+          <p class="cmpx-read-title">{s.title}</p>
+          <p class="cmpx-read-note">{s.note}</p>
+        </li>
+      ))}
+    </ul>
+
+    {/* The way into the quiz, as a room on the night ground the Compass is always drawn on.
+        Not a dawn sky: the footer below this is a photograph of one. */}
+    <section class="wayin wayin--night cmpx-way">
+      <div class="wayin-ghost" aria-hidden="true">where</div>
+      <div class="wayin-in">
+        <span class="wayin-mark" aria-hidden="true"><Icon name="compass" size={20} /></span>
+        <p class="wayin-kicker">{quiz.title}</p>
+        <h2>Where do you stand?</h2>
+        <p class="wayin-say">
+          Answer the statements and you are drawn on these same six rails, with the distance
+          to {c.labelA}, to {c.labelB} and to {quiz.outcomes.length - 2} other traditions.
+        </p>
+        <ul class="wayin-facts">
+          <li><Icon name="scroll" size={13} /> {quiz.items.length} statements</li>
+          <li><Icon name="clock" size={13} /> About {quiz.minutes} minutes</li>
+          <li><Icon name="compass" size={13} /> {quiz.groups.length} axes, both poles named</li>
+        </ul>
+        <div class="btn-row">
+          <a class="btn" href={quizHref(quiz)}>Take the {quiz.title}</a>
+        </div>
+      </div>
+    </section>
+
+    {others.length > 0 && (
+      <section class="cmpx-more">
+        <SectionHead
+          title="Other comparisons"
+          kicker="The ones sharing a tradition first"
+          href="/compare/"
+          more="All comparisons"
+        />
+        <div class="cmpx-cards">
+          {others.map(o => (
+            <Card
+              href={compareHref(o.slug)}
+              title={`${o.labelA} vs ${o.labelB}`}
+              text={o.description}
+              meta="Side by side"
+              tab="Compare"
+              go="Read"
+              icon="compass"
+            />
+          ))}
+        </div>
+      </section>
+    )}
+
+    <CorrectionNote subject={`${tradA.name} and ${tradB.name}`} />
+  </div>
+</Base>

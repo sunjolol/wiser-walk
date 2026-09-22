@@ -1,0 +1,100 @@
+---
+/**
+ * The way into the comparison pages, on the Compass's own page.
+ *
+ * It sits under the index of all eighteen traditions, because the question it answers is
+ * the one that index provokes: a reader looking down a list of names is usually holding two
+ * of them in mind and wondering what actually separates them.
+ *
+ * A dark room on purpose. The block above it is a light panel listing eighteen names, and a
+ * second light panel under it would read as more of the same list. Built from the files that
+ * exist, so a pair that was never written cannot be offered.
+ */
+import Icon from './Icon.astro';
+import { COMPARISONS, compareHref } from '../lib/comparisons';
+
+interface Props {
+  /** How many pairs to name here. The rest are behind the hub link. */
+  limit?: number;
+}
+const { limit = 6 } = Astro.props;
+
+/*
+ * Which six to name, chosen for SPREAD rather than by alphabet.
+ *
+ * The set is sorted by slug, and the first six of it were "Anglican vs Catholic, Baptist vs
+ * Catholic, Baptist vs Methodist, Baptist vs Presbyterian, Calvinist vs Arminian, Catholic
+ * vs Orthodox" — four of the six beginning with the same two words, and eight of the twelve
+ * traditions never mentioned. A reader scanning for their own church should find it.
+ *
+ * So a pair is taken first when it brings a tradition none of the chosen ones has yet, and
+ * the rest fill up in the set's own order. Greedy, deterministic, and it needs no list.
+ */
+const chosen: typeof COMPARISONS = [];
+const seen = new Set<string>();
+for (const c of COMPARISONS) {
+  if (chosen.length >= limit) break;
+  if (seen.has(c.a) && seen.has(c.b)) continue;
+  chosen.push(c);
+  seen.add(c.a);
+  seen.add(c.b);
+}
+const shown = [...chosen, ...COMPARISONS.filter(c => !chosen.includes(c))].slice(0, limit);
+const rest = COMPARISONS.length - shown.length;
+---
+{COMPARISONS.length > 0 && (
+  <section class="cmpr dark" aria-labelledby="cmpr-h">
+    <div class="dark-ghost" aria-hidden="true">versus</div>
+    <p class="feature-kicker"><Icon name="compass" size={13} /> Compare</p>
+    <h2 id="cmpr-h">What is the difference between two of them?</h2>
+    <p class="cmpr-say">
+      {COMPARISONS.length === 1 ? 'One pair is' : `${COMPARISONS.length} pairs are`} written
+      out in full: the answer in a paragraph, both traditions on these same six rails, and
+      the story of how they came to differ.
+    </p>
+    <ul class="cmpr-chips">
+      {shown.map(c => (
+        <li>
+          <a href={compareHref(c.slug)}>
+            {c.labelA} <span aria-hidden="true">vs</span> {c.labelB}
+          </a>
+        </li>
+      ))}
+    </ul>
+    <div class="btn-row">
+      <a class="btn" href="/compare/">
+        {rest > 0 ? `All ${COMPARISONS.length} comparisons` : 'Compare traditions'}
+      </a>
+    </div>
+  </section>
+)}
+
+<style>
+  .cmpr {
+    position: relative; overflow: clip;
+    margin: 2.2rem 0 .5rem; padding: 1.7rem 1.35rem 1.5rem; border-radius: 24px;
+  }
+  .cmpr h2 {
+    margin: .55rem 0 0; font-family: var(--display); font-weight: 400;
+    font-size: clamp(1.6rem, 6vw, 2.2rem); line-height: 1.1; text-wrap: balance;
+  }
+  .cmpr-say { margin: .7rem 0 0; max-width: 34rem; text-wrap: pretty; }
+
+  .cmpr-chips {
+    display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.3rem 0 0; padding: 0; list-style: none;
+  }
+  .cmpr-chips a {
+    display: inline-flex; align-items: center; gap: .35rem; min-height: 40px;
+    padding: .4rem .8rem; border-radius: 999px;
+    background: rgba(255, 255, 255, .07); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .13);
+    font-family: var(--ui); font-size: .78rem; font-weight: 600; line-height: 1.25;
+    color: var(--on-dark); text-decoration: none;
+  }
+  .cmpr-chips a span { color: var(--on-dark-mute); font-weight: 500; }
+  .cmpr-chips a:hover { background: rgba(255, 255, 255, .14); }
+  .cmpr .btn-row { margin: 1.4rem 0 0; }
+  .cmpr .btn { flex: 1 1 auto; }
+
+  @media (min-width: 30rem) { .cmpr .btn { flex: 0 0 auto; } }
+  @media (min-width: 52rem) { .cmpr { padding: 2.3rem 2.3rem 2.1rem; } }
+</style>

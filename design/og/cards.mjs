@@ -44,6 +44,48 @@ export const CARDS = {
     h: 'Who *said* it?', s: 'One line from the Bible. Four names. Two minutes a run.' },
 };
 
+/*
+ * Comparisons: one card per pair, plus the hub.
+ *
+ * Read from the site's own data files rather than typed here, so a thirteenth pair brings
+ * its card with it. The headline is the two labels, the second in the warm ink, which is
+ * the one thing that differs between twelve cards in a feed. The plates are Doré, printed
+ * soft sepia like every other engraving card: chosen for showing PEOPLE TOGETHER — two
+ * figures, a household, a gathered church — because that is what a comparison page is, and
+ * cycled by position so no two pairs in a row wear the same one.
+ */
+const CMP_DIR = join(ROOT, 'site/src/data/comparisons');
+const CMP_PLATES = [
+  ['/img/figures/jonathan.jpg', '50% 52%'],
+  ['/img/dore-paul.jpg', '38% 44%'],
+  ['/img/figures/peter.jpg', '50% 42%'],
+  ['/img/figures/john-the-baptist.jpg', '52% 36%'],
+  ['/img/figures/martha.jpg', '54% 44%'],
+  ['/img/figures/tobit.jpg', '54% 48%']
+];
+let comparisons = [];
+if (existsSync(CMP_DIR)) {
+  comparisons = readdirSync(CMP_DIR)
+    .filter(f => f.endsWith('.json') && !f.startsWith('_'))
+    .sort()
+    .map(f => JSON.parse(readFileSync(join(CMP_DIR, f), 'utf8')));
+}
+comparisons.forEach((c, i) => {
+  const [img, pos] = CMP_PLATES[i % CMP_PLATES.length];
+  CARDS[`compare-${c.slug}`] = {
+    v: 'left', tone: 'engraving', img, pos, k: 'Compare',
+    h: `${c.labelA} vs|*${c.labelB}*`,
+    s: 'What actually separates them, on the same six axes.'
+  };
+});
+CARDS.compare = {
+  v: 'left', tone: 'engraving', img: '/img/figures/jonathan.jpg', pos: '50% 52%', k: 'Compare traditions',
+  h: 'What is the|*difference?*',
+  /* No count in the line. A card is drawn once and committed, and a thirteenth pair would
+     leave a card in every feed saying there are twelve. */
+  s: 'Lutheran or Reformed? Catholic or Orthodox? Each pair, side by side.'
+};
+
 /* Articles: the article's own painting and title. */
 const ART_DIR = join(ROOT, 'site/src/content/articles');
 for (const f of readdirSync(ART_DIR).filter(f => f.endsWith('.md'))) {

@@ -30,9 +30,27 @@ interface Props {
   cmp: BipolarComparison;
   /** Link each rail's name to its axis page. */
   linked?: boolean;
+  /**
+   * What to call the two markers in the spoken description of each rail.
+   *
+   * On /c/ they have no names — they are two people, and naming either of them in the URL
+   * or on the page is the one thing that route may not do — so they stay "the first" and
+   * "the second", and the page's own script swaps in "you" and "they" through the
+   * data-label-a / data-label-b attributes once it knows who is looking.
+   *
+   * A comparison of two TRADITIONS does know: the markers are Lutheran and Reformed, and a
+   * reader using a screen reader should hear that rather than an ordinal. Passing the two
+   * names puts them in the description and drops the swap attributes, which belong to a
+   * script that is not on that page. Passing nothing leaves /c/ byte for byte as it was.
+   */
+  nameA?: string;
+  nameB?: string;
 }
 
-const { quiz, cmp, linked = true } = Astro.props;
+const { quiz, cmp, linked = true, nameA, nameB } = Astro.props;
+const named = Boolean(nameA && nameB);
+const whoA = nameA ?? 'the first';
+const whoB = nameB ?? 'the second';
 
 const [zoneLo, zoneHi] = cmp.a.noClaimSpan;
 const zoneStyle = `--zone-lo:${zoneLo};--zone-hi:${zoneHi}`;
@@ -96,9 +114,9 @@ const sideOf = (row: { value: number; noClaim: boolean }) =>
           <div
             class="rail-track"
             role="img"
-            aria-label={say('the first', 'the second')}
-            data-label-a={say('you are', 'they are')}
-            data-label-b={say('they are', 'you are')}
+            aria-label={say(whoA, whoB)}
+            data-label-a={named ? undefined : say('you are', 'they are')}
+            data-label-b={named ? undefined : say('they are', 'you are')}
           >
             <span class="rail-zone" aria-hidden="true"></span>
             <span class="rail-spine" aria-hidden="true"></span>

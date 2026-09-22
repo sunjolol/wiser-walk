@@ -14,8 +14,10 @@ import Icon from '../../components/Icon.astro';
 import SectionHead from '../../components/SectionHead.astro';
 import QuizPreview from '../../components/QuizPreview.astro';
 import OutcomeIndex from '../../components/OutcomeIndex.astro';
+import CompareRoom from '../../components/CompareRoom.astro';
 import ReadCard from '../../components/ReadCard.astro';
 import { getCollection } from 'astro:content';
+import { COMPARE_QUIZ } from '../../lib/comparisons';
 import { QUIZZES, getQuiz } from '../../lib/engine/registry';
 import { capitalise, groupNounPlural, outcomeNounPlural } from '../../lib/engine/types';
 import '../../styles/pages/reads.css';
@@ -46,6 +48,9 @@ const readNext = (await getCollection('articles'))
   .slice(0, 3);
 const isDraft = quiz.status === 'draft';
 const bipolar = quiz.strategy.shape === 'bipolar';
+/* The comparison pages are drawn on the Compass's own rails, so they belong to the Compass
+   and to no other quiz. Asked of the data rather than of the slug typed here twice. */
+const comparable = quiz.slug === COMPARE_QUIZ.slug;
 
 /**
  * A quiz long enough to need a one-sentence way in (notes.introShort) is a quiz whose frame
@@ -327,7 +332,12 @@ const breadcrumbs = isDraft
         data — a quiz with outcomes has pages for them — not which quiz this is. A quiz whose
         strategy reads no outcomes prints nothing here, as it always did.
       */}
-      {quiz.outcomes.length > 0 && <OutcomeIndex quiz={quiz} />}
+      {quiz.outcomes.length > 0 && <OutcomeIndex quiz={quiz} />}{/*
+        Under that index, because it answers the question the index provokes: a reader
+        looking down eighteen names is usually holding two of them in mind. Hung with no
+        whitespace on either side, so the three quizzes that have no comparison pages come
+        out of this change byte for byte as they went in.
+      */}{comparable && <CompareRoom />}
 
       {/* The articles written alongside this quiz, as the paintings they are — the same
           cards, in the same grid, that the foot of an article and of a result already use.

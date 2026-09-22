@@ -41,10 +41,16 @@ to another project", inside his weekly token limit. Tick items here as they ship
       of the long ones, article-like, from New Testament text already bundled.
 - [x] **7. Reformation Day article (round 2; Advent and Lent still to come)**: must be live and indexed weeks ahead. Built from the axis
       content: what the Reformation actually argued about, both sides in plain words. Then Advent, then Lent.
-- [ ] **8. Eight to twelve hand-built comparison pages** ("Lutheran vs Reformed", "Orthodox vs Catholic",
-      "Calvinist vs Arminian", "Baptist vs Presbyterian" ...), with a HOME on the site that feels planned:
-      a "Compare" area reached from the Articles menu (a dropdown entry, not a new top-level item), from
-      the Compass page and from each tradition page involved.
+- [x] **8. Twelve hand-built comparison pages (BUILT 2026-09-21 on `seo/discoverability`, awaiting his look
+      before the push to `main`)**: `/compare/` hub and `/compare/<pair>/` for Catholic vs Orthodox, Lutheran vs
+      Catholic, Anglican vs Catholic, Lutheran vs Reformed, Calvinism vs Arminianism, Methodist vs Presbyterian,
+      Baptist vs Presbyterian, Baptist vs Methodist, Baptist vs Catholic, Pentecostal vs Baptist, Pentecostal vs
+      Charismatic, Church of Christ vs Baptist. Content is one JSON per pair in `site/src/data/comparisons/`
+      (brief: `COMPARE-BRIEF.md`; audited positions: `compare-pairs.generated.md`), validated at build by
+      `site/src/lib/comparisons.ts`; the SEO guard's check 4 covers them. Homes: the Articles dropdown, the
+      footer, `CompareRoom` on the Compass page, `CompareBlock` on each tradition page involved. Thirteen social
+      cards. Every file was fact-read (four by an Opus editor, the rest by the main session); uncertain claims
+      were cut rather than re-guessed.
 - [ ] **4. Printable spiritual gifts test**: judged worth it (strongest demand signal in the audit; what
       ranks is gated, paid or scanned; low effort as a print stylesheet + a print page of the 57
       statements with a scoring key). Do not call it a PDF.

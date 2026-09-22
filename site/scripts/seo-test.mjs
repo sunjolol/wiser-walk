@@ -78,7 +78,15 @@ const titleOf = html => {
   const m = /<title[^>]*>([\s\S]*?)<\/title>/i.exec(head(html));
   return m ? decode(m[1]).trim() : null;
 };
-/** An attribute's value, whichever order the attributes were written in. */
+/**
+ * An attribute's value, whichever order the attributes were written in.
+ *
+ * The value is read to the MATCHING quote, not to the next quote of either kind. An
+ * attribute written with double quotes may legally contain an apostrophe, and a great many
+ * descriptions do ("the Lord's Supper"): reading to the next quote of either kind returned
+ * "Baptism, the Lord" and this file then failed the build for a description of 17
+ * characters that ended mid-word. The tag was correct; the reader was not.
+ */
 const metaOf = (html, key, kind = 'name') => {
   const re = new RegExp(
     `<meta[^>]*\\b${kind}=["']${key}["'][^>]*>|<meta[^>]*\\bcontent=["'][^"']*["'][^>]*\\b${kind}=["']${key}["'][^>]*>`,
@@ -86,8 +94,9 @@ const metaOf = (html, key, kind = 'name') => {
   );
   const tag = re.exec(head(html));
   if (!tag) return null;
-  const c = /\bcontent=["']([^"']*)["']/i.exec(tag[0]);
-  return c ? decode(c[1]).trim() : null;
+  const c = /\bcontent=(?:"([^"]*)"|'([^']*)')/i.exec(tag[0]);
+  if (!c) return null;
+  return decode(c[1] ?? c[2] ?? '').trim();
 };
 
 const isNoindex = html => /<meta[^>]*\bname=["']robots["'][^>]*\bcontent=["'][^"']*noindex/i.test(head(html));
@@ -240,6 +249,88 @@ console.log('3. articles');
     }
   }
   if (!bad) ok(articles.length + ' articles, every one answering its own title in a quotable passage');
+}
+
+// ---- every comparison answers its own question, draws both traditions, names both poles
+console.log('4. comparisons');
+{
+  /*
+   * A comparison page ("Lutheran vs Reformed") is three promises at once, and each of them
+   * can break silently — the page would still render, and still look finished.
+   *
+   *   the ANSWER   the same "In short" passage an article carries, in the same band, for the
+   *                same two reasons: the reader has the point before reading on, and a search
+   *                engine has a self-contained passage it can lift.
+   *   the RAILS    six of them, each drawing BOTH traditions. A file naming a tradition that
+   *                does not exist is caught in lib/comparisons.ts at build time; what is
+   *                checked here is the thing only the output can show — that six rails were
+   *                drawn and every one of them printed both of its pole names. A pole encoded
+   *                by omission is the failure the whole instrument exists to prevent, and this
+   *                is the one template where two markers compete for the same row of labels.
+   *   the LINKS    a comparison is a crossroads: two tradition pages, up to six axis pages,
+   *                the hub, the other pairs. Every internal link on these pages must land on
+   *                a page that was actually built, or the crossroads leaks crawl budget into
+   *                404s and takes the pair pages' own ranking with it.
+   */
+  const comparisons = [...built].filter(([path]) => /^\/compare\/[^/]+\/$/.test(path));
+  let bad = 0;
+
+  for (const [path, html] of comparisons) {
+    const block = /<aside[^>]*\bclass=["'][^"']*\binshort\b[^"']*["'][^>]*>[\s\S]*?<\/aside>/i.exec(html);
+    if (!block) {
+      fail(path + ': no "In short" answer — add `answer` to its comparison file');
+      bad++;
+    } else {
+      const ps = [...block[0].matchAll(/<p[^>]*>([\s\S]*?)<\/p>/gi)];
+      const answer = ps.length
+        ? decode(ps[ps.length - 1][1].replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim()
+        : '';
+      const n = answer ? answer.split(' ').length : 0;
+      if (n < 30 || n > 70) {
+        fail(path + ': the "In short" answer is ' + n + ' words (40 to 50 is the target)');
+        bad++;
+      }
+    }
+
+    const rails = (html.match(/rail--pair/g) || []).length;
+    if (rails !== 6) { fail(path + ': ' + rails + ' two-marker rails (want 6)'); bad++; }
+
+    const poles = [...html.matchAll(/<p class="rail-poles">([\s\S]*?)<\/p>/g)];
+    if (poles.length !== 6) { fail(path + ': ' + poles.length + ' pole rows (want 6)'); bad++; }
+    for (const row of poles) {
+      const names = [...row[1].matchAll(/<span[^>]*>([\s\S]*?)<\/span>/g)]
+        .map(m => decode(m[1].replace(/<[^>]+>/g, '')).trim())
+        .filter(Boolean);
+      if (names.length !== 2) {
+        fail(path + ': a rail names ' + names.length + ' poles (both must print)');
+        bad++;
+      }
+    }
+
+    for (const m of html.matchAll(/href=["'](\/[^"'#?]*)["']/g)) {
+      const target = m[1];
+      // Only pages are checked: a file (the feed, an image, a card) is not in this map.
+      if (/\.[a-z0-9]+$/i.test(target)) continue;
+      if (!built.has(target)) { fail(path + ': links to ' + target + ', which is not in the build'); bad++; }
+    }
+  }
+
+  /* The hub is the only page linking to all of them, so a pair missing from it is a pair
+     nothing on the site points at but the tradition pages of its own two sides. */
+  const hub = built.get('/compare/');
+  if (comparisons.length && !hub) { fail('there are comparison pages but no /compare/ hub'); bad++; }
+  else if (hub) {
+    for (const [path] of comparisons) {
+      if (!hub.includes('href="' + path + '"')) {
+        fail('/compare/ does not link to ' + path);
+        bad++;
+      }
+    }
+  }
+
+  if (!bad) {
+    ok(comparisons.length + ' comparisons, every one answering its own question on six rails with both poles named');
+  }
 }
 
 console.log(failures ? '\nseo guard: ' + failures + ' problem(s)' : '\nseo guard: all checks passed');

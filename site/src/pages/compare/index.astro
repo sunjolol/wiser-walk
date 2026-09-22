@@ -1,0 +1,178 @@
+---
+/**
+ * The comparison hub.
+ *
+ * Twelve pairs, and the useful thing to say about them is not alphabetical order: it is how
+ * far apart the two actually land on the instrument. So the cards are grouped by how many of
+ * the six axes put the pair in the SAME AUDITED BAND — a number computed here from the
+ * audited positions, never typed — and a reader can see at a glance that Catholic and
+ * Orthodox share five of six while Baptist and Catholic share none.
+ *
+ * The one thing that grouping must not be allowed to imply is agreement, so the line under
+ * the band says what a band is and what it is not, once, before the first card.
+ */
+import Base from '../../layouts/Base.astro';
+import Hero from '../../components/Hero.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import Card from '../../components/Card.astro';
+import Icon from '../../components/Icon.astro';
+import { compare, quizHref } from '../../lib/engine/registry';
+import type { BipolarComparison } from '../../lib/engine/compare';
+import {
+  COMPARISONS, COMPARE_QUIZ, comparedTraditions, compareHref, traditionOf
+} from '../../lib/comparisons';
+import type { Comparison } from '../../lib/comparisons';
+import '../../styles/pages/compare.css';
+
+const quiz = COMPARE_QUIZ;
+
+/** Every pair with its own same-band count, from the same call each page makes. */
+const pairs = COMPARISONS.map(c => {
+  const cmp = compare(quiz, traditionOf(c.a).position ?? [], traditionOf(c.b).position ?? []) as BipolarComparison;
+  return { c, same: cmp.sameCount, total: cmp.total };
+}).sort((x, y) => y.same - x.same || x.c.slug.localeCompare(y.c.slug));
+
+/*
+ * Three shelves, by the instrument's own reading. The boundaries are stated in the kicker of
+ * each one, so nothing is grouped by a rule the reader cannot check against the cards.
+ */
+const BANDS: Array<{ id: string; title: string; kicker: string; keep: (n: number) => boolean }> = [
+  {
+    id: 'near',
+    title: 'Near neighbours',
+    kicker: 'Same band on four or more of the six',
+    keep: n => n >= 4
+  },
+  {
+    id: 'mixed',
+    title: 'Common ground, and real differences',
+    kicker: 'Same band on two or three of the six',
+    keep: n => n === 2 || n === 3
+  },
+  {
+    id: 'apart',
+    title: 'Furthest apart',
+    kicker: 'Same band on one of the six, or none',
+    keep: n => n <= 1
+  }
+];
+const shelves = BANDS.map(b => ({ ...b, items: pairs.filter(p => b.keep(p.same)) }))
+  .filter(b => b.items.length > 0);
+
+const traditions = comparedTraditions();
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Compare traditions',
+  url: new URL('/compare/', Astro.site).href,
+  isPartOf: { '@id': new URL('/#website', Astro.site).href },
+  hasPart: COMPARISONS.map(c => ({
+    '@type': 'WebPage',
+    name: c.h1,
+    description: c.description,
+    url: new URL(compareHref(c.slug), Astro.site).href
+  }))
+};
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Compare', url: '/compare/' }
+];
+const many = COMPARISONS.length;
+---
+<Base
+  title="Compare traditions"
+  description="What is the difference between Lutheran and Reformed, Calvinism and Arminianism, Catholic and Orthodox? Each pair side by side on six audited axes."
+  jsonLd={jsonLd}
+  breadcrumbs={breadcrumbs}
+>
+  <Hero
+    title="Compare traditions"
+    eyebrow="Side by side"
+    icon="compass"
+    kind="night"
+    lede="What is the actual difference between two churches? Each pair answered in a
+          paragraph, then drawn on the same six rails."
+    tiles={[
+      { n: many, label: many === 1 ? 'Comparison' : 'Comparisons' },
+      { n: traditions.length, label: 'Traditions' },
+      { n: quiz.groups.length, label: 'Axes drawn' }
+    ]}
+  />
+
+  <div class="cmpx cmpx--hub">
+    <p class="cmpx-hub-say">
+      Every page opens with the answer in about forty words, then puts both traditions on the
+      Theology Compass's six audited rails, then tells the story of how they came to differ.
+      Both sides are stated the way people who hold them would state them.
+    </p>
+
+    {shelves.map(shelf => (
+      <section class="cmpx-shelf">
+        <SectionHead title={shelf.title} kicker={shelf.kicker} id={`shelf-${shelf.id}`} />
+        {shelf.id === 'near' && (
+          <p class="cmpx-note">
+            Landing in the same band is not agreeing: two families can reach one band by
+            different roads, and the pages say where each road ran.
+          </p>
+        )}
+        {/*
+          The tag on each card's stripe is SHORT on purpose. It is set vertically, nowrap,
+          inside a card that clips, and "Same band on 1 of 6" is nineteen characters: the two
+          shortest cards in the set cut it to "ME BAND ON 1 OF 6". The heading directly above
+          says what the figure counts, so the tag only has to carry the figure.
+        */}
+        <div class="cmpx-cards">
+          {shelf.items.map(({ c, same, total }) => (
+            <Card
+              href={compareHref(c.slug)}
+              title={`${c.labelA} vs ${c.labelB}`}
+              text={c.description}
+              meta={`Same band ${same}/${total}`}
+              tab="Compare"
+              go="Read"
+              icon="compass"
+            />
+          ))}
+        </div>
+      </section>
+    ))}
+
+    {traditions.length > 0 && (
+      <section class="cmpx-shelf">
+        <SectionHead title="Or read one on its own" kicker="Every tradition drawn above" />
+        <ul class="cmpx-trads">
+          {traditions.map(t => (
+            <li>
+              <a href={`/tradition/${t.slug}/`}>
+                <span>{t.name}</span><Icon name="arrow" size={13} />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <section class="wayin wayin--night cmpx-way">
+      <div class="wayin-ghost" aria-hidden="true">where</div>
+      <div class="wayin-in">
+        <span class="wayin-mark" aria-hidden="true"><Icon name="compass" size={20} /></span>
+        <p class="wayin-kicker">{quiz.title}</p>
+        <h2>Which of them are you nearest?</h2>
+        <p class="wayin-say">
+          The same six rails these pages draw, with your own answers on them and the distance
+          to all {quiz.outcomes.length} traditions.
+        </p>
+        <ul class="wayin-facts">
+          <li><Icon name="scroll" size={13} /> {quiz.items.length} statements</li>
+          <li><Icon name="clock" size={13} /> About {quiz.minutes} minutes</li>
+          <li><Icon name="compass" size={13} /> {quiz.groups.length} axes, both poles named</li>
+        </ul>
+        <div class="btn-row">
+          <a class="btn" href={quizHref(quiz)}>Take the {quiz.title}</a>
+        </div>
+      </div>
+    </section>
+  </div>
+</Base>

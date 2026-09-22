@@ -39,6 +39,18 @@ export const SEO: Record<string, { title: string; description: string }> = {
     description:
       'Short, practical reads on becoming more grateful, patient, humble and content, on forgiving someone who hurt you, and on what the Bible says about worry.'
   },
+  /*
+   * The comparison hub (2026-09-21). The individual pages carry their own `searchTitle` and
+   * description in their data files, because each one is aimed at a query of its own
+   * ("lutheran vs reformed"); only the hub is a fixed path, so only the hub belongs here.
+   * It leads with the two words people type at the hub level and then names the pair most
+   * of them arrive looking for.
+   */
+  '/compare/': {
+    title: 'Compare Christian traditions, two at a time',
+    description:
+      'Lutheran vs Reformed, Calvinism vs Arminianism, Catholic vs Orthodox: what actually separates them, with both traditions drawn on the same six axes.'
+  },
   '/about/': {
     title: 'About Wiser Walk',
     description:
@@ -287,10 +299,14 @@ const card = (name: string, fallback = 'home') => `/og/${HAVE.has(name) ? name :
 
 export function ogImageFor(path: string): string {
   const exact: Record<string, string> = {
-    '/': 'home', '/quizzes/': 'quizzes', '/games/': 'games', '/articles/': 'articles', '/support/': 'support'
+    '/': 'home', '/quizzes/': 'quizzes', '/games/': 'games', '/articles/': 'articles',
+    '/support/': 'support', '/compare/': 'compare'
   };
   if (exact[path]) return card(exact[path]);
   let m: RegExpExecArray | null;
+  /* A pair has its own card naming the two traditions; a pair whose card has not been
+     drawn falls back to the hub's rather than to the home page's. */
+  if ((m = /^\/compare\/([^/]+)\//.exec(path))) return card(`compare-${m[1]}`, 'compare');
   if ((m = /^\/(?:q|r|c|axis)\/([^/]+)\//.exec(path))) return card(`quiz-${m[1]}`);
   if (path.startsWith('/tradition/')) return card('quiz-theology-compass');
   if ((m = /^\/figure\/([^/]+)\//.exec(path))) return card(`figure-${m[1]}`, 'quiz-bible-figure');
