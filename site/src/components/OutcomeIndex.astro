@@ -41,7 +41,12 @@ const groupCount =
     {identified
       ? <p>One line on each, and where they stand on the {groupCount} axes.</p>
       : <p>Where each one stands on the {groupCount} questions, described the way its own people would.</p>}
-    <p class="oidx-hint"><Icon name="arrow" size={14} /> Tap any of them to read more.</p>
+    <p class="oidx-hint"><Icon name="arrow" size={14} /> Tap any of them to read more.</p>{/*
+      The Compass's traditions also exist as one table with a file behind it. Only that quiz has
+      one, so the line is keyed to its slug rather than to a field every other quiz would carry empty.
+    */}{quiz.slug === 'theology-compass' && (
+      <p class="oidx-hint"><Icon name="arrow" size={14} /> Or <a href="/data/theology-compass/">see all 18 on one table</a>, free to download.</p>
+    )}
   </div>
   <ul class="oidx-list">
     {quiz.outcomes.map(o => (

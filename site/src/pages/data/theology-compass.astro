@@ -1,0 +1,156 @@
+---
+/**
+ * The eighteen traditions as one table, with the file behind it.
+ *
+ * Every number on this page is an audited coordinate from compass.json, printed through the
+ * same band() the result page uses; nothing is computed here that the site does not already
+ * publish one tradition at a time. The page exists so that the whole table can be read at
+ * once, cited, and downloaded as a CSV under the same licence as the rest of the words and
+ * data (CC BY 4.0, stated on /about/). Search engines are told what the file is with a
+ * Dataset record, which is how a data search finds it.
+ */
+import Base from '../../layouts/Base.astro';
+import Hero from '../../components/Hero.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import Icon from '../../components/Icon.astro';
+import { getQuiz } from '../../lib/engine/registry';
+import { groupHref } from '../../lib/engine/registry';
+import { band } from '../../lib/strategies/bipolar';
+
+const quiz = getQuiz('theology-compass')!;
+const axes = quiz.groups;
+const rows = quiz.outcomes.map(o => ({
+  name: o.name,
+  href: `/tradition/${o.slug}/`,
+  cells: axes.map((g, i) => {
+    const v = o.position?.[i] ?? 50;
+    return { v, band: g.bands?.[band(v)] ?? '' };
+  })
+}));
+
+const CSV = '/data/theology-compass-traditions.csv';
+const LICENCE = 'https://creativecommons.org/licenses/by/4.0/';
+const title = 'The 18 Christian traditions on six axes: the table and the CSV';
+const description =
+  'Where 18 Christian traditions stand on six questions (grace, the Lord’s Supper, the gifts, Israel and the church, authority, worship) as one table, free to download.';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Quizzes', url: '/quizzes/' },
+  { name: quiz.title, url: `/q/${quiz.slug}/` },
+  { name: 'The table', url: '/data/theology-compass/' }
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Dataset',
+  name: 'Theology Compass: 18 Christian traditions on six axes',
+  description:
+    'For each of 18 Christian traditions, a coordinate from 0 to 100 on six axes (grace, the Lord’s Supper, the gifts of the Spirit, Israel and the church, authority, worship) and the band each coordinate falls in. 0 is the left pole of the axis and 100 the right. The coordinates are the audited answer sheets behind the Theology Compass quiz.',
+  url: new URL('/data/theology-compass/', Astro.site).href,
+  sameAs: new URL(`/q/${quiz.slug}/`, Astro.site).href,
+  license: LICENCE,
+  isAccessibleForFree: true,
+  inLanguage: 'en',
+  keywords: ['Christian traditions', 'denominations', 'theology', 'Theology Compass', ...axes.map(g => g.name)],
+  creator: { '@type': 'Organization', name: 'Wiser Walk', url: new URL('/', Astro.site).href },
+  variableMeasured: axes.map(g => ({
+    '@type': 'PropertyValue',
+    name: g.name,
+    description: `${g.left} (0) to ${g.right} (100)`,
+    minValue: 0,
+    maxValue: 100
+  })),
+  distribution: [
+    {
+      '@type': 'DataDownload',
+      encodingFormat: 'text/csv',
+      contentUrl: new URL(CSV, Astro.site).href
+    }
+  ]
+};
+---
+
+<Base title={title} description={description} jsonLd={jsonLd} breadcrumbs={breadcrumbs}>
+  <Hero
+    title="The 18 traditions, as one table"
+    eyebrow="Open data"
+    icon="compass"
+    ghost="table"
+    lede="Where each tradition the Theology Compass knows stands on its six questions, all on one page. Read it here, cite it, or take the file."
+    tiles={[{ n: rows.length, label: 'traditions' }, { n: axes.length, label: 'axes' }, { n: rows.length * axes.length, label: 'coordinates' }]}
+  >
+    <a class="btn" href={CSV} download="theology-compass-traditions.csv" slot="actions"><Icon name="arrow" size={14} /> Download the CSV</a>
+  </Hero>
+
+  <div class="ds">
+    <dl class="spec">
+      <div><dt>Each number</dt><dd>0 is the axis's left pole, 100 its right; the middle band, 41 to 59, names no position</dd></div>
+      <div><dt>Where it comes from</dt><dd>the audited answer sheet for each tradition, the same coordinates every tradition page draws</dd></div>
+      <div><dt>Licence</dt><dd><a href={LICENCE} rel="license">CC BY 4.0</a>: use it, with credit and a link</dd></div>
+    </dl>
+
+    <SectionHead kicker="Both poles, every axis" title="the six questions" />
+    <ul class="ds-axes">
+      {axes.map(g => (
+        <li>
+          <a href={groupHref(quiz, g)}><b>{g.name}</b></a>
+          <span class="ds-poles"><span class="pole-l">{g.left}</span> 0 <span aria-hidden="true">↔</span> 100 <span class="pole-r">{g.right}</span></span>
+        </li>
+      ))}
+    </ul>
+
+    <SectionHead kicker="Tap a name for its page" title="the table" />
+    <div class="ds-scroll" tabindex="0" role="region" aria-label="The 18 traditions on six axes">
+      <table class="ds-table">
+        <thead>
+          <tr>
+            <th scope="col">Tradition</th>
+            {axes.map(g => <th scope="col" title={`${g.left} (0) to ${g.right} (100)`}>{g.name}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map(r => (
+            <tr>
+              <th scope="row"><a href={r.href}>{r.name}</a></th>
+              {r.cells.map(c => <td title={c.band} data-band={band(c.v)}><b>{c.v}</b><small>{c.band}</small></td>)}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="ds-note">
+      A tradition sits where its own confessions and standard works put it, described in words its
+      people would accept; the band words are the ones the quiz prints for a reader at the same
+      point. What a coordinate can and cannot say is set out on <a href="/method/#the-numbers">the method page</a>.
+      The file has a row for each tradition and, for each axis, a <code>_score</code> and a <code>_band</code> column.
+    </p>
+  </div>
+</Base>
+
+<style>
+  .ds { max-width: 64rem; margin: 0 auto; padding: 0 var(--gut, 1.25rem) 2rem; }
+  .ds .spec { margin-top: .4rem; }
+  .ds-axes { list-style: none; margin: .2rem 0 1.6rem; padding: 0; display: grid; gap: .55rem; }
+  .ds-axes li { display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem .8rem; padding: .55rem 0; border-bottom: 1px dotted var(--rule); }
+  .ds-axes a { color: inherit; text-decoration: none; }
+  .ds-axes a:hover { text-decoration: underline; }
+  .ds-poles { font-size: .9rem; color: var(--ink-2); }
+  .ds-scroll { overflow-x: auto; margin: .4rem calc(-1 * var(--gut, 1.25rem)) 1rem; padding: 0 var(--gut, 1.25rem); -webkit-overflow-scrolling: touch; }
+  .ds-table { border-collapse: collapse; width: 100%; min-width: 46rem; font-size: .92rem; }
+  .ds-table th, .ds-table td { text-align: left; padding: .55rem .5rem; border-bottom: 1px dotted var(--rule); vertical-align: top; }
+  .ds-table thead th { font-family: Poppins, sans-serif; font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); }
+  .ds-table tbody th { font-weight: 600; min-width: 11rem; }
+  .ds-table tbody th a { color: inherit; text-decoration: none; }
+  .ds-table tbody th a:hover { text-decoration: underline; }
+  .ds-table td b { font-family: "DM Serif Display", serif; font-weight: 400; font-size: 1.15rem; display: block; line-height: 1.1; }
+  .ds-table td small { display: block; font-size: .72rem; color: var(--ink-2); line-height: 1.25; }
+  /* the same two inks the kit gives a pole name: the deepened blue, and the warm ink */
+  .ds-table td[data-band="0"] b, .ds-table td[data-band="1"] b { color: var(--accent); }
+  .ds-table td[data-band="3"] b, .ds-table td[data-band="4"] b { color: var(--warn-ink); }
+  .ds-note { font-size: .92rem; color: var(--ink-2); line-height: 1.55; }
+  .ds-note code { font-family: ui-monospace, monospace; font-size: .85em; }
+  @media (min-width: 56rem) {
+    .ds-scroll { margin: .4rem 0 1rem; padding: 0; }
+  }
+</style>

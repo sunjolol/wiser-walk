@@ -61,7 +61,10 @@ to another project", inside his weekly token limit. Tick items here as they ship
       ("Use it. Print anything here for a class, a small group or a church, or quote it, as long as you say
       where it came from and link back."), CC BY 4.0 for the words and data, not the Bible text or the
       paintings. One plain line in the footer; the detail lives on /about/.
-- [ ] **6. The 18-tradition table as a dataset**: CSV download + `Dataset` markup + a small page.
+- [x] **6. The 18-tradition table as a dataset (BUILT 2026-09-21 on `seo/discoverability`)**: `/data/theology-compass/`
+      (the six axes with both poles, the 18 x 6 table with the band words, CC BY 4.0, `Dataset` JSON-LD with a
+      `DataDownload`) and the file `/data/theology-compass-traditions.csv`, both built from compass.json through
+      the engine's own `band()`; linked from the tradition index at the foot of the Compass page.
 - [x] **10. Contact on /about/ (round 2)**: info@wiserwalk.com (he made the mailbox).
 - [ ] **11. Seven deadly sins: audit and publish.** A LEAN audit (one drafter-critic pass, one editor),
       then `status: 'live'`, indexable, its own search title and card. Rename pending (`FOOT_SHORT`).

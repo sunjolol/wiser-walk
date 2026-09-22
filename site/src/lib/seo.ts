@@ -76,6 +76,11 @@ export const SEO: Record<string, { title: string; description: string }> = {
     description:
       'A free spiritual gifts test on all 19 gifts the New Testament names, from teaching and mercy to healing, prophecy and tongues. 57 statements, about 8 minutes.'
   },
+  '/data/theology-compass/': {
+    title: '18 Christian traditions on six axes: the table, free CSV',
+    description:
+      'Where 18 Christian traditions stand on grace, the Lord’s Supper, the gifts, Israel and the church, authority and worship, as one table you can read or download.'
+  },
   '/q/spiritual-gifts/print/': {
     title: 'Printable spiritual gifts test: all 19 gifts, with scoring key',
     description:
