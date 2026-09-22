@@ -747,8 +747,17 @@ body {
   letter-spacing: -.04em; white-space: nowrap; color: var(--ghost-dark);
 }
 .site-foot .foot-main { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr; gap: 2rem; padding-top: 1.6rem; padding-bottom: 1.2rem; }
-.foot-brand { font-family: var(--display); font-size: 1.7rem; color: var(--on-dark); margin: 0 0 .5rem; }
-.foot-brand span { font-style: italic; background: var(--grad-r); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.foot-brand {
+  display: inline-flex; align-items: center; gap: 15px; margin: 0 0 .7rem; line-height: 0;
+  color: #C9CDD2;
+}
+.foot-brand .brand-mark { width: 47px; height: auto; display: block; }
+.foot-brand .brand-word {
+  display: block; height: 18.5px; aspect-ratio: 5405 / 783; background-color: currentColor;
+  -webkit-mask: url(/img/wordmark.svg) center / contain no-repeat;
+  mask: url(/img/wordmark.svg) center / contain no-repeat;
+  transform: translateY(-1px);
+}
 .foot-line { margin: 0; max-width: 22rem; font-size: .92rem; line-height: 1.55; color: var(--on-dark-soft); }
 .site-foot a { color: var(--on-dark); }
 

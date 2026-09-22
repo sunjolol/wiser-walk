@@ -328,7 +328,14 @@ const navItems = ACCOUNTS_VISIBLE ? NAV.filter(n => n.href !== '/me/') : NAV;
     <div class="sheet">
     <header class:list={['site-head', ACCOUNTS_VISIBLE && 'site-head--acct']}>
       <div class="wrap">
-        <a class="brand" href="/">Wiser <span>Walk</span></a>
+        {/* The owner's logo (2026-09-22): his brush-stroke W, and the two words drawn from his
+            Amatry font as outlines (design/tools/wordmark.py), so the font file itself is
+            never served. The words are a mask filled with the text colour; the link's own
+            label is what a screen reader hears. */}
+        <a class="brand" href="/" aria-label="Wiser Walk, home">
+          <img class="brand-mark" src="/img/logo-w.png" width="47" height="34" alt="" />
+          <span class="brand-word" aria-hidden="true"></span>
+        </a>
         {/*
           The menus are <details>, so they open with JavaScript off and the keyboard already
           works; `name` makes the two of them mutually exclusive where the browser supports
@@ -479,7 +486,10 @@ const navItems = ACCOUNTS_VISIBLE ? NAV.filter(n => n.href !== '/me/') : NAV;
       <div class="foot-ghost" aria-hidden="true">wiser walk</div>
       <div class="wrap foot-main">
         <div class="foot-say">
-          <p class="foot-brand">Wiser <span>Walk</span></p>
+          <p class="foot-brand">
+            <img class="brand-mark" src="/img/logo-w.png" width="47" height="34" alt="" loading="lazy" />
+            <span class="brand-word" role="img" aria-label="Wiser Walk"></span>
+          </p>
           <p class="foot-line">
             Quizzes, games and articles for understanding yourself, and your walk with God,
             a little better.

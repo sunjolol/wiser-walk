@@ -193,17 +193,32 @@ a { color: var(--accent); text-underline-offset: 2px; }
   display: flex; align-items: center; gap: .75rem;
   padding-top: .85rem; padding-bottom: .85rem;
 }
+/*
+ * THE LOGO (2026-09-22, the owner's own mock-up): his brush-stroke W, then "Wiser Walk" in
+ * his Amatry font, a cool grey, nothing else. Measured off his mock-up: on a wide screen the
+ * W at its own 47 x 34, fifteen pixels, then the words 18.5px tall; on a phone the whole lock-up
+ * at 79% of that. The words are wordmark.svg used as a mask, so they take --brand-ink and
+ * need no second file for the dark theme.
+ */
 .brand {
-  font-family: var(--display); font-size: 1.7rem; line-height: 1.1;
-  color: var(--ink); text-decoration: none; letter-spacing: 0; margin-right: auto;
+  --brand-ink: #7C8288; --brand-mark-w: 37.5px; --brand-gap: 7.5px; --brand-word-h: 14.6px;
+  display: inline-flex; align-items: center; gap: var(--brand-gap);
+  color: var(--brand-ink); text-decoration: none; margin-right: auto; line-height: 0;
 }
-/* On the light header the pale spectrum washed out beside the dark "Wiser". Same hues, same
-   saturation, less light, so it holds its own. The dark theme keeps the pale pair. */
-.brand span {
-  font-style: italic;
-  background: linear-gradient(to right, #4C9BE3, #EA834A); -webkit-background-clip: text; background-clip: text; color: transparent;
+:root[data-theme="dark"] .brand { --brand-ink: #BEC3C9; }
+.brand-mark { display: block; width: var(--brand-mark-w); height: auto; flex: none; }
+.brand-word {
+  display: block; flex: none; height: var(--brand-word-h);
+  aspect-ratio: 5405 / 783;   /* the wordmark's own ink box */
+  background-color: currentColor;
+  -webkit-mask: url(/img/wordmark.svg) center / contain no-repeat;
+  mask: url(/img/wordmark.svg) center / contain no-repeat;
+  /* the words sit a hair above the W's middle in the mock-up */
+  transform: translateY(-1px);
 }
-:root[data-theme="dark"] .brand span { background: var(--grad-r); -webkit-background-clip: text; background-clip: text; }
+@media (min-width: 46rem) {
+  .brand { --brand-mark-w: 47px; --brand-gap: 15px; --brand-word-h: 18.5px; }
+}
 .site-head nav { display: flex; gap: .9rem; align-items: center; font-family: var(--ui); font-size: .8rem; }
 .site-head nav a { color: var(--ink-mute); text-decoration: none; font-weight: 600; }
 .site-head nav a:hover, .site-head nav a[aria-current="page"] { color: var(--accent); }
