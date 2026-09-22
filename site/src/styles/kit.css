@@ -725,6 +725,9 @@ body {
  * before first paint, so nothing shows and then vanishes.
  */
 :root[data-account="in"] .site-head--acct ~ .site-foot .foot-dawn-in { display: none; }
+/* and the dark overlay goes with them: it was there to keep white words readable on a bright
+   sky, and with no words it is only a shadow over the picture (the owner, same day). */
+:root[data-account="in"] .site-head--acct ~ .site-foot .foot-dawn::after { display: none; }
 :root[data-account="in"] .site-head--acct ~ .site-foot .foot-dawn { height: 12.5rem; }
 :root[data-account="in"] .site-head--acct ~ .site-foot .foot-dawn > img {
   top: 0; height: 100%; object-position: 14% 58%;
