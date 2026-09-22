@@ -1225,6 +1225,11 @@
 @media (min-width: 34rem) { .art-end .btn { flex: 0 0 auto; } }
 /* inside the sheet it lines up under the column it belongs to, not under the paper */
 @media (min-width: 46rem) { .art-end { max-width: 36rem; } }
+/* From 62rem the rail is beside the reader and already carries "All articles", and on a desktop the
+   address bar IS the share control: the owner found the pair redundant there, and in Vivaldi the
+   share button opened a system panel that vanished after a second. So the row is a phone and
+   tablet thing only, where there is no rail and the share sheet is how people actually share. */
+@media (min-width: 62rem) { .art-end { display: none; } }
 .art-share.is-said { background: var(--accent-soft); }
 
 @media (prefers-reduced-motion: reduce) {

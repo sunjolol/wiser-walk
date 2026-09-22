@@ -93,7 +93,10 @@ to another project", inside his weekly token limit. Tick items here as they ship
       has `updated:`); the desktop scroll-spy rule is segmented between rows; body images would need a rehype
       plugin for lazy loading and dimensions. The build guard now REQUIRES an `answer:` (30 to 70 words) in
       every article's front matter: every new article must have one.
-- [ ] **Posting (owner, optional, his biggest lever):** the verified list with drafts is `WHERE-TO-POST.md`
-      (2026-09-21). Waiting on him: a licence for the GitHub repo (needed for the two curated GitHub lists) and
-      whether he wants help turning `demos/sounds-like-scripture.html` into an itch.io upload (cover image, tags).
-
+- [ ] **Posting (owner, optional, his biggest lever):** the verified list with drafts is `WHERE-TO-POST.md`.
+      **HE REFUSED to open-source the code (2026-09-21): no licence file, skip the two curated GitHub lists, do
+      not raise it again.** He said YES to preparing the **itch.io upload** (cover image 630x500, tags,
+      description, the plain build `demos/sounds-like-scripture.html`): **FIRST JOB of the next session**; he
+      does the upload himself.
+- [x] Desktop: the Share / All articles row at the end of an article is hidden from 62rem (the rail already
+      has "All articles"; in Vivaldi the share button opened a system panel that vanished). 2026-09-21.

@@ -50,20 +50,51 @@ description refreshes in days, the icon on Google's schedule, and sitelinks cann
 
 **DISCOVERABILITY IS NOW THE WHOLE JOB (his words, 2026-09-21: the project "HINGES on it being discoverable
 through normal searches"; he has no social following and will not market).** Everything is in `design/seo/`:
-the audit (seven lenses, a skeptic, a completeness critic), `TASKS.md` (HIS ANSWERS to all fifteen open items,
-his steer, and the order of work: NOTHING on it may be dropped; tick items as they ship), `OWNER-ACTIONS.md`
-(his one-time tasks: Bing import, request indexing, Brave, faith.tools, GitHub/Ko-fi links, a monthly
-five-minute check, and an honest timeline), `ROUND-1-BRIEF.md` / `ROUND-2-BRIEF.md`. **Round 1 is LIVE**
-(`e16a341`: search titles, H1s and descriptions for 79 pages, internal links, 404, article feed, IndexNow,
-cache headers, the `seo-test.mjs` build guard). **Round 2 was running when this was written** (axis pages in
-everyday words with a direct answer, 18 tradition profiles, expanded gift pages, a Reformation Day article,
-contact and reuse line on /about/, reverent capitals everywhere): check `git log` and `TASKS.md` for where it
-got to. HIS STEER, binding: engaging, fun, easy to read; jargon always explained; stop hedging every line for
-fairness; SEO and ranking first, substance VISIBLE on the page (pop-outs and hovers only for repeated
-boilerplate); do NOT over-audit (one writer + one editor per family at most); capitalise God, Jesus, the Holy
-Spirit and Their pronouns in all the site's own words, never inside quotations. Work on branch
-`seo/discoverability`, push to `main` when a round passes its tests. NEVER let agents run `git stash/reset/
-checkout`: one did mid-build on 2026-09-21 and silently destroyed another agent's edits.
+the audit (seven lenses, a skeptic, a completeness critic); **`TASKS.md` = HIS ANSWERS to all fifteen open
+items, his steer, the order of work, and what is ticked: NOTHING on it may be dropped**; `OWNER-ACTIONS.md`
+(his one-time tasks: HE HAS DONE THEM ALL on 2026-09-21: Bing import, request indexing, Brave, faith.tools,
+GitHub and Ko-fi links); `WHERE-TO-POST.md` (the verified list of places he may post once, with drafts).
+
+**START THE NEXT SESSION HERE, in this order (his instruction at the end of 2026-09-21):**
+1. **Prepare the itch.io upload of Sounds Like Scripture** (he said yes, "but not in this session"): a cover
+   image (itch wants 630x500), tags, a short description and the page text, from the game's REAL details, and
+   the plain standalone build `demos/sounds-like-scripture.html` as the file. HE uploads it: it is his
+   account. Read the itch.io entry in `WHERE-TO-POST.md` first.
+2. **Then back to `design/seo/TASKS.md`, unticked items in order:** item 8 (eight to twelve hand-built
+   comparison pages with a home under the Articles menu: a dropdown entry, linked from the Compass page and
+   from each tradition page involved; NOT the 153 generated pairs), item 4 (a printable spiritual gifts
+   test: do not call it a PDF), item 6 (the 18-tradition table as a CSV + Dataset markup + a small page),
+   item 11 (seven deadly sins: a LEAN audit, then publish), item 12 (a short readable /method/), item 14
+   (article engine: two a month, topics from Bing's free Keyword Research now that he has imported the
+   site: ASK HIM for those numbers), item 13 (self-host the fonts), item 15 (later), and the small
+   leftovers listed at the foot of that file.
+
+**LIVE on `main` from 2026-09-21** (all verified after deploy): round 1 (`e16a341`: search titles, H1s and
+descriptions for 79 pages, internal links, a real 404, the article feed, IndexNow pings, cache headers, the
+`site/scripts/seo-test.mjs` build guard); round 2 (`9544fa7`: the six Compass axis pages in everyday words
+with a direct answer, a profile on each of the 18 tradition pages (similarity 48% -> 22%, ~340 -> ~980 words),
+all 19 gift pages over 700 words, a Reformation Day article, contact + reuse line on /about/, reverent
+capitals everywhere with `design/tools/reverent-check.mjs`); the article reading redesign (`fe3c4cb`: unboxed
+prose on a phone, a dotted-line contents list, `ReadingProgress.astro`, an "In short" `answer:` REQUIRED in
+every article's front matter by the guard, the end-of-article sequence); the Articles band (full-width Sower,
+no credit) and the article bands (painting whole on the right, starry ground on the left).
+
+**HIS STEER, binding on all content:** engaging, fun, easy to read; jargon always explained; stop hedging every
+line for fairness; **SEO and ranking first, substance VISIBLE on the page** (pop-outs and hovers only for
+repeated boilerplate); **do NOT over-audit** (one writer + one editor per family at most); capitalise God,
+Jesus, the Holy Spirit and Their pronouns in all the site's own words, never inside quotations; header
+pictures span the full band and MAIN pages print no picture credits; he notices single-pixel flaws.
+**He REFUSED to open-source the code** ("so someone with more followers can just copy paste it and steal
+everything"): never add a licence file, skip the two curated GitHub lists, do not raise it again. (The repo
+is public with no licence, which legally reserves all rights; making it private is possible on Vercel and is
+his call if he ever asks.) He is watching his weekly token limit and wants the list finished "asap so I can
+move on to another project": small agent counts, Opus, precise briefs, ship each item as it passes.
+Work on branch `seo/discoverability` (= `main` at the end of the session), push to `main` when a piece passes
+`npm run build` (prebuild tests + the SEO guard), `npm run test:switches` and `node audit/selftest.js`.
+**NEVER let agents run `git stash/reset/checkout`**: one did mid-build on 2026-09-21 and silently destroyed
+another agent's edits. For work that must not collide with a running job, use a separate `git worktree` with
+a node_modules JUNCTION, and remove the junction with `[System.IO.Directory]::Delete(path, $false)` BEFORE
+removing the worktree (never `rm -rf`, which follows it into the real packages).
 
 **ACCOUNTS ARE BUILT AND LIVE BUT HIDDEN ON `main` (pushed 2026-09-21, `08e64af`, his go).** He said he will make
 the Resend account and follow the README "later"; it is ready "in case the site gains popularity". Do not
