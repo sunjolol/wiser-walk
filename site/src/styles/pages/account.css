@@ -10,7 +10,7 @@
  * site, not an auth screen: signing up is the moment the site asks for something, and the
  * page whose whole job is asking is /support/, which is what this is built from.
  *
- * The five flow pages (sign up, check email, choose a password, sign in, forgotten) share
+ * The five flow pages (sign up, check email, choose a password, log in, forgot) share
  * ONE picture, so they read as one movement. The two back-of-house pages (/account/ and
  * /account/setup/) take the dark starry ground instead, because they are not a doorway.
  *
@@ -25,15 +25,16 @@
  * 1883 — a lane at first light with a gate standing open in the wall. Credited in
  * public/img/CREDITS.md.
  *
- * On a phone the painting takes the HEAD of the band, so the gate, the house and the gold
- * sky stand above the words, and its foot is masked into the band's own dark so the type
- * never sits on a pale sky. The band's ground is the deepest tone of the painting's own
- * road, so the melt has nothing to give away.
+ * On a phone the painting lies BEHIND the words, darkened, and the chip starts at the top
+ * of the band. Until 2026-09-22 the painting took the band's head on its own, which put
+ * nine rem of picture above the chip: on an article that is the point, on a log-in form
+ * the owner read it as blank space before the thing he came to do. The band's ground is
+ * the deepest tone of the painting's own road, so the scrim has nothing to give away.
  */
 .ac-band {
   position: relative; isolation: isolate; overflow: hidden;
   margin: calc(-1 * var(--top)) calc(-1 * var(--gut)) 0;
-  padding: 9.4rem var(--gut) 2.9rem;
+  padding: 2.6rem var(--gut) 2.9rem;
   border-radius: 0 0 30px 30px;
   color: #fff;
   /* background-color, not the shorthand: the night variant below puts the starry tile on
@@ -43,26 +44,28 @@
 /* Room in the band's foot ONLY where something rises into it. A band that keeps the extra
    padding on a page with nothing under it is a panel with two hundred pixels of empty
    ground below its content, which is a finding three separate times over. */
-.ac-band:has(+ .ac-rooms), .ac-band:has(+ .ac-solo) { padding-bottom: 4.8rem; }
-/* Drawn wider than the band so it scales up and the box can crop the empty top of the sky
-   away: what is left is the trees, the house, the wall with the gate in it and the leaves
-   on the lane, which is the half of the painting that says anything. */
+.ac-band:has(+ .ac-rooms) { padding-bottom: 4.8rem; }
+/* Wide, the rooms rise 4.6rem, so the foot holds that and the same 1.4rem of air the phone
+   keeps; at 4.8rem the small print sat on the rooms' top edge. */
+@media (min-width: 46rem) { .ac-band:has(+ .ac-rooms) { padding-bottom: 6rem; } }
+/* The whole band, cropped to the half of the painting that says anything: the trees, the
+   house and the wall with the gate in it. */
 .ac-band-img {
-  position: absolute; left: -46%; top: 0; z-index: -2; display: block;
-  width: 175%; height: 17rem; object-fit: cover; object-position: 62% 80%;
+  position: absolute; inset: 0; z-index: -2; display: block;
+  width: 100%; height: 100%; object-fit: cover; object-position: 64% 40%;
   /* the painting's own colour, lifted a little rather than printed sepia: the engravings
      are the site's brown pictures, and this one is meant to read as a painting */
   filter: saturate(1.14) brightness(1.04);
-  -webkit-mask-image: linear-gradient(180deg, #000 66%, transparent);
-  mask-image: linear-gradient(180deg, #000 66%, transparent);
 }
+/* Dark enough at the top for white type on the painting's pale sky, and near-solid by the
+   form, so the fields and the small print never sit on detail. */
 .ac-band::after {
   content: ""; position: absolute; inset: 0; z-index: -1;
   background: linear-gradient(
     180deg,
-    rgba(29, 21, 13, 0) 5.5rem,
-    rgba(29, 21, 13, .3) 8.5rem,
-    rgba(29, 21, 13, .92) 13.5rem
+    rgba(29, 21, 13, .58),
+    rgba(29, 21, 13, .74) 9rem,
+    rgba(29, 21, 13, .92) 17rem
   );
 }
 .ac-band-in { position: relative; max-width: 34rem; }
@@ -102,10 +105,7 @@
   /* left and width back to the band's own, so the painting is whole again: the phone's
      zoom exists only because a phone cannot show the whole of a landscape and still have
      room for a headline. */
-  .ac-band-img {
-    left: 0; top: 0; width: 100%; height: 100%; object-position: 62% 58%;
-    -webkit-mask-image: none; mask-image: none;
-  }
+  .ac-band-img { object-position: 62% 58%; }
   .ac-band::after {
     background:
       linear-gradient(90deg, rgba(25, 18, 10, .93), rgba(25, 18, 10, .66) 48%, rgba(25, 18, 10, 0) 82%),
@@ -175,33 +175,9 @@
 :root[data-acct="in"] .ac-when[data-state="in"],
 :root[data-acct="out"] .ac-when[data-state="out"] { display: block; }
 
-/*
- * The six-digit state carries three fields where the others carry one, and the main button
- * still has to be on screen at 390 without scrolling. So that state keeps less of the
- * painting: the picture is the invitation, and by this point the reader is already inside.
- */
-:root[data-acct="code"] .ac-band { padding-top: 4.6rem; }
-:root[data-acct="code"] .ac-band-img { height: 10.5rem; }
-:root[data-acct="code"] .ac-band::after {
-  background: linear-gradient(
-    180deg,
-    rgba(29, 21, 13, 0) 1.5rem,
-    rgba(29, 21, 13, .38) 4rem,
-    rgba(29, 21, 13, .92) 8.5rem
-  );
-}
-/* Wide there is room for both, so this state is the band every other page has. The scrim
-   has to be named again at this specificity or the phone's near-opaque one drowns the
-   painting on a screen that was never short of space. */
-@media (min-width: 46rem) {
-  :root[data-acct="code"] .ac-band { padding-top: 4.1rem; }
-  :root[data-acct="code"] .ac-band-img { height: 100%; }
-  :root[data-acct="code"] .ac-band::after {
-    background:
-      linear-gradient(90deg, rgba(25, 18, 10, .93), rgba(25, 18, 10, .66) 48%, rgba(25, 18, 10, 0) 82%),
-      linear-gradient(180deg, rgba(25, 18, 10, .28), rgba(18, 13, 7, .48));
-  }
-}
+/* The six-digit state once kept less of the painting so its three fields fitted at 390,
+   with overrides here to undo that on wide screens. Every state now starts at the chip and
+   wears the same band, so it needs nothing of its own at any width. */
 
 /* ----------------------------------------------------------------- the forms ---- */
 /*
@@ -211,6 +187,26 @@
  */
 .ac-form { margin: 1.3rem 0 0; }
 .ac-row { position: relative; display: flex; flex-direction: column; gap: .55rem; }
+/* A label a reader can see, above its field (the design pass, 2026-09-22). A placeholder
+   standing in for a label vanishes at the first keystroke, and with it the only record of
+   what the box was for. */
+.ac-group { display: flex; flex-direction: column; gap: .4rem; }
+.ac-row > .ac-group + .ac-group { margin-top: .35rem; }
+/* The status line inside the form's own column sits between the last field and the button,
+   so a failure is read right where the next press happens. ONE LINE IS HELD EVEN WHEN IT IS
+   EMPTY, so "Sending…", "Enter your email address." and every other one-line answer land
+   without moving the button under the thumb; only a second line moves it. Until 2026-09-22
+   an empty line collapsed to .2rem and the button dropped 17px the moment it was pressed.
+   A little of the row's gap is taken back above it, so the held line does not read as a
+   hole under the field; below it the full gap stays, so a message never touches the button. */
+.ac-row > .ac-status { margin: -.2rem 0 0; min-height: 1.5em; }
+.ac-label {
+  font-family: var(--ui); font-size: .8rem; font-weight: 600; letter-spacing: .01em;
+  color: rgba(255, 255, 255, .94); text-shadow: 0 1px 8px rgba(22, 14, 6, .5);
+}
+/* the field a failure belongs to, marked in the band's warm ink rather than a red that
+   would fight the painting */
+.ac-field[aria-invalid="true"] { box-shadow: inset 0 0 0 2px #FFB38A; }
 .ac-cell { position: relative; flex: 1 1 auto; min-width: 0; }
 /* z-index, because a field carrying `backdrop-filter` makes its own stacking context and
    paints over an absolutely positioned sibling that came before it in the document. */
@@ -231,34 +227,44 @@
 /* the six-digit code, read back to somebody typing it off a screen */
 .ac-field--code { font-variant-numeric: tabular-nums; letter-spacing: .18em; }
 
-/* A word, not an eye. There is no eye in the mark set and one would be a picture of a verb;
-   the control also has to be 44px, which an icon this size is not. */
+/* Every field in the band is the height of the button beside or under it: one height for
+   everything a thumb presses on these pages. */
+.ac-band .ac-field { min-height: 52px; }
+
+/* A word, not an eye. There is no eye in the mark set and one would be a picture of a verb.
+   A soft chip 6px in from the field's edge on every side it faces, with NO ring of its own:
+   a 44px pill with a ring inside a 46px field sat ring on ring and read as one smudged,
+   doubled outline (the critique, 2026-09-22). Its 44px target comes from ::before, which is
+   invisible. The same shape as the light panels on /account/. */
 .ac-field--pw { padding-right: 4.9rem; }
 .ac-show {
-  position: absolute; right: 4px; top: 50%; transform: translateY(-50%);
-  min-width: 56px; min-height: 44px; padding: 0 .6rem; cursor: pointer;
+  position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+  min-width: 56px; min-height: 40px; padding: 0 .6rem; cursor: pointer;
   border: 0; border-radius: var(--r-pill);
-  background: rgba(255, 255, 255, .12); color: #fff;
-  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .26);
+  background: rgba(255, 255, 255, .15); color: #fff; box-shadow: none;
   font-family: var(--ui); font-size: .68rem; font-weight: 700; letter-spacing: .1em;
   text-transform: uppercase;
 }
-.ac-show:hover { background: rgba(255, 255, 255, .2); }
+.ac-show::before { content: ""; position: absolute; inset: -2px; }
+.ac-show:hover { background: rgba(255, 255, 255, .24); }
+.ac-show:focus-visible { outline: 2px solid var(--blue-soft); outline-offset: 1px; }
 
-/* The rule is printed BEFORE they type, under the field. A password rejected after the fact
-   is the one failure on these pages that costs a whole second email. */
+/* The rule is printed BEFORE they type, between the label and the field, where GOV.UK puts
+   a hint. A password rejected after the fact is the one failure on these pages that costs a
+   whole second email. */
 .ac-rule {
-  /* no margin: it is a row of the form's own flex column, which already sets the gap */
+  /* no margin: it is a row of the group's own flex column, which already sets the gap */
   margin: 0; font-size: .82rem; line-height: 1.45;
   color: rgba(255, 255, 255, .8); text-wrap: balance;
 }
+.ac-group > .ac-rule { margin-top: -.15rem; }
 
 /*
  * GOOGLE'S SLOT, laid out now so adding it later is one element and not a relayout. A 52px
  * control of its own above the fields, then a hairline of the brand's gradient with the
  * word across it. Nothing renders these until the button works: see sign-in.astro.
  */
-.ac-btn--plain {
+.btn.ac-btn--plain {
   background-image: none; background-color: rgba(255, 255, 255, .12); color: #fff;
   box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .34);
   width: 100%;
@@ -274,21 +280,71 @@
 }
 
 /* The primary action. Stretched at 390, because on a phone the main action is the width of
-   the screen; from 30rem a single-field form puts it beside the field instead. */
-.ac-btn {
+   the screen; from 30rem a single-field form puts it beside the field instead.
+
+   `.btn.ac-btn`, two classes, on purpose: site.css's `.btn` is one class too and can load
+   after this sheet (it does in a dev build), and until 2026-09-22 its 44px quietly won, so
+   "the 52px button" was 44 and the disabled state a 45%-opacity ghost. Which sheet the
+   bundler happens to put first must not decide the size of the main action. */
+.btn.ac-btn {
   padding: .95rem 1.9rem; min-height: 52px; font-size: .86rem;
   box-shadow: 0 8px 24px rgba(10, 10, 16, .38);
 }
 /* Not a 45%-opacity ghost: a control that is plainly busy or plainly not ready, and legible
    while it says so. Its WORDS change too, which is what actually tells the reader. */
-.ac-btn:disabled {
+.btn.ac-btn:disabled {
   opacity: 1; cursor: default; background-image: none;
   background-color: rgba(255, 255, 255, .12); color: rgba(255, 255, 255, .78);
   box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .22);
 }
+/*
+ * ONE FIELD AND ITS BUTTON. On a phone it is the log-in column: label, field, the status
+ * line, then the button the width of the screen. From 30rem the button stands beside the
+ * field, level with it (both 52px, bottoms aligned under the label), and the status line
+ * drops to its own row under the pair, so a failure still reads before anything else.
+ */
 @media (min-width: 30rem) {
-  .ac-row--one { flex-direction: row; align-items: center; gap: .5rem; }
-  .ac-row--one .ac-btn { flex: none; }
+  .ac-row--one {
+    display: grid; grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: .5rem; row-gap: 0; align-items: end;
+  }
+  .ac-row--one > .ac-group { grid-column: 1; grid-row: 1; }
+  .ac-row--one > .ac-btn { grid-column: 2; grid-row: 1; }
+  .ac-row--one > .ac-status { grid-column: 1 / -1; grid-row: 2; margin-top: .3rem; }
+  /*
+   * The row reaches past the text column. Beside a 190-230px button, a field held to the
+   * 31rem column showed about 24 characters of an address, and the long address is the
+   * one most likely to hold the typo; at 38rem it shows well over 30. The heading, the
+   * lede and the small print keep their own measures.
+   */
+  .ac-band-in:has(.ac-form--one) { max-width: 38rem; }
+  .ac-band-in:has(.ac-form--one) .ac-form:not(.ac-form--one),
+  .ac-band-in:has(.ac-form--one) .ac-small { max-width: 31rem; }
+}
+
+/* The plain links a form keeps next to it: "Forgot your password?" straight under the
+   log-in button, "Already have an account? Log in" under the sign-up ask. Underlined
+   text, as on every form a reader has used, with a 44px target. */
+.ac-under { margin: .35rem 0 0; text-align: center; }
+.ac-under a, .ac-alt a {
+  display: inline-flex; align-items: center; min-height: 44px; color: #fff; font-weight: 600;
+  text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .22em;
+  text-decoration-color: rgba(255, 255, 255, .5);
+}
+.ac-under a { font-size: .95rem; }
+.ac-under a:hover, .ac-alt a:hover { text-decoration-color: #fff; }
+.ac-alt { margin: .1rem 0 0; font-size: .95rem; color: rgba(255, 255, 255, .86); }
+/* the one line under a form for somebody on the wrong page: "New here? Sign up" */
+.ac-alt--foot { margin-top: .5rem; text-align: center; }
+/* Under a one-field form the lines follow the button: centred under it while it is the
+   width of the phone, as on log in, and back to the column's left edge once it stands
+   beside the field, where a centred line would float between the two. */
+.ac-form--one .ac-under, .ac-form--one .ac-alt, .ac-form--one .ac-small { text-align: center; }
+.ac-form--one .ac-alt { margin-top: .35rem; }
+@media (min-width: 30rem) {
+  .ac-form--one .ac-under, .ac-form--one .ac-alt, .ac-form--one .ac-small { text-align: left; }
+  /* the status line's reserved row above already holds the space */
+  .ac-form--one .ac-alt, .ac-form--one .ac-under { margin-top: 0; }
 }
 
 /* A second way on, never a 12px underlined link: a glass pill at every width. */
@@ -339,17 +395,55 @@
 
 /* The marketing line, read before anybody types. Small, but never small enough to hide in. */
 .ac-small {
-  margin: 1.05rem 0 0; max-width: 33rem; font-size: .82rem; line-height: 1.55;
-  color: rgba(255, 255, 255, .76); text-wrap: balance;
+  margin: .5rem 0 0; font-size: .82rem; line-height: 1.55;
+  color: rgba(255, 255, 255, .78); text-wrap: balance;
 }
 
-/* ---- the address, read back ----
- * The commonest failure in this whole flow is a typo, and showing the address is the fix. */
-.ac-to { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem .95rem; margin: 1.2rem 0 0; }
+/* ---- check your email ----
+ * The address read back big, because the commonest failure in this whole flow is a typo and
+ * showing it is the fix; "Wrong address? Change it" straight under it. Then two short lines
+ * and the resend, all in the band: the page is over before the painting is.
+ *
+ * TWO SIZES ON THIS PAGE, the address's display type and 1rem for every other line. Four
+ * near-identical sizes (.92, .95, 1) in one short column read as a mistake, not an order;
+ * the order comes from weight instead: the links and the subject line are bold. */
+.ac-sent .ac-look, .ac-sent .ac-alt, .ac-sent .ac-wait, .ac-sent .ac-status { font-size: 1rem; }
+.ac-sent .ac-alt, .ac-sent .ac-wait { color: rgba(255, 255, 255, .9); }
+.ac-sent .ac-under a, .ac-sent .ac-alt a { font-size: inherit; }
+/* no address: the one way to ask again, where the resend would be */
+.ac-sent .ac-look + .ac-alt { margin-top: .45rem; }
+.ac-to { margin: 1.25rem 0 0; }
 .ac-to-addr {
   margin: 0; font-family: var(--display); font-weight: 400; color: #fff;
-  font-size: clamp(1.2rem, 5.6vw, 1.55rem); line-height: 1.2; letter-spacing: -.01em;
+  font-size: clamp(1.45rem, 6.6vw, 1.9rem); line-height: 1.15; letter-spacing: -.01em;
   overflow-wrap: anywhere; text-shadow: 0 1px 12px rgba(22, 14, 6, .5);
+}
+.ac-to .ac-alt { margin-top: 0; }
+.ac-look {
+  margin: 1rem 0 0; max-width: 30rem; font-size: 1rem; line-height: 1.55;
+  color: rgba(255, 255, 255, .92); text-shadow: 0 1px 10px rgba(22, 14, 6, .5); text-wrap: pretty;
+}
+/* the subject line, in the reader's own inbox type: bold, not display */
+.ac-look b { font-weight: 700; color: #fff; }
+/* "Not there? Check spam or promotions." follows on as the same paragraph would */
+.ac-look + .ac-look { margin-top: .35rem; }
+/* The wait and the button hold the same 52px, so the one replacing the other moves nothing. */
+.ac-again { display: flex; align-items: center; min-height: 52px; margin: .8rem 0 0; }
+.ac-wait { margin: 0; font-variant-numeric: tabular-nums; }
+/* The resend is a second chance, not the page's action (that is opening the inbox), so it
+   wears the glass rather than the gradient. */
+.btn.ac-btn--glass {
+  background-image: none; background-color: rgba(255, 255, 255, .12); color: #fff;
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .4);
+}
+.btn.ac-btn--glass:hover { background-color: rgba(255, 255, 255, .2); box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .6); }
+.ac-sent > .ac-status { margin-top: .4rem; }
+.ac-sent > .ac-status:empty { min-height: 0; margin: 0; }
+/* "Sent again." is one plain line here, not the footer's green panel: this page is already
+   a column of short lines, and a boxed confirmation shouts over the countdown beside it. */
+.ac-sent > .ac-status.is-ok {
+  padding: 0; border-radius: 0; background: none; box-shadow: none;
+  -webkit-backdrop-filter: none; backdrop-filter: none;
 }
 
 /* ------------------------------------------------------------------- rooms ---- */
@@ -397,42 +491,6 @@
   .ac-room { padding: 1.5rem 1.4rem 1.6rem; }
 }
 
-/* one room on its own, rising out of the band the same way a row of three does */
-.ac-solo {
-  --room-ink: var(--orange);
-  position: relative; z-index: 1; margin-top: -3.4rem; display: block;
-}
-@media (min-width: 46rem) {
-  .ac-solo { margin-top: -4.6rem; max-width: 34rem; padding: 1.5rem 1.4rem 1.6rem; }
-}
-
-/* --------------------------------------------------------------- dark panels ---- */
-/* One per page at most: what the email looks like, what an account keeps. `.dark` does the
-   ground and the tokens; this is only its shape and its spacing. */
-.ac-panel { margin: 1.5rem 0 0; padding: 1.5rem 1.35rem 1.6rem; border-radius: 24px; }
-.ac-panel .dark-ghost { right: -.04em; bottom: -.26em; font-size: clamp(4.5rem, 22vw, 8rem); }
-.ac-panel h2 {
-  margin: .9rem 0 0; font-family: var(--display); font-style: italic; font-weight: 400;
-  font-size: clamp(1.6rem, 6.6vw, 2.1rem); line-height: 1.05; letter-spacing: -.02em;
-}
-.ac-panel p { margin: .6rem 0 0; max-width: 34rem; text-wrap: balance; }
-.ac-panel .ac-mark { background: var(--orange-soft); }
-@media (min-width: 46rem) { .ac-panel { padding: 2rem 2rem 2.1rem; } }
-
-/* what the email looks like: two facts, not a paragraph of them */
-/* Label over value at every width, so the two rows keep the same shape whether or not an
-   address happens to be short enough to sit beside its label. */
-.ac-from { margin: 1.1rem 0 0; padding: 0; list-style: none; display: grid; gap: .7rem; }
-.ac-from li { display: grid; gap: .15rem; font-size: .93rem; line-height: 1.45; }
-.ac-from b {
-  font-family: var(--ui); font-size: .68rem; font-weight: 700; letter-spacing: .12em;
-  text-transform: uppercase; color: var(--blue-soft);
-}
-.ac-from span { color: var(--on-dark); overflow-wrap: anywhere; }
-
-/* the resend, disabled with words and a countdown in tabular figures, never a greyed ghost */
-.ac-again { margin: 1.25rem 0 0; }
-.ac-again .ac-btn { font-variant-numeric: tabular-nums; }
 
 /* --------------------------------------------------------------- the account ---- */
 /* One room per action, each with its own mark, on the light ground under the night band. */
@@ -490,7 +548,7 @@
   .ac-room--wide .ac-room-do form { margin-top: 0; }
 }
 
-/* who you are signed in as: one line in the band, its height held from the server so the
+/* who you are logged in as: one line in the band, its height held from the server so the
    band does not grow when the browser fills the address in */
 .ac-who { margin: 1rem 0 0; min-height: 1.6rem; }
 .ac-who span {
@@ -625,10 +683,6 @@
 
 /* ------------------------------------------------------------------- the foot ---- */
 .ac-foot { margin: 1.6rem 0 .4rem; text-align: center; }
-.ac-fine {
-  margin: 1.3rem auto .2rem; max-width: 40rem;
-  font-size: .8rem; line-height: 1.6; color: var(--ink-mute); text-wrap: balance;
-}
 
 @media (prefers-reduced-motion: reduce) {
   .ac-switch-track, .ac-switch-knob, .ac-go, .ac-quiet { transition: none; }

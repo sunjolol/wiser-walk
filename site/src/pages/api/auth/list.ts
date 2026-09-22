@@ -77,7 +77,7 @@ export const POST: APIRoute = async ({ request, url, locals }) => {
   }
 
   const who = await whoIs(fetch, env, bearerFrom(request));
-  if (!who) return json(401, { ok: false, error: 'Sign in first.' });
+  if (!who) return json(401, { ok: false, error: 'Log in first.' });
 
   const on = payload.on !== false;
   const provider = getProvider(env);

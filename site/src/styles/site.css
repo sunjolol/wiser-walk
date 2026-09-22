@@ -243,6 +243,149 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .theme-toggle.lit .rays { opacity: 1; transform: scale(1); }
 .theme-toggle.lit .glass { fill: rgba(240, 160, 111, .3); }
 
+/* ----------------------------------------------------- the account pair
+ *
+ * "Log in" and "Sign up" for a guest, "My profile" for somebody logged in (Base.astro, only
+ * in a build where the public can see accounts; the header carries .site-head--acct then).
+ * Every selector here starts .site-head.site-head--acct, which outranks the header rules in
+ * kit.css and touch.css, so a header without accounts is untouched by anything below.
+ *
+ * Both states sit in one grid cell and the attribute written before first paint says which
+ * is visible. visibility rather than display: the hidden one still holds its size, so the
+ * slot is the same width in both states and nothing beside it shifts.
+ */
+.site-head.site-head--acct .head-acct {
+  display: grid; flex: none; align-items: center; justify-items: end;
+  font-family: var(--ui); font-size: .85rem;
+}
+.site-head.site-head--acct .head-acct > * { grid-area: 1 / 1; }
+.site-head.site-head--acct .head-acct-out { display: flex; align-items: center; gap: .4rem; }
+.site-head.site-head--acct .head-me { visibility: hidden; }
+:root[data-account="in"] .site-head.site-head--acct .head-acct-out { visibility: hidden; }
+:root[data-account="in"] .site-head.site-head--acct .head-me { visibility: visible; }
+
+.site-head.site-head--acct .head-acct a {
+  display: inline-flex; align-items: center; min-height: 44px; white-space: nowrap;
+  font-weight: 600; text-decoration: none; border-radius: var(--r-pill);
+  transition: background .18s ease, color .18s ease;
+}
+/* "Log in": text, in the ink of the words around it, a pill only under the pointer and on the
+   log-in page itself. Both pills of the pair are drawn 4px in from the top and the bottom of
+   their 44px tap area, so where they stand side by side (the log-in page, or a pointer on
+   "Log in") they are one height, 36px, with the pair's own gap between them. */
+.site-head.site-head--acct .head-login,
+.site-head.site-head--acct .head-join { position: relative; isolation: isolate; }
+.site-head.site-head--acct .head-login { padding: .42rem .75rem; color: var(--ink); }
+.site-head.site-head--acct .head-login::before {
+  content: ""; position: absolute; inset: 4px 0; z-index: -1; border-radius: inherit;
+  background: var(--accent-soft); opacity: 0; transition: opacity .18s ease;
+}
+.site-head.site-head--acct .head-login:hover,
+.site-head.site-head--acct .head-login[aria-current="page"] { color: var(--accent); }
+.site-head.site-head--acct .head-login:hover::before,
+.site-head.site-head--acct .head-login[aria-current="page"]::before { opacity: 1; }
+/* "Sign up": the loud one. */
+.site-head.site-head--acct .head-join { padding: .42rem 1.05rem; color: var(--on-grad); font-weight: 700; }
+.site-head.site-head--acct .head-join::before {
+  content: ""; position: absolute; inset: 4px 0; z-index: -1; border-radius: inherit;
+  background-image: var(--grad); box-shadow: var(--lift); transition: box-shadow .2s;
+}
+.site-head.site-head--acct .head-join:hover::before { box-shadow: 0 6px 14px rgba(62, 134, 196, .3); }
+/* "My profile": the words, after a round mark in the same gradient, so the slot that held
+   the loud pill still holds the one bright thing in the header */
+.site-head.site-head--acct .head-me { gap: .5rem; padding: .3rem .8rem .3rem .3rem; color: var(--ink); }
+.site-head.site-head--acct .head-me-mark {
+  display: grid; place-items: center; width: 34px; height: 34px; flex: none;
+  border-radius: 50%; background-image: var(--grad); color: var(--on-grad);
+}
+.site-head.site-head--acct .head-me:hover,
+.site-head.site-head--acct .head-me[aria-current="page"] { background: var(--accent-soft); color: var(--accent); }
+.site-head.site-head--acct .head-acct a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/*
+ * Phone and tablet, two rows. Row 1: the brand, and the account pair at the top right where
+ * people look for it. Row 2: the nav, and the bulb at its right end, directly under the pair
+ * (the owner, 2026-09-22). DOM order is brand, nav, pair, bulb, which is the desktop row; the
+ * two rows are made with `order`.
+ *
+ * Why up to 48rem and not the 46rem the rest of the header turns on: the desktop row with the
+ * pair in it is 720px of content (measured: brand 134, nav 353, pair 153, bulb 44, three gaps),
+ * and a 768px tablet has 712. From 48rem to 50rem the row is kept by giving the nav items and
+ * the gaps a little less room (682px); below 48rem there is no honest way to fit it.
+ *
+ * The nav's width is the row less the bulb and one gap, and a pixel less again so rounding can
+ * never push the bulb onto a third row. flex-grow takes the pixel back. When a quiz hides the
+ * nav and the pair (quiz.css), the bulb's auto margin brings it back up beside the brand.
+ */
+@media (max-width: 47.99rem) {
+  .site-head.site-head--acct .wrap { flex-wrap: wrap; }
+  .site-head.site-head--acct .brand { margin-right: 0; }
+  .site-head.site-head--acct .head-acct { margin-left: auto; }
+  .site-head.site-head--acct nav {
+    order: 3; flex: 1 1 auto; min-width: 0;
+    width: calc(100% - 48px - .75rem - 1px); margin-right: 0;
+  }
+  .site-head.site-head--acct .theme-toggle { order: 4; margin-left: auto; min-width: 48px; min-height: 48px; }
+  .site-head.site-head--acct .theme-toggle svg { width: 26px; height: 26px; }
+}
+/* The nav is pulled left by its first item's padding, so "Quizzes" starts under the W of the
+   brand; its width grows by the same amount so the row still ends at the bulb.
+   Below 30rem the row is a sideways scroller (kit.css). At kit's padding the four items measure
+   290px, and a 360px screen, common on Android, leaves the nav 267px beside the bulb: "Donate"
+   was cut in half. So the items give up a little, and there is no gap before the bulb at all:
+   the bulb keeps its 48px, and the 11px either side of the glass is its own air. Measured at
+   360: the four items 272px in a 277px row. */
+@media (max-width: 29.99rem) {
+  .site-head.site-head--acct .wrap { column-gap: 0; }
+  .site-head.site-head--acct nav { margin-left: -.3rem; width: calc(100% + .3rem - 48px - 1px); }
+  .site-head.site-head--acct nav > a,
+  .site-head.site-head--acct .navmenu > summary { padding-left: .3rem; padding-right: .3rem; }
+  .site-head.site-head--acct .navmenu > summary { gap: .1rem; }
+}
+/* Below 360px even that is 40px too many, and the row cut "Donate" to "Do" against the bulb.
+   The carets go: all four words then fit whole (231px in 237 at 320), and a menu without its
+   caret still opens on a tap, which is how a phone finds it anyway. */
+@media (max-width: 22.49rem) {
+  .site-head.site-head--acct .navmenu-caret { display: none; }
+}
+/* From 30rem the row has the width to itself, so every item gets the roomy padding. (kit.css
+   tightens the links, and only the links, between 30 and 34rem, for the old single row; the
+   menus kept theirs, which left the gaps uneven. The row here has no need to be tight.) */
+@media (min-width: 30rem) and (max-width: 47.99rem) {
+  .site-head.site-head--acct nav { gap: .25rem; margin-left: -.7rem; width: calc(100% + .7rem - 48px - .75rem - 1px); }
+  .site-head.site-head--acct nav > a,
+  .site-head.site-head--acct .navmenu > summary { padding: .42rem .7rem; }
+}
+/* From 30rem the menus hang under their own item, anchored to its right edge because the nav
+   used to sit at the right of the header. Here it starts at the left, so they open rightwards;
+   the first from the page's own gutter, in line with the brand, rather than from its pill's
+   edge 11px outside it; the last, which at 480 would run 10px off the screen, centred under
+   its own word (100 to 380 at 480). */
+@media (min-width: 30rem) and (max-width: 47.99rem) {
+  .site-head.site-head--acct .navmenu-panel { left: 0; right: auto; }
+  .site-head.site-head--acct .navmenu:first-of-type .navmenu-panel { left: .7rem; }
+  .site-head.site-head--acct .navmenu:last-of-type .navmenu-panel { left: 50%; transform: translateX(-50%); }
+}
+/* One row again from 48rem, where the pair pushes the nav to the left, and "Quizzes" sits so
+   near the brand that its right-anchored menu opened past the left edge of the screen (at -11
+   at 768). It opens rightwards until the row is wide enough to hang it the usual way clear
+   of the gutter (at 54rem it would start at 58px). */
+@media (min-width: 48rem) and (max-width: 53.99rem) {
+  .site-head.site-head--acct .navmenu:first-of-type .navmenu-panel { left: 0; right: auto; }
+}
+@media (min-width: 48rem) and (max-width: 49.99rem) {
+  .site-head.site-head--acct .wrap { column-gap: .5rem; }
+  .site-head.site-head--acct nav > a,
+  .site-head.site-head--acct .navmenu > summary { padding-left: .5rem; padding-right: .5rem; }
+}
+/* 320px: the brand and the pair only just share a row, so the pair gives up some padding, but
+   never its gap: the two pills must not touch on the log-in page. */
+@media (max-width: 22.49rem) {
+  .site-head.site-head--acct .head-acct { font-size: .8rem; }
+  .site-head.site-head--acct .head-login { padding-left: .45rem; padding-right: .45rem; }
+  .site-head.site-head--acct .head-join { padding-left: .75rem; padding-right: .75rem; }
+}
+
 /* ------------------------------------------------------------- surfaces */
 
 .panel {

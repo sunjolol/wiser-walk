@@ -41,6 +41,18 @@ Note he had earlier rejected the word "wiser" as "weird to say"; he has since ov
 
 State: local git repo initialised, **one commit** `c8fd322`, 137 files tracked, `node_modules` excluded. Authored as `Light <serenitybackto@gmail.com>` — he was offered a GitHub noreply address to keep his email out of public history and **chose to keep his real email**. Do not change it.
 
+## ACCOUNTS ARE PUBLIC (2026-09-22, his go: "yes go public now")
+
+`ACCOUNT_LINKS_LIVE` is true. He set up Supabase + Resend (sending domain `mail.wiserwalk.com`,
+`ACCOUNT_EMAIL_FROM` set), signed up for real, and the account flow got a full design pass
+(`design/accounts/PASS-BRIEF.md`; exemplar `site/src/pages/account/sign-in.astro` +
+`site/src/lib/account/form.ts`). Header: guests "Log in | Sign up", logged in "My profile".
+Words are "Log in / Log out / Sign up" everywhere (routes unchanged). NEXT: the personal
+profile ("You, so far": https://claude.ai/artifact/AziUmP2qvxYgYBSnCaQkYo; weakness part behind
+a "Show it" tap; "How do you love?" approved) and a researched list of 10+ quiz ideas with
+disguised, scripture-grounded items for him to pick from. Build no new quiz until he picks.
+Paragraphs below that say accounts are hidden are history.
+
 ## WHERE THINGS STAND (end of 2026-09-21, second session): READ HANDOFF.md FIRST
 
 **LIVE on `main` since 2026-09-22 (his go, unseen: "if anything is wrong I'll just revert/change it"): the

@@ -8,7 +8,10 @@ import audit from '../data/compass-audit.json';
 import { theologyCompass } from '../lib/quizzes/theology-compass';
 
 import CorrectionNote from '../components/CorrectionNote.astro';
-import { ACCOUNTS_READY } from '../lib/account/config';
+import { ACCOUNTS_READY, ACCOUNTS_VISIBLE } from '../lib/account/config';
+/* The page's name for /me/, as the header names it: "My profile" once the public can see
+   accounts, today's "My results" until then. */
+const ME = ACCOUNTS_VISIBLE ? 'My profile' : 'My results';
 
 const sheets = (audit.simulations ?? []) as Array<Record<string, any>>;
 const landed = sheets.filter(s => Array.isArray(s.answers) && s.answers.length);
@@ -191,7 +194,7 @@ const breadcrumbs = [
           </p>
           <p>
             A result you finish is saved in your own browser, so you can find it again on
-            <a href="/me/">My results</a>. Clearing the lot is one button on that page.
+            <a href="/me/">{ME}</a>. Clearing the lot is one button on that page.
           </p>
         </div>
       </section>
@@ -215,7 +218,7 @@ const breadcrumbs = [
             site data erases that note.
           </p>
           <p>
-            One button on <a href="/me/">My results</a> clears every result from this device and
+            One button on <a href="/me/">{ME}</a> clears every result from this device and
             from every other device you sign in on. A cleared result leaves a marker behind, and
             that marker is how your other devices know to drop it too: which quiz, which code and
             when, and nothing else. It is erased ninety days later, or when you delete your
@@ -260,7 +263,7 @@ const breadcrumbs = [
           </p>
           <p>
             A result you finish is now saved in your own browser, so you can find it again on
-            <a href="/me/">My results</a>. It stays on that device and is not sent anywhere, and
+            <a href="/me/">{ME}</a>. It stays on that device and is not sent anywhere, and
             clearing the lot is one button on that page.
           </p>
         </div>

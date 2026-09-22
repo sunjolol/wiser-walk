@@ -576,7 +576,7 @@ export async function clearEverywhere(deps: SyncDeps = {}): Promise<Done> {
   if (!w.url || !w.key) return gone('off', 'Accounts are not switched on yet.');
   try {
     const auth = await authFor(w);
-    if (!auth) return gone('nosession', 'You are not signed in on this device.');
+    if (!auth) return gone('nosession', 'You are not logged in on this device.');
 
     const res = await rest(w, auth.accessToken, 'results?deleted_at=is.null', {
       method: 'PATCH',
@@ -611,7 +611,7 @@ export async function removeEverywhere(
 
   try {
     const auth = await authFor(w);
-    if (!auth) return gone('nosession', 'You are not signed in on this device.');
+    if (!auth) return gone('nosession', 'You are not logged in on this device.');
 
     const where =
       `results?quiz=eq.${encodeURIComponent(one.quiz)}` +

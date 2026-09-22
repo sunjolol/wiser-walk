@@ -65,8 +65,13 @@ export const SUPABASE_KEY = env.key;
 /** Both values present, so there is something to talk to. */
 export const ACCOUNTS_READY = Boolean(SUPABASE_URL && SUPABASE_KEY);
 
-/** False until the owner says otherwise. This is the one line he flips at the end. */
-export const ACCOUNT_LINKS_LIVE: boolean = false;
+/**
+ * Flipped to true on 2026-09-22 with the owner's go ("yes go public now"), after he had
+ * signed up, logged in and reset a password on the live domain, and after the design pass
+ * (design/accounts/PASS-BRIEF.md). Setting it back to false hides every door again without
+ * touching anybody's account.
+ */
+export const ACCOUNT_LINKS_LIVE: boolean = true;
 
 /**
  * True only in a Vercel PREVIEW build. Production and a local build are both false, and so

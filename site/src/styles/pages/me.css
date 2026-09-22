@@ -87,7 +87,7 @@
 /* the Thessalonica plate is the palest of the three; printed darker it joins the other two */
 .mroom--spiritual-gifts > img { filter: sepia(.34) contrast(.9) brightness(.88); }
 
-.mroom-body { position: relative; margin-top: auto; padding: 1.3rem 1.25rem 1.35rem; }
+.mroom-body { margin-top: auto; padding: 1.3rem 1.25rem 1.35rem; }
 .mroom-mark {
   display: grid; place-items: center; width: 2.6rem; height: 2.6rem; margin: 0 0 .8rem;
   border-radius: 14px; color: #17181d; background: var(--room-ink);
@@ -111,13 +111,36 @@
   color: rgba(255, 255, 255, .92); background: rgba(255, 255, 255, .12);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16);
 }
+/*
+ * THE WHOLE CARD IS THE WAY IN (the owner, 2026-09-22: the small "Take it" link was "super
+ * small and annoying to click"). The card's main link stretches an invisible layer over the
+ * whole card, so a tap anywhere on it goes where the button goes; the few other controls on
+ * a finished card (take it again, earlier runs) stand above that layer. The link itself is
+ * a real button at every width now, in the room's own ink, sitting on the same line as the
+ * time chip and pushed to the right.
+ */
 .mroom-go {
-  display: inline-flex; align-items: center; gap: .45rem; min-height: 44px; text-decoration: none;
-  font-family: var(--ui); font-size: .7rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; padding: .55rem 1.15rem;
+  border-radius: var(--r-pill); text-decoration: none; white-space: nowrap;
+  font-family: var(--ui); font-size: .74rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
   color: var(--room-ink);
+  background: color-mix(in srgb, currentColor 16%, transparent);
+  box-shadow: inset 0 0 0 1.5px currentColor;
+  transition: background-color .18s ease;
 }
+/* No radius of its own: it would inherit the pill's and turn the layer into a stadium that misses
+   the corners. The card clips it to its own shape. */
+.mroom-go::before { content: ""; position: absolute; inset: 0; z-index: 1; }
+.mroom-again, .mroom-past { position: relative; z-index: 2; }
 .mroom-go .icon { transition: transform .18s ease; }
-.mroom-go:hover .icon { transform: translateX(3px); }
+.mroom:hover .mroom-go, .mgame:hover .mroom-go { background: color-mix(in srgb, currentColor 26%, transparent); }
+.mroom:hover .mroom-go .icon, .mgame:hover .mroom-go .icon { transform: translateX(3px); }
+.mroom-foot {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .6rem .75rem;
+  margin-top: 1rem;
+}
+.mroom-foot .mroom-facts { margin: 0; }
+.mroom-foot .mroom-go { margin-left: auto; }
 
 /* A finished room has TWO things that want to be the headline — the quiz's name and the
    reader's own verdict. The verdict wins: the quiz's name steps down to a kicker, which is
@@ -141,7 +164,7 @@
   margin: .75rem 0 0; font-family: var(--ui); font-size: .6rem; font-weight: 700;
   letter-spacing: .14em; text-transform: uppercase; color: rgba(255, 255, 255, .62);
 }
-.mroom-acts { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem 1.2rem; margin-top: .3rem; }
+.mroom-acts { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem 1.2rem; margin-top: .9rem; }
 .mroom-again {
   display: inline-flex; align-items: center; min-height: 44px; text-decoration: none;
   font-family: var(--ui); font-size: .68rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
@@ -213,8 +236,7 @@
   margin: .55rem 0 0; font-family: var(--display); font-size: 1.15rem; line-height: 1.2;
   color: var(--orange-soft); font-variant-numeric: tabular-nums;
 }
-.mgame .mroom-facts { margin-top: .6rem; }
-.mgame .mroom-go { margin-top: .3rem; }
+.mgame .mroom-foot { margin-top: .8rem; }
 @media (min-width: 40rem) { .me-games-row { grid-template-columns: 1fr 1fr; gap: 1rem; } }
 
 /* --------------------------------------------------------------- the account ----
@@ -372,6 +394,18 @@
 .me-ask-go:hover {
   background: rgba(255, 255, 255, .2); box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .54);
 }
+/* The guest's "Already have an account? Log in" is the sign-up page's line, not a pill (the
+   owner, 2026-09-22: secondary links are plain underlined text): one sentence in flow, the
+   link underlined, 44px tall for a thumb. The pill above stays for "Your account", which is
+   the only thing a logged-in reader can do in this box. */
+.me-ask--out .me-ask-alt { display: block; margin: .35rem 0 0; font-size: .95rem; color: rgba(255, 255, 255, .86); }
+.me-ask--out .me-ask-go {
+  display: inline-flex; min-height: 44px; padding: 0; border-radius: 0; background: none; box-shadow: none;
+  color: #fff; font-family: inherit; font-size: inherit; font-weight: 600; letter-spacing: 0; text-transform: none;
+  text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .22em;
+  text-decoration-color: rgba(255, 255, 255, .5);
+}
+.me-ask--out .me-ask-go:hover { background: none; box-shadow: none; text-decoration-color: #fff; }
 
 /* Who this is. The address holds its line from the first paint, so nothing moves when the
    script fills it in, and it may break anywhere: a long address must not force a ragged

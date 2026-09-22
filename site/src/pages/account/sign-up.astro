@@ -7,11 +7,11 @@
  * then on it is email and password like everything else. So there is no password field
  * here, no confirm field, no username and no tick boxes.
  *
- * The page is built like /support/, because /support/ is the other page whose whole job is
- * asking for something: a picture band with the ask INSIDE it, three reasons rising out of
- * its foot, one line of small print. What an account is for is said in the reasons; what
- * holding an address actually means is said in the band, above the fold, before anybody
- * types a character.
+ * Built like log in (the design pass of 2026-09-22, design/accounts/PASS-BRIEF.md): a label
+ * above the field, the ask on the first screen of a phone, "Already have an account? Log in"
+ * straight under the button where every sign-up form keeps it, and ONE line of small print
+ * saying what the address is used for, read before anybody types. The reasons rise out of
+ * the band's foot, one sentence each.
  */
 import '../../styles/pages/account.css';
 import Base from '../../layouts/Base.astro';
@@ -19,29 +19,29 @@ import Icon from '../../components/Icon.astro';
 import AccountBand from '../../components/AccountBand.astro';
 import { ACCOUNTS_READY } from '../../lib/account/config';
 
+/* The last two words of a headline are tied, so no width ever leaves one word alone on the
+   last line (the owner's rule: a lone last word is "super sloppy"). */
+const tie = (s: string) => s.replace(/ (?=\S+$)/, String.fromCharCode(160));
+
 /* A mark and an ink each, because three grey boxes in a column have to be read to be told
    apart. One claim per room, and every one of them is something the account really does. */
 const REASONS = [
   {
     mark: 'users' as const,
     title: 'Everything in one place.',
-    body:
-      'Every quiz and game you finish is kept with your account, not just in the browser ' +
-      'you happened to be using at the time.'
+    body: 'Every quiz you finish, kept together in one profile.'
   },
   {
     mark: 'compass' as const,
     title: 'A picture that fills in.',
-    body:
-      'The more you do, the more the site can show you about yourself, drawn from all of ' +
-      'it at once rather than one quiz at a time.'
+    body: 'The more you do, the more the site can show you about yourself.'
   },
   {
-    mark: 'mail' as const,
-    title: 'You hear when there is more.',
-    body:
-      'New quizzes, new games and new articles, whenever they are finished. You can stop ' +
-      'those at any time and keep your account.'
+    /* Not the email: the small print in the band already says that once, and a room
+       saying it again sat directly under it. */
+    mark: 'play' as const,
+    title: 'Your best scores, kept.',
+    body: 'Your top score in each game stays, ready to beat.'
   }
 ];
 ---
@@ -66,119 +66,123 @@ const REASONS = [
     <AccountBand
       eyebrow="Your account"
       icon="users"
-      title="Keep your results for good."
-      accent="for good."
-      lede="They follow you to any device, and you hear when there is something new to try."
+      title={tie('Keep your results for good.')}
+      accent={tie('for good.')}
     >
-      <form class="ac-form" id="ac-form" novalidate>
+      {/* method="post" so a press before the script has loaded never puts the address in
+          the URL; the static page answers a POST with an error and nothing is sent. */}
+      <form class="ac-form ac-form--one" id="ac-form" method="post" novalidate>
         {/* Hidden from people, irresistible to naive bots. Not a CAPTCHA and never will be. */}
         <p class="hp" aria-hidden="true">
           <label>Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
         </p>
         <div class="ac-row ac-row--one">
-          <span class="ac-cell">
-            <label class="sr-only" for="ac-email">Your email address</label>
-            <span class="ac-cell-icon" aria-hidden="true"><Icon name="mail" size={17} /></span>
-            <input class="ac-field" id="ac-email" name="email" type="email" required
-                   autocomplete="email" inputmode="email" placeholder="you@example.com" />
-          </span>
+          <div class="ac-group">
+            <label class="ac-label" for="ac-email">Email address</label>
+            <span class="ac-cell">
+              <span class="ac-cell-icon" aria-hidden="true"><Icon name="mail" size={17} /></span>
+              <input class="ac-field" id="ac-email" name="email" type="email" required
+                     autocomplete="email" inputmode="email" spellcheck="false" autocapitalize="none"
+                     aria-describedby="ac-status" />
+            </span>
+          </div>
+          <p class="ac-status" id="ac-status" role="status" aria-live="polite"></p>
           <button class="btn ac-btn" id="ac-go" type="submit">Email me a link</button>
         </div>
+        <p class="ac-alt">Already have an account? <a href="/account/sign-in/" id="ac-have">Log in</a></p>
+        {/* The whole of what holding an address means, in the band and above the fold on
+            purpose: a disclosure nobody scrolls to is a disclosure nobody read. */}
+        <p class="ac-small">
+          We will email you a link to set a password, and a note now and then when something
+          new is made.
+        </p>
       </form>
-      {/* Outside the form, so hiding the field on success never hides the answer with it. */}
-      <p class="ac-status" id="ac-status" role="status" aria-live="polite"></p>
-      {/*
-        The whole of what holding an address means, read before anybody types. It is in the
-        band rather than at the foot of the page on purpose: a disclosure below the fold is
-        a disclosure nobody read.
-      */}
-      <p class="ac-small">
-        We will email you a link to set a password. We will also send you a note now and
-        then when there is a new quiz, game or article. You can stop those at any time and
-        keep your account.
-      </p>
-      <p class="ac-acts">
-        <a class="ac-go" href="/account/sign-in/">I already have an account</a>
-      </p>
     </AccountBand>
   )}
 
   {ACCOUNTS_READY && (
-    <>
-      <section class="ac-rooms" aria-label="What an account is for">
-        {REASONS.map(r => (
-          <article class="ac-room">
-            <span class="ac-mark"><Icon name={r.mark} size={20} /></span>
-            <h2>{r.title}</h2>
-            <p>{r.body}</p>
-          </article>
-        ))}
-      </section>
-
-      <p class="ac-fine">
-        An account keeps your email address, the results you have taken and your best
-        scores in the games. Your answers themselves are never sent anywhere: a quiz is
-        still worked out in your browser. One button on your account page deletes the lot.
-      </p>
-    </>
+    <section class="ac-rooms" aria-label="What an account is for">
+      {REASONS.map(r => (
+        <article class="ac-room">
+          <span class="ac-mark"><Icon name={r.mark} size={20} /></span>
+          <h2>{r.title}</h2>
+          <p>{r.body}</p>
+        </article>
+      ))}
+    </section>
   )}
 
   <script>
     import { requestLink, sayFor } from '../../lib/account/client';
+    import { flagFields, carryEmail, carriedEmail } from '../../lib/account/form';
 
-    const form = document.getElementById('ac-form');
+    const form = document.getElementById('ac-form') as HTMLFormElement | null;
     if (form) {
-      const status = document.getElementById('ac-status');
-      const button = document.getElementById('ac-go');
-      const field = document.getElementById('ac-email');
-      const row = form.querySelector('.ac-row');
+      const status = document.getElementById('ac-status')!;
+      const button = document.getElementById('ac-go') as HTMLButtonElement;
+      const field = document.getElementById('ac-email') as HTMLInputElement;
 
       /* The box on /me/ is a real GET form pointed at this page, so if its own script never
          loaded the browser lands here with the address already typed. Put it back in the
          field rather than asking for it twice. The layout strips the whole query before a
-         page view is counted, and this page is out of the index. */
+         page view is counted, and this page is out of the index. Failing that, the address
+         typed on another account page ("Wrong address? Change it" brings it back here). */
       try {
         const passed = new URL(location.href).searchParams.get('email');
         if (passed && !field.value) field.value = passed.trim();
-      } catch (e) {}
+      } catch {
+        /* no URL, no address: they type it */
+      }
+      if (!field.value) field.value = carriedEmail();
 
-      const say = (text, kind) => {
+      const say = (text: string, kind?: string) => {
         status.textContent = text;
         status.className = 'ac-status' + (kind ? ' is-' + kind : '');
       };
       /* Busy is said in words as well as by the button being out of action: a control that
          only greys out looks broken rather than working. */
-      const busy = on => {
+      const busy = (on: boolean) => {
         button.disabled = on;
         button.textContent = on ? 'Sending…' : 'Email me a link';
       };
 
+      // Somebody who turns out to have an account takes the address they typed with them.
+      document.getElementById('ac-have')?.addEventListener('click', () => carryEmail(field.value));
+
       form.addEventListener('submit', event => {
         event.preventDefault();
         if (button.disabled) return;
-        // The honeypot. A bot that fills it gets the same page a person gets, and we send
-        // nothing at all.
-        if (form.elements.website && form.elements.website.value) {
-          row.hidden = true;
-          // Word for word what the next page says, so the two never drift apart, and true
-          // of a bot as well: nothing was sent, and nothing is claimed to have been.
-          say('If that address is right, a link should reach it within a minute. It works for an hour, and only once.', 'ok');
+        flagFields([field], false);
+        // The honeypot. A bot that fills it gets the page a person gets, and nothing is sent.
+        const trap = form.elements.namedItem('website') as HTMLInputElement | null;
+        if (trap && trap.value) {
+          location.href = '/account/check-email/';
           return;
         }
 
         const email = field.value.trim();
+        if (!email) {
+          flagFields([field], true);
+          say('Enter your email address.', 'bad');
+          field.focus();
+          return;
+        }
+
         busy(true);
         say('Sending…', 'busy');
-
         requestLink(email).then(done => {
           if (!done.ok) {
             busy(false);
+            if (done.code === 'address') {
+              flagFields([field], true);
+              field.focus();
+            }
             say(done.say, 'bad');
             return;
           }
           // The next page prints the address back, because the commonest failure in this
           // whole flow is a typo and showing it is the fix. It is not put in the URL.
-          try { sessionStorage.setItem('ww.acct.to', email); } catch (e) {}
+          try { sessionStorage.setItem('ww.acct.to', email); } catch { /* the next page leaves the address out */ }
           location.href = '/account/check-email/';
         });
       });
@@ -188,8 +192,10 @@ const REASONS = [
          built, and this whole block goes with it. */
       if (import.meta.env.DEV) {
         const state = new URLSearchParams(location.search).get('state');
-        if (state === 'busy') { busy(true); say('Sending…', 'busy'); }
+        if (state === 'busy') { field.value = 'reader@example.com'; busy(true); say('Sending…', 'busy'); }
         if (state === 'error') say(sayFor('cooldown'), 'bad');
+        if (state === 'empty') { flagFields([field], true); say('Enter your email address.', 'bad'); }
+        if (state === 'address') { field.value = 'reader@example'; flagFields([field], true); say(sayFor('address'), 'bad'); }
       }
     }
   </script>

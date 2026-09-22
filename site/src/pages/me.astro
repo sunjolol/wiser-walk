@@ -59,7 +59,7 @@ const GAME_BEST: Record<string, string> = {
 const games = liveGames();
 ---
 <Base
-  title="My results"
+  title={ACCOUNTS_VISIBLE ? 'My profile' : 'My results'}
   description={ACCOUNTS_VISIBLE
     ? 'Every quiz you have finished, and the games you have played.'
     : 'Every quiz you have finished on this device, and the games you have played.'}
@@ -83,7 +83,11 @@ const games = liveGames();
       ) : (
         <p class="me-chip"><Icon name="users" size={14} /> On this device</p>
       )}
-      <h1>My <em>results.</em></h1>
+      <h1>My <em>{
+        /* "My profile" once the header's way here says so; until then, today's words. Inside
+           the expression, so a build with the doors shut prints exactly what it did. */
+        ACCOUNTS_VISIBLE ? 'profile.' : 'results.'
+      }</em></h1>
       <p class="me-count" id="me-count">Everything you finish here waits for you on this page.</p>{ACCOUNTS_VISIBLE && (
         /*
           Hung off the paragraph above with no whitespace between them, and the same again
@@ -131,13 +135,13 @@ const games = liveGames();
           {/* Outside the form, and holding its line from the first paint, so an answer
               landing never shunts the small print down the screen. */}
           <p class="me-join-status" id="me-join-status" role="status" aria-live="polite"></p>
+          {/* The sign-up page's own sentence, word for word: the same ask says the same thing. */}
           <p class="me-ask-small">
-            We will email you a link to set a password. We will also send you a note now
-            and then when there is a new quiz, game or article. You can stop those at any
-            time and keep your account.
+            We will email you a link to set a password, and a note now and then when something
+            new is made.
           </p>
           <p class="me-ask-alt">
-            Already have an account? <a class="me-ask-go" href="/account/sign-in/">Sign in</a>
+            Already have an account? <a class="me-ask-go" href="/account/sign-in/">Log in</a>
           </p>
         </div>
       )}{ACCOUNTS_READY && (
@@ -148,7 +152,7 @@ const games = liveGames();
           tests the whole of it on the live domain first.
         */
         <div class="me-ask me-ask--in">
-          <p class="me-who"><span data-role="who-pre">Signed in as</span> <span class="me-who-at" data-role="who"></span></p>
+          <p class="me-who"><span data-role="who-pre">Logged in as</span> <span class="me-who-at" data-role="who"></span></p>
           {/* Only ever shown when the account has refused a new result for want of room.
               The quiet type, because it is an explanation of where the newest results are,
               not an alarm. */}
@@ -199,11 +203,13 @@ const games = liveGames();
             {/* What a reader who has not taken it sees, and what everyone sees first. */}
             <div class="mroom-none" data-role="none">
               <p class="mroom-say">{quiz.tagline}</p>
-              <ul class="mroom-facts">
-                <li><Icon name="clock" size={13} /> {quiz.minutes} min</li>
-                {quiz.status === 'draft' && <li>Draft</li>}
-              </ul>
-              <a class="mroom-go" href={href}>Take it <Icon name="arrow" size={14} /></a>
+              <div class="mroom-foot">
+                <ul class="mroom-facts">
+                  <li><Icon name="clock" size={13} /> {quiz.minutes} min</li>
+                  {quiz.status === 'draft' && <li>Draft</li>}
+                </ul>
+                <a class="mroom-go" href={href}>Take it <Icon name="arrow" size={14} /></a>
+              </div>
             </div>
           </div>
         </article>
@@ -222,8 +228,10 @@ const games = liveGames();
             {/* The best score is the game's own, read from where the game keeps it. Until
                 there is one, the room says how long a run takes and nothing else. */}
             <p class="mgame-best" data-role="best" hidden></p>
-            <ul class="mroom-facts" data-role="run"><li><Icon name="clock" size={13} /> 2 min a run</li></ul>
-            <a class="mroom-go" href={game.href}>Play <Icon name="arrow" size={14} /></a>
+            <div class="mroom-foot">
+              <ul class="mroom-facts" data-role="run"><li><Icon name="clock" size={13} /> 2 min a run</li></ul>
+              <a class="mroom-go" href={game.href}>Play <Icon name="arrow" size={14} /></a>
+            </div>
           </article>
         ))}
       </div>
@@ -488,7 +496,7 @@ const games = liveGames();
         const who = document.querySelector('[data-role="who"]');
         const hint = readHint();
         if (who && hint) who.textContent = hint.email;
-        // No address to print means no sentence: "Signed in as" on its own is worse than a
+        // No address to print means no sentence: "Logged in as" on its own is worse than a
         // line that quietly holds its space. The line is reserved either way.
         if (!hint) {
           const pre = document.querySelector('[data-role="who-pre"]');
@@ -562,7 +570,7 @@ const games = liveGames();
         const button = join.querySelector('button[type="submit"]');
         const email = (field?.value ?? '').trim();
         if (!email) {
-          sayJoin('Type the address you want the link sent to.', 'bad');
+          sayJoin('Enter your email address.', 'bad');
           field?.focus();
           return;
         }

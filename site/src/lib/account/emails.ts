@@ -182,33 +182,39 @@ interface Copy {
 }
 
 /**
- * EVERY SUBJECT IS ABOUT THE PASSWORD, and that is a contract rather than a coincidence.
+ * TWO SUBJECTS, AND "CHECK YOUR EMAIL" PRINTS THEM WORD FOR WORD (2026-09-22).
  *
- * The site cannot know which of these three was sent: typing an address into the sign-up
- * box sends `signup` to a new address and `magiclink` to one that already has an account,
- * and saying which would tell anybody with a list of addresses who has an account here. So
- * "Check your email" quotes no subject line at all; it says the subject is about your
- * password, and the only way that sentence stays true is if all three subjects are. The
- * news that somebody already HAS an account is carried by the preheader, the heading and
- * the first line, where only its owner reads it.
+ * The site cannot know which of `signup` and `magiclink` was sent: typing an address into
+ * the sign-up box sends `signup` to a new address and `magiclink` to one that already has an
+ * account, and saying which would tell anybody with a list of addresses who has an account
+ * here. So those two share ONE subject, and the page can name it without knowing. A reset is
+ * asked for on its own page, which the next page does know (`?k=recovery`), so it has its
+ * own. The news that somebody already HAS an account is carried by the preheader, the heading
+ * and the first line, where only its owner reads it.
+ *
+ * Exported because check-email.astro imports them: the subject a reader is told to look for
+ * and the subject that arrives are one constant, so they cannot drift apart.
  */
+export const SUBJECT_SET = 'Set your Wiser Walk password';
+export const SUBJECT_RESET = 'Reset your Wiser Walk password';
+
 const COPY: Record<EmailKind, Copy> = {
   signup: {
-    subject: 'Set your password for Wiser Walk',
+    subject: SUBJECT_SET,
     preheader: 'Choose a password and your results are kept for good.',
     heading: 'Set your password',
     button: 'Choose a password',
     before: [
       { html: 'Hello.' },
       {
-        html: 'Someone asked to make a Wiser Walk account with this address. If that was you, the button below takes you to a page where you choose a password. From then on you sign in with your email and that password.',
-        text: 'Someone asked to make a Wiser Walk account with this address. If that was you, the link below takes you to a page where you choose a password. From then on you sign in with your email and that password.'
+        html: 'Someone asked to make a Wiser Walk account with this address. If that was you, the button below takes you to a page where you choose a password. From then on you log in with your email and that password.',
+        text: 'Someone asked to make a Wiser Walk account with this address. If that was you, the link below takes you to a page where you choose a password. From then on you log in with your email and that password.'
       }
     ],
     after: [{ html: 'If it was not you, you can ignore this. Nothing has been made.' }, { html: 'Wiser Walk' }]
   },
   magiclink: {
-    subject: 'Your Wiser Walk password',
+    subject: SUBJECT_SET,
     preheader: 'You already have an account with this address.',
     heading: 'Your way back in',
     button: 'Choose a new password',
@@ -216,8 +222,8 @@ const COPY: Record<EmailKind, Copy> = {
       { html: 'Hello.' },
       { html: 'You already have a Wiser Walk account with this address.' },
       {
-        html: 'If you know your password, sign in at wiserwalk.com/account/sign-in/. If you do not, the button below lets you choose a new one.',
-        text: 'If you know your password, sign in at wiserwalk.com/account/sign-in/. If you do not, the link below lets you choose a new one.'
+        html: 'If you know your password, log in at wiserwalk.com/account/sign-in/. If you do not, the button below lets you choose a new one.',
+        text: 'If you know your password, log in at wiserwalk.com/account/sign-in/. If you do not, the link below lets you choose a new one.'
       }
     ],
     after: [
@@ -226,7 +232,7 @@ const COPY: Record<EmailKind, Copy> = {
     ]
   },
   recovery: {
-    subject: 'Choose a new password for Wiser Walk',
+    subject: SUBJECT_RESET,
     preheader: 'The link inside sets a new password on your account.',
     heading: 'Choose a new password',
     button: 'Choose a new password',

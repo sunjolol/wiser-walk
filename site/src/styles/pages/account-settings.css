@@ -1,0 +1,257 @@
+/* =====================================================================================
+ * /account/, the settings page (the design pass, 2026-09-22).
+ *
+ * Loaded by site/src/pages/account/index.astro only. account.css still carries the band,
+ * the fields and the switch; this file is the list under the band and the few things the
+ * band holds that no other account page has.
+ *
+ * A settings page in the shape every reader already knows (GOV.UK's summary list, and every
+ * account page since): one panel, one row per thing, the name of it, what it is now, and its
+ * one action on the right. Rows are parted by the kit's dotted rule, the same one `.spec`
+ * uses. Phone first; wide, it stays a reading column under the band's headline rather than
+ * spreading into cards.
+ *
+ * The fields in account.css are glass, made for white type on a painting. On this light
+ * panel they take the page's own inks instead, the way the footer's sign-up does.
+ * ===================================================================================== */
+
+/* The one red on the site, and only on the button that deletes. Every other failure on these
+   pages is worded in --warn-ink, which is the site's accepted ink for "not that". */
+/* ONE width for the card and the delete panel at every size: the page's own content width up
+   to 46rem, then held there, left-aligned under the band's headline, so a name, its value and
+   its action stay within one eyespan instead of across the whole desktop. */
+.set {
+  --set-red: #B3261E;
+  --set-red-hover: #9A1F18;
+  margin: 1.5rem 0 0; max-width: 46rem;
+}
+:root[data-theme="dark"] .set { --set-red: #C8413D; --set-red-hover: #D65550; }
+/* `hidden` must win over any display a rule below gives a form, a panel or a button. */
+.set [hidden], .ac-band [hidden] { display: none !important; }
+
+/* ------------------------------------------------------------------ the band ---- */
+/* The door to the profile, and the one fact beside it. */
+.set-facts {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .55rem 1rem; margin: 1.1rem 0 0;
+}
+/* An underlined line of white text, drawn as the log-in page draws "New here? Sign up"
+   (.ac-alt a), because every secondary link on the account pages is one. Five classes so it
+   outranks the dark panel's blue link ink (`.dark a:not(...)`, four). */
+.ac-band.ac-band--night .ac-when .set-facts a.set-profile {
+  display: inline-flex; align-items: center; gap: .35rem; min-height: 44px;
+  font-size: .95rem; font-weight: 600; color: #fff;
+  text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .22em;
+  text-decoration-color: rgba(255, 255, 255, .5);
+}
+.ac-band.ac-band--night .ac-when .set-facts a.set-profile:hover { text-decoration-color: #fff; }
+.ac-band.ac-band--night .ac-when .set-facts a.set-profile:focus-visible {
+  outline: 2px solid var(--blue-soft); outline-offset: 2px; border-radius: 4px;
+}
+/* the zero-width space keeps a line box while the count is still being asked for */
+.set-count { font-size: .92rem; color: var(--on-dark-soft); font-variant-numeric: tabular-nums; }
+.set-count:empty::before { content: "\200B"; }
+
+/* The signed-out door: "Log in", then one line for somebody without an account, laid out
+   the way the log-in page lays out its own button and its "New here?" line. The link is
+   white, as it is there; the dark panel would otherwise paint it in the left pole's blue. */
+.ac-band--night .ac-when .ac-acts .ac-btn { flex: 1 1 auto; }
+.ac-band--night .ac-when .ac-alt { margin: .5rem 0 0; text-align: center; }
+.ac-band.ac-band--night .ac-when .ac-alt a:not(.btn) { color: #fff; }
+
+/* ------------------------------------------------------------------ the list ---- */
+.set-card {
+  background: var(--panel); border-radius: var(--r-lg); box-shadow: var(--lift);
+  padding: .15rem 1.2rem .2rem;
+}
+.set-list { margin: 0; padding: 0; }
+/*
+ * A row: the name and what it is now on the left, the action on the right, centred against
+ * the pair. Anything a row opens (the password form, a saved line) runs full width beneath.
+ */
+.set-row {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 1rem;
+  align-items: center; padding: 1.05rem 0;
+  border-top: 2px dotted var(--rule-strong);
+}
+.set-row:first-child { border-top: 0; }
+.set-key {
+  grid-column: 1; margin: 0;
+  font-family: var(--ui); font-size: .92rem; font-weight: 600; line-height: 1.35; color: var(--ink);
+  text-wrap: balance;
+}
+.set-row dd { margin: 0; }
+.set-val {
+  grid-column: 1; margin-top: .2rem !important;
+  font-size: .94rem; line-height: 1.45; color: var(--ink-soft); text-wrap: pretty;
+}
+/* an address is one unbreakable word, and a long one must break rather than push the
+   panel wider than the phone */
+.set-val--addr { overflow-wrap: anywhere; }
+/* an empty value still makes a line, so the row does not grow when the address lands */
+.set-val:empty::before { content: "\200B"; }
+.set-dots { letter-spacing: .14em; color: var(--ink-mute); }
+.set-act { grid-column: 2; grid-row: 1 / span 2; justify-self: end; }
+.set-more { grid-column: 1 / -1; }
+
+/* "Change" and "Log out": the card's ONE secondary control, a small outlined pill in the
+   page's accent with a 44px target, always in the right-hand action column. */
+.set-do {
+  min-height: 44px; min-width: 5.6rem; padding: 0 1.1rem; cursor: pointer;
+  border: 0; border-radius: var(--r-pill); background: none;
+  box-shadow: inset 0 0 0 1.5px var(--rule-strong);
+  font-family: var(--ui); font-size: .68rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--accent);
+  transition: background-color .18s ease, box-shadow .18s ease;
+}
+.set-do:hover { background-color: var(--accent-soft); box-shadow: inset 0 0 0 1.5px var(--accent); }
+.set-do[aria-expanded="true"] { color: var(--ink-soft); }
+.set-do:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.set-do:disabled { cursor: default; color: var(--ink-mute); background: none; box-shadow: inset 0 0 0 1.5px var(--rule-strong); }
+
+/* The switch sits in the action column; account.css gives it a top margin for the old card
+   layout, which a row centred on its own does not want. */
+.set-act .ac-switch { margin: 0; }
+/* "Off" is wider than "On"; held at the wider, so the row's name does not rewrap on a tap */
+.set-act .ac-switch-word { min-width: 2.1em; }
+
+/* One line under a row for what just happened. Nothing is held for it: a row that grows by a
+   line when somebody has pressed something is the row telling them it heard. Empty, it has
+   no height, but it stays in the page: a live region that is not rendered until it speaks is
+   one some screen readers never hear. */
+.set-said { margin: 0; font-size: .88rem; line-height: 1.5; text-wrap: balance; }
+.set-said.is-ok, .set-said.is-busy, .set-said.is-bad { margin-top: .6rem; }
+.set-said.is-ok { color: var(--accent); font-weight: 600; }
+.set-said.is-busy { color: var(--ink-mute); }
+.set-said.is-bad { color: var(--warn-ink); font-weight: 600; }
+
+/* ------------------------------------------------------- forms on a light panel ---- */
+.set-form { margin: 1rem 0 .15rem; }
+.set .ac-label { color: var(--ink); text-shadow: none; }
+.set .ac-field {
+  background: var(--shell); color: var(--ink);
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+  box-shadow: inset 0 0 0 1.5px var(--rule-strong);
+}
+.set .ac-field:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.set .ac-field[aria-invalid="true"] { box-shadow: inset 0 0 0 2px var(--warn-ink); }
+.set .ac-cell-icon { color: var(--ink-mute); }
+/*
+ * Show / Hide on a light field. No ring of its own: a ring 1px inside the field's ring ran
+ * parallel to it with an uneven gap and read as a double outline (three, with the error
+ * ring). Instead a soft chip set 6px in from the field's edge on every side it faces, so no
+ * two edges ever run side by side; its 44px target comes from ::before, which is invisible.
+ */
+.set .ac-show {
+  right: 6px; min-height: 34px; min-width: 52px; padding: 0 .65rem;
+  background: var(--panel); color: var(--ink-soft); box-shadow: none;
+}
+.set .ac-show::before { content: ""; position: absolute; inset: -5px -3px; }
+.set .ac-show:hover { background: var(--accent-soft); color: var(--accent); }
+.set .ac-show:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+/* spacing comes from account.css's `.ac-group > .ac-rule`, as on the choose-a-password page */
+.set .ac-rule { color: var(--ink-mute); text-shadow: none; }
+/* "Forgot your password?" under a button on a light panel: the same quiet ink as Cancel.
+   Centred under the button while it is the phone's width, as on log in; at the left once
+   the button is the size of its words. */
+.set .ac-under { margin: .35rem 0 0; }
+.set .ac-under a {
+  color: var(--ink-soft); text-decoration-color: var(--rule-strong);
+}
+.set .ac-under a:hover { color: var(--ink); text-decoration-color: currentColor; }
+.set .ac-under a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+.set .ac-status { color: var(--ink-soft); text-shadow: none; }
+.set .ac-status.is-busy { color: var(--ink-mute); }
+.set .ac-status.is-bad { color: var(--warn-ink); text-shadow: none; }
+.set .ac-status.is-ok {
+  margin-top: .2rem; padding: 0; border-radius: 0; background: none; box-shadow: none;
+  font-size: .9rem; color: var(--accent);
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+}
+.set .ac-btn { box-shadow: var(--lift); }
+.set .ac-btn:disabled {
+  background-image: none; background-color: var(--shell); color: var(--ink-mute);
+  box-shadow: inset 0 0 0 1.5px var(--rule-strong);
+}
+/* Stretched on a phone, where the main action is the width of the column; from 30rem it is
+   the size of its words and sits at the left, under the fields it belongs to. */
+@media (min-width: 30rem) {
+  .set .ac-row > .ac-btn { align-self: start; }
+  .set-form .ac-group { max-width: 24rem; }
+  .set .ac-under { text-align: left; }
+}
+
+/* ------------------------------------------------------------------ deleting ---- */
+/* Quiet, under the panel, lined up with the words inside it. Text, not a button shape: it
+   is the one thing on the page nobody should press by accident. */
+.set-foot { margin: .7rem 0 0; padding: 0 1.2rem; }
+.set-quiet {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0; cursor: pointer;
+  border: 0; background: none;
+  font-family: var(--text); font-size: .9rem; color: var(--ink-mute);
+  text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .22em;
+  text-decoration-color: var(--rule-strong);
+}
+.set-quiet:hover { color: var(--ink); text-decoration-color: currentColor; }
+.set-quiet:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+.set-del {
+  margin: 1rem 0 0; padding: 1.3rem 1.2rem 1.35rem;
+  background: var(--panel); border-radius: var(--r-lg);
+  /* a faint ring of the button's own red, all the way round: this panel is not like the
+     others, and a stripe down one side of a rounded panel bends at the corners */
+  box-shadow: var(--lift), inset 0 0 0 1.5px color-mix(in srgb, var(--set-red) 38%, transparent);
+}
+.set-del-head {
+  margin: 0; font-family: var(--display); font-weight: 400; color: var(--ink);
+  font-size: 1.5rem; line-height: 1.1; letter-spacing: -.012em;
+}
+/* focused by the script so a screen reader starts here; a sighted reader needs no ring on
+   a heading they did not tab to */
+.set-del-head:focus { outline: none; }
+.set-del > p {
+  margin: .55rem 0 0; max-width: 33rem;
+  font-size: .95rem; line-height: 1.55; color: var(--ink-soft); text-wrap: pretty;
+}
+.set-btns { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem 1.1rem; }
+.set-btns .ac-btn { flex: 1 1 100%; }
+.btn.set-red { background-image: none; background-color: var(--set-red); color: #fff; }
+.btn.set-red:hover { background-color: var(--set-red-hover); box-shadow: 0 6px 14px rgba(179, 38, 30, .28); }
+.btn.set-red:focus-visible { outline: 2px solid var(--set-red); outline-offset: 3px; }
+.set-cancel {
+  min-height: 44px; margin: 0 auto; padding: 0 .4rem; cursor: pointer; border: 0; background: none;
+  font-family: var(--ui); font-size: .9rem; font-weight: 600; color: var(--ink-soft);
+  text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .22em;
+  text-decoration-color: var(--rule-strong);
+}
+.set-cancel:hover { color: var(--ink); text-decoration-color: currentColor; }
+.set-cancel:disabled { cursor: default; color: var(--ink-mute); }
+@media (min-width: 30rem) {
+  .set-btns .ac-btn { flex: 0 0 auto; }
+  .set-cancel { margin: 0; }
+}
+
+/* ------------------------------------------------------------------- wider ---- */
+@media (min-width: 46rem) {
+  .set { margin-top: 2rem; }
+  .set-card { padding: .3rem 1.6rem .35rem; }
+  .set-row { padding: 1.2rem 0; column-gap: 1.5rem; }
+  .set-foot { padding: 0 1.6rem; }
+  .set-del { padding: 1.6rem 1.6rem 1.65rem; }
+}
+/*
+ * Wide, three columns inside the 46rem card, as GOV.UK's summary list sits in its
+ * two-thirds column: the name, what it is now beside it, and the action at the right, so
+ * each row reads across in one line within one eyespan. Whatever a row opens starts under
+ * the value, where the eye already is.
+ */
+@media (min-width: 52rem) {
+  .set-row { grid-template-columns: 12.5rem minmax(0, 1fr) auto; column-gap: 1.5rem; min-height: 4.6rem; }
+  .set-key { grid-row: 1; }
+  .set-val { grid-column: 2; grid-row: 1; margin-top: 0 !important; }
+  .set-act { grid-column: 3; grid-row: 1; }
+  .set-more { grid-column: 2 / -1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .set-do { transition: none; }
+}

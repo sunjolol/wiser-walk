@@ -9,7 +9,7 @@ import '../styles/touch.css';
 import { QUIZZES, quizHref } from '../lib/engine/registry';
 import { liveGames } from '../lib/games';
 import { SEO, ogImageFor } from '../lib/seo';
-import { ACCOUNTS_READY } from '../lib/account/config';
+import { ACCOUNTS_READY, ACCOUNTS_VISIBLE } from '../lib/account/config';
 import Icon from '../components/Icon.astro';
 
 export interface Props {
@@ -155,6 +155,19 @@ const NAV: Array<{
    */
   { href: '/me/', label: 'My results', icon: 'users' }
 ];
+
+/*
+ * Once the public can see accounts, "My results" leaves the nav: the account pair beside the
+ * bulb takes over the job, "Log in" and "Sign up" for a guest and "My profile" (the same
+ * /me/) for somebody logged in. Until then the nav is the list above, untouched, so a build
+ * with the doors shut comes out exactly as it did.
+ *
+ * With no "My results" item the dot script at the foot of the page finds nothing and stops.
+ * That is deliberate: "My profile" says in words where it goes, and a logged-in reader always
+ * has something behind it, so a dot there would be lit on every page and say nothing. (Its
+ * note is not edited to say so, because that script is printed into every page as written.)
+ */
+const navItems = ACCOUNTS_VISIBLE ? NAV.filter(n => n.href !== '/me/') : NAV;
 ---
 <!doctype html>
 <html lang="en">
@@ -313,7 +326,7 @@ const NAV: Array<{
   </head>
   <body>
     <div class="sheet">
-    <header class="site-head">
+    <header class:list={['site-head', ACCOUNTS_VISIBLE && 'site-head--acct']}>
       <div class="wrap">
         <a class="brand" href="/">Wiser <span>Walk</span></a>
         {/*
@@ -324,7 +337,7 @@ const NAV: Array<{
           page is only marked visually.
         */}
         <nav>
-          {NAV.map(n => n.items ? (
+          {navItems.map(n => n.items ? (
             <details class:list={['navmenu', n.items.some(i => isCurrent(i.href)) && 'here']} name="sitenav">
               <summary>
                 {n.label}
@@ -355,7 +368,52 @@ const NAV: Array<{
           ) : (
             <a href={n.href} aria-current={isCurrent(n.href) ? 'page' : undefined}>{n.label}</a>
           ))}
-        </nav>
+        </nav>{ACCOUNTS_VISIBLE && (
+          /*
+            The account pair (the owner, 2026-09-22): "Log in" as text and "Sign up" as the one
+            loud pill for a guest, "My profile" for somebody logged in. It sits outside <nav>
+            because on a phone it is not in the nav's row: it takes the bulb's place at the top
+            right, where people look for it, and the bulb moves down to the end of the nav row.
+
+            Both states are in the page and the attribute the head script writes before first
+            paint says which one shows, so nobody sees the wrong one flash. They share one grid
+            cell, so the slot is as wide as the wider of the two whichever is showing, and
+            nothing beside it moves if the state changes while the page is open (/me/ drops
+            the attribute when the account turns out to be gone).
+
+            Hung off </nav> with no whitespace, so a build with the doors shut is unchanged
+            down to the byte.
+          */
+          <div class="head-acct">
+            <span class="head-acct-out">
+              <a class="head-login" id="head-login" href="/account/sign-in/"
+                 aria-current={isCurrent('/account/sign-in/') ? 'page' : undefined}>Log in</a>
+              <a class="head-join" href="/account/sign-up/"
+                 aria-current={isCurrent('/account/sign-up/') ? 'page' : undefined}>Sign up</a>
+            </span>
+            <a class="head-me" href="/me/" aria-current={isCurrent('/me/') ? 'page' : undefined}>
+              <span class="head-me-mark" aria-hidden="true"><Icon name="users" size={16} /></span>
+              <span>My profile</span>
+            </a>
+            {/*
+              After logging in, back to the page they were reading rather than to the profile.
+              Added in the browser rather than printed into the page, so every built page
+              carries the same plain address for the way in (switch-test.mjs looks for it);
+              without the script the link still works and lands on the profile. The log-in
+              page runs whatever it is given through safeNext(), which refuses anything that
+              is not a plain path on this site. Nothing is added where the profile is the
+              better landing anyway: the home page, /me/ itself, and the account pages.
+            */}
+            <script is:inline>
+              (function () {
+                var a = document.getElementById('head-login');
+                var p = location.pathname;
+                if (!a || p === '/' || p === '/me/' || p.indexOf('/account/') === 0) return;
+                a.href = '/account/sign-in/?next=' + encodeURIComponent(p);
+              })();
+            </script>
+          </div>
+        )}
         <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch theme">
           <svg viewBox="0 0 24 24" width="21" height="21" aria-hidden="true" fill="none"
                stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
@@ -406,10 +464,23 @@ const NAV: Array<{
               <span class="foot-signup-icon" aria-hidden="true"><Icon name="mail" size={17} /></span>
               <input id="foot-email" type="email" name="email" required autocomplete="email"
                      inputmode="email" placeholder="you@example.com" />
-              <button class="btn" type="submit">Sign up</button>
+              <button class="btn" type="submit">{
+                /* "Subscribe" once the header says "Sign up" for an account: one page must not
+                   use the same two words for two different things. The note is inside the
+                   expression so a build with the doors shut prints exactly what it did. */
+                ACCOUNTS_VISIBLE ? 'Subscribe' : 'Sign up'
+              }</button>
             </div>
             <p class="foot-signup-status" id="foot-signup-status" role="status" aria-live="polite"></p>
-          </form>
+          </form>{ACCOUNTS_VISIBLE && (
+            /*
+              What somebody logged in sees in the form's place (kit.css shows one or the other
+              from the attribute written in <head>): their account already has the address and
+              the switch for these emails, so the footer points there instead of asking again.
+              Hung off </form> with no whitespace, so a build with the doors shut is unchanged.
+            */
+            <p class="foot-acct"><a href="/account/">Email settings <Icon name="arrow" size={13} /></a></p>
+          )}
         </div>
       </div>
 
@@ -457,7 +528,12 @@ const NAV: Array<{
               <li><a href="/articles/">Articles</a></li>
               {/* The comparison pages are writing, and this is where the writing lives. */}
               <li><a href="/compare/">Compare traditions</a></li>
-              <li><a href="/about/">About</a></li>
+              <li><a href="/about/">About</a></li>{ACCOUNTS_VISIBLE && (
+                /* The header's way to /me/ is the account pair, which a guest reads as "make an
+                   account". Results kept on this device are on that same page, so a guest who
+                   took a quiz before accounts existed still has a plain way back to them. */
+                <li><a href="/me/">My profile</a></li>
+              )}
             </ul>
           </div>
         </nav>

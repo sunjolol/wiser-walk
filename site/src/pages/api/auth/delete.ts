@@ -35,7 +35,7 @@ export const POST: APIRoute = async ({ request, url, locals }) => {
   if (!sameOrigin(request, url)) return json(403, { ok: false, error: 'Bad origin.' });
 
   const who = await whoIs(fetch, env, bearerFrom(request));
-  if (!who) return json(401, { ok: false, error: 'Sign in first.' });
+  if (!who) return json(401, { ok: false, error: 'Log in first.' });
 
   if (!secret) {
     // Never pretend. Somebody asking to be forgotten and being told "done" when nothing

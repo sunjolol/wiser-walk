@@ -18,13 +18,15 @@
 import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
 import Icon from '../components/Icon.astro';
+import { ACCOUNTS_VISIBLE } from '../lib/account/config';
 
 /* Every one of these is a real hub that exists today. */
 const WAYS = [
   { href: '/quizzes/', label: 'Quizzes', icon: 'compass' as const },
   { href: '/games/', label: 'Games', icon: 'scroll' as const },
   { href: '/articles/', label: 'Articles', icon: 'book' as const },
-  { href: '/me/', label: 'My results', icon: 'users' as const }
+  // Named as the header names it: "My profile" once the public can see accounts.
+  { href: '/me/', label: ACCOUNTS_VISIBLE ? 'My profile' : 'My results', icon: 'users' as const }
 ];
 ---
 <Base

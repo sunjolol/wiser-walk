@@ -188,7 +188,7 @@ const games = liveGames();
           header's own My results link, so the two read as the same place.
         */}
         <p class="saved-pill" id="saved-note" hidden>
-          <Icon name="users" size={14} /> Saved to <a href="/me/">My results</a>
+          <Icon name="users" size={14} /> Saved to <a href="/me/">{ACCOUNTS_VISIBLE ? 'My profile' : 'My results'}</a>
         </p>
         {/*
           And, for the reader who has just finished and has no account, the one step that

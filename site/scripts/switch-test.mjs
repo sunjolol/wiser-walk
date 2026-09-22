@@ -13,7 +13,7 @@
  * different environment, and asks the built files what a visitor would actually get:
  *
  *   a. nothing set            the site exactly as it is today
- *   b. the demo values, production   a project behind it, and still no door in public
+ *   b. the demo values, production   a project behind it: the doors are public (since 2026-09-22)
  *   c. the demo values, preview      the doors open, because only the owner can open a preview
  *   d. nothing set again      so the working tree is left as it was found
  *
@@ -124,6 +124,18 @@ function builtPages() {
 }
 
 const pageText = path => readFileSync(join(STATIC, path.split('/').join(sep)), 'utf8');
+
+/**
+ * The site header of a built page and nothing else: the brand, the nav, the account pair and
+ * the bulb. Found by the layout's own class, because the account pages open their band with a
+ * <header> of their own.
+ */
+function headerOf(html) {
+  const start = html.indexOf('<header class="site-head');
+  if (start < 0) return '';
+  const end = html.indexOf('</header>', start);
+  return end < 0 ? html.slice(start) : html.slice(start, end);
+}
 
 /**
  * The module scripts a page loads, in order, each with the code that would run.
@@ -297,9 +309,9 @@ let runnerName = '';
   }
 }
 
-// =================================== b. a project behind it, and no door in public
+// ======================================== b. a project behind it: the doors are public
 
-console.log('\n2. a build with a project and VERCEL_ENV=production: still nothing in public');
+console.log('\n2. a build with a project and VERCEL_ENV=production: the doors are public');
 buildWith('production', {
   PUBLIC_SUPABASE_URL: 'https://example.supabase.co',
   PUBLIC_SUPABASE_KEY: 'sb_publishable_demo',
@@ -308,33 +320,35 @@ buildWith('production', {
 guardPasses('production');
 
 {
-  // Everything above the footer. The footer carries the newsletter sign-up on every page on
-  // the site, so an email field down there says nothing about whether /me/ is inviting
-  // anybody to make an account.
+  /*
+   * Until 2026-09-22 this build proved the opposite: that production, with a project behind
+   * it, still showed nobody a door. The owner switched ACCOUNT_LINKS_LIVE on that day ("yes
+   * go public now"), so production now has to show exactly what a preview does, and build 1
+   * above still proves that a build with no project shows none of it.
+   */
   const me = pageText('me/index.html');
   const above = me.includes('<footer') ? me.slice(0, me.indexOf('<footer')) : me;
 
-  yes(!/<input\b[^>]*type="email"/.test(above), 'My results offers no email field');
-  yes(!above.includes('Email me a link'), 'and does not ask anybody to send themselves a link');
-  yes(!above.includes('action="/account/sign-up/'), 'and holds no form pointing at the sign-up page');
-  yes(
-    !above.includes('href="/account/sign-in/') && !above.includes('href="/account/sign-up/'),
-    'and links to neither sign-in nor sign-up'
-  );
+  yes(/<input\b[^>]*type="email"/.test(above), 'My profile offers an email field');
+  yes(above.includes('Email me a link'), 'with the button that asks for a link');
+  yes(above.includes('href="/account/sign-in/'), 'and a way in for somebody who already has an account');
 
-  yes(!pageText('index.html').includes('href="/account/'), 'the home page points at no account page');
+  const head = headerOf(pageText('index.html'));
+  yes(head.length > 0, 'the home page has the site header');
+  yes(head.includes('href="/account/sign-in/'), 'the header offers "Log in"');
+  yes(head.includes('href="/account/sign-up/'), 'and "Sign up"');
+  yes(head.includes('My profile'), 'and "My profile" for a browser that is logged in');
+  yes(!head.includes('My results'), 'and no longer says "My results"');
 
   const holders = serverFiles().filter(f => readFileSync(f, 'utf8').includes('Keep it on every device'));
   yes(holders.length === 1, `one server chunk holds the result page's account button (found ${holders.length})`);
-
   if (holders.length === 1) {
-    const text = readFileSync(holders[0], 'utf8');
-    const guard = text.match(/([A-Za-z_$][\w$]*)\s*&&\s*renderTemplate`[^`]*Keep it on every device/);
-    yes(Boolean(guard), 'the button is written behind a condition rather than printed outright');
+    const guard = readFileSync(holders[0], 'utf8')
+      .match(/([A-Za-z_$][\w$]*)\s*&&\s*renderTemplate`[^`]*Keep it on every device/);
+    yes(Boolean(guard), 'the button is still written behind the one condition');
     if (guard) {
       const answer = await importedValue(holders[0], guard[1], 'b');
-      yes(answer.found, `the condition ${guard[1]} is imported from another built chunk`);
-      if (answer.found) yes(answer.value === false, `and in a production build it is false (it is ${answer.value})`);
+      yes(answer.found && answer.value === true, `and in a production build it is now true (it is ${answer.value})`);
     }
   }
 }
@@ -356,6 +370,24 @@ guardPasses('preview');
   yes(/<input\b[^>]*type="email"/.test(above), 'My results now offers an email field');
   yes(above.includes('Email me a link'), 'with the button that asks for a link');
   yes(above.includes('href="/account/sign-in/'), 'and a way in for somebody who already has an account');
+
+  // The header's pair, as it is printed. The script on the page adds ?next= to "Log in" in
+  // the browser, so the built attribute is the plain address.
+  const home = pageText('index.html');
+  const head = headerOf(home);
+  yes(
+    head.includes('href="/account/sign-in/"') && head.includes('href="/account/sign-up/"'),
+    'the home page header offers "Log in" and "Sign up"'
+  );
+  yes(!head.includes('My results'), 'in place of "My results", which the pair replaces');
+  yes(
+    home.includes('>Subscribe</button>') && !home.includes('>Sign up</button>'),
+    'and the footer\'s newsletter button says "Subscribe", so "Sign up" means one thing on the page'
+  );
+  // The header's way to /me/ is now the account pair, so the results a guest's device holds
+  // need a plain way back that does not read as "make an account".
+  const foot = home.includes('<footer') ? home.slice(home.indexOf('<footer')) : '';
+  yes(foot.includes('href="/me/"'), 'and the footer keeps a plain link to /me/ for results kept on the device');
 
   const quiz = moduleScripts(pageText('q/theology-compass/index.html'));
   const runners = quiz.filter(isRunner);

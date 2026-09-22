@@ -207,10 +207,12 @@ console.log('2. the hook payload');
 // ------------------------------------------------------------------- 3. the emails
 console.log('3. the emails');
 {
+  // Sign-up and "you already have an account" share one subject on purpose: the check-email
+  // page names it word for word and cannot know which of the two was sent.
   const SUBJECTS = {
-    signup: 'Set your password for Wiser Walk',
-    magiclink: 'Your Wiser Walk password',
-    recovery: 'Choose a new password for Wiser Walk'
+    signup: 'Set your Wiser Walk password',
+    magiclink: 'Set your Wiser Walk password',
+    recovery: 'Reset your Wiser Walk password'
   };
 
   for (const kind of ['signup', 'magiclink', 'recovery']) {
@@ -254,17 +256,17 @@ console.log('3. the emails');
     hasnt(mail.html, '<table', `${kind}: no table scaffolding`);
   }
 
-  // The site cannot know which of the three was sent, because saying so would tell anybody
-  // with a list of addresses who has an account here. So "Check your email" quotes no
-  // subject line and says instead that the subject is about your password — a sentence that
-  // is only true while every one of the three subjects is about the password.
-  for (const kind of ['signup', 'magiclink', 'recovery']) {
-    has(
-      emails.renderAuthEmail({ action: kind, tokenHash: 'H', token: '483205' }).subject.toLowerCase(),
-      'password',
-      `${kind}: the subject is about the password, so the site can say so without naming it`
-    );
-  }
+  // The site cannot know which of signup and magiclink was sent, because saying so would
+  // tell anybody with a list of addresses who has an account here. So "Check your email"
+  // prints ONE subject for both, imported from emails.ts, and that is only true while the two
+  // really are the same and the page's constants are the ones the emails use.
+  is(
+    emails.renderAuthEmail({ action: 'signup', tokenHash: 'H', token: '483205' }).subject,
+    emails.renderAuthEmail({ action: 'magiclink', tokenHash: 'H', token: '483205' }).subject,
+    'sign-up and a known address share one subject, so the page can name it'
+  );
+  is(emails.SUBJECT_SET, SUBJECTS.signup, 'and it is the constant check-email prints');
+  is(emails.SUBJECT_RESET, SUBJECTS.recovery, 'as is the reset one');
 
   has(
     emails.renderAuthEmail({ action: 'magiclink', tokenHash: 'H', token: '483205' }).html,
@@ -709,7 +711,7 @@ const LOG_EMPTY = ['/rest/v1/auth_email_log', ({ method }) => (method === 'GET' 
   const sends = at(calls, 'api.brevo.com');
   is(sends.length, 1, 'exactly one email');
   is(sends[0].body.to, [{ email: 'reader@example.com' }], 'to the address in the payload');
-  is(sends[0].body.subject, 'Set your password for Wiser Walk', 'with the sign-up subject');
+  is(sends[0].body.subject, 'Set your Wiser Walk password', 'with the sign-up subject');
   has(sends[0].body.htmlContent, 'https://wiserwalk.com/account/password/?t=HASH123&amp;k=signup', 'and the link built from the token hash');
 
   const written = at(calls, '/rest/v1/auth_email_log').filter(c => c.method === 'POST');

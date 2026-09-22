@@ -152,23 +152,28 @@ export function codeFor(error: unknown): string {
   return 'unknown';
 }
 
+/*
+ * Plain modern words, and what to do next (the design pass, 2026-09-22): no "Please", no
+ * "Sorry", and "log in" wherever a reader sees the act, because "sign in" and "sign up"
+ * differ by two letters and people press the wrong one.
+ */
 const SAYINGS: Record<string, string> = {
-  expired: 'That link has been used already, or it has expired. We can send you a fresh one.',
+  expired: 'That link has been used or has expired. Ask for a new one.',
   // Never "we have just sent one": the same refusal covers the minute between two requests
   // for one address AND the hour's ceiling for the whole project, and in the second case
   // nothing was sent to this person at all.
-  cooldown: 'Give it a minute before asking again. If an email was sent, it is in your inbox by now.',
-  busy: 'That is a lot of tries in a short time. Leave it a few minutes and try again.',
-  weak: 'Please pick a longer password. Eight characters or more.',
-  same: 'That is the password you already have. Please pick a different one.',
-  wrong: 'That email and password do not go together. Have another go.',
+  cooldown: 'Wait a minute, then try again. If an email was sent, it will be in your inbox by now.',
+  busy: 'Too many tries in a short time. Wait a few minutes, then try again.',
+  weak: `Use at least ${MIN_PASSWORD} characters.`,
+  same: 'That is the password you already have. Choose a different one.',
+  wrong: 'That email and password do not match. Check them and try again.',
   unconfirmed: 'Open the email we sent you and set a password there first.',
   offline: 'We could not reach your account. Check your connection and try again.',
   off: 'Accounts are not switched on yet.',
-  paused: 'Sign-in is having a rest and should be back in a few minutes. Your results are safe on this device.',
-  nosession: 'You are not signed in on this device.',
-  address: 'That does not look like an email address.',
-  unknown: 'Something went wrong at our end. Please try again in a moment.'
+  paused: 'Logging in is having a rest and should be back in a few minutes. Your results are safe on this device.',
+  nosession: 'You are not logged in on this device.',
+  address: 'Enter an email address like name@example.com.',
+  unknown: 'Something went wrong at our end. Try again in a moment.'
 };
 
 /** A code, as a sentence a page can print exactly as it stands. */
@@ -396,9 +401,9 @@ export async function signIn(email: string, password: string): Promise<Done> {
 }
 
 /**
- * Out of this browser only. The default scope signs them out everywhere they own, which is
- * not what anybody means by a Sign out link. The hint goes whatever the server says: they
- * asked to be signed out here, and here is the part we can honour.
+ * Out of this browser only. The default scope logs them out everywhere they own, which is
+ * not what anybody means by a "Log out" link. The hint goes whatever the server says: they
+ * asked to be logged out here, and here is the part we can honour.
  */
 export async function signOut(): Promise<Done> {
   if (!ACCOUNTS_READY) return no('off');
@@ -464,7 +469,13 @@ export async function whoAmI(): Promise<Who | null | 'unreachable'> {
   }
 }
 
-/** Changing it later, from `/account/`. The current one is checked by the server, not here. */
+/**
+ * Changing it later, from `/account/`. The current one is checked by the server, not here.
+ *
+ * Every OTHER device is logged out afterwards (OWASP's advice, and the design pass of
+ * 2026-09-22): somebody changing a password because they think it has leaked must not leave
+ * the person who has it still logged in. This browser stays in; they are standing at it.
+ */
 export async function changePassword(current: string, next: string): Promise<Done> {
   if (!ACCOUNTS_READY) return no('off');
   if (typeof next !== 'string' || next.length < MIN_PASSWORD) return no('weak');
@@ -476,7 +487,13 @@ export async function changePassword(current: string, next: string): Promise<Don
     // the published type for the attributes has not caught up with it.
     const attributes = { password: next, current_password: current } as unknown as { password: string };
     const { error } = await supabase.auth.updateUser(attributes);
-    return error ? bad(error) : { ok: true };
+    if (error) return bad(error);
+    try {
+      await supabase.auth.signOut({ scope: 'others' });
+    } catch {
+      /* the password has changed either way; the other sessions run out on their own */
+    }
+    return { ok: true };
   } catch (error) {
     return bad(error);
   }

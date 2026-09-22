@@ -120,14 +120,16 @@
  *
  * The band would push the answers under the fold at 390x700, and the site nav above and the
  * four-column footer below made the screen a reader spends three minutes on look like a
- * paragraph dropped into a home page. Both go while a run is in progress; the brand and the
- * theme bulb stay, and Back still reads "Leave the quiz" on the first statement, so there is
- * always a way out. No script change — the play panel's own hidden attribute drives all of it.
+ * paragraph dropped into a home page. Both go while a run is in progress, and so does the
+ * account pair beside the nav ("Log in", "Sign up", "My profile"); the brand and the theme bulb
+ * stay, and Back still reads "Leave the quiz" on the first statement, so there is always a way
+ * out. No script change — the play panel's own hidden attribute drives all of it.
  */
 .page:has(#play:not([hidden])) .band { display: none; }
 .page:has(#play:not([hidden])) .runner { margin-top: .25rem; }
 .page:has(#play:not([hidden])) { padding-top: .9rem; padding-bottom: 2.25rem; }
 .sheet:has(#play:not([hidden])) .site-head nav,
+.sheet:has(#play:not([hidden])) .site-head .head-acct,
 .sheet:has(#play:not([hidden])) .site-foot { display: none; }
 
 #play { max-width: 44rem; margin: 0 auto; }
@@ -434,6 +436,7 @@
 .page:has(#uniform:not([hidden])) .runner { margin-top: .25rem; }
 .page:has(#uniform:not([hidden])) { padding-top: .9rem; padding-bottom: 2.25rem; }
 .sheet:has(#uniform:not([hidden])) .site-head nav,
+.sheet:has(#uniform:not([hidden])) .site-head .head-acct,
 .sheet:has(#uniform:not([hidden])) .site-foot { display: none; }
 
 #uniform { max-width: 44rem; margin: 0 auto; }

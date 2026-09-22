@@ -1,10 +1,15 @@
 ---
 /**
- * The account room.
+ * Your account: the settings page.
  *
- * Not a doorway, so it wears no photograph: the dark starry ground says plainly that this
- * is the back of the house. Four things can be done here and each is a room of its own with
- * its own mark, because four boxes of grey text have to be read to be told apart.
+ * Built as a settings page is built everywhere a reader has used one (GOV.UK's summary list,
+ * and every account page since): one row per thing, the name of it, what it is now, and the
+ * one action it takes on the right. Nothing on this page explains how accounts work. The
+ * design pass of 2026-09-22 (design/accounts/PASS-BRIEF.md) replaced four cards of prose
+ * with this list.
+ *
+ * Not a doorway, so it wears no photograph: the dark starry ground says plainly that this is
+ * the back of the house.
  *
  * Signed-in state is painted by the browser, the way /me/ does it, and for the same reason:
  * every page on this site is static and cached, so the server cannot know who is reading.
@@ -12,10 +17,11 @@
  * which of the two is showing BEFORE first paint, so nothing flashes and nothing moves.
  *
  * Deleting really deletes: the account, the address, the results on the server and the
- * results on this device. The room says so in one line rather than hiding it behind a
- * confirmation nobody reads.
+ * results on this device. It asks for the password first, on the page, not in the browser's
+ * own grey box, which a thumb dismisses without reading.
  */
 import '../../styles/pages/account.css';
+import '../../styles/pages/account-settings.css';
 import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
 import AccountBand from '../../components/AccountBand.astro';
@@ -36,7 +42,7 @@ const HEADS = [
     icon: 'users' as const,
     title: 'Your account.',
     accent: 'account.',
-    lede: 'You are not signed in on this browser.'
+    lede: 'You are not logged in on this browser.'
   }
 ];
 ---
@@ -80,16 +86,16 @@ const HEADS = [
       <AccountBand kind="night" ghost="account" heads={HEADS}>
         <div class="ac-when ac-when--fallback" data-state="out">
           <p class="ac-acts">
-            <a class="btn ac-btn" href="/account/sign-in/">Sign in</a>
-            <a class="ac-go" href="/account/sign-up/">Make an account</a>
+            <a class="btn ac-btn" href="/account/sign-in/">Log in</a>
           </p>
+          <p class="ac-alt">New here? <a href="/account/sign-up/">Sign up</a></p>
         </div>
 
         <div class="ac-when" data-state="in">
-          <p class="ac-who">Signed in as <span id="ac-email">this browser</span></p>
+          <p class="ac-who">Logged in as <span id="ac-email"></span></p>
           {/*
             Filled during parse rather than after it, so the line never shows a placeholder
-            to somebody who is signed in. The height is held by .ac-who either way.
+            to somebody who is logged in. The height is held by .ac-who either way.
           */}
           <script is:inline>
             (function () {
@@ -98,17 +104,19 @@ const HEADS = [
             })();
           </script>
           {/*
-            Both values are EMPTY until the server has answered. A page that prints "Set"
-            before it has asked is telling somebody a fact about their account that it has
-            not checked, and the row would have to correct itself a second later. The rows
-            keep their height either way: see .spec dd:empty in account.css.
+            The door to the profile, and the one fact about the account a person would ask
+            for: how much of their work it holds. The count is EMPTY until the server has
+            answered, so the page never states something it has not checked; its line box is
+            held either way, so nothing moves when it lands. (A "Password: Set" row stood here
+            until 2026-09-22; the owner found it random, and it was.) The link is an underlined
+            line of text, as every secondary link on the account pages is, not a pill.
           */}
-          <dl class="spec">
-            <div><dt>Password</dt><dd id="ac-spec-pw"></dd></div>
-            <div><dt id="ac-spec-n-label">Results saved</dt><dd id="ac-spec-n"></dd></div>
-          </dl>
+          <p class="set-facts">
+            <a class="set-profile" href="/me/">My profile <Icon name="arrow" size={15} /></a>
+            <span class="set-count" id="ac-count"></span>
+          </p>
           {/* Shown only when the server could not be reached at all: the page stays as it
-              is rather than telling somebody they are signed out when they are not. */}
+              is rather than telling somebody they are logged out when they are not. */}
           <p class="ac-stale" id="ac-stale" hidden>
             We could not reach your account just now. What you see here may be out of date.
           </p>
@@ -116,175 +124,210 @@ const HEADS = [
       </AccountBand>
 
       <div class="ac-when" data-state="in">
-        <section class="ac-acct" aria-label="Your account">
-          {/* ------------------------------------------------------- change the password */}
-          {/* The one room with a form in it, so from the tablet up its words stand beside
-              its fields instead of leaving half a panel empty. */}
-          <article class="ac-room ac-room--wide">
-            <div class="ac-room-say">
-              <span class="ac-mark"><Icon name="key" size={20} /></span>
-              <h3>Change your password.</h3>
-              <p>You will stay signed in here. Anywhere else you are signed in stays as it is.</p>
-            </div>
-            <div class="ac-room-do">
-            <form id="ac-pw-form" novalidate>
-              <div class="ac-row">
-                <span class="ac-cell">
-                  <label class="sr-only" for="ac-pw-old">Your password now</label>
-                  <span class="ac-cell-icon" aria-hidden="true"><Icon name="key" size={17} /></span>
-                  <input class="ac-field" id="ac-pw-old" name="current" type="password" required
-                         autocomplete="current-password" placeholder="Your password now" />
-                </span>
-                <span class="ac-cell">
-                  <label class="sr-only" for="ac-pw-new">Your new password</label>
-                  <span class="ac-cell-icon" aria-hidden="true"><Icon name="key" size={17} /></span>
-                  <input class="ac-field ac-field--pw" id="ac-pw-new" name="next" type="password" required
-                         minlength={MIN_PASSWORD} autocomplete="new-password" placeholder="Your new password" />
-                  <button class="ac-show" type="button" data-show="ac-pw-new" aria-pressed="false">Show</button>
-                </span>
-                <p class="ac-rule">At least {MIN_PASSWORD} characters.</p>
-                <button class="btn ac-btn" id="ac-pw-go" type="submit">Save the new password</button>
+        <section class="set" aria-labelledby="set-title">
+          <h2 class="sr-only" id="set-title">Account settings</h2>
+
+          <div class="set-card">
+            <dl class="set-list">
+              {/* ------------------------------------------------------------ the address */}
+              {/* No "Change" yet: changing an address needs a confirmation at both ends, and a
+                  button that goes nowhere is worse than no button. */}
+              <div class="set-row">
+                <dt class="set-key">Email address</dt>
+                <dd class="set-val set-val--addr" id="ac-row-email"></dd>
               </div>
-            </form>
-            <p class="ac-status ac-panel-light" id="ac-pw-status" role="status" aria-live="polite"></p>
-            </div>
-          </article>
 
-          {/* -------------------------------------------------------------- the notes */}
-          <article class="ac-room">
-            <span class="ac-mark"><Icon name="mail" size={20} /></span>
-            <h3>Notes about new quizzes and games.</h3>
-            <p>
-              A short note when something new is made, and nothing else. Turning it off
-              never affects signing in.
-            </p>
-            <button class="ac-switch" id="ac-notes" type="button" role="switch" aria-checked="true">
-              <span class="ac-switch-track" aria-hidden="true"><span class="ac-switch-knob"></span></span>
-              <span class="ac-switch-word" id="ac-notes-word">On</span>
-            </button>
-            <p class="ac-status ac-panel-light" id="ac-notes-status" role="status" aria-live="polite"></p>
-          </article>
+              {/* ----------------------------------------------------------- the password */}
+              {/* id="password" so /account/#password opens the form: the address a password
+                  manager's "change password" button can be pointed at. */}
+              <div class="set-row" id="password">
+                <dt class="set-key">Password</dt>
+                <dd class="set-val"><span class="set-dots" aria-hidden="true">••••••••</span></dd>
+                <dd class="set-act">
+                  <button class="set-do" id="ac-pw-open" type="button"
+                          aria-expanded="false" aria-controls="ac-pw-form">Change</button>
+                </dd>
+                <dd class="set-more">
+                  {/* method="post": if the script has not loaded when Enter is pressed, the
+                      browser must not put two passwords in the address bar. */}
+                  <form class="set-form" id="ac-pw-form" method="post" novalidate hidden>
+                    {/* The address, for the password manager: it files the new password under
+                        this account instead of asking which one it belongs to. */}
+                    <input class="set-user" type="email" name="username" autocomplete="username" hidden />
+                    <div class="ac-row">
+                      <div class="ac-group">
+                        <label class="ac-label" for="ac-pw-old">Current password</label>
+                        <span class="ac-cell">
+                          <span class="ac-cell-icon" aria-hidden="true"><Icon name="key" size={17} /></span>
+                          <input class="ac-field ac-field--pw" id="ac-pw-old" name="current" type="password" required
+                                 autocomplete="current-password" spellcheck="false" autocapitalize="none" autocorrect="off"
+                                 aria-describedby="ac-pw-status" />
+                          <button class="ac-show" type="button" data-show="ac-pw-old" aria-pressed="false">Show</button>
+                        </span>
+                      </div>
+                      <div class="ac-group">
+                        <label class="ac-label" for="ac-pw-new">New password</label>
+                        {/* Between the label and the field, where the choose-a-password page
+                            prints it too, so the rule is read before anything is typed. */}
+                        <p class="ac-rule" id="ac-pw-rule">At least {MIN_PASSWORD} characters.</p>
+                        <span class="ac-cell">
+                          <span class="ac-cell-icon" aria-hidden="true"><Icon name="key" size={17} /></span>
+                          <input class="ac-field ac-field--pw" id="ac-pw-new" name="new-password" type="password" required
+                                 minlength={MIN_PASSWORD} autocomplete="new-password"
+                                 spellcheck="false" autocapitalize="none" autocorrect="off"
+                                 aria-describedby="ac-pw-rule ac-pw-status" />
+                          <button class="ac-show" type="button" data-show="ac-pw-new" aria-pressed="false">Show</button>
+                        </span>
+                      </div>
+                      <p class="ac-status" id="ac-pw-status" role="status" aria-live="polite"></p>
+                      <button class="btn ac-btn" id="ac-pw-go" type="submit">Save the new password</button>
+                    </div>
+                    {/* Both forms on this page ask for the current password, so somebody who
+                        has forgotten it needs the way round it here, under the button, where
+                        the log-in page keeps the same line. */}
+                    <p class="ac-under"><a class="set-forgot" href="/account/forgot/">Forgot your password?</a></p>
+                  </form>
+                  <p class="set-said" id="ac-pw-said" role="status" aria-live="polite"></p>
+                </dd>
+              </div>
 
-          {/* ---------------------------------------------------------------- signing out */}
-          <article class="ac-room">
-            <span class="ac-mark"><Icon name="door" size={20} /></span>
-            <h3>Sign out of this browser.</h3>
-            <p>
-              Your results stay on this device, and everything is still in your account when
-              you come back.
-            </p>
-            <p class="ac-acts">
-              <button class="btn ghost" id="ac-out" type="button">Sign out</button>
-            </p>
-            <p class="ac-status ac-panel-light" id="ac-out-status" role="status" aria-live="polite"></p>
-          </article>
+              {/* ---------------------------------------------------------------- emails */}
+              <div class="set-row">
+                <dt class="set-key" id="ac-notes-key">Emails about new quizzes and games</dt>
+                <dd class="set-val" id="ac-notes-val">Now and then, when something new is made.</dd>
+                <dd class="set-act">
+                  <button class="ac-switch" id="ac-notes" type="button" role="switch" aria-checked="true"
+                          aria-labelledby="ac-notes-key" aria-describedby="ac-notes-val">
+                    <span class="ac-switch-track" aria-hidden="true"><span class="ac-switch-knob"></span></span>
+                    <span class="ac-switch-word" id="ac-notes-word" aria-hidden="true">On</span>
+                  </button>
+                </dd>
+                <dd class="set-more">
+                  <p class="set-said" id="ac-notes-status" role="status" aria-live="polite"></p>
+                </dd>
+              </div>
+
+              {/* ----------------------------------------------------------- logging out */}
+              {/* A row like the others, its button the same pill in the same column as
+                  "Change". "This browser" because that is all it logs out: other devices
+                  stay logged in (signOut's scope is local). No value beside it: "Logged in"
+                  told a logged-in reader what they already knew, the kind of row the owner cut
+                  when it said "Password: Set". The empty cell keeps the row on the grid. */}
+              <div class="set-row">
+                <dt class="set-key">This browser</dt>
+                <dd class="set-val" aria-hidden="true"></dd>
+                <dd class="set-act">
+                  <button class="set-do" id="ac-out" type="button">Log out</button>
+                </dd>
+              </div>
+            </dl>
+          </div>
 
           {/* ------------------------------------------------------------------ deleting */}
-          <article class="ac-room">
-            <span class="ac-mark"><Icon name="bin" size={20} /></span>
-            <h3>Delete my account.</h3>
-            {/* The confirmation quotes this sentence rather than repeating it, so the room
-                and the dialog can never drift into promising two different things. */}
+          {/* Quiet at the foot of the page, and a step of its own when pressed: the sentence
+              of what goes, the password, and one red button. */}
+          <p class="set-foot">
+            <button class="set-quiet" id="ac-del" type="button"
+                    aria-expanded="false" aria-controls="ac-del-panel">Delete my account</button>
+          </p>
+          <div class="set-del" id="ac-del-panel" hidden>
+            <h2 class="set-del-head" id="ac-del-head" tabindex="-1">Delete your account?</h2>
             <p id="ac-del-say">
               Your email address, your results and your best scores go, from our side and
               from this device, and none of it can be brought back.
             </p>
-            <button class="ac-quiet" id="ac-del" type="button">Delete my account</button>
-            <p class="ac-status ac-panel-light" id="ac-del-status" role="status" aria-live="polite"></p>
-          </article>
+            <form class="set-form" id="ac-del-form" method="post" novalidate>
+              <input class="set-user" type="email" name="username" autocomplete="username" hidden />
+              <div class="ac-row">
+                <div class="ac-group">
+                  <label class="ac-label" for="ac-del-pw">Your password</label>
+                  <span class="ac-cell">
+                    <span class="ac-cell-icon" aria-hidden="true"><Icon name="key" size={17} /></span>
+                    <input class="ac-field ac-field--pw" id="ac-del-pw" name="password" type="password" required
+                           autocomplete="current-password" spellcheck="false" autocapitalize="none" autocorrect="off"
+                           aria-describedby="ac-del-status" />
+                    <button class="ac-show" type="button" data-show="ac-del-pw" aria-pressed="false">Show</button>
+                  </span>
+                </div>
+                <p class="ac-status" id="ac-del-status" role="status" aria-live="polite"></p>
+                <div class="set-btns">
+                  <button class="btn ac-btn set-red" id="ac-del-go" type="submit">Delete my account</button>
+                  <button class="set-cancel" id="ac-del-cancel" type="button">Cancel</button>
+                </div>
+              </div>
+              {/* Deleting must be within reach of somebody who has lost the password too. */}
+              <p class="ac-under"><a class="set-forgot" href="/account/forgot/">Forgot your password?</a></p>
+            </form>
+          </div>
         </section>
-
-        <p class="ac-fine">
-          Your answers to a quiz are never sent anywhere: the scoring happens in your
-          browser and what your account holds is the short result code, which is the same
-          thing that is already in the link. Games keep your best score, and which Bible you
-          chose in Sounds Like Scripture.
-        </p>
       </div>
     </>
   )}
 
   <script>
     import {
-      whoAmI, changePassword, setNotes, signOut, deleteAccount, countResults
+      whoAmI, changePassword, setNotes, signIn, signOut, deleteAccount, countResults
     } from '../../lib/account/client';
+    import { wirePasswordToggles, flagFields, carryEmail } from '../../lib/account/form';
+    import { MIN_PASSWORD } from '../../lib/account/config';
 
-    const room = document.getElementById('ac-pw-form');
-    if (room) {
-      const pick = id => document.getElementById(id);
-      /* Screenshot switches, read first because one of them pins the signed-in state that
-         the real check below would otherwise undo. Dev only: `import.meta.env.DEV` is
-         replaced with false when the site is built and this goes with it. */
+    const pwForm = document.getElementById('ac-pw-form') as HTMLFormElement | null;
+    if (pwForm) {
+      const pick = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
+      const root = document.documentElement;
+
+      /* Screenshot switches, read first because they pin the state that the real check below
+         would otherwise undo. Dev only: `import.meta.env.DEV` is replaced with false when the
+         site is built and this goes with it. */
       const shown = import.meta.env.DEV ? new URLSearchParams(location.search).get('state') : null;
-      if (shown === 'in' || shown === 'out') document.documentElement.dataset.acct = shown;
+      if (shown) root.dataset.acct = shown === 'out' ? 'out' : 'in';
 
-      const sayOn = (id, text, kind) => {
+      type Kind = 'busy' | 'bad' | 'ok';
+      const say = (id: string, text: string, kind?: Kind) => {
         const line = pick(id);
         line.textContent = text;
-        line.className = 'ac-status ac-panel-light' + (kind ? ' is-' + kind : '');
+        line.classList.remove('is-busy', 'is-bad', 'is-ok');
+        if (kind) line.classList.add('is-' + kind);
       };
-      const busyOn = (id, on, word, rest) => {
-        const button = pick(id);
+      const busy = (button: HTMLButtonElement, on: boolean, word: string) => {
         button.disabled = on;
-        button.textContent = on ? word : rest;
+        button.textContent = word;
       };
 
-      const results = n => (n === 1 ? '1 result' : n + ' results');
-
-      /*
-       * "Results saved" is a fact about the ACCOUNT, so it is the account that is asked.
-       * The device's shelf is capped at 200 and the account holds far more than that, and a
-       * page headed "Your account" printing the device's number under that label is the
-       * kind of small untruth this page exists not to tell.
-       *
-       * Until the server answers, the row says nothing. If it cannot answer, the device's
-       * own count is printed with the label changed to say what it counts. The key is read
-       * raw rather than through lib/shelf, the way the header's saved-results dot is,
-       * because this page needs a length and not the module that knows how to score one.
-       */
-      const onDevice = () => {
-        try {
-          const saved = JSON.parse(localStorage.getItem('ww.shelf.v1'));
-          return Array.isArray(saved) ? saved.length : 0;
-        } catch (e) {
-          return 0;
-        }
+      wirePasswordToggles(document);
+      /* A form put away with a password showing must not come back showing it. Each toggle
+         is pressed rather than the field retyped, so its label and its announcement stay
+         true to what it is doing. */
+      const hideAll = (form: HTMLElement) => {
+        form.querySelectorAll<HTMLButtonElement>('.ac-show[aria-pressed="true"]').forEach(toggle => toggle.click());
       };
-      // `shown` is null in every real build, so this is the live path; in dev it leaves the
-      // screenshot switches below in charge of what the two rows say.
-      if (!shown && document.documentElement.dataset.acct === 'in') {
-        countResults().then(n => {
-          if (typeof n === 'number') {
-            pick('ac-spec-n').textContent = results(n);
-            return;
-          }
-          pick('ac-spec-n-label').textContent = 'Results on this device';
-          pick('ac-spec-n').textContent = results(onDevice());
-        });
-      }
 
-      document.querySelectorAll('.ac-show').forEach(toggle => {
-        toggle.addEventListener('click', () => {
-          const field = pick(toggle.dataset.show);
-          const showing = field.type === 'text';
-          field.type = showing ? 'password' : 'text';
-          toggle.setAttribute('aria-pressed', String(!showing));
-          toggle.textContent = showing ? 'Show' : 'Hide';
+      // ---- who ---------------------------------------------------------------------------
+      /* One address, printed in the band and in its row, and put in the two hidden username
+         fields so a password manager knows whose password is changing. */
+      let address = String((window as unknown as { __wwAccountEmail?: string }).__wwAccountEmail ?? '');
+      const paintAddress = (value: string) => {
+        address = value;
+        pick('ac-email').textContent = value;
+        pick('ac-row-email').textContent = value;
+        // defaultValue as well, so putting a form away (which resets it) keeps the address
+        document.querySelectorAll<HTMLInputElement>('.set-user').forEach(field => {
+          field.defaultValue = value;
+          field.value = value;
         });
-      });
+      };
+      if (address) paintAddress(address);
 
-      // ---- who, and what the switch should be showing ----------------------------------
-      const notes = pick('ac-notes');
-      const notesWord = pick('ac-notes-word');
-      const paintNotes = on => {
+      const notes = pick<HTMLButtonElement>('ac-notes');
+      const paintNotes = (on: boolean) => {
         notes.setAttribute('aria-checked', String(on));
-        notesWord.textContent = on ? 'On' : 'Off';
+        pick('ac-notes-word').textContent = on ? 'On' : 'Off';
       };
 
       whoAmI().then(who => {
         if (who === 'unreachable') {
           // The request never arrived, or the project is having a rest. That is not somebody
-          // signed out: the header still says they are, and a page that contradicts the
+          // logged out: the header still says they are, and a page that contradicts the
           // header is worse than a page that admits it is looking at yesterday's answer.
           if (!shown) pick('ac-stale').hidden = false;
           return;
@@ -292,101 +335,269 @@ const HEADS = [
         if (!who) {
           // The server itself said there is nobody here. Show the door rather than leaving
           // controls that cannot work behind a name that is no longer true.
-          if (!shown) document.documentElement.dataset.acct = 'out';
+          if (!shown) root.dataset.acct = 'out';
           return;
         }
-        pick('ac-email').textContent = who.email;
-        pick('ac-spec-pw').textContent = who.passwordSet ? 'Set' : 'Not set yet';
+        if (!shown) paintAddress(who.email);
         paintNotes(!who.notesOff);
       });
 
-      // ---- change the password ---------------------------------------------------------
-      room.addEventListener('submit', event => {
-        event.preventDefault();
-        if (pick('ac-pw-go').disabled) return;
-        busyOn('ac-pw-go', true, 'Saving…');
-        sayOn('ac-pw-status', 'Saving…', 'busy');
-
-        changePassword(pick('ac-pw-old').value, pick('ac-pw-new').value).then(done => {
-          busyOn('ac-pw-go', false, '', 'Save the new password');
-          if (!done.ok) {
-            sayOn('ac-pw-status', done.say, 'bad');
+      /*
+       * "7 results saved" is a fact about the ACCOUNT, so it is the account that is asked.
+       * The device's shelf is capped at 200 and the account holds far more than that. If the
+       * account cannot answer, the device's own count is printed and says what it counts.
+       * The key is read raw rather than through lib/shelf, the way the header's saved-results
+       * dot is, because this page needs a length and not the module that knows how to score one.
+       */
+      const results = (n: number) => (n === 0 ? 'Nothing saved yet' : n === 1 ? '1 result' : n + ' results');
+      const onDevice = () => {
+        try {
+          const saved = JSON.parse(localStorage.getItem('ww.shelf.v1') ?? 'null');
+          return Array.isArray(saved) ? saved.length : 0;
+        } catch {
+          return 0;
+        }
+      };
+      if (!shown && root.dataset.acct === 'in') {
+        countResults().then(n => {
+          if (typeof n === 'number') {
+            pick('ac-count').textContent = n === 0 ? results(0) : results(n) + ' saved';
             return;
           }
-          room.reset();
-          sayOn('ac-pw-status', 'Saved. Use the new one next time.', 'ok');
+          const here = onDevice();
+          pick('ac-count').textContent = here === 0 ? results(0) : results(here) + ' on this device';
         });
+      }
+
+      // ---- change the password -------------------------------------------------------------
+      const pwOpen = pick<HTMLButtonElement>('ac-pw-open');
+      const pwGo = pick<HTMLButtonElement>('ac-pw-go');
+      const pwOld = pick<HTMLInputElement>('ac-pw-old');
+      const pwNew = pick<HTMLInputElement>('ac-pw-new');
+
+      const openPw = (open: boolean, focus = true) => {
+        pwForm.hidden = !open;
+        pwOpen.setAttribute('aria-expanded', String(open));
+        pwOpen.textContent = open ? 'Cancel' : 'Change';
+        if (open) {
+          say('ac-pw-said', '');
+          if (focus) pwOld.focus();
+          return;
+        }
+        hideAll(pwForm);
+        pwForm.reset();
+        flagFields([pwOld, pwNew], false);
+        say('ac-pw-status', '');
+        busy(pwGo, false, 'Save the new password');
+      };
+      pwOpen.addEventListener('click', () => {
+        const open = pwOpen.getAttribute('aria-expanded') !== 'true';
+        openPw(open);
+        if (!open) pwOpen.focus();
       });
 
-      // ---- the notes -------------------------------------------------------------------
+      pwForm.addEventListener('submit', event => {
+        event.preventDefault();
+        if (pwGo.disabled) return;
+        flagFields([pwOld, pwNew], false);
+
+        // What is missing or short is said here, before anything is sent, and in the words of
+        // the field it belongs to.
+        const miss =
+          !pwOld.value ? { field: pwOld, text: 'Enter your current password.' } :
+          !pwNew.value ? { field: pwNew, text: 'Enter a new password.' } :
+          pwNew.value.length < MIN_PASSWORD ? { field: pwNew, text: `Use at least ${MIN_PASSWORD} characters.` } :
+          pwNew.value === pwOld.value ? { field: pwNew, text: 'Choose a password different from your current one.' } :
+          null;
+        if (miss) {
+          flagFields([miss.field], true);
+          say('ac-pw-status', miss.text, 'bad');
+          miss.field.focus();
+          return;
+        }
+
+        busy(pwGo, true, 'Saving…');
+        say('ac-pw-status', 'Saving…', 'busy');
+
+        /*
+         * The current password is checked by logging in with it first. The server is also
+         * sent it with the change, but whether it insists on it is a switch in the project's
+         * settings, and its refusal arrives as a code this site does not know how to word.
+         * Logging in answers "is that the password?" in the one sentence that is always right.
+         */
+        signIn(address, pwOld.value)
+          .then(checked => {
+            if (!checked.ok) return checked;
+            return changePassword(pwOld.value, pwNew.value);
+          })
+          .then(done => {
+            if (!done.ok) {
+              busy(pwGo, false, 'Save the new password');
+              if (done.code === 'wrong') {
+                pwOld.value = '';
+                flagFields([pwOld], true);
+                say('ac-pw-status', 'That is not your current password. Have another go.', 'bad');
+                pwOld.focus();
+                return;
+              }
+              if (done.code === 'weak' || done.code === 'same') flagFields([pwNew], true);
+              say('ac-pw-status', done.say, 'bad');
+              return;
+            }
+            /* changePassword logs every other device out once the new one is saved, so a phone
+               left logged in somewhere is asked for the new one. */
+            openPw(false);
+            pwOpen.focus();
+            say('ac-pw-said', 'Saved. You are logged out everywhere else.', 'ok');
+          });
+      });
+
+      // /account/#password, which is where a password manager's "change password" lands.
+      if (location.hash === '#password' && root.dataset.acct === 'in') openPw(true, false);
+
+      // ---- the emails ----------------------------------------------------------------------
       notes.addEventListener('click', () => {
         const next = notes.getAttribute('aria-checked') !== 'true';
         paintNotes(next);
-        sayOn('ac-notes-status', 'Saving…', 'busy');
+        say('ac-notes-status', 'Saving…', 'busy');
         setNotes(next).then(done => {
           if (!done.ok) {
             paintNotes(!next);
-            sayOn('ac-notes-status', done.say, 'bad');
+            say('ac-notes-status', done.say, 'bad');
             return;
           }
-          sayOn('ac-notes-status', next ? 'On. We will let you know.' : 'Off. Your account is untouched.', 'ok');
+          say('ac-notes-status', next ? 'Saved. We will email you when something is new.' : 'Saved. No more of these emails.', 'ok');
         });
       });
 
-      // ---- sign out --------------------------------------------------------------------
-      pick('ac-out').addEventListener('click', () => {
-        busyOn('ac-out', true, 'Signing out…');
+      // ---- log out -------------------------------------------------------------------------
+      const out = pick<HTMLButtonElement>('ac-out');
+      out.addEventListener('click', () => {
+        busy(out, true, 'Logging out…');
         signOut().then(() => { location.href = '/me/'; });
       });
 
-      // ---- delete ----------------------------------------------------------------------
-      pick('ac-del').addEventListener('click', () => {
-        /* The promise is read off the room itself, whitespace tidied, so the dialog and the
-           page say the same thing word for word however either is edited later. */
-        const promise = pick('ac-del-say').textContent.replace(/\s+/g, ' ').trim();
-        if (!window.confirm('Delete your account? ' + promise)) return;
-        busyOn('ac-del', true, 'Deleting…');
-        sayOn('ac-del-status', 'Deleting…', 'busy');
-        deleteAccount().then(done => {
-          if (!done.ok) {
-            busyOn('ac-del', false, '', 'Delete my account');
-            sayOn('ac-del-status', done.say, 'bad');
+      // ---- forgotten the password ----------------------------------------------------------
+      // The address goes with them in session storage, not the URL, so the forgot page is
+      // already filled in (as it is from the log-in page).
+      document.querySelectorAll<HTMLAnchorElement>('.set-forgot').forEach(link => {
+        link.addEventListener('click', () => carryEmail(address));
+      });
+
+      // ---- delete --------------------------------------------------------------------------
+      const delOpen = pick<HTMLButtonElement>('ac-del');
+      const delPanel = pick('ac-del-panel');
+      const delForm = pick<HTMLFormElement>('ac-del-form');
+      const delPw = pick<HTMLInputElement>('ac-del-pw');
+      const delGo = pick<HTMLButtonElement>('ac-del-go');
+      const delCancel = pick<HTMLButtonElement>('ac-del-cancel');
+
+      const openDel = (open: boolean) => {
+        delPanel.hidden = !open;
+        delOpen.hidden = open;
+        delOpen.setAttribute('aria-expanded', String(open));
+        if (open) {
+          // To the heading, not the field: the sentence of what goes is read before the
+          // keyboard comes up over it.
+          pick('ac-del-head').focus();
+          return;
+        }
+        hideAll(delForm);
+        delForm.reset();
+        flagFields([delPw], false);
+        say('ac-del-status', '');
+        busy(delGo, false, 'Delete my account');
+        delOpen.focus();
+      };
+      delOpen.addEventListener('click', () => openDel(true));
+      delCancel.addEventListener('click', () => openDel(false));
+
+      delForm.addEventListener('submit', event => {
+        event.preventDefault();
+        if (delGo.disabled) return;
+        flagFields([delPw], false);
+        if (!delPw.value) {
+          flagFields([delPw], true);
+          say('ac-del-status', 'Enter your password.', 'bad');
+          delPw.focus();
+          return;
+        }
+
+        busy(delGo, true, 'Checking…');
+        delCancel.disabled = true;
+        say('ac-del-status', 'Checking your password…', 'busy');
+
+        const stop = (text: string, wrong: boolean) => {
+          busy(delGo, false, 'Delete my account');
+          delCancel.disabled = false;
+          if (wrong) {
+            delPw.value = '';
+            flagFields([delPw], true);
+            delPw.focus();
+          }
+          say('ac-del-status', text, 'bad');
+        };
+
+        // The password is proved by logging in with it, and only then is anything deleted.
+        signIn(address, delPw.value).then(checked => {
+          if (!checked.ok) {
+            if (checked.code === 'wrong') stop('That is not your password. Nothing was deleted.', true);
+            else stop(checked.say, false);
             return;
           }
-          /* The account is gone. The mailing list is a different company, and when it would
-             not let go of the address the reader is told here, on the page that promised it,
-             rather than being sent to the home page believing something that is not so. The
-             wait is long enough to read two sentences: there is nothing true left on this
-             page to stay for. */
-          if (done.listRemoved === false) {
-            busyOn('ac-del', true, 'Account deleted');
-            sayOn(
-              'ac-del-status',
-              'Your account is gone. We could not take your address off our email list just ' +
-                'now. The unsubscribe link in any email from us will do it.',
-              'ok'
-            );
-            window.setTimeout(() => { location.href = '/'; }, 10000);
-            return;
-          }
-          location.href = '/';
+          busy(delGo, true, 'Deleting…');
+          say('ac-del-status', 'Deleting…', 'busy');
+          deleteAccount().then(done => {
+            if (!done.ok) {
+              stop(done.say, false);
+              return;
+            }
+            /* The account is gone. The mailing list is a different company, and when it would
+               not let go of the address the reader is told here, on the page that promised it,
+               rather than being sent to the home page believing something that is not so. The
+               wait is long enough to read two sentences: there is nothing true left on this
+               page to stay for. */
+            if (done.listRemoved === false) {
+              busy(delGo, true, 'Account deleted');
+              say(
+                'ac-del-status',
+                'Your account is gone. We could not take your address off our email list just ' +
+                  'now. The unsubscribe link in any email from us will do it.',
+                'ok'
+              );
+              window.setTimeout(() => { location.href = '/'; }, 10000);
+              return;
+            }
+            location.href = '/';
+          });
         });
       });
 
+      /* Screenshot states. Dev only, like the switch above. */
       if (shown) {
-        document.documentElement.dataset.acct = shown === 'out' ? 'out' : 'in';
-        pick('ac-email').textContent = 'reader@example.com';
-        pick('ac-spec-pw').textContent = 'Set';
-        pick('ac-spec-n').textContent = '7 results';
+        paintAddress('reader@example.com');
+        pick('ac-count').textContent = '7 results saved';
         if (shown === 'stale') pick('ac-stale').hidden = false;
-        if (shown === 'waiting') { pick('ac-spec-pw').textContent = ''; pick('ac-spec-n').textContent = ''; }
-        if (shown === 'device') {
-          pick('ac-spec-n-label').textContent = 'Results on this device';
-          pick('ac-spec-n').textContent = '3 results';
-        }
-        if (shown === 'busy') { busyOn('ac-pw-go', true, 'Saving…'); sayOn('ac-pw-status', 'Saving…', 'busy'); }
-        if (shown === 'error') sayOn('ac-pw-status', 'That is not your password now. Have another go.', 'bad');
+        if (shown === 'waiting') pick('ac-count').textContent = '';
+        if (shown === 'device') pick('ac-count').textContent = '3 results on this device';
         if (shown === 'off') paintNotes(false);
+        if (shown === 'pw' || shown === 'busy' || shown === 'error') openPw(true, false);
+        if (shown === 'busy') { busy(pwGo, true, 'Saving…'); say('ac-pw-status', 'Saving…', 'busy'); }
+        if (shown === 'error') {
+          flagFields([pwOld], true);
+          say('ac-pw-status', 'That is not your current password. Have another go.', 'bad');
+        }
+        if (shown === 'saved') say('ac-pw-said', 'Saved. You are logged out everywhere else.', 'ok');
+        if (shown === 'notes') say('ac-notes-status', 'Saved. We will email you when something is new.', 'ok');
+        if (shown === 'del' || shown === 'del-error') {
+          delPanel.hidden = false;
+          delOpen.hidden = true;
+          delOpen.setAttribute('aria-expanded', 'true');
+        }
+        if (shown === 'del-error') {
+          flagFields([delPw], true);
+          say('ac-del-status', 'That is not your password. Nothing was deleted.', 'bad');
+        }
       }
     }
   </script>

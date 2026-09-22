@@ -1,19 +1,27 @@
 ---
 /**
- * Forgotten your password.
+ * Forgot your password.
  *
  * The same shape as signing up, one field and one button, because it is the same act: an
  * address goes in and a link comes back. Nothing here says whether that address has an
  * account, and the page says the same thing either way.
+ *
+ * The address typed on the log-in page is already in the field (form.ts carries it in
+ * session storage, never the URL), so most people only press the button. No sentence
+ * explains what the link does: the owner cut that one word for word on 2026-09-22.
  */
 import '../../styles/pages/account.css';
 import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
 import AccountBand from '../../components/AccountBand.astro';
 import { ACCOUNTS_READY } from '../../lib/account/config';
+
+/* The last two words of a headline are tied, so no width ever leaves one word alone on the
+   last line (the owner's rule: a lone last word is "super sloppy"). */
+const tie = (s: string) => s.replace(/ (?=\S+$)/, String.fromCharCode(160));
 ---
 <Base
-  title="Forgotten your password"
+  title="Forgot your password"
   description="We will email you a link to choose a new password."
   noindex={true}
 >
@@ -30,76 +38,86 @@ import { ACCOUNTS_READY } from '../../lib/account/config';
       </p>
     </AccountBand>
   ) : (
-    <AccountBand
-      eyebrow="Your password"
-      icon="key"
-      title="Forgotten your password?"
-      accent="password?"
-      lede="Put your email address in and we will send you a link to choose a new one."
-    >
-      <form class="ac-form" id="ac-form" novalidate>
+    <AccountBand eyebrow="Your account" icon="key" title={tie('Need a new password?')} accent={tie('new password?')}>
+      <form class="ac-form ac-form--one" id="ac-form" method="post" novalidate>
         {/* Hidden from people, irresistible to naive bots. Not a CAPTCHA and never will be. */}
         <p class="hp" aria-hidden="true">
           <label>Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
         </p>
         <div class="ac-row ac-row--one">
-          <span class="ac-cell">
-            <label class="sr-only" for="ac-email">Your email address</label>
-            <span class="ac-cell-icon" aria-hidden="true"><Icon name="mail" size={17} /></span>
-            <input class="ac-field" id="ac-email" name="email" type="email" required
-                   autocomplete="email" inputmode="email" placeholder="you@example.com" />
-          </span>
+          <div class="ac-group">
+            <label class="ac-label" for="ac-email">Email address</label>
+            <span class="ac-cell">
+              <span class="ac-cell-icon" aria-hidden="true"><Icon name="mail" size={17} /></span>
+              <input class="ac-field" id="ac-email" name="email" type="email" required
+                     autocomplete="email" inputmode="email" spellcheck="false" autocapitalize="none"
+                     aria-describedby="ac-status" />
+            </span>
+          </div>
+          <p class="ac-status" id="ac-status" role="status" aria-live="polite"></p>
           <button class="btn ac-btn" id="ac-go" type="submit">Email me a link</button>
         </div>
+        <p class="ac-under"><a href="/account/sign-in/" id="ac-back">Back to log in</a></p>
       </form>
-      <p class="ac-status" id="ac-status" role="status" aria-live="polite"></p>
-      <p class="ac-small">
-        The link lands on a page where you choose a new password, and works for an hour.
-        Until you choose one, your old password still works.
-      </p>
-      <p class="ac-acts">
-        <a class="ac-go" href="/account/sign-in/">Back to sign in</a>
-      </p>
     </AccountBand>
   )}
 
   <script>
     import { requestReset, sayFor } from '../../lib/account/client';
+    import { flagFields, carryEmail, carriedEmail } from '../../lib/account/form';
 
-    const form = document.getElementById('ac-form');
+    const form = document.getElementById('ac-form') as HTMLFormElement | null;
     if (form) {
-      const status = document.getElementById('ac-status');
-      const button = document.getElementById('ac-go');
-      const field = document.getElementById('ac-email');
+      const status = document.getElementById('ac-status')!;
+      const button = document.getElementById('ac-go') as HTMLButtonElement;
+      const field = document.getElementById('ac-email') as HTMLInputElement;
 
-      const say = (text, kind) => {
+      if (!field.value) field.value = carriedEmail();
+
+      const say = (text: string, kind?: string) => {
         status.textContent = text;
         status.className = 'ac-status' + (kind ? ' is-' + kind : '');
       };
-      const busy = on => {
+      const busy = (on: boolean) => {
         button.disabled = on;
         button.textContent = on ? 'Sending…' : 'Email me a link';
       };
 
+      // And back again, still typed.
+      document.getElementById('ac-back')?.addEventListener('click', () => carryEmail(field.value));
+
       form.addEventListener('submit', event => {
         event.preventDefault();
         if (button.disabled) return;
+        flagFields([field], false);
         // The honeypot. A bot that fills it gets the page a person gets, and nothing is sent.
-        if (form.elements.website && form.elements.website.value) {
+        const trap = form.elements.namedItem('website') as HTMLInputElement | null;
+        if (trap && trap.value) {
           location.href = '/account/check-email/?k=recovery';
           return;
         }
 
         const email = field.value.trim();
+        if (!email) {
+          flagFields([field], true);
+          say('Enter your email address.', 'bad');
+          field.focus();
+          return;
+        }
+
         busy(true);
         say('Sending…', 'busy');
         requestReset(email).then(done => {
           if (!done.ok) {
             busy(false);
+            if (done.code === 'address') {
+              flagFields([field], true);
+              field.focus();
+            }
             say(done.say, 'bad');
             return;
           }
-          try { sessionStorage.setItem('ww.acct.to', email); } catch (e) {}
+          try { sessionStorage.setItem('ww.acct.to', email); } catch { /* the next page leaves the address out */ }
           location.href = '/account/check-email/?k=recovery';
         });
       });
@@ -107,8 +125,10 @@ import { ACCOUNTS_READY } from '../../lib/account/config';
       /* Screenshot switches. Dev only: the whole block goes when the site is built. */
       if (import.meta.env.DEV) {
         const state = new URLSearchParams(location.search).get('state');
-        if (state === 'busy') { busy(true); say('Sending…', 'busy'); }
+        if (state === 'filled') field.value = 'reader@example.com';
+        if (state === 'busy') { field.value = 'reader@example.com'; busy(true); say('Sending…', 'busy'); }
         if (state === 'error') say(sayFor('cooldown'), 'bad');
+        if (state === 'empty') { flagFields([field], true); say('Enter your email address.', 'bad'); }
       }
     }
   </script>

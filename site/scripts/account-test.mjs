@@ -389,8 +389,10 @@ console.log('4. is there a project, and may anyone see it');
   is(configOn.ACCOUNTS_READY, true, 'both values set switches accounts on');
   is(configOn.SUPABASE_URL, URL_BASE, 'the url, with no trailing slash');
   is(configOn.SUPABASE_KEY, KEY, 'the publishable key');
-  is(configOn.ACCOUNT_LINKS_LIVE, false, 'links stay dark until the owner says otherwise');
-  is(configOn.ACCOUNTS_VISIBLE, false, 'so nothing on the site links to an account yet');
+  // Public since 2026-09-22, on the owner's go. With a project behind the build, every
+  // entry point shows; with none, nothing does (configOff below), whatever this says.
+  is(configOn.ACCOUNT_LINKS_LIVE, true, 'the owner switched the doors on');
+  is(configOn.ACCOUNTS_VISIBLE, true, 'so the site links to accounts wherever there is a project');
   is(configOn.MIN_PASSWORD, 8, 'eight characters, the same number Supabase is told');
 
   // The build variable is absent everywhere but Vite, and reading it must stay harmless.
@@ -399,13 +401,14 @@ console.log('4. is there a project, and may anyone see it');
 
   is(configPreview.IS_PREVIEW, true, 'a Vercel preview build knows it is one');
   is(configPreview.ACCOUNTS_VISIBLE, true, 'so the owner can see the public entry points there');
-  is(configPreview.ACCOUNT_LINKS_LIVE, false, 'without the committed switch having moved');
+  is(configPreview.ACCOUNT_LINKS_LIVE, true, 'the same committed switch as production');
 
   is(configProd.IS_PREVIEW, false, 'a production build is not a preview');
-  is(configProd.ACCOUNTS_VISIBLE, false, 'and production still shows nobody a door');
+  is(configProd.ACCOUNTS_VISIBLE, true, 'and production shows the doors, now they are public');
+  is(configOff.ACCOUNTS_VISIBLE, false, 'but never without a project: no keys, no doors');
 
   is(configDev.ACCOUNTS_VISIBLE, true, 'a dev machine may switch the entry points on to look at them');
-  is(configDev.ACCOUNT_LINKS_LIVE, false, 'and that override is not the owner\'s switch either');
+  is(configDev.ACCOUNT_LINKS_LIVE, true, 'the owner\'s switch, the same on every machine');
 }
 
 // ------------------------------------------------------------------ 5. one sync
