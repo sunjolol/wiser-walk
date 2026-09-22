@@ -1,0 +1,41 @@
+<!doctype html>
+<!-- The itch.io cover, 630 x 500. Drawn by node design/itch/build.mjs. itch prints the game's name
+     under the cover, so the cover carries the question, not the title. It is usually seen 315px wide
+     in a grid: the type is large on purpose. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@600;700&family=Inter:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 630px; height: 500px; overflow: hidden; background: #15161c; }
+  body { position: relative; font-family: Inter, sans-serif; color: #fff; }
+  .bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 55%; opacity: .9; transform: scale(1.14); transform-origin: 50% 100%; }
+  .scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(18,17,15,.3), rgba(18,17,15,.55) 45%, rgba(18,17,15,.9)); }
+  .in { position: absolute; inset: 0; padding: 40px 44px 36px; display: flex; flex-direction: column; }
+  .kicker {
+    align-self: flex-start; padding: 8px 18px; border-radius: 999px;
+    font-family: Poppins, sans-serif; font-weight: 700; font-size: 16px; letter-spacing: .15em; text-transform: uppercase;
+    background: rgba(255,255,255,.16); box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.4);
+  }
+  h1 { margin-top: 26px; font-family: "DM Serif Display", serif; font-weight: 400; font-size: 78px; line-height: 1; letter-spacing: -.02em; text-shadow: 0 3px 26px rgba(10,16,30,.6); }
+  h1 em { font-style: italic; color: #FFD2B0; }
+  .small { margin-top: 20px; font-size: 27px; font-weight: 500; line-height: 1.3; color: rgba(255,255,255,.96); text-shadow: 0 2px 14px rgba(10,16,30,.7); }
+  .foot { margin-top: auto; display: flex; align-items: center; justify-content: space-between; }
+  .brand { font-family: "DM Serif Display", serif; font-size: 28px; text-shadow: 0 2px 18px rgba(10,16,30,.6); }
+  .brand i { background: linear-gradient(90deg, #8CC4F2, #F6AE80); -webkit-background-clip: text; background-clip: text; color: transparent; }
+</style>
+</head>
+<body>
+  <img class="bg" src="../../site/public/img/game-manuscript.jpg" alt="">
+  <div class="scrim"></div>
+  <div class="in">
+    <p class="kicker">Free Bible game</p>
+    <h1>Is this line<br>in the <em>Bible?</em></h1>
+    <p class="small">Ten lines. A few seconds each.<br>Harder than you think.</p>
+    <div class="foot"><p class="brand">Wiser <i>Walk</i></p></div>
+  </div>
+</body>
+</html>

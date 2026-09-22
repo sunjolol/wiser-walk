@@ -96,7 +96,9 @@ to another project", inside his weekly token limit. Tick items here as they ship
 - [ ] **Posting (owner, optional, his biggest lever):** the verified list with drafts is `WHERE-TO-POST.md`.
       **HE REFUSED to open-source the code (2026-09-21): no licence file, skip the two curated GitHub lists, do
       not raise it again.** He said YES to preparing the **itch.io upload** (cover image 630x500, tags,
-      description, the plain build `demos/sounds-like-scripture.html`): **FIRST JOB of the next session**; he
-      does the upload himself.
+      description, the plain build `demos/sounds-like-scripture.html`): **PREPARED 2026-09-21: his steps,
+      the page text and tags are `design/itch/README.md`; the files are `design/itch/upload/` (the game with
+      its challenge links pointed at wiserwalk.com, a 630x500 cover, four screenshots; remade by
+      `node design/itch/build.mjs shots`).** He does the upload himself; re-upload only if the pool is rebuilt.
 - [x] Desktop: the Share / All articles row at the end of an article is hidden from 62rem (the rail already
       has "All articles"; in Vivaldi the share button opened a system panel that vanished). 2026-09-21.
