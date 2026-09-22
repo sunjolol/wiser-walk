@@ -49,9 +49,12 @@ const swap = (html: string, find: string, put: string) => {
  */
 const FONTS_GAME =
   'https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap';
-const FONTS_LAYOUT =
-  'https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&display=swap';
+/* Since 2026-09-21 the layout serves the faces itself from /fonts/, so the game's Google
+   stylesheet becomes the same local one, and the two preconnects to Google go with it. */
+const FONTS_LAYOUT = '/fonts/fonts.css';
 head = swap(head, FONTS_GAME, FONTS_LAYOUT);
+head = swap(head, '<link rel="preconnect" href="https://fonts.googleapis.com">\n', '');
+head = swap(head, '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n', '');
 
 body = swap(
   body,

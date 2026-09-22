@@ -74,7 +74,11 @@ to another project", inside his weekly token limit. Tick items here as they ship
       sentence above it says the same thing). The "Your answers" and games disclosures are untouched.
 - [ ] **14. Article engine**: two a month, topics chosen from Bing's free Keyword Research once he has
       imported the site (OWNER-ACTIONS step 6); every article opens with the direct answer.
-- [ ] **13. Self-host the two fonts** (after the content work; before/after captures).
+- [x] **13. Self-host the fonts (DONE 2026-09-21 on `seo/discoverability`)**: the three faces (DM Serif Display, Inter,
+      Poppins; Latin and Latin Extended; the same OFL files Google serves, licences beside them) in
+      `site/public/fonts/`, `fonts.css` linked from `Base.astro` with two preloads, the two game pages
+      swapped to the same stylesheet, no page left referencing Google, `/fonts/` cached a week. Before and
+      after captures of the home page at 390 were pixel-identical; how to regenerate: `design/tools/fonts.md`.
 - [ ] **15. Later, when there is traffic**: AVIF/srcset pipeline; per-page stylesheet split; embeddable
       result badge; Vercel Speed Insights; re-export the 511x768 humility image.
 

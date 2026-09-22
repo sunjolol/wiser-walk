@@ -417,7 +417,7 @@ console.log('9. vercel.json');
   // reaches it. Hence a headers block here, where Vercel reads it before that phase.
   is(value('/_astro/(.*)'), 'public, max-age=31536000, immutable', 'content-hashed assets are immutable');
   is(
-    value('/(img|og|tex)/(.*)'),
+    value('/(img|og|tex|fonts)/(.*)'),
     'public, max-age=604800, stale-while-revalidate=86400',
     'pictures and cards get a week, and a replaced one still lands inside a day'
   );
