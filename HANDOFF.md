@@ -16,9 +16,9 @@ and double opt-in must be ON in MailerLite. Steps: `site/src/lib/email/README.md
 
 ## START HERE (written at the end of the SECOND 2026-09-21 session; supersedes the section below where they differ)
 
-**Everything below this line, plus the itch.io kit, is on branch `seo/discoverability`, pushed to origin, NOT on
-`main`. The owner has been shown captures and asked for his go before the push to production; do not push it
-without that.** Every commit passed `npm run build` (prebuild tests + the SEO guard), `npm run test:switches` and
+**Everything below this line, plus the itch.io kit, was PUSHED TO `main` on 2026-09-22 with his go ("Just push it to
+main... If anything is wrong I'll just revert/change it"): commits `65a147a` to `b49b2c5`, deployed by Vercel. He
+had not looked at the pages himself; if he reports something wrong, fix it on `main` or revert that commit.** Every commit passed `npm run build` (prebuild tests + the SEO guard), `npm run test:switches` and
 `node audit/selftest.js`. The API refused agents for most of the session (529 overloads on every Opus call, three
 times), so items 4, 6, 11, 12 and 13 were done by hand in the main session.
 

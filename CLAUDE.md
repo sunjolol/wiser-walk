@@ -43,9 +43,9 @@ State: local git repo initialised, **one commit** `c8fd322`, 137 files tracked, 
 
 ## WHERE THINGS STAND (end of 2026-09-21, second session): READ HANDOFF.md FIRST
 
-**Branch `seo/discoverability` (pushed, NOT on `main`) holds the itch.io kit and six finished task-list items:
-the twelve `/compare/` pages, the printable gifts test, the dataset, the short `/method/`, self-hosted fonts and
-the seven deadly sins quiz gone live. It awaits the owner's go before any push to `main`.** Item 14 (articles)
+**LIVE on `main` since 2026-09-22 (his go, unseen: "if anything is wrong I'll just revert/change it"): the
+itch.io kit and six task-list items: the twelve `/compare/` pages, the printable gifts test, the dataset, the
+short `/method/`, self-hosted fonts and the seven deadly sins quiz gone live.** Item 14 (articles)
 needs his Bing Keyword Research numbers first. Details and lessons: `HANDOFF.md` "START HERE (second session)".
 
 The redesign is LIVE on `main` (picture bands site-wide, 11 articles with a topic filter, `/me/`,
