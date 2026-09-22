@@ -195,7 +195,9 @@ const namedSubject = isGift
 const meansTitle = bipolar
   ? caseTitle
   : group.shortAnswer
-    ? `What does ${namedSubject} look like in a church?`
+    ? isGift
+      ? `What does ${namedSubject} look like in a church?`
+      : `What does ${group.name} look like day to day?`
     : `What is ${group.name}?`;
 
 const heading = bipolar
@@ -397,7 +399,7 @@ const breadcrumbs =
         <section class="dark quoted-panel">
           <div class="dark-ghost" aria-hidden="true">{ghost}</div>
           <p class="feature-kicker">
-            <Icon name={quiz.icon} size={13} /> In the list's own words
+            <Icon name={quiz.icon} size={13} /> {isGift ? "In the list's own words" : "In the Bible's own words"}
           </p>
           <ul class="quoted">
             {quoted.map(q => (

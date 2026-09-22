@@ -66,8 +66,14 @@ to another project", inside his weekly token limit. Tick items here as they ship
       `DataDownload`) and the file `/data/theology-compass-traditions.csv`, both built from compass.json through
       the engine's own `band()`; linked from the tradition index at the foot of the Compass page.
 - [x] **10. Contact on /about/ (round 2)**: info@wiserwalk.com (he made the mailbox).
-- [ ] **11. Seven deadly sins: audit and publish.** A LEAN audit (one drafter-critic pass, one editor),
-      then `status: 'live'`, indexable, its own search title and card. Rename pending (`FOOT_SHORT`).
+- [x] **11. Seven deadly sins: audited and LIVE (2026-09-21 on `seo/discoverability`).** The lean pass was done in
+      the main session (the model API refused every agent that day): all fourteen statements judged for
+      plainness and keying (one reworded: "a good work" -> "something worthwhile"), the one uncertain
+      attribution cut (a line credited to Aquinas), Gregory's list described precisely (the Middle Ages settled
+      the seven from his list), the `notes` block written (intro, scale, result, low), and each of the seven
+      pages given a profile (question, 40-50 word answer, why it matters, a certain did-you-know, two WEBBE
+      verses inserted by script and checked by `engine-test.mjs`), so no sin page is thin when indexed. Status
+      flipped, draft note gone, engine tests updated. `FOOT_SHORT` (the footer's short label) is unchanged.
 - [x] **12. /method/ (DONE 2026-09-21 on `seo/discoverability`)**: 12,881 words -> about 1,250. The audit log and
       the refused findings moved whole to `/method/changelog/` (same grouping, same rows), linked from the
       audit paragraph, from /about/ and from every correction note; the 18-sheet list panel was cut (the
