@@ -1235,3 +1235,9 @@
 @media (prefers-reduced-motion: reduce) {
   .toc-list a, .rbar, .rbar-chev { transition: none; }
 }
+
+/* The feed line at the foot of /articles/: one sentence under the grid, for the readers who
+   use a feed reader, and a crawlable path to feed.xml from the page it lists. */
+.reads-feed { margin: 1.6rem 0 0; text-align: center; font-size: .92rem; color: var(--ink-2); text-wrap: balance; }
+.reads-feed a { color: var(--accent); font-weight: 600; text-decoration: none; }
+.reads-feed a:hover { text-decoration: underline; }

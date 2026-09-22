@@ -116,6 +116,11 @@ const filterTopics = topics.filter(t => articles.filter(x => x.data.tags.include
     ))}
   </div>
 
+  <p class="reads-feed">
+    New articles arrive about twice a month.
+    <a href="/articles/feed.xml">Follow the feed</a> and your reader will show you each one.
+  </p>
+
   {next.length > 0 && (
     <KeepGoing
       title="Or see where you stand."

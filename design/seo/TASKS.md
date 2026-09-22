@@ -51,9 +51,12 @@ to another project", inside his weekly token limit. Tick items here as they ship
       footer, `CompareRoom` on the Compass page, `CompareBlock` on each tradition page involved. Thirteen social
       cards. Every file was fact-read (four by an Opus editor, the rest by the main session); uncertain claims
       were cut rather than re-guessed.
-- [ ] **4. Printable spiritual gifts test**: judged worth it (strongest demand signal in the audit; what
-      ranks is gated, paid or scanned; low effort as a print stylesheet + a print page of the 57
-      statements with a scoring key). Do not call it a PDF.
+- [x] **4. Printable spiritual gifts test (BUILT 2026-09-21 on `seo/discoverability`)**: `/q/spiritual-gifts/print/`,
+      the 57 statements from the quiz's own data with a five-box row each and a scoring key for all 19 gifts
+      (0 to 4 a statement, reversed where the quiz keys it reversed, 0 to 12 a gift), a print stylesheet that
+      drops the site around it and puts the key on its own sheet, a "Print it for a group" link in the quiz's
+      band, its own search title, in the sitemap. Checked on paper through headless Chrome: five sheets. It is
+      a page, never called a PDF.
 - [x] **5. Say what people may do with the site (round 2, on /about/ and in the footer)**: one line in the footer and a sentence on /about/
       ("Use it. Print anything here for a class, a small group or a church, or quote it, as long as you say
       where it came from and link back."), CC BY 4.0 for the words and data, not the Bible text or the
@@ -73,7 +76,7 @@ to another project", inside his weekly token limit. Tick items here as they ship
 
 - [x] H2 headings on axis and tradition pages still use the site's private vocabulary ("Where the
       traditions sit", "The two cases"): fold into items 2 and 1.
-- [ ] A visible link to the article feed at the foot of /articles/.
+- [x] A visible link to the article feed at the foot of /articles/ (2026-09-21: one line under the grid).
 - [ ] `AxisMap.astro` draws figures whose mask on an axis is none/both: check it is not an unintended
       placement claim (fold into item 3's neighbour, the figure-axis pages).
 - [ ] Record `reads-sower.jpg` (Van Gogh, The Sower, June 1888, public domain, Wikimedia Commons file

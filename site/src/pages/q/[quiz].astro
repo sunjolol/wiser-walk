@@ -153,7 +153,13 @@ const breadcrumbs = isDraft
       foot, and the band is hidden the moment play begins, so it cannot linger over a
       statement. Without JavaScript the noscript note below says so, as it always has.
     */}
-    <button class="btn" type="button" data-start slot="actions">Start the quiz</button>
+    <button class="btn" type="button" data-start slot="actions">Start the quiz</button>{/*
+      The gifts test also exists on paper (/q/spiritual-gifts/print/), for a class or a small
+      group. It is the one quiz with a print page, so the link is keyed to its slug here rather
+      than to a field every other quiz would carry empty.
+    */}{quiz.slug === 'spiritual-gifts' && (
+      <a class="btn ghost" href="/q/spiritual-gifts/print/" slot="actions">Print it for a group</a>
+    )}
   </Hero>
 
   <div class="runner" id="runner" data-quiz={quiz.slug}>

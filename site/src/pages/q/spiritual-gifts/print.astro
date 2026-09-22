@@ -1,0 +1,171 @@
+---
+/**
+ * The spiritual gifts test on paper.
+ *
+ * "Printable spiritual gifts test" is a real search, and what ranks for it is gated behind
+ * an email address, sold, or a scan of a photocopy. This is the same 57 statements the quiz
+ * asks, in the same order, with a five-box row beside each and a scoring key on the last
+ * sheet, so a class, a small group or a church can run it with a pen. Nothing on it is a
+ * second instrument: the statements, the gifts and the keying are read from the quiz's own
+ * data, and the paper score orders the gifts exactly as the online one does (each statement
+ * 0 to 4, reversed where the quiz keys it reversed, three statements a gift, 0 to 12).
+ *
+ * It is a page, not a file: it prints from the browser's own print button, and on a screen
+ * it reads as any other page here does. Never call it a PDF.
+ */
+import Base from '../../../layouts/Base.astro';
+import Hero from '../../../components/Hero.astro';
+import SectionHead from '../../../components/SectionHead.astro';
+import Icon from '../../../components/Icon.astro';
+import { getQuiz } from '../../../lib/engine/registry';
+import { capitalise } from '../../../lib/engine/types';
+
+const quiz = getQuiz('spiritual-gifts')!;
+const groups = quiz.groups;
+const items = quiz.items;
+const reversed = items.filter(i => i.direction === -1).length;
+
+const SCALE = ['Strongly disagree', 'Disagree', 'Unsure / neither', 'Agree', 'Strongly agree'];
+
+/** The statements of each gift, by number, for the key. */
+const key = groups.map((g, gi) => ({
+  name: capitalise(g.name),
+  slug: g.slug,
+  numbers: items.filter(i => i.group === gi).map(i => ({ n: i.n, reversed: i.direction === -1 }))
+}));
+
+const title = 'Printable spiritual gifts test: all 19 gifts, with the scoring key';
+const description =
+  'The 57-statement spiritual gifts test on paper, free, with a scoring key for all 19 gifts. Print it for a class, a small group or a church.';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Quizzes', url: '/quizzes/' },
+  { name: quiz.title, url: `/q/${quiz.slug}/` },
+  { name: 'Printable test', url: '/q/spiritual-gifts/print/' }
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Quiz',
+  name: title,
+  description,
+  url: new URL('/q/spiritual-gifts/print/', Astro.site).href,
+  isAccessibleForFree: true,
+  inLanguage: 'en',
+  numberOfQuestions: items.length,
+  educationalLevel: 'general',
+  isBasedOn: new URL(`/q/${quiz.slug}/`, Astro.site).href
+};
+---
+
+<Base title={title} description={description} jsonLd={jsonLd} breadcrumbs={breadcrumbs}>
+  <Hero
+    title="The spiritual gifts test, on paper"
+    eyebrow="Printable"
+    icon="sparkle"
+    ghost="print"
+    lede="The same 57 statements the quiz asks, with a scoring key for all 19 gifts. Print it for a class, a small group or a church, and give the pen to whoever wants it."
+    tiles={[{ n: items.length, label: 'statements' }, { n: groups.length, label: 'gifts' }, { n: 'about 10', label: 'minutes' }]}
+  >
+    <button class="btn" type="button" data-print slot="actions"><Icon name="arrow" size={14} /> Print this test</button>
+  </Hero>
+
+  <div class="print-sheet">
+    <p class="print-how">
+      Mark one box for each sentence. {quiz.notes?.scale}
+    </p>
+    <div class="print-legend" aria-hidden="true">
+      {SCALE.map((s, i) => <span><b>{i}</b> {s}</span>)}
+    </div>
+
+    <SectionHead kicker="Answer every one" title="the statements" />
+    <ol class="print-items">
+      {items.map(i => (
+        <li>
+          <span class="print-n">{i.n}</span>
+          <span class="print-text">{i.text}</span>
+          <span class="print-boxes" role="group" aria-label={`Statement ${i.n}: ${SCALE.join(', ')}`}>
+            {SCALE.map((s, v) => <span class="print-box" title={s}><i>{v}</i></span>)}
+          </span>
+        </li>
+      ))}
+    </ol>
+
+    <div class="print-keywrap">
+    <SectionHead kicker="The last sheet" title="scoring key" id="key" />
+    <p class="print-how">
+      Each box is worth its number: strongly disagree 0, disagree 1, unsure 2, agree 3, strongly agree 4.
+      For the {reversed} statements marked <b>R</b> below, take the number away from 4 first (a 0 becomes
+      a 4, a 3 becomes a 1). Add the three numbers for each gift. The highest totals are where your
+      answers pointed. {quiz.notes?.introShort}
+    </p>
+    <table class="print-key">
+      <thead><tr><th>Gift</th><th>Statements</th><th>Total</th></tr></thead>
+      <tbody>
+        {key.map(k => (
+          <tr>
+            <th scope="row"><a href={`/gift/${k.slug}/`}>{k.name}</a></th>
+            <td>{k.numbers.map((x, i) => <span class="print-ref">{x.n}{x.reversed && <sup>R</sup>}{i < k.numbers.length - 1 ? ', ' : ''}</span>)}</td>
+            <td class="print-total" aria-label="Write the total here"></td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    <p class="print-foot">
+      Every gift here has its own page, with the passages that name it and what the New Testament
+      records of it: wiserwalk.com/gift/&lt;name&gt;/. The quiz that scores itself is at
+      wiserwalk.com/q/spiritual-gifts/. Free to print and use, with credit.
+    </p>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('[data-print]').forEach(b => b.addEventListener('click', () => window.print()));
+  </script>
+</Base>
+
+<style>
+  /* On a screen: a sheet, in the kit's voice. On paper: the same sheet with the site around it gone. */
+  .print-sheet { max-width: 46rem; margin: 0 auto; padding: 0 var(--gutter, 1rem) 2rem; }
+  .print-how { color: var(--ink-2); line-height: 1.55; margin: 1rem 0 .8rem; }
+  .print-legend { display: flex; flex-wrap: wrap; gap: .4rem .9rem; font-size: .85rem; color: var(--ink-2); margin-bottom: 1.4rem; }
+  .print-legend b { display: inline-grid; place-items: center; width: 1.4rem; height: 1.4rem; border-radius: .35rem; box-shadow: inset 0 0 0 1.5px var(--rule-strong, #999); font-family: Poppins, sans-serif; font-size: .75rem; margin-right: .2rem; color: var(--ink); }
+  .print-items { list-style: none; margin: 0; padding: 0; counter-reset: none; }
+  .print-items li { display: grid; grid-template-columns: 2rem 1fr; grid-template-areas: "n text" "n boxes"; gap: .3rem .6rem; align-items: start; padding: .7rem 0; border-bottom: 1px dotted var(--rule, #ccc); break-inside: avoid; }
+  .print-n { grid-area: n; font-family: Poppins, sans-serif; font-weight: 700; font-size: .8rem; letter-spacing: .06em; color: var(--accent); padding-top: .15rem; }
+  .print-text { grid-area: text; line-height: 1.45; }
+  .print-boxes { grid-area: boxes; display: flex; gap: .45rem; }
+  .print-box { display: inline-grid; place-items: center; width: 1.7rem; height: 1.7rem; border-radius: .4rem; box-shadow: inset 0 0 0 1.5px var(--rule-strong, #999); color: var(--ink-3, #888); font-size: .7rem; font-family: Poppins, sans-serif; }
+  .print-box i { font-style: normal; }
+  .print-key { width: 100%; border-collapse: collapse; margin: .4rem 0 1.2rem; font-size: .95rem; }
+  .print-key th, .print-key td { text-align: left; padding: .55rem .4rem; border-bottom: 1px dotted var(--rule, #ccc); vertical-align: middle; }
+  .print-key thead th { font-family: Poppins, sans-serif; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); }
+  .print-key tbody th { font-weight: 600; }
+  .print-key tbody th a { color: inherit; text-decoration: none; }
+  .print-key tbody th a:hover { text-decoration: underline; }
+  .print-ref sup { font-family: Poppins, sans-serif; font-size: .6rem; color: var(--accent); margin-left: .05rem; }
+  .print-total { width: 5.5rem; }
+  .print-total::after { content: ""; display: block; height: 1.6rem; border-radius: .4rem; box-shadow: inset 0 0 0 1.5px var(--rule-strong, #999); }
+  .print-foot { font-size: .85rem; color: var(--ink-2); line-height: 1.5; }
+  @media (min-width: 40rem) {
+    .print-items li { grid-template-columns: 2rem 1fr auto; grid-template-areas: "n text boxes"; align-items: center; }
+  }
+  @media print {
+    :global(.site-head), :global(.site-foot), :global(.band), :global([data-print]) { display: none !important; }
+    :global(html), :global(body), :global(main), :global(.sheet) { background: #fff !important; box-shadow: none !important; margin: 0 !important; padding: 0 !important; border-radius: 0 !important; }
+    .print-sheet { max-width: none; padding: 0; color: #000; }
+    .print-sheet::before { content: "The spiritual gifts test · wiserwalk.com"; display: block; font-family: Poppins, sans-serif; font-weight: 700; font-size: 11pt; letter-spacing: .08em; text-transform: uppercase; margin-bottom: .6rem; }
+    .print-how, .print-foot, .print-legend, .print-key thead th { color: #333; }
+    .print-n, .print-ref sup { color: #000; }
+    .print-items li { grid-template-columns: 1.8rem 1fr auto; grid-template-areas: "n text boxes"; align-items: center; padding: .38rem 0; border-bottom: 1px dotted #999; font-size: 10.5pt; }
+    .print-box { width: 1.45rem; height: 1.45rem; box-shadow: none; border: 1px solid #000; color: #555; border-radius: .25rem; }
+    .print-legend b, .print-total::after { box-shadow: none; border: 1px solid #000; }
+    .print-keywrap { break-before: page; }
+    .print-key { font-size: 10.5pt; }
+    .print-key th, .print-key td { border-bottom: 1px dotted #999; padding: .2rem .3rem; }
+    .print-keywrap .print-how { margin: .4rem 0 .5rem; font-size: 10pt; }
+    .print-total::after { height: 1.2rem; }
+    .print-key tbody th a { text-decoration: none; }
+  }
+</style>

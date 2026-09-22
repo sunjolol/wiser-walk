@@ -76,6 +76,11 @@ export const SEO: Record<string, { title: string; description: string }> = {
     description:
       'A free spiritual gifts test on all 19 gifts the New Testament names, from teaching and mercy to healing, prophecy and tongues. 57 statements, about 8 minutes.'
   },
+  '/q/spiritual-gifts/print/': {
+    title: 'Printable spiritual gifts test: all 19 gifts, with scoring key',
+    description:
+      'The 57-statement spiritual gifts test on paper, free, with a scoring key for all 19 gifts. Print it for a class, a small group or a church.'
+  },
   '/q/seven-deadly-sins/': {
     title: 'Which of the 7 deadly sins are you weakest to? Free quiz',
     description:
