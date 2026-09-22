@@ -297,28 +297,44 @@ export const checkTables: CheckFn = async (fetchImpl, env) => {
     return { step, name, state: 'todo', say: 'Nothing to check yet. Set the website keys and the secret key first.' };
   }
 
-  // The secret key goes on the apikey header and NEVER as a bearer token: it is not a JWT,
-  // and anything that tries to read it as one refuses the request.
-  const res = await ask(fetchImpl, `${base}/rest/v1/profiles?select=id&limit=1`, { apikey: secret });
-  if (!res) return { step, name, state: 'bad', say: UNREACHABLE };
-  if (res.status === 540) return { step, name, state: 'bad', say: PAUSED };
-  if (res.status === 401 || res.status === 403) {
-    return {
-      step,
-      name,
-      state: 'bad',
-      say: 'Supabase refused the secret key. Copy it again from the API Keys screen, paste it into Vercel as SUPABASE_SECRET_KEY, and redeploy.'
-    };
+  // Two tables: the first a person's own, the second the one only the server writes. Both
+  // have to answer the secret key, and on a project made since 30 May 2026 neither does
+  // unless the schema file granted it (see the end of schema.sql).
+  for (const table of ['profiles', 'auth_email_log']) {
+    // The secret key goes on the apikey header and NEVER as a bearer token: it is not a
+    // JWT, and anything that tries to read it as one refuses the request.
+    const res = await ask(fetchImpl, `${base}/rest/v1/${table}?limit=1`, { apikey: secret });
+    if (!res) return { step, name, state: 'bad', say: UNREACHABLE };
+    if (res.status === 540) return { step, name, state: 'bad', say: PAUSED };
+    if (res.status === 401 || res.status === 403) {
+      // Postgres's "permission denied" is a table the key may not touch, which no new key
+      // would fix. Telling those two apart is what stops a loop of fresh keys.
+      const body = (await res.json().catch(() => null)) as { code?: unknown } | null;
+      if (body?.code === '42501') {
+        return {
+          step,
+          name,
+          state: 'todo',
+          say: 'The tables are there, but the site is not yet allowed to use them. In Supabase open the SQL Editor, paste the whole of the schema file again, and press Run. It is safe to run twice.'
+        };
+      }
+      return {
+        step,
+        name,
+        state: 'bad',
+        say: 'Supabase refused the secret key. Copy it again from the API Keys screen, paste it into Vercel as SUPABASE_SECRET_KEY, and redeploy.'
+      };
+    }
+    if (res.status === 404 || res.status === 406) {
+      return {
+        step,
+        name,
+        state: 'todo',
+        say: 'The tables the accounts need are not there yet. In Supabase open the SQL Editor, paste the whole of the schema file, and press Run. It is safe to run twice.'
+      };
+    }
+    if (res.status >= 500) return { step, name, state: 'bad', say: UNREACHABLE };
   }
-  if (res.status === 404 || res.status === 406) {
-    return {
-      step,
-      name,
-      state: 'todo',
-      say: 'The tables the accounts need are not there yet. In Supabase open the SQL Editor, paste the whole of the schema file, and press Run. It is safe to run twice.'
-    };
-  }
-  if (res.status >= 500) return { step, name, state: 'bad', say: UNREACHABLE };
   return { step, name, state: 'ok', say: 'The account tables are there and answering.' };
 };
 
@@ -396,10 +412,52 @@ export const checkSending: CheckFn = async (fetchImpl, env) => {
   if (resendKey) {
     const res = await ask(fetchImpl, 'https://api.resend.com/domains', { authorization: `Bearer ${resendKey}` });
     if (!res) return { step, name, state: 'bad', say: 'The email service did not answer just now. Try this page again in a minute.' };
-    if (res.status === 401 || res.status === 403) {
+    const body = (await res.json().catch(() => null)) as { name?: unknown; data?: unknown } | null;
+
+    // A key made with "Sending access" may send and may do nothing else, so asking it for
+    // the list of domains is refused with a 401 named restricted_api_key. That is a working
+    // key, and the smallest one that does the job; calling it refused sent the owner round
+    // in a loop of making new keys. The 403 of the same name means the key is switched off.
+    if (res.status === 401 && body?.name === 'restricted_api_key') {
+      return {
+        step,
+        name,
+        state: 'ok',
+        say: 'The email service took our key. It can only send, so this page cannot see whether the address the emails come from is on your verified domain: the first real sign-up will show it.'
+      };
+    }
+    if (res.status === 429 || res.status >= 500) {
+      return { step, name, state: 'bad', say: 'The email service did not answer properly just now. Try this page again in a minute.' };
+    }
+    // Anything else that is not a 200 is the key. A made-up key gets a 400 here, not a 401,
+    // and was reported as working until 2026-09-22.
+    if (res.status !== 200) {
       return { step, name, state: 'bad', say: 'The email service refused our key. Make a new one and put it into Vercel.' };
     }
-    return { step, name, state: 'ok', say: 'The email service answered and the key works.' };
+
+    // The key works. Resend refuses every email from an address outside a verified domain,
+    // so the domain of the From address has to be on the list and verified. Neither the
+    // address nor the domain is printed: this is a public page.
+    const domain = fromAddress(env).split('@')[1] ?? '';
+    const domains = Array.isArray(body?.data) ? (body!.data as { name?: unknown; status?: unknown }[]) : [];
+    const mine = domains.find(d => typeof d?.name === 'string' && d.name.toLowerCase() === domain);
+    if (!mine) {
+      return {
+        step,
+        name,
+        state: 'todo',
+        say: 'The address the emails come from is not on any domain added to the email service. In Vercel, ACCOUNT_EMAIL_FROM has to end in the domain shown on its Domains page.'
+      };
+    }
+    if (mine.status !== 'verified') {
+      return {
+        step,
+        name,
+        state: 'todo',
+        say: 'The email service has not finished verifying the domain the emails come from. Its Domains page shows how far it has got; it can take a few minutes after the DNS records are added.'
+      };
+    }
+    return { step, name, state: 'ok', say: 'The email service took our key, and the domain the emails come from is verified.' };
   }
 
   const brevoKey = trim(env.BREVO_API_KEY);

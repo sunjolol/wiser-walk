@@ -365,6 +365,14 @@ const mail = () => ({
   routeFetch([['api.brevo.com', res(400, { code: 'account_under_validation' })]]);
   const held = await send.sendTransactional({ BREVO_API_KEY: 'k' }, mail());
   is(held.detail, '400 account_under_validation', 'the provider word survives, so the owner knows what to ask for');
+
+  // Resend refuses a From address on a domain it has not verified with a 403. That is not
+  // the key, and saying "key refused" would send the owner off to replace a working one.
+  routeFetch([['api.resend.com', res(403, { name: 'validation_error', message: 'The domain is not verified.' })]]);
+  const unverified = await send.sendTransactional({ RESEND_API_KEY: 'k' }, mail());
+  is(unverified.detail, '403 validation_error', 'a 403 about the domain keeps its own word');
+  routeFetch([['api.resend.com', res(403, { name: 'invalid_api_key' })]]);
+  is((await send.sendTransactional({ RESEND_API_KEY: 'k' }, mail())).detail, '403 key refused', 'a 403 about the key still says so');
 }
 {
   // A service that never answers. The stub honours the abort signal, which is the only
@@ -484,10 +492,19 @@ const FULL = {
   is(noTables.state, 'todo', 'no tables is something to do');
   has(noTables.say, 'SQL Editor', 'and it names the screen');
 
-  const fine = routeFetch([['/rest/v1/profiles', res(200, [])]]);
+  const fine = routeFetch([['/rest/v1/profiles', res(200, [])], ['/rest/v1/auth_email_log', res(200, [])]]);
   is((await checks.checkTables(globalThis.fetch, FULL)).state, 'ok', 'tables that answer are fine');
+  is(fine.length, 2, 'both the person-owned table and the server-only log are asked');
   is(fine[0].headers.apikey, 'sb_secret_demo', 'the secret key rides on the apikey header');
   is(fine[0].headers.authorization, undefined, 'and never as a bearer token');
+
+  // A project made since 30 May 2026 grants nothing to the secret key by itself. That is
+  // Postgres's "permission denied", and a new key would not fix it: the SQL would.
+  const denied = res(403, { code: '42501', message: 'permission denied for table auth_email_log' });
+  routeFetch([['/rest/v1/profiles', res(200, [])], ['/rest/v1/auth_email_log', denied]]);
+  const noGrant = await checks.checkTables(globalThis.fetch, FULL);
+  is(noGrant.state, 'todo', 'tables the key may not use are something to do, not a bad key');
+  has(noGrant.say, 'schema file again', 'and it sends him back to the SQL, not to make a new key');
 
   routeFetch([['/rest/v1/profiles', res(401, {})]]);
   is((await checks.checkTables(globalThis.fetch, FULL)).state, 'bad', 'a refused secret key is wrong');
@@ -534,6 +551,36 @@ const FULL = {
 
   routeFetch([['api.brevo.com/v3/senders', res(401, {})]]);
   is((await checks.checkSending(globalThis.fetch, FULL)).state, 'bad', 'a refused key is wrong');
+
+  // Resend. A "Sending access" key may not list domains, and says so by name: that is a
+  // working key, not a refused one.
+  const RESEND = { ...FULL, RESEND_API_KEY: 'resend-demo', ACCOUNT_EMAIL_FROM: 'Wiser Walk <account@mail.wiserwalk.com>' };
+  const domains = (...list) => res(200, { data: list });
+  routeFetch([['api.resend.com/domains', domains({ name: 'mail.wiserwalk.com', status: 'verified' })]]);
+  is((await checks.checkSending(globalThis.fetch, RESEND)).state, 'ok', 'a full-access Resend key with the From domain verified is fine');
+  routeFetch([['api.resend.com/domains', domains({ name: 'mail.wiserwalk.com', status: 'pending' })]]);
+  is((await checks.checkSending(globalThis.fetch, RESEND)).state, 'todo', 'a From domain still verifying is something to wait for');
+  routeFetch([['api.resend.com/domains', domains({ name: 'mail.wiserwalk.com', status: 'verified' })]]);
+  const bare = await checks.checkSending(globalThis.fetch, { ...RESEND, ACCOUNT_EMAIL_FROM: undefined });
+  is(bare.state, 'todo', 'a From address outside the verified domain is something to fix');
+  has(bare.say, 'ACCOUNT_EMAIL_FROM', 'and it names the setting to change');
+  routeFetch([['api.resend.com/domains', domains({ name: 'mail.wiserwalk.com', status: 'verified' })]]);
+  const printedDomains = JSON.stringify(await checks.checkSending(globalThis.fetch, RESEND));
+  hasnt(printedDomains, 'mail.wiserwalk.com', 'the page never prints the domain or the address');
+  routeFetch([['api.resend.com/domains', res(400, { statusCode: 400, name: 'validation_error', message: 'API key is invalid' })]]);
+  is((await checks.checkSending(globalThis.fetch, RESEND)).state, 'bad', 'a made-up Resend key, which Resend answers with a 400, is wrong');
+  routeFetch([['api.resend.com/domains', res(500, {})]]);
+  is((await checks.checkSending(globalThis.fetch, RESEND)).state, 'bad', 'a Resend outage is not a working key');
+  routeFetch([['api.resend.com/domains', res(401, { name: 'restricted_api_key', message: 'This API key is restricted to only send emails' })]]);
+  const sendingOnly = await checks.checkSending(globalThis.fetch, RESEND);
+  is(sendingOnly.state, 'ok', 'a sending-only Resend key is fine too');
+  has(sendingOnly.say, 'can only send', 'and the page says why it could not look further');
+  routeFetch([['api.resend.com/domains', res(401, { name: 'missing_api_key' })]]);
+  is((await checks.checkSending(globalThis.fetch, RESEND)).state, 'bad', 'a Resend 401 of any other name is wrong');
+  routeFetch([['api.resend.com/domains', res(403, { name: 'invalid_api_key' })]]);
+  is((await checks.checkSending(globalThis.fetch, RESEND)).state, 'bad', 'an invalid Resend key is wrong');
+  routeFetch([['api.resend.com/domains', res(403, { name: 'restricted_api_key', message: 'API key is not active' })]]);
+  is((await checks.checkSending(globalThis.fetch, RESEND)).state, 'bad', 'a switched-off Resend key is wrong');
 
   is((await checks.checkSending(realFetch, { ...FULL, EMAIL_PREVIEW: '1' })).state, 'todo', 'preview mode is named, not counted as working');
   const nothing = await checks.checkSending(realFetch, { PUBLIC_SUPABASE_URL: 'https://demo.supabase.co' });
@@ -667,7 +714,7 @@ const LOG_EMPTY = ['/rest/v1/auth_email_log', ({ method }) => (method === 'GET' 
 
   const written = at(calls, '/rest/v1/auth_email_log').filter(c => c.method === 'POST');
   is(written.length, 1, 'one line written to the log');
-  is(written[0].body[0].webhook_id, 'msg_1', 'keyed on the webhook id, so a retry cannot send twice');
+  is(written[0].body[0].webhook_id, 'msg_1', 'keyed on the webhook id, so the same delivery twice cannot send twice');
   is(written[0].body[0].ok, true, 'recorded as sent');
   hasnt(JSON.stringify(written[0].body), 'reader@example.com', 'and the log holds no address');
   is(written[0].headers.apikey, 'sb_secret_demo', 'written with the secret key on the apikey header');
@@ -687,6 +734,7 @@ const LOG_EMPTY = ['/rest/v1/auth_email_log', ({ method }) => (method === 'GET' 
   const calls = routeFetch([LOG_EMPTY, ['api.brevo.com', res(503, { code: 'unavailable' })]]);
   const r = await emailRoute.POST(ctx(hookRequest(), HOOK_ENV));
   is(r.status, 503, 'a busy email service answers 503, which is one of the two Supabase retries');
+  is(r.headers.get('retry-after'), '1', 'with the retry-after Supabase needs before it will try again');
   const written = at(calls, '/rest/v1/auth_email_log').filter(c => c.method === 'POST');
   is(written[0].body[0].ok, false, 'and the attempt is recorded as failed');
 }
@@ -694,6 +742,9 @@ const LOG_EMPTY = ['/rest/v1/auth_email_log', ({ method }) => (method === 'GET' 
   const calls = routeFetch([LOG_EMPTY, ['api.brevo.com', res(400, { code: 'not_enough_credits' })]]);
   const r = await emailRoute.POST(ctx(hookRequest(), HOOK_ENV));
   is(r.status, 200, 'a permanent refusal answers 200, because retrying it would end the same way');
+  const said = await r.json();
+  is(typeof said.error?.message, 'string', 'with an error Supabase can read, so the reader is told it failed');
+  is(typeof said.error?.http_code, 'number', 'and a status for it');
   const written = at(calls, '/rest/v1/auth_email_log').filter(c => c.method === 'POST');
   is(written[0].body[0].ok, false, 'recorded as failed');
   has(written[0].body[0].detail, 'not_enough_credits', 'with the word the owner needs');
@@ -706,6 +757,7 @@ const LOG_EMPTY = ['/rest/v1/auth_email_log', ({ method }) => (method === 'GET' 
   const calls = routeFetch([LOG_EMPTY, ['api.brevo.com', res(201, {})]]);
   const r = await emailRoute.POST(ctx(hookRequest(body), HOOK_ENV));
   is(r.status, 200, 'an action we do not handle never blocks the sign-in it belongs to');
+  is('error' in (await r.json()), false, 'and the answer carries no error for Supabase to fail on');
   is(at(calls, 'api.brevo.com').length, 0, 'and nothing is sent');
   const written = at(calls, '/rest/v1/auth_email_log').filter(c => c.method === 'POST');
   is(written[0].body[0].action, 'email_change', 'the action is recorded by name');
@@ -715,7 +767,50 @@ const LOG_EMPTY = ['/rest/v1/auth_email_log', ({ method }) => (method === 'GET' 
   const calls = routeFetch([LOG_EMPTY, ['api.brevo.com', res(201, {})]]);
   const r = await emailRoute.POST(ctx(hookRequest('{"nonsense":true}'), HOOK_ENV));
   is(r.status, 200, 'a payload we cannot read is still answered');
+  is('error' in (await r.json()), false, 'as handled, so a security notice can never fail the change it reports');
   is(at(calls, 'api.brevo.com').length, 0, 'and nothing is sent');
+}
+{
+  // Supabase retries under a NEW webhook id with the same payload bytes. The key the
+  // provider sees must be the same across those attempts, or a retry is a second email.
+  const RESEND_HOOK = { ...HOOK_ENV, RESEND_API_KEY: 'resend-demo', ACCOUNT_EMAIL_FROM: 'Wiser Walk <account@mail.wiserwalk.com>' };
+  const calls = routeFetch([LOG_EMPTY, ['api.resend.com', res(200, { id: 'r-1' })]]);
+  await emailRoute.POST(ctx(hookRequest(PAYLOAD, { id: 'msg_try_1' }), RESEND_HOOK));
+  await emailRoute.POST(ctx(hookRequest(PAYLOAD, { id: 'msg_try_2' }), RESEND_HOOK));
+  const other = JSON.stringify({ ...JSON.parse(PAYLOAD), email_data: { ...JSON.parse(PAYLOAD).email_data, token_hash: 'OTHER' } });
+  await emailRoute.POST(ctx(hookRequest(other, { id: 'msg_try_3' }), RESEND_HOOK));
+  const keys = at(calls, 'api.resend.com').map(c => c.headers['idempotency-key']);
+  is(keys.length, 3, 'three attempts reach the provider');
+  is(keys[0], keys[1], 'two attempts at the same email carry the same idempotency key');
+  if (keys[0] !== keys[2]) ok('a different email carries a different key');
+  else fail('two different emails share an idempotency key');
+  hasnt(keys.join(' '), 'HASH123', 'and the key is not the token hash itself');
+  is(at(calls, 'api.resend.com')[0].body.from, 'Wiser Walk <account@mail.wiserwalk.com>', 'sent from the verified subdomain');
+}
+{
+  // A send that runs out its 3.5 seconds leaves no room for Supabase to try again inside
+  // its five, so it is answered without retry-after and fails at once.
+  globalThis.fetch = async (input, init = {}) => {
+    const url = typeof input === 'string' ? input : input.url;
+    if (url.includes('/rest/v1/auth_email_log')) return init.method === 'POST' ? res(201, {}) : res(200, []);
+    return new Promise((_, reject) => init.signal?.addEventListener('abort', () => reject(new Error('aborted'))));
+  };
+  const r = await emailRoute.POST(ctx(hookRequest(PAYLOAD, { id: 'msg_slow' }), HOOK_ENV));
+  is(r.status, 503, 'a send that timed out is still a 503');
+  is(r.headers.get('retry-after'), null, 'but with no retry-after, because there is no time left to try again');
+}
+{
+  // Until 2026-09-22 the link was built from the request's own host, and on Vercel that host
+  // read as localhost. However the request arrives, a real email links to the live site.
+  const calls = routeFetch([LOG_EMPTY, ['api.brevo.com', res(201, { messageId: 'm-local' })]]);
+  const body = PAYLOAD;
+  const signed = hookRequest(body, { id: 'msg_local' });
+  const local = new Request('https://localhost/api/auth/email', { method: 'POST', headers: signed.headers, body });
+  const r = await emailRoute.POST(ctx(local, HOOK_ENV));
+  is(r.status, 200, 'a request that arrives as localhost is still sent');
+  const sends = at(calls, 'api.brevo.com');
+  has(sends[0]?.body.htmlContent ?? '', 'https://wiserwalk.com/account/password/?t=HASH123', 'and its link goes to the live site');
+  hasnt(sends[0]?.body.htmlContent ?? '', 'localhost', 'never to localhost');
 }
 {
   const calls = routeFetch([LOG_EMPTY, ['api.brevo.com', res(201, {})]]);
@@ -919,7 +1014,7 @@ console.log('9. /api/auth/health');
   // The report is public on purpose: the owner needs it before there is an account to check
   // him against. Two minutes at the edge is what stops a loop turning one request into four
   // outbound ones against Supabase and the email service.
-  is(r.headers.get('cache-control'), 'public, s-maxage=120, max-age=0', 'the report is cached at the edge');
+  is(r.headers.get('cache-control'), 'public, s-maxage=30, max-age=0', 'the report is cached at the edge, briefly');
   const body = await r.json();
   is(Array.isArray(body.checks), true, 'it returns a list of checks');
   is(body.checks.length >= 8, true, `all of them (${body.checks.length})`);

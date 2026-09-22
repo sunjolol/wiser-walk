@@ -90,6 +90,21 @@ function buildWith(label, extra) {
   console.log(`  ..   built in ${took}s`);
 }
 
+/**
+ * The discoverability guard, run over the build just made.
+ *
+ * `npm run build` runs it as `postbuild`, and Vercel builds with `npm run build`; this file
+ * builds with `astro build`, which skips it. So until 2026-09-22 the guard had only ever
+ * read a build with accounts switched off, and the first real deploy with the two PUBLIC
+ * values set failed on account pages that no earlier build had rendered. Running it after
+ * each build here means a build with a project behind it is checked before Vercel does it.
+ */
+function guardPasses(label) {
+  const res = spawnSync(process.execPath, [resolve(here, 'seo-test.mjs')], { cwd: ROOT, encoding: 'utf8' });
+  const said = (res.stdout ?? '').split('\n').filter(line => line.includes('FAIL'));
+  yes(res.status === 0, `the discoverability guard passes on the ${label} build` + (said.length ? `:\n${said.join('\n')}` : ''));
+}
+
 // -------------------------------------------------------- reading what was built
 
 /** Every built page, as a site-shaped path: 'me/index.html', 'q/theology-compass/index.html'. */
@@ -290,6 +305,7 @@ buildWith('production', {
   PUBLIC_SUPABASE_KEY: 'sb_publishable_demo',
   VERCEL_ENV: 'production'
 });
+guardPasses('production');
 
 {
   // Everything above the footer. The footer carries the newsletter sign-up on every page on
@@ -331,6 +347,7 @@ buildWith('preview', {
   PUBLIC_SUPABASE_KEY: 'sb_publishable_demo',
   VERCEL_ENV: 'preview'
 });
+guardPasses('preview');
 
 {
   const me = pageText('me/index.html');

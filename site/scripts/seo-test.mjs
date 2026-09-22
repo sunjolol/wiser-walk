@@ -103,6 +103,36 @@ const isNoindex = html => /<meta[^>]*\bname=["']robots["'][^>]*\bcontent=["'][^"
 const hasCanonical = html => /<link[^>]*\brel=["']canonical["']/i.test(head(html));
 
 /**
+ * The <h1>s a reader actually gets, which is not always the <h1>s in the file.
+ *
+ * AccountBand draws one head per page state, each inside `.ac-head[data-state]`, and
+ * account.css shows exactly one of them: the one `data-acct` names, or the fallback head when
+ * no state was ever decided. The rest are display:none, out of the page for a reader and a
+ * screen reader alike. So a set of those is one h1, not several, and what can go wrong with
+ * it is the fallback: none, and a page whose script never ran has no heading at all; two,
+ * and it has both. That is reported separately.
+ *
+ * This was missed until the first build with the two PUBLIC_SUPABASE_ values set, on
+ * 2026-09-22: the state heads only render once accounts are switched on, and every earlier
+ * build had them off. /account/ counted 2 and /account/password/ 5, and the build failed.
+ *
+ * A block this pattern does not recognise is left in and its h1s counted the ordinary way,
+ * so a mistake here can only fail a build, never pass a page with two headings.
+ */
+const STATE_HEAD = /<div class="ac-head( ac-head--fallback)?" data-state="[^"]*">([\s\S]*?)<\/div>/g;
+const countH1 = html => {
+  let states = 0;
+  let fallbacks = 0;
+  const rest = html.replace(STATE_HEAD, (block, fallback, inner) => {
+    if ((inner.match(/<h1[\s>]/gi) || []).length !== 1) return block;
+    states++;
+    if (fallback) fallbacks++;
+    return '';
+  });
+  return { h1s: (rest.match(/<h1[\s>]/gi) || []).length + (states ? 1 : 0), states, fallbacks };
+};
+
+/**
  * A description that stops in the middle of a word. There is no way to know a truncated
  * word from a short one by looking at it, so what is checked is the thing truncation always
  * leaves behind: no end. A finished sentence ends on a full stop, a question mark, an
@@ -140,8 +170,9 @@ for (const [path, html] of built) {
   const noindex = isNoindex(html);
 
   // ---- structure, on every page, indexable or not
-  const h1s = (html.match(/<h1[\s>]/gi) || []).length;
+  const { h1s, states, fallbacks } = countH1(html);
   if (h1s !== 1) note(path, h1s + ' <h1> (want exactly 1)');
+  if (states && fallbacks !== 1) note(path, states + ' state heads with ' + fallbacks + ' fallback (want exactly 1)');
 
   /* The attribute must be PRESENT; it may be empty, which is the right answer for a picture
      that carries no information a reader would miss. Astro compresses alt="" to a bare `alt`,

@@ -403,6 +403,33 @@ const config = await bundle('astro.config.mjs', 'node_modules/.seo-plumbing-conf
   is(config.articleLastmod(pathToFileURL(join(scratch, 'no-such-dir') + '/')).size, 0, 'a missing directory is not a crash');
 }
 
+// ================================== 8b. the address an on-demand route believes it has
+console.log('8b. the host an on-demand route believes it is served from');
+{
+  // Astro's own request builder, the one the Vercel adapter calls, fed the headers Vercel
+  // sends. With no allowed hosts it ignores them all and answers https://localhost, which is
+  // what the live site did until 2026-09-22: its no-script newsletter form was refused as a
+  // cross-site post, and the account email links would have opened localhost.
+  const { NodeApp } = await import('astro/app/node');
+  const allowedDomains = config.default?.security?.allowedDomains ?? [];
+  const seen = headers =>
+    new URL(NodeApp.createRequest({ method: 'GET', url: '/api/auth/health', headers, socket: {} }, { allowedDomains }).url).origin;
+  const vercel = host => ({ host, 'x-forwarded-host': host, 'x-forwarded-proto': 'https' });
+
+  is(seen(vercel('wiserwalk.com')), 'https://wiserwalk.com', 'the live site knows its own name, not localhost');
+  is(seen(vercel('www.wiserwalk.com')), 'https://www.wiserwalk.com', 'and the www form');
+  is(
+    seen(vercel('wiser-walk-git-main-sunjo.vercel.app')),
+    'https://wiser-walk-git-main-sunjo.vercel.app',
+    'a preview deployment knows its own name'
+  );
+  is(
+    seen({ host: 'wiserwalk.com', 'x-forwarded-host': 'evil.example.com', 'x-forwarded-proto': 'https' }),
+    'https://wiserwalk.com',
+    'a forwarded host that is not ours is not believed'
+  );
+}
+
 // ============================================================== 9. vercel.json
 console.log('9. vercel.json');
 {

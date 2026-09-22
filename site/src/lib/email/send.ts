@@ -37,7 +37,7 @@ export interface Mail {
   text: string;
   /** A word for the logs, e.g. `signup`. Rides along as a provider tag. */
   tag?: string;
-  /** The webhook id, so a retried delivery cannot become a second email. */
+  /** The same for every attempt at one email, so a retried delivery cannot become a second one. */
   idempotencyKey?: string;
 }
 
@@ -164,6 +164,11 @@ export async function sendTransactional(env: Env, msg: Mail): Promise<SendOutcom
 function classify(status: number, body: unknown): { retryable: boolean; detail: string } {
   const word = errorWord(body);
   if (status === 429 || status >= 500) return { retryable: true, detail: `${status} ${word}` };
-  if (status === 401 || status === 403) return { retryable: false, detail: `${status} key refused` };
+  // A 403 is not always the key. Resend answers 403 for a From address on a domain it has
+  // not verified, and calling that "key refused" would send the owner off to replace a key
+  // that works, so a 403 keeps the provider's own word unless the word is about the key.
+  if (status === 401 || word === 'invalid_api_key' || word === 'unauthorized') {
+    return { retryable: false, detail: `${status} key refused` };
+  }
   return { retryable: false, detail: `${status} ${word}` };
 }

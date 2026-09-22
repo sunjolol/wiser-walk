@@ -61,8 +61,12 @@ let lastPingMs = 0;
 const BUILT_SUPABASE_URL = String(import.meta.env.PUBLIC_SUPABASE_URL ?? '').trim();
 const BUILT_SUPABASE_KEY = String(import.meta.env.PUBLIC_SUPABASE_KEY ?? '').trim();
 
-/** The report is cacheable; everything else on this route is not. */
-const REPORT_CACHE = 'public, s-maxage=120, max-age=0';
+/**
+ * The report is cacheable; everything else on this route is not. Thirty seconds, not the
+ * two minutes it was: the setup page is read straight after changes made in Supabase,
+ * which no redeploy clears, and a stale line reads as a fix that did not work.
+ */
+const REPORT_CACHE = 'public, s-maxage=30, max-age=0';
 
 const json = (status: number, body: unknown, cache = 'no-store') =>
   new Response(JSON.stringify(body), {

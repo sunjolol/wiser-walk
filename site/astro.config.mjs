@@ -71,6 +71,25 @@ export default defineConfig({
   // stripped from result-page paths before the view is sent (see the beforeSend hook in
   // src/layouts/Base.astro). Described on /method/ under "Your answers".
   adapter: vercel({ webAnalytics: { enabled: true } }),
+  // The hosts an on-demand route may believe it is being served from. Astro 5 ignores the
+  // Host and X-Forwarded-Host headers unless the host is listed here, and falls back to
+  // "localhost", so until 2026-09-22 every route on Vercel saw its own address as
+  // https://localhost. What that broke: Astro's own origin check refused the site's no-script
+  // newsletter form as a cross-site post, /api/auth/list and /api/auth/delete answered "Bad
+  // origin." to the site's own pages, and the link in every account email would have opened
+  // localhost. `*.vercel.app` is here for preview deployments; Vercel routes a request to this
+  // project only by one of this project's own hosts, so no other project's host can arrive
+  // here. The email links do not rely on this list at all: see api/auth/email.ts.
+  security: {
+    allowedDomains: [
+      { protocol: 'https', hostname: 'wiserwalk.com' },
+      { protocol: 'https', hostname: 'www.wiserwalk.com' },
+      { protocol: 'https', hostname: '*.vercel.app' }
+    ]
+  },
+  // Nothing on the site uses Astro's image resizer, and with the real host above it would
+  // have become a free image-enlarging service for anybody. See src/lib/no-image-endpoint.ts.
+  image: { endpoint: { route: '/_image', entrypoint: './src/lib/no-image-endpoint.ts' } },
   // Which Vercel environment this build is for, carried into the bundle as a plain value.
   // Vercel sets VERCEL_ENV for the build machine, not for the browser, and src/lib/account/
   // config.ts needs it to show the account's public entry points on a PREVIEW deployment and

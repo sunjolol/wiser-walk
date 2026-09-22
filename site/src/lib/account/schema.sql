@@ -326,6 +326,21 @@ revoke all on public.auth_email_log from anon, authenticated;
 
 
 -- ============================================================================
+-- The site's own server
+-- ============================================================================
+-- The secret key (Postgres calls it service_role) is how the site's server writes
+-- the email log above, notes when somebody reached the mailing list, and sweeps
+-- away old log lines and results marked as deleted. It skips the row-level rules,
+-- but it still has to be allowed to touch each table at all. Supabase used to
+-- grant that to every new table by itself; a project made since 30 May 2026 does
+-- not, unless "Automatically expose new tables" was ticked when it was made. So
+-- it is granted here, where it does not depend on a box.
+grant select, insert, update, delete
+  on public.profiles, public.results, public.game_stats, public.auth_email_log
+  to service_role;
+
+
+-- ============================================================================
 -- That is everything. If it ran without a red error message, the database is
 -- ready and the next step is back in Vercel, setting the environment variables.
 -- ============================================================================
