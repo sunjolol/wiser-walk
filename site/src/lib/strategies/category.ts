@@ -49,8 +49,14 @@ export function pull(quiz: Quiz, score: number): string {
   if (score < 50) return words?.below ?? BELOW;
   if (score === 50) return words?.level ?? LEVEL;
   const half = Math.max(1, (quiz.config.radix - 1) / 2);
-  const over = ((score - 50) / 50) * half;
-  return above[Math.min(3, Math.max(0, Math.ceil((over / half) * 4) - 1))]!;
+  /*
+   * Rungs above the middle, counted from the rounded score back to a whole rung. It used to
+   * work on the rounded score itself, so on the sins quiz (rungs 12.5 points apart) 62.5
+   * became 63 and read "a clear pull", 87.5 became 88 and read "the strongest here", and
+   * "a slight pull" and "a strong pull" could never print at all (found 2026-09-22).
+   */
+  const steps = Math.round(((score - 50) / 50) * half);
+  return above[Math.min(3, Math.max(0, Math.ceil((steps / half) * 4) - 1))]!;
 }
 
 /**
@@ -62,7 +68,9 @@ export function pull(quiz: Quiz, score: number): string {
  * tie" on the second. `tieSteps` says what was actually meant, at any length of instrument.
  */
 function tieMargin(quiz: Quiz): number {
-  const steps = Math.max(1, quiz.config.tieSteps ?? 1);
+  // 0 is a real setting ("an exact tie only", the sins quiz's), not a missing one; it was
+  // quietly raised to 1 until 2026-09-22, so two vices a rung apart printed as level.
+  const steps = Math.max(0, quiz.config.tieSteps ?? 1);
   const rung = 100 / Math.max(1, quiz.config.radix - 1);
   return steps * rung + 0.5; // the half-point absorbs score()'s rounding
 }
@@ -211,7 +219,9 @@ export const category: ScoringStrategy = {
       const nextNames = next.length && next.length <= MOST_NAMED ? ` Next: ${joinNames(next.map(r => r.name))}.` : '';
       summary = lead
         ? `${first.charAt(0).toUpperCase() + first.slice(1)} came out highest.${nextNames}`
-        : `Strongest pull: ${ranked[0]!.name}. Next: ${ranked[1]?.name ?? '—'}.`;
+        : // The same "Next" rule as above. It used to be whichever row sorted second, so a
+          // vice the reader leaned away from could print as "Next" because of its spelling.
+          `Strongest pull: ${ranked[0]!.name}.${nextNames}`;
     }
 
     return {

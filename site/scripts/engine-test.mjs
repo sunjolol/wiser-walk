@@ -1577,6 +1577,51 @@ console.log('17. the shelf keeps, dedupes, caps and refuses junk');
   rmSync(OUT_SHELF, { force: true });
 }
 
+// ------------------------------- the sins quiz's words, rung by rung (fixed 2026-09-22)
+console.log('the seven deadly sins: strength words, ties and "Next"');
+{
+  const sins = getQuiz('seven-deadly-sins');
+  // A sheet that puts each vice on the rung asked for: raw -4..+4 across its two items.
+  const sheetFor = raws => {
+    const used = {};
+    return sins.items.map(it => {
+      const key = sins.groups[it.group].key;
+      const want = raws[key] ?? 0;
+      const first = !(key in used);
+      used[key] = true;
+      const part = first ? Math.max(-2, Math.min(2, want)) : want - Math.max(-2, Math.min(2, want));
+      return part * it.direction;
+    });
+  };
+  const view = raws => resultFor(sins, scoreQuiz(sins, sheetFor(raws)));
+  const word = (res, key) => res.rows.find(r => r.slug === sins.groups.find(g => g.key === key).slug)?.strength;
+
+  // Every rung above the middle has its own word; two of them could never print before.
+  const rungs = { 1: 'a slight pull', 2: 'a clear pull', 3: 'a strong pull', 4: 'the strongest here' };
+  for (const [raw, expected] of Object.entries(rungs)) {
+    const got = word(view({ pride: Number(raw) }), 'pride');
+    if (got !== expected) fail(`one vice ${raw} rung(s) above the middle reads "${got}", not "${expected}"`);
+    else ok(`${raw} rung(s) above the middle reads "${got}"`);
+  }
+
+  // tieSteps: 0 means an exact tie only. A rung apart is a leader and a runner-up.
+  const apart = view({ pride: 4, wrath: 3 });
+  if (apart.state !== 'clear') fail(`pride a rung ahead of wrath came out "${apart.state}": ${apart.summary}`);
+  else ok(`a rung apart is not level: "${apart.summary}"`);
+  const level = view({ pride: 4, wrath: 4 });
+  if (level.state !== 'tie') fail('an exact tie did not print as level: ' + level.summary);
+  else ok(`an exact tie is level: "${level.summary}"`);
+
+  // "Next" names only what clears the naming floor, and every row on that score.
+  const alone = view({ pride: 4, envy: -2, wrath: -2, sloth: -2, greed: -2, gluttony: -2, lust: -2 });
+  if (/Next/.test(alone.summary)) fail('a runner-up the reader leaned away from was named: ' + alone.summary);
+  else ok(`nothing else cleared the floor, so no "Next": "${alone.summary}"`);
+  const pair = view({ pride: 4, wrath: 2, sloth: 2 });
+  if (!/Next: /.test(pair.summary) || !/wrath/.test(pair.summary) || !/sloth/.test(pair.summary) || /envy/.test(pair.summary)) {
+    fail('two runners-up on one score were not both named: ' + pair.summary);
+  } else ok(`two runners-up on one score are both named: "${pair.summary}"`);
+}
+
 rmSync(OUT, { force: true });
 rmSync(OUT_TYPES, { force: true });
 
