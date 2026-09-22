@@ -718,32 +718,20 @@ body {
 /*
  * Logged in (2026-09-22), and only in a build where the public can see accounts, which is when
  * the header carries .site-head--acct; a build with the doors shut keeps today's footer for
- * everyone. The account already holds the address and the switch for these emails, so the
- * footer does not ask for the address again: the form gives way to one quiet line to where
- * that switch is. The attribute is written before first paint, so the form never shows and
- * vanishes.
+ * everyone. The band's words are an invitation to leave an address, and somebody logged in
+ * has already given one, so the owner had every word of it go ("nonsensical for logged in
+ * users"): no kicker, no "Keep walking.", no form and no link. The walker at dawn stays, as
+ * a picture band of its own, framed so he stands clear on the ridge. The attribute is written
+ * before first paint, so nothing shows and then vanishes.
  */
-:root[data-account="in"] .site-head--acct ~ .site-foot .foot-signup { display: none; }
-.foot-acct { display: none; margin: -.5rem 0 0; }
-:root[data-account="in"] .foot-acct { display: block; }
-.site-foot .foot-acct a {
-  display: inline-flex; align-items: center; gap: .4rem; min-height: 44px;
-  color: #fff; font-size: .95rem; font-weight: 600; text-shadow: 0 1px 10px rgba(30, 14, 4, .6);
-  text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .22em;
-  text-decoration-color: rgba(255, 255, 255, .5);
+:root[data-account="in"] .site-head--acct ~ .site-foot .foot-dawn-in { display: none; }
+:root[data-account="in"] .site-head--acct ~ .site-foot .foot-dawn { height: 12.5rem; }
+:root[data-account="in"] .site-head--acct ~ .site-foot .foot-dawn > img {
+  top: 0; height: 100%; object-position: 14% 58%;
 }
-.site-foot .foot-acct a:hover { text-decoration-color: #fff; }
-@media (min-width: 52rem) { .foot-acct { grid-column: 2; grid-row: 2; } }
-/* Without the form the band is shorter, and the picture, sized to the band, shrank with it
-   until the walker stood behind "Keep walking." So on a phone and a tablet it is hung at the
-   size and height it has for a guest (measured: 475px from 58px above the band below 26rem,
-   434px from 53px above it up to 52rem), and the band simply ends sooner. The walker keeps
-   his place, clear of the words, and nothing but the empty foot of the picture is cut. */
-@media (max-width: 25.99rem) {
-  :root[data-account="in"] .site-head--acct ~ .site-foot .foot-dawn > img { top: -3.6rem; height: 29.7rem; }
-}
-@media (min-width: 26rem) and (max-width: 51.99rem) {
-  :root[data-account="in"] .site-head--acct ~ .site-foot .foot-dawn > img { top: -3.3rem; height: 27.1rem; }
+@media (min-width: 52rem) {
+  :root[data-account="in"] .site-head--acct ~ .site-foot .foot-dawn { height: 15rem; }
+  :root[data-account="in"] .site-head--acct ~ .site-foot .foot-dawn > img { object-position: 30% 58%; }
 }
 
 /* the ways back in */

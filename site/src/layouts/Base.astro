@@ -472,15 +472,7 @@ const navItems = ACCOUNTS_VISIBLE ? NAV.filter(n => n.href !== '/me/') : NAV;
               }</button>
             </div>
             <p class="foot-signup-status" id="foot-signup-status" role="status" aria-live="polite"></p>
-          </form>{ACCOUNTS_VISIBLE && (
-            /*
-              What somebody logged in sees in the form's place (kit.css shows one or the other
-              from the attribute written in <head>): their account already has the address and
-              the switch for these emails, so the footer points there instead of asking again.
-              Hung off </form> with no whitespace, so a build with the doors shut is unchanged.
-            */
-            <p class="foot-acct"><a href="/account/">Email settings <Icon name="arrow" size={13} /></a></p>
-          )}
+          </form>
         </div>
       </div>
 
