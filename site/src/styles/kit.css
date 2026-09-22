@@ -731,10 +731,10 @@ body {
 }
 @media (min-width: 52rem) {
   :root[data-account="in"] .site-head--acct ~ .site-foot .foot-dawn { height: 15rem; }
-  /* 100px lower than the plain 58% crop, on the owner's word (2026-09-22): more of the dawn
+  /* 70px lower than the plain 58% crop, on the owner's word (2026-09-22; 100px was too far): more of the dawn
      sky above the ridge, and the walker further down the band. A length added to the
      percentage keeps the shift the same at every width. */
-  :root[data-account="in"] .site-head--acct ~ .site-foot .foot-dawn > img { object-position: 30% calc(58% + 100px); }
+  :root[data-account="in"] .site-head--acct ~ .site-foot .foot-dawn > img { object-position: 30% calc(58% + 70px); }
 }
 
 /* the ways back in */
