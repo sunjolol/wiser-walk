@@ -41,14 +41,18 @@ Note he had earlier rejected the word "wiser" as "weird to say"; he has since ov
 
 State: local git repo initialised, **one commit** `c8fd322`, 137 files tracked, `node_modules` excluded. Authored as `Light <serenitybackto@gmail.com>` — he was offered a GitHub noreply address to keep his email out of public history and **chose to keep his real email**. Do not change it.
 
-## NEXT SESSION STARTS HERE (updated 2026-09-23): HE HAS JUDGED THE TEN QUIZ IDEAS
+## NEXT SESSION STARTS HERE (updated 2026-09-23): THE PSALM QUIZ DRAFT AWAITS HIS TAP-THROUGH
 
-**Open `design/quiz-ideas/NEXT-TEN.md` first: his verdict on each idea is at the foot, in his words.** Favourites:
-**#2 "Which Psalm are you living right now?"** and **#4** (the early Christian friend and foe; only its title changes).
-Then #1 as a plain "Personality Quiz" (Quick + Full), whose whole goal is an "aha" accurate enough to unlock people.
-#3 is dropped, #6 is for later. I recommended building #2 first and put shorter #4 titles, a depth answer for #1 and
-an angle for #5 back to him; his answer to those is pending. Build ONE quiz complete and deep and show it before
-starting another, and show him a handful of real questions and one complete result before building any machinery.
+**Build order he set: #2 Psalm, then #4 (early Christian friend and foe), then #1 ("Personality Quiz"), then the
+rest he liked** (verdicts and his words at the foot of `design/quiz-ideas/NEXT-TEN.md`). He turned Ultracode on for
+the Psalm quiz. **Read `design/quiz-ideas/psalm/README.md` first.** Draft 2 of "Which Psalm are you living right
+now?" is a tap-through preview (https://claude.ai/artifact/8EWuYxAX3qfrgtpYXvAxg7): 48 results, every one a situation
+Athanasius named (read in his Greek), honest "his letter doesn't name this" routes for grief, illness and the rest,
+Psalm 3 written out as the one finished result. Nothing is in `site/` yet. Waiting on: his feel of the questions on
+his phone; whether to keep the quiet "Hard words" note under psalms that curse enemies; whether to keep the crisis
+help line (988) on results reached through hard paths. After his yes: write all 48 results to Psalm 3's standard,
+then build it into the site per `engine-fit.md` (a new 'reading' strategy, per-psalm pages for search). #4's title
+advice (short title where space is tight, "And which would argue with you?" under it) is still unruled.
 The section below on the scrapped list explains what went wrong last time; it still applies.
 
 Everything from 2026-09-22 is live on `main` (last commit before these notes: `b778859`). He reviews on the live site;

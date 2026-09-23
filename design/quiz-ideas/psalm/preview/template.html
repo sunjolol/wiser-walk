@@ -1,0 +1,284 @@
+<title>Which Psalm Are You Living</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Philosopher:ital,wght@0,700;1,700&family=Poppins:wght@500;600;700&display=swap">
+<style>
+:root {
+  --page: #E3E3E3; --shell: #E8E8E8; --panel: #EEEEEE; --raise: #F5F5F5;
+  --ink: #444444; --ink-soft: #5A6066; --ink-mute: #7C8288;
+  --blue: #7EBAEE; --orange: #F0A06F; --accent: #3E86C4; --accent-soft: #E2EDF7;
+  --on-grad: #3B3B3B; --rule: rgba(68, 68, 68, .12); --stripe: rgba(68, 68, 68, .035);
+  --lift: 3px 3px 5px rgba(68, 68, 68, .065); --mark: rgba(126, 186, 238, .16);
+  --display: "Philosopher", "Gill Sans", "Trebuchet MS", sans-serif;
+  --ui: "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --text: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #131319; --shell: #1B1B21; --panel: #24242B; --raise: #2C2C34;
+    --ink: #EAE8E4; --ink-soft: #B4B0AA; --ink-mute: #8E8A84;
+    --accent: #7EBAEE; --accent-soft: rgba(126, 186, 238, .12);
+    --rule: rgba(234, 232, 228, .12); --stripe: rgba(255, 255, 255, .025);
+    --lift: 3px 3px 6px rgba(0, 0, 0, .25); --mark: rgba(126, 186, 238, .12);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #131319; --shell: #1B1B21; --panel: #24242B; --raise: #2C2C34;
+  --ink: #EAE8E4; --ink-soft: #B4B0AA; --ink-mute: #8E8A84;
+  --accent: #7EBAEE; --accent-soft: rgba(126, 186, 238, .12);
+  --rule: rgba(234, 232, 228, .12); --stripe: rgba(255, 255, 255, .025);
+  --lift: 3px 3px 6px rgba(0, 0, 0, .25); --mark: rgba(126, 186, 238, .12);
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding-block: 1.25rem 3rem; padding-inline: 16px;
+  background-color: var(--page);
+  background-image: repeating-linear-gradient(135deg, transparent 0 7px, var(--stripe) 7px 8px);
+  color: var(--ink); font: 400 1rem/1.6 var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+.sheet {
+  max-width: 36rem; margin: 0 auto; background: var(--panel); border-radius: 22px;
+  box-shadow: var(--lift); padding: 1.4rem 1.2rem 1.8rem;
+}
+@media (min-width: 40rem) { .sheet { padding: 2.2rem 2.4rem 2.6rem; } }
+.brand { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin: 0 0 1.6rem; }
+.brand b { font: 700 1.05rem/1 var(--display); letter-spacing: .01em; }
+.brand span, .kicker, .step, .cite, .btn, .label, .greek {
+  font-family: var(--ui); text-transform: uppercase; letter-spacing: .1em;
+}
+.brand span { font-size: .62rem; font-weight: 600; color: var(--ink-mute); }
+
+h1, h2 { font-family: var(--display); font-weight: 700; margin: 0; text-wrap: balance; color: var(--ink); }
+h1 { font-size: clamp(2.1rem, 8.5vw, 2.9rem); line-height: 1.04; letter-spacing: -.01em; }
+h2 { font-size: clamp(1.55rem, 6vw, 1.95rem); line-height: 1.15; }
+.blue { color: var(--accent); }
+.lede { color: var(--ink-soft); font-size: 1.05rem; margin: 1rem 0 0; max-width: 32rem; text-wrap: pretty; }
+.kicker { font-size: .68rem; font-weight: 600; color: var(--accent); margin: 0 0 .55rem; }
+.step { font-size: .64rem; font-weight: 600; color: var(--ink-mute); margin: 0 0 .7rem; }
+
+.row { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1.6rem; }
+.row.quiet { justify-content: space-between; margin-top: 1.1rem; gap: .5rem; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  min-height: 46px; padding: .75rem 1.45rem; border-radius: 999px; border: 0; cursor: pointer;
+  font-size: .78rem; font-weight: 700; text-decoration: none;
+  color: var(--on-grad); background-image: linear-gradient(to bottom right, var(--blue), var(--orange));
+  box-shadow: var(--lift);
+}
+.btn.ghost { background: none; color: var(--accent); box-shadow: inset 0 0 0 1.5px var(--accent); }
+.btn:focus-visible, .opt:focus-visible, .back:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.opts { display: grid; gap: .6rem; margin-top: 1.3rem; }
+.opt {
+  width: 100%; text-align: left; cursor: pointer; border: 0; border-radius: 16px;
+  padding: 1rem 1.1rem; background: var(--raise); color: var(--ink); box-shadow: var(--lift);
+  font: 500 1rem/1.45 var(--text); text-wrap: pretty; transition: transform .12s ease, box-shadow .12s ease;
+}
+.opt:hover { box-shadow: inset 0 0 0 1.5px var(--blue), var(--lift); }
+.opt:active { transform: scale(.985); }
+.opt.off { opacity: .55; }
+.opt small { display: block; margin-top: .3rem; font: 600 .6rem/1 var(--ui); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-mute); }
+.back {
+  background: none; border: 0; padding: .4rem 0; cursor: pointer;
+  font: 600 .74rem/1 var(--ui); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-mute);
+}
+
+.seen {
+  font: 700 italic clamp(1.45rem, 5.6vw, 1.8rem)/1.28 var(--display); color: var(--ink);
+  margin: .2rem 0 0; text-wrap: balance;
+}
+
+/* result */
+.verdict { font-size: clamp(2.8rem, 12vw, 3.8rem); line-height: 1; }
+.greek { margin: .5rem 0 0; font-size: .64rem; font-weight: 600; color: var(--ink-mute); }
+.lead-quote {
+  margin: 1.1rem 0 0; font: 700 italic clamp(1.2rem, 4.8vw, 1.45rem)/1.35 var(--display);
+  color: var(--ink); text-wrap: pretty;
+}
+.cite { display: block; font-size: .62rem; font-weight: 600; color: var(--ink-mute); margin-top: .5rem; font-style: normal; }
+.cite.inline { display: inline; margin: 0 0 0 .3rem; }
+.heading-note { margin: .9rem 0 0; color: var(--ink-soft); font-size: .92rem; }
+section { margin-top: 2rem; }
+.label { font-size: .66rem; font-weight: 700; color: var(--accent); margin: 0 0 .6rem; }
+.chips { display: flex; flex-wrap: wrap; gap: .45rem; }
+.chip {
+  font: 500 .8rem/1.35 var(--text); padding: .45rem .75rem; border-radius: 999px;
+  background: var(--shell); color: var(--ink-soft);
+}
+p.body { margin: 0; color: var(--ink); max-width: 34rem; text-wrap: pretty; }
+p.body + p.body { margin-top: .8rem; }
+p.body.strong { margin-top: .8rem; font-weight: 600; }
+p.body.soft { margin-top: .8rem; color: var(--ink-soft); font-size: .94rem; }
+q { quotes: "“" "”"; }
+.turn {
+  margin: 0; padding: .95rem 1.05rem; border-radius: 14px; background: var(--accent-soft);
+  font: 700 italic 1.12rem/1.45 var(--display); color: var(--ink); text-wrap: pretty;
+}
+.psalm { margin: 0; padding: 1.1rem 1.1rem 1.2rem; border-radius: 16px; background: var(--raise); box-shadow: var(--lift); }
+.psalm h3 { font: 700 1.2rem/1.2 var(--display); margin: 0 0 .2rem; }
+.psalm .sup { font-size: .85rem; color: var(--ink-mute); font-style: italic; margin: 0 0 .7rem; }
+.psalm ol { list-style: none; margin: 0; padding: 0; display: grid; gap: .35rem; }
+.psalm li { display: grid; grid-template-columns: 1.7rem 1fr; gap: .2rem; padding: .15rem .3rem; border-radius: 8px; }
+.psalm li.hit { background: var(--mark); }
+.psalm li span { font: 600 .66rem/1.9 var(--ui); color: var(--ink-mute); text-align: right; padding-right: .3rem; }
+.psalms-set { display: grid; gap: 1rem; }
+.help { margin-top: 2rem; padding: .95rem 1.05rem; border-radius: 14px; background: var(--shell); color: var(--ink-soft); font-size: .9rem; }
+.help p { margin: 0; }
+.foot { margin-top: 2.2rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--ink-mute); }
+.foot p { margin: 0 0 .4rem; }
+@media (prefers-reduced-motion: reduce) { .opt { transition: none; } }
+</style>
+
+<main class="sheet" id="app" aria-live="polite"></main>
+
+<script>
+const DATA = /*DATA*/null;
+const app = document.getElementById('app');
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+let trail = [];        // [{node, pick}] answered so far; pick null means "none of these fit"
+let refused = 0;       // "Not quite" answers at the check step
+let greyed = {};       // node -> picks refused there
+
+const brand = '<div class="brand"><b>Wiser Walk</b><span>Draft preview</span></div>';
+const verse = ref => { const [c, v] = ref.split(':').map(Number); const hit = DATA.psalms[c].v.find(x => x[0] === v); return hit ? hit[1] : ''; };
+const narrative = sup => /\b(when|after|who sang|concerning|prayer of one)\b/i.test(sup);
+const lxx = n => n <= 8 ? n : n <= 10 ? 9 : n <= 113 ? n - 1 : n <= 115 ? 113 : n === 116 ? '114 and 115' : n <= 146 ? n - 1 : n === 147 ? '146 and 147' : n;
+const list = a => a.map(String).join(', ').replace(/, ([^,]+)$/, ' and $1');
+
+function intro() {
+  trail = []; refused = 0; greyed = {};
+  app.innerHTML = brand + `
+    <p class="kicker">A new quiz</p>
+    <h1>Which <span class="blue">Psalm</span> are you living right now?</h1>
+    <p class="lede">A few honest taps about what you're carrying. Then the psalm one of the early Church Fathers gave for exactly that, printed in full, with why.</p>
+    <div class="row">
+      <button class="btn" id="go" type="button">Start</button>
+      <button class="btn ghost" id="demo" type="button">See a finished result</button>
+    </div>`;
+  document.getElementById('go').onclick = () => ask(DATA.start);
+  document.getElementById('demo').onclick = () => {
+    trail = [{ node: 'where', pick: 0 }, { node: 'source', pick: 0 }, { node: 'who', pick: 0 }];
+    result('P3');
+  };
+  window.scrollTo(0, 0);
+}
+
+function ask(id) {
+  const n = DATA.nodes[id];
+  const off = greyed[id] || [];
+  const answered = trail.filter(t => t.pick !== null).length;
+  app.innerHTML = brand + `
+    <p class="step">${id === 'none' ? 'None of those fit' : 'Question ' + (answered + 1)}</p>
+    <h2>${esc(n.q)}</h2>
+    ${n.lead ? `<p class="lede">${esc(n.lead)}</p>` : ''}
+    <div class="opts">${n.options.map((o, i) => `<button class="opt${off.includes(i) ? ' off' : ''}" type="button" data-i="${i}">${esc(o.t)}${off.includes(i) ? '<small>Not quite, you said</small>' : ''}</button>`).join('')}</div>
+    <div class="row quiet">
+      <button class="back" type="button" id="back">&larr; ${trail.length ? 'Back' : 'Leave the quiz'}</button>
+      ${id !== 'none' && id !== DATA.start ? '<button class="back" type="button" id="none">None of these fit</button>' : ''}
+    </div>`;
+  app.querySelectorAll('.opt').forEach(b => b.onclick = () => {
+    const i = +b.dataset.i;
+    trail.push({ node: id, pick: i });
+    const go = n.options[i].go;
+    DATA.nodes[go] ? ask(go) : check(go);
+  });
+  document.getElementById('back').onclick = back;
+  const nb = document.getElementById('none');
+  if (nb) nb.onclick = () => { trail.push({ node: id, pick: null }); ask('none'); };
+  window.scrollTo(0, 0);
+}
+
+function back() {
+  if (!trail.length) return intro();
+  const last = trail.pop();
+  ask(last.node);
+}
+
+function check(oid) {
+  const o = DATA.outcomes[oid];
+  app.innerHTML = brand + `
+    <p class="kicker">Does this sound like you?</p>
+    <p class="seen">${esc(o.seen)}</p>
+    <div class="row">
+      <button class="btn" id="yes" type="button">Yes, that's it</button>
+      <button class="btn ghost" id="no" type="button">Not quite</button>
+    </div>`;
+  document.getElementById('yes').onclick = () => result(oid);
+  document.getElementById('no').onclick = () => {
+    refused++;
+    const last = trail.pop();
+    (greyed[last.node] = greyed[last.node] || []).push(last.pick);
+    if (refused >= 2 && last.node !== 'none') { trail.push({ node: last.node, pick: null }); ask('none'); }
+    else ask(last.node);
+  };
+  window.scrollTo(0, 0);
+}
+
+function psalmBlock(n, marks) {
+  const p = DATA.psalms[n];
+  return `<div class="psalm"><h3>Psalm ${n}</h3>${p.sup ? `<p class="sup">${esc(p.sup)}</p>` : ''}
+    <ol>${p.v.map(([v, t]) => `<li class="${marks.includes(`${n}:${v}`) ? 'hit' : ''}"><span>${v}</span>${esc(t)}</li>`).join('')}</ol></div>`;
+}
+
+function result(oid) {
+  const o = DATA.outcomes[oid];
+  const f = DATA.full[oid];
+  const p = DATA.psalms[o.psalm];
+  const picked = trail.filter(s => s.pick !== null).map(s => DATA.nodes[s.node].options[s.pick]);
+  const hard = picked.length && picked[0].hard;
+  const notes = picked.filter(x => x.note).map(x => x.note).concat(o.note ? [o.note] : []);
+  const marks = [o.names, o.turn].filter(Boolean);
+  const title = o.set ? `the <span class="blue">Songs of Ascents</span>` : `Psalm <span class="blue">${o.psalm}</span>`;
+  const greek = !o.set && String(lxx(o.psalm)) !== String(o.psalm) ? `<p class="greek">${lxx(o.psalm)} in the Greek numbering Athanasius used</p>` : '';
+  const also = o.also && o.also.length
+    ? `<p class="body soft">For the same situation he also named ${o.also.length === 1 ? 'Psalm' : 'Psalms'} ${list(o.also)}.</p>` : '';
+  const story = f && f.story
+    ? `<section><p class="label">The story behind it</p><p class="body">${f.story.map(x => x.q ? `<q>${esc(x.q)}</q> (${esc(x.ref)})` : esc(x.t)).join('')}</p>${f.own ? `<p class="body">${esc(f.own)}</p>` : ''}</section>` : '';
+  const night = f && f.night
+    ? `<section><p class="label">For the nights</p><p class="turn">${esc(verse(f.night))}</p><span class="cite">Psalm ${f.night}</span></section>` : '';
+  const hardNote = o.hard
+    ? `<section><p class="label">Hard words</p><p class="body"><q>${esc(verse(o.hard))}</q><span class="cite inline">Psalm ${o.hard}</span></p>
+       <p class="body">${esc(o.hardNote || 'The Psalms say to God what hurt people really feel, anger included, and leave the verdict with Him. Athanasius gives the same counsel in this letter: ask God to be the Judge, since He alone is just (§17).')}</p></section>` : '';
+  const whole = o.set ? `<div class="psalms-set">${o.set.map(n => psalmBlock(n, marks)).join('')}</div>` : psalmBlock(o.psalm, marks);
+  const carry = o.turn || o.names;
+
+  app.innerHTML = brand + `
+    <p class="kicker">You're living</p>
+    <h1 class="verdict">${title}</h1>
+    ${greek}
+    <p class="lead-quote">${esc(verse(o.names))}<span class="cite">Psalm ${o.names}</span></p>
+    ${!o.set && p.sup && narrative(p.sup) ? `<p class="heading-note">Its own heading: <i>${esc(p.sup)}</i></p>` : ''}
+    ${picked.length ? `<section><p class="label">What you said</p><div class="chips">${picked.map(x => `<span class="chip">${esc(x.t)}</span>`).join('')}</div></section>` : ''}
+    <section>
+      <p class="label">Why this one</p>
+      <p class="body">In the 300s, Athanasius of Alexandria wrote to a friend about praying the Psalms, and matched them to what people go through. For where you are, his advice was:</p>
+      <p class="body strong">${esc(o.reason)}</p>
+      <span class="cite">Letter to Marcellinus, §${esc(o.sec)}</span>
+      ${notes.map(x => `<p class="body soft">${esc(x)}</p>`).join('')}
+      ${also}
+    </section>
+    ${story}
+    ${o.turn ? `<section><p class="label">Where it turns</p><p class="turn">${esc(verse(o.turn))}</p><span class="cite">Psalm ${o.turn}</span></section>` : ''}
+    ${night}
+    <section><p class="label">${o.set ? 'The fifteen songs' : 'The whole psalm'}</p>${whole}</section>
+    ${hardNote}
+    <section><p class="label">Carry this line</p><p class="turn">${esc(verse(carry))}</p><span class="cite">Psalm ${carry}</span></section>
+    ${hard ? `<aside class="help"><p><b>If it's more than this.</b> If someone is hurting you, or you've thought about ending your life, please tell someone today. In the US, call or text 988, or 911 if you're in danger. Anywhere else, findahelpline.com lists free lines.</p></aside>` : ''}
+    <div class="row"><button class="btn" id="again" type="button">Take it again</button></div>
+    <div class="foot">
+      <p>${f ? 'This is the finished shape of a result.' : 'Draft: this result shows its core. “See a finished result” on the first screen shows the finished shape (Psalm 3).'}</p>
+      <p>Bible text: Berean Standard Bible, public domain. Athanasius's advice is paraphrased from his Greek.</p>
+    </div>`;
+  document.getElementById('again').onclick = intro;
+  window.scrollTo(0, 0);
+}
+
+if (location.hash === '#example') {
+  trail = [{ node: 'where', pick: 0 }, { node: 'source', pick: 0 }, { node: 'who', pick: 0 }];
+  result('P3');
+} else intro();
+</script>

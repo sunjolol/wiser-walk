@@ -1,0 +1,1084 @@
+[
+ {
+  "lens": "fidelity 1",
+  "findings": [
+   {
+    "where": "P55",
+    "severity": "must-fix",
+    "problem": "The path option lets in anyone hurt by a friend in any way (a friend who cheated, left, or stole). Athanasius's situation is specific: people who seemed to be friends slander you with idle talk, while enemies taunt you, and it grieves you. The option has no slander in it at all, so it is the only gate and it is wide open.",
+    "evidence": "[00391] Ἐὰν δὲ καὶ ὀνειδίζωσι θλίβοντες οἱ ἐχθροὶ, καὶ φλυαροῦντες διαβάλλωσιν οἱ δοκοῦντες εἶναι φίλοι, καὶ λυπηθῇς ἐν τῇ ἀδολεσχίᾳ σου πρὸς ὀλίγον... Option in node 'who': \"Someone I trusted. A friend.\"",
+    "fix": "Option text: \"A friend. Or someone I thought was one. They're spreading things about me.\""
+   },
+   {
+    "where": "P55",
+    "severity": "should-fix",
+    "problem": "'reason' drops the first half of his condition, the enemies' taunts (ὀνειδίζωσι θλίβοντες οἱ ἐχθροὶ). 'seen' softens slander (διαβάλλωσιν) to 'talking about you', and adds 'more than you let on', which he did not write. ἀδολεσχία (echoing LXX Ps 54:3, 'grieved in my complaint') is grief you keep turning over, not grief you hide.",
+    "evidence": "[00391] ὀνειδίζωσι θλίβοντες οἱ ἐχθροὶ ... φλυαροῦντες διαβάλλωσιν οἱ δοκοῦντες εἶναι φίλοι ... λυπηθῇς ἐν τῇ ἀδολεσχίᾳ σου πρὸς ὀλίγον, ἀλλὰ δύνασαι παρακαλεῖσθαι ὑμνῶν καὶ σὺ τὸν Θεὸν",
+    "fix": "reason: \"If your enemies taunt you, and people who seemed to be your friends slander you with idle talk, and for a while it grieves you as you turn it over, you can still take comfort by praising God with the words of Psalm 55.\" seen: \"People you thought were your friends are spreading lies about you, your enemies are piling on, and it keeps going round in your head.\""
+   },
+   {
+    "where": "P31",
+    "severity": "must-fix",
+    "problem": "The path option widens his situation from ALL your friends and relatives hating and hounding you, to any people who dislike your beliefs (online critics, co-workers, strangers). Then 'seen' tells that player it is about friends and family, which does not match what they tapped. 'seen' also softens 'hated and hounded' (μισούμενον καὶ διωκόμενον) to 'turned cold', and turns 'for the truth's sake' into 'what you believe', which could mean any opinion.",
+    "evidence": "[00365] Ὅταν δὲ σαυτὸν διὰ τὴν ἀλήθειαν μισούμενον καὶ διωκόμενον παρὰ πάντων τῶν τε φίλων καὶ συγγενῶν βλέπῃς ... ἂν τοὺς γνωρίμους ἴδῃς ἀποστρεφομένους σε, πτήξῃς. Option: \"People who can't stand what I believe.\"",
+    "fix": "Option text: \"My own friends and family, because I stand by what's true.\" seen: \"Your friends and family have turned against you because you stand by the truth, and even people you know turn away when they see you.\""
+   },
+   {
+    "where": "P144",
+    "severity": "must-fix",
+    "problem": "'turn' is null, so the result has no line where the psalm turns toward hope. 'names' 144:10 ('frees His servant David from the deadly sword') is itself the rescue line, not the line that names the threat.",
+    "evidence": "BSB 144:7 \"rescue me from the deep waters, from the grasp of foreigners\"; 144:10 \"to Him who gives victory to kings, who frees His servant David from the deadly sword\". The LXX title of Ps 143 adds 'against Goliath'.",
+    "fix": "names: \"144:7\" (or \"144:11\"); turn: \"144:10\""
+   },
+   {
+    "where": "P144",
+    "severity": "should-fix",
+    "problem": "His situation is a tyrant enemy who rises against THE PEOPLE and against you, as Goliath defied Israel and David. The option drops the people entirely, so anyone with a big bully boss lands here. It also sits under 'Someone with power over me', but Goliath was an outside enemy, not someone set over David. 'seen' says 'Something', which widens a hostile person into any overwhelming circumstance (illness, debt), and it drops 'tyrant'.",
+    "evidence": "[00483] Ἐχθρὸς τύραννος ἐπανέστη τῷ λαῷ καί σοι, ὥσπερ Γολιὰθ τῷ Δαβὶδ, μὴ πτήξῃς. Option under node 'power': \"They're coming after me, and they're far bigger than I am.\"",
+    "fix": "Move the option to node 'doing' as: \"Someone far bigger than me has set themselves against my people, and against me.\" seen: \"Someone powerful and overbearing has risen up against the people you belong to, and against you with them.\" reason: \"If a tyrant rises up against God's people and against you, as Goliath did against David, don't cower. Trust God as David did, and say his words in Psalm 144.\""
+   },
+   {
+    "where": "P57",
+    "severity": "should-fix",
+    "problem": "His picture is exact: you are hiding, and the one hunting you comes into your very hiding place without knowing you are there. The option ('I feel cornered, with nowhere left to go') lets in any feeling of being trapped. 'seen' changes the pursuer into 'the danger', so a person, which is his condition, becomes any threat. It also drops 'without knowing it'.",
+    "evidence": "[00386] Ἐὰν δὲ καὶ συνδράμῃ ὁ διώκων, καὶ μὴ γινώσκων εἰσέλθῃ εἰς τὸ σπήλαιον ἐν ᾧ καὶ σὺ κρύπτῃ, μηδ' οὕτως πτήξῃς",
+    "fix": "Option text: \"Closing in. Even the place I went to hide isn't safe from them.\" seen: \"You've been hiding from someone who is after you, and now they've come right into your hiding place without knowing you're there.\""
+   },
+   {
+    "where": "P3",
+    "severity": "should-fix",
+    "problem": "His condition has two parts: your own people hound you, AND many have risen up against you. The option has only the first, so a single conflict with one relative lands here. 'seen' adds 'with them', meaning the many are joining your own people, which the Greek does not say, and 'are against you' is weaker than διώκῃ (hounded).",
+    "evidence": "[00326] Ἂν δὲ διώκῃ παρὰ τῶν ἰδίων, καὶ πολλοὺς ἔχῃς τοὺς ἐπαναστάντας κατὰ σοῦ, λέγε τὸν γʹ ψαλμόν. Option: \"My own family, or the people closest to me.\"",
+    "fix": "Option text: \"My own people. And now lots of others are turning on me too.\" seen: \"Your own people have turned on you, and more and more others are rising up against you.\""
+   },
+   {
+    "where": "P52",
+    "severity": "should-fix",
+    "problem": "'seen' and the option drop 'wicked' (πονηρῷ βασιλεῖ). He wrote for someone slandered to a ruler who is evil and already hostile, as Saul was. 'A person with power over you' lets in anyone misrepresented to a fair boss.",
+    "evidence": "[00384] Εἰ δὲ καὶ διεβλήθης πονηρῷ βασιλεῖ, καὶ ὁρᾷς τὸν διάβολον κατακαυχώμενον, ἀναχώρει",
+    "fix": "seen: \"Someone has lied about you to a person with power over you who already means you harm, and the liar is gloating over it.\""
+   },
+   {
+    "where": "P52",
+    "severity": "consider",
+    "problem": "τὸν διάβολον can mean 'the devil' (research.json renders it 'the devil gloat over it') or 'the slanderer' (a pun on διεβλήθης, i.e. Doeg). The draft silently takes the human reading. Both can be defended, but the site should pick one on purpose, and the research file and the draft should agree.",
+    "evidence": "[00384] διεβλήθης ... καὶ ὁρᾷς τὸν διάβολον κατακαυχώμενον",
+    "fix": "Keep \"the slanderer boasting about it\" (it fits Ps 52:1, which is addressed to Doeg) and change research.json's situation to match; or, if the devil reading is chosen, reason: \"...and you see the devil gloating over it, step away and say Psalm 52.\""
+   },
+   {
+    "where": "P27",
+    "severity": "consider",
+    "problem": "'as if you don't count' loses the 'not yet' (μήπω): they scorn you as one who has not YET been anointed, so it is a present lack of standing, not worthlessness. 'reason' also drops that this is why they want to fight you (διὰ τοῦτο πολεμεῖν ἐθέλοντες).",
+    "evidence": "[00356] καταφρονοῦντες ὡς μήπω σου χρισθέντος, καὶ διὰ τοῦτο πολεμεῖν ἐθέλοντες",
+    "fix": "seen: \"They're ganging up on you, more of them all the time, and they look down on you as if you're nobody yet.\" reason: \"...looking down on you as someone not yet anointed and spoiling for a fight because of it, don't cower. Sing Psalm 27.\""
+   },
+   {
+    "where": "P7",
+    "severity": "consider",
+    "problem": "'names' 7:1 names pursuers, not the plotting that is his situation (Ahithophel's counsel). 7:14 is the verse that names the scheming.",
+    "evidence": "[00332] βουλεύωνταί τινες κατὰ σοῦ, ὡς ὁ Ἀχιτόφελ κατὰ τοῦ Δαβὶδ; BSB 7:14 \"Behold, the wicked man travails with evil; he conceives trouble and births falsehood.\"",
+    "fix": "names: \"7:14\" (turn 7:10 can stay)"
+   }
+  ],
+  "summary": "I checked all eleven outcomes against the Greek in marc-greek2.txt (lines 00326, 00332, 00336, 00338, 00356-57, 00365, 00384-87, 00391, 00483-84). Every pairing is one Athanasius actually made, in the correct English numbering: 3, 7, 11, 13, 27, 31, 52, 54 with 56, 55, 57 with 142, 144. The 'reason' texts are mostly faithful; the one real gap is that P55's leaves out the enemies' taunts.\n\nThe main problems are in the gates. P55's option ('A friend') and P31's option ('People who can't stand what I believe') let in far more people than he wrote for. P31's 'seen' then contradicts what the player tapped. P144's option and 'seen' drop the 'against the people' half of the Goliath situation, and P144 has no 'turn' verse, while its 'names' verse is really the rescue line. P57's option and 'seen' turn 'the pursuer walks unknowing into your hiding place' into any feeling of being cornered. P3's option drops the 'many rising up' half, and P52 drops 'wicked'. Minor: the 'devil' or 'slanderer' reading of διάβολον in P52, 'not yet' in P27, and 7:14 as the naming verse for P7.\n\nP54, P11 and P13 are sound. P54's path and its 56 pairing are right. For P11, 'seen' adds 'part of you wants to run', which is loosely drawn from 11:1 but tolerable. P13 is sound on both of its paths."
+ },
+ {
+  "lens": "fidelity 2",
+  "summary": "I checked all 11 outcomes against the Greek (TLG lines [00329]–[00550]). All psalm numbers are right: every LXX numeral maps correctly to English numbering, and every \"also\" list matches the Greek. P28 is sound. P137 has one serious error: \"ἀλλοτρίων λογισμῶν\" means thoughts foreign to you (temptations), not \"other people's thinking\", and the draft drops the repenting and the sin. The rest are smaller problems where the words shown to the player (the \"seen\" line or the tapped options) widen or blur his condition. P26: \"settle it myself\" does not match his \"do not give the judgment to a man\". P62: \"out for your life\" is dropped, and his command is turned into a description. P39: \"decided to change\" is wider than keeping watch over yourself. P6: \"God is against you\" is wider than a threat from the Lord. P42S: \"can't say why\" is added and clashes with the \"life\" path. P64: the children's-arrows image comes from his Greek Bible and is not in the BSB verse cited. There are also a few better \"turn\" verses, especially 62:5, the exact verse his word ὑποτάσσου echoes. No files were edited.",
+  "findings": [
+   {
+    "where": "P137",
+    "severity": "must-fix",
+    "problem": "Mistranslation. ἀλλοτρίων λογισμῶν means alien or foreign thoughts: in the Fathers, logismoi are tempting thoughts, and the image is being carried off to a foreign land. It does not mean 'other people's thinking' or 'someone else's way of thinking', which turns a sin of the mind into outside influence. The draft also drops two conditions: μετέγνως (you repented) and ἐφ' οἷς ἁμαρτάνοντα σεαυτὸν κατέλαβες (where you caught yourself sinning). 'The moment you notice, stop' is also not what παῦσαι τοῦ λοιποῦ says (stop from now on).",
+    "evidence": "[00475] Ἠχμαλωτεύθης ὑπὸ ἀλλοτρίων λογισμῶν, καὶ ᾔσθου σεαυτὸν ἀπαγόμενον, καὶ μετέγνως, παῦσαι τοῦ λοιποῦ, καὶ μείνας ἐφ' οἷς ἁμαρτάνοντα σεαυτὸν κατέλαβες, κάθου, καὶ κλαῦσον καὶ σὺ, ὡς πεποίηκεν ὁ τότε λαὸς, λέγων τὰ ἐν τῷ ρλςʹ. Draft reason: 'carried off by other people's thinking'; option: 'carried off by someone else's way of thinking'.",
+    "fix": "reason: \"If thoughts that are foreign to you have taken you captive, and you have felt yourself being led away and are sorry for it, stop from now on. Stay where you caught yourself going wrong, sit down and weep, as the exiles did by the rivers of Babylon, and say Psalm 137.\" seen: \"Thoughts that aren't really yours carried you somewhere wrong, you've just caught yourself, and you're sorry.\" Option in node 'self': \"My thoughts carried me off somewhere I never meant to go, and I've only just caught myself.\""
+   },
+   {
+    "where": "P26",
+    "severity": "should-fix",
+    "problem": "His counsel is not to hand the verdict to a human being and to ask God to judge. The option and 'seen' make the person want to settle it themselves, meaning revenge. The reason then fails to answer the 'seen': someone taking matters into their own hands is not handing the verdict to anyone, so the advice misses them. The reason also drops his description of the enemies (hands full of blood), which widens the case from violent enemies to anyone making trouble. Psalm 26:9 itself has 'men of bloodshed'.",
+    "evidence": "[00354] Ἐπιμένουσιν οἱ ἐχθροὶ, οὐδὲν ἕτερον ἢ τὰς χεῖρας ἔχοντες αἱμάτων πλήρεις, καὶ ζητοῦντες ἑλκῦσαί σε καὶ ἀπολέσαι, μὴ δῷς ἀνθρώπῳ τὸ κρῖμα (ὕποπτα γὰρ πάντα τὰ ἀνθρώπινα)· [00355] ἀλλὰ τὸν Θεὸν ἀξιῶν κριτὴν γενέσθαι (μόνος γὰρ αὐτὸς δίκαιος)… Option: 'To settle it myself. To make them answer for it.'",
+    "fix": "Option in node 'pull': \"For someone to finally judge it. To make them answer for it.\" seen: \"They won't stop trying to ruin you, and you want someone to finally rule on who's in the right.\" reason: \"When your enemies keep on, with nothing in their hands but harm, trying to drag you down and ruin you, don't hand the verdict to any human being, because everything human is open to doubt. Ask God to be the judge, for He alone is just, and say Psalms 26, 35 and 43.\""
+   },
+   {
+    "where": "P62",
+    "severity": "should-fix",
+    "problem": "Two problems. (1) 'Seen' drops his condition that these people are out for your life (θέλοντας λαβεῖν σου τὴν ψυχὴν) and widens it to anyone who rages. (2) The reason turns his command ὑποτάσσου (submit yourself) into a description ('the more you yield yourself'). There is also no 'turn' verse, but 62:5 is the exact verse his word echoes: LXX 61:6 πλὴν τῷ θεῷ ὑποτάγηθι, ἡ ψυχή μου, which is BSB 'Rest in God alone, O my soul, for my hope comes from Him'.",
+    "evidence": "[00393] πρὸς δὲ τοὺς ὁρμῶντας ἀγρίως κατὰ σοῦ, καὶ θέλοντας λαβεῖν σου τὴν ψυχὴν, ἀντίθες σὺ τὴν πρὸς τὸν Θεόν σου ὑποταγὴν, καὶ θάῤῥει. [00394] Ὅσῳ γὰρ ἐκεῖνοι μαίνονται, τοσούτῳ μᾶλλον ὑποτάσσου σὺ τῷ Κυρίῳ, καὶ λέγε τὰ ἐν τῷ ξαʹ.",
+    "fix": "seen: \"They're coming at you savagely, out to destroy you, and you've chosen to meet it with stillness and trust.\" reason: \"Against people who come at you savagely and want your life, set your submission to your God, and take heart: the more they rage, the more yield yourself to the Lord. Say Psalm 62.\" turn: \"62:5\""
+   },
+   {
+    "where": "P39",
+    "severity": "should-fix",
+    "problem": "The option 'I decided to change' is much wider than προθέμενος προσέχειν σαυτῷ (having resolved to keep watch over yourself; compare 39:1 'I will watch my ways'). Any change, even a practical one, qualifies. 'It's got harder' does not say what attacks. The 'seen' also drops his last condition, that you want to steel yourself against it (θέλῃς ἐπαλείφειν σαυτὸν κατ' αὐτοῦ).",
+    "evidence": "[00374] Ἀλλὰ δὴ καὶ σὺ, προθέμενος προσέχειν σαυτῷ, ἐὰν βλέπῃς ἐπιτιθέμενον τὸν ἐχθρὸν (τότε γὰρ μᾶλλον ἐπεγείρεται κατὰ τῶν τοιούτων), καὶ θέλῃς ἐπαλείφειν σαυτὸν κατ' αὐτοῦ, ᾆδε τὸν ληʹ ψαλμόν.",
+    "fix": "Option in node 'self': \"I made up my mind to keep a closer watch on myself, and the temptation has hit harder since.\" seen: \"You resolved to keep watch over yourself, the pull has come at you harder ever since, and you want to stand firm against it.\""
+   },
+   {
+    "where": "P6",
+    "severity": "should-fix",
+    "problem": "ἀπειλή is a threat, and the case is sensing a threat from the Lord. The 'seen' ('God is against you') widens this to anyone who feels God is opposed or distant. The reason's 'warning' softens the word. Both psalms open on rebuke in anger (6:1, 38:1), so 'rebuking' stays inside his case.",
+    "evidence": "[00329] Αἰσθόμενος δὲ ἀπειλῆς τοῦ Κυρίου, ἐὰν διὰ τοῦτο ταραττόμενον σεαυτὸν βλέπῃς, δύνασαι λέγειν τὸν ϛʹ καὶ τὸν λζʹ.",
+    "fix": "seen: \"It feels as if God is rebuking you, and it's shaking you.\" reason: \"If you sense a threat from the Lord hanging over you, and see that it has shaken you, you can say Psalms 6 and 38.\""
+   },
+   {
+    "where": "P42S",
+    "severity": "should-fix",
+    "problem": "'Seen' adds 'you can't quite say why'. Athanasius names only sadness (τὸ λυποῦν), and in Psalm 42 the speaker knows why. The addition also contradicts one of the two paths into this outcome: someone who tapped 'Life. It's all just too much' and then 'Making me sad, and I can't shake it' does know why. Separately, 'lightens' understates θεραπεύεται (is healed or tended).",
+    "evidence": "[00545] τὸ δὲ λυποῦν θεραπεύεται, ψαλλόντων ἡμῶν· [00546] Ἵνα τί περίλυπος εἶ, ἡ ψυχή μου, καὶ ἵνα τί συνταράσσεις με;",
+    "fix": "seen: \"You're sad, and you can't shake it.\" reason: \"Athanasius wrote that when we sing the Psalms, the sadness in us is healed, and the line he gave for it is this one: 'Why are you downcast, O my soul?'\""
+   },
+   {
+    "where": "P64",
+    "severity": "should-fix",
+    "problem": "The children's-arrows image comes from Athanasius's Greek Bible (LXX 63:8 βέλος νηπίων ἐγενήθησαν αἱ πληγαὶ αὐτῶν). The BSB turn verse, 64:7, says 'But God will shoot them with arrows', so a player looking for his image in their Bible will not find it. The paraphrase also cuts the genitive absolute ψάλλοντός σου: their blows become children's arrows as you sing. Singing is his means, not a separate instruction.",
+    "evidence": "[00396] Ἐκφοβούντων δὲ τῶν ἐχθρῶν καὶ μὴ παυομένων τοῦ ἐνεδρεύειν, ἀλλὰ καὶ ἐξερευνώντων πᾶν κατὰ σοῦ, κἂν πλῆθος ὦσι, μὴ ὑπενδῷς· [00397] βέλη γὰρ νηπίων ἔσονται τούτων αἱ πληγαὶ, ψάλλοντός σου τὸν ξγʹ, καὶ τὸν ξδʹ, καὶ ξθʹ, καὶ οʹ. BSB 64:7: 'But God will shoot them with arrows; suddenly they will be wounded.'",
+    "fix": "reason: \"When your enemies keep trying to frighten you, lying in wait and searching out everything against you, however many they are, don't give in: as you sing Psalms 64, 65, 70 and 71, their blows will be no more than children's arrows (his Greek Bible reads 64:7 that way).\""
+   },
+   {
+    "where": "P51",
+    "severity": "consider",
+    "problem": "His case is not only knowing you sinned. It is being ashamed, repenting and asking for mercy. The option on the path ('I did something wrong, and I know it') lets in someone who knows but is not sorry. The 'seen' check partly catches this with 'want to come back'.",
+    "evidence": "[00383] Ἀλλ' ἥμαρτες, καὶ ἐντραπεὶς μεταγινώσκεις καὶ ἐλεηθῆναι ἀξιοῖς, ἔχεις τοὺς τῆς ἐξομολογήσεως καὶ μετανοίας λόγους ἐν τῷ νʹ.",
+    "fix": "Option in node 'self': \"I did something wrong. I know it, I'm ashamed, and I want to be forgiven.\" seen: \"You've done wrong, you're ashamed of it, and you want to be forgiven.\""
+   },
+   {
+    "where": "P118",
+    "severity": "consider",
+    "problem": "Athanasius's quotation reads 'The Lord is my helper' (Κύριος ἐμοὶ βοηθός). In the BSB the word 'helper' is in 118:7, not 118:6. The current turn, 118:5, comes before the naming verse. 118:7 carries his exact word and is itself the turn.",
+    "evidence": "[00549] τὸ δὲ φοβηθὲν ἐπιῤῥώσει τῇ ἐλπίδι ἐν τῷ λέγειν· [00550] Κύριος ἐμοὶ βοηθὸς, καὶ οὐ φοβηθήσομαι τί ποιήσει μοι ἄνθρωπος. BSB 118:7: 'The LORD is on my side; He is my helper.'",
+    "fix": "turn: \"118:7\""
+   },
+   {
+    "where": "P102",
+    "severity": "consider",
+    "problem": "Athanasius's own word ἀκηδιάσῃς (grow weary) comes from this psalm's LXX title, which the BSB renders 'A prayer of one who is afflicted, when he grows faint'. The superscription names his situation more exactly than 102:4.",
+    "evidence": "[00462] … ἐὰν διὰ τὰς συνοχὰς τοῦ βίου ὡς πτωχὸς γενόμενος ἀκηδιάσῃς ποτὲ, καὶ θέλῃς παρακληθῆναι, ἔχεις τὸν ραʹ ψαλμόν. BSB superscription: 'A prayer of one who is afflicted, when he grows faint and pours out his lament before the LORD.'",
+    "fix": "If the result format can show a superscription, set names to the Psalm 102 superscription; otherwise keep 102:4."
+   },
+   {
+    "where": "P42S",
+    "severity": "consider",
+    "problem": "The names verse (42:5) and the turn verse (42:11) are the same refrain, word for word up to the final clause, so the result would show nearly the same line twice.",
+    "evidence": "BSB 42:5 and 42:11 both read 'Why are you downcast, O my soul? Why the unease within me? Put your hope in God, for I will yet praise Him…'",
+    "fix": "turn: \"42:8\" ('The LORD decrees His loving devotion by day, and at night His song is with me'), or keep 42:5 alone and let its second half serve as the turn."
+   }
+  ]
+ },
+ {
+  "lens": "fidelity 3",
+  "findings": [
+   {
+    "where": "P34",
+    "severity": "must-fix",
+    "problem": "The \"seen\" line and the option text misread the Greek. Athanasius has someone fall among enemies, escape them by wits and slip out of the plot they laid against him (David feigning madness before Abimelech, per the superscription). The draft turns it into someone who was asked to join a plan and said no, which is peer pressure and a different situation. \"Fell in with\" also means \"started keeping company with\", which is wrong. The reason says \"sing ... with them\", but ἐπ' αὐτῶν means in their presence.",
+    "evidence": "[00368] Ἐμπεσὼν δὲ εἰς τοὺς ἐχθροὺς, καὶ σοφῶς αὐτοὺς διαφυγὼν, καὶ ἐκκλίνας ἀπὸ τῆς ἐπιβουλῆς αὐτῶν, εἰ θέλεις εὐχαριστῆσαι, συγκαλέσας τοὺς πραεῖς ἄνδρας, ἐπ' αὐτῶν ψάλλε τὸν λγʹ. The draft has seen \"you got out by wisely refusing their plan\" and option (out) \"I got out by refusing to go along with something.\" In the Greek, ἐπιβουλή is a plot against someone and ἐκκλίνας means turning aside from it. BSB superscription: \"when he pretended to be insane before Abimelech, so that the king drove him away.\"",
+    "fix": "seen: \"You fell into the hands of people who meant you harm, and you got away by keeping your wits about you.\" Option in \"out\": \"People who meant me harm had me cornered, and I thought my way out.\" reason: \"When you have fallen among enemies but wisely got away and slipped out of their plot, and you want to give thanks, call gentle people together and sing Psalm 34 in front of them.\" Optionally set names to \"34:4\" (\"I sought the LORD, and He answered me; He delivered me from all my fears\"), which names the rescue. 34:3 names the gathering."
+   },
+   {
+    "where": "P4",
+    "severity": "must-fix",
+    "problem": "The draft drops οὕτως (\"thus afflicted\"). The sentence follows straight on from the Psalm 3 case, being hunted by your own people with many rising against you, and \"thus\" ties the thanksgiving to that trouble. The reason, the seen line and the option all widen it to any distress. The option also never says who helped, so help from anyone lands on this result. Separately, LXX 114 is only Eng 116:1-9 (research.json says so). Verses 10-19 are LXX 115, which Athanasius assigns elsewhere (§24, to faith).",
+    "evidence": "[00326] Ἂν δὲ διώκῃ παρὰ τῶν ἰδίων, καὶ πολλοὺς ἔχῃς τοὺς ἐπαναστάντας κατὰ σοῦ, λέγε τὸν γʹ ψαλμόν. [00327] Εἰ δὲ οὕτως θλιβόμενος ἐπεκαλέσω τὸν Κύριον, καὶ εἰσακουσθεὶς θέλεις εὐχαριστεῖν, ψάλλε τὸν τέταρτον, καὶ οδʹ, καὶ ριδʹ. The draft's option is \"I cried out for help, and help came.\" Its also field is [75, 116].",
+    "fix": "reason: \"When you have been hounded like that, by your own people, with many rising against you, and you called on the Lord and He heard you, and now you want to give thanks, sing Psalms 4, 75 and 116 (verses 1-9).\" seen: \"People close to you turned against you. You called out to God, He heard you, and now you want to say thank you.\" Option in \"out\": \"People close to me turned on me. I cried out to God, and He answered.\" Record also as 75 and \"116:1-9\", not the whole of 116."
+   },
+   {
+    "where": "P91",
+    "severity": "must-fix",
+    "problem": "This is a stretched pairing. Athanasius's situation is wanting to embolden yourself and others toward godliness, by showing that hope in God does not shame and makes the soul fearless. He did not write it for someone gripped by a vague, nameless dread. The \"seen\" line and the path (life -> \"Making me afraid\" -> \"Of everything, and nothing in particular\") put this result in front of an anxious person he never addressed, and drop the \"yourself and others\" and the toward-godliness aim. names 91:5 is the result (the fearless soul), not the situation.",
+    "evidence": "[00425] Παραθαρσῦναι θέλων σεαυτὸν καὶ τοὺς ἑτέρους εἰς θεοσέβειαν, καὶ ὡς εἰς τὸν Θεὸν ἐλπὶς οὔτε καταισχύνει, ἀλλὰ καὶ ἄφοβον τὴν ψυχὴν κατασκευάζει, αἴνει τὸν Θεὸν, λέγων τὰ ἐν τῷ ϙʹ. The draft's seen is \"You're afraid, and you can't even say of what.\"",
+    "fix": "seen: \"Fear keeps creeping in, and you want to take heart in God again, and help the people around you take heart too.\" Option in \"fear\": \"I'm afraid, and I want to find my courage in God again, for me and for the people around me.\" names: \"91:2\" (\"You are my refuge and my fortress, my God, in whom I trust\"). Keep 91:5 as turn, since it is exactly Athanasius's \"makes the soul unafraid\". The reason can stay."
+   },
+   {
+    "where": "P18",
+    "severity": "should-fix",
+    "problem": "The Greek is passive: you were saved and rescued. The option makes the escape the player's own doing (\"I got away\"). That blurs it with P34, which is the escape-by-your-own-wits case, and lets someone who simply fled on their own land here.",
+    "evidence": "[00347] Ἀλλ' ἐσώθης ἀπὸ τῶν ἐχθρῶν σου, καὶ ἐῤῥύσθης ἀπὸ τῶν διωκόντων σε, ᾆδε καὶ σὺ τὸν ιςʹ ψαλμόν (TLG ις; Migne ιζ', which research settles as Eng 18). The draft's option (out) is \"I got away from someone who was after me.\"",
+    "fix": "Option in \"out\": \"People were after me, and God rescued me from them.\" seen: \"People were hunting you, and you've been rescued from them.\""
+   },
+   {
+    "where": "P37",
+    "severity": "should-fix",
+    "problem": "The \"seen\" line drops two of Athanasius's conditions: the wicked are lifting themselves up against the little ones, and you want to warn yourself and others not to heed or envy them. What is left, \"riding high and you envy them\", is barely different from P73. \"turn\" is null, but 37:2 is exactly Athanasius's stated reason (they are quickly snuffed out).",
+    "evidence": "[00371] Ἐὰν δὲ πολλὰ πράττοντας ἄνομα τοὺς πονηροὺς βλέπῃς, καὶ ἐπαιρομένους αὐτοὺς κατὰ τῶν μικρῶν, καὶ θέλῃς παραινεῖν τισι μὴ προσέχειν τούτοις, μηδὲ παραζηλοῦν αὐτοὺς, διὰ τὸ ταχέως αὐτοὺς ἀποσβέννυσθαι, λέγε καὶ σαυτῷ καὶ τοῖς ἑτέροις τὸν λςʹ. BSB 37:2: \"For they wither quickly like grass and wilt like tender plants.\"",
+    "fix": "seen: \"People who do wrong are riding high and pushing the little people around, and you need to tell yourself, and others, not to envy them.\" Set turn: \"37:2\"."
+   },
+   {
+    "where": "P73",
+    "severity": "should-fix",
+    "problem": "The option describes the prosperous as \"people who cheat and lie\", which is lawless deeds (the P37 wording). Athanasius's word here is ἀσεβεῖς, the ungodly, people without God, flourishing in peace and living as they please. The option therefore sends the P37 person to P73 and blurs the two. The \"seen\" line has it right (\"People who don't care about God\").",
+    "evidence": "[00403] Ὅτε δὲ βλέπεις τοὺς μὲν ἀσεβεῖς ἐν εἰρήνῃ εὐθηνουμένους καὶ καταθυμίως ζῶντας τοὺς δὲ δικαίους θλιβομένους, ἵνα μὴ σκανδαλισθῇς καὶ παρασαλευθῇς, λέγε καὶ σὺ τὰ ἐν τῷ οβʹ ψαλμῷ. The draft's option (world) is \"People who cheat and lie are doing fine, and good people are struggling.\"",
+    "fix": "Option in \"world\": \"People who don't care about God have an easy life, and good people are struggling. It's shaking me.\" reason (optional, to keep καταθυμίως ζῶντας): \"When you see the ungodly living in peace and plenty, just as they please, while the righteous suffer, say Psalm 73, so that you are not scandalised or shaken.\""
+   },
+   {
+    "where": "P41",
+    "severity": "should-fix",
+    "problem": "This is a path problem. P41 is reached only through source -> \"Someone I love is going through it.\" Athanasius's person is looking at many poor and needy people, not at a loved one, so the person he wrote for would not tap that option, and anyone who does is then offered a situation that does not follow from it. Also, ἀποδέχεσθαι means to welcome or commend, which is warmer than \"honour\".",
+    "evidence": "[00376] Βλέπων δὲ πολλοὺς πένητας καὶ πτωχοὺς, καὶ θέλεις ἐλεεῖσθαι αὐτούς, δύνασαι τοὺς μὲν ἤδη ἐλεήσαντας ἀποδέχεσθαι, τοὺς δὲ ἄλλους εἰς τὸ ποιεῖν προτρέπεσθαι, ἐν τῷ λέγειν τὸν μʹ. The draft's option (source) is \"Someone I love is going through it.\"",
+    "fix": "Option in \"source\": \"It's not me. It's the people around me who are going through it.\" Then in \"loved\", P20: \"Someone is suffering, and I want to be there for them.\" and P41: \"People around me are going without, and I want them helped.\" reason: \"...you can thank those who have already helped and urge others to do the same, with Psalm 41.\""
+   },
+   {
+    "where": "P14",
+    "severity": "consider",
+    "problem": "The \"seen\" line and the option make the player half-agree with the mockers (\"part of you is tempted to join them\" / \"part of me wants to agree\"). Athanasius's situation is hearing people blaspheme against Providence, and his command is not to share their impiety but to intercede. The warning does not presuppose inner agreement. As written, the result is aimed at a doubter more than at the hearer he addressed. It is defensible, since the command implies the risk exists, but it goes one step past his words.",
+    "evidence": "[00339] Ἐπειδὰν βλασφημούντων τινῶν κατὰ τῆς Προνοίας ἀκούσῃς, μὴ κοινώνει μὲν αὐτῶν τῇ ἀσεβείᾳ, ἐντυγχάνων δὲ τῷ Θεῷ, λέγε τὸν ιγʹ καὶ νβʹ.",
+    "fix": "seen: \"People around you mock the idea that God is looking after the world, and you feel the pull to go along with them.\" Option in \"world\": \"People around me sneer at the idea that God is looking after anything, and it's getting to me.\" reason: say \"don't share in their ungodliness\" instead of \"don't join in their contempt\"."
+   }
+  ],
+  "summary": "I read each Greek sentence in marc-greek2.txt and checked it against tree.json and the BSB. P12, P20 and P46 are sound; P18 is paired correctly (Migne ιζ' = Eng 18 over the TLG's ις) but its option needs a fix. Three must-fixes. P34 misreads ἐκκλίνας ἀπὸ τῆς ἐπιβουλῆς: escaping a plot laid against you becomes \\\"refusing their plan\\\", which reads as peer pressure. P4 drops οὕτως, which ties the thanksgiving to the Psalm 3 trouble (hounded by your own people), and 116 should be only verses 1-9 (LXX 114). P91 is a stretch: Athanasius wrote it for someone wanting to embolden themselves and others toward godliness, not for a vague, nameless fear. Should-fixes: the P18 option makes the rescue self-made and blurs it with P34. The P37 seen drops the oppression of the little ones and the wish to warn others (and 37:2 should be its turn). The P73 option says \\\"cheat and lie\\\" where the Greek has ἀσεβεῖς (the ungodly). P41 can only be reached through \\\"Someone I love is going through it\\\", which the person Athanasius described would not tap. One consider: P14's \\\"part of me wants to agree\\\" adds inner agreement to a situation about hearing blasphemy."
+ },
+ {
+  "lens": "fidelity 4",
+  "findings": [
+   {
+    "where": "P42",
+    "severity": "must-fix",
+    "problem": "The option on the path turns Athanasius's situation into someone else's. He wrote for a person who longs hard for God while enemies taunt him; the remedy is hope, not an argument. The option leaves out the longing, softens the taunt into an honest question, and adds a need for an answer ('I don't know what to say'). That is a person looking for apologetics. It also sits under 'Nothing's wrong, exactly', yet his person is under scorn and 42:3 has tears for food. 'seen' and 'reason' also soften 'enemies' to 'people', and 'taunting' to 'asking' in 'seen'.",
+    "evidence": "Sect. 19 [00377-78]: 'Εἶτα ἐὰν, πάνυ τὸν πόθον ἔχων εἰς τὸν Θεὸν, ἀκούσῃς τῶν ἐχθρῶν ὀνειδιζόντων, μὴ ταράσσου· ἀλλὰ συνιεὶς τὸν ἐκ τοῦ τοιούτου πόθου ἀθάνατον καρπὸν, παρακάλει σαυτοῦ τὴν ψυχὴν τῇ εἰς Θεὸν ἐλπίδι ... λέγε τὸν μαʹ'. Option: 'An answer. People ask me where God is in all this, and I don't know what to say.' Seen: 'people keep asking you where He is.' Reason: 'hear people taunting you'.",
+    "fix": "Option (keep it under 'missing', and see the P84 fix so the two do not collide): 'Him. I ache for God, and people mock me for it.' Seen: 'You long for God with everything in you, and people mock you for it: \"Where is your God?\"' Reason: 'If you long for God with all your heart and hear your enemies taunting you, don't be troubled. Knowing the undying fruit of that longing, comfort your soul with hope in God, and ease its griefs in this life, with Psalm 42.' Names: consider 42:10 ('my enemies taunt me ... \"Where is your God?\"'), which matches ἐχθρῶν ὀνειδιζόντων exactly. Keep turn 42:5."
+   },
+   {
+    "where": "P85",
+    "severity": "must-fix",
+    "problem": "The option widens his situation to any hardship that has ended. Athanasius wrote for the end of God's anger and release from captivity. Psalm 85 is about forgiven sin and withdrawn wrath (85:2-3), so a person whose illness or work crisis has just ended would be told, in effect, that it was God's fury. 'seen' says 'The anger is over' without saying whose, and a player will read it as their own anger. The context shows it is God's: the nearby pairing for LXX 73 reads 'ὅταν μὲν ὀργισθῇ ὁ Θεὸς ἐπὶ τὸν λαὸν', and 85:3 says 'You turned from Your burning anger'.",
+    "evidence": "Sect. 22 [00421]: 'Παυσαμένης δέ ποτε τῆς ὀργῆς, καὶ τῆς αἰχμαλωσίας λυθείσης, ἐὰν θέλῃς εὐχαριστῆσαι, ἔχεις εἰς τὸ λέγειν τὰ ἐν τῷ πδʹ καὶ ρκεʹ.' Option: 'The storm is over. It's finally quiet.' Seen: 'The anger is over and you're free again'.",
+    "fix": "Option: 'It felt like God was against me. Now that's over, and I'm free.' Seen: 'God's anger has passed, you've been set free, and you want to thank Him.' Reason is faithful; optionally make it 'When His anger has passed at last and the captivity is over...'. Psalms 85 and 126 (πδʹ, ρκεʹ = LXX 84, 125) are correct. Names 85:1 and turn 85:8 are right."
+   },
+   {
+    "where": "P63",
+    "severity": "should-fix",
+    "problem": "His condition is persecution: someone hunted who flees into the wilderness. 'seen' and the option drop the persecution ('pushed out' also covers being laid off or dropped by friends). They also frame the need as 'People' and put it under 'Nothing's wrong, exactly. But something's missing.' Being hunted into the desert is not 'nothing's wrong', and what Athanasius counters is the fear of being alone, not a lack of company.",
+    "evidence": "Sect. 20 [00395]: 'Καὶ ἐὰν μὲν διωκόμενος εἰς ἐρημίαν ἀπέλθῃς, μὴ φοβηθῇς ὡς μόνος ὢν ἐκεῖ, ἔχων δὲ τὸν Θεὸν ἐκεῖ καὶ πρὸς αὐτὸν ὀρθρίζων ψάλλε τὸν ξβʹ.' Path: 'Nothing's wrong, exactly. But something's missing.' then 'People. I've been pushed out, and I'm on my own now.'",
+    "fix": "Move the option to the 'In the middle of something hard' branch, worded: 'People turned on me and drove me out. Now I'm alone, far from everyone.' Seen: 'People set against you have driven you out, and now you're somewhere lonely, afraid you're on your own.' The reason is faithful; keep it. Names 63:1 is fine; the superscription ('when he was in the Wilderness of Judah') is the closest line to his situation if the renderer can show it."
+   },
+   {
+    "where": "P84",
+    "severity": "should-fix",
+    "problem": "His object of longing is God's house and His eternal dwelling places, as Paul longed to depart and be at home with the Lord. The option ('I long to be near Him') is longing for God Himself, which is Athanasius's wording for Psalm 42 (πόθον εἰς τὸν Θεόν). The two results cannot be told apart, and 'seen' ('where God is') is wider than his object.",
+    "evidence": "Sect. 22 [00420]: 'Καὶ ἐὰν, βλέπων τὸν οἶκον τοῦ Θεοῦ καὶ τὰ αἰώνια αὐτοῦ σκηνώματα, τὸν πόθον ἔχῃς εἰς αὐτὰ, ὡς εἶχεν ὁ Ἀπόστολος, λέγε καὶ σὺ τὸν πγʹ ψαλμόν.' Option: 'Him. I long to be near Him.' Seen: 'You long to be where God is.'",
+    "fix": "Option: 'Home. I long for His house, the place where He lives, for good.' Seen: 'You long for God's house, and for the home with Him that lasts forever.' The reason is faithful; keep it. Names 84:2 is right."
+   },
+   {
+    "where": "P139",
+    "severity": "should-fix",
+    "problem": "The option narrows πειρασμούς (trials and temptations) to a temptation to sin, and it adds a condition he never set: 'without giving in'. His condition is that the person takes the trials as a proving and wants to give thanks once they are past. The reason also turns his condition into a general statement ('Temptations are how we are tested') and adds 'safely'.",
+    "evidence": "Sect. 25 [00478]: 'Τοὺς δὲ πειρασμοὺς ἡγούμενος εἶναί σου δοκιμὴν, μετὰ τοὺς πειρασμοὺς ἐὰν εὐχαριστῆσαι θελήσῃς, ἔχεις τὸν ρληʹ ψαλμόν.' Option: 'I came through a temptation without giving in.' Reason: 'Temptations are how we are tested. When you want to thank God once a test is safely past...'",
+    "fix": "Option: 'I was put to the test, and I can see now it was proving me. It's over.' Reason: 'If you take your trials as a testing of you, and want to give thanks once they are over, you have Psalm 139.' Seen is fine. Names 139:23 ('test me') is right."
+   },
+   {
+    "where": "P19",
+    "severity": "should-fix",
+    "problem": "He joins three objects of wonder: the order of creation, the grace of Providence in it, and the holy commands of the law. 'seen' drops the law, and the option drops both Providence and the law. The option also swaps order (τάξις) for beauty ('how beautifully everything is made'). Half of Psalm 19 (vv. 7-11) is about the law, and a nature-lover who taps 'beautiful' is not quite his person.",
+    "evidence": "Sect. 17 [00350]: 'Θαυμάζεις τὴν τῆς κτίσεως τάξιν, καὶ τὴν εἰς αὐτὴν τῆς Προνοίας χάριν, τοῦ τε νόμου τὰ ἱερὰ προστάγματα, ψάλλε τὸν ιηʹ καὶ τὸν κγʹ.' Option: 'I keep noticing how beautifully everything is made.' Seen: 'You're marvelling at how the world is ordered, and at God's care in it.'",
+    "fix": "Option: 'Everything seems in its right place: the world around me, and what God asks of me.' Seen: 'You're marvelling at how well the world is ordered, at God's care in it, and at how good His commands are.' The reason is faithful, and 19 and 24 are correct."
+   },
+   {
+    "where": "P101",
+    "severity": "should-fix",
+    "problem": "'I was corrected' does not say by whom, so a person corrected by a boss or a parent who was lenient would land on a result about the Lord's judgment. His condition is having learned the Lord's power to judge, and that He mixes mercy into His judgment, and wanting to draw near to Him.",
+    "evidence": "Sect. 23 [00461]: 'Καὶ ἐὰν, μαθὼν αὐτοῦ τὴν κριτικὴν δύναμιν, καὶ ὅτι ἐλέῳ τὴν κρίσιν κεράσας κρίνει ὁ Κύριος, θελήσῃς αὐτῷ προσελθεῖν, ἔχεις εἰς τοῦτο λόγους τοὺς ἐν τῷ ρʹ.' Option: 'I was corrected, and I found mercy in it.'",
+    "fix": "Option: 'God set me straight, and He was merciful in it. I want to be close to Him.' Seen and reason are faithful. Names 101:1 ('loving devotion and justice') is right."
+   },
+   {
+    "where": "P120",
+    "severity": "should-fix",
+    "problem": "The reason adds a one-psalm-per-step mapping that the Greek does not make: he says to say the fifteen songs at each advance. 'going forward' also loses 'ascending in your deeds', which is growth in how you live. 'names' points to 121:1, outside the headline psalm (120). Psalm 120's own lines ('In my distress', 'Woe to me that I dwell in Meshech') do not name a person who is in a good place and climbing, and he named the fifteen as a set, not any one of them.",
+    "evidence": "Sect. 24 [00472-74]: 'Ἀλλὰ ἀναβαίνοντα σαυτὸν αἴσθῃ ταῖς πράξεσιν, ὥστε λέγειν· Τὰ μὲν ὀπίσω ἐπιλανθάνομαι, τοῖς δὲ ἔμπροσθεν ἐπεκτείνομαι; ἔχεις καθ' ἑκάστην προκοπὴν εἰς τὸ λέγειν τὰς ιεʹ τῶν ἀναβαθμῶν ᾠδάς.' Reason: 'When you sense yourself going forward ... one for each step.' Names '121:1' with psalm 120.",
+    "fix": "Reason: 'When you sense yourself climbing higher in how you live, so that you can say with Paul, \"forgetting what is behind and straining toward what is ahead\", you have the fifteen Songs of Ascents to say at every step forward.' Present the result as 'The Songs of Ascents (Psalms 120-134)' and use the shared superscription 'A song of ascents' as the naming line. If one psalm must headline, set psalm to 121 so that names 121:1 falls inside it."
+   },
+   {
+    "where": "P145",
+    "severity": "consider",
+    "problem": "The reason drops his condition ('if you want to bless God for these things'), drops 'and to all' from the goodness remembered, and leaves the participle dangling. The option narrows 'all' (πάντας) to 'everyone around me'.",
+    "evidence": "Sect. 25 [00485]: 'Εἶτα θαυμάζων τὰς εἰς πάντας τοῦ Θεοῦ εὐεργεσίας, καὶ μνημονεύων τῆς τε εἰς σὲ καὶ εἰς πάντας γενομένης ἀγαθότητος αὐτοῦ, ἐὰν θέλῃς διὰ ταῦτα εὐλογεῖν τὸν Θεὸν, λέγε τὰ τοῦ Δαβὶδ ῥήματα, ἅπερ καὶ αὐτὸς εἶπεν ἐν τῷ ρμδʹ ψαλμῷ.' Reason: 'Marvelling at God's kindness to everyone, and remembering His goodness to you, bless Him...'",
+    "fix": "Reason: 'When you marvel at God's kindness to everyone, remember His goodness to you and to all, and want to bless Him for it, say the very words David said in Psalm 145.' Option: 'His kindness, to me and to everyone.' Names 145:9 is exactly right."
+   },
+   {
+    "where": "P103",
+    "severity": "consider",
+    "problem": "'In and through everything' is his reason (it is fitting to give thanks in all things), not the situation. The situation is wanting to bless God and stirring up your own soul to do it, which is the 'O my soul' of 103:1. The option's 'for everything' also shifts 'in everything' (in every circumstance) to 'for every good thing'.",
+    "evidence": "Sect. 24 [00463]: 'Καὶ ἐπειδὴ πρέπει διὰ πάντων καὶ ἐν πᾶσιν εὐχαριστεῖν ἡμᾶς τῷ Θεῷ, ὅτε θέλεις εὐλογεῖν αὐτὸν, ἔχεις εἰς τοῦτο προτρέπεσθαι σαυτοῦ τὴν ψυχὴν, καὶ λέγειν τὸν ρβʹ καὶ ργʹ.' Seen: 'You want to thank God, in and through everything.' Option: 'I just want to thank Him for everything.'",
+    "fix": "Seen: 'You want to bless God, and to stir your own soul up to do it.' Option: 'I just want to thank Him, whatever comes.' The reason is faithful, and 103 and 104 are correct. Consider names 103:1 ('Bless the LORD, O my soul; all that is within me'), which shows the stirring of one's own soul."
+   }
+  ],
+  "summary": "I read every sentence in the Greek myself: P85 [00421], P139 [00478], P101 [00461], P23 [00352], P19 [00350], P103 [00463], P145 [00485], P120 [00472-74], P84 [00420], P63 [00395], P42 [00377-78]. All psalm numbers, including the \"also\" and \"set\" lists, convert correctly from the Greek (Septuagint) numbering to English, and every \"reason\" keeps his meaning apart from the few slips listed. P23 is sound and is not listed.\n\nThe main problems are in the option texts and the \"seen\" lines.\n\n- **Two must-fix:**\n  - **P42:** the option drops his longing for God, turns enemies' taunts into honest questions, and adds a need for an answer. It also sits under \"Nothing's wrong\".\n  - **P85:** \"The storm is over\" covers any hardship ending, but his situation is God's anger passing. Psalm 85 would then tell someone that their ended hardship was God's anger.\n- **Should-fix:**\n  - **P63:** the persecution is gone, and the option sits wrongly under \"Nothing's wrong\".\n  - **P84:** the option longs for God Himself, which is Psalm 42's situation. His object is God's house and eternal dwelling places.\n  - **P139:** the option narrows trials to temptation and adds \"without giving in\".\n  - **P19:** the option and \"seen\" drop the law, and the option drops God's care.\n  - **P101:** \"corrected\" does not say by whom, so correction by a person also fits.\n  - **P120:** the reason adds \"one for each step\", and the verse naming his situation comes from Psalm 121, not Psalm 120, which leads the result.\n- **Consider:** small drops in P145 and P103.\n\nFiles checked: C:/Users/Light/Desktop/claude/theology compass/design/quiz-ideas/psalm/tree.json, C:/Users/Light/Desktop/claude/theology compass/design/quiz-ideas/psalm/research.json, C:/Users/Light/AppData/Local/Temp/claude/C--Users-Light-Desktop-claude-theology-compass/5d5b7ea0-870f-4d9b-a8bd-900bab31fcb0/scratchpad/greek/marc-greek2.txt, C:/Users/Light/AppData/Local/Temp/claude/C--Users-Light-Desktop-claude-theology-compass/5d5b7ea0-870f-4d9b-a8bd-900bab31fcb0/scratchpad/psalms-bsb.json."
+ },
+ {
+  "lens": "personas 1",
+  "summary": "I walked the draft tree as the four people. Two of them end up misread. The main problems are in the routing, not in Athanasius's pairings.\n\n1. Nurse. Path: where → \"In the middle of something hard\" → \"Life. It's all just too much\" → \"Wearing me down. I'm running on empty\" → P102. This is a good match. His Greek word is ἀκηδιάσῃς, which means listless, with no heart left for anything, and that is her numbness exactly. The \"reason\" line (\"Our nature is weak…\") has no blame in it and will speak to her. Two weaknesses. The \"seen\" line says \"poor and empty\" and leaves out the listlessness, which is the thing that would make her feel seen. And many numb people would honestly tap \"Nothing's wrong, exactly. But something's missing\". That branch has no route to 102, so she ends at \"I just feel low\" → P42S, \"You're sad\", and numb is not sad. Psalm 102 mostly meets her (102:4 \"I even forget to eat my bread\", 102:7 \"I lie awake\"). But 102:10 (\"because of Your indignation and wrath… You have picked me up and cast me aside\") could read to a burnt-out believer as God being angry with her.\n\n2. The man after the affair. Path: middle → \"Me. Something I did\" → \"I did something wrong, and I know it\" → P51. The pairing is exact, and the superscription (\"after his adultery with Bathsheba\") is his own story, so he will feel seen. The \"seen\" line leaves out \"ashamed\" (ἐντραπεὶς), and shame is the centre of his state. That word is in the \"reason\" line but not in the line shown to him. 51:4 (\"Against You, You only, have I sinned\") could read as if his wife's injury does not count, and nothing tells him otherwise. Athanasius's advice itself (repentance, mercy) speaks to him.\n\n3. The 16-year-old mocked for his faith. Path: middle → \"Someone is against me\" → \"People who can't stand what I believe\" → P31. He is misread. The \"seen\" line tells him \"Friends and family have turned cold because of what you believe\". His family has not, and his parents don't even know. The option is broad, but the pairing is narrow: Athanasius says \"all your friends and relatives\". The natural first tap sends him to the wrong result. Psalm 31 would also frighten more than help him: 31:13 \"plot to take my life\", 31:10 \"my iniquity has drained my strength\", 31:17 \"let them lie silent in Sheol\". Honest homes exist. P42 is Athanasius's case of enemies taunting someone who longs for God, and the psalm's own words are \"Where is your God?\". P27 is enemies massing and scorning you, and it is reachable only by avoiding the obvious option. Neither is offered where he would look. P42 sits under \"Nothing's wrong, exactly\", with a condition added that Athanasius never gave (\"I don't know what to say\").\n\n4. The widow. No option is honest for her. The tree has no route for loss. She would reluctantly tap \"Life. It's all just too much\" → \"Making me sad\" → P42S. There the \"seen\" line says \"You're sad, and you can't quite say why\", and that would sting: she knows exactly why. Her other likely paths are also misreads. \"Missing → People… on my own now\" → P63 tells her she was \"pushed out\". \"Someone I love is going through it\" → P20 tells her to \"stand beside them\", and her husband is dead. Psalm 42 itself would meet her well (42:3 tears day and night, 42:4 remembering how things were, 42:5 \"Put your hope in God\"). His section-28 remedy is for what grieves you (τὸ λυποῦν), which covers her honestly, as long as no one claims he spoke of death.\n\nThe findings below fix all of this using only pairings in research.json recon.entries. No new pairings are proposed. Nothing was edited.",
+  "findings": [
+   {
+    "where": "who → P31",
+    "severity": "must-fix",
+    "problem": "The obvious answer for anyone mocked or opposed for their faith leads to a result that says their friends AND family have turned against them. That is Athanasius's condition, not theirs. The teen is told his family has turned cold when his parents don't even know. The option is broad but the pairing is narrow.",
+    "evidence": "Greek [00365]: διὰ τὴν ἀλήθειαν μισούμενον καὶ διωκόμενον παρὰ πάντων τῶν τε φίλων καὶ συγγενῶν ('by all your friends and relatives'). Option text: 'People who can't stand what I believe.' Seen: 'Friends and family have turned cold because of what you believe…' Persona 3 (16, mocked by a school group, parents unaware) lands here on his first honest tap.",
+    "fix": "Change the option to 'My own friends and family, because of what I believe.' → P31. Add a sibling option, 'People who mock me for what I believe.' → P42 (sec 19: longing for God while enemies taunt, ἀκούσῃς τῶν ἐχθρῶν ὀνειδιζόντων). Rewrite the P42 seen line as: 'You long for God, and people keep throwing it at you: \"Where is your God?\"' (BSB 42:3 wording, quoted exactly)."
+   },
+   {
+    "where": "source (no loss option) → P42S",
+    "severity": "must-fix",
+    "problem": "The tree has no route for bereavement, one of the most common reasons anyone would take this quiz. The widow has to force a choice. Her likeliest one, 'Life. It's all just too much' → 'Making me sad', gives the seen line 'You're sad, and you can't quite say why', and that misreads her painfully: she knows exactly why.",
+    "evidence": "Persona 4 (widow, husband died four months ago). P42S seen: 'You're sad, and you can't quite say why.' Athanasius's section-28 remedy is general: [00545] τὸ δὲ λυποῦν θεραπεύεται, ψαλλόντων ἡμῶν ('what grieves is healed as we sing'), followed by [00546], 42:5.",
+    "fix": "Add a source option: 'Loss. Someone I love has died.' → P42S. Change the P42S seen line to 'Grief is weighing on you, and it won't lift.' This also fits the 'I just feel low' and 'Making me sad' routes. Change the P42S reason from 'lightens sadness' to 'Athanasius wrote that what grieves us is healed as we sing the Psalms, and the line he gave for it is this one: \"Why are you downcast, O my soul?\"' Do not claim he spoke about death."
+   },
+   {
+    "where": "P42S (reached from life and missing)",
+    "severity": "should-fix",
+    "problem": "One seen line serves two routes that contradict each other. Someone who tapped 'Life… Making me sad, and I can't shake it' knows the cause, yet is told they 'can't quite say why'.",
+    "evidence": "life → 'Making me sad, and I can't shake it.' → P42S. missing → 'I don't know. I just feel low.' → P42S. Seen: 'You're sad, and you can't quite say why.'",
+    "fix": "Use a seen line that does not assume the cause is unknown: 'Grief is weighing on you, and it won't lift.' (the same wording as the fix above)."
+   },
+   {
+    "where": "P102 seen; missing node",
+    "severity": "should-fix",
+    "problem": "Athanasius's key word here is ἀκηδιάσῃς (listless, gone numb, no heart for anything), which is the burnt-out nurse's exact state. The seen line leaves it out and says 'poor', which reads as money. And the 'Nothing's wrong, exactly. But something's missing' branch, where numb people naturally go, has no way to reach 102.",
+    "evidence": "Greek [00462]: διὰ τὰς συνοχὰς τοῦ βίου ὡς πτωχὸς γενόμενος ἀκηδιάσῃς ποτέ, καὶ θέλῃς παρακληθῆναι. Seen: 'Life has worn you down until you feel poor and empty, and you need comfort.' Persona 1 (a nurse, numb, praying less) who taps 'missing' ends at P42S 'You're sad', and she is numb, not sad.",
+    "fix": "Seen: 'Life has worn you down until you feel empty and have no heart left for anything, and you want comfort.' Add to the missing node: 'Feeling. I'm running on empty and I've gone numb.' → P102."
+   },
+   {
+    "where": "P51 seen",
+    "severity": "should-fix",
+    "problem": "The seen line leaves out shame, which Athanasius names (ἐντραπεὶς) and which is the heart of this situation. The man whose affair has just come out would feel much more seen if it were included.",
+    "evidence": "Greek [00383]: Ἀλλ' ἥμαρτες, καὶ ἐντραπεὶς μεταγινώσκεις καὶ ἐλεηθῆναι ἀξιοῖς. Seen: 'You've done wrong, you know it, and you want to come back.' The reason line does keep 'ashamed'.",
+    "fix": "Seen: 'You've done wrong, you know it, you're ashamed, and you want to come back.'"
+   },
+   {
+    "where": "missing → P42",
+    "severity": "should-fix",
+    "problem": "The option adds a condition Athanasius never gave ('I don't know what to say') and leaves out the ones he did give: intense longing for God, and enemies taunting. It also sits under 'Nothing's wrong, exactly', which contradicts being taunted. Athanasius's advice is 'don't be troubled', not help for someone at a loss for an answer.",
+    "evidence": "Option: 'An answer. People ask me where God is in all this, and I don't know what to say.' Greek [00377]: πάνυ τὸν πόθον ἔχων εἰς τὸν Θεόν, ἀκούσῃς τῶν ἐχθρῶν ὀνειδιζόντων, μὴ ταράσσου.",
+    "fix": "Remove this option from 'missing' and move P42 under 'who' as 'People who mock me for what I believe.' (see the P31 finding). If a missing-branch entry is kept, word it with both of his conditions: 'God. I long for Him, and people sneer at me for it.'"
+   },
+   {
+    "where": "missing → P63",
+    "severity": "should-fix",
+    "problem": "The option and the seen line lose the persecution that is the whole condition, so this reads as plain loneliness. It pulls in the widow and anyone lonely, then tells them they were 'pushed out'. Psalm 63:9-10 (enemies 'a portion for foxes') would then puzzle them.",
+    "evidence": "Greek [sec 20]: διωκόμενος εἰς ἐρημίαν ἀπέλθῃς, μὴ φοβηθῇς ὡς μόνος ὤν. Option: 'People. I've been pushed out, and I'm on my own now.' Seen: 'You've been pushed out, and you're on your own now.'",
+    "fix": "Option: 'People. I was driven out for what I stand for, and now I'm on my own.' Seen: 'You've been driven out for what you stand for, and you're on your own now.'"
+   },
+   {
+    "where": "world → P14",
+    "severity": "should-fix",
+    "problem": "The option adds a temptation, 'part of me wants to agree', and so shuts out steadfast believers who are simply hearing people mock God's care, such as the teen. Athanasius's words forbid joining in; they don't say the reader wants to. Placing it under 'The wrong people keep winning' also hides it from people who are mocked for their faith.",
+    "evidence": "Greek [00339]: βλασφημούντων τινῶν κατὰ τῆς Προνοίας ἀκούσῃς, μὴ κοινώνει μὲν αὐτῶν τῇ ἀσεβείᾳ. Option: '…and part of me wants to agree.' Seen: '…part of you is tempted to join them.'",
+    "fix": "Option: 'People around me laugh at the idea that God looks after the world.' Seen: 'People around you mock the idea that God is looking after the world, and you won't join them.' Keep the reason as it is ('don't join in their contempt')."
+   },
+   {
+    "where": "source → loved → P20",
+    "severity": "consider",
+    "problem": "'Someone I love is going through it' is ambiguous for a bereaved person. A widow reading fast may tap it and be told to 'stand beside' someone who has died.",
+    "evidence": "Option: 'Someone I love is going through it.' → 'Someone I love is suffering, and I want to be there for them.' → P20 seen: 'Someone you love is in trouble, and you want to stand beside them.' Persona 4.",
+    "fix": "Add the loss option to 'source' (the second finding above) so bereavement has its own door. Optionally reword this one to 'Someone I love is struggling, and I want to help them.'"
+   },
+   {
+    "where": "P102 turn",
+    "severity": "consider",
+    "problem": "For an exhausted believer who prays less, 102:10 (God's 'indignation and wrath… cast me aside') can land as an accusation, and the chosen turn (102:12, God enthroned) does not answer her weakened prayer. The turn verse is the site's choice, not Athanasius's, so it can move.",
+    "evidence": "BSB 102:10 'because of Your indignation and wrath, for You have picked me up and cast me aside.' 102:17 'He will turn toward the prayer of the destitute; He will not despise their prayer.'",
+    "fix": "Change turn from '102:12' to '102:17'."
+   },
+   {
+    "where": "P51 (display of superscription and 51:4)",
+    "severity": "consider",
+    "problem": "For the man, the Bathsheba superscription is a direct mirror, which is powerful. But anyone who tapped 'I did something wrong' for a lesser wrong will see 'adultery' at the top of their result and may feel accused. Separately, 51:4 'Against You, You only' can read as if the wronged spouse does not count. Neither can be fixed by changing Athanasius, and the quotation must not be altered.",
+    "evidence": "BSB 51 superscription: 'When Nathan the prophet came to him after his adultery with Bathsheba.' 51:4 'Against You, You only, have I sinned…'",
+    "fix": "If superscriptions are shown, print it as the psalm's own context in small type under the psalm title, not as a headline about the reader. Add nothing that goes beyond Athanasius's advice."
+   },
+   {
+    "where": "P31, P54, P57, P62, P64 (results about being hunted or threatened)",
+    "severity": "consider",
+    "problem": "Children and teens will take this quiz. A bullied 16-year-old whose parents don't know gets a psalm about people plotting to take his life (31:13) and asking that they 'lie silent in Sheol' (31:17), with no pointer to a real person who can help. The owner dislikes over-explaining, so this is only a flag.",
+    "evidence": "BSB 31:13 'They conspire against me and plot to take my life.' 31:17 'let them lie silent in Sheol.' Persona 3.",
+    "fix": "On these results only, add one short line in the site's own words, outside the Athanasius paraphrase: 'If someone is hurting you, tell a person you trust.' Do not attribute it to Athanasius."
+   }
+  ]
+ },
+ {
+  "lens": "personas 2",
+  "summary": "I walked the tree as the four people. Every node links to a real node or outcome, and every outcome can be reached. The problems are where options sit and how the seen lines are worded, not broken links.\n\n1. PASTOR (false story sent to the denomination by two elders he mentored). Path: where > \"In the middle of something hard\" > source > \"Someone is against me\" > who. \"Someone I trusted. A friend.\" leads to P55 (Psalm 55), which is the best result in the tree for him. 55:13-14 (\"it is you, a man like myself, my companion... we walked with the crowd into the house of God\") describes elders he walked into church with, and Athanasius's advice (praise God and be comforted) speaks to him. But the seen line (\"talking about you... hurts more than you let on\") undersells a false report to his denomination. If he taps \"Someone with power over me\" instead (just as honest: they went to the denomination), he gets P52 or P54. Psalm 52 still works for him (52:8, \"an olive tree flourishing in the house of God\"). Psalm 54:3 calls them \"strangers\", which they are not, and 54:5 says \"destroy them\". In both cases he never sees 55:12-14. Lines that could wound him: 55:15 (\"Let death seize them\"), 52:5.\n\n2. SISTER (cut off, family turned against her). Path: hard > against me > \"My own family, or the people closest to me\" > P3 (Psalm 3). The seen line lands (\"more and more are rising up with them\"), and the superscription (David fleeing his own son) would move her if it were shown. But the reason is one bare sentence with no hope in it, \"hounding\" does not describe being frozen out, and 3:7 (\"break the teeth of the wicked\") casts a sister she still loves as \"the wicked\". The truest outcome for her, P63 (\"pushed out, on my own\"), can only be reached through \"Nothing's wrong, exactly\", which she would never tap.\n\n3. STUDENT (classmates mock faith; he doubts and is scared). No source option is honest for him: the trouble is his own wavering faith. He reluctantly taps \"Someone is against me\" > \"People who can't stand what I believe\" and lands on P31 (Psalm 31). He feels misread: it says friends and FAMILY turned cold, and it assumes he is standing firm. The outcome that fits him exactly, P14 (\"part of me wants to agree\"), is filed under \"The wrong people keep winning\", which he would never pick. P42 (\"Where is your God?\") would also meet him, but it sits behind \"Nothing's wrong, exactly\" and its option asks for \"an answer\", not for longing. The tree has no route back when the answer to \"Does this sound like you?\" is no.\n\n4. LAID-OFF MAN (money tight, feels useless, no enemy). Path: hard > \"Life. It's all just too much\" (reluctant: his trouble is too little, not too much) > \"Wearing me down\" > P102 (Psalm 102). This is a genuine hit. Athanasius's own words are \"as a poor man\" and \"listless\" (ἀκηδιάσῃς, the same words as the LXX superscription of this psalm), which name his money trouble and his uselessness. But the option text drops both, and the chosen turn line (102:12) is abstract, while 102:17 (\"He will turn toward the prayer of the destitute; He will not despise their prayer\") is his line. 102:10 (\"You have picked me up and cast me aside\") will cut him. If he taps \"sad\" he is told he \"can't quite say why\", but he can. If he taps \"afraid\", neither fear option is honest for him, and he lands on P91, a pairing Athanasius did not make for fear, whose \"no evil will befall you\" rings false to a man already struck.\n\nFindings, most severe first, are below.",
+  "findings": [
+   {
+    "where": "P91 (node fear)",
+    "severity": "must-fix",
+    "problem": "This pairing is stretched. Athanasius gives Psalm 91 to someone who wants to encourage themselves and others in reverence for God, showing that hope in God makes the soul unafraid. He does not give it to someone who is afraid and cannot say of what. The seen line invents the situation. The laid-off man, afraid about money, has no honest option at 'Afraid of what, mostly?', reluctantly taps 'everything', and gets 91:10 'no evil will befall you' after the disaster has already happened.",
+    "evidence": "[00425] Παραθαρσῦναι θέλων σεαυτὸν καὶ τοὺς ἑτέρους εἰς θεοσέβειαν, καὶ ὡς εἰς τὸν Θεὸν ἐλπὶς οὔτε καταισχύνει, ἀλλὰ καὶ ἄφοβον τὴν ψυχὴν κατασκευάζει (research recon kind: 'teaching'). Draft seen: 'You're afraid, and you can't even say of what.'",
+    "fix": "Remove P91 from the fear node. Make the life option 'Making me afraid of what people could do to me' go straight to P118, and drop the fear node. If P91 stays, move it to the 'good' node with his situation in plain words, e.g. option 'I want to take heart in God, and help others take heart too', seen 'You want to take heart in God, and to help the people around you do the same.' Accept that fear about money has no Athanasius pairing; such a person reaches P102 through 'Wearing me down'."
+   },
+   {
+    "where": "P14 (node world) / node source",
+    "severity": "must-fix",
+    "problem": "The outcome that fits a doubter word for word is hidden under 'The way things are. The wrong people keep winning.', which a scared, doubting student would never tap. No source option names the thing he is actually living: his own faith wavering. So he is forced into 'Someone is against me' > P31 and misread.",
+    "evidence": "P14 option: 'People around me laugh at the idea that God is in charge, and part of me wants to agree.' Parent option: 'The way things are. The wrong people keep winning.' Greek [00339] βλασφημούντων τινῶν κατὰ τῆς Προνοίας ἀκούσῃς, μὴ κοινώνει ... ἐντυγχάνων δὲ τῷ Θεῷ.",
+    "fix": "Add a source option 'My faith. Part of me isn't sure any more.' leading to a new node 'faith' with two options, both real pairings: (a) 'People around me mock the idea that God is looking after anything, and part of me wants to agree.' > P14; (b) 'I want God, and people keep asking me where He is.' > P42. P14 can stay in 'world' as well."
+   },
+   {
+    "where": "P31 (node who)",
+    "severity": "should-fix",
+    "problem": "The option broadens Athanasius's situation (hated by ALL friends AND relatives for the truth) to anyone who dislikes your beliefs. The mocked student lands here and is told his family turned cold and that he is holding firm, when he is wavering.",
+    "evidence": "Option 'People who can't stand what I believe.' vs [00365] διὰ τὴν ἀλήθειαν μισούμενον καὶ διωκόμενον παρὰ πάντων τῶν τε φίλων καὶ συγγενῶν. Seen: 'Friends and family have turned cold because of what you believe'.",
+    "fix": "Option: 'My friends and family. They've turned on me because of my faith.' Mocking classmates then go to the new 'faith' node (P14/P42)."
+   },
+   {
+    "where": "P63 (node missing)",
+    "severity": "should-fix",
+    "problem": "Athanasius's situation is being driven into the wilderness by persecution, but it sits under 'Nothing's wrong, exactly. But something's missing.' This contradicts his situation, and the estranged sister, for whom 'pushed out and on my own' is exactly true, can never reach it: she would honestly tap 'In the middle of something hard'. The seen line also drops the fear of being alone that his advice answers.",
+    "evidence": "[00395] διωκόμενος εἰς ἐρημίαν ἀπέλθῃς, μὴ φοβηθῇς ὡς μόνος ὢν ἐκεῖ. Path: where > 'Nothing's wrong, exactly' > missing > 'People. I've been pushed out...'",
+    "fix": "Move it to node who (or source): option 'They've pushed me out. I'm on my own now.' > P63. Seen: 'You've been pushed out by people set against you, and you're afraid you're on your own now.' Remove it from 'missing'."
+   },
+   {
+    "where": "P52 (node power)",
+    "severity": "should-fix",
+    "problem": "The paraphrase changes Athanasius's meaning in two ways. His gloater is ὁ διάβολος, glossed 'the devil' in research.json (the draft makes him 'the slanderer', a human), and the ruler is wicked ('wicked' is dropped from the option and the seen line). For the pastor, the devil reading is the pastoral point: it moves his anger off the elders he mentored. The option also lets any authority count, including a fair denomination.",
+    "evidence": "[00384] Εἰ δὲ καὶ διεβλήθης πονηρῷ βασιλεῖ, καὶ ὁρᾷς τὸν διάβολον κατακαυχώμενον, ἀναχώρει. research recon: 'seeing the devil gloat over it'. Draft reason: 'you see the slanderer boasting about it'.",
+    "fix": "Reason: 'If you have been slandered to a wicked ruler, and you see the devil gloating over it, step away and say Psalm 52.' Option: 'Someone lied about me to people with power over me, people who were never on my side.' If the διάβολος/διαβάλλω wordplay is judged to allow 'slanderer', say so in the sources note rather than choosing silently."
+   },
+   {
+    "where": "P55 (node who)",
+    "severity": "should-fix",
+    "problem": "This is the pastor's truest result, but the wording would lose him. 'Talking about you' undersells slander (a false report to his denomination). 'Hurts more than you let on' reverses πρὸς ὀλίγον ('grieved for a little while') and adds a claim Athanasius does not make. The seen line also drops the enemies' taunts that come first in his sentence. The option 'Someone I trusted. A friend.' does not say what they did, so someone betrayed in another way would be told they are being slandered.",
+    "evidence": "[00391] Ἐὰν δὲ καὶ ὀνειδίζωσι θλίβοντες οἱ ἐχθροὶ, καὶ φλυαροῦντες διαβάλλωσιν οἱ δοκοῦντες εἶναι φίλοι, καὶ λυπηθῇς ἐν τῇ ἀδολεσχίᾳ σου πρὸς ὀλίγον. Seen: 'People you thought were your friends are talking about you, and it hurts more than you let on.'",
+    "fix": "Option: 'People I trusted. They're spreading stories about me.' Seen: 'People you thought were your friends are spreading stories about you, on top of everything else, and it has left you grieving.' Consider 55:22 ('Cast your burden upon the LORD and He will sustain you') as the hope line alongside 55:16, since 55:15 and 55:23 are imprecations a pastor will stumble on."
+   },
+   {
+    "where": "P102 (node life)",
+    "severity": "should-fix",
+    "problem": "This is a genuine hit for the laid-off man, but the option text drops the two words that make it his: Athanasius's 'as a poor man' and 'listless' (ἀκηδιάσῃς, acedia, which is close to 'useless'). Both echo the LXX superscription of this psalm (Προσευχὴ τῷ πτωχῷ, ὅταν ἀκηδιάσῃ). 'Life. It's all just too much' also misdescribes a man whose trouble is too little (no work). The turn line 102:12 is cosmic, and 102:10 'You have picked me up and cast me aside' will cut someone just laid off.",
+    "evidence": "[00462] ἐὰν διὰ τὰς συνοχὰς τοῦ βίου ὡς πτωχὸς γενόμενος ἀκηδιάσῃς ποτὲ. Option: 'Wearing me down. I'm running on empty.' BSB 102:17 'He will turn toward the prayer of the destitute; He will not despise their prayer.'",
+    "fix": "Option: 'Wearing me down. I feel poor, worn out and no use to anyone.' Change turn to 102:17. Source option: 'Life. It's grinding me down.' (covers both too much and too little)."
+   },
+   {
+    "where": "P42S (seen)",
+    "severity": "should-fix",
+    "problem": "'Can't quite say why' is added: Athanasius says only that the part of the soul that grieves is healed by singing 42:5. It fits the 'missing > I just feel low' route but misreads anyone arriving through life > 'Making me sad', such as the laid-off man, who knows exactly why.",
+    "evidence": "[00545] τὸ δὲ λυποῦν θεραπεύεται, ψαλλόντων ἡμῶν· [00546] Ἵνα τί περίλυπος εἶ, ἡ ψυχή μου. Seen: 'You're sad, and you can't quite say why.'",
+    "fix": "Seen: 'Something is weighing your soul down, and you can't shake it.' (true for both routes)."
+   },
+   {
+    "where": "P3",
+    "severity": "should-fix",
+    "problem": "For the estranged sister the seen line lands, but the result gives her almost nothing: a one-sentence reason with no hope in it. 'Hounding' does not describe being frozen out, and 3:7 ('break the teeth of the wicked') casts a sister she still loves as 'the wicked', with nothing to frame it. Athanasius said more about Psalm 3 in §12, and the psalm's own superscription is the strongest thing it has for her.",
+    "evidence": "[00326] Ἂν δὲ διώκῃ παρὰ τῶν ἰδίων ... λέγε τὸν γʹ ψαλμόν. [00221] Ὅτε γοῦν τὸν τρίτον ψάλλει τις εἰς τὰς ἰδίας θλίψεις συνορῶν, ὡς αὑτοῦ εἶναι νομίζει τὰ ἐν τῷ ψαλμῷ ῥήματα. BSB superscription: 'when he fled from his son Absalom'.",
+    "fix": "Reason: 'When your own people turn on you, and many rise up with them, say Psalm 3. David prayed it running from his own son. Athanasius adds that when you pray it with your own trouble in mind, you will find its words are yours (§§12, 15).' Keep turn 3:3; consider also showing 3:5 ('I lie down and sleep; I wake again, for the LORD sustains me')."
+   },
+   {
+    "where": "general (the 'Does this sound like you?' step)",
+    "severity": "should-fix",
+    "problem": "The tree does not say what happens if someone answers No. The student at P31 is misread and has nowhere to go, so the quiz dead-ends at exactly the moment it fails to see him.",
+    "evidence": "Every outcome has 'seen' shown as 'Does this sound like you?', but no field or node handles a No.",
+    "fix": "Define the No path in the data: return to the last question with the tapped option greyed out (or show the sibling outcomes' seen lines as 'Is it more like this?')."
+   },
+   {
+    "where": "P42 (node missing)",
+    "severity": "should-fix",
+    "problem": "The option asks for an intellectual answer; Athanasius's situation is intense longing for God while enemies taunt you. So the option and the seen line describe different people. Tucked under 'Nothing's wrong, exactly', it is also out of reach for the scared student it best fits.",
+    "evidence": "Option: 'An answer. People ask me where God is in all this, and I don't know what to say.' vs [00377] πάνυ τὸν πόθον ἔχων εἰς τὸν Θεὸν, ἀκούσῃς τῶν ἐχθρῶν ὀνειδιζόντων. Seen: 'You long for God, and people keep asking you where He is.'",
+    "fix": "Option: 'I want God, and people keep asking me where He is.' Place it in the new 'faith' node (see the P14 finding) as well as, or instead of, 'missing'."
+   },
+   {
+    "where": "P31 (reason)",
+    "severity": "consider",
+    "problem": "'Step back from them' reads as advice to withdraw from the friends and relatives just named. ἐκστὰς ἀπὸ τούτων can equally mean 'standing apart from these things'. For someone estranged from family, the draft's reading could push them toward cutting family off, which Athanasius does not clearly say.",
+    "evidence": "[00365] ... ἀλλ' ἐκστὰς ἀπὸ τούτων, καὶ σκοπῶν τὰ μέλλοντα, ψάλλε τὸν λʹ. Draft: 'Step back from them, look to what is coming'.",
+    "fix": "'Step back from it all, look to what is coming, and sing Psalm 31.'"
+   },
+   {
+    "where": "P144 (node power)",
+    "severity": "consider",
+    "problem": "The option drops 'against God's people', so the pastor (the denomination is 'far bigger than I am') could tap it and get a Goliath psalm about a tyrant attacking God's people. That is a stretch of the pairing.",
+    "evidence": "[§25] a tyrant enemy rising against God's people and against you, as Goliath did (research recon entry 86). Option: 'They're coming after me, and they're far bigger than I am.'",
+    "fix": "Option: 'Something far bigger than us is coming after me and the people I belong to.'"
+   },
+   {
+    "where": "P6 (seen)",
+    "severity": "consider",
+    "problem": "'God is against you' overstates Athanasius's 'sensing the Lord's warning'. A laid-off man who wonders whether he is being punished could tap 'being corrected' and be told God is against him.",
+    "evidence": "[00329] Αἰσθόμενος δὲ ἀπειλῆς τοῦ Κυρίου, ἐὰν διὰ τοῦτο ταραττόμενον σεαυτὸν βλέπῃς. Seen: 'It feels as if God is against you right now, and it's shaking you.'",
+    "fix": "Seen: 'You sense God warning you, and it's shaking you.'"
+   },
+   {
+    "where": "node pull",
+    "severity": "consider",
+    "problem": "Of the choices open to someone under long attack, only P62 fits 'I'm holding on and waiting'. There is an honest, unused pairing for the person enduring under attack who wants to know what patience gains, which suits the pastor and the sister.",
+    "evidence": "research recon entry 38, §19: [00375] τῶν ἐχθρῶν ἐπιτιθεμένων, ὑπομένῃς τὰς θλίψεις, καὶ θέλῃς μαθεῖν τὴν ἐκ τῆς ὑπομονῆς ὠφέλειαν, ψάλλε τὸν λθʹ (Eng 40).",
+    "fix": "Add to 'pull': 'To keep waiting it out, and I need to know it's worth it.' > new outcome P40 (Psalm 40), seen: 'You're holding on under attack, and you want to know that the waiting is worth something.'"
+   }
+  ]
+ },
+ {
+  "lens": "personas 3",
+  "summary": "I walked all four people through the quiz, starting at \"start\". Two of them are served well: the envious man and, mostly, the new believer. The other two get a result that is either invented or harmful.\n\nPERSONA 1, the woman who is anxious for no reason and lies awake. None of the four first answers fits her. \"In the middle of something hard\" assumes something happened. \"Nothing's wrong, exactly. But something's missing\" gets half of it right, but nothing is missing for her. She most likely taps where > \"In the middle of something hard\" > \"Life. It's all just too much\" (she chooses it reluctantly, because \"source\" has no \"I can't tell where it's coming from\") > \"Making me afraid\" > \"Of everything, and nothing in particular\" > P91.\n- The \"seen\" line would make her feel very seen (\"You're afraid, and you can't even say of what\"). Psalm 91:5 (\"You will not fear the terror of the night\") lands for someone awake at night.\n- But Athanasius never named this situation. The Greek (§22, line 00425) is a teaching aim: \"Wanting to encourage yourself and others toward godliness, [showing] that hope in God does not shame but makes the soul fearless.\" The \"reason\" line therefore does not answer the \"seen\" line. It tells a frightened woman to encourage others in reverence. This breaks the real-data rule.\n- Her other likely path is where > missing > \"I don't know. I just feel low.\" > P42S. That line says \"You're sad\", and she is not sad; she is uneasy. Yet the verse Athanasius quotes for sadness in §28 is 42:5, which the BSB gives as \"Why the unease within me?\" (the Greek has \"why do you trouble me\"). §28 also gives 118:6 for fear in general. So the honest results for her already exist in the draft; the tree just does not lead her to them.\n\nPERSONA 2, the new believer baptised a month ago. where > \"In a good place\" > \"I just want to thank Him for everything\" > P103.\n- \"You want to thank God, in and through everything\" fits her, though it says nothing about her being new.\n- Psalm 103 meets her strongly: 103:3 \"forgives all your iniquities\" and 103:12 \"as far as the east is from the west\". Athanasius's advice (\"stir up your own soul\") suits her.\n- Her other plausible tap is \"I'm growing. I'm leaving old things behind\" > P120. That result shows Psalm 120 as her psalm: \"Deliver my soul... from lying lips\", \"Woe to me that I dwell in Meshech\", \"when I speak, they want war\". That is a jarring answer to joy, and the \"names\" line points at 121:1, a different psalm.\n- Nothing in \"good\" names a new beginning, although Athanasius made honest pairings for it: Ps 32 (§18), Ps 15 (§16) and the praise set (§24).\n\nPERSONA 3, the mother whose son is seriously ill. where > middle > \"Someone I love is going through it.\" > \"Someone I love is suffering, and I want to be there for them.\" > P20.\n- The \"seen\" line only half reads her: \"you want to stand beside them\" leaves out her fear and her constant praying.\n- Psalm 20 is a prayer she can say over her son (\"May the LORD answer you in the day of trouble\"). Athanasius's advice (comfort them, pray over them, say these words to them) gives her something to do, which helps.\n- Some lines could hurt her if he does not recover. 20:4-5 (\"make all your plans succeed... shout for joy at your victory\") and 20:6 (\"the LORD saves His anointed\") read like a promised outcome. The king-and-chariots imagery feels far from a sickbed. P20 has no \"turn\" line.\n- The \"loved\" node has no \"I'm scared for them and all I can do is pray\" answer. Athanasius gives Ps 5 and 143 for \"wanting to pray and plead\" (§25), and 118:6 for fear (§28).\n- If she answers through the fear branch instead, she reaches P91: \"nor the pestilence that stalks in the darkness\" (91:6) and \"no plague will approach your tent\" (91:10). For a mother of a very sick child, that is a wound.\n\nPERSONA 4, the honest man whose rival cheated his way to success. where > middle > \"The way things are. The wrong people keep winning.\" > \"People who cheat and lie are doing fine, and good people are struggling.\" > P73. This is the best result in the walk.\n- The pairing matches §21 exactly.\n- Psalm 73 names him line by line: 73:3 \"I envied the arrogant\", 73:13 \"Surely in vain I have kept my heart pure\", the turn at 73:16-17, and 73:21-22, a hard but healing word on his bitterness.\n- He would feel seen, though \"shaking you\" is softer than what he feels, which is bitter and envious. The advice speaks to him, but \"scandalised\" is a church word he may trip on.\n- The P37 answer (\"I catch myself wanting what they have\") also serves him. The one line that could sting a struggling honest man there is 37:25 (\"never have I seen the righteous abandoned or their children begging for bread\").\n\nAcross the tree, one more problem showed up. P137 translates Athanasius's \"alien thoughts\" (sinful thoughts, with \"where you caught yourself sinning\") as \"someone else's way of thinking\", which changes his meaning. P137 also has no turn line, and its last verse is 137:9.\n\nI edited no files. The files I used are:\n- C:/Users/Light/Desktop/claude/theology compass/design/quiz-ideas/psalm/tree.json\n- C:/Users/Light/Desktop/claude/theology compass/design/quiz-ideas/psalm/research.json\n- the Greek text, marc-greek2.txt, at lines 00340, 00351, 00366, 00371, 00403, 00425, 00463-00475 and 00544-00550.",
+  "findings": [
+   {
+    "where": "P91 (and node fear)",
+    "severity": "must-fix",
+    "problem": "Athanasius never paired Psalm 91 with 'You're afraid, and you can't even say of what'. His §22 line is about encouraging yourself and others toward godliness. The fear/nameless-fear branch rests on a situation he did not name, and the 'reason' line does not answer the 'seen' line: an anxious person is told to encourage others in reverence.",
+    "evidence": "Greek §22 [00425]: 'Παραθαρσῦναι θέλων σεαυτὸν καὶ τοὺς ἑτέρους εἰς θεοσέβειαν, καὶ ὡς εἰς τὸν Θεὸν ἐλπὶς οὔτε καταισχύνει, ἀλλὰ καὶ ἄφοβον τὴν ψυχὴν κατασκευάζει, αἴνει τὸν Θεὸν' (recon kind: teaching). Draft seen: 'You're afraid, and you can't even say of what.' Persona 1 reaches it at the end of where>source>life>fear.",
+    "fix": "Stop routing fear to P91. Send 'Of everything, and nothing in particular' to P118, because §28 [00549] gives 118:6 for fear in general: 'τὸ φοβηθὲν ἐπιῤῥώσει τῇ ἐλπίδι' ('whatever in the soul is afraid, he steadies with hope'). Or send it to P42S (see the next finding). If P91 stays in the quiz, make it a teaching situation, e.g. under 'good': 'I want to help someone else stop being afraid' / seen: 'You want to encourage yourself and others that hope in God never lets you down and makes you unafraid.'"
+   },
+   {
+    "where": "where / source (missing route for anxiety)",
+    "severity": "must-fix",
+    "problem": "No first answer fits anxiety without a cause. 'In the middle of something hard' assumes an event. 'Something's missing' names a lack, not unease. At 'source' every answer names a cause (someone, me, life, the world, a loved one), and there is no 'I can't tell'. An anxious person has to pick a false answer at the first or second tap.",
+    "evidence": "Persona 1 (33, anxious for no reason, lies awake) has no honest answer at 'where' or at 'source'. §28 [00544-00546] names exactly her state: 'τὸ μὲν ἐν αὐτῇ ταραχῶδες καὶ τραχὺ καὶ ἄτακτον ἐξομαλίζεται· τὸ δὲ λυποῦν θεραπεύεται... Ἵνα τί περίλυπος εἶ, ἡ ψυχή μου, καὶ ἵνα τί συνταράσσεις με;' The BSB gives 42:5 as 'Why the unease within me?'",
+    "fix": "Change the fourth 'where' answer to 'Nothing's happened, exactly. But something isn't right.' Have its node offer: 'I'm uneasy all the time, and I can't say why.' → P42S; 'I'm afraid, and I can't say of what.' → P118; 'I just feel low.' → P42S; 'Him. I long to be near Him.' → P84; 'People. I've been pushed out...' → P63; 'An answer...' → P42. Also add 'I can't tell. It's just there.' at 'source', leading to the same unease/fear pair."
+   },
+   {
+    "where": "P42S",
+    "severity": "should-fix",
+    "problem": "The 'seen' line says only 'You're sad'. The line Athanasius quotes for it also says 'why do you trouble me', and the BSB renders it 'unease'. Anxious people who tap 'I just feel low' are misread as sad, when the verse speaks to their exact state.",
+    "evidence": "Greek §28 [00546] 'ἵνα τί συνταράσσεις με'; BSB 42:5 'Why are you downcast, O my soul? Why the unease within me?' Draft seen: 'You're sad, and you can't quite say why.'",
+    "fix": "Change seen to: \"You're low and uneasy inside, and you can't quite say why.\" Change reason to: \"Athanasius wrote that singing the Psalms eases sadness and settles whatever is troubled in the soul, and the line he gave for it is this one: 'Why are you downcast, O my soul? Why the unease within me?'\" (quote the BSB exactly)."
+   },
+   {
+    "where": "P118",
+    "severity": "should-fix",
+    "problem": "The seen line limits Athanasius's fear line to fear of people. In §28 he applies 118:6 to fear in the soul in general ('τὸ φοβηθὲν'). The verse mentions man, but his situation is fear itself. Together with the invented P91, this leaves general fear without an honest result.",
+    "evidence": "Draft seen: \"You're afraid of what people could do to you.\" Greek [00549] 'τὸ δὲ φοβηθὲν ἐπιῤῥώσει τῇ ἐλπίδι ἐν τῷ λέγειν· Κύριος ἐμοὶ βοηθὸς, καὶ οὐ φοβηθήσομαι τί ποιήσει μοι ἄνθρωπος.'",
+    "fix": "Seen: \"You're afraid, and you need something to hold on to.\" Keep the reason as written. Collapse the 'fear' node, or keep both answers and send both to P118. Also, 'turn' 118:5 comes before 'names' 118:6. Set turn to 118:14 ('The LORD is my strength and my song') so the page reads naming first, then hope."
+   },
+   {
+    "where": "P120",
+    "severity": "must-fix",
+    "problem": "The result shows Psalm 120 as 'your psalm' to someone who said they are growing and leaving old things behind. Psalm 120 is about distress, lying tongues and living among people who want war. The 'names' ref (121:1) points at a different psalm than the one displayed. A joyful new believer who taps this answer gets 'Woe to me that I dwell in Meshech'.",
+    "evidence": "BSB 120:2 'Deliver my soul, O LORD, from lying lips and a deceitful tongue'; 120:5 'Woe to me that I dwell in Meshech'; 120:7 'when I speak, they want war.' Draft: \"psalm\": 120, \"names\": \"121:1\". Athanasius [00474]: 'καθ' ἑκάστην προκοπὴν... τὰς ιεʹ τῶν ἀναβαθμῶν ᾠδάς' (all fifteen, one per step).",
+    "fix": "All fifteen are his pairing, so leading with a different one is honest. Set \"psalm\": 122, \"names\": \"122:1\" ('I was glad when they said to me, \"Let us go to the house of the LORD.\"'). Or present the set as a ladder headed 'The fifteen Songs of Ascents' with no single psalm, and show 120 as the bottom rung where the climb starts."
+   },
+   {
+    "where": "loved",
+    "severity": "must-fix",
+    "problem": "A parent terrified for a sick child and praying constantly has only 'I want to be there for them' (P20) or an unrelated answer about the poor (P41). Her fear and her pleading have no place. Athanasius made two honest pairings that fit her: wanting to pray and plead with God (Ps 5, 143) and fear (118:6).",
+    "evidence": "Persona 3 path where>source>loved>P20. Greek §25: 'δεηθῆναι δὲ καὶ προσεύξασθαι θέλεις; ψάλλε τὸν εʹ καὶ ρμβʹ' (recon: 5, 143). BSB 5:3 'In the morning, O LORD, You hear my voice; at daybreak I lay my plea before You and wait in expectation'; 143:7 'Answer me quickly, O LORD; my spirit fails.'",
+    "fix": "Add to 'loved': 'I'm scared for them. All I can do is pray.' → new outcome P5 { psalm: 5, also: [143], sec: '25', seen: \"You want to pray and plead with God, and you need words for it.\", reason: \"When you want to plead with God and pray, sing Psalms 5 and 143.\", names: '5:1', turn: '5:3' }. Move P41 ('People around me are going without') out of 'loved': the people it describes are not loved ones, so it does not answer 'Someone I love is going through it'."
+   },
+   {
+    "where": "P91 (reachable by the frightened and the bereaved)",
+    "severity": "must-fix",
+    "problem": "Psalm 91's promises of bodily safety are shown to anyone who says they are afraid, including a mother whose son is seriously ill or anyone already struck by illness or loss. For them the psalm reads as a promise already broken.",
+    "evidence": "BSB 91:6 'nor the pestilence that stalks in the darkness'; 91:10 'no evil will befall you, no plague will approach your tent'; 91:16 'With long life I will satisfy him.' Persona 3 reaches P91 through where>source>life>fear>'Of everything'.",
+    "fix": "This is fixed by the P91 finding (route fear to P118 or P42S). If P91 stays as a teaching result, reach it only from 'good' (wanting to encourage others), never from a fear answer."
+   },
+   {
+    "where": "P20",
+    "severity": "should-fix",
+    "problem": "The 'seen' line leaves out the fear behind wanting to stand beside someone. The psalm has no turn line, and its outcome-shaped blessings can wound a parent whose child may not recover.",
+    "evidence": "Draft seen: \"Someone you love is in trouble, and you want to stand beside them.\" BSB 20:4 'May He give you the desires of your heart and make all your plans succeed'; 20:5 'May we shout for joy at your victory'; 'turn': null. Athanasius [00351]: 'Θλιβομένους δὲ ὁρῶν, παρακάλει τούτους, ἐπευχόμενος καὶ λέγων αὐτοῖς τὰ ἐν τῷ ιθʹ ψαλμῷ ῥήματα.'",
+    "fix": "Seen: \"Someone you love is in trouble, and you want to comfort them and pray over them.\" (this adds nothing Athanasius did not say). Set turn: '20:7' ('we trust in the name of the LORD our God'), so the page's hope line is trust rather than a promised win."
+   },
+   {
+    "where": "good",
+    "severity": "should-fix",
+    "problem": "Nothing in 'good' fits someone newly come to faith or newly baptised, the most common joyful state on a Christian site. The new believer has to settle for a general thanks answer and gets no sense of being seen. Athanasius made honest pairings that fit.",
+    "evidence": "Persona 2 path where>good>P103; seen \"You want to thank God, in and through everything.\" Greek §18 [00366] 'Τοὺς δὲ βαπτιζομένους καὶ λυτρουμένους ἀπὸ τῆς φθαρτῆς γενέσεως βλέπων, καὶ θαυμάζων τὴν τοῦ Θεοῦ φιλανθρωπίαν, ᾆδε εἰς ἐκείνους τὸν λαʹ' (Ps 32); §16 [00340] 'ἐὰν θέλῃς μαθεῖν ὁποῖός ἐστι τῆς βασιλείας τῶν οὐρανῶν ὁ πολίτης, ψάλλε τὸν ιδʹ' (Ps 15); §24 [00464] 'Αἰνεῖν θέλεις τὸν Θεὸν, καὶ εἰδέναι πῶς...' (105, 107, 135, 146-148, 150).",
+    "fix": "Add to 'good': (a) 'I've just watched people be baptised, and I can't get over how much He loves us.' → P32 { psalm: 32, sec: '18', seen: \"You've seen people baptised and made new, and you're amazed at how much God loves people.\", reason: \"When you see people being baptised and set free, and you marvel at God's love for people, sing Psalm 32 over them.\", names: '32:1', turn: null }. (b) 'I want to learn how to live now.' → P15 { psalm: 15, sec: '16', seen: \"You want to know what kind of person belongs to God's kingdom.\", reason: \"If you want to learn what a citizen of the kingdom of heaven is like, sing Psalm 15.\", names: '15:1' }. Keep the wording about watching others be baptised, as in the Greek, not about the reader's own baptism."
+   },
+   {
+    "where": "P137 (node self)",
+    "severity": "should-fix",
+    "problem": "'Carried off by alien thoughts' is translated as 'someone else's way of thinking'. The Greek means thoughts foreign to the soul, i.e. sinful thoughts, and includes 'where you caught yourself sinning'. The draft changes his meaning. The psalm also has no turn and ends in 137:9, which will wound anyone reading it cold, a parent above all.",
+    "evidence": "Greek [00475] 'Ἠχμαλωτεύθης ὑπὸ ἀλλοτρίων λογισμῶν, καὶ ᾔσθου σεαυτὸν ἀπαγόμενον, καὶ μετέγνως, παῦσαι τοῦ λοιποῦ, καὶ μείνας ἐφ' οἷς ἁμαρτάνοντα σεαυτὸν κατέλαβες, κάθου, καὶ κλαῦσον.' Draft option: \"I let myself get carried off by someone else's way of thinking\". BSB 137:9 'Blessed is he who seizes your infants and dashes them against the rocks.'",
+    "fix": "Option: 'My thoughts dragged me somewhere I shouldn't have gone, and I've just caught myself.' Seen: \"Wrong thoughts carried you off, you've just caught yourself, and you're sorry.\" Reason: \"If you find that wrong thoughts have carried you off captive, and you notice it and repent, stop there. Stay where you caught yourself, sit down and weep, as the exiles did, with Psalm 137.\" Show only 137:1-4 on the page, with the full psalm behind a link."
+   },
+   {
+    "where": "P73",
+    "severity": "consider",
+    "problem": "This is the right result for the bitter, envious honest man, and the psalm names him. But the reason uses 'scandalised', which reads as church vocabulary, or as its everyday sense of 'outraged'. The owner wants plain words.",
+    "evidence": "Draft reason: \"say Psalm 73, so that you are not scandalised or shaken.\" Greek [00403] 'ἵνα μὴ σκανδαλισθῇς καὶ παρασαλευθῇς'. BSB 73:3 'For I envied the arrogant', 73:13 'Surely in vain I have kept my heart pure.'",
+    "fix": "Reason: \"When you see the ungodly living in peace and plenty while the righteous suffer, say Psalm 73, so that it does not trip you up or shake your faith.\""
+   },
+   {
+    "where": "P37",
+    "severity": "consider",
+    "problem": "The 'seen' line makes a confession ('you catch yourself envying them'). Athanasius frames it as wanting to warn yourself and others not to envy. That is close, since he says 'to yourself', but it adds a little. Also, 37:25 can sting a man who stayed honest and is still struggling.",
+    "evidence": "Greek [00371] 'θέλῃς παραινεῖν τισι μὴ προσέχειν τούτοις, μηδὲ παραζηλοῦν αὐτούς... λέγε καὶ σαυτῷ καὶ τοῖς ἑτέροις τὸν λςʹ.' BSB 37:25 'never have I seen the righteous abandoned or their children begging for bread.'",
+    "fix": "Seen: \"People who do wrong are riding high, and you need to tell yourself not to envy them.\" Set 'turn' to 37:7 ('Be still before the LORD and wait patiently for Him; do not fret when men prosper in their ways'), so the hope line the page shows is the one that speaks to him."
+   },
+   {
+    "where": "P19 (node good)",
+    "severity": "consider",
+    "problem": "The answer and the 'seen' line leave out 'the holy commands of His law', which Athanasius names and which fills half of Psalm 19 (19:7-14). Someone who tapped 'how beautifully everything is made' then meets a long passage on the law without warning.",
+    "evidence": "Greek [00350] 'Θαυμάζεις τὴν τῆς κτίσεως τάξιν, καὶ τὴν εἰς αὐτὴν τῆς Προνοίας χάριν, τοῦ τε νόμου τὰ ἱερὰ προστάγματα'. Draft seen: \"You're marvelling at how the world is ordered, and at God's care in it.\"",
+    "fix": "Seen: \"You're marvelling at how the world is ordered, at God's care in it, and at how good His commands are.\" Set turn: '19:7'."
+   },
+   {
+    "where": "P18",
+    "severity": "consider",
+    "problem": "As with P118, the 'turn' verse comes before the 'names' verse, so the page shows hope before it names the situation.",
+    "evidence": "P18 names '18:17', turn '18:6'; P118 names '118:6', turn '118:5'.",
+    "fix": "P18: names '18:4' or '18:6', turn '18:17'. P118: turn '118:14'."
+   }
+  ]
+ },
+ {
+  "lens": "wording",
+  "summary": "Overall the draft passes the owner's test far better than the scrapped batch. Most screens sound like a wise friend talking, and each tap follows from the last one (\"Who are they to you?\", \"What is it doing to you?\"). Most \"seen\" lines are specific and human, and some are excellent: \"it hurts more than you let on\" (P55), \"part of me wants to agree\" (P14) and the \"children's arrows\" line (P64).\n\nThe problems fall into five groups:\n1. **A mistranslation.** P137 renders ἀλλοτρίων λογισμῶν as \"someone else's way of thinking\". The Greek means stray, sinful thoughts: in line [00475] he goes on to \"where you caught yourself sinning\".\n2. **Options that look alike on a phone.** \"Trying to ruin me, and they won't let up\" and \"It just won't end\" sit on the same screen. So do P4 and P46, which are both \"I called and God helped\". On the Who screen, family (P3), friend (P55) and \"people who can't stand what I believe\" (P31) overlap, and P31's option points at outsiders while its \"seen\" line says friends and family.\n3. **One loaded option.** \"To stay calm and trust God, even though it's hard\" is the obvious right answer, and it is the only option on that screen that mentions God.\n4. **Wrong placement and entry labels.** P63 (driven out by persecution) sits under \"Nothing's wrong, exactly\". The labels on the \"source\" screen promise less than their branches hold: \"wrong people keep winning\" does not cover P12 or P14, and \"Someone I love\" does not cover P41.\n5. **Additions and clichés.** Some options add a cause or a virtue Athanasius never gave: \"Everything keeps going wrong\" (P6), \"refusing to go along\" (P34), \"without giving in\" (P139). There are also a few clichés and vague words: \"storm\", \"growing\", \"poor\", the ownerless \"the anger\", and \"Which is closest/closer?\" used three times.\n\nTwo screens are too long for a phone (\"doing\" has 6 options, \"out\" has 7). Two reasons (P42S, P118) switch to a third-person \"Athanasius wrote\" voice. P42S also softens his verb: \"healed\" (θεραπεύεται) becomes \"lightens\".\n\nPronoun capitals are correct throughout, the BSB quotation at 42:5 matches, and I found no preachy or jargon-heavy lines except \"not yet anointed\" (P27) and a clunky parenthesis in P39. Each finding gives exact replacement wording.",
+  "findings": [
+   {
+    "where": "P137 (node self option + outcome seen + reason)",
+    "severity": "must-fix",
+    "problem": "Mistranslation. ἀλλοτρίων λογισμῶν means stray or alien thoughts: thoughts that are not yours, the tempting λογισμοί of the Fathers. The next clause makes this clear: 'stay where you caught yourself sinning'. The draft turns it into being swayed by other people's opinions, which changes his meaning and also makes the option vague.",
+    "evidence": "[00475] Ἠχμαλωτεύθης ὑπὸ ἀλλοτρίων λογισμῶν, καὶ ᾔσθου σεαυτὸν ἀπαγόμενον ... μείνας ἐφ' οἷς ἁμαρτάνοντα σεαυτὸν κατέλαβες, κάθου, καὶ κλαῦσον. Draft option: 'I let myself get carried off by someone else's way of thinking, and I've only just seen it.'",
+    "fix": "Option: \"My thoughts took me somewhere they shouldn't have, and I've only just noticed.\" Seen: \"Your thoughts carried you off somewhere you never meant to go, and you've only just caught yourself.\" Reason: \"If stray thoughts have carried you off like a captive, then the moment you notice and are sorry, stop. Stay where you caught yourself, sit down and weep, as the exiles did by the rivers of Babylon, with Psalm 137.\""
+   },
+   {
+    "where": "pull (P62 option)",
+    "severity": "must-fix",
+    "problem": "This option is loaded. It is the obviously good answer and the only one on the screen that mentions God, so a believer is steered into it. It also flatters the player ('you've chosen to meet it with stillness'), which is the tone the owner rejects.",
+    "evidence": "\"To stay calm and trust God, even though it's hard.\" / seen: \"They're raging against you, and you've chosen to meet it with stillness and trust.\"",
+    "fix": "Option: \"To stop fighting and leave it with God. I've got nothing else.\" Seen: \"They're coming at you hard, out for everything you have, and you've stopped fighting and put yourself in God's hands.\" Reason: \"When people come at you savagely and want your life, put yourself in God's hands and take heart: the more they rage, the more you yield to the Lord. Say Psalm 62.\""
+   },
+   {
+    "where": "doing (options 5 and 6)",
+    "severity": "must-fix",
+    "problem": "Two options on one phone screen read the same: 'won't let up' and 'won't end'. The screen also has six options, one too many. P13 is still reachable through pull ('To give up. It's gone on so long.'), so the sixth option can go.",
+    "evidence": "\"Trying to ruin me, and they won't let up.\" / \"Nothing new. It just won't end.\"",
+    "fix": "Delete \"Nothing new. It just won't end.\" from doing. In its place, move P63 here (see the P63 finding): \"Pushing me out. I'm on my own now.\""
+   },
+   {
+    "where": "out (P4 vs P46)",
+    "severity": "must-fix",
+    "problem": "The player cannot tell these two apart: both are 'I was in trouble, turned to God, and He helped'. The only difference is 'tell everyone', which is a response, not a situation. Athanasius's actual difference: in P4 you called and were heard; in P46 you fled to God and were kept safe from the troubles around you.",
+    "evidence": "\"I cried out for help, and help came.\" / \"I ran to God, and I want to tell everyone what He did.\" Greek P46: καταφυγὼν δὲ πρὸς τὸν Θεὸν καὶ διασωθεὶς (from the troubles around you).",
+    "fix": "P4 option: \"I prayed for help, and I got an answer.\" P46 option: \"Everything around me was falling apart, and God kept me safe.\" Keep the P46 seen line, which already carries the wish to tell people."
+   },
+   {
+    "where": "who (P3, P55, P31 options)",
+    "severity": "must-fix",
+    "problem": "Three options overlap: 'family, or the people closest to me', 'a friend', and P31. P31's option points at outsiders ('people who can't stand what I believe'), but its seen line and Athanasius both say friends and relatives turned on you for the truth's sake. A player whose family is hostile over faith has two plausible taps, and one of them leads to a seen line that contradicts what they tapped.",
+    "evidence": "\"My own family, or the people closest to me.\" / \"Someone I trusted. A friend.\" / \"People who can't stand what I believe.\" vs P31 seen \"Friends and family have turned cold because of what you believe\"; Greek: παρὰ πάντων τῶν τε φίλων καὶ συγγενῶν.",
+    "fix": "P3: \"My own family, and now others are joining in.\" P55: \"A friend. Someone I trusted.\" P31: \"Friends and family who've turned on me over what I believe.\""
+   },
+   {
+    "where": "missing (P63 option)",
+    "severity": "must-fix",
+    "problem": "The option is filed under 'Nothing's wrong, exactly', but its situation is persecution that drives you out, which is plainly something wrong. It contradicts the answer the player just gave. Athanasius's pairing needs the persecution, so it cannot be softened into plain loneliness.",
+    "evidence": "where: \"Nothing's wrong, exactly. But something's missing.\" -> \"People. I've been pushed out, and I'm on my own now.\" Greek: διωκόμενος εἰς ἐρημίαν ἀπέλθῃς.",
+    "fix": "Move it to the doing node as \"Pushing me out. I'm on my own now.\" and remove it from missing, which leaves three options there. Seen stays: \"You've been pushed out, and you're on your own now.\""
+   },
+   {
+    "where": "missing (P42 option)",
+    "severity": "should-fix",
+    "problem": "The option turns Athanasius's situation (deep longing for God while people taunt 'where is your God?') into a question about apologetics ('I don't know what to say'). That drops the longing, which is the heart of the pairing, and it no longer matches the seen line. It also opens with the same word as the P84 option ('Him.'), so the two blur together.",
+    "evidence": "\"An answer. People ask me where God is in all this, and I don't know what to say.\" vs seen \"You long for God, and people keep asking you where He is.\"; Greek: πάνυ τὸν πόθον ἔχων εἰς τὸν Θεόν ... ὀνειδιζόντων.",
+    "fix": "Option: \"God. I miss Him, and people keep needling me: so where's your God now?\" Change P84's option to: \"Nearness. I long to be where God is.\""
+   },
+   {
+    "where": "self (P6 option)",
+    "severity": "should-fix",
+    "problem": "The option adds a cause that Athanasius never gave ('everything keeps going wrong'), and it does not match the seen line. His situation is sensing the Lord's displeasure and being shaken by it.",
+    "evidence": "\"Everything keeps going wrong, and it feels like I'm being corrected.\" / Greek [00329] Αἰσθόμενος δὲ ἀπειλῆς τοῦ Κυρίου ... ταραττόμενον σεαυτὸν.",
+    "fix": "Option: \"It feels like God is against me right now, and it's shaking me.\""
+   },
+   {
+    "where": "out (P34 option + seen)",
+    "severity": "should-fix",
+    "problem": "'Refusing to go along with something' adds a moral refusal that is not in the text: he says you fell among enemies and wisely slipped away. As written, the option is also too vague to recognise.",
+    "evidence": "\"I got out by refusing to go along with something.\" / seen \"...you got out by wisely refusing their plan.\" Greek: ἐμπεσὼν δὲ εἰς τοὺς ἐχθροὺς, καὶ σοφῶς αὐτοὺς διαφυγών.",
+    "fix": "Option: \"I was in with people who meant me harm, and I got out in time.\" Seen: \"You found yourself among people who meant you harm, and you had the sense to get out.\""
+   },
+   {
+    "where": "out (P85 option + seen + reason)",
+    "severity": "should-fix",
+    "problem": "'The storm is over' is a cliché and loses the meaning, which is release after God's anger and captivity. In the seen line and the reason, 'the anger' has no owner, so a reader assumes someone else's temper. The context (line [00404], God angry with the people) makes it God's anger.",
+    "evidence": "\"The storm is over. It's finally quiet.\" / seen \"The anger is over and you're free again\" / Greek [00421] Παυσαμένης δέ ποτε τῆς ὀργῆς, καὶ τῆς αἰχμαλωσίας λυθείσης.",
+    "fix": "Option: \"Something that felt like punishment is finally over, and I'm free.\" Seen: \"A long stretch that felt like God's anger has ended, you're free again, and you want to give thanks.\" Reason: \"When God's anger has passed at last and the captivity is over, and you want to give thanks, you have Psalms 85 and 126.\""
+   },
+   {
+    "where": "out (P139 option)",
+    "severity": "should-fix",
+    "problem": "'Without giving in' adds a claim of victory Athanasius does not make. He only says to count temptations as testing and give thanks once they are past. The addition also makes this the boastful option on the screen.",
+    "evidence": "\"I came through a temptation without giving in.\" / Greek: τοὺς δὲ πειρασμοὺς ἡγούμενος εἶναί σου δοκιμήν.",
+    "fix": "Option: \"I was tested hard, and it's behind me now.\""
+   },
+   {
+    "where": "out (screen length)",
+    "severity": "should-fix",
+    "problem": "Seven options is too many to take in on a phone without scrolling and re-reading.",
+    "evidence": "out has 7 options (P4, P46, P18, P34, P85, P139, P101).",
+    "fix": "Split it with one question first: \"How did you get out?\" -> \"Someone was after me, and I got away.\" (goes to a node with P18 and P34) / \"God answered me.\" (P4, P46) / \"It just ended, and I can see why.\" (P85, P101, P139). Or at least apply the rewrites above so the seven read as clearly different."
+   },
+   {
+    "where": "source (world and loved options)",
+    "severity": "should-fix",
+    "problem": "These entry labels promise less than their branches hold. 'The wrong people keep winning' does not cover 'no good people left' (P12) or 'people mock the idea that God is in charge' (P14). 'Someone I love is going through it' does not cover strangers going without (P41). A player picks one of these and then finds options that do not fit what they tapped.",
+    "evidence": "\"The way things are. The wrong people keep winning.\" / \"Someone I love is going through it.\" -> loved includes \"People around me are going without\".",
+    "fix": "\"The world. What I see people doing, and getting away with.\" / \"Not me. It's what someone else is going through.\""
+   },
+   {
+    "where": "pull (stem + P26 option)",
+    "severity": "should-fix",
+    "problem": "'What's the pull you feel most?' is abstract, and 'the pull to be afraid' is odd English. The P26 option ('settle it myself') misses his point, which is not to hand the verdict to any human being but to ask God to judge. The human pull he is answering is wanting people to rule you in the right.",
+    "evidence": "\"Underneath it all, what's the pull you feel most?\" / \"To settle it myself. To make them answer for it.\" / Greek: μὴ δῷς ἀνθρώπῳ τὸ κρῖμα ... τὸν Θεὸν ἀξιῶν κριτὴν γενέσθαι.",
+    "fix": "Stem: \"And what's it making you want to do?\" P26 option: \"Prove I'm right. Get people to see who's really in the wrong.\" P26 seen: \"They won't stop trying to ruin you, and you badly want someone to rule that you're in the right.\" P64 option: \"Brace myself. I keep waiting for the next blow.\""
+   },
+   {
+    "where": "power (P144 option + seen)",
+    "severity": "should-fix",
+    "problem": "The option drops what sets this pairing apart: a tyrant rising against God's people and you with them, as Goliath did. Without it, 'they're far bigger than I am' is indistinguishable from the other enemy options. 'They' also has no clear antecedent on a screen about someone with power.",
+    "evidence": "\"They're coming after me, and they're far bigger than I am.\" / Greek: ἐχθρὸς τύραννος ἐπανέστη τῷ λαῷ καί σοι.",
+    "fix": "Option: \"Someone powerful has come against me, and against everyone who believes what I do.\" Seen: \"Someone far more powerful than you has come against you, and against God's people with you.\""
+   },
+   {
+    "where": "P42S (seen + reason) and P118 (reason)",
+    "severity": "should-fix",
+    "problem": "The seen line 'you can't quite say why' contradicts the 'life' route, where the player has just said life is the cause. These two reasons also switch to a third-person, lecture voice ('Athanasius wrote that...') while every other reason speaks straight to the player. And 'lightens' weakens his verb: θεραπεύεται means 'is healed'.",
+    "evidence": "P42S seen \"You're sad, and you can't quite say why.\"; reason \"Athanasius wrote that singing the Psalms lightens sadness...\"; Greek [00545] τὸ δὲ λυποῦν θεραπεύεται, ψαλλόντων ἡμῶν.",
+    "fix": "P42S seen: \"You're low, and it won't lift.\" P42S reason: \"When you sing the Psalms, what grieves you is healed. Say to your own soul, with Psalm 42: 'Why are you downcast, O my soul?'\" P118 reason: \"When you are afraid, sing Psalm 118 and let hope steady you: the Lord is your helper, and you will not fear what anyone can do to you.\""
+   },
+   {
+    "where": "P91 (reason)",
+    "severity": "should-fix",
+    "problem": "The reason is written for someone encouraging others in reverence, not for the anxious player who has just said they are afraid of everything and nothing. It reads as off-topic and preachy. Leading with the half of his sentence that answers fear keeps his meaning.",
+    "evidence": "\"To encourage yourself and others in reverence for God, and to show that hope in God never puts you to shame but makes the soul unafraid, praise God with Psalm 91.\"",
+    "fix": "\"Hope in God never lets you down; it makes a soul unafraid. To remind yourself of that, and to encourage others in reverence for God, praise Him with Psalm 91.\""
+   },
+   {
+    "where": "good (P103 option and P120 option)",
+    "severity": "should-fix",
+    "problem": "The P103 option answers 'What's making it good?' with a wish, not a cause, and it overlaps with P145 (His kindness). 'I'm growing' is a self-help cliché and misses Athanasius's image, which is Paul's forgetting what is behind and straining ahead. The P23 option opens with 'Him' although God has not yet been named on this screen.",
+    "evidence": "\"I just want to thank Him for everything.\" / \"I'm growing. I'm leaving old things behind.\" / \"I can see Him leading me, one step at a time.\"",
+    "fix": "P103: \"Nothing in particular. I'm just thankful for all of it.\" P120: \"I'm moving forward, and I'm not looking back.\" P23: \"I can see God leading me, one step at a time.\" P145: \"God's kindness. To me, and to everyone I see.\""
+   },
+   {
+    "where": "world (P37 and P73 options)",
+    "severity": "should-fix",
+    "problem": "The P37 option ('wanting what they have') only makes sense by reference to a 'they' on another screen; each option should stand alone. The P73 option says 'cheat and lie' while its seen line says 'don't care about God', so the player recognises a different person from the one they tapped.",
+    "evidence": "\"I catch myself wanting what they have.\" / P73 option \"People who cheat and lie are doing fine\" vs seen \"People who don't care about God are doing fine\".",
+    "fix": "P37: \"Bad people are riding high, and I catch myself envying them.\" P73 option and seen: \"People who don't care about God or what's right are doing fine, and good people are struggling.\""
+   },
+   {
+    "where": "self, loved (stems)",
+    "severity": "consider",
+    "problem": "'Which is closest?' and 'Which is closer?' are filler. The first screen already asks 'Which is closest', so the conversation loses its voice exactly where it should be most personal.",
+    "evidence": "self q: \"Which is closest?\"; loved q: \"Which is closer?\"",
+    "fix": "self: \"What's weighing on you?\" loved: \"Who's hurting?\""
+   },
+   {
+    "where": "source (self option)",
+    "severity": "consider",
+    "problem": "'Something I did, or keep doing' does not cover two of the four answers behind it: sensing God's displeasure (P6) and being attacked harder after resolving to change (P39).",
+    "evidence": "\"Me. Something I did, or keep doing.\"",
+    "fix": "\"Me. Something in me, or something I did.\""
+   },
+   {
+    "where": "P102 (seen)",
+    "severity": "consider",
+    "problem": "In modern English 'feel poor' reads as money, not spiritual poverty.",
+    "evidence": "\"Life has worn you down until you feel poor and empty, and you need comfort.\"",
+    "fix": "\"Life has worn you down until you feel you have nothing left, and you just want some comfort.\""
+   },
+   {
+    "where": "P3, P13, P54 (seen)",
+    "severity": "consider",
+    "problem": "There are small stiff or archaic spots in otherwise good lines: 'rising up', 'the scheming against you', and 'hunted' in a modern present-tense line.",
+    "evidence": "P3 \"more and more are rising up with them\"; P13 \"The scheming against you has dragged on so long...\"; P54 \"You're being hunted, and people are informing on you...\"",
+    "fix": "P3: \"The people closest to you are against you, and more keep taking their side.\" P13: \"It's gone on so long you've started to wonder if God has forgotten you.\" P54: \"People are watching you and reporting on you, hoping to see you handed over.\""
+   },
+   {
+    "where": "P28 and P39 and P27 (reasons)",
+    "severity": "consider",
+    "problem": "Three reasons are clumsy to read. P28's 'because human nature is weak' clause hangs off the wrong thing. P39's parenthesis stops the reader mid-sentence. P27's 'not yet anointed' is jargon that means nothing to a newcomer without the David story.",
+    "evidence": "P28 \"Because human nature is weak, if the people scheming against you turn shameless again, don't give them your attention.\"; P39 \"(for that is when he rises up all the more against people like you)\"; P27 \"looking down on you as someone not yet anointed\".",
+    "fix": "P28: \"People are weak, so when those scheming against you turn shameless again, don't fix your eyes on them. Cry out to God with Psalm 28.\" P39: \"When you have made up your mind to keep watch over yourself, that is exactly when the enemy comes at you hardest. If you want to brace yourself against him, sing Psalm 39.\" P27: \"...your enemies mass like an army and look down on you as if God had never chosen you, don't cower. Sing Psalm 27.\""
+   },
+   {
+    "where": "P62, P103 (reason/seen phrasing)",
+    "severity": "consider",
+    "problem": "'set your submission to God' is translationese, and 'in and through everything' is awkward in the seen line.",
+    "evidence": "P62 reason \"set your submission to God\"; P103 seen \"You want to thank God, in and through everything.\"",
+    "fix": "P62: use the reason given in the pull finding. P103 seen: \"You want to thank God for all of it, whatever comes.\""
+   },
+   {
+    "where": "where (stem)",
+    "severity": "consider",
+    "problem": "'Be honest.' is a small lecture on the very first screen. The owner finds the site over-explained, and the question works without it.",
+    "evidence": "\"Be honest. Which is closest to where you are right now?\"",
+    "fix": "\"Right now, which is closest?\""
+   },
+   {
+    "where": "P52 (reason)",
+    "severity": "consider",
+    "problem": "Athanasius says you see the devil (τὸν διάβολον) gloating. The draft makes the human slanderer the one gloating. That reading is defensible, since diabolos literally means 'slanderer', but the research file glosses it as 'the devil', so the sense has quietly shifted. This should be settled on purpose rather than by accident.",
+    "evidence": "Greek [sec 20]: διεβλήθης πονηρῷ βασιλεῖ, καὶ ὁρᾷς τὸν διάβολον κατακαυχώμενον; draft \"you see the slanderer boasting about it\".",
+    "fix": "If following research.json: \"If you have been slandered to a wicked ruler, and you can see the devil gloating over it, step away and say Psalm 52.\" Keep the option (\"Someone lied about me to them, and is pleased with themselves\") only if the literal 'slanderer' reading is chosen deliberately."
+   }
+  ]
+ },
+ {
+  "lens": "care",
+  "summary": "Reverent capitals are clean. I checked every option, \"seen\" and \"reason\" string, and every pronoun for God is capitalised. The one lowercase \"his\" (P144, \"sing his words\") refers to David, which is correct.\n\nThe real problems are pastoral. The draft sends its most vulnerable paths straight into lines that could hurt or mislead:\n- **Next blow (P64):** \"waiting for the next blow\" leads to \"their blows will be like children's arrows\". That line is Septuagint wording and does not appear in the BSB text the page prints.\n- **Verdict (P26):** \"don't hand the verdict to any human being\" can be read as \"don't report it\".\n- **Submit (P62):** \"the more they rage, the more you yield\" can be heard as advice to submit to the person hurting you.\n- **Two new ideas added:** P6 tells people whose lives are going wrong that God is correcting them, and P91 turns a teaching entry into an answer for free-floating fear.\n\nThree situations change Athanasius's meaning:\n- **P137:** \"captive to alien thoughts, repenting where you caught yourself sinning\" became \"carried off by other people's thinking\". This also drops the repentance, which is his point.\n- **P85:** God's anger ending became \"the storm is over\".\n- **P34:** turning aside from their plot became \"refusing to go along with something\".\n\nThe imprecations need one fixed pattern:\n- Print every psalm whole and unaltered. Athanasius himself forbids reworking the words (TLG [00567], §31).\n- Add one quiet note at the first hard line, grounded in his §17 counsel to ask God to judge (TLG [00354]-[00355]).\n- Never let a result end on a curse or a bleak last line.\n- For Psalm 137, cite Augustine's reading of 137:9 (little ones = sinful desires dashed on the Rock, Who is Christ), credited to Augustine and not to Athanasius. It fits Athanasius's own framing, captivity to thoughts, exactly.\n\nNothing in the draft needs cutting outright. Keep 58, 59, 83 and 109 out, as the draft already does.\n\nFor people in crisis:\n- Show one fixed two-line safety note on hard-branch results.\n- Add an \"It's worse than that\" answer at the \"Does this sound like you?\" step. It leads to help first, then Athanasius's own words for extremity (57 and 142).\n- Add one line on the dangerous paths: David fled (the psalms' own superscriptions say so), and Paul appealed to Caesar.\n\nTraditions: show the Greek numbering once so Orthodox and older Catholic readers can follow. Never claim completeness, since Psalm 151 and most of the letter's pairings are not used.\n\nShow the \"also\" psalms as links with a single line each, never printed in full. Fix 116 to 116:1-9.\n\nFiles: C:/Users/Light/Desktop/claude/theology compass/design/quiz-ideas/psalm/tree.json (draft), research.json (hardParts is missing for Psalms 20, 37, 41 and 91). Greek checked in scratchpad/greek/marc-greek2.txt; BSB in scratchpad/psalms-bsb.json.",
+  "findings": [
+   {
+    "where": "pull option 'To be afraid. I keep waiting for the next blow.' -> P64",
+    "severity": "must-fix",
+    "problem": "This is the path most likely to be taken by someone being physically abused. The option uses the literal word 'blow', and the result then tells them 'their blows will be like children's arrows', which minimises real violence. The line is also Athanasius quoting the Septuagint (LXX 63:8, 'βέλη νηπίων'). The BSB 64:7 that the page prints says something different ('God will shoot them with arrows'), so the reader looks for the promised line and cannot find it.",
+    "evidence": "TLG [00396]-[00397]: 'Ἐκφοβούντων δὲ τῶν ἐχθρῶν ... μὴ ὑπενδῷς· βέλη γὰρ νηπίων ἔσονται τούτων αἱ πληγαί'. BSB 64:7 'But God will shoot them with arrows; suddenly they will be wounded.'",
+    "fix": "Option: 'To be afraid. I keep bracing for whatever they do next.' Reason: 'When your enemies keep trying to frighten you, lying in wait and digging up everything they can against you, however many they are, don't give in. In the Greek Psalter Athanasius sang, their blows are \"children's arrows\": they cannot reach your soul. Sing Psalms 64, 65, 70 and 71.' Add the safety line (see the crisis finding) to this result."
+   },
+   {
+    "where": "P26 (and pull node)",
+    "severity": "must-fix",
+    "problem": "'Don't hand the verdict to any human being' can be read by someone being abused or defrauded as advice not to report to police, courts or church authorities. Athanasius means: don't make human judgement the final word; appeal to God, the only just Judge. The draft also drops his 'hands full of blood', which marks this as real danger.",
+    "evidence": "TLG [00354]-[00355]: 'Ἐπιμένουσιν οἱ ἐχθροὶ ... τὰς χεῖρας ἔχοντες αἱμάτων πλήρεις ... μὴ δῷς ἀνθρώπῳ τὸ κρῖμα (ὕποπτα γὰρ πάντα τὰ ἀνθρώπινα)· ἀλλὰ τὸν Θεὸν ἀξιῶν κριτὴν γενέσθαι (μόνος γὰρ αὐτὸς δίκαιος)'",
+    "fix": "Reason: 'When your enemies keep on, with blood on their hands, trying to drag you down and ruin you, don't let any human verdict be the last word, because everything human is open to doubt. Ask God to be the Judge, for He alone is just, and say Psalms 26, 35 and 43.' Add one line beneath it: 'Handing the verdict to God is not keeping quiet: Paul appealed to Caesar (Acts 25:11).'"
+   },
+   {
+    "where": "P62 (pull option 'To stay calm and trust God') and P3 (family path)",
+    "severity": "must-fix",
+    "problem": "'The more they rage, the more you yield yourself' is faithful to the Greek. But to someone in an abusive home it can sound like 'submit and stay'. P3 ('my own family') leads to a psalm whose own heading says David FLED, and the page should let that heading speak.",
+    "evidence": "TLG [00393]-[00394]: 'πρὸς δὲ τοὺς ὁρμῶντας ἀγρίως κατὰ σοῦ, καὶ θέλοντας λαβεῖν σου τὴν ψυχήν, ἀντίθες σὺ τὴν πρὸς τὸν Θεόν σου ὑποταγήν ... τοσούτῳ μᾶλλον ὑποτάσσου σὺ τῷ Κυρίῳ'. BSB superscriptions: Ps 3 'when he fled from his son Absalom'; Ps 57 'when he fled from Saul into the cave'; Ps 142 'when he was in the cave'.",
+    "fix": "P62 reason: '... set against them your submission to God, not to them, and take heart: the more they rage, the more you give yourself to the Lord. Say Psalm 62.' On P3, P54, P57, P62 and P64 add one line: 'David wrote these psalms while running from danger. Trusting God and getting safe go together.'"
+   },
+   {
+    "where": "general: crisis paths (P3, P13, P26, P57, P62, P64, P102, P91/P118, P42S via 'I just feel low')",
+    "severity": "must-fix",
+    "problem": "Several paths ('cornered, nowhere left to go', 'running on empty', 'to give up, it's gone on so long', 'they want my life') may be taken by someone being abused or thinking of ending their life. Their psalms contain 13:3 'lest I sleep in death', 102:23-24 'cut short my days', 39:13 'before I depart and am no more' and 142:4 'no one cares for my soul'. At present the quiz offers such a person nothing beyond the psalm.",
+    "evidence": "tree: doing option 'Closing in. I feel cornered, with nowhere left to go.'; pull option 'To give up. It's gone on so long.'; life option 'Wearing me down. I'm running on empty.' research hardParts for 13, 39, 102, 116, 142.",
+    "fix": "(1) On every result reached through 'In the middle of something hard' or 'I just feel low', place a fixed two-line note under the psalm title. Not a popup. Suggested wording: 'If someone is hurting you, or you have thought about ending your life, please tell someone today. US: call or text 988; domestic abuse 1-800-799-7233. Elsewhere: findahelpline.com. In danger now: call 911.' (2) At 'Does this sound like you?', add a third answer, 'It's worse than that.' It opens the same help first, then Athanasius's words for extremity, Psalms 57 and 142 ('for that kind of extremity you have words of comfort', TLG [00386]-[00387]). (3) Reword 'To give up.' to 'To stop hoping it will ever change.' No other clinical copy."
+   },
+   {
+    "where": "general: hard lines in printed psalms",
+    "severity": "must-fix",
+    "problem": "Results print whole psalms, and many contain curses: 3:7, 7:11-13, 28:4, 31:17, 35:4-8, 52:5, 54:5, 55:15, 63:9-10, 137:8-9 and 139:19-22. Several END on a hard or bleak line: 137:9, 12:8, 39:13, 6:10, 55:23, 62:12, 120:7, and 104:35 among the 'also' psalms. Trimming them would alter Scripture. Printing them with no word leaves a hurting reader on a curse.",
+    "evidence": "BSB last verses: 137:9 'Blessed is he who seizes your infants and dashes them against the rocks.'; 12:8 'The wicked wander freely...'; 39:13 '...before I depart and am no more.'; 120:7 '...they want war.' Athanasius on not altering the psalms, TLG [00567] (§31): 'Μὴ περιβαλλέτω μέντοι τις αὐτὰ τοῖς ἔξωθεν πιθανοῖς ῥήμασι, μηδὲ πειραζέτω τὰς λέξεις μεταποιεῖν ἢ ὅλως ἐναλλάσσειν'.",
+    "fix": "One pattern for all results. (a) Print the psalm whole and unaltered, as Athanasius asks (§31). (b) At the first hard line, put one small margin note, identical site-wide: 'Hard words. The psalms say to God what we actually feel, anger too, and leave the verdict with Him. Athanasius: ask God to be the Judge, \"for He alone is just\" (Letter to Marcellinus 17).' (c) Never end the page on the psalm's last line. Close with the 'turn' verse repeated, or with Athanasius's counsel. (d) Never use a hard line as a pull-quote or on a share card."
+   },
+   {
+    "where": "P137 (self option and outcome)",
+    "severity": "must-fix",
+    "problem": "The draft changes Athanasius's meaning. He speaks of being captive to 'alien thoughts' (ἀλλοτρίων λογισμῶν, the tempting thoughts of ascetic language), noticing it, REPENTING, and sitting down to weep 'where you caught yourself sinning'. The draft says 'carried off by other people's thinking' and drops both the sin and the repentance. The psalm has no turn and ends on 137:9. Augustine's reading resolves exactly this ending, and it fits Athanasius's framing.",
+    "evidence": "TLG [00475]: 'Ἠχμαλωτεύθης ὑπὸ ἀλλοτρίων λογισμῶν, καὶ ᾔσθου σεαυτὸν ἀπαγόμενον, καὶ μετέγνως, παῦσαι τοῦ λοιποῦ, καὶ μείνας ἐφ' οἷς ἁμαρτάνοντα σεαυτὸν κατέλαβες, κάθου, καὶ κλαῦσον'. Augustine, Expositions of the Psalms, on Ps 136 (his numbering), closing section (§21): the 'little ones of Babylon' are evil desires at their birth, to be dashed against the Rock, and the Rock is Christ (1 Cor 10:4).",
+    "fix": "Option: 'My thoughts dragged me somewhere I shouldn't have gone, and I've only just caught it.' Seen: 'Your thoughts carried you off, you've caught yourself where you went wrong, and you want to turn back.' Reason: 'If thoughts not your own have carried you off captive, and you notice it and repent, stop there. Stay where you caught yourself, sit down and weep, as the exiles did by the rivers of Babylon, with Psalm 137.' At 137:8-9, add a note: 'Augustine read the \"little ones of Babylon\" as sinful desires caught while they are small and dashed against the Rock, Who is Christ.' Credit it to Augustine, never to Athanasius. Do not invent a 'turn' for this psalm."
+   },
+   {
+    "where": "P6 (self option 'Everything keeps going wrong, and it feels like I'm being corrected') and its 'also' 38",
+    "severity": "must-fix",
+    "problem": "The option invites anyone with bad luck, illness or loss to read it as God punishing them, and the result then confirms it. Athanasius's situation is narrower: sensing a threat or warning from the Lord and being shaken by it. The seen line 'It feels as if God is against you' goes further than his ἀπειλή. The also-psalm 38 ties sickness to sin (38:3, 38:5).",
+    "evidence": "TLG [00329]: 'Αἰσθόμενος δὲ ἀπειλῆς τοῦ Κυρίου, ἐὰν διὰ τοῦτο ταραττόμενον σεαυτὸν βλέπῃς, δύνασαι λέγειν τὸν ϛʹ καὶ τὸν λζʹ'. BSB 38:3 'no soundness in my body because of Your anger'.",
+    "fix": "Option: 'I feel God is warning me about something in my life, and it's shaken me.' Seen: 'You sense a warning from God, and it's shaking you.' Lead the result with 6:8-9 ('The LORD has heard my plea'). Show 38 as a link only, with one line: 'David's own confession, not a rule that suffering means punishment (John 9:3).'"
+   },
+   {
+    "where": "P91 (fear option 'Of everything, and nothing in particular')",
+    "severity": "should-fix",
+    "problem": "The pairing is stretched. Athanasius gives Psalm 91 for encouraging yourself and others toward godliness, showing that hope in God makes the SOUL unafraid. He does not give it for free-floating fear. Printed in full, 91 reads as a guarantee of physical safety ('no harm will come near you', 91:7, 91:10), which an anxious or ill reader may test and find broken. The devil quotes 91:11-12 in Matthew 4:6, and Jesus refuses to treat it that way. research.json has no hardParts entry for 91 (also none for 20, 37 and 41).",
+    "evidence": "TLG [00425]: 'Παραθαρσῦναι θέλων σεαυτὸν καὶ τοὺς ἑτέρους εἰς θεοσέβειαν, καὶ ὡς εἰς τὸν Θεὸν ἐλπὶς οὔτε καταισχύνει, ἀλλὰ καὶ ἄφοβον τὴν ψυχὴν κατασκευάζει'. BSB 91:10 'no evil will befall you, no plague will approach your tent.'",
+    "fix": "Send both fear options to P118, which is Athanasius's actual fear line (§28, TLG [00549]-[00550]). If 91 stays, move it to a 'want to stop living afraid' option. Seen: 'You want a heart that isn't ruled by fear, and to help someone else find one too.' Result note: 'Athanasius read this psalm as making the soul unafraid, not as a promise that nothing bad will happen.' Never pull-quote 91:7 or 91:10, or 103:3, 34:10, 145:19."
+   },
+   {
+    "where": "P31",
+    "severity": "should-fix",
+    "problem": "'Step back from them', said to someone whose family has 'turned cold because of what you believe', is the exact advice high-control groups give to cut members off. ἐκστὰς ἀπὸ τούτων can mean standing apart from the whole situation (not dwelling on it), not severing people. 'What you believe' also flattens Athanasius's 'for the truth's sake'.",
+    "evidence": "TLG [00365]: 'μὴ τούτοις μηδὲ σαυτῷ κατανοῶν ὀλιγωρήσῃς ... ἀλλ' ἐκστὰς ἀπὸ τούτων, καὶ σκοπῶν τὰ μέλλοντα, ψάλλε τὸν λʹ'",
+    "fix": "Reason: '...don't lose heart over them or over yourself, and don't cower when acquaintances turn away. Stand back from it all, look to what is coming, and sing Psalm 31.' Option: 'People who turned on me for holding to what's true.'"
+   },
+   {
+    "where": "P14 (world option ending 'part of me wants to agree')",
+    "severity": "should-fix",
+    "problem": "A reader who honestly admits doubt is then shown 14:1, 'The fool says in his heart, \"There is no God\"', and 14:3, 'no one does good'. Read cold, that calls them, or the unbelieving family around them, a fool. Athanasius's counsel is gentle: don't join the contempt; plead with God.",
+    "evidence": "TLG [00341]-area (recon §16): 'βλασφημούντων τινῶν κατὰ τῆς Προνοίας ἀκούσῃς ... λέγε τὸν ιγʹ καὶ νβʹ'. research hardParts 14: 'a reader with unbelieving family, or with doubts of their own, could feel condemned.'",
+    "fix": "Add one line above the text: 'Doubt that brings itself to God is not the fool's \"no God\": it is a prayer. Athanasius's counsel is to plead with Him.' Keep the option's honesty."
+   },
+   {
+    "where": "P85 (out option 'The storm is over. It's finally quiet.')",
+    "severity": "should-fix",
+    "problem": "Athanasius means GOD's anger ending and captivity lifting (the entry before it is 'when God is angry with His people'). The option lets someone recovering from illness, abuse or grief land on a psalm that explains their trouble as God's wrath over forgiven sin (85:2-3). The seen 'The anger is over' does not say whose anger.",
+    "evidence": "TLG [00421]: 'Παυσαμένης δέ ποτε τῆς ὀργῆς, καὶ τῆς αἰχμαλωσίας λυθείσης, ἐὰν θέλῃς εὐχαριστῆσαι'; BSB 85:2-3 'You forgave the iniquity of Your people... You withdrew all Your wrath'.",
+    "fix": "Option: 'A time when God felt far off and displeased is over, and I'm free again.' Seen: 'A season of God's displeasure has lifted, you're free again, and you want to give thanks.'"
+   },
+   {
+    "where": "P120 (the Songs of Ascents)",
+    "severity": "should-fix",
+    "problem": "The outcome leads with Psalm 120, which ends on unresolved conflict ('they want war', 120:7), for a reader who chose 'I'm growing'. Its 'names' field already points at 121:1, so the draft is inconsistent with itself. Athanasius gives the fifteen as 'one for each step'.",
+    "evidence": "TLG [00474]: 'ἔχεις καθ' ἑκάστην προκοπὴν εἰς τὸ λέγειν τὰς ιεʹ τῶν ἀναβαθμῶν ᾠδάς'. BSB 120:7.",
+    "fix": "Show the fifteen as a ladder of links and print 121 in full as the lead (psalm: 121). Keep 120 as step one, with a one-line gloss: 'the first step: wanting to leave'."
+   },
+   {
+    "where": "P52",
+    "severity": "should-fix",
+    "problem": "The draft says 'the slanderer boasting'. Athanasius wrote 'the devil gloating' (τὸν διάβολον, with the article). The draft also drops his counsel to withdraw (ἀναχώρει) as a separate act. Restoring the devil also helps with the hard lines: Athanasius sees the spiritual enemy behind the human one, and the letter closes on psalm-singing that overturns the devil (TLG [00576]).",
+    "evidence": "TLG [00384]: 'Εἰ δὲ καὶ διεβλήθης πονηρῷ βασιλεῖ, καὶ ὁρᾷς τὸν διάβολον κατακαυχώμενον, ἀναχώρει, καὶ λέγε καὶ σὺ τὰ ἐν τῷ ναʹ'",
+    "fix": "Reason: 'If you have been slandered to a wicked ruler and you see the devil gloating over it, withdraw, and say Psalm 52.' The seen line can keep 'and they're proud of it'."
+   },
+   {
+    "where": "general: numbering and Septuagint wording (Orthodox, Catholic readers)",
+    "severity": "should-fix",
+    "problem": "Athanasius numbered and quoted the Greek Psalter. Orthodox readers, and Catholics with Douay or liturgical books, will look for Psalm 50, not 51. Three of his quoted lines differ from the BSB text shown: 64:7 'children's arrows', 118:6 'the Lord is my helper' (BSB 'on my side') and 42:5. Leaving this silent looks like an error to careful readers.",
+    "evidence": "research.json recon entries carry both lxx and english numbers; TLG [00550] 'Κύριος ἐμοὶ βοηθός'; BSB 118:6 'The LORD is on my side'.",
+    "fix": "Print the Greek number once under the title, e.g. 'Psalm 51 (50 in the Greek numbering Athanasius used)'. Wherever a reason uses his wording, attribute it: 'in the Greek Psalter he sang'."
+   },
+   {
+    "where": "general: Psalm 151 and completeness",
+    "severity": "consider",
+    "problem": "Athanasius names Psalm 151 (in Orthodox Bibles) as David's own. The quiz also uses fewer than half of his roughly 100 pairings. That is fine, but any copy claiming 'every situation he named' would be false, and an Orthodox reader would notice 151 missing.",
+    "evidence": "TLG §25: 'τὸν ρναʹ ἴδιον ὄντα τοῦ Δαβίδ'; recon entry E 'none (Psalm 151 is in the Septuagint and Orthodox Bibles only)'.",
+    "fix": "Never claim completeness. Write 'situations Athanasius named', not 'every'. No note about 151 is needed on the quiz page."
+   },
+   {
+    "where": "general: 'also' psalms",
+    "severity": "consider",
+    "problem": "Showing them is honest: he named them together, and it proves nothing was stretched. Printing them in full would bury the lead, though, and several are hard: 35 is imprecation, 38 ties illness to sin, 71 and 75 end on judgement. P4's 'also' says 116, but his LXX 114 is only 116:1-9. Some are gentler companions: 56:8 (tears in God's bottle), 142 for the cornered, 43 answering 42.",
+    "evidence": "P4 also [75,116] vs recon '4, 75, 116:1-9'; research hardParts 35, 38, 71, 75.",
+    "fix": "Show them under the main psalm as small links, 'Athanasius gave these for the same moment:', each with one plain line. Do not print them in full. Correct P4 to 116:1-9. If there is room, surface 56:8 on P54 as a single quoted verse."
+   },
+   {
+    "where": "P34 and P139 options",
+    "severity": "consider",
+    "problem": "Small additions change the situation. P34: Athanasius says you fell among enemies, wisely escaped and turned aside from their plot. 'Refusing to go along with something' makes it a moral refusal. P139: 'without giving in' and 'will meet your need' are not in the Greek ('ἔχεις', you have).",
+    "evidence": "TLG [00368]: 'Ἐμπεσὼν δὲ εἰς τοὺς ἐχθροὺς, καὶ σοφῶς αὐτοὺς διαφυγὼν, καὶ ἐκκλίνας ἀπὸ τῆς ἐπιβουλῆς αὐτῶν'; TLG [00478]: '... μετὰ τοὺς πειρασμοὺς ἐὰν εὐχαριστῆσαι θελήσῃς, ἔχεις τὸν ρληʹ'.",
+    "fix": "P34 option: 'I landed among people who meant me harm, and I got out by keeping my wits.' P139 option: 'I've come through a hard test.' Reason ending: '...once a test is past, you have Psalm 139.'"
+   },
+   {
+    "where": "intro line",
+    "severity": "consider",
+    "problem": "Some readers of every tradition will object that a quiz turns Scripture into a personality test. Athanasius's own words answer this in one line, and the owner finds Church Fathers reassuring.",
+    "evidence": "TLG [00218] (§12): 'Καί μοι δοκεῖ τῷ ψάλλοντι γίνεσθαι τούτους ὥσπερ εἴσοπτρον, εἰς τὸ κατανοεῖν καὶ αὐτὸν ἐν αὐτοῖς καὶ τὰ τῆς ἑαυτοῦ ψυχῆς κινήματα'.",
+    "fix": "One line on the intro, no more: 'St Athanasius said the Psalms become a mirror: in them you see the movements of your own soul.' Cite 'Letter to Marcellinus 12'."
+   }
+  ]
+ },
+ {
+  "lens": "coverage",
+  "summary": "Coverage check of tree.json against the twenty most common reasons someone reaches for a psalm. I read every one of the 102 pairings in research.json and checked the Greek (marc-greek2.txt) and the BSB for each fix proposed below.\n\nHonest now (7): burnout (102), guilt (51), fear of people (118, 11, 64), a loved one suffering (20), joy and gratitude (23, 19, 103, 145 and the whole \"out\" branch), injustice and envy of wrongdoers (73, 37), and hostility or slander at work (52, 54, 144).\n\nHonest but mis-worded or out of reach (7): anxiety (the 91 \"seen\" line adds \"can't say of what\"), betrayal (the 55 option is too broad), loneliness, persecution for faith (the 31 option drops \"friends and relatives\"), doubt (the \"An answer.\" option draws the wrong people), anger (26 sits five taps deep), and family conflict.\n\nDead ends or wrong landings (6), all among the most searched:\n- **Grief.** It lands on 20 or on a 42 line that says \"you can't say why\".\n- **Your own illness.** There is no option, and 6:2 (\"heal me\") would be a trap.\n- **Divorce or a breakup.** It lands on 3 or 55.\n- **Waiting.** There is no option.\n- **A decision.** There is no pairing.\n- **A new home.** There is no option.\n\nUnused pairings that honestly fill gaps:\n- Ps 40 (§19): enduring hardship while under attack, and wanting to learn what patience gains.\n- Ps 143 with 5 (§25): wanting to plead with God and pray. 143:8, \"Teach me the way I should walk\", is the psalm's own line, not Athanasius's pairing.\n- Ps 30 with 127 (§17): the Greek names the house you live in, not only the soul. The research note calling it allegory only is wrong.\n- Ps 79 (§21): Christians killed and holy places defiled; suffer with them and plead with God.\n- Ps 73:2 (§28): the soul that slipped comes to own it.\n- The λυποῦν line (§28) can carry grief as sorrow, but never as a psalm Athanasius named for a death.\n\nNo honest pairing exists for bereavement as such, illness as such, making a decision, general worry about the future, ordinary loneliness, marriage or romantic loss, money or success, anger at God, or reconciliation. The tree has no path for \"No\" at the \"Does this sound like you?\" check, and an honest \"this letter does not name your situation\" page is the most important missing piece. For grief and illness, the better pattern is a door that states the gap in one line and then asks what it is doing to the person (worn down leads to 102, heavy leads to 42:5, afraid leads to 118 or 91).\n\nNo files were edited.",
+  "findings": [
+   {
+    "where": "general (every outcome's 'Does this sound like you?' check)",
+    "severity": "must-fix",
+    "problem": "tree.json has no path for a player who answers No at the 'Does this sound like you?' check. That check is the only thing that catches people whose real situation has no pairing (grief, illness, divorce, decisions, ordinary loneliness). Right now they are either shown a result that is not theirs or left at a dead end. Nothing in the data tells them honestly that the letter does not name their situation.",
+    "evidence": "tree.json nodes/outcomes have no 'no' or 'fallback' field. §30 [00562]: each reader should take from the Psalms 'ὡς ἐκ παραδείσου καρπῶν ὠφελείας, πρὸς ὃ τὴν χρείαν ἑαυτὸν ἔχοντα συνορᾷ'. That is the letter's own permission for a reader who is not named.",
+    "fix": "Add a top-level \"onNo\" rule: go back to the last question with the chosen option greyed out. When the player has refused two landings, go to a new outcome \"NONE\": { \"psalm\": null, \"sec\": \"30\", \"seen\": null, \"reason\": \"Athanasius's letter doesn't name what you're going through, and we won't pretend it does. He does say every reader should come to the Psalms like a garden and take the fruit they see they need.\" }. Then offer the two nearest honest outcomes by feeling: P102 (worn down) and P42S (downcast). Never offer an invented pairing."
+   },
+   {
+    "where": "source / life -> P42S; loved -> P20 (GRIEF, death of someone you love)",
+    "severity": "must-fix",
+    "problem": "No option names a loss. A grieving person picks either 'Someone I love is going through it', which lands on P20 (comfort a person in distress; wrong, because the person is gone), or 'Life... Making me sad', which lands on P42S, whose seen line says 'You're sad, and you can't quite say why'. A bereaved person knows exactly why, so the line tells them they are wrong. The letter names no psalm for a death. It does say τὸ λυποῦν ('what grieves in us') is healed as we sing 42:5. That honestly covers the sorrow, not the bereavement.",
+    "evidence": "§28 [00545-00546]: 'τὸ δὲ λυποῦν θεραπεύεται, ψαλλόντων ἡμῶν· Ἵνα τί περίλυπος εἶ, ἡ ψυχή μου'. research.json modern: grief 'none'. P42S.seen: 'You're sad, and you can't quite say why.' The 'can't say why' is not in the Greek.",
+    "fix": "In node 'source', add { \"t\": \"I've lost someone. A death, or something that ended.\", \"go\": \"loss\" }. New node \"loss\": { \"q\": \"What is it doing to you right now?\", \"options\": [ { \"t\": \"It's heavy, and it won't lift.\", \"go\": \"P42G\" }, { \"t\": \"It's worn me out completely.\", \"go\": \"P102\" }, { \"t\": \"They turned on me, and now they're talking about me.\", \"go\": \"P55\" } ] }. New outcome \"P42G\": { \"psalm\": 42, \"also\": [43], \"sec\": \"28\", \"seen\": \"Your heart is heavy with loss, and it won't lift.\", \"reason\": \"Athanasius names no psalm for the death of someone you love. What he does say is that the part of us that grieves is healed as we sing, and the line he gives for it is this one: 'Why are you downcast, O my soul?'\", \"names\": \"42:5\", \"turn\": \"42:11\" }. Change P42S.seen to \"Your soul is downcast, and you can't shake it.\" so the 'life -> sad' path no longer contradicts the player."
+   },
+   {
+    "where": "source (ILLNESS of self: a diagnosis, surgery, chronic sickness)",
+    "severity": "must-fix",
+    "problem": "There is no health option. A sick person picks 'Me. Something I did', which implies sin, or 'Life... wearing me down', which lands on P102. P102 is about the pressures of life, not illness. The letter pairs no psalm with sickness, even though Marcellinus had just been ill. Ps 6 must not be used here: 6:2 says 'heal me', but Athanasius paired 6 and 38 with sensing the Lord's displeasure, and routing illness there would suggest the illness is a punishment.",
+    "evidence": "§1 [00004]: 'πῶς ἄρα καὶ μετὰ τὴν νόσον διάγεις'. It is the only mention of illness, and no psalm goes with it. §15 [00329]: Ps 6/38 = 'Αἰσθόμενος δὲ ἀπειλῆς τοῦ Κυρίου'. BSB 6:2 'heal me, O LORD, for my bones are in agony'.",
+    "fix": "In 'source', add { \"t\": \"My health. I'm ill, or waiting on news.\", \"go\": \"life\", \"flag\": \"illness\" }. When the flag is set, print one line above the result: \"Athanasius wrote this letter to a friend just getting over an illness, but he names no psalm for sickness itself. He does name one for what it is doing to you.\" The existing 'life' node (worn down -> P102, sad -> P42S, afraid -> fear) then gives honest landings. Add no option that leads to P6 for illness. A person who has recovered already has an honest landing: out -> 'I cried out for help, and help came' -> P4 (§15)."
+   },
+   {
+    "where": "who -> P3 / who -> P55 (DIVORCE, BREAKUP, marriage trouble)",
+    "severity": "must-fix",
+    "problem": "A divorcing or abandoned person picks 'My own family, or the people closest to me' and lands on P3 (many of your own people rising up and hounding you), or picks 'Someone I trusted' and lands on P55 (friends gossiping and slandering). Neither is a marriage ending. The letter has nothing on marriage or romantic loss. P55 is honest only when the person is being slandered by someone who seemed a friend.",
+    "evidence": "§15 [00ἂν δὲ διώκῃ παρὰ τῶν ἰδίων, καὶ πολλοὺς ἔχῃς τοὺς ἐπαναστάντας] (P3). §20: 'φλυαροῦντες διαβάλλωσιν οἱ δοκοῦντες εἶναι φίλοι, καὶ λυπηθῇς' (P55). research.json modern: 'Heartbreak... Romantic loss as such has no pairing.'",
+    "fix": "Send them through the new 'loss' node from the grief finding ('I've lost someone. A death, or something that ended.'). The heavy option goes to P42G, the worn-out option to P102, and 'They turned on me, and now they're talking about me' to P55. The P42G reason already says plainly that no psalm is named for the loss itself. Do not add a divorce option that lands on P3."
+   },
+   {
+    "where": "doing / pull (WAITING, enduring something long)",
+    "severity": "should-fix",
+    "problem": "There is no option for waiting or endurance, one of the commonest reasons to open the Psalms. An honest pairing is unused: Ps 40 (§19), 'you endure afflictions while enemies press on you and want to learn what patience gains'. Its setting is opposition, so it belongs under the enemies branch. For waiting with no opponent (a job, a spouse, a test result) it would be a stretch, and there is no other pairing.",
+    "evidence": "§19 [00375]: 'Καὶ ἐὰν, τῶν ἐχθρῶν ἐπιτιθεμένων, ὑπομένῃς τὰς θλίψεις, καὶ θέλῃς μαθεῖν τὴν ἐκ τῆς ὑπομονῆς ὠφέλειαν, ψάλλε τὸν λθʹ ψαλμόν'. LXX 39 = English 40. BSB 40:1 'I waited patiently for the LORD; He inclined to me and heard my cry.' 40:2 'He lifted me up from the pit of despair'.",
+    "fix": "In node 'pull', add { \"t\": \"To hold on. I want to know what all this enduring is for.\", \"go\": \"P40\" }. New outcome \"P40\": { \"psalm\": 40, \"also\": [], \"sec\": \"19\", \"seen\": \"It keeps coming at you, and you're holding on, wanting to know what patience is for.\", \"reason\": \"When people are pressing on you and you are enduring hardship, and you want to learn what patience gains you, sing Psalm 40.\", \"names\": \"40:1\", \"turn\": \"40:2\" }. Do not add a general 'I'm waiting for something' option. That person reaches the NONE fallback."
+   },
+   {
+    "where": "missing -> P42 ('An answer...'); DECISION / needing guidance",
+    "severity": "should-fix",
+    "problem": "The letter has no pairing for making a decision. Under 'What's missing?', the option opens with 'An answer.', which draws in people who want guidance, and people with private doubt, and lands them on P42 (longing for God while people taunt 'where is your God?'). There is an honest pairing for someone who wants to bring a decision to God in prayer: Ps 143 with 5 (§25, 'you want to plead and pray?'). 143:8 happens to say 'Teach me the way I should walk', but those are the psalm's words, not Athanasius's pairing.",
+    "evidence": "§25 [00481-00482]: 'Δεηθῆναι δὲ καὶ προσεύξασθαι θέλεις; ψάλλε τὸν εʹ καὶ ρμβʹ' (LXX 142 = English 143). BSB 143:1 'O LORD, hear my prayer'. 143:8 'Teach me the way I should walk, for to You I lift up my soul.' research.json modern: 'Guidance, a decision... none'.",
+    "fix": "Reword the P42 option to \"Him. I want Him more than ever, and people keep asking me where He is.\" In 'missing', add { \"t\": \"Words. I need to bring something to God, and I don't know how to pray it.\", \"go\": \"P143\" }. New outcome \"P143\": { \"psalm\": 143, \"also\": [5], \"sec\": \"25\", \"seen\": \"You want to plead with God about something, and you need the words.\", \"reason\": \"When you want to plead with God and pray, Athanasius says, you have Psalms 5 and 143.\", \"names\": \"143:1\", \"turn\": \"143:8\" }. Never write that Athanasius gave 143 for decisions. A decision-seeker who answers No goes to NONE."
+   },
+   {
+    "where": "fear -> P91 (ANXIETY, general worry)",
+    "severity": "should-fix",
+    "problem": "'Of everything, and nothing in particular' lands on P91, and its seen line says 'You're afraid, and you can't even say of what.' Athanasius's situation is wanting to encourage yourself and others that hope in God makes the soul unafraid. He says nothing about a fear with no object. The seen line adds that meaning, which would make 91 look like his psalm for anxiety. Overwhelm itself is honestly covered by P102.",
+    "evidence": "§22 [00425]: 'Παραθαρσῦναι θέλων σεαυτὸν καὶ τοὺς ἑτέρους εἰς θεοσέβειαν, καὶ ὡς εἰς τὸν Θεὸν ἐλπὶς οὔτε καταισχύνει, ἀλλὰ καὶ ἄφοβον τὴν ψυχὴν κατασκευάζει... τὰ ἐν τῷ ϙʹ'. research.json modern: 'do not present Ps 11 or 91 as Athanasius's psalm for anxiety'.",
+    "fix": "Option: \"I'm tired of being afraid. I want the kind of hope that isn't.\" P91.seen: \"You want to talk your soul out of fear, and maybe someone else's too, with a hope that doesn't let you down.\" Keep the reason as it is. Add the line \"He names no psalm for worry itself; this is the one he gives for a soul learning not to fear.\""
+   },
+   {
+    "where": "who -> P55 (BETRAYAL by a friend)",
+    "severity": "should-fix",
+    "problem": "'Someone I trusted. A friend.' catches every kind of betrayal (a broken confidence, stolen money, an affair). Athanasius's P55 situation is narrower: people who seemed to be friends gossip about you and slander you, and you grieve for a while. The pairing is honest once the option says so.",
+    "evidence": "§20: 'φλυαροῦντες διαβάλλωσιν οἱ δοκοῦντες εἶναι φίλοι, καὶ λυπηθῇς πρὸς ὀλίγον'. BSB 55:13 'my companion and close friend'.",
+    "fix": "Reword the option to \"A friend. Someone I trusted is talking about me behind my back.\" Keep the P55 outcome as it is."
+   },
+   {
+    "where": "who -> P31 (PERSECUTION for faith); world (Christians persecuted elsewhere)",
+    "severity": "should-fix",
+    "problem": "'People who can't stand what I believe' lands on P31, but Athanasius's situation is being hated and hounded by all your friends and relatives for the truth. A person mocked by coworkers lands on a seen line about family turning cold and has to answer No. Separately, a common modern weight has an honest pairing the tree does not use: news of Christians being killed. That is Ps 79 (§21): suffer with the sufferers and plead with God, without being cowed.",
+    "evidence": "§18: 'μισούμενον καὶ διωκόμενον παρὰ πάντων τῶν τε φίλων καὶ συγγενῶν'. §21 [00415]: 'μιάνωσι τὸν οἶκον τοῦ Θεοῦ, τούς τε ἁγίους ἀποκτείνωσι, καὶ τὰ σώματα αὐτῶν ῥίψωσι τοῖς πετεινοῖς... σύμπασχε μὲν τοῖς πάσχουσιν, ἐντύγχανε δὲ τῷ Θεῷ, λέγων τὸν οηʹ'. BSB 79:2 'They have given the corpses of Your servants as food to the birds of the air'. 79:9 'Help us, O God of our salvation'.",
+    "fix": "Reword the P31 option to \"Friends or family, because of what I believe.\" A person mocked by outsiders fits the reworded P42 option ('people keep asking me where He is'). In 'world', add { \"t\": \"Christians are being attacked and killed, and I can't stop thinking about it.\", \"go\": \"P79\" }. New outcome \"P79\": { \"psalm\": 79, \"also\": [], \"sec\": \"21\", \"seen\": \"Believers are being killed and holy places torn apart, and it's weighing on you.\", \"reason\": \"When enemies defile God's house, kill His saints and leave their bodies to the birds, don't let their cruelty cow you. Suffer with those who suffer, and plead with God in the words of Psalm 79.\", \"names\": \"79:2\", \"turn\": \"79:9\" }."
+   },
+   {
+    "where": "good (A NEW START / a new home)",
+    "severity": "should-fix",
+    "problem": "'I'm growing. I'm leaving old things behind.' lands honestly on the Songs of Ascents (§24). But moving house, one of the commonest new starts, has no option, although the letter has an honest pairing. The Greek of §17 names both the soul and the actual house you live in, so the research table's 'allegorised to the soul, loosely' undersells it.",
+    "evidence": "§17 [00362]: 'ἐγκαινίζων τὸν οἶκόν σου τήν τε ψυχὴν τὴν τὸν Κύριον ὑποδεχομένην, καὶ τὸν σωματικὸν οἶκον, ἐν ᾧ σωματικῶς κατοικεῖς, εὐχαρίστει, καὶ λέγε τόν τε κθʹ καὶ... ρκςʹ' (English 30 and 127). The BSB superscription of 30 reads 'for the dedication of the temple', so do not use it as the naming line. BSB 127:1 'Unless the LORD builds the house'.",
+    "fix": "In 'good', add { \"t\": \"We've just moved into a new home.\", \"go\": \"P30\" }. New outcome \"P30\": { \"psalm\": 30, \"also\": [127], \"sec\": \"17\", \"seen\": \"You've just moved into a new home, and you want to give thanks for it.\", \"reason\": \"When you dedicate your home (both your soul, which welcomes the Lord, and the house you actually live in), give thanks and say Psalms 30 and 127.\", \"names\": \"127:1\", \"turn\": \"30:11\" }."
+   },
+   {
+    "where": "doing -> pull -> P26 (ANGER, resentment)",
+    "severity": "should-fix",
+    "problem": "The only honest landing for resentment is P26 (don't hand the verdict to people; ask God to judge). It is reached only after five taps, through 'Trying to ruin me, and they won't let up', so someone who is simply furious at a person who wronged them rarely gets there. The limit is honest: the Greek needs enemies who keep on. There is no pairing for anger at God or a short temper, and §27's discussion of θυμός (anger) is teaching, not a pairing.",
+    "evidence": "§17: 'μὴ δῷς ἀνθρώπῳ τὸ κρῖμα ... τὸν Θεὸν ἀξιῶν κριτὴν γενέσθαι ... κεʹ, λδʹ, μβʹ'. research.json modern: anger 'loosely'.",
+    "fix": "Leave P26 where it is. Reword the 'doing' option to \"Trying to ruin me. It won't stop, and I want them to pay.\" so an angry player recognises it one tap earlier. Add nothing for anger at God. That player goes to NONE."
+   },
+   {
+    "where": "missing -> P63 (LONELINESS)",
+    "severity": "should-fix",
+    "problem": "P63 is honest only for someone driven out, which is how it is worded ('I've been pushed out'). Ordinary loneliness (widowed, moved away, single) has no pairing, and those people will pick this option because nothing else fits. Without the No path they get a result that is not theirs.",
+    "evidence": "§20: 'διωκόμενος εἰς ἐρημίαν ἀπέλθῃς, μὴ φοβηθῇς ὡς μόνος ὤν'. research.json modern: 'Do not use it for plain loneliness.'",
+    "fix": "Keep the option wording. The fix is the general No path. Add no 'I'm just lonely' option that leads to P63."
+   },
+   {
+    "where": "world -> P14 / P73; missing -> P42 (DOUBT)",
+    "severity": "consider",
+    "problem": "Doubt that has an outside source is honestly covered: others mocking God's care leads to P14, the wicked prospering to P73, people taunting 'where is your God?' to P42. Private doubt ('I'm not sure I believe any more') has no pairing. §24's 116:10-19 is for someone who does believe what they pray, so it must not be used for doubt.",
+    "evidence": "§16: 'βλασφημούντων τινῶν κατὰ τῆς Προνοίας'. §21 [00403]: 'ἵνα μὴ σκανδαλισθῇς καὶ παρασαλευθῇς'. §24 [00470]: 'Ἔχεις πίστιν... καὶ πιστεύεις οἷς εὐχόμενος λαλεῖς;'",
+    "fix": "No new option. Private doubt goes to NONE. Keep 116:10-19 out of any doubt path."
+   },
+   {
+    "where": "self (GUILT, a slip, temptation)",
+    "severity": "consider",
+    "problem": "Guilt (P51), a resolve under attack (P39) and being carried off by others' thinking (P137) are honest. Getting through a temptation is honest (P139). Two gaps: a small failing that is not a grave sin, which has an honest unused line (§28: 'my feet had almost stumbled'), and a habit with no resolve yet, which has no pairing. Ps 140 ('hemmed in by enemies again') is too ambiguous to present as an addiction psalm.",
+    "evidence": "§28 [00547-00548]: 'Καὶ τὸ μὲν ἐσφαλμένον ἐπιγνώσεται λέγουσα· Ἐμοῦ δὲ παρὰ μικρὸν ἐσαλεύθησαν οἱ πόδες' (BSB 73:2 'my feet had almost stumbled'). §25 [00479]: 'Συνέχῃ πάλιν ἀπὸ ἐχθρῶν' (Ps 140).",
+    "fix": "In 'self', add { \"t\": \"I nearly went wrong. I caught myself, just.\", \"go\": \"P73SLIP\" }. New outcome \"P73SLIP\": { \"psalm\": 73, \"also\": [], \"sec\": \"28\", \"seen\": \"You nearly slipped, and you're only now owning it.\", \"reason\": \"Athanasius wrote that as we sing, the part of us that has slipped comes to own it, saying: 'my feet had almost stumbled.'\", \"names\": \"73:2\", \"turn\": \"73:26\" }. Add nothing that leads to Ps 140."
+   },
+   {
+    "where": "loved -> P20 (a LOVED ONE ill or suffering)",
+    "severity": "consider",
+    "problem": "Honest. Athanasius tells you to comfort people in distress by praying over them and saying Ps 20 to them. The seen line narrows 'people in distress' to 'someone you love', which is harmless. It promises no healing, and must not. §33 adds that whoever cares for sufferers should speak these words (quoting Ps 119), which could support the result without becoming a second pairing.",
+    "evidence": "§17 [00351]: 'Θλιβομένους δὲ ὁρῶν, παρακάλει τούτους, ἐπευχόμενος καὶ λέγων αὐτοῖς τὰ ἐν τῷ ιθʹ'. §33 [00598]: 'εἴ τις κήδεται τῶν πασχόντων, ταῦτα λεγέτω'.",
+    "fix": "Keep it. Optionally add one sentence to the reason: \"He adds that anyone who cares for someone suffering should speak Scripture's own words over them.\" Keep 119 out of 'also', because §33 quotes it rather than prescribing it."
+   },
+   {
+    "where": "life -> P102 (BURNOUT; MONEY pressure)",
+    "severity": "consider",
+    "problem": "Honest, and one of the best fits. The Greek 'ὡς πτωχὸς γενόμενος' (made as though poor by the pressures of life, sliding into listlessness) also covers someone ground down by money trouble. Wanting money, a job or success has no pairing and is rightly absent. Ps 41 is about showing mercy to the poor, not about being poor.",
+    "evidence": "§24 [00462]: 'Ἀσθενοῦς δὲ ἡμῶν τῆς φύσεως οὔσης, ἐὰν διὰ τὰς συνοχὰς τοῦ βίου ὡς πτωχὸς γενόμενος ἀκηδιάσῃς ποτὲ, καὶ θέλῃς παρακληθῆναι, ἔχεις τὸν ραʹ'. BSB superscription: 'when he grows faint'.",
+    "fix": "Optionally reword the 'life' option to \"Wearing me down. Work, money, all of it. I'm running on empty.\" so money pressure recognises itself. Add no prosperity option."
+   },
+   {
+    "where": "life -> fear -> P118; doing -> P11 / P64 (FEAR of people)",
+    "severity": "consider",
+    "problem": "Honest: 118:6 is the exact line Athanasius gives for fear. One oddity: P118 has 'turn' 118:5, which comes before 'names' 118:6, so the psalm 'turns toward hope' before it names the situation.",
+    "evidence": "§28 [00549-00550]: 'τὸ δὲ φοβηθὲν ἐπιῤῥώσει τῇ ἐλπίδι ἐν τῷ λέγειν· Κύριος ἐμοὶ βοηθὸς'. BSB 118:5 'In my distress I called to the LORD, and He answered'.",
+    "fix": "Set P118.turn to null, or to a verse after 118:6, so the order matches every other outcome."
+   },
+   {
+    "where": "world -> P37 (ENVY)",
+    "severity": "consider",
+    "problem": "Honest for envy of people doing wrong, and the branch question ('The wrong people keep winning') carries that condition. Envy of a sibling's or friend's ordinary success has no pairing and cannot reach this branch, which is correct.",
+    "evidence": "§18: 'μὴ προσέχειν τούτοις, μηδὲ παραζηλοῦν αὐτούς ... λέγε καὶ σαυτῷ καὶ τοῖς ἑτέροις τὸν λϛʹ'.",
+    "fix": "Optionally tighten the option to \"I catch myself envying them, even knowing how they got there.\" No other change."
+   },
+   {
+    "where": "who -> P3 (FAMILY conflict)",
+    "severity": "consider",
+    "problem": "Honest when the family, or your own people, are actively against you and others join in. A family rift where the person wants reconciliation, or worry over a wayward child, has no pairing. Those people will pick this option and should reach NONE through the No path, not P3.",
+    "evidence": "§15: 'ἂν δὲ διώκῃ παρὰ τῶν ἰδίων, καὶ πολλοὺς ἔχῃς τοὺς ἐπαναστάντας'. BSB 3:1 'How many rise up against me!'",
+    "fix": "Reword the option to \"My own family, or the people closest to me. They've turned on me.\" No new outcome."
+   },
+   {
+    "where": "out -> P85 (GRATITUDE after a hard season)",
+    "severity": "consider",
+    "problem": "The whole 'out' branch is honest and rich (4, 46, 18, 34, 139, 101). One wording problem: 'The storm is over. It's finally quiet.' leaves out that the anger that ended was God's and that a captivity was lifted, so almost anyone relieved lands here. The seen line ('The anger is over') does not say whose anger.",
+    "evidence": "§22: 'παυσαμένης δέ ποτε τῆς ὀργῆς, καὶ τῆς αἰχμαλωσίας λυθείσης ... πδʹ καὶ ρκεʹ' (English 85, 126). BSB 85:1-3 speaks of God restoring and withdrawing His wrath.",
+    "fix": "Option: \"It felt like God was against me. Now it's over, and I'm free.\" P85.seen: \"The season when God seemed set against you has ended, and you're free again.\" General relief is already served by P4 ('I cried out for help, and help came')."
+   }
+  ]
+ }
+]
