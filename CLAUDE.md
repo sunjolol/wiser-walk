@@ -41,6 +41,31 @@ Note he had earlier rejected the word "wiser" as "weird to say"; he has since ov
 
 State: local git repo initialised, **one commit** `c8fd322`, 137 files tracked, `node_modules` excluded. Authored as `Light <serenitybackto@gmail.com>` — he was offered a GitHub noreply address to keep his email out of public history and **chose to keep his real email**. Do not change it.
 
+## NEXT SESSION STARTS HERE (end of 2026-09-22): the quiz ideas, second attempt. Read HANDOFF.md "START HERE" first
+
+Live today: accounts public, the account design pass, his logo (brush W + Amatry wordmark as outlines), and
+headlines in Philosopher Bold (Poppins and Inter kept for everything small; he rejected PT Sans as ugly).
+
+**His verdict on the twelve researched quiz ideas: "Total scrap."** In his words: "None of the quiz proposals are
+good, besides maybe the 1,400 year old personality test - but only the premise, the questions themselves and the
+answers that go with them are very low quality and shallow, and feel like nonsensical AI wrote them rather than
+them being coherent and intelligent and cohesive." What he asked for in the first place: research what Christians
+and people in general want to know about themselves, and quizzes whose questions are DISGUISED (everyday questions
+that do not visibly point to Scripture) while their results are honestly derived from Scripture and the early
+Church Fathers, "a very subtle, nuanced, and difficult balance... it will require the most care". The one premise
+he kept: a personality test drawn from Gregory the Great's Pastoral Rule (c. 590).
+
+What went wrong, so it is not repeated: ideas and items were mass-produced by parallel agents (12 ideas, 4 writers,
+critics, revisers), so every quiz came out in the same shape: a "scenario" stem with four equally pleasant options
+keyed one-to-one to a category. The options were balanced against loading, and in doing so became interchangeable
+and shallow; nothing tied the questions to each other or to a real model of a person. Breadth was optimised before a
+single quiz was proven. Next time: fewer ideas, thought through by the main session itself from the primary text
+up (read Gregory's Book III whole), with a coherent logic that runs from what the source actually says about kinds
+of people, to what an honest question can reveal, to a result that explains the person back to themselves; show him
+ONE quiz complete and deep before any list. Ask him what "coherent and intelligent" looks like to him if unsure (in
+plain words, with a real example in front of him). The earlier memory notes on loaded surveys and "fun means
+personal" still apply.
+
 ## ACCOUNTS ARE PUBLIC (2026-09-22, his go: "yes go public now")
 
 `ACCOUNT_LINKS_LIVE` is true. He set up Supabase + Resend (sending domain `mail.wiserwalk.com`,

@@ -1,4 +1,42 @@
-# Handoff (updated 2026-09-21): start the next session here
+# Handoff (updated 2026-09-22, end of the accounts / logo / type session): start here
+
+## START HERE (2026-09-22, third session). Supersedes everything below where they differ
+
+**Live on `main` and deployed today, each with the owner's go:**
+- **Accounts are public** (`ACCOUNT_LINKS_LIVE = true`). Supabase Auth + Resend; the sending domain is
+  `mail.wiserwalk.com` (`ACCOUNT_EMAIL_FROM`), the email rate limit is 100/hour, and every line on
+  `/account/setup/` is green. He signed up, logged in and reset a password on the live site.
+- **Account design pass** (brief `design/accounts/PASS-BRIEF.md`, exemplar `site/src/pages/account/sign-in.astro` +
+  `site/src/lib/account/form.ts`): visible labels, "Forgot your password?" under the log-in button, a settings-list
+  `/account/`, delete asks for the password. Words are Log in / Log out / Sign up; routes unchanged. Header: guests
+  "Log in | Sign up" (on a phone in the bulb's old place; the bulb moved to the end of the nav row), logged in
+  "My profile". Logged in, the footer band has no words at all, just the walker picture (no overlay; 70px lower on
+  desktop).
+- **Fixes found on the way:** the server believed it was https://localhost (Astro `security.allowedDomains`), email
+  links now always go to the live site, service_role grants in `schema.sql`, the `/_image` endpoint switched off,
+  the sins quiz's strength words / ties / "Next" line (`category.ts`).
+- **The logo**: his brush-stroke W (`site/public/img/logo-w.png`, only 47x34: ask him for a 4x or SVG export) and
+  "Wiser Walk" drawn from his licensed Amatry font as outlines (`site/public/img/wordmark.svg`, made by
+  `design/tools/wordmark.py`). The Amatry files stay OUT of the public repo (`.gitignore`); he holds an Envato
+  Elements commercial licence.
+- **Headlines in Philosopher Bold** ('Wiser Display' in `site/public/fonts/fonts.css`). **Poppins and Inter stay for
+  everything small: he tried PT Sans and called it ugly. Do not propose changing the small fonts again unprompted.**
+  Philosopher's capital I looks like a lowercase l (a font trait, he knows). The 42 social cards
+  (`design/og/`) still use the old fonts: regenerating them is an open follow-up.
+
+**SCRAPPED: every quiz idea from today's research.** He read twelve researched ideas with sample questions
+(https://claude.ai/artifact/DVcWJFcLXy99MjWEGQomVj) and said: "None of the quiz proposals are good, besides maybe the
+1,400 year old personality test - but only the premise, the questions themselves and the answers that go with them
+are very low quality and shallow, and feel like nonsensical AI wrote them rather than them being coherent and
+intelligent and cohesive. Total scrap." The next session tries again. See the section in `CLAUDE.md` of the same date
+for what he wants and what went wrong. The research itself (demand, sources, craft) was sound and can be reused:
+it is summarised in the memory note `quiz-ideas-retry`.
+
+**The personal profile** ("You, so far": https://claude.ai/artifact/AziUmP2qvxYgYBSnCaQkYo) is designed, not built. His
+rulings: the weakness part sits behind a "Show it" tap; a "How do you love?" quiz from 1 Corinthians 13 is approved
+in principle. Build nothing for it until the quiz direction is settled.
+
+## Earlier (2026-09-21)
 
 **Everything on `build/three-new` was merged to `main` and is live on wiserwalk.com** (owner's yes,
 2026-09-20): the two quizzes left draft, Who Said It? shipped, the footer and quizzes page were
