@@ -106,7 +106,7 @@ const turnRef = leads.map(x => x.o.turn).find((r): r is string => r !== null && 
  */
 const HARD_WORDS =
   'The Psalms say to God what hurt people really feel, anger included, and leave the verdict ' +
-  'with Him. Athanasius gives the same counsel in section 17 of this letter: ask God to be the ' +
+  'with Him. Athanasius gives the same counsel in this letter: ask God to be the ' +
   'Judge, since He alone is just.';
 const hard: Array<{ ref: string; line: string; note: string }> = [];
 for (const { o } of leads) {
@@ -206,7 +206,7 @@ const breadcrumbs = [
         <article class:list={['ps-sit', `ps-sit--${x.role}`]}>
           <p class="ps-seen">{x.o.seen}</p>
           <p class="ps-advice">{x.o.reason}</p>
-          <p class="ps-cite">Letter to Marcellinus, section&nbsp;{x.o.sec}</p>
+          <p class="ps-cite">Letter to Marcellinus</p>
           {x.o.note && <p class="ps-soft">{x.o.note}</p>}
 
           {/*

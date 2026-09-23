@@ -71,7 +71,7 @@ const also = o.also.map(String);
 
 const hardNote =
   o.hardNote ||
-  'The Psalms say to God what hurt people really feel, anger included, and leave the verdict with Him. Athanasius gives the same counsel in section 17 of this letter: ask God to be the Judge, since He alone is just.';
+  'The Psalms say to God what hurt people really feel, anger included, and leave the verdict with Him. Athanasius gives the same counsel in this letter: ask God to be the Judge, since He alone is just.';
 
 /* The line note either always applies, or applies only to some answers (the script decides). */
 const lineNote = o.lineNote ?? null;
@@ -104,7 +104,7 @@ const lineNote = o.lineNote ?? null;
           Psalms. In it he matched psalms to what people go through. For this, his advice was:
         </p>
         <p class="pr-body pr-strong">{o.reason}</p>
-        <span class="pr-cite">Letter to Marcellinus, section&nbsp;{o.sec}</span>
+        <span class="pr-cite">Letter to Marcellinus</span>
         {Object.entries(READING.notes).map(([focus, text]) => (
           <p class="pr-body pr-soft" data-pr-focus={focus} hidden>{text}</p>
         ))}

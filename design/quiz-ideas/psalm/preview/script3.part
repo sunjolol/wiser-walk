@@ -142,7 +142,7 @@ function result(oid, fromNone) {
   const night = f && f.night ? `<section><p class="label">For the nights</p><p class="turn">${esc(verse(f.night))}</p><span class="cite">Psalm ${f.night}</span></section>` : '';
   const hardNote = o.hard
     ? `<section><p class="label">Hard words</p><p class="body"><q>${esc(verse(o.hard))}</q><span class="cite inline">Psalm ${o.hard}</span></p>
-       <p class="body">${esc(o.hardNote || 'The Psalms say to God what hurt people really feel, anger included, and leave the verdict with Him. Athanasius gives the same counsel in section 17 of this letter: ask God to be the Judge, since He alone is just.')}</p></section>` : '';
+       <p class="body">${esc(o.hardNote || 'The Psalms say to God what hurt people really feel, anger included, and leave the verdict with Him. Athanasius gives the same counsel in this letter: ask God to be the Judge, since He alone is just.')}</p></section>` : '';
   const whole = o.set ? `<div class="psalms-set">${o.set.map(n => psalmBlock(n, marks)).join('')}</div>` : psalmBlock(o.psalm, marks);
   const ln = o.lineNote && (!o.lineNote.when || meets(o.lineNote.when, a)) ? o.lineNote : null;
   const lineNote = ln
@@ -161,7 +161,7 @@ function result(oid, fromNone) {
       ${said.length ? `<div class="chips because">${said.map(s => `<span class="chip">${esc(s)}</span>`).join('')}</div>` : ''}
       <p class="body">In the 300s, Athanasius of Alexandria wrote to a friend about praying the Psalms, and matched them to what people go through. For this, his advice was:</p>
       <p class="body strong">${esc(o.reason)}</p>
-      <span class="cite">Letter to Marcellinus, section ${esc(o.sec)}</span>
+      <span class="cite">Letter to Marcellinus</span>
       ${notes.map(x => `<p class="body soft">${esc(x)}</p>`).join('')}
       ${also}
     </section>
