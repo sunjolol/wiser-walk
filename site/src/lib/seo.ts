@@ -103,7 +103,7 @@ export const SEO: Record<string, { title: string; description: string }> = {
   '/q/which-psalm/': {
     title: 'Which Psalm are you living right now? Free 3-minute quiz',
     description:
-      'A few honest taps about your life right now, then the psalm St Athanasius gave for exactly that in the 300s, printed in full, with his reason. Free.'
+      'Answer a few honest questions about your life right now. Then read the psalm St Athanasius gave for exactly that in the 300s. Free, about 3 minutes.'
   },
   '/q/seven-deadly-sins/': {
     title: 'Which of the 7 deadly sins are you weakest to? Free quiz',

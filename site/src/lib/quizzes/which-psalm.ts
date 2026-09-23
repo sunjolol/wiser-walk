@@ -35,11 +35,11 @@ export const whichPsalm: Quiz = {
   title: 'Which Psalm are you living right now?',
   tagline: 'A few honest taps about your life right now, and the psalm an early Church Father gave for exactly that.',
   description:
-    'A few honest questions about your life right now, then the psalm St Athanasius prescribed ' +
-    'for exactly that situation in the 300s, printed in full, with why.',
+    'Answer a few honest questions about your life right now. Then read the psalm St Athanasius ' +
+    'gave for exactly that in the 300s, and why he gave it.',
   intro:
-    'A few quick, honest taps about your life right now. Then the psalm one of the early Church ' +
-    'Fathers gave for exactly that, printed in full, with why.',
+    'A few quick, honest taps about your life right now. Then read the psalm an early Church ' +
+    'Father gave for exactly that, and why he gave it.',
   icon: 'book',
   minutes: 3,
   status: 'live',

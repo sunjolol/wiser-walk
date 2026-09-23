@@ -14,7 +14,7 @@
  * 1. **Every situation is Athanasius's.** The lines, his advice, the notes and the verse marks
  *    are all in src/data/which-psalm.json, each read against his Greek; this file arranges
  *    them and writes no commentary of its own. The one sentence it adds under a psalm that
- *    curses an enemy is the same one the result page prints, from the same letter (§17).
+ *    curses an enemy is the same one the result page prints, from the same letter (section 17).
  * 2. **The psalm is printed whole and unaltered**, from the Berean Standard Bible (public
  *    domain), with its own heading marked as the psalm's rather than ours. psalms.json is
  *    imported here, in the frontmatter, and never in a script: 78 psalms are not for a phone
@@ -102,12 +102,12 @@ const turnRef = leads.map(x => x.o.turn).find((r): r is string => r !== null && 
  * The hard words. The Psalms say to God what hurt people really feel, and some of it is a
  * curse on an enemy. Where a situation that leads with this psalm marks such a line, the
  * page quotes it and says what the result page says under it, in the same words; the
- * fallback sentence is Athanasius's own counsel in §17 of the same letter.
+ * fallback sentence is Athanasius's own counsel in section 17 of the same letter.
  */
 const HARD_WORDS =
   'The Psalms say to God what hurt people really feel, anger included, and leave the verdict ' +
-  'with Him. Athanasius gives the same counsel in this letter: ask God to be the Judge, since ' +
-  'He alone is just (§17).';
+  'with Him. Athanasius gives the same counsel in section 17 of this letter: ask God to be the ' +
+  'Judge, since He alone is just.';
 const hard: Array<{ ref: string; line: string; note: string }> = [];
 for (const { o } of leads) {
   const line = o.hard ? verse(o.hard) : null;
@@ -196,8 +196,8 @@ const breadcrumbs = [
   <div class="ref ref--psalm">
     <SectionHead title="When to pray it" kicker="St Athanasius, Letter to Marcellinus" />
     <p class="ps-intro">
-      In the 300s, St Athanasius of Alexandria wrote to his friend Marcellinus about praying
-      the Psalms, and matched them to what people go through.
+      In the 300s, St Athanasius of Alexandria wrote a letter to his friend Marcellinus about
+      praying the Psalms. In it he matched psalms to what people go through.
       {named.length === 1 ? ' This is what he gave this one for.' : ' He named this one more than once.'}
     </p>
 
@@ -206,7 +206,7 @@ const breadcrumbs = [
         <article class:list={['ps-sit', `ps-sit--${x.role}`]}>
           <p class="ps-seen">{x.o.seen}</p>
           <p class="ps-advice">{x.o.reason}</p>
-          <p class="ps-cite">Letter to Marcellinus, §{x.o.sec}</p>
+          <p class="ps-cite">Letter to Marcellinus, section&nbsp;{x.o.sec}</p>
           {x.o.note && <p class="ps-soft">{x.o.note}</p>}
 
           {/*

@@ -91,7 +91,7 @@ const breadcrumbs = [
     imageAlt={art?.alt}
     imagePosition={art?.objectPosition}
     imageLift={art?.lift}
-    lede={`St Athanasius's guide to praying the Psalms, from a letter he wrote in the 300s: ${SITUATIONS.length} of the situations he named, and the psalm he gave for each.`}
+    lede={`In the 300s, St Athanasius wrote a letter about praying the Psalms. Here are ${SITUATIONS.length} of the situations he named, with the psalm he gave for each one.`}
     tiles={[
       { n: SITUATIONS.length, label: 'Situations' },
       { n: psalmCount, label: 'Psalms' }
@@ -105,24 +105,25 @@ const breadcrumbs = [
     <SectionHead title="Where this comes from" kicker="The Letter to Marcellinus" />
     <div class="pg-intro">
       <p>
-        St Athanasius, bishop of Alexandria in the 300s, had a friend named Marcellinus who
-        was getting over an illness and had spent the time with the Psalms, trying to
-        understand each one. Athanasius wrote back with what an old man, a lover of study, had
-        once taught him about them.
+        St Athanasius was the bishop of Alexandria in the 300s. His friend Marcellinus was
+        getting over an illness and spent the time reading the Psalms. Athanasius wrote him a
+        letter about them. In it he passed on what a studious old man had once taught him.
       </p>
       <p>
-        The old man's point was simple. The rest of the Bible you read as other people's words.
-        The Psalms you say as your own. He called them a mirror, in which you see what
-        is moving in your own soul (§12). Then he took life's situations one at a time and
-        named a psalm for each, sometimes several. He believed the whole of human life is in
-        them (§30).
+        The old man's point was simple. You read the rest of the Bible as other people's words.
+        You say the Psalms as your own. He called them a mirror that shows you what is going on
+        in your own soul. Then he went through one situation in life after another and named
+        the psalm to pray for each. He believed every part of human life is found in them.
       </p>
       <p>
-        The Church has trusted the letter ever since. In the Codex Alexandrinus, one of the
-        oldest Bibles in the world, copied in the 400s, it stands in front of the Book of
-        Psalms. Below are 53 of his situations, in plain words; each opens its psalm, with his
-        advice and the whole text. The letter also gives psalms for feasts, for certain days of
-        the week and for teaching the faith.
+        The Church has trusted the letter ever since. One of the oldest Bibles in the world, the
+        Codex Alexandrinus from the 400s, places it right in front of the Book of Psalms.
+      </p>
+      <p>
+        Below are 53 of his situations in plain words. Tap one to read its psalm in full, with
+        his advice. The letter is split into 33 short numbered sections, and each situation
+        shows the section it comes from. The letter also names psalms for feasts, for certain
+        days of the week and for teaching the faith.
       </p>
       <p class="pg-cta">
         <Icon name="arrow" size={14} />
@@ -153,7 +154,7 @@ const breadcrumbs = [
                   <span class="pg-num" aria-hidden="true">{l.short}</span>
                   <span class="pg-body">
                     <span class="pg-seen">{o.seen}</span>
-                    <span class="pg-meta">{l.label} · Letter, §{o.sec}</span>
+                    <span class="pg-meta">{l.label} · Letter, section&nbsp;{o.sec}</span>
                   </span>
                   <Icon name="arrow" size={14} />
                 </a>

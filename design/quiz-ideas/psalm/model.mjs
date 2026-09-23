@@ -225,7 +225,7 @@ const full = {
       { q: 'weeping as he went up. His head was covered, and he was walking barefoot', ref: '2 Samuel 15:30' },
       { t: '. The psalm opens on that same word: how my foes have increased.' }
     ],
-    own: 'Athanasius adds that people sing this psalm with their own troubles in view, and find its words are their own (§12).',
+    own: 'In section 12 of the letter, Athanasius adds that people sing this psalm with their own troubles in mind and find its words are their own.',
     night: '3:5'
   }
 };
