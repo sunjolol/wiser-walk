@@ -120,6 +120,14 @@ Jesus, the Holy Spirit and every pronoun for Them in the site's own words; plain
 
 ---
 
+## STATUS (updated 2026-09-23, night)
+
+- **#2 Which Psalm are you living right now?** LIVE (/q/which-psalm/, the /psalm/ guide, an article).
+- **#4 Which early Christian thinks like you?** NEXT. He asked to start it on 2026-09-23. Title ruled (see below).
+- **#1 Personality Quiz** after #4 (Gregory the Great's Pastoral Rule, Book III; Quick and Full if needed).
+- **Then #7, #8, #9, #10 in any order**, and **#5** only with an angle that makes it deep, built on John Chrysostom.
+- **#6** later. **#3** dropped.
+
 ## HIS VERDICTS (2026-09-23)
 
 **Favourites: #2 and #4.** Then #1, "slightly above the others I liked" IF its angle is hit perfectly. Then #7, #8,
@@ -149,7 +157,7 @@ Jesus, the Holy Spirit and every pronoun for Them in the site's own words; plain
 9. "Good idea" (he has had the thought himself many times).
 10. "An interesting angle, I like this one also."
 
-## WHAT I PUT BACK TO HIM THE SAME DAY (awaiting his answer)
+## WHAT I PUT BACK TO HIM THE SAME DAY (he answered: see the next section)
 
 - **#4 shorter titles:** Which early Christian thinks like you? (my pick, with the furious-letter twist kept as the
   result's surprise and in the sub-line) / Which early Christian would argue with you? / Friend or foe in the early
