@@ -75,6 +75,7 @@ Aspelin, died in 1932. The credit prints under the picture on the article's own 
 | what-are-spiritual-gifts | Jean II Restout, Pentecost, 1732. A gallery photograph with some glare; cropped out of its frame; replace if a cleaner scan turns up | `Restout - La Pentecôte 01.jpg` |
 | what-the-bible-says-about-worry | Rembrandt, Christ in the Storm on the Sea of Galilee, 1633 | `Rembrandt Christ in the Storm on the Lake of Galilee.jpg` |
 | what-was-the-reformation-about | Karl Aspelin (1857–1932), Luther Burns the Papal Bull in Wittenberg, 1885 | `Karl Aspelin-Luther uppbränner den påfliga bullan.jpg` |
+| how-to-pray-the-psalms | Gerard van Honthorst, King David Playing the Harp, 1622 (Centraal Museum, Utrecht) | `Gerard van Honthorst - King David Playing the Harp - Google Art Project.jpg` |
 
 Two pictures belong to no article. Both are Van Gogh, both are out of copyright, and both came
 from Wikimedia Commons.

@@ -4,8 +4,10 @@
  *
  * The hub the 78 psalm pages hang from (their breadcrumbs lead here), and the page a searcher
  * lands on when they type "a psalm for" whatever they are going through. It lists every
- * situation Athanasius named in his Letter to Marcellinus, in the reader's words, in the
- * seven browsing groups the quiz page uses, each a way in to its psalm's page.
+ * situation the quiz draws from his Letter to Marcellinus, in the reader's words, in the
+ * seven browsing groups the quiz page uses, each a way in to its psalm's page. These are the
+ * 53 the quiz can name; the letter pairs about a hundred
+ * psalms with a need in all, and the page says so rather than calling the 53 "every" one.
  *
  * What the page adds of its own is the frame: who wrote the letter and why it has been
  * trusted (copied in front of the Psalms in the Codex Alexandrinus, in the 400s), what the
@@ -77,7 +79,7 @@ const breadcrumbs = [
 ---
 <Base
   title="A psalm for every situation"
-  description={`St Athanasius matched the Psalms to ${SITUATIONS.length} situations in the 300s. Find yours, with his advice and the whole psalm.`}
+  description={`In the 300s St Athanasius matched the Psalms to what people go through. Here are ${SITUATIONS.length} of his situations, with his advice and the whole psalm.`}
   jsonLd={jsonLd}
   breadcrumbs={breadcrumbs}
 >
@@ -89,7 +91,7 @@ const breadcrumbs = [
     imageAlt={art?.alt}
     imagePosition={art?.objectPosition}
     imageLift={art?.lift}
-    lede={`St Athanasius's guide to praying the Psalms, from a letter he wrote in the 300s: ${SITUATIONS.length} situations, and the psalm he gave for each.`}
+    lede={`St Athanasius's guide to praying the Psalms, from a letter he wrote in the 300s: ${SITUATIONS.length} of the situations he named, and the psalm he gave for each.`}
     tiles={[
       { n: SITUATIONS.length, label: 'Situations' },
       { n: psalmCount, label: 'Psalms' }
@@ -109,20 +111,26 @@ const breadcrumbs = [
         once taught him about them.
       </p>
       <p>
-        The old man's point was simple. The rest of the Bible you read as words about other
-        people. The Psalms you say as your own. He called them a mirror, in which you see what
-        is moving in your own soul (§12). Then he went through life, one situation after
-        another, and named the psalm for each.
+        The old man's point was simple. The rest of the Bible you read as other people's words.
+        The Psalms you say as your own. He called them a mirror, in which you see what
+        is moving in your own soul (§12). Then he took life's situations one at a time and
+        named a psalm for each, sometimes several. He believed the whole of human life is in
+        them (§30).
       </p>
       <p>
         The Church has trusted the letter ever since. In the Codex Alexandrinus, one of the
         oldest Bibles in the world, copied in the 400s, it stands in front of the Book of
-        Psalms. Every situation below is his, put in plain words; each opens its psalm, with
-        his advice and the whole text.
+        Psalms. Below are 53 of his situations, in plain words; each opens its psalm, with his
+        advice and the whole text. The letter also gives psalms for feasts, for certain days of
+        the week and for teaching the faith.
       </p>
       <p class="pg-cta">
         <Icon name="arrow" size={14} />
         <span>Not sure which is yours? <a href={quizHref(quiz)}>A few honest taps will find it</a>.</span>
+      </p>
+      <p class="pg-cta">
+        <Icon name="arrow" size={14} />
+        <span>How he said to pray them: <a href="/articles/how-to-pray-the-psalms/">six lessons from the letter</a>.</span>
       </p>
     </div>
 

@@ -22,7 +22,7 @@
  * Run with `npm run test` in site/.
  */
 import { build } from 'esbuild';
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -397,7 +397,11 @@ const config = await bundle('astro.config.mjs', 'node_modules/.seo-plumbing-conf
 
   // And against the articles that actually ship.
   const real = config.articleLastmod(pathToFileURL(join(ROOT, 'src/content/articles') + '/'));
-  is(real.size, 12, 'all twelve published articles have a date');
+  // Counted from the folder, not written in: a new article must not break this test.
+  const published = readdirSync(join(ROOT, 'src/content/articles'))
+    .filter(f => f.endsWith('.md'))
+    .filter(f => !/^draft:\s*true\s*$/m.test(readFileSync(join(ROOT, 'src/content/articles', f), 'utf8'))).length;
+  is(real.size, published, `all ${published} published articles have a date`);
   const bad = [...real.entries()].filter(([, d]) => !/^\d{4}-\d{2}-\d{2}$/.test(d));
   is(bad, [], 'every one of them is a plain calendar date');
   is(config.articleLastmod(pathToFileURL(join(scratch, 'no-such-dir') + '/')).size, 0, 'a missing directory is not a crash');

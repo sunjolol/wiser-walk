@@ -146,6 +146,7 @@
   border-radius: var(--r-pill); font-size: .9rem; color: var(--ink); background: var(--accent-soft);
 }
 .pg-cta .icon { flex: none; color: var(--accent); }
+.pg-cta + .pg-cta { margin-top: .5rem; }
 .pg-cta a { color: var(--accent); font-weight: 600; text-underline-offset: 3px; }
 
 /* the seven groups, so a reader can jump to their own: full-width rows on a phone (seven

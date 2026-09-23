@@ -50,8 +50,17 @@ for it; that fix is in and it shipped to `main` on 2026-09-23 (`/q/which-psalm/`
 `/psalm/<n>/` pages). How it is built: `design/quiz-ideas/psalm/README.md` "Shipped". Only Psalm 3 carries the extra
 "story behind it" section (verbatim 2 Samuel); the other 52 results print his advice, the naming verse, where it turns
 and the whole psalm. Still unruled and waiting on him: capitals inside Bible quotations (keep verbatim or switch
-quotes to the BSB); #4's title ("Which early Christian thinks like you? (And which would argue with you?)" vs shorter).
+quotes to the BSB) — RULED: always capitalise; #4's title — RULED: "Which early Christian thinks like you?" as the title, "And which would argue with you?" printed under it on its card and start page.
 The "Hard words" note and the 988 line stay as they are (told him so). Ultracode was on for the Psalm quiz.
+**Later on 2026-09-23 (his yes to all four):** the Psalm quiz got its browse layer, LIVE: the quiz page lists the 53
+situations in seven groups (`PsalmIndex.astro`; groups are data in `model.mjs`), `/psalm/` is the guide ("A psalm for
+every situation"; every psalm page's breadcrumb leads to it), and each psalm page has "Close to this". The article
+`how-to-pray-the-psalms.md` (from his Greek, §-cited, checked by a 75-agent fidelity workflow) is LIVE with Honthorst's
+King David Playing the Harp (1622). He pre-approved downloading images (memory: image-downloads-approved). NOTE: the
+letter pairs about a hundred psalms with needs; the quiz's 53 are a selection, never "every situation he named". His ruling "Always capitalize He and His" now covers
+quotations: site quotes with a pronoun for God use the BSB (a checked map raises the BSB's lower-case "who"), and both
+games capitalise pronouns for God at display on every line (`demos/*/capitals.json`, guarded by `capitals.mjs`); in
+Who Said It? a first-person Me/My stays lower case so the speaker is not given away.
 The section below on the scrapped list explains what went wrong last time; it still applies.
 
 Everything from 2026-09-22 is live on `main` (last commit before these notes: `b778859`). He reviews on the live site;

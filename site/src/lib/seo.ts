@@ -59,7 +59,7 @@ export const SEO: Record<string, { title: string; description: string }> = {
   '/psalm/': {
     title: 'A psalm for every situation: St Athanasius’s guide',
     description:
-      'Betrayed, afraid, worn down, grateful? In the 300s St Athanasius named a psalm for 53 situations in life. Find yours, with his advice and the whole psalm.'
+      'Betrayed, afraid, worn down, grateful? In the 300s St Athanasius matched the Psalms to what people go through. Find yours among 53, with the whole psalm.'
   },
   '/about/': {
     title: 'About Wiser Walk',
