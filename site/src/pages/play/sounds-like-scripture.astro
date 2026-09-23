@@ -52,7 +52,7 @@ const FONTS_GAME =
   'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&family=Poppins:wght@500;600;700&display=swap';
 /* Since 2026-09-21 the layout serves the faces itself from /fonts/, so the game's Google
    stylesheet becomes the same local one, and the two preconnects to Google go with it. */
-const FONTS_LAYOUT = '/fonts/fonts.css';
+const FONTS_LAYOUT = '/fonts/fonts.css?v=2';
 head = swap(head, FONTS_GAME, FONTS_LAYOUT);
 head = swap(head, '<link rel="preconnect" href="https://fonts.googleapis.com">\n', '');
 head = swap(head, '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n', '');

@@ -1,5 +1,15 @@
 # The self-hosted fonts (site/public/fonts/)
 
+**Since 2026-09-23 Philosopher's eight files are the builds Google sends to iPhones, named
+`philosopher-*-unhinted.woff2`.** Google answers a Windows user agent with hinted files carrying
+TrueType font programs (fpgm, prep, cvt); an iPhone was seen refusing those, so every headline fell
+back to Gill Sans while Inter and Poppins loaded. For the display face, run the recipe below with an
+iPhone Safari user agent (e.g. `Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X)
+AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1`), keep the
+`-unhinted` names, and raise the `?v=` number on `/fonts/fonts.css` in `Base.astro` and the two game
+pages whenever a file name changes (the stylesheet caches for a week). Inter and Poppins are still the
+Windows builds and load everywhere; they were left alone.
+
 **Since 2026-09-22 the headline face is Philosopher (400, 700, both italics) in place of DM Serif
 Display; Inter and Poppins are unchanged** (the owner tried PT Sans for them the same day and kept
 these). fonts.css also declares 'Wiser Display': Philosopher Bold under its own name at weights
