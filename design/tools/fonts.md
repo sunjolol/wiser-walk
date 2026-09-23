@@ -1,5 +1,14 @@
 # The self-hosted fonts (site/public/fonts/)
 
+**Since 2026-09-22 the headline face is Philosopher (400, 700, both italics) in place of DM Serif
+Display; Inter and Poppins are unchanged** (the owner tried PT Sans for them the same day and kept
+these). fonts.css also declares 'Wiser Display': Philosopher Bold under its own name at weights
+400 and 700, because every headline rule says font-weight: 400. To regenerate, use the URL
+`family=Inter:wght@400;500;600;700&family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&family=Poppins:wght@500;600;700`
+in the recipe below, then add the 'Wiser Display' blocks back by hand (copies of the four
+Philosopher 700 blocks, renamed, at weights 400 and 700). The paragraph that follows describes
+the fonts before that date.
+
 Since 2026-09-21 the site serves DM Serif Display (regular, italic), Inter (400, 500, 600, 700) and
 Poppins (500, 600, 700) from `/fonts/` instead of from Google Fonts: the same OFL-licensed woff2 files
 Google serves, Latin and Latin Extended subsets, with the three licences beside them. `Base.astro`
@@ -17,7 +26,7 @@ keeps the `latin` and `latin-ext` blocks, downloads each file, and rewrites `fon
 ```python
 import re, urllib.request, os
 UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36'
-url = 'https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap'
+url = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&family=Poppins:wght@500;600;700&display=swap'
 css = urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': UA})).read().decode()
 out = []
 for subset, body in re.findall(r'/\* (\w[\w-]*) \*/\s*@font-face\s*{(.*?)}', css, re.S):

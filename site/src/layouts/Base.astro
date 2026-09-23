@@ -265,13 +265,13 @@ const navItems = ACCOUNTS_VISIBLE ? NAV.filter(n => n.href !== '/me/') : NAV;
     )}
 
     {/*
-      The three faces are served from /fonts/ (see public/fonts/fonts.css) rather than from
-      Google: one origin, no third-party connection, and the files cache for a week. The two
-      preloads are the faces every first paint needs, body text and the headline; the rest
-      load as the stylesheet asks for them.
+      The faces are served from /fonts/ (see public/fonts/fonts.css) rather than from Google:
+      one origin, no third-party connection, and the files cache for a week. The two preloads
+      are the faces every first paint needs, body text and the headline (Philosopher Bold, which
+      'Wiser Display' is); the rest load as the stylesheet asks for them.
     */}
     <link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/dm-serif-display-400-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/philosopher-700-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="/fonts/fonts.css" />
 
     <meta property="og:site_name" content={siteName} />

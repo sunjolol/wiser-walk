@@ -130,21 +130,21 @@ const jsonLd = {
   .print-sheet { max-width: 46rem; margin: 0 auto; padding: 0 var(--gut, 1.25rem) 2rem; }
   .print-how { color: var(--ink-2); line-height: 1.55; margin: 1rem 0 .8rem; }
   .print-legend { display: flex; flex-wrap: wrap; gap: .4rem .9rem; font-size: .85rem; color: var(--ink-2); margin-bottom: 1.4rem; }
-  .print-legend b { display: inline-grid; place-items: center; width: 1.4rem; height: 1.4rem; border-radius: .35rem; box-shadow: inset 0 0 0 1.5px var(--ink-mute); font-family: Poppins, sans-serif; font-size: .75rem; margin-right: .2rem; color: var(--ink); }
+  .print-legend b { display: inline-grid; place-items: center; width: 1.4rem; height: 1.4rem; border-radius: .35rem; box-shadow: inset 0 0 0 1.5px var(--ink-mute); font-family: var(--ui); font-size: .75rem; margin-right: .2rem; color: var(--ink); }
   .print-items { list-style: none; margin: 0; padding: 0; counter-reset: none; }
   .print-items li { display: grid; grid-template-columns: 2rem 1fr; grid-template-areas: "n text" "n boxes"; gap: .3rem .6rem; align-items: start; padding: .7rem 0; border-bottom: 1px dotted var(--rule); break-inside: avoid; }
-  .print-n { grid-area: n; font-family: Poppins, sans-serif; font-weight: 700; font-size: .8rem; letter-spacing: .06em; color: var(--accent); padding-top: .15rem; }
+  .print-n { grid-area: n; font-family: var(--ui); font-weight: 700; font-size: .8rem; letter-spacing: .06em; color: var(--accent); padding-top: .15rem; }
   .print-text { grid-area: text; line-height: 1.45; }
   .print-boxes { grid-area: boxes; display: flex; gap: .45rem; }
-  .print-box { display: inline-grid; place-items: center; width: 1.7rem; height: 1.7rem; border-radius: .4rem; box-shadow: inset 0 0 0 1.5px var(--ink-mute); color: var(--ink-mute); font-size: .7rem; font-family: Poppins, sans-serif; }
+  .print-box { display: inline-grid; place-items: center; width: 1.7rem; height: 1.7rem; border-radius: .4rem; box-shadow: inset 0 0 0 1.5px var(--ink-mute); color: var(--ink-mute); font-size: .7rem; font-family: var(--ui); }
   .print-box i { font-style: normal; }
   .print-key { width: 100%; border-collapse: collapse; margin: .4rem 0 1.2rem; font-size: .95rem; }
   .print-key th, .print-key td { text-align: left; padding: .55rem .4rem; border-bottom: 1px dotted var(--rule); vertical-align: middle; }
-  .print-key thead th { font-family: Poppins, sans-serif; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); }
+  .print-key thead th { font-family: var(--ui); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); }
   .print-key tbody th { font-weight: 600; }
   .print-key tbody th a { color: inherit; text-decoration: none; }
   .print-key tbody th a:hover { text-decoration: underline; }
-  .print-ref sup { font-family: Poppins, sans-serif; font-size: .6rem; color: var(--accent); margin-left: .05rem; }
+  .print-ref sup { font-family: var(--ui); font-size: .6rem; color: var(--accent); margin-left: .05rem; }
   .print-total { width: 5.5rem; }
   .print-total::after { content: ""; display: block; height: 1.6rem; border-radius: .4rem; box-shadow: inset 0 0 0 1.5px var(--ink-mute); }
   .print-foot { font-size: .85rem; color: var(--ink-2); line-height: 1.5; }
@@ -155,7 +155,7 @@ const jsonLd = {
     :global(.site-head), :global(.site-foot), :global(.band), :global([data-print]) { display: none !important; }
     :global(html), :global(body), :global(main), :global(.sheet) { background: #fff !important; box-shadow: none !important; margin: 0 !important; padding: 0 !important; border-radius: 0 !important; }
     .print-sheet { max-width: none; padding: 0; color: #000; }
-    .print-sheet::before { content: "The spiritual gifts test · wiserwalk.com"; display: block; font-family: Poppins, sans-serif; font-weight: 700; font-size: 11pt; letter-spacing: .08em; text-transform: uppercase; margin-bottom: .6rem; }
+    .print-sheet::before { content: "The spiritual gifts test · wiserwalk.com"; display: block; font-family: var(--ui); font-weight: 700; font-size: 11pt; letter-spacing: .08em; text-transform: uppercase; margin-bottom: .6rem; }
     .print-how, .print-foot, .print-legend, .print-key thead th { color: #333; }
     .print-n, .print-ref sup { color: #000; }
     .print-items li { grid-template-columns: 1.8rem 1fr auto; grid-template-areas: "n text boxes"; align-items: center; padding: .38rem 0; border-bottom: 1px dotted #999; font-size: 10.5pt; }

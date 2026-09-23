@@ -191,8 +191,10 @@
  * the small uppercase label are all the kit's, so this reads as another room of the same
  * house rather than a box somebody bolted on.
  */
+/* Paragraph-length copy in the headline family takes Philosopher's REGULAR weight: in the bold
+   the headlines use, eight lines of it read dense. */
 .answer-lead {
-  margin: 0; font-family: var(--display); font-size: 1.3rem; line-height: 1.42;
+  margin: 0; font-family: "Philosopher", var(--display); font-size: 1.3rem; line-height: 1.42;
   color: var(--ink); text-wrap: pretty;
 }
 /* 44rem is the measure the rest of this file already uses for prose in a wide panel
@@ -224,7 +226,7 @@
 .dyk-item:first-child { border-top: 2px dotted var(--rule-strong); }
 .dyk-item:last-child { border-bottom: 0; padding-bottom: 0; }
 .dyk-text {
-  margin: 0; font-family: var(--display); font-size: 1.05rem; line-height: 1.45;
+  margin: 0; font-family: "Philosopher", var(--display); font-size: 1.05rem; line-height: 1.45;
   color: var(--ink); text-wrap: pretty;
 }
 .dyk-source {

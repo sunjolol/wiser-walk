@@ -146,6 +146,8 @@
    They are printed soft (sepia, lifted blacks), because a hard black plate fights the pale
    sheet. */
 .hm-rail { position: relative; margin: .9rem calc(-1 * var(--gut)) 0 0; }
+/* two lines held for every rail card's blurb, so the titles sit level */
+.hm-rail .room-say { min-height: 3em; }
 .hm-rail-track {
   display: flex; gap: .9rem; overflow-x: auto; overscroll-behavior-x: contain;
   scroll-snap-type: x proximity; scrollbar-width: none; -webkit-overflow-scrolling: touch;
@@ -202,7 +204,7 @@
   .room--compass .room-wheel { order: 1; flex: 0 0 50%; padding: .6rem 6.5rem 1.6rem 5.5rem; }
   .room--compass .wheel-plot { max-width: 19rem; margin-top: 2.2rem; }
   .room--compass .room-body { flex: 1; padding: 2.2rem 0 2.2rem 2.4rem; }
-  .room--compass h3 { font-size: 2.5rem; }
+  .room--compass h3 { font-size: clamp(2rem, 4.7vw, 2.5rem); }
   .room--compass .room-say { font-size: 1.02rem; }
   .room-body { padding: 1.6rem 1.5rem 1.6rem; }
 }

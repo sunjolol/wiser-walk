@@ -223,7 +223,8 @@ const jsonLd = {
           <a class="game" href={sls.href}>
             <div class="game-say">
               <span class="room-mark room-mark--orange"><Icon name="scroll" size={20} /></span>
-              <h3>{sls.title}</h3>
+              {/* "Sounds / Like Scripture" rather than a lone "Scripture" in the narrow column */}
+              <h3>{sls.title.replace(/ (?=\S+$)/, '\u00A0')}</h3>
               <p>A line appears. Is it in the Bible, or does it only sound like it?</p>
               <ul class="room-facts">
                 <li><Icon name="clock" size={13} /> 2 min a run</li>

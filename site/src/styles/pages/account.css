@@ -82,7 +82,7 @@
   -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
 }
 .ac-band h1 {
-  margin: 0; max-width: 14ch;
+  margin: 0; max-width: 7em;
   font-family: var(--display); font-weight: 400; color: #fff;
   font-size: clamp(2.35rem, 10.4vw, 4.1rem); line-height: 1.03; letter-spacing: -.02em;
   text-shadow: 0 2px 22px rgba(22, 14, 6, .45); text-wrap: balance;
@@ -551,8 +551,10 @@
 /* who you are logged in as: one line in the band, its height held from the server so the
    band does not grow when the browser fills the address in */
 .ac-who { margin: 1rem 0 0; min-height: 1.6rem; }
+/* The address in the reading face, bold, as /me/ prints it: in Philosopher beside the text
+   face it read as the same sentence at the wrong size. */
 .ac-who span {
-  font-family: var(--display); font-size: clamp(1.1rem, 4.8vw, 1.35rem); line-height: 1.25;
+  font-family: var(--text); font-weight: 700; font-size: 1.04rem; line-height: 1.45;
   color: #fff; overflow-wrap: anywhere;
 }
 .ac-band--night .spec { max-width: 34rem; }

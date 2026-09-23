@@ -39,7 +39,7 @@
 
 .tlead-say {
   margin: 0; max-width: 42rem; color: var(--ink);
-  font-family: var(--display); font-size: clamp(1.3rem, 5.6vw, 1.85rem);
+  font-family: "Philosopher", var(--display); font-size: clamp(1.3rem, 5.6vw, 1.85rem);
   line-height: 1.34; letter-spacing: -.005em; text-wrap: pretty;
 }
 
@@ -158,5 +158,5 @@
 }
 .tread-note {
   margin: .32rem 0 0; font-size: .87rem; line-height: 1.55; color: var(--ink-mute);
-  text-wrap: pretty;
+  text-wrap: balance;
 }

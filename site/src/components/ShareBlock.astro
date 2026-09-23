@@ -319,6 +319,11 @@ const card = {
     async function draw() {
       if (drawn) return;
       try { await document.fonts.ready; } catch (e) {}
+      // A canvas never redraws when a face arrives late, so ask for the three it draws with
+      // by name before the first stroke (the headline face is Philosopher Bold, as 'Wiser Display').
+      try {
+        await Promise.all(['700 23px Poppins', '25px Inter', "58px 'Wiser Display'"].map(f => document.fonts.load(f)));
+      } catch (e) {}
       const g = canvas.getContext('2d');
       const pad = 52;
 
@@ -334,7 +339,7 @@ const card = {
       g.fillText(data.quiz.toUpperCase(), x, y);
 
       // the verdict, each clause in the colour of the pole it names
-      g.font = '58px "DM Serif Display", Georgia, serif';
+      g.font = "58px 'Wiser Display', Philosopher, sans-serif";
       const words = data.headline.flatMap((p, i) => {
         const text = p.text + (i < data.headline.length - 1 ? ',' : '');
         return text.split(' ').map(t => ({ t, side: p.side }));
