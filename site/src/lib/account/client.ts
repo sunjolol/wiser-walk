@@ -279,11 +279,40 @@ async function settle(supabase: SupabaseClient, password: string): Promise<Done>
 
   const { data: session } = await supabase.auth.getSession();
   const token = session?.session?.access_token ?? '';
+  const userId = updated.data?.user?.id ?? session?.session?.user?.id ?? '';
   // Only now is there an account to put on the list, and the address comes from the token
-  // on the other side rather than from anything typed here.
-  if (token) tellTheList(token, true);
+  // on the other side rather than from anything typed here. A reset comes through here too,
+  // so the list is told what the person last chose, never simply "on": somebody who turned
+  // the notes off on /account/ and then forgot their password must not be put back.
+  if (token && userId) {
+    const wanted = await notesWanted(supabase, userId);
+    if (wanted !== null) tellTheList(token, wanted);
+  }
 
   return { ok: true };
+}
+
+/**
+ * Whether this person wants the notes, as their own switch last said.
+ *
+ * A brand-new account has no choice on record, and the answer is on: the sign-up page says
+ * the notes come. `mark_password_set` has just made the row, so the usual answer is the
+ * column's default, which is also on; no row at all (that call lost on a phone) reads the
+ * same way. A read that failed is not an answer. Then nothing is sent, because guessing "on"
+ * is the exact mistake this exists to stop, and /account/ can set it again at any time.
+ */
+async function notesWanted(supabase: SupabaseClient, userId: string): Promise<boolean | null> {
+  try {
+    const { data: row, error } = await supabase
+      .from('profiles')
+      .select('notes_off')
+      .eq('id', userId)
+      .maybeSingle();
+    if (error) return null;
+    return !row?.notes_off;
+  } catch {
+    return null;
+  }
 }
 
 async function finish(memo: string, password: string, verify: (s: SupabaseClient) => Promise<unknown>): Promise<Done> {

@@ -14,6 +14,10 @@
  * The link comes second, in a field that selects itself, because the link IS the result:
  * the scores are encoded in it and the page is rendered from it.
  *
+ * Each link sits in a box of its own: a label over the field, its caption under it, and
+ * clear space before the next box. The owner, 2026-09-23: with the captions loose between
+ * two links, each one read as belonging to the wrong link.
+ *
  * There is no plain-text version. A row of filled and empty circles is not a standard
  * anyone reads, and the owner has said so twice; a picture and a link are the two things
  * people actually send.
@@ -64,12 +68,10 @@ const cta = comparable
 const mineHeading = quiz.slug === 'theology-compass' ? 'Share your compass' : 'Share your result';
 
 /*
- * How long it takes, for the visitor who was sent this. A quiz of statements counts them; a
- * reading asks a few questions whose number depends on the answers, so it says so.
+ * The labels point at the fields by id. A page could show more than one result, so the ids
+ * carry the quiz and the code rather than being fixed.
  */
-const effort = quiz.items.length
-  ? `${quiz.items.length} statements, about ${quiz.minutes} minutes.`
-  : `A few questions, about ${quiz.minutes} minutes.`;
+const uid = `share-${quiz.slug}-${view.code}`;
 
 /** Everything the card needs, and nothing else. */
 const card = {
@@ -103,9 +105,14 @@ const card = {
           name: r.name, left: r.left, right: r.right, value: r.value,
           step: r.step, steps: r.steps, noClaim: r.noClaim, lean: r.lean, band: r.band
         }
-      : { name: r.name, value: r.value, rank: r.rank, strength: r.strength }
+      : { name: r.name, value: r.value, rank: r.rank, strength: r.strength, below: r.below }
   ),
-  // Added only for a reading, so every other quiz's card data is exactly what it was.
+  /*
+   * A ranking's card draws its bars, and emphasises the rows the headline names, exactly as
+   * many as the page does (see CategoryStack): none on a flat result, several on a tie.
+   */
+  ...(view.shape === 'unipolar' ? { lead: view.named.length } : {}),
+  // Added only for a reading.
   ...(view.shape === 'reading'
     ? { reading: { line: line?.text ?? '', cite: line?.cite ?? '', say: quiz.shareTitle } }
     : {})
@@ -116,7 +123,7 @@ const card = {
 
   {/* The picture first. It is the thing being shared; the buttons act on it. */}
   <figure class="card-stage" data-role="stage">
-    <canvas data-role="canvas" width="1080" height="1350" aria-label="Your result card"></canvas>
+    <canvas data-role="canvas" width="1080" height="1350" aria-label="Result card"></canvas>
     <figcaption class="card-hint" data-role="hint">This is the image people see when you share it.</figcaption>
   </figure>
 
@@ -134,35 +141,42 @@ const card = {
        >{cta.visitor}</a>
   </div>
 
-  <div class="share-link">
-    <input data-role="url" type="text" readonly value={url} spellcheck="false"
-           aria-label="Your result link" />
-    <button class="btn ghost" data-role="copy-link" type="button">Copy link</button>
-  </div>
-
-  {/*
-    Owner-only, revealed by the same `mine` switch as the copy above. A visitor already has
-    the invitation on the button; showing them a second copy of it would be one CTA too many
-    on a page that is not about them.
-  */}
-  {comparable && (
-  <div class="compare-row" data-mine-show hidden>
-    <p class="share-note">
-      Send this to someone else and, when they finish, you both see your answers on the same
-      rails.
-    </p>
-    <div class="share-link">
-      <input data-role="invite-url" type="text" readonly value={invite} spellcheck="false"
-             aria-label="Invite link" />
-      <button class="btn ghost" data-role="copy-invite" type="button">Copy link</button>
+  <div class="share-boxes">
+    {/*
+      The result's own link. A visitor gets the label and the field and nothing more; the
+      owner also gets the line that says what the link is for, under the field it describes.
+    */}
+    <div class="share-box">
+      <label class="share-label" for={`${uid}-url`}
+             data-visitor="This result's link" data-mine="Your result link">This result's link</label>
+      <div class="share-link">
+        <input id={`${uid}-url`} data-role="url" type="text" readonly value={url} spellcheck="false" />
+        <button class="btn ghost" data-role="copy-link" type="button">Copy link</button>
+      </div>
+      <p class="share-note" data-mine-show hidden>
+        Opens this result for anyone. Keep it to come back to your result.
+      </p>
     </div>
-  </div>
-  )}
 
-  <p class="share-note" data-role="note"
-     data-visitor={`Someone sent you this. ${effort}`}
-     data-mine="Keep this link to come back to your result."
-  >Someone sent you this. {effort}</p>
+    {/*
+      Owner-only, revealed by the same `mine` switch as the copy above. A visitor already has
+      the invitation on the button; showing them a second copy of it would be one CTA too many
+      on a page that is not about them.
+    */}
+    {comparable && (
+    <div class="share-box" data-mine-show hidden>
+      <label class="share-label" for={`${uid}-invite`}>Compare with a friend</label>
+      <div class="share-link">
+        <input id={`${uid}-invite`} data-role="invite-url" type="text" readonly value={invite}
+               spellcheck="false" />
+        <button class="btn ghost" data-role="copy-invite" type="button">Copy link</button>
+      </div>
+      <p class="share-note">
+        Send this to a friend. When they finish the quiz, you both see your answers side by side.
+      </p>
+    </div>
+    )}
+  </div>
 
   <script type="application/json" data-role="data" set:html={JSON.stringify(card)}></script>
 </section>
@@ -230,11 +244,75 @@ const card = {
       page: '#E3E3E3', panel: '#EEEEEE', shell: '#E8E8E8',
       ink: '#3B3B3B', soft: '#5A6066', mute: '#7C8288',
       blue: '#7EBAEE', orange: '#F0A06F', accent: '#3E86C4', rust: '#7A4A22',
-      zone: 'rgba(124,130,136,.34)', hatch: 'rgba(124,130,136,.30)'
+      zone: 'rgba(124,130,136,.34)', hatch: 'rgba(124,130,136,.30)',
+      // an empty bar on a panel: the shell tone alone is invisible (site.css --track)
+      track: '#D9D9DC',
+      // the wordmark's ink, the site's own #444444
+      brand: '#444444'
     };
     const W = 1080, H = 1350;
     const tone = r => (r.noClaim ? P.mute : r.value < 50 ? P.blue : P.orange);
     const ink = side => (side === 'left' ? P.accent : side === 'right' ? P.rust : P.ink);
+
+    /* ---------------- the mark ---------------- */
+    /*
+     * The owner's logo heads every card, the brush W and then the words (the owner,
+     * 2026-09-23: he wants the mark itself on what people share, not only the name). Sized
+     * as the header sizes them (site.css .brand): the words 18.5/34 of the W's height, the
+     * gap 15/34 of it.
+     *
+     * The W is his larger export (159×114), so it is only ever scaled DOWN. The words are
+     * wordmark.svg, whose ink is currentColor. An image on a canvas has no current colour,
+     * so the file is fetched as text, given the card's ink and a size, and drawn from a data
+     * URL. The size matters too: Firefox will not draw an SVG that has only a viewBox.
+     *
+     * Both start loading at once and draw() waits for them as it waits for the fonts, since
+     * a canvas never redraws when an image arrives late. A file that fails is left out
+     * rather than holding the card back.
+     */
+    const MARK_H = 48;
+    const MARK_W = MARK_H * 159 / 114;
+    const WORD_H = Math.round(MARK_H * 18.5 / 34);
+    const WORD_W = WORD_H * 5405 / 783;
+    const MARK_GAP = Math.round(MARK_H * 15 / 34);
+
+    const image = src => new Promise((done, fail) => {
+      const img = new Image();
+      img.onload = () => done(img);
+      img.onerror = fail;
+      img.src = src;
+    });
+    const mark = Promise.all([
+      image('/img/logo-w-large.png').catch(() => null),
+      fetch('/img/wordmark.svg')
+        .then(r => (r.ok ? r.text() : Promise.reject(new Error(String(r.status)))))
+        .then(svg => image('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(
+          svg.replace(/currentColor/g, P.brand)
+             .replace('<svg ', '<svg width="' + WORD_W + '" height="' + WORD_H + '" ')
+        )))
+        .catch(() => null)
+    ]);
+
+    /** The W, then the words centred on it and a hair above its middle, as in the header. */
+    function drawMark(g, x, top, [brush, words]) {
+      let wx = x;
+      if (brush) {
+        g.save();
+        g.imageSmoothingEnabled = true;
+        g.imageSmoothingQuality = 'high';
+        g.drawImage(brush, x, top, MARK_W, MARK_H);
+        g.restore();
+        wx += MARK_W + MARK_GAP;
+      }
+      if (words) {
+        g.drawImage(words, wx, top + (MARK_H - WORD_H) / 2 - 1.5, WORD_W, WORD_H);
+      } else {
+        // the words in the headline face, so a card whose file failed still says whose it is
+        g.fillStyle = P.brand;
+        g.font = "34px 'Wiser Display', Philosopher, sans-serif";
+        g.fillText('Wiser Walk', wx, top + MARK_H / 2 + 12);
+      }
+    }
 
     function roundRect(g, x, y, w, h, r) {
       g.beginPath();
@@ -415,6 +493,81 @@ const card = {
       g.fillText((r.cite || '').toUpperCase(), x, vy + 62);
     }
 
+    /**
+     * A ranking's card: its rows as named bars, in rank order, drawn as CategoryStack draws
+     * them on the page. It used to be handed the rows and draw none, which left the middle of
+     * every sins and gifts card empty.
+     *
+     * The bar is the PULL, not the raw score: filled from zero by how far the score rose
+     * above 50, so a neutral sheet shows empty bars rather than "halfway to every vice". The
+     * fill is the spectrum, at full strength on the rows the headline names and at half on
+     * the rest. A row answered against on balance has its track faded and its words in
+     * italic. Each bar carries its rank, its name and its strength in words.
+     *
+     * As many rows as fit between the summary and whatever is under the bars, and never
+     * fewer than five. The gifts quiz ranks nineteen, so its card shows the top of the list.
+     * Five rows in too little room are drawn smaller rather than on top of each other.
+     */
+    function drawBars(g, x, w, top, bottom) {
+      const rows = [...data.rows].sort((a, b) => a.rank - b.rank);
+      const lead = data.lead || 0;
+      const PITCH = 104;                    // one row, from the top of its name to the next
+      const room = bottom - top;
+      const n = Math.min(rows.length, Math.max(5, Math.floor(room / PITCH)));
+      const k = Math.min(1, room / (n * PITCH));
+      const pitch = PITCH * k;
+      const BAR = 22 * k;
+      let y = top + (room - pitch * n) * 0.4;
+
+      rows.slice(0, n).forEach(r => {
+        const leading = r.rank <= lead;
+        const base = y + 30 * k;            // the baseline of the row's words
+        const nx = x + 38 * k;
+
+        g.textAlign = 'left';
+        g.font = '700 ' + Math.round(22 * k) + 'px Poppins, system-ui, sans-serif';
+        g.fillStyle = leading ? P.accent : P.mute;
+        g.fillText(String(r.rank), x, base);
+
+        g.textAlign = 'right';
+        g.font = (r.below ? 'italic ' : '') + '600 ' + Math.round(22 * k) + 'px Poppins, system-ui, sans-serif';
+        g.fillStyle = P.mute;
+        g.fillText(r.strength, x + w, base);
+        const nameRoom = w - (nx - x) - g.measureText(r.strength).width - 28;
+        g.textAlign = 'left';
+
+        // sentence case, as the page sets it: "The gift of faith", never "The Gift Of Faith"
+        const name = r.name.charAt(0).toUpperCase() + r.name.slice(1);
+        let size = Math.round((leading ? 32 : 29) * k);
+        do {
+          g.font = '700 ' + size + 'px Poppins, system-ui, sans-serif';
+          size -= 1;
+        } while (g.measureText(name).width > nameRoom && size > 16);
+        g.fillStyle = P.ink;
+        g.fillText(name, nx, base);
+
+        const by = base + 16 * k;
+        g.save();
+        if (r.below) g.globalAlpha = .55;
+        g.fillStyle = P.track;
+        roundRect(g, x, by, w, BAR, BAR / 2); g.fill();
+        g.restore();
+
+        const fill = w * Math.max(0, (r.value - 50) * 2) / 100;
+        if (fill > 0) {
+          const grad = g.createLinearGradient(x, 0, x + fill, 0);
+          grad.addColorStop(0, P.blue); grad.addColorStop(1, P.orange);
+          g.save();
+          g.globalAlpha = leading ? 1 : .5;
+          g.fillStyle = grad;
+          // never narrower than its own rounded ends, or the corners fold over
+          roundRect(g, x, by, Math.max(fill, BAR), BAR, BAR / 2); g.fill();
+          g.restore();
+        }
+        y += pitch;
+      });
+    }
+
     let drawn = false;
     /**
      * Drawn on load, not on click.
@@ -434,6 +587,7 @@ const card = {
         // and the italic a reading's verse is set in
         if (data.reading) await document.fonts.load("italic 52px 'Wiser Display'");
       } catch (e) {}
+      const logo = await mark;
       const g = canvas.getContext('2d');
       const pad = 52;
 
@@ -442,7 +596,11 @@ const card = {
       roundRect(g, pad, pad, W - pad * 2, H - pad * 2, 44); g.fill();
 
       const x = pad + 54, w = W - (pad + 54) * 2;
-      let y = pad + 88;
+
+      // the mark, on the text's left edge, then the quiz's name under it
+      const markTop = pad + 56;
+      drawMark(g, x, markTop, logo);
+      let y = markTop + MARK_H + 52;
 
       g.fillStyle = P.accent;
       g.font = '700 23px Poppins, system-ui, sans-serif';
@@ -521,6 +679,9 @@ const card = {
         drawWheel(g, W / 2, top + LABELS + R, R);
       }
 
+      // clear of the summary above, and of the notes or the link below
+      if (data.shape === 'unipolar') drawBars(g, x, w, y + 10, bottom - 50);
+
       if (noteRows) {
         g.fillStyle = P.mute;
         g.font = NOTE_FONT;
@@ -563,11 +724,13 @@ const card = {
     });
 
     // Offered only where it can actually send a file. A Share button that silently does
-    // nothing is worse than no Share button.
+    // nothing is worse than no Share button. Desktop browsers answer yes to canShare and
+    // then open nothing, so it is also offered only on a touch screen: phones and tablets.
     const shareBtn = pick('share');
     try {
       const probe = new File([new Blob([''], { type: 'image/png' })], 'x.png', { type: 'image/png' });
-      if (navigator.canShare && navigator.canShare({ files: [probe] })) shareBtn.hidden = false;
+      const touch = matchMedia('(hover: none) and (pointer: coarse)').matches;
+      if (touch && navigator.canShare && navigator.canShare({ files: [probe] })) shareBtn.hidden = false;
     } catch (e) {}
 
     shareBtn?.addEventListener('click', async e => {

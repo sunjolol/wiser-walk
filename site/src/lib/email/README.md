@@ -1,8 +1,12 @@
 # Switching sign-up on
 
 The code is done. Everything below happens in a Brevo account and in Vercel, and only you
-can do it. Until it is done, `/api/subscribe` answers 503 in production and the two sign-up
-forms collect nothing.
+can do it.
+
+**Since 2026-09-23 no form on the site posts to `/api/subscribe`.** Every email box (the footer,
+the result page's "Save your result", /me/, /account/sign-up/) starts an account sign-up, and
+the address joins the list through `/api/auth/list` once the password is set. The endpoint is
+kept for the tests and for any future list-only use.
 
 **Why Brevo.** The free plan holds up to 100,000 contacts and sends 300 emails a day, it
 has an API and SMTP, and it costs nothing to start. (MailerLite still works in the code,

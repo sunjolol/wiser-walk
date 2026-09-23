@@ -955,11 +955,11 @@ a:hover .go-pill .icon, a.go-pill:hover .icon { transform: translateX(3px); }
 .saved-note .icon { color: var(--accent); flex: none; }
 .saved-note a { color: var(--accent); }
 .result-band .verdict { max-width: 11em; }
-.outcomes > h2, .depth-section > h2, .share-block > h2, .capture > h2 {
+.outcomes > h2, .depth-section > h2, .share-block > h2 {
   font-style: italic; font-size: clamp(1.8rem, 7.6vw, 2.6rem); line-height: 1; letter-spacing: -.02em;
   margin-top: 3rem;
 }
-.outcomes > h2::after, .depth-section > h2::after, .share-block > h2::after, .capture > h2::after {
+.outcomes > h2::after, .depth-section > h2::after, .share-block > h2::after {
   content: ""; display: block; width: 58px; height: 7px; margin-top: .65rem;
   border-radius: var(--r-pill); background-image: var(--grad-r);
 }

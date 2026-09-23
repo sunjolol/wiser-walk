@@ -9,14 +9,12 @@ import RailStack from '../../../components/RailStack.astro';
 import CategoryStack from '../../../components/CategoryStack.astro';
 import AxisDepth from '../../../components/AxisDepth.astro';
 import ShareBlock from '../../../components/ShareBlock.astro';
-import EmailCapture from '../../../components/EmailCapture.astro';
+import SaveResult from '../../../components/SaveResult.astro';
 import NextUp from '../../../components/NextUp.astro';
 import ReadCard from '../../../components/ReadCard.astro';
 import PsalmReading from '../../../components/PsalmReading.astro';
 import { QUIZZES, getQuiz, resultFor, decodeFor, outcomeHref } from '../../../lib/engine/registry';
 import { groupNoteFor, outcomeNounPlural, rankWord } from '../../../lib/engine/types';
-import { isConfigured } from '../../../lib/email/provider';
-import { readEnv } from '../../../lib/email/env';
 import { ACCOUNTS_VISIBLE } from '../../../lib/account/config';
 import { artFor } from '../../../lib/art';
 import { READING } from '../../../lib/strategies/reading';
@@ -37,8 +35,6 @@ if (quiz && values) Astro.response.headers.set('cache-control', 'public, max-age
 else Astro.response.status = 404;
 
 const view = quiz && values ? resultFor(quiz, values) : null;
-
-const emailOn = isConfigured(readEnv(Astro.locals));
 
 // Articles that speak to this quiz, so a result is a doorway rather than a dead end.
 const related = quiz
@@ -229,23 +225,6 @@ const description = reading
         <p class="saved-pill" id="saved-note" hidden>
           <Icon name="users" size={14} /> Saved to <a href="/me/">{ACCOUNTS_VISIBLE ? 'My profile' : 'My results'}</a>
         </p>
-        {/*
-          And, for the reader who has just finished and has no account, the one step that
-          makes that saving permanent. It is shown by the same test as the pill above it, so
-          a visitor opening somebody else's link is never asked to keep a result that was
-          never theirs, and it is hidden again the moment there IS an account. The pill
-          above says the result is on this device; this says the thing that is actually
-          different about an account, which is every other device.
-
-          The initial hiding is an inline style rather than the `hidden` attribute because
-          .btn-row is display:flex, which beats the attribute, and the rule that would fix
-          that lives in a stylesheet this page shares with every other reference page.
-        */}
-        {ACCOUNTS_VISIBLE && (
-          <p class="btn-row" id="keep-row" style="display:none">
-            <a class="btn" href="/account/sign-up/">Keep it on every device</a>
-          </p>
-        )}
       </div>
     </header>{/*
       Hung off the band with no whitespace between them: an expression that renders nothing
@@ -289,9 +268,6 @@ const description = reading
       try {
         if (sessionStorage.getItem('ww:took:' + savedQuizSlug) === savedQuizCode) {
           document.getElementById('saved-note').hidden = false;
-          // Already signed in: it is kept for good already, and there is nothing to ask for.
-          var keep = document.getElementById('keep-row');
-          if (keep && document.documentElement.dataset.account !== 'in') keep.style.display = '';
         }
       } catch (e) {}
     </script>
@@ -299,8 +275,8 @@ const description = reading
     {view.shape === 'reading' ? (
       /*
         A reading has no rails and no ranking: the psalm, why, and the whole text. It has no
-        outcome list, no depth panels and no email offer below either (each is skipped by
-        its own test further down), because its rows and ranking are empty by design.
+        outcome list and no depth panels below either (each is skipped by its own test
+        further down), because its rows and ranking are empty by design.
       */
       <PsalmReading quiz={quiz} view={view} part="body" />
     ) : (
@@ -453,10 +429,11 @@ const description = reading
     <ShareBlock quiz={quiz} view={view} origin={Astro.site!.origin} line={readingLine} />
 
     {/*
-      Never for a reading. The offer sends the result code to a mail provider, and a reading's
-      code names what someone is going through; that is not ours to hand on.
+      Save it, or take it yourself: the one ask on a result page, for every shape, a reading
+      too. It sends nothing about the result anywhere; the result is already on this device,
+      and the account picks it up from there once a password is chosen.
     */}
-    {view.shape !== 'reading' && <EmailCapture quiz={quiz} view={view} enabled={emailOn} />}
+    <SaveResult quiz={quiz} view={view} />
 
     {/*
       The way on. A result used to end on the email form and, for some quizzes, three grey

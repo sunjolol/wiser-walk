@@ -129,8 +129,9 @@ export interface BrevoOptions {
  *   opt-in      the contact only exists once they click it. Needs a DOI template in the
  *               Brevo account, hence BREVO_DOI_TEMPLATE_ID.
  *
- * The form's copy has to be true under both, which is why it no longer promises a
- * confirmation email by name. See components/EmailCapture.astro.
+ * Any copy about the list has to be true under both, which is why none promises a
+ * confirmation email by name. (The list-only form, EmailCapture, was removed 2026-09-23:
+ * every email box on the site now starts an account, and /api/auth/list adds the address.)
  */
 export function brevo(apiKey: string, opts: BrevoOptions = {}): EmailProvider {
   const { listId, doiTemplateId, doiRedirect, timeoutMs = TIMEOUT_MS } = opts;

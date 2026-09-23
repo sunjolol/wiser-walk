@@ -240,15 +240,21 @@ const tiles = quiz && cmp
       <div class="dark-ghost" aria-hidden="true">send</div>
       <p class="feature-kicker"><Icon name="compass" size={13} /> Add a third reader</p>
       <h2>Send this to someone else.</h2>
-      <p>
-        When they finish, you both see your answers on the same rails. The link carries two
-        sets of scores and nothing else: no name, no initial, no label.
-      </p>
-      <div class="share-link">
-        <input data-role="invite-url" type="text" readonly value={inviteUrlA}
-               data-url-a={inviteUrlA} data-url-b={inviteUrlB}
-               spellcheck="false" aria-label="Invite link" />
-        <button class="btn ghost" data-role="copy-invite" type="button">Copy link</button>
+      {/*
+        The same box as the invite on a result page, label and caption word for word, so the
+        invitation reads the same wherever it is found. The caption says what the paragraph
+        here used to say, so the paragraph went.
+      */}
+      <div class="share-box">
+        <label class="share-label" for="invite-url">Compare with a friend</label>
+        <div class="share-link">
+          <input id="invite-url" data-role="invite-url" type="text" readonly value={inviteUrlA}
+                 data-url-a={inviteUrlA} data-url-b={inviteUrlB} spellcheck="false" />
+          <button class="btn ghost" data-role="copy-invite" type="button">Copy link</button>
+        </div>
+        <p class="share-note">
+          Send this to a friend. When they finish the quiz, you both see your answers side by side.
+        </p>
       </div>
     </section>
 

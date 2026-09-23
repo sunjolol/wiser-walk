@@ -703,54 +703,6 @@
 .result-fold .frame-fold-body p { margin: 0 0 .7rem; font-size: .92rem; line-height: 1.62; color: var(--ink-soft); }
 .result-fold .frame-fold-body p:last-child { margin-bottom: 0; }
 
-/* ------------------------------------------------------- the email room --- */
-
-/*
- * The offer, as a dark room with one field.
- *
- * It used to be a light panel carrying a heading, a field, a button and five
- * lines of small print, which read as a form bolted to the foot of a result.
- * The words are unchanged — they were only just made true — but they are set as
- * a room now: the heading, the offer at reading size, the field and its button
- * on one line, and the detail small and calm underneath. No mark over the
- * heading since 2026-09-22 (the owner: no icon tiles anywhere).
- *
- * Deliberately NOT the footer's photograph. The footer is on this page too, and
- * the same picture twice on one page has already been rejected once.
- */
-.capture {
-  position: relative; isolation: isolate; overflow: hidden;
-  padding: 1.5rem 1.15rem 1.6rem; border-radius: var(--r-lg); box-shadow: var(--lift);
-  background-color: var(--dark-fill); background-image: var(--dark-fill-img); background-size: 520px;
-  color: var(--on-dark);
-}
-/* (the starry tile is opaque and turns a shade darker in the dark theme by itself, site.css) */
-@media (min-width: 40rem) { .capture { padding: 2rem 1.95rem 2.1rem; } }
-.capture h2 {
-  margin: 0; font-family: var(--display); font-style: italic; font-weight: 400;
-  font-size: clamp(1.6rem, 6.6vw, 2.1rem); line-height: 1.04; letter-spacing: -.02em;
-  color: var(--on-dark); text-wrap: balance;
-}
-.capture h2::after {
-  content: ""; display: block; width: 46px; height: 6px; margin-top: .6rem;
-  border-radius: var(--r-pill); background-image: var(--grad-r);
-}
-.capture-offer { margin: .95rem 0 1.15rem; font-size: 1rem; line-height: 1.6; color: var(--on-dark-soft); max-width: 34rem; }
-.capture-form { max-width: 31rem; }
-.capture-row input {
-  background: rgba(255, 255, 255, .08); color: var(--on-dark);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .18);
-}
-.capture-row input::placeholder { color: var(--on-dark-mute); }
-.capture-status.is-ok { color: var(--blue-soft); }
-.capture-status.is-bad { color: var(--orange-soft); }
-.capture-status.is-busy { color: var(--on-dark-mute); }
-.capture-small {
-  margin: 1.25rem 0 0; max-width: 40rem; font-size: .76rem; line-height: 1.6;
-  color: var(--on-dark-mute); text-wrap: pretty;
-}
-.capture-small a { color: var(--blue-soft); }
-
 /* --------------------------------------------- reads at the page foot ----- */
 
 /*

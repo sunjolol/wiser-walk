@@ -464,28 +464,40 @@ const navItems = ACCOUNTS_VISIBLE ? NAV.filter(n => n.href !== '/me/') : NAV;
         <div class="wrap foot-dawn-in">
           <div class="foot-dawn-say">
             <h2>Keep walking.</h2>
-            <p>New quizzes and games as they are made.</p>
+            <p>{ACCOUNTS_VISIBLE
+              ? 'Make a free profile. Save every result and see what they add up to.'
+              : 'New quizzes and games as they are made.'}</p>
           </div>
-          <form class="foot-signup" id="foot-signup" method="post" action="/api/subscribe">
-            <input type="hidden" name="back" value={here} />
-            {/* Hidden from people, irresistible to naive bots. Not a CAPTCHA and never will be. */}
-            <p class="hp" aria-hidden="true">
-              <label>Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
-            </p>
-            <div class="foot-signup-row">
-              <label class="sr-only" for="foot-email">Your email address</label>
-              <span class="foot-signup-icon" aria-hidden="true"><Icon name="mail" size={17} /></span>
-              <input id="foot-email" type="email" name="email" required autocomplete="email"
-                     inputmode="email" placeholder="you@example.com" />
-              <button class="btn" type="submit">{
-                /* "Subscribe" once the header says "Sign up" for an account: one page must not
-                   use the same two words for two different things. The note is inside the
-                   expression so a build with the doors shut prints exactly what it did. */
-                ACCOUNTS_VISIBLE ? 'Subscribe' : 'Sign up'
-              }</button>
-            </div>
-            <p class="foot-signup-status" id="foot-signup-status" role="status" aria-live="polite"></p>
-          </form>
+          {/*
+            A free profile (the owner, 2026-09-23). This box used to put an address on a mailing
+            list and start nothing; it starts the same account sign-up as /me/ and the foot of
+            a result page now, so "Sign up" means one thing wherever it is printed. Hidden when
+            signed in, with the rest of the band's words (kit.css). With no way in for the
+            public there is nothing for it to start, so there is no box.
+
+            A GET to the sign-up page, as on /me/, so it still does something with the script
+            blocked: that page opens with the address already typed. The script that sends the
+            email is the processed one at the foot of this file. The small line is the status
+            line's resting text: an answer is printed in its place, and the line comes back
+            when the field is touched again.
+          */}
+          {ACCOUNTS_VISIBLE && (
+            <form class="foot-signup" id="foot-signup" method="get" action="/account/sign-up/" novalidate>
+              <div class="foot-signup-row">
+                <label class="sr-only" for="foot-email">Your email address</label>
+                <input id="foot-email" type="email" name="email" required autocomplete="email"
+                       inputmode="email" spellcheck="false" autocapitalize="none"
+                       placeholder="you@example.com" aria-describedby="foot-signup-status" />
+                {/* After the field, not before it: the field's backdrop-filter gives it a
+                    stacking context of its own, which painted over the mark when the mark
+                    came first, and the envelope was never seen. */}
+                <span class="foot-signup-icon" aria-hidden="true"><Icon name="mail" size={17} /></span>
+                <button class="btn" type="submit">Sign up</button>
+              </div>
+              <p class="foot-signup-status" id="foot-signup-status" role="status" aria-live="polite"
+                 data-rest="We'll email you a link to choose a password, and a note when something new is made.">We'll email you a link to choose a password, and a note when something new is made.</p>
+            </form>
+          )}
         </div>
       </div>
 
@@ -596,76 +608,6 @@ const navItems = ACCOUNTS_VISIBLE ? NAV.filter(n => n.href !== '/me/') : NAV;
       })();
 
       /*
-       * The footer sign-up. The same three states the result page's form has — sending,
-       * already on the list, and a failure the reader can act on — against the same
-       * endpoint. With this script blocked the form still posts and still works; the
-       * endpoint redirects back with the outcome in the query.
-       */
-      (function () {
-        var form = document.getElementById('foot-signup');
-        var status = document.getElementById('foot-signup-status');
-        if (!form || !status) return;
-        var button = form.querySelector('button[type="submit"]');
-        var say = function (text, kind) {
-          status.textContent = text;
-          status.className = 'foot-signup-status is-' + kind;
-        };
-
-        form.addEventListener('submit', function (event) {
-          event.preventDefault();
-          var data = {};
-          new FormData(form).forEach(function (v, k) { data[k] = v; });
-          button.disabled = true;
-          say('Sending…', 'busy');
-
-          fetch('/api/subscribe', {
-            method: 'POST',
-            headers: { 'content-type': 'application/json' },
-            body: JSON.stringify(data)
-          })
-            .then(function (res) {
-              return res.json().catch(function () { return {}; }).then(function (body) {
-                return { ok: res.ok, body: body };
-              });
-            })
-            .then(function (r) {
-              if (r.ok && r.body.ok) {
-                // Hide the FIELD, never the form: the status line lives inside the form, and
-                // hiding the form hid the thank-you with it, so a reader who had just signed
-                // up saw the box vanish and nothing else.
-                var row = form.querySelector('.foot-signup-row');
-                if (row) row.hidden = true;
-                // True whether or not the provider's double opt-in is switched on: that
-                // lives in an account setting, not in this repository, so the line may not
-                // promise a confirmation email outright.
-                say(
-                  r.body.already
-                    ? 'You are already on the list.'
-                    : 'Thank you. Look out for an email from us; the first one may ask you to confirm.',
-                  'ok'
-                );
-              } else {
-                button.disabled = false;
-                say(r.body.error || 'That did not go through. Try again in a moment.', 'bad');
-              }
-            })
-            .catch(function () {
-              button.disabled = false;
-              say('That did not go through. Try again in a moment.', 'bad');
-            });
-        });
-
-        // The no-JS path comes back with ?sub= in the query. The result page's own form
-        // reads the same parameter, so leave it to that one where both are on the page.
-        if (document.getElementById('capture-form')) return;
-        var sub = new URLSearchParams(location.search).get('sub');
-        if (sub === 'ok') say('Thank you. Look out for an email from us; the first one may ask you to confirm.', 'ok');
-        else if (sub === 'already') say('You are already on the list.', 'ok');
-        else if (sub === 'error') say('That did not go through. Try again in a moment.', 'bad');
-        if (sub) history.replaceState(null, '', location.pathname);
-      })();
-
-      /*
        * A dot on "My results" when there is something behind it.
        *
        * The key is read raw rather than through lib/shelf, because this runs inline on every
@@ -739,7 +681,7 @@ const navItems = ACCOUNTS_VISIBLE ? NAV.filter(n => n.href !== '/me/') : NAV;
 
       TWO THINGS ABOUT THIS BLOCK, both learned the hard way on 2026-09-21.
 
-      It is the ONLY processed <script> in this file, and it has to stay the only one. Astro
+      It is the ONLY processed script tag in this file, and it has to stay the only one. Astro
       hoists every processed script in a component and renders a marker for each; with more
       than one, and one of them inside a conditional as this is, the markers cross and a page
       loads the wrong script. It was watched happening on the quiz page, which shipped the
@@ -762,6 +704,13 @@ const navItems = ACCOUNTS_VISIBLE ? NAV.filter(n => n.href !== '/me/') : NAV;
       nothing still leaves the whitespace on each side of it, and with no project behind
       the build every page on the site has to come out of this change exactly as it went
       in, down to the byte.
+
+      THE FOOTER'S SIGN-UP lives here too (2026-09-23), for the same first reason: it has to
+      load the account client, which only a processed script can import, and this is the one
+      processed script this file may have. It is the signed-OUT half of the block. The form
+      is printed only where the public can see accounts, which is never without a project,
+      so it is always inside this gate. The client, and the Supabase SDK behind it, load when
+      the button is pressed and not before.
     */
     <script>
       const HINT = 'ww.acct.v1';
@@ -799,6 +748,63 @@ const navItems = ACCOUNTS_VISIBLE ? NAV.filter(n => n.href !== '/me/') : NAV;
                  again. Nothing a reader is doing depends on this having happened. */
             });
         }
+      }
+
+      /*
+       * The footer's sign-up, exactly as /me/ starts one. The answer is printed where the
+       * small line is, and the small line comes back when the field is touched again.
+       */
+      const foot = document.getElementById('foot-signup') as HTMLFormElement | null;
+      const footField = document.getElementById('foot-email') as HTMLInputElement | null;
+      const footStatus = document.getElementById('foot-signup-status');
+      const footButton = foot?.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+
+      if (foot && footField && footStatus && footButton) {
+        const rest = footStatus.dataset.rest || '';
+        const say = (text: string, kind?: string) => {
+          footStatus.textContent = text || rest;
+          footStatus.classList.remove('is-busy', 'is-bad');
+          if (kind) footStatus.classList.add('is-' + kind);
+        };
+
+        footField.addEventListener('input', () => {
+          if (footStatus.textContent !== rest) say('');
+        });
+
+        foot.addEventListener('submit', async event => {
+          event.preventDefault();
+          if (footButton.disabled) return;
+
+          const email = footField.value.trim();
+          if (!email) {
+            say('Enter your email address.', 'bad');
+            footField.focus();
+            return;
+          }
+
+          footButton.disabled = true;
+          say('Sending…', 'busy');
+
+          let done: { ok: boolean; code?: string; say?: string } = { ok: false };
+          try {
+            const { requestLink } = await import('../lib/account/client');
+            done = await requestLink(email);
+          } catch (e) {
+            /* the sentence below covers it */
+          }
+
+          if (done.ok) {
+            // The page that prints the address back reads it from this tab's own storage.
+            // Never in the URL, where it would sit in history and in a server's log.
+            try { sessionStorage.setItem('ww.acct.to', email); } catch (e) { /* that page manages without it */ }
+            location.href = '/account/check-email/';
+            return;
+          }
+
+          footButton.disabled = false;
+          say(done.say || 'That did not go through. Try again in a moment.', 'bad');
+          if (done.code === 'address') footField.focus();
+        });
       }
     </script>
     )}

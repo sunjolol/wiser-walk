@@ -381,8 +381,8 @@ guardPasses('preview');
   );
   yes(!head.includes('My results'), 'in place of "My results", which the pair replaces');
   yes(
-    home.includes('>Subscribe</button>') && !home.includes('>Sign up</button>'),
-    'and the footer\'s newsletter button says "Subscribe", so "Sign up" means one thing on the page'
+    !home.includes('>Subscribe</button>'),
+    'and no box on the page is a list-only "Subscribe": every email box starts an account (owner, 2026-09-23)'
   );
   // The header's way to /me/ is now the account pair, so the results a guest's device holds
   // need a plain way back that does not read as "make an account".

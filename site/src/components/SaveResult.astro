@@ -1,0 +1,299 @@
+---
+/**
+ * The one ask at the foot of a result page (the owner, 2026-09-23).
+ *
+ * It replaced "Where this came from", a box that promised a short series of emails, posted
+ * the address to a mailing list and started nothing. What an address is actually worth here
+ * is an account: the result is already on this device's shelf, and settle() in
+ * lib/account/client.ts uploads the shelf the moment a password is chosen, so typing an
+ * address below is how this result gets saved for good.
+ *
+ * Two readers arrive at the same URL, told apart exactly as the share block tells them apart:
+ *
+ *   the taker      finished this quiz in this tab, so the runner left a note in
+ *                  sessionStorage ('ww:took:<slug>' holding this code). Asked to save it.
+ *   a visitor      opened a link someone sent. Asked to take the quiz for themselves, and
+ *                  offered the same sign-up as a second way on.
+ *
+ * The server renders the visitor, because getting it wrong for a visitor is the costlier
+ * error: nobody should be asked to save a result that was never theirs. A short inline
+ * script straight after the block switches it to the taker before the first paint, so the
+ * reader who just finished never sees the other one flash. Somebody signed in sees nothing
+ * at all: the layout marks <html> before first paint, and the rule at the foot of the style
+ * hides the whole room.
+ *
+ * Every shape gets it, a reading (the Psalm quiz) too. Nothing about the result is sent
+ * anywhere by this box: the address goes to the account, and the code was already on the
+ * device.
+ */
+import Icon from './Icon.astro';
+import type { Quiz, ResultView } from '../lib/engine/types';
+import { isComparable } from '../lib/engine/types';
+import { inviteHref, quizHref, resultHref } from '../lib/engine/registry';
+import { ACCOUNTS_VISIBLE } from '../lib/account/config';
+
+interface Props {
+  quiz: Quiz;
+  view: ResultView;
+}
+
+const { quiz, view } = Astro.props;
+
+// No way in for the public, no box. A signed-in browser does not need one either.
+if (!ACCOUNTS_VISIBLE) return null;
+
+/*
+ * Log in comes back here. The log-in page runs `next` through safeNext(), which takes a
+ * plain path on this site and nothing else.
+ */
+const logIn = `/account/sign-in/?next=${encodeURIComponent(resultHref(quiz, view.code))}`;
+
+/*
+ * A visitor who takes a comparable quiz lands beside the friend who sent it, which is the
+ * same invite the share block carries. A quiz whose results are never set side by side (a
+ * reading) sends them to its plain start.
+ */
+const take = isComparable(quiz) ? inviteHref(quiz, view.code) : quizHref(quiz);
+---
+<section class="save dark" id="save" data-who="visitor" aria-labelledby="save-h">
+  <div class="dark-ghost" aria-hidden="true">yours</div>
+
+  <div class="save-say">
+    <h2 id="save-h">
+      <span class="save-visitor">Try it for yourself</span>
+      <span class="save-taker">Save your result</span>
+    </h2>
+    <p class="save-line save-visitor">
+      Wiser Walk is a free home for quizzes, games and articles that help you understand
+      yourself and grow in your walk with God. Take this quiz in about {quiz.minutes} minutes
+      and save every result to your own profile.
+    </p>
+    <p class="save-line save-taker">
+      It's free and takes 30 seconds. Every quiz you take adds to your profile, and the more
+      you take, the more it shows you about yourself.
+    </p>
+    <p class="save-take save-visitor">
+      <a class="btn" href={take}>Take the quiz <Icon name="arrow" size={16} /></a>
+    </p>
+  </div>
+
+  <div class="save-ask">
+    <p class="save-or save-visitor">Or start your free profile now</p>
+    {/*
+      A GET to the sign-up page, as on /me/, so the box still does something with the script
+      blocked: it lands on the page that asks the same thing, with the address already typed.
+      No honeypot, unlike the old box. A bot that does not run scripts gets that static page,
+      which sends nothing on its own, so a trap here would only put "website=" in a reader's
+      address bar.
+    */}
+    <form class="save-form" id="save-form" method="get" action="/account/sign-up/" novalidate>
+      <div class="save-row">
+        <span class="save-cell">
+          <label class="sr-only" for="save-email">Your email address</label>
+          <span class="save-icon" aria-hidden="true"><Icon name="mail" size={17} /></span>
+          <input class="save-field" id="save-email" type="email" name="email" required
+                 autocomplete="email" inputmode="email" spellcheck="false" autocapitalize="none"
+                 placeholder="you@example.com" aria-describedby="save-status" />
+        </span>
+        {/* Glass for a visitor, whose first way on is "Take the quiz"; the brand's gradient
+            for the taker, for whom this is the only button in the room. */}
+        <button class="btn glass save-go" id="save-go" type="submit">Sign up</button>
+      </div>
+    </form>
+    {/* Outside the form, and printed where the small print is: while there is something to
+        say the small print steps aside, and it is back the moment the field is touched. */}
+    <p class="save-status" id="save-status" role="status" aria-live="polite"></p>
+    <p class="save-small">We'll email you a link to choose a password, and a note when something new is made.</p>
+    <p class="save-alt save-taker">
+      Already have an account? <a class="go-pill save-in" href={logIn}>Log in</a>
+    </p>
+  </div>
+</section>
+
+{/*
+  The taker, switched on before the first paint. Inline and synchronous on purpose: the
+  processed script below is a module, which runs after the page has been drawn. Development
+  builds can force this state with ?took=1 (see the result page).
+*/}
+<script is:inline define:vars={{ saveSlug: quiz.slug, saveCode: view.code }}>
+  try {
+    if (sessionStorage.getItem('ww:took:' + saveSlug) === saveCode) {
+      document.getElementById('save').dataset.who = 'taker';
+      var saveGo = document.getElementById('save-go');
+      saveGo.classList.remove('glass');
+      saveGo.textContent = 'Save my result';
+    }
+  } catch (e) {}
+</script>
+
+<script>
+  /*
+   * The sign-up itself, exactly as /me/ starts one: the account client is loaded only when
+   * the button is pressed, because it brings the Supabase SDK with it, and a result page is
+   * read by far more people than ever press it.
+   */
+  const form = document.getElementById('save-form') as HTMLFormElement | null;
+  const field = document.getElementById('save-email') as HTMLInputElement | null;
+  const button = document.getElementById('save-go') as HTMLButtonElement | null;
+  const status = document.getElementById('save-status');
+
+  if (form && field && button && status) {
+    const say = (text: string, kind?: string) => {
+      status.textContent = text;
+      status.classList.remove('is-busy', 'is-bad');
+      if (kind) status.classList.add('is-' + kind);
+    };
+
+    // Touching the field again brings the small print back.
+    field.addEventListener('input', () => {
+      if (status.textContent) say('');
+    });
+
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+      if (button.disabled) return;
+
+      const email = field.value.trim();
+      if (!email) {
+        say('Enter your email address.', 'bad');
+        field.focus();
+        return;
+      }
+
+      // Read now, not at render: the taker's label was set by the inline script above.
+      const label = button.textContent;
+      button.disabled = true;
+      say('Sending…', 'busy');
+
+      let done: { ok: boolean; code?: string; say?: string } = { ok: false };
+      try {
+        const { requestLink } = await import('../lib/account/client');
+        done = await requestLink(email);
+      } catch (e) {
+        /* the sentence below covers it */
+      }
+
+      if (done.ok) {
+        // Handed over in this tab's own storage, where /account/check-email/ looks for it to
+        // print the address back. Never in the URL, where it would sit in history and logs.
+        try { sessionStorage.setItem('ww.acct.to', email); } catch (e) { /* that page manages without it */ }
+        location.href = '/account/check-email/';
+        return;
+      }
+
+      button.disabled = false;
+      button.textContent = label;
+      say(done.say || 'That did not go through. Try again in a moment.', 'bad');
+      if (done.code === 'address') field.focus();
+    });
+  }
+</script>
+
+<style>
+  /*
+   * A dark room, as the old box was: the starry ground the site uses for anything it asks
+   * of a reader (.dark in kit.css re-points the tokens). Deliberately not the footer's
+   * photograph, which is on this page too.
+   *
+   * Phone first, one column: the reason, then the ask. From 52rem the two stand side by
+   * side, the reason on the left and the ask on the right, so neither leaves a hole under
+   * the other at 1360.
+   */
+  .save {
+    margin: 2.5rem 0 0; padding: 1.6rem 1.25rem 1.7rem;
+    display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem;
+  }
+  /* Which reader is looking. The server prints the visitor; the inline script says taker. */
+  .save[data-who="visitor"] .save-taker,
+  .save[data-who="taker"] .save-visitor { display: none; }
+  /* Signed in: the result is saved already, and there is nothing to ask. */
+  :global(:root[data-account="in"]) .save { display: none; }
+
+  .save .dark-ghost { font-size: clamp(6rem, 30vw, 11rem); right: -.04em; bottom: -.24em; }
+
+  /* The result page's own section voice: italic, with the brand's bar under it. */
+  .save h2 {
+    margin: 0; font-family: var(--display); font-style: italic; font-weight: 400;
+    font-size: clamp(1.8rem, 7.6vw, 2.6rem); line-height: 1; letter-spacing: -.02em;
+    color: var(--on-dark); text-wrap: balance;
+  }
+  .save h2::after {
+    content: ""; display: block; width: 58px; height: 7px; margin-top: .65rem;
+    border-radius: var(--r-pill); background-image: var(--grad-r);
+  }
+  .save-line {
+    margin: 1rem 0 0; max-width: 34rem; font-size: 1rem; line-height: 1.6;
+    color: var(--on-dark-soft); text-wrap: pretty;
+  }
+  .save-take { margin: 1.35rem 0 0; }
+  .save-take .btn { width: 100%; }
+
+  /*
+   * The visitor's second way on, under a hairline so it reads as a second way and not as
+   * more of the first. The site's uppercase kicker, in the room's warm ink.
+   */
+  .save[data-who="visitor"] .save-ask { padding-top: 1.35rem; border-top: 1px solid rgba(255, 255, 255, .12); }
+  .save-or {
+    margin: 0 0 .75rem; font-family: var(--ui); font-size: .64rem; font-weight: 700;
+    letter-spacing: .15em; text-transform: uppercase; color: var(--orange-soft);
+  }
+
+  /* The field and its button: the account pages' 46px pill and 16px type (below 16px iOS
+     zooms the page on focus), set for a starry ground rather than a photograph. */
+  .save-row { display: flex; flex-direction: column; gap: .55rem; }
+  .save-cell { position: relative; flex: 1 1 auto; min-width: 0; }
+  .save-icon {
+    position: absolute; z-index: 2; left: 1rem; top: 50%; transform: translateY(-50%);
+    display: grid; color: rgba(255, 255, 255, .7); pointer-events: none;
+  }
+  .save-field {
+    display: block; width: 100%; min-height: 48px;
+    font-family: var(--text); font-size: 1rem;
+    padding: .7rem .95rem .7rem 2.75rem; border-radius: var(--r-pill);
+    border: 0; background: rgba(255, 255, 255, .08); color: var(--on-dark);
+    box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .3);
+  }
+  .save-field::placeholder { color: var(--on-dark-mute); }
+  .save-field:focus-visible { outline: 2px solid var(--blue-soft); outline-offset: 2px; }
+  .save-go { min-height: 48px; padding-left: 1.6rem; padding-right: 1.6rem; }
+  /* Not a 45% ghost: plainly out of action and still legible. What it is doing is said in
+     words on the line under it. */
+  .save-go:disabled {
+    opacity: 1; cursor: default; background-image: none;
+    background-color: rgba(255, 255, 255, .14); color: rgba(255, 255, 255, .8);
+    box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .24);
+  }
+  @media (min-width: 30rem) {
+    .save-row { flex-direction: row; align-items: stretch; }
+    .save-go { flex: none; }
+    .save-take .btn { width: auto; }
+  }
+
+  .save-status, .save-small { margin: .7rem 0 0; font-size: .84rem; line-height: 1.5; text-wrap: balance; }
+  .save-status:empty { display: none; }
+  .save-status:not(:empty) + .save-small { display: none; }
+  .save-status.is-busy { color: var(--on-dark-mute); }
+  .save-status.is-bad { color: #FFD9BF; font-weight: 600; }
+  .save-small { color: var(--on-dark-mute); }
+
+  .save-alt {
+    display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .8rem;
+    margin: 1.1rem 0 0; font-size: .92rem; color: var(--on-dark-soft);
+  }
+
+  @media (min-width: 40rem) { .save { padding: 2.2rem 2.1rem 2.3rem; } }
+  @media (min-width: 52rem) {
+    /* The ask a little the wider of the two: "Save my result" is a long button, and the
+       field beside it still has to show a whole address. */
+    .save {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 2.75rem;
+      align-items: center; padding: 2.6rem 2.6rem 2.7rem;
+    }
+    /* Side by side, the hairline between the two ways on stands upright, in the middle of
+       the gap. */
+    .save[data-who="visitor"] .save-ask {
+      padding: .2rem 0 .2rem 1.375rem; margin-left: -1.375rem;
+      border-top: 0; border-left: 1px solid rgba(255, 255, 255, .12);
+    }
+  }
+</style>
