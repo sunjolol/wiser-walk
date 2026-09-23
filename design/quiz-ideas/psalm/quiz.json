@@ -1,0 +1,2477 @@
+{
+ "draft": 5,
+ "weights": {
+  "default": 2,
+  "say": 3,
+  "who": 3,
+  "faith": 3,
+  "what": 3,
+  "self": 3,
+  "world": 4,
+  "loved": 4,
+  "ended": 4,
+  "how": 3,
+  "good": 4
+ },
+ "core": [
+  {
+   "id": "season",
+   "q": "How would you sum up this stretch of your life?",
+   "options": [
+    [
+     "vhard",
+     "Really hard"
+    ],
+    [
+     "hard",
+     "Hard, but I'm getting by"
+    ],
+    [
+     "mixed",
+     "Up and down"
+    ],
+    [
+     "inside",
+     "Fine on the outside, not on the inside"
+    ],
+    [
+     "busy",
+     "Busy, but fine"
+    ],
+    [
+     "ordinary",
+     "Quiet and ordinary"
+    ],
+    [
+     "good",
+     "Good"
+    ],
+    [
+     "vgood",
+     "Really good"
+    ]
+   ]
+  },
+  {
+   "id": "trend",
+   "q": "And lately?",
+   "options": [
+    [
+     "worse",
+     "Getting worse"
+    ],
+    [
+     "sudden",
+     "Something hard just happened"
+    ],
+    [
+     "same",
+     "About the same"
+    ],
+    [
+     "better",
+     "Getting better"
+    ],
+    [
+     "over",
+     "Something hard is finally over"
+    ],
+    [
+     "new",
+     "Something new is starting"
+    ]
+   ]
+  },
+  {
+   "id": "feel",
+   "q": "Pick the words that fit you best right now.",
+   "max": 2,
+   "words": true,
+   "options": [
+    [
+     "afraid",
+     "Afraid"
+    ],
+    [
+     "anxious",
+     "Anxious"
+    ],
+    [
+     "heavy",
+     "Sad"
+    ],
+    [
+     "lonely",
+     "Lonely"
+    ],
+    [
+     "hurt",
+     "Hurt"
+    ],
+    [
+     "ashamed",
+     "Ashamed"
+    ],
+    [
+     "angry",
+     "Angry"
+    ],
+    [
+     "bitter",
+     "Bitter"
+    ],
+    [
+     "tired",
+     "Worn out"
+    ],
+    [
+     "numb",
+     "Numb"
+    ],
+    [
+     "restless",
+     "Restless"
+    ],
+    [
+     "unsure",
+     "Unsure"
+    ],
+    [
+     "curious",
+     "Curious"
+    ],
+    [
+     "calm",
+     "At peace"
+    ],
+    [
+     "hopeful",
+     "Hopeful"
+    ],
+    [
+     "grateful",
+     "Grateful"
+    ],
+    [
+     "happy",
+     "Happy"
+    ]
+   ]
+  },
+  {
+   "id": "focus",
+   "q": "What's been on your mind the most?",
+   "options": [
+    [
+     "people",
+     "People in my life"
+    ],
+    [
+     "self",
+     "Something I've done"
+    ],
+    [
+     "body",
+     "My health"
+    ],
+    [
+     "work",
+     "Work or school"
+    ],
+    [
+     "money",
+     "Money"
+    ],
+    [
+     "future",
+     "What's next for me"
+    ],
+    [
+     "loved",
+     "Someone I love"
+    ],
+    [
+     "loss",
+     "Someone or something I've lost"
+    ],
+    [
+     "world",
+     "The way the world is"
+    ],
+    [
+     "god",
+     "God, and my faith"
+    ],
+    [
+     "nothing",
+     "Nothing in particular"
+    ]
+   ]
+  },
+  {
+   "id": "people",
+   "q": "How have the people around you been lately?",
+   "max": 2,
+   "options": [
+    [
+     "against",
+     "Against me"
+    ],
+    [
+     "one",
+     "One person has turned on me"
+    ],
+    [
+     "talking",
+     "Talking about me"
+    ],
+    [
+     "mocking",
+     "Making fun of me"
+    ],
+    [
+     "upset",
+     "Upset with me, and with reason"
+    ],
+    [
+     "hard",
+     "Hard to be around"
+    ],
+    [
+     "gone",
+     "Far away, or gone"
+    ],
+    [
+     "fine",
+     "Fine"
+    ],
+    [
+     "kind",
+     "Kind to me"
+    ],
+    [
+     "gift",
+     "A real gift"
+    ]
+   ]
+  },
+  {
+   "id": "god",
+   "q": "And God, right now, feels…",
+   "options": [
+    [
+     "far",
+     "Far away"
+    ],
+    [
+     "displeased",
+     "Displeased with me"
+    ],
+    [
+     "silent",
+     "Silent. I pray and nothing changes"
+    ],
+    [
+     "doubt",
+     "I'm not sure He's there"
+    ],
+    [
+     "drift",
+     "I've drifted from Him"
+    ],
+    [
+     "background",
+     "Just there, in the background"
+    ],
+    [
+     "quiet",
+     "Near, but quiet"
+    ],
+    [
+     "close",
+     "Close"
+    ],
+    [
+     "working",
+     "Clearly at work"
+    ]
+   ]
+  },
+  {
+   "id": "say",
+   "q": "If you could say one thing to Him right now, it would be…",
+   "short": true,
+   "options": [
+    [
+     "howlong",
+     "How long?"
+    ],
+    [
+     "why",
+     "Why?"
+    ],
+    [
+     "help",
+     "Help."
+    ],
+    [
+     "tired",
+     "I'm so tired."
+    ],
+    [
+     "sorry",
+     "I'm sorry."
+    ],
+    [
+     "clear",
+     "Clear my name."
+    ],
+    [
+     "unfair",
+     "It isn't fair."
+    ],
+    [
+     "nothing",
+     "Nothing, really."
+    ],
+    [
+     "there",
+     "Are You there?"
+    ],
+    [
+     "stay",
+     "Stay with me."
+    ],
+    [
+     "miss",
+     "I miss You."
+    ],
+    [
+     "way",
+     "Show me the way."
+    ],
+    [
+     "become",
+     "Make me who You want me to be."
+    ],
+    [
+     "thanks",
+     "Thank You."
+    ],
+    [
+     "praise",
+     "How great You are."
+    ]
+   ]
+  }
+ ],
+ "follow": [
+  {
+   "id": "who",
+   "q": "Who are they, mostly?",
+   "when": [
+    {
+     "people": [
+      "against",
+      "one",
+      "talking",
+      "mocking"
+     ]
+    },
+    {
+     "ended": [
+      "people"
+     ]
+    }
+   ],
+   "options": [
+    [
+     "family",
+     "Family, or the people closest to me"
+    ],
+    [
+     "friends",
+     "Friends, or people I trusted"
+    ],
+    [
+     "work",
+     "People at work or school"
+    ],
+    [
+     "boss",
+     "People with power over me"
+    ],
+    [
+     "crowd",
+     "A whole group of people"
+    ],
+    [
+     "strangers",
+     "People I barely know"
+    ],
+    [
+     "danger",
+     "People who could really hurt me"
+    ]
+   ]
+  },
+  {
+   "id": "faith",
+   "q": "Is your faith part of it?",
+   "when": [
+    {
+     "people": [
+      "against",
+      "one",
+      "talking",
+      "mocking"
+     ]
+    }
+   ],
+   "options": [
+    [
+     "yes",
+     "Yes, it's because of what I believe"
+    ],
+    [
+     "partly",
+     "Partly"
+    ],
+    [
+     "no",
+     "No"
+    ]
+   ]
+  },
+  {
+   "id": "what",
+   "q": "What's the hardest part?",
+   "when": [
+    {
+     "people": [
+      "against",
+      "one",
+      "talking",
+      "mocking"
+     ]
+    }
+   ],
+   "options": [
+    [
+     "words",
+     "What they're saying about me"
+    ],
+    [
+     "plans",
+     "What they might be planning"
+    ],
+    [
+     "fear",
+     "Not knowing what they'll do next"
+    ],
+    [
+     "cornered",
+     "Feeling trapped"
+    ],
+    [
+     "doubt",
+     "That they might be right"
+    ],
+    [
+     "drags",
+     "That it won't stop"
+    ],
+    [
+     "growing",
+     "That it keeps growing"
+    ],
+    [
+     "pushed",
+     "Being pushed out"
+    ]
+   ]
+  },
+  {
+   "id": "self",
+   "q": "What's weighing on you most?",
+   "when": [
+    {
+     "focus": [
+      "self"
+     ]
+    },
+    {
+     "say": [
+      "sorry"
+     ]
+    },
+    {
+     "god": [
+      "displeased"
+     ]
+    },
+    {
+     "people": [
+      "upset"
+     ]
+    },
+    {
+     "feel": [
+      "ashamed"
+     ]
+    }
+   ],
+   "options": [
+    [
+     "did",
+     "Something I did wrong"
+    ],
+    [
+     "mistake",
+     "A mistake I made"
+    ],
+    [
+     "habit",
+     "Something I keep going back to"
+    ],
+    [
+     "thoughts",
+     "Where my thoughts have taken me"
+    ],
+    [
+     "trying",
+     "Trying to change, and finding it harder"
+    ],
+    [
+     "warned",
+     "A sense that God is warning me"
+    ],
+    [
+     "none",
+     "It's not something I did. I just feel it."
+    ]
+   ]
+  },
+  {
+   "id": "world",
+   "q": "What gets to you most?",
+   "when": [
+    {
+     "focus": [
+      "world"
+     ]
+    },
+    {
+     "say": [
+      "unfair"
+     ]
+    }
+   ],
+   "options": [
+    [
+     "prosper",
+     "Bad people doing well"
+    ],
+    [
+     "bully",
+     "The strong pushing the weak around"
+    ],
+    [
+     "nogood",
+     "How little goodness is left"
+    ],
+    [
+     "mock",
+     "People mocking God"
+    ],
+    [
+     "persecuted",
+     "Christians suffering for their faith"
+    ],
+    [
+     "personal",
+     "Something that happened to me"
+    ]
+   ]
+  },
+  {
+   "id": "loved",
+   "q": "What's happening with them?",
+   "when": [
+    {
+     "focus": [
+      "loved"
+     ]
+    }
+   ],
+   "options": [
+    [
+     "comfort",
+     "They're suffering, and I want to be there for them"
+    ],
+    [
+     "danger",
+     "They're ill, or in danger"
+    ],
+    [
+     "need",
+     "They're in need"
+    ],
+    [
+     "losing",
+     "I'm losing them"
+    ],
+    [
+     "mending",
+     "We're finding our way back to each other"
+    ],
+    [
+     "newlife",
+     "They're new in my life"
+    ],
+    [
+     "well",
+     "They're doing well, and I'm thankful"
+    ]
+   ]
+  },
+  {
+   "id": "ended",
+   "q": "What was it?",
+   "when": [
+    {
+     "trend": [
+      "over"
+     ]
+    }
+   ],
+   "options": [
+    [
+     "people",
+     "People who were against me"
+    ],
+    [
+     "trouble",
+     "Trouble on every side"
+    ],
+    [
+     "sick",
+     "An illness, or a scare"
+    ],
+    [
+     "wait",
+     "A long wait"
+    ],
+    [
+     "rift",
+     "A falling-out"
+    ],
+    [
+     "test",
+     "A real test of my faith"
+    ],
+    [
+     "god",
+     "A time God felt against me"
+    ],
+    [
+     "self",
+     "Something I'd done"
+    ]
+   ]
+  },
+  {
+   "id": "how",
+   "q": "How did it end?",
+   "when": [
+    {
+     "trend": [
+      "over"
+     ]
+    }
+   ],
+   "options": [
+    [
+     "answered",
+     "I prayed, and He answered"
+    ],
+    [
+     "rescued",
+     "He got me out"
+    ],
+    [
+     "wits",
+     "I kept my head and got away"
+    ],
+    [
+     "refuge",
+     "I ran to Him, and He kept me safe"
+    ],
+    [
+     "settled",
+     "I left it with Him, and He set it right"
+    ],
+    [
+     "peace",
+     "We made peace"
+    ],
+    [
+     "mercy",
+     "He corrected me, gently"
+    ],
+    [
+     "passed",
+     "It just passed"
+    ]
+   ]
+  },
+  {
+   "id": "good",
+   "q": "What's behind the good?",
+   "when": [
+    {
+     "season": [
+      "good",
+      "vgood"
+     ],
+     "trend": [
+      "worse",
+      "sudden",
+      "same",
+      "better",
+      "new"
+     ]
+    },
+    {
+     "feel": [
+      "grateful",
+      "happy",
+      "hopeful"
+     ],
+     "trend": [
+      "worse",
+      "sudden",
+      "same",
+      "better",
+      "new"
+     ]
+    },
+    {
+     "trend": [
+      "new"
+     ]
+    }
+   ],
+   "options": [
+    [
+     "led",
+     "I can see Him leading me"
+    ],
+    [
+     "beauty",
+     "How good and well-made everything is"
+    ],
+    [
+     "kind",
+     "His kindness, to me and to everyone"
+    ],
+    [
+     "answered",
+     "An answered prayer"
+    ],
+    [
+     "growing",
+     "I'm growing"
+    ],
+    [
+     "home",
+     "A new home, or a new family"
+    ],
+    [
+     "faith",
+     "Coming to faith, mine or someone else's"
+    ],
+    [
+     "back",
+     "Coming back to Him"
+    ],
+    [
+     "chapter",
+     "A chapter ending well"
+    ],
+    [
+     "all",
+     "Everything, really"
+    ],
+    [
+     "unsure",
+     "I'm not sure yet"
+    ]
+   ]
+  }
+ ],
+ "outcomes": {
+  "P3": {
+   "psalm": 3,
+   "also": [],
+   "sec": "15",
+   "seen": "Your own people have turned on you, and more and more others are rising up against you.",
+   "reason": "If you are hounded by your own people, and many are rising up against you, say Psalm 3.",
+   "names": "3:1",
+   "turn": "3:3",
+   "hard": "3:7",
+   "need": [
+    {
+     "who": [
+      "family"
+     ],
+     "people": [
+      "against",
+      "talking",
+      "one"
+     ]
+    }
+   ],
+   "like": {
+    "what": [
+     "growing"
+    ],
+    "trend": [
+     "worse"
+    ],
+    "feel": [
+     "hurt",
+     "heavy",
+     "afraid"
+    ],
+    "say": [
+     "help",
+     "why"
+    ]
+   }
+  },
+  "P55": {
+   "psalm": 55,
+   "also": [],
+   "sec": "20",
+   "seen": "People you thought were your friends are spreading lies about you, others are piling on, and it keeps going round in your head.",
+   "reason": "If your enemies taunt you, and people who seemed to be your friends slander you with idle talk, and for a while it grieves you as you turn it over, you can still take comfort by praising God with the words of Psalm 55.",
+   "names": "55:13",
+   "turn": "55:16",
+   "hard": "55:15",
+   "need": [
+    {
+     "who": [
+      "friends"
+     ],
+     "people": [
+      "talking",
+      "one",
+      "against"
+     ]
+    }
+   ],
+   "like": {
+    "what": [
+     "words"
+    ],
+    "feel": [
+     "hurt",
+     "heavy"
+    ]
+   }
+  },
+  "P31": {
+   "psalm": 31,
+   "also": [],
+   "sec": "18",
+   "seen": "Your friends and family have turned against you because you hold to the truth, and even people you know look the other way.",
+   "reason": "When you find yourself hated and hounded by all your friends and relatives for the truth's sake, don't lose heart over them or over yourself, and don't cower when acquaintances turn away. Stand back from it all, look to what is coming, and sing Psalm 31.",
+   "names": "31:11",
+   "turn": "31:14",
+   "hard": "31:17",
+   "need": [
+    {
+     "who": [
+      "family",
+      "friends"
+     ],
+     "faith": [
+      "yes"
+     ]
+    }
+   ],
+   "like": {
+    "people": [
+     "against",
+     "mocking"
+    ],
+    "feel": [
+     "lonely",
+     "hurt"
+    ]
+   }
+  },
+  "P42": {
+   "psalm": 42,
+   "also": [],
+   "sec": "19",
+   "seen": "You long for God with everything in you, and people keep throwing it at you: \"Where is your God?\"",
+   "reason": "If you long for God with all your heart and hear your enemies taunting you, don't be troubled. Knowing the undying fruit of that longing, comfort your soul with hope in God, and ease its griefs, with Psalm 42.",
+   "names": "42:3",
+   "turn": "42:5",
+   "need": [
+    {
+     "faith": [
+      "yes",
+      "partly"
+     ],
+     "people": [
+      "mocking",
+      "against",
+      "talking"
+     ]
+    }
+   ],
+   "like": {
+    "say": [
+     "miss",
+     "there"
+    ],
+    "god": [
+     "far",
+     "doubt",
+     "silent"
+    ]
+   }
+  },
+  "P52": {
+   "psalm": 52,
+   "also": [],
+   "sec": "20",
+   "seen": "Someone has lied about you to a person with power over you who already means you harm, and the liar is gloating over it.",
+   "reason": "If you have been slandered to a wicked ruler, and you see the slanderer boasting about it, withdraw, and say Psalm 52.",
+   "names": "52:1",
+   "turn": "52:8",
+   "hard": "52:5",
+   "need": [
+    {
+     "who": [
+      "boss"
+     ],
+     "what": [
+      "words"
+     ]
+    }
+   ],
+   "like": {
+    "feel": [
+     "angry",
+     "hurt"
+    ],
+    "say": [
+     "clear"
+    ]
+   }
+  },
+  "P54": {
+   "psalm": 54,
+   "also": [
+    56
+   ],
+   "sec": "20",
+   "seen": "You're being hunted, and people are informing on you because they want you handed over.",
+   "reason": "When you are hunted, and people inform on you because they want to hand you over, as the Ziphites and the Philistines did to David, don't lose heart. Trust in the Lord, praise Him, and say Psalms 54 and 56.",
+   "names": "54:3",
+   "turn": "54:4",
+   "hard": "54:5",
+   "need": [
+    {
+     "who": [
+      "boss",
+      "work"
+     ],
+     "what": [
+      "plans"
+     ]
+    }
+   ],
+   "like": {
+    "feel": [
+     "afraid",
+     "anxious"
+    ]
+   }
+  },
+  "P7": {
+   "psalm": 7,
+   "also": [],
+   "sec": "15",
+   "seen": "People are plotting against you, and someone has just told you.",
+   "reason": "If people are plotting against you, as Ahithophel plotted against David, and someone tells you about it, sing Psalm 7 and take courage in God, Who rescues you.",
+   "names": "7:14",
+   "turn": "7:10",
+   "need": [
+    {
+     "what": [
+      "plans"
+     ]
+    }
+   ],
+   "like": {
+    "trend": [
+     "worse",
+     "sudden"
+    ],
+    "who": [
+     "friends",
+     "crowd",
+     "work"
+    ]
+   }
+  },
+  "P11": {
+   "psalm": 11,
+   "also": [],
+   "sec": "16",
+   "seen": "Someone is set on rattling you, and part of you wants to run.",
+   "reason": "If someone is set on unsettling you, keep your trust in the Lord and sing Psalm 11.",
+   "names": "11:1",
+   "turn": "11:4",
+   "hard": "11:6",
+   "need": [
+    {
+     "what": [
+      "fear"
+     ]
+    }
+   ],
+   "like": {
+    "people": [
+     "one"
+    ],
+    "feel": [
+     "afraid",
+     "anxious"
+    ],
+    "say": [
+     "help"
+    ]
+   }
+  },
+  "P64": {
+   "psalm": 64,
+   "also": [
+    65,
+    70,
+    71
+   ],
+   "sec": "20",
+   "seen": "They keep trying to frighten you, lying in wait and digging up whatever they can against you.",
+   "reason": "When your enemies keep trying to frighten you, lying in wait and searching out everything against you, however many they are, don't give in. In the Greek Psalter Athanasius sang, their blows are no more than children's arrows. Sing Psalms 64, 65, 70 and 71.",
+   "names": "64:1",
+   "turn": "64:7",
+   "need": [
+    {
+     "what": [
+      "fear"
+     ]
+    }
+   ],
+   "like": {
+    "who": [
+     "crowd",
+     "work",
+     "strangers",
+     "danger"
+    ],
+    "feel": [
+     "afraid"
+    ]
+   }
+  },
+  "P57": {
+   "psalm": 57,
+   "also": [
+    142
+   ],
+   "sec": "20",
+   "seen": "You've been hiding from someone who is after you, and now they've come right into your hiding place.",
+   "reason": "Even if the one hunting you walks, without knowing it, into the very cave where you are hiding, don't cower. For that kind of extremity you have words of comfort in Psalms 57 and 142.",
+   "names": "57:1",
+   "turn": "57:7",
+   "need": [
+    {
+     "what": [
+      "cornered"
+     ]
+    }
+   ],
+   "like": {
+    "feel": [
+     "afraid"
+    ],
+    "say": [
+     "help"
+    ],
+    "who": [
+     "danger"
+    ]
+   }
+  },
+  "P27": {
+   "psalm": 27,
+   "also": [],
+   "sec": "17",
+   "seen": "They're ganging up on you, more of them all the time, looking down on you as if you're nobody yet.",
+   "reason": "If they attack you harder still, and your enemies mass like an army, looking down on you as someone not yet anointed and spoiling for a fight because of it, don't cower. Sing Psalm 27.",
+   "names": "27:3",
+   "turn": "27:13",
+   "need": [
+    {
+     "what": [
+      "growing"
+     ]
+    }
+   ],
+   "like": {
+    "who": [
+     "crowd",
+     "boss",
+     "work"
+    ],
+    "trend": [
+     "worse"
+    ],
+    "feel": [
+     "afraid"
+    ]
+   }
+  },
+  "P63": {
+   "psalm": 63,
+   "also": [],
+   "sec": "20",
+   "seen": "People set against you have driven you out, and now you're on your own.",
+   "reason": "If persecution drives you out into the wilderness, don't be afraid as though you were alone there. God is with you there: rise early to Him and sing Psalm 63.",
+   "names": "63:1",
+   "turn": null,
+   "hard": "63:9",
+   "need": [
+    {
+     "what": [
+      "pushed"
+     ]
+    }
+   ],
+   "like": {
+    "people": [
+     "gone"
+    ],
+    "feel": [
+     "lonely",
+     "afraid"
+    ]
+   }
+  },
+  "P13": {
+   "psalm": 13,
+   "also": [],
+   "sec": "16",
+   "seen": "The scheming against you has dragged on so long you've started to wonder if God has forgotten you.",
+   "reason": "When your enemies' scheming drags on, don't lose heart as though God had forgotten you. Call on the Lord with Psalm 13.",
+   "names": "13:1",
+   "turn": "13:5",
+   "need": [
+    {
+     "what": [
+      "drags"
+     ],
+     "god": [
+      "far",
+      "silent",
+      "doubt"
+     ]
+    },
+    {
+     "what": [
+      "drags"
+     ],
+     "say": [
+      "howlong",
+      "why",
+      "there"
+     ]
+    }
+   ],
+   "like": {
+    "god": [
+     "far",
+     "silent"
+    ],
+    "say": [
+     "howlong"
+    ],
+    "trend": [
+     "same"
+    ]
+   }
+  },
+  "P26": {
+   "psalm": 26,
+   "also": [
+    35,
+    43
+   ],
+   "sec": "17",
+   "seen": "They won't stop trying to ruin you, and you want someone to finally judge who's in the right.",
+   "reason": "When your enemies keep on, trying to drag you down and ruin you, don't let any human verdict be the last word, because everything human is open to doubt. Ask God to be the Judge, for He alone is just, and say Psalms 26, 35 and 43.",
+   "names": "26:1",
+   "turn": "26:12",
+   "note": "Leaving the verdict with God doesn't mean staying silent: Paul himself appealed to Caesar (Acts 25:11).",
+   "need": [
+    {
+     "people": [
+      "against",
+      "one",
+      "talking"
+     ],
+     "say": [
+      "clear"
+     ]
+    }
+   ],
+   "like": {
+    "feel": [
+     "angry",
+     "bitter",
+     "hurt"
+    ],
+    "what": [
+     "words",
+     "drags"
+    ]
+   }
+  },
+  "P28": {
+   "psalm": 28,
+   "also": [],
+   "sec": "17",
+   "seen": "The people scheming against you have no shame, and they've taken over your thoughts.",
+   "reason": "Because human nature is weak, if the people scheming against you turn shameless again, don't give them your attention. Cry out to God with Psalm 28.",
+   "names": "28:3",
+   "turn": "28:6",
+   "hard": "28:4",
+   "need": [
+    {
+     "people": [
+      "against",
+      "one",
+      "talking"
+     ],
+     "feel": [
+      "restless",
+      "bitter"
+     ]
+    }
+   ],
+   "like": {
+    "what": [
+     "drags",
+     "words"
+    ]
+   }
+  },
+  "P40": {
+   "psalm": 40,
+   "also": [],
+   "sec": "19",
+   "seen": "It keeps coming at you, you're holding on, and you want to know what all this enduring is for.",
+   "reason": "If, while your enemies attack, you endure the hardship and want to learn what patience gains you, sing Psalm 40.",
+   "names": "40:1",
+   "turn": "40:2",
+   "hard": "40:14",
+   "need": [
+    {
+     "people": [
+      "against",
+      "one"
+     ],
+     "what": [
+      "drags"
+     ]
+    }
+   ],
+   "like": {
+    "feel": [
+     "tired"
+    ],
+    "say": [
+     "howlong",
+     "stay",
+     "tired"
+    ],
+    "god": [
+     "quiet",
+     "close"
+    ]
+   }
+  },
+  "P62": {
+   "psalm": 62,
+   "also": [],
+   "sec": "20",
+   "seen": "They're coming at you savagely, out to destroy you, and you've stopped fighting and put yourself in God's hands.",
+   "reason": "Against people who come at you savagely and want your life, set your submission to God, not to them, and take heart: the more they rage, the more you give yourself to the Lord. Say Psalm 62.",
+   "names": "62:3",
+   "turn": "62:5",
+   "need": [
+    {
+     "people": [
+      "against",
+      "one"
+     ],
+     "feel": [
+      "calm"
+     ]
+    }
+   ],
+   "like": {
+    "god": [
+     "quiet",
+     "close"
+    ]
+   }
+  },
+  "P51": {
+   "psalm": 51,
+   "also": [],
+   "sec": "20",
+   "seen": "You've done wrong, you know it, you're ashamed, and you want to come back.",
+   "reason": "You have sinned; you are ashamed, you are turning back, and you are asking for mercy. The words of confession and repentance are in Psalm 51.",
+   "names": "51:1",
+   "turn": "51:7",
+   "need": [
+    {
+     "self": [
+      "did",
+      "habit"
+     ]
+    }
+   ],
+   "like": {
+    "say": [
+     "sorry"
+    ],
+    "god": [
+     "displeased"
+    ],
+    "feel": [
+     "ashamed",
+     "heavy"
+    ]
+   }
+  },
+  "P6": {
+   "psalm": 6,
+   "also": [
+    38
+   ],
+   "sec": "15",
+   "seen": "You sense a warning from God, and it's shaking you.",
+   "reason": "If you sense a warning from the Lord hanging over you, and it has shaken you, you can say Psalms 6 and 38.",
+   "names": "6:1",
+   "turn": "6:9",
+   "need": [
+    {
+     "god": [
+      "displeased"
+     ]
+    },
+    {
+     "self": [
+      "warned"
+     ]
+    }
+   ],
+   "like": {
+    "self": [
+     "warned"
+    ],
+    "feel": [
+     "afraid",
+     "anxious"
+    ],
+    "say": [
+     "sorry",
+     "help"
+    ]
+   }
+  },
+  "P137": {
+   "psalm": 137,
+   "also": [],
+   "sec": "25",
+   "seen": "Wrong thoughts carried you off, you've just caught yourself, and you're sorry.",
+   "reason": "If thoughts that aren't your own have taken you captive, and you notice you're being led away and are sorry, stop from now on. Stay where you caught yourself going wrong, sit down and weep, as the exiles did, and say Psalm 137.",
+   "names": "137:1",
+   "turn": null,
+   "hard": "137:9",
+   "hardNote": "Augustine read this last line as being about the very thing Athanasius gave the psalm for: \"What are the little ones of Babylon? Evil desires at their birth.\" Dash them against the Rock, he says, which is Christ, while they are still small (Exposition on Psalm 137, 12).",
+   "need": [
+    {
+     "self": [
+      "thoughts"
+     ]
+    }
+   ],
+   "like": {
+    "say": [
+     "sorry"
+    ],
+    "feel": [
+     "ashamed"
+    ]
+   }
+  },
+  "P39": {
+   "psalm": 39,
+   "also": [],
+   "sec": "19",
+   "seen": "You resolved to keep watch over yourself, and the pull has come at you harder ever since.",
+   "reason": "When you have resolved to keep watch over yourself and you see the enemy attacking, since that is when he rises up most against people like you, and you want to brace yourself against him, sing Psalm 39.",
+   "names": "39:1",
+   "turn": "39:7",
+   "need": [
+    {
+     "self": [
+      "trying"
+     ]
+    }
+   ],
+   "like": {
+    "feel": [
+     "restless",
+     "tired"
+    ]
+   }
+  },
+  "P73S": {
+   "psalm": 73,
+   "also": [],
+   "sec": "28",
+   "seen": "You've come close to losing your footing, and you're honest enough to admit it.",
+   "reason": "Sing the Psalms, and whatever in you has slipped comes to admit it, as you say with Psalm 73: \"my feet had almost stumbled; my steps had nearly slipped.\"",
+   "names": "73:2",
+   "turn": "73:23",
+   "greek": "[00547]-[00548]",
+   "need": [
+    {
+     "god": [
+      "doubt"
+     ],
+     "feel": [
+      "unsure",
+      "afraid",
+      "anxious"
+     ]
+    },
+    {
+     "god": [
+      "doubt"
+     ],
+     "say": [
+      "there",
+      "why"
+     ]
+    },
+    {
+     "what": [
+      "doubt"
+     ]
+    },
+    {
+     "self": [
+      "habit"
+     ],
+     "say": [
+      "help"
+     ]
+    }
+   ],
+   "like": {
+    "focus": [
+     "god"
+    ],
+    "say": [
+     "there",
+     "why"
+    ],
+    "feel": [
+     "unsure",
+     "afraid",
+     "anxious"
+    ]
+   }
+  },
+  "P102": {
+   "psalm": 102,
+   "also": [],
+   "sec": "24",
+   "seen": "Life has worn you down until you feel empty and listless, and you need comfort.",
+   "reason": "Our nature is weak, so if the pressures of life ever leave you feeling poor and worn down to listlessness, and you want comfort, you have Psalm 102.",
+   "names": "102:4",
+   "turn": "102:17",
+   "need": [
+    {
+     "feel": [
+      "tired",
+      "numb"
+     ],
+     "season": [
+      "vhard",
+      "hard",
+      "mixed",
+      "inside"
+     ]
+    }
+   ],
+   "like": {
+    "focus": [
+     "work",
+     "money",
+     "body",
+     "nothing",
+     "loss"
+    ],
+    "say": [
+     "tired",
+     "help"
+    ],
+    "season": [
+     "vhard",
+     "hard",
+     "inside"
+    ]
+   },
+   "lineNote": {
+    "ref": "102:10",
+    "text": "These are the psalmist's words from inside his distress. The psalm does not say your exhaustion is God's anger; it turns, a few lines on, to the God who will not despise the prayer of the destitute."
+   }
+  },
+  "P42S": {
+   "psalm": 42,
+   "also": [
+    43
+   ],
+   "sec": "28",
+   "seen": "Something in you is weighed down or uneasy, and it won't settle.",
+   "reason": "Sing the Psalms: what is troubled in you is smoothed out, and what grieves you is healed, as you say to your own soul, \"Why are you downcast, O my soul?\"",
+   "names": "42:5",
+   "turn": "42:11",
+   "need": [
+    {
+     "feel": [
+      "heavy",
+      "anxious",
+      "lonely",
+      "hurt",
+      "restless"
+     ]
+    }
+   ],
+   "like": {
+    "focus": [
+     "loss",
+     "body",
+     "nothing",
+     "future",
+     "loved"
+    ],
+    "god": [
+     "far",
+     "silent"
+    ],
+    "season": [
+     "inside"
+    ]
+   }
+  },
+  "P118": {
+   "psalm": 118,
+   "also": [],
+   "sec": "28",
+   "seen": "You're afraid, and you need something to hold on to.",
+   "reason": "When you are afraid, sing that the Lord is your helper and you will not fear what anyone can do to you: whatever in you is afraid is strengthened by hope.",
+   "names": "118:6",
+   "turn": "118:14",
+   "hard": "118:10",
+   "need": [
+    {
+     "feel": [
+      "afraid"
+     ]
+    }
+   ],
+   "like": {
+    "god": [
+     "far",
+     "silent",
+     "displeased"
+    ],
+    "say": [
+     "help",
+     "stay"
+    ]
+   },
+   "lineNote": {
+    "ref": "118:17",
+    "when": {
+     "focus": [
+      "body",
+      "loved",
+      "loss"
+     ]
+    },
+    "text": "This is thanksgiving from someone who was rescued. It is a song to sing with him, not a promise about how your own story ends."
+   }
+  },
+  "P91": {
+   "psalm": 91,
+   "also": [],
+   "sec": "22",
+   "seen": "You're tired of living afraid, and you want to take heart in God, and help others take heart too.",
+   "reason": "To encourage yourself and others in reverence for God, and to show that hope in God never puts you to shame but makes the soul unafraid, praise God with Psalm 91.",
+   "names": "91:2",
+   "turn": "91:5",
+   "need": [
+    {
+     "feel": [
+      "afraid",
+      "anxious"
+     ],
+     "god": [
+      "close",
+      "quiet",
+      "working"
+     ]
+    }
+   ],
+   "like": {
+    "say": [
+     "thanks",
+     "praise",
+     "stay"
+    ],
+    "feel": [
+     "hopeful"
+    ]
+   },
+   "lineNote": {
+    "ref": "91:10",
+    "when": {
+     "focus": [
+      "body",
+      "loved",
+      "loss"
+     ]
+    },
+    "text": "Athanasius gave this psalm for taking heart and becoming unafraid, not as a promise that nothing will ever go wrong."
+   }
+  },
+  "P84": {
+   "psalm": 84,
+   "also": [],
+   "sec": "22",
+   "seen": "You long for God's house, and for the home with Him that lasts forever.",
+   "reason": "When you look at God's house and His eternal dwelling places and long for them, as Paul did, say Psalm 84.",
+   "names": "84:2",
+   "turn": null,
+   "need": [
+    {
+     "say": [
+      "miss"
+     ],
+     "god": [
+      "far",
+      "silent",
+      "quiet"
+     ]
+    },
+    {
+     "focus": [
+      "god"
+     ],
+     "god": [
+      "far"
+     ]
+    }
+   ],
+   "like": {
+    "god": [
+     "far",
+     "quiet",
+     "silent",
+     "drift"
+    ],
+    "people": [
+     "fine",
+     "kind"
+    ]
+   }
+  },
+  "P103D": {
+   "psalm": 103,
+   "also": [
+    104
+   ],
+   "sec": "24",
+   "seen": "God has slipped into the background, and you want to wake your soul up to Him again.",
+   "reason": "Because we ought to give thanks to God through everything and in everything, when you want to bless Him you can stir up your own soul with Psalms 103 and 104: \"Bless the LORD, O my soul.\"",
+   "names": "103:1",
+   "turn": "103:2",
+   "greek": "[00463]",
+   "need": [
+    {
+     "god": [
+      "drift",
+      "background"
+     ]
+    }
+   ],
+   "like": {
+    "say": [
+     "miss",
+     "thanks",
+     "become"
+    ],
+    "season": [
+     "busy",
+     "ordinary",
+     "good",
+     "mixed"
+    ],
+    "feel": [
+     "calm",
+     "numb",
+     "restless"
+    ]
+   }
+  },
+  "P143W": {
+   "psalm": 143,
+   "also": [
+    5
+   ],
+   "sec": "25",
+   "seen": "There's something you can't work out on your own, and you want to lay it before God.",
+   "reason": "When you want to plead with God and pray, you have Psalms 5 and 143.",
+   "names": "143:8",
+   "turn": "143:10",
+   "greek": "[00481]-[00482]",
+   "need": [
+    {
+     "say": [
+      "way"
+     ]
+    }
+   ],
+   "like": {
+    "focus": [
+     "future",
+     "work",
+     "money",
+     "loved"
+    ],
+    "feel": [
+     "unsure",
+     "anxious"
+    ]
+   }
+  },
+  "P73": {
+   "psalm": 73,
+   "also": [],
+   "sec": "21",
+   "seen": "People who don't care about God are doing fine, good people are suffering, and it's shaking you.",
+   "reason": "When you see the ungodly living in peace and plenty, just as they please, and the righteous suffering, say Psalm 73, so that you are not caught out and shaken.",
+   "names": "73:3",
+   "turn": "73:17",
+   "need": [
+    {
+     "world": [
+      "prosper"
+     ]
+    }
+   ],
+   "like": {
+    "say": [
+     "unfair",
+     "why"
+    ],
+    "feel": [
+     "angry",
+     "bitter"
+    ]
+   }
+  },
+  "P37": {
+   "psalm": 37,
+   "also": [],
+   "sec": "18",
+   "seen": "People who do wrong are riding high and pushing the little people around, and you need to tell yourself, and others, not to envy them.",
+   "reason": "When you see wicked people doing much wrong and lording it over the lowly, say Psalm 37 to yourself and to others: pay them no mind and don't envy them, for they are quickly snuffed out.",
+   "names": "37:1",
+   "turn": "37:2",
+   "need": [
+    {
+     "world": [
+      "bully"
+     ]
+    }
+   ],
+   "like": {
+    "feel": [
+     "angry",
+     "bitter"
+    ]
+   }
+  },
+  "P12": {
+   "psalm": 12,
+   "also": [],
+   "sec": "16",
+   "seen": "Pride is everywhere, and it feels as if there's nothing good left among people.",
+   "reason": "When you see the pride of so many and evil overflowing, until nothing holy seems left among people, take refuge in the Lord and say Psalm 12.",
+   "names": "12:1",
+   "turn": "12:5",
+   "need": [
+    {
+     "world": [
+      "nogood"
+     ]
+    }
+   ],
+   "like": {
+    "feel": [
+     "heavy"
+    ]
+   }
+  },
+  "P14": {
+   "psalm": 14,
+   "also": [
+    53
+   ],
+   "sec": "16",
+   "seen": "People around you mock the idea that God looks after the world, and it's starting to get to you.",
+   "reason": "When you hear people speaking against God's care for the world, don't join in their contempt. Plead with God, and say Psalms 14 and 53.",
+   "names": "14:1",
+   "turn": "14:5",
+   "need": [
+    {
+     "world": [
+      "mock"
+     ]
+    },
+    {
+     "people": [
+      "mocking"
+     ],
+     "god": [
+      "doubt"
+     ]
+    },
+    {
+     "what": [
+      "doubt"
+     ]
+    }
+   ],
+   "like": {
+    "feel": [
+     "unsure"
+    ]
+   }
+  },
+  "P79": {
+   "psalm": 79,
+   "also": [],
+   "sec": "21",
+   "seen": "Christians are being killed and their churches destroyed, and it's tearing at you.",
+   "reason": "When enemies break in, defile God's house, kill His saints and leave their bodies to the birds, don't let their cruelty cow you. Suffer with those who suffer, and plead with God in the words of Psalm 79.",
+   "names": "79:1",
+   "turn": "79:9",
+   "hard": "79:6",
+   "greek": "[00415]",
+   "need": [
+    {
+     "world": [
+      "persecuted"
+     ]
+    }
+   ],
+   "like": {
+    "feel": [
+     "heavy",
+     "angry",
+     "hurt"
+    ]
+   }
+  },
+  "P20": {
+   "psalm": 20,
+   "also": [],
+   "sec": "17",
+   "seen": "Someone you love is in trouble, and you want to comfort them and pray over them.",
+   "reason": "When you see people in distress, comfort them: pray over them, and say to them the words of Psalm 20.",
+   "names": "20:1",
+   "turn": "20:7",
+   "need": [
+    {
+     "loved": [
+      "comfort"
+     ]
+    }
+   ],
+   "like": {}
+  },
+  "P5": {
+   "psalm": 5,
+   "also": [
+    143
+   ],
+   "sec": "25",
+   "seen": "You need to plead with God, and you want words to pray with.",
+   "reason": "When you want to plead with God and pray, sing Psalms 5 and 143.",
+   "names": "5:1",
+   "turn": "5:3",
+   "hard": "5:10",
+   "need": [
+    {
+     "loved": [
+      "danger"
+     ]
+    }
+   ],
+   "like": {
+    "say": [
+     "help"
+    ],
+    "feel": [
+     "afraid",
+     "anxious"
+    ]
+   }
+  },
+  "P41": {
+   "psalm": 41,
+   "also": [],
+   "sec": "19",
+   "seen": "People around you are going without, and you want them shown mercy.",
+   "reason": "When you see many poor and needy people and want them shown mercy, you can honour those who have already helped and urge others to do the same, with Psalm 41.",
+   "names": "41:1",
+   "turn": null,
+   "need": [
+    {
+     "loved": [
+      "need"
+     ]
+    }
+   ],
+   "like": {}
+  },
+  "P4": {
+   "psalm": 4,
+   "also": [
+    75,
+    "116:1-9"
+   ],
+   "sec": "15",
+   "seen": "Your own people turned against you. You called on the Lord, He heard you, and now you want to thank Him.",
+   "reason": "If, hounded like that by your own people, you called on the Lord and He heard you, and now you want to give thanks, sing Psalms 4, 75 and 116.",
+   "names": "4:1",
+   "turn": "4:3",
+   "need": [
+    {
+     "ended": [
+      "people"
+     ],
+     "how": [
+      "answered"
+     ],
+     "who": [
+      "family"
+     ]
+    }
+   ],
+   "like": {
+    "say": [
+     "thanks"
+    ]
+   }
+  },
+  "P18": {
+   "psalm": 18,
+   "also": [],
+   "sec": "17",
+   "seen": "People were hunting you, and you've been rescued from them.",
+   "reason": "When you have been saved from your enemies and rescued from those who were hunting you, sing Psalm 18.",
+   "names": "18:17",
+   "turn": "18:6",
+   "hard": "18:37",
+   "need": [
+    {
+     "ended": [
+      "people"
+     ],
+     "how": [
+      "rescued",
+      "settled"
+     ]
+    }
+   ],
+   "like": {
+    "say": [
+     "thanks"
+    ]
+   }
+  },
+  "P34": {
+   "psalm": 34,
+   "also": [],
+   "sec": "18",
+   "seen": "You fell among people who meant you harm, and you got away by keeping your wits about you.",
+   "reason": "When you have fallen among enemies but wisely got away and slipped out of their plot, and you want to give thanks, call gentle people together and sing Psalm 34 with them.",
+   "names": "34:3",
+   "turn": null,
+   "need": [
+    {
+     "ended": [
+      "people"
+     ],
+     "how": [
+      "wits"
+     ]
+    }
+   ],
+   "like": {
+    "say": [
+     "thanks"
+    ]
+   }
+  },
+  "P46": {
+   "psalm": 46,
+   "also": [],
+   "sec": "19",
+   "seen": "You ran to God, He brought you through, and you want to tell people what He did.",
+   "reason": "When you have run to God and been saved from the troubles around you, and you want to thank Him and tell of the kindness He showed you, you have Psalm 46.",
+   "names": "46:1",
+   "turn": null,
+   "need": [
+    {
+     "ended": [
+      "trouble",
+      "sick",
+      "wait"
+     ]
+    },
+    {
+     "how": [
+      "refuge"
+     ]
+    }
+   ],
+   "like": {
+    "say": [
+     "thanks",
+     "praise"
+    ],
+    "how": [
+     "answered",
+     "refuge"
+    ]
+   }
+  },
+  "P139": {
+   "psalm": 139,
+   "also": [],
+   "sec": "25",
+   "seen": "You were put to the test, you can see now it was proving you, and you want to thank God that it's over.",
+   "reason": "If you take your trials as a testing of you, and want to give thanks once they are over, you have Psalm 139.",
+   "names": "139:23",
+   "turn": null,
+   "hard": "139:19",
+   "need": [
+    {
+     "ended": [
+      "test"
+     ]
+    }
+   ],
+   "like": {
+    "say": [
+     "thanks"
+    ]
+   }
+  },
+  "P85": {
+   "psalm": 85,
+   "also": [
+    126
+   ],
+   "sec": "22",
+   "seen": "A time when God's anger was on you has passed, you're free again, and you want to give thanks.",
+   "reason": "When God's anger has passed at last and your captivity is over, and you want to give thanks, you have Psalms 85 and 126.",
+   "names": "85:1",
+   "turn": "85:8",
+   "need": [
+    {
+     "ended": [
+      "god"
+     ]
+    }
+   ],
+   "like": {
+    "how": [
+     "passed"
+    ],
+    "say": [
+     "thanks"
+    ]
+   }
+  },
+  "P101": {
+   "psalm": 101,
+   "also": [],
+   "sec": "23",
+   "seen": "You've learned that God's judgment comes with mercy, and you want to draw near to Him.",
+   "reason": "When you have learned the Lord's power to judge, and that He judges with mercy mixed in, and you want to draw near to Him, you have the words of Psalm 101.",
+   "names": "101:1",
+   "turn": null,
+   "need": [
+    {
+     "how": [
+      "mercy"
+     ]
+    },
+    {
+     "ended": [
+      "self"
+     ]
+    },
+    {
+     "good": [
+      "back"
+     ]
+    }
+   ],
+   "like": {
+    "say": [
+     "thanks"
+    ]
+   }
+  },
+  "P23": {
+   "psalm": 23,
+   "also": [],
+   "sec": "17",
+   "seen": "You can see the Lord shepherding you and guiding your way, and you're glad.",
+   "reason": "When you see yourself shepherded by the Lord and guided on your way, sing Psalm 23 and rejoice in it.",
+   "names": "23:1",
+   "turn": null,
+   "need": [
+    {
+     "good": [
+      "led"
+     ]
+    }
+   ],
+   "like": {
+    "god": [
+     "close",
+     "working"
+    ]
+   }
+  },
+  "P19": {
+   "psalm": 19,
+   "also": [
+    24
+   ],
+   "sec": "17",
+   "seen": "You're marvelling at how well the world is ordered, at God's care in it, and at how good His commands are.",
+   "reason": "When you marvel at the order of creation, God's care within it, and the holy commands of His law, sing Psalms 19 and 24.",
+   "names": "19:1",
+   "turn": null,
+   "need": [
+    {
+     "good": [
+      "beauty"
+     ]
+    },
+    {
+     "feel": [
+      "curious"
+     ],
+     "focus": [
+      "world",
+      "god",
+      "nothing"
+     ]
+    }
+   ],
+   "like": {
+    "say": [
+     "praise"
+    ],
+    "feel": [
+     "curious"
+    ]
+   }
+  },
+  "P103": {
+   "psalm": 103,
+   "also": [
+    104
+   ],
+   "sec": "24",
+   "seen": "You want to thank God, in and through everything.",
+   "reason": "Because we ought to give thanks to God through everything and in everything, when you want to bless Him you can stir up your own soul with Psalms 103 and 104.",
+   "names": "103:2",
+   "turn": null,
+   "need": [
+    {
+     "good": [
+      "all",
+      "chapter"
+     ]
+    },
+    {
+     "loved": [
+      "well",
+      "mending"
+     ]
+    },
+    {
+     "how": [
+      "peace"
+     ]
+    },
+    {
+     "ended": [
+      "rift"
+     ]
+    },
+    {
+     "say": [
+      "thanks"
+     ]
+    }
+   ],
+   "like": {
+    "feel": [
+     "grateful"
+    ],
+    "season": [
+     "ordinary",
+     "busy",
+     "mixed",
+     "good",
+     "vgood"
+    ]
+   }
+  },
+  "P145": {
+   "psalm": 145,
+   "also": [],
+   "sec": "25",
+   "seen": "You keep seeing God's kindness, to you and to everyone, and you want to bless Him for it.",
+   "reason": "Marvelling at God's kindness to everyone, and remembering His goodness to you and to all, bless Him in David's own words with Psalm 145.",
+   "names": "145:9",
+   "turn": null,
+   "need": [
+    {
+     "good": [
+      "kind",
+      "answered"
+     ]
+    }
+   ],
+   "like": {
+    "say": [
+     "praise",
+     "thanks"
+    ]
+   }
+  },
+  "P120": {
+   "psalm": 121,
+   "set": [
+    120,
+    121,
+    122,
+    123,
+    124,
+    125,
+    126,
+    127,
+    128,
+    129,
+    130,
+    131,
+    132,
+    133,
+    134
+   ],
+   "also": [],
+   "sec": "24",
+   "seen": "You can feel yourself climbing: forgetting what's behind you and straining toward what's ahead.",
+   "reason": "When you sense yourself climbing higher in how you live, so that you can say with Paul, \"forgetting what is behind and straining toward what is ahead\", you have the fifteen Songs of Ascents to say at every step forward.",
+   "names": "121:1",
+   "turn": null,
+   "need": [
+    {
+     "good": [
+      "growing"
+     ]
+    }
+   ],
+   "like": {
+    "trend": [
+     "better",
+     "new"
+    ]
+   }
+  },
+  "P30": {
+   "psalm": 30,
+   "also": [
+    127
+   ],
+   "sec": "17",
+   "seen": "Something new has begun in your home, and you want to give it, and yourself, to God with thanks.",
+   "reason": "When you dedicate your house, both your soul, which receives the Lord, and the home you live in, give thanks and say Psalm 30, and Psalm 127 from the Songs of Ascents.",
+   "names": "30:1",
+   "turn": "30:11",
+   "need": [
+    {
+     "good": [
+      "home"
+     ]
+    },
+    {
+     "loved": [
+      "newlife"
+     ]
+    }
+   ],
+   "like": {}
+  },
+  "P32": {
+   "psalm": 32,
+   "also": [],
+   "sec": "18",
+   "seen": "You've seen someone made new, maybe yourself, and you're amazed at how much God loves us.",
+   "reason": "When you see people being baptised and set free from the corruption we are born into, and you marvel at God's love for mankind, sing Psalm 32 over them.",
+   "names": "32:1",
+   "turn": null,
+   "need": [
+    {
+     "good": [
+      "faith"
+     ]
+    }
+   ],
+   "like": {
+    "say": [
+     "thanks",
+     "praise"
+    ]
+   }
+  },
+  "P93": {
+   "psalm": 93,
+   "also": [
+    98
+   ],
+   "sec": "25",
+   "seen": "You just want to sing to God.",
+   "reason": "When you simply want to sing to the Lord, you have Psalms 93 and 98.",
+   "names": "93:1",
+   "turn": null,
+   "greek": "[00486]-[00487]",
+   "need": [
+    {
+     "say": [
+      "praise"
+     ]
+    }
+   ],
+   "like": {
+    "feel": [
+     "happy"
+    ]
+   }
+  },
+  "P15": {
+   "psalm": 15,
+   "also": [],
+   "sec": "16",
+   "seen": "You want to become the kind of person who belongs with God.",
+   "reason": "When you want to learn what kind of person is a citizen of the kingdom of heaven, sing Psalm 15.",
+   "names": "15:1",
+   "turn": null,
+   "greek": "[00340]",
+   "need": [
+    {
+     "say": [
+      "become"
+     ]
+    }
+   ],
+   "like": {
+    "season": [
+     "ordinary",
+     "good",
+     "mixed",
+     "busy"
+    ],
+    "trend": [
+     "same",
+     "better",
+     "new"
+    ]
+   }
+  }
+ },
+ "notes": {
+  "body": "Athanasius wrote this letter to a friend who was just getting over an illness, but he names no psalm for sickness itself. He does name one for what it is doing to you.",
+  "loss": "Athanasius names no psalm for a death or for something ending. He does name one for what grief does to you."
+ },
+ "none": {
+  "lead": "Athanasius's letter doesn't name what you're going through, and we won't pretend it does. But he does name psalms for what it's doing to you.",
+  "options": [
+   [
+    "P102",
+    "It's grinding me down."
+   ],
+   [
+    "P42S",
+    "It's weighing on me, or it won't let me settle."
+   ],
+   [
+    "P118",
+    "It's making me afraid."
+   ],
+   [
+    "P143W",
+    "I need to bring it to God, and I don't know how."
+   ]
+  ]
+ },
+ "unused": [
+  "P144"
+ ]
+}

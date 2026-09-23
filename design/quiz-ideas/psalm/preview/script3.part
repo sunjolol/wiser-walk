@@ -1,0 +1,183 @@
+<main class="sheet" id="app" aria-live="polite"></main>
+
+<script>
+const DATA = /*DATA*/null;
+/*SCORER*/
+const QUIZ = DATA.quiz;
+const app = document.getElementById('app');
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const ALLQ = [...QUIZ.core, ...QUIZ.follow];
+const qById = id => ALLQ.find(q => q.id === id);
+let a = {};          // answers so far
+let order = [];      // question ids in the order answered
+let queue = [];      // ranked candidates at the check step
+let at = 0;          // which candidate is showing
+
+const brand = '<div class="brand"><b>Wiser Walk</b><span>Draft preview</span></div>';
+const verse = ref => { const [c, v] = ref.split(':').map(Number); const hit = DATA.psalms[c].v.find(x => x[0] === v); return hit ? hit[1] : ''; };
+const narrative = sup => /\b(when|after|who sang|concerning|prayer of one)\b/i.test(sup);
+const lxx = n => n <= 8 ? n : n <= 10 ? 9 : n <= 113 ? n - 1 : n <= 115 ? 113 : n === 116 ? '114 and 115' : n <= 146 ? n - 1 : n === 147 ? '146 and 147' : n;
+const list = xs => xs.map(String).join(', ').replace(/, ([^,]+)$/, ' and $1');
+const optText = (qid, key) => { const q = qById(qid); const o = q && q.options.find(x => x[0] === key); return o ? o[1] : ''; };
+
+function intro() {
+  a = {}; order = [];
+  app.innerHTML = brand + `
+    <p class="kicker">A new quiz</p>
+    <h1>Which <span class="blue">Psalm</span> are you living right now?</h1>
+    <p class="lede">A few quick, honest taps about your life right now. Then the psalm one of the early Church Fathers gave for exactly that, printed in full, with why.</p>
+    <div class="row">
+      <button class="btn" id="go" type="button">Start</button>
+      <button class="btn ghost" id="demo" type="button">See a finished result</button>
+    </div>`;
+  document.getElementById('go').onclick = step;
+  document.getElementById('demo').onclick = example;
+  window.scrollTo(0, 0);
+}
+
+function example() {
+  a = { season: 'hard', trend: 'worse', feel: ['hurt', 'afraid'], focus: 'people', people: ['against', 'talking'], god: 'far', say: 'help', who: 'family', faith: 'no', what: 'growing' };
+  order = Object.keys(a);
+  result('P3');
+}
+
+function step() {
+  const q = nextQuestion(QUIZ, a);
+  if (q) return ask(q);
+  queue = rank(QUIZ, a).slice(0, 3).map(r => r.id);
+  at = 0;
+  queue.length ? check() : none();
+}
+
+function ask(q) {
+  const grid = q.words ? ' words' : q.short ? ' short' : '';
+  const chosen = [];
+  app.innerHTML = brand + `
+    <p class="step">Question ${order.length + 1}${q.max ? ' · pick one or two' : ''}</p>
+    <h2>${esc(q.q)}</h2>
+    <div class="opts${grid}">${q.options.map(o => `<button class="opt" type="button" data-k="${o[0]}" aria-pressed="false">${esc(o[1])}</button>`).join('')}</div>
+    <div class="row quiet"><button class="back" type="button" id="back">&larr; ${order.length ? 'Back' : 'Leave the quiz'}</button>
+      ${q.max ? '<button class="btn" type="button" id="next" disabled>Next</button>' : ''}</div>`;
+  app.querySelectorAll('.opt').forEach(b => b.onclick = () => {
+    if (!q.max) { a[q.id] = b.dataset.k; order.push(q.id); return step(); }
+    const k = b.dataset.k, i = chosen.indexOf(k);
+    if (i >= 0) chosen.splice(i, 1);
+    else { if (chosen.length >= q.max) chosen.shift(); chosen.push(k); }
+    app.querySelectorAll('.opt').forEach(x => x.setAttribute('aria-pressed', chosen.includes(x.dataset.k)));
+    document.getElementById('next').disabled = !chosen.length;
+  });
+  const next = document.getElementById('next');
+  if (next) next.onclick = () => { a[q.id] = [...chosen]; order.push(q.id); step(); };
+  document.getElementById('back').onclick = back;
+  window.scrollTo(0, 0);
+}
+
+function back() {
+  if (!order.length) return intro();
+  const last = order.pop();
+  delete a[last];
+  // answers that only a later question depended on are dropped with it
+  for (const id of [...order]) { if (!QUIZ.core.some(q => q.id === id) && !qById(id).when.some(w => meets(w, a))) { delete a[id]; order.splice(order.indexOf(id), 1); } }
+  ask(qById(last));
+}
+
+function check() {
+  const o = QUIZ.outcomes[queue[at]];
+  app.innerHTML = brand + `
+    <p class="kicker">${at === 0 ? 'Does this sound like you?' : 'Is it closer to this?'}</p>
+    <p class="seen">${esc(o.seen)}</p>
+    <div class="row">
+      <button class="btn" id="yes" type="button">Yes, that's it</button>
+      <button class="btn ghost" id="no" type="button">Not quite</button>
+    </div>
+    <div class="row quiet"><button class="back" type="button" id="back">&larr; Change my answers</button></div>`;
+  document.getElementById('yes').onclick = () => result(queue[at]);
+  document.getElementById('no').onclick = () => { at++; at < queue.length ? check() : none(); };
+  document.getElementById('back').onclick = back;
+  window.scrollTo(0, 0);
+}
+
+function none() {
+  app.innerHTML = brand + `
+    <p class="step">None of those</p>
+    <h2>Then here is what we can honestly say.</h2>
+    <p class="lede">${esc(QUIZ.none.lead)}</p>
+    <div class="opts">${QUIZ.none.options.map(o => `<button class="opt" type="button" data-k="${o[0]}">${esc(o[1])}</button>`).join('')}</div>
+    <div class="row quiet"><button class="back" type="button" id="back">&larr; Change my answers</button></div>`;
+  app.querySelectorAll('.opt').forEach(b => b.onclick = () => result(b.dataset.k, true));
+  document.getElementById('back').onclick = back;
+  window.scrollTo(0, 0);
+}
+
+function psalmBlock(n, marks) {
+  const p = DATA.psalms[n];
+  return `<div class="psalm"><h3>Psalm ${n}</h3>${p.sup ? `<p class="sup">${esc(p.sup)}</p>` : ''}
+    <ol>${p.v.map(([v, t]) => `<li class="${marks.includes(`${n}:${v}`) ? 'hit' : ''}"><span>${v}</span>${esc(t)}</li>`).join('')}</ol></div>`;
+}
+
+/** The answers that put this result here: the facets of its need and like that the person's answers met. */
+function because(o) {
+  const hit = o.need.find(n => meets(n, a)) || {};
+  const conds = [...Object.entries(hit), ...Object.entries(o.like || {})];
+  const out = [];
+  for (const [k, vals] of conds) for (const x of picks(a[k])) if (vals.includes(x)) out.push(optText(k, x));
+  return [...new Set(out)];
+}
+
+function result(oid, fromNone) {
+  const o = QUIZ.outcomes[oid];
+  const f = DATA.full[oid];
+  const p = DATA.psalms[o.psalm];
+  const marks = [o.names, o.turn].filter(Boolean);
+  const title = o.set ? `the <span class="blue">Songs of Ascents</span>` : `Psalm <span class="blue">${o.psalm}</span>`;
+  const greek = !o.set && String(lxx(o.psalm)) !== String(o.psalm) ? `<p class="greek">${lxx(o.psalm)} in the Greek numbering Athanasius used</p>` : '';
+  const notes = [a.focus && QUIZ.notes[a.focus], fromNone ? "His letter doesn't name your situation itself. This is the psalm he gave for what it's doing to you." : null, o.note].filter(Boolean);
+  const said = fromNone ? [] : because(o);
+  const also = o.also && o.also.length ? `<p class="body soft">For the same situation he also named ${o.also.length === 1 ? 'Psalm' : 'Psalms'} ${list(o.also)}.</p>` : '';
+  const story = f && f.story
+    ? `<section><p class="label">The story behind it</p><p class="body">${f.story.map(x => x.q ? `<q>${esc(x.q)}</q> (${esc(x.ref)})` : esc(x.t)).join('')}</p>${f.own ? `<p class="body">${esc(f.own)}</p>` : ''}</section>` : '';
+  const night = f && f.night ? `<section><p class="label">For the nights</p><p class="turn">${esc(verse(f.night))}</p><span class="cite">Psalm ${f.night}</span></section>` : '';
+  const hardNote = o.hard
+    ? `<section><p class="label">Hard words</p><p class="body"><q>${esc(verse(o.hard))}</q><span class="cite inline">Psalm ${o.hard}</span></p>
+       <p class="body">${esc(o.hardNote || 'The Psalms say to God what hurt people really feel, anger included, and leave the verdict with Him. Athanasius gives the same counsel in this letter: ask God to be the Judge, since He alone is just (§17).')}</p></section>` : '';
+  const whole = o.set ? `<div class="psalms-set">${o.set.map(n => psalmBlock(n, marks)).join('')}</div>` : psalmBlock(o.psalm, marks);
+  const ln = o.lineNote && (!o.lineNote.when || meets(o.lineNote.when, a)) ? o.lineNote : null;
+  const lineNote = ln
+    ? `<section><p class="label">About verse ${ln.ref.split(':')[1]}</p><p class="body"><q>${esc(verse(ln.ref))}</q><span class="cite inline">Psalm ${ln.ref}</span></p><p class="body">${esc(ln.text)}</p></section>` : '';
+  const carry = o.turn || o.names;
+  const hardPath = ['vhard', 'hard'].includes(a.season);
+
+  app.innerHTML = brand + `
+    <p class="kicker">You're living</p>
+    <h1 class="verdict">${title}</h1>
+    ${greek}
+    <p class="lead-quote">${esc(verse(o.names))}<span class="cite">Psalm ${o.names}</span></p>
+    ${!o.set && p.sup && narrative(p.sup) ? `<p class="heading-note">Its own heading: <i>${esc(p.sup)}</i></p>` : ''}
+    <section><p class="label">Why this one</p>
+      <p class="body">${esc(o.seen)}</p>
+      ${said.length ? `<div class="chips because">${said.map(s => `<span class="chip">${esc(s)}</span>`).join('')}</div>` : ''}
+      <p class="body">In the 300s, Athanasius of Alexandria wrote to a friend about praying the Psalms, and matched them to what people go through. For this, his advice was:</p>
+      <p class="body strong">${esc(o.reason)}</p>
+      <span class="cite">Letter to Marcellinus, §${esc(o.sec)}</span>
+      ${notes.map(x => `<p class="body soft">${esc(x)}</p>`).join('')}
+      ${also}
+    </section>
+    ${story}
+    ${o.turn ? `<section><p class="label">Where it turns</p><p class="turn">${esc(verse(o.turn))}</p><span class="cite">Psalm ${o.turn}</span></section>` : ''}
+    ${night}
+    <section><p class="label">${o.set ? 'The fifteen songs' : 'The whole psalm'}</p>${whole}</section>
+    ${hardNote}
+    ${lineNote}
+    <section><p class="label">Carry this line</p><p class="turn">${esc(verse(carry))}</p><span class="cite">Psalm ${carry}</span></section>
+    ${hardPath ? `<aside class="help"><p><b>If it's more than this.</b> If someone is hurting you, or you've thought about ending your life, please tell someone today. In the US, call or text 988, or 911 if you're in danger. Anywhere else, findahelpline.com lists free lines.</p></aside>` : ''}
+    <div class="row"><button class="btn" id="again" type="button">Take it again</button></div>
+    <div class="foot">
+      <p>${f ? 'This is the finished shape of a result.' : 'Draft: this result shows its core. “See a finished result” on the first screen shows the finished shape (Psalm 3).'}</p>
+      <p>Bible text: Berean Standard Bible, public domain. Athanasius's advice is paraphrased from his Greek.</p>
+    </div>`;
+  document.getElementById('again').onclick = intro;
+  window.scrollTo(0, 0);
+}
+
+location.hash === '#example' ? example() : intro();
+</script>
