@@ -62,7 +62,9 @@
 /* ------------------------------------------------------------------ section heads ---- */
 /* A section head is its word and, where there is more than this page shows, an "All …" button
    (the owner, 2026-09-22: no kickers over the words, and the buttons are real pills, .go-pill). */
-.hm-head { position: relative; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 0 1rem; margin: 0 0 1.1rem; }
+/* A row that wraps: on the narrowest phones (under about 352px) "All 12 articles" is wider than the
+   room beside its word, and it steps down under the word instead of running off the screen. */
+.hm-head { position: relative; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem 1rem; margin: 0 0 1.1rem; }
 .hm-head h2 {
   margin: 0; font-family: var(--display); font-style: italic; font-weight: 400;
   font-size: clamp(2.3rem, 9vw, 3.3rem); line-height: 1; letter-spacing: -.02em; color: var(--ink);

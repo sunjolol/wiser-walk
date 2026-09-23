@@ -144,7 +144,7 @@ body {
 .navmenu > summary {
   display: inline-flex; align-items: center; gap: .22rem; min-height: 44px;
   padding: .42rem .7rem; border-radius: var(--r-pill);
-  color: var(--ink-mute); font-weight: 600; white-space: nowrap; cursor: pointer;
+  color: var(--menu-ink); font-weight: 600; white-space: nowrap; cursor: pointer;
   list-style: none; transition: background .18s ease, color .18s ease;
 }
 .navmenu > summary::-webkit-details-marker { display: none; }

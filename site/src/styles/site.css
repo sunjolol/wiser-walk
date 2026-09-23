@@ -61,6 +61,11 @@
   --ink: #444444;
   --ink-soft: #5A6066;
   --ink-mute: #7C8288;
+  /* the header's words (the owner, 2026-09-22): the menu and "Log In" in the muted grey, "Sign Up"
+     10% darker so its word holds up on the colour behind it */
+  --menu-ink: #7C8288;
+  --login-ink: #7C8288;
+  --signup-ink: #70757A;
   --accent: #3E86C4;  /* the spectrum's blue, deepened so it reads on a light panel */
   --accent-soft: #E2EDF7;
   --accent-ink: #FFFFFF;
@@ -108,6 +113,10 @@
   --ink: #EAE8E4;
   --ink-soft: #B4B0AA;
   --ink-mute: #8E8A84;
+  /* in the dark, lighter than the page's muted grey, as the owner set them (2026-09-22) */
+  --menu-ink: #BBBBBB;
+  --login-ink: #BBBBBB;
+  --signup-ink: #CCCCCC;
   --accent: #7EBAEE;
   --accent-soft: #1E2A38;
   --accent-ink: #10131A;
@@ -229,7 +238,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
 /* The menu is set in Inter at .9rem, at every width (the owner, 2026-09-22). The dropdown lists
    inherit the face and keep their own size (kit.css). */
 .site-head nav { display: flex; gap: .9rem; align-items: center; font-family: var(--text); font-size: .9rem; }
-.site-head nav a { color: var(--ink-mute); text-decoration: none; font-weight: 600; }
+.site-head nav a { color: var(--menu-ink); text-decoration: none; font-weight: 600; }
 .site-head nav a:hover, .site-head nav a[aria-current="page"] { color: var(--accent); }
 
 /* On a phone the four nav links do not fit beside the brand; they wrap to their own row. */
@@ -308,7 +317,11 @@ a { color: var(--accent); text-underline-offset: 2px; }
  */
 .site-head.site-head--acct .head-login,
 .site-head.site-head--acct .head-join,
-.site-head.site-head--acct .head-me { position: relative; isolation: isolate; color: var(--ink-mute); }
+.site-head.site-head--acct .head-me { position: relative; isolation: isolate; color: var(--menu-ink); }
+.site-head.site-head--acct .head-login { color: var(--login-ink); }
+/* heavier than the menu (800, declared in public/fonts/fonts.css) and, in the light theme, a
+   shade darker, so it reads on its wash */
+.site-head.site-head--acct .head-acct .head-join { color: var(--signup-ink); font-weight: 800; }
 .site-head.site-head--acct .head-login { padding: .42rem .75rem; }
 .site-head.site-head--acct .head-login::before,
 .site-head.site-head--acct .head-join::before,
@@ -459,11 +472,12 @@ a { color: var(--accent); text-underline-offset: 2px; }
   .site-head.site-head--acct .theme-toggle { grid-area: 1 / 3; justify-self: end; }
 }
 /* 320px: the brand and the pair only just share a row, so the pair gives up some padding, but
-   never its gap: the two pills must not touch on the log-in page. */
+   never its gap: the two pills must not touch on the log-in page. "Sign Up" at 800 is about 6px
+   wider than it was at 600, so its own padding gives up that much more (2026-09-22). */
 @media (max-width: 22.49rem) {
   .site-head.site-head--acct .head-acct { font-size: .8rem; }
   .site-head.site-head--acct .head-login { padding-left: .45rem; padding-right: .45rem; }
-  .site-head.site-head--acct .head-join { padding-left: .75rem; padding-right: .75rem; }
+  .site-head.site-head--acct .head-join { padding-left: .55rem; padding-right: .55rem; }
 }
 
 /* ------------------------------------------------------------- surfaces */
