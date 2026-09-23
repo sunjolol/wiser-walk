@@ -57,8 +57,14 @@ const comparable = quiz.slug === COMPARE_QUIZ.slug;
  * is long enough to fold: its three notes go into one <details> under the quick start
  * instead of standing open between the reader and the start button. A quiz with one short
  * note — the Compass has exactly one — prints it as it always did.
+ *
+ * The fold also needs something to hold. The seven deadly sins quiz went live (2026-09-21)
+ * with its one-sentence way in and none of the three notes, and the page drew a panel
+ * promising "what this quiz can and cannot tell you" that opened on nothing. Now the sentence
+ * prints whenever a quiz has one, and the panel only when there is a note to put in it.
  */
-const folded = Boolean(quiz.notes?.introShort);
+const hasFrame = Boolean(quiz.notes?.intro || quiz.notes?.disputed || quiz.notes?.omitted);
+const folded = Boolean(quiz.notes?.introShort) && hasFrame;
 
 /**
  * One word of the quiz's own title is painted in the band's second ink — the last word long
@@ -198,7 +204,7 @@ const breadcrumbs = isDraft
         button is in the band above, and the rest of the frame is the panel directly below
         this line, which says on its face what is inside it — so the "Read this first"
         button that used to stand between the two is gone: it opened the thing under it.
-      */}{folded && <p class="qgo-say">{quiz.notes!.introShort}</p>}{folded ? (
+      */}{quiz.notes?.introShort && <p class="qgo-say">{quiz.notes.introShort}</p>}{folded ? (
         <>
           {/*
             THE FRAME, FOLDED. Three notes — what the quiz can see, the disagreement it
