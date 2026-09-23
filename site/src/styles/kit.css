@@ -135,8 +135,10 @@ body {
  * OUTSIDE it, so below 30rem the <details> stays static and the panel is measured against
  * .site-head, dropping the full width of the header. From 30rem the nav no longer scrolls,
  * the <details> takes position: relative, and the panel hangs under its own item — anchored
- * to the item's right edge, because the nav sits at the right of the header and the sheet
- * around it is clipped to its own frame.
+ * to the item's right edge, because the nav used to sit at the right of the header and the
+ * sheet around it is clipped to its own frame. (Since 2026-09-22 the one-row nav stands in the
+ * centre; right-anchored panels still clear the frame there, and site.css opens them rightwards
+ * on the two-row header, where the nav starts at the left.)
  */
 .navmenu { position: static; }
 .navmenu > summary {
@@ -222,6 +224,13 @@ body {
   text-transform: uppercase; line-height: 1;
 }
 .band-chip .icon { color: var(--orange-soft); }
+/* A band with no chip (every band but an article's, since 2026-09-22) keeps the height it had
+   with one: the owner likes the full view of the picture. The chip and its margin were 49px;
+   half of that goes above the words and half below, so they stay centred in the band. Spacers
+   inside .band-in rather than padding on .band, so they hold whatever padding a band or a
+   page gives it. */
+.band--bare .band-in::before,
+.band--bare .band-in::after { content: ""; display: block; height: 1.53rem; }
 .band h1 {
   font-size: clamp(2.35rem, 10.6vw, 4.4rem); line-height: 1.02; letter-spacing: -.022em;
   margin: 0 0 .85rem; max-width: 7em;   /* 14ch in DM Serif; em so the measure does not move with the font's zero */
@@ -431,12 +440,8 @@ body {
   content: ""; display: block; width: 58px; height: 7px; margin-top: .65rem;
   border-radius: var(--r-pill); background-image: var(--grad-r);
 }
-.sect-more {
-  flex: none; font-family: var(--ui); font-size: .64rem; font-weight: 700; letter-spacing: .12em;
-  text-transform: uppercase; text-decoration: none; color: var(--accent);
-  padding: .6rem 0 .2rem; min-height: 44px; display: inline-flex; align-items: flex-end;
-}
-.sect-more:hover { text-decoration: underline; }
+/* the "All …" link beside a section title: a real button at every width (.go-pill) */
+.sect-more { flex: none; color: var(--accent); }
 
 /* ------------------------------------------------------------ dark panels */
 
@@ -452,7 +457,7 @@ body {
   background-color: var(--dark-fill); background-image: var(--dark-fill-img); background-size: 520px;
   color: var(--on-dark); border-radius: var(--r-lg); box-shadow: var(--lift);
 }
-:root[data-theme="dark"] .dark { background-color: #2A2A33; }
+:root[data-theme="dark"] .dark { background-color: var(--dark-fill); }
 .dark h2, .dark h3 { color: var(--on-dark); }
 .dark p { color: var(--on-dark-soft); }
 /* A link inside a dark panel is blue, EXCEPT the instruments' own cells: blue on this site
@@ -466,6 +471,107 @@ body {
   color: var(--ghost-dark); line-height: .8; letter-spacing: -.04em;
 }
 .dark > *:not(.dark-ghost) { position: relative; z-index: 1; }
+
+/*
+ * A GAME'S MARK, AS A GHOST: one giant glyph in a card's top left corner, cut by the card's own
+ * edge, as faint as the "wiser walk" in the footer (the owner, 2026-09-22, in place of the small
+ * icon tile over the title), on the home page's game cards and on /games/. Who Said It? wears an
+ * opening quotation mark; Sounds Like Scripture a question mark, its one question being "is it
+ * in the Bible?". (Tried and set aside the same day: the scroll icon drawn large, which read as
+ * a blank page, and a pilcrow, whose bowl vanished under the title and left two bars.)
+ *
+ * The card holding one must be position: relative, isolation: isolate and clipped; the glyph is
+ * drawn under the words at z-index -1 inside the card's own stacking context. Placed by the
+ * glyphs' own ink, measured in Philosopher: each runs a little off the top and the left edge,
+ * and neither loses the part that makes it recognisable.
+ */
+.corner-ghost {
+  position: absolute; z-index: -1; top: 0; left: 0; pointer-events: none; user-select: none;
+  font-family: var(--display); font-weight: 400; line-height: 1; color: rgba(255, 255, 255, .06);
+}
+.corner-ghost--quote { font-size: 26rem; top: -.196em; left: -.05em; }
+.corner-ghost--ask { font-size: 17rem; top: -.226em; left: -.038em; }
+
+/*
+ * THE WAY IN, AS A BUTTON (the owner, 2026-09-22): "Start", "Play", "Read" and every "All …"
+ * link are real pills at every width, never small-caps text. Tinted and outlined in their own
+ * ink (currentColor), deepening when the card or the link under the pointer is hovered. Any
+ * component can use it; the ink comes from the colour the element is given.
+ */
+.go-pill {
+  display: inline-flex; align-items: center; gap: .5rem; min-height: 44px;
+  padding: .55rem 1.15rem; border-radius: 999px; text-decoration: none; white-space: nowrap;
+  font-family: var(--ui); font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  background: color-mix(in srgb, currentColor 16%, transparent);
+  box-shadow: inset 0 0 0 1.5px currentColor;
+  transition: background .18s ease;
+}
+.go-pill .icon { width: 16px; height: 16px; transition: transform .18s ease; }
+a:hover .go-pill, a.go-pill:hover { background: color-mix(in srgb, currentColor 26%, transparent); }
+a:hover .go-pill .icon, a.go-pill:hover .icon { transform: translateX(3px); }
+@media (prefers-reduced-motion: reduce) { .go-pill, .go-pill .icon { transition: none; } }
+
+/*
+ * THE TITLE LIFT: the soft shadow under a white title set on a picture (the engraving cards),
+ * the same idea as the one under "Keep walking." in the footer. Not black: a darker shade of
+ * the engravings' own brown, blurred wide, so it reads as the picture dimming behind the words
+ * rather than as a shadow (the owner, 2026-09-22).
+ */
+:root { --title-lift: 0 1px 2px rgba(30, 25, 20, .45), 0 2px 24px rgba(30, 25, 20, .85); }
+
+/*
+ * THE COMPASS CARD (components/CompassCard.astro), one look wherever the Theology Compass is
+ * offered. The night ground with its blue glow, a real wheel, the words, the facts and Start.
+ * It lays itself out by its own width: wheel over words when narrow, words beside the wheel
+ * from 40rem of card. The wheel's top label sits inside its plot, so the plot needs no margin
+ * over it; the uneven padding beside it leaves room for the labels that hang outside the
+ * circle and about 42px of night above and below the drawing.
+ */
+.ccard-wrap { container-type: inline-size; }
+.ccard.dark {
+  --room-ink: var(--blue-soft);
+  display: flex; flex-direction: column; border-radius: 24px; text-decoration: none; color: #fff;
+  background-color: #141a27;
+  background-image: radial-gradient(120% 90% at 85% 10%, rgba(126, 186, 238, .22), transparent 60%), var(--dark-fill-img);
+  background-size: auto, 520px;
+  box-shadow: 0 10px 30px rgba(20, 24, 40, .16);
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+:root[data-theme="dark"] .ccard.dark { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .07), 0 10px 26px rgba(0, 0, 0, .35); }
+.ccard.dark:hover { transform: translateY(-3px); box-shadow: 0 16px 38px rgba(20, 24, 40, .24); }
+.ccard-wheel { order: -1; padding: .5rem 3.4rem 0; }
+.ccard .wheel-plot { max-width: 15.5rem; margin: 0 auto; }
+.ccard .wheel figcaption, .ccard .wheel-cap { display: none; }
+.ccard-body { padding: 1.35rem 1.3rem 1.4rem; }
+.ccard-kicker {
+  margin: 0 0 .25rem; font-family: var(--ui); font-size: .6rem; font-weight: 700; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--room-ink);
+}
+.ccard .ccard-title {
+  margin: 0; font-family: var(--display); font-weight: 400; color: #fff;
+  font-size: clamp(1.55rem, 6.2vw, 1.95rem); line-height: 1.08; letter-spacing: -.012em; text-wrap: balance;
+}
+.ccard .ccard-say { margin: .55rem 0 0; max-width: 26rem; font-size: .95rem; line-height: 1.5; text-wrap: balance; }
+.ccard-facts {
+  display: flex; flex-wrap: wrap; gap: .4rem; margin: .95rem 0 0; padding: 0; list-style: none;
+  font-family: var(--ui); font-size: .62rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+}
+.ccard-facts li {
+  display: inline-flex; align-items: center; gap: .35rem; padding: .36rem .62rem; border-radius: 999px;
+  color: rgba(255, 255, 255, .92); background: rgba(255, 255, 255, .12); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16);
+}
+.ccard-go { margin-top: 1.1rem; color: var(--room-ink); }
+@container (min-width: 40rem) {
+  .ccard.dark { flex-direction: row; align-items: center; }
+  .ccard-wheel { order: 1; flex: 0 0 50%; padding: 1.8rem 6.5rem 1.5rem 5.5rem; }
+  .ccard .wheel-plot { max-width: 19rem; }
+  .ccard-body { flex: 1; padding: 2.2rem 0 2.2rem 2.4rem; }
+  .ccard .ccard-title { font-size: clamp(2rem, 4.7vw, 2.5rem); }
+  .ccard .ccard-say { font-size: 1.02rem; }
+}
+/* under 23rem the three facts only just miss one row, and "18 traditions" fell alone onto a second */
+@media (max-width: 22.99rem) { .ccard-facts { gap: .3rem; } .ccard-facts li { padding: .36rem .5rem; } }
+@media (prefers-reduced-motion: reduce) { .ccard.dark { transition: none; } .ccard.dark:hover { transform: none; } }
 
 /* the feature: a dark half carrying the instrument, a light half carrying the words */
 .feature {
@@ -604,6 +710,7 @@ body {
 .mock-btns span {
   display: grid; place-items: center; border-radius: 12px; padding: .7rem .4rem; text-align: center; color: var(--on-grad);
   font-family: var(--ui); font-size: .54rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; line-height: 1.3;
+  text-wrap: balance;   /* never "NOT IN THE / BIBLE" with a word alone */
 }
 .mock-btns span:first-child { background: var(--orange); } .mock-btns span:last-child { background: var(--blue); }
 @media (min-width: 52rem) {
@@ -626,7 +733,7 @@ body {
 /*
  * Redrawn 2026-09-20 after the owner's verdict on the last one ("even more wall-of-text...
  * not even any color... over-used the dotted lines"). It opens on a photograph, the heads
- * carry a mark and an ink each, links answer a hover with colour and movement, and the only
+ * carry an ink each, links answer a hover with colour and movement, and the only
  * rule left is one hairline of the brand's own gradient above the last line.
  */
 /*
@@ -642,7 +749,7 @@ body {
   background-color: var(--dark-fill); background-image: var(--dark-fill-img); background-size: 520px;
   color: var(--on-dark-soft); border-radius: 30px 30px 0 0;
 }
-:root[data-theme="dark"] .site-foot { background-color: #1F1F26; }
+:root[data-theme="dark"] .site-foot { background-color: var(--dark-fill); }
 
 /* the walk */
 .foot-dawn { position: relative; isolation: isolate; overflow: hidden; overflow: clip; display: flow-root; }
@@ -662,25 +769,23 @@ body {
 }
 :root[data-theme="dark"] .foot-dawn::after {
   background:
-    linear-gradient(180deg, rgba(44, 44, 56, 0) 18%, rgba(44, 44, 56, .7) 56%, #2C2C38 100%),
+    linear-gradient(180deg, rgba(24, 24, 26, 0) 18%, rgba(24, 24, 26, .7) 56%, var(--dark-fill) 100%),
     linear-gradient(90deg, rgba(40, 22, 8, 0) 30%, rgba(40, 22, 8, .5));
 }
 /* .site-foot in the selector on purpose: an older `.site-foot .wrap` rule elsewhere sets the
    wrap's top padding, and it was winning, which put the words at the top of the band on the
    brightest part of the sky. They belong low, on the dark of the hill. */
-.site-foot .foot-dawn-in { display: grid; grid-template-columns: 1fr; gap: 1.3rem; padding-top: 5.4rem; padding-bottom: 5.4rem; }
-.foot-kicker {
-  display: inline-flex; align-items: center; gap: .45rem; margin: 0 0 .5rem;
-  font-family: var(--ui); font-size: .68rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
-  color: #fff; text-shadow: 0 1px 10px rgba(30, 14, 4, .6);
-}
+/* The kicker over "Keep walking." ("By email, now and then", with a mail mark) went on
+   2026-09-22; its 26px came back as padding, half above and half below, so the band is exactly
+   as tall as it was (417px on a phone, 322px wide) and the words stay centred in it. */
+.site-foot .foot-dawn-in { display: grid; grid-template-columns: 1fr; gap: 1.3rem; padding-top: 6.21rem; padding-bottom: 6.21rem; }
 .foot-dawn h2 {
   margin: 0; font-family: var(--display); font-style: italic; font-weight: 400; color: #fff;
   font-size: clamp(2.3rem, 9vw, 3.4rem); line-height: 1; letter-spacing: -.02em; text-shadow: 0 2px 20px rgba(30, 14, 4, .45);
 }
 .foot-dawn-say p:last-child { margin: .6rem 0 0; font-size: 1rem; color: rgba(255, 255, 255, .92); text-shadow: 0 1px 12px rgba(30, 14, 4, .5); }
 @media (min-width: 52rem) {
-  .site-foot .foot-dawn-in { grid-template-columns: minmax(0, 1fr) minmax(0, 25rem); gap: 3rem; align-items: center; align-content: center; padding-top: 3.6rem; padding-bottom: 3.6rem; min-height: 19rem; }
+  .site-foot .foot-dawn-in { grid-template-columns: minmax(0, 1fr) minmax(0, 25rem); gap: 3rem; align-items: center; align-content: center; padding-top: 4.41rem; padding-bottom: 4.41rem; min-height: 19rem; }
   /* the walker stands at the left of the frame, so the words go to the right of him */
   .foot-dawn-say { grid-column: 2; grid-row: 1; }
   /* A link to #foot-signup (from /me/) should arrive with the heading above the field in view,
@@ -780,12 +885,12 @@ body {
 .foot-cols { display: grid; grid-template-columns: 1fr; gap: 1.7rem; }
 .foot-col { --col-ink: var(--blue-soft); }
 .foot-col--orange { --col-ink: var(--orange-soft); }
+/* the three heads are words alone, in their column's ink (the owner, 2026-09-22: no marks) */
 .foot-col h4 {
-  display: flex; align-items: center; gap: .55rem; margin: 0 0 .45rem;
-  font-family: var(--ui); font-size: .66rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  margin: 0 0 .45rem;
+  font-family: var(--ui); font-size: .8rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
   color: var(--col-ink);
 }
-.foot-mark { display: grid; place-items: center; width: 1.75rem; height: 1.75rem; border-radius: 9px; color: #1c1c23; background: var(--col-ink); }
 .foot-col ul { margin: 0; padding: 0; list-style: none; }
 .foot-col li a {
   display: inline-flex; align-items: center; gap: .4rem; min-height: 44px; padding: .2rem 0;
@@ -795,11 +900,21 @@ body {
 .foot-col li a:hover { color: var(--col-ink); transform: translateX(3px); }
 .foot-col li a.foot-all { color: var(--on-dark); font-family: var(--ui); font-size: .66rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
 .foot-col li a.foot-all:hover { color: var(--col-ink); }
+/*
+ * Three columns from 48rem, each as wide as its longest link and spread across the row, because a
+ * quiz title is a sentence and must read as one line. Until 2026-09-22 the columns were fixed
+ * shares (2 : 1.25 : .9) of the space BESIDE the brand, and from 768 to about 960 that was
+ * narrower than the links: "Sounds Like Scripture" ran into "Articles" and "Compare traditions"
+ * off the screen. The links need 584px with their gaps (246, 155 and 135, measured), so the
+ * brand stands above them until 60rem and beside them from there, where both fit.
+ */
 @media (min-width: 48rem) {
-  .site-foot .foot-main { grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); gap: 3rem; padding-top: 2.2rem; }
-  .foot-cols { grid-template-columns: minmax(0, 2fr) minmax(0, 1.25fr) minmax(0, .9fr); gap: 1.5rem; }
-  /* a quiz title is a sentence and must read as one line */
+  .site-foot .foot-main { padding-top: 2.2rem; }
+  .foot-cols { grid-template-columns: repeat(3, max-content); justify-content: space-between; gap: 1.5rem; }
   .foot-col li a { white-space: nowrap; min-height: 38px; }
+}
+@media (min-width: 60rem) {
+  .site-foot .foot-main { grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); gap: 3rem; }
 }
 
 /* the one rule in the footer: a hairline of the brand's own gradient */
@@ -811,15 +926,13 @@ body {
 }
 @media (prefers-reduced-motion: reduce) { .foot-col li a { transition: none; } .foot-col li a:hover { transform: none; } }
 
-/* DARK PANELS IN THE DARK THEME. Charcoal on near-black has no presence (1.3:1), which flattens
-   every page. In the dark theme the same panels lift instead: a clearly lighter surface, tinted
-   by the spectrum, with a hairline of light on the edge. */
+/* DARK PANELS IN THE DARK THEME keep their starry ground, a shade darker than in the light theme
+   (the tile itself is swapped in site.css), and each keeps its own glow. Until 2026-09-22 this
+   rule lifted every one of them to a flat, lighter #2C2C38 with no texture, which the owner found
+   ugly: in a dark theme a dark panel should be darker, not brighter. A hairline of light on the
+   edge and a deeper shadow give it its outline against the near-black page instead. */
 :root[data-theme="dark"] .dark,
 :root[data-theme="dark"] .site-foot {
-  background-color: #2C2C38;
-  background-image:
-    linear-gradient(135deg, rgba(126, 186, 238, .13), rgba(240, 160, 111, .09) 70%, rgba(240, 160, 111, .13));
-  background-size: auto;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .07), 0 10px 26px rgba(0, 0, 0, .35);
 }
 :root[data-theme="dark"] .dark { --panel: #3A3A48; --shell: #24242E; }

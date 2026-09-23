@@ -21,6 +21,11 @@
  * With no `kind` at all the old wash is still drawn, because the result page composes the
  * same `.band` markup by hand and must not change.
  *
+ * THE CHIP (`eyebrow`, with its `icon`) is for an article only, where "Article" says what the
+ * page is. Everywhere else it was a label nobody needed, and the owner had them all taken out
+ * (2026-09-22). A band without one is `.band--bare` and keeps the height it had with one
+ * (kit.css), so no page loses any of its picture.
+ *
  * `blue` and `orange` colour one phrase each inside the title. On a picture they become the
  * home hero's two inks (a soft blue and #FFD2B0) so white type keeps its contrast.
  * The lede is the default slot (so it can carry links) or the `lede` prop. Buttons go in the
@@ -105,7 +110,8 @@ const wash = !pic;
     long && 'band--long',
     pic && 'band--pic',
     kind && `band--${kind}`,
-    image && 'band--has-img'
+    image && 'band--has-img',
+    !eyebrow && 'band--bare'
   ]}
 >
   {wash && <div class="wash" aria-hidden="true"></div>}

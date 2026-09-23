@@ -3,8 +3,8 @@
  * One person from the Bible, as the figure quiz places them.
  *
  * This is the tradition page's sibling, and deliberately so: the same band, the same dark
- * feature half with the instrument on it, the same rails, the same neighbour list, the same
- * dark way back into the quiz. What differs is what the page is made of. A tradition's
+ * feature half with the instrument on it, the same rails, the same neighbour list, and the
+ * quiz's own card at the foot. What differs is what the page is made of. A tradition's
  * position is a sketch of where adherents land; a figure's position is an ARGUMENT FROM THE
  * TEXT, so the page prints the argument — every cited act that put the figure where they
  * are, grouped by axis, with both pole names on every heading.
@@ -35,6 +35,7 @@ import CorrectionNote from '../../components/CorrectionNote.astro';
 import { bibleFigure } from '../../lib/quizzes/bible-figure';
 import type { FigureEvidence, FigureOutcome } from '../../lib/quizzes/bible-figure';
 import { groupHref, quizHref, resultFor } from '../../lib/engine/registry';
+import { outcomeNounPlural } from '../../lib/engine/types';
 import type { BipolarView } from '../../lib/engine/types';
 import { artFor, artForOutcome } from '../../lib/art';
 import { clip } from '../../lib/seo';
@@ -58,18 +59,44 @@ const view = resultFor(quiz, figure.position) as BipolarView;
 const neighbours = view.ranked.filter(r => r.slug !== figure.slug);
 const named = view.rows.filter(r => !r.noClaim).length;
 
-/** The ghost word is one word of the name — the first real one, never anything invented. */
-const ghost = (figure.name.match(/[A-Za-z]{4,}/g) ?? [figure.name])[0]!.toLowerCase();
+/**
+ * The ghost word is one word of the name — the first real one, never anything invented.
+ * Printed as the name is written, never lowercased: one of these pages is His.
+ */
+const ghost = (figure.name.match(/[A-Za-z]{4,}/g) ?? [figure.name])[0]!;
 /* Doré's own plate of this person where one exists and shows nothing violent; the quiz's
    picture where it does not. A page never pretends to a portrait the plates do not hold. */
 const art = artForOutcome(quiz.slug, figure.slug);
 /**
- * The picture for the room at the foot: the QUIZ's own plate, and only when this page is
- * not already showing it in the band. A page that shows one picture twice is the mistake
- * the owner has already rejected once; null here means the room takes the sky instead.
+ * The card at the foot is the quiz's own engraving card, as the home page and /quizzes/
+ * draw it (the owner, 2026-09-22: "literally everywhere it appears it should be
+ * standardized"), and it carries the QUIZ's plate only when this page is not already
+ * showing that plate in the band. A page that shows one picture twice is the mistake the
+ * owner has already rejected once; null here means the card is drawn on the plate's own
+ * brown without it (Moses, and the five figures who have no plate of their own).
  */
 const quizArt = artFor(quiz.slug);
 const wayArt = quizArt && quizArt.src !== art?.src ? quizArt : null;
+const NUMBER_WORDS = [
+  'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten',
+  'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen',
+  'nineteen', 'twenty'
+];
+/** The card's one line, about this person; the count is the quiz's own, and not one of its
+    statements mentions the Bible (the home page's room says the same). */
+const cardSay =
+  `Answer ${NUMBER_WORDS[quiz.items.length] ?? quiz.items.length} plain statements about ` +
+  `you, none of them about the Bible, and see how near you land to ${figure.name}.`;
+/** The second fact, counted the way /quizzes/ counts it. */
+const cardFact = `${quiz.outcomes.length} ${outcomeNounPlural(quiz)}`;
+const cardStyle = wayArt
+  ? [
+      `--img-pos:${wayArt.objectPosition}`,
+      wayArt.lift ? `--img-lift:${wayArt.lift}` : '',
+      /* a plate art.ts dims for being printed light gets a deeper scrim, as on /quizzes/ */
+      wayArt.lift && wayArt.lift < 1 ? '--room-dim:.38' : ''
+    ].filter(Boolean).join(';')
+  : undefined;
 
 /**
  * The evidence, in the engine's axis order, joined to the row the engine produced. Evidence
@@ -123,10 +150,11 @@ const reading = (a: (typeof axes)[number]) =>
     : a.notShown ? 'not shown in the text' : a.bothEnds ? 'recorded at both ends' : a.row.band;
 
 /**
- * The mark beside an axis, and the disc beside its reading: which way the record points.
- * It is the same fact the rail draws, and it is never a judgement — blue is the left pole
- * and orange the right, and neither is the better one. An axis the acts do not settle gets
- * both halves; an axis the text is silent on gets a hollow ring, not a colour.
+ * Which way the record points: the disc beside a reading in the feature, and the ink of the
+ * reading on each axis's card of moments. It is the same fact the rail draws, and it is never
+ * a judgement — blue is the left pole and orange the right, and neither is the better one. An
+ * axis the acts do not settle gets both halves of the disc; an axis the text is silent on gets
+ * a hollow ring, not a colour. On the cards, both of those keep the plain ink.
  */
 const pointing = (a: (typeof axes)[number]) =>
   a.bothEnds ? 'both' : a.mask !== 'shown' ? 'none' : a.row.value < 50 ? 'left' : 'right';
@@ -281,8 +309,6 @@ const breadcrumbs = isDraft
 >
   <Hero
     title={figure.name}
-    eyebrow={`${quiz.title} · figure`}
-    icon={quiz.icon}
     kind={art ? 'engraving' : 'night'}
     image={art?.src}
     imageAlt={art?.alt}
@@ -451,10 +477,6 @@ const breadcrumbs = isDraft
       {axes.map(axis => (
         <section class:list={['moment-axis', { 'is-silent': axis.notShown, 'is-both': axis.bothEnds }]}>
           <h3 class="moment-head">
-            {/* A mark that does work: the pole the acts point at, in that pole's own ink. */}
-            <span class:list={['moment-medal', `moment-medal--${pointing(axis)}`]} aria-hidden="true">
-              <Icon name="arrow" size={13} />
-            </span>
             <a href={groupHref(quiz, axis.group)}>{axis.group.name}</a>
             <span class="moment-poles">
               <b class="pole-l">{axis.group.left}</b>
@@ -462,7 +484,10 @@ const breadcrumbs = isDraft
               <b class="pole-r">{axis.group.right}</b>
             </span>
           </h3>
-          <p class="moment-band">{reading(axis)}</p>
+          {/* Which way the record points, said in that pole's own ink, as the verdict at the
+              top of the page says it. It was a round disc with an arrow beside the heading
+              until the owner had every mark beside a card's title taken off (2026-09-22). */}
+          <p class:list={['moment-band', `moment-band--${pointing(axis)}`]}>{reading(axis)}</p>
 
           {/*
             The two kinds of middle, said in full and never swapped. "The text does not show
@@ -541,41 +566,31 @@ const breadcrumbs = isDraft
       </>
     )}
 
-    {/* The way back into the quiz, as a room. It carries the QUIZ's own plate rather than
-        this person's, because this person's is already in the band above and no page shows
-        one picture twice. A figure who has no plate of their own is already wearing the
-        quiz's, so that page's room is the night ground instead. */}
-    <section class:list={['wayin', wayArt ? 'wayin--pic' : 'wayin--night']}>
-      {!wayArt && <div class="wayin-ghost" aria-hidden="true">{ghost}</div>}
-      {wayArt && (
-        <img
-          class="wayin-img"
-          src={wayArt.src}
-          alt=""
-          loading="lazy"
-          decoding="async"
-          style={`object-position:${wayArt.objectPosition}${wayArt.lift ? `;--img-lift:${wayArt.lift}` : ''}`}
-        />
-      )}
-      <div class="wayin-in">
-        <span class="wayin-mark" aria-hidden="true"><Icon name={quiz.icon} size={20} /></span>
-        <p class="wayin-kicker">{quiz.title}</p>
-        <h2>See who you land nearest.</h2>
-        <p class="wayin-say">
-          Answer {quiz.items.length} plain statements about yourself — none of them mentions
-          the Bible — and your own position is drawn on these same six rails, with the
-          distance to {figure.name} and to {quiz.outcomes.length - 1} others.
-        </p>
-        <ul class="wayin-facts">
-          <li><Icon name="scroll" size={13} /> {quiz.items.length} statements</li>
-          <li><Icon name="clock" size={13} /> About {quiz.minutes} minutes</li>
-          <li><Icon name="users" size={13} /> {quiz.outcomes.length} people</li>
-        </ul>
-        <div class="btn-row">
-          <a class="btn" href={quizHref(quiz)}>Take the quiz</a>
+    {/* The way back into the quiz: the quiz's own engraving card (see the note above
+        `wayArt`). The plate is decorative here and carries no alt text: the card is one
+        link, and the picture is described where it is the subject. Styles: .qcard in
+        pages/reference.css. */}
+    <div class="qcard-wrap">
+      <a
+        class:list={['qcard', wayArt ? 'qcard--pic' : 'qcard--plain', `qcard--${quiz.slug}`]}
+        href={quizHref(quiz)}
+        style={cardStyle}
+      >
+        {wayArt && (
+          <img class="qcard-img" src={wayArt.src} alt="" loading="lazy" decoding="async" width="820" height="1029" />
+        )}
+        <div class="qcard-body">
+          <p class="qcard-kicker">Your turn</p>
+          <h2 class="qcard-title">{quiz.title}</h2>
+          <p class="qcard-say">{cardSay}</p>
+          <ul class="qcard-facts">
+            <li><Icon name="clock" size={13} /> {quiz.minutes} min</li>
+            <li>{cardFact}</li>
+          </ul>
+          <span class="qcard-go go-pill">Start <Icon name="arrow" size={16} /></span>
         </div>
-      </div>
-    </section>
+      </a>
+    </div>
 
     <CorrectionNote subject={figure.name} />
   </div>

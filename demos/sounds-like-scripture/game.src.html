@@ -136,7 +136,7 @@ body {
  *
  * On a phone the two .gcol wrappers are nothing: their blocks simply stack in source
  * order, which is the reading order (the band, the question, the two run buttons, how a
- * run goes, the note). From the stage width they become the two halves of one grid, so
+ * run goes). From the stage width they become the two halves of one grid, so
  * the same markup composes left and right with nothing duplicated and nothing hidden at
  * one width and shown at another. The band sits outside .two and spans the whole sheet.
  */
@@ -260,9 +260,8 @@ button { font: inherit; color: inherit; }
 }
 .band-chip svg { width: .9em; height: .9em; color: var(--orange-soft); }
 .band h1 { margin: 0 0 .7rem; max-width: 11ch; line-height: 1.0; letter-spacing: -.022em; }
+/* one ink in the title, the site's blue, on the word that names what is at stake */
 .band h1 .t-blue { color: var(--accent); }
-.band h1 .t-orange { color: var(--warn-ink); }
-:root[data-theme="dark"] .band h1 .t-orange { color: var(--orange); }
 .band .lede { margin: 0; max-width: 26rem; }
 
 /* stat tiles: a number in display type over a whispered label */
@@ -305,9 +304,10 @@ button { font: inherit; color: inherit; }
  * No push, no hole. The old layout pinned the buttons to the bottom of the viewport with
  * space-between, which on anything taller than a phone opened a thousand pixels of bare
  * ground between "how a run goes" and PLAY. The blocks simply flow, in this order:
- * the band, the question, the two run buttons, how a run goes, the note.
+ * the band, the question, the two run buttons, how a run goes. The last of them keeps
+ * clear of a phone's home bar through the screen's own padding.
  */
-#screen-start { overflow-y: auto; padding-bottom: 1.25rem; }
+#screen-start { overflow-y: auto; padding-bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px)); }
 
 /* ------------------------------------------------------------ the question
    The first thing a reader is asked, so it is set as a question and not as a
@@ -379,7 +379,11 @@ button { font: inherit; color: inherit; }
   font-family: var(--ui); font-size: .66rem; font-weight: 700; letter-spacing: .1em;
   text-transform: uppercase; color: var(--ink-mute);
 }
-.foot { margin: 1.4rem 0 0; padding-bottom: calc(.5rem + env(safe-area-inset-bottom, 0px)); }
+/* The small print that closed the start and result screens is gone (the owner, 2026-09-22).
+   The empty paragraph left at the end of the result screen is only a marker: the site's
+   route (site/src/pages/play/sounds-like-scripture.astro) replaces it with its own links.
+   Here, standing alone, it is never drawn, so it adds no space. */
+.foot { display: none; }
 
 /* -------------------------------------------------------------------- play */
 
@@ -510,7 +514,7 @@ button { font: inherit; color: inherit; }
 
 /* ------------------------------------------------------------------ result */
 
-#screen-result { overflow-y: auto; padding-bottom: 1.25rem; }
+#screen-result { overflow-y: auto; padding-bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px)); }
 .result-band { padding-bottom: 1.5rem; }
 .result-band .big {
   font-family: var(--display); font-size: clamp(3rem, 17vw, 4.2rem);
@@ -633,12 +637,10 @@ p, dd, .misses q { text-wrap: pretty; }
   #screen-start .two { grid-template-columns: minmax(0, 1fr) minmax(0, .82fr); }
   #screen-start .canon { margin-top: 0; }
   #screen-start .howto { margin-top: 0; padding: 1.3rem 1.4rem 1.4rem; }
-  #screen-start .foot { margin-top: 1.2rem; }
 
   /* result: what caught you, beside what fools you and what to do next */
   #screen-result .two { grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr); }
   #screen-result .result-actions { margin-top: 1.6rem; }
-  #screen-result .foot { margin-top: 1.4rem; }
 
   /* the band's tiles stop stretching to the width of the sheet */
   .band .tiles { grid-template-columns: repeat(3, minmax(0, 10rem)); }
@@ -671,7 +673,6 @@ p, dd, .misses q { text-wrap: pretty; }
   .howto .spec > div { padding: .35rem 0; }
   .start-actions { margin-top: .95rem; }
   .btn { min-height: 48px; }
-  .foot { margin-top: 1rem; }
 }
 
 /* Landscape, or a very small window. */
@@ -694,7 +695,7 @@ p, dd, .misses q { text-wrap: pretty; }
           <div class="band-wash" aria-hidden="true"></div>
           <div class="band-ghost" aria-hidden="true">scripture?</div>
           <p class="band-chip">A wiserwalk game</p>
-          <h1>Sounds <span class="t-blue">Like</span> <span class="t-orange">Scripture</span></h1>
+          <h1>Sounds Like <span class="t-blue">Scripture</span></h1>
 
           <div class="banner" id="challengeBanner" hidden>
             <p><strong id="challengeScore">0</strong> <span id="challengeWord">was their score</span> on these ten lines.</p>
@@ -718,7 +719,7 @@ p, dd, .misses q { text-wrap: pretty; }
 
         <div class="btn-col start-actions">
           <button type="button" class="btn" id="btnPlay">Play</button>
-          <button type="button" class="btn ghost" id="btnDaily">Today's ten</button>
+          <button type="button" class="btn ghost" id="btnDaily">Today's Challenge</button>
           <p class="canon-hint" id="canonHint" hidden>Pick one of the three above</p>
         </div>
       </div>
@@ -735,8 +736,6 @@ p, dd, .misses q { text-wrap: pretty; }
           </dl>
           <ul class="tiles" id="startTiles"></ul>
         </div>
-
-        <p class="small foot" id="footStart"></p>
       </div>
     </div>
   </section>
@@ -815,8 +814,10 @@ p, dd, .misses q { text-wrap: pretty; }
 
     <div class="btn-col result-actions">
       <button type="button" class="btn" id="btnAgain">Play again</button>
+      <!-- a hard space in "challenge link": where the label needs two lines it breaks after
+           "Copy", never leaving "link" alone on the second -->
       <div class="btn-row">
-        <button type="button" class="btn quiet" id="btnCopyLink">Copy challenge link</button>
+        <button type="button" class="btn quiet" id="btnCopyLink">Copy challenge&nbsp;link</button>
         <button type="button" class="btn quiet" id="btnCopyResult">Copy result</button>
       </div>
     </div>
@@ -1007,7 +1008,6 @@ function decodeChallenge(hash) {
   var SOURCES = POOL.sources || [];
 
   var ORTHODOX_NOTE = 'Orthodox canons vary a little from church to church; this follows the books printed in the Greek Orthodox Bible.';
-  var FOOT = 'Every line is quoted word for word from a public-domain edition. LORD and GOD in small capitals are shown as Lord and God, and quotation marks are shown in one style. Scripture: King James Version and World English Bible, British Edition.';
 
   var ICON = {
     tick: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 12.6l4.8 4.8L19.6 7"/></svg>',
@@ -1021,7 +1021,7 @@ function decodeChallenge(hash) {
   var el = {
     start: $('screen-start'), play: $('screen-play'), result: $('screen-result'),
     banner: $('challengeBanner'), bannerScore: $('challengeScore'), bannerWord: $('challengeWord'),
-    lede: $('startLede'), canonNote: $('canonNote'), footStart: $('footStart'), footResult: $('footResult'),
+    lede: $('startLede'), canonNote: $('canonNote'),
     startTiles: $('startTiles'), canonHint: $('canonHint'), canonQ: $('canonQ'),
     btnPlay: $('btnPlay'), btnDaily: $('btnDaily'),
     pips: $('pips'), scoreNow: $('scoreNow'), fuseFill: $('fuseFill'),
@@ -1108,14 +1108,14 @@ function decodeChallenge(hash) {
     el.btnDaily.setAttribute('aria-disabled', String(locked));
     if (locked) {
       el.btnPlay.textContent = 'Choose your Bible to play';
-      el.btnDaily.textContent = "Choose your Bible for today's ten";
+      el.btnDaily.textContent = "Choose your Bible for Today's Challenge";
       el.btnDaily.hidden = false;
     } else if (state.challenge) {
       el.btnPlay.textContent = 'Take the challenge';
       el.btnDaily.hidden = true;
     } else {
       el.btnPlay.textContent = 'Play';
-      el.btnDaily.textContent = "Today's ten";
+      el.btnDaily.textContent = "Today's Challenge";
       el.btnDaily.hidden = false;
     }
     if (!locked) el.canonHint.hidden = true;
@@ -1136,8 +1136,6 @@ function decodeChallenge(hash) {
     var orthodox = canon === 'orthodox';
     el.canonNote.hidden = !orthodox;
     el.canonNote.textContent = orthodox ? ORTHODOX_NOTE : '';
-    el.footStart.textContent = FOOT + (orthodox ? ' ' + ORTHODOX_NOTE : '');
-    el.footResult.textContent = el.footStart.textContent;
     if (remember) write(K.canon, canon);
     refreshActions();
     publish();
@@ -1587,8 +1585,6 @@ function decodeChallenge(hash) {
     setCanon(savedCanon, false);
   } else {
     setCanon(null, false);
-    el.footStart.textContent = FOOT;
-    el.footResult.textContent = FOOT;
   }
 
   showScreen('start');

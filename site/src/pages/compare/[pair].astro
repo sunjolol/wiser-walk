@@ -26,7 +26,8 @@ import Base from '../../layouts/Base.astro';
 import Hero from '../../components/Hero.astro';
 import SectionHead from '../../components/SectionHead.astro';
 import Icon from '../../components/Icon.astro';
-import Card from '../../components/Card.astro';
+import CompareCard from '../../components/CompareCard.astro';
+import CompassCard from '../../components/CompassCard.astro';
 import RailOverlay from '../../components/RailOverlay.astro';
 import CorrectionNote from '../../components/CorrectionNote.astro';
 import { compare, groupHref, quizHref } from '../../lib/engine/registry';
@@ -64,14 +65,22 @@ const sameSay = `${cmp.sameCount} of ${cmp.total}`;
 /**
  * Small counts are spelled out in a kicker, because a kicker is set in uppercase micro-type
  * and "2 OF THE SIX AXES" puts a numeral next to a word for the same kind of thing in the
- * same four words. The six is already a word; the other one has to match it.
+ * same four words. The six is already a word; the other one has to match it. The list runs
+ * to twenty for the Compass card's sentence, which counts the other traditions.
  */
-const COUNT = ['no', 'one', 'two', 'three', 'four', 'five', 'six'];
+const COUNT = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine',
+  'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen',
+  'eighteen', 'nineteen', 'twenty'];
 const spell = (n: number) => COUNT[n] ?? String(n);
 const capital = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 const url = new URL(compareHref(c.slug), Astro.site).href;
 const others = otherComparisons(c);
+
+/* The Compass card at the foot, naming this pair. A reader's result is measured against
+   every tradition on the Compass, these two among them, so "among" is the true word. */
+const compassSay = `See where you land among ${c.labelA}, ${c.labelB} and the ` +
+  `${spell(quiz.outcomes.length - 2)} other traditions.`;
 
 /*
  * WebPage rather than Article, for the reason the axis and tradition templates give: an
@@ -106,8 +115,6 @@ const breadcrumbs = [
 <Base title={c.searchTitle} description={c.description} jsonLd={jsonLd} breadcrumbs={breadcrumbs}>
   <Hero
     title={c.h1}
-    eyebrow="Compare"
-    icon="compass"
     kind="night"
     long
     tiles={[
@@ -169,9 +176,7 @@ const breadcrumbs = [
       kicker={cmp.sameCount > 0 ? `In the same band on ${sameSay}` : 'What the six rails do not show'}
     />
     <ul class="cmpx-common">
-      {c.common.map(line => (
-        <li><span class="cmpx-tick" aria-hidden="true"><Icon name="sparkle" size={14} /></span><p>{line}</p></li>
-      ))}
+      {c.common.map(line => <li><p>{line}</p></li>)}
     </ul>
 
     <SectionHead
@@ -226,7 +231,6 @@ const breadcrumbs = [
         <ul class="cmpx-beyond">
           {c.beyond_the_compass.map(item => (
             <li>
-              <span class="cmpx-beyond-mark" aria-hidden="true"><Icon name="scroll" size={16} /></span>
               <h3>{item.heading}</h3>
               <p>{item.text}</p>
             </li>
@@ -249,7 +253,6 @@ const breadcrumbs = [
         The phrase people search for is in the kicker above it, which is set in capitals. */}
     <SectionHead title="Walking in" kicker="What a visitor would notice on a Sunday" />
     <div class="cmpx-sunday">
-      <span class="cmpx-sunday-mark" aria-hidden="true"><Icon name="users" size={18} /></span>
       <p>{c.on_a_sunday}</p>
     </div>
 
@@ -271,50 +274,22 @@ const breadcrumbs = [
       ))}
     </ul>
 
-    {/* The way into the quiz, as a room on the night ground the Compass is always drawn on.
-        Not a dawn sky: the footer below this is a photograph of one. */}
-    <section class="wayin wayin--night cmpx-way">
-      <div class="wayin-ghost" aria-hidden="true">where</div>
-      <div class="wayin-in">
-        <span class="wayin-mark" aria-hidden="true"><Icon name="compass" size={20} /></span>
-        <p class="wayin-kicker">{quiz.title}</p>
-        <h2>Where do you stand?</h2>
-        <p class="wayin-say">
-          Answer the statements and you are drawn on these same six rails, with the distance
-          to {c.labelA}, to {c.labelB} and to {quiz.outcomes.length - 2} other traditions.
-        </p>
-        <ul class="wayin-facts">
-          <li><Icon name="scroll" size={13} /> {quiz.items.length} statements</li>
-          <li><Icon name="clock" size={13} /> About {quiz.minutes} minutes</li>
-          <li><Icon name="compass" size={13} /> {quiz.groups.length} axes, both poles named</li>
-        </ul>
-        <div class="btn-row">
-          <a class="btn" href={quizHref(quiz)}>Take the {quiz.title}</a>
-        </div>
-      </div>
-    </section>
+    {/* The way into the quiz: the one Compass card the whole site uses. */}
+    <div class="cmpx-way">
+      <CompassCard level={2} kicker="Your turn" say={compassSay} />
+    </div>
 
     {others.length > 0 && (
       <section class="cmpx-more">
-        <SectionHead
-          title="Other comparisons"
-          kicker="The ones sharing a tradition first"
-          href="/compare/"
-          more="All comparisons"
-        />
+        <SectionHead title="Other comparisons" kicker="The ones sharing a tradition first" />
         <div class="cmpx-cards">
-          {others.map(o => (
-            <Card
-              href={compareHref(o.slug)}
-              title={`${o.labelA} vs ${o.labelB}`}
-              text={o.description}
-              meta="Side by side"
-              tab="Compare"
-              go="Read"
-              icon="compass"
-            />
-          ))}
+          {others.map(o => <CompareCard c={o} />)}
         </div>
+        {/* The way to the rest as a real button, under the cards it continues (the head's
+            own "more" link is small caps on a wide screen). */}
+        <p class="cmpx-all">
+          <a class="go-pill" href="/compare/">All comparisons <Icon name="arrow" size={16} /></a>
+        </p>
       </section>
     )}
 

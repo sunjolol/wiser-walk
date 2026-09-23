@@ -21,15 +21,13 @@
   font-family: var(--ui); font-size: .6rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
   -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
 }
-.read h3 { margin: .95rem 0 0; font-family: var(--display); font-weight: 400; font-size: 1.45rem; line-height: 1.12; color: var(--ink); text-wrap: balance; }
+.read h3 { margin: .95rem 0 0; font-family: var(--display); font-weight: 400; font-size: 1.45rem; line-height: 1.12; color: var(--ink); text-wrap: balance; transition: color .18s ease; }
+/* the title answers the pointer in the link blue, so the card feels alive on a wide screen */
+.read:hover h3, .read:focus-visible h3 { color: var(--accent); }
 .read p { margin: .45rem 0 0; font-size: .95rem; line-height: 1.55; color: var(--ink-soft);
   display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-.read .read-go {
-  display: inline-flex; align-items: center; gap: .45rem; margin: .7rem 0 0; color: var(--accent);
-  font-family: var(--ui); font-size: .7rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase;
-}
-.read .read-go .icon { transition: transform .18s ease; }
-.read:hover .read-go .icon { transform: translateX(3px); }
+/* "Read" is a real button at every width (.go-pill in kit.css), in the link blue */
+.read .read-go { margin: .9rem 0 0; color: var(--accent); }
 @media (min-width: 40rem) { .hm-reads { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 1.4rem; } }
 @media (min-width: 60rem) { .hm-reads { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 
@@ -37,7 +35,7 @@
    underneath. The dawn pass moved the painting into the band, where the credit prints as
    one small italic line, so the figure in the body was the same picture twice on one page
    and was deleted. The rules went with it. */
-@media (prefers-reduced-motion: reduce) { .read-pic img, .read .read-go .icon { transition: none; } .read:hover .read-pic img { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .read-pic img, .read h3 { transition: none; } .read:hover .read-pic img { transform: none; } }
 
 /* ---- the topic filter on /articles/ ---------------------------------------------------- */
 .topic-chips { display: flex; flex-wrap: wrap; gap: .45rem; margin: .5rem 0 0; padding: 0; list-style: none; }

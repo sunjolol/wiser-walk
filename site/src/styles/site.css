@@ -120,8 +120,11 @@
   --wash-op: .05;
   --veil-op: .08;
   --veil-blend: overlay;
-  --dark-fill: #343441;
-  --dark-fill-img: none;
+  /* The starry ground stays in the dark theme, a shade darker (public/tex/starry-dark.png is
+     starry.png at 64%), where it used to be switched off for a flat, LIGHTER #343441: the
+     owner saw every starry panel turn brighter and lose its texture (2026-09-22). */
+  --dark-fill: #18181A;
+  --dark-fill-img: url("/tex/starry-dark.png");
   --card-ink: #EAE8E4;
   --track: #15151B;
   --lift: 0 2px 6px rgba(0, 0, 0, .3);
@@ -223,7 +226,9 @@ a { color: var(--accent); text-underline-offset: 2px; }
 @media (min-width: 46rem) {
   .brand { --brand-mark-w: 47px; --brand-gap: 15px; --brand-word-h: 18.5px; }
 }
-.site-head nav { display: flex; gap: .9rem; align-items: center; font-family: var(--ui); font-size: .8rem; }
+/* The menu is set in Inter at .9rem, at every width (the owner, 2026-09-22). The dropdown lists
+   inherit the face and keep their own size (kit.css). */
+.site-head nav { display: flex; gap: .9rem; align-items: center; font-family: var(--text); font-size: .9rem; }
 .site-head nav a { color: var(--ink-mute); text-decoration: none; font-weight: 600; }
 .site-head nav a:hover, .site-head nav a[aria-current="page"] { color: var(--accent); }
 
@@ -235,7 +240,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
   .theme-toggle { margin-left: auto; }
 }
 @media (min-width: 30rem) {
-  .site-head nav { gap: 1.35rem; font-size: .85rem; }
+  .site-head nav { gap: 1.35rem; }
 }
 
 .site-foot {
@@ -275,7 +280,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
  */
 .site-head.site-head--acct .head-acct {
   display: grid; flex: none; align-items: center; justify-items: end;
-  font-family: var(--ui); font-size: .85rem;
+  font-family: var(--text); font-size: .9rem;
 }
 .site-head.site-head--acct .head-acct > * { grid-area: 1 / 1; }
 .site-head.site-head--acct .head-acct-out { display: flex; align-items: center; gap: .4rem; }
@@ -288,38 +293,68 @@ a { color: var(--accent); text-underline-offset: 2px; }
   font-weight: 600; text-decoration: none; border-radius: var(--r-pill);
   transition: background .18s ease, color .18s ease;
 }
-/* "Log in": text, in the ink of the words around it, a pill only under the pointer and on the
-   log-in page itself. Both pills of the pair are drawn 4px in from the top and the bottom of
-   their 44px tap area, so where they stand side by side (the log-in page, or a pointer on
-   "Log in") they are one height, 36px, with the pair's own gap between them. */
+/*
+ * All three words are in the menu's own face, size and grey (the owner, 2026-09-22: "Log in"
+ * and "Sign up" were darker than the menu beside them). Below 360px the pair stays a step
+ * smaller (.8rem, against the menu's .85rem there), because at 320 it only just clears the brand. Every pill of the pair is drawn 4px in
+ * from the top and the bottom of its 44px tap area, so where two stand side by side (the log-in
+ * page, or a pointer on "Log in") they are one height, 36px, with the pair's own gap between.
+ *
+ * "Log In": text, a pill only under the pointer and on the log-in page itself.
+ * "Sign Up": the one thing in the header that stands out, on a wash of the brand's gradient
+ * about 40% of the way to the logo's own colours (the owner, 2026-09-22: the solid gradient pill
+ * was too loud, a faint .2 wash too timid), light enough that the grey word still reads on it.
+ * "My Profile": the same wash, fainter, because it has nothing to invite anyone to.
+ */
 .site-head.site-head--acct .head-login,
-.site-head.site-head--acct .head-join { position: relative; isolation: isolate; }
-.site-head.site-head--acct .head-login { padding: .42rem .75rem; color: var(--ink); }
-.site-head.site-head--acct .head-login::before {
+.site-head.site-head--acct .head-join,
+.site-head.site-head--acct .head-me { position: relative; isolation: isolate; color: var(--ink-mute); }
+.site-head.site-head--acct .head-login { padding: .42rem .75rem; }
+.site-head.site-head--acct .head-login::before,
+.site-head.site-head--acct .head-join::before,
+.site-head.site-head--acct .head-me::before {
+  content: ""; position: absolute; inset: 4px 0; z-index: -1; border-radius: inherit;
+  transition: opacity .18s ease;
+}
+.site-head.site-head--acct .head-login::before { background: var(--accent-soft); opacity: 0; }
+.site-head.site-head--acct .head-join::before,
+.site-head.site-head--acct .head-me::before { background-image: var(--grad); opacity: .2; }
+.site-head.site-head--acct .head-join::before { opacity: .4; }
+:root[data-theme="dark"] .site-head.site-head--acct .head-join::before { opacity: .3; }
+:root[data-theme="dark"] .site-head.site-head--acct .head-me::before { opacity: .16; }
+.site-head.site-head--acct .head-join { padding: .42rem 1rem; }
+.site-head.site-head--acct .head-me { gap: .45rem; padding: .42rem 1rem .42rem .85rem; }
+.site-head.site-head--acct .head-me-mark { display: grid; place-items: center; flex: none; }
+
+.site-head.site-head--acct .head-acct a:hover,
+.site-head.site-head--acct .head-acct a[aria-current="page"] { color: var(--accent); }
+.site-head.site-head--acct .head-login:hover::before,
+.site-head.site-head--acct .head-login[aria-current="page"]::before { opacity: 1; }
+.site-head.site-head--acct .head-me:hover::before,
+.site-head.site-head--acct .head-me[aria-current="page"]::before { opacity: .34; }
+.site-head.site-head--acct .head-join:is(:hover, [aria-current="page"])::before { opacity: .55; }
+/* the dark bases above outrank the hover rules, so dark gets its own deeper states */
+:root[data-theme="dark"] .site-head.site-head--acct .head-me:is(:hover, [aria-current="page"])::before { opacity: .3; }
+:root[data-theme="dark"] .site-head.site-head--acct .head-join:is(:hover, [aria-current="page"])::before { opacity: .44; }
+.site-head.site-head--acct .head-acct a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* The menu's own pills (a pointer, the current page, an open menu) are drawn the same way, 4px in
+   from the top and the bottom of the 44px tap area, so every pill in the header is 36px: a 44px
+   "Quizzes" standing beside a 36px "Sign up", both faint and in one grey, read as a mistake
+   (2026-09-22). The tap area and the focus ring keep the full 44px. */
+.site-head.site-head--acct nav > a,
+.site-head.site-head--acct .navmenu > summary { position: relative; isolation: isolate; }
+.site-head.site-head--acct nav > a:is(:hover, [aria-current="page"]),
+.site-head.site-head--acct .navmenu > summary { background: none; }
+.site-head.site-head--acct nav > a::before,
+.site-head.site-head--acct .navmenu > summary::before {
   content: ""; position: absolute; inset: 4px 0; z-index: -1; border-radius: inherit;
   background: var(--accent-soft); opacity: 0; transition: opacity .18s ease;
 }
-.site-head.site-head--acct .head-login:hover,
-.site-head.site-head--acct .head-login[aria-current="page"] { color: var(--accent); }
-.site-head.site-head--acct .head-login:hover::before,
-.site-head.site-head--acct .head-login[aria-current="page"]::before { opacity: 1; }
-/* "Sign up": the loud one. */
-.site-head.site-head--acct .head-join { padding: .42rem 1.05rem; color: var(--on-grad); font-weight: 700; }
-.site-head.site-head--acct .head-join::before {
-  content: ""; position: absolute; inset: 4px 0; z-index: -1; border-radius: inherit;
-  background-image: var(--grad); box-shadow: var(--lift); transition: box-shadow .2s;
-}
-.site-head.site-head--acct .head-join:hover::before { box-shadow: 0 6px 14px rgba(62, 134, 196, .3); }
-/* "My profile": the words, after a round mark in the same gradient, so the slot that held
-   the loud pill still holds the one bright thing in the header */
-.site-head.site-head--acct .head-me { gap: .5rem; padding: .3rem .8rem .3rem .3rem; color: var(--ink); }
-.site-head.site-head--acct .head-me-mark {
-  display: grid; place-items: center; width: 34px; height: 34px; flex: none;
-  border-radius: 50%; background-image: var(--grad); color: var(--on-grad);
-}
-.site-head.site-head--acct .head-me:hover,
-.site-head.site-head--acct .head-me[aria-current="page"] { background: var(--accent-soft); color: var(--accent); }
-.site-head.site-head--acct .head-acct a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.site-head.site-head--acct nav > a:is(:hover, [aria-current="page"])::before,
+.site-head.site-head--acct .navmenu > summary:hover::before,
+.site-head.site-head--acct .navmenu[open] > summary::before,
+.site-head.site-head--acct .navmenu.here > summary::before { opacity: 1; }
 
 /*
  * Phone and tablet, two rows. Row 1: the brand, and the account pair at the top right where
@@ -327,16 +362,18 @@ a { color: var(--accent); text-underline-offset: 2px; }
  * (the owner, 2026-09-22). DOM order is brand, nav, pair, bulb, which is the desktop row; the
  * two rows are made with `order`.
  *
- * Why up to 48rem and not the 46rem the rest of the header turns on: the desktop row with the
- * pair in it is 720px of content (measured: brand 134, nav 353, pair 153, bulb 44, three gaps),
- * and a 768px tablet has 712. From 48rem to 50rem the row is kept by giving the nav items and
- * the gaps a little less room (682px); below 48rem there is no honest way to fit it.
+ * Why up to 56rem and not the 46rem the rest of the header turns on: on one row the nav stands
+ * in the TRUE centre of the header (see "one row" below), so each side has to be as wide as the
+ * wider of the two, and that row is 806px of content (measured 2026-09-22: brand 190, nav 356
+ * in Inter, pair 157 + gap + bulb 44 = 213 on the right, twice, and two gaps). 56rem leaves it
+ * 34px to spare. Before this the row started at 48rem and a 768px tablet ran the bulb 30px off
+ * the right edge, because the new logo is 56px wider than the brand the row was measured with.
  *
  * The nav's width is the row less the bulb and one gap, and a pixel less again so rounding can
  * never push the bulb onto a third row. flex-grow takes the pixel back. When a quiz hides the
  * nav and the pair (quiz.css), the bulb's auto margin brings it back up beside the brand.
  */
-@media (max-width: 47.99rem) {
+@media (max-width: 55.99rem) {
   .site-head.site-head--acct .wrap { flex-wrap: wrap; }
   .site-head.site-head--acct .brand { margin-right: 0; }
   .site-head.site-head--acct .head-acct { margin-left: auto; }
@@ -367,10 +404,25 @@ a { color: var(--accent); text-underline-offset: 2px; }
 @media (max-width: 22.49rem) {
   .site-head.site-head--acct .navmenu-caret { display: none; }
 }
+/* The menu went to Inter at .9rem (2026-09-22), which is 10px wider on this row: at 375 the
+   four items still fill their 292px exactly, but at 360 "Donate" was cut against the bulb. So
+   below 24rem the items give up a little more padding (274px in 277 at 360; 375 is inside the
+   rule on purpose, because "exactly" leaves nothing for a phone that renders a hair wider), and at 320, which
+   has no carets to separate the words, the type steps down to .85rem so the padding can stay
+   wide enough to read the four words apart (229px in 237). */
+@media (max-width: 23.99rem) {
+  .site-head.site-head--acct nav > a,
+  .site-head.site-head--acct .navmenu > summary { padding-left: .2rem; padding-right: .2rem; }
+}
+@media (max-width: 22.49rem) {
+  .site-head.site-head--acct nav { font-size: .85rem; }
+  .site-head.site-head--acct nav > a,
+  .site-head.site-head--acct .navmenu > summary { padding-left: .25rem; padding-right: .25rem; }
+}
 /* From 30rem the row has the width to itself, so every item gets the roomy padding. (kit.css
    tightens the links, and only the links, between 30 and 34rem, for the old single row; the
    menus kept theirs, which left the gaps uneven. The row here has no need to be tight.) */
-@media (min-width: 30rem) and (max-width: 47.99rem) {
+@media (min-width: 30rem) and (max-width: 55.99rem) {
   .site-head.site-head--acct nav { gap: .25rem; margin-left: -.7rem; width: calc(100% + .7rem - 48px - .75rem - 1px); }
   .site-head.site-head--acct nav > a,
   .site-head.site-head--acct .navmenu > summary { padding: .42rem .7rem; }
@@ -380,22 +432,31 @@ a { color: var(--accent); text-underline-offset: 2px; }
    the first from the page's own gutter, in line with the brand, rather than from its pill's
    edge 11px outside it; the last, which at 480 would run 10px off the screen, centred under
    its own word (100 to 380 at 480). */
-@media (min-width: 30rem) and (max-width: 47.99rem) {
+@media (min-width: 30rem) and (max-width: 55.99rem) {
   .site-head.site-head--acct .navmenu-panel { left: 0; right: auto; }
   .site-head.site-head--acct .navmenu:first-of-type .navmenu-panel { left: .7rem; }
   .site-head.site-head--acct .navmenu:last-of-type .navmenu-panel { left: 50%; transform: translateX(-50%); }
 }
-/* One row again from 48rem, where the pair pushes the nav to the left, and "Quizzes" sits so
-   near the brand that its right-anchored menu opened past the left edge of the screen (at -11
-   at 768). It opens rightwards until the row is wide enough to hang it the usual way clear
-   of the gutter (at 54rem it would start at 58px). */
-@media (min-width: 48rem) and (max-width: 53.99rem) {
-  .site-head.site-head--acct .navmenu:first-of-type .navmenu-panel { left: 0; right: auto; }
-}
-@media (min-width: 48rem) and (max-width: 49.99rem) {
-  .site-head.site-head--acct .wrap { column-gap: .5rem; }
-  .site-head.site-head--acct nav > a,
-  .site-head.site-head--acct .navmenu > summary { padding-left: .5rem; padding-right: .5rem; }
+/*
+ * ONE ROW, from 56rem: the nav in the true centre of the header, so it stands on the same line
+ * as the headline under it ("Know yourself a little better." is centred on the page), with the
+ * brand at the left and the pair and the bulb at the right (the owner, 2026-09-22). A grid of
+ * three columns, the outer two equal: each is at least as wide as what it holds and they share
+ * what is left, so the middle column is centred for as long as the row has room.
+ *
+ * The pair and the bulb share the right-hand cell, both pinned to its right edge, the pair held
+ * off the bulb by the bulb's width and the row's gap; that margin counts in the cell's width.
+ * When a quiz hides the nav and the pair (quiz.css), the brand and the bulb keep their places.
+ */
+@media (min-width: 56rem) {
+  .site-head.site-head--acct .wrap {
+    display: grid; grid-template-columns: minmax(max-content, 1fr) auto minmax(max-content, 1fr);
+    align-items: center; column-gap: .75rem;
+  }
+  .site-head.site-head--acct .brand { grid-area: 1 / 1; justify-self: start; margin-right: 0; }
+  .site-head.site-head--acct nav { grid-area: 1 / 2; }
+  .site-head.site-head--acct .head-acct { grid-area: 1 / 3; justify-self: end; margin-right: calc(44px + .75rem); }
+  .site-head.site-head--acct .theme-toggle { grid-area: 1 / 3; justify-self: end; }
 }
 /* 320px: the brand and the pair only just share a row, so the pair gives up some padding, but
    never its gap: the two pills must not touch on the log-in page. */
@@ -504,7 +565,8 @@ a { color: var(--accent); text-underline-offset: 2px; }
 
 .wheel-hatch-line { stroke: var(--zone-hatch); stroke-width: 3; }
 .wheel-zone {
-  fill: url(#wheel-hatch); stroke: var(--zone-edge); stroke-width: 1;
+  /* its fill is the wheel's own hatch pattern, set on the circle (CompassWheel.astro) */
+  stroke: var(--zone-edge); stroke-width: 1;
 }
 
 /* the two poles, and the grey that means neither */

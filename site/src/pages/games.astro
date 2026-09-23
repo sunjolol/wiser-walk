@@ -8,9 +8,9 @@
  * a page whose job is to get someone playing ending on process talk.
  *
  * Now both games get the same room: a dark card carrying its own mark, its own ink, the
- * counted facts and a small drawing of what a player actually meets. Play is in the band and
- * again on every card. Where the lines come from is said once, in the band's own line, and
- * in full after every answer inside the game.
+ * counted facts and a small drawing of what a player actually meets. Play is in the band, on
+ * every card, and at the foot of each game's short rules below. Where the lines come from is
+ * said once, in the band's own line, and in full after every answer inside the game.
  *
  * Every number on this page is read from the built game's metadata; nothing is typed but the
  * rules a game states on its own page (a run is ten lines, about two minutes).
@@ -20,7 +20,6 @@ import Hero from '../components/Hero.astro';
 import GameCard from '../components/GameCard.astro';
 import SectionHead from '../components/SectionHead.astro';
 import Icon from '../components/Icon.astro';
-import type { IconName } from '../lib/icons';
 import { liveGames } from '../lib/games';
 import slsMeta from '../games/sounds-like-scripture.meta.json';
 import wsiMeta from '../games/who-said-it.meta.json';
@@ -28,13 +27,13 @@ import wsiMeta from '../games/who-said-it.meta.json';
 const games = liveGames();
 
 /**
- * What each game shows on its card. The mark and the ink keep two dark cards from reading
- * as one; `run` is the length of a run, which each game states on its own page; the facts
+ * What each game shows on its card. The ghost glyph and the ink keep two dark cards from
+ * reading as one; `run` is the length of a run, which each game states on its own page; the facts
  * are counted off the built pool; and `preview` is the drawing, whose line and names come
  * off that same metadata so a card is one real question out of the game and nothing typed.
  */
 type CardSpec = {
-  icon: IconName;
+  ghost: 'quote' | 'ask';
   ink: 'orange' | 'blue';
   run: number;
   /** The size of this game's pool, for the band's count across every game. */
@@ -47,13 +46,13 @@ type CardSpec = {
 
 const SPEC: Record<string, CardSpec> = {
   'sounds-like-scripture': {
-    icon: 'scroll',
+    ghost: 'ask',
     ink: 'orange',
     run: 10,
     items: slsMeta.items,
-    /* Short enough to stand on one row of pills at 390: three long ones stacked into three
-       rows and pushed the drawing off the screen. */
-    facts: [`${slsMeta.items} real lines`, `${slsMeta.sources} editions`],
+    /* No "N real lines" pill on a card (the owner, 2026-09-22): the count stays in the band's
+       tiles above, across both games, and on each game's own page. */
+    facts: [`${slsMeta.sources} editions`],
     preview: {
       kind: 'binary',
       answers: ['Not in the Bible', 'In the Bible'],
@@ -62,14 +61,11 @@ const SPEC: Record<string, CardSpec> = {
     }
   },
   'who-said-it': {
-    icon: 'quote',
+    ghost: 'quote',
     ink: 'blue',
     run: 10,
     items: wsiMeta.items || 0,
-    facts: [
-      ...(wsiMeta.items ? [`${wsiMeta.items} real lines`] : []),
-      ...(wsiMeta.speakers ? [`${wsiMeta.speakers} speakers`] : [])
-    ],
+    facts: wsiMeta.speakers ? [`${wsiMeta.speakers} speakers`] : [],
     /*
      * One real line and the four real names under it, both straight out of the built
      * pool's metadata, which never records which of the four spoke. Alphabetical, and
@@ -86,61 +82,67 @@ const SPEC: Record<string, CardSpec> = {
 /**
  * WHAT A PLAYER IS ABOUT TO MEET, in words, under the cards.
  *
- * This page carried 175 words, which made the two games the thinnest pages on a site whose
- * whole hope is being found by someone searching for exactly this. The words below are the
- * ones a person wants before they tap Play: what the game asks, how long a run is, where the
- * lines come from, and what decides the answer. Not how any of it was made.
+ * Short on purpose (the owner, 2026-09-22: inviting, never a wall of text). Each game gets a
+ * question for a title and four points a reader can take in at a glance, each a bold lead-in
+ * and one or two plain sentences; then its way in. The words are the owner's, checked against
+ * the games themselves: the answer buttons are named as the game names them, "quick, right
+ * answers score more" is the game's scoring (a right answer earns more the more of its clock is
+ * left), and both games' first screens show the traps and the canon choice named here.
  *
- * Nothing here repeats a number the card above already prints, and nothing here is typed that
- * the game does not say on its own first screen ("Eight to sixteen seconds each") or in its
- * own footer (the editions, the canon). The works named in the second paragraph are the
- * sources in the built pool, in the order the pool lists them.
+ * `text` may carry an <em> for a button's name; it is set as HTML, and only ever from this file.
  */
-type Say = { kicker: string; title: string; paras: string[] };
+type Point = { lead: string; text: string };
+type Say = { kicker: string; title: string; points: Point[] };
 
 const SAY: Record<string, Say> = {
   'sounds-like-scripture': {
     kicker: 'Sounds Like Scripture',
     title: 'Is this line in the Bible?',
-    paras: [
-      'A line comes up on a card and you call it: in the Bible, or only sounds like it. Ten ' +
-        'lines a run, eight to sixteen seconds on each, so a run is done inside a couple of ' +
-        'minutes. Points go to speed, and a run of right answers is worth more.',
-      /* Two hard spaces: a line that breaks after "1" leaves a bare numeral at the end of a
-         column, and one that breaks after "à" leaves a bare accent. */
-      /* "among them", because the pool holds eleven prose works and this names six of them:
-         a colon list here would read as the whole shelf. */
-      'The lines that are not Scripture are not inventions. They are sentences out of the ' +
-        'Apocrypha and 1 Enoch, and out of books Christians have read for centuries, ' +
-        'among them the Apostolic Fathers, Augustine, Thomas à Kempis, Julian of ' +
-        'Norwich, John Bunyan and Josephus. Old English and plain modern English appear on ' +
-        'both sides, so the way a line sounds gives nothing away.',
-      'You choose the Bible you read before you start, Protestant, Catholic or Orthodox, and ' +
-        'what counts as Scripture follows that choice. A book yours prints and another leaves ' +
-        'out is never called a fake; the answer tells you where it is printed.'
+    points: [
+      { lead: 'Call it.', text: 'A line appears. Tap <em>In the Bible</em> or <em>Not in the Bible</em> before the clock runs out.' },
+      { lead: 'Ten lines a run.', text: 'A few seconds each, and quick, right answers score more.' },
+      { lead: 'No easy fakes.', text: 'The lines that aren’t Scripture come from old books Christians have read for centuries, and old and modern English turn up on both sides.' },
+      { lead: 'Your Bible.', text: 'Choose Protestant, Catholic or Orthodox before you start, and the answers follow it.' }
     ]
   },
   'who-said-it': {
     kicker: 'Who Said It?',
-    title: 'Which of these four spoke?',
-    paras: [
-      'A line of speech comes up with four names under it, and you tap the one who said it. ' +
-        'Ten lines a run, ten to eighteen seconds on each, and the names you are given are ' +
-        'people who could plausibly have been in the room.',
-      'That is what makes it hard. Job’s friends sound like God, and the Pharisees sound like ' +
-        'the disciples. No name is ever offered as the wrong answer when it could truthfully ' +
-        'have said the line, so God is never set against Jesus, and the disciples are never ' +
-        'set against Peter.',
-      'Every line is speech the Bible records, from the sixty-six books, in the King James ' +
-        'Version and the World English Bible, British Edition. As soon as you answer you are ' +
-        'told who spoke and where to read it.'
+    title: 'Which of the four said it?',
+    points: [
+      { lead: 'Pick the speaker.', text: 'A line of speech from the Bible, four names underneath. Tap the one who said it.' },
+      { lead: 'Ten lines a run.', text: 'A few seconds each, and quick, right answers score more.' },
+      { lead: 'Close calls on purpose.', text: 'Job’s friends sound like God, and the Pharisees sound like the disciples.' },
+      { lead: 'Learn as you go.', text: 'After every answer you see who said it and where to read it.' }
     ]
   }
+};
+
+/*
+ * The daily round, which both games already have: the "Today's Challenge" button on each start
+ * screen draws its ten from the date (UTC), not from chance, and never skips lines a player has
+ * seen, so everyone who plays it that day meets the same ten. In Sounds Like Scripture the ten
+ * also depend on the Bible chosen, because what counts as Scripture decides the draw, hence the
+ * last sentence. No link: the round is reached from each game's own first screen.
+ *
+ * The streak point is the owner's, kept on his word (2026-09-22) although neither game counts
+ * days in a row yet: the day streak is to be built before this page is widely read, and he
+ * would rather not come back to rewrite it. When it is built, it must match these words.
+ */
+const DAILY: Say = {
+  kicker: 'Every day',
+  title: 'Today’s Challenge',
+  points: [
+    { lead: 'New every day.', text: 'Both games have a daily round of ten lines, and a fresh one starts each day.' },
+    { lead: 'The same ten for everyone.', text: 'Play it on the same day as a friend and compare scores. In Sounds Like Scripture, choose the same Bible.' },
+    { lead: 'Keep your streak going.', text: 'Play Today’s Challenge each day and your streak counts up.' }
+  ]
 };
 
 /* Every live game gets a room, drawn or not: a game whose drawing nobody has made yet still
    belongs on the hub, and the card simply carries its words and its way in. */
 const specs = games.map(g => SPEC[g.slug]);
+/* The daily panel says "both games", so it is drawn only while both are live. */
+const hasDaily = ['sounds-like-scripture', 'who-said-it'].every(slug => games.some(g => g.slug === slug));
 /** Counted across the whole shelf, so the band never reports one game's pool as the site's. */
 const totalLines = specs.reduce((n, s) => n + (s?.items ?? 0), 0);
 const runs = specs.filter(Boolean).map(s => s!.run);
@@ -184,15 +186,14 @@ const jsonLd = {
   */}
   <Hero
     title="Games"
-    eyebrow="Against the clock"
-    icon="scroll"
     kind="night"
     image="/img/game-manuscript.jpg"
     imageAlt=""
     imagePosition="50% 24%"
     tiles={[
       { n: games.length, label: games.length === 1 ? 'Game' : 'Games' },
-      ...(totalLines ? [{ n: totalLines, label: 'Real lines' }] : []),
+      /* "2,168", as each game's own tiles print their counts ("1,261"), never a bare "2168" */
+      ...(totalLines ? [{ n: totalLines.toLocaleString('en-US'), label: 'Real lines' }] : []),
       ...(sameRun ? [{ n: runs[0]!, label: 'Lines a run' }] : [])
     ]}
   >
@@ -211,7 +212,7 @@ const jsonLd = {
       return (
         <GameCard
           game={g}
-          icon={s?.icon ?? g.icon}
+          ghost={s?.ghost}
           ink={s?.ink ?? (i % 2 === 0 ? 'orange' : 'blue')}
           clock={s ? '2 min a run' : undefined}
           facts={s?.facts}
@@ -222,31 +223,40 @@ const jsonLd = {
   </div>
 
   {/*
-    The words under the cards. A card says what a game is in a sentence and shows one real
-    question; this says what a player actually wants to know next, which is how a run goes,
-    where the lines come from and what decides the answer. It is not a second card: plain
-    panels, the site's own, one to a game, and one quiet line under both.
+    The words under the cards: what a player wants to know before tapping Play, as a short list
+    per game rather than paragraphs, ending on that game's own way in (a .go-pill in its ink).
+    Plain panels, the site's own, so they read as the page explaining itself and not as two more
+    cards competing with the two above. The daily round, which both games share, spans the
+    width under them.
   */}
-  <SectionHead title="How the games work" kicker="Before you play" />
-  <div class="stack stack--2">
+  <SectionHead title="How the games work" />
+  <div class="gsay">
     {games.map(g => {
       const s = SAY[g.slug];
+      const ink = SPEC[g.slug]?.ink ?? 'blue';
       return s ? (
-        <section class="pnl">
+        <section class={`pnl gsay-pnl gsay-pnl--${ink}`}>
           <div class="pnl-head">
             <p class="pnl-kicker">{s.kicker}</p>
             <h3 class="pnl-title">{s.title}</h3>
           </div>
-          {s.paras.map(p => <p>{p}</p>)}
-          <p class="gsay-go"><a href={g.href}>Play {g.title} <Icon name="arrow" size={14} /></a></p>
+          <ul class="gsay-points">
+            {s.points.map(p => <li><b>{p.lead}</b><span set:html={p.text} /></li>)}
+          </ul>
+          <a class="go-pill gsay-go" href={g.href} aria-label={`Play ${g.title}`}>Play <Icon name="arrow" size={16} /></a>
         </section>
       ) : null;
     })}
+    {hasDaily && (
+      <section class="pnl gsay-pnl gsay-pnl--daily">
+        <div class="pnl-head">
+          <p class="pnl-kicker">{DAILY.kicker}</p>
+          <h3 class="pnl-title">{DAILY.title}</h3>
+        </div>
+        <ul class="gsay-points">
+          {DAILY.points.map(p => <li><b>{p.lead}</b><span set:html={p.text} /></li>)}
+        </ul>
+      </section>
+    )}
   </div>
-  <p class="gsay-foot">
-    Both are free, and there is nothing to sign up for. Every line in either game is quoted
-    word for word from a public-domain edition, and the citation is on the screen as soon as
-    you answer. None of them is one of the famous sayings people wrongly believe are in the
-    Bible: the lines that catch players out are ordinary ones.
-  </p>
 </Base>

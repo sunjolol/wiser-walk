@@ -15,28 +15,8 @@
  * bundler puts them in. Loaded from Base.astro.
  * ===================================================================================== */
 @media (max-width: 45.99rem) {
-  body .room-go,
-  body .read .read-go,
-  body .gcard-go,
-  body .qroom-go,
-  body .mroom-go,
-  body .nx-go,
-  body .scard-go {
-    display: inline-flex; align-items: center; gap: .5rem;
-    min-height: 44px; padding: .55rem 1.15rem; border-radius: 999px; font-size: .78rem; letter-spacing: .12em;
-    background: color-mix(in srgb, currentColor 16%, transparent);
-    box-shadow: inset 0 0 0 1.5px currentColor;
-  }
-  body .room-go .icon, body .read .read-go .icon { width: 16px; height: 16px; }
-  body .read .read-go { margin-top: .9rem; }
-
-  body .hm-more,
-  body .sect-more {
-    display: inline-flex; align-items: center; gap: .4rem; text-decoration: none;
-    min-height: 44px; padding: .5rem 1rem; border-radius: 999px; font-size: .7rem;
-    background: color-mix(in srgb, currentColor 14%, transparent);
-    box-shadow: inset 0 0 0 1.5px currentColor;
-  }
+  /* Every way in ("Start", "Play", "Read", "All …") is a .go-pill at every width now (kit.css),
+     so a phone needs nothing of its own for them. */
   /* the head is a two-column grid; a pill needs the title to give it room */
   body .hm-head { align-items: center; row-gap: .35rem; }
 

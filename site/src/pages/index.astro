@@ -7,10 +7,11 @@
  * one idea: the brand's blue-to-orange is a sky at first light, and the site is a walk.
  *
  *   sky        the hero is a real dawn sky, and the quizzes rise out of its lower edge
- *   four rooms each quiz has its own picture, its own ink and its own mark, so none of them
- *              looks like the next: the compass is an instrument on a night ground, the
- *              figures, the gifts and the seven are three Doré engravings in one ink, so the
- *              art is one family and the subjects are not
+ *   four rooms each quiz has its own picture and its own ink, so none of them looks like
+ *              the next: the compass is an instrument on a night ground, the figures, the
+ *              gifts and the seven are three Doré engravings in one ink, so the art is one
+ *              family and the subjects are not. No marks over the titles: the owner found
+ *              them distracting (2026-09-22)
  *   night      the games sit on a dark band over an old manuscript page, because they are played with the text
  *   morning    the articles are paintings first and words second: colour, where the quizzes are ink
  *   (the traditions list moved to the foot of the Compass's own page, 2026-09-21)
@@ -23,17 +24,15 @@ import '../styles/pages/home.css';
 import '../styles/pages/reads.css';
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
-import CompassWheel from '../components/CompassWheel.astro';
+import CompassCard from '../components/CompassCard.astro';
 import ReadCard from '../components/ReadCard.astro';
-import { QUIZZES, getQuiz, scoreQuiz, resultFor, outcomeHref, quizHref } from '../lib/engine/registry';
+import { getQuiz, quizHref } from '../lib/engine/registry';
 import { groupNounPlural } from '../lib/engine/types';
-import type { BipolarView } from '../lib/engine/types';
 import { liveGames } from '../lib/games';
 import { SEO } from '../lib/seo';
 import { SUPPORT_URL, SUPPORT_READY } from '../lib/support';
 import slsMeta from '../games/sounds-like-scripture.meta.json';
 import wsiMeta from '../games/who-said-it.meta.json';
-import audit from '../data/compass-audit.json';
 import { getCollection } from 'astro:content';
 
 const compass = getQuiz('theology-compass')!;
@@ -44,12 +43,6 @@ const games = liveGames();
 const sls = games.find(g => g.slug === 'sounds-like-scripture');
 const wsi = games.find(g => g.slug === 'who-said-it');
 
-/* The wheel is a REAL result: a published, audited answer sheet scored by the live engine. */
-const EXAMPLE = 'Eastern Orthodox';
-const sheet = (audit.simulations as Array<Record<string, any>>).find(
-  s => s.tradition === EXAMPLE && Array.isArray(s.answers)
-);
-const exampleView = sheet ? (resultFor(compass, scoreQuiz(compass, sheet.answers)) as BipolarView) : null;
 
 const articles = (await getCollection('articles'))
   .filter(a => !a.data.draft)
@@ -109,7 +102,6 @@ const jsonLd = {
   <section class="hm-hero">
     <img class="hm-hero-img" src="/img/sky-rays.jpg" alt="" width="1800" height="1200" fetchpriority="high" decoding="async" />
     <div class="hm-hero-in">
-      <p class="hm-chip"><Icon name="path" size={14} /> {QUIZZES.length} quizzes · {games.length} games · {articleCount} articles</p>
       <h1>Know yourself<br />a little <em>better.</em></h1>
       <p class="hm-lede">
         Quizzes and Bible games for Christians who would rather see themselves clearly than
@@ -124,30 +116,14 @@ const jsonLd = {
 
   {/* ------------------------------------------------------------------ four rooms */}
   <section class="hm-rooms" aria-labelledby="hm-quizzes">
+    {/* Only the word (the owner, 2026-09-22): no kicker, and no "All quizzes" link, because every
+        quiz is already on this page, on the rail below. */}
     <header class="hm-head hm-head--over">
-      <p class="hm-kicker">See where you stand</p>
       <h2 id="hm-quizzes">quizzes</h2>
-      <a class="hm-more" href="/quizzes/">All quizzes <Icon name="arrow" size={13} /></a>
     </header>
 
-      <a class="room room--compass dark" href={quizHref(compass)}>
-        <div class="room-body">
-          <span class="room-mark"><Icon name="compass" size={20} /></span>
-          <p class="room-kicker">The flagship</p>
-          <h3>{compass.title}</h3>
-          <p class="room-say">Six questions that divide Christians, and the tradition that sits nearest you.</p>
-          <ul class="room-facts">
-            <li><Icon name="clock" size={13} /> {compass.minutes} min</li>
-            <li>{compass.items.length} statements</li>
-            <li>{compass.outcomes.length} traditions</li>
-          </ul>
-          <span class="room-go">Start <Icon name="arrow" size={14} /></span>
-        </div>
-        <div class="room-wheel">
-          {exampleView && <CompassWheel view={exampleView} />}
-          {exampleView && <p class="room-note">A real result: the published {EXAMPLE} answer sheet.</p>}
-        </div>
-      </a>
+      {/* The flagship: the shared Compass card, the same one every page offers. */}
+      <CompassCard />
 
     {/*
       The other quizzes stand on a rail, because there will be more than four. Each keeps a
@@ -160,14 +136,13 @@ const jsonLd = {
           <a class="room room--figures" href={quizHref(figures)}>
             <img src="/img/dore-moses.jpg" alt="Gustave Doré’s engraving of Moses breaking the tablets of the law" loading="lazy" decoding="async" width="820" height="1029" />
             <div class="room-body">
-              <span class="room-mark"><Icon name="users" size={20} /></span>
               <h3>{figures.title}</h3>
               <p class="room-say">Eighteen plain statements about you. None of them mentions the Bible.</p>
               <ul class="room-facts">
                 <li><Icon name="clock" size={13} /> {figures.minutes} min</li>
                 <li>{figures.outcomes.length} figures</li>
               </ul>
-              <span class="room-go">Find yours <Icon name="arrow" size={14} /></span>
+              <span class="room-go">Start <Icon name="arrow" size={14} /></span>
             </div>
           </a>
         )}
@@ -176,14 +151,13 @@ const jsonLd = {
           <a class="room room--gifts" href={quizHref(gifts)}>
             <img src="/img/dore-paul.jpg" alt="Gustave Doré’s engraving of Paul preaching to a gathered church at Thessalonica" loading="lazy" decoding="async" width="565" height="696" />
             <div class="room-body">
-              <span class="room-mark"><Icon name="sparkle" size={20} /></span>
               <h3>{gifts.title}</h3>
               <p class="room-say">All {gifts.groups.length} {groupNounPlural(gifts)} the New Testament names.</p>
               <ul class="room-facts">
                 <li><Icon name="clock" size={13} /> {gifts.minutes} min</li>
                 <li>{gifts.items.length} statements</li>
               </ul>
-              <span class="room-go">Take it <Icon name="arrow" size={14} /></span>
+              <span class="room-go">Start <Icon name="arrow" size={14} /></span>
             </div>
           </a>
         )}
@@ -193,13 +167,12 @@ const jsonLd = {
             <img src="/img/dore-eden.jpg" alt="Gustave Doré’s engraving of Adam and Eve driven out of Eden" loading="lazy" decoding="async" width="820" height="1029" />
             {sins.status === 'draft' && <span class="room-tab">Draft</span>}
             <div class="room-body">
-              <span class="room-mark"><Icon name="apple" size={20} /></span>
               <h3>{sins.title}</h3>
               <ul class="room-facts">
                 <li><Icon name="clock" size={13} /> {sins.minutes} min</li>
                 <li>{sins.items.length} statements</li>
               </ul>
-              <span class="room-go">Take it <Icon name="arrow" size={14} /></span>
+              <span class="room-go">Start <Icon name="arrow" size={14} /></span>
             </div>
           </a>
         )}
@@ -214,21 +187,20 @@ const jsonLd = {
     <section class="hm-night" aria-labelledby="hm-games">
       <img class="hm-night-img" src="/img/game-manuscript.jpg" alt="" loading="lazy" decoding="async" width="1400" height="858" />
       <header class="hm-head hm-head--dark">
-        <p class="hm-kicker">Against the clock</p>
         <h2 id="hm-games">games</h2>
-        <a class="hm-more" href="/games/">All games <Icon name="arrow" size={13} /></a>
+        <a class="hm-more go-pill" href="/games/">All games <Icon name="arrow" size={16} /></a>
       </header>
       <div class="hm-games">
         {sls && (
           <a class="game" href={sls.href}>
+            {/* The game's one question, "is it in the Bible?", as a ghost in the corner. */}
+            <span class="corner-ghost corner-ghost--ask" aria-hidden="true">?</span>
             <div class="game-say">
-              <span class="room-mark room-mark--orange"><Icon name="scroll" size={20} /></span>
               {/* "Sounds / Like Scripture" rather than a lone "Scripture" in the narrow column */}
               <h3>{sls.title.replace(/ (?=\S+$)/, '\u00A0')}</h3>
               <p>A line appears. Is it in the Bible, or does it only sound like it?</p>
               <ul class="room-facts">
                 <li><Icon name="clock" size={13} /> 2 min a run</li>
-                <li>{slsMeta.items} real lines</li>
               </ul>
               <span class="room-go">Play <Icon name="arrow" size={14} /></span>
             </div>
@@ -245,13 +217,12 @@ const jsonLd = {
         )}
         {wsi && (
           <a class="game" href={wsi.href}>
+            <span class="corner-ghost corner-ghost--quote" aria-hidden="true">“</span>
             <div class="game-say">
-              <span class="room-mark room-mark--blue"><Icon name="quote" size={20} /></span>
               <h3>{wsi.title}</h3>
               <p>A line of speech and four names under it. The wrong name is rarely the odd one out.</p>
               <ul class="room-facts">
                 <li><Icon name="clock" size={13} /> 2 min a run</li>
-                {wsiMeta.items ? <li>{wsiMeta.items} real lines</li> : null}
               </ul>
               <span class="room-go">Play <Icon name="arrow" size={14} /></span>
             </div>
@@ -277,9 +248,8 @@ const jsonLd = {
   {articles.length > 0 && (
     <section class="hm-morning" aria-labelledby="hm-articles">
       <header class="hm-head">
-        <p class="hm-kicker">The slow work of formation</p>
         <h2 id="hm-articles">articles</h2>
-        <a class="hm-more" href="/articles/">All {articleCount} articles <Icon name="arrow" size={13} /></a>
+        <a class="hm-more go-pill" href="/articles/">All {articleCount} articles <Icon name="arrow" size={16} /></a>
       </header>
       <div class="hm-reads">
         {shownArticles.map(a => (

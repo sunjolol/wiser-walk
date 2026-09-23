@@ -45,7 +45,7 @@ const lib = passages.passages as Record<
 <div class="pg">
   <div class="pg-head">
     <Heading>Passages both sides argue from</Heading>
-    <p class="pg-note">Tap one to read it. {passages.abbreviation}, {passages.licence.toLowerCase()}</p>
+    <p class="pg-note">Tap one to read it. {passages.abbreviation}, {passages.licence.charAt(0).toLowerCase() + passages.licence.slice(1)}</p>
   </div>
 
   <div class="pg-row">

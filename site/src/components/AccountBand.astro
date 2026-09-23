@@ -2,16 +2,16 @@
 /**
  * The one band the account pages share.
  *
- * Five pages of the sign-up flow wear the same picture, the same chip, the same two-ink
- * headline and the same slot, so that going from "keep your results" to "check your email"
+ * Five pages of the sign-up flow wear the same picture, the same two-ink headline and the
+ * same slot (no chip since 2026-09-22: the owner had every label chip taken off the site), so that going from "keep your results" to "check your email"
  * to "choose a password" reads as one movement rather than five screens that happen to be
  * on the same site. The two back-of-house pages (/account/ and /account/setup/) pass
  * `kind="night"` and get the dark starry ground instead, because they are not a doorway.
  *
  * THE ACTION GOES IN THE SLOT, INSIDE THE BAND. That is the whole reason this component
  * exists: the owner's rule is that the main button is never below the fold on a phone, and
- * a band that ends before the form puts it there. At 390 the chip, a two-line headline, a
- * two-line lede, a field and a 52px button come to about 400px of content.
+ * a band that ends before the form puts it there. At 390 a two-line headline, a two-line
+ * lede, a field and a 52px button come to about 350px of content.
  *
  * `heads` is for the one page that has more than one state. /account/password/ is reached
  * from an email, from a link that has expired and from nowhere at all, and each of those is
@@ -19,16 +19,12 @@
  * showing is decided by `data-acct` on <html>, set before first paint; the rules are in
  * account.css, so nothing here needs to know.
  */
-import Icon from './Icon.astro';
-import type { IconName } from '../lib/icons';
 
 export interface Head {
   /** The `data-acct` value this head belongs to. Omitted on a page with one state. */
   state?: string;
   /** The one head that shows when the script is blocked and no state was ever decided. */
   fallback?: boolean;
-  eyebrow: string;
-  icon: IconName;
   /** The whole headline, including the phrase `accent` picks out of it. */
   title: string;
   /** One phrase, set in italic and the band's warm ink. Never more than one. */
@@ -46,10 +42,10 @@ export interface Props extends Partial<Head> {
 
 const {
   kind = 'photo', heads, ghost,
-  eyebrow = '', icon = 'users' as IconName, title = '', accent, lede
+  title = '', accent, lede
 } = Astro.props;
 
-const all: Head[] = heads ?? [{ eyebrow, icon, title, accent, lede }];
+const all: Head[] = heads ?? [{ title, accent, lede }];
 
 /** before / the accented phrase / after, so the em is never guessed at by a regex. */
 const split = (h: Head) => {
@@ -78,7 +74,6 @@ const split = (h: Head) => {
       const [before, em, after] = split(h);
       return (
         <div class:list={['ac-head', h.fallback && 'ac-head--fallback']} data-state={h.state}>
-          <p class="ac-chip"><Icon name={h.icon} size={14} /> {h.eyebrow}</p>
           <h1>{before}{em && <em>{em}</em>}{after}</h1>
           {h.lede && <p class="ac-lede">{h.lede}</p>}
         </div>

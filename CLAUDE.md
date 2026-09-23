@@ -41,6 +41,12 @@ Note he had earlier rejected the word "wiser" as "weird to say"; he has since ov
 
 State: local git repo initialised, **one commit** `c8fd322`, 137 files tracked, `node_modules` excluded. Authored as `Light <serenitybackto@gmail.com>` — he was offered a GitHub noreply address to keep his email out of public history and **chose to keep his real email**. Do not change it.
 
+## LIVE since late 2026-09-22: the standardize pass (see HANDOFF.md "LATEST")
+
+One card look, one Compass card, pill buttons, no icon tiles or text-only chips, centred header, darker textured
+dark theme; the daily round is called **Today's Challenge**. He is checking the game start screens himself. Design
+tweaks are done SOLO (no reviewer fan-outs: he found 3M+ tokens for cosmetic changes excessive).
+
 ## NEXT SESSION STARTS HERE (end of 2026-09-22): the quiz ideas, second attempt. Read HANDOFF.md "START HERE" first
 
 Live today: accounts public, the account design pass, his logo (brush W + Amatry wordmark as outlines), and

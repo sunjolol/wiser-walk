@@ -1,5 +1,5 @@
 /*
- * reference pages — the axis pages and the tradition pages.
+ * reference pages — the axis pages, the tradition pages and the figure pages.
  * Owned by one builder; see design/RICHE-PASS-BRIEF.md. Tokens only, phone first.
  *
  * These two page types are the site's reference floor: they describe somebody else's
@@ -48,14 +48,7 @@
 
 .ref .correction { margin-top: 2rem; }
 
-/* the pole names as the band's lede: both printed, each in its own ink */
-.poleline { display: flex; flex-wrap: wrap; align-items: baseline; gap: .1rem .6rem; }
-.poleline-to { display: inline-flex; align-items: baseline; gap: .5rem; }
-.poleline b {
-  font-family: var(--display); font-style: italic; font-weight: 400;
-  font-size: clamp(1.45rem, 7.4vw, 2.2rem); line-height: 1.05; letter-spacing: -.015em;
-}
-.poleline i { font-style: normal; color: var(--ink-mute); font-size: 1.1rem; line-height: 1; }
+/* the pole names, each in its own ink */
 .pole-l { color: var(--accent); }
 .pole-r { color: var(--warn-ink); }
 
@@ -460,6 +453,10 @@
 .trad-kicker { color: var(--accent); }
 .trad-verdict { text-wrap: balance; }
 .trad-verdict .verdict-sep { color: var(--ink-mute); }
+/* site.css keeps each band word on one line from 46rem, for the result page's headline. In
+   the half-width body of this feature a long one ("rooted in Scripture and tradition") ran
+   past the card's edge and took its comma with it, so here a band word may break. */
+.trad-verdict .verdict-part { white-space: normal; }
 /* The six readings under the verdict are .axlist now, not a dotted spec list; see the dawn
    pass block at the foot of this file. */
 
@@ -526,8 +523,7 @@
 }
 @media (prefers-reduced-motion: reduce) { .nbr-link { transition: none; } }
 
-/* The way back into the quiz is .wayin now — a room with a picture in it, not a dark slab
-   with a spec list beside it. See the dawn pass block at the foot of this file. */
+/* The way back into the quiz is the quiz's own card: see THE WAY IN at the foot of this file. */
 
 @media (prefers-reduced-motion: reduce) {
   .pager-link { transition: none; }
@@ -674,11 +670,8 @@
      · no dotted rule is ever decoration. Space, or one hairline of the brand.
      · a mark only where it does work. The disc beside an axis is the pole the
        record points at; it is not a picture of the axis.
-     · the way back into the quiz is a room with a picture in it, not a slab.
-
-   `.wayin` is defined here and also used by the quiz intro: both stylesheets
-   are loaded on every page by Base.astro, and one room drawn once is better
-   than the same room drawn twice in two files.
+     · the way back into the quiz is that quiz's own card, the one it wears
+       everywhere else (THE WAY IN, at the foot of this file).
    ========================================================================== */
 
 /* ------------------------------------------------------- the dots come out ---- */
@@ -837,33 +830,24 @@
 
 /* ------------------------------------------------- the moments, by axis ---- */
 /*
- * One card per axis with a mark that says which way the record points: blue for
- * the left pole, orange for the right, split where the acts go both ways, hollow
- * where the text shows nothing. Six identical icons would have been decoration.
+ * One card per axis, and its reading says which way the record points in that pole's
+ * own ink, as the verdict at the top of the page does: blue for the left pole, orange
+ * for the right, the plain ink where the acts go both ways or the text shows nothing.
+ * (It was a round disc beside the heading; the owner had every mark beside a card's
+ * title taken off, 2026-09-22.)
  */
 /* a card is as tall as its own evidence. Stretched to its neighbour's height it ended in a
    hand's depth of empty panel, which reads as something that failed to load */
 @media (min-width: 62rem) { .moments { align-items: start; } }
 .ref .moment-axis { padding: 1.2rem 1.15rem 1.25rem; }
-.ref .moment-head {
-  display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .1rem .75rem;
-  align-items: center;
-}
-.moment-medal {
-  grid-row: 1 / span 2; display: grid; place-items: center;
-  width: 2.3rem; height: 2.3rem; border-radius: 50%; color: var(--on-grad);
-}
-.moment-medal--left { background: var(--blue); }
-.moment-medal--left .icon { transform: rotate(180deg); }
-.moment-medal--right { background: var(--orange); }
-.moment-medal--both { background-image: linear-gradient(to right, var(--blue) 50%, var(--orange) 50%); }
-.moment-medal--none { box-shadow: inset 0 0 0 2px var(--rule-strong); }
-.moment-medal--both .icon, .moment-medal--none .icon { display: none; }
-.ref .moment-poles { grid-column: 2; }
+/* the name over its two poles, both flush left */
+.ref .moment-head { display: grid; gap: .1rem; }
 .ref .moment-band {
   margin: .5rem 0 0; font-family: var(--display); font-style: italic; font-size: 1.05rem;
   letter-spacing: 0; text-transform: none; color: var(--ink-soft);
 }
+.ref .moment-band--left { color: var(--accent); }
+.ref .moment-band--right { color: var(--warn-ink); }
 .ref .moment-note { margin-top: .7rem; border-radius: var(--r-sm); font-size: .84rem; }
 .ref .moment { padding: .8rem 0 .85rem .85rem; }
 .ref .moment + .moment { border-top: 1px solid var(--rule); }
@@ -921,32 +905,136 @@
 .ref .nbr:first-child .nbr-rank { background-image: var(--grad); color: var(--on-grad); }
 
 /* ==============================================================================
-   THE WAY IN: a room with the quiz's own picture in it
-   (the foot of every reference page, and the foot of a quiz's intro)
+   THE WAY IN (2026-09-22)
+
+   At the foot of a reference page the way back into the quiz is that quiz's OWN
+   card, the one it wears everywhere (the owner: "literally everywhere it appears
+   it should be standardized"). The Compass's is the shared CompassCard (.ccard in
+   kit.css). Every other quiz's is its engraving room below, the home page's rail
+   room and /quizzes/'s: the quiz's Doré plate from lib/art.ts printed soft sepia
+   under a warm dark gradient, the title lifted off it, one line, the counted
+   facts and Start in the quiz's own ink. No icon tile and no ghost word.
+
+   One exception, and it is the page's rather than the card's: where the band at
+   the top of a page already IS the quiz's plate (every axis page of a quiz with a
+   plate; Moses, and the five figures with no plate of their own), the card is
+   drawn on that plate's own brown without it, because no page shows one picture
+   twice. Everything else about it is the same.
    ============================================================================== */
 
+.ref > .ccard-wrap, .ref > .qcard-wrap { margin: 2.6rem 0 0; }
+
+/* it lays itself out by its own width, as the Compass card does */
+.qcard-wrap { container-type: inline-size; }
+.qcard {
+  --room-ink: #FFD2B0;
+  position: relative; isolation: isolate; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  border-radius: 24px; text-decoration: none; color: #fff;
+  background: #2a2622; box-shadow: 0 10px 30px rgba(20, 24, 40, .16);
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+.qcard:hover { transform: translateY(-3px); box-shadow: 0 16px 38px rgba(20, 24, 40, .24); }
+:root[data-theme="dark"] .qcard {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .07), 0 10px 26px rgba(0, 0, 0, .35);
+}
+/* each quiz's ink, the home page's and /quizzes/'s, kept the same on purpose */
+.qcard--bible-figure { --room-ink: #EADFCB; }
+.qcard--spiritual-gifts { --room-ink: #FFC98F; }
+.qcard--seven-deadly-sins { --room-ink: #F2A596; }
+
+/* the plate, printed soft, and brought down to near-solid under the words. The second layer
+   is flat and normally zero: a plate printed unusually light gets it turned up from the page
+   (--room-dim), so its whole face goes down and the type stays readable */
+.qcard--pic { min-height: 26rem; }
+.qcard-img {
+  position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover;
+  object-position: var(--img-pos, 50% 20%);
+  filter: sepia(.34) contrast(.9) brightness(var(--img-lift, 1.06));
+}
+/* the gradient comes in higher than a home room's (26% and 58% there): this card carries a
+   kicker and a longer line, so its words start higher up the plate */
+.qcard--pic::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    linear-gradient(180deg, rgba(38, 33, 28, 0) 14%, rgba(38, 33, 28, .74) 46%, rgba(34, 30, 26, .96)),
+    linear-gradient(180deg, rgba(30, 26, 22, var(--room-dim, 0)), rgba(30, 26, 22, var(--room-dim, 0)));
+}
+/* no plate: the plate's own brown, with a glow of the quiz's ink in the corner the Compass
+   card keeps its blue in */
+.qcard--plain {
+  background-image: radial-gradient(110% 95% at 90% 0%, color-mix(in srgb, var(--room-ink) 16%, transparent), transparent 62%);
+}
+
+.qcard-body { position: relative; padding: 1.35rem 1.3rem 1.4rem; }
+.qcard-kicker {
+  margin: 0 0 .25rem; font-family: var(--ui); font-size: .6rem; font-weight: 700;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--room-ink);
+}
+.qcard-title {
+  margin: 0; font-family: var(--display); font-weight: 400; color: #fff;
+  font-size: clamp(1.55rem, 6.2vw, 1.95rem); line-height: 1.08; letter-spacing: -.012em;
+  text-wrap: balance;
+}
+/* the picture dims softly behind the title, as it does under the footer's "Keep walking.",
+   and behind the small kicker over it */
+.qcard--pic .qcard-title, .qcard--pic .qcard-kicker { text-shadow: var(--title-lift); }
+.qcard-say {
+  margin: .55rem 0 0; max-width: 26rem; font-size: .95rem; line-height: 1.5;
+  color: rgba(255, 255, 255, .85); text-wrap: balance;
+}
+.qcard-facts {
+  display: flex; flex-wrap: wrap; gap: .4rem; margin: .95rem 0 0; padding: 0; list-style: none;
+  font-family: var(--ui); font-size: .62rem; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.qcard-facts li {
+  display: inline-flex; align-items: center; gap: .35rem; padding: .36rem .62rem;
+  border-radius: 999px; color: rgba(255, 255, 255, .92);
+  background: rgba(255, 255, 255, .12); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16);
+}
+.qcard-go { margin-top: 1.1rem; color: var(--room-ink); }
+
+/* wide: the words keep the left of the card and the plate is left room to be seen */
+@container (min-width: 40rem) {
+  .qcard--pic { min-height: 22rem; }
+  .qcard--pic::after {
+    background:
+      linear-gradient(100deg, rgba(34, 29, 25, .96) 26%, rgba(36, 31, 26, .74) 54%, rgba(38, 33, 28, .3)),
+      linear-gradient(180deg, rgba(30, 26, 22, var(--room-dim, 0)), rgba(30, 26, 22, var(--room-dim, 0)));
+  }
+  .qcard-body { max-width: 34rem; padding: 2.2rem 2.4rem 2.3rem; }
+  .qcard-title { font-size: clamp(2rem, 4.7vw, 2.5rem); }
+  .qcard-say { font-size: 1.02rem; }
+  /* With no plate there is nothing to leave room for, and the words alone in one corner of a
+     wide card read as a slab. So the card becomes a band: the words on the left, the facts
+     and Start on the right, Start level with the last line of the sentence. */
+  .qcard--plain .qcard-body {
+    max-width: none; display: grid; grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 2.4rem; padding: 2rem 2.4rem 2.1rem;
+  }
+  .qcard--plain .qcard-kicker, .qcard--plain .qcard-title, .qcard--plain .qcard-say { grid-column: 1; }
+  .qcard--plain .qcard-facts { grid-column: 2; grid-row: 1 / 3; align-self: end; justify-self: end; margin: 0; }
+  .qcard--plain .qcard-go { grid-column: 2; grid-row: 3; align-self: end; justify-self: end; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .qcard { transition: none; }
+  .qcard:hover { transform: none; }
+}
+
+/* ------------------------------------------------ the room at a quiz's intro ---- */
+/*
+ * The start panel at the foot of a quiz's own intro (q/[quiz].astro; quiz.css adds .qway).
+ * Not the quiz's plate, which is the band at the top of that page, and not a dawn sky,
+ * which the footer under it is a photograph of: the night ground the instruments are drawn
+ * on, with first light coming up one corner of it.
+ */
 .wayin {
   position: relative; isolation: isolate; overflow: hidden;
   display: flex; flex-direction: column; justify-content: flex-end;
   min-height: 21rem; margin: 2.6rem 0 0; padding: 1.5rem 1.35rem 1.6rem;
   border-radius: 24px; color: #fff; background: #15161c;
 }
-.wayin-img {
-  position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover;
-}
-/* the engraving, printed soft, exactly as the home page's rooms print theirs */
-.wayin--pic .wayin-img { filter: sepia(.34) contrast(.9) brightness(var(--img-lift, 1.06)); }
-.wayin--pic { background: #2a2622; }
-.wayin--pic::after {
-  content: ""; position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(180deg, rgba(38, 33, 28, 0) 22%, rgba(38, 33, 28, .76) 58%, rgba(32, 28, 24, .96));
-}
-/*
- * No plate: the night ground the instruments are drawn on, with first light coming up one
- * corner of it. This is what a page gets when the picture it would otherwise use is already
- * somewhere on it — and a dawn sky is not the alternative, because the footer under every
- * one of these blocks is a photograph of one.
- */
 .wayin--night {
   background-color: #141a27; background-image: var(--dark-fill-img); background-size: 520px;
 }
@@ -958,7 +1046,7 @@
 }
 /* A room with no picture in it needs something on the side the picture would have taken, or
    it is a wide dark rectangle with words in one corner. The ghost word is the kit's own
-   answer to that, and it is always a real word from the page it is on. */
+   answer to that, and here it says what the room is for ("begin"). */
 .wayin-ghost {
   position: absolute; z-index: 0; right: -.04em; bottom: -.18em; pointer-events: none;
   user-select: none; font-family: var(--display); font-style: italic; font-weight: 400;
@@ -966,16 +1054,10 @@
   white-space: nowrap; color: rgba(255, 255, 255, .055);
 }
 .wayin-in { position: relative; z-index: 1; }
-.wayin-mark {
-  display: grid; place-items: center; width: 2.6rem; height: 2.6rem; margin: 0 0 .85rem;
-  border-radius: 14px; color: #17181d; background: var(--room-ink, var(--blue-soft));
-}
-.wayin--pic .wayin-mark { background: #EADFCB; }
 .wayin-kicker {
   margin: 0 0 .3rem; font-family: var(--ui); font-size: .6rem; font-weight: 700;
-  letter-spacing: .16em; text-transform: uppercase; color: var(--room-ink, var(--blue-soft));
+  letter-spacing: .16em; text-transform: uppercase; color: var(--blue-soft);
 }
-.wayin--pic .wayin-kicker { color: #EADFCB; }
 .wayin h2 {
   margin: 0; font-family: var(--display); font-weight: 400; color: #fff;
   font-size: clamp(1.75rem, 7.6vw, 2.4rem); line-height: 1.05; letter-spacing: -.015em;
@@ -983,18 +1065,7 @@
 }
 .wayin-say {
   margin: .6rem 0 0; max-width: 30rem; font-size: .95rem; line-height: 1.5;
-  color: rgba(255, 255, 255, .85); text-wrap: pretty;
-}
-/* the facts as glass pills, the way the rooms on the home page carry theirs */
-.wayin-facts {
-  display: flex; flex-wrap: wrap; gap: .4rem; margin: 1rem 0 0; padding: 0; list-style: none;
-  font-family: var(--ui); font-size: .62rem; font-weight: 600; letter-spacing: .08em;
-  text-transform: uppercase;
-}
-.wayin-facts li {
-  display: inline-flex; align-items: center; gap: .35rem; padding: .36rem .62rem;
-  border-radius: 999px; color: rgba(255, 255, 255, .92);
-  background: rgba(255, 255, 255, .12); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16);
+  color: rgba(255, 255, 255, .85); text-wrap: balance;
 }
 .wayin .btn-row { margin: 1.25rem 0 0; }
 .wayin .btn { flex: 1 1 auto; box-shadow: 0 6px 20px rgba(12, 22, 44, .3); }
@@ -1002,10 +1073,6 @@
 @media (min-width: 52rem) {
   .wayin { min-height: 22rem; padding: 2.2rem 2.2rem 2.3rem; }
   .wayin-in { max-width: 34rem; }
-  /* the words keep the left of the room and the picture is left room to be seen */
-  .wayin--pic::after {
-    background: linear-gradient(100deg, rgba(34, 29, 25, .96) 26%, rgba(36, 31, 26, .74) 54%, rgba(38, 33, 28, .3));
-  }
   .wayin h2 { font-size: clamp(2rem, 3.4vw, 2.7rem); }
 }
 

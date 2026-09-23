@@ -77,18 +77,10 @@ const art = artFor(quiz.slug);
  * A draft says so in the hero chip, where the facts about the instrument are, rather than
  * only two thousand pixels further down: the hub's card already marks it DRAFT on its face,
  * and a reader who starts here should not learn it later than a reader who starts there.
- *
- * On a draft the chip says THAT AND NOTHING ELSE. The statement count and the minutes are
- * already two of the tiles directly under it, and all three facts in one chip wrapped it
- * onto two lines at 390px.
- *
- * On a live quiz the chip used to carry the count and the minutes, which are the first and
- * last of the tiles at the foot of the same band: the band opened on two facts and closed
- * on the same two. It carries the site's own word for what this is instead — the word the
- * hub's band uses — so a reader who lands here first learns the kind of thing they are
- * looking at, and each fact is printed once.
+ * That is the ONLY chip this band carries. A live quiz's said "Self-assessment", a label with
+ * no job, and the owner had every such chip taken off the site (2026-09-22).
  */
-const eyebrow = isDraft ? 'Unaudited draft' : 'Self-assessment';
+const eyebrow = isDraft ? 'Unaudited draft' : undefined;
 
 const tiles = [
   { n: quiz.items.length, label: 'Statements' },
@@ -136,7 +128,7 @@ const breadcrumbs = isDraft
     title={quiz.title}
     blue={painted}
     eyebrow={eyebrow}
-    icon={quiz.icon}
+    icon={eyebrow ? quiz.icon : undefined}
     kind={art ? 'engraving' : 'night'}
     image={art?.src}
     imageAlt={art?.alt}
@@ -314,11 +306,11 @@ const breadcrumbs = isDraft
 
       {/* The way in again at the foot, as a room on the night ground. Not the quiz's own
           plate, which is already in the band at the top of this page, and not a dawn sky,
-          which is what the footer under this block is a photograph of. */}
+          which is what the footer under this block is a photograph of. No icon tile over
+          the words (the owner, 2026-09-22); the ghost word says what the room is for. */}
       <section class="wayin wayin--night qway">
         <div class="wayin-ghost" aria-hidden="true">begin</div>
         <div class="wayin-in">
-          <span class="wayin-mark" aria-hidden="true"><Icon name={quiz.icon} size={20} /></span>
           <p class="wayin-kicker">When you are ready</p>
           <h2>{quiz.items.length} statements, about {quiz.minutes} minutes.</h2>
           <p class="wayin-say">You can stop at any point, and go back at any point.</p>

@@ -8,6 +8,7 @@ import RailStack from '../../components/RailStack.astro';
 import TraditionNeighbours from '../../components/TraditionNeighbours.astro';
 import CorrectionNote from '../../components/CorrectionNote.astro';
 import CompareBlock from '../../components/CompareBlock.astro';
+import CompassCard from '../../components/CompassCard.astro';
 import { theologyCompass } from '../../lib/quizzes/theology-compass';
 import { groupHref, quizHref, resultFor } from '../../lib/engine/registry';
 import { clip } from '../../lib/seo';
@@ -63,9 +64,10 @@ const view = resultFor(quiz, position) as BipolarView;
 const neighbours = view.ranked.filter(r => r.slug !== tradition.slug);
 const named = view.rows.filter(r => !r.noClaim).length;
 
-/** The ghost word is one word of the name — the first real one, never anything invented. */
-const ghost =
-  (tradition.name.match(/[A-Za-z]{4,}/g) ?? [tradition.name])[0]!.toLowerCase();
+/*
+ * No ghost word on this page any more (2026-09-22). It was the first long word of the
+ * name, which gave "eastern", "southern" and "national": fragments the owner read as random.
+ */
 
 /**
  * Which pole a reading points at, for the small disc beside it. Not a judgement and not a
@@ -93,6 +95,21 @@ const strip = (n: string) => n.replace(/\s*\([^)]*\)/g, '').trim();
 const stripped = strip(tradition.name);
 const collides = quiz.outcomes.filter(o => strip(o.name) === stripped).length > 1;
 const searchName = collides ? tradition.name : stripped;
+
+/**
+ * The Compass card's one line at the foot, in this tradition's own name. Most of the names
+ * are adjectives ("Catholic", "Lutheran", "Wesleyan / Methodist"), so the name is followed by
+ * "tradition": "how near you land to Catholic" is not English. The count is the quiz's own.
+ */
+const NUMBER_WORDS = [
+  'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten',
+  'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen',
+  'nineteen', 'twenty'
+];
+const others = quiz.outcomes.length - 1;
+const compassSay =
+  `See how near you land to the ${searchName} tradition, and to the other ` +
+  `${NUMBER_WORDS[others] ?? others}.`;
 
 /**
  * The title, as many of the six topics as there is room for.
@@ -202,8 +219,6 @@ const breadcrumbs = [
 >
   <Hero
     title={tradition.name}
-    eyebrow={`${quiz.title} · tradition`}
-    icon="compass"
     kind="night"
     long
     tiles={[
@@ -246,7 +261,6 @@ const breadcrumbs = [
 
     <div class="feature trad-feature">
       <div class="feature-art dark">
-        <div class="dark-ghost" aria-hidden="true">{ghost}</div>
         <p class="feature-kicker">The sketch, drawn</p>
         <CompassWheel view={view} />
         <p class="feature-note">
@@ -296,7 +310,6 @@ const breadcrumbs = [
             <ul class="tfacts">
               {profile.did_you_know.map(fact => (
                 <li class="tfact">
-                  <span class="tfact-mark" aria-hidden="true"><Icon name="sparkle" size={16} /></span>
                   <p class="tfact-text">{fact.text}</p>
                   <p class="tfact-src">{fact.source}</p>
                 </li>
@@ -352,7 +365,6 @@ const breadcrumbs = [
             <ul class="tread-open">
               {profile.read.open.map(doc => (
                 <li>
-                  <span class="tread-mark" aria-hidden="true"><Icon name="book" size={15} /></span>
                   <p class="tread-title">{doc.title}</p>
                   <p class="tread-note">{doc.note}</p>
                 </li>
@@ -363,29 +375,9 @@ const breadcrumbs = [
       </>
     )}
 
-    {/* The way back into the quiz, as a room on the night ground the Compass is always
-        drawn on. Not a dawn sky: the footer directly below this block is a photograph of
-        one, and two skies stacked read as the same picture used twice. */}
-    <section class="wayin wayin--night">
-      <div class="wayin-ghost" aria-hidden="true">{ghost}</div>
-      <div class="wayin-in">
-        <span class="wayin-mark" aria-hidden="true"><Icon name="compass" size={20} /></span>
-        <p class="wayin-kicker">{quiz.title}</p>
-        <h2>See how near you land.</h2>
-        <p class="wayin-say">
-          Answer the statements and your own position is drawn on these same six rails, with
-          the distance to this tradition and to {quiz.outcomes.length - 1} others.
-        </p>
-        <ul class="wayin-facts">
-          <li><Icon name="scroll" size={13} /> {quiz.items.length} statements</li>
-          <li><Icon name="clock" size={13} /> About {quiz.minutes} minutes</li>
-          <li><Icon name="compass" size={13} /> {quiz.groups.length} axes, both poles named</li>
-        </ul>
-        <div class="btn-row">
-          <a class="btn" href={quizHref(quiz)}>Take the {quiz.title}</a>
-        </div>
-      </div>
-    </section>
+    {/* The way back into the quiz: the Compass's own card, the one every page offers it
+        with (components/CompassCard.astro), speaking of this tradition by name. */}
+    <CompassCard level={2} kicker="Your turn" say={compassSay} />
 
     <CorrectionNote subject={tradition.name} />
   </div>

@@ -29,8 +29,6 @@ import { ACCOUNTS_READY } from '../../lib/account/config';
 >
   {!ACCOUNTS_READY ? (
     <AccountBand
-      eyebrow="Your account"
-      icon="users"
       title="Accounts are not switched on yet."
       accent="not switched on yet."
       lede="Everything you finish is still saved on this device in the meantime, and it is all on one page."
@@ -40,7 +38,7 @@ import { ACCOUNTS_READY } from '../../lib/account/config';
       </p>
     </AccountBand>
   ) : (
-    <AccountBand eyebrow="Welcome back" icon="users" title="Log in." accent="in.">
+    <AccountBand title="Log in." accent="in.">
       {/*
         GOOGLE GOES HERE, LATER, AND NOTHING MOVES WHEN IT DOES.
         One 52px "Continue with Google" control above the fields, then a hairline of the

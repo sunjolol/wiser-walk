@@ -4,6 +4,8 @@
  * spectrum rule, and an optional "all of these" link at the right. Taken from the reference
  * skins, where every region of a page is announced in big italic type rather than a label.
  */
+import Icon from './Icon.astro';
+
 export interface Props { title: string; kicker?: string; href?: string; more?: string; id?: string }
 const { title, kicker, href, more, id } = Astro.props;
 ---
@@ -12,5 +14,5 @@ const { title, kicker, href, more, id } = Astro.props;
     {kicker && <p class="sect-kicker">{kicker}</p>}
     <h2 class="sect-title">{title}</h2>
   </div>
-  {href && more && <a class="sect-more" href={href}>{more} →</a>}
+  {href && more && <a class="sect-more go-pill" href={href}>{more} <Icon name="arrow" size={16} /></a>}
 </div>

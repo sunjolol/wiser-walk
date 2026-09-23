@@ -2,7 +2,8 @@
  * The tradition page's own words (2026-09-21).
  *
  * reference.css still owns every instrument on this page: the compass, the six rails, the
- * neighbours list, the caveat, the way in. Nothing here touches any of them. This file adds
+ * neighbours list, the caveat. The way in at the foot is the shared Compass card (.ccard in
+ * kit.css). Nothing here touches any of them. This file adds
  * only what the written profile needs, because until now these eighteen pages said nothing
  * at all in prose and had no vocabulary for saying it.
  *
@@ -10,13 +11,14 @@
  *
  *   .tlead    the opening sentence, directly under the band, set as a statement
  *   .tprose   the profile and the family note: a lead line, then paragraphs at reading size
- *   .tfacts   "Did you know?" as marked cards, each carrying its own source
+ *   .tfacts   "Did you know?" as cards, each carrying its own source
  *   .tread    what was read: the citations on the dark ground the site keeps for the
  *             things it only carries, and beside them two documents to open next
  *
  * The rule the rest of the site follows holds here too: blue is the left pole of an axis
- * and orange the right, so neither is used on anything that is not a position. The marks in
- * this file are the accent and the full spectrum, never one pole's ink alone.
+ * and orange the right, so neither is used on anything that is not a position. The edges in
+ * this file are the accent and the full spectrum, never one pole's ink alone. No card here
+ * carries an icon tile over its words (the owner, 2026-09-22).
  */
 
 /* ------------------------------------------------------------- the lead ---- */
@@ -87,11 +89,24 @@
  * that backs it are never more than a card apart.
  */
 .tfacts { list-style: none; margin: 1.15rem 0 0; padding: 0; display: grid; gap: .8rem; }
+/*
+ * Side by side, the cards in a row are one height and their sources start on one line: each
+ * card spans two of the list's rows (the fact, then its source) and takes them as its own
+ * (subgrid). Left to their own heights, three facts of different lengths stood in a ragged
+ * row, which reads as unfinished.
+ *
+ * Two abreast, and an odd one out takes the whole row rather than leaving a hole beside it
+ * (the rule /quizzes/ keeps for its rooms). Exactly three go three abreast once each card
+ * has about 17.5rem, which is as narrow as a fact of eleven lines reads well.
+ */
 @media (min-width: 52rem) {
-  .tfacts {
-    grid-template-columns: repeat(auto-fit, minmax(17.5rem, 1fr));
-    gap: 1rem; align-items: start;
-  }
+  .tfacts { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+  .tfact { display: grid; grid-row: span 2; grid-template-rows: subgrid; row-gap: 0; }
+  .tfact:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+@media (min-width: 60rem) {
+  .tfacts:has(> .tfact:nth-child(3):last-child) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .tfacts:has(> .tfact:nth-child(3):last-child) > .tfact:last-child { grid-column: auto; }
 }
 
 .tfact {
@@ -103,10 +118,6 @@
 .tfact::before {
   content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 6px;
   background-image: linear-gradient(to bottom, var(--blue), var(--orange));
-}
-.tfact-mark {
-  display: grid; place-items: center; width: 2rem; height: 2rem; margin: 0 0 .75rem;
-  border-radius: 11px; background: var(--accent); color: var(--accent-ink);
 }
 .tfact-text {
   margin: 0; font-size: .95rem; line-height: 1.6; color: var(--ink-soft); text-wrap: pretty;
@@ -120,8 +131,15 @@
 /* -------------------------------------------------------- what we read ---- */
 
 .tread { margin: 1.15rem 0 0; display: grid; gap: .8rem; }
+/*
+ * Wide, the citations run the full width as one charcoal strip and the two documents stand
+ * side by side under it, one height. (The citations used to be a column beside the two
+ * documents: it stopped halfway down them, and stretched to their height it was a block of
+ * empty charcoal.)
+ */
 @media (min-width: 54rem) {
-  .tread { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1rem; align-items: start; }
+  .tread { gap: 1rem; }
+  .tread-open { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1rem; }
 }
 
 /*
@@ -144,13 +162,8 @@
 
 .tread-open { list-style: none; margin: 0; padding: 0; display: grid; gap: .7rem; }
 .tread-open li {
-  position: relative; background: var(--panel); border-radius: var(--r);
-  box-shadow: var(--lift); padding: 1rem 1.1rem 1.05rem 3.35rem;
-}
-.tread-mark {
-  position: absolute; left: 1.05rem; top: 1.05rem;
-  display: grid; place-items: center; width: 1.8rem; height: 1.8rem; border-radius: 50%;
-  background-image: var(--grad); color: var(--on-grad);
+  background: var(--panel); border-radius: var(--r);
+  box-shadow: var(--lift); padding: 1rem 1.15rem 1.05rem;
 }
 .tread-title {
   margin: 0; font-family: var(--display); font-size: 1.1rem; line-height: 1.25;

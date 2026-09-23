@@ -7,6 +7,7 @@ import AxisMap from '../../../components/AxisMap.astro';
 import HistoryTimeline from '../../../components/HistoryTimeline.astro';
 import PassagePills from '../../../components/PassagePills.astro';
 import CorrectionNote from '../../../components/CorrectionNote.astro';
+import CompassCard from '../../../components/CompassCard.astro';
 import { QUIZZES, getQuiz, groupHref, quizHref } from '../../../lib/engine/registry';
 import {
   capitalise, groupNoun, groupNounPlural, isSplitReadMore, outcomeNoun, outcomeNounPlural,
@@ -124,14 +125,6 @@ const tiles = [
     : [{ n: quiz.groups.length, label: capitalise(groupNounPlural(quiz)) }])
 ];
 
-/**
- * "Take the Which of the seven are you weakest to?" is what a title-in-a-sentence does to
- * a quiz whose title is a question. Short noun-phrase titles read well in the button;
- * anything else gets the plain form.
- */
-const takeIt =
-  quiz.title.length <= 24 && !quiz.title.includes('?') ? `Take the ${quiz.title}` : 'Take the quiz';
-
 // Siblings that actually have a page of their own, in the quiz's own order.
 const siblings = quiz.groups.filter(g => g.summary);
 const at = siblings.findIndex(g => g.slug === group.slug);
@@ -192,8 +185,11 @@ const firstRef = quoted[0]?.ref;
 const namedSubject = isGift
   ? giftHeading.charAt(0).toLowerCase() + giftHeading.slice(1)
   : group.name;
+/* A two-pole group that reaches this heading has no cases stated by holders (the Compass's
+   do, under caseTitle): today that is the figure quiz, whose axes are temperament, and
+   "What does each side believe?" said they were beliefs. */
 const meansTitle = bipolar
-  ? caseTitle
+  ? 'What does each side look like?'
   : group.shortAnswer
     ? isGift
       ? `What does ${namedSubject} look like in a church?`
@@ -237,6 +233,35 @@ const metaDescription = clip(
 const ghost = group.name.toLowerCase();
 /* An axis wears its parent quiz's picture: it is a page ABOUT that quiz. */
 const art = artFor(quiz.slug);
+
+/*
+ * THE WAY IN AT THE FOOT (2026-09-22): the quiz's own card, the one it wears everywhere
+ * (the owner: "literally everywhere it appears it should be standardized"). The Compass's
+ * is the shared CompassCard; any other quiz's is its engraving room, as on the home page
+ * and /quizzes/, drawn here WITHOUT its plate, because the plate is already the band at the
+ * top of this page and no page shows one picture twice.
+ *
+ * Its one line is about this page's subject, and every number in it is counted.
+ */
+const isCompass = quiz.slug === 'theology-compass';
+const NUMBER_WORDS = [
+  'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten',
+  'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen',
+  'nineteen', 'twenty'
+];
+const word = (n: number) => NUMBER_WORDS[n] ?? String(n);
+const cardSay = bipolar
+  ? `See where you land between ${group.left} and ${group.right}, and ` +
+    (isCompass
+      ? `on ${word(quiz.groups.length - 1)} more questions that divide Christians.`
+      : `which ${outcomeNoun(quiz)} sits nearest you.`)
+  : `See where ${namedSubject} ranks for you among all ${word(quiz.groups.length)}.`;
+/** The second fact, counted the way /quizzes/ counts it: 25 figures, 19 gifts, 14 statements. */
+const cardFact = quiz.outcomes.length
+  ? `${quiz.outcomes.length} ${plural}`
+  : quiz.groupNounPlural
+    ? `${quiz.groups.length} ${groupNounPlural(quiz)}`
+    : `${quiz.items.length} statements`;
 
 /*
  * WebPage, not Article.
@@ -304,8 +329,6 @@ const breadcrumbs =
     title={heading}
     blue={bipolar ? group.left : undefined}
     orange={bipolar ? group.right : undefined}
-    eyebrow={quiz.title}
-    icon={quiz.icon}
     kind={art ? 'engraving' : 'night'}
     image={art?.src}
     imageAlt={art?.alt}
@@ -443,9 +466,11 @@ const breadcrumbs =
       </>
     ) : (
       <>
+        {/* A group with two poles is an axis whatever the quiz calls its groups: the figure
+            quiz names none, and the engine's fallback word, "category", is not the reader's. */}
         <SectionHead
           title={meansTitle}
-          kicker={`${capitalise(groupNoun(quiz))} ${index + 1} of ${quiz.groups.length}`}
+          kicker={`${bipolar ? 'Axis' : capitalise(groupNoun(quiz))} ${index + 1} of ${quiz.groups.length}`}
         />
         <div class="panel layered ref-panel">
           <div class="wash" aria-hidden="true"></div>
@@ -578,37 +603,28 @@ const breadcrumbs =
     )}
 
     {/*
-      The way back into the quiz, as a room on the night ground.
-
-      Two pictures it must NOT be. Not the plate in the band at the top of this page: a page
-      never shows one picture twice. Not a dawn sky either: the footer directly under this
-      block is a photograph of one, and two skies stacked is the same mistake wearing a
-      different file name. So it is the night the instruments are drawn on, with first light
-      coming up one corner. Every fact in the pills is counted from the registry.
+      The way back into the quiz: the quiz's own card (see the note above `cardSay`). The
+      engraving room is drawn on its plate's own brown with no plate in it, because the
+      plate is the band at the top of this page. Styles: .qcard in pages/reference.css.
     */}
-    <section class="wayin wayin--night">
-      <div class="wayin-ghost" aria-hidden="true">{ghost}</div>
-      <div class="wayin-in">
-        <span class="wayin-mark" aria-hidden="true"><Icon name={quiz.icon} size={20} /></span>
-        <p class="wayin-kicker">{quiz.title}</p>
-        <h2>Where do you land?</h2>
-        <p class="wayin-say">
-          {bipolar
-            ? `Answer the statements and the whole map is drawn for you — every axis, and the ${plural} that sit nearest to where you land.`
-            : `Answer the statements and every ${groupNoun(quiz)} is ranked by how much pull it has on you.`}
-        </p>
-        <ul class="wayin-facts">
-          <li><Icon name="scroll" size={13} /> {quiz.items.length} statements</li>
-          <li><Icon name="clock" size={13} /> About {quiz.minutes} minutes</li>
-          {bipolar && placed > 0 && (
-            <li><Icon name="users" size={13} /> {placed} {plural}</li>
-          )}
-        </ul>
-        <div class="btn-row">
-          <a class="btn" href={quizHref(quiz)}>{takeIt}</a>
-        </div>
+    {isCompass ? (
+      <CompassCard level={2} kicker="Your turn" say={cardSay} />
+    ) : (
+      <div class="qcard-wrap">
+        <a class={`qcard qcard--plain qcard--${quiz.slug}`} href={quizHref(quiz)}>
+          <div class="qcard-body">
+            <p class="qcard-kicker">Your turn</p>
+            <h2 class="qcard-title">{quiz.title}</h2>
+            <p class="qcard-say">{cardSay}</p>
+            <ul class="qcard-facts">
+              <li><Icon name="clock" size={13} /> {quiz.minutes} min</li>
+              <li>{cardFact}</li>
+            </ul>
+            <span class="qcard-go go-pill">Start <Icon name="arrow" size={16} /></span>
+          </div>
+        </a>
       </div>
-    </section>
+    )}
 
     {(prev || next) && (
       <nav class="pager" aria-label="Other axes">

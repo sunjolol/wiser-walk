@@ -162,7 +162,6 @@ p { margin: 0 0 .9rem; }
 }
 .lede { color: var(--ink-soft); font-size: 1rem; }
 .small { font-size: .82rem; color: var(--ink-mute); line-height: 1.55; }
-.small a { color: var(--accent); }
 
 svg { width: 1em; height: 1em; display: block; fill: none; stroke: currentColor;
       stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
@@ -231,6 +230,22 @@ button { font: inherit; color: inherit; }
   font-size: clamp(3rem, 17.5vw, 5.4rem); line-height: .88; letter-spacing: -.045em;
   color: var(--ghost); white-space: nowrap; pointer-events: none; user-select: none;
 }
+/*
+ * On the start band the ghost is not a word but the game's own mark: one giant opening
+ * quotation mark, the glyph this game wears in the corner of its cards on the home page and
+ * on /games/ (.corner-ghost--quote in the site's kit.css), upright and the same size there,
+ * mirrored into the top right because the title holds the left. It replaced the word
+ * "spoke?", which read as nonsense (the owner, 2026-09-22). Placed by the glyph's own ink,
+ * measured in Philosopher: the ink runs from .15em to .42em down its line and ends .03em
+ * short of its advance, so the tails run off the top edge while the two round heads stay
+ * whole, a little clear of the right edge and of the band's rounded corner. Smaller on a
+ * phone, where at full size it sat on "It?".
+ */
+.band-ghost--quote {
+  font-style: normal; letter-spacing: 0; line-height: 1;
+  font-size: 20rem; top: -.196em; right: .01em;
+}
+@media (min-width: 40rem) { .band-ghost--quote { font-size: 26rem; } }
 .band-chip {
   display: inline-flex; align-items: center; gap: .45rem; margin: 0 0 1rem;
   padding: .52rem .85rem; border-radius: var(--r-pill);
@@ -240,9 +255,8 @@ button { font: inherit; color: inherit; }
 }
 .band-chip svg { width: .9em; height: .9em; color: var(--orange-soft); }
 .band h1 { margin: 0 0 .7rem; max-width: 11ch; line-height: 1.0; letter-spacing: -.022em; }
+/* one ink in the title, the site's blue, on the question the game asks */
 .band h1 .t-blue { color: var(--accent); }
-.band h1 .t-orange { color: var(--warn-ink); }
-:root[data-theme="dark"] .band h1 .t-orange { color: var(--orange); }
 .band .lede { margin: 0; max-width: 26rem; }
 
 /* stat tiles: a number in display type over a whispered label */
@@ -280,9 +294,10 @@ button { font: inherit; color: inherit; }
 /* ------------------------------------------------------------------- start */
 
 /* The blocks simply flow, in this order: the band, the explanation, the two run
-   buttons, how a run goes, the note. Nothing is pinned to the bottom, so a tall
-   window never opens a hole in the middle of the screen. */
-#screen-start { overflow-y: auto; padding-bottom: 1.25rem; }
+   buttons, how a run goes. Nothing is pinned to the bottom, so a tall window never
+   opens a hole in the middle of the screen; the screen's own padding keeps the last
+   block clear of a phone's home bar. */
+#screen-start { overflow-y: auto; padding-bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px)); }
 
 /* ----------------------------------------------------------- the explanation
    The sibling asks a question here, because it has to know which Bible you read
@@ -335,7 +350,12 @@ button { font: inherit; color: inherit; }
 .banner p { margin: 0; color: var(--ink-soft); font-size: .92rem; }
 .banner strong { color: var(--ink); font-weight: 600; font-family: var(--ui); }
 .start-actions { margin-top: 1.1rem; }
-.foot { margin: 1.4rem 0 0; padding-bottom: calc(.5rem + env(safe-area-inset-bottom, 0px)); }
+/* The small print that closed the start and result screens is gone (the owner, 2026-09-22;
+   the credit the speaker data's licence asks for is on /method/). The empty paragraph left
+   at the end of the result screen is only a marker: the site's route
+   (site/src/pages/play/who-said-it.astro) replaces it with its own links, and
+   scripts/test-game.mjs checks it is there. Here, standing alone, it is never drawn. */
+.foot { display: none; }
 
 /* -------------------------------------------------------------------- play */
 
@@ -477,7 +497,7 @@ button { font: inherit; color: inherit; }
 
 /* ------------------------------------------------------------------ result */
 
-#screen-result { overflow-y: auto; padding-bottom: 1.25rem; }
+#screen-result { overflow-y: auto; padding-bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px)); }
 .result-band { padding-bottom: 1.5rem; }
 .result-band .big {
   font-family: var(--display); font-size: clamp(3rem, 17vw, 4.2rem);
@@ -612,12 +632,10 @@ p, dd, .misses q { text-wrap: pretty; }
   #screen-start .start-actions { margin-top: 1.7rem; gap: .75rem; }
   #screen-start .start-actions .btn { min-height: 62px; font-size: .82rem; }
   #screen-start .howto { margin-top: 0; padding: 1.3rem 1.4rem 1.4rem; }
-  #screen-start .foot { margin-top: 1.2rem; }
 
   /* result: what caught you, beside who you mix up and what to do next */
   #screen-result .two { grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr); }
   #screen-result .result-actions { margin-top: 1.6rem; }
-  #screen-result .foot { margin-top: 1.4rem; }
 
   /* the band's tiles stop stretching to the width of the sheet */
   .band .tiles { grid-template-columns: repeat(3, minmax(0, 10rem)); }
@@ -653,7 +671,6 @@ p, dd, .misses q { text-wrap: pretty; }
   .howto .spec > div { padding: .35rem 0; }
   .start-actions { margin-top: .95rem; }
   .btn { min-height: 48px; }
-  .foot { margin-top: 1rem; }
   .card { padding: 1.1rem 1rem; }
   .card-hint { margin-top: .75rem; }
   .fuse { margin: .55rem 0 .7rem; }
@@ -681,9 +698,9 @@ p, dd, .misses q { text-wrap: pretty; }
   <section class="screen" id="screen-start">
         <div class="band">
           <div class="band-wash" aria-hidden="true"></div>
-          <div class="band-ghost" aria-hidden="true">spoke?</div>
+          <div class="band-ghost band-ghost--quote" aria-hidden="true">&ldquo;</div>
           <p class="band-chip">A wiserwalk game</p>
-          <h1>Who <span class="t-blue">Said</span> <span class="t-orange">It?</span></h1>
+          <h1>Who <span class="t-blue">Said It?</span></h1>
 
           <div class="banner" id="challengeBanner" hidden>
             <p><strong id="challengeScore">0</strong> <span id="challengeWord">was their score</span> on these ten lines.</p>
@@ -701,7 +718,7 @@ p, dd, .misses q { text-wrap: pretty; }
 
         <div class="btn-col start-actions">
           <button type="button" class="btn" id="btnPlay">Play</button>
-          <button type="button" class="btn ghost" id="btnDaily">Today's ten</button>
+          <button type="button" class="btn ghost" id="btnDaily">Today's Challenge</button>
         </div>
       </div>
 
@@ -717,8 +734,6 @@ p, dd, .misses q { text-wrap: pretty; }
           </dl>
           <ul class="tiles" id="startTiles"></ul>
         </div>
-
-        <p class="small foot" id="footStart"></p>
       </div>
     </div>
   </section>
@@ -797,8 +812,10 @@ p, dd, .misses q { text-wrap: pretty; }
 
     <div class="btn-col result-actions">
       <button type="button" class="btn" id="btnAgain">Play again</button>
+      <!-- a hard space in "challenge link": where the label needs two lines it breaks after
+           "Copy", never leaving "link" alone on the second -->
       <div class="btn-row">
-        <button type="button" class="btn quiet" id="btnCopyLink">Copy challenge link</button>
+        <button type="button" class="btn quiet" id="btnCopyLink">Copy challenge&nbsp;link</button>
         <button type="button" class="btn quiet" id="btnCopyResult">Copy result</button>
       </div>
     </div>
@@ -1145,11 +1162,6 @@ function topConfusions(tally, limit) {
     kjv: 'King James Version',
     webbe: 'World English Bible, British Edition'
   };
-  var FOOT = 'Every line is quoted word for word from the King James Version or the World English ' +
-    'Bible, British Edition, and only the sixty-six book canon is used. LORD and GOD in small ' +
-    'capitals are shown as Lord and God. Speaker labels: Glyssen character data, © SIL and ' +
-    'Faith Comes By Hearing, MIT licence. A label can be wrong and we did not make them: ';
-  var FOOT_LINK = '<a href="https://wiserwalk.com/method/#the-game">report one</a>.';
 
   var ICON = {
     tick: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 12.6l4.8 4.8L19.6 7"/></svg>',
@@ -1163,7 +1175,7 @@ function topConfusions(tally, limit) {
   var el = {
     start: $('screen-start'), play: $('screen-play'), result: $('screen-result'),
     banner: $('challengeBanner'), bannerScore: $('challengeScore'), bannerWord: $('challengeWord'),
-    lede: $('startLede'), footStart: $('footStart'), footResult: $('footResult'),
+    lede: $('startLede'),
     startTiles: $('startTiles'),
     btnPlay: $('btnPlay'), btnDaily: $('btnDaily'),
     pips: $('pips'), scoreNow: $('scoreNow'), fuseFill: $('fuseFill'),
@@ -1244,7 +1256,7 @@ function topConfusions(tally, limit) {
       el.btnDaily.hidden = true;
     } else {
       el.btnPlay.textContent = 'Play';
-      el.btnDaily.textContent = "Today's ten";
+      el.btnDaily.textContent = "Today's Challenge";
       el.btnDaily.hidden = false;
     }
   }
@@ -1593,9 +1605,6 @@ function topConfusions(tally, limit) {
     '<li class="tile"><b>' + (POOL.items || []).length.toLocaleString() + '</b><span>Lines</span></li>' +
     '<li class="tile"><b>' + SPEAKERS.length.toLocaleString() + '</b><span>Speakers</span></li>' +
     '<li class="tile"><b>' + RUN_LENGTH + '</b><span>Lines a run</span></li>';
-
-  el.footStart.innerHTML = esc(FOOT) + FOOT_LINK;
-  el.footResult.innerHTML = el.footStart.innerHTML;
 
   var incoming = decodeChallenge(location.hash);
   if (incoming) {

@@ -481,10 +481,6 @@
 /* the head, tight under the band: this gap separates a band from its page, not
    two blocks of content, so it does not take the kit's 3rem of air */
 .qhub-head { margin: 1.5rem 0 .95rem; }
-.qhub-kicker {
-  margin: 0 0 .1rem; font-family: var(--ui); font-size: .62rem; font-weight: 700;
-  letter-spacing: .16em; text-transform: uppercase; color: var(--ink-mute);
-}
 .qhub-title {
   margin: 0; font-family: var(--display); font-style: italic; font-weight: 400;
   font-size: clamp(2.3rem, 9vw, 3.3rem); line-height: 1; letter-spacing: -.02em; color: var(--ink);
@@ -526,19 +522,13 @@
   background-size: auto, 520px;
 }
 .qroom-body { position: relative; padding: 1.35rem 1.3rem 1.4rem; }
-.qroom-mark {
-  display: grid; place-items: center; width: 2.6rem; height: 2.6rem; margin: 0 0 .85rem;
-  border-radius: 14px; color: #17181d; background: var(--room-ink);
-}
-.qroom-kicker {
-  margin: 0 0 .25rem; font-family: var(--ui); font-size: .6rem; font-weight: 700;
-  letter-spacing: .16em; text-transform: uppercase; color: var(--room-ink);
-}
 .qroom h3 {
   margin: 0; font-family: var(--display); font-weight: 400; color: #fff;
   font-size: clamp(1.55rem, 6.2vw, 1.95rem); line-height: 1.08; letter-spacing: -.012em;
   text-wrap: balance;
 }
+/* the picture dims softly behind the title, as it does under the footer's "Keep walking." */
+.qroom--pic h3 { text-shadow: var(--title-lift); }
 .qroom-say {
   margin: .55rem 0 0; max-width: 26rem; font-size: .95rem; line-height: 1.5;
   color: rgba(255, 255, 255, .85); text-wrap: balance;
@@ -554,11 +544,17 @@
   background: rgba(255, 255, 255, .12); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16);
 }
 .qroom-go {
-  display: inline-flex; align-items: center; gap: .45rem; margin: 1.05rem 0 0;
-  font-family: var(--ui); font-size: .7rem; font-weight: 700; letter-spacing: .13em;
+  display: inline-flex; align-items: center; gap: .5rem; margin: 1.1rem 0 0;
+  min-height: 44px; padding: .55rem 1.15rem; border-radius: 999px;
+  font-family: var(--ui); font-size: .78rem; font-weight: 700; letter-spacing: .12em;
   text-transform: uppercase; color: var(--room-ink);
+  background: color-mix(in srgb, currentColor 16%, transparent);
+  box-shadow: inset 0 0 0 1.5px currentColor;
+  transition: background .18s ease;
 }
-.qroom-go .icon { transition: transform .18s ease; }
+/* a real button at every width, as on the home page (the owner, 2026-09-22) */
+.qroom-go .icon { width: 16px; height: 16px; transition: transform .18s ease; }
+.qroom:hover .qroom-go { background: color-mix(in srgb, currentColor 26%, transparent); }
 .qroom:hover .qroom-go .icon { transform: translateX(3px); }
 /* a draft says so once, in the corner, and nothing else about it is different */
 .qroom-tab {
@@ -567,23 +563,8 @@
   letter-spacing: .14em; text-transform: uppercase; color: #17181d; background: var(--room-ink);
 }
 
-/* the flagship: an instrument on the night ground, with a real answer sheet drawn on it.
-   .dark re-points the tokens, so the wheel draws itself for this ground unaided. */
-.qroom--flag {
-  --room-ink: var(--blue-soft);
-  justify-content: flex-start; min-height: 0; margin: 0 0 .85rem;
-  background-color: #141a27;
-  background-image: radial-gradient(120% 90% at 85% 10%, rgba(126, 186, 238, .22), transparent 60%), var(--dark-fill-img);
-  background-size: auto, 520px;
-  box-shadow: 0 10px 30px rgba(20, 24, 40, .16);
-}
-:root[data-theme="dark"] .qroom--flag { background-color: #141a27; }
-.qroom--flag .qroom-body { margin-top: 0; }
-/* the wheel's labels hang outside its circle, so the room leaves them room to hang in */
-.qroom-wheel { padding: 1.4rem 3.4rem 0; }
-.qroom--flag .wheel-plot { max-width: 15.5rem; margin: 1.6rem auto 0; }
-.qroom--flag .wheel figcaption, .qroom--flag .wheel-cap { display: none; }
-.qroom-note { margin: 1.5rem 0 0; text-align: center; font-size: .72rem; color: rgba(255, 255, 255, .6); }
+/* the flagship is the shared Compass card (.ccard in kit.css), held apart from the rooms under it */
+.qhub-flag { margin: 0 0 .95rem; }
 
 .qhub-rooms { display: grid; grid-template-columns: 1fr; gap: .85rem; }
 
@@ -603,18 +584,11 @@
   /* rooms widen before they multiply: a room narrower than about 16rem squeezes its title
      onto four lines, which is the squeezed card the owner has already rejected */
   .qhub-rooms { grid-template-columns: repeat(auto-fit, minmax(16.5rem, 1fr)); }
-  /* the flagship takes a whole row, so its wheel has room for the labels outside the circle */
-  .qroom--flag { flex-direction: row; align-items: center; min-height: 23rem; margin-bottom: .95rem; }
-  .qroom--flag .qroom-wheel { order: 1; flex: 0 0 50%; padding: .6rem 6.5rem 1.6rem 5.5rem; }
-  .qroom--flag .wheel-plot { max-width: 19rem; margin-top: 2.2rem; }
-  .qroom--flag .qroom-body { flex: 1; padding: 2.2rem 0 2.2rem 2.4rem; }
-  .qroom--flag h3 { font-size: 2.5rem; }
-  .qroom--flag .qroom-say { font-size: 1.02rem; }
   .qroom--pic { min-height: 26rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .qroom, .qroom-go .icon { transition: none; }
+  .qroom, .qroom-go, .qroom-go .icon { transition: none; }
   .qroom:hover { transform: none; }
 }
 

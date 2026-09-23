@@ -2,7 +2,7 @@
  * /support/ (2026-09-20).
  *
  * Built in the home page's language: a photographic band with white display type, rounded
- * rooms under it, a mark on every box, and one button. Tokens come from site.css and
+ * rooms under it, each lit by its own ink, and one button. Tokens come from site.css and
  * kit.css; the only literals here are the inks of the photograph's own overlay, which is
  * how home.css handles its bands too.
  *
@@ -28,7 +28,7 @@
   color: #fff;
   background: #3A2A1C;
 }
-/* the X keeps the figure clear of the chip and the headline below him */
+/* the X keeps the figure clear of the headline below him */
 .sp-band-img {
   position: absolute; left: 0; top: -22%; z-index: -2;
   width: 100%; height: 122%; object-fit: cover; object-position: 22% 50%;
@@ -41,15 +41,9 @@
 }
 .sp-band-in { max-width: 38rem; }
 
-.sp-chip {
-  display: inline-flex; align-items: center; gap: .45rem; margin: 0 0 1.1rem;
-  padding: .42rem .85rem; border-radius: var(--r-pill);
-  font-family: var(--ui); font-size: .62rem; font-weight: 700; letter-spacing: .14em;
-  text-transform: uppercase; color: #fff;
-  background: rgba(255, 255, 255, .16);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .34);
-  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
-}
+/* The band keeps the height it had with its chip (47px with the margin, gone since 2026-09-22):
+   half above the words and half below. */
+.sp-band-in::before, .sp-band-in::after { content: ""; display: block; height: 1.48rem; }
 .sp-band h1 {
   margin: 0; max-width: 6.5em;
   font-family: var(--display); font-weight: 400; color: #fff;
@@ -96,44 +90,53 @@
   border-radius: 24px; background: var(--panel); box-shadow: var(--lift);
   padding: 1.3rem 1.25rem 1.4rem;
 }
-/* a soft light of the room's own ink in the corner: colour, without a second photograph.
-   A radial, not a disc — a hard circle edge inside a card reads as a mistake. */
+/* a soft light of the room's own ink falling from its top right corner: colour, without a
+   second photograph. A wash from the corner itself, not a disc set in from it: with the mark
+   gone the title runs up to where a disc stood, and a blot behind a title's far end reads as
+   a smudge on it rather than as light. */
 .sp-room::before {
-  content: ""; position: absolute; z-index: -1; right: -4rem; top: -4.5rem;
-  width: 13rem; height: 13rem; pointer-events: none;
-  background: radial-gradient(closest-side, var(--room-ink), transparent 78%);
-  opacity: .42;
+  content: ""; position: absolute; z-index: -1; inset: 0; pointer-events: none;
+  background: radial-gradient(70% 62% at 100% 0%, var(--room-ink), transparent 72%);
+  opacity: .3;
 }
 /* the same light reads stronger against a dark panel than a pale one */
-:root[data-theme="dark"] .sp-room::before { opacity: .3; }
+:root[data-theme="dark"] .sp-room::before { opacity: .2; }
 .sp-room:nth-child(1) { --room-ink: var(--blue); }
 .sp-room:nth-child(2) { --room-ink: var(--orange); }
 /*
- * The third carries both inks, but only where both ENDS of the gradient can be seen.
- *
- * It used to pour the gradient through a soft round hole. The mask keeps the middle of the
- * blue-to-orange ramp and throws both ends away, and the middle of that ramp is grey: the
- * card came out with a neutral smudge in the corner beside a blue one and an orange one,
- * which reads as colour that failed to load rather than as the brand's own move. So the
- * glow is one ink, and the mark — a small square where the whole ramp is on show, corner
- * to corner — is where the two meet.
+ * The third is one ink too. A glow poured from the whole blue-to-orange ramp shows only its
+ * middle, and the middle of that ramp is grey: a neutral smudge beside a blue corner and an
+ * orange one reads as colour that failed to load. (The ramp used to show in full on the
+ * third room's mark; the marks went on 2026-09-22, with every icon tile on the site.)
  */
 .sp-room:nth-child(3) { --room-ink: var(--blue); }
-.sp-room:nth-child(3) .sp-mark { background-image: var(--grad); }
 
-.sp-mark {
-  display: grid; place-items: center; width: 2.6rem; height: 2.6rem;
-  border-radius: 14px; color: #1C1C23; background: var(--room-ink, var(--blue));
-}
+/* No mark over the title (the owner, 2026-09-22): the title opens the room, a size up from
+   when it sat under a mark, with the room's own light behind its far end. */
 .sp-room h2 {
-  margin: .9rem 0 0; font-family: var(--display); font-weight: 400; color: var(--ink);
-  font-size: 1.42rem; line-height: 1.1; letter-spacing: -.012em;
+  margin: 0; font-family: var(--display); font-weight: 400; color: var(--ink);
+  font-size: 1.55rem; line-height: 1.1; letter-spacing: -.012em;
 }
-.sp-room p { margin: .5rem 0 0; font-size: .95rem; line-height: 1.55; color: var(--ink-soft); }
+.sp-room p { margin: .55rem 0 0; font-size: .95rem; line-height: 1.55; color: var(--ink-soft); }
 
 @media (min-width: 46rem) {
-  .sp-reasons { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin-top: -4.6rem; }
-  .sp-room { padding: 1.5rem 1.4rem 1.6rem; }
+  .sp-reasons { gap: 1rem; margin-top: -4.6rem; }
+  .sp-room { padding: 1.6rem 1.4rem 1.6rem; }
+}
+/* Three across only where a room is wide enough to hold its words in a few lines. A tablet
+   made them a third of its width each, and the rooms, which stand as tall as the longest,
+   left the first one's three lines over a hollow twice their height. */
+@media (min-width: 60rem) {
+  .sp-reasons { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+/* Side by side, the rooms share their two lines on the row's own grid (subgrid), as the sign-up
+   page's do: should one title break where the others do not, the titles still end level and
+   the sentences start level. */
+@supports (grid-template-rows: subgrid) {
+  @media (min-width: 60rem) {
+    .sp-room { grid-row: span 2; display: grid; grid-template-rows: subgrid; row-gap: 0; }
+    .sp-room h2 { align-self: end; }
+  }
 }
 
 /* -------------------------------------------------------------- who it is ---- */
@@ -147,10 +150,6 @@
 .sp-who::before {
   content: ""; position: absolute; inset: 0 auto 0 0; width: 6px;
   background-image: linear-gradient(180deg, var(--blue), var(--orange));
-}
-.sp-mark--quiet {
-  width: 2.4rem; height: 2.4rem; border-radius: 12px;
-  color: var(--accent); background: var(--accent-soft);
 }
 .sp-who h2 {
   margin: .85rem 0 0; font-family: var(--display); font-style: italic; font-weight: 400;
@@ -168,7 +167,6 @@
     display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
     column-gap: 2.6rem; align-items: start;
   }
-  .sp-who .sp-mark--quiet { grid-column: 1; grid-row: 1; }
   .sp-who h2 { grid-column: 1; grid-row: 2; margin-top: .8rem; }
   .sp-who p { grid-column: 2; grid-row: 1 / span 2; margin-top: .15rem; font-size: 1.04rem; }
 }
@@ -220,8 +218,6 @@
 @media (min-width: 46rem) {
   .sp-fine { max-width: 44rem; margin-left: auto; margin-right: auto; text-align: center; }
 }
-
-@media (prefers-reduced-motion: reduce) { .sp-alt .icon { transition: none; } }
 
 /* ---- 2026-09-21, the owner's notes ---------------------------------------------------
  * The way to give is in the band, so nobody scrolls to find it; the ask sits above the "who"

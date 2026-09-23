@@ -122,7 +122,8 @@ Never put backticks inside a double-quoted bash string.
 ## Tells to remove
 
 - **Small capitals.** KJV and WEBBE print `LORD` and `GOD`. The pool keeps the verbatim text;
-  the game displays `LORD` as `Lord` and `GOD` as `God`. The footer says so. `verify.mjs` checks
+  the game displays `LORD` as `Lord` and `GOD` as `God`. /method/#the-game says so (the game's own
+  footer did until 2026-09-22, when the owner had it removed as clutter). `verify.mjs` checks
   the verbatim text, not the display text.
 - **Scripture quoted inside other works.** `assemble.mjs` drops any `other` candidate that shares
   a five-word shingle (lower-cased, punctuation stripped) with any verse of KJV, the KJV
@@ -215,7 +216,7 @@ bottom bar. Then widen: on desktop the play column stays about 30rem wide and ce
 
 1. **Start.** Title, one sentence ("Ten lines. Some are in the Bible. Some only sound like it.
    You have seconds."), the canon picker as three chips (no default on first visit; the choice is
-   remembered), then "Play" and "Today's ten". If the URL carries a challenge, a banner replaces
+   remembered), then "Play" and "Today's Challenge". If the URL carries a challenge, a banner replaces
    the sentence: "Someone scored 1,420 on these ten lines." with "Take the challenge".
 2. **Play.** Ten progress pips, the score, a fuse bar, the line on a card in the display serif
    (size steps down for long lines so nothing scrolls), and two wide buttons: left "Not in the
@@ -245,7 +246,7 @@ bottom bar. Then widen: on desktop the play column stays about 30rem wide and ce
   transition whose duration is the fuse. Card drag uses pointer events and direct style writes.
   State must be readable for testing: expose `window.__sls` with the current screen, run, index,
   score and answers.
-- A run is drawn by a seeded PRNG (mulberry32). "Play" uses a random seed, "Today's ten" uses the
+- A run is drawn by a seeded PRNG (mulberry32). "Play" uses a random seed, "Today's Challenge" uses the
   UTC date as `yyyymmdd`, a challenge uses the seed in the link. The number of lines that are
   "In the Bible" under the chosen canon is drawn from 3 to 7 so it cannot be counted. Draw
   weights: tier 3 weight 4, tier 2 weight 2, tier 1 weight 1. Within a run no two lines share a
@@ -259,9 +260,9 @@ bottom bar. Then widen: on desktop the play column stays about 30rem wide and ce
 - Every localStorage read and write in try/catch; the game works with storage blocked.
 - Visible focus states, `prefers-reduced-motion` removes the tilt and flip but keeps the fuse
   (it is information), buttons are real `<button>`s with stable ids.
-- Footer, small: "Every line is quoted word for word from a public-domain edition. LORD and GOD
-  in small capitals are shown as Lord and God. Scripture: King James Version and World English
-  Bible, British Edition." plus the Orthodox canon note when that canon is chosen.
+- No footer (removed on the owner's word, 2026-09-22: "needless clutter"). The editions and the
+  small-capitals rule are stated on /method/#the-game; the Orthodox canon note still prints
+  under the canon choice when that canon is chosen.
 
 Pure logic (PRNG, draw, truth-under-canon, fuse, scoring, link encode and decode, display
 normalisation) lives in one clearly marked block of `game.src.html` between the comment lines

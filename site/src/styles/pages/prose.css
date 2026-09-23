@@ -491,9 +491,10 @@
  *
  * One marked block, holding everything the result pages, the comparison, an
  * article, /about/ and /method/ needed to join the family the home page,
- * /support/ and /me/ set: pictures carrying the page, a mark wherever a box
- * would otherwise have to be read to be understood, space instead of dotted
- * rules, and the next thing to do drawn as a place rather than as a link.
+ * /support/ and /me/ set: pictures carrying the page, space instead of dotted
+ * rules, and the next thing to do drawn as a place rather than as a link. (It
+ * also put a mark over every box; the marks went on 2026-09-22, the owner: no
+ * icon tiles anywhere.)
  *
  * Nothing here touches an instrument. The rails, the wheel, the outcome cards,
  * the category stack and the share card are drawn exactly as they were; this is
@@ -503,96 +504,140 @@
 /* ---------------------------------------------------- what to do next ----- */
 
 /*
- * The rooms. One per live quiz or game, each carrying its own picture: the same
- * plate the home page, /me/ and that quiz's own band already use, so a reader
- * meets one face per thing. The Compass has no plate and takes the starry
- * ground its instrument is always drawn on.
+ * The rooms (components/NextUp.astro). One per live quiz or game, each the home
+ * page's own card as closely as its size allows: a quiz wears the plate the home
+ * page, /quizzes/ and its own band use, printed soft sepia under a warm dark
+ * gradient; the Compass takes the night ground of its shared card; a game is
+ * its /games/ card, dark, with its glyph and its ink in the corner. No marks
+ * over the titles and no "Quiz" or "Game" label (the owner, 2026-09-22).
  *
  * Stacked on a phone rather than railed: four rooms on a rail hide two of them
- * behind an edge, and a card that is off-screen is a card nobody takes. Two
- * across from 34rem and four from 62rem, so the row is four, two by two, or a
- * column, and never leaves one card stranded on a line of its own.
+ * behind an edge, and a card that is off-screen is a card nobody takes.
+ *
+ * Wider, the columns are counted off the rooms and the room they have (a container
+ * query, so a result page and an article foot agree): two across, then three rooms
+ * three across and four rooms four across. Never a row with a hole in it and never
+ * one room stranded under a full row: an odd room left over takes the whole row.
  */
-.nx { list-style: none; margin: 1.1rem 0 0; padding: 0; display: grid; gap: .7rem; }
-/*
- * auto-fit rather than a fixed count: a page with three rooms and a four-column grid
- * prints a quarter of the sheet empty beside them, which reads as something failing to
- * load. The tracks collapse to however many rooms there are, four at most in a 70rem
- * sheet, and an odd one on the last row widens instead of standing in a hole.
- */
-@media (min-width: 34rem) {
-  .nx { grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: .8rem; }
-}
+.nx-wrap { container-type: inline-size; }
+.nx { list-style: none; margin: 1.1rem 0 0; padding: 0; display: grid; gap: .8rem; }
 .nx > li { display: flex; }
+@container (min-width: 30rem) {
+  .nx { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .9rem; }
+  .nx > li:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+@container (min-width: 42rem) {
+  .nx:has(> li:nth-child(3):last-child) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .nx:has(> li:nth-child(3):last-child) > li:last-child { grid-column: auto; }
+}
+@container (min-width: 54rem) {
+  .nx:has(> li:nth-child(4)) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
 
 .nx-room {
-  position: relative; isolation: isolate; overflow: hidden; flex: 1;
-  display: flex; align-items: flex-end; min-height: 10rem;
-  border-radius: var(--r); box-shadow: var(--lift); text-decoration: none;
-  background-color: #1f1b17; color: var(--on-dark);
-  transition: transform .18s ease, box-shadow .18s ease;
+  position: relative; isolation: isolate; overflow: hidden; overflow: clip; flex: 1;
+  display: flex; align-items: flex-end;
+  border-radius: 22px; text-decoration: none; color: #fff;
+  background: #15161c; box-shadow: 0 10px 30px rgba(20, 24, 40, .16);
+  transition: transform .22s ease, box-shadow .22s ease;
 }
-@media (min-width: 34rem) { .nx-room { min-height: 13.5rem; } }
-.nx-room:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(40, 40, 40, .16); }
+.nx-room:hover { transform: translateY(-3px); box-shadow: 0 16px 38px rgba(20, 24, 40, .24); }
 .nx-room:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
-/* the plate, printed in the same ink as every other engraving on the site */
+/* a quiz's plate, printed the way the home page and /quizzes/ print it, and brought down
+   to near-solid under the words; a plate printed unusually light gets the flat second layer
+   turned up from the page (--room-dim), so its whole face goes down and the type stays read */
+.nx-room--pic { min-height: 18.5rem; background: #2a2622; }
 .nx-img {
   position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover;
-  filter: sepia(.34) contrast(.94) brightness(var(--img-lift, 1.02)) grayscale(.15);
+  filter: sepia(.34) contrast(.9) brightness(var(--img-lift, 1.06));
 }
-.nx-room::after {
+.nx-room--pic::after {
   content: ""; position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(180deg, rgba(20, 17, 14, .3) 0 32%, rgba(18, 15, 12, .78) 76%, rgba(16, 13, 11, .93));
-}
-/* no picture: the Compass's own ground, so it reads as an instrument beside the plates */
-.nx-room--night {
-  background-color: var(--dark-fill); background-image: var(--dark-fill-img); background-size: 420px;
-}
-.nx-room--night::after {
   background:
-    radial-gradient(85% 100% at 88% 6%, rgba(126, 186, 238, .26), transparent 62%),
-    linear-gradient(180deg, transparent 30%, rgba(16, 16, 22, .74));
+    linear-gradient(180deg, rgba(38, 33, 28, 0) 22%, rgba(38, 33, 28, .74) 54%, rgba(34, 30, 26, .96)),
+    linear-gradient(180deg, rgba(30, 26, 22, var(--room-dim, 0)), rgba(30, 26, 22, var(--room-dim, 0)));
 }
+/* no plate: the Compass, on the night ground and blue glow of its shared card (.ccard) */
+.nx-room--night {
+  background-color: #141a27;
+  background-image: radial-gradient(120% 90% at 85% 10%, rgba(126, 186, 238, .22), transparent 60%), var(--dark-fill-img);
+  background-size: auto, 520px;
+}
+/* a game: the /games/ card's night, with a bloom of its own ink behind its corner glyph */
+.nx-room--game {
+  background-color: #17161c; background-image: var(--dark-fill-img); background-size: 520px;
+  box-shadow: 0 10px 30px rgba(20, 24, 40, .16), inset 0 0 0 1px rgba(255, 255, 255, .07);
+}
+.nx-room--game::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: radial-gradient(85% 60% at 6% 0%, var(--room-glow, rgba(240, 160, 111, .2)), transparent 62%);
+}
+:root[data-theme="dark"] .nx-room--night,
+:root[data-theme="dark"] .nx-room--game { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .07), 0 10px 26px rgba(0, 0, 0, .35); }
+/* the glyph at the size of a small room: the kit's own sizes are for a card twice as wide */
+.nx-room .corner-ghost--ask { font-size: 11rem; }
+.nx-room .corner-ghost--quote { font-size: 16rem; }
 
-.nx-body { display: block; padding: .9rem .95rem 1rem; }
-.nx-mark {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 2rem; height: 2rem; border-radius: 11px; margin: 0 0 .55rem;
-  background: rgba(255, 255, 255, .17); color: #FFD2B0;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .3);
-  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
-}
-.nx-room--night .nx-mark { color: var(--blue-soft); }
-.nx-kind {
-  display: block; font-family: var(--ui); font-size: .54rem; font-weight: 700;
-  letter-spacing: .18em; text-transform: uppercase; color: rgba(255, 255, 255, .66);
-}
+.nx-body { display: block; position: relative; padding: 1.2rem 1.15rem 1.2rem; }
 .nx-title {
-  display: block; margin: .18rem 0 0; font-family: var(--display); font-weight: 400;
-  font-size: 1.16rem; line-height: 1.12; letter-spacing: -.01em; color: #fff;
-  text-wrap: balance;
+  display: block; font-family: var(--display); font-weight: 400; color: #fff;
+  font-size: 1.5rem; line-height: 1.1; letter-spacing: -.012em; text-wrap: balance;
 }
+/* the picture dims softly behind the title, as on the home page and /quizzes/ */
+.nx-room--pic .nx-title { text-shadow: var(--title-lift); }
+/* balanced, as the home page's cards are, so no line under a title ends on one word; not
+   clamped, because a clamped box ignores text-wrap and every line here is one sentence */
 .nx-say {
-  display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical;
-  overflow: hidden; margin: .35rem 0 0; font-size: .84rem; line-height: 1.45;
-  color: rgba(255, 255, 255, .8); text-wrap: pretty;
+  display: block; margin: .45rem 0 0; font-size: .92rem; line-height: 1.5;
+  color: rgba(255, 255, 255, .85); text-wrap: balance;
 }
-.nx-facts { display: flex; flex-wrap: wrap; gap: .3rem; margin: .6rem 0 0; }
+.nx-facts { display: flex; flex-wrap: wrap; gap: .35rem; margin: .8rem 0 0; }
 .nx-facts > span {
-  display: inline-flex; align-items: center; padding: .28rem .5rem; border-radius: var(--r-pill);
-  background: rgba(255, 255, 255, .13); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .2);
-  font-family: var(--ui); font-size: .52rem; font-weight: 700; letter-spacing: .11em;
-  text-transform: uppercase; color: rgba(255, 255, 255, .85); line-height: 1;
+  display: inline-flex; align-items: center; gap: .35rem; padding: .34rem .6rem; border-radius: 999px;
+  font-family: var(--ui); font-size: .6rem; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase; line-height: 1;
+  color: rgba(255, 255, 255, .92); background: rgba(255, 255, 255, .12); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16);
 }
-.nx-go {
-  display: inline-flex; align-items: center; gap: .4rem; margin: .7rem 0 0;
-  font-family: var(--ui); font-size: .62rem; font-weight: 700; letter-spacing: .14em;
-  text-transform: uppercase; color: #FFD2B0;
+/* Start and Play: the shared pill, in the room's own ink */
+.nx-body .go-pill { margin-top: 1rem; color: var(--room-ink); }
+
+/* in a row: smaller type for a narrower room */
+@container (min-width: 30rem) {
+  .nx-room--pic { min-height: 21rem; }
+  .nx-body { padding: 1.1rem 1.05rem 1.15rem; }
+  .nx-title { font-size: 1.28rem; }
+  .nx-say { font-size: .88rem; line-height: 1.45; }
 }
-.nx-room--night .nx-go { color: var(--blue-soft); }
-.nx-go .icon { transition: transform .18s ease; }
-.nx-room:hover .nx-go .icon { transform: translateX(3px); }
+/*
+ * And the rooms in a row share their lines. Every room is the same four rows (title, line,
+ * facts, button) on the list's own grid (subgrid), so a two-line title and a four-line
+ * blurb in one room cannot knock the next room's words out of line: the titles end on one
+ * line, the blurbs start on one line, and the facts and the buttons stand level. Every room
+ * in a row keeps the same height of picture, glyph or night above its title.
+ */
+@supports (grid-template-rows: subgrid) {
+  @container (min-width: 30rem) {
+    /* the space between rows of rooms is each item's own foot, not a gap the subgrids
+       would inherit between their own four lines */
+    .nx { row-gap: 0; margin-bottom: -.9rem; }
+    .nx > li { display: grid; grid-row: span 4; grid-template-rows: subgrid; row-gap: 0; margin-bottom: .9rem; }
+    .nx-room {
+      grid-row: 1 / -1; display: grid; grid-template-rows: subgrid; row-gap: 0;
+      align-items: start; justify-items: start; padding: 8.5rem 1.05rem 1.15rem;
+    }
+    /* a room alone on its row is twice as wide, and the same height of night over it read as
+       an empty panel */
+    .nx > li:last-child:nth-child(odd) .nx-room { padding-top: 6rem; }
+    .nx-room--pic { min-height: 0; }
+    .nx-body { display: contents; }
+    .nx-title { align-self: end; }
+  }
+  /* three across, the third is not alone any more */
+  @container (min-width: 42rem) {
+    .nx:has(> li:nth-child(3):last-child) > li:last-child .nx-room { padding-top: 8.5rem; }
+  }
+}
 
 /* ------------------------------------------------- the result page room --- */
 
@@ -637,10 +682,12 @@
 
 /*
  * A section head already carries 3rem above it, so the block it announces does
- * not need its own 2.5rem on top of that.
+ * not need its own 2.5rem on top of that. (Not the email room: it carries its
+ * heading inside it, and with no margin of its own it sat flush under the last
+ * line of the share block.)
  */
 .sect + .tags { margin: -.45rem 0 1.05rem; max-width: var(--measure); }
-.outcomes, .depth-section, .share-block, .capture { margin-top: 0; }
+.outcomes, .depth-section, .share-block { margin-top: 0; }
 
 /*
  * "How to read this result": the quiz's own words about its ranking, folded. It
@@ -659,13 +706,14 @@
 /* ------------------------------------------------------- the email room --- */
 
 /*
- * The offer, as a dark room with the mail mark and one field.
+ * The offer, as a dark room with one field.
  *
  * It used to be a light panel carrying a heading, a field, a button and five
  * lines of small print, which read as a form bolted to the foot of a result.
  * The words are unchanged — they were only just made true — but they are set as
- * a room now: the mark, the offer at reading size, the field and its button on
- * one line, and the detail small and calm underneath.
+ * a room now: the heading, the offer at reading size, the field and its button
+ * on one line, and the detail small and calm underneath. No mark over the
+ * heading since 2026-09-22 (the owner: no icon tiles anywhere).
  *
  * Deliberately NOT the footer's photograph. The footer is on this page too, and
  * the same picture twice on one page has already been rejected once.
@@ -676,15 +724,8 @@
   background-color: var(--dark-fill); background-image: var(--dark-fill-img); background-size: 520px;
   color: var(--on-dark);
 }
-:root[data-theme="dark"] .capture { background-color: #2A2A33; }
+/* (the starry tile is opaque and turns a shade darker in the dark theme by itself, site.css) */
 @media (min-width: 40rem) { .capture { padding: 2rem 1.95rem 2.1rem; } }
-.capture > *:not(.dark-ghost) { position: relative; z-index: 1; }
-.capture .dark-ghost { font-size: clamp(5rem, 26vw, 9rem); right: -.05em; bottom: -.22em; }
-.cap-mark {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 2.4rem; height: 2.4rem; border-radius: 13px; margin: 0 0 .8rem;
-  background: rgba(255, 255, 255, .09); color: var(--orange-soft);
-}
 .capture h2 {
   margin: 0; font-family: var(--display); font-style: italic; font-weight: 400;
   font-size: clamp(1.6rem, 6.6vw, 2.1rem); line-height: 1.04; letter-spacing: -.02em;
@@ -761,8 +802,17 @@
  * the articles wear everywhere else, so the page shows what it is describing.
  */
 .ab-rooms { list-style: none; margin: 1.1rem 0 0; padding: 0; display: grid; gap: .8rem; }
-@media (min-width: 46rem) { .ab-rooms { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .ab-rooms > li { display: flex; }
+/* a tablet holds two, and the odd one takes the whole row rather than leaving a hole beside
+   it (a room a third of a tablet wide cut the articles' line off mid-word); three from 60rem */
+@media (min-width: 46rem) {
+  .ab-rooms { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ab-rooms > li:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+@media (min-width: 60rem) {
+  .ab-rooms { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .ab-rooms > li:last-child:nth-child(odd) { grid-column: auto; }
+}
 .ab-room {
   position: relative; isolation: isolate; overflow: hidden; flex: 1;
   display: flex; align-items: flex-end; min-height: 13rem;
@@ -776,23 +826,47 @@
   position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover;
 }
 .ab-room--ink img { filter: sepia(.34) contrast(.94) brightness(var(--img-lift, 1.04)) grayscale(.15); }
+/* The manuscript photograph has the book's black edge along its top (about 7% of it), which
+   every shape of this room shows in full, as a black strip over the page. Grown a tenth from
+   its foot, the edge goes above the room and the page fills it. */
+.ab-room--games img { transform: scale(1.1); transform-origin: 50% 100%; }
 .ab-room::after {
   content: ""; position: absolute; inset: 0; z-index: -1;
   background: linear-gradient(180deg, rgba(18, 18, 24, .24) 0 28%, rgba(16, 14, 12, .8) 74%, rgba(14, 12, 10, .94));
 }
-.ab-room .nx-body { padding: 1rem 1.05rem 1.1rem; }
-.ab-room .nx-title { font-size: 1.34rem; }
-.ab-room .nx-say { -webkit-line-clamp: 3; line-clamp: 3; }
-/* three lines held on every card, so the titles above sit level whatever each blurb runs to */
-@media (min-width: 46rem) { .ab-room .nx-say { min-height: calc(3 * 1.45em); } }
+.ab-room .nx-body { padding: 1.2rem 1.15rem 1.2rem; }
+.ab-room .nx-title { font-size: 1.5rem; text-shadow: var(--title-lift); }
+/* "All quizzes", "All games", "All articles": the shared pill, each in an ink of its own
+   picture (the Moses plate's parchment, the games' orange, the harvest sky's blue) */
+.ab-room .go-pill { margin-top: 1rem; color: #EADFCB; }
+.ab-room--games .go-pill { color: var(--orange-soft); }
+.ab-room--articles .go-pill { color: var(--blue-soft); }
+@media (min-width: 46rem) {
+  .ab-room { min-height: 17rem; }
+  .ab-room .nx-body { padding: 1.15rem 1.1rem 1.2rem; }
+}
+/* Side by side, the rooms share their three lines (title, blurb, button) on the list's own
+   grid, as the NextUp rooms do: the titles end level, the blurbs start level and the buttons
+   line up, however long each blurb runs. */
+@supports (grid-template-rows: subgrid) {
+  @media (min-width: 46rem) {
+    .ab-rooms { row-gap: 0; margin-bottom: -.8rem; }
+    .ab-rooms > li { display: grid; grid-row: span 3; grid-template-rows: subgrid; row-gap: 0; margin-bottom: .8rem; }
+    .ab-room {
+      grid-row: 1 / -1; display: grid; grid-template-rows: subgrid; row-gap: 0;
+      align-items: start; justify-items: start; min-height: 0; padding: 8rem 1.1rem 1.2rem;
+    }
+    .ab-room .nx-body { display: contents; }
+    .ab-room .nx-title { align-self: end; }
+  }
+}
 
 /* the foot of an article: the rooms first, then the paintings */
 .doc-next { margin-top: 1.5rem; }
 
 @media (prefers-reduced-motion: reduce) {
-  .nx-room, .ab-room, .nx-go .icon { transition: none; }
+  .nx-room, .ab-room { transition: none; }
   .nx-room:hover, .ab-room:hover { transform: none; }
-  .nx-room:hover .nx-go .icon { transform: none; }
 }
 
 /* ==========================================================================
@@ -958,13 +1032,8 @@
     background-color: var(--dark-fill); background-image: var(--dark-fill-img);
     background-size: 520px; color: var(--on-dark); box-shadow: var(--lift);
   }
-  :root[data-theme="dark"] .doc-rail {
-    background-color: #2C2C38;
-    background-image:
-      linear-gradient(135deg, rgba(126, 186, 238, .13), rgba(240, 160, 111, .09) 70%, rgba(240, 160, 111, .13));
-    background-size: auto;
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .07), 0 10px 26px rgba(0, 0, 0, .35);
-  }
+  /* the starry ground turns a shade darker in the dark theme (site.css); only the edge is added */
+  :root[data-theme="dark"] .doc-rail { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .07), 0 10px 26px rgba(0, 0, 0, .35); }
   .rail-ghost {
     display: block; position: absolute; z-index: 0; left: -.05em; top: -.06em;
     font-family: var(--display); font-style: italic; font-weight: 400; white-space: nowrap;

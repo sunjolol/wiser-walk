@@ -1,0 +1,54 @@
+---
+/**
+ * One comparison, as a card: on /compare/ and under "Other comparisons" on every pair page.
+ *
+ * It replaced the stripe card there (2026-09-22). The owner wanted no compass medallion, no
+ * "Compare" corner tab and no sideways tag, and a page of twelve cards that did not all look
+ * the same. So the card says how close the pair lands in two ways at once:
+ *
+ * - a big faint ghost under the words, "shares 4/6", as faint as the "wiser walk" in the
+ *   footer and cut by the card's own edge the same way, with the Read pill beside it;
+ * - its colour. The ground runs from blue into orange, and how much of it is blue is the
+ *   share of the six axes on which the two land in the SAME AUDITED BAND. A pair sharing five
+ *   is nearly all blue with a warm corner; a pair sharing none is orange with a cool one.
+ *   (Two stops sliding, not one mixed colour: blue and orange mixed half and half is a grey,
+ *   and the middle shelf would have been a row of grey cards.) Styles: .cmpc in compare.css.
+ *
+ * The count comes from the same compare() call each pair page makes, so the card and the page
+ * it opens can never print two different numbers. It is a count of the instrument's bands,
+ * never a percentage and never a claim that the two agree.
+ */
+import Icon from './Icon.astro';
+import { compare } from '../lib/engine/registry';
+import type { BipolarComparison } from '../lib/engine/compare';
+import { COMPARE_QUIZ, compareHref, traditionOf } from '../lib/comparisons';
+import type { Comparison } from '../lib/comparisons';
+
+interface Props {
+  c: Comparison;
+}
+const { c } = Astro.props;
+
+const cmp = compare(
+  COMPARE_QUIZ,
+  traditionOf(c.a).position ?? [],
+  traditionOf(c.b).position ?? []
+) as BipolarComparison;
+const same = cmp.sameCount;
+const total = cmp.total;
+/** How much of the ground is blue: the share of the axes in the same band. */
+const near = total > 0 ? Math.round((same / total) * 1000) / 10 : 0;
+---
+<a class="cmpc" href={compareHref(c.slug)} style={`--near: ${near}%`}>
+  <span class="cmpc-ghost" aria-hidden="true"><span>shares</span><span>{same}/{total}</span></span>
+  {/* Each name kept whole ("Church of / Christ vs Baptist" was a phone's first try), and
+      "vs" rides with the second, so a title that breaks ends on two words, never one
+      ("Church of Christ / vs Baptist"). {' '} because JSX drops the space between two
+      elements on separate lines. */}
+  <h3 class="cmpc-title">
+    <span>{c.labelA}</span>{' '}<span>vs {c.labelB}</span>
+  </h3>
+  <p class="cmpc-text">{c.description}</p>
+  <span class="sr-only">Same band on {same} of {total} axes.</span>
+  <span class="cmpc-go go-pill">Read <Icon name="arrow" size={16} /></span>
+</a>

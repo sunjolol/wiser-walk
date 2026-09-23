@@ -1,5 +1,22 @@
 # Handoff (updated 2026-09-22, end of the accounts / logo / type session): start here
 
+## LATEST (2026-09-22, late): the standardize pass is LIVE on `main`, with the owner's go
+
+One look everywhere, on his list (brief: `design/STANDARDIZE-BRIEF.md`): no icon tiles on any card; every way in
+("Start", "Play", "Read", "All …") is a `.go-pill` button; ONE Compass card (`components/CompassCard.astro`, the
+Eastern Orthodox wheel) wherever the Compass is offered; game cards wear a faint corner glyph (`.corner-ghost`: "?"
+and "“"), no "real lines" chips; every text-only hero chip removed except an article's "Article" (bands keep their
+height, `.band--bare`); header menu centred in Inter .9rem, "Log In / Sign Up / My Profile", Sign Up on a stronger
+brand wash; /compare/ cards colour-coded blue (near) to orange (far) with a faint "shares x/6"; dark theme keeps the
+starry texture, darker (`tex/starry-dark.png`); 18 pictures had paper margins cropped (they showed as bright edges in
+dark). The daily round is called **Today's Challenge** (his call, 2026-09-22), including the in-game buttons; /games/
+promises a daily streak that is NOT built yet (his call: build it before the page is widely read).
+- **He will look at the game start screens himself** and decide on the faint ghost word "hard" behind the "Lines a
+  run" tile. Ask what he thought.
+- Captures: use `node design/tools/fullshot.mjs <url> <out.png> <width> [mobile]`: it waits for every picture
+  (shot.sh once returned a phone capture with a blank sky).
+- **Work SOLO on design tweaks** (he objected to 3M+ tokens spent on reviewer fan-outs for cosmetic changes).
+
 ## START HERE (2026-09-22, third session). Supersedes everything below where they differ
 
 **Live on `main` and deployed today, each with the owner's go:**

@@ -5,8 +5,9 @@
  *
  * Redrawn for the dawn pass (2026-09-21). It used to be a light panel with a dotted spec
  * list beside a dark art half — a form, not a room. Now the whole card is the game's own
- * night, with its mark and its ink, and the drawing sits beside the words rather than under
- * a rule: what a player actually meets when they tap Play, at a glance.
+ * night, with its ink and its ghost glyph in the corner (.corner-ghost in kit.css; it was a
+ * small icon tile over the title until 2026-09-22), and the drawing sits beside the words
+ * rather than under a rule: what a player actually meets when they tap Play, at a glance.
  *
  * TWO DRAWINGS, and both show a real question.
  *
@@ -23,14 +24,14 @@
  */
 import Icon from './Icon.astro';
 import type { Game } from '../lib/games';
-import type { IconName } from '../lib/icons';
 
 export interface Props {
   game: Game;
-  /** The mark and the ink, so no two cards read alike. */
-  icon: IconName;
+  /** The ghost glyph in the corner and the ink, so no two cards read alike. */
+  ghost?: 'quote' | 'ask';
   ink: 'orange' | 'blue';
-  /** Short, counted facts. Each one comes off the built game's own metadata. */
+  /** Short, counted facts. Each one comes off the built game's own metadata. Never the size of
+      the pool ("N real lines"), which the owner wants off every card (2026-09-22). */
   facts?: string[];
   /** How long a run takes, in the game's own words: "2 min a run". */
   clock?: string;
@@ -47,11 +48,12 @@ export interface Props {
     | { kind: 'binary'; answers: [string, string]; line?: string | null }
     | { kind: 'names'; names?: string[] | null; line?: string | null };
 }
-const { game, icon, ink, facts = [], clock, preview } = Astro.props;
+const { game, ghost, ink, facts = [], clock, preview } = Astro.props;
+const GLYPH = { quote: '“', ask: '?' } as const;
 ---
 <a class={`gcard gcard--${ink}`} href={game.href}>
+  {ghost && <span class={`corner-ghost corner-ghost--${ghost}`} aria-hidden="true">{GLYPH[ghost]}</span>}
   <div class="gcard-say">
-    <span class="gcard-mark"><Icon name={icon} size={20} /></span>
     {/* h2: with no section head over them, each game IS a section of this page, and a page
         that runs h1 straight to h3 reads as a level missing to a screen reader. */}
     <h2>{game.title}</h2>
@@ -62,7 +64,7 @@ const { game, icon, ink, facts = [], clock, preview } = Astro.props;
         {facts.map(f => <li>{f}</li>)}
       </ul>
     )}
-    <span class="gcard-go">Play <Icon name="arrow" size={14} /></span>
+    <span class="gcard-go go-pill">Play <Icon name="arrow" size={16} /></span>
   </div>
 
   {preview && (

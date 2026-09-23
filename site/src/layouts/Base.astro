@@ -377,8 +377,10 @@ const navItems = ACCOUNTS_VISIBLE ? NAV.filter(n => n.href !== '/me/') : NAV;
           ))}
         </nav>{ACCOUNTS_VISIBLE && (
           /*
-            The account pair (the owner, 2026-09-22): "Log in" as text and "Sign up" as the one
-            loud pill for a guest, "My profile" for somebody logged in. It sits outside <nav>
+            The account pair (the owner, 2026-09-22): "Log In" as text and "Sign Up" on a wash
+            of the brand's colours for a guest, "My Profile" for somebody logged in. Title case
+            here, as the owner asked; the pages themselves keep "Log in" and "Sign up" in their
+            own sentences. It sits outside <nav>
             because on a phone it is not in the nav's row: it takes the bulb's place at the top
             right, where people look for it, and the bulb moves down to the end of the nav row.
 
@@ -394,13 +396,13 @@ const navItems = ACCOUNTS_VISIBLE ? NAV.filter(n => n.href !== '/me/') : NAV;
           <div class="head-acct">
             <span class="head-acct-out">
               <a class="head-login" id="head-login" href="/account/sign-in/"
-                 aria-current={isCurrent('/account/sign-in/') ? 'page' : undefined}>Log in</a>
+                 aria-current={isCurrent('/account/sign-in/') ? 'page' : undefined}>Log In</a>
               <a class="head-join" href="/account/sign-up/"
-                 aria-current={isCurrent('/account/sign-up/') ? 'page' : undefined}>Sign up</a>
+                 aria-current={isCurrent('/account/sign-up/') ? 'page' : undefined}>Sign Up</a>
             </span>
             <a class="head-me" href="/me/" aria-current={isCurrent('/me/') ? 'page' : undefined}>
               <span class="head-me-mark" aria-hidden="true"><Icon name="users" size={16} /></span>
-              <span>My profile</span>
+              <span>My Profile</span>
             </a>
             {/*
               After logging in, back to the page they were reading rather than to the profile.
@@ -456,7 +458,6 @@ const navItems = ACCOUNTS_VISIBLE ? NAV.filter(n => n.href !== '/me/') : NAV;
         <img src="/img/hero-dawn.jpg" alt="" loading="lazy" decoding="async" width="2000" height="1335" />
         <div class="wrap foot-dawn-in">
           <div class="foot-dawn-say">
-            <p class="foot-kicker"><Icon name="mail" size={14} /> By email, now and then</p>
             <h2>Keep walking.</h2>
             <p>New quizzes and games as they are made.</p>
           </div>
@@ -504,7 +505,7 @@ const navItems = ACCOUNTS_VISIBLE ? NAV.filter(n => n.href !== '/me/') : NAV;
 
         <nav class="foot-cols" aria-label="Site">
           <div class="foot-col foot-col--blue">
-            <h4><span class="foot-mark"><Icon name="compass" size={15} /></span> Quizzes</h4>
+            <h4>Quizzes</h4>
             <ul>
               {/*
                 ONE title is cut short here BY HAND, by the owner's instruction (2026-09-21): at full
@@ -518,14 +519,14 @@ const navItems = ACCOUNTS_VISIBLE ? NAV.filter(n => n.href !== '/me/') : NAV;
             </ul>
           </div>
           <div class="foot-col foot-col--orange">
-            <h4><span class="foot-mark"><Icon name="play" size={13} /></span> Games</h4>
+            <h4>Games</h4>
             <ul>
               {footGames.map(g => <li><a href={g.href}>{g.title}</a></li>)}
               <li><a class="foot-all" href="/games/">All games <Icon name="arrow" size={12} /></a></li>
             </ul>
           </div>
           <div class="foot-col foot-col--blue">
-            <h4><span class="foot-mark"><Icon name="book" size={15} /></span> More</h4>
+            <h4>More</h4>
             <ul>
               <li><a href="/articles/">Articles</a></li>
               {/* The comparison pages are writing, and this is where the writing lives. */}

@@ -2,9 +2,11 @@
  * My results (2026-09-20).
  *
  * The same language as the home page, written again rather than borrowed: home.css belongs
- * to the home page and is loaded only there. A sky band with white display type, rooms with
- * a 24px radius and a picture each, a mark on anything that would otherwise have to be read
- * to be understood.
+ * to the home page and is loaded only there. A sky band with white display type, and the
+ * same cards the rest of the site offers (standardised 2026-09-22, when the owner found the
+ * ones here "totally different"): the Compass on its night ground with a real wheel in the
+ * corner, the other quizzes in their Doré plates, the games dark with a ghost glyph and a
+ * drawing of one real question. No icon tiles over any title; the ways in are .go-pill.
  *
  * Phone first; every block starts at 360px and widens after. Tokens only.
  * ===================================================================================== */
@@ -27,14 +29,9 @@
     radial-gradient(90% 70% at 30% 40%, rgba(18, 32, 58, .48), transparent 74%),
     linear-gradient(180deg, rgba(18, 30, 56, .34), rgba(18, 30, 56, .06) 55%, rgba(30, 20, 14, .22));
 }
-.me-chip {
-  display: inline-flex; align-items: center; gap: .45rem; margin: 0 0 1rem;
-  padding: .42rem .85rem; border-radius: var(--r-pill);
-  font-family: var(--ui); font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
-  color: #fff; background: rgba(255, 255, 255, .16);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .34);
-  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
-}
+/* The band keeps the height it had with its chip (46px with the margin, gone since 2026-09-22):
+   half above the words and half below, so they stay centred on the picture. */
+.me-band-in::before, .me-band-in::after { content: ""; display: block; height: 1.43rem; }
 .me-band h1 {
   margin: 0; font-family: var(--display); font-weight: 400; color: #fff;
   font-size: clamp(2.6rem, 12vw, 4.4rem); line-height: 1.02; letter-spacing: -.02em;
@@ -54,56 +51,109 @@
    without a single node moving in the document. */
 .me-rooms { display: flex; flex-direction: column; gap: .9rem; }
 
+/*
+ * A ROOM is the home page's quiz card (.room in home.css) at this page's widths: a Doré plate
+ * printed soft sepia under a warm dark scrim, the white title lifted off it, one sentence, the
+ * counted facts and Start in the quiz's own ink under them. The Compass is the shared Compass
+ * card's twin (.ccard in kit.css): the night ground, its blue glow and a real wheel.
+ */
 .mroom {
   --room-ink: var(--blue-soft);
   position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column;
-  min-height: 16rem; border-radius: 24px; color: #fff;
+  min-height: 20rem; border-radius: 24px; color: #fff;
   background: #2a2622; box-shadow: 0 10px 30px rgba(20, 24, 40, .16);
+  transition: transform .22s ease, box-shadow .22s ease;
 }
+.mroom:hover { transform: translateY(-3px); box-shadow: 0 16px 38px rgba(20, 24, 40, .24); }
 .mroom > img {
   position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover;
-  filter: sepia(.34) contrast(.9) brightness(1.02);
+  filter: sepia(.34) contrast(.9) brightness(1.06);
 }
-.mroom::after {
+.mroom--pic::after {
   content: ""; position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(180deg, rgba(38, 33, 28, .1) 22%, rgba(38, 33, 28, .78) 58%, rgba(34, 30, 26, .96));
+  background: linear-gradient(180deg, rgba(38, 33, 28, 0) 24%, rgba(38, 33, 28, .76) 58%, rgba(34, 30, 26, .96));
 }
 /* A finished room carries four more lines than an empty one, so its words start further up
    the plate — and a Doré sky is white. The scrim rises to meet them. */
-.mroom.is-taken::after {
+.mroom--pic.is-taken::after {
   background: linear-gradient(180deg, rgba(38, 33, 28, .2) 6%, rgba(38, 33, 28, .84) 36%, rgba(34, 30, 26, .96) 68%);
 }
-/* the Compass has no engraving: it is an instrument, on the night ground it is always drawn on */
-.mroom--plain {
-  background-color: #141a27;
-  background-image: radial-gradient(120% 90% at 85% 8%, rgba(126, 186, 238, .22), transparent 60%), var(--dark-fill-img);
-  background-size: auto, 520px;
-  min-height: 0;
-}
-.mroom--plain::after { display: none; }
 .mroom--bible-figure { --room-ink: #EADFCB; }
 .mroom--spiritual-gifts { --room-ink: #FFC98F; }
 .mroom--seven-deadly-sins { --room-ink: #F2A596; }
 /* the Thessalonica plate is the palest of the three; printed darker it joins the other two */
 .mroom--spiritual-gifts > img { filter: sepia(.34) contrast(.9) brightness(.88); }
+/* white type on a picture sits on the title lift (kit.css), as on every engraving card */
+.mroom--pic h2, .mroom--pic .mroom-verdict { text-shadow: var(--title-lift); }
+
+/* the Compass has no engraving: it is an instrument, on the night ground it is always drawn on.
+   A container, so the wheel in its corner is placed by the room's own width. */
+.mroom--plain {
+  container-type: inline-size;
+  min-height: 0;
+  background-color: #141a27;
+  background-image: radial-gradient(120% 90% at 85% 10%, rgba(126, 186, 238, .22), transparent 60%), var(--dark-fill-img);
+  background-size: auto, 520px;
+}
+:root[data-theme="dark"] .mroom--plain {
+  background-color: var(--dark-fill);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .07), 0 10px 26px rgba(0, 0, 0, .35);
+}
+
+/*
+ * THE EXAMPLE WHEEL, in the Compass room, and only while the reader has no
+ * Compass result of their own: a finished room hides it, because beside their verdict it would
+ * read as theirs. Smaller than the shared card's, so it names the six axes and leaves the poles
+ * to the colour, as that card's wheel does on a phone; no caption, as on every Compass card.
+ *
+ * The tokens are the ones .dark re-points (kit.css), so the wheel draws itself for the night
+ * ground. The room cannot simply be .dark: that class lifts every child above the card's
+ * stretched link, and the room would stop being one big way in.
+ *
+ * In flow in the top right corner, above the words, while the room is narrow (a phone, or one of
+ * two rooms side by side), so the two can never meet; from 40rem of room it stands beside them
+ * instead, and the words keep out of its column.
+ */
+.mroom-eg {
+  --panel: #2A2A33; --ink: var(--on-dark); --ink-soft: var(--on-dark-soft); --ink-mute: var(--on-dark-mute);
+  --accent: var(--blue-soft); --warn-ink: var(--orange-soft);
+  --zone-hatch: rgba(190, 196, 205, .2); --zone-edge: rgba(190, 196, 205, .34);
+  align-self: flex-end; padding: 1.3rem 1.8rem 0 3.2rem;
+}
+.mroom.is-taken .mroom-eg { display: none; }
+.mroom-eg .wheel-plot { width: 8.5rem; max-width: none; margin: 0; padding-bottom: 0; }
+.mroom-eg .wheel-cap { display: none; }
+.mroom-eg .wheel-label { width: 4.2rem; }
+.mroom-eg .wheel-label b { font-size: .54rem; letter-spacing: .08em; }
+.mroom-eg .wheel-label i { display: none; }
+/* one of two rooms side by side, or a wide phone: a size up, type included */
+@container (min-width: 26rem) {
+  .mroom-eg { padding: 1.5rem 2rem 0 3.7rem; }
+  .mroom-eg .wheel-plot { width: 10rem; }
+  .mroom-eg .wheel-label { width: 4.7rem; }
+  .mroom-eg .wheel-label b { font-size: .6rem; }
+}
+/* a whole row (a tablet): beside the words and centred against them, as the shared card's wheel
+   stands beside its words from the same 40rem of card; the labels sit inside the plot's own
+   box, so centring the box centres the drawing. The words are centred too, as that card centres
+   them: left at the foot of the room they sat 45px lower than the wheel beside them. */
+@container (min-width: 40rem) {
+  .mroom-eg { position: absolute; top: 50%; right: 0; padding-top: 0; transform: translateY(-50%); }
+  .mroom:not(.is-taken) .mroom-eg ~ .mroom-body { padding-right: 17rem; margin-block: auto; }
+}
 
 .mroom-body { margin-top: auto; padding: 1.3rem 1.25rem 1.35rem; }
-.mroom-mark {
-  display: grid; place-items: center; width: 2.6rem; height: 2.6rem; margin: 0 0 .8rem;
-  border-radius: 14px; color: #17181d; background: var(--room-ink);
-}
-.mroom-mark--blue { background: var(--blue); }
-.mroom-mark--orange { background: var(--orange); }
 .mroom h2 {
   margin: 0; font-family: var(--display); font-weight: 400; color: #fff;
   font-size: clamp(1.45rem, 5.8vw, 1.85rem); line-height: 1.08; letter-spacing: -.012em; text-wrap: balance;
 }
 .mroom-say {
   margin: .5rem 0 0; max-width: 30rem; font-size: .94rem; line-height: 1.5; color: rgba(255, 255, 255, .82);
+  text-wrap: balance;
   display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
 }
 .mroom-facts {
-  display: flex; flex-wrap: wrap; gap: .4rem; margin: .9rem 0 0; padding: 0; list-style: none;
+  display: flex; flex-wrap: wrap; gap: .4rem; margin: .95rem 0 0; padding: 0; list-style: none;
   font-family: var(--ui); font-size: .62rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
 }
 .mroom-facts li {
@@ -111,36 +161,26 @@
   color: rgba(255, 255, 255, .92); background: rgba(255, 255, 255, .12);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16);
 }
+/* a draft says so once, in the corner, and nothing else about it is different */
+.mroom-tab {
+  position: absolute; top: 0; right: 0; padding: .45rem .9rem; border-radius: 0 24px 0 14px;
+  font-family: var(--ui); font-size: .58rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  color: #17181d; background: var(--room-ink);
+}
 /*
  * THE WHOLE CARD IS THE WAY IN (the owner, 2026-09-22: the small "Take it" link was "super
  * small and annoying to click"). The card's main link stretches an invisible layer over the
  * whole card, so a tap anywhere on it goes where the button goes; the few other controls on
  * a finished card (take it again, earlier runs) stand above that layer. The link itself is
- * a real button at every width now, in the room's own ink, sitting on the same line as the
- * time chip and pushed to the right.
+ * the site's pill (.go-pill in kit.css) in the card's own ink, under the facts as on the home
+ * page's cards; the layer hovers it, so the pill deepens wherever the card is pointed at.
  */
-.mroom-go {
-  display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; padding: .55rem 1.15rem;
-  border-radius: var(--r-pill); text-decoration: none; white-space: nowrap;
-  font-family: var(--ui); font-size: .74rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
-  color: var(--room-ink);
-  background: color-mix(in srgb, currentColor 16%, transparent);
-  box-shadow: inset 0 0 0 1.5px currentColor;
-  transition: background-color .18s ease;
-}
+.mroom-go { color: var(--room-ink); }
+.mroom-none .mroom-go, .mgame .mroom-go { margin-top: 1.1rem; }
 /* No radius of its own: it would inherit the pill's and turn the layer into a stadium that misses
    the corners. The card clips it to its own shape. */
 .mroom-go::before { content: ""; position: absolute; inset: 0; z-index: 1; }
 .mroom-again, .mroom-past { position: relative; z-index: 2; }
-.mroom-go .icon { transition: transform .18s ease; }
-.mroom:hover .mroom-go, .mgame:hover .mroom-go { background: color-mix(in srgb, currentColor 26%, transparent); }
-.mroom:hover .mroom-go .icon, .mgame:hover .mroom-go .icon { transform: translateX(3px); }
-.mroom-foot {
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .6rem .75rem;
-  margin-top: 1rem;
-}
-.mroom-foot .mroom-facts { margin: 0; }
-.mroom-foot .mroom-go { margin-left: auto; }
 
 /* A finished room has TWO things that want to be the headline — the quiz's name and the
    reader's own verdict. The verdict wins: the quiz's name steps down to a kicker, which is
@@ -159,18 +199,26 @@
   font-size: clamp(1.5rem, 6.4vw, 2rem); line-height: 1.06; letter-spacing: -.015em; text-wrap: balance;
   display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
 }
-.mroom-has .mroom-say { -webkit-line-clamp: 2; line-clamp: 2; margin-top: .45rem; }
+/* Three lines, as the tagline gets: at two, a 360 phone cut the seven sins' "…so none is named."
+   down to "so none is…", one word short of the end. */
+.mroom-has .mroom-say { margin-top: .45rem; }
 .mroom-when {
   margin: .75rem 0 0; font-family: var(--ui); font-size: .6rem; font-weight: 700;
   letter-spacing: .14em; text-transform: uppercase; color: rgba(255, 255, 255, .62);
 }
 .mroom-acts { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem 1.2rem; margin-top: .9rem; }
+/* The pill and "Take it again" need 283px side by side at this gap, and a 360 phone's room has
+   280: closer there, so it stays on the pill's line as it does on every wider screen. */
+@media (max-width: 23rem) { .mroom-acts { column-gap: .75rem; } }
+/* The second way in, beside the pill: a plain underlined line of text, as every secondary link
+   on the site now is (the owner, 2026-09-22), never small caps; 44px tall for a thumb. */
 .mroom-again {
-  display: inline-flex; align-items: center; min-height: 44px; text-decoration: none;
-  font-family: var(--ui); font-size: .68rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
-  color: rgba(255, 255, 255, .72);
+  display: inline-flex; align-items: center; min-height: 44px;
+  font-size: .9rem; font-weight: 600; color: #fff;
+  text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .22em;
+  text-decoration-color: rgba(255, 255, 255, .5);
 }
-.mroom-again:hover { color: #fff; }
+.mroom-again:hover { text-decoration-color: #fff; }
 
 /* earlier runs: shut, quiet, and never in the way of the latest one */
 .mroom-past { margin: .55rem 0 0; }
@@ -201,16 +249,18 @@
 
 @media (min-width: 46rem) {
   .me-rooms { gap: 1rem; }
-  .mroom { min-height: 18rem; }
-  .mroom--plain { min-height: 0; }
+  .mroom { min-height: 20rem; }
+  .mroom--plain { min-height: 18rem; }
   .mroom-body { padding: 1.6rem 1.6rem 1.7rem; }
 }
 /* Two across, rather than four letterboxes with a verdict in the left third of each. A grid
    row stretches its cells to the same height, so a room with a history stays level with the
-   one beside it, and `order` still lifts the finished ones to the front. */
+   one beside it, and `order` still lifts the finished ones to the front. Every row is as tall
+   as the tallest (1fr): the Compass room's wheel stands over its words, and without this its
+   row came out 60px taller than the one under it. */
 @media (min-width: 58rem) {
-  .me-rooms { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
-  .mroom, .mroom--plain { min-height: 21rem; }
+  .me-rooms { display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: 1fr; gap: 1.1rem; }
+  .mroom, .mroom--plain { min-height: 23rem; }
   .mroom-verdict { font-size: 1.85rem; }
 }
 
@@ -221,23 +271,102 @@
   color: var(--ink); text-transform: lowercase;
 }
 .me-games-row { display: grid; grid-template-columns: 1fr; gap: .9rem; }
+/*
+ * A GAME is the home page's game card (.game in home.css), standing on this page's pale sheet
+ * rather than on the home page's manuscript, so it is grounded the way /games/ grounds it
+ * (.gcard in play.css): the game's own night on the starry ground, a bloom of its ink behind
+ * the ghost glyph in the corner (.corner-ghost in kit.css), the words, and a drawing of one
+ * real question (.mock in kit.css) beside them where there is room and under them where not.
+ */
 .mgame {
-  --room-ink: var(--orange-soft);
-  position: relative; overflow: hidden; padding: 1.25rem 1.2rem 1.3rem; border-radius: 22px;
-  color: #fff; background-color: var(--dark-fill); background-image: var(--dark-fill-img); background-size: 520px;
-  box-shadow: var(--lift);
+  --game-ink: var(--orange-soft);
+  position: relative; isolation: isolate; overflow: hidden; overflow: clip;
+  /* align-content: where the two cards cannot share their rows (no subgrid, below), they are still
+     stretched to one height, and the spare height of the shorter one must not open a gap between
+     its words and its drawing: the spare room goes to the foot */
+  display: grid; grid-template-columns: 1fr; gap: 1.25rem; align-items: start; align-content: start;
+  padding: 1.4rem 1.3rem 1.5rem; border-radius: 24px; color: #fff;
+  background-color: #17161c; background-image: var(--dark-fill-img); background-size: 520px;
+  box-shadow: 0 10px 30px rgba(20, 24, 40, .16), inset 0 0 0 1px rgba(255, 255, 255, .07);
+  transition: transform .22s ease, box-shadow .22s ease;
 }
-:root[data-theme="dark"] .mgame { background-color: #2C2C38; }
+.mgame--blue { --game-ink: var(--blue-soft); }
+.mgame:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 38px rgba(20, 24, 40, .24), inset 0 0 0 1px rgba(255, 255, 255, .12);
+}
+.mgame::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: radial-gradient(85% 60% at 6% 0%, rgba(240, 160, 111, .2), transparent 62%);
+}
+.mgame--blue::before { background: radial-gradient(85% 60% at 6% 0%, rgba(126, 186, 238, .2), transparent 62%); }
+/* On a phone the question mark is drawn smaller, as on the home page: at full size its dot fell
+   between the facts and Play and read as a smudge. */
+@media (max-width: 45.99rem) { .mgame .corner-ghost--ask { font-size: 11rem; } }
+/* The words are a column with the facts and Play at its foot. Two cards stand side by side from
+   40rem and only one of them may carry a best score, which is a line more: stretched to the card
+   (or to the row the two share, below), the column keeps both titles level at the top and both
+   facts and Plays level at the foot, and the spare room opens under the sentence instead of
+   shifting one card's words down. */
+.mgame-say { align-self: stretch; display: flex; flex-direction: column; align-items: flex-start; }
 .mgame h3 {
   margin: 0; font-family: var(--display); font-weight: 400; color: #fff;
-  font-size: 1.4rem; line-height: 1.1; letter-spacing: -.012em;
+  font-size: clamp(1.55rem, 6.2vw, 1.95rem); line-height: 1.08; letter-spacing: -.012em; text-wrap: balance;
 }
+/* the reader's own best, under the name and in the game's ink */
 .mgame-best {
-  margin: .55rem 0 0; font-family: var(--display); font-size: 1.15rem; line-height: 1.2;
-  color: var(--orange-soft); font-variant-numeric: tabular-nums;
+  margin: .4rem 0 0; font-family: var(--display); font-size: 1.2rem; line-height: 1.2;
+  color: var(--game-ink); font-variant-numeric: tabular-nums;
 }
-.mgame .mroom-foot { margin-top: .8rem; }
+/* its auto foot is where the spare room of a stretched column opens (see .mgame-say) */
+.mgame-line {
+  margin: .55rem 0 auto; max-width: 30rem; font-size: .95rem; line-height: 1.5;
+  color: rgba(255, 255, 255, .84); text-wrap: balance;
+}
+.mgame .mroom-go { color: var(--game-ink); }
+
+/* the drawing: .mock and its parts come from the kit; only what this card adds is here */
+.mgame .mock { margin: 0 auto; width: 100%; max-width: 17rem; }
+/* The line is quoted, so it is never cut: the clamp is only a stop for a pool that one day
+   holds a much longer line, and does not bite on today's. */
+.mgame .mock-card--line q {
+  font-size: 1rem; line-height: 1.3;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; line-clamp: 4; overflow: hidden;
+}
+/* Evened, so a narrow column breaks "Not in / the Bible" rather than leaving "Bible" alone. */
+.mgame--blue .mock-q { color: var(--blue-soft); }
+.mgame--blue .mock-fuse i { width: 38%; }
+/* Four names, all four the same: the site is never told which of them spoke. */
+.mgame-names { display: grid; grid-template-columns: 1fr 1fr; gap: .45rem; }
+.mgame-names span {
+  display: grid; place-items: center; min-height: 2.1rem; padding: .3rem .4rem;
+  border-radius: 10px; text-align: center;
+  font-family: var(--ui); font-size: .6rem; font-weight: 700; letter-spacing: .07em;
+  text-transform: uppercase; line-height: 1.25;
+  color: rgba(255, 255, 255, .9); background: rgba(255, 255, 255, .1); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14);
+  transition: color .18s ease, box-shadow .18s ease;
+}
+/* the card's own ink, and only under the pointer: the four stay equal */
+.mgame:hover .mgame-names span { color: var(--game-ink); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .26); }
+
 @media (min-width: 40rem) { .me-games-row { grid-template-columns: 1fr 1fr; gap: 1rem; } }
+/* Two across, each with its words over its drawing: the two cards share their two rows (a
+   subgrid), so both drawings start at one height even when one card has a best score and the
+   other has not. Where subgrid is unknown each card simply keeps its own rows, as before. */
+@media (min-width: 40rem) and (max-width: 61.999rem) {
+  .mgame { grid-row: span 2; grid-template-rows: subgrid; }
+}
+/* side by side, the words get the wider half and run the card's height (Play at their foot), and
+   the drawing is centred against them, so neither column leaves a hole under the other; the line
+   steps down to fit the narrower column */
+@media (min-width: 62rem) {
+  .mgame {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 1.6rem;
+    align-items: center; align-content: stretch; padding: 1.7rem;
+  }
+  .mgame .mock { max-width: none; }
+  .mgame .mock-card--line q { font-size: .88rem; -webkit-line-clamp: 6; line-clamp: 6; }
+}
 
 /* --------------------------------------------------------------- the account ----
  *
@@ -247,9 +376,6 @@
  * nothing moving after the fact. With no account at all only one of each is rendered, and
  * none of this applies.
  */
-.me-chip--in { display: none; }
-:root[data-account="in"] .me-chip--out { display: none; }
-:root[data-account="in"] .me-chip--in { display: inline-flex; }
 
 /* ------------------------------------------------------------- the ask, in the band ----
  *
@@ -430,13 +556,8 @@
   font-size: clamp(1.7rem, 7vw, 2.2rem); line-height: 1.05; letter-spacing: -.02em;
 }
 .me-keep p { margin: .6rem 0 0; max-width: 34rem; }
-.me-keep-go {
-  display: inline-flex; align-items: center; gap: .45rem; min-height: 44px; margin-top: .5rem;
-  text-decoration: none; font-family: var(--ui); font-size: .7rem; font-weight: 700;
-  letter-spacing: .13em; text-transform: uppercase;
-}
-.me-keep-go .icon { transition: transform .18s ease; }
-.me-keep-go:hover .icon { transform: translateX(3px); }
+/* a .go-pill (kit.css), in the blue a link takes on a dark panel */
+.me-keep-go { margin-top: 1.1rem; }
 @media (min-width: 46rem) { .me-keep { padding: 2rem 2rem 2.1rem; } }
 
 /* Today's panel is hidden from somebody signed in: he must not be told accounts are on the
@@ -460,7 +581,11 @@
 .me-clear-say.is-bad { color: var(--warn-ink); }
 .me-clear-say.is-busy { color: var(--ink-mute); }
 
+/* (the pills' own motion is switched off in kit.css, with .go-pill) */
 @media (prefers-reduced-motion: reduce) {
-  .mroom-go .icon, .me-keep-go .icon, .mroom-past > summary::after, .me-ask-go { transition: none; }
-  .mroom-go:hover .icon, .me-keep-go:hover .icon { transform: none; }
+  .mroom, .mgame, .mgame-names span, .mroom-past > summary::after, .me-ask-go { transition: none; }
+  .mroom:hover, .mgame:hover { transform: none; }
 }
+
+/* as on the shared Compass card: under 23rem the facts tighten so none falls alone onto a second row */
+@media (max-width: 22.99rem) { .mroom-facts { gap: .3rem; } .mroom-facts li { padding-left: .5rem; padding-right: .5rem; } }

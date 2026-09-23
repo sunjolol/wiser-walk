@@ -3,8 +3,9 @@
  *
  * Written in the language of /support/ and /me/ rather than borrowed from them: those two
  * stylesheets belong to their own pages and are loaded only there. A full-bleed picture
- * band with white display type, a glass chip, THE FORM INSIDE THE BAND so the main action
- * is on screen at 390 without scrolling, and rooms with a mark and an ink each below it.
+ * band with white display type (no chip since 2026-09-22), THE FORM INSIDE THE BAND so the main action
+ * is on screen at 390 without scrolling, and rooms with an ink each below it (no marks
+ * since 2026-09-22).
  *
  * There is no centred card anywhere in here on purpose. An account page is a page of this
  * site, not an auth screen: signing up is the moment the site asks for something, and the
@@ -25,9 +26,9 @@
  * 1883 — a lane at first light with a gate standing open in the wall. Credited in
  * public/img/CREDITS.md.
  *
- * On a phone the painting lies BEHIND the words, darkened, and the chip starts at the top
+ * On a phone the painting lies BEHIND the words, darkened, and the headline starts at the top
  * of the band. Until 2026-09-22 the painting took the band's head on its own, which put
- * nine rem of picture above the chip: on an article that is the point, on a log-in form
+ * nine rem of picture above the words: on an article that is the point, on a log-in form
  * the owner read it as blank space before the thing he came to do. The band's ground is
  * the deepest tone of the painting's own road, so the scrim has nothing to give away.
  */
@@ -70,17 +71,9 @@
 }
 .ac-band-in { position: relative; max-width: 34rem; }
 
-.ac-chip {
-  display: inline-flex; align-items: center; gap: .45rem; margin: 0 0 1rem;
-  padding: .42rem .9rem; border-radius: var(--r-pill);
-  /* .68rem, not the .62rem the older bands use: the critique caught uppercase labels that
-     measured under 11px on a phone, and a chip is the first thing read on these pages. */
-  font-family: var(--ui); font-size: .68rem; font-weight: 700; letter-spacing: .13em;
-  text-transform: uppercase; color: #fff;
-  background: rgba(255, 255, 255, .16);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .34);
-  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
-}
+/* The band keeps the height it had with its chip (47px with the margin, gone since 2026-09-22):
+   half above the headline and half below the form. */
+.ac-band-in::before, .ac-band-in::after { content: ""; display: block; height: 1.48rem; }
 .ac-band h1 {
   margin: 0; max-width: 7em;
   font-family: var(--display); font-weight: 400; color: #fff;
@@ -122,19 +115,14 @@
  * kit.css gives them the starry ground and re-points every token inside; these two lines
  * only take the band's shape back off it.
  */
-/* No picture to make room for, so no sky above the chip either. The ground is named again
+/* No picture to make room for, so no sky above the headline either. The ground is named again
    here rather than left to `.dark`, so which stylesheet the bundler puts first cannot
    decide what colour this band is. */
 .ac-band--night {
   padding-top: 3rem; padding-bottom: 3.2rem; border-radius: 0 0 30px 30px; box-shadow: none;
   background-color: var(--dark-fill); background-image: var(--dark-fill-img); background-size: 520px;
 }
-:root[data-theme="dark"] .ac-band--night {
-  background-color: #2C2C38;
-  background-image:
-    linear-gradient(135deg, rgba(126, 186, 238, .13), rgba(240, 160, 111, .09) 70%, rgba(240, 160, 111, .13));
-  background-size: auto;
-}
+/* (No dark-theme override: the starry ground itself turns a shade darker there, site.css.) */
 @media (min-width: 46rem) {
   .ac-band--night { padding-top: 3.6rem; padding-bottom: 3.8rem; border-radius: 0 0 38px 38px; }
 }
@@ -448,8 +436,9 @@
 
 /* ------------------------------------------------------------------- rooms ---- */
 /* They rise out of the band's lower edge, so the ask and the reasons read as one movement
-   rather than two sections. Each has its own ink, because three grey boxes in a column have
-   to be read to be told apart. */
+   rather than two sections. Each has its own ink, the soft light in its corner, because
+   three grey boxes in a column have to be read to be told apart. No mark over the titles
+   (the owner, 2026-09-22): the title opens the room, a size up from when it sat under one. */
 .ac-rooms {
   position: relative; z-index: 1; margin-top: -3.4rem;
   display: grid; grid-template-columns: 1fr; gap: .9rem;
@@ -459,36 +448,45 @@
   border-radius: 24px; background: var(--panel); box-shadow: var(--lift);
   padding: 1.3rem 1.25rem 1.4rem;
 }
-/* a soft light of the room's own ink in the corner: colour without a second picture, and a
-   radial rather than a disc, because a hard circle edge inside a card reads as a mistake */
+/* a soft light of the room's own ink falling from its top right corner, as on /support/:
+   colour without a second picture. A wash from the corner itself, not a disc set in from it,
+   because with the mark gone the title runs up to where a disc stood. */
 .ac-room::before {
-  content: ""; position: absolute; z-index: -1; right: -4rem; top: -4.5rem;
-  width: 13rem; height: 13rem; pointer-events: none;
-  background: radial-gradient(closest-side, var(--room-ink), transparent 78%);
-  opacity: .42;
+  content: ""; position: absolute; z-index: -1; inset: 0; pointer-events: none;
+  background: radial-gradient(70% 62% at 100% 0%, var(--room-ink), transparent 72%);
+  opacity: .3;
 }
-:root[data-theme="dark"] .ac-room::before { opacity: .3; }
+:root[data-theme="dark"] .ac-room::before { opacity: .2; }
 .ac-rooms .ac-room:nth-child(1) { --room-ink: var(--blue); }
 .ac-rooms .ac-room:nth-child(2) { --room-ink: var(--orange); }
-/* The third carries both, but only on the mark, where the whole ramp is on show corner to
-   corner. Poured into the glow it would show its middle, and the middle of blue-to-orange
-   is grey: a card with a neutral smudge beside a blue one and an orange one reads as colour
-   that failed to load. */
+/* The third is one ink too: a glow poured from the whole blue-to-orange ramp shows only its
+   middle, and the middle of that ramp is grey, which beside a blue corner and an orange one
+   reads as colour that failed to load. */
 .ac-rooms .ac-room:nth-child(3) { --room-ink: var(--blue); }
-.ac-rooms .ac-room:nth-child(3) .ac-mark { background-image: var(--grad); }
 
-.ac-mark {
-  display: grid; place-items: center; width: 2.6rem; height: 2.6rem;
-  border-radius: 14px; color: #1C1C23; background: var(--room-ink, var(--blue));
-}
 .ac-room h2 {
-  margin: .9rem 0 0; font-family: var(--display); font-weight: 400; color: var(--ink);
-  font-size: 1.42rem; line-height: 1.1; letter-spacing: -.012em; text-wrap: balance;
+  margin: 0; font-family: var(--display); font-weight: 400; color: var(--ink);
+  font-size: 1.55rem; line-height: 1.1; letter-spacing: -.012em; text-wrap: balance;
 }
-.ac-room p { margin: .5rem 0 0; font-size: .95rem; line-height: 1.55; color: var(--ink-soft); text-wrap: balance; }
+.ac-room p { margin: .55rem 0 0; font-size: .95rem; line-height: 1.55; color: var(--ink-soft); text-wrap: balance; }
 @media (min-width: 46rem) {
   .ac-rooms { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin-top: -4.6rem; }
-  .ac-room { padding: 1.5rem 1.4rem 1.6rem; }
+  .ac-room { padding: 1.6rem 1.4rem 1.6rem; }
+}
+/* Side by side, the rooms share their two lines on the row's own grid (subgrid), as NextUp's
+   and /about/'s do. Between a tablet and a desktop one title breaks where the others do not
+   ("Everything in one place." is the longest), and each room on its own started its sentence
+   a line lower or higher than the next; now the titles end level and the sentences start level. */
+@supports (grid-template-rows: subgrid) {
+  @media (min-width: 46rem) {
+    .ac-rooms .ac-room { grid-row: span 2; display: grid; grid-template-rows: subgrid; row-gap: 0; }
+    .ac-rooms .ac-room h2 { align-self: end; }
+  }
+}
+/* And until every title has the room to stand on one line (a desktop), every title takes two,
+   so no room in the row carries a spare line of air over its title. */
+@media (min-width: 46rem) and (max-width: 63.99rem) {
+  .ac-rooms .ac-room h2 { max-width: 7.5em; }
 }
 
 

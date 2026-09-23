@@ -4,15 +4,22 @@
  *
  * A finished result, a comparison and the foot of an article are the three places on this
  * site where a reader is most likely to stop. All three used to end on a flat list of
- * links. This draws the same information as a set of small rooms in the home page's
- * language — each one carrying the picture that belongs to that quiz or game, its own mark
- * and one short line — so the next thing is a place to walk into rather than a line of text.
+ * links. This draws the same information as a set of small rooms that match the home
+ * page's own cards as closely as their size allows (the owner, 2026-09-22: "literally
+ * everywhere it appears it should be standardized"), so the next thing is a place to walk
+ * into rather than a line of text, and a reader meets one face per thing wherever it is.
  *
- * Every picture comes from lib/art.ts, the single place that says which plate belongs to
- * which quiz, so a reader never meets two different faces for one thing. A quiz with no
- * plate (the Compass, which is an instrument rather than a person) gets the dark starry
- * ground instead, exactly as its band and its feature card do. The games share the
- * manuscript page their own band and the home page's night section are drawn on.
+ *   a quiz     its Doré plate from lib/art.ts, printed soft sepia under a warm dark
+ *              gradient, a white title lifted off the picture, one line, the counted
+ *              facts and Start in the quiz's own ink (the home page's and /quizzes/'s)
+ *   Compass    no plate: it is an instrument, and it takes the night ground its shared
+ *              card (CompassCard.astro) is drawn on, that card's sentence, and Start in
+ *              the soft blue
+ *   a game     the /games/ card: a dark room with its ink in the corner and its giant
+ *              faint glyph there (.corner-ghost in kit.css), Play in the game's ink
+ *
+ * No marks over the titles and no "Quiz" or "Game" label (the owner, 2026-09-22): the
+ * picture, the ground and the button already say which is which.
  *
  * The pictures are decorative here and carry no alt text on purpose: a card is one link,
  * and a plate described in full would be read out before the title of the thing it leads
@@ -20,15 +27,16 @@
  * link goes to, where the picture is the subject rather than the wallpaper.
  *
  * Nothing here invents a destination, a count or a description: the title, the line and
- * every fact are read off the registry and the games list.
+ * every fact are read off the registry and the games list, except the Compass's line, which
+ * is its shared card's own sentence.
  *
  * Drafts are left out. A quiz that has not been through its fairness audit is a poor thing
  * to push someone into at the moment they are most willing to go, and it is kept out of
  * everything that travels for the same reason.
  */
 import Icon from './Icon.astro';
-import type { IconName } from '../lib/icons';
 import type { Quiz } from '../lib/engine/types';
+import { groupNounPlural, outcomeNounPlural } from '../lib/engine/types';
 import type { Game } from '../lib/games';
 import { quizHref } from '../lib/engine/registry';
 import { artFor } from '../lib/art';
@@ -43,24 +51,58 @@ export interface Props {
 
 const { quizzes = [], games = [], limit = 4 } = Astro.props;
 
-/*
- * The manuscript page the games are drawn on everywhere else on the site.
- *
- * Two games standing side by side would otherwise show the identical photograph twice in
- * one row, which is a thing the owner has already rejected on another page. There is only
- * one manuscript, so each game takes a different part of the page: the illuminated initial
- * and the gold, or the ruled lines lower down. Both are written-on vellum, neither is the
- * blank margin — a picture that fades into empty space has been rejected too.
+/** Each quiz's ink: the home page's (home.css .room--*) and /quizzes/'s, kept the same on purpose. */
+const QUIZ_INK: Record<string, string> = {
+  'bible-figure': '#EADFCB',
+  'spiritual-gifts': '#FFC98F',
+  'seven-deadly-sins': '#F2A596'
+};
+
+/**
+ * Each game's glyph and ink, as its card on the home page and /games/ draws it: the
+ * question mark and the orange for "is it in the Bible?", the opening quote and the blue
+ * for "who said it?". A game added later without an entry here still gets its room, with
+ * no glyph and the orange.
  */
-const GAME_PIC = '/img/game-manuscript.jpg';
-const GAME_CROPS = ['16% 22%', '54% 80%'];
+const GAME_LOOK: Record<string, { glyph: string; ghost: 'ask' | 'quote'; ink: 'orange' | 'blue' }> = {
+  'sounds-like-scripture': { glyph: '?', ghost: 'ask', ink: 'orange' },
+  'who-said-it': { glyph: '“', ghost: 'quote', ink: 'blue' }
+};
+
+/**
+ * The second fact on a quiz, after the minutes: what you come away with, counted the way
+ * /quizzes/ counts it. A quiz with outcomes names them (18 traditions, 25 figures); a
+ * ranking names its categories only when it has a true word for them (19 gifts).
+ */
+const countFact = (q: Quiz): string =>
+  q.outcomes.length
+    ? `${q.outcomes.length} ${outcomeNounPlural(q)}`
+    : q.groupNounPlural
+      ? `${q.groups.length} ${groupNounPlural(q)}`
+      : `${q.items.length} statements`;
+
+/*
+ * The Compass is introduced in its shared card's words (CompassCard.astro's default `say`), as
+ * on the home page, /quizzes/ and /me/, so it reads as the same card wherever it is offered.
+ * Every other quiz says its own tagline, as /quizzes/ does.
+ */
+const COMPASS_SAY = 'Six questions that divide Christians, and the tradition that sits nearest you.';
+
+/*
+ * A three-word title's last two words tied, the way the home page ties its game's: broken in
+ * a narrow room, balanced type splits "Sounds Like Scripture" two and one, which leaves one
+ * word alone on the last line (the owner: "super sloppy"). A longer title is left to the
+ * balancing, which keeps its last line full on its own and, tied, broke "What are / your
+ * spiritual gifts?" off a stub. A two-word title stays free: tied, it could not wrap at all.
+ */
+const tie = (s: string) => (s.trim().split(/\s+/).length === 3 ? s.replace(/ (?=\S+$)/, ' ') : s);
 
 /**
  * The first sentences of a tagline, up to a hook that can stand alone.
  *
  * A game's tagline is three sentences, which is a paragraph in a card this size, and its
  * first sentence alone can be four words ("A line appears."). So sentences are taken until
- * there is enough of one to read, and the card's own clamp handles the rest.
+ * there is enough of one to read, and no more: the card prints the whole of what this returns.
  */
 const hook = (text: string) => {
   const parts = text.split(/(?<=[.?!])\s+/);
@@ -75,14 +117,21 @@ const hook = (text: string) => {
 interface Room {
   href: string;
   title: string;
-  kind: string;
-  icon: IconName;
   say: string;
+  /** The minutes, drawn with the clock, then any counted facts. */
+  minutes: string;
   facts: string[];
   go: string;
+  /** pic: a quiz's plate; night: a quiz with no plate (the Compass); game: a game's room. */
+  kind: 'pic' | 'night' | 'game';
+  /** The button's colour. */
+  ink: string;
+  /** A game's bloom in its corner: its ink at full strength, faint. */
+  glow?: string;
   image?: string;
   imagePosition?: string;
   imageLift?: number;
+  ghost?: { glyph: string; kind: 'ask' | 'quote' };
 }
 
 const rooms: Room[] = [
@@ -92,62 +141,79 @@ const rooms: Room[] = [
       const art = artFor(q.slug);
       return {
         href: quizHref(q),
-        title: q.title,
-        kind: 'Quiz',
-        icon: q.icon as IconName,
-        say: q.tagline,
-        facts: [`${q.minutes} min`, `${q.items.length} statements`],
-        go: 'Take it',
+        title: tie(q.title),
+        say: q.slug === 'theology-compass' ? COMPASS_SAY : q.tagline,
+        minutes: `${q.minutes} min`,
+        facts: [countFact(q)],
+        go: 'Start',
+        kind: art ? 'pic' : 'night',
+        ink: art ? (QUIZ_INK[q.slug] ?? '#FFD2B0') : 'var(--blue-soft)',
         image: art?.src,
         imagePosition: art?.objectPosition,
         imageLift: art?.lift
       };
     }),
-  ...games.map((g, i): Room => ({
-    href: g.href,
-    title: g.title,
-    kind: 'Game',
-    icon: g.icon as IconName,
-    say: hook(g.tagline),
-    facts: ['2 min a run'],
-    go: 'Play',
-    image: GAME_PIC,
-    imagePosition: GAME_CROPS[i % GAME_CROPS.length]
-  }))
+  ...games.map((g): Room => {
+    const look = GAME_LOOK[g.slug];
+    return {
+      href: g.href,
+      title: tie(g.title),
+      say: hook(g.tagline),
+      minutes: '2 min a run',
+      facts: [],
+      go: 'Play',
+      kind: 'game',
+      ink: look?.ink === 'blue' ? 'var(--blue-soft)' : 'var(--orange-soft)',
+      glow: look?.ink === 'blue' ? 'rgba(126, 186, 238, .2)' : 'rgba(240, 160, 111, .2)',
+      ghost: look ? { glyph: look.glyph, kind: look.ghost } : undefined
+    };
+  })
 ].slice(0, limit);
+
+const roomStyle = (room: Room) =>
+  [
+    `--room-ink:${room.ink}`,
+    room.glow ? `--room-glow:${room.glow}` : '',
+    room.imageLift ? `--img-lift:${room.imageLift}` : '',
+    /* art.ts gives a lift under 1 to exactly the plates printed unusually light (Doré's
+       Thessalonians is mostly white wall), and white type needs more shade on those: the
+       fact that dims the plate also deepens its scrim, as on /quizzes/ */
+    room.imageLift && room.imageLift < 1 ? '--room-dim:.38' : ''
+  ].filter(Boolean).join(';');
 ---
 {rooms.length > 0 && (
-  <ul class="nx">
-    {rooms.map(room => (
-      <li>
-        <a class:list={['nx-room', !room.image && 'nx-room--night']} href={room.href}>
-          {room.image && (
-            <img
-              class="nx-img"
-              src={room.image}
-              alt=""
-              loading="lazy"
-              decoding="async"
-              width="820"
-              height="1029"
-              style={[
-                room.imagePosition ? `object-position:${room.imagePosition}` : '',
-                room.imageLift ? `--img-lift:${room.imageLift}` : ''
-              ].filter(Boolean).join(';') || undefined}
-            />
-          )}
-          <span class="nx-body">
-            <span class="nx-mark" aria-hidden="true"><Icon name={room.icon} size={18} /></span>
-            <span class="nx-kind">{room.kind}</span>
-            <b class="nx-title">{room.title}</b>
-            <span class="nx-say">{room.say}</span>
-            <span class="nx-facts">
-              {room.facts.map(f => <span>{f}</span>)}
+  <div class="nx-wrap">
+    <ul class="nx">
+      {rooms.map(room => (
+        <li>
+          <a class={`nx-room nx-room--${room.kind}`} href={room.href} style={roomStyle(room)}>
+            {room.image && (
+              <img
+                class="nx-img"
+                src={room.image}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                width="820"
+                height="1029"
+                style={room.imagePosition ? `object-position:${room.imagePosition}` : undefined}
+              />
+            )}
+            {room.ghost && (
+              <span class={`corner-ghost corner-ghost--${room.ghost.kind}`} aria-hidden="true">{room.ghost.glyph}</span>
+            )}
+            <span class="nx-body">
+              <b class="nx-title">{room.title}</b>
+              <span class="nx-say">{room.say}</span>
+              <span class="nx-facts">
+                <span><Icon name="clock" size={13} /> {room.minutes}</span>
+                {room.facts.map(f => <span>{f}</span>)}
+              </span>
+              <span class="go-pill">{room.go} <Icon name="arrow" size={16} /></span>
             </span>
-            <span class="nx-go">{room.go} <Icon name="arrow" size={14} /></span>
-          </span>
-        </a>
-      </li>
-    ))}
-  </ul>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
 )}

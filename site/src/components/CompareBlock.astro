@@ -38,34 +38,41 @@ const rows = comparisonsFor(slug).map(c => {
     total: cmp.total
   };
 });
+
+/* The count opens a sentence, so it is a word ("Four pages", not "4 pages"). */
+const WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten',
+  'eleven', 'twelve'];
+const word = WORDS[rows.length] ?? String(rows.length);
+const pagesWord = word.charAt(0).toUpperCase() + word.slice(1);
 ---
 {rows.length > 0 && (
   <section class="cmpb" aria-labelledby="cmpb-h">
     <div class="cmpb-say">
-      <span class="cmpb-mark" aria-hidden="true"><Icon name="compass" size={18} /></span>
       <h2 id="cmpb-h">Side by side</h2>
       <p>
         {rows.length === 1
           ? 'One page puts this tradition next to another on the same six rails, with the differences written out.'
-          : `${rows.length} pages put this tradition next to another on the same six rails, with the differences written out.`}
+          : `${pagesWord} pages put this tradition next to another on the same six rails, with the differences written out.`}
       </p>
     </div>
-    <ul class="cmpb-list">
-      {rows.map(r => (
-        <li>
-          <a href={r.href}>
-            {/* {' '} and not a literal space: JSX drops the whitespace between two elements
-                on separate lines, and the row shipped as "Lutheran vsCatholic". */}
-            <span class="cmpb-pair">
-              <span class="cmpb-vs">{r.self} vs</span>{' '}<span class="cmpb-other">{r.other}</span>
-            </span>
-            <span class="cmpb-same">Same band on {r.same} of {r.total}</span>
-            <Icon name="arrow" size={14} />
-          </a>
-        </li>
-      ))}
-    </ul>
-    <p class="cmpb-all"><a href="/compare/">All comparisons <Icon name="arrow" size={12} /></a></p>
+    <div class="cmpb-rows">
+      <ul class="cmpb-list">
+        {rows.map(r => (
+          <li>
+            <a href={r.href}>
+              {/* {' '} and not a literal space: JSX drops the whitespace between two elements
+                  on separate lines, and the row shipped as "Lutheran vsCatholic". */}
+              <span class="cmpb-pair">
+                <span class="cmpb-vs">{r.self} vs</span>{' '}<span class="cmpb-other">{r.other}</span>
+              </span>
+              <span class="cmpb-same">Same band on {r.same} of {r.total}</span>
+              <Icon name="arrow" size={14} />
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="cmpb-all"><a class="go-pill" href="/compare/">All comparisons <Icon name="arrow" size={16} /></a></p>
+    </div>
   </section>
 )}
 
@@ -78,10 +85,6 @@ const rows = comparisonsFor(slug).map(c => {
   .cmpb::before {
     content: ""; position: absolute; inset: 0 0 auto 0; height: 5px;
     background-image: var(--grad-r);
-  }
-  .cmpb-mark {
-    display: grid; place-items: center; width: 2.3rem; height: 2.3rem; margin: 0 0 .7rem;
-    border-radius: 12px; color: var(--accent); background: var(--accent-soft);
   }
   .cmpb h2 {
     margin: 0; font-family: var(--display); font-weight: 400; font-style: italic;
@@ -109,13 +112,9 @@ const rows = comparisonsFor(slug).map(c => {
   .cmpb-list a:hover .cmpb-other { color: var(--accent); }
   .cmpb-list a:hover :global(.icon) { transform: translateX(3px); }
 
+  /* the way to the rest: a real button at every width (.go-pill, kit.css), in the accent */
   .cmpb-all { margin: 1.1rem 0 0; }
-  .cmpb-all a {
-    display: inline-flex; align-items: center; gap: .4rem;
-    font-family: var(--ui); font-size: .72rem; font-weight: 700; letter-spacing: .1em;
-    text-transform: uppercase; color: var(--accent); text-decoration: none;
-  }
-  .cmpb-all a:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .cmpb-all a { color: var(--accent); }
 
   @media (min-width: 52rem) {
     .cmpb {
@@ -123,7 +122,7 @@ const rows = comparisonsFor(slug).map(c => {
       gap: 2.2rem; padding: 2rem 2.1rem 1.9rem; align-items: start;
     }
     .cmpb-say p { margin-bottom: 0; }
-    .cmpb-all { grid-column: 2; margin-top: 1rem; }
+    .cmpb-all { margin-top: 1rem; }
   }
   @media (prefers-reduced-motion: reduce) { .cmpb-list a :global(.icon) { transition: none; } }
 </style>

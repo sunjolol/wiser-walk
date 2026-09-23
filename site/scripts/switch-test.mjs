@@ -337,7 +337,7 @@ guardPasses('production');
   yes(head.length > 0, 'the home page has the site header');
   yes(head.includes('href="/account/sign-in/'), 'the header offers "Log in"');
   yes(head.includes('href="/account/sign-up/'), 'and "Sign up"');
-  yes(head.includes('My profile'), 'and "My profile" for a browser that is logged in');
+  yes(head.includes('My Profile'), 'and "My Profile" for a browser that is logged in');
   yes(!head.includes('My results'), 'and no longer says "My results"');
 
   const holders = serverFiles().filter(f => readFileSync(f, 'utf8').includes('Keep it on every device'));

@@ -8,7 +8,8 @@
  * each name can be opened, because on a phone a list of names does not look tappable. So each
  * row carries an arrow, and the line above says what a tap does.
  *
- * Generic: the nouns, the count, the mark and the links come from the quiz.
+ * Generic: the nouns, the counts and the links come from the quiz. No icon tile over the
+ * heading (the owner, 2026-09-22: no mark over any card's or panel's title).
  *
  * TWO KINDS OF OUTCOME, told apart by the data and never by the quiz's name. An Outcome may
  * carry `who` — "One line identifying who or what this is, under the name", which is how the
@@ -34,18 +35,17 @@ const groupCount =
 ---
 <section class:list={['oidx', identified && 'oidx--who']} aria-labelledby="oidx-h">
   <div class="oidx-say">
-    <span class="oidx-mark"><Icon name={quiz.icon} size={20} /></span>
     {identified
       ? <h2 id="oidx-h">{quiz.outcomes.length} {nouns}, one page each</h2>
       : <h2 id="oidx-h">{quiz.outcomes.length} {nouns}, each in its own words</h2>}
     {identified
       ? <p>One line on each, and where they stand on the {groupCount} axes.</p>
       : <p>Where each one stands on the {groupCount} questions, described the way its own people would.</p>}
-    <p class="oidx-hint"><Icon name="arrow" size={14} /> Tap any of them to read more.</p>{/*
+    <p class="oidx-hint"><Icon name="arrow" size={14} /> <span>Tap any of them to read more.</span></p>{/*
       The Compass's traditions also exist as one table with a file behind it. Only that quiz has
       one, so the line is keyed to its slug rather than to a field every other quiz would carry empty.
     */}{quiz.slug === 'theology-compass' && (
-      <p class="oidx-hint"><Icon name="arrow" size={14} /> Or <a href="/data/theology-compass/">see all 18 on one table</a>, free to download.</p>
+      <p class="oidx-hint"><Icon name="arrow" size={14} /> <span>Or <a href="/data/theology-compass/">see all {quiz.outcomes.length} as one table</a>.</span></p>
     )}
   </div>
   <ul class="oidx-list">
@@ -67,7 +67,6 @@ const groupCount =
     background: var(--panel); box-shadow: var(--lift);
   }
   .oidx::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 6px; background-image: linear-gradient(180deg, var(--blue), var(--orange)); }
-  .oidx-mark { display: grid; place-items: center; width: 2.6rem; height: 2.6rem; margin: 0 0 .85rem; border-radius: 14px; color: #17181d; background: var(--blue); }
   .oidx h2 { margin: 0; font-family: var(--display); font-weight: 400; font-size: clamp(1.6rem, 6vw, 2.1rem); line-height: 1.1; color: var(--ink); text-wrap: balance; }
   .oidx-say p { margin: .6rem 0 0; color: var(--ink-soft); max-width: 24rem; text-wrap: balance; }
   .oidx-say .oidx-hint {
@@ -75,6 +74,9 @@ const groupCount =
     font-family: var(--ui); font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
     color: var(--accent); background: var(--accent-soft);
   }
+  /* the words are ONE flex item beside the arrow: left loose, the link inside them made three
+     items of their own and the line broke into columns on a wide screen */
+  .oidx-say .oidx-hint :global(.icon) { flex: none; }
   .oidx-list { margin: 0; padding: 0; list-style: none; }
   .oidx-list li + li { border-top: 1px solid var(--rule); }
   .oidx-list a {

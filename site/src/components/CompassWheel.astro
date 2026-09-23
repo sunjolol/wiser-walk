@@ -73,14 +73,18 @@ const f = (n: number) => n.toFixed(1);
 const points = rays.map(r => `${f(r.x)},${f(r.y)}`).join(' ');
 
 /** One wedge per adjacent pair, so the fill blends between the two rays' own colours. */
+/* Every id is this wheel's own. Two wheels can share a page (a tradition page draws its own
+   and the Compass card's), and with fixed ids the second one's url(#w0) found the FIRST one's
+   gradients and was painted in the other tradition's colours (2026-09-22). */
+const uid = 'cw' + Math.random().toString(36).slice(2, 8);
 const wedges = rays.map((r, i) => {
   const next = rays[(i + 1) % rays.length]!;
-  return { a: r, b: next, id: `w${i}` };
+  return { a: r, b: next, id: `${uid}-w${i}` };
 });
 
 const label = (a: string) => `${a} compass`;
 ---
-<figure class="wheel" role="group" aria-labelledby="wheel-cap">
+<figure class="wheel" role="group" aria-labelledby={`${uid}-cap`}>
   <div class="wheel-plot">
     <svg viewBox={`0 0 ${SIZE} ${SIZE}`} class="wheel-svg" role="img"
          aria-label={`Six axes. ${rays.map(r =>
@@ -94,7 +98,7 @@ const label = (a: string) => `${a} compass`;
             <stop offset="100%" class={`stop stop--${w.b.side}`} />
           </linearGradient>
         ))}
-        <pattern id="wheel-hatch" width="6" height="6" patternUnits="userSpaceOnUse"
+        <pattern id={`${uid}-hatch`} width="6" height="6" patternUnits="userSpaceOnUse"
                  patternTransform="rotate(45)">
           <line x1="0" y1="0" x2="0" y2="6" class="wheel-hatch-line" />
         </pattern>
@@ -113,7 +117,7 @@ const label = (a: string) => `${a} compass`;
       ))}
 
       {/* the band in which no pole is named — the same hatch the rails use */}
-      <circle cx={C} cy={C} r={f(R * zoneT)} class="wheel-zone" />
+      <circle cx={C} cy={C} r={f(R * zoneT)} class="wheel-zone" fill={`url(#${uid}-hatch)`} />
 
       {/* the shape of the reader's convictions, blended between its own rays' colours */}
       <g class="wheel-shape">
@@ -142,7 +146,7 @@ const label = (a: string) => `${a} compass`;
     ))}
   </div>
 
-  <figcaption class="wheel-cap" id="wheel-cap">
+  <figcaption class="wheel-cap" id={`${uid}-cap`}>
     Each arm is one axis: how far out you sit is how strongly you lean, and the colour is
     which way. The hatched middle is the band where the quiz names neither pole.
   </figcaption>

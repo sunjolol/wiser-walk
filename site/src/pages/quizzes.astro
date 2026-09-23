@@ -8,9 +8,10 @@
  * meant by templated, over-explained, "a soup of dullness".
  *
  * So the hub is now what the home page calls a room, at full size: ONE block per quiz, each
- * with its own picture, its own ink and its own mark, the lot inside about two phone screens.
- * The Compass keeps the instrument treatment — the dark starry ground and its real wheel,
- * scored by the live engine from a published audited answer sheet — and every other quiz
+ * with its own picture and its own ink, the lot inside about two phone screens. No marks
+ * over the titles and no caption under the wheel (the owner, 2026-09-22, as on the home page).
+ * The Compass is the shared card (components/CompassCard.astro), the very one the home page
+ * shows, with the same published Eastern Orthodox answer sheet on its wheel; every other quiz
  * wears the Doré plate that `lib/art.ts` already pairs with it, so a reader who met a quiz on
  * the home page meets the same face here.
  *
@@ -21,13 +22,11 @@
 import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
 import Icon from '../components/Icon.astro';
-import CompassWheel from '../components/CompassWheel.astro';
-import { QUIZZES, getQuiz, scoreQuiz, resultFor, quizHref } from '../lib/engine/registry';
+import CompassCard from '../components/CompassCard.astro';
+import { QUIZZES, getQuiz, quizHref } from '../lib/engine/registry';
 import { groupNounPlural, outcomeNounPlural } from '../lib/engine/types';
-import type { Quiz, BipolarView } from '../lib/engine/types';
-import type { IconName } from '../lib/icons';
+import type { Quiz } from '../lib/engine/types';
 import { artFor } from '../lib/art';
-import audit from '../data/compass-audit.json';
 
 const compass = getQuiz('theology-compass')!;
 /** The Compass first, then registry order; published first, drafts after. */
@@ -42,24 +41,7 @@ const liveStatements = live.reduce((n, q) => n + q.items.length, 0);
 const figureQuiz = getQuiz('bible-figure');
 const giftsQuiz = getQuiz('spiritual-gifts');
 
-/**
- * The wheel is a REAL result: a published, audited answer sheet scored by the live engine.
- *
- * Deliberately NOT the sheet the home page draws. A reader who has just scrolled past the
- * Eastern Orthodox compass learns nothing from meeting it again, and two different published
- * sheets show at a glance that the instrument gives different shapes to different people.
- */
-const EXAMPLE = 'Reformed Baptist (1689)';
-const sheet = (audit.simulations as Array<Record<string, any>>).find(
-  s => s.tradition === EXAMPLE && Array.isArray(s.answers)
-);
-const exampleView = sheet ? (resultFor(compass, scoreQuiz(compass, sheet.answers)) as BipolarView) : null;
 
-/** Small numbers read as words, the way the quizzes' own taglines write them. */
-const WORDS = [
-  'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'
-];
-const word = (n: number) => WORDS[n] ?? String(n);
 
 /**
  * The second fact on a room, after the minutes: what you come away with.
@@ -75,24 +57,12 @@ const countFact = (q: Quiz): string =>
       ? `${q.groups.length} ${groupNounPlural(q)}`
       : `${q.items.length} statements`;
 
-/**
- * A mark and an ink per quiz, so no two rooms read alike.
- *
- * The quiz data's own `icon` is what a small stripe card needs and two quizzes share
- * 'scroll' there, which on a page of four large rooms would be two boxes you have to read to
- * tell apart. The inks are the home page's, kept the same on purpose: one quiz, one face.
- */
-const MARK: Record<string, IconName> = {
-  'bible-figure': 'users',
-  'spiritual-gifts': 'sparkle',
-  'seven-deadly-sins': 'apple'
-};
+/** An ink per quiz, so no two rooms read alike: the home page's, kept the same on purpose. */
 const INK: Record<string, string> = {
   'bible-figure': '#EADFCB',
   'spiritual-gifts': '#FFC98F',
   'seven-deadly-sins': '#F2A596'
 };
-const markFor = (q: Quiz): IconName => MARK[q.slug] ?? q.icon;
 
 const roomStyle = (q: Quiz) => {
   const art = artFor(q.slug);
@@ -135,8 +105,6 @@ const breadcrumbs = [
   <Hero
     title="See where you actually stand."
     blue="actually"
-    eyebrow="Self-assessments"
-    icon="compass"
     kind="photo"
     image="/img/sky-rays.jpg"
     imagePosition="72% 30%"
@@ -163,29 +131,11 @@ const breadcrumbs = [
   </Hero>
 
   <div class="qhub-head">
-    <p class="qhub-kicker">{word(QUIZZES.length)} in all</p>
     <h2 class="qhub-title">every quiz</h2>
   </div>
 
-  {/* The flagship: an instrument on a night ground, drawn from a real answer sheet. */}
-  <a class="qroom qroom--flag dark" href={quizHref(compass)}>
-    <div class="qroom-wheel">
-      {exampleView && <CompassWheel view={exampleView} />}
-      {exampleView && <p class="qroom-note">A real result: the published {EXAMPLE} answer sheet.</p>}
-    </div>
-    <div class="qroom-body">
-      <span class="qroom-mark"><Icon name="compass" size={20} /></span>
-      <p class="qroom-kicker">The flagship</p>
-      <h3>{compass.title}</h3>
-      <p class="qroom-say">{compass.tagline}</p>
-      <ul class="qroom-facts">
-        <li><Icon name="clock" size={13} /> {compass.minutes} min</li>
-        <li>{compass.items.length} statements</li>
-        <li>{countFact(compass)}</li>
-      </ul>
-      <span class="qroom-go">Start <Icon name="arrow" size={14} /></span>
-    </div>
-  </a>
+  {/* The flagship: the shared Compass card, the same one the home page and every other page offer. */}
+  <div class="qhub-flag"><CompassCard /></div>
 
   {/* Every other quiz, one room each, in its own plate and its own ink. */}
   <div class="qhub-rooms">
@@ -198,14 +148,13 @@ const breadcrumbs = [
           )}
           {q.status === 'draft' && <span class="qroom-tab">Draft</span>}
           <div class="qroom-body">
-            <span class="qroom-mark"><Icon name={markFor(q)} size={20} /></span>
             <h3>{q.title}</h3>
             <p class="qroom-say">{q.tagline}</p>
             <ul class="qroom-facts">
               <li><Icon name="clock" size={13} /> {q.minutes} min</li>
               <li>{countFact(q)}</li>
             </ul>
-            <span class="qroom-go">Take it <Icon name="arrow" size={14} /></span>
+            <span class="qroom-go">Start <Icon name="arrow" size={14} /></span>
           </div>
         </a>
       );

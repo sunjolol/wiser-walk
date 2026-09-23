@@ -38,8 +38,6 @@ const tie = (s: string) => s.replace(/ (?=\S+$)/, String.fromCharCode(160));
 >
   {!ACCOUNTS_READY ? (
     <AccountBand
-      eyebrow="Your account"
-      icon="users"
       title="Accounts are not switched on yet."
       accent="not switched on yet."
       lede="Everything you finish is still saved on this device in the meantime, and it is all on one page."
@@ -49,7 +47,7 @@ const tie = (s: string) => s.replace(/ (?=\S+$)/, String.fromCharCode(160));
       </p>
     </AccountBand>
   ) : (
-    <AccountBand eyebrow="Sent" icon="mail" title={tie('Now check your email.')} accent={tie('your email.')}>
+    <AccountBand title={tie('Now check your email.')} accent={tie('your email.')}>
       <div class="ac-sent">
         {/* Empty and hidden until the script below finds the address. A stand-in such as
             "the address you gave us" printed in display type read as a heading, and a line

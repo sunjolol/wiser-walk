@@ -25,6 +25,9 @@ const games = liveGames();
 const articles = (await getCollection('articles')).filter(a => !a.data.draft);
 const compass = getQuiz('theology-compass')!;
 const game = games[0];
+/* The game's first two sentences ("A line appears. Is it in the Bible, or does it only sound
+   like it?"): its whole tagline is a paragraph, and the room holds three lines. */
+const gameHook = game ? game.tagline.split(/(?<=[.?!])\s+/).slice(0, 2).join(' ') : '';
 
 const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
 
@@ -84,8 +87,6 @@ const breadcrumbs = [
 >
   <Hero
     title="About"
-    eyebrow="Wiser Walk"
-    icon="compass"
     kind="photo"
     image="/img/sky-rays.jpg"
     imagePosition="24% 14%"
@@ -133,46 +134,42 @@ const breadcrumbs = [
     cards, which is the shape every list on the site had worn out; each one now carries the
     picture that kind of thing wears everywhere else, so the page shows what it describes.
     The pictures are decorative: each card is one link, and its title says where it goes.
+    No mark over the title and the way in a real button (the owner, 2026-09-22); no count
+    over the title either, because the band and the facts beside "What this is" count all three.
   */}
   <ul class="ab-rooms">
     <li>
-      <a class="ab-room ab-room--ink" href="/quizzes/">
+      <a class="ab-room ab-room--ink ab-room--quizzes" href="/quizzes/">
         <img src={quizPic!.src} alt="" loading="lazy" decoding="async"
              width="820" height="1029" style={`object-position:${quizPic!.objectPosition}`} />
         <span class="nx-body">
-          <span class="nx-mark" aria-hidden="true"><Icon name={compass.icon} size={18} /></span>
-          <span class="nx-kind">{plural(quizzes.length, 'quiz', 'quizzes')}</span>
           <b class="nx-title">Quizzes</b>
           <span class="nx-say">{compass.tagline}</span>
-          <span class="nx-go">All quizzes <Icon name="arrow" size={14} /></span>
+          <span class="go-pill">All quizzes <Icon name="arrow" size={16} /></span>
         </span>
       </a>
     </li>
     {game && (
       <li>
-        <a class="ab-room" href="/games/">
+        <a class="ab-room ab-room--games" href="/games/">
           <img src="/img/game-manuscript.jpg" alt="" loading="lazy" decoding="async"
                width="1400" height="858" style="object-position:50% 40%" />
           <span class="nx-body">
-            <span class="nx-mark" aria-hidden="true"><Icon name={game.icon} size={18} /></span>
-            <span class="nx-kind">{plural(games.length, 'game', 'games')}</span>
             <b class="nx-title">Games</b>
-            <span class="nx-say">{game.tagline}</span>
-            <span class="nx-go">All games <Icon name="arrow" size={14} /></span>
+            <span class="nx-say">{gameHook}</span>
+            <span class="go-pill">All games <Icon name="arrow" size={16} /></span>
           </span>
         </a>
       </li>
     )}
     <li>
-      <a class="ab-room" href="/articles/">
+      <a class="ab-room ab-room--articles" href="/articles/">
         <img src={READS_PIC} alt="" loading="lazy" decoding="async"
              width="1280" height="1011" style="object-position:50% 46%" />
         <span class="nx-body">
-          <span class="nx-mark" aria-hidden="true"><Icon name="book" size={18} /></span>
-          <span class="nx-kind">{plural(articles.length, 'piece', 'pieces')}</span>
           <b class="nx-title">Articles</b>
           <span class="nx-say">Plain, practical writing on Christian formation: gratitude, joy, and what it actually means to be Christ-like.</span>
-          <span class="nx-go">All articles <Icon name="arrow" size={14} /></span>
+          <span class="go-pill">All articles <Icon name="arrow" size={16} /></span>
         </span>
       </a>
     </li>

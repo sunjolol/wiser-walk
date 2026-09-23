@@ -30,16 +30,12 @@ import { ACCOUNTS_READY, MIN_PASSWORD } from '../../lib/account/config';
 const HEADS = [
   {
     state: 'in',
-    eyebrow: 'Your account',
-    icon: 'users' as const,
     title: 'Your account.',
     accent: 'account.'
   },
   {
     state: 'out',
     fallback: true,
-    eyebrow: 'Your account',
-    icon: 'users' as const,
     title: 'Your account.',
     accent: 'account.',
     lede: 'You are not logged in on this browser.'
@@ -71,8 +67,6 @@ const HEADS = [
 
   {!ACCOUNTS_READY ? (
     <AccountBand
-      eyebrow="Your account"
-      icon="users"
       title="Accounts are not switched on yet."
       accent="not switched on yet."
       lede="Everything you finish is still saved on this device in the meantime, and it is all on one page."

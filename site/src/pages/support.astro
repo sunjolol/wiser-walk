@@ -10,29 +10,27 @@
  * lib/support.ts, and with nothing set the button renders disabled and says so, which is
  * why this page can be reviewed today.
  *
- * Words are the editor's, verbatim. Layout, marks and the picture are this file's.
+ * Words are the editor's, verbatim. Layout and the picture are this file's.
  */
 import '../styles/pages/support.css';
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import { SUPPORT_URL, SUPPORT_READY } from '../lib/support';
 
-/* A mark each, because three grey boxes in a column have to be read to be told apart. */
+/* Three rooms, told apart by the soft light of their own ink in the corner (support.css).
+   No icon tile over the titles (the owner, 2026-09-22). */
 const REASONS = [
   {
-    mark: 'users',
     title: 'Keeps it free.',
     body: 'Hosting, tools and the hours. Support is what lets this stay free to use.'
   },
   {
-    mark: 'pencil',
     title: 'Pays for the next one.',
     body:
       'A quiz takes weeks of reading, writing and checking before it goes up. A game is ' +
       'built from thousands of real lines, every one checked against its source.'
   },
   {
-    mark: 'quote',
     title: 'Keeps it careful.',
     body:
       'Every belief here is described the way the people who hold it would describe it. ' +
@@ -71,7 +69,6 @@ const breadcrumbs = [
       decoding="async"
     />
     <div class="sp-band-in">
-      <p class="sp-chip"><Icon name="path" size={14} /> Support</p>
       <h1>Keep Wiser Walk <em>free.</em></h1>
       <p class="sp-lede">
         Every quiz, game and article here is free. If one of them has been worth something
@@ -89,7 +86,6 @@ const breadcrumbs = [
   <section class="sp-reasons" aria-label="What support pays for">
     {REASONS.map(r => (
       <article class="sp-room">
-        <span class="sp-mark"><Icon name={r.mark} size={20} /></span>
         <h2>{r.title}</h2>
         <p>{r.body}</p>
       </article>

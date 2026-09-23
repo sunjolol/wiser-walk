@@ -27,8 +27,6 @@ const tie = (s: string) => s.replace(/ (?=\S+$)/, String.fromCharCode(160));
 >
   {!ACCOUNTS_READY ? (
     <AccountBand
-      eyebrow="Your account"
-      icon="users"
       title="Accounts are not switched on yet."
       accent="not switched on yet."
       lede="Everything you finish is still saved on this device in the meantime, and it is all on one page."
@@ -38,7 +36,7 @@ const tie = (s: string) => s.replace(/ (?=\S+$)/, String.fromCharCode(160));
       </p>
     </AccountBand>
   ) : (
-    <AccountBand eyebrow="Your account" icon="key" title={tie('Need a new password?')} accent={tie('new password?')}>
+    <AccountBand title={tie('Need a new password?')} accent={tie('new password?')}>
       <form class="ac-form ac-form--one" id="ac-form" method="post" novalidate>
         {/* Hidden from people, irresistible to naive bots. Not a CAPTCHA and never will be. */}
         <p class="hp" aria-hidden="true">

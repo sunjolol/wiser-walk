@@ -1,0 +1,60 @@
+---
+/**
+ * THE Theology Compass card: one look wherever the Compass is offered (the owner, 2026-09-22:
+ * "literally everywhere it appears it should be standardized"). The home page's flagship room,
+ * made shared: the night ground, a real wheel, the words, the counted facts and a Start button.
+ * It replaced the "way in" panels at the foot of the tradition, axis and comparison pages,
+ * which carried an icon tile and a ghost word ("where", "eastern") the owner found random.
+ *
+ * The wheel is a REAL result, as it is on the home page: the published, audited Eastern
+ * Orthodox answer sheet, scored by the live engine. It carries no caption; the owner had the
+ * "A real result" line taken off.
+ *
+ * It lays itself out by its OWN width (a container query), not the window's, so it is right
+ * in a full-width row and in a narrower column alike: stacked, wheel over words, when narrow;
+ * words beside the wheel from 40rem of card. Styles: .ccard in kit.css.
+ */
+import CompassWheel from './CompassWheel.astro';
+import Icon from './Icon.astro';
+import { getQuiz, scoreQuiz, resultFor, quizHref } from '../lib/engine/registry';
+import type { BipolarView } from '../lib/engine/types';
+import audit from '../data/compass-audit.json';
+
+export interface Props {
+  /** The small line over the title. The home page calls it "The flagship". */
+  kicker?: string;
+  /** One sentence under the title; a page may say it in its own context. */
+  say?: string;
+  /** h3 under a section head, h2 where the card is a section of its own. */
+  level?: 2 | 3;
+}
+const compass = getQuiz('theology-compass')!;
+const {
+  kicker = 'The flagship',
+  say = 'Six questions that divide Christians, and the tradition that sits nearest you.',
+  level = 3
+} = Astro.props;
+const Heading = level === 2 ? 'h2' : 'h3';
+
+const EXAMPLE = 'Eastern Orthodox';
+const sheet = (audit.simulations as Array<Record<string, any>>).find(
+  s => s.tradition === EXAMPLE && Array.isArray(s.answers)
+);
+const view = sheet ? (resultFor(compass, scoreQuiz(compass, sheet.answers)) as BipolarView) : null;
+---
+<div class="ccard-wrap">
+  <a class="ccard dark" href={quizHref(compass)}>
+    <div class="ccard-body">
+      {kicker && <p class="ccard-kicker">{kicker}</p>}
+      <Heading class="ccard-title">{compass.title}</Heading>
+      <p class="ccard-say">{say}</p>
+      <ul class="ccard-facts">
+        <li><Icon name="clock" size={13} /> {compass.minutes} min</li>
+        <li>{compass.items.length} statements</li>
+        <li>{compass.outcomes.length} traditions</li>
+      </ul>
+      <span class="ccard-go go-pill">Start <Icon name="arrow" size={16} /></span>
+    </div>
+    {view && <div class="ccard-wheel"><CompassWheel view={view} /></div>}
+  </a>
+</div>

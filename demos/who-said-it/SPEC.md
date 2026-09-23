@@ -19,10 +19,11 @@ file's structure and restyle nothing that already works; change the play interac
 2. **Who spoke is never decided by a model either.** Speaker labels come from Glyssen's
    `CharacterVerse.txt` (SIL and Faith Comes By Hearing, MIT licence, in `raw/`). A line is used
    only when that file names exactly one speaking character for the verse.
-3. The footer credits the speaker data ("Speaker labels: Glyssen character data, © SIL and Faith
-   Comes By Hearing, MIT licence") and links a correction route (`/method/#the-game`), because a
-   label can be wrong and we did not make them.
-4. Sixty-six book canon only, and the footer says so.
+3. The speaker data is credited ("Glyssen character data, published by SIL and Faith Comes By
+   Hearing under the MIT licence") with a correction route, because a label can be wrong and we
+   did not make them. Since 2026-09-22 that credit lives on /method/#the-game, not in a footer on
+   the game (the owner had the footer removed as clutter). Keep it there.
+4. Sixty-six book canon only (stated on /method/).
 5. No agent commits, pushes, installs packages, or touches files outside `demos/who-said-it/`,
    `demos/who-said-it.html`, and the site files this spec names.
 

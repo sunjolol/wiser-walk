@@ -7,7 +7,7 @@
  * saves itself on the device, and this page is where they are.
  *
  * What the SERVER renders is the invitation: one room per quiz, every one of them saying
- * "Take it". What the BROWSER does is fill in the rooms a reader has actually finished,
+ * "Start". What the BROWSER does is fill in the rooms a reader has actually finished,
  * from the shelf, scored back through the same engine the result page uses. That order
  * matters: with the script blocked, or with storage blocked, or on a brand-new device, the
  * page is still a set of doorways rather than an empty box apologising for itself.
@@ -36,26 +36,107 @@
 import '../styles/pages/me.css';
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
-import { QUIZZES, quizHref } from '../lib/engine/registry';
+import CompassWheel from '../components/CompassWheel.astro';
+import { QUIZZES, getQuiz, quizHref, scoreQuiz, resultFor } from '../lib/engine/registry';
+import { groupNounPlural, outcomeNounPlural } from '../lib/engine/types';
+import type { BipolarView, Quiz } from '../lib/engine/types';
 import { artFor } from '../lib/art';
 import { liveGames } from '../lib/games';
 import { ACCOUNTS_READY, ACCOUNTS_VISIBLE } from '../lib/account/config';
+import audit from '../data/compass-audit.json';
+import slsMeta from '../games/sounds-like-scripture.meta.json';
+import wsiMeta from '../games/who-said-it.meta.json';
 
 /* Finished quizzes first, drafts last, as everywhere else on the site. */
 const quizzes = [...QUIZZES].sort(
   (a, b) => Number(a.status === 'draft') - Number(b.status === 'draft')
 );
 
-/**
- * What each game already keeps on the device, from its own SPEC: a personal best, written
- * by the game and read here. A game that keeps nothing simply has no key, so its room shows
- * the way in and no score. Signed in, the best of the two — this device's and the account's
- * — is written back both ways, which is the only thing a game puts in an account.
+/*
+ * The rooms are the same cards the rest of the site offers (the owner, 2026-09-22: the ones
+ * here "look totally different"). The Compass is the shared card's twin: the night ground and
+ * a real wheel in its corner, the published, audited Eastern Orthodox answer sheet scored by
+ * the live engine, exactly as components/CompassCard.astro draws it. It is an example, so it
+ * is shown only while the reader has no Compass result of their own: beside a result of
+ * theirs it would read as that result (me.css hides it on a finished room).
  */
-const GAME_BEST: Record<string, string> = {
-  'sounds-like-scripture': 'sls.best',
-  'who-said-it': 'wsi.best'
+const compass = getQuiz('theology-compass');
+const EXAMPLE = 'Eastern Orthodox';
+const exampleSheet = (audit.simulations as Array<Record<string, any>>).find(
+  s => s.tradition === EXAMPLE && Array.isArray(s.answers)
+);
+const example = compass && exampleSheet
+  ? (resultFor(compass, scoreQuiz(compass, exampleSheet.answers)) as BipolarView)
+  : null;
+/* Its one sentence is the shared card's too (CompassCard.astro's default `say`), so the Compass
+   is introduced in the same words here as on the home page and /quizzes/. Every other room says
+   its quiz's own tagline, as /quizzes/ does. */
+const COMPASS_SAY = 'Six questions that divide Christians, and the tradition that sits nearest you.';
+
+/**
+ * The counted facts on a room, after the minutes: the Compass says what its shared card says
+ * (its statements and its traditions); every other quiz what /quizzes/ says of it. A quiz
+ * with outcomes names them (25 figures); a ranking names its categories only when it has a
+ * true word for them (19 gifts), because "7 categories" is the engine's vocabulary.
+ */
+const factsFor = (q: Quiz): string[] =>
+  q.slug === compass?.slug
+    ? [`${q.items.length} statements`, `${q.outcomes.length} ${outcomeNounPlural(q)}`]
+    : [
+        q.outcomes.length
+          ? `${q.outcomes.length} ${outcomeNounPlural(q)}`
+          : q.groupNounPlural
+            ? `${q.groups.length} ${groupNounPlural(q)}`
+            : `${q.items.length} statements`
+      ];
+
+/**
+ * Each game's room, as the home page draws it: its ghost glyph in the corner, its ink, its
+ * one sentence (the home page's words) and a drawing of one real question out of the built
+ * pool (the line, word for word, and the answers a player meets under it; never which one is
+ * right). No count of lines: that stays on the game's own page.
+ *
+ * `best` is what the game already keeps on the device, from its own SPEC: a personal best,
+ * written by the game and read here. A game that keeps nothing simply has no key, so its room
+ * shows the way in and no score. Signed in, the best of the two — this device's and the
+ * account's — is written back both ways, which is the only thing a game puts in an account.
+ *
+ * A game with no entry here still gets its room, with its own tagline and no drawing.
+ */
+type GameRoom = {
+  best: string;
+  ghost: 'ask' | 'quote';
+  ink: 'orange' | 'blue';
+  say: string;
+  preview:
+    | { kind: 'binary'; line: string | null; answers: [string, string] }
+    | { kind: 'names'; line: string | null; names: string[] };
 };
+const GAME_ROOM: Record<string, GameRoom> = {
+  'sounds-like-scripture': {
+    best: 'sls.best',
+    ghost: 'ask',
+    ink: 'orange',
+    say: 'A line appears. Is it in the Bible, or does it only sound like it?',
+    preview: {
+      kind: 'binary',
+      line: (slsMeta as { cover?: string | null }).cover ?? null,
+      answers: ['Not in the Bible', 'In the Bible']
+    }
+  },
+  'who-said-it': {
+    best: 'wsi.best',
+    ghost: 'quote',
+    ink: 'blue',
+    say: 'A line of speech and four names under it. The wrong name is rarely the odd one out.',
+    preview: {
+      kind: 'names',
+      line: (wsiMeta as { cover?: string | null }).cover ?? null,
+      names: (wsiMeta as { coverNames?: string[] | null }).coverNames ?? []
+    }
+  }
+};
+const GLYPH = { quote: '“', ask: '?' } as const;
 const games = liveGames();
 ---
 <Base
@@ -69,20 +150,8 @@ const games = liveGames();
     <img class="me-band-img" src="/img/sky-rays.jpg" alt="" width="1800" height="1200"
          fetchpriority="high" decoding="async" />
     <div class="me-band-in">
-      {ACCOUNTS_READY ? (
-        /*
-          Both chips are here and the layout has already said which one applies, in the
-          attribute it writes before the page is painted. Same mark, same size, same fill:
-          the state changes the word and nothing else. The signed-out word is today's word,
-          so a reader who has no account reads what they have always read.
-        */
-        <>
-          <p class="me-chip me-chip--out"><Icon name="users" size={14} /> On this device</p>
-          <p class="me-chip me-chip--in"><Icon name="users" size={14} /> Saved to your account</p>
-        </>
-      ) : (
-        <p class="me-chip"><Icon name="users" size={14} /> On this device</p>
-      )}
+      {/* No chip over the headline (the owner, 2026-09-22): "On this device" and "Saved to your
+          account" are both said again lower down, where they mean something. */}
       <h1>My <em>{
         /* "My profile" once the header's way here says so; until then, today's words. Inside
            the expression, so a build with the doors shut prints exactly what it did. */
@@ -173,7 +242,7 @@ const games = liveGames();
       const art = artFor(quiz.slug);
       const href = quizHref(quiz);
       return (
-        <article class:list={['mroom', !art && 'mroom--plain', `mroom--${quiz.slug}`]} data-quiz={quiz.slug} data-href={href}>
+        <article class:list={['mroom', art ? 'mroom--pic' : 'mroom--plain', `mroom--${quiz.slug}`]} data-quiz={quiz.slug} data-href={href}>
           {art && (
             /* The first two rooms are on screen the moment the band is scrolled past, and a
                room whose picture has not arrived is a flat brown box with no quiz in it.
@@ -181,8 +250,14 @@ const games = liveGames();
             <img src={art.src} alt={art.alt} loading={i < 2 ? 'eager' : 'lazy'} decoding="async"
                  width="1000" height="1255" style={`object-position:${art.objectPosition}`} />
           )}
+          {/* A draft says so once, in the corner, as it does on the home page and /quizzes/. */}
+          {quiz.status === 'draft' && <span class="mroom-tab">Draft</span>}
+          {quiz.slug === compass?.slug && example && (
+            /* Somebody else's result, so it is hidden from a screen reader: read out on this
+               page, six axes and their leanings would sound like the reader's own. */
+            <div class="mroom-eg" aria-hidden="true"><CompassWheel view={example} /></div>
+          )}
           <div class="mroom-body">
-            <span class="mroom-mark"><Icon name={quiz.icon} size={20} /></span>
             <h2>{quiz.title}</h2>
 
             {/* Filled in by the script from the shelf, and shown only when there is one. */}
@@ -191,7 +266,7 @@ const games = liveGames();
               <p class="mroom-say" data-role="summary"></p>
               <p class="mroom-when" data-role="when"></p>
               <div class="mroom-acts">
-                <a class="mroom-go" data-role="see" href={href}>See the result <Icon name="arrow" size={14} /></a>
+                <a class="mroom-go go-pill" data-role="see" href={href}>See the result <Icon name="arrow" size={16} /></a>
                 <a class="mroom-again" href={href}>Take it again</a>
               </div>
               <details class="mroom-past" data-role="past" hidden>
@@ -202,14 +277,12 @@ const games = liveGames();
 
             {/* What a reader who has not taken it sees, and what everyone sees first. */}
             <div class="mroom-none" data-role="none">
-              <p class="mroom-say">{quiz.tagline}</p>
-              <div class="mroom-foot">
-                <ul class="mroom-facts">
-                  <li><Icon name="clock" size={13} /> {quiz.minutes} min</li>
-                  {quiz.status === 'draft' && <li>Draft</li>}
-                </ul>
-                <a class="mroom-go" href={href}>Take it <Icon name="arrow" size={14} /></a>
-              </div>
+              <p class="mroom-say">{quiz.slug === compass?.slug ? COMPASS_SAY : quiz.tagline}</p>
+              <ul class="mroom-facts">
+                <li><Icon name="clock" size={13} /> {quiz.minutes} min</li>
+                {factsFor(quiz).map(f => <li>{f}</li>)}
+              </ul>
+              <a class="mroom-go go-pill" href={href}>Start <Icon name="arrow" size={16} /></a>
             </div>
           </div>
         </article>
@@ -221,19 +294,41 @@ const games = liveGames();
     <section class="me-games" aria-label="Games">
       <h2 class="me-head">games</h2>
       <div class="me-games-row">
-        {games.map(game => (
-          <article class="mgame" data-best={GAME_BEST[game.slug] ?? ''}>
-            <span class="mroom-mark mroom-mark--orange"><Icon name="play" size={18} /></span>
-            <h3>{game.title}</h3>
-            {/* The best score is the game's own, read from where the game keeps it. Until
-                there is one, the room says how long a run takes and nothing else. */}
-            <p class="mgame-best" data-role="best" hidden></p>
-            <div class="mroom-foot">
-              <ul class="mroom-facts" data-role="run"><li><Icon name="clock" size={13} /> 2 min a run</li></ul>
-              <a class="mroom-go" href={game.href}>Play <Icon name="arrow" size={14} /></a>
-            </div>
-          </article>
-        ))}
+        {games.map(game => {
+          const room = GAME_ROOM[game.slug];
+          return (
+            <article class:list={['mgame', `mgame--${room?.ink ?? 'orange'}`]} data-best={room?.best ?? ''}>
+              {room && <span class={`corner-ghost corner-ghost--${room.ghost}`} aria-hidden="true">{GLYPH[room.ghost]}</span>}
+              <div class="mgame-say">
+                {/* The last two words held together, so a narrow column never ends the title
+                    on one of them alone ("Sounds Like / Scripture", not "… / Scripture"). */}
+                <h3>{game.title.replace(/ (?=\S+$)/, '\u00A0')}</h3>
+                {/* The best score is the game's own, read from where the game keeps it, and
+                    printed under the name in the game's ink. Until there is one, the room
+                    says what the game is and how long a run takes. */}
+                <p class="mgame-best" data-role="best" hidden></p>
+                <p class="mgame-line">{room?.say ?? game.tagline}</p>
+                <ul class="mroom-facts"><li><Icon name="clock" size={13} /> 2 min a run</li></ul>
+                <a class="mroom-go go-pill" href={game.href}>Play <Icon name="arrow" size={16} /></a>
+              </div>
+              {room && (
+                <div class="mock" aria-hidden="true">
+                  <div class="mock-fuse"><i></i></div>
+                  {room.preview.line
+                    ? <div class="mock-card mock-card--line"><span class="mock-q">“</span><q>{room.preview.line}</q></div>
+                    : <div class="mock-card"><span class="mock-q">“</span><i></i><i></i>{room.preview.kind === 'binary' && <i></i>}</div>}
+                  {room.preview.kind === 'binary' ? (
+                    <div class="mock-btns"><span>{room.preview.answers[0]}</span><span>{room.preview.answers[1]}</span></div>
+                  ) : (
+                    <div class="mgame-names">
+                      {(room.preview.names.length ? room.preview.names : ['', '', '', '']).map(n => <span>{n}</span>)}
+                    </div>
+                  )}
+                </div>
+              )}
+            </article>
+          );
+        })}
       </div>
     </section>
   )}
@@ -246,13 +341,12 @@ const games = liveGames();
       must not be told accounts are on the way while he is using one.
     */
     <section class:list={['dark', 'me-keep', ACCOUNTS_READY && 'me-keep--out']}>
-      <span class="mroom-mark mroom-mark--blue"><Icon name="mail" size={20} /></span>
       <h2>Kept on this device.</h2>
       <p>
         These are saved on this device only. Accounts are on the way, so you can keep them for
         good and see them anywhere. Leave your email and we will tell you when.
       </p>
-      <a class="me-keep-go" href="#foot-signup">Leave your email <Icon name="arrow" size={14} /></a>
+      <a class="me-keep-go go-pill" href="#foot-signup">Leave your email <Icon name="arrow" size={16} /></a>
     </section>
   )}
 

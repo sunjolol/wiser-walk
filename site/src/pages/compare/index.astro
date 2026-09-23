@@ -14,14 +14,14 @@
 import Base from '../../layouts/Base.astro';
 import Hero from '../../components/Hero.astro';
 import SectionHead from '../../components/SectionHead.astro';
-import Card from '../../components/Card.astro';
+import CompareCard from '../../components/CompareCard.astro';
+import CompassCard from '../../components/CompassCard.astro';
 import Icon from '../../components/Icon.astro';
-import { compare, quizHref } from '../../lib/engine/registry';
+import { compare } from '../../lib/engine/registry';
 import type { BipolarComparison } from '../../lib/engine/compare';
 import {
   COMPARISONS, COMPARE_QUIZ, comparedTraditions, compareHref, traditionOf
 } from '../../lib/comparisons';
-import type { Comparison } from '../../lib/comparisons';
 import '../../styles/pages/compare.css';
 
 const quiz = COMPARE_QUIZ;
@@ -29,7 +29,7 @@ const quiz = COMPARE_QUIZ;
 /** Every pair with its own same-band count, from the same call each page makes. */
 const pairs = COMPARISONS.map(c => {
   const cmp = compare(quiz, traditionOf(c.a).position ?? [], traditionOf(c.b).position ?? []) as BipolarComparison;
-  return { c, same: cmp.sameCount, total: cmp.total };
+  return { c, same: cmp.sameCount };
 }).sort((x, y) => y.same - x.same || x.c.slug.localeCompare(y.c.slug));
 
 /*
@@ -80,6 +80,18 @@ const breadcrumbs = [
   { name: 'Compare', url: '/compare/' }
 ];
 const many = COMPARISONS.length;
+
+/*
+ * The Compass card's sentence, counted from the quiz rather than typed, so it cannot go on
+ * saying "eighteen" after a statement or a tradition is added. Spelled out, as the site
+ * writes small counts in running prose.
+ */
+const WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten',
+  'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen',
+  'nineteen', 'twenty'];
+const spell = (n: number) => WORDS[n] ?? String(n);
+const compassSay = `Answer ${spell(quiz.items.length)} statements and see which of the ` +
+  `${spell(quiz.outcomes.length)} traditions sits nearest you.`;
 ---
 <Base
   title="Compare traditions"
@@ -89,8 +101,6 @@ const many = COMPARISONS.length;
 >
   <Hero
     title="Compare traditions"
-    eyebrow="Side by side"
-    icon="compass"
     kind="night"
     lede="What is the actual difference between two churches? Each pair answered in a
           paragraph, then drawn on the same six rails."
@@ -102,12 +112,6 @@ const many = COMPARISONS.length;
   />
 
   <div class="cmpx cmpx--hub">
-    <p class="cmpx-hub-say">
-      Every page opens with the answer in about forty words, then puts both traditions on the
-      Theology Compass's six audited rails, then tells the story of how they came to differ.
-      Both sides are stated the way people who hold them would state them.
-    </p>
-
     {shelves.map(shelf => (
       <section class="cmpx-shelf">
         <SectionHead title={shelf.title} kicker={shelf.kicker} id={`shelf-${shelf.id}`} />
@@ -117,24 +121,10 @@ const many = COMPARISONS.length;
             different roads, and the pages say where each road ran.
           </p>
         )}
-        {/*
-          The tag on each card's stripe is SHORT on purpose. It is set vertically, nowrap,
-          inside a card that clips, and "Same band on 1 of 6" is nineteen characters: the two
-          shortest cards in the set cut it to "ME BAND ON 1 OF 6". The heading directly above
-          says what the figure counts, so the tag only has to carry the figure.
-        */}
+        {/* Each card carries its own count, as the ghost behind its words and in its colour
+            (components/CompareCard.astro); the kicker above says what the count is of. */}
         <div class="cmpx-cards">
-          {shelf.items.map(({ c, same, total }) => (
-            <Card
-              href={compareHref(c.slug)}
-              title={`${c.labelA} vs ${c.labelB}`}
-              text={c.description}
-              meta={`Same band ${same}/${total}`}
-              tab="Compare"
-              go="Read"
-              icon="compass"
-            />
-          ))}
+          {shelf.items.map(({ c }) => <CompareCard c={c} />)}
         </div>
       </section>
     ))}
@@ -154,25 +144,8 @@ const many = COMPARISONS.length;
       </section>
     )}
 
-    <section class="wayin wayin--night cmpx-way">
-      <div class="wayin-ghost" aria-hidden="true">where</div>
-      <div class="wayin-in">
-        <span class="wayin-mark" aria-hidden="true"><Icon name="compass" size={20} /></span>
-        <p class="wayin-kicker">{quiz.title}</p>
-        <h2>Which of them are you nearest?</h2>
-        <p class="wayin-say">
-          The same six rails these pages draw, with your own answers on them and the distance
-          to all {quiz.outcomes.length} traditions.
-        </p>
-        <ul class="wayin-facts">
-          <li><Icon name="scroll" size={13} /> {quiz.items.length} statements</li>
-          <li><Icon name="clock" size={13} /> About {quiz.minutes} minutes</li>
-          <li><Icon name="compass" size={13} /> {quiz.groups.length} axes, both poles named</li>
-        </ul>
-        <div class="btn-row">
-          <a class="btn" href={quizHref(quiz)}>Take the {quiz.title}</a>
-        </div>
-      </div>
-    </section>
+    <div class="cmpx-way">
+      <CompassCard level={2} kicker="Your turn" say={compassSay} />
+    </div>
   </div>
 </Base>

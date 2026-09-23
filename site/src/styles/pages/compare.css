@@ -1,8 +1,9 @@
 /*
  * compare.css — /compare/ and /compare/<pair>/.
  *
- * Phone first. Tokens only; no colour here is a literal, so the dark theme recolours the
- * page by re-pointing the tokens and nothing in this file has to know about it.
+ * Phone first. Tokens only, so the dark theme recolours the page by re-pointing the tokens and
+ * nothing in this file has to know about it; the one exception is the comparison card (.cmpc),
+ * whose grounds and inks are mixed for contrast here, with a dark-theme rule of its own.
  *
  * THE ONE RULE THAT SHAPES EVERYTHING HERE: on a comparison page the two traditions are
  * told apart by SHAPE, never by colour. Blue and orange mean which POLE of an axis a
@@ -63,17 +64,9 @@ a.cmpx-who:hover { text-decoration: underline; }
 /* ------------------------------------------------------------------ shared ground */
 
 .cmpx-common { margin: 0; padding: 0; list-style: none; }
-.cmpx-common li {
-  display: grid; grid-template-columns: auto 1fr; gap: .7rem;
-  padding: .85rem 0; border-bottom: 1px solid var(--rule);
-}
+.cmpx-common li { padding: .85rem 0; border-bottom: 1px solid var(--rule); }
 .cmpx-common li:first-child { border-top: 1px solid var(--rule); }
 .cmpx-common p { margin: 0; color: var(--ink-soft); line-height: 1.6; }
-.cmpx-tick {
-  display: grid; place-items: center; flex: none;
-  width: 1.7rem; height: 1.7rem; border-radius: 50%;
-  background: var(--accent-soft); color: var(--accent);
-}
 
 /* ------------------------------------------------------------------ the differences */
 
@@ -171,13 +164,11 @@ a.cmpx-who:hover { text-decoration: underline; }
   position: relative; padding: 1.1rem 1.1rem 1.15rem 1.1rem; border-radius: var(--r);
   background: var(--panel); box-shadow: var(--lift-soft);
 }
-.cmpx-beyond-mark {
-  display: grid; place-items: center; width: 2.1rem; height: 2.1rem; margin-bottom: .6rem;
-  border-radius: 11px; background: var(--warn-bg); color: var(--warn-ink);
-}
+/* 1.3, not the headings' 1.12: Poppins runs tall, and a two-line title at 1.12 ("The pope, and
+   whether Anglican / orders count") set its lines touching */
 .cmpx-beyond h3 {
-  margin: 0 0 .4rem;
-  font-family: var(--ui); font-size: .95rem; font-weight: 700; color: var(--ink);
+  margin: 0 0 .45rem;
+  font-family: var(--ui); font-size: .95rem; font-weight: 700; line-height: 1.3; color: var(--ink);
 }
 .cmpx-beyond p { margin: 0; font-size: .9rem; line-height: 1.6; color: var(--ink-soft); }
 @media (min-width: 52rem) {
@@ -203,13 +194,8 @@ a.cmpx-who:hover { text-decoration: underline; }
 /* ------------------------------------------------------------------ on a Sunday */
 
 .cmpx-sunday {
-  display: grid; grid-template-columns: auto 1fr; gap: .9rem; align-items: start;
-  padding: 1.15rem 1.15rem 1.2rem; border-radius: var(--r);
+  padding: 1.15rem 1.15rem 1.2rem 1.3rem; border-radius: var(--r);
   background: var(--shell); box-shadow: inset 3px 0 0 var(--accent);
-}
-.cmpx-sunday-mark {
-  display: grid; place-items: center; width: 2.3rem; height: 2.3rem; flex: none;
-  border-radius: 12px; background: var(--accent-soft); color: var(--accent);
 }
 .cmpx-sunday p { margin: 0; font-size: .95rem; line-height: 1.65; color: var(--ink-soft); }
 
@@ -261,17 +247,85 @@ a.cmpx-who:hover { text-decoration: underline; }
 
 .cmpx-way { margin-top: 2.6rem; }
 .cmpx-more { margin-top: .5rem; }
+.cmpx-all { margin: 1.1rem 0 0; }
+.cmpx-all .go-pill { color: var(--accent); }
 
 .cmpx-cards { display: grid; grid-template-columns: 1fr; gap: .9rem; }
 @media (min-width: 40rem) { .cmpx-cards { grid-template-columns: 1fr 1fr; } }
 @media (min-width: 62rem) { .cmpx-cards { grid-template-columns: repeat(3, 1fr); } }
 
+/*
+ * THE COMPARISON CARD (components/CompareCard.astro). Its colour is how close the pair lands,
+ * and this is the one place on these pages where blue and orange mean something other than
+ * a pole: the cards carry no rail, no marker and no pole name, so nothing on them can be read
+ * as a side of an axis. --near (set on the card) is the share of the six axes in the same
+ * band; the ground is blue up to a point that slides with it and orange after, so a near pair
+ * is nearly all blue and a far one nearly all orange. The title and text keep the page's own
+ * ink (6:1 or better on every tint); the Read pill takes a deep blue-to-brown of its own,
+ * mixed by the same --near, which holds 4.5:1 across the whole scale in both themes.
+ */
+.cmpc {
+  --cmpc-blue: color-mix(in srgb, var(--blue) 52%, var(--panel));
+  --cmpc-orange: color-mix(in srgb, var(--orange) 52%, var(--panel));
+  --cmpc-ink: color-mix(in srgb, #184B78 var(--near), #713A12);
+  --cmpc-ghost: rgba(255, 255, 255, .3);
+  --cmpc-pad: 1.3rem;
+  --cmpc-pad-end: 1.35rem;
+  position: relative; isolation: isolate; overflow: hidden; overflow: clip;
+  container-type: inline-size;
+  /* title, text, then one row the ghost and the Read pill share; that row takes any height
+     the grid row adds, so the pills of a row of cards stay level */
+  display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto 1fr;
+  justify-items: start;
+  padding: var(--cmpc-pad) var(--cmpc-pad) var(--cmpc-pad-end); border-radius: var(--r-lg);
+  text-decoration: none; color: var(--ink);
+  background-image: linear-gradient(to bottom right,
+    var(--cmpc-blue) calc(var(--near) - 35%), var(--cmpc-orange) calc(var(--near) + 35%));
+  box-shadow: var(--lift);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.cmpc:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(40, 40, 50, .14); }
+:root[data-theme="dark"] .cmpc {
+  --cmpc-blue: color-mix(in srgb, var(--blue) 30%, #16161C);
+  --cmpc-orange: color-mix(in srgb, var(--orange) 30%, #16161C);
+  --cmpc-ink: color-mix(in srgb, #C1DDF6 var(--near), #F7CDB0);
+  --cmpc-ghost: rgba(255, 255, 255, .07);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .07), 0 10px 26px rgba(0, 0, 0, .35);
+}
+/*
+ * The ghost: two lines, right-aligned, cut by the card's right and bottom edges the way the
+ * footer's "wiser walk" is cut by its own, and sized by the card, not the window. It sits in
+ * the last row, under the words rather than behind them, as the footer's sits under its
+ * links: set behind the text, "shares" ran across the last lines of the description and read
+ * as a smudge. The negative margins carry it through the padding to the card's edges. 46cqi
+ * keeps the number clear of the Read pill beside it down to a 300px card (the three-up grid).
+ */
+.cmpc-ghost {
+  grid-row: 3; grid-column: 1; align-self: end; justify-self: end;
+  position: relative; z-index: -1;
+  margin: 0 calc(-1 * var(--cmpc-pad) - .04em) calc(-1 * var(--cmpc-pad-end) - .12em) 0;
+  display: flex; flex-direction: column; align-items: flex-end;
+  pointer-events: none; user-select: none;
+  font-family: var(--display); font-style: italic; font-weight: 400; white-space: nowrap;
+  font-size: 46cqi; line-height: .8; letter-spacing: -.04em; color: var(--cmpc-ghost);
+}
+.cmpc-ghost span:first-child { font-size: .42em; margin: 0 .14em -.06em 0; }
+/* A title breaks only between the two names, never inside one: "Church of Christ / vs Baptist". */
+.cmpc-title {
+  grid-row: 1; grid-column: 1; margin: 0;
+  font-family: var(--display); font-weight: 400; font-size: 1.5rem; line-height: 1.08;
+  letter-spacing: -.01em; color: var(--ink);
+}
+.cmpc-title span { white-space: nowrap; }
+.cmpc-text {
+  grid-row: 2; grid-column: 1; margin: .55rem 0 .5rem; max-width: 30rem;
+  font-size: .93rem; line-height: 1.55; color: var(--ink);
+}
+.cmpc-go { grid-row: 3; grid-column: 1; align-self: end; color: var(--cmpc-ink); }
+@media (prefers-reduced-motion: reduce) { .cmpc { transition: none; } .cmpc:hover { transform: none; } }
+
 /* ------------------------------------------------------------------ the hub */
 
-.cmpx-hub-say {
-  margin: 0 0 .5rem; max-width: 44em;
-  font-size: 1rem; line-height: 1.65; color: var(--ink-soft);
-}
 .cmpx-shelf { margin-top: .5rem; }
 
 .cmpx-trads { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0; padding: 0; list-style: none; }
@@ -283,6 +337,17 @@ a.cmpx-who:hover { text-decoration: underline; }
   text-decoration: none;
 }
 .cmpx-trads a:hover { color: var(--accent); background: var(--accent-soft); box-shadow: none; }
+/*
+ * On a phone every name is wider than half the screen, so the chips fall one to a line anyway:
+ * they run the full width there, arrows in one column, rather than a ragged stack in which the
+ * one long name ("Pentecostal (Assemblies of God, Church of God, COGIC)") breaks in two and
+ * leaves its arrow stranded at the far edge. Its two lines are balanced, not a line and a stub.
+ */
+.cmpx-trads a span { text-wrap: balance; }
+@media (max-width: 39.99rem) {
+  .cmpx-trads li { flex: 1 1 100%; }
+  .cmpx-trads a { display: flex; justify-content: space-between; gap: .8rem; }
+}
 .cmpx-trads .icon { flex: none; opacity: .7; }
 
 /* ------------------------------------------------------------------ dark */
