@@ -1,0 +1,821 @@
+{
+ "_how": "Display lines, hand-picked from the research quote. Unlisted cells: a clean quote (under 33 words, whole sentences) shows whole; anything else is hidden (still scored). Values: '=' whole quote, '-' hidden, [start, end] the verbatim stretch from the first phrase to the end of the second ('' = to the end), optional third item {cap:true} to capitalise a first letter when the stretch starts mid-sentence, {fix:[[from,to],...]} only for capitals on pronouns for God. {stop:true} ends a stretch that stops at a comma or semicolon with a full stop. {note:'...'} prints a short fairness note under the line. {by:'...'} says who recorded words that are not the person's own pen. {use:{quote,work}} swaps in a line on the same position from research/figures (read in the source there).",
+ "augustine.learning": "=",
+ "augustine.anger": [
+  "In our ethics",
+  "what he fears."
+ ],
+ "augustine.nature": [
+  "But there is a great book",
+  "the very things He made."
+ ],
+ "augustine.body": [
+  "They are not destroying",
+  ""
+ ],
+ "augustine.dreams": "-",
+ "augustine.miracles": "=",
+ "augustine.mystery": [
+  "Let us therefore so seek",
+  ""
+ ],
+ "augustine.pure": [
+  "Let the good tolerate",
+  ""
+ ],
+ "augustine.rulers": [
+  "In that he is man",
+  ""
+ ],
+ "augustine.all": [
+  "Wherefore, as the eternal life",
+  ""
+ ],
+ "chrysostom.laugh": "=",
+ "chrysostom.alone": [
+  "For the man who sits at the helm",
+  ""
+ ],
+ "chrysostom.tell": [
+  "And make me not this cold reply",
+  "nothing in common with him."
+ ],
+ "chrysostom.tears": [
+  "But you, who expectest",
+  ""
+ ],
+ "chrysostom.lie": [
+  "For the daughter of Saul",
+  "deceiving her father."
+ ],
+ "chrysostom.mystery": [
+  "Questioning is the subversion",
+  "has not yet found."
+ ],
+ "chrysostom.pure": "=",
+ "chrysostom.all": [
+  "How then is that temporary",
+  ""
+ ],
+ "tertullian.learning": [
+  "What indeed has Athens",
+  "and the Church?"
+ ],
+ "tertullian.alone": [
+  "We are not Indian Brahmins",
+  "ordinary human life."
+ ],
+ "tertullian.tell": "-",
+ "tertullian.tears": [
+  "He who goes before us",
+  ""
+ ],
+ "tertullian.mystery": [
+  "To know nothing in opposition",
+  ""
+ ],
+ "tertullian.deeper": [
+  "And, indeed, if all are figures",
+  "they are the figures?"
+ ],
+ "tertullian.pure": [
+  "Far, far from Christ's betrothed",
+  ""
+ ],
+ "tertullian.war": [
+  "the Lord afterward",
+  "unbelted every soldier.",
+  {
+   "cap": true
+  }
+ ],
+ "tertullian.rulers": "-",
+ "jerome.learning": "=",
+ "jerome.alone": [
+  "Do I condemn a solitary life?",
+  "I have often commended it."
+ ],
+ "jerome.rich": [
+  "So that common saying",
+  ""
+ ],
+ "jerome.nature": "-",
+ "jerome.calm": "-",
+ "jerome.mystery": [
+  "I beg of you, my dear brother",
+  "to seek nothing else."
+ ],
+ "jerome.calling": [
+  "should your father prostrate himself",
+  "go your way.",
+  {
+   "cap": true,
+   "note": "He wrote this in his twenties. Years later he called that letter the showy work of a young man."
+  }
+ ],
+ "jerome.pure": [
+  "As in the ark there were all kinds",
+  "all races and characters."
+ ],
+ "jerome.all": "=",
+ "clement.learning": "=",
+ "clement.alone": "-",
+ "clement.rich": [
+  "Such an instrument is wealth",
+  "subservient to righteousness."
+ ],
+ "clement.tell": "=",
+ "clement.tears": [
+  "They say, accordingly, that the blessed Peter",
+  "Remember the Lord."
+ ],
+ "clement.surplus": [
+  "All things therefore are common",
+  ""
+ ],
+ "clement.calm": [
+  "We must therefore rescue",
+  "passion of the soul."
+ ],
+ "clement.body": "=",
+ "clement.all": "-",
+ "ambrose.laugh": [
+  "Do we seek for something to laugh at",
+  "weep hereafter?"
+ ],
+ "ambrose.quiet": "=",
+ "ambrose.learning": [
+  "But it was not by dialectic",
+  ""
+ ],
+ "ambrose.anger": "-",
+ "ambrose.rich": [
+  "Let the rich learn",
+  "know not how to use them."
+ ],
+ "ambrose.tears": [
+  "But we have not incurred",
+  "from unbelief or weakness."
+ ],
+ "ambrose.surplus": [
+  "Not from your own do you bestow",
+  "what is his."
+ ],
+ "ambrose.miracles": [
+  "He says: I who could not see now see.",
+  "proves it by the fact."
+ ],
+ "ambrose.deeper": "-",
+ "ambrose.pure": [
+  "with proud eyes and puffed-up hearts",
+  "",
+  {
+   "cap": true
+  }
+ ],
+ "ambrose.war": [
+  "For courage, which in war",
+  "is full of justice",
+  {
+   "stop": true
+  }
+ ],
+ "ambrose.rulers": "=",
+ "ambrose.effort": [
+  "For our heart and our thoughts",
+  "not in our own power",
+  {
+   "stop": true
+  }
+ ],
+ "gregory.learning": [
+  "the praises of Christ cannot find room",
+  "",
+  {
+   "cap": true
+  }
+ ],
+ "gregory.anger": "-",
+ "gregory.rich": "-",
+ "gregory.war": "-",
+ "gregory.tell": "=",
+ "gregory.tears": [
+  "He was not altogether unmoved",
+  "should commit sin."
+ ],
+ "gregory.lie": [
+  "This kind of lying also those that are perfect",
+  "be defended",
+  {
+   "stop": true
+  }
+ ],
+ "gregory.surplus": "=",
+ "gregory.calling": [
+  "We should love those joined to us",
+  "by hating and fleeing them.",
+  {
+   "note": "His comment on Luke 14:26, where Jesus says that whoever does not hate father and mother cannot be His disciple."
+  }
+ ],
+ "gregory.rulers": [
+  "Make haste to extend",
+  "under your sway",
+  {
+   "stop": true
+  }
+ ],
+ "gregory.all": [
+  "Certain it is",
+  "",
+  {
+   "stop": true
+  }
+ ],
+ "basil.laugh": [
+  "Since the Lord condemns those that laugh",
+  "for the believer",
+  {
+   "stop": true
+  }
+ ],
+ "basil.learning": [
+  "So we, if wise, shall take from heathen books",
+  "pass over the rest."
+ ],
+ "basil.anger": [
+  "Anger, stirred at the proper time",
+  ""
+ ],
+ "basil.alone": [
+  "Whose feet then wilt thou wash",
+  "",
+  {
+   "fix": [
+    [
+     "wash ?",
+     "wash?"
+    ]
+   ]
+  }
+ ],
+ "basil.rich": [
+  "So the more you abound in wealth",
+  ""
+ ],
+ "basil.tell": [
+  "those who pretend to be kind",
+  "are actually sentencing them",
+  {
+   "cap": true,
+   "stop": true
+  }
+ ],
+ "basil.surplus": [
+  "The bread you are holding on to",
+  ""
+ ],
+ "basil.nature": "-",
+ "basil.mystery": "-",
+ "basil.pure": "-",
+ "basil.deeper": [
+  "There are those truly, who do not admit",
+  "but some other nature",
+  {
+   "stop": true
+  }
+ ],
+ "basil.calling": [
+  "So he who is seized by the vehement desire",
+  "anything to do with this life."
+ ],
+ "nazianzen.laugh": [
+  "Who was more kindly in his stories",
+  "more tender in his rebukes?"
+ ],
+ "nazianzen.learning": [
+  "I take it as admitted by men of sense",
+  "the first of our advantages is education",
+  {
+   "stop": true
+  }
+ ],
+ "nazianzen.alone": [
+  "For nothing seemed to me so desirable",
+  "speaking to myself and to God",
+  {
+   "stop": true
+  }
+ ],
+ "nazianzen.tears": "-",
+ "nazianzen.miracles": "-",
+ "nazianzen.pure": "-",
+ "nazianzen.surplus": [
+  "But look, I beg you, to the first equality",
+  ""
+ ],
+ "nazianzen.mystery": [
+  "Not to every one, my friends, does it belong to philosophize about God",
+  "to philosophize about God",
+  {
+   "stop": true
+  }
+ ],
+ "nazianzen.calling": [
+  "Now, I had specially pledged myself",
+  "the support of their weakness",
+  {
+   "stop": true
+  }
+ ],
+ "nazianzen.effort": [
+  "For it is necessary both that we should be our own masters",
+  ""
+ ],
+ "nyssa.anger": "-",
+ "nyssa.miracles": "-",
+ "nyssa.effort": "-",
+ "nyssa.alone": [
+  "woe to him that is alone when he falls",
+  "",
+  {
+   "cap": true
+  }
+ ],
+ "nyssa.body": [
+  "That is temperance's highest aim",
+  ""
+ ],
+ "nyssa.deeper": [
+  "the Divine intention lies hid",
+  "",
+  {
+   "cap": true
+  }
+ ],
+ "nyssa.all": {
+  "use": {
+   "quote": "He accomplished all the results before mentioned, freeing both man from evil, and healing even the introducer of evil himself.",
+   "work": "The Great Catechism"
+  }
+ },
+ "lactantius.anger": [
+  "the anger which relates to the correction of vices",
+  "taken away from man",
+  {
+   "cap": true,
+   "stop": true
+  }
+ ],
+ "lactantius.alone": [
+  "But he who withdraws",
+  "after the manner of wild beasts."
+ ],
+ "lactantius.rich": "=",
+ "lactantius.lie": [
+  "In this path of justice",
+  ""
+ ],
+ "lactantius.nature": "-",
+ "lactantius.rulers": "-",
+ "lactantius.calm": [
+  "For as water which is always still",
+  "useless even to itself",
+  {
+   "stop": true
+  }
+ ],
+ "lactantius.miracles": [
+  "so now His followers",
+  "",
+  {
+   "cap": true
+  }
+ ],
+ "lactantius.mystery": [
+  "It is therefore right, especially",
+  "weighing of the truth",
+  {
+   "stop": true
+  }
+ ],
+ "lactantius.war": [
+  "Thus it will be neither lawful for a just man",
+  "is justice itself",
+  {
+   "stop": true
+  }
+ ],
+ "lactantius.all": [
+  "The same divine fire",
+  "will form them again",
+  {
+   "stop": true
+  }
+ ],
+ "origen.learning": "=",
+ "origen.anger": "-",
+ "origen.mystery": "-",
+ "origen.pure": "-",
+ "origen.lie": [
+  "But a man on whom necessity imposes",
+  "a stimulant or a medicine",
+  {
+   "stop": true
+  }
+ ],
+ "origen.dreams": [
+  "many have been converted to Christianity",
+  "",
+  {
+   "cap": true
+  }
+ ],
+ "origen.miracles": [
+  "They expel evil spirits",
+  "foresee certain events",
+  {
+   "stop": true
+  }
+ ],
+ "origen.calling": [
+  "Take heed not to change your mind on our account.",
+  "",
+  {
+   "by": "in a letter to his father, as Eusebius records it"
+  }
+ ],
+ "origen.war": [
+  "We do not indeed fight under him",
+  "by offering our prayers to God.",
+  {
+   "fix": [
+    [
+     "army--an army of piety--by",
+     "army (an army of piety) by"
+    ]
+   ]
+  }
+ ],
+ "origen.all": [
+  "But our belief is, that the Word shall prevail",
+  "into His own perfection",
+  {
+   "stop": true
+  }
+ ],
+ "cyprian.quiet": "-",
+ "cyprian.tell": "-",
+ "cyprian.calm": "-",
+ "cyprian.miracles": "-",
+ "cyprian.rich": [
+  "Let the poor feel that you are wealthy",
+  ""
+ ],
+ "cyprian.tears": [
+  "our brethren who are freed from this world",
+  "but sent before",
+  {
+   "cap": true,
+   "stop": true
+  }
+ ],
+ "cyprian.surplus": [
+  "For whatever is of God is common in our use",
+  "",
+  {
+   "stop": true
+  }
+ ],
+ "cyprian.calling": [
+  "That, being redeemed and quickened",
+  "prefer nothing to Christ",
+  {
+   "stop": true
+  }
+ ],
+ "cyprian.effort": [
+  "All our power is of God",
+  ""
+ ],
+ "cyprian.all": [
+  "An ever-burning Gehenna",
+  "devouring with living flames",
+  {
+   "stop": true
+  }
+ ],
+ "antony.laugh": "-",
+ "antony.calm": "-",
+ "antony.dreams": "-",
+ "antony.learning": [
+  "We Christians therefore hold the mystery",
+  "through Jesus Christ.",
+  {
+   "by": "as Athanasius recorded his words"
+  }
+ ],
+ "antony.anger": [
+  "And once also the Arians",
+  "",
+  {
+   "by": "as Athanasius tells it"
+  }
+ ],
+ "antony.alone": [
+  "Fishes, if they remain long on dry land, die.",
+  "hasten to the mountain.",
+  {
+   "by": "as Athanasius recorded his words"
+  }
+ ],
+ "antony.nature": [
+  "'My book, O philosopher,'",
+  "",
+  {
+   "by": "as Evagrius recorded it"
+  }
+ ],
+ "antony.body": [
+  "'For,' said he",
+  "",
+  {
+   "by": "as Athanasius recorded his words"
+  }
+ ],
+ "antony.miracles": [
+  "For the working of signs is not ours but the Saviour's work",
+  "the Saviour's work",
+  {
+   "stop": true,
+   "by": "as Athanasius recorded his words"
+  }
+ ],
+ "antony.mystery": "=",
+ "antony.effort": [
+  "Wherefore virtue has need at our hands of willingness alone",
+  "formed from us.",
+  {
+   "by": "as Athanasius recorded his words"
+  }
+ ],
+ "cassian.quiet": "-",
+ "cassian.learning": "-",
+ "cassian.calm": "-",
+ "cassian.alone": "-",
+ "cassian.body": {
+  "use": {
+   "quote": "For excess of fasting and gluttony come to the same thing, and an unlimited continuance of vigils is equally injurious to a monk as the torpor of a deep sleep.",
+   "work": "Conferences"
+  }
+ },
+ "cassian.miracles": "-",
+ "cassian.calling": "-",
+ "cassian.pure": "-",
+ "cassian.lie": [
+  "but if we prefer what is for another's advantage",
+  "",
+  {
+   "cap": true
+  }
+ ],
+ "cassian.deeper": [
+  "But as the renewal of our soul grows",
+  "grow with our growth."
+ ],
+ "isaac.laugh": [
+  "Be not friends with one that loves laughter",
+  "",
+  {
+   "stop": true
+  }
+ ],
+ "isaac.quiet": [
+  "Love silence above all things.",
+  "too weak to interpret."
+ ],
+ "isaac.anger": "=",
+ "isaac.alone": [
+  "Love the ease of solitude",
+  ""
+ ],
+ "isaac.tell": [
+  "Spread thy mantle over the sinner and cover him",
+  "",
+  {
+   "stop": true
+  }
+ ],
+ "isaac.calling": "-",
+ "isaac.all": [
+  "The retribution of the sinners is this",
+  "instead of with justice."
+ ],
+ "macrina.learning": "-",
+ "macrina.mystery": "-",
+ "macrina.anger": [
+  "But, whenever their impulse is towards what is noble",
+  "",
+  {
+   "by": "as her brother Gregory recorded her words"
+  }
+ ],
+ "macrina.tell": [
+  "Will you not cease",
+  "",
+  {
+   "by": "as her brother Gregory remembered it"
+  }
+ ],
+ "macrina.tears": [
+  "She quoted the Apostle's words",
+  "",
+  {
+   "by": "as her brother Gregory tells it"
+  }
+ ],
+ "macrina.calm": [
+  "It will therefore be no detriment",
+  "free from such emotions",
+  {
+   "stop": true,
+   "by": "as her brother Gregory recorded her words"
+  }
+ ],
+ "macrina.deeper": [
+  "it is impossible to make the framework",
+  "in the world of ideas.",
+  {
+   "cap": true,
+   "by": "as her brother Gregory recorded her words"
+  }
+ ],
+ "macrina.all": {
+  "use": {
+   "quote": "But He that becomes all things will be in all things too; and herein it appears to me that Scripture teaches the complete annihilation of evil.",
+   "work": "On the Soul and the Resurrection"
+  },
+  "by": "as her brother Gregory recorded her words"
+ },
+ "justin.learning": [
+  "Whatever things were rightly said among all men",
+  ""
+ ],
+ "justin.nature": "-",
+ "justin.mystery": {
+  "use": {
+   "quote": "Reason directs those who are truly pious and philosophical to honour and love only what is true, declining to follow traditional opinions, if these be worthless.",
+   "work": "First Apology"
+  }
+ },
+ "justin.pure": "-",
+ "justin.effort": "-",
+ "justin.all": "-",
+ "justin.miracles": [
+  "For numberless demoniacs",
+  "have healed and do heal",
+  {
+   "stop": true,
+   "fix": [
+    [
+     "Christ, who was crucified",
+     "Christ, Who was crucified"
+    ]
+   ]
+  }
+ ],
+ "justin.war": [
+  "we who formerly used to murder one another",
+  "making war upon our enemies",
+  {
+   "cap": true,
+   "stop": true
+  }
+ ],
+ "irenaeus.learning": "-",
+ "irenaeus.war": "-",
+ "irenaeus.miracles": [
+  "Others still, heal the sick",
+  "they are made whole."
+ ],
+ "irenaeus.mystery": [
+  "we are able by the grace of God",
+  "in the hands of God",
+  {
+   "cap": true,
+   "stop": true
+  }
+ ],
+ "irenaeus.all": [
+  "thus also the punishment",
+  "",
+  {
+   "cap": true
+  }
+ ],
+ "martin.laugh": [
+  "No one ever saw him enraged",
+  "or laughing",
+  {
+   "stop": true,
+   "by": "as Sulpicius Severus, who knew him, recorded it"
+  }
+ ],
+ "martin.calm": [
+  "No one ever saw him enraged",
+  "",
+  {
+   "by": "as Sulpicius Severus, who knew him, recorded it"
+  }
+ ],
+ "martin.alone": [
+  "Martin was accustomed to say to you",
+  "",
+  {
+   "by": "as Sulpicius Severus, who knew him, recorded it"
+  }
+ ],
+ "martin.tell": "-",
+ "martin.dreams": "-",
+ "martin.miracles": "-",
+ "martin.pure": "-",
+ "martin.rulers": "-",
+ "martin.body": [
+  "It is not fitting that a Christian",
+  "",
+  {
+   "by": "as Sulpicius Severus, who knew him, recorded it"
+  }
+ ],
+ "martin.war": [
+  "I am the soldier of Christ",
+  "",
+  {
+   "by": "as Sulpicius Severus, who knew him, recorded it"
+  }
+ ],
+ "benedict.learning": "-",
+ "benedict.pure": "-",
+ "benedict.all": "-",
+ "benedict.tell": [
+  "Let him not shut his eyes",
+  "to root them out",
+  {
+   "stop": true
+  }
+ ],
+ "benedict.effort": "=",
+ "boethius.quiet": "-",
+ "boethius.learning": [
+  "examine carefully",
+  "",
+  {
+   "cap": true
+  }
+ ],
+ "boethius.anger": [
+  "pity is rather due to the criminal",
+  "of compassion and kindness",
+  {
+   "cap": true,
+   "stop": true
+  }
+ ],
+ "boethius.mystery": [
+  "I HAVE long pondered",
+  "",
+  {
+   "fix": [
+    [
+     "I HAVE",
+     "I have"
+    ]
+   ]
+  }
+ ],
+ "boethius.effort": [
+  "Therefore, withstand vice",
+  "humble prayers to Heaven."
+ ],
+ "hilary.quiet": "-",
+ "hilary.learning": "-",
+ "hilary.nature": "-",
+ "hilary.lie": [
+  "For a lie is often necessary",
+  "someone in hiding",
+  {
+   "stop": true
+  }
+ ],
+ "hilary.deeper": [
+  "The whole is a texture",
+  "",
+  {
+   "stop": true
+  }
+ ],
+ "hilary.rulers": [
+  "I ask you, bishops",
+  "from idols to God?"
+ ]
+}
