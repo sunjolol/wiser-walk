@@ -41,27 +41,35 @@ Note he had earlier rejected the word "wiser" as "weird to say"; he has since ov
 
 State: local git repo initialised, **one commit** `c8fd322`, 137 files tracked, `node_modules` excluded. Authored as `Light <serenitybackto@gmail.com>` — he was offered a GitHub noreply address to keep his email out of public history and **chose to keep his real email**. Do not change it.
 
-## NEXT SESSION STARTS HERE (updated 2026-09-23, night): THE PSALM QUIZ IS LIVE; #4 IS NEXT
+## NEXT SESSION STARTS HERE (updated 2026-09-23, late night): BUILD QUIZ #4, "WHICH EARLY CHRISTIAN THINKS LIKE YOU?"
 
-**Build order he set: #2 Psalm (DONE, live), then #4 (early Christian friend and foe), then #1 ("Personality Quiz"),
-then the rest he liked** (verdicts at the foot of `design/quiz-ideas/NEXT-TEN.md`). He tapped through Psalm draft 5 and
-said it was "phenomenal and very powerful", ready to ship once each follow-up came straight after the answer calling
-for it; that fix is in and it shipped to `main` on 2026-09-23 (`/q/which-psalm/`, results `/r/which-psalm/PS<n>/`, 78
-`/psalm/<n>/` pages). How it is built: `design/quiz-ideas/psalm/README.md` "Shipped". Only Psalm 3 carries the extra
-"story behind it" section (verbatim 2 Samuel); the other 52 results print his advice, the naming verse, where it turns
-and the whole psalm. Still unruled and waiting on him: capitals inside Bible quotations (keep verbatim or switch
-quotes to the BSB) — RULED: always capitalise; #4's title — RULED: "Which early Christian thinks like you?" as the title, "And which would argue with you?" printed under it on its card and start page.
-The "Hard words" note and the 988 line stay as they are (told him so). Ultracode was on for the Psalm quiz.
-**Later on 2026-09-23 (his yes to all four):** the Psalm quiz got its browse layer, LIVE: the quiz page lists the 53
-situations in seven groups (`PsalmIndex.astro`; groups are data in `model.mjs`), `/psalm/` is the guide ("A psalm for
-every situation"; every psalm page's breadcrumb leads to it), and each psalm page has "Close to this". The article
-`how-to-pray-the-psalms.md` (from his Greek, §-cited, checked by a 75-agent fidelity workflow) is LIVE with Honthorst's
-King David Playing the Harp (1622). He pre-approved downloading images (memory: image-downloads-approved). NOTE: the
-letter pairs about a hundred psalms with needs; the quiz's 53 are a selection, never "every situation he named". His ruling "Always capitalize He and His" now covers
-quotations: site quotes with a pronoun for God use the BSB (a checked map raises the BSB's lower-case "who"), and both
-games capitalise pronouns for God at display on every line (`demos/*/capitals.json`, guarded by `capitals.mjs`); in
-Who Said It? a first-person Me/My stays lower case so the speaker is not given away.
-The section below on the scrapped list explains what went wrong last time; it still applies.
+**He said "Let's move on to the next quiz, which if I recall was #4" (2026-09-23).** Start on it. Build order he set:
+#2 Psalm (DONE, live), **#4 now**, then #1 ("Personality Quiz", Gregory's Pastoral Rule Book III), then the rest he
+liked. The idea as he approved it ("Love this! ... change nothing else because it's a brilliant idea") is #4 in
+`design/quiz-ideas/NEXT-TEN.md`: agree or disagree with REAL positions of early Christians in plain words, no names
+until the end; the result is the Father nearest you and the one farthest, each with the real line that shows why
+(Tertullian vs Clement on philosophy, Cyprian vs Novatian on second chances, Chrysostom on the poor, Basil's "whose
+feet will you wash?"; Jerome really did write furious letters). Nearest by position, never a percentage. **Title,
+RULED:** "Which early Christian thinks like you?" everywhere space is tight (menu, search, share card); "And which
+would argue with you?" printed directly under it on the quiz's card and start page.
+
+**How the Psalm quiz was made, which he loved ("phenomenal and very powerful"); repeat it:** research the primary texts
+first (agents fetch and verify; the main session reads the originals itself and writes the questions); questions
+even-handed and generic, specificity saved for the reveal; test on simulated people (persona answers, deterministic
+scoring in the script, a separate judge) before showing him; show him a tap-through preview artifact BEFORE building
+into the site; build with Opus builders under strict file ownership, then check every page at 390 and 1360, light
+and dark; ship with a way to BROWSE the results from the quiz page (he asked why Psalm lacked one) and propose extra
+pages to him before building them; adversarially verify any article or claim against the source before publishing.
+Rules learned today: plain short sentences (comma stacks read as AI to him); NO section numbers or § marks shown to
+readers, name the source only; capitals for every pronoun for God INSIDE quotations too (prefer the BSB); images may
+be downloaded without asking. Ultracode is on: use workflows, `model: 'opus'`.
+
+**The Psalm quiz, for reference:** live at `/q/which-psalm/` with the `/psalm/` guide, 78 psalm pages with "Close to
+this", and the article `how-to-pray-the-psalms`. How it is built: `design/quiz-ideas/psalm/README.md` "Shipped". The
+letter pairs about a hundred psalms with needs; the quiz's 53 are a selection, never "every situation he named". In
+Who Said It? a first-person Me/My for God stays lower case so the speaker is not given away (his rule otherwise holds
+everywhere: `demos/*/capitals.json`). The section below on the scrapped list explains what went wrong last time; it
+still applies.
 
 Everything from 2026-09-22 is live on `main` (last commit before these notes: `b778859`). He reviews on the live site;
 small changes he asked for are pushed without waiting (memory: push-small-changes).
