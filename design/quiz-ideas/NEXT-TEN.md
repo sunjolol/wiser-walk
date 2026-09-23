@@ -178,3 +178,15 @@ Jesus, the Holy Spirit and every pronoun for Them in the site's own words; plain
 - **Recommended order: #2 first** (his favourite; the most personal; people already search for a psalm for their
   situation, so each psalm result can be its own findable page; its engine carries #8), then #4. Before building:
   read Athanasius's letter whole and show him a handful of real questions and ONE complete result, psalm and all.
+
+## HIS ANSWERS TO THOSE (2026-09-23, later) — SETTLED
+
+- **Build order: #2 Psalm first, then #4, then #1, then the rest he liked in any order.** He turned Ultracode on for #2.
+- **#1:** "Personality Quiz" is good.
+- **#5:** "I would much rather rely on John Chrysostom, relying on early church fathers and saints is what really
+  drives home the reliability and accuracy for me." (Edwards is out; Fathers and saints first, everywhere.)
+- **#8:** the plan (match the trouble to the brother who brought the same one; give the elder's real answer) is good.
+- **#4 title:** torn between "Which early Christian thinks like you? (And which would argue with you?)" and the short
+  form. My advice: the short question is the title wherever space is tight (menus, search results, share cards; the
+  long form is 72 characters and search results cut near 60), and "And which would argue with you?" prints right
+  under it on the quiz's card and start page, so both sides survive. His ruling pending.
