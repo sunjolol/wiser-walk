@@ -29,7 +29,7 @@ Plenty is on the list. Paul treats abundance
 as a second thing to be learned, and Ecclesiastes says why: "He who loves money is never
 satisfied by money" (Ecclesiastes 5:10).
 
-The famous next line belongs to this paragraph: "I can do all things through Christ who
+The famous next line belongs to this paragraph: "I can do all things through Christ Who
 gives me strength" (Philippians 4:13). In context the "all things" are being hungry and
 being full. It is a sentence about a bad month and a good one.
 
@@ -68,7 +68,7 @@ rarely general. It has a house, a salary or a marriage in view, usually someone 
 Say which one, in prayer, as plainly as the commandment does.
 
 **Give some away.** Paul's instruction for the rich is "to be generous and ready to
-share," with their hope set on God, "who richly provides all things for us to enjoy"
+share," with their hope set on God, Who "richly provides all things for us to enjoy"
 (1 Timothy 6:17–18). Giving shows whether you own a thing or it owns you.
 
 ## What it does not mean

@@ -14,6 +14,7 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve, relative } from 'node:path';
+import { readCapitals, applyCapitals } from './capitals.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
@@ -36,7 +37,7 @@ const IDEAL_LENGTH = 78;
  *
  * Everything here is deterministic — the choice changes only when the pool does —
  * and the text goes through the same display rule the game itself uses: typography
- * only, no word altered.
+ * and the capitals for God (item.d, from capitals.json), no word altered.
  */
 
 /* The game's own displayText, byte for byte. */
@@ -152,7 +153,7 @@ export function coverFor(pool) {
       if ((item.tier || 0) !== tier) continue;
       const speaker = speakerMap(pool)[item.sp];
       if (!speaker || !isNamedIndividual(speaker.name)) continue;
-      const text = display(item.t);
+      const text = display(item.d || item.t);
       if (!isCleanlyEnded(text)) continue;
       const names = coverNames(pool, item);
       if (!names) continue;
@@ -193,6 +194,18 @@ function main() {
   if (!Array.isArray(pool.items) || !Array.isArray(pool.speakers)) {
     console.error('The pool needs both a speakers array and an items array.');
     process.exit(1);
+  }
+
+  /* Pronouns for God capitalised for display (capitals.mjs says why). Each named line gets
+     its display text as item.d; item.t stays verbatim. A fixture has no real ids. */
+  let capitalised = 0;
+  if (!pool.fixture) {
+    try {
+      capitalised = applyCapitals(pool, readCapitals(join(root, 'capitals.json')));
+    } catch (err) {
+      console.error(err.message);
+      process.exit(1);
+    }
   }
 
   /* Compact, and with "<" escaped so no line can close the script element. */
@@ -242,6 +255,7 @@ function main() {
   console.log('speakers ' + pool.speakers.length +
               (thin.length ? '  (' + thin.length + ' with fewer than six lines)' : ''));
   console.log('tiers    1:' + (tiers[1] || 0) + '  2:' + (tiers[2] || 0) + '  3:' + (tiers[3] || 0));
+  console.log('capitals ' + capitalised + ' lines show pronouns for God capitalised');
   if (cover) {
     console.log('cover    ' + cover.text);
     console.log('names    ' + cover.names.join(' · '));

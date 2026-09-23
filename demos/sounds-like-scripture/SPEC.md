@@ -76,6 +76,8 @@ demos/sounds-like-scripture/
   scripts/verify.mjs          pool.json vs raw/, exits non-zero on any failure
   scripts/build-page.mjs      game.src.html + pool.json -> ../sounds-like-scripture.html
   scripts/test-game.mjs       node tests for the pure game logic
+  scripts/capitals.mjs        guard for capitals.json (display capitals for God)
+  capitals.json               line id -> display text with pronouns for God capitalised
   game.src.html            the page, with the pool placeholder
   work/                    intermediate files (kept; verdicts cost tokens)
   pool.json                the shipped pool
@@ -125,6 +127,16 @@ Never put backticks inside a double-quoted bash string.
   the game displays `LORD` as `Lord` and `GOD` as `God`. /method/#the-game says so (the game's own
   footer did until 2026-09-22, when the owner had it removed as clutter). `verify.mjs` checks
   the verbatim text, not the display text.
+- **Capital pronouns for God.** Several other sources print "Thee", "His" and "Him" for God;
+  KJV and WEBBE never do, so a capital would mean "not the Bible". The owner's rule
+  (2026-09-23) is that every pronoun for God, Jesus or the Holy Spirit is capitalised, inside
+  quotations too, so the game capitalises them on every line. `capitals.json` maps a line id
+  to its display text, judged line by line (the BSB decides a disputed Bible referent);
+  `build-page.mjs` carries it as `item.d` and the page shows `displayText(item.d || item.t)`.
+  `scripts/capitals.mjs` refuses any entry that changes more than the first letter of he, his,
+  him, himself, who, whom, whose, you, your, yours, yourself, thou, thee, thy, thine or thyself,
+  or of me, my, mine or myself (raised only when God, Jesus or the Spirit is the speaker, as the
+  BSB does; Who Said It? leaves first person alone, since a capital Me would name the speaker).
 - **Scripture quoted inside other works.** `assemble.mjs` drops any `other` candidate that shares
   a five-word shingle (lower-cased, punctuation stripped) with any verse of KJV, the KJV
   Apocrypha or WEBBE. It also drops any `deutero` candidate sharing a five-word shingle with a

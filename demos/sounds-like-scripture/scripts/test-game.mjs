@@ -11,6 +11,7 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import assert from 'node:assert/strict';
+import { checkCapitals, readCapitals, applyCapitals } from './capitals.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, '..');
@@ -25,7 +26,7 @@ const source = page.slice(a + START.length, b);
 
 const EXPORTS = [
   'RUN_LENGTH', 'TIER_WEIGHT', 'mulberry32', 'dailySeed', 'seedFromRandom', 'wordCount',
-  'displayText', 'isInBible', 'workKey', 'fuseFor', 'scoreFor', 'drawRun', 'timeBucket',
+  'displayText', 'shownText', 'isInBible', 'workKey', 'fuseFor', 'scoreFor', 'drawRun', 'timeBucket',
   'encodeChallenge', 'decodeChallenge'
 ];
 const L = new Function('"use strict";' + source + '\nreturn {' + EXPORTS.join(',') + '};')();
@@ -247,6 +248,41 @@ test('LORD and GOD are shown as Lord and God, and nothing else changes', () => {
   assert.equal(L.displayText('the Lord GOD said'), 'the Lord God said');
   assert.equal(L.displayText('GODLY and LORDSHIP stay.'), 'GODLY and LORDSHIP stay.');
   assert.equal(L.displayText('A plain line of text.'), 'A plain line of text.');
+});
+
+/* ------------------------------------------------------- capitals for God */
+
+test('a line with a capitalised display text shows it, through the same display rule', () => {
+  assert.equal(L.shownText({ t: 'Placeholder: the LORD and his word.', d: 'Placeholder: the LORD and His word.' }),
+    'Placeholder: the Lord and His word.');
+  assert.equal(L.shownText({ t: 'Placeholder: the LORD and his word.' }), 'Placeholder: the Lord and his word.');
+});
+
+test('the capitals guard allows nothing but raising a pronoun for God', () => {
+  assert.equal(checkCapitals('Placeholder: he and thee.', 'Placeholder: He and Thee.'), null);
+  /* this game only: first person too, for a divine speaker */
+  assert.equal(checkCapitals('Placeholder: my word to me.', 'Placeholder: My word to Me.'), null);
+  assert.ok(checkCapitals('Placeholder: he said.', 'Placeholder: he said.'), 'an entry that changes nothing');
+  assert.ok(checkCapitals('Placeholder: the king.', 'Placeholder: the King.'), 'a word outside the pronoun list');
+  assert.ok(checkCapitals('Placeholder: he said.', 'Placeholder: He says.'), 'a changed word');
+  assert.ok(checkCapitals('Placeholder: he said.', 'Placeholder: HE said.'), 'more than the first letter');
+  assert.ok(checkCapitals('Placeholder: He said.', 'Placeholder: he said.'), 'a capital lowered');
+  assert.ok(checkCapitals('Placeholder: he said.', 'Placeholder: He said!'), 'changed punctuation');
+  assert.ok(checkCapitals('Placeholder: he said.', 'Placeholder:  He said.'), 'changed spacing');
+});
+
+test('every capitalised line differs from its verbatim text only in pronouns for God', () => {
+  const real = JSON.parse(readFileSync(join(root, 'pool.json'), 'utf8'));
+  const caps = readCapitals(join(root, 'capitals.json'));
+  const ids = Object.keys(caps.lines);
+  assert.ok(ids.length > 0, 'capitals.json is missing or empty');
+  assert.equal(applyCapitals(real, caps), ids.length);   /* throws on any bad entry */
+  for (const it of real.items) {
+    if (!it.d) continue;
+    /* and still only those capitals once the page's own display rules have run */
+    const why = checkCapitals(L.displayText(it.t), L.shownText(it));
+    assert.equal(why, null, it.id + ': ' + why);
+  }
 });
 
 /* ------------------------------------------------------------ challenge --- */

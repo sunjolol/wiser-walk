@@ -48,7 +48,9 @@ Both registers again, so that modern English does not mean anything:
 - 8 to 34 words, ends in `.`, `?` or `!`, whole sentence or sentences, no digits.
 - The line must not contain the speaker's own name or alias, or "I, <name>".
 - Display only: enclosing quotation marks are dropped, LORD and GOD print as Lord and God, quote
-  style is unified. `verify.mjs` checks the verbatim text against the verse.
+  style is unified, and pronouns for God, Jesus and the Holy Spirit are capitalised (the owner's
+  rule, 2026-09-23; `capitals.json`, guarded by `scripts/capitals.mjs`, as in the sibling).
+  `verify.mjs` checks the verbatim text against the verse.
 
 ## Speakers
 
@@ -109,8 +111,8 @@ print as a real line.
 ## Files
 
 ```
-demos/who-said-it/  SPEC.md  raw/  speakers.json  pool.json  game.src.html
-  scripts/ extract.mjs assemble.mjs finalize.mjs verify.mjs build-page.mjs test-game.mjs
+demos/who-said-it/  SPEC.md  raw/  speakers.json  pool.json  capitals.json  game.src.html
+  scripts/ extract.mjs assemble.mjs finalize.mjs verify.mjs build-page.mjs test-game.mjs capitals.mjs
   work/    candidates.json selected.json key.json batch-0N.txt verdict-0N.txt fixture-pool.json
 demos/who-said-it.html                       built standalone demo
 site/src/games/who-said-it.html + .meta.json generated but committed, written by build-page.mjs

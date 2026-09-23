@@ -231,6 +231,24 @@ const bothAxes = axes.filter(a => a.bothEnds).length;
 const matchedAxes = placedAxes.length;
 
 /**
+ * Which Bible each quotation on this page is from, so the note above the moments names what
+ * the page actually holds. Most are the World English Bible British Edition. A line that
+ * carries a pronoun for God or Jesus is the Berean Standard Bible's wording instead (see
+ * FigureEvidence.quotedFrom), and a page holding both names the translation under every
+ * quotation rather than claiming one Bible for all of them.
+ */
+const WEB = 'World English Bible British Edition';
+const quoteFrom = (e: FigureEvidence) => e.quotedFrom ?? WEB;
+const versions = [...new Set(axes.flatMap(a => a.items).filter(e => e.quote).map(quoteFrom))];
+const mixedVersions = versions.length > 1;
+const quoteNote =
+  versions.length === 0
+    ? ''
+    : mixedVersions
+      ? '; where it is in quotation marks it is verbatim, from the translation named under it'
+      : `; where it is in quotation marks it is verbatim from the ${versions[0]}`;
+
+/**
  * THE TITLE AND THE DESCRIPTION (2026-09-21).
  *
  * The pages that rank for these people are titled around "in the Bible" and "character",
@@ -466,8 +484,7 @@ const breadcrumbs = isDraft
     />
     <p class="ref-note">
       Each line is one recorded act and the reference it is taken from. The sentence says
-      what the person did; where it is in quotation marks it is verbatim from the World
-      English Bible British Edition. An act listed here is evidence of how this person moved,
+      what the person did{quoteNote}. An act listed here is evidence of how this person moved,
       not approval of it; read the passage for how it was received.
       {silentAxes > 0 && ` On ${silentAxes} of the six the text does not show this, and that axis is left out of the match rather than filled in.`}
       {bothAxes > 0 && ` On ${bothAxes} the text shows both ends and they do not settle, so that axis is left out too — the acts for each end are printed under it.`}
@@ -545,6 +562,7 @@ const breadcrumbs = isDraft
                         </p>}
                     <p class="moment-did">{item.did}</p>
                     {item.quote && <blockquote class="moment-quote">{item.quote}</blockquote>}
+                    {item.quote && mixedVersions && <p class="moment-quote-from">{quoteFrom(item)}</p>}
                   </li>
                 ))}
               </ol>

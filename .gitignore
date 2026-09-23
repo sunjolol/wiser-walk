@@ -12,6 +12,10 @@ design/og/out/
 design/accounts/captures/
 design/seo/captures/
 
+# Berean Standard Bible chapters that engine-test.mjs checks quotations against; regenerable
+# with site/scripts/fetch-bsb-verses.mjs, like the World English Bible files beside it.
+demos/sounds-like-scripture/work/bsb-verses.json
+
 # The owner's licensed Amatry font (Envato Elements). The repository is public, so the font
 # files stay on his machine; the site uses the wordmark drawn from it (site/public/img/wordmark.svg).
 design/fonts/

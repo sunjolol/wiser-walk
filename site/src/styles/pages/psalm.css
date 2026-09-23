@@ -134,3 +134,102 @@
   .ps-sits:has(> .ps-sit:nth-child(2)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .ps-text { max-width: 46rem; }
 }
+
+/* ==========================================================================
+   /psalm/, the guide: every situation in its group, each a way in to its psalm.
+   ========================================================================== */
+
+.pg-intro p { margin: 0 0 .9rem; max-width: var(--measure); line-height: 1.65; color: var(--ink-soft); }
+/* the way to the quiz, for the reader who does not know which line is theirs */
+.pg-intro .pg-cta {
+  display: inline-flex; align-items: center; gap: .5rem; margin: .3rem 0 0; padding: .55rem 1rem;
+  border-radius: var(--r-pill); font-size: .9rem; color: var(--ink); background: var(--accent-soft);
+}
+.pg-cta .icon { flex: none; color: var(--accent); }
+.pg-cta a { color: var(--accent); font-weight: 600; text-underline-offset: 3px; }
+
+/* the seven groups, so a reader can jump to their own: full-width rows on a phone (seven
+   sentences squeezed into wrapping pills read as clutter there), a row of pills from 40rem */
+.pg-toc { display: grid; gap: .4rem; margin: 1.6rem 0 0; }
+.pg-toc a {
+  display: flex; align-items: center; justify-content: space-between; gap: .6rem; min-height: 46px;
+  padding: .4rem .5rem .4rem 1rem; border-radius: 14px; font-size: .92rem; line-height: 1.3; text-decoration: none;
+  text-wrap: balance;
+  color: var(--ink); background: var(--panel); box-shadow: inset 0 0 0 1px var(--rule);
+}
+@media (min-width: 40rem) {
+  .pg-toc { display: flex; flex-wrap: wrap; gap: .45rem; }
+  .pg-toc a { display: inline-flex; justify-content: flex-start; min-height: 40px; padding: .35rem .45rem .35rem .9rem; border-radius: var(--r-pill); font-size: .84rem; }
+}
+.pg-toc a:hover { box-shadow: inset 0 0 0 1.5px var(--accent); color: var(--accent); }
+.pg-toc-n {
+  display: inline-grid; place-items: center; min-width: 1.7rem; height: 1.7rem; padding: 0 .35rem;
+  border-radius: var(--r-pill); font-family: var(--ui); font-size: .66rem; font-weight: 700;
+  color: var(--ink-mute); background: var(--shell);
+}
+
+/* one group: a plain display heading (the site's big lowercase section voice is too loud seven
+   times over), the spectrum rule under it, then its situations */
+.pg-group { margin: 2.6rem 0 0; scroll-margin-top: 1rem; }
+.pg-gtitle {
+  margin: 0 0 1rem; font-family: var(--display); font-weight: 700;
+  font-size: clamp(1.35rem, 5.4vw, 1.75rem); line-height: 1.2; color: var(--ink); text-wrap: balance;
+}
+.pg-gtitle::after {
+  content: ""; display: block; width: 48px; height: 6px; margin-top: .55rem;
+  border-radius: var(--r-pill); background-image: var(--grad-r);
+}
+
+.pg-list { display: grid; gap: .6rem; margin: 0; padding: 0; list-style: none; }
+.pg-item { border-radius: var(--r); background: var(--panel); box-shadow: var(--lift); }
+.pg-main {
+  display: flex; align-items: flex-start; gap: .85rem; padding: .95rem 1rem 1rem;
+  text-decoration: none; color: var(--ink);
+}
+.pg-main > .icon { flex: none; margin-top: .45rem; color: var(--accent); transition: transform .18s ease; }
+.pg-main:hover > .icon { transform: translateX(3px); }
+.pg-main:hover .pg-seen { color: var(--accent); }
+.pg-main:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; border-radius: var(--r); }
+/* the psalm's number, in the pill the list on the quiz page wears */
+.pg-num {
+  flex: none; display: inline-grid; place-items: center; min-width: 2.7rem; height: 2.1rem; padding: 0 .5rem;
+  border-radius: var(--r-pill); font-family: var(--ui); font-size: .76rem; font-weight: 700;
+  color: var(--accent); background: var(--shell); box-shadow: inset 0 0 0 1px var(--rule);
+}
+.pg-body { flex: 1; min-width: 0; }
+.pg-seen { display: block; font-size: 1rem; line-height: 1.5; text-wrap: pretty; }
+.pg-meta {
+  display: block; margin-top: .35rem; font-family: var(--ui); font-size: .62rem; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mute);
+}
+.pg-also { margin: -.35rem 0 0; padding: 0 1rem .9rem calc(1rem + 2.7rem + .85rem); font-size: .86rem; color: var(--ink-soft); }
+.pg-also a { color: var(--accent); text-underline-offset: 3px; }
+
+/* what the letter does not name: said once, plainly, on a quieter ground */
+.pg-none {
+  margin: 2.8rem 0 0; padding: 1.4rem 1.2rem 1.3rem; border-radius: var(--r-lg);
+  background: var(--shell); box-shadow: inset 0 0 0 1px var(--rule);
+}
+.pg-none h2 {
+  margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(1.3rem, 5vw, 1.6rem);
+  line-height: 1.2; color: var(--ink);
+}
+.pg-none > p { margin: .7rem 0 1.1rem; max-width: var(--measure); line-height: 1.6; color: var(--ink-soft); }
+
+@media (min-width: 40rem) {
+  .pg-none { padding: 1.9rem 2rem 1.8rem; }
+}
+@media (min-width: 64rem) {
+  .pg-list { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pg-main > .icon { transition: none; }
+}
+
+/* ------------------------------------------------------------ close to this ---- */
+.ps-near-all {
+  display: inline-flex; align-items: center; gap: .5rem; margin: 1rem 0 0; padding: .55rem 1rem;
+  border-radius: var(--r-pill); font-size: .9rem; color: var(--ink); background: var(--accent-soft);
+}
+.ps-near-all .icon { flex: none; color: var(--accent); }
+.ps-near-all a { color: var(--accent); font-weight: 600; text-underline-offset: 3px; }

@@ -14,6 +14,7 @@ import assert from 'node:assert/strict';
 /* The card the site draws is built here, so it is tested here. Importing this runs
    nothing: build-page.mjs only builds when it is the program. */
 import { coverFor, coverNames } from './build-page.mjs';
+import { checkCapitals, readCapitals, applyCapitals } from './capitals.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, '..');
@@ -28,7 +29,7 @@ const source = page.slice(a + START.length, b);
 
 const EXPORTS = [
   'RUN_LENGTH', 'OPTION_COUNT', 'TIER_WEIGHT', 'LONG_NAME', 'mulberry32', 'dailySeed',
-  'seedFromRandom', 'seedForIndex', 'wordCount', 'displayText', 'fuseFor', 'scoreFor',
+  'seedFromRandom', 'seedForIndex', 'wordCount', 'displayText', 'shownText', 'fuseFor', 'scoreFor',
   'speakerMap', 'speakerName', 'inConflict', 'hasBook', 'shuffle', 'optionsFor',
   'needsOneColumn', 'speakerKey', 'drawRun', 'timeBucket', 'encodeChallenge',
   'decodeChallenge', 'confusionKey', 'addConfusion', 'topConfusions'
@@ -46,6 +47,9 @@ const metaPath = join(root, '..', '..', 'site', 'src', 'games', 'who-said-it.met
 assert.ok(existsSync(realPoolPath), 'pool.json is missing');
 assert.ok(existsSync(metaPath), 'the site metadata is missing: run scripts/build-page.mjs');
 const realPool = JSON.parse(readFileSync(realPoolPath, 'utf8'));
+/* As the build does: pronouns for God capitalised for display, as item.d. */
+const capitals = readCapitals(join(root, 'capitals.json'));
+const capitalised = applyCapitals(realPool, capitals);
 const meta = JSON.parse(readFileSync(metaPath, 'utf8'));
 
 /* One rng per line, exactly as the page builds it. */
@@ -354,6 +358,39 @@ test('curly quotes are unified and an enclosing pair is dropped', () => {
   assert.equal(L.displayText('"He said "no"."'), 'He said "no".');
 });
 
+/* ------------------------------------------------------- capitals for God */
+
+test('a line with a capitalised display text shows it, through the same display rule', () => {
+  assert.equal(L.shownText({ t: '“Placeholder: the LORD and his word.”', d: '“Placeholder: the LORD and His word.”' }),
+    'Placeholder: the Lord and His word.');
+  assert.equal(L.shownText({ t: '“Placeholder: the LORD and his word.”' }), 'Placeholder: the Lord and his word.');
+});
+
+test('the capitals guard allows nothing but raising a pronoun for God', () => {
+  assert.equal(checkCapitals('Placeholder: he and thee.', 'Placeholder: He and Thee.'), null);
+  /* never first person here: a capital Me would name the speaker */
+  assert.ok(checkCapitals('Placeholder: my word to me.', 'Placeholder: My word to Me.'), 'first person');
+  assert.ok(checkCapitals('Placeholder: he said.', 'Placeholder: he said.'), 'an entry that changes nothing');
+  assert.ok(checkCapitals('Placeholder: the king.', 'Placeholder: the King.'), 'a word outside the pronoun list');
+  assert.ok(checkCapitals('Placeholder: he said.', 'Placeholder: He says.'), 'a changed word');
+  assert.ok(checkCapitals('Placeholder: he said.', 'Placeholder: HE said.'), 'more than the first letter');
+  assert.ok(checkCapitals('Placeholder: He said.', 'Placeholder: he said.'), 'a capital lowered');
+  assert.ok(checkCapitals('Placeholder: he said.', 'Placeholder: He said!'), 'changed punctuation');
+  assert.ok(checkCapitals('Placeholder: he said.', 'Placeholder:  He said.'), 'changed spacing');
+});
+
+test('every capitalised line differs from its verbatim text only in pronouns for God', () => {
+  const ids = Object.keys(capitals.lines);
+  assert.ok(ids.length > 0, 'capitals.json is missing or empty');
+  assert.equal(capitalised, ids.length);   /* applyCapitals threw above on any bad entry */
+  for (const it of realPool.items) {
+    if (!it.d) continue;
+    /* and still only those capitals once the page's own display rules have run */
+    const why = checkCapitals(L.displayText(it.t), L.shownText(it));
+    assert.equal(why, null, it.id + ': ' + why);
+  }
+});
+
 /* ------------------------------------------------------------ challenge --- */
 
 const BASE = 'https://wiserwalk.com/play/who-said-it/';
@@ -521,8 +558,8 @@ test('the chosen cover is a real line, hardest tier, a named individual speaking
   const item = realPool.items.find(i => i.id === cover.id);
   assert.ok(item, 'the cover must come from an item in the pool');
   assert.equal(item.tier, Math.max(...realPool.items.map(i => i.tier || 0)));
-  assert.equal(cover.text, L.displayText(item.t),
-    'the cover text must be the game’s own display of the verbatim line');
+  assert.equal(cover.text, L.shownText(item),
+    'the cover text must be the game’s own display of the line');
   const speaker = realPool.speakers.find(s => s.id === item.sp);
   assert.match(speaker.name, /^[A-Z][A-Za-z'-]*$/, 'the cover speaker must be a named individual');
   assert.deepEqual(cover.names, coverNames(realPool, item));

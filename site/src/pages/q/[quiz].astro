@@ -14,6 +14,7 @@ import Icon from '../../components/Icon.astro';
 import SectionHead from '../../components/SectionHead.astro';
 import QuizPreview from '../../components/QuizPreview.astro';
 import OutcomeIndex from '../../components/OutcomeIndex.astro';
+import PsalmIndex from '../../components/PsalmIndex.astro';
 import CompareRoom from '../../components/CompareRoom.astro';
 import ReadCard from '../../components/ReadCard.astro';
 import ReadingRunner from '../../components/ReadingRunner.astro';
@@ -189,8 +190,8 @@ const breadcrumbs = isDraft
   {/*
     A READING: its own runner, with the intro as the runner's slot so it is hidden the moment
     play begins. No #runner is drawn, so the statement script at the foot of this page finds
-    nothing to bind; ReadingRunner binds the band's [data-start] itself. No OutcomeIndex
-    either: its sentences are about axes and traditions, and would be untrue of psalms.
+    nothing to bind; ReadingRunner binds the band's [data-start] itself. PsalmIndex stands where
+    OutcomeIndex would: OutcomeIndex's sentences are about axes and traditions, untrue of psalms.
   */}{reading ? (
   <ReadingRunner quiz={quiz}>
     <SectionHead title="How it works" kicker="Three steps, no wrong answers" />
@@ -230,6 +231,9 @@ const breadcrumbs = isDraft
         </div>
       </div>
     </section>
+
+    {/* Every situation, each a way in to its psalm's page: this quiz's "one page each". */}
+    <PsalmIndex />
 
     {readNext.length > 0 && (
       <section class="qreads">

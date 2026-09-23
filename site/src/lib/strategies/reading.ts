@@ -64,11 +64,21 @@ export interface Situation {
   like: Condition;
 }
 
+/** A browsing group: how a reader walks the situations (the quiz page, /psalm/, "Close to this"). */
+export interface SituationGroup {
+  /** The anchor on /psalm/ (#people-against-you). */
+  id: string;
+  title: string;
+  /** Situation keys, in the order they are listed. */
+  ids: string[];
+}
+
 interface ReadingData {
   weights: Record<string, number>;
   core: Question[];
   follow: Question[];
   outcomes: Record<string, Situation>;
+  groups: SituationGroup[];
   notes: Record<string, string>;
   none: { lead: string; options: [string, string][] };
   full: Record<string, { story: Array<{ t?: string; q?: string; ref?: string }>; own?: string; night?: string }>;
@@ -76,6 +86,28 @@ interface ReadingData {
 
 export const READING = data as unknown as ReadingData;
 export const SITUATIONS = Object.keys(READING.outcomes);
+/** Seven groups running from hard to good, as the questions do. Every situation is in exactly one. */
+export const GROUPS = READING.groups;
+
+/** The group a situation is listed under. */
+export function groupOf(id: string): SituationGroup {
+  const g = GROUPS.find(x => x.ids.includes(id));
+  if (!g) throw new Error(`reading: situation ${id} is in no group`);
+  return g;
+}
+
+/**
+ * The page a situation's psalm lives on, and what to call it in a list. The Songs of Ascents
+ * are one piece of advice for fifteen psalms; the list names all fifteen and opens on the first.
+ */
+export function psalmLinkFor(id: string): { href: string; label: string; short: string } {
+  const o = READING.outcomes[id]!;
+  if (o.set) {
+    const first = Math.min(...o.set), last = Math.max(...o.set);
+    return { href: `/psalm/${first}/`, label: `Psalms ${first}–${last}`, short: `${first}–${last}` };
+  }
+  return { href: `/psalm/${o.psalm}/`, label: `Psalm ${o.psalm}`, short: String(o.psalm) };
+}
 
 export function picks(v: string | string[] | undefined): string[] {
   return v === undefined ? [] : Array.isArray(v) ? v : [v];

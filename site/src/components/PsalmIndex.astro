@@ -1,0 +1,129 @@
+---
+/**
+ * Every situation the Psalm quiz can name, as ways in to the psalm pages: the Psalm quiz's
+ * counterpart of OutcomeIndex ("25 figures, one page each"), under the last call to start.
+ *
+ * Fifty-three sentences would be a wall on a phone, so they stand in their seven groups (the
+ * data's browsing groups, hard to good, as the questions run) and each group opens on a tap.
+ * Each row is the psalm's number and the plain phrase its page is titled with, so a reader
+ * sees what each psalm is FOR before choosing one. The whole list, open, with Athanasius's
+ * own lines, is the guide at /psalm/, which the side column offers.
+ *
+ * The phrases are seo.ts's PSALM_TOPICS: one short rendering of each situation's own line,
+ * written once and used for the page titles, so the list and the page it opens say the same.
+ */
+import Icon from './Icon.astro';
+import { GROUPS, SITUATIONS, psalmLinkFor } from '../lib/strategies/reading';
+import { PSALM_TOPICS } from '../lib/seo';
+
+const phrase = (id: string) => {
+  const t = PSALM_TOPICS[id];
+  if (!t) throw new Error(`PsalmIndex: no phrase for ${id} (PSALM_TOPICS)`);
+  return t.charAt(0).toUpperCase() + t.slice(1);
+};
+---
+<section class="pidx" aria-labelledby="pidx-h">
+  <div class="pidx-say">
+    <h2 id="pidx-h">{SITUATIONS.length} situations, one psalm each</h2>
+    <p>Every situation St Athanasius named in his letter, and the psalm he gave for it.</p>
+    <p class="pidx-hint"><Icon name="arrow" size={14} /> <span>Open a group, then tap a psalm.</span></p>
+    <p class="pidx-hint"><Icon name="arrow" size={14} /> <span>Or <a href="/psalm/">read the whole guide</a>.</span></p>
+  </div>
+  <div class="pidx-groups">
+    {GROUPS.map(g => (
+      <details class="pidx-group">
+        <summary>
+          <span class="pidx-gtitle">{g.title}</span>
+          <span class="pidx-count">{g.ids.length}</span>
+          <span class="pidx-chev" aria-hidden="true"></span>
+        </summary>
+        <ul>
+          {g.ids.map(id => {
+            const l = psalmLinkFor(id);
+            return (
+              <li>
+                <a href={l.href}>
+                  <span class="pidx-num" aria-hidden="true">{l.short}</span>
+                  <span class="pidx-topic"><span class="sr-only">{l.label}: </span>{phrase(id)}</span>
+                  <Icon name="arrow" size={14} />
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </details>
+    ))}
+  </div>
+</section>
+
+<style>
+  /* The same panel as OutcomeIndex, so the Psalm quiz's page ends the way the others do. */
+  .pidx {
+    position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr; gap: 1.2rem;
+    margin: 2.2rem 0 .5rem; padding: 1.7rem 1.4rem 1.3rem; border-radius: 24px;
+    background: var(--panel); box-shadow: var(--lift);
+  }
+  .pidx::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 6px; background-image: linear-gradient(180deg, var(--blue), var(--orange)); }
+  .pidx h2 { margin: 0; font-family: var(--display); font-weight: 400; font-size: clamp(1.6rem, 6vw, 2.1rem); line-height: 1.1; color: var(--ink); text-wrap: balance; }
+  .pidx-say p { margin: .6rem 0 0; color: var(--ink-soft); max-width: 24rem; text-wrap: balance; }
+  .pidx-say .pidx-hint {
+    display: inline-flex; align-items: center; gap: .5rem; margin-top: .7rem; padding: .5rem .9rem; border-radius: 999px;
+    font-family: var(--ui); font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--accent); background: var(--accent-soft);
+  }
+  .pidx-say .pidx-hint + .pidx-hint { margin-left: 0; }
+  .pidx-say .pidx-hint :global(.icon) { flex: none; }
+  .pidx-say .pidx-hint a { color: inherit; text-underline-offset: 3px; }
+  .pidx-say { display: flex; flex-direction: column; align-items: flex-start; }
+
+  /* a group: its title, how many are in it, and a chevron that turns when it opens */
+  .pidx-group { border-top: 1px solid var(--rule); }
+  .pidx-group:last-child { border-bottom: 1px solid var(--rule); }
+  .pidx-group summary {
+    display: flex; align-items: center; gap: .75rem; min-height: 52px; padding: .6rem .2rem;
+    cursor: pointer; list-style: none; color: var(--ink);
+  }
+  .pidx-group summary::-webkit-details-marker { display: none; }
+  .pidx-group summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+  .pidx-gtitle { flex: 1; min-width: 0; font-weight: 600; line-height: 1.35; text-wrap: pretty; }
+  .pidx-count {
+    flex: none; min-width: 1.9rem; padding: .2rem .5rem; border-radius: 999px; text-align: center;
+    font-family: var(--ui); font-size: .7rem; font-weight: 700; color: var(--ink-mute); background: var(--shell);
+  }
+  .pidx-chev {
+    flex: none; width: .55rem; height: .55rem; margin: 0 .35rem 0 .1rem;
+    border-right: 2px solid var(--accent); border-bottom: 2px solid var(--accent);
+    transform: rotate(45deg) translateY(-2px); transition: transform .18s ease;
+  }
+  .pidx-group[open] .pidx-chev { transform: rotate(225deg) translate(-1px, -1px); }
+  .pidx-group summary:hover .pidx-gtitle { color: var(--accent); }
+
+  .pidx-group ul { margin: 0 0 .7rem; padding: 0; list-style: none; }
+  .pidx-group a {
+    display: flex; align-items: center; gap: .75rem; min-height: 48px; padding: .35rem .2rem;
+    text-decoration: none; font-size: .94rem; line-height: 1.35; color: var(--ink);
+  }
+  /* the psalm's number, in the pill the Songs of Ascents wear on the psalm pages */
+  .pidx-num {
+    flex: none; display: inline-grid; place-items: center; min-width: 2.6rem; height: 2rem; padding: 0 .5rem;
+    border-radius: 999px; font-family: var(--ui); font-size: .74rem; font-weight: 700;
+    color: var(--accent); background: var(--shell); box-shadow: inset 0 0 0 1px var(--rule);
+  }
+  .pidx-topic { flex: 1; min-width: 0; text-wrap: pretty; }
+  .pidx-group a :global(.icon) { flex: none; color: var(--accent); transition: transform .18s ease; }
+  .pidx-group a:hover { color: var(--accent); }
+  .pidx-group a:hover .pidx-num { box-shadow: inset 0 0 0 1.5px var(--accent); }
+  .pidx-group a:hover :global(.icon) { transform: translateX(3px); }
+
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
+    clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
+
+  @media (min-width: 58rem) {
+    .pidx { grid-template-columns: minmax(0, 19rem) minmax(0, 1fr); gap: 2.6rem; padding: 2.3rem 2.4rem 2rem 2.6rem; align-items: start; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pidx-chev, .pidx-group a :global(.icon) { transition: none; }
+  }
+</style>

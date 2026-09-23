@@ -51,6 +51,16 @@ export const SEO: Record<string, { title: string; description: string }> = {
     description:
       'Lutheran vs Reformed, Calvinism vs Arminianism, Catholic vs Orthodox: what actually separates them, with both traditions drawn on the same six axes.'
   },
+  /*
+   * The Psalm guide (2026-09-23): the hub the 78 psalm pages hang from. People search "a psalm
+   * for" what they are in, and "which psalm to read when"; the title answers both, and names
+   * the Father the whole guide is his.
+   */
+  '/psalm/': {
+    title: 'A psalm for every situation: St Athanasius’s guide',
+    description:
+      'Betrayed, afraid, worn down, grateful? In the 300s St Athanasius named a psalm for 53 situations in life. Find yours, with his advice and the whole psalm.'
+  },
   '/about/': {
     title: 'About Wiser Walk',
     description:

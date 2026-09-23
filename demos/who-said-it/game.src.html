@@ -894,6 +894,14 @@ function displayText(text) {
   return s.trim();
 }
 
+/* Pronouns for God, Jesus and the Holy Spirit are capitalised on every line, KJV and
+   WEBBE alike, as on the rest of the site. The build carries that text as item.d (from
+   capitals.json, checked to differ from the verbatim item.t only in those capitals);
+   the rule above then applies to it. */
+function shownText(item) {
+  return displayText(item && item.d ? item.d : item && item.t);
+}
+
 function fuseFor(words) {
   return Math.min(18, Math.max(10, 7 + 0.35 * words));
 }
@@ -1238,7 +1246,7 @@ function topConfusions(tally, limit) {
       challenge: state.challenge,
       logic: {
         mulberry32: mulberry32, drawRun: drawRun, optionsFor: optionsFor, fuseFor: fuseFor,
-        scoreFor: scoreFor, displayText: displayText, speakerKey: speakerKey,
+        scoreFor: scoreFor, displayText: displayText, shownText: shownText, speakerKey: speakerKey,
         inConflict: inConflict, needsOneColumn: needsOneColumn,
         encodeChallenge: encodeChallenge, decodeChallenge: decodeChallenge,
         confusionKey: confusionKey, addConfusion: addConfusion, topConfusions: topConfusions
@@ -1342,7 +1350,7 @@ function topConfusions(tally, limit) {
     state.answerAt = drawn.answerAt;
 
     el.line.className = 'line ' + sizeClass(words);
-    el.line.textContent = displayText(item.t);
+    el.line.textContent = shownText(item);
     el.reveal.hidden = true;
     el.reveal.innerHTML = '';
     el.card.classList.remove('revealed');
@@ -1495,7 +1503,7 @@ function topConfusions(tally, limit) {
         '<li>' +
         '<span class="miss-stripe" aria-hidden="true"><span class="miss-tag">' + esc(tag) + '</span></span>' +
         '<span class="miss-medal" aria-hidden="true">' + (a.timedOut ? ICON.clock : ICON.cross) + '</span>' +
-        '<q>' + esc(displayText(item.t)) + '</q>' +
+        '<q>' + esc(shownText(item)) + '</q>' +
         '<p class="miss-ref">' + esc(item.ref) + ' &middot; ' + esc(TRANSLATION[item.tr] || item.tr || '') + '</p>' +
         '<p class="miss-where">' + esc(speakerName(POOL, item.sp)) + ' said it. ' + saidWhat + '</p>' +
         '</li>'

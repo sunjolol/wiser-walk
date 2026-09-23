@@ -882,6 +882,14 @@ function displayText(text) {
     });
 }
 
+/* Pronouns for God, Jesus and the Holy Spirit are capitalised on every line, whatever
+   its source printed, so a capital "Thee" says nothing about where a line came from. The
+   build carries that text as item.d (from capitals.json, checked to differ from the
+   verbatim item.t only in those capitals); the rule above then applies to it. */
+function shownText(item) {
+  return displayText(item && item.d ? item.d : item && item.t);
+}
+
 function isInBible(item, canon) {
   if (!item) return false;
   if (item.k === 'b') return true;
@@ -1083,7 +1091,7 @@ function decodeChallenge(hash) {
       challenge: state.challenge,
       logic: {
         mulberry32: mulberry32, drawRun: drawRun, isInBible: isInBible, fuseFor: fuseFor,
-        scoreFor: scoreFor, displayText: displayText, workKey: workKey,
+        scoreFor: scoreFor, displayText: displayText, shownText: shownText, workKey: workKey,
         encodeChallenge: encodeChallenge, decodeChallenge: decodeChallenge
       },
       answer: answer,
@@ -1209,7 +1217,7 @@ function decodeChallenge(hash) {
     lineFuse = fuseFor(words);
 
     el.line.className = 'line ' + sizeClass(words);
-    el.line.textContent = displayText(item.t);
+    el.line.textContent = shownText(item);
     el.reveal.hidden = true;
     el.reveal.innerHTML = '';
     el.card.classList.remove('revealed');
@@ -1395,7 +1403,7 @@ function decodeChallenge(hash) {
         '<li>' +
         '<span class="miss-stripe" aria-hidden="true"><span class="miss-tag">' + esc(tag) + '</span></span>' +
         '<span class="miss-medal" aria-hidden="true">' + (a.timedOut ? ICON.clock : ICON.cross) + '</span>' +
-        '<q>' + esc(displayText(item.t)) + '</q>' +
+        '<q>' + esc(shownText(item)) + '</q>' +
         '<p class="miss-ref">' + esc(item.ref) + '</p>' +
         '<p class="miss-where">' + esc(truthSentence(item, a.truth)) +
         (cit ? ' ' + esc(cit) + '.' : '') + '</p>' +

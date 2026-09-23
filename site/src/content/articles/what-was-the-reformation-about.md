@@ -33,7 +33,7 @@ him to keep the books.
 
 Luther wrote ninety-five short propositions in Latin, aimed at scholars, and posted
 them to Albrecht on 31 October 1517. The first is the whole thing in a sentence: "When our
-Lord and Master Jesus Christ said, 'Repent,' he willed the entire life of believers to be
+Lord and Master Jesus Christ said, 'Repent,' He willed the entire life of believers to be
 one of repentance." Whether he also nailed a copy to the door of the Castle Church that day
 is the most famous thing about him and the least certain. The letter is documented. The
 hammer is not.

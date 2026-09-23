@@ -81,13 +81,77 @@ async function chapter(id, n) {
   return json;
 }
 
-/** Verse content arrives as an array that can hold formatting objects as well as strings. */
+/**
+ * Verse content arrives as an array that can hold formatting objects as well as strings:
+ * {text} for each line of poetry, {noteId} for a footnote, {lineBreak}. Joined with nothing,
+ * the lines of a poem ran together ("I will makewith the house of Israel") and a footnote
+ * between two sentences glued them ("praise!Amen."). So the parts are joined with a space,
+ * and a space that lands before a closing mark (or after an opening one or a dash) is taken
+ * out again. The words themselves are untouched.
+ */
 const plain = content =>
   content
-    .map(part => (typeof part === 'string' ? part : part && typeof part.text === 'string' ? part.text : ''))
-    .join('')
+    .map(part => (typeof part === 'string' ? part : part && typeof part.text === 'string' ? part.text : ' '))
+    .join(' ')
     .replace(/\s+/g, ' ')
+    .replace(/ ([,.;:!?’”)\]—])/g, '$1')
+    .replace(/([‘“(\[—]) /g, '$1')
     .trim();
+
+/**
+ * CAPITALS FOR GOD. The owner's rule (2026-09-23): every pronoun for God, Jesus or the Holy
+ * Spirit is capitalised, inside quotations too. The BSB already capitalises He, His, Him and
+ * You for Them, but prints the relative pronoun in lower case ("the will of Him who sent Me").
+ * The BSB is in the public domain and asks nothing about altered text, so those are raised
+ * here, verse by verse, from a map read and judged by hand: each entry is a phrase exactly as
+ * the BSB prints it and the same phrase with the pronoun raised. A "who" for the people in a
+ * verse ("those who love Him") stays as printed.
+ *
+ * capitalOnly() is the guard, the same rule as the games' capitals.mjs: the new phrase may
+ * differ from the old only by raising the first letter of a pronoun for God. A phrase that is
+ * missing from its verse, or found in it twice, stops the script rather than being skipped.
+ */
+const GOD_PRONOUNS = new Set(['he', 'his', 'him', 'himself', 'who', 'whom', 'whose', 'you', 'your']);
+const CAPITALS = {
+  'Romans 9:5': [['Christ, who is God', 'Christ, Who is God']],
+  'Ephesians 1:3': [['Lord Jesus Christ, who has blessed', 'Lord Jesus Christ, Who has blessed']],
+  'Ephesians 2:14': [['He Himself is our peace, who has made', 'He Himself is our peace, Who has made']],
+  // the verse opens mid-sentence: "God our Savior, / who wants everyone to be saved"
+  '1 Timothy 2:4': [['who wants everyone to be saved', 'Who wants everyone to be saved']],
+  'John 6:38': [['the will of Him who sent Me', 'the will of Him Who sent Me']],
+  'John 6:39': [['the will of Him who sent Me', 'the will of Him Who sent Me']],
+  'Philippians 2:13': [['it is God who works in you', 'it is God Who works in you']],
+  'Colossians 2:12': [['the power of God, who raised Him', 'the power of God, Who raised Him']],
+  'Acts 15:8': [['And God, who knows the heart', 'And God, Who knows the heart']]
+};
+
+const tokens = s => s.match(/[A-Za-z]+|[^A-Za-z]+/g) ?? [];
+function capitalOnly(from, to) {
+  const a = tokens(from), b = tokens(to);
+  if (a.length !== b.length) return 'the words differ';
+  let raised = 0;
+  for (let i = 0; i < a.length; i++) {
+    if (a[i] === b[i]) continue;
+    const w = a[i];
+    if (!GOD_PRONOUNS.has(w) || b[i] !== w[0].toUpperCase() + w.slice(1)) return `"${w}" became "${b[i]}"`;
+    raised++;
+  }
+  return raised ? null : 'nothing is raised';
+}
+
+const capitalised = new Set();
+function capitalise(where, text) {
+  let out = text;
+  for (const [from, to] of CAPITALS[where] ?? []) {
+    const why = capitalOnly(from, to);
+    if (why) throw new Error(`CAPITALS ${where}: ${why}`);
+    const count = out.split(from).length - 1;
+    if (count !== 1) throw new Error(`CAPITALS ${where}: "${from}" is in the verse ${count} times, not once`);
+    out = out.replace(from, to);
+    capitalised.add(where);
+  }
+  return out;
+}
 
 const data = JSON.parse(readFileSync(DATA, 'utf8'));
 const refs = [...new Set(data.axes.flatMap(a => a.passages))];
@@ -109,7 +173,10 @@ for (const ref of refs) {
       book: p.book,
       chapter: p.chapter,
       // What the reader is actually looking at, so the panel never overstates itself.
-      verses: shown.map(v => ({ n: v.number, text: plain(v.content) })),
+      verses: shown.map(v => ({
+        n: v.number,
+        text: capitalise(`${p.book} ${p.chapter}:${v.number}`, plain(v.content))
+      })),
       inRange: inRange.length,
       chapterVerses: json.numberOfVerses ?? all.length,
       truncated: inRange.length > shown.length,
@@ -118,6 +185,9 @@ for (const ref of refs) {
     };
     process.stdout.write('.');
   } catch (err) {
+    // A capitals entry that does not fit its verse is an error in the map, not a network
+    // failure: stop, rather than leave the passage out and carry on.
+    if (err.message.startsWith("CAPITALS")) throw err;
     failed.push(`${ref} (${err.message})`);
     process.stdout.write('x');
   }
@@ -131,7 +201,16 @@ if (failed.length) {
   failed.forEach(f => console.log('  ' + f));
 }
 
-writeFileSync(OUT, JSON.stringify({ ...LICENCE, maxVerses: MAX_VERSES, passages: out }, null, 1));
+const unused = Object.keys(CAPITALS).filter(k => !capitalised.has(k));
+if (unused.length) throw new Error(`CAPITALS names verses no passage shows: ${unused.join(", ")}`);
+
+writeFileSync(OUT, JSON.stringify({
+  ...LICENCE,
+  // Where a pronoun for God was raised to a capital; see CAPITALS above.
+  capitalised: [...capitalised].sort(),
+  maxVerses: MAX_VERSES,
+  passages: out
+}, null, 1));
 
 const words = Object.values(out).reduce((n, p) => n + p.verses.reduce((m, v) => m + v.text.split(/\s+/).length, 0), 0);
 console.log(

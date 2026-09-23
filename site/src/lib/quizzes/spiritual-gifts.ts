@@ -10,7 +10,11 @@
  *   - The gifts, the passages and the cited acts are real. Every quotation below is verbatim
  *     from the World English Bible British Edition (WEBBE) held on disk at
  *     demos/sounds-like-scripture/work/verses-all.json (src "webbe"), and was checked as a
- *     substring of that file. Never retype one from memory.
+ *     substring of that file. Never retype one from memory. The exceptions are the lines that
+ *     carry a pronoun for God (1 Corinthians 12:11 in the intro, 1 Corinthians 1:5 in a
+ *     didYouKnow): those are the Berean Standard Bible's wording, which capitalises it, and
+ *     say so. A lower-case "who" for God that the BSB also prints is kept outside the quotation
+ *     marks, in the site's own words, rather than re-lettered inside them.
  *   - The statements came from two independent drafts and two adversarial critiques, then
  *     one editor, then five audit reviews (cessationist, Pentecostal, Catholic and Orthodox,
  *     psychometric, evidence) closed in audit/new-quizzes/AUDIT-LOG.md. The six gifts added
@@ -139,7 +143,8 @@ export const giftSources: Record<string, GiftSource[]> = {
  * reference), what it looks like in an ordinary church in an ordinary week, how people tend
  * to notice it in themselves, and the neighbouring gift it is most often confused with.
  *
- * Nothing is invented. Every verse quoted is verbatim WEBBE, checked as a substring of
+ * Nothing is invented. Every verse quoted is verbatim WEBBE (none of these carries a pronoun
+ * for God), checked as a substring of
  * demos/sounds-like-scripture/work/verses-all.json; every Greek note carries its source in
  * the didYouKnow entry beside it. The honest notes on the six disputed gifts are untouched:
  * sentences were added after them, never in place of them.
@@ -252,7 +257,7 @@ export const giftActs: Record<string, GiftAct[]> = {
   healing: [
     { ref: 'Acts 3:1-12', what: 'At the temple gate Peter told a man lame from birth that he had no silver or gold but would give what he had, and said, in the name of Jesus Christ of Nazareth, get up and walk; he took him by the right hand and raised him up, immediately his feet and ankle bones received strength, and he went into the temple walking, leaping and praising God; when the people ran together in wonder, Peter asked why they looked at him and John as though they had made the man walk by their own power or godliness.' },
     { ref: 'Acts 5:12-16', what: 'By the hands of the apostles many signs and wonders were done among the people, and more believers were added to the Lord; the sick were carried into the streets and laid on cots and mattresses so that Peter’s shadow might fall on some of them as he came by, and crowds from the cities around Jerusalem brought the sick and those tormented by unclean spirits, and they were all healed.' },
-    { ref: 'Acts 9:17-18', what: 'Ananias entered the house and, laying his hands on Saul, told him that the Lord who had appeared to him on the road had sent Ananias so that he might receive his sight and be filled with the Holy Spirit; immediately something like scales fell from Saul’s eyes and he received his sight, and he arose and was baptised.' },
+    { ref: 'Acts 9:17-18', what: 'Ananias entered the house and, laying his hands on Saul, told him that the Lord Who had appeared to him on the road had sent Ananias so that he might receive his sight and be filled with the Holy Spirit; immediately something like scales fell from Saul’s eyes and he received his sight, and he arose and was baptised.' },
     { ref: 'Acts 28:7-9', what: 'The father of Publius, the chief man of the island, lay sick with fever and dysentery; Paul went in to him, prayed, and laying his hands on him healed him, and then the rest on the island who had diseases came and were cured.' }
   ],
   leading: [
@@ -279,7 +284,7 @@ export const giftActs: Record<string, GiftAct[]> = {
   miracles: [
     { ref: 'Acts 9:40-42', what: 'At Joppa Peter sent them all out, knelt down and prayed, and turning to the body told Tabitha to get up; she opened her eyes and, seeing Peter, sat up; he gave her his hand, raised her up and presented her alive to the saints and widows, and it became known throughout all Joppa and many believed in the Lord.' },
     { ref: 'Acts 19:11-12', what: 'Luke writes that God worked special miracles by the hands of Paul, so that even handkerchiefs or aprons were carried away from his body to the sick, and the diseases departed from them and the evil spirits went out.' },
-    { ref: 'Galatians 3:5', what: 'Paul asks the Galatians whether He who supplies the Spirit to them and does miracles amongst them does it by the works of the law or by hearing of faith.' },
+    { ref: 'Galatians 3:5', what: 'Paul asks the Galatians whether He Who supplies the Spirit to them and does miracles amongst them does it by the works of the law or by hearing of faith.' },
     { ref: '2 Corinthians 12:12', what: 'Paul writes to the Corinthians that truly the signs of an apostle were worked amongst them in all perseverance, in signs and wonders and mighty works.' }
   ],
   discernment: [
@@ -348,10 +353,15 @@ const summaryOf = (key: string) => PLAIN[key]!;
  * Every Greek note below was checked against a lexicon and every verse against the WEBBE
  * text on disk (demos/sounds-like-scripture/work/verses-all.json). The `source` string is
  * the working source note as well as the printed credit: if a claim cannot carry one, it
- * does not belong here.
+ * does not belong here. A quotation that carries a pronoun for God is the Berean Standard
+ * Bible's wording instead, because the BSB capitalises it and the WEBBE's publisher asks
+ * that altered text not be called the World English Bible; its `source` names the BSB, and
+ * engine-test.mjs checks it against the BSB text (demos/sounds-like-scripture/work/
+ * bsb-verses.json, from scripts/fetch-bsb-verses.mjs).
  * ---------------------------------------------------------------------------------------
  */
 const WEB_SOURCE = 'World English Bible British Edition';
+const BSB_SOURCE = 'Berean Standard Bible';
 
 const QUESTION: Record<string, string> = {
   serving: 'What is the spiritual gift of serving?',
@@ -558,8 +568,8 @@ const DID_YOU_KNOW: Record<string, Array<{ text: string; source: string }>> = {
   ],
   knowledge: [
     {
-      text: 'Paul thanks God that the Corinthians were “enriched in Him, in all speech and all knowledge”, and twelve chapters later tells the same church that knowing all mysteries and all knowledge without love makes a person nothing.',
-      source: `1 Corinthians 1:5 and 13:2, ${WEB_SOURCE}`
+      text: 'Paul thanks God for the Corinthians because “in Him you have been enriched in every way, in all speech and all knowledge”, and twelve chapters later tells the same church that knowing all mysteries and all knowledge without love makes a person nothing.',
+      source: `1 Corinthians 1:5, ${BSB_SOURCE}; 1 Corinthians 13:2`
     },
     {
       text: '“Knowledge puffs up, but love builds up” is Paul answering the Corinthians on their own favourite subject, four chapters before he lists it as a gift.',
@@ -590,7 +600,7 @@ const DID_YOU_KNOW: Record<string, Array<{ text: string; source: string }>> = {
       source: `Acts 6:3, ${WEB_SOURCE}`
     },
     {
-      text: 'James tells anyone short of wisdom to ask God for it, and promises the answer: “let him ask of God, who gives to all liberally and without reproach, and it will be given to him”.',
+      text: 'James tells anyone short of wisdom to ask God, Who gives to everyone generously, and promises the answer: “it will be given to him”.',
       source: `James 1:5, ${WEB_SOURCE}`
     },
     {
@@ -608,7 +618,7 @@ const DID_YOU_KNOW: Record<string, Array<{ text: string; source: string }>> = {
       source: `Acts 19:11, ${WEB_SOURCE}`
     },
     {
-      text: 'Paul asks the Galatians a question that takes miracles among them as a present fact: does He who supplies the Spirit to you and works miracles among you do it by the works of the law, or by hearing of faith?',
+      text: 'Paul asks the Galatians a question that takes miracles among them as a present fact: does He Who supplies the Spirit to you and works miracles among you do it by the works of the law, or by hearing of faith?',
       source: `Galatians 3:5, ${WEB_SOURCE}`
     }
   ],
@@ -670,7 +680,7 @@ const DID_YOU_KNOW: Record<string, Array<{ text: string; source: string }>> = {
   ],
   shepherding: [
     {
-      text: 'The noun poimen appears eighteen times in the New Testament, and Ephesians 4:11 is the only one where it names a human church leader. Everywhere else it is a literal shepherd, or Christ, who is called “the chief Shepherd”.',
+      text: 'The noun poimen appears eighteen times in the New Testament, and Ephesians 4:11 is the only one where it names a human church leader. Everywhere else it is a literal shepherd, or Christ, Who is called “the chief Shepherd”.',
       source: 'Ephesians 4:11; 1 Peter 5:4; poimen, Strong’s Greek 4166'
     },
     {
@@ -918,14 +928,18 @@ const items: QuizItem[] = ordered.map(([key, text, direction], i) => ({
  * has no slot for it yet, so it is exported for the engineer to place.
  *
  * The blueprint's own wording is "for the common good"; the translation on disk says "for the
- * profit of all" (1 Corinthians 12:7), and this site quotes the text on disk.
+ * profit of all" (1 Corinthians 12:7), and this site quotes the text on disk. One quotation in
+ * the intro is NOT the WEBBE's: 1 Corinthians 12:11 carries a pronoun for the Spirit, so it is
+ * the Berean Standard Bible's wording, which capitalises it ("as He determines").
  */
 export const giftsFrame = {
   translation: WEBBE,
+  /** The one quotation above that is not from `translation`. */
+  alsoQuoted: { ref: '1 Corinthians 12:11', translation: BSB_SOURCE },
   intro:
     'Scripture gives lists of gifts. It gives no test for finding which are yours. It says the ' +
-    'Spirit gives them, “distributing to each one separately as he desires” (1 Corinthians ' +
-    '12:11), and that each is given “for the profit of all” (1 Corinthians 12:7). So this is a ' +
+    'Spirit gives them “to each one as He determines” (1 Corinthians 12:11), and that each ' +
+    'is given “for the profit of all” (1 Corinthians 12:7). So this is a ' +
     'conversation starter, not a verdict: fifty-seven statements cannot see your last ten ' +
     'years, and the people who have watched you serve can. If you know the lists you will ' +
     'sometimes see which gift a statement is about, and with a few, such as tongues and ' +

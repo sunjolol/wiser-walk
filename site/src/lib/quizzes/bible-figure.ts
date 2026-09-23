@@ -53,8 +53,18 @@ export interface FigureEvidence {
   toward: 'left' | 'right' | null;
   /** One neutral sentence saying what the person DID. Never a virtue word. */
   did: string;
-  /** Present only when verbatim from the World English Bible British Edition. */
+  /**
+   * Present only when verbatim. From the World English Bible British Edition unless
+   * `quotedFrom` names another translation.
+   */
   quote?: string;
+  /**
+   * Set only when `quote` is NOT the World English Bible's: "Berean Standard Bible" where the
+   * line carries a pronoun for God or Jesus. The BSB capitalises those pronouns, and the
+   * WEB's publisher asks that altered text not be called the World English Bible, so such a
+   * line is quoted in the BSB's own words and named as the BSB on the page.
+   */
+  quotedFrom?: string;
 }
 
 export interface FigureOutcome extends Outcome {

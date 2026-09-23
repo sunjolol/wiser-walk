@@ -10,6 +10,7 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve, relative } from 'node:path';
+import { readCapitals, applyCapitals } from './capitals.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
@@ -41,6 +42,18 @@ if (!Array.isArray(pool.items) || !Array.isArray(pool.sources)) {
   process.exit(1);
 }
 
+/* Pronouns for God capitalised for display (capitals.mjs says why). Each named line gets
+   its display text as item.d; item.t stays verbatim. A fixture has no real ids. */
+let capitalised = 0;
+if (!pool.fixture) {
+  try {
+    capitalised = applyCapitals(pool, readCapitals(join(root, 'capitals.json')));
+  } catch (err) {
+    console.error(err.message);
+    process.exit(1);
+  }
+}
+
 /* Compact, and with "<" escaped so no line can close the script element. */
 const json = JSON.stringify(pool).replace(/</g, '\\u003c');
 
@@ -59,7 +72,7 @@ writeFileSync(out, html, 'utf8');
  * a card still cannot tell anyone whether a line is in the Bible. The choice is
  * deterministic (hardest tier, nearest 78 characters, ties broken by id), so the card
  * only changes when the pool does, and the text goes through the same display rule the
- * game itself uses: typography only, no word altered.
+ * game itself uses: typography and the capitals for God (item.d), no word altered.
  */
 function coverLine(items) {
   const display = t => String(t)
@@ -68,7 +81,7 @@ function coverLine(items) {
   const top = Math.max(...items.map(i => i.tier || 0));
   const pick = items
     .filter(i => (i.tier || 0) === top)
-    .map(i => ({ id: i.id, text: display(i.t) }))
+    .map(i => ({ id: i.id, text: display(i.d || i.t) }))
     .sort((a, b) =>
       Math.abs(a.text.length - 78) - Math.abs(b.text.length - 78) || (a.id < b.id ? -1 : 1))[0];
   return pick ? pick.text : null;
@@ -93,4 +106,5 @@ console.log('items   ' + pool.items.length +
             '  (bible ' + (kinds.b || 0) + ', deutero ' + (kinds.d || 0) + ', other ' + (kinds.o || 0) + ')');
 console.log('tiers   1:' + (tiers[1] || 0) + '  2:' + (tiers[2] || 0) + '  3:' + (tiers[3] || 0));
 console.log('sources ' + pool.sources.length);
+console.log('capitals ' + capitalised + ' lines show pronouns for God capitalised');
 console.log('wrote   ' + resolve(out) + '  (' + Math.round(html.length / 1024) + ' kB)');

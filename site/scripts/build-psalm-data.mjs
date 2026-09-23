@@ -59,6 +59,15 @@ if (!existsSync(QUIZ_SRC) || !existsSync(BSB_SRC)) {
     if (!/^P\d+[A-Z]?$/.test(id)) throw new Error(`build-psalm-data: situation id ${id} cannot make a result code`);
   }
   for (const f of Object.values(quiz.full || {})) if (f.night) verse(f.night);
+  // The browsing groups: every situation in exactly one, or a situation silently drops off the /psalm/ guide.
+  {
+    const listed = (quiz.groups || []).flatMap(g => g.ids);
+    for (const id of Object.keys(quiz.outcomes)) {
+      const n = listed.filter(x => x === id).length;
+      if (n !== 1) throw new Error(`build-psalm-data: situation ${id} is in ${n} browsing groups, not one`);
+    }
+    for (const id of listed) if (!quiz.outcomes[id]) throw new Error(`build-psalm-data: group lists unknown situation ${id}`);
+  }
 
   const { draft, unused, ...keep } = quiz;
   writeFileSync(QUIZ_OUT, JSON.stringify({ generatedFrom: 'design/quiz-ideas/psalm/quiz.json', draft, ...keep }, null, 1));

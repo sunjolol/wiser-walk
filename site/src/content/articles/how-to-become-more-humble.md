@@ -54,7 +54,7 @@ Humility is not winning the comparison in reverse. It is putting the ruler down.
 parable about a wedding banquet: "go and sit in the last place" (Luke 14:10). On a
 Tuesday the best place is the credit in the meeting, the better parking space, the last
 word. Let someone else have it. Paul puts the principle as "in humility consider others
-more important than yourselves" (Philippians 2:3), and rests it on Christ, who "humbled
+more important than yourselves" (Philippians 2:3), and rests it on Christ, Who "humbled
 Himself and became obedient to death" (Philippians 2:8).
 
 **Do the job beneath your position.** When Jesus washes the disciples' feet He does not

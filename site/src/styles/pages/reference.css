@@ -820,6 +820,10 @@
   content: "”"; margin-left: .08em; font-family: var(--display); font-size: 1.3em;
   line-height: 0; vertical-align: -.12em; color: var(--orange-soft);
 }
+/* the translation a quotation is from, printed under it only on a page that quotes two */
+.moment-quote-from {
+  margin: .3rem 0 0; font-size: .72rem; font-style: italic; color: var(--ink-mute);
+}
 /* the listing verse on a gift page already sits on charcoal; it gets the same mark */
 .quoted-item { position: relative; padding-left: 1.9rem; }
 .quoted-item::before {

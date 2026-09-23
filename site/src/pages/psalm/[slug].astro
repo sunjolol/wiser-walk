@@ -29,7 +29,7 @@ import SectionHead from '../../components/SectionHead.astro';
 import Icon from '../../components/Icon.astro';
 import CorrectionNote from '../../components/CorrectionNote.astro';
 import { whichPsalm } from '../../lib/quizzes/which-psalm';
-import { READING, SITUATIONS, greekNumber } from '../../lib/strategies/reading';
+import { READING, SITUATIONS, greekNumber, groupOf, psalmLinkFor } from '../../lib/strategies/reading';
 import type { Situation } from '../../lib/strategies/reading';
 import { quizHref } from '../../lib/engine/registry';
 import { artFor } from '../../lib/art';
@@ -132,6 +132,17 @@ for (const { o } of leads) {
 
 const greek = greekNumber(n);
 
+/*
+ * Close to this: the situations listed next to this page's own in its browsing group, so a
+ * reader can walk the guide the way the figure pages are walked. The ones after it first,
+ * wrapping round, and never one that opens this same page (Psalm 42 heads two situations).
+ */
+const group = groupOf(head.id);
+const at = group.ids.indexOf(head.id);
+const near = [...group.ids.slice(at + 1), ...group.ids.slice(0, at)]
+  .filter(id => psalmLinkFor(id).href !== `/psalm/${n}/` && !READING.outcomes[id]!.set?.includes(n))
+  .slice(0, 4);
+
 /* The band: the quiz's own picture when it has one; the dark ground when it has none. */
 const art = artFor(quiz.slug);
 
@@ -149,6 +160,7 @@ const jsonLd = {
   url,
   isPartOf: [
     { '@id': siteId },
+    { '@type': 'CollectionPage', name: 'A psalm for every situation', url: new URL('/psalm/', Astro.site).href },
     { '@type': 'Quiz', name: quiz.title, url: new URL(quizHref(quiz), Astro.site).href }
   ],
   about: { '@type': 'CreativeWork', name: `Psalm ${n}`, isPartOf: { '@type': 'Book', name: 'Psalms' } },
@@ -158,10 +170,10 @@ const jsonLd = {
     author: { '@type': 'Person', name: 'Athanasius of Alexandria' }
   }
 };
+/* The guide is the page every psalm page hangs from; the quiz is offered at the foot. */
 const breadcrumbs = [
   { name: 'Home', url: '/' },
-  { name: 'Quizzes', url: '/quizzes/' },
-  { name: quiz.title, url: quizHref(quiz) },
+  { name: 'A psalm for every situation', url: '/psalm/' },
   { name: `Psalm ${n}`, url: `/psalm/${n}/` }
 ];
 ---
@@ -286,6 +298,33 @@ const breadcrumbs = [
         Psalm {n} is {greek} in the Greek numbering Athanasius used, which Orthodox Bibles and
         some older Catholic ones still follow.
       </p>
+    )}
+
+    {near.length > 0 && (
+      <section class="ps-near" aria-labelledby="ps-near-h">
+        <SectionHead title="Close to this" kicker={group.title} id="ps-near-h" />
+        <ul class="pg-list">
+          {near.map(id => {
+            const l = psalmLinkFor(id);
+            return (
+              <li class="pg-item">
+                <a class="pg-main" href={l.href}>
+                  <span class="pg-num" aria-hidden="true">{l.short}</span>
+                  <span class="pg-body">
+                    <span class="pg-seen">{READING.outcomes[id]!.seen}</span>
+                    <span class="pg-meta">{l.label}</span>
+                  </span>
+                  <Icon name="arrow" size={14} />
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+        <p class="ps-near-all">
+          <Icon name="arrow" size={14} />
+          <span><a href={`/psalm/#${group.id}`}>Every situation Athanasius named</a>, in one guide.</span>
+        </p>
+      </section>
     )}
 
     {/* The way into the quiz: the quiz's own card (.qcard in pages/reference.css), drawn

@@ -235,5 +235,28 @@ const quotes = {
 };
 for (const part of full.P3.story) if (part.q && !quotes[part.ref].includes(part.q)) throw new Error(`not verbatim: ${part.ref}`);
 
-writeFileSync(resolve(here, 'quiz.json'), JSON.stringify({ draft: 5, weights, core, follow, outcomes, notes, none, full, unused }, null, 1));
+// The situations as a reader browses them (the quiz page's list, the /psalm/ guide, "Close to this" on each psalm
+// page): seven groups running from hard to good, as the questions do. The grouping is ours; every line in it is his.
+// Every situation sits in exactly one group (checked here and by site/scripts/build-psalm-data.mjs).
+const groups = [
+  { id: 'people-against-you', title: 'When people turn against you',
+    ids: ['P3', 'P55', 'P31', 'P42', 'P52', 'P54', 'P7', 'P11', 'P64', 'P57', 'P27', 'P63', 'P13', 'P26', 'P28', 'P40', 'P62'] },
+  { id: 'done-wrong', title: "When you've done wrong, or feel the pull to", ids: ['P51', 'P6', 'P137', 'P39', 'P73S'] },
+  { id: 'afraid-or-worn-down', title: "When you're afraid, worn down, or longing for God",
+    ids: ['P102', 'P42S', 'P118', 'P91', 'P84', 'P103D'] },
+  { id: 'world-upside-down', title: 'When the world seems upside down', ids: ['P73', 'P37', 'P12', 'P14', 'P79'] },
+  { id: 'words-to-pray', title: 'When you need words to pray, for yourself or someone else', ids: ['P5', 'P143W', 'P20', 'P41'] },
+  { id: 'brought-through', title: 'After God has brought you through', ids: ['P4', 'P18', 'P34', 'P46', 'P139', 'P85', 'P101'] },
+  { id: 'life-is-good', title: 'When life is good, and you want to thank Him and grow',
+    ids: ['P23', 'P19', 'P103', 'P145', 'P30', 'P32', 'P93', 'P120', 'P15'] }
+];
+{
+  const seen = groups.flatMap(g => g.ids);
+  const missing = Object.keys(outcomes).filter(id => !seen.includes(id));
+  const twice = seen.filter((id, i) => seen.indexOf(id) !== i);
+  const stray = seen.filter(id => !outcomes[id]);
+  if (missing.length || twice.length || stray.length) throw new Error(`groups: missing ${missing}, twice ${twice}, unknown ${stray}`);
+}
+
+writeFileSync(resolve(here, 'quiz.json'), JSON.stringify({ draft: 5, weights, core, follow, outcomes, groups, notes, none, full, unused }, null, 1));
 console.log('quiz.json: draft 5,', core.length, 'core questions,', follow.length, 'follow-ups,', Object.keys(outcomes).length, 'outcomes; unused from draft 2:', unused.join(', ') || 'none');

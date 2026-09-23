@@ -1,0 +1,217 @@
+---
+/**
+ * /psalm/: A psalm for every situation. St Athanasius's guide, whole and open.
+ *
+ * The hub the 78 psalm pages hang from (their breadcrumbs lead here), and the page a searcher
+ * lands on when they type "a psalm for" whatever they are going through. It lists every
+ * situation Athanasius named in his Letter to Marcellinus, in the reader's words, in the
+ * seven browsing groups the quiz page uses, each a way in to its psalm's page.
+ *
+ * What the page adds of its own is the frame: who wrote the letter and why it has been
+ * trusted (copied in front of the Psalms in the Codex Alexandrinus, in the 400s), what the
+ * letter does NOT name and what it gives instead (the quiz's own honest page, said once for
+ * everyone), and the numbering. Every situation line, piece of advice and section number is
+ * the data's, read against his Greek. The owner approved the page on 2026-09-23.
+ */
+import Base from '../../layouts/Base.astro';
+import Hero from '../../components/Hero.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import Icon from '../../components/Icon.astro';
+import { whichPsalm } from '../../lib/quizzes/which-psalm';
+import { READING, SITUATIONS, GROUPS, psalmLinkFor } from '../../lib/strategies/reading';
+import { quizHref } from '../../lib/engine/registry';
+import { artFor } from '../../lib/art';
+import { PSALM_TOPICS } from '../../lib/seo';
+import '../../styles/pages/psalm.css';
+
+const quiz = whichPsalm;
+const art = artFor(quiz.slug);
+const psalmCount = quiz.outcomes.length;
+
+/* "116:1-9" reads "116:1–9"; a whole psalm is its number. */
+const alsoName = (x: number | string) => String(x).replace('-', '–');
+const alsoHref = (x: number | string) => `/psalm/${parseInt(String(x), 10)}/`;
+
+/* What the letter does not name, and what it gives for what those things do to a person:
+   the options of the quiz's own "none of those" page, in the words a reader would use. */
+const NONE_SAY: Record<string, string> = {
+  P102: 'When it is grinding you down',
+  P42S: 'When it weighs on you and will not let you settle',
+  P118: 'When it is making you afraid',
+  P143W: 'When you need to bring it to God and do not know how'
+};
+for (const [id] of READING.none.options) {
+  if (!NONE_SAY[id]) throw new Error(`/psalm/: no line for the none option ${id}`);
+}
+
+const url = new URL('/psalm/', Astro.site).href;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'A psalm for every situation',
+  url,
+  isPartOf: { '@id': new URL('/#website', Astro.site).href },
+  about: {
+    '@type': 'CreativeWork',
+    name: 'Letter to Marcellinus',
+    author: { '@type': 'Person', name: 'Athanasius of Alexandria' }
+  },
+  mainEntity: {
+    '@type': 'ItemList',
+    numberOfItems: SITUATIONS.length,
+    itemListElement: GROUPS.flatMap(g => g.ids).map((id, i) => {
+      const l = psalmLinkFor(id);
+      return {
+        '@type': 'ListItem',
+        position: i + 1,
+        url: new URL(l.href, Astro.site).href,
+        name: `${l.label}: ${PSALM_TOPICS[id]}`
+      };
+    })
+  }
+};
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'A psalm for every situation', url: '/psalm/' }
+];
+---
+<Base
+  title="A psalm for every situation"
+  description={`St Athanasius matched the Psalms to ${SITUATIONS.length} situations in the 300s. Find yours, with his advice and the whole psalm.`}
+  jsonLd={jsonLd}
+  breadcrumbs={breadcrumbs}
+>
+  <Hero
+    title="A psalm for every situation"
+    blue="every"
+    kind={art ? 'engraving' : 'night'}
+    image={art?.src}
+    imageAlt={art?.alt}
+    imagePosition={art?.objectPosition}
+    imageLift={art?.lift}
+    lede={`St Athanasius's guide to praying the Psalms, from a letter he wrote in the 300s: ${SITUATIONS.length} situations, and the psalm he gave for each.`}
+    tiles={[
+      { n: SITUATIONS.length, label: 'Situations' },
+      { n: psalmCount, label: 'Psalms' }
+    ]}
+    long
+  >
+    <a class="btn" href={quizHref(quiz)} slot="actions">Find yours <Icon name="arrow" size={15} /></a>
+  </Hero>
+
+  <div class="ref ref--psalm">
+    <SectionHead title="Where this comes from" kicker="The Letter to Marcellinus" />
+    <div class="pg-intro">
+      <p>
+        St Athanasius, bishop of Alexandria in the 300s, had a friend named Marcellinus who
+        was getting over an illness and had spent the time with the Psalms, trying to
+        understand each one. Athanasius wrote back with what an old man, a lover of study, had
+        once taught him about them.
+      </p>
+      <p>
+        The old man's point was simple. The rest of the Bible you read as words about other
+        people. The Psalms you say as your own. He called them a mirror, in which you see what
+        is moving in your own soul (§12). Then he went through life, one situation after
+        another, and named the psalm for each.
+      </p>
+      <p>
+        The Church has trusted the letter ever since. In the Codex Alexandrinus, one of the
+        oldest Bibles in the world, copied in the 400s, it stands in front of the Book of
+        Psalms. Every situation below is his, put in plain words; each opens its psalm, with
+        his advice and the whole text.
+      </p>
+      <p class="pg-cta">
+        <Icon name="arrow" size={14} />
+        <span>Not sure which is yours? <a href={quizHref(quiz)}>A few honest taps will find it</a>.</span>
+      </p>
+    </div>
+
+    <nav class="pg-toc" aria-label="The seven groups">
+      {GROUPS.map(g => (
+        <a href={`#${g.id}`}>{g.title}<span class="pg-toc-n">{g.ids.length}</span></a>
+      ))}
+    </nav>
+
+    {GROUPS.map(g => (
+      <section class="pg-group" id={g.id} aria-labelledby={`${g.id}-h`}>
+        <h2 class="pg-gtitle" id={`${g.id}-h`}>{g.title}</h2>
+        <ul class="pg-list">
+          {g.ids.map(id => {
+            const o = READING.outcomes[id]!;
+            const l = psalmLinkFor(id);
+            return (
+              <li class="pg-item">
+                <a class="pg-main" href={l.href}>
+                  <span class="pg-num" aria-hidden="true">{l.short}</span>
+                  <span class="pg-body">
+                    <span class="pg-seen">{o.seen}</span>
+                    <span class="pg-meta">{l.label} · Letter, §{o.sec}</span>
+                  </span>
+                  <Icon name="arrow" size={14} />
+                </a>
+                {o.also.length > 0 && (
+                  <p class="pg-also">
+                    He also named {o.also.map((p, i) => (
+                      <>{i > 0 && (i === o.also.length - 1 ? ' and ' : ', ')}<a href={alsoHref(p)}>Psalm {alsoName(p)}</a></>
+                    ))}.
+                  </p>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    ))}
+
+    <section class="pg-none" aria-labelledby="pg-none-h">
+      <h2 id="pg-none-h">What his letter doesn't name</h2>
+      <p>
+        The letter covers a great deal of life, but not all of it. Athanasius names no psalm
+        for a death, for an illness itself, or for a hard decision, and we won't pretend he
+        does. His friend was just getting over an illness when he wrote, and still the letter
+        names nothing for sickness. What he does name is a psalm for what those things do to
+        a person.
+      </p>
+      <ul class="pg-list pg-list--none">
+        {READING.none.options.map(([id]) => {
+          const l = psalmLinkFor(id);
+          return (
+            <li class="pg-item">
+              <a class="pg-main" href={l.href}>
+                <span class="pg-num" aria-hidden="true">{l.short}</span>
+                <span class="pg-body"><span class="pg-seen">{NONE_SAY[id]}</span><span class="pg-meta">{l.label}</span></span>
+                <Icon name="arrow" size={14} />
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+
+    <p class="ps-greek">
+      Athanasius numbered the psalms from the Greek Bible, so from Psalm 10 to Psalm 147 his
+      number usually runs one lower than an English Bible's: his 50 is our 51. Every number
+      here is the English one, and each psalm's page gives his as well.
+    </p>
+
+    <div class="qcard-wrap">
+      <a class={`qcard qcard--plain qcard--${quiz.slug}`} href={quizHref(quiz)}>
+        <div class="qcard-body">
+          <p class="qcard-kicker">Your turn</p>
+          <h2 class="qcard-title">{quiz.title}</h2>
+          <p class="qcard-say">{quiz.tagline}</p>
+          <ul class="qcard-facts">
+            <li><Icon name="clock" size={13} /> {quiz.minutes} min</li>
+            <li>{SITUATIONS.length} situations</li>
+          </ul>
+          <span class="qcard-go go-pill">Start <Icon name="arrow" size={16} /></span>
+        </div>
+      </a>
+    </div>
+
+    <p class="ps-credit">
+      Bible text: Berean Standard Bible, public domain. Athanasius’s advice is paraphrased
+      from his Greek (Migne, Patrologia Graeca 27).
+    </p>
+  </div>
+</Base>

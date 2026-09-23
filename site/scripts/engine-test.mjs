@@ -1109,20 +1109,35 @@ console.log('12d. what is named, and what travels with the name');
 // ------------------------- 13. the gift quotations are verbatim, checked against the text
 console.log('13. every quoted passage is a substring of the translation on disk');
 {
-  // Both files are ones demos/sounds-like-scripture downloads, and both are gitignored, so
-  // both are absent on the deploy host. Missing means "not checked here", never "checked and
-  // fine". They hold different books, and a reference can only be checked against the file
-  // that has its book: verses-all.json carries the sixty-six, and the verse-per-line file
-  // carries the deuterocanon, which is where Judith and Tobit come from. The parsing of the
-  // second is audit/tools/webbe.mjs's, which is how those two entries were verified by hand.
+  // Every file below is one this repository downloads, and all are gitignored, so all are
+  // absent on the deploy host. Missing means "not checked here", never "checked and fine".
+  // The World English Bible files hold different books, and a reference can only be checked
+  // against the file that has its book: verses-all.json carries the sixty-six, and the
+  // verse-per-line file carries the deuterocanon, which is where Judith and Tobit come from.
+  // The parsing of the second is audit/tools/webbe.mjs's, which is how those two entries were
+  // verified by hand.
+  //
+  // A quotation that carries a pronoun for God is the Berean Standard Bible's wording
+  // instead: the owner's rule (2026-09-23) is that those pronouns are capitalised inside
+  // quotations too, the BSB prints them so, and the WEB's publisher asks that altered text
+  // not be called the World English Bible. Such a quotation names the BSB where it is printed
+  // (`quotedFrom` on a group or a figure's evidence, or a didYouKnow `source`) and is checked
+  // against bsb-verses.json, which scripts/fetch-bsb-verses.mjs writes. Case counts, with
+  // one allowance for the BSB alone (see found() below): a lower-case pronoun for God may be
+  // raised to a capital. A WEB quotation re-lettered in any way fails here.
   const versePath = resolve(ROOT, '../demos/sounds-like-scripture/work/verses-all.json');
   const vplPath = resolve(ROOT, '../demos/sounds-like-scripture/raw/eng-webbe_vpl.txt');
+  const bsbPath = resolve(ROOT, '../demos/sounds-like-scripture/work/bsb-verses.json');
+  const WEBBE = 'World English Bible British Edition';
+  const BSB = 'Berean Standard Bible';
   /** Books read from the verse-per-line file, by the name a reference uses. */
   const VPL_BOOKS = { Tobit: 'TOB', Judith: 'JDT' };
 
   const haveVerses = existsSync(versePath);
   const haveVpl = existsSync(vplPath);
+  const haveBsb = existsSync(bsbPath);
   const byRef = new Map();
+  const bsbByRef = new Map();
   if (haveVerses) {
     for (const v of JSON.parse(readFileSync(versePath, 'utf8'))) {
       if (v.src === 'webbe') byRef.set(v.ref, v.text);
@@ -1139,39 +1154,73 @@ console.log('13. every quoted passage is a substring of the translation on disk'
   } else {
     console.log('  skip  eng-webbe_vpl.txt is not on disk (it is gitignored) — Judith and Tobit are unchecked');
   }
+  if (haveBsb) {
+    for (const [ref, text] of Object.entries(JSON.parse(readFileSync(bsbPath, 'utf8')).verses)) {
+      bsbByRef.set(ref, text);
+    }
+  } else {
+    console.log('  skip  bsb-verses.json is not on disk (it is gitignored; scripts/fetch-bsb-verses.mjs writes it) — Berean Standard Bible quotations are unchecked');
+  }
 
-  /** True when this reference's book lives only in a file that is not on disk. */
-  const unloaded = ref => {
+  /** The verses a translation label points at. No label is the World English Bible. */
+  const mapFor = label => (label === undefined || label === WEBBE ? byRef : label === BSB ? bsbByRef : null);
+
+  /** True when this reference, in this translation, lives only in a file that is not on disk. */
+  const unloaded = (ref, label) => {
+    if (label === BSB) return !haveBsb;
     const book = /^(.+?)\s\d+:/.exec(ref)?.[1];
     if (!book) return false;
     return VPL_BOOKS[book] ? !haveVpl : !haveVerses;
   };
 
-  if (!byRef.size) {
+  if (!byRef.size && !bsbByRef.size) {
     console.log('  skip  no translation file is on disk — quotations unchecked');
   } else {
     /** "1 Peter 4:9-10" -> the text of 4:9 and 4:10, joined. */
-    const textOf = ref => {
+    const textOf = (map, ref) => {
       const m = /^(.+?)\s(\d+):(\d+)(?:-(\d+))?$/.exec(ref);
       if (!m) return null;
       const [, book, ch, from, to] = m;
       const out = [];
       for (let v = Number(from); v <= Number(to ?? from); v++) {
-        const t = byRef.get(`${book} ${ch}:${v}`);
+        const t = map.get(`${book} ${ch}:${v}`);
         if (t) out.push(t);
       }
       return out.length ? out.join(' ') : null;
     };
     const norm = s => s.replace(/[’‘]/g, "'").replace(/[“”]/g, '"').replace(/\s+/g, ' ').trim();
+    /*
+     * Is `quote` in `text`? Verbatim, with one allowance for the Berean Standard Bible only:
+     * a pronoun for God that the BSB prints in lower case ("Him who sent Me") may be raised
+     * to a capital, as the owner's rule asks. Nothing else may differ, and nothing may be
+     * lowered. The World English Bible gets no allowance: its publisher asks that altered
+     * text not be called the WEB, which is why such a line is quoted from the BSB instead.
+     */
+    const GOD_PRONOUNS = new Set(['he', 'his', 'him', 'himself', 'who', 'whom', 'whose', 'you', 'your']);
+    const lowered = s => s.replace(/[A-Za-z]+/g, w => (GOD_PRONOUNS.has(w.toLowerCase()) ? w.toLowerCase() : w));
+    const found = (text, quote, label) => {
+      const t = norm(text), q = norm(quote);
+      if (t.includes(q)) return true;
+      if (label !== BSB) return false;
+      const at = lowered(t).indexOf(lowered(q));
+      if (at < 0) return false;
+      const was = t.slice(at, at + q.length).match(/[A-Za-z]+/g) ?? [];
+      const now = q.match(/[A-Za-z]+/g) ?? [];
+      // every word that differs must be a lower-case pronoun raised to its capital
+      return was.every((w, i) => w === now[i] || (/^[a-z]/.test(w) && now[i] === w[0].toUpperCase() + w.slice(1)));
+    };
     let checked = 0, missing = 0, skipped = 0;
     for (const q of QUIZZES) {
       for (const g of q.groups) {
+        const label = g.quotedFrom;
         for (const src of g.quoted ?? []) {
-          if (unloaded(src.ref)) { skipped++; continue; }
-          const text = textOf(src.ref);
-          if (!text) { missing++; fail(`${q.slug}/${g.key}: ${src.ref} is not in the WEBBE file`); continue; }
-          if (!norm(text).includes(norm(src.text))) {
-            fail(`${q.slug}/${g.key}: the quotation is not in ${src.ref}:\n    ${src.text}\n    ${text}`);
+          const map = mapFor(label);
+          if (!map) { missing++; fail(`${q.slug}/${g.key}: quotedFrom "${label}" is not a translation this test can read`); continue; }
+          if (unloaded(src.ref, label)) { skipped++; continue; }
+          const text = textOf(map, src.ref);
+          if (!text) { missing++; fail(`${q.slug}/${g.key}: ${src.ref} is not in the ${label ?? WEBBE} file`); continue; }
+          if (!found(text, src.text, label)) {
+            fail(`${q.slug}/${g.key}: the quotation is not in ${src.ref} (${label ?? WEBBE}):\n    ${src.text}\n    ${text}`);
           } else checked++;
         }
       }
@@ -1181,32 +1230,65 @@ console.log('13. every quoted passage is a substring of the translation on disk'
          (skipped ? ` (${skipped} skipped: their book's file is not on disk)` : ''));
     }
 
+    // A didYouKnow line prints its `source` as its credit. Where that credit names the BSB,
+    // every span in curly quotation marks must be in the verse(s) it names, in the BSB.
+    const BSB_CREDIT = new RegExp(`((?:[1-3] )?[A-Z][a-z]+) (\\d+:\\d+(?:-\\d+)?), ${BSB}`);
+    let dykChecked = 0, dykSkipped = 0, dykBad = 0;
+    for (const q of QUIZZES) {
+      for (const g of q.groups) {
+        for (const d of g.didYouKnow ?? []) {
+          if (!d.source.includes(BSB)) continue;
+          const m = BSB_CREDIT.exec(d.source);
+          if (!m) { dykBad++; fail(`${q.slug}/${g.key}: cannot read the reference in "${d.source}"`); continue; }
+          const ref = `${m[1]} ${m[2]}`;
+          if (unloaded(ref, BSB)) { dykSkipped++; continue; }
+          const text = textOf(bsbByRef, ref);
+          if (!text) { dykBad++; fail(`${q.slug}/${g.key}: ${ref} is not in the BSB file`); continue; }
+          for (const [, span] of d.text.matchAll(/“([^”]+)”/g)) {
+            if (!found(text, span.replace(/[,.;:]$/, ''), BSB)) {
+              dykBad++;
+              fail(`${q.slug}/${g.key}: a didYouKnow quotation is not in ${ref} (${BSB}):\n    ${span}\n    ${text}`);
+            } else dykChecked++;
+          }
+        }
+      }
+    }
+    if (dykChecked && !dykBad) ok(`${dykChecked} didYouKnow quotations credited to the ${BSB} are verbatim`);
+    else if (dykSkipped && !dykBad) console.log(`  skip  ${dykSkipped} didYouKnow quotations credited to the ${BSB}: its file is not on disk`);
+
     // The figure roster, held to the same standard the verifier held it to by hand: every
     // reference must resolve in the translation on disk, and every quotation must be a
-    // verbatim substring of the verses it cites. A calibration pass that added evidence is
-    // exactly when this stops being theoretical.
+    // verbatim substring of the verses it cites, in the translation it names. A calibration
+    // pass that added evidence is exactly when this stops being theoretical.
     const bf = getQuiz('bible-figure');
-    let refs = 0, quotes = 0, badRef = 0, badQuote = 0, unchecked = 0;
+    let refs = 0, quotes = 0, bsbQuotes = 0, badRef = 0, badQuote = 0, unchecked = 0;
     for (const f of bf.outcomes) {
       for (const g of bf.groups) {
         for (const e of f.evidence[g.key] ?? []) {
           if (!e.ref) continue;
-          if (unloaded(e.ref)) { unchecked++; continue; }
-          const text = textOf(e.ref);
-          refs++;
-          if (!text) { badRef++; fail(`${f.name}/${g.key}: ${e.ref} is not in the WEBBE file`); continue; }
+          if (!unloaded(e.ref)) {
+            refs++;
+            if (!textOf(byRef, e.ref)) { badRef++; fail(`${f.name}/${g.key}: ${e.ref} is not in the WEBBE file`); continue; }
+          } else unchecked++;
           if (!e.quote) continue;
+          const label = e.quotedFrom;
+          const map = mapFor(label);
+          if (!map) { badQuote++; fail(`${f.name}/${g.key}: quotedFrom "${label}" is not a translation this test can read`); continue; }
+          if (unloaded(e.ref, label)) { if (label === BSB) unchecked++; continue; }
+          const text = textOf(map, e.ref);
           quotes++;
-          if (!norm(text).includes(norm(e.quote))) {
+          if (label === BSB) bsbQuotes++;
+          if (!text || !found(text, e.quote, label)) {
             badQuote++;
-            fail(`${f.name}/${g.key}: the quotation is not in ${e.ref}:\n    ${e.quote}\n    ${text}`);
+            fail(`${f.name}/${g.key}: the quotation is not in ${e.ref} (${label ?? WEBBE}):\n    ${e.quote}\n    ${text}`);
           }
         }
       }
     }
     if (!badRef && !badQuote) {
       ok(`${refs} figure references all resolve, and all ${quotes} of their quotations are verbatim` +
-         (unchecked ? ` (${unchecked} skipped: their book's file is not on disk)` : ''));
+         (bsbQuotes ? `, ${bsbQuotes} of them in the ${BSB}` : '') +
+         (unchecked ? ` (${unchecked} skipped: their file is not on disk)` : ''));
     }
   }
 }
