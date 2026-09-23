@@ -1,5 +1,12 @@
 # Handoff (updated 2026-09-22, end of the accounts / logo / type session): start here
 
+## NEXT SESSION: his verdict on the ten quiz ideas in `design/quiz-ideas/NEXT-TEN.md`
+
+He will respond to each idea. Ask plainly, one by one; build nothing until he picks; then ONE quiz, complete and deep,
+shown to him before any other. The header tweak (dark menu #bbb, Log In #bbb, Sign Up #ccc at weight 800, Sign Up a
+shade darker in light) is live too (`b778859`); "hard" on the game start screens stays (he: it is a difficulty
+indicator).
+
 ## LATEST (2026-09-22, late): the standardize pass is LIVE on `main`, with the owner's go
 
 One look everywhere, on his list (brief: `design/STANDARDIZE-BRIEF.md`): no icon tiles on any card; every way in

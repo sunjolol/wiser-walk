@@ -41,13 +41,24 @@ Note he had earlier rejected the word "wiser" as "weird to say"; he has since ov
 
 State: local git repo initialised, **one commit** `c8fd322`, 137 files tracked, `node_modules` excluded. Authored as `Light <serenitybackto@gmail.com>` — he was offered a GitHub noreply address to keep his email out of public history and **chose to keep his real email**. Do not change it.
 
+## NEXT SESSION STARTS HERE (written at the very end of 2026-09-22): TEN QUIZ IDEAS AWAIT HIS VERDICT
+
+**Open `design/quiz-ideas/NEXT-TEN.md` first.** On 2026-09-22 he asked for ten new quiz ideas built from the pattern
+of the quizzes and games we already have (not from search research), and closed the session saying he will respond
+to EACH of them in the next one. So: put each idea to him in plain words, record his verdict on each, build nothing
+until he picks, then build ONE quiz complete and deep and show it before starting another. The section below on the
+scrapped list explains what went wrong last time; it still applies.
+
+Everything from 2026-09-22 is live on `main` (last commit before these notes: `b778859`). He reviews on the live site;
+small changes he asked for are pushed without waiting (memory: push-small-changes).
+
 ## LIVE since late 2026-09-22: the standardize pass (see HANDOFF.md "LATEST")
 
 One card look, one Compass card, pill buttons, no icon tiles or text-only chips, centred header, darker textured
 dark theme; the daily round is called **Today's Challenge**. He is checking the game start screens himself. Design
 tweaks are done SOLO (no reviewer fan-outs: he found 3M+ tokens for cosmetic changes excessive).
 
-## NEXT SESSION STARTS HERE (end of 2026-09-22): the quiz ideas, second attempt. Read HANDOFF.md "START HERE" first
+## Earlier on 2026-09-22: the first quiz-idea list was scrapped (why, so it is not repeated)
 
 Live today: accounts public, the account design pass, his logo (brush W + Amatry wordmark as outlines), and
 headlines in Philosopher Bold (Poppins and Inter kept for everything small; he rejected PT Sans as ugly).
