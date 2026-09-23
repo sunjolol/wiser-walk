@@ -189,4 +189,9 @@ Jesus, the Holy Spirit and every pronoun for Them in the site's own words; plain
 - **#4 title:** torn between "Which early Christian thinks like you? (And which would argue with you?)" and the short
   form. My advice: the short question is the title wherever space is tight (menus, search results, share cards; the
   long form is 72 characters and search results cut near 60), and "And which would argue with you?" prints right
-  under it on the quiz's card and start page, so both sides survive. His ruling pending.
+  under it on the quiz's card and start page, so both sides survive. **RULED 2026-09-23: keep both, exactly that way.**
+  Title (menu, search results, share cards): "Which early Christian thinks like you?"; on the quiz's own card and its
+  start page, "And which would argue with you?" printed directly under it.
+- **Capitals inside Bible quotations (2026-09-23): "Always capitalize He and His."** Quotations now use the Berean
+  Standard Bible where a pronoun refers to God (it capitalises natively); the games capitalise them for display on
+  every line, Bible or not.

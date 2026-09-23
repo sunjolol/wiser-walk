@@ -222,7 +222,8 @@ const breadcrumbs = isDraft
       <div class="wayin-ghost" aria-hidden="true">begin</div>
       <div class="wayin-in">
         <p class="wayin-kicker">When you are ready</p>
-        <h2>{READING.core.length} questions, about {quiz.minutes} minutes.</h2>
+        {/* two lines, as the statement quizzes' longer heading wraps on its own */}
+        <h2>{READING.core.length} questions,<br /> about {quiz.minutes} minutes.</h2>
         <p class="wayin-say">You can go back at any point, and nothing is yours until you say it is.</p>
         <div class="btn-row">
           <button class="btn" type="button" data-start>Start the quiz</button>
