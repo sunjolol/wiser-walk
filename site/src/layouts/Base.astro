@@ -83,7 +83,10 @@ const here = Astro.url.pathname;
 // Finished quizzes before drafts, here as on the home page.
 const footQuizzes = [...QUIZZES].sort((a, b) => Number(a.status === 'draft') - Number(b.status === 'draft'));
 const footGames = liveGames();
-const FOOT_SHORT: Record<string, string> = { 'seven-deadly-sins': 'Which of the 7 deadly sins are…' };
+const FOOT_SHORT: Record<string, string> = {
+  'seven-deadly-sins': 'Which of the 7 deadly sins are…',
+  'which-psalm': 'Which Psalm are you living?'
+};
 const isCurrent = (href: string) => here === href || here.startsWith(href.replace(/\/$/, '') + '/');
 /** Computed at build, so the footer cannot be caught printing last year. */
 const year = new Date().getFullYear();

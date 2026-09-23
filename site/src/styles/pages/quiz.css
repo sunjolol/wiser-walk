@@ -585,6 +585,9 @@
      onto four lines, which is the squeezed card the owner has already rejected */
   .qhub-rooms { grid-template-columns: repeat(auto-fit, minmax(16.5rem, 1fr)); }
   .qroom--pic { min-height: 26rem; }
+  /* the sheet holds three rooms on a row; a fourth alone would leave two holes beside it,
+     so a lone last room takes the whole row, as the tablet's odd one out does */
+  .qhub-rooms > .qroom:last-child:nth-child(3n+1) { grid-column: 1 / -1; min-height: 22rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

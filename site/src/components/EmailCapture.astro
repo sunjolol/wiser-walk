@@ -23,15 +23,24 @@ interface Props {
 
 const { quiz, view, enabled } = Astro.props;
 if (!enabled) return null;
+/*
+ * Never for a reading (the Psalm quiz). Subscribing sends the result code, and a reading's
+ * code names what someone is going through right now. The result page already leaves this
+ * out for a reading; this is the second lock on the same door.
+ */
+if (view.shape === 'reading') return null;
 
 const backTo = `/r/${quiz.slug}/${view.code}/`;
 
 // Name the strongest axes in the offer, so it is concrete rather than a generic newsletter
 // pitch. On a flat or all-central result there is nothing to name, and the copy says that.
+// A view with no rows names nothing, and falls to the last sentence below.
 const named =
   view.shape === 'bipolar'
     ? view.rows.filter(r => !r.noClaim).sort((a, b) => Math.abs(b.value - 50) - Math.abs(a.value - 50))
-    : [...view.rows].sort((a, b) => a.rank - b.rank).filter(r => r.value > 50);
+    : view.shape === 'unipolar'
+      ? [...view.rows].sort((a, b) => a.rank - b.rank).filter(r => r.value > 50)
+      : [];
 
 const topTwo = named.slice(0, 2).map(r => r.name);
 const offer =

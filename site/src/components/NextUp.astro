@@ -40,6 +40,7 @@ import { groupNounPlural, outcomeNounPlural } from '../lib/engine/types';
 import type { Game } from '../lib/games';
 import { quizHref } from '../lib/engine/registry';
 import { artFor } from '../lib/art';
+import { SITUATIONS } from '../lib/strategies/reading';
 
 export interface Props {
   /** Quizzes to offer, in order. Drafts are dropped here rather than by every caller. */
@@ -53,6 +54,7 @@ const { quizzes = [], games = [], limit = 4 } = Astro.props;
 
 /** Each quiz's ink: the home page's (home.css .room--*) and /quizzes/'s, kept the same on purpose. */
 const QUIZ_INK: Record<string, string> = {
+  'which-psalm': '#BCD6F2',
   'bible-figure': '#EADFCB',
   'spiritual-gifts': '#FFC98F',
   'seven-deadly-sins': '#F2A596'
@@ -72,14 +74,17 @@ const GAME_LOOK: Record<string, { glyph: string; ghost: 'ask' | 'quote'; ink: 'o
 /**
  * The second fact on a quiz, after the minutes: what you come away with, counted the way
  * /quizzes/ counts it. A quiz with outcomes names them (18 traditions, 25 figures); a
- * ranking names its categories only when it has a true word for them (19 gifts).
+ * ranking names its categories only when it has a true word for them (19 gifts). A reading
+ * (the Psalm quiz) counts the situations it can name, as /quizzes/ does.
  */
 const countFact = (q: Quiz): string =>
-  q.outcomes.length
-    ? `${q.outcomes.length} ${outcomeNounPlural(q)}`
-    : q.groupNounPlural
-      ? `${q.groups.length} ${groupNounPlural(q)}`
-      : `${q.items.length} statements`;
+  q.strategy.shape === 'reading'
+    ? `${SITUATIONS.length} situations`
+    : q.outcomes.length
+      ? `${q.outcomes.length} ${outcomeNounPlural(q)}`
+      : q.groupNounPlural
+        ? `${q.groups.length} ${groupNounPlural(q)}`
+        : `${q.items.length} statements`;
 
 /*
  * The Compass is introduced in its shared card's words (CompassCard.astro's default `say`), as

@@ -5,7 +5,7 @@ published: 2026-09-01
 minutes: 6
 answer: "Biblical joy is not cheerfulness and not the absence of sorrow. It is a response to God Himself, and it is fruit of the Spirit rather than something you manufacture. So go where it is, say true things about your situation, cut what flattens it, and do something for someone."
 tags: [formation, joy]
-quizzes: []
+quizzes: [which-psalm]
 image: /img/articles/how-to-become-more-joyful.jpg
 imageAlt: "A father crouches with open arms as a small child takes first steps towards him"
 imageCredit: "Vincent van Gogh, First Steps (after Millet), 1890"

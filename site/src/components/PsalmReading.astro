@@ -1,0 +1,283 @@
+---
+/**
+ * The reading: the result page of "Which Psalm are you living right now?".
+ *
+ * It is the owner's tap-through preview (design/quiz-ideas/psalm/preview/script3.part,
+ * result()) rendered on the server, in the same order and the same words: he played it and
+ * called it "phenomenal and very powerful", so this file reproduces it rather than
+ * reinterpreting it. Nothing about it is a measurement, so it borrows nothing from the rails
+ * or the ranking.
+ *
+ * Two parts, because the page's band is shared with every other result: `band` is the words
+ * that stand in the band (the psalm, the verse that names the situation, its heading), and
+ * `body` is everything under it. The page renders the two in their places.
+ *
+ * TWO READERS, ONE URL. The code names the situation, never the answers, so everything that
+ * depends on HOW someone answered (the "because you said" chips, the note for an illness or a
+ * death, the line for a result reached through the honest none page, a line note that only
+ * applies to some people, and the help box for a hard season) is rendered hidden here and
+ * revealed by the script at the foot, from a tab-scoped note the runner leaves behind, and
+ * only when that note is for this very code. A friend opening a shared link sees the psalm
+ * and why, and nothing of how anyone answered; the page reads whole without JavaScript.
+ *
+ * The Bible text comes from src/data/psalms.json, which is imported here in the frontmatter
+ * and nowhere in the browser: it is the whole BSB text of every psalm a result can print.
+ */
+import type { Quiz, ReadingView } from '../lib/engine/types';
+import { READING, greekNumber } from '../lib/strategies/reading';
+import { outcomeHref } from '../lib/engine/registry';
+import bsb from '../data/psalms.json';
+import '../styles/pages/psalm-reading.css';
+
+interface Props {
+  quiz: Quiz;
+  view: ReadingView;
+  part: 'band' | 'body';
+}
+
+const { quiz, view, part } = Astro.props;
+
+type Psalm = { superscription?: string; verses: [number, string][] };
+const PSALMS = bsb.psalms as unknown as Record<string, Psalm>;
+
+const id = view.situation;
+const o = READING.outcomes[id]!;
+const full = READING.full[id];
+
+/** A verse by its BSB reference ("3:5"). The data build checks every one exists. */
+const verse = (ref: string) => {
+  const [c, v] = ref.split(':').map(Number);
+  return PSALMS[String(c)]?.verses.find(x => x[0] === v)?.[1] ?? '';
+};
+const psalmHref = (n: number | string) =>
+  outcomeHref(quiz, { name: `Psalm ${n}`, slug: String(parseInt(String(n), 10)) });
+
+const heading = PSALMS[String(o.psalm)]?.superscription ?? '';
+/*
+ * The psalm's own heading is printed only where it tells a story (David fleeing Absalom, a
+ * prayer "of one who is afflicted"). "For the choirmaster. With stringed instruments." is
+ * an instruction to musicians, and printed under a result it reads as noise. The test is the
+ * preview's, word for word.
+ */
+const narrative = !o.set && /\b(when|after|who sang|concerning|prayer of one)\b/i.test(heading);
+const greek = !o.set && greekNumber(o.psalm) !== String(o.psalm) ? greekNumber(o.psalm) : null;
+
+const marks = [o.names, o.turn].filter(Boolean) as string[];
+const carry = o.turn || o.names;
+const blocks = (o.set ?? [o.psalm]).map(n => ({ n, p: PSALMS[String(n)]! }));
+
+/** "56", "65, 70 and 71": each one a link to that psalm's own page. */
+const also = o.also.map(String);
+
+const hardNote =
+  o.hardNote ||
+  'The Psalms say to God what hurt people really feel, anger included, and leave the verdict with Him. Athanasius gives the same counsel in this letter: ask God to be the Judge, since He alone is just (§17).';
+
+/* The line note either always applies, or applies only to some answers (the script decides). */
+const lineNote = o.lineNote ?? null;
+---
+{part === 'band' ? (
+  <>
+    <p class="pr-kicker">You're living</p>
+    <h1 class="verdict pr-verdict">
+      {o.set
+        ? <>the <span class="verdict-part--left">Songs of Ascents</span></>
+        : <>Psalm <span class="verdict-part--left">{o.psalm}</span></>}
+    </h1>
+    {greek && <p class="pr-greek">{greek} in the Greek numbering Athanasius used</p>}
+    <blockquote class="pr-lead">
+      <p>{verse(o.names)}</p>
+      <cite class="pr-cite">Psalm {o.names}</cite>
+    </blockquote>
+    {narrative && <p class="pr-heading">Its own heading: <i>{heading}</i></p>}
+  </>
+) : (
+  <article class="panel pr" data-pr data-quiz={quiz.slug} data-code={view.code} data-situation={id}>
+    <div class="pr-main">
+      <section class="pr-sec">
+        <p class="pr-label">Why this one</p>
+        <p class="pr-body">{o.seen}</p>
+        {/* Filled in by the script, from this reader's own answers, and only theirs. */}
+        <ul class="pr-chips" data-pr-because aria-label="What you said" hidden></ul>
+        <p class="pr-body">
+          In the 300s, Athanasius of Alexandria wrote to a friend about praying the Psalms, and
+          matched them to what people go through. For this, his advice was:
+        </p>
+        <p class="pr-body pr-strong">{o.reason}</p>
+        <span class="pr-cite">Letter to Marcellinus, §{o.sec}</span>
+        {Object.entries(READING.notes).map(([focus, text]) => (
+          <p class="pr-body pr-soft" data-pr-focus={focus} hidden>{text}</p>
+        ))}
+        <p class="pr-body pr-soft" data-pr-none hidden>
+          His letter doesn't name your situation itself. This is the psalm he gave for what it's
+          doing to you.
+        </p>
+        {o.note && <p class="pr-body pr-soft">{o.note}</p>}
+        {also.length > 0 && (
+          <p class="pr-body pr-soft">
+            For the same situation he also named {also.length === 1 ? 'Psalm' : 'Psalms'}{' '}
+            {also.map((n, i) => (
+              <>
+                <a href={psalmHref(n)}>{n}</a>{i < also.length - 2 ? ', ' : i === also.length - 2 ? ' and ' : '.'}
+              </>
+            ))}
+          </p>
+        )}
+      </section>
+
+      {full?.story && (
+        <section class="pr-sec">
+          <p class="pr-label">The story behind it</p>
+          <p class="pr-body">
+            {full.story.map(x => (x.q ? <><q>{x.q}</q> ({x.ref})</> : x.t))}
+          </p>
+          {full.own && <p class="pr-body">{full.own}</p>}
+        </section>
+      )}
+
+      {o.turn && (
+        <section class="pr-sec">
+          <p class="pr-label">Where it turns</p>
+          <p class="pr-line">{verse(o.turn)}</p>
+          <span class="pr-cite">Psalm {o.turn}</span>
+        </section>
+      )}
+
+      {full?.night && (
+        <section class="pr-sec">
+          <p class="pr-label">For the nights</p>
+          <p class="pr-line">{verse(full.night)}</p>
+          <span class="pr-cite">Psalm {full.night}</span>
+        </section>
+      )}
+    </div>
+
+    <section class="pr-sec pr-whole">
+      <p class="pr-label">{o.set ? 'The fifteen songs' : 'The whole psalm'}</p>
+      <div class="pr-psalms">
+        {blocks.map(({ n, p }) => (
+          <div class="pr-psalm">
+            {/* In the set, each song's name leads to its own page; a single psalm's link is at the foot. */}
+            <h3>{o.set ? <a href={psalmHref(n)}>Psalm {n}</a> : <>Psalm {n}</>}</h3>
+            {p.superscription && <p class="pr-sup">{p.superscription}</p>}
+            <ol>
+              {p.verses.map(([v, t]) => (
+                <li class:list={[{ 'is-marked': marks.includes(`${n}:${v}`) }]}>
+                  <span class="pr-vn">{v}</span><span>{t}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <div class="pr-after">
+      {o.hard && (
+        <section class="pr-sec">
+          <p class="pr-label">Hard words</p>
+          <p class="pr-body"><q>{verse(o.hard)}</q><span class="pr-cite pr-cite--inline">Psalm {o.hard}</span></p>
+          <p class="pr-body">{hardNote}</p>
+        </section>
+      )}
+
+      {lineNote && (
+        <section class="pr-sec" data-pr-when={lineNote.when ? JSON.stringify(lineNote.when) : undefined}
+                 hidden={Boolean(lineNote.when)}>
+          <p class="pr-label">About verse {lineNote.ref.split(':')[1]}</p>
+          <p class="pr-body"><q>{verse(lineNote.ref)}</q><span class="pr-cite pr-cite--inline">Psalm {lineNote.ref}</span></p>
+          <p class="pr-body">{lineNote.text}</p>
+        </section>
+      )}
+
+      <section class="pr-sec">
+        <p class="pr-label">Carry this line</p>
+        <p class="pr-line">{verse(carry)}</p>
+        <span class="pr-cite">Psalm {carry}</span>
+      </section>
+
+      {/*
+        For a reader who said their season is hard, and only for them. It is not a verdict on
+        anyone: the questions cannot tell grief from danger, so the line is offered to both.
+      */}
+      <aside class="pr-help" data-pr-help hidden>
+        <p>
+          <b>If it's more than this.</b> If someone is hurting you, or you've thought about
+          ending your life, please tell someone today. In the US, call or text 988, or 911 if
+          you're in danger. Anywhere else, findahelpline.com lists free lines.
+        </p>
+      </aside>
+
+      <p class="btn-row pr-row">
+        <a class="btn ghost" href={psalmHref(o.psalm)}>Psalm {o.psalm} on its own page</a>
+      </p>
+
+      <p class="pr-foot">
+        Bible text: Berean Standard Bible, public domain. Athanasius's advice is paraphrased
+        from his Greek.
+      </p>
+    </div>
+  </article>
+)}
+
+<script>
+  /*
+   * The parts of the reading that depend on how THIS reader answered. The runner leaves two
+   * tab-scoped notes when someone says "Yes, that's it": which result they took, and their
+   * answers. Both are read only when the first is this page's own code, so a stranger who
+   * opens a shared link, or the same person on another result, sees none of it. Nothing is
+   * sent anywhere; the notes die with the tab.
+   */
+  import { READING, meets, picks, optionText, type Answers, type Condition } from '../lib/strategies/reading';
+
+  const root = document.querySelector<HTMLElement>('[data-pr]');
+  let saved: { code?: string; answers?: Answers; fromNone?: boolean } | null = null;
+  if (root) {
+    try {
+      const slug = root.dataset.quiz!;
+      if (sessionStorage.getItem('ww:took:' + slug) === root.dataset.code) {
+        saved = JSON.parse(sessionStorage.getItem('ww:answers:' + slug) || 'null');
+      }
+    } catch (e) {}
+  }
+
+  if (root && saved && saved.code === root.dataset.code && saved.answers) {
+    const a = saved.answers;
+    const o = READING.outcomes[root.dataset.situation!];
+    const show = (el: Element | null) => { if (el) (el as HTMLElement).hidden = false; };
+
+    /*
+     * "Because you said": the answers that met this situation's need, and the ones that
+     * matched what it is like. Not on a result reached through the none page, which came
+     * from what the reader picked there rather than from a match.
+     */
+    if (o && !saved.fromNone) {
+      const hit: Condition = o.need.find(n => meets(n, a)) || {};
+      const said: string[] = [];
+      for (const [k, vals] of [...Object.entries(hit), ...Object.entries(o.like || {})]) {
+        for (const x of picks(a[k])) if (vals.includes(x)) said.push(optionText(k, x));
+      }
+      const list = root.querySelector('[data-pr-because]');
+      const unique = [...new Set(said.filter(Boolean))];
+      if (list && unique.length) {
+        unique.forEach(s => {
+          const li = document.createElement('li');
+          li.textContent = s;
+          list.appendChild(li);
+        });
+        show(list);
+      }
+    }
+
+    const focus = typeof a.focus === 'string' ? a.focus : null;
+    if (focus) show(root.querySelector(`[data-pr-focus="${CSS.escape(focus)}"]`));
+    if (saved.fromNone) show(root.querySelector('[data-pr-none]'));
+
+    const when = root.querySelector<HTMLElement>('[data-pr-when]');
+    if (when) {
+      try { if (meets(JSON.parse(when.dataset.prWhen!), a)) show(when); } catch (e) {}
+    }
+
+    if (['vhard', 'hard'].includes(String(a.season))) show(root.querySelector('[data-pr-help]'));
+  }
+</script>

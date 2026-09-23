@@ -1,0 +1,315 @@
+---
+/**
+ * One psalm, as the Psalm quiz can print it: /psalm/<n>/.
+ *
+ * Every psalm a result of "Which Psalm are you living right now?" can name has a page here,
+ * and each is for someone who searched for that psalm, or for "a psalm for" what they are in.
+ * So the page answers the question they came with before it asks anything of them: when to
+ * pray this psalm (every situation St Athanasius named it for, in his words, with the
+ * section), where it turns, and then the whole psalm. The quiz comes last, as the way to find
+ * the psalm for your own situation rather than this one.
+ *
+ * Rules this page keeps:
+ *
+ * 1. **Every situation is Athanasius's.** The lines, his advice, the notes and the verse marks
+ *    are all in src/data/which-psalm.json, each read against his Greek; this file arranges
+ *    them and writes no commentary of its own. The one sentence it adds under a psalm that
+ *    curses an enemy is the same one the result page prints, from the same letter (§17).
+ * 2. **The psalm is printed whole and unaltered**, from the Berean Standard Bible (public
+ *    domain), with its own heading marked as the psalm's rather than ours. psalms.json is
+ *    imported here, in the frontmatter, and never in a script: 78 psalms are not for a phone
+ *    to download.
+ * 3. **A psalm Athanasius named beside another says so.** Psalm 56 is not the answer to being
+ *    hunted on its own; the quiz gives Psalm 54 for that and Athanasius named 56 beside it,
+ *    and the page says so and links it.
+ */
+import Base from '../../layouts/Base.astro';
+import Hero from '../../components/Hero.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import Icon from '../../components/Icon.astro';
+import CorrectionNote from '../../components/CorrectionNote.astro';
+import { whichPsalm } from '../../lib/quizzes/which-psalm';
+import { READING, SITUATIONS, greekNumber } from '../../lib/strategies/reading';
+import type { Situation } from '../../lib/strategies/reading';
+import { quizHref } from '../../lib/engine/registry';
+import { artFor } from '../../lib/art';
+import { PSALM_OWN_TOPIC, psalmListing } from '../../lib/seo';
+import type { PsalmRole } from '../../lib/seo';
+import bsb from '../../data/psalms.json';
+import '../../styles/pages/psalm.css';
+
+export function getStaticPaths() {
+  return whichPsalm.outcomes.map(o => ({ params: { slug: o.slug } }));
+}
+
+const quiz = whichPsalm;
+const n = Number(Astro.params.slug);
+
+type Text = { superscription: string; verses: Array<[number, string]> };
+const text = (bsb.psalms as unknown as Record<string, Text>)[String(n)];
+if (!text) throw new Error(`/psalm/${n}/: no Berean Standard Bible text in psalms.json`);
+
+/** One verse of THIS psalm by its reference ("13:5"), or null for a verse of another. */
+const verse = (ref: string) => {
+  const [c, v] = ref.split(':').map(Number);
+  if (c !== n) return null;
+  return text.verses.find(x => x[0] === v)?.[1] ?? null;
+};
+
+/**
+ * Every situation that names this psalm, and how: it LEADS a situation (the psalm the
+ * quiz's result would be), it is one Athanasius named ALSO for it, or it is one of the
+ * fifteen Songs of Ascents he gave together. A psalm is looked for in that order, so Psalm
+ * 121, which leads the Songs of Ascents, is a lead and not a member of its own set.
+ *
+ * `part` keeps what the data says where he means only part of a psalm ("116:1-9").
+ */
+type Named = { id: string; o: Situation; role: PsalmRole; part?: string };
+const RANK: Record<PsalmRole, number> = { lead: 0, also: 1, set: 2 };
+const named: Named[] = SITUATIONS.flatMap((id): Named[] => {
+  const o = READING.outcomes[id]!;
+  if (o.psalm === n) return [{ id, o, role: 'lead' }];
+  const part = o.also.find(x => parseInt(String(x), 10) === n);
+  if (part !== undefined) return [{ id, o, role: 'also', part: String(part) }];
+  if (o.set?.includes(n)) return [{ id, o, role: 'set' }];
+  return [];
+}).sort((a, b) => RANK[a.role] - RANK[b.role]);
+if (!named.length) throw new Error(`/psalm/${n}/: no situation names this psalm`);
+
+/* Where a psalm leads two situations, seo.ts says which one heads its page. */
+const own = PSALM_OWN_TOPIC[n]?.lead;
+if (own) named.sort((a, b) => Number(b.id === own) - Number(a.id === own));
+const head = named[0]!;
+const leads = named.filter(x => x.role === 'lead');
+
+const { title, description, lede } = psalmListing(n, head.role, { id: head.id, seen: head.o.seen }, head.o.psalm);
+
+/** "116:1-9" is "Psalm 116:1–9"; a whole psalm is just its number. */
+const psalmName = (x: number | string) => `Psalm ${String(x).replace('-', '–')}`;
+const psalmHref = (x: number | string) => `/psalm/${parseInt(String(x), 10)}/`;
+
+/**
+ * The verses the lead situations point at, marked in the psalm as the result page marks
+ * them: the line that names the situation and the line where the psalm turns. Only verses of
+ * THIS psalm; an also-psalm's situation points into the psalm that leads it.
+ */
+const marks = new Set(leads.flatMap(x => [x.o.names, x.o.turn]).filter((r): r is string => r !== null && verse(r) !== null));
+
+/* Where it turns: the heading situation's turn where it has one, or the next lead's. */
+const turnRef = leads.map(x => x.o.turn).find((r): r is string => r !== null && verse(r) !== null) ?? null;
+
+/*
+ * The hard words. The Psalms say to God what hurt people really feel, and some of it is a
+ * curse on an enemy. Where a situation that leads with this psalm marks such a line, the
+ * page quotes it and says what the result page says under it, in the same words; the
+ * fallback sentence is Athanasius's own counsel in §17 of the same letter.
+ */
+const HARD_WORDS =
+  'The Psalms say to God what hurt people really feel, anger included, and leave the verdict ' +
+  'with Him. Athanasius gives the same counsel in this letter: ask God to be the Judge, since ' +
+  'He alone is just (§17).';
+const hard: Array<{ ref: string; line: string; note: string }> = [];
+for (const { o } of leads) {
+  const line = o.hard ? verse(o.hard) : null;
+  if (o.hard && line && !hard.some(h => h.ref === o.hard)) {
+    hard.push({ ref: o.hard, line, note: o.hardNote ?? HARD_WORDS });
+  }
+}
+
+/*
+ * A line that could wound someone, with the note the data keeps beside it (Psalm 91's "no
+ * evil will befall you", said to someone who is ill). The result page shows some of these
+ * only to people whose answers put them in that place; a reader arriving from a search has
+ * told us nothing, so here every one is shown.
+ */
+const lineNotes: Array<{ ref: string; line: string; text: string }> = [];
+for (const { o } of leads) {
+  const line = o.lineNote ? verse(o.lineNote.ref) : null;
+  if (o.lineNote && line && !lineNotes.some(l => l.ref === o.lineNote!.ref)) {
+    lineNotes.push({ ref: o.lineNote.ref, line, text: o.lineNote.text });
+  }
+}
+
+const greek = greekNumber(n);
+
+/* The band: the quiz's own picture when it has one; the dark ground when it has none. */
+const art = artFor(quiz.slug);
+
+/* The card at the foot is the quiz's own. Its plate is never drawn twice on one page, and
+   the band above already wears it, so the card is always the plain one here. */
+const situationCount = SITUATIONS.length;
+
+const siteId = new URL('/#website', Astro.site).href;
+const url = new URL(`/psalm/${n}/`, Astro.site).href;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: title,
+  description,
+  url,
+  isPartOf: [
+    { '@id': siteId },
+    { '@type': 'Quiz', name: quiz.title, url: new URL(quizHref(quiz), Astro.site).href }
+  ],
+  about: { '@type': 'CreativeWork', name: `Psalm ${n}`, isPartOf: { '@type': 'Book', name: 'Psalms' } },
+  citation: {
+    '@type': 'CreativeWork',
+    name: 'Letter to Marcellinus',
+    author: { '@type': 'Person', name: 'Athanasius of Alexandria' }
+  }
+};
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Quizzes', url: '/quizzes/' },
+  { name: quiz.title, url: quizHref(quiz) },
+  { name: `Psalm ${n}`, url: `/psalm/${n}/` }
+];
+---
+<Base title={title} description={description} jsonLd={jsonLd} breadcrumbs={breadcrumbs}>
+  <Hero
+    title={`Psalm ${n}`}
+    blue={String(n)}
+    kind={art ? 'engraving' : 'night'}
+    image={art?.src}
+    imageAlt={art?.alt}
+    imagePosition={art?.objectPosition}
+    imageLift={art?.lift}
+    lede={lede}
+    tiles={[
+      { n: text.verses.length, label: 'Verses' },
+      { n: named.length, label: named.length === 1 ? 'Situation' : 'Situations' }
+    ]}
+  />
+
+  <div class="ref ref--psalm">
+    <SectionHead title="When to pray it" kicker="St Athanasius, Letter to Marcellinus" />
+    <p class="ps-intro">
+      In the 300s, St Athanasius of Alexandria wrote to his friend Marcellinus about praying
+      the Psalms, and matched them to what people go through.
+      {named.length === 1 ? ' This is what he gave this one for.' : ' He named this one more than once.'}
+    </p>
+
+    <div class="ps-sits">
+      {named.map(x => (
+        <article class:list={['ps-sit', `ps-sit--${x.role}`]}>
+          <p class="ps-seen">{x.o.seen}</p>
+          <p class="ps-advice">{x.o.reason}</p>
+          <p class="ps-cite">Letter to Marcellinus, §{x.o.sec}</p>
+          {x.o.note && <p class="ps-soft">{x.o.note}</p>}
+
+          {/*
+            Which psalm leads here, where this one is named beside it. "Leads" is the quiz's
+            word and not a claim about his order: for pleading with God he writes "Psalms 5
+            and 143" in one place and the quiz gives 143, so nothing here says "first".
+          */}
+          {x.role === 'also' && (
+            <p class="ps-soft">
+              For this, the quiz gives <a href={psalmHref(x.o.psalm)}>Psalm {x.o.psalm}</a>,
+              {x.part && x.part !== String(n)
+                ? ` and verses ${x.part.split(':')[1]!.replace('-', ' to ')} of this psalm beside it.`
+                : ' and this psalm beside it.'}
+            </p>
+          )}
+
+          {/* The other psalms he named for the same thing, each a page of its own. */}
+          {x.role === 'lead' && x.o.also.length > 0 && (
+            <p class="ps-soft">
+              For the same situation he also named {x.o.also.map((p, i) => (
+                <>{i > 0 && (i === x.o.also.length - 1 ? ' and ' : ', ')}<a href={psalmHref(p)}>{psalmName(p)}</a></>
+              ))}.
+            </p>
+          )}
+
+          {/* The fifteen Songs of Ascents are one piece of advice; each is a page. */}
+          {x.o.set && (
+            <>
+              <p class="ps-soft">He gave all fifteen Songs of Ascents for this, Psalms 120 to 134.</p>
+              <ul class="ps-set" aria-label="The Songs of Ascents">
+                {x.o.set.map(p => (
+                  <li>
+                    {p === n
+                      ? <span class="ps-set-here" aria-current="page">{p}</span>
+                      : <a href={psalmHref(p)} aria-label={`Psalm ${p}`}>{p}</a>}
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+        </article>
+      ))}
+    </div>
+
+    {turnRef && (
+      <>
+        <SectionHead title="Where it turns" kicker={`Psalm ${turnRef}`} />
+        <blockquote class="ps-turn">
+          <p>{verse(turnRef)}</p>
+        </blockquote>
+      </>
+    )}
+
+    <SectionHead title="The whole psalm" kicker={`${text.verses.length} verses, Berean Standard Bible`} />
+    <div class="ps-text">
+      <h2 class="ps-text-title">Psalm {n}</h2>
+      {/* The psalm's own heading, which is part of the text, marked as the psalm's rather
+          than as anything this page says. Many psalms have none. */}
+      {text.superscription && (
+        <p class="ps-sup"><span class="ps-sup-label">Its own heading</span> {text.superscription}</p>
+      )}
+      <ol class="ps-verses">
+        {text.verses.map(([v, t]) => (
+          <li class:list={[{ 'is-marked': marks.has(`${n}:${v}`) }]}>
+            <span class="ps-vn">{v}</span>{t}
+          </li>
+        ))}
+      </ol>
+    </div>
+
+    {hard.map(h => (
+      <aside class="ps-note">
+        <p class="ps-note-label">Hard words</p>
+        <p><q>{h.line}</q> <span class="ps-ref">Psalm {h.ref}</span></p>
+        <p>{h.note}</p>
+      </aside>
+    ))}
+
+    {lineNotes.map(l => (
+      <aside class="ps-note">
+        <p class="ps-note-label">About verse {l.ref.split(':')[1]}</p>
+        <p><q>{l.line}</q> <span class="ps-ref">Psalm {l.ref}</span></p>
+        <p>{l.text}</p>
+      </aside>
+    ))}
+
+    {greek !== String(n) && (
+      <p class="ps-greek">
+        Psalm {n} is {greek} in the Greek numbering Athanasius used, which Orthodox Bibles and
+        some older Catholic ones still follow.
+      </p>
+    )}
+
+    {/* The way into the quiz: the quiz's own card (.qcard in pages/reference.css), drawn
+        plain because the band above already wears the quiz's picture, if it has one. */}
+    <div class="qcard-wrap">
+      <a class={`qcard qcard--plain qcard--${quiz.slug}`} href={quizHref(quiz)}>
+        <div class="qcard-body">
+          <p class="qcard-kicker">Your turn</p>
+          <h2 class="qcard-title">{quiz.title}</h2>
+          <p class="qcard-say">{quiz.tagline}</p>
+          <ul class="qcard-facts">
+            <li><Icon name="clock" size={13} /> {quiz.minutes} min</li>
+            <li>{situationCount} situations</li>
+          </ul>
+          <span class="qcard-go go-pill">Start <Icon name="arrow" size={16} /></span>
+        </div>
+      </a>
+    </div>
+
+    <CorrectionNote subject={`Psalm ${n}`} />
+
+    <p class="ps-credit">
+      Bible text: Berean Standard Bible, public domain. Athanasius’s advice is paraphrased
+      from his Greek.
+    </p>
+  </div>
+</Base>

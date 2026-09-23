@@ -41,6 +41,7 @@ import { QUIZZES, getQuiz, quizHref, scoreQuiz, resultFor } from '../lib/engine/
 import { groupNounPlural, outcomeNounPlural } from '../lib/engine/types';
 import type { BipolarView, Quiz } from '../lib/engine/types';
 import { artFor } from '../lib/art';
+import { SITUATIONS } from '../lib/strategies/reading';
 import { liveGames } from '../lib/games';
 import { ACCOUNTS_READY, ACCOUNTS_VISIBLE } from '../lib/account/config';
 import audit from '../data/compass-audit.json';
@@ -77,17 +78,20 @@ const COMPASS_SAY = 'Six questions that divide Christians, and the tradition tha
  * The counted facts on a room, after the minutes: the Compass says what its shared card says
  * (its statements and its traditions); every other quiz what /quizzes/ says of it. A quiz
  * with outcomes names them (25 figures); a ranking names its categories only when it has a
- * true word for them (19 gifts), because "7 categories" is the engine's vocabulary.
+ * true word for them (19 gifts), because "7 categories" is the engine's vocabulary. The
+ * Psalm quiz counts the situations it can name, as /quizzes/ does: it has no statements.
  */
 const factsFor = (q: Quiz): string[] =>
   q.slug === compass?.slug
     ? [`${q.items.length} statements`, `${q.outcomes.length} ${outcomeNounPlural(q)}`]
     : [
-        q.outcomes.length
-          ? `${q.outcomes.length} ${outcomeNounPlural(q)}`
-          : q.groupNounPlural
-            ? `${q.groups.length} ${groupNounPlural(q)}`
-            : `${q.items.length} statements`
+        q.strategy.shape === 'reading'
+          ? `${SITUATIONS.length} situations`
+          : q.outcomes.length
+            ? `${q.outcomes.length} ${outcomeNounPlural(q)}`
+            : q.groupNounPlural
+              ? `${q.groups.length} ${groupNounPlural(q)}`
+              : `${q.items.length} statements`
       ];
 
 /**

@@ -35,6 +35,10 @@ export const CARDS = {
     h: 'Which Bible|character are|you most *like?*', s: '18 statements. 3 minutes. 25 figures.' },
   'quiz-spiritual-gifts': { v: 'left', tone: 'engraving', img: '/img/dore-paul.jpg', pos: '45% 25%', k: 'Free test',
     h: 'What are your|spiritual *gifts?*', s: 'All 19 gifts the New Testament names. About 8 minutes.' },
+  /* David mourning Absalom: the story behind Psalm 3, the quiz's finished example, and the
+     plate the quiz wears on the site (lib/art.ts). */
+  'quiz-which-psalm': { v: 'left', tone: 'engraving', img: '/img/figures/david.jpg', pos: '48% 30%', k: 'Free quiz',
+    h: 'Which Psalm are|you living|right *now?*', s: '3 minutes. The psalm a Church Father gave for exactly that.' },
   'quiz-seven-deadly-sins': { v: 'left', tone: 'engraving', img: '/img/dore-eden.jpg', pos: '50% 14%', k: 'Free quiz',
     h: 'Which of the 7|deadly sins are you|*weakest* to?', s: '14 statements. 2 minutes.' },
 

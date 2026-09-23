@@ -12,14 +12,18 @@ import ShareBlock from '../../../components/ShareBlock.astro';
 import EmailCapture from '../../../components/EmailCapture.astro';
 import NextUp from '../../../components/NextUp.astro';
 import ReadCard from '../../../components/ReadCard.astro';
+import PsalmReading from '../../../components/PsalmReading.astro';
 import { QUIZZES, getQuiz, resultFor, decodeFor, outcomeHref } from '../../../lib/engine/registry';
 import { groupNoteFor, outcomeNounPlural, rankWord } from '../../../lib/engine/types';
 import { isConfigured } from '../../../lib/email/provider';
 import { readEnv } from '../../../lib/email/env';
 import { ACCOUNTS_VISIBLE } from '../../../lib/account/config';
 import { artFor } from '../../../lib/art';
+import { READING } from '../../../lib/strategies/reading';
 import { liveGames } from '../../../lib/games';
 import { getCollection } from 'astro:content';
+// Server only: the whole BSB text of every psalm a reading can print. Never in a client script.
+import bsb from '../../../data/psalms.json';
 
 // Rendered on demand: any valid code has a permanent page, without pre-building
 // millions of them. Nothing is scored here — the code already carries the scores.
@@ -130,11 +134,39 @@ const art = quiz ? artFor(quiz.slug) : null;
  */
 const otherQuizzes = quiz ? QUIZZES.filter(q => q.slug !== quiz.slug) : [];
 const games = liveGames();
+
+/*
+ * A READING (the Psalm quiz) names what someone is going through right now, so two things
+ * on this page are different for it.
+ *
+ * The description. Everywhere else it is the one-line verdict; here that line is the
+ * situation itself ("Your own people have turned on you..."), and a page's description is
+ * what a chat app prints under a pasted link. The share text leaves the situation out for
+ * that reason (strategies/reading.ts), so the link's preview does too: it says which psalm,
+ * and the page says why.
+ *
+ * The share card draws the verse that names the situation, and the text lives in
+ * psalms.json, which only the server may read. So it is looked up here and handed down.
+ */
+const reading = view?.shape === 'reading' ? view : null;
+const readingLine = (() => {
+  if (!reading) return undefined;
+  const ref = READING.outcomes[reading.situation]!.names;
+  const [c, v] = ref.split(':').map(Number);
+  const psalms = bsb.psalms as unknown as Record<string, { verses: [number, string][] }>;
+  const text = psalms[String(c)]?.verses.find(x => x[0] === v)?.[1] ?? '';
+  return text ? { text, cite: `Psalm ${ref}` } : undefined;
+})();
+const description = reading
+  ? `${reading.headline}, printed in full, with the reason Athanasius of Alexandria gave ${
+      READING.outcomes[reading.situation]!.set ? 'them' : 'it'
+    } in the 300s.`
+  : view?.summary ?? '';
 ---
 {quiz && view ? (
   <Base
     title={`${view.headline} — ${quiz.title}`}
-    description={view.summary}
+    description={description}
     noindex={true}
     ogType="article"
   >
@@ -168,17 +200,24 @@ const games = liveGames();
       )}
       <div class="band-in">
         <p class="band-chip"><Icon name={quiz.icon} size={13} />{quiz.title} · your result</p>
-        {/* The first thing a reader sees, in the same two colours as the compass and rails. */}
-        <h1 class="verdict">
-          {view.headlineParts.map((part, i) => (
-            <>
-              <span class={`verdict-part verdict-part--${part.side}`}>{part.text}</span>
-              {i < view.headlineParts.length - 1 && <span class="verdict-sep">,</span>}
-              {i < view.headlineParts.length - 1 && ' '}
-            </>
-          ))}
-        </h1>
-        <p class="lede">{view.summary}</p>
+        {view.shape === 'reading' ? (
+          /* "You're living Psalm 3", its Greek number, and the verse that names it. */
+          <PsalmReading quiz={quiz} view={view} part="band" />
+        ) : (
+          <>
+            {/* The first thing a reader sees, in the same two colours as the compass and rails. */}
+            <h1 class="verdict">
+              {view.headlineParts.map((part, i) => (
+                <>
+                  <span class={`verdict-part verdict-part--${part.side}`}>{part.text}</span>
+                  {i < view.headlineParts.length - 1 && <span class="verdict-sep">,</span>}
+                  {i < view.headlineParts.length - 1 && ' '}
+                </>
+              ))}
+            </h1>
+            <p class="lede">{view.summary}</p>
+          </>
+        )}
 
         {/*
           Only for the reader who just finished this, told apart the same way the share
@@ -230,8 +269,17 @@ const games = liveGames();
          in. Without it they can only be looked at by playing a quiz through by hand. */
       <script is:inline define:vars={{ devSlug: quiz.slug, devCode: view.code }}>
         try {
-          if (new URLSearchParams(location.search).get('took') === '1') {
+          var devQuery = new URLSearchParams(location.search);
+          if (devQuery.get('took') === '1') {
             sessionStorage.setItem('ww:took:' + devSlug, devCode);
+            // A reading's answer-dependent parts need answers too: &answers={"season":"hard",...}
+            // (and &none=1 for a result reached through the none page).
+            var devAnswers = devQuery.get('answers');
+            if (devAnswers) {
+              sessionStorage.setItem('ww:answers:' + devSlug, JSON.stringify({
+                code: devCode, answers: JSON.parse(devAnswers), fromNone: devQuery.get('none') === '1'
+              }));
+            }
           }
         } catch (e) {}
       </script>
@@ -248,6 +296,14 @@ const games = liveGames();
       } catch (e) {}
     </script>
 
+    {view.shape === 'reading' ? (
+      /*
+        A reading has no rails and no ranking: the psalm, why, and the whole text. It has no
+        outcome list, no depth panels and no email offer below either (each is skipped by
+        its own test further down), because its rows and ranking are empty by design.
+      */
+      <PsalmReading quiz={quiz} view={view} part="body" />
+    ) : (
     <div class="panel layered result-panel">
       <div class="wash" aria-hidden="true"></div>
       <div class="veil" aria-hidden="true"></div>
@@ -260,7 +316,8 @@ const games = liveGames();
       ) : (
         <CategoryStack quiz={quiz} view={view} />
       )}
-    </div>{/*
+    </div>
+    )}{/*
       These three hang off the end of the panel above with no whitespace between them. An
       expression that renders nothing still leaves the newline on each side of it, and
       three of those are three stray spaces in the Compass's result page — the one page on
@@ -393,9 +450,13 @@ const games = liveGames();
       </section>
     )}
 
-    <ShareBlock quiz={quiz} view={view} origin={Astro.site!.origin} />
+    <ShareBlock quiz={quiz} view={view} origin={Astro.site!.origin} line={readingLine} />
 
-    <EmailCapture quiz={quiz} view={view} enabled={emailOn} />
+    {/*
+      Never for a reading. The offer sends the result code to a mail provider, and a reading's
+      code names what someone is going through; that is not ours to hand on.
+    */}
+    {view.shape !== 'reading' && <EmailCapture quiz={quiz} view={view} enabled={emailOn} />}
 
     {/*
       The way on. A result used to end on the email form and, for some quizzes, three grey

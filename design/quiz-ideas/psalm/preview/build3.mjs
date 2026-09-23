@@ -17,6 +17,7 @@ const style = readFileSync(resolve(here, 'style.part'), 'utf8').replace('</style
 #next[disabled] { opacity: .4; cursor: default; }
 .row.quiet { align-items: center; }
 .chips.because { margin: .8rem 0 .9rem; }
+.said { margin: 0 0 .45rem; color: var(--ink-soft); font-size: .92rem; font-style: italic; }
 </style>`);
 const script = readFileSync(resolve(here, 'script3.part'), 'utf8');
 

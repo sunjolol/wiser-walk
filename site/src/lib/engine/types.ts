@@ -314,7 +314,28 @@ export interface UnipolarView extends ViewBase {
   rows: UnipolarRow[];
 }
 
-export type ResultView = BipolarView | UnipolarView;
+/**
+ * THE THIRD SHAPE: a reading.
+ *
+ * "Which Psalm are you living right now?" does not measure anything along axes or rank
+ * categories. It asks a few even-handed questions and matches the answers to ONE situation
+ * St Athanasius named in his Letter to Marcellinus, whose advice is a psalm. The person
+ * confirms the match themselves before they see it ("Does this sound like you?"), so the
+ * result is a single situation, never a score. Its rows and ranking are empty on purpose:
+ * every surface that draws rows or a ranking draws nothing for it.
+ *
+ * `situation` is the stable key (P3, P42S) that the result code carries; `psalm` is the
+ * English-numbered psalm it leads with, or the first of a set.
+ */
+export interface ReadingView extends ViewBase {
+  shape: 'reading';
+  state: 'clear';
+  situation: string;
+  psalm: number;
+  rows: [];
+}
+
+export type ResultView = BipolarView | UnipolarView | ReadingView;
 
 /**
  * A scoring strategy turns a sheet into per-group values, and values into a result.
@@ -526,7 +547,17 @@ export interface Quiz {
   groupNote?: GroupNote;
   /** Unipolar copy that replaces the vice-shaped defaults; see UnipolarCopy. */
   unipolarCopy?: UnipolarCopy;
+
+  /**
+   * False where two people's results make no sense side by side, so the compare page 404s
+   * and no surface offers "See where you land next to them". The Psalm quiz is the case: its
+   * result is what someone is going through right now, and setting two of those next to
+   * each other would expose it without telling anyone anything. Omitted means comparable.
+   */
+  comparable?: boolean;
 }
+
+export const isComparable = (q: Quiz) => q.comparable !== false;
 
 export const isLive = (q: Quiz) => q.status === 'live';
 

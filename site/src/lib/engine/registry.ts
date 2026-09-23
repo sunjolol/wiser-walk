@@ -8,8 +8,9 @@ import { theologyCompass } from '../quizzes/theology-compass';
 import { sevenDeadlySins } from '../quizzes/seven-deadly-sins';
 import { bibleFigure } from '../quizzes/bible-figure';
 import { spiritualGifts } from '../quizzes/spiritual-gifts';
+import { whichPsalm } from '../quizzes/which-psalm';
 
-export const QUIZZES: Quiz[] = [theologyCompass, sevenDeadlySins, bibleFigure, spiritualGifts];
+export const QUIZZES: Quiz[] = [theologyCompass, sevenDeadlySins, bibleFigure, spiritualGifts, whichPsalm];
 
 /** Live quizzes only: what the hub lists and what search engines are invited to index. */
 export const liveQuizzes = () => QUIZZES.filter(q => q.status === 'live');
@@ -47,6 +48,13 @@ export type {
  */
 function validate(quiz: Quiz): void {
   const where = `quiz "${quiz.slug}"`;
+  // A reading asks its own questions and names one situation; it has no statements to key
+  // and no groups to rank, and its rules are checked by the engine test instead.
+  if (quiz.strategy.shape === 'reading') {
+    if (quiz.items.length || quiz.groups.length) throw new Error(`${where}: a reading carries no items or groups`);
+    if (!quiz.outcomes.length) throw new Error(`${where}: a reading needs the psalms it can print as outcomes`);
+    return;
+  }
   if (!quiz.items.length) throw new Error(`${where} has no items`);
   if (!quiz.groups.length) throw new Error(`${where} has no groups`);
 

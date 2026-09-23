@@ -214,5 +214,26 @@ const lineNotes = {
 };
 for (const [id, n] of Object.entries(lineNotes)) outcomes[id].lineNote = n;
 
-writeFileSync(resolve(here, 'quiz.json'), JSON.stringify({ draft: 5, weights, core, follow, outcomes, notes, none, unused }, null, 1));
+// The one result written out in full, Psalm 3 (the preview's "See a finished result"). Quotations are checked verbatim
+// against the BSB by site/scripts/build-data.mjs, which refuses to write the site's copy if one has drifted.
+const full = {
+  P3: {
+    story: [
+      { t: "The heading puts it in David's worst days. His son Absalom had spent years winning the people over, until " },
+      { q: 'the conspiracy gained strength, and Absalom’s following kept increasing', ref: '2 Samuel 15:12' },
+      { t: '. David left Jerusalem on foot, ' },
+      { q: 'weeping as he went up. His head was covered, and he was walking barefoot', ref: '2 Samuel 15:30' },
+      { t: '. The psalm opens on that same word: how my foes have increased.' }
+    ],
+    own: 'Athanasius adds that people sing this psalm with their own troubles in view, and find its words are their own (§12).',
+    night: '3:5'
+  }
+};
+const quotes = {
+  '2 Samuel 15:12': 'While Absalom was offering the sacrifices, he sent for Ahithophel the Gilonite, David’s counselor, to come from his hometown of Giloh. So the conspiracy gained strength, and Absalom’s following kept increasing.',
+  '2 Samuel 15:30': 'But David continued up the Mount of Olives, weeping as he went up. His head was covered, and he was walking barefoot. And all the people with him covered their heads and went up, weeping as they went.'
+};
+for (const part of full.P3.story) if (part.q && !quotes[part.ref].includes(part.q)) throw new Error(`not verbatim: ${part.ref}`);
+
+writeFileSync(resolve(here, 'quiz.json'), JSON.stringify({ draft: 5, weights, core, follow, outcomes, notes, none, full, unused }, null, 1));
 console.log('quiz.json: draft 5,', core.length, 'core questions,', follow.length, 'follow-ups,', Object.keys(outcomes).length, 'outcomes; unused from draft 2:', unused.join(', ') || 'none');

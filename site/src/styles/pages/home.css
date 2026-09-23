@@ -134,7 +134,7 @@
 
 /* the compass is the shared card: .ccard in kit.css (components/CompassCard.astro) */
 
-/* THE RAIL. Three engravings in one ink: the Dore plates are a single family, so the rooms
+/* THE RAIL. Four engravings in one ink: the Dore plates are a single family, so the rooms
    read as a set, and what tells them apart is the scene and each room's own ink.
    They are printed soft (sepia, lifted blacks), because a hard black plate fights the pale
    sheet. */
@@ -155,7 +155,7 @@
 .hm-rail-track:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 24px; }
 .hm-rail .room { flex: 0 0 min(80vw, 20rem); min-height: 25rem; scroll-snap-align: start; user-select: none; -webkit-user-drag: none; }
 .hm-rail .room img { -webkit-user-drag: none; }
-.hm-rail .room--figures { flex-basis: min(84vw, 24rem); }
+.hm-rail .room--figures, .hm-rail .room--psalm { flex-basis: min(84vw, 24rem); }
 /* the fade says there is more; it is only drawn on a side that has more */
 .hm-rail::before, .hm-rail::after {
   content: ""; position: absolute; top: 0; bottom: 0; width: 4.5rem; z-index: 2; pointer-events: none;
@@ -180,15 +180,21 @@
   .hm-rail .room { min-height: 27rem; }
 }
 
+/* the psalm's ink is the pale blue of the sky the page opens on: the other three are warm, and
+   a fourth warm ink beside them would read as one of them */
+.room--psalm { --room-ink: #BCD6F2; }
 .room--figures { --room-ink: #EADFCB; }
 .room--gifts { --room-ink: #FFC98F; }
 .room--sins { --room-ink: #F2A596; }
-.room--figures, .room--gifts, .room--sins { background: #2a2622; }
-.room--figures > img, .room--gifts > img, .room--sins > img { filter: sepia(.34) contrast(.9) brightness(1.06); }
+.room--psalm, .room--figures, .room--gifts, .room--sins { background: #2a2622; }
+.room--psalm > img, .room--figures > img, .room--gifts > img, .room--sins > img { filter: sepia(.34) contrast(.9) brightness(1.06); }
+/* David's head sits a third of the way down his plate, above the scrim; the wall behind him is
+   pale, so the plate is printed a little under the others */
+.room--psalm > img { object-position: 48% 30%; filter: sepia(.34) contrast(.9) brightness(.96); }
 .room--figures > img { object-position: 50% 18%; }
 .room--gifts > img { object-position: 42% 22%; filter: sepia(.34) contrast(.9) brightness(.9); }
 .room--sins > img { object-position: 50% 12%; }
-.room--figures::after, .room--gifts::after, .room--sins::after {
+.room--psalm::after, .room--figures::after, .room--gifts::after, .room--sins::after {
   content: ""; position: absolute; inset: 0; z-index: -1;
   background: linear-gradient(180deg, rgba(38, 33, 28, 0) 28%, rgba(38, 33, 28, .74) 62%, rgba(34, 30, 26, .95));
 }

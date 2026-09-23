@@ -27,6 +27,7 @@ import { QUIZZES, getQuiz, quizHref } from '../lib/engine/registry';
 import { groupNounPlural, outcomeNounPlural } from '../lib/engine/types';
 import type { Quiz } from '../lib/engine/types';
 import { artFor } from '../lib/art';
+import { SITUATIONS } from '../lib/strategies/reading';
 
 const compass = getQuiz('theology-compass')!;
 /** The Compass first, then registry order; published first, drafts after. */
@@ -49,16 +50,22 @@ const giftsQuiz = getQuiz('spiritual-gifts');
  * Read off the quiz, so a new quiz brings its own. A quiz with outcomes names them (18
  * traditions, 25 figures); a ranking names its categories only when it has a true word for
  * them (19 gifts), because "7 categories" is the engine's vocabulary on a reader's page.
+ * A reading (the Psalm quiz) counts the situations it can name: its outcomes are every psalm
+ * a result can print, including the ones listed beside the one you get, so "78 psalms" would
+ * promise a spread of results it does not have.
  */
 const countFact = (q: Quiz): string =>
-  q.outcomes.length
-    ? `${q.outcomes.length} ${outcomeNounPlural(q)}`
-    : q.groupNounPlural
-      ? `${q.groups.length} ${groupNounPlural(q)}`
-      : `${q.items.length} statements`;
+  q.strategy.shape === 'reading'
+    ? `${SITUATIONS.length} situations`
+    : q.outcomes.length
+      ? `${q.outcomes.length} ${outcomeNounPlural(q)}`
+      : q.groupNounPlural
+        ? `${q.groups.length} ${groupNounPlural(q)}`
+        : `${q.items.length} statements`;
 
 /** An ink per quiz, so no two rooms read alike: the home page's, kept the same on purpose. */
 const INK: Record<string, string> = {
+  'which-psalm': '#BCD6F2',
   'bible-figure': '#EADFCB',
   'spiritual-gifts': '#FFC98F',
   'seven-deadly-sins': '#F2A596'

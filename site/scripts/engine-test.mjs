@@ -81,7 +81,8 @@ console.log('1b. publication status');
     'theology-compass': 'live',
     'bible-figure': 'live',
     'spiritual-gifts': 'live',
-    'seven-deadly-sins': 'live'
+    'seven-deadly-sins': 'live',
+    'which-psalm': 'live'
   };
   for (const [slug, status] of Object.entries(want)) {
     const q = getQuiz(slug);
@@ -101,6 +102,8 @@ console.log('1b. publication status');
 // ------------------------------------------------------- 2. codec round-trips
 console.log('2. codec round-trips');
 for (const q of QUIZZES) {
+  // A reading's code carries one situation, not a value per group; section 18 checks it.
+  if (q.strategy.shape === 'reading') continue;
   const steps = q.config.radix - 1;
   let bad = 0, n = 0;
   // Every reachable value on every group, plus the corners.
@@ -405,6 +408,7 @@ console.log('6d. the share bars keep position and magnitude apart');
 console.log('7. share text');
 {
   for (const q of QUIZZES) {
+    if (q.strategy.shape === 'reading') continue; // section 18
     const values = q.groups.map((_, i) => (i % 2 ? 70 : 30));
     const text = shareTextFor(q, values, 'https://wiserwalk.com');
     const lines = text.split('\n');
@@ -997,7 +1001,7 @@ console.log('12c. the wide codec carries nineteen gifts');
   // ...and no other quiz's code opens this one, or a reader would meet a fabricated result.
   for (const q of QUIZZES) {
     if (q.slug === sg.slug) continue;
-    const foreign = encodeFor(q, q.groups.map(() => 50));
+    const foreign = encodeFor(q, q.strategy.shape === 'reading' ? [0] : q.groups.map(() => 50));
     if (decodeFor(sg, foreign) !== null) fail(`a ${q.slug} code decoded under spiritual-gifts`);
   }
   ok('no other quiz\'s code decodes under spiritual-gifts');
@@ -1299,6 +1303,7 @@ console.log('14. the note travels with the name it belongs to');
    * so, for every quiz at once.
    */
   for (const q of QUIZZES) {
+    if (q.strategy.shape === 'reading') continue; // names nothing that carries a note; section 18
     const values = q.groups.map((_, i) => (i % 2 ? 75 : 25));
     const lines = shareTextFor(q, values, 'https://wiserwalk.com');
     const view = resultFor(q, values);
@@ -1620,6 +1625,131 @@ console.log('the seven deadly sins: strength words, ties and "Next"');
   if (!/Next: /.test(pair.summary) || !/wrath/.test(pair.summary) || !/sloth/.test(pair.summary) || /envy/.test(pair.summary)) {
     fail('two runners-up on one score were not both named: ' + pair.summary);
   } else ok(`two runners-up on one score are both named: "${pair.summary}"`);
+}
+
+// ------------------------------- 18. which psalm: a reading, not a measurement
+/*
+ * The third shape. Its rules are data (src/data/which-psalm.json), so what can go wrong is a
+ * rule that names a question or an answer that does not exist (a result nobody can reach), a
+ * code that changes meaning, a verse reference that is not in the text, a follow-up asked out
+ * of order, or a share text that says how someone answered. Each of those is checked here.
+ */
+console.log('18. which psalm are you living right now?');
+{
+  const OUT_READING = resolve(ROOT, 'node_modules/.engine-test-reading.mjs');
+  await build({
+    entryPoints: [resolve(ROOT, 'src/lib/strategies/reading.ts')],
+    outfile: OUT_READING, bundle: true, format: 'esm', platform: 'node', target: 'node18', logLevel: 'silent'
+  });
+  const R = await import(pathToFileURL(OUT_READING).href);
+  rmSync(OUT_READING, { force: true });
+  const q = getQuiz('which-psalm');
+  const { READING, SITUATIONS } = R;
+  const questions = [...READING.core, ...READING.follow];
+  const qById = new Map(questions.map(x => [x.id, x]));
+
+  // Every rule names real questions and real answers, or a result silently becomes unreachable.
+  let badRef = 0;
+  const checkCond = (where, cond) => {
+    for (const [k, vals] of Object.entries(cond)) {
+      const qq = qById.get(k);
+      if (!qq) { badRef++; fail(`${where}: no question "${k}"`); continue; }
+      for (const v of vals) if (!qq.options.some(o => o[0] === v)) { badRef++; fail(`${where}: "${k}" has no answer "${v}"`); }
+    }
+  };
+  for (const id of SITUATIONS) {
+    const o = READING.outcomes[id];
+    if (!o.need.length) { badRef++; fail(`${id}: no condition at all`); }
+    o.need.forEach((n, i) => checkCond(`${id} need ${i}`, n));
+    checkCond(`${id} like`, o.like);
+    if (o.lineNote?.when) checkCond(`${id} lineNote`, o.lineNote.when);
+  }
+  READING.follow.forEach(f => (f.when ?? []).forEach((w, i) => checkCond(`follow-up ${f.id} when ${i}`, w)));
+  if (!badRef) ok(`${SITUATIONS.length} situations and ${READING.follow.length} follow-ups name only real questions and answers`);
+
+  // Codes: one per situation, round-tripping, bound to this quiz, and junk refused.
+  let codeBad = 0;
+  SITUATIONS.forEach((id, i) => {
+    const code = encodeFor(q, [i]);
+    if (code !== 'PS' + id.slice(1)) { codeBad++; fail(`${id} encodes as ${code}`); }
+    const back = decodeFor(q, code);
+    if (!back || back[0] !== i) { codeBad++; fail(`${code} does not decode back to ${id}`); }
+    if (!/^[0-9A-Z.]{1,96}$/.test(code)) { codeBad++; fail(`${code} would be refused by the shelf and the account table`); }
+  });
+  if (!codeBad) ok(`all ${SITUATIONS.length} result codes round-trip (e.g. ${encodeFor(q, [0])})`);
+  const junk = ['', 'PS', 'PS0', 'PS999', 'PSX3', 'P3', '3', 'ps3x', 'PS3.', 'ZZZZZZ'];
+  const leaked = junk.filter(c => decodeFor(q, c) !== null);
+  if (leaked.length) fail('junk decoded under which-psalm: ' + leaked.join(', '));
+  else ok(`${junk.length} malformed codes refused`);
+  for (const other of QUIZZES) {
+    if (other.slug === q.slug) continue;
+    const foreign = encodeFor(other, other.groups.map(() => 50));
+    if (decodeFor(q, foreign) !== null) fail(`a ${other.slug} code decoded under which-psalm`);
+    if (decodeFor(other, encodeFor(q, [0])) !== null) fail(`a which-psalm code decoded under ${other.slug}`);
+  }
+  ok('no other quiz\'s code opens a psalm, and no psalm code opens another quiz');
+
+  // The two-person page does not exist for it, and the view names one psalm and ranks nothing.
+  if (parseCodes(q, encodeFor(q, [0]) + '.' + encodeFor(q, [1])) !== null) fail('which-psalm has a compare page');
+  else ok('no compare page: two people\'s situations are never set side by side');
+  const v = resultFor(q, [SITUATIONS.indexOf('P3')]);
+  if (v.shape !== 'reading' || v.headline !== 'Psalm 3' || v.rows.length || v.ranked.length) fail('P3 view is wrong: ' + JSON.stringify(v));
+  else ok(`P3 reads "${v.headline}": "${v.summary}"`);
+
+  // The share text: the title, the psalm, the link, and nothing about the answers.
+  const text = shareTextFor(q, [SITUATIONS.indexOf('P3')], 'https://wiserwalk.com');
+  const lines = text.split('\n');
+  if (lines[0] !== q.shareTitle || lines[1] !== 'Psalm 3' || lines[2] !== 'https://wiserwalk.com/r/which-psalm/PS3' || lines.length !== 3) {
+    fail('share text is not title, psalm, link:\n' + text);
+  } else ok('share text is the title, the psalm and the link, nothing more');
+
+  // Every verse a result points at is in the text the site ships.
+  const psalms = JSON.parse(readFileSync(resolve(ROOT, 'src/data/psalms.json'), 'utf8')).psalms;
+  let missing = 0;
+  const has = ref => { const [c, vv] = ref.split(':').map(Number); return psalms[c]?.verses.some(x => x[0] === vv); };
+  for (const id of SITUATIONS) {
+    const o = READING.outcomes[id];
+    for (const n of [o.psalm, ...(o.set ?? []), ...o.also.map(x => parseInt(String(x), 10))]) if (!psalms[n]) { missing++; fail(`${id}: Psalm ${n} is not in psalms.json`); }
+    for (const f of ['names', 'turn', 'hard']) if (o[f] && !has(o[f])) { missing++; fail(`${id}: ${f} ${o[f]} is not in the text`); }
+    if (o.lineNote && !has(o.lineNote.ref)) { missing++; fail(`${id}: line note ${o.lineNote.ref} is not in the text`); }
+  }
+  if (!missing) ok(`every psalm and verse the ${SITUATIONS.length} results print is in psalms.json (${Object.keys(psalms).length} psalms)`);
+
+  // Athanasius's numbering, as the result page prints it for Orthodox and older Catholic readers.
+  const greek = { 3: '3', 13: '12', 51: '50', 116: '114 and 115', 147: '146 and 147', 150: '150', 9: '9', 10: '9', 114: '113' };
+  const wrongGreek = Object.entries(greek).filter(([n, g]) => R.greekNumber(+n) !== g);
+  if (wrongGreek.length) fail('Greek numbering wrong for ' + wrongGreek.map(([n]) => n).join(', '));
+  else ok('Greek numbering: 51 is his 50, 13 his 12, 116 his 114 and 115');
+
+  // A follow-up comes straight after the answer that calls for it.
+  {
+    const a = { season: 'hard', trend: 'worse', feel: ['hurt'], focus: 'people', people: ['against'] };
+    const next = R.nextQuestion(a);
+    if (next?.id !== 'who') fail(`after "Against me" the next question is ${next?.id}, not "Who are they, mostly?"`);
+    else ok('"Who are they, mostly?" follows the people question directly');
+  }
+
+  // Walk thousands of random answer sets: every walk ends, and every situation can be offered.
+  let longest = 0, empty = 0;
+  const offered = new Set();
+  const N = 20000;
+  for (let i = 0; i < N; i++) {
+    const a = {};
+    let qq, steps = 0;
+    while ((qq = R.nextQuestion(a)) && steps < 40) {
+      const pick = () => qq.options[(i * 7 + steps * 13 + Math.floor(Math.random() * 97)) % qq.options.length][0];
+      a[qq.id] = qq.max ? [pick()] : pick();
+      steps++;
+    }
+    if (steps >= 40) { fail('a walk did not end'); break; }
+    longest = Math.max(longest, steps);
+    const r = R.rank(a);
+    if (!r.length) empty++;
+    r.slice(0, 3).forEach(x => offered.add(x.id));
+  }
+  const never = SITUATIONS.filter(id => !offered.has(id));
+  if (never.length) fail('never offered in 20,000 walks: ' + never.join(', '));
+  else ok(`20,000 random walks: at most ${longest} questions, every situation offered, ${(100 * empty / N).toFixed(1)}% meet the honest "the letter doesn't name it" page`);
 }
 
 rmSync(OUT, { force: true });

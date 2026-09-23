@@ -52,8 +52,11 @@ function step() {
 function ask(q) {
   const grid = q.words ? ' words' : q.short ? ' short' : '';
   const chosen = [];
+  const t = QUIZ.follow.includes(q) ? trigger(QUIZ, a, q) : null;
+  const said = t && order[order.length - 1] !== t[0] ? `<p class="said">You said: ${esc(optText(t[0], t[1]))}</p>` : '';
   app.innerHTML = brand + `
     <p class="step">Question ${order.length + 1}${q.max ? ' · pick one or two' : ''}</p>
+    ${said}
     <h2>${esc(q.q)}</h2>
     <div class="opts${grid}">${q.options.map(o => `<button class="opt" type="button" data-k="${o[0]}" aria-pressed="false">${esc(o[1])}</button>`).join('')}</div>
     <div class="row quiet"><button class="back" type="button" id="back">&larr; ${order.length ? 'Back' : 'Leave the quiz'}</button>

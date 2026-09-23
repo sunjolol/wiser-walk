@@ -5,7 +5,7 @@ published: 2026-09-03
 minutes: 6
 answer: "Scripture treats gratitude as a practice before it is a feeling, which is why it can be commanded at all. Name particular things rather than everything, fold thanks into your asking, say it out loud to the person, and keep it up on the days your mood disagrees."
 tags: [formation, gratitude]
-quizzes: []
+quizzes: [which-psalm]
 image: /img/articles/how-to-become-more-grateful.jpg
 imageAlt: "Two field workers stand with heads bowed in prayer at dusk"
 imageCredit: "Jean-François Millet, The Angelus, 1857–59"

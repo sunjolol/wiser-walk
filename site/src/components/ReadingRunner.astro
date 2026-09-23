@@ -1,0 +1,250 @@
+---
+/**
+ * The runner for a reading ("Which Psalm are you living right now?").
+ *
+ * Not the statement runner with other words in it. A reading asks questions with options,
+ * some of which take two picks, asks follow-ups only when an answer calls for them, and ends
+ * not on a score but on a question back to the reader: "Does this sound like you?". Nothing
+ * is theirs until they say yes. So it is its own component, with its own root (#reading),
+ * and the quiz page's statement script never finds anything here to bind.
+ *
+ * THE PREVIEW IS THE SPEC. The owner played design/quiz-ideas/psalm/preview/ on his phone and
+ * called it "phenomenal and very powerful" (2026-09-23), so every screen below says and does
+ * what that one did: the question count, "pick one or two", "You said: …" over a follow-up
+ * that could not sit straight after the answer that called for it, Back that forgets the
+ * follow-ups it no longer calls for, three matches at most, and then the honest page.
+ *
+ * The rules are NOT copied here. What is asked next, what called for a follow-up and what the
+ * answers match all come from strategies/reading.ts, which the result page and the tests use
+ * too; this file only draws screens and remembers the order they were answered in.
+ *
+ * The intro (how it works, the way in again, what to read next) is the default slot, and is
+ * hidden the moment play begins, so the question is the whole page.
+ */
+import type { Quiz } from '../lib/engine/types';
+import '../styles/pages/reading.css';
+
+interface Props { quiz: Quiz; }
+const { quiz } = Astro.props;
+---
+<div class="rd-root" id="reading" data-quiz={quiz.slug}>
+  <noscript>
+    <div class="note">
+      <p>This quiz needs JavaScript enabled.</p>
+    </div>
+  </noscript>
+
+  <div id="reading-intro"><slot /></div>
+
+  <div id="reading-play" hidden>
+    <div class="rd-card" id="reading-screen"></div>
+  </div>
+</div>
+
+<script>
+  import {
+    READING, nextQuestion, trigger, rank, meets, optionText, codeFor
+  } from '../lib/strategies/reading';
+  import type { Answers, Question } from '../lib/strategies/reading';
+  // A finished result is kept on this device, so it can be found again on /me/. A blocked
+  // or full storage is a no-op rather than an error.
+  import { addResult } from '../lib/shelf';
+
+  const root = document.getElementById('reading');
+  const intro = document.getElementById('reading-intro');
+  const play = document.getElementById('reading-play');
+  const screen = document.getElementById('reading-screen');
+
+  if (root && intro && play && screen) {
+    const slug = root.dataset.quiz ?? '';
+    const ALL = [...READING.core, ...READING.follow];
+    const byId = (id: string) => ALL.find(q => q.id === id);
+    const isCore = (id: string) => READING.core.some(q => q.id === id);
+    const esc = (s: unknown) => String(s).replace(/[&<>"]/g, c =>
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
+
+    let a: Answers = {};        // the answers so far: one key, or an array for a two-pick
+    let order: string[] = [];   // question ids in the order they were answered
+    let queue: string[] = [];   // the matches at the check step, best first
+    let showing = 0;            // which of them is on screen
+
+    /*
+     * A tap that lands in the first moment of a new screen is the second half of a double
+     * tap on the last one, not an answer: the options sit in the same place from question to
+     * question, so without this a quick thumb answers two questions with one gesture.
+     */
+    let shownAt = 0;
+    const settled = () => performance.now() - shownAt > 250;
+
+    /*
+     * Every screen is drawn the same way: the new markup, the top of the page, and focus on
+     * its heading, so a screen reader reads the new question and the keyboard starts from it.
+     */
+    function show(html: string) {
+      screen!.innerHTML = html;
+      shownAt = performance.now();
+      window.scrollTo(0, 0);
+      (screen!.querySelector('[data-focus]') as HTMLElement | null)?.focus({ preventScroll: true });
+    }
+
+    const backButton = (label: string) =>
+      `<div class="rd-row rd-row--quiet"><button class="rd-back" type="button" data-back>&larr; ${label}</button></div>`;
+
+    function begin() {
+      a = {}; order = [];
+      intro!.hidden = true;
+      play!.hidden = false;
+      step();
+    }
+
+    function leave() {
+      play!.hidden = true;
+      intro!.hidden = false;
+      window.scrollTo(0, 0);
+    }
+
+    /** The next question, or, when the answers are complete, the check. */
+    function step() {
+      const q = nextQuestion(a);
+      if (q) return ask(q);
+      queue = rank(a).slice(0, 3).map(r => r.id);
+      showing = 0;
+      queue.length ? check() : none();
+    }
+
+    function ask(q: Question) {
+      const grid = q.words ? ' rd-opts--words' : q.short ? ' rd-opts--short' : '';
+      const chosen: string[] = [];
+      /*
+       * A follow-up is asked straight after the answer that called for it. Where it cannot
+       * be (two follow-ups called by the same answer, the second waits for the first), the
+       * reader is told which of their answers it is about, so it never arrives from nowhere.
+       */
+      const t = isCore(q.id) ? null : trigger(a, q);
+      const said = t && order[order.length - 1] !== t[0]
+        ? `<p class="rd-said">You said: ${esc(optionText(t[0], t[1]))}</p>` : '';
+      // Single picks are plain buttons; only a question that takes two has toggles.
+      const pressed = q.max ? ' aria-pressed="false"' : '';
+
+      show(`
+        <p class="rd-step">Question ${order.length + 1}${q.max ? ' · pick one or two' : ''}</p>
+        ${said}
+        <h2 tabindex="-1" data-focus>${esc(q.q)}</h2>
+        <div class="rd-opts${grid}">${q.options.map(([k, text]) =>
+          `<button class="rd-opt" type="button" data-k="${esc(k)}"${pressed}>${esc(text)}</button>`).join('')}</div>
+        <div class="rd-row rd-row--quiet">
+          <button class="rd-back" type="button" data-back>&larr; ${order.length ? 'Back' : 'Leave the quiz'}</button>
+          ${q.max ? '<button class="btn" type="button" data-next disabled>Next</button>' : ''}
+        </div>`);
+
+      const opts = [...screen!.querySelectorAll<HTMLButtonElement>('.rd-opt')];
+      const next = screen!.querySelector<HTMLButtonElement>('[data-next]');
+      opts.forEach(b => b.addEventListener('click', () => {
+        if (!settled()) return;
+        const k = b.dataset.k!;
+        if (!q.max) { a[q.id] = k; order.push(q.id); return step(); }
+        // Two at most: a third pick lets go of the oldest, rather than refusing the tap.
+        const i = chosen.indexOf(k);
+        if (i >= 0) chosen.splice(i, 1);
+        else { if (chosen.length >= q.max) chosen.shift(); chosen.push(k); }
+        opts.forEach(x => x.setAttribute('aria-pressed', String(chosen.includes(x.dataset.k!))));
+        next!.disabled = !chosen.length;
+      }));
+      next?.addEventListener('click', () => {
+        if (!chosen.length) return;
+        a[q.id] = [...chosen]; order.push(q.id); step();
+      });
+      screen!.querySelector('[data-back]')!.addEventListener('click', back);
+    }
+
+    /*
+     * Back undoes the last answer and asks that question again. A follow-up that only the
+     * undone answer called for is forgotten with it, so changing "How have the people around
+     * you been lately?" does not leave "Who are they, mostly?" answered behind it.
+     */
+    function back() {
+      if (!order.length) return leave();
+      const last = order.pop()!;
+      delete a[last];
+      for (const id of [...order]) {
+        if (isCore(id)) continue;
+        if (!(byId(id)?.when ?? []).some(w => meets(w, a))) {
+          delete a[id];
+          order.splice(order.indexOf(id), 1);
+        }
+      }
+      ask(byId(last)!);
+    }
+
+    function check() {
+      const o = READING.outcomes[queue[showing]!]!;
+      show(`
+        <p class="rd-kicker">${showing === 0 ? 'Does this sound like you?' : 'Is it closer to this?'}</p>
+        <p class="rd-seen" tabindex="-1" data-focus>${esc(o.seen)}</p>
+        <div class="rd-row">
+          <button class="btn" type="button" data-yes>Yes, that's it</button>
+          <button class="btn ghost" type="button" data-no>Not quite</button>
+        </div>
+        ${backButton('Change my answers')}`);
+      screen!.querySelector('[data-yes]')!.addEventListener('click', () => {
+        if (settled()) finish(queue[showing]!, false);
+      });
+      screen!.querySelector('[data-no]')!.addEventListener('click', () => {
+        if (!settled()) return;
+        showing++;
+        showing < queue.length ? check() : none();
+      });
+      screen!.querySelector('[data-back]')!.addEventListener('click', back);
+    }
+
+    /*
+     * The honest page. None of the matches was theirs, or nothing matched at all, so it says
+     * plainly that the letter does not name what they are going through, and offers the
+     * psalms Athanasius gave for what it is doing to them. Each goes straight to its result.
+     */
+    function none() {
+      show(`
+        <p class="rd-step">None of those</p>
+        <h2 tabindex="-1" data-focus>Then here is what we can honestly say.</h2>
+        <p class="rd-lede">${esc(READING.none.lead)}</p>
+        <div class="rd-opts">${READING.none.options.map(([id, text]) =>
+          `<button class="rd-opt" type="button" data-k="${esc(id)}">${esc(text)}</button>`).join('')}</div>
+        ${backButton('Change my answers')}`);
+      screen!.querySelectorAll<HTMLButtonElement>('.rd-opt').forEach(b => b.addEventListener('click', () => {
+        if (settled()) finish(b.dataset.k!, true);
+      }));
+      screen!.querySelector('[data-back]')!.addEventListener('click', back);
+    }
+
+    /*
+     * "Yes, that's it". The code in the URL carries the situation and nothing else, so a
+     * shared link says which psalm and not how anybody answered. The answers go to the
+     * result page through this tab's own storage, where it can show "because you said…" to
+     * the one person who said it; they are never sent anywhere, and a link opened anywhere
+     * else finds none.
+     */
+    function finish(id: string, fromNone: boolean) {
+      const code = codeFor(id);
+      try {
+        sessionStorage.setItem('ww:took:' + slug, code);
+        sessionStorage.setItem('ww:answers:' + slug, JSON.stringify(
+          fromNone ? { code, answers: a, fromNone: true } : { code, answers: a }));
+      } catch (e) {}
+
+      // One instant, used twice: the device's copy of a finish and the account's have to
+      // carry the same moment (the same rule as the statement runner's).
+      const at = new Date().toISOString();
+      addResult(slug, code, at);
+      // Said out loud rather than done here. An account, where there is one, listens for
+      // this and puts the finish on its queue; the event is dispatched synchronously, so
+      // the queue is written before the navigation below.
+      document.dispatchEvent(
+        new CustomEvent('ww:finished', { detail: { quiz: slug, code, at } })
+      );
+      window.location.href = `/r/${slug}/${code}/`;
+    }
+
+    // The button in the band, and the one in the room at the foot of the intro.
+    document.querySelectorAll('[data-start]').forEach(b => b.addEventListener('click', begin));
+  }
+</script>

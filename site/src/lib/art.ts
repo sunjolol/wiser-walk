@@ -1,7 +1,7 @@
 /**
  * A picture for a quiz, and a plate for a figure.
  *
- * The home page pairs each quiz with a Doré engraving printed in one ink, so the four cards
+ * The home page pairs each quiz with a Doré engraving printed in one ink, so the cards
  * read as a family without any two of them looking alike. Any page that shows a quiz as a
  * picture should use the SAME picture, or a reader meets two different faces for one quiz.
  * So the pairing lives here, once, and the home page's own composition is left alone.
@@ -52,6 +52,14 @@ const ART: Record<string, QuizArt> = {
     src: '/img/dore-eden.jpg',
     alt: 'Gustave Doré’s engraving of Adam and Eve driven out of Eden',
     objectPosition: '50% 12%'
+  },
+  /* The plate David's own figure page wears, and on purpose: the finished example of this
+     quiz is Psalm 3, "when he fled from his son Absalom", and this is the same story's end.
+     A king crowned and alone, grieving the son who hunted him; nothing violent in it. */
+  'which-psalm': {
+    src: '/img/figures/david.jpg',
+    alt: 'Gustave Doré’s engraving of David standing crowned and bowed as he mourns Absalom',
+    objectPosition: '48% 30%'
   }
 };
 

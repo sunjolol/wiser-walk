@@ -939,6 +939,7 @@
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .07), 0 10px 26px rgba(0, 0, 0, .35);
 }
 /* each quiz's ink, the home page's and /quizzes/'s, kept the same on purpose */
+.qcard--which-psalm { --room-ink: #BCD6F2; }
 .qcard--bible-figure { --room-ink: #EADFCB; }
 .qcard--spiritual-gifts { --room-ink: #FFC98F; }
 .qcard--seven-deadly-sins { --room-ink: #F2A596; }

@@ -43,6 +43,10 @@ Moses keeps the figure quiz's own plate (`dore-moses.jpg`) and Paul keeps the gi
 (`dore-paul.jpg`): Commons has no calm Paul plate at a usable size, and its "Paul Addresses the
 Crowd After His Arrest" is a riot with the dead on the ground.
 
+`figures/david.jpg` is also the plate of **Which Psalm are you living right now?** (added
+2026-09-23): the quiz's finished example is Psalm 3, "when he fled from his son Absalom", and
+this is the same story's end. One file, two uses, so nothing new was downloaded.
+
 **No plate, and none invented: Deborah, Hannah, Abigail, Rahab, Barnabas.** Doré drew no usable
 one of them, so those pages fall back to the quiz's Moses plate. If a plate is ever added, it
 goes in `src/lib/art.ts` under the same two rules.

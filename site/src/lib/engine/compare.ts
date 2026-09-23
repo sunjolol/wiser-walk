@@ -102,6 +102,8 @@ export function parseCodes(
   param: string,
   count: number = MAX_CODES
 ): number[][] | null {
+  // A quiz that is not comparable has no two-person page at all (see Quiz.comparable).
+  if (quiz.comparable === false) return null;
   const all = decodeAll(quiz, param);
   if (!all || all.length !== count) return null;
   return all;
@@ -110,6 +112,7 @@ export function parseCodes(
 export function compare(quiz: Quiz, a: number[], b: number[]): Comparison {
   const va = resultFor(quiz, a);
   const vb = resultFor(quiz, b);
+  if (va.shape === 'reading') throw new Error(`compare: "${quiz.slug}" is not comparable`);
 
   if (va.shape === 'bipolar') {
     // Same quiz, so the same strategy and the same shape. The cast is the type system

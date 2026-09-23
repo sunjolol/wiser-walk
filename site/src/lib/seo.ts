@@ -86,6 +86,15 @@ export const SEO: Record<string, { title: string; description: string }> = {
     description:
       'The 57-statement spiritual gifts test on paper, free, with a scoring key for all 19 gifts. Print it for a class, a small group or a church.'
   },
+  /* Added with the quiz (2026-09-23). People do not search for the quiz's name; they search
+     "what psalm should I read" and "a psalm for" whatever they are in. The title keeps the
+     quiz's own question, which already says both, and the description says what the page
+     really does: a few taps, then one psalm, in full, with the reason a Father gave for it. */
+  '/q/which-psalm/': {
+    title: 'Which Psalm are you living right now? Free 3-minute quiz',
+    description:
+      'A few honest taps about your life right now, then the psalm St Athanasius gave for exactly that in the 300s, printed in full, with his reason. Free.'
+  },
   '/q/seven-deadly-sins/': {
     title: 'Which of the 7 deadly sins are you weakest to? Free quiz',
     description:
@@ -300,6 +309,145 @@ export function clip(text: string, max = 158): string {
 }
 
 /**
+ * THE PSALM PAGES (2026-09-23): what each /psalm/<n>/ page says to a search engine.
+ *
+ * Someone arriving at one of these typed "psalm 13", or "a psalm for when" something is
+ * happening to them. So the title is the psalm's number and then the situation in the words
+ * a person would use for it: "Psalm 13: when it feels like God has forgotten you".
+ *
+ * The situation is always Athanasius's, never ours. Each phrase below is a short plain
+ * rendering of one situation's own `seen` line in src/data/which-psalm.json (that line is
+ * too long for a title, which is the only reason these exist), and it claims nothing the
+ * situation does not. They are keyed by SITUATION, because a psalm Athanasius named beside
+ * another for the same thing (56 beside 54) is for the same thing, and says so.
+ *
+ * Every phrase begins "when" and is at most 54 characters, so "Psalm 143: " plus the phrase
+ * stays inside the 65 a result shows. Reverent capitals throughout, as on every page.
+ */
+export const PSALM_TOPICS: Record<string, string> = {
+  P3: 'when your own people turn against you',
+  P55: 'when friends spread lies about you',
+  P31: 'when friends and family turn on you for the truth',
+  P42: 'when you long for God and people ask where He is',
+  P52: 'when someone lies about you to a person in power',
+  P54: 'when you are hunted and people want you handed over',
+  P7: 'when you find out people are plotting against you',
+  P11: 'when someone is set on rattling you',
+  P64: 'when people keep trying to frighten you',
+  P57: 'when the one hunting you comes into your hiding place',
+  P27: 'when they gang up on you and look down on you',
+  P63: 'when you’ve been driven out and you’re on your own',
+  P13: 'when it feels like God has forgotten you',
+  P26: 'when you want God to judge who is in the right',
+  P28: 'when people scheming against you fill your thoughts',
+  P40: 'when you’re holding on and wonder what it’s for',
+  P62: 'when people are out to destroy you',
+  P51: 'when you’ve done wrong and want to come back to God',
+  P6: 'when you sense a warning from God and it shakes you',
+  P137: 'when you catch wrong thoughts carrying you off',
+  P39: 'when you guard yourself and the pull grows stronger',
+  P73S: 'when you have nearly lost your footing',
+  P102: 'when life has worn you down and you feel empty',
+  P42S: 'when something in you is downcast and won’t settle',
+  P118: 'when you’re afraid and need something to hold on to',
+  P91: 'when you’re tired of living afraid',
+  P84: 'when you long for God’s house and your home with Him',
+  P103D: 'when God has slipped into the background',
+  P143W: 'when there’s something you can’t work out alone',
+  P73: 'when the ungodly prosper and good people suffer',
+  P37: 'when wrongdoers ride high and you’re tempted to envy',
+  P12: 'when pride is everywhere and nothing good seems left',
+  P14: 'when people mock the idea that God cares for the world',
+  P79: 'when Christians are killed and churches destroyed',
+  P20: 'when someone you love is in trouble',
+  P5: 'when you need words to plead with God',
+  P41: 'when people around you are going without',
+  P4: 'when the Lord has heard you and you want to thank Him',
+  P18: 'when you’ve been rescued from the people hunting you',
+  P34: 'when you’ve escaped people who meant you harm',
+  P46: 'when God has brought you through',
+  P139: 'when a hard test is over and you want to thank God',
+  P85: 'when a time under God’s anger has passed',
+  P101: 'when you learn that God’s judgment comes with mercy',
+  P23: 'when you can see the Lord shepherding you',
+  P19: 'when you marvel at creation and at God’s commands',
+  P103: 'when you want to thank God in everything',
+  P145: 'when you keep seeing God’s kindness',
+  P120: 'when you can feel yourself climbing higher',
+  P30: 'when you dedicate your home, and yourself, to God',
+  P32: 'when you see someone baptised and made new',
+  P93: 'when you just want to sing to God',
+  P15: 'when you want to be someone who belongs with God'
+};
+
+/**
+ * Three psalms lead two situations each. One phrase has to speak for both, and one of the two
+ * has to head the page; `lead` names it. Psalm 73's is the one it is best known for (the
+ * ungodly doing well), which is also the one whose turn, "until I entered God’s sanctuary", is
+ * the psalm's own hinge.
+ */
+export const PSALM_OWN_TOPIC: Record<number, { topic: string; lead: string }> = {
+  42: { topic: 'when you long for God and your soul is downcast', lead: 'P42' },
+  73: { topic: 'when the ungodly prosper and good people suffer', lead: 'P73' },
+  103: { topic: 'when you want to wake your soul up and thank God', lead: 'P103D' }
+};
+
+/** How a psalm stands in the situation that heads its page. */
+export type PsalmRole = 'lead' | 'also' | 'set';
+
+/**
+ * The title, the description and the band's one line for one psalm page.
+ *
+ * `seen` is the heading situation's own line, and it opens the description as a question put
+ * to the reader ("Your own people have turned on you...?"), because that is the sentence a
+ * person in that situation recognises. Where it leaves no room for the rest, the plain phrase
+ * stands in for it; nothing is ever cut mid-sentence.
+ *
+ * The fifteen Songs of Ascents are one situation between them ("to say at every step
+ * forward", in Athanasius's own reason), so each is titled as what it is, a Song of Ascents,
+ * with that phrase after it.
+ */
+export function psalmListing(
+  n: number,
+  role: PsalmRole,
+  situation: { id: string; seen: string },
+  /** For an also-psalm, the psalm that comes first in the same situation. */
+  first?: number
+): { title: string; description: string; lede: string; topic: string } {
+  const topic = PSALM_OWN_TOPIC[n]?.topic ?? PSALM_TOPICS[situation.id];
+  // A situation added to the quiz data without a phrase here fails the build, rather than
+  // shipping a page titled with words nobody chose for it.
+  if (!topic) throw new Error(`seo: no search phrase for situation ${situation.id} (PSALM_TOPICS)`);
+  /* Psalm 121 leads the Songs of Ascents in the data, but the advice is all fifteen of them,
+     so its page speaks of the fifteen exactly as the other fourteen do. */
+  const ascent = role === 'set' || situation.id === 'P120';
+  const title = ascent ? `Psalm ${n}: a Song of Ascents for every step forward` : `Psalm ${n}: ${topic}`;
+
+  const lede = ascent
+    ? `One of the fifteen Songs of Ascents, which St Athanasius said to pray ${topic}.`
+    : role === 'lead'
+      ? `What St Athanasius said to pray ${topic}, in a letter from the 300s.`
+      : `One of the psalms St Athanasius said to pray ${topic}, in a letter from the 300s.`;
+
+  /* The reader's own sentence, turned into the question it is. A line that already ends on a
+     question (Psalm 42's "Where is your God?") keeps its own mark. */
+  const seen = situation.seen.trim();
+  const asked = /[?]["”]?$/.test(seen) ? seen : seen.replace(/[.!]$/, '') + '?';
+  const gave = ascent
+    ? `St Athanasius gave the Songs of Ascents for that, Psalm ${n} among them.`
+    : role === 'lead'
+      ? `St Athanasius gave Psalm ${n} for that.`
+      : `St Athanasius gave Psalm ${n} for that, with Psalm ${first}.`;
+  const tail = ' Read his advice and the whole psalm.';
+  const opener = `${asked} ${gave}`;
+  const plain = `Psalm ${n} is for ${topic}, as St Athanasius wrote in the 300s. His advice, and the whole psalm.`;
+  const description =
+    (opener + tail).length <= 158 ? opener + tail : opener.length <= 158 ? opener : clip(plain);
+
+  return { title, description, lede, topic };
+}
+
+/**
  * The social preview card for a path (og:image). Cards are drawn by design/og/render.mjs into
  * public/og/ and listed in data/og-cards.json, so this only ever names a card that exists.
  * A result or a comparison wears its quiz's card: that link is the one people actually share.
@@ -317,7 +465,12 @@ export function ogImageFor(path: string): string {
   /* A pair has its own card naming the two traditions; a pair whose card has not been
      drawn falls back to the hub's rather than to the home page's. */
   if ((m = /^\/compare\/([^/]+)\//.exec(path))) return card(`compare-${m[1]}`, 'compare');
-  if ((m = /^\/(?:q|r|c|axis)\/([^/]+)\//.exec(path))) return card(`quiz-${m[1]}`);
+  /* A quiz whose card has not been drawn yet (the Psalm quiz, on the day it went live) wears
+     the quizzes card, which is at least about quizzes, rather than the home page's. */
+  if ((m = /^\/(?:q|r|c|axis)\/([^/]+)\//.exec(path))) return card(`quiz-${m[1]}`, 'quizzes');
+  /* A psalm page is the Psalm quiz's reference floor, as a figure page is the figure quiz's,
+     and it is shared as that quiz. No psalm has a card of its own. */
+  if (path.startsWith('/psalm/')) return card('quiz-which-psalm', 'quizzes');
   if (path.startsWith('/tradition/')) return card('quiz-theology-compass');
   if ((m = /^\/figure\/([^/]+)\//.exec(path))) return card(`figure-${m[1]}`, 'quiz-bible-figure');
   if ((m = /^\/articles\/([^/]+)\//.exec(path))) return card(`article-${m[1]}`, 'articles');

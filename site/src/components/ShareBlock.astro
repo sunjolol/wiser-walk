@@ -24,16 +24,21 @@
  * wrong for a visitor is the costlier error.
  */
 import type { BipolarView, Quiz, ResultView } from '../lib/engine/types';
-import { groupNoteFor, resultNotes } from '../lib/engine/types';
+import { groupNoteFor, isComparable, resultNotes } from '../lib/engine/types';
 import { quizHref, inviteHref } from '../lib/engine/registry';
 
 interface Props {
   quiz: Quiz;
   view: ResultView;
   origin: string;
+  /**
+   * A reading's card draws the verse that names the situation. The Bible text is server-only
+   * data, so the page looks the verse up and hands it down; no other shape passes one.
+   */
+  line?: { text: string; cite: string };
 }
 
-const { quiz, view, origin } = Astro.props;
+const { quiz, view, origin, line } = Astro.props;
 const url = `${origin}/r/${quiz.slug}/${view.code}/`;
 /*
  * The invite carries THIS result's code, so whoever follows it is compared with the person
@@ -42,6 +47,30 @@ const url = `${origin}/r/${quiz.slug}/${view.code}/`;
  */
 const invite = `${origin}${inviteHref(quiz, view.code)}`;
 
+/*
+ * A quiz whose results are not set side by side (the Psalm quiz: its result is what someone
+ * is going through) has no comparison to invite anyone to. Its button asks a visitor to take
+ * it for themselves instead, and the owner-side invite row is not drawn at all.
+ */
+const comparable = isComparable(quiz);
+const cta = comparable
+  ? { href: invite, visitor: 'See where you land next to them' }
+  : { href: quizHref(quiz), visitor: 'Take it yourself' };
+
+/*
+ * "Share your compass" was written when the Compass was the only quiz; every other quiz now
+ * says "result". The Compass keeps its own word.
+ */
+const mineHeading = quiz.slug === 'theology-compass' ? 'Share your compass' : 'Share your result';
+
+/*
+ * How long it takes, for the visitor who was sent this. A quiz of statements counts them; a
+ * reading asks a few questions whose number depends on the answers, so it says so.
+ */
+const effort = quiz.items.length
+  ? `${quiz.items.length} statements, about ${quiz.minutes} minutes.`
+  : `A few questions, about ${quiz.minutes} minutes.`;
+
 /** Everything the card needs, and nothing else. */
 const card = {
   quiz: quiz.title,
@@ -49,7 +78,11 @@ const card = {
   url: url.replace(/^https?:\/\//, '').replace(/\/$/, ''),
   shape: view.shape,
   headline: view.headlineParts,
-  summary: view.summary,
+  /*
+   * Not for a reading: its summary is the situation line, and the card and the system share
+   * sheet travel without the person there to say it was theirs. The card says which psalm.
+   */
+  summary: view.shape === 'reading' ? '' : view.summary,
   /*
    * The sentence a named outcome carries, verbatim, drawn under the picture.
    *
@@ -71,11 +104,15 @@ const card = {
           step: r.step, steps: r.steps, noClaim: r.noClaim, lean: r.lean, band: r.band
         }
       : { name: r.name, value: r.value, rank: r.rank, strength: r.strength }
-  )
+  ),
+  // Added only for a reading, so every other quiz's card data is exactly what it was.
+  ...(view.shape === 'reading'
+    ? { reading: { line: line?.text ?? '', cite: line?.cite ?? '', say: quiz.shareTitle } }
+    : {})
 };
 ---
 <section class="share-block" data-quiz={quiz.slug} data-code={view.code}>
-  <h2 data-visitor="Their result" data-mine="Share your compass">Their result</h2>
+  <h2 data-visitor="Their result" data-mine={mineHeading}>Their result</h2>
 
   {/* The picture first. It is the thing being shared; the buttons act on it. */}
   <figure class="card-stage" data-role="stage">
@@ -92,9 +129,9 @@ const card = {
       quiz. The href swaps with the label, or the owner would be invited to compare with
       themselves.
     */}
-    <a class="btn ghost" data-role="cta" href={invite} data-mine-href={quizHref(quiz)}
-       data-visitor="See where you land next to them" data-mine="Take it again"
-       >See where you land next to them</a>
+    <a class="btn ghost" data-role="cta" href={cta.href} data-mine-href={quizHref(quiz)}
+       data-visitor={cta.visitor} data-mine="Take it again"
+       >{cta.visitor}</a>
   </div>
 
   <div class="share-link">
@@ -108,6 +145,7 @@ const card = {
     the invitation on the button; showing them a second copy of it would be one CTA too many
     on a page that is not about them.
   */}
+  {comparable && (
   <div class="compare-row" data-mine-show hidden>
     <p class="share-note">
       Send this to someone else and, when they finish, you both see your answers on the same
@@ -119,11 +157,12 @@ const card = {
       <button class="btn ghost" data-role="copy-invite" type="button">Copy link</button>
     </div>
   </div>
+  )}
 
   <p class="share-note" data-role="note"
-     data-visitor={`Someone sent you this. ${quiz.items.length} statements, about ${quiz.minutes} minutes.`}
+     data-visitor={`Someone sent you this. ${effort}`}
      data-mine="Keep this link to come back to your result."
-  >Someone sent you this. {quiz.items.length} statements, about {quiz.minutes} minutes.</p>
+  >Someone sent you this. {effort}</p>
 
   <script type="application/json" data-role="data" set:html={JSON.stringify(card)}></script>
 </section>
@@ -307,6 +346,75 @@ const card = {
       g.textAlign = 'left';
     }
 
+    /**
+     * A reading's card: the psalm's name large, the verse that names the situation, and the
+     * link. Nothing about how the person answered and not the situation line, which is on the
+     * page for whoever follows the link. The name is in two inks as on the page ("Psalm" in
+     * ink, the number in the link blue), and both it and the verse shrink until they fit, so
+     * "The Songs of Ascents" and Psalm 18's longest line land on the card as well as "Psalm 3".
+     */
+    /** No line ends on one stranded word (the owner's rule for the whole site): pull one down. */
+    function unstrand(lines) {
+      const n = lines.length;
+      if (n > 1 && lines[n - 1].length === 1 && lines[n - 2].length > 2) {
+        lines[n - 1].unshift(lines[n - 2].pop());
+      }
+      return lines;
+    }
+
+    function drawReading(g, x, y, w, footY) {
+      const r = data.reading;
+      const words = data.headline.map(p => p.text).join(' ').split(' ');
+      const parts = words.map((t, i) => ({ t, side: i === 0 ? 'centre' : 'left' }));
+
+      let size = 150, lines;
+      do {
+        g.font = size + "px 'Wiser Display', Philosopher, sans-serif";
+        lines = unstrand(wrapWords(g, parts, w));
+        size -= 6;
+      } while ((lines.length > 2 || lines.some(l => g.measureText(l.map(o => o.t).join(' ')).width > w)) && size > 60);
+      const lh = Math.round((size + 6) * 1.04);
+      y += 26;
+      lines.forEach(line => {
+        y += lh;
+        let cx = x;
+        line.forEach(word => {
+          g.fillStyle = ink(word.side);
+          g.fillText(word.t, cx, y);
+          cx += g.measureText(word.t + ' ').width;
+        });
+      });
+
+      // the spectrum rule the page's section heads wear
+      y += 44;
+      const rule = g.createLinearGradient(x, 0, x + 96, 0);
+      rule.addColorStop(0, P.blue); rule.addColorStop(1, P.orange);
+      g.fillStyle = rule;
+      roundRect(g, x, y, 96, 10, 5); g.fill();
+      y += 10;
+
+      // the verse, centred in what is left between the rule and the link
+      const room = footY - 70 - y;
+      // Large first: at 52px a one-line verse left most of the card empty.
+      let vs = 78, vlines, vlh;
+      do {
+        g.font = 'italic ' + vs + "px 'Wiser Display', Philosopher, sans-serif";
+        vlines = unstrand(wrapWords(g, (r.line || '').split(' '), w));
+        vlh = Math.round(vs * 1.3);
+        vs -= 2;
+      } while ((vlines.length * vlh + 64 > room || vlines.length > 6) && vs > 28);
+      const block = vlines.length * vlh + 64;
+      let vy = y + Math.max(40, (room - block) * 0.45);
+      g.fillStyle = P.ink;
+      vlines.forEach(line => {
+        vy += vlh;
+        g.fillText(line.join(' '), x, vy);
+      });
+      g.fillStyle = P.mute;
+      g.font = '600 26px Poppins, system-ui, sans-serif';
+      g.fillText((r.cite || '').toUpperCase(), x, vy + 62);
+    }
+
     let drawn = false;
     /**
      * Drawn on load, not on click.
@@ -323,6 +431,8 @@ const card = {
       // by name before the first stroke (the headline face is Philosopher Bold, as 'Wiser Display').
       try {
         await Promise.all(['700 23px Poppins', '25px Inter', "58px 'Wiser Display'"].map(f => document.fonts.load(f)));
+        // and the italic a reading's verse is set in
+        if (data.reading) await document.fonts.load("italic 52px 'Wiser Display'");
       } catch (e) {}
       const g = canvas.getContext('2d');
       const pad = 52;
@@ -337,6 +447,15 @@ const card = {
       g.fillStyle = P.accent;
       g.font = '700 23px Poppins, system-ui, sans-serif';
       g.fillText(data.quiz.toUpperCase(), x, y);
+
+      if (data.reading) {
+        drawReading(g, x, y, w, H - pad - 44);
+        g.fillStyle = P.mute;
+        g.font = '600 22px Poppins, system-ui, sans-serif';
+        g.fillText(data.url.toUpperCase(), x, H - pad - 44);
+        drawn = true;
+        return;
+      }
 
       // the verdict, each clause in the colour of the pole it names
       g.font = "58px 'Wiser Display', Philosopher, sans-serif";
@@ -460,7 +579,8 @@ const card = {
         await navigator.share({
           files: [new File([b], filename, { type: 'image/png' })],
           title: data.quiz,
-          text: data.summary
+          // a reading's summary is the situation, which does not travel (see the card data)
+          text: data.reading ? data.reading.say : data.summary
         });
       } catch (err) {
         if (err && err.name !== 'AbortError') {

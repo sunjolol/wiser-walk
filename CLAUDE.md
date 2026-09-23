@@ -41,18 +41,17 @@ Note he had earlier rejected the word "wiser" as "weird to say"; he has since ov
 
 State: local git repo initialised, **one commit** `c8fd322`, 137 files tracked, `node_modules` excluded. Authored as `Light <serenitybackto@gmail.com>` — he was offered a GitHub noreply address to keep his email out of public history and **chose to keep his real email**. Do not change it.
 
-## NEXT SESSION STARTS HERE (updated 2026-09-23, late): PSALM QUIZ DRAFT 5 AWAITS HIS TAP-THROUGH
+## NEXT SESSION STARTS HERE (updated 2026-09-23, night): THE PSALM QUIZ IS LIVE; #4 IS NEXT
 
-**Build order he set: #2 Psalm, then #4 (early Christian friend and foe), then #1 ("Personality Quiz"), then the
-rest he liked** (verdicts at the foot of `design/quiz-ideas/NEXT-TEN.md`). Ultracode is on for the Psalm quiz.
-**Read `design/quiz-ideas/psalm/README.md` first.** He saw draft 2 and said Q1 funnels negative, the answers feel
-"scattered and random" instead of running evenly negative -> neutral -> positive, and some options are hyper-specific
-boxes; he wants generic, "sneakier" options that fit more people, even if it takes more questions. Draft 5 answers
-that (seven even-handed core questions, follow-ups only when needed, the specific Athanasius situation revealed at
-"Does this sound like you?" with the next-closest on "Not quite") and was tuned on 150 simulated people. Preview, same
-link: https://claude.ai/artifact/8EWuYxAX3qfrgtpYXvAxg7 . Waiting on: his feel of draft 5 on his phone; the "Hard
-words" note and the 988 line (still unruled). After his yes: write every result to Psalm 3's standard, then build it
-into the site per `engine-fit.md`. #4's title advice is still unruled.
+**Build order he set: #2 Psalm (DONE, live), then #4 (early Christian friend and foe), then #1 ("Personality Quiz"),
+then the rest he liked** (verdicts at the foot of `design/quiz-ideas/NEXT-TEN.md`). He tapped through Psalm draft 5 and
+said it was "phenomenal and very powerful", ready to ship once each follow-up came straight after the answer calling
+for it; that fix is in and it shipped to `main` on 2026-09-23 (`/q/which-psalm/`, results `/r/which-psalm/PS<n>/`, 78
+`/psalm/<n>/` pages). How it is built: `design/quiz-ideas/psalm/README.md` "Shipped". Only Psalm 3 carries the extra
+"story behind it" section (verbatim 2 Samuel); the other 52 results print his advice, the naming verse, where it turns
+and the whole psalm. Still unruled and waiting on him: capitals inside Bible quotations (keep verbatim or switch
+quotes to the BSB); #4's title ("Which early Christian thinks like you? (And which would argue with you?)" vs shorter).
+The "Hard words" note and the 988 line stay as they are (told him so). Ultracode was on for the Psalm quiz.
 The section below on the scrapped list explains what went wrong last time; it still applies.
 
 Everything from 2026-09-22 is live on `main` (last commit before these notes: `b778859`). He reviews on the live site;

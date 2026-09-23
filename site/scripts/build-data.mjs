@@ -5,6 +5,9 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
+
+// The Psalm quiz's data comes from design/, not audit/, and has its own fallback; see that script.
+await import('./build-psalm-data.mjs');
 const SOURCE = resolve(here, '../../audit/compass-data.revised.json');
 const OUT = resolve(here, '../src/data/compass.json');
 const ASIDE = resolve(here, '../src/data/compass-audit.json');

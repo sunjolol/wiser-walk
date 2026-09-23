@@ -8,9 +8,9 @@
  *
  *   sky        the hero is a real dawn sky, and the quizzes rise out of its lower edge
  *   four rooms each quiz has its own picture and its own ink, so none of them looks like
- *              the next: the compass is an instrument on a night ground, the figures, the
- *              gifts and the seven are three Doré engravings in one ink, so the art is one
- *              family and the subjects are not. No marks over the titles: the owner found
+ *              the next: the compass is an instrument on a night ground, the psalm, the
+ *              figures, the gifts and the seven are four Doré engravings in one ink, so the
+ *              art is one family and the subjects are not. No marks over the titles: the owner found
  *              them distracting (2026-09-22)
  *   night      the games sit on a dark band over an old manuscript page, because they are played with the text
  *   morning    the articles are paintings first and words second: colour, where the quizzes are ink
@@ -29,6 +29,7 @@ import ReadCard from '../components/ReadCard.astro';
 import { getQuiz, quizHref } from '../lib/engine/registry';
 import { groupNounPlural } from '../lib/engine/types';
 import { liveGames } from '../lib/games';
+import { SITUATIONS } from '../lib/strategies/reading';
 import { SEO } from '../lib/seo';
 import { SUPPORT_URL, SUPPORT_READY } from '../lib/support';
 import slsMeta from '../games/sounds-like-scripture.meta.json';
@@ -39,6 +40,7 @@ const compass = getQuiz('theology-compass')!;
 const figures = getQuiz('bible-figure');
 const gifts = getQuiz('spiritual-gifts');
 const sins = getQuiz('seven-deadly-sins');
+const psalm = getQuiz('which-psalm');
 const games = liveGames();
 const sls = games.find(g => g.slug === 'sounds-like-scripture');
 const wsi = games.find(g => g.slug === 'who-said-it');
@@ -132,6 +134,25 @@ const jsonLd = {
     */}
     <div class="hm-rail" data-rail>
       <div class="hm-rail-track" data-rail-track tabindex="0" role="group" aria-label="More quizzes">
+        {/* The Psalm quiz leads the rail, straight after the Compass: the newest quiz, and the
+            one the owner called "phenomenal and very powerful" when he played it. It has no
+            statements to count, so its facts are the minutes and the situations it can name,
+            counted off the data rather than typed. */}
+        {psalm && (
+          <a class="room room--psalm" href={quizHref(psalm)}>
+            <img src="/img/figures/david.jpg" alt="Gustave Doré’s engraving of David standing crowned and bowed as he mourns Absalom" loading="lazy" decoding="async" width="807" height="1012" />
+            <div class="room-body">
+              <h3>{psalm.title}</h3>
+              <p class="room-say">A few honest taps, and the psalm an early Church Father gave for exactly that.</p>
+              <ul class="room-facts">
+                <li><Icon name="clock" size={13} /> {psalm.minutes} min</li>
+                <li>{SITUATIONS.length} situations</li>
+              </ul>
+              <span class="room-go">Start <Icon name="arrow" size={14} /></span>
+            </div>
+          </a>
+        )}
+
         {figures && (
           <a class="room room--figures" href={quizHref(figures)}>
             <img src="/img/dore-moses.jpg" alt="Gustave Doré’s engraving of Moses breaking the tablets of the law" loading="lazy" decoding="async" width="820" height="1029" />

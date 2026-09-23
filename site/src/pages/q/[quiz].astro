@@ -16,6 +16,8 @@ import QuizPreview from '../../components/QuizPreview.astro';
 import OutcomeIndex from '../../components/OutcomeIndex.astro';
 import CompareRoom from '../../components/CompareRoom.astro';
 import ReadCard from '../../components/ReadCard.astro';
+import ReadingRunner from '../../components/ReadingRunner.astro';
+import { READING, SITUATIONS } from '../../lib/strategies/reading';
 import { getCollection } from 'astro:content';
 import { COMPARE_QUIZ } from '../../lib/comparisons';
 import { QUIZZES, getQuiz } from '../../lib/engine/registry';
@@ -48,6 +50,12 @@ const readNext = (await getCollection('articles'))
   .slice(0, 3);
 const isDraft = quiz.status === 'draft';
 const bipolar = quiz.strategy.shape === 'bipolar';
+/*
+ * A reading ("Which Psalm are you living right now?") has no statements to agree with and
+ * nothing to rank, so none of the statement runner's intro describes it. It gets its own
+ * runner and its own three points; the band and the articles are the same as every quiz's.
+ */
+const reading = quiz.strategy.shape === 'reading';
 /* The comparison pages are drawn on the Compass's own rails, so they belong to the Compass
    and to no other quiz. Asked of the data rather than of the slug typed here twice. */
 const comparable = quiz.slug === COMPARE_QUIZ.slug;
@@ -72,7 +80,16 @@ const folded = Boolean(quiz.notes?.introShort) && hasFrame;
  */
 const words = quiz.title.toLowerCase().replace(/[^a-z\s]/g, ' ').split(/\s+/).filter(Boolean);
 const ghost = [...words].reverse().find(w => w.length >= 5) ?? words[words.length - 1] ?? quiz.slug;
-const painted = quiz.title
+/*
+ * A reading paints the word for what it gives you instead ("Psalm", in "Which Psalm are you
+ * living right now?"), which is the word the owner saw painted in the preview he approved.
+ * By the rule above it would have been "right", which says nothing. Still the quiz's own
+ * noun, from its data; every other quiz is painted exactly as before.
+ */
+const nounWord = reading
+  ? quiz.title.split(/\s+/).find(w => w.toLowerCase().replace(/[^a-z]/g, '') === quiz.outcomeNoun)
+  : undefined;
+const painted = nounWord ?? quiz.title
   .split(/\s+/)
   .find(w => w.toLowerCase().replace(/[^a-z]/g, '') === ghost);
 
@@ -88,7 +105,16 @@ const art = artFor(quiz.slug);
  */
 const eyebrow = isDraft ? 'Unaudited draft' : undefined;
 
-const tiles = [
+/*
+ * A reading's honest numbers: the questions everyone is asked (the follow-ups come only when
+ * an answer calls for them, so they are not counted as if everyone meets them), and the
+ * situations a result can be, each one Athanasius's own.
+ */
+const tiles = reading ? [
+  { n: READING.core.length, label: 'Questions' },
+  { n: SITUATIONS.length, label: 'Situations' },
+  { n: `${quiz.minutes}m`, label: 'To take' }
+] : [
   { n: quiz.items.length, label: 'Statements' },
   { n: quiz.groups.length, label: bipolar ? 'Axes' : capitalise(groupNounPlural(quiz)) },
   ...(quiz.outcomes.length
@@ -160,6 +186,69 @@ const breadcrumbs = isDraft
     )}
   </Hero>
 
+  {/*
+    A READING: its own runner, with the intro as the runner's slot so it is hidden the moment
+    play begins. No #runner is drawn, so the statement script at the foot of this page finds
+    nothing to bind; ReadingRunner binds the band's [data-start] itself. No OutcomeIndex
+    either: its sentences are about axes and traditions, and would be untrue of psalms.
+  */}{reading ? (
+  <ReadingRunner quiz={quiz}>
+    <SectionHead title="How it works" kicker="Three steps, no wrong answers" />
+    <ul class="steps">
+      <li class="step">
+        <span class="step-mark rd-mark--tap" aria-hidden="true"><i></i><i></i><i></i></span>
+        <div class="step-say">
+          <b>Answer quickly and honestly</b>
+          <p>{READING.core.length} short questions about your life right now, and a few more only if an answer needs them.</p>
+        </div>
+      </li>
+      <li class="step">
+        <span class="step-mark rd-mark--yes" aria-hidden="true"></span>
+        <div class="step-say">
+          <b>Say if it's you</b>
+          <p>You'll see your situation in plain words. It's yours only if you say so, and "Not quite" shows the next.</p>
+        </div>
+      </li>
+      <li class="step">
+        <span class="step-mark rd-mark--lines" aria-hidden="true"><i></i><i></i><i></i></span>
+        <div class="step-say">
+          <b>Read your psalm, in full</b>
+          <p>The psalm St Athanasius gave for exactly that, in the 300s, and why he gave it.</p>
+        </div>
+      </li>
+    </ul>
+
+    <section class="wayin wayin--night qway">
+      <div class="wayin-ghost" aria-hidden="true">begin</div>
+      <div class="wayin-in">
+        <p class="wayin-kicker">When you are ready</p>
+        <h2>{READING.core.length} questions, about {quiz.minutes} minutes.</h2>
+        <p class="wayin-say">You can go back at any point, and nothing is yours until you say it is.</p>
+        <div class="btn-row">
+          <button class="btn" type="button" data-start>Start the quiz</button>
+        </div>
+      </div>
+    </section>
+
+    {readNext.length > 0 && (
+      <section class="qreads">
+        <SectionHead
+          title="Read next"
+          kicker="Alongside this quiz"
+          href="/articles/"
+          more="All articles"
+        />
+        <div class="hm-reads reads-foot">
+          {readNext.map(a => (
+            <ReadCard id={a.id} title={a.data.title} description={a.data.description}
+                      minutes={a.data.minutes} image={a.data.image} imageAlt={a.data.imageAlt}
+                      imagePosition={a.data.imagePosition} />
+          ))}
+        </div>
+      </section>
+    )}
+  </ReadingRunner>
+  ) : (
   <div class="runner" id="runner" data-quiz={quiz.slug}>
     <noscript>
       <div class="note">
@@ -425,6 +514,7 @@ const breadcrumbs = isDraft
       </div>
     )}
   </div>
+  )}
 
   <script>
     import { getQuiz, scoreQuiz, encodeFor, decodeFor } from '../../lib/engine/registry';
