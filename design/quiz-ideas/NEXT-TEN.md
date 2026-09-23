@@ -117,3 +117,64 @@ own words carry the result), then #3 and #2 as the most original (nothing like t
 Rules that bind every one of them (from CLAUDE.md and memory): count knowledge, never devotion; never a percentage
 against a person or between two people; both poles named wherever an axis is drawn; real data only; capitalise God,
 Jesus, the Holy Spirit and every pronoun for Them in the site's own words; plain, engaging words; no AI chat.
+
+---
+
+## HIS VERDICTS (2026-09-23)
+
+**Favourites: #2 and #4.** Then #1, "slightly above the others I liked" IF its angle is hit perfectly. Then #7, #8,
+#9, #10, tied. #5 on the fence. #6 later. #3 no.
+
+1. Likes it a lot, but NOT the "1,400-year-old doctor of souls" angle: "way too unrealistic (in the sense of not being
+   real/relevant to the reader)". Present it far from its source: simply a **"Personality Quiz"**, the source explained
+   only on the how-it-works page, like the others. Then it must be "as complete and accurate as possible, extremely
+   well thought out because the whole goal of a personality quiz is to wow the user with your accuracy and insight
+   into their lives, so much so that we can reveal things to them they may not have realized about themselves
+   consciously, but once hearing it, it becomes an 'aha!' moment that 'unlocks' them. That is the ultimate goal." If
+   the source is not deep enough: a **"Quick Personality Quiz"** paired with a fuller **"Full Personality Quiz"** from
+   a more complete source, or several sources meshed seamlessly into one quiz.
+2. "I actually really love this": it makes people conscious of what they feel and gives them the Scripture that makes
+   them feel seen and understood, edifies them, and offers "an angle of hope/resolution/answers to their situation
+   BASED on the Psalms - brilliant if we can do it well". Title: **"Which Psalm are you living right now?"**
+3. "A bit too niche and complex to be fun." Dropped.
+4. "Love this!" Only the title is too long: explore shorter question forms, "but change nothing else because it's a
+   brilliant idea".
+5. On the fence: doubts there is enough context to derive a genuinely useful result. Likes the angle "How complete is
+   your love?" / "How does your love hit vs miss the mark according to the Bible?", the result pointing to the ways
+   they fail to love as the Bible describes and the ways they do. Open to an angle that makes it deep, real, helpful.
+6. Likes it less than the others: keep for later.
+7. "Really like this": people learn their true motives and driving factors.
+8. Loves the result, ONLY if it is accurately tied to what is genuinely on the user's heart: questions that draw out
+   what a person truly feels, and "a REAL word as if they're getting it directly about their situation".
+9. "Good idea" (he has had the thought himself many times).
+10. "An interesting angle, I like this one also."
+
+## WHAT I PUT BACK TO HIM THE SAME DAY (awaiting his answer)
+
+- **#4 shorter titles:** Which early Christian thinks like you? (my pick, with the furious-letter twist kept as the
+  result's surprise and in the sub-line) / Which early Christian would argue with you? / Friend or foe in the early
+  Church? / Who in the early Church is on your side? / Which early Christian gets you?
+- **#1 depth, checked in Book III itself** (New Advent 36013.htm, Barmby, about 45,000 words, chapters 2-35 are the
+  pairs): 14 pairs are plain temperament (3 joyful/sad, 7 impudent/bashful, 8 forward/faint-hearted, 9 impatient/
+  patient, 10 kindly/envious, 11 simple/crafty, 14 silent/talkative, 15 slothful/hasty, 16 meek/passionate, 17 humble/
+  haughty, 18 obstinate/fickle, 22 at variance/at peace, 23 sowers of strife/peacemakers, 34 never begin/never
+  finish); about five more are character (19 food, 20-21 giving and seizing, 32 sudden impulse/deliberate, 35 good
+  in secret/for show, 26 success/adversity); the rest are station (rich/poor, subjects/prelates, servants/masters,
+  married/single, whole/sick) or states of sin and do not belong. Most pairs get 700-2,000 words, and the counsel is
+  the "aha" kind: the over-silent suffer "more grievous loquacity in the heart", judge the talkers in secret, and hurt
+  more for never saying the hurt ("closed sores torment the more", ch. 14); the patient feel nothing at the insult but
+  "after a while" recall it and "seek reasons for vengeance" (ch. 9). Proposal: a Full Personality Quiz on Gregory
+  alone (many short plain questions per pair, a reading of the strongest leanings TOGETHER, since combinations are
+  where the insight lands), and a Quick one on the same backbone leading into it; meshing only from the same
+  tradition where Gregory is thin (John Climacus's Ladder; Gregory of Nazianzus, Oration 2); not the four temperaments
+  or the Enneagram. Read Book III whole and closely before promising.
+- **#5 angle:** Jonathan Edwards's sixteen sermons on 1 Corinthians 13 (1738, published 1851 as Charity and Its
+  Fruits, public domain) and Chrysostom's homilies on the chapter spell out each line in daily life, kept and missed.
+  So "How does your love hit or miss the mark?": each line read from everyday situations; the lines you live, and
+  behind a tap the lines you miss, each with what missing it looks like and the way back.
+- **#8 condition:** many sayings are someone bringing a real trouble ("a brother asked Abba...") and the elder's answer
+  to it. Ask what is weighing on the person, match it to the brother who came with the same trouble, give the answer
+  he got (Budge, The Paradise of the Holy Fathers, 1907, public domain). Same read-your-moment engine as #2.
+- **Recommended order: #2 first** (his favourite; the most personal; people already search for a psalm for their
+  situation, so each psalm result can be its own findable page; its engine carries #8), then #4. Before building:
+  read Athanasius's letter whole and show him a handful of real questions and ONE complete result, psalm and all.

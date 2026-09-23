@@ -41,13 +41,15 @@ Note he had earlier rejected the word "wiser" as "weird to say"; he has since ov
 
 State: local git repo initialised, **one commit** `c8fd322`, 137 files tracked, `node_modules` excluded. Authored as `Light <serenitybackto@gmail.com>` — he was offered a GitHub noreply address to keep his email out of public history and **chose to keep his real email**. Do not change it.
 
-## NEXT SESSION STARTS HERE (written at the very end of 2026-09-22): TEN QUIZ IDEAS AWAIT HIS VERDICT
+## NEXT SESSION STARTS HERE (updated 2026-09-23): HE HAS JUDGED THE TEN QUIZ IDEAS
 
-**Open `design/quiz-ideas/NEXT-TEN.md` first.** On 2026-09-22 he asked for ten new quiz ideas built from the pattern
-of the quizzes and games we already have (not from search research), and closed the session saying he will respond
-to EACH of them in the next one. So: put each idea to him in plain words, record his verdict on each, build nothing
-until he picks, then build ONE quiz complete and deep and show it before starting another. The section below on the
-scrapped list explains what went wrong last time; it still applies.
+**Open `design/quiz-ideas/NEXT-TEN.md` first: his verdict on each idea is at the foot, in his words.** Favourites:
+**#2 "Which Psalm are you living right now?"** and **#4** (the early Christian friend and foe; only its title changes).
+Then #1 as a plain "Personality Quiz" (Quick + Full), whose whole goal is an "aha" accurate enough to unlock people.
+#3 is dropped, #6 is for later. I recommended building #2 first and put shorter #4 titles, a depth answer for #1 and
+an angle for #5 back to him; his answer to those is pending. Build ONE quiz complete and deep and show it before
+starting another, and show him a handful of real questions and one complete result before building any machinery.
+The section below on the scrapped list explains what went wrong last time; it still applies.
 
 Everything from 2026-09-22 is live on `main` (last commit before these notes: `b778859`). He reviews on the live site;
 small changes he asked for are pushed without waiting (memory: push-small-changes).
