@@ -622,7 +622,10 @@
  * A quiz that says something about itself before you start says it as a note with a mark,
  * not as a slab of tinted text. Same words, same place, a shape a reader can see the edge of.
  */
+/* Full width, like the panels under it (the owner, 2026-09-23: at 44rem it stopped at a phone's
+   width on desktop, and the Compass's one sentence wrapped when it could sit on one line). */
 #intro .quiz-frame {
+  max-width: none;
   position: relative; overflow: hidden; margin: 1.2rem 0 0; padding: .9rem 1.05rem .95rem 1.2rem;
   border-radius: var(--r); background: var(--panel); box-shadow: var(--lift, none);
   color: var(--ink-soft);
