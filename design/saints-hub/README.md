@@ -110,6 +110,43 @@ Also resolved in draft 2: the ELCA keeps 11 November; "MAR-tin of TOOR" (Merriam
 own footnote defines "birthday" as the day a saint enters heaven. Sources in `research/martin-miracles.json`
 (`checked.open_items_resolved`). No "[checked before launch]" marks remain.
 
+## Draft 3 (same link, version 3), his second round (2026-09-24)
+
+- **The Learn menu's two-line items (a name plus one plain line) go to EVERY header menu when the hub goes live**
+  (Quizzes and Games too). He liked it.
+- "Christian Personality Test" in The Oak card is a link, same window (a page on our own site; new tabs are only for
+  links that leave the site, and for the result-page popups' labelled pills).
+- The sources under the numbers are a little brighter (#A9A59F) on the lighter tiles.
+- On wide screens "His roles, in order" sits in the middle of its box, equal space either side (columns sized to
+  their words, `justify-content: center`), and still left-aligned inside.
+- Small text follows the two sizes below. He will take one final visual pass, then it ports live.
+
+## SMALL TEXT: TWO SIZES (his soft rule, 2026-09-24, for the whole site)
+
+He set these by hand ("this is the exact type of issue that becomes a massive pain to fix if you regress") and asked
+for a pattern so he adjusts less. The pattern in his own choices:
+
+- **Label, `--fs-label` (.7rem) at weight 600 (`--fw-label`):** text a reader reads on its own. A field name
+  (Born, Died), the label that heads a box or card ("Who was Martin?", "His roles, in order", "Often said", "What
+  the sources say", "West", "Quiz"), an author or source line, a citation.
+- **Tag, `--fs-tag` (.6rem), weight unchanged:** text that rides on something bigger beside it. A chip or pill (on
+  a number, a card, a menu item: "New"), a date or "As a monk" beside a heading, the two ends of a scale, a sub-label
+  sitting over a row of chips.
+- **The floor:** nothing meant to be read goes below .6rem. Only text inside a drawing (the month on a calendar
+  leaf) may. Buttons keep their own sizes (pills .72rem, filter chips .62rem).
+- **Always the tokens, never a raw size**, so one line changes them everywhere. At go-live the tokens move into
+  `kit.css` and a build check (like `scripts/quiz-page-test.mjs`) fails on any small uppercase text under .6rem
+  outside the drawing list.
+- His list, applied exactly: labels `.facts dt, .read .by, .cite, .qcard-k, .churches b, .lastwords .k,
+  .myth-t b, .myth-k, .feast-col h4, .feasts-h p, .path-k, .answer h2, .portrait figcaption b`; tags `.scale-ends,
+  .rz-when, .mo-when, .stat-chip, .gchips-k, .tchip, .navmenu-tag`. The number chips got letter-spacing .09em so
+  "Raised the dead" stays on one line at 375.
+- **Where the pattern disagrees with the page and he has not ruled (asked him, 2026-09-24):** as labels (.7rem):
+  `.st-topic` ("On laughter"), `.later b` ("A later story", "Doubted from the start"), `.sources h3`, `.qf-k`
+  ("Before a battle near Worms"), `.frow-l` (the hub's filter names), `.temper-k` ("His personality type", which
+  shows at .83rem only because `.temper-b p` overrides it); as tags (.6rem): `.pcard-d` (dates on the hub's cards),
+  `.gchips li` ("Confident"); a citation in tight tiles: `.stat-src` (.64rem, he asked only to brighten it).
+
 ## Rules that bind every page (from CLAUDE.md, memory and the research)
 
 - Real data only. Every fact has a source. Every quotation word for word from a public-domain translation,

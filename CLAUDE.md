@@ -74,8 +74,10 @@ it done right from the start ("I really want to make sure we nail this right fro
 Step one: the tap-through mock-up is published (https://claude.ai/artifact/2XipDT23JpGHU1kYKi7VX9: the Learn menu,
 the hub, St Martin of Tours with checked facts). He reviewed draft 1 the same evening (14 notes, "we are definitely
 on the right track"); **draft 2 is at the same link** with every note applied and a proposed miracles section. His
-notes are now binding rules for every saint page: README "Draft 2 of the mock-up". Ask what he thinks of draft 2
-before building anything.
+notes are now binding rules for every saint page: README "Draft 2 of the mock-up". A second round made **draft 3**
+(same link); he will take one final visual pass and then it ports live. Two site-wide rules came out of it
+(README "Draft 3" and "SMALL TEXT: TWO SIZES"): the Learn menu's two-line items go to every header menu at go-live,
+and small text uses two sizes, labels .7rem at weight 600 and tags .6rem, as tokens, never below .6rem.
 
 Also live that day (commits 0026af9, fd69270): the Oak has saints (Martin, Benedict, John the Baptist), the Hearth
 adds Cuthbert and Guthlac, the Spark adds Philip Neri; the opposite panel leads with the opposite's person; saint
