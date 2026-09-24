@@ -98,8 +98,8 @@ const comparable = quiz.slug === COMPARE_QUIZ.slug;
  * prints whenever a quiz has one, and the panel only when there is a note to put in it.
  *
  * What a quiz leaves out (notes.omitted) is said on its result, not here: the owner asked for
- * the gifts test's "Not scored here" paragraph to come out of this panel (2026-09-24). So it
- * does not count towards the panel either.
+ * the gifts test's "Not scored here" paragraph to come out of this panel (2026-09-24), and then
+ * off its result too. So it does not count towards the panel either.
  */
 const hasFrame = Boolean(quiz.notes?.intro || quiz.notes?.disputed);
 const folded = Boolean(quiz.notes?.introShort) && hasFrame;

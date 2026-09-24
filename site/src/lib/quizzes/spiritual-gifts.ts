@@ -27,9 +27,10 @@
  * tongues, interpreting tongues and the word of knowledge are measured, named and ranked
  * exactly like the other thirteen. Nothing marks them out anywhere — no badge, no chip, no
  * grouping, no separate section, no extra field on a row — because a mark is a verdict on
- * the reader who scores highest there. Three things are named and NOT scored, in
- * `notes.omitted`: apostles (1 Corinthians 12:28; Ephesians 4:11), the gift Paul names when
- * he writes of remaining unmarried (1 Corinthians 7:7), and the gift given with the laying
+ * the reader who scores highest there. Three things are NOT scored (no page says so since the
+ * owner's wish of 2026-09-24; giftsFrame.notScored keeps the words): apostles (1 Corinthians
+ * 12:28; Ephesians 4:11), the gift Paul names when he writes of remaining unmarried
+ * (1 Corinthians 7:7), and the gift given with the laying
  * on of the hands of the elders (1 Timothy 4:14) — statements about what you do and what
  * has happened have nothing to say about any of the three. The disagreement about whether
  * the six are given today is DESCRIBED, in `notes.disputed`, and ruled on nowhere: the
@@ -1113,11 +1114,9 @@ export const spiritualGifts: Quiz = {
       // Built from the axis's SLUG through the URL builder. The Compass's Gifts axis is
       // keyed `spirit` and published at /gifts/, so a href written from the key would 404.
       href: giftsAxisHref
-    },
-    omitted: {
-      // No link: see giftsFrame.notScored. The argument is `disputed`'s, and so is the link.
-      text: giftsFrame.notScored
     }
+    // No `omitted`: the owner had the "Not scored here" paragraph taken off the quiz page and the
+    // result (2026-09-24). giftsFrame.notScored keeps the words, and the three still go unscored.
   },
 
   /**
