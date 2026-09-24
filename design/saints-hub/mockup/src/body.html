@@ -102,14 +102,12 @@
   <div class="colls">{{COLLS}}</div>
 
   <div class="sect" id="people"><div class="sect-text"><h2 class="sect-title">all the people</h2></div></div>
-  <div class="filters" id="filters">{{FILTERS}}</div>
-  <div class="people-head">
-    <p class="people-count" id="people-count" aria-live="polite">38 people</p>
-    <button class="people-clear" id="people-clear" type="button" hidden>Clear filters</button>
-    <p class="people-key">A coloured chip is where the Christian Personality Test places that person. It is our reading, not a church's.</p>
-  </div>
+  <div class="people-wrap" id="filters">
+  {{FILTERS}}
   <div class="people" id="people-grid">{{PEOPLE}}</div>
-  <p class="people-empty" id="people-empty" hidden>No one matches that. Try another name, or clear the filters.</p>
+  <p class="people-empty" id="people-empty" hidden>No one matches that. Try another name, or <button class="fclear" type="button" data-clear-all>clear the filters</button>.</p>
+  </div>
+  <p class="people-key">A coloured chip is where the Christian Personality Test places that person. It is our reading, not a church's.</p>
 
   <div class="sect"><div class="sect-text"><h2 class="sect-title">where do you stand?</h2></div></div>
   <a class="qcard qcard--engr" href="#" data-dead>
@@ -174,6 +172,7 @@
   <div class="sect" id="glance"><div class="sect-text"><h2 class="sect-title">at a glance</h2></div></div>
   <div class="cs">
     <section class="cs-path panel" aria-label="His roles, in order">
+      <div class="path-in">
       <p class="path-k">His roles, in order</p>
       <ol class="path">
         <li><b>Soldier</b><span>Forced to enlist at 15</span></li>
@@ -181,6 +180,7 @@
         <li><b>Monk</b><span>Founded a monastery near Poitiers</span></li>
         <li><b>Bishop</b><span>Of Tours, 371 to 397</span></li>
       </ol>
+      </div>
     </section>
 
     <section class="cs-stats dark" aria-label="Martin in numbers">
@@ -646,4 +646,5 @@
   <div class="wrap foot-bar"><p>© 2026 Wiser Walk · Free to use, with credit</p></div>
 </footer>
 </div>
+{{SHEET}}
 <div class="toast" id="toast" role="status" aria-live="polite"></div>

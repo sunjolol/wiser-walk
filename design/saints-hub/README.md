@@ -121,6 +121,24 @@ own footnote defines "birthday" as the day a saint enters heaven. Sources in `re
   their words, `justify-content: center`), and still left-aligned inside.
 - Small text follows the two sizes below. He will take one final visual pass, then it ports live.
 
+## The hub's filters, redesigned (his note, 2026-09-24)
+
+He found the four rows of chips "unusable on mobile": they ran off the screen and took far too much space. Now,
+in the pattern the best listing sites use:
+
+- **One bar** that stays in reach (sticky) while the list scrolls, with the count on its right ("8 of 38").
+- **Phones:** a "Filters" button (a badge counts what is picked) opens a sheet from the bottom: each kind under its
+  label (label size), the options as chips, "Clear all", and "Show N people", which closes the sheet on the results.
+- **Wide screens:** one pill per kind (Group, Lived, East or West, Personality type) opens a small panel with the
+  same chips, "Clear" and "Done".
+- **Several picks in one kind widen the list; picks in different kinds narrow it.** Every option shows how many
+  people it would leave, and an option that would leave none is greyed out, so no one lands on an empty page.
+- What is picked (and a search) shows as chips under the bar, each with a cross, plus "Clear all".
+- A collection card starts the list afresh on its group.
+- At go-live: put the picks in the address (`/saints/#group=martyrs`, as the articles page already does with
+  `#topic=`), so the group pages and other pages can link straight to a filtered list.
+- The old row labels (Group, Lived...) became the sheet's group titles, at the label size he agreed to.
+
 ## SMALL TEXT: TWO SIZES (his soft rule, 2026-09-24, for the whole site)
 
 He set these by hand ("this is the exact type of issue that becomes a massive pain to fix if you regress") and asked

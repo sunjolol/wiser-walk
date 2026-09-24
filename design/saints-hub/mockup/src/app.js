@@ -144,57 +144,149 @@
   });
   route();
 
-  /* ---- the hub's filters */
+  /* ---- the hub's filters. Picks within one kind widen the list (Martyrs or Women); picks in
+     different kinds narrow it (Martyrs who lived in the 300s). Each option shows how many people
+     it would leave, so a reader never lands on an empty page by surprise. */
   var cards = [].slice.call(document.querySelectorAll('.pcard'));
   var total = cards.length;
-  var state = { group: 'all', cent: 'all', side: 'all', type: 'all', q: '' };
+  var KEYS = ['group', 'cent', 'side', 'type'];
+  var picks = { group: [], cent: [], side: [], type: [] }, q = '';
+  var LABEL = {};
+  [].slice.call(document.querySelectorAll('.fpop .fopt')).forEach(function (b) {
+    LABEL[b.getAttribute('data-key') + ':' + b.getAttribute('data-val')] = b.querySelector('span').textContent;
+  });
+  var opts = [].slice.call(document.querySelectorAll('.fopt'));
+  var pills = [].slice.call(document.querySelectorAll('.fpill'));
   var countEl = document.getElementById('people-count');
-  var clearEl = document.getElementById('people-clear');
   var emptyEl = document.getElementById('people-empty');
+  var activeEl = document.getElementById('f-active');
+  var badge = document.getElementById('f-badge');
+  var sheet = document.getElementById('f-sheet');
+  var showBtn = document.getElementById('f-show');
   var qEl = document.getElementById('saint-q');
+  var CROSS = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
   function norm(s) { return (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+  function escH(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
   function has(list, v) { return (' ' + list + ' ').indexOf(' ' + v + ' ') >= 0; }
+  function fits(c, key, v) {
+    if (key === 'group') return has(c.getAttribute('data-groups'), v);
+    if (key === 'side') return has(c.getAttribute('data-side'), v);
+    return c.getAttribute('data-' + key) === v;
+  }
+  function matches(c, skip) {
+    for (var i = 0; i < KEYS.length; i++) {
+      var k = KEYS[i];
+      if (k === skip || !picks[k].length) continue;
+      if (!picks[k].some(function (v) { return fits(c, k, v); })) return false;
+    }
+    var nq = norm(q).trim();
+    return !nq || norm(c.getAttribute('data-search')).indexOf(nq) >= 0;
+  }
+  function people(n) { return n + (n === 1 ? ' person' : ' people'); }
+  function chip(label, attrs) {
+    return '<button class="fchip-x" type="button" ' + attrs + ' aria-label="Remove ' + escH(label) + '"><span>' + escH(label) + '</span>' + CROSS + '</button>';
+  }
   function apply() {
-    var shown = 0, q = norm(state.q).trim();
-    cards.forEach(function (c) {
-      var ok = (state.group === 'all' || has(c.dataset.groups, state.group))
-        && (state.cent === 'all' || c.dataset.cent === state.cent)
-        && (state.side === 'all' || has(c.dataset.side, state.side))
-        && (state.type === 'all' || c.dataset.type === state.type)
-        && (!q || norm(c.dataset.search).indexOf(q) >= 0);
-      c.hidden = !ok;
-      if (ok) shown++;
-    });
-    var filtered = state.group !== 'all' || state.cent !== 'all' || state.side !== 'all' || state.type !== 'all' || q;
-    countEl.textContent = filtered ? shown + ' of ' + total + ' people' : total + ' people';
-    clearEl.hidden = !filtered;
+    var shown = 0;
+    cards.forEach(function (c) { var ok = matches(c); c.hidden = !ok; if (ok) shown++; });
+    var n = KEYS.reduce(function (a, k) { return a + picks[k].length; }, 0);
+    var searching = !!norm(q).trim();
+    countEl.textContent = n || searching ? shown + ' of ' + total : people(total);
     emptyEl.hidden = shown > 0;
+    badge.hidden = !n;
+    badge.textContent = n;
+    showBtn.textContent = shown ? 'Show ' + people(shown) : 'No one matches';
+    showBtn.disabled = !shown;
+    opts.forEach(function (b) {
+      var k = b.getAttribute('data-key'), v = b.getAttribute('data-val'), on = picks[k].indexOf(v) >= 0, m = 0;
+      cards.forEach(function (c) { if (matches(c, k) && fits(c, k, v)) m++; });
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      b.querySelector('.fopt-n').textContent = m;
+      b.disabled = !m && !on;
+    });
+    pills.forEach(function (p) {
+      var len = picks[p.getAttribute('data-pop')].length, pn = p.querySelector('.fpill-n');
+      pn.hidden = !len;
+      pn.textContent = len;
+      p.classList.toggle('is-on', len > 0);
+    });
+    var html = '';
+    KEYS.forEach(function (k) { picks[k].forEach(function (v) { html += chip(LABEL[k + ':' + v], 'data-key="' + k + '" data-val="' + v + '"'); }); });
+    if (searching) html += chip('“' + q.trim() + '”', 'data-q');
+    if (html) html += '<button class="fclear" type="button" data-clear-all>Clear all</button>';
+    activeEl.innerHTML = html;
+    activeEl.hidden = !html;
   }
-  function setRow(key, val) {
-    state[key] = val;
-    [].slice.call(document.querySelectorAll('.fchip[data-key="' + key + '"]')).forEach(function (b) {
-      b.setAttribute('aria-pressed', b.dataset.val === val ? 'true' : 'false');
+  function clearAll() {
+    KEYS.forEach(function (k) { picks[k] = []; });
+    q = ''; qEl.value = '';
+    apply();
+  }
+  function closePops(except) {
+    pills.forEach(function (p) {
+      if (p === except) return;
+      p.setAttribute('aria-expanded', 'false');
+      document.getElementById('pop-' + p.getAttribute('data-pop')).hidden = true;
     });
   }
-  document.getElementById('filters').addEventListener('click', function (e) {
-    var b = e.target.closest('.fchip');
-    if (!b) return;
-    setRow(b.dataset.key, b.dataset.val);
-    apply();
+  pills.forEach(function (p) {
+    p.addEventListener('click', function () {
+      var pop = document.getElementById('pop-' + p.getAttribute('data-pop'));
+      closePops(p);
+      pop.hidden = !pop.hidden;
+      p.setAttribute('aria-expanded', String(!pop.hidden));
+    });
   });
-  clearEl.addEventListener('click', function () {
-    ['group', 'cent', 'side', 'type'].forEach(function (k) { setRow(k, 'all'); });
-    state.q = ''; qEl.value = '';
-    apply();
+  document.addEventListener('click', function (e) {
+    var t = e.target;
+    var o = t.closest('.fopt');
+    if (o) {
+      var k = o.getAttribute('data-key'), v = o.getAttribute('data-val'), i = picks[k].indexOf(v);
+      if (i >= 0) picks[k].splice(i, 1); else picks[k].push(v);
+      apply();
+      return;
+    }
+    var x = t.closest('.fchip-x');
+    if (x) {
+      if (x.hasAttribute('data-q')) { q = ''; qEl.value = ''; }
+      else picks[x.getAttribute('data-key')].splice(picks[x.getAttribute('data-key')].indexOf(x.getAttribute('data-val')), 1);
+      apply();
+      return;
+    }
+    if (t.closest('[data-clear-all]')) { clearAll(); return; }
+    var one = t.closest('[data-clear]');
+    if (one) { picks[one.getAttribute('data-clear')] = []; apply(); return; }
+    if (t.closest('.fdone')) { closePops(); return; }
+    if (!t.closest('.fpill-w')) closePops();
   });
-  qEl.addEventListener('input', function () { state.q = qEl.value; apply(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePops(); });
+
+  /* the phone sheet: it rises from the bottom, and "Show N people" closes it on the results */
+  function lock(on) { root.classList.toggle('is-locked', on); }
+  document.getElementById('f-open').addEventListener('click', function () {
+    if (typeof sheet.showModal === 'function') sheet.showModal(); else sheet.setAttribute('open', '');
+    lock(true);
+  });
+  function closeSheet() { if (sheet.open) sheet.close(); lock(false); }
+  sheet.addEventListener('close', function () { lock(false); });
+  sheet.addEventListener('click', function (e) { if (e.target === sheet) closeSheet(); });
+  sheet.querySelector('.fsheet-x').addEventListener('click', closeSheet);
+  showBtn.addEventListener('click', function () {
+    closeSheet();
+    document.getElementById('people').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  qEl.addEventListener('input', function () { q = qEl.value; apply(); });
   document.getElementById('saint-search').addEventListener('submit', function (e) {
     e.preventDefault();
     document.getElementById('people').scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
+  /* a collection card is a way in: it starts the list afresh on that group */
   [].slice.call(document.querySelectorAll('.coll')).forEach(function (c) {
     c.addEventListener('click', function () {
-      setRow('group', c.dataset.group);
+      KEYS.forEach(function (k) { picks[k] = []; });
+      picks.group = [c.getAttribute('data-group')];
+      q = ''; qEl.value = '';
       apply();
       document.getElementById('people').scrollIntoView({ behavior: 'smooth', block: 'start' });
     });

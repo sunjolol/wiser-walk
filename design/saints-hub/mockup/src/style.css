@@ -104,6 +104,7 @@ h1, h2, h3, h4 {
 }
 p { margin: 0 0 1rem; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+[hidden] { display: none !important; } /* a card's own display must never beat hidden */
 .vh { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
 .wrap { --gut: 1.25rem; max-width: 62rem; margin: 0 auto; padding: 0 var(--gut); }
@@ -414,31 +415,109 @@ p { margin: 0 0 1rem; }
   .coll:first-child { min-height: 12rem; }
 }
 
-/* ============================================================ hub: filters and people */
-.filters { display: grid; gap: .55rem; margin: 0 0 1rem; }
-.frow { display: flex; align-items: center; gap: .6rem; min-width: 0; }
-.frow-l { flex: none; width: 7.8rem; font-family: var(--ui); font-size: .58rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-mute); }
-.frow-chips { display: flex; gap: .35rem; overflow-x: auto; scrollbar-width: none; padding: 2px; min-width: 0; }
-.frow-chips::-webkit-scrollbar { display: none; }
-.fchip {
-  flex: none; display: inline-flex; align-items: center; gap: .4rem; min-height: 40px; padding: .45rem .8rem;
-  border: 0; border-radius: var(--r-pill); background: none; cursor: pointer; white-space: nowrap;
-  box-shadow: inset 0 0 0 1.5px var(--rule-strong); color: var(--ink-soft);
-  font-family: var(--ui); font-size: .62rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+/* ============================================================ hub: the filter bar and the people */
+/* One bar that stays in reach while the list scrolls. Phones get "Filters", which opens a sheet from
+   the bottom; wide screens get one pill per kind, each opening a small panel. What is picked shows
+   as chips under the bar. */
+.people-wrap { position: relative; }
+.ftool-bar {
+  position: sticky; top: 8px; z-index: 12; display: flex; align-items: center; gap: .35rem;
+  padding: 5px; border-radius: var(--r-pill);
+  background: color-mix(in srgb, var(--panel) 86%, transparent);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2); backdrop-filter: blur(12px) saturate(1.2);
+  box-shadow: 0 6px 20px rgba(40, 40, 50, .12), inset 0 0 0 1px var(--rule);
+  margin: 0 0 .9rem;
 }
-.fchip:hover { color: var(--accent); box-shadow: inset 0 0 0 1.5px var(--accent); }
-.fchip[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); box-shadow: inset 0 0 0 1.5px var(--accent); }
-.fchip i { width: 9px; height: 9px; border-radius: 50%; background: var(--t); flex: none; }
-@media (max-width: 39.99rem) {
-  .frow { flex-direction: column; align-items: stretch; gap: .3rem; }
-  .frow-l { width: auto; }
-  .frow-chips { margin: 0 calc(-1 * var(--gut)); padding: 2px var(--gut); }
+.fbtn, .fpill {
+  display: inline-flex; align-items: center; gap: .45rem; min-height: 44px; padding: .5rem 1rem; border: 0; border-radius: var(--r-pill);
+  background: var(--shell); color: var(--ink); cursor: pointer; white-space: nowrap;
+  font-family: var(--ui); font-size: .82rem; font-weight: 600; line-height: 1;
 }
-@media (min-width: 40rem) { .frow-chips { flex-wrap: wrap; overflow: visible; } }
-.people-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .4rem 1rem; margin: 0 0 .9rem; }
-.people-count { margin: 0; font-family: var(--ui); font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); }
-.people-clear { font-family: var(--ui); font-size: .72rem; font-weight: 600; background: none; border: 0; padding: .3rem 0; color: var(--accent); cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
-.people-key { margin: 0; flex-basis: 100%; font-size: .8rem; color: var(--ink-mute); }
+.fbtn:hover, .fpill:hover { color: var(--accent); }
+.fpill[aria-expanded="true"], .fpill.is-on { background: var(--accent-soft); color: var(--accent); }
+.fbadge, .fpill-n {
+  display: inline-grid; place-items: center; min-width: 1.35rem; height: 1.35rem; padding: 0 .3rem; border-radius: var(--r-pill);
+  background: var(--accent); color: var(--panel); font-family: var(--ui); font-size: .68rem; font-weight: 700;
+}
+.fbadge[hidden], .fpill-n[hidden] { display: none; }
+.fcaret { flex: none; width: 7px; height: 7px; margin-left: .05rem; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: translateY(-2px) rotate(45deg); opacity: .6; }
+.fpill[aria-expanded="true"] .fcaret { transform: translateY(2px) rotate(225deg); }
+.fpills { display: none; gap: .35rem; }
+.fpill-w { position: relative; }
+.people-count { margin: 0 0 0 auto; padding: 0 .85rem 0 .5rem; font-family: var(--ui); font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); white-space: nowrap; }
+@media (min-width: 46rem) {
+  .fbtn { display: none; }
+  .fpills { display: flex; }
+}
+
+/* a panel under a pill */
+.fpop {
+  position: absolute; z-index: 30; top: calc(100% + 10px); left: 0; width: 23rem; max-width: calc(100vw - 3rem); padding: 1rem;
+  border-radius: 20px; background: var(--panel); box-shadow: 0 16px 40px rgba(20, 20, 30, .22), inset 0 0 0 1px var(--rule);
+}
+.fpill-w:last-child .fpop { left: auto; right: 0; }
+.fpop-f { display: flex; align-items: center; justify-content: space-between; margin-top: .9rem; padding-top: .75rem; border-top: 2px dotted var(--rule-strong); }
+.fdone {
+  min-height: 40px; padding: .45rem 1.15rem; border: 0; border-radius: var(--r-pill); background: var(--accent); color: var(--panel); cursor: pointer;
+  font-family: var(--ui); font-size: .8rem; font-weight: 700;
+}
+
+/* the options, the same in the panels and in the sheet */
+.fopts { display: flex; flex-wrap: wrap; gap: .45rem; }
+.fopt {
+  display: inline-flex; align-items: center; gap: .45rem; min-height: 40px; padding: .45rem .85rem; border: 0; border-radius: var(--r-pill);
+  background: none; box-shadow: inset 0 0 0 1.5px var(--rule-strong); color: var(--ink-soft); cursor: pointer; text-align: left;
+  font-family: var(--ui); font-size: .8rem; font-weight: 600; line-height: 1.2;
+}
+.fopt:hover { color: var(--accent); box-shadow: inset 0 0 0 1.5px var(--accent); }
+.fopt[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); box-shadow: inset 0 0 0 1.5px var(--accent); }
+.fopt:disabled { opacity: .4; cursor: default; box-shadow: inset 0 0 0 1.5px var(--rule); color: var(--ink-mute); }
+.fopt i { width: 9px; height: 9px; border-radius: 50%; background: var(--t); flex: none; }
+.fopt-n { font-size: .72rem; font-weight: 500; color: var(--ink-mute); font-variant-numeric: tabular-nums; }
+.fopt[aria-pressed="true"] .fopt-n { color: inherit; opacity: .8; }
+.fnote { margin: 0 0 .65rem; font-size: .8rem; line-height: 1.45; color: var(--ink-mute); }
+
+/* what is picked, as chips you can take off */
+.factive { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; margin: -.2rem 0 .9rem; }
+.factive[hidden] { display: none; }
+.fchip-x {
+  display: inline-flex; align-items: center; gap: .4rem; min-height: 36px; padding: .35rem .6rem .35rem .85rem; border: 0; border-radius: var(--r-pill);
+  background: var(--accent-soft); color: var(--accent); cursor: pointer; font-family: var(--ui); font-size: .78rem; font-weight: 600;
+}
+.fchip-x:hover { box-shadow: inset 0 0 0 1.5px var(--accent); }
+.fclear {
+  min-height: 36px; padding: .35rem .35rem; border: 0; background: none; cursor: pointer; color: var(--accent);
+  font-family: var(--ui); font-size: .78rem; font-weight: 600; text-decoration: underline; text-underline-offset: 2px;
+}
+.people-empty .fclear { min-height: 0; padding: 0; font-size: inherit; font-family: inherit; }
+
+/* the phone sheet */
+html.is-locked { overflow: hidden; }
+.fsheet {
+  position: fixed; inset: auto 0 0 0; width: 100%; max-width: 100%; max-height: 88svh; margin: 0; padding: 0; border: 0;
+  border-radius: 24px 24px 0 0; background: var(--panel); color: var(--ink); box-shadow: 0 -12px 40px rgba(0, 0, 0, .25);
+  flex-direction: column; overflow: hidden;
+}
+.fsheet[open] { display: flex; animation: sheet-up .26s ease-out; }
+.fsheet::backdrop { background: rgba(18, 18, 24, .45); }
+@keyframes sheet-up { from { transform: translateY(40px); opacity: .4; } to { transform: none; opacity: 1; } }
+.fsheet-h { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.35rem 1.1rem .7rem; border-bottom: 1px solid var(--rule); }
+.fsheet-grab { position: absolute; top: .5rem; left: 50%; width: 40px; height: 4px; margin-left: -20px; border-radius: 4px; background: var(--rule-strong); }
+.fsheet-h h2 { margin: 0; font-size: 1.45rem; }
+.fsheet-x { display: grid; place-items: center; width: 44px; height: 44px; margin-right: -.5rem; border: 0; border-radius: 50%; background: var(--shell); color: var(--ink); cursor: pointer; }
+.fsheet-b { flex: 1; overflow: auto; overscroll-behavior: contain; padding: 0 1.1rem; }
+.fgroup { padding: 1.05rem 0 1.15rem; border-bottom: 2px dotted var(--rule-strong); }
+.fgroup:last-child { border-bottom: 0; }
+.fgroup-t { margin: 0 0 .65rem; font-family: var(--ui); font-size: var(--fs-label); font-weight: var(--fw-label); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-mute); }
+.fsheet-f {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: .8rem 1.1rem calc(.8rem + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--rule); background: var(--panel);
+}
+.fshow { flex: 1; max-width: 17rem; }
+.fshow:disabled { opacity: .5; cursor: default; }
+@media (prefers-reduced-motion: reduce) { .fsheet[open] { animation: none; } }
+
+.people-key { margin: 1rem 0 0; font-size: .8rem; color: var(--ink-mute); }
 .people { display: grid; gap: .7rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @media (min-width: 34rem) { .people { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (min-width: 52rem) { .people { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .8rem; } }
@@ -591,7 +670,9 @@ section[id], div[id] { scroll-margin-top: 5rem; }
 .path b { font-family: var(--display); font-weight: 700; font-size: 1.3rem; line-height: 1.15; color: var(--ink); }
 .path span { font-size: .86rem; line-height: 1.4; color: var(--ink-soft); }
 @media (min-width: 46rem) {
-  .path { --gap: clamp(2rem, 5vw, 4.5rem); grid-auto-flow: column; grid-auto-columns: minmax(0, max-content); justify-content: center; column-gap: var(--gap); }
+  /* the label and the path sit together in the middle, so the label starts over the first dot */
+  .path-in { width: fit-content; max-width: 100%; margin: 0 auto; }
+  .path { --gap: clamp(2rem, 5vw, 4.5rem); grid-auto-flow: column; grid-auto-columns: minmax(0, max-content); column-gap: var(--gap); }
   .path li { max-width: 15rem; padding: 1.6rem 0 0; }
   .path li::before { top: 0; }
   .path li::after { left: 1.5rem; right: calc(.5rem - var(--gap)); top: 6.5px; bottom: auto; border-left: 0; border-top: 2px dotted var(--rule-strong); }
@@ -860,7 +941,7 @@ section[id], div[id] { scroll-margin-top: 5rem; }
 /* ============================================================ phones: boxes run nearly edge to edge */
 /* Last in the file on purpose, so it wins over each box's own margins. The text inside gets the width. */
 @media (max-width: 39.99rem) {
-  [data-view] > :is(.panel, .cs, .said, .words, .moments, .myths, .stances, .split, .reads, .qcards, .kin, .colls, .people, .qcard),
+  [data-view] > :is(.panel, .cs, .said, .words, .moments, .myths, .stances, .split, .reads, .qcards, .kin, .colls, .people-wrap, .qcard),
   .mir > :is(.raised, .wonders, .doubt) { margin-left: calc(6px - var(--gut)); margin-right: calc(6px - var(--gut)); }
   .pager { margin-left: calc(6px - var(--gut)); margin-right: calc(6px - var(--gut)); }
 }

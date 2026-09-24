@@ -125,16 +125,40 @@ const COLLS = COLL.map(([g, t, imgs]) => `<button class="coll" type="button" dat
   + `<span class="coll-art">${imgs.map(i => `<img src="img/${i}.jpg" alt="" loading="lazy" style="object-position:50% 18%">`).join('')}</span>`
   + `<span class="coll-t">${esc(t)}</span></button>`).join('\n');
 
-/* ---------- filters */
-const row = (key, label, opts) => `<div class="frow"><span class="frow-l" id="fl-${key}">${label}</span><div class="frow-chips" role="group" aria-labelledby="fl-${key}">`
-  + [['all', 'All']].concat(opts).map(([v, l, ink]) => `<button class="fchip" type="button" data-key="${key}" data-val="${v}" aria-pressed="${v === 'all'}">${ink ? `<i style="--t:${ink}"></i>` : ''}${esc(l)}</button>`).join('')
-  + `</div></div>`;
-const FILTERS = [
-  row('group', 'Group', COLL.map(([g, t]) => [g, t]).concat([['monks', 'Monks and hermits']])),
-  row('cent', 'Lived', [['pre300', 'Before 300'], ['300s', 'The 300s'], ['400s', 'The 400s'], ['500on', '500 and later'], ['bible', 'In the Bible']]),
-  row('side', 'East or West', [['east', 'East'], ['west', 'West']]),
-  row('type', 'Personality type', Object.keys(TYPES).map(k => [k, tname(k), tink(k)]))
-].join('\n');
+/* ---------- filters: one pill per kind on wide screens, a "Filters" sheet on phones.
+   Several picks in one kind widen the list (Martyrs or Women); picks in different kinds narrow it. */
+const FGROUPS = [
+  { key: 'group', label: 'Group', opts: COLL.map(([g, t]) => [g, t]).concat([['monks', 'Monks and hermits']]) },
+  { key: 'cent', label: 'Lived', opts: [['pre300', 'Before 300'], ['300s', 'The 300s'], ['400s', 'The 400s'], ['500on', '500 and later'], ['bible', 'In the Bible']] },
+  { key: 'side', label: 'East or West', opts: [['east', 'East'], ['west', 'West']] },
+  { key: 'type', label: 'Personality type', note: 'Where the Christian Personality Test places them. Our reading, not a church’s.',
+    opts: Object.keys(TYPES).map(k => [k, tname(k), tink(k)]) }
+];
+const SLIDERS = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>';
+const CROSS = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+const optList = g => '<div class="fopts">' + g.opts.map(([v, l, ink]) =>
+  `<button class="fopt" type="button" data-key="${g.key}" data-val="${v}" aria-pressed="false">`
+  + (ink ? `<i style="--t:${ink}"></i>` : '') + `<span>${esc(l)}</span><b class="fopt-n"></b></button>`).join('') + '</div>';
+const fnote = g => g.note ? `<p class="fnote">${esc(g.note)}</p>` : '';
+const FILTERS = `<div class="ftool-bar">
+    <button class="fbtn" type="button" id="f-open" aria-haspopup="dialog" aria-controls="f-sheet">${SLIDERS}<span>Filters</span><span class="fbadge" id="f-badge" hidden></span></button>
+    <div class="fpills">${FGROUPS.map(g => `
+      <div class="fpill-w"><button class="fpill" type="button" data-pop="${g.key}" aria-expanded="false" aria-controls="pop-${g.key}"><span>${esc(g.label)}</span><span class="fpill-n" hidden></span><span class="fcaret" aria-hidden="true"></span></button>
+        <div class="fpop" id="pop-${g.key}" role="group" aria-label="${esc(g.label)}" hidden>${fnote(g)}${optList(g)}
+          <div class="fpop-f"><button class="fclear" type="button" data-clear="${g.key}">Clear</button><button class="fdone" type="button">Done</button></div>
+        </div></div>`).join('')}
+    </div>
+    <p class="people-count" id="people-count" aria-live="polite">38 people</p>
+  </div>
+  <div class="factive" id="f-active" hidden></div>`;
+const SHEET = `<dialog class="fsheet" id="f-sheet" aria-labelledby="f-sheet-t">
+  <div class="fsheet-h"><span class="fsheet-grab" aria-hidden="true"></span><h2 id="f-sheet-t">Filters</h2>
+    <button class="fsheet-x" type="button" aria-label="Close">${CROSS}</button></div>
+  <div class="fsheet-b">${FGROUPS.map(g => `
+    <section class="fgroup"><h3 class="fgroup-t">${esc(g.label)}</h3>${fnote(g)}${optList(g)}</section>`).join('')}
+  </div>
+  <div class="fsheet-f"><button class="fclear" type="button" data-clear-all>Clear all</button><button class="btn fshow" type="button" id="f-show">Show 38 people</button></div>
+</dialog>`;
 
 /* ---------- Where he stood, from Martin's cells */
 const PLACE = { laugh: 'chapter 27', alone: 'Dialogue II, chapter 4', calm: 'chapter 27', body: 'Letter 3', war: 'chapter 4' };
@@ -214,7 +238,7 @@ const ARROW = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" strok
 
 let bodyHtml = fs.readFileSync(path.join(here, 'body.html'), 'utf8');
 bodyHtml = bodyHtml
-  .replace('{{WALL}}', WALL).replace('{{COLLS}}', COLLS).replace('{{FILTERS}}', FILTERS)
+  .replace('{{WALL}}', WALL).replace('{{COLLS}}', COLLS).replace('{{FILTERS}}', FILTERS).replace('{{SHEET}}', SHEET)
   .replace('{{PEOPLE}}', PEOPLE).replace('{{STANCES}}', STANCES).replace('{{JSONLD}}', JSONLD).replace('{{MIRACLES}}', MIRACLES)
   .replaceAll('{{CARET}}', CARET).replaceAll('{{ARROW}}', ARROW);
 const svg = fs.readFileSync('C:/Users/Light/Desktop/claude/theology compass/site/public/img/wordmark.svg');

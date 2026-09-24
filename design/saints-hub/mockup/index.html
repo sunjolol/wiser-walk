@@ -110,6 +110,7 @@ h1, h2, h3, h4 {
 }
 p { margin: 0 0 1rem; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+[hidden] { display: none !important; } /* a card's own display must never beat hidden */
 .vh { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
 .wrap { --gut: 1.25rem; max-width: 62rem; margin: 0 auto; padding: 0 var(--gut); }
@@ -420,31 +421,109 @@ p { margin: 0 0 1rem; }
   .coll:first-child { min-height: 12rem; }
 }
 
-/* ============================================================ hub: filters and people */
-.filters { display: grid; gap: .55rem; margin: 0 0 1rem; }
-.frow { display: flex; align-items: center; gap: .6rem; min-width: 0; }
-.frow-l { flex: none; width: 7.8rem; font-family: var(--ui); font-size: .58rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-mute); }
-.frow-chips { display: flex; gap: .35rem; overflow-x: auto; scrollbar-width: none; padding: 2px; min-width: 0; }
-.frow-chips::-webkit-scrollbar { display: none; }
-.fchip {
-  flex: none; display: inline-flex; align-items: center; gap: .4rem; min-height: 40px; padding: .45rem .8rem;
-  border: 0; border-radius: var(--r-pill); background: none; cursor: pointer; white-space: nowrap;
-  box-shadow: inset 0 0 0 1.5px var(--rule-strong); color: var(--ink-soft);
-  font-family: var(--ui); font-size: .62rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+/* ============================================================ hub: the filter bar and the people */
+/* One bar that stays in reach while the list scrolls. Phones get "Filters", which opens a sheet from
+   the bottom; wide screens get one pill per kind, each opening a small panel. What is picked shows
+   as chips under the bar. */
+.people-wrap { position: relative; }
+.ftool-bar {
+  position: sticky; top: 8px; z-index: 12; display: flex; align-items: center; gap: .35rem;
+  padding: 5px; border-radius: var(--r-pill);
+  background: color-mix(in srgb, var(--panel) 86%, transparent);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2); backdrop-filter: blur(12px) saturate(1.2);
+  box-shadow: 0 6px 20px rgba(40, 40, 50, .12), inset 0 0 0 1px var(--rule);
+  margin: 0 0 .9rem;
 }
-.fchip:hover { color: var(--accent); box-shadow: inset 0 0 0 1.5px var(--accent); }
-.fchip[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); box-shadow: inset 0 0 0 1.5px var(--accent); }
-.fchip i { width: 9px; height: 9px; border-radius: 50%; background: var(--t); flex: none; }
-@media (max-width: 39.99rem) {
-  .frow { flex-direction: column; align-items: stretch; gap: .3rem; }
-  .frow-l { width: auto; }
-  .frow-chips { margin: 0 calc(-1 * var(--gut)); padding: 2px var(--gut); }
+.fbtn, .fpill {
+  display: inline-flex; align-items: center; gap: .45rem; min-height: 44px; padding: .5rem 1rem; border: 0; border-radius: var(--r-pill);
+  background: var(--shell); color: var(--ink); cursor: pointer; white-space: nowrap;
+  font-family: var(--ui); font-size: .82rem; font-weight: 600; line-height: 1;
 }
-@media (min-width: 40rem) { .frow-chips { flex-wrap: wrap; overflow: visible; } }
-.people-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .4rem 1rem; margin: 0 0 .9rem; }
-.people-count { margin: 0; font-family: var(--ui); font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); }
-.people-clear { font-family: var(--ui); font-size: .72rem; font-weight: 600; background: none; border: 0; padding: .3rem 0; color: var(--accent); cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
-.people-key { margin: 0; flex-basis: 100%; font-size: .8rem; color: var(--ink-mute); }
+.fbtn:hover, .fpill:hover { color: var(--accent); }
+.fpill[aria-expanded="true"], .fpill.is-on { background: var(--accent-soft); color: var(--accent); }
+.fbadge, .fpill-n {
+  display: inline-grid; place-items: center; min-width: 1.35rem; height: 1.35rem; padding: 0 .3rem; border-radius: var(--r-pill);
+  background: var(--accent); color: var(--panel); font-family: var(--ui); font-size: .68rem; font-weight: 700;
+}
+.fbadge[hidden], .fpill-n[hidden] { display: none; }
+.fcaret { flex: none; width: 7px; height: 7px; margin-left: .05rem; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: translateY(-2px) rotate(45deg); opacity: .6; }
+.fpill[aria-expanded="true"] .fcaret { transform: translateY(2px) rotate(225deg); }
+.fpills { display: none; gap: .35rem; }
+.fpill-w { position: relative; }
+.people-count { margin: 0 0 0 auto; padding: 0 .85rem 0 .5rem; font-family: var(--ui); font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); white-space: nowrap; }
+@media (min-width: 46rem) {
+  .fbtn { display: none; }
+  .fpills { display: flex; }
+}
+
+/* a panel under a pill */
+.fpop {
+  position: absolute; z-index: 30; top: calc(100% + 10px); left: 0; width: 23rem; max-width: calc(100vw - 3rem); padding: 1rem;
+  border-radius: 20px; background: var(--panel); box-shadow: 0 16px 40px rgba(20, 20, 30, .22), inset 0 0 0 1px var(--rule);
+}
+.fpill-w:last-child .fpop { left: auto; right: 0; }
+.fpop-f { display: flex; align-items: center; justify-content: space-between; margin-top: .9rem; padding-top: .75rem; border-top: 2px dotted var(--rule-strong); }
+.fdone {
+  min-height: 40px; padding: .45rem 1.15rem; border: 0; border-radius: var(--r-pill); background: var(--accent); color: var(--panel); cursor: pointer;
+  font-family: var(--ui); font-size: .8rem; font-weight: 700;
+}
+
+/* the options, the same in the panels and in the sheet */
+.fopts { display: flex; flex-wrap: wrap; gap: .45rem; }
+.fopt {
+  display: inline-flex; align-items: center; gap: .45rem; min-height: 40px; padding: .45rem .85rem; border: 0; border-radius: var(--r-pill);
+  background: none; box-shadow: inset 0 0 0 1.5px var(--rule-strong); color: var(--ink-soft); cursor: pointer; text-align: left;
+  font-family: var(--ui); font-size: .8rem; font-weight: 600; line-height: 1.2;
+}
+.fopt:hover { color: var(--accent); box-shadow: inset 0 0 0 1.5px var(--accent); }
+.fopt[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); box-shadow: inset 0 0 0 1.5px var(--accent); }
+.fopt:disabled { opacity: .4; cursor: default; box-shadow: inset 0 0 0 1.5px var(--rule); color: var(--ink-mute); }
+.fopt i { width: 9px; height: 9px; border-radius: 50%; background: var(--t); flex: none; }
+.fopt-n { font-size: .72rem; font-weight: 500; color: var(--ink-mute); font-variant-numeric: tabular-nums; }
+.fopt[aria-pressed="true"] .fopt-n { color: inherit; opacity: .8; }
+.fnote { margin: 0 0 .65rem; font-size: .8rem; line-height: 1.45; color: var(--ink-mute); }
+
+/* what is picked, as chips you can take off */
+.factive { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; margin: -.2rem 0 .9rem; }
+.factive[hidden] { display: none; }
+.fchip-x {
+  display: inline-flex; align-items: center; gap: .4rem; min-height: 36px; padding: .35rem .6rem .35rem .85rem; border: 0; border-radius: var(--r-pill);
+  background: var(--accent-soft); color: var(--accent); cursor: pointer; font-family: var(--ui); font-size: .78rem; font-weight: 600;
+}
+.fchip-x:hover { box-shadow: inset 0 0 0 1.5px var(--accent); }
+.fclear {
+  min-height: 36px; padding: .35rem .35rem; border: 0; background: none; cursor: pointer; color: var(--accent);
+  font-family: var(--ui); font-size: .78rem; font-weight: 600; text-decoration: underline; text-underline-offset: 2px;
+}
+.people-empty .fclear { min-height: 0; padding: 0; font-size: inherit; font-family: inherit; }
+
+/* the phone sheet */
+html.is-locked { overflow: hidden; }
+.fsheet {
+  position: fixed; inset: auto 0 0 0; width: 100%; max-width: 100%; max-height: 88svh; margin: 0; padding: 0; border: 0;
+  border-radius: 24px 24px 0 0; background: var(--panel); color: var(--ink); box-shadow: 0 -12px 40px rgba(0, 0, 0, .25);
+  flex-direction: column; overflow: hidden;
+}
+.fsheet[open] { display: flex; animation: sheet-up .26s ease-out; }
+.fsheet::backdrop { background: rgba(18, 18, 24, .45); }
+@keyframes sheet-up { from { transform: translateY(40px); opacity: .4; } to { transform: none; opacity: 1; } }
+.fsheet-h { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.35rem 1.1rem .7rem; border-bottom: 1px solid var(--rule); }
+.fsheet-grab { position: absolute; top: .5rem; left: 50%; width: 40px; height: 4px; margin-left: -20px; border-radius: 4px; background: var(--rule-strong); }
+.fsheet-h h2 { margin: 0; font-size: 1.45rem; }
+.fsheet-x { display: grid; place-items: center; width: 44px; height: 44px; margin-right: -.5rem; border: 0; border-radius: 50%; background: var(--shell); color: var(--ink); cursor: pointer; }
+.fsheet-b { flex: 1; overflow: auto; overscroll-behavior: contain; padding: 0 1.1rem; }
+.fgroup { padding: 1.05rem 0 1.15rem; border-bottom: 2px dotted var(--rule-strong); }
+.fgroup:last-child { border-bottom: 0; }
+.fgroup-t { margin: 0 0 .65rem; font-family: var(--ui); font-size: var(--fs-label); font-weight: var(--fw-label); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-mute); }
+.fsheet-f {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: .8rem 1.1rem calc(.8rem + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--rule); background: var(--panel);
+}
+.fshow { flex: 1; max-width: 17rem; }
+.fshow:disabled { opacity: .5; cursor: default; }
+@media (prefers-reduced-motion: reduce) { .fsheet[open] { animation: none; } }
+
+.people-key { margin: 1rem 0 0; font-size: .8rem; color: var(--ink-mute); }
 .people { display: grid; gap: .7rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @media (min-width: 34rem) { .people { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (min-width: 52rem) { .people { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .8rem; } }
@@ -597,7 +676,9 @@ section[id], div[id] { scroll-margin-top: 5rem; }
 .path b { font-family: var(--display); font-weight: 700; font-size: 1.3rem; line-height: 1.15; color: var(--ink); }
 .path span { font-size: .86rem; line-height: 1.4; color: var(--ink-soft); }
 @media (min-width: 46rem) {
-  .path { --gap: clamp(2rem, 5vw, 4.5rem); grid-auto-flow: column; grid-auto-columns: minmax(0, max-content); justify-content: center; column-gap: var(--gap); }
+  /* the label and the path sit together in the middle, so the label starts over the first dot */
+  .path-in { width: fit-content; max-width: 100%; margin: 0 auto; }
+  .path { --gap: clamp(2rem, 5vw, 4.5rem); grid-auto-flow: column; grid-auto-columns: minmax(0, max-content); column-gap: var(--gap); }
   .path li { max-width: 15rem; padding: 1.6rem 0 0; }
   .path li::before { top: 0; }
   .path li::after { left: 1.5rem; right: calc(.5rem - var(--gap)); top: 6.5px; bottom: auto; border-left: 0; border-top: 2px dotted var(--rule-strong); }
@@ -866,7 +947,7 @@ section[id], div[id] { scroll-margin-top: 5rem; }
 /* ============================================================ phones: boxes run nearly edge to edge */
 /* Last in the file on purpose, so it wins over each box's own margins. The text inside gets the width. */
 @media (max-width: 39.99rem) {
-  [data-view] > :is(.panel, .cs, .said, .words, .moments, .myths, .stances, .split, .reads, .qcards, .kin, .colls, .people, .qcard),
+  [data-view] > :is(.panel, .cs, .said, .words, .moments, .myths, .stances, .split, .reads, .qcards, .kin, .colls, .people-wrap, .qcard),
   .mir > :is(.raised, .wonders, .doubt) { margin-left: calc(6px - var(--gut)); margin-right: calc(6px - var(--gut)); }
   .pager { margin-left: calc(6px - var(--gut)); margin-right: calc(6px - var(--gut)); }
 }
@@ -998,15 +1079,30 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
 <button class="coll" type="button" data-group="bible"><span class="coll-art"><img src="img/f/moses.jpg" alt="" loading="lazy" style="object-position:50% 18%"><img src="img/f/isaiah.jpg" alt="" loading="lazy" style="object-position:50% 18%"><img src="img/f/peter.jpg" alt="" loading="lazy" style="object-position:50% 18%"></span><span class="coll-t">People of the Bible</span></button></div>
 
   <div class="sect" id="people"><div class="sect-text"><h2 class="sect-title">all the people</h2></div></div>
-  <div class="filters" id="filters"><div class="frow"><span class="frow-l" id="fl-group">Group</span><div class="frow-chips" role="group" aria-labelledby="fl-group"><button class="fchip" type="button" data-key="group" data-val="all" aria-pressed="true">All</button><button class="fchip" type="button" data-key="group" data-val="fathers" aria-pressed="false">Church Fathers</button><button class="fchip" type="button" data-key="group" data-val="desert" aria-pressed="false">Desert fathers and mothers</button><button class="fchip" type="button" data-key="group" data-val="cappadocians" aria-pressed="false">The Cappadocian fathers</button><button class="fchip" type="button" data-key="group" data-val="teachers" aria-pressed="false">Great teachers of East and West</button><button class="fchip" type="button" data-key="group" data-val="martyrs" aria-pressed="false">Martyrs</button><button class="fchip" type="button" data-key="group" data-val="women" aria-pressed="false">Women of the early Church</button><button class="fchip" type="button" data-key="group" data-val="bible" aria-pressed="false">People of the Bible</button><button class="fchip" type="button" data-key="group" data-val="monks" aria-pressed="false">Monks and hermits</button></div></div>
-<div class="frow"><span class="frow-l" id="fl-cent">Lived</span><div class="frow-chips" role="group" aria-labelledby="fl-cent"><button class="fchip" type="button" data-key="cent" data-val="all" aria-pressed="true">All</button><button class="fchip" type="button" data-key="cent" data-val="pre300" aria-pressed="false">Before 300</button><button class="fchip" type="button" data-key="cent" data-val="300s" aria-pressed="false">The 300s</button><button class="fchip" type="button" data-key="cent" data-val="400s" aria-pressed="false">The 400s</button><button class="fchip" type="button" data-key="cent" data-val="500on" aria-pressed="false">500 and later</button><button class="fchip" type="button" data-key="cent" data-val="bible" aria-pressed="false">In the Bible</button></div></div>
-<div class="frow"><span class="frow-l" id="fl-side">East or West</span><div class="frow-chips" role="group" aria-labelledby="fl-side"><button class="fchip" type="button" data-key="side" data-val="all" aria-pressed="true">All</button><button class="fchip" type="button" data-key="side" data-val="east" aria-pressed="false">East</button><button class="fchip" type="button" data-key="side" data-val="west" aria-pressed="false">West</button></div></div>
-<div class="frow"><span class="frow-l" id="fl-type">Personality type</span><div class="frow-chips" role="group" aria-labelledby="fl-type"><button class="fchip" type="button" data-key="type" data-val="all" aria-pressed="true">All</button><button class="fchip" type="button" data-key="type" data-val="hearth" aria-pressed="false"><i style="--t:#E3A55B"></i>The Hearth</button><button class="fchip" type="button" data-key="type" data-val="spark" aria-pressed="false"><i style="--t:#EE7F5E"></i>The Spark</button><button class="fchip" type="button" data-key="type" data-val="deepwell" aria-pressed="false"><i style="--t:#4F7FB5"></i>The Deep Well</button><button class="fchip" type="button" data-key="type" data-val="forge" aria-pressed="false"><i style="--t:#C9553B"></i>The Forge</button><button class="fchip" type="button" data-key="type" data-val="stillwater" aria-pressed="false"><i style="--t:#4FA3BC"></i>The Still Water</button><button class="fchip" type="button" data-key="type" data-val="lookout" aria-pressed="false"><i style="--t:#6F9E5C"></i>The Lookout</button><button class="fchip" type="button" data-key="type" data-val="oak" aria-pressed="false"><i style="--t:#8C7A4F"></i>The Oak</button><button class="fchip" type="button" data-key="type" data-val="herald" aria-pressed="false"><i style="--t:#D19A22"></i>The Herald</button></div></div></div>
-  <div class="people-head">
+  <div class="people-wrap" id="filters">
+  <div class="ftool-bar">
+    <button class="fbtn" type="button" id="f-open" aria-haspopup="dialog" aria-controls="f-sheet"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg><span>Filters</span><span class="fbadge" id="f-badge" hidden></span></button>
+    <div class="fpills">
+      <div class="fpill-w"><button class="fpill" type="button" data-pop="group" aria-expanded="false" aria-controls="pop-group"><span>Group</span><span class="fpill-n" hidden></span><span class="fcaret" aria-hidden="true"></span></button>
+        <div class="fpop" id="pop-group" role="group" aria-label="Group" hidden><div class="fopts"><button class="fopt" type="button" data-key="group" data-val="fathers" aria-pressed="false"><span>Church Fathers</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="group" data-val="desert" aria-pressed="false"><span>Desert fathers and mothers</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="group" data-val="cappadocians" aria-pressed="false"><span>The Cappadocian fathers</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="group" data-val="teachers" aria-pressed="false"><span>Great teachers of East and West</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="group" data-val="martyrs" aria-pressed="false"><span>Martyrs</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="group" data-val="women" aria-pressed="false"><span>Women of the early Church</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="group" data-val="bible" aria-pressed="false"><span>People of the Bible</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="group" data-val="monks" aria-pressed="false"><span>Monks and hermits</span><b class="fopt-n"></b></button></div>
+          <div class="fpop-f"><button class="fclear" type="button" data-clear="group">Clear</button><button class="fdone" type="button">Done</button></div>
+        </div></div>
+      <div class="fpill-w"><button class="fpill" type="button" data-pop="cent" aria-expanded="false" aria-controls="pop-cent"><span>Lived</span><span class="fpill-n" hidden></span><span class="fcaret" aria-hidden="true"></span></button>
+        <div class="fpop" id="pop-cent" role="group" aria-label="Lived" hidden><div class="fopts"><button class="fopt" type="button" data-key="cent" data-val="pre300" aria-pressed="false"><span>Before 300</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="cent" data-val="300s" aria-pressed="false"><span>The 300s</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="cent" data-val="400s" aria-pressed="false"><span>The 400s</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="cent" data-val="500on" aria-pressed="false"><span>500 and later</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="cent" data-val="bible" aria-pressed="false"><span>In the Bible</span><b class="fopt-n"></b></button></div>
+          <div class="fpop-f"><button class="fclear" type="button" data-clear="cent">Clear</button><button class="fdone" type="button">Done</button></div>
+        </div></div>
+      <div class="fpill-w"><button class="fpill" type="button" data-pop="side" aria-expanded="false" aria-controls="pop-side"><span>East or West</span><span class="fpill-n" hidden></span><span class="fcaret" aria-hidden="true"></span></button>
+        <div class="fpop" id="pop-side" role="group" aria-label="East or West" hidden><div class="fopts"><button class="fopt" type="button" data-key="side" data-val="east" aria-pressed="false"><span>East</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="side" data-val="west" aria-pressed="false"><span>West</span><b class="fopt-n"></b></button></div>
+          <div class="fpop-f"><button class="fclear" type="button" data-clear="side">Clear</button><button class="fdone" type="button">Done</button></div>
+        </div></div>
+      <div class="fpill-w"><button class="fpill" type="button" data-pop="type" aria-expanded="false" aria-controls="pop-type"><span>Personality type</span><span class="fpill-n" hidden></span><span class="fcaret" aria-hidden="true"></span></button>
+        <div class="fpop" id="pop-type" role="group" aria-label="Personality type" hidden><p class="fnote">Where the Christian Personality Test places them. Our reading, not a church’s.</p><div class="fopts"><button class="fopt" type="button" data-key="type" data-val="hearth" aria-pressed="false"><i style="--t:#E3A55B"></i><span>The Hearth</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="type" data-val="spark" aria-pressed="false"><i style="--t:#EE7F5E"></i><span>The Spark</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="type" data-val="deepwell" aria-pressed="false"><i style="--t:#4F7FB5"></i><span>The Deep Well</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="type" data-val="forge" aria-pressed="false"><i style="--t:#C9553B"></i><span>The Forge</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="type" data-val="stillwater" aria-pressed="false"><i style="--t:#4FA3BC"></i><span>The Still Water</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="type" data-val="lookout" aria-pressed="false"><i style="--t:#6F9E5C"></i><span>The Lookout</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="type" data-val="oak" aria-pressed="false"><i style="--t:#8C7A4F"></i><span>The Oak</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="type" data-val="herald" aria-pressed="false"><i style="--t:#D19A22"></i><span>The Herald</span><b class="fopt-n"></b></button></div>
+          <div class="fpop-f"><button class="fclear" type="button" data-clear="type">Clear</button><button class="fdone" type="button">Done</button></div>
+        </div></div>
+    </div>
     <p class="people-count" id="people-count" aria-live="polite">38 people</p>
-    <button class="people-clear" id="people-clear" type="button" hidden>Clear filters</button>
-    <p class="people-key">A coloured chip is where the Christian Personality Test places that person. It is our reading, not a church's.</p>
   </div>
+  <div class="factive" id="f-active" hidden></div>
   <div class="people" id="people-grid"><a class="pcard" href="#" data-dead data-groups="fathers martyrs" data-cent="pre300" data-side="east" data-type="" data-search="justin martyr "><span class="pcard-pic"><img src="img/p/justin-martyr.jpg" alt="Saint Justin the Philosopher, Theophanes the Cretan, 1545-1546" loading="lazy" style="object-position:50% 14%"></span><span class="pcard-b"><span class="pcard-n">Justin Martyr</span><span class="pcard-d">c. 100 to c. 165</span><span class="pcard-w">Philosopher who became the first great defender of the faith.</span></span></a>
 <a class="pcard" href="#" data-dead data-groups="fathers" data-cent="pre300" data-side="east west" data-type="" data-search="irenaeus of lyons "><span class="pcard-pic"><img src="img/p/irenaeus-of-lyons.jpg" alt="Saint Irenaeus, stained-glass window, Lucien Bégule, 1901" loading="lazy" style="object-position:50% 30%"></span><span class="pcard-b"><span class="pcard-n">Irenaeus of Lyons</span><span class="pcard-d">c. 130 to c. 202</span><span class="pcard-w">Bishop of Lyons. As a boy he heard Polycarp, who had known the apostle John.</span></span></a>
 <a class="pcard" href="#" data-dead data-groups="fathers" data-cent="pre300" data-side="east" data-type="" data-search="clement of alexandria "><span class="pcard-pic"><img src="img/p/clement-of-alexandria.jpg" alt="Saint Clement of Alexandria, Jean-Auguste-Dominique Ingres, c. 1842" loading="lazy" style="object-position:50% 22%"></span><span class="pcard-b"><span class="pcard-n">Clement of Alexandria</span><span class="pcard-d">c. 150 to c. 215</span><span class="pcard-w">Teacher in the ancient world's great city of learning.</span></span></a>
@@ -1045,7 +1141,9 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
 <a class="pcard" href="#" data-dead data-groups="bible" data-cent="bible" data-side="" data-type="herald" data-search="peter "><span class="pcard-pic"><img src="img/f/peter.jpg" alt="Portrait of Peter" loading="lazy" style="object-position:50% 40%"></span><span class="pcard-b"><span class="pcard-n">Peter</span><span class="pcard-d">New Testament</span><span class="pcard-w">He denied Christ three times. Then he wept, came back, and led the Church.</span><span class="pcard-foot"><span class="tchip" style="--t:#D19A22" title="The Christian Personality Test's reading">The Herald</span></span></span></a>
 <a class="pcard" href="#" data-dead data-groups="bible" data-cent="bible" data-side="" data-type="hearth" data-search="barnabas "><span class="pcard-pic"><img src="img/f/barnabas.jpg" alt="Portrait of Barnabas" loading="lazy" style="object-position:50% 40%"></span><span class="pcard-b"><span class="pcard-n">Barnabas</span><span class="pcard-d">New Testament</span><span class="pcard-w">The “Son of Encouragement”, who wanted to give young Mark a second chance.</span><span class="pcard-foot"><span class="tchip" style="--t:#E3A55B" title="The Christian Personality Test's reading">The Hearth</span></span></span></a>
 <a class="pcard" href="#" data-dead data-groups="bible" data-cent="bible" data-side="" data-type="forge" data-search="paul "><span class="pcard-pic"><img src="img/f/paul.jpg" alt="Portrait of Paul" loading="lazy" style="object-position:50% 40%"></span><span class="pcard-b"><span class="pcard-n">Paul</span><span class="pcard-d">New Testament</span><span class="pcard-w">He would not give Mark a second chance. Years later he asked for him.</span><span class="pcard-foot"><span class="tchip" style="--t:#C9553B" title="The Christian Personality Test's reading">The Forge</span></span></span></a></div>
-  <p class="people-empty" id="people-empty" hidden>No one matches that. Try another name, or clear the filters.</p>
+  <p class="people-empty" id="people-empty" hidden>No one matches that. Try another name, or <button class="fclear" type="button" data-clear-all>clear the filters</button>.</p>
+  </div>
+  <p class="people-key">A coloured chip is where the Christian Personality Test places that person. It is our reading, not a church's.</p>
 
   <div class="sect"><div class="sect-text"><h2 class="sect-title">where do you stand?</h2></div></div>
   <a class="qcard qcard--engr" href="#" data-dead>
@@ -1110,6 +1208,7 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
   <div class="sect" id="glance"><div class="sect-text"><h2 class="sect-title">at a glance</h2></div></div>
   <div class="cs">
     <section class="cs-path panel" aria-label="His roles, in order">
+      <div class="path-in">
       <p class="path-k">His roles, in order</p>
       <ol class="path">
         <li><b>Soldier</b><span>Forced to enlist at 15</span></li>
@@ -1117,6 +1216,7 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
         <li><b>Monk</b><span>Founded a monastery near Poitiers</span></li>
         <li><b>Bishop</b><span>Of Tours, 371 to 397</span></li>
       </ol>
+      </div>
     </section>
 
     <section class="cs-stats dark" aria-label="Martin in numbers">
@@ -1656,6 +1756,17 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
   <div class="wrap foot-bar"><p>© 2026 Wiser Walk · Free to use, with credit</p></div>
 </footer>
 </div>
+<dialog class="fsheet" id="f-sheet" aria-labelledby="f-sheet-t">
+  <div class="fsheet-h"><span class="fsheet-grab" aria-hidden="true"></span><h2 id="f-sheet-t">Filters</h2>
+    <button class="fsheet-x" type="button" aria-label="Close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <div class="fsheet-b">
+    <section class="fgroup"><h3 class="fgroup-t">Group</h3><div class="fopts"><button class="fopt" type="button" data-key="group" data-val="fathers" aria-pressed="false"><span>Church Fathers</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="group" data-val="desert" aria-pressed="false"><span>Desert fathers and mothers</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="group" data-val="cappadocians" aria-pressed="false"><span>The Cappadocian fathers</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="group" data-val="teachers" aria-pressed="false"><span>Great teachers of East and West</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="group" data-val="martyrs" aria-pressed="false"><span>Martyrs</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="group" data-val="women" aria-pressed="false"><span>Women of the early Church</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="group" data-val="bible" aria-pressed="false"><span>People of the Bible</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="group" data-val="monks" aria-pressed="false"><span>Monks and hermits</span><b class="fopt-n"></b></button></div></section>
+    <section class="fgroup"><h3 class="fgroup-t">Lived</h3><div class="fopts"><button class="fopt" type="button" data-key="cent" data-val="pre300" aria-pressed="false"><span>Before 300</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="cent" data-val="300s" aria-pressed="false"><span>The 300s</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="cent" data-val="400s" aria-pressed="false"><span>The 400s</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="cent" data-val="500on" aria-pressed="false"><span>500 and later</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="cent" data-val="bible" aria-pressed="false"><span>In the Bible</span><b class="fopt-n"></b></button></div></section>
+    <section class="fgroup"><h3 class="fgroup-t">East or West</h3><div class="fopts"><button class="fopt" type="button" data-key="side" data-val="east" aria-pressed="false"><span>East</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="side" data-val="west" aria-pressed="false"><span>West</span><b class="fopt-n"></b></button></div></section>
+    <section class="fgroup"><h3 class="fgroup-t">Personality type</h3><p class="fnote">Where the Christian Personality Test places them. Our reading, not a church’s.</p><div class="fopts"><button class="fopt" type="button" data-key="type" data-val="hearth" aria-pressed="false"><i style="--t:#E3A55B"></i><span>The Hearth</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="type" data-val="spark" aria-pressed="false"><i style="--t:#EE7F5E"></i><span>The Spark</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="type" data-val="deepwell" aria-pressed="false"><i style="--t:#4F7FB5"></i><span>The Deep Well</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="type" data-val="forge" aria-pressed="false"><i style="--t:#C9553B"></i><span>The Forge</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="type" data-val="stillwater" aria-pressed="false"><i style="--t:#4FA3BC"></i><span>The Still Water</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="type" data-val="lookout" aria-pressed="false"><i style="--t:#6F9E5C"></i><span>The Lookout</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="type" data-val="oak" aria-pressed="false"><i style="--t:#8C7A4F"></i><span>The Oak</span><b class="fopt-n"></b></button><button class="fopt" type="button" data-key="type" data-val="herald" aria-pressed="false"><i style="--t:#D19A22"></i><span>The Herald</span><b class="fopt-n"></b></button></div></section>
+  </div>
+  <div class="fsheet-f"><button class="fclear" type="button" data-clear-all>Clear all</button><button class="btn fshow" type="button" id="f-show">Show 38 people</button></div>
+</dialog>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -1805,57 +1916,149 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
   });
   route();
 
-  /* ---- the hub's filters */
+  /* ---- the hub's filters. Picks within one kind widen the list (Martyrs or Women); picks in
+     different kinds narrow it (Martyrs who lived in the 300s). Each option shows how many people
+     it would leave, so a reader never lands on an empty page by surprise. */
   var cards = [].slice.call(document.querySelectorAll('.pcard'));
   var total = cards.length;
-  var state = { group: 'all', cent: 'all', side: 'all', type: 'all', q: '' };
+  var KEYS = ['group', 'cent', 'side', 'type'];
+  var picks = { group: [], cent: [], side: [], type: [] }, q = '';
+  var LABEL = {};
+  [].slice.call(document.querySelectorAll('.fpop .fopt')).forEach(function (b) {
+    LABEL[b.getAttribute('data-key') + ':' + b.getAttribute('data-val')] = b.querySelector('span').textContent;
+  });
+  var opts = [].slice.call(document.querySelectorAll('.fopt'));
+  var pills = [].slice.call(document.querySelectorAll('.fpill'));
   var countEl = document.getElementById('people-count');
-  var clearEl = document.getElementById('people-clear');
   var emptyEl = document.getElementById('people-empty');
+  var activeEl = document.getElementById('f-active');
+  var badge = document.getElementById('f-badge');
+  var sheet = document.getElementById('f-sheet');
+  var showBtn = document.getElementById('f-show');
   var qEl = document.getElementById('saint-q');
+  var CROSS = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
   function norm(s) { return (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+  function escH(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
   function has(list, v) { return (' ' + list + ' ').indexOf(' ' + v + ' ') >= 0; }
+  function fits(c, key, v) {
+    if (key === 'group') return has(c.getAttribute('data-groups'), v);
+    if (key === 'side') return has(c.getAttribute('data-side'), v);
+    return c.getAttribute('data-' + key) === v;
+  }
+  function matches(c, skip) {
+    for (var i = 0; i < KEYS.length; i++) {
+      var k = KEYS[i];
+      if (k === skip || !picks[k].length) continue;
+      if (!picks[k].some(function (v) { return fits(c, k, v); })) return false;
+    }
+    var nq = norm(q).trim();
+    return !nq || norm(c.getAttribute('data-search')).indexOf(nq) >= 0;
+  }
+  function people(n) { return n + (n === 1 ? ' person' : ' people'); }
+  function chip(label, attrs) {
+    return '<button class="fchip-x" type="button" ' + attrs + ' aria-label="Remove ' + escH(label) + '"><span>' + escH(label) + '</span>' + CROSS + '</button>';
+  }
   function apply() {
-    var shown = 0, q = norm(state.q).trim();
-    cards.forEach(function (c) {
-      var ok = (state.group === 'all' || has(c.dataset.groups, state.group))
-        && (state.cent === 'all' || c.dataset.cent === state.cent)
-        && (state.side === 'all' || has(c.dataset.side, state.side))
-        && (state.type === 'all' || c.dataset.type === state.type)
-        && (!q || norm(c.dataset.search).indexOf(q) >= 0);
-      c.hidden = !ok;
-      if (ok) shown++;
-    });
-    var filtered = state.group !== 'all' || state.cent !== 'all' || state.side !== 'all' || state.type !== 'all' || q;
-    countEl.textContent = filtered ? shown + ' of ' + total + ' people' : total + ' people';
-    clearEl.hidden = !filtered;
+    var shown = 0;
+    cards.forEach(function (c) { var ok = matches(c); c.hidden = !ok; if (ok) shown++; });
+    var n = KEYS.reduce(function (a, k) { return a + picks[k].length; }, 0);
+    var searching = !!norm(q).trim();
+    countEl.textContent = n || searching ? shown + ' of ' + total : people(total);
     emptyEl.hidden = shown > 0;
+    badge.hidden = !n;
+    badge.textContent = n;
+    showBtn.textContent = shown ? 'Show ' + people(shown) : 'No one matches';
+    showBtn.disabled = !shown;
+    opts.forEach(function (b) {
+      var k = b.getAttribute('data-key'), v = b.getAttribute('data-val'), on = picks[k].indexOf(v) >= 0, m = 0;
+      cards.forEach(function (c) { if (matches(c, k) && fits(c, k, v)) m++; });
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      b.querySelector('.fopt-n').textContent = m;
+      b.disabled = !m && !on;
+    });
+    pills.forEach(function (p) {
+      var len = picks[p.getAttribute('data-pop')].length, pn = p.querySelector('.fpill-n');
+      pn.hidden = !len;
+      pn.textContent = len;
+      p.classList.toggle('is-on', len > 0);
+    });
+    var html = '';
+    KEYS.forEach(function (k) { picks[k].forEach(function (v) { html += chip(LABEL[k + ':' + v], 'data-key="' + k + '" data-val="' + v + '"'); }); });
+    if (searching) html += chip('“' + q.trim() + '”', 'data-q');
+    if (html) html += '<button class="fclear" type="button" data-clear-all>Clear all</button>';
+    activeEl.innerHTML = html;
+    activeEl.hidden = !html;
   }
-  function setRow(key, val) {
-    state[key] = val;
-    [].slice.call(document.querySelectorAll('.fchip[data-key="' + key + '"]')).forEach(function (b) {
-      b.setAttribute('aria-pressed', b.dataset.val === val ? 'true' : 'false');
+  function clearAll() {
+    KEYS.forEach(function (k) { picks[k] = []; });
+    q = ''; qEl.value = '';
+    apply();
+  }
+  function closePops(except) {
+    pills.forEach(function (p) {
+      if (p === except) return;
+      p.setAttribute('aria-expanded', 'false');
+      document.getElementById('pop-' + p.getAttribute('data-pop')).hidden = true;
     });
   }
-  document.getElementById('filters').addEventListener('click', function (e) {
-    var b = e.target.closest('.fchip');
-    if (!b) return;
-    setRow(b.dataset.key, b.dataset.val);
-    apply();
+  pills.forEach(function (p) {
+    p.addEventListener('click', function () {
+      var pop = document.getElementById('pop-' + p.getAttribute('data-pop'));
+      closePops(p);
+      pop.hidden = !pop.hidden;
+      p.setAttribute('aria-expanded', String(!pop.hidden));
+    });
   });
-  clearEl.addEventListener('click', function () {
-    ['group', 'cent', 'side', 'type'].forEach(function (k) { setRow(k, 'all'); });
-    state.q = ''; qEl.value = '';
-    apply();
+  document.addEventListener('click', function (e) {
+    var t = e.target;
+    var o = t.closest('.fopt');
+    if (o) {
+      var k = o.getAttribute('data-key'), v = o.getAttribute('data-val'), i = picks[k].indexOf(v);
+      if (i >= 0) picks[k].splice(i, 1); else picks[k].push(v);
+      apply();
+      return;
+    }
+    var x = t.closest('.fchip-x');
+    if (x) {
+      if (x.hasAttribute('data-q')) { q = ''; qEl.value = ''; }
+      else picks[x.getAttribute('data-key')].splice(picks[x.getAttribute('data-key')].indexOf(x.getAttribute('data-val')), 1);
+      apply();
+      return;
+    }
+    if (t.closest('[data-clear-all]')) { clearAll(); return; }
+    var one = t.closest('[data-clear]');
+    if (one) { picks[one.getAttribute('data-clear')] = []; apply(); return; }
+    if (t.closest('.fdone')) { closePops(); return; }
+    if (!t.closest('.fpill-w')) closePops();
   });
-  qEl.addEventListener('input', function () { state.q = qEl.value; apply(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePops(); });
+
+  /* the phone sheet: it rises from the bottom, and "Show N people" closes it on the results */
+  function lock(on) { root.classList.toggle('is-locked', on); }
+  document.getElementById('f-open').addEventListener('click', function () {
+    if (typeof sheet.showModal === 'function') sheet.showModal(); else sheet.setAttribute('open', '');
+    lock(true);
+  });
+  function closeSheet() { if (sheet.open) sheet.close(); lock(false); }
+  sheet.addEventListener('close', function () { lock(false); });
+  sheet.addEventListener('click', function (e) { if (e.target === sheet) closeSheet(); });
+  sheet.querySelector('.fsheet-x').addEventListener('click', closeSheet);
+  showBtn.addEventListener('click', function () {
+    closeSheet();
+    document.getElementById('people').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  qEl.addEventListener('input', function () { q = qEl.value; apply(); });
   document.getElementById('saint-search').addEventListener('submit', function (e) {
     e.preventDefault();
     document.getElementById('people').scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
+  /* a collection card is a way in: it starts the list afresh on that group */
   [].slice.call(document.querySelectorAll('.coll')).forEach(function (c) {
     c.addEventListener('click', function () {
-      setRow('group', c.dataset.group);
+      KEYS.forEach(function (k) { picks[k] = []; });
+      picks.group = [c.getAttribute('data-group')];
+      q = ''; qEl.value = '';
       apply();
       document.getElementById('people').scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
