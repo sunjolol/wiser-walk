@@ -41,27 +41,27 @@ Note he had earlier rejected the word "wiser" as "weird to say"; he has since ov
 
 State: local git repo initialised, **one commit** `c8fd322`, 137 files tracked, `node_modules` excluded. Authored as `Light <serenitybackto@gmail.com>` — he was offered a GitHub noreply address to keep his email out of public history and **chose to keep his real email**. Do not change it.
 
-## NEXT SESSION STARTS HERE (updated 2026-09-23, evening): THE QUIZ STANDARD, PHASE A LIVE, AWAITING HIS CHECK
+## NEXT SESSION STARTS HERE (updated 2026-09-23, night): QUIZ #4 AND THE QUIZ STANDARD ARE LIVE
 
-He liked quiz #4 (draft 4 preview: https://claude.ai/artifact/CByzoDrwBGtVDsxagX4Sj1; notes in
-`design/quiz-ideas/fathers/README.md`) and then set ONE BAR FOR EVERY QUIZ (memory: quiz-standard-bar): in-depth
-pages with the reader's answers shown when they come from a result; personalized sharing (a short result link,
-"6 characters like the Compass"; a picture card with his LOGO IMAGE and the wordmark; a link preview per result);
-unmistakable share links; every email box signs people up for an account.
+Everything below shipped on 2026-09-23 with the owner's go, in order: Phase A `72f1dc2` (he verified it: "Everything
+looks great"), wave 1 `4238c9f`, quiz #4 `0f6ea8a` plus the deploy fix `d53370a`. Ask how quiz #4 and the new
+sharing look to him before starting anything new. Next in his build order: #1 the Personality Quiz (Gregory the
+Great, Pastoral Rule Book III), with the Psalm and #4 method (design/quiz-ideas/fathers/README.md).
 
-- **Phase A is LIVE (`72f1dc2`), fixes he asked for; ask him how it looked before Phase B.** Brief:
-  `design/share-standard/PHASE-A-BRIEF.md`. Two labelled link boxes, Share only on touch devices, no visitor filler
-  line, logo + wordmark on every card, bars on the sins/gifts cards, `SaveResult.astro` ("Save your result" /
-  "Try it for yourself" / nothing when signed in) starting a real sign-up, the footer box a sign-up, `settle()` no
-  longer re-subscribes people who switched notes off.
-- **Phase B, after his yes:** (1) short codes: the Compass is already 6; sins (S+6) and figures (BF+6) can drop the
-  prefix in URLs; gifts (16) and #4 (23 answers, 11 chars) cannot fit 6 characters, so a 6-character code stored in
-  Supabase (a `short_links` table, deterministic, the long code still valid as a fallback) is the plan to explain to
-  him; (2) a link preview per outcome for every quiz, made by `design/og/render.mjs` (headless Chrome), picked by the
-  result page (today every /r/ link previews the generic quiz card); (3) "your answers vs theirs" on outcome pages
-  (tradition, figure, psalm, axis pages) when a result is in session; (4) build quiz #4 into the site (new result
-  shape, person pages `/early-christian/<slug>/`, question pages, the card and 22 previews), then check every page at
-  390 and 1360, light and dark. His larger logo is `site/public/img/logo-w-large.png` (159x114): scale it DOWN only.
+- **The quiz standard** (memory: quiz-standard-bar; briefs in `design/share-standard/`): every result has a public
+  link of 6 characters or fewer (`lib/engine/links.ts`; gifts and #4 keep a key in Supabase's `short_links`, which
+  he created: /account/setup/ is all green), a personal link preview (141 `r-<quiz>-<slug>.jpg` cards, picked by
+  `resultCardFor`), his brush W and the wordmark on every card, two labelled link boxes, Share only on touch
+  devices, `SaveResult` ("Save your result" / "Try it for yourself" / nothing signed in), every email box starting
+  an account, and the reader's own answers marked on tradition, figure, axis, psalm and early-Christian pages
+  (`lib/mine.ts`).
+- **Quiz #4 "Which early Christian thinks like you?"** at /q/which-early-christian/: result shape `kindred`
+  (`strategies/kindred.ts`, parity-tested against design/quiz-ideas/fathers/score.js), 22 person pages at
+  /early-christian/, 23 question pages at /early-church-on/. Source of truth: design/quiz-ideas/fathers/
+  (table.mjs, excerpts.json, people.json -> model.mjs -> quiz.json -> site/scripts/build-early-christian-data.mjs).
+  All 22 portraits are public domain or CC0. Lines checked against 154 source pages (VERIFY.md).
+- **Lesson from the failed first deploy:** Vercel's clone has files outside `site/` but not gitignored ones. Before
+  pushing a build script, run it with its gitignored inputs moved away.
 
 ## (previous) BUILD QUIZ #4, "WHICH EARLY CHRISTIAN THINKS LIKE YOU?"
 
