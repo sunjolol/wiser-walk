@@ -71,8 +71,8 @@ rules so they don't happen again". `site/scripts/quiz-page-test.mjs` (postbuild)
 **Read `design/saints-hub/README.md` first, whole.** The owner approved a Saints and early Christians hub
 (`/saints/`, one rich page per person, a "Learn" menu) and said yes to all four decisions in its plan. He wants
 it done right from the start ("I really want to make sure we nail this right from the start and do it right").
-Step one is the tap-through mock-up (St Martin of Tours, the hub, the Learn menu): its build was in progress when
-the session ended; the README says where its files are and what to do. Show him the mock-up before building.
+Step one: the tap-through mock-up is published (https://claude.ai/artifact/2XipDT23JpGHU1kYKi7VX9: the Learn menu,
+the hub, St Martin of Tours with checked facts). Ask what he thinks of it before building anything.
 
 Also live that day (commits 0026af9, fd69270): the Oak has saints (Martin, Benedict, John the Baptist), the Hearth
 adds Cuthbert and Guthlac, the Spark adds Philip Neri; the opposite panel leads with the opposite's person; saint

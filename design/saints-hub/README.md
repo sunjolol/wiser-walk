@@ -54,22 +54,23 @@ Also settled that day: young Augustine STAYS a Spark saint (though he is also in
   apostolic-fathers, martyrs, women, east-and-west, quiet (and later struggles pages linked to the sins quiz).
   A build check: no group slug may equal a person slug.
 
-## The mock-up (in progress when the session ended)
+## The mock-up (DONE 2026-09-24; awaiting his look)
 
-A tap-through mock-up (the Learn menu, the hub, and St Martin of Tours's page with verified facts) was being
-built by workflow `wslprarc9` (run `wf_71c48e9c-b50`) in session `9b93c859`:
+Published: **https://claude.ai/artifact/2XipDT23JpGHU1kYKi7VX9** (source in `mockup/`, images in `mockup/img/`).
+Three tabs: the Learn menu, the hub (real people and portraits, working filters), and St Martin of Tours's page
+built only from `research/martin-facts.json` (every item sourced; quotations checked word for word against
+Roberts's unrevised 1894 translation on CCEL). The "stat sheet" uses sourced numbers only (15, the age he
+enlisted; 26, years a bishop; 80 disciples; 81, his age by Gregory of Tours; 3, days to burial), never ratings.
 
-- the page: `C:/Users/Light/AppData/Local/Temp/claude/C--Users-Light-Desktop-claude-theology-compass/9b93c859-e9a4-4e65-a8e5-992fee83be6c/scratchpad/hub-mock/site/index.html` (+ `img/`)
-- the Martin fact sheet: that workflow's journal, `C:/Users/Light/.claude/projects/C--Users-Light-Desktop-claude-theology-compass/9b93c859-e9a4-4e65-a8e5-992fee83be6c/subagents/workflows/wf_71c48e9c-b50/journal.jsonl` (the `facts:martin` result), and `.../scratchpad/hub-mock/facts/`
+**First thing next session:** ask the owner what he thinks of the mock-up (and the plan). Build nothing until he
+says go. Open items from the fact sheet (`could_not_verify`): GOARCH blocked the checker (the Greek 12 November
+is confirmed from synaxarion.gr and saint.gr instead); the ELCA listing; patronages beyond France, soldiers and
+tailors; the goose as an art attribute. The Eastern icon in the mock-up (Petit Palais PPP4870, CC0) is not yet in
+`site/public/img/CREDITS.md`.
 
-**First thing next session:** if those files exist, copy them into `design/saints-hub/mockup/` (the fact sheet
-into `research/martin-facts.json`), look at the page once at 390 and 1360 in both themes, fix what is off,
-publish it as an artifact (plain HTML page; images as `files`), and show the owner. If they are missing,
-rebuild it from this brief. **Show him the mock-up and get his go before building the hub** (his standing
-method: mock-up first).
-
-A fact to settle before anything about Martin ships: our notes disagreed on his Orthodox feast day (12 November
-in one, 12 October in another). Check the OCA and GOARCH calendars themselves.
+Martin's Orthodox feast, settled: churches differ. Greek synaxaria keep 12 November; the Russian Church keeps
+12 October on the old calendar (25 October civil); the OCA keeps 11 November and also lists 12 October, calling
+the October date an error. So "East" is never one date: print each church's own.
 
 ## Rules that bind every page (from CLAUDE.md, memory and the research)
 
