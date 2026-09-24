@@ -77,14 +77,20 @@ export const TYPES = {
     portrait: 'Your mood runs light, and you are at your best when life is quiet. You enjoy things as they come: a meal, a long talk, an evening at home.',
     kindred: [
       { who: 'St Antony the Great', img: 'antony-the-great', text: 'He spent twenty years alone in the desert. When he came out, Athanasius says, his friends were amazed at how settled he was, and his face was cheerful because his soul was at peace.', src: 'Athanasius, Life of Antony' },
+      // Cuthbert and Guthlac added 2026-09-24 (the owner asked for at least two saints per type); each checked by a
+      // skeptic against the fetched public-domain text and Latin, both halves recorded as their nature.
+      { who: 'St Cuthbert', img: 'cuthbert-of-lindisfarne', text: 'Bede says he was “affable and pleasant in his character”, and spoke “with cheerful and soothing language, as he was accustomed”. He had long wanted “the secrecy of solitude”, and at last he lived alone on the island of Farne. Made a bishop, he went back after two years to “his much-loved solitude”.', src: 'Bede, Life of St Cuthbert' },
+      { who: 'St Guthlac', img: 'guthlac-of-crowland', text: 'He led a war band for nine years, then became a monk and began “to long for the wilderness”. He spent his last fifteen years as a hermit in the fens, and “evermore sweetness was in his temper”. When two visiting monks hid their ale under a turf, he knew, and asked them “with merry countenance and laughing words” why they had not brought it along.', src: 'Felix, Life of St Guthlac' },
     ],
-    kindredNote: 'Scripture records joyful moments more often than joyful people. So no Bible figure is named here, only one saint.' },
+    kindredNote: 'Scripture records joyful moments more often than joyful people, so no Bible figure is named here.' },
 
   spark: { ink: '#EE7F5E', art: 'spark', name: 'The Spark', disposition: 'cheerful', makeup: 'restless', opposite: 'deepwell',
     tagline: 'Light-hearted, and at your best when there is something to do.',
     portrait: 'Your mood runs light, and you are at your best with something to do. A quiet week makes you restless, and a full one suits you. People catch your energy.',
     kindred: [
       { who: 'St Augustine, as a young man', img: 'augustine-of-hippo', text: 'Before his conversion he loved talk, jokes, reading together and friendly arguments. In his Confessions he calls it “a restless youthfulness”. He is honest there, too, about where his love of pleasure had led him.', src: 'Augustine, Confessions' },
+      // Added 2026-09-24, checked by a skeptic against Bacci's Life (Antrobus, 1902).
+      { who: 'St Philip Neri', img: 'philip-neri', text: 'His biographer says he had “a very lively temperament, and without the least tendency to melancholy”. Philip hated idleness so much “that no one ever found him unemployed”. His door was always open, and his room became known as “the Shelter of Christian Mirth”.', src: 'Pietro Giacomo Bacci, Life of St Philip Neri' },
     ] },
 
   deepwell: { ink: '#4F7FB5', art: 'deepwell', name: 'The Deep Well', disposition: 'serious', makeup: 'quiet', opposite: 'spark',
@@ -123,9 +129,14 @@ export const TYPES = {
   oak: { ink: '#8C7A4F', art: 'oak', name: 'The Oak', disposition: 'confident', makeup: 'quiet', opposite: 'lookout',
     tagline: 'Sure of yourself, and at your best when life is quiet.',
     portrait: 'You are sure of yourself, and you are at your best when life is quiet. You do not need the room’s attention.',
-    kindred: [],
-    kindredNote: 'No saint is on record with this temper, so we will not guess. Gregory does name its risk. A quiet person can keep the tongue still while the mind grows proud.',
-    gregoryLine: Q('For his tongue he represses, his mind he exalts', GREGORY_PR) },
+    // Added 2026-09-24 after the owner, an Oak himself, asked whether no saint truly fits. Each was checked by a skeptic
+    // against the fetched public-domain text; both halves are recorded in the source, the confident one as settled
+    // steadiness and authority (never pride), which Gregory's grace line for this temper describes.
+    kindred: [
+      { who: 'St Martin of Tours', img: 'martin-of-tours', text: 'At court everyone flattered the emperor, and the bishops gave way. But “in Martin alone, apostolic authority continued to assert itself.” No one ever saw him angry or excited: “he was always one and the same.” When crowds of visitors grew too much for him, he moved to a hidden cell outside the city.', src: 'Sulpicius Severus, Life of St Martin' },
+      { who: 'St Benedict', img: 'benedict-of-nursia', text: 'As a young man he ran from praise and lived three years alone in a cave. When his own monks tried to poison him, he faced them “with a mild countenance and quiet mind”. When a raging Goth shouted at him to get up, the Goth ended at his feet, and Benedict “rose not up from his reading”.', src: 'St Gregory the Great, Dialogues' },
+      { who: 'St John the Baptist', img: 'john-the-baptist', text: 'He lived in the wilderness until the day he began to preach. Jesus asked the crowds if they had gone out to see “a reed swaying in the wind”. St Gregory says a reed bends to praise or blame, but “no variety of circumstance bent him from his uprightness”.', src: 'Luke 1:80; Matthew 11:7; St Gregory the Great, Homilies on the Gospels' },
+    ] },
 
   herald: { ink: '#D19A22', art: 'herald', name: 'The Herald', disposition: 'confident', makeup: 'restless', opposite: 'stillwater',
     tagline: 'Sure of yourself, and at your best when there is something to do.',

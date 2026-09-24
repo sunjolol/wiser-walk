@@ -141,13 +141,23 @@
 .pt .pq-opp h3 a { color: #fff; text-decoration-color: rgba(255, 255, 255, .45); text-underline-offset: 4px; text-decoration-thickness: 1.5px; }
 .pt .pq-opp h3 a:hover { text-decoration-color: #fff; }
 .pt .pq-opp .pq-quote { margin: .2rem 0 0; }
-/* the two real people who were opposites, each with the type they stand for */
+/* The two real people who were opposites, each with the type they stand for: the opposite's
+   person first, in the opposite's colour, straight under its name and tagline; then this type's,
+   in this type's colour. One with a page of their own is a link, stretched over face and name. */
 .pt-pair { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: .6rem; margin: .2rem 0; padding: 0; list-style: none; }
-.pt-pair li { display: grid; grid-template-columns: 52px 1fr; gap: .75rem; align-items: center; }
+.pt-pair li { position: relative; display: grid; grid-template-columns: 52px 1fr; gap: .75rem; align-items: center; }
 .pt-pair .pq-face { width: 52px; height: 52px; }
-.pt-pair li:first-child .pq-face { box-shadow: 0 0 0 3px rgba(16, 16, 21, .9), 0 0 0 4px var(--pq-t); }
+.pt-pair .pt-pair--mine .pq-face { box-shadow: 0 0 0 3px rgba(16, 16, 21, .9), 0 0 0 4px var(--pq-t); }
 .pt-pair b { display: block; font: 600 .92rem/1.3 var(--ui); color: #fff; text-wrap: balance; }
 .pt-pair li span span { display: block; font: 500 .74rem/1.3 var(--ui); color: rgba(255, 255, 255, .7); }
+.pt-pair li span span.pq-kin-end { display: inline; font: inherit; color: inherit; }
+.pt .pt-pair-a { color: #fff; text-decoration: underline; text-decoration-color: rgba(255, 255, 255, .35); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.pt-pair-a::after { content: ""; position: absolute; inset: -.3rem; z-index: 1; border-radius: 14px; }
+.pt-pair .pq-kin-go { color: var(--blue); }
+.pt-pair--link:hover .pt-pair-a { text-decoration-color: #fff; }
+.pt-pair--link:hover .pq-kin-go { transform: translateX(3px); }
+.pt-pair-a:focus-visible { outline: none; }
+.pt-pair-a:focus-visible::after { outline: 2px solid #fff; outline-offset: 2px; }
 .pt .btn.pt-opp-go {
   align-self: flex-start; margin-top: .5rem; background-image: none; background-color: var(--pq-o); color: #000;
 }

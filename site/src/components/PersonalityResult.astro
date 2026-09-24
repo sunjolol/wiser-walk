@@ -38,6 +38,7 @@ import { EXAMPLE_CODE, SCALES } from '../lib/strategies/personality';
 import { artFor } from '../lib/art';
 import { focusOf, typeHref } from '../lib/personality-art';
 import { ACCOUNTS_VISIBLE } from '../lib/account/config';
+import { nameEnds, personHref } from '../lib/person-links';
 import Q from './PersonalityQuote.astro';
 import full from '../data/personality.json';
 import '../styles/pages/personality.css';
@@ -144,15 +145,27 @@ const mine = r.strongest.slice(0, 2).map(s => {
 const OP = R.OPPOSITES ? R.OPPOSITES[[r.type, T.opposite].sort().join('-')] : null;
 const them = OP ? OP.people[T.opposite] : null;
 const themFace = them ? facePic(them.img) : null;
+const themHref = them ? personHref(them.img) : null;
+/*
+ * The reader's own side of the pair (Mary, where Martha is the opposite), after the opposite's
+ * name, person and tagline, so the words above a face are always about that face (the owner,
+ * 2026-09-24). It is also where an Oak meets Mary, whom he left out of the Oak's saints "since
+ * she's already listed in the opposite contrast".
+ */
+const ours = OP ? OP.people[r.type] ?? null : null;
+const oursFace = ours ? facePic(ours.img) : null;
+const oursHref = ours ? personHref(ours.img) : null;
 const oppArt = artPic(O.art);
 const brings: string[] = [].concat(D.bring, M.bring);
 const costs: string[] = [].concat(D.cost, r.trapSwapped ? [] : [D.trapCost], M.cost);
 const trapSwap = r.trapSwapped
   ? ' ' + R.TRAP_SWAP.replace('{own}', D.trap.name).replace('{second}', R.DISPOSITIONS[r.trap].word.toLowerCase())
   : '';
+/* Each saint links to their own page where the site has one (lib/person-links.ts), in a new tab. */
 const kindred = T.kindred.map((k: { img: string; who: string; text: string; src: string; partial?: boolean }) => ({
-  ...k, face: facePic(k.img)
+  ...k, face: facePic(k.img), href: personHref(k.img)
 }));
+
 const types = TYPE_ORDER.map(k => {
   const t = R.TYPES[k];
   const d = R.DISPOSITIONS[t.disposition];
@@ -162,7 +175,7 @@ const types = TYPE_ORDER.map(k => {
     you: k === r.type,
     close: k !== r.type && closeTypes.includes(k),
     trap: d.trap.name,
-    kindred: t.kindred.map((x: { who: string }) => x.who)
+    kindred: t.kindred.map((x: { who: string; img: string }) => ({ who: x.who, href: personHref(x.img) }))
   };
 });
 
@@ -215,6 +228,7 @@ const P = r.partner ? R.PARTNERS[r.partner] : null;
 
 /* ---- page 10 */
 const lineArt = linePic(LN.img);
+const lineHref = personHref(LN.img);
 const partnerFace = facePic(PL.img);
 
 /* ---------------------------------------------------------------- other quizzes */
@@ -293,6 +307,8 @@ const island = {
 const json = (x: unknown) => JSON.stringify(x).replace(/</g, '\\u003c');
 
 const LOCK = 'M7 10V7a5 5 0 0 1 10 0v3';
+/* The new-tab mark, as on the type sheets' "Explore" button. */
+const NEWTAB = 'M14 4h6v6M20 4l-8.5 8.5M18 14v4.5A1.5 1.5 0 0 1 16.5 20h-11A1.5 1.5 0 0 1 4 18.5v-11A1.5 1.5 0 0 1 5.5 6H10';
 
 /* The example result (a simulated person's) is nobody's, so it says so. The start page no longer links it
    (the owner, 2026-09-24); it stays reachable by its link for checking the report. */
@@ -407,12 +423,19 @@ const isExample = view.code === EXAMPLE_CODE;
     </div>
 
     <h3 class="pq-sub">Saints and Bible figures like you</h3>
+    {/* A saint with a page of their own is a card that opens it, in a new tab so the reader keeps
+        their result: the name is the link, stretched over the card (personality.css .pq-kin--link). */}
     {kindred.length ? kindred.map(k => (
-      <div class="pq-kin">
+      <div class:list={['pq-kin', k.href && 'pq-kin--link']}>
         {k.face
-          ? <img class="pq-face" src={k.face.src} width={k.face.width} height={k.face.height} alt={k.who} loading="lazy" decoding="async" />
+          ? <img class="pq-face" src={k.face.src} width={k.face.width} height={k.face.height} alt={k.href ? '' : k.who} loading="lazy" decoding="async" />
           : <span class="pq-face" aria-hidden="true"></span>}
-        <b>{k.who}{k.partial && <em>partly like you</em>}</b>
+        <b>
+          {k.href
+            ? <a class="pq-kin-a" href={k.href} target="_blank" rel="noopener">{nameEnds(k.who)[0]}<span class="pq-kin-end">{nameEnds(k.who)[1]}<svg class="pq-newtab pq-kin-go" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={NEWTAB} /></svg></span><span class="pq-sr"> (opens in a new tab)</span></a>
+            : k.who}
+          {k.partial && <em>partly like you</em>}
+        </b>
         <p>{k.text}</p>
         <span class="pq-src">{k.src}</span>
       </div>
@@ -430,13 +453,39 @@ const isExample = view.code === EXAMPLE_CODE;
         <p class="pq-kicker">Your opposite, and why you need them</p>
         {them ? (
           <>
+            {/* The opposite's person first, beside the opposite's name; the tagline under them is theirs too. */}
             <div class="pq-opp-who">
               {themFace
-                ? <img class="pq-face" src={themFace.src} width={themFace.width} height={themFace.height} alt={them.who} loading="lazy" decoding="async" />
+                ? (themHref
+                  ? <a class="pq-opp-face-a" href={themHref} target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img class="pq-face" src={themFace.src} width={themFace.width} height={themFace.height} alt="" loading="lazy" decoding="async" /></a>
+                  : <img class="pq-face" src={themFace.src} width={themFace.width} height={themFace.height} alt={them.who} loading="lazy" decoding="async" />)
                 : <span class="pq-face" aria-hidden="true"></span>}
-              <div><h3>{O.name}</h3><p class="pq-opp-person">{them.who}</p></div>
+              <div>
+                <h3>{O.name}</h3>
+                <p class="pq-opp-person">
+                  {themHref
+                    ? <a class="pq-opp-a" href={themHref} target="_blank" rel="noopener">{nameEnds(them.who)[0]}<span class="pq-kin-end">{nameEnds(them.who)[1]}<svg class="pq-newtab pq-kin-go" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={NEWTAB} /></svg></span><span class="pq-sr"> (opens in a new tab)</span></a>
+                    : them.who}
+                </p>
+              </div>
             </div>
             <p class="pq-opp-tag">{O.tagline}</p>
+            {/* Then the reader's own side of the pair, named with the reader's type. */}
+            {ours && (
+              <div class:list={['pq-opp-ours', oursHref && 'pq-opp-ours--link']}>
+                {oursFace
+                  ? <img class="pq-face" src={oursFace.src} width={oursFace.width} height={oursFace.height} alt={oursHref ? '' : ours.who} loading="lazy" decoding="async" />
+                  : <span class="pq-face" aria-hidden="true"></span>}
+                <div>
+                  <p class="pq-opp-ours-who">
+                    {oursHref
+                      ? <a class="pq-opp-a pq-opp-ours-a" href={oursHref} target="_blank" rel="noopener">{nameEnds(ours.who)[0]}<span class="pq-kin-end">{nameEnds(ours.who)[1]}<svg class="pq-newtab pq-kin-go" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={NEWTAB} /></svg></span><span class="pq-sr"> (opens in a new tab)</span></a>
+                      : ours.who}
+                  </p>
+                  <p class="pq-opp-ours-type">{T.name}, your type</p>
+                </div>
+              </div>
+            )}
             <p>{OP.story}</p>
             {OP.src && <p class="pq-opp-src">{OP.src}</p>}
           </>
@@ -657,7 +706,9 @@ const isExample = view.code === EXAMPLE_CODE;
         <h3>{LN.name}</h3>
         <p class="pq-line-gift">Spiritual gift: <b>{LN.gift}</b></p>
         <p>{LN.what}</p>
-        <p class="pq-line-who">Pictured: {LN.imgWho}{LN.imgWhy ? ', ' + LN.imgWhy : ''}.</p>
+        <p class="pq-line-who">Pictured: {lineHref
+          ? <a class="pq-line-who-a" href={lineHref} target="_blank" rel="noopener">{LN.imgWho}<svg class="pq-newtab" viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={NEWTAB} /></svg><span class="pq-sr"> (opens in a new tab)</span></a>
+          : LN.imgWho}{LN.imgWhy ? ', ' + LN.imgWhy : ''}.</p>
         <button class="btn pq-btn-line pq-mine" type="button" data-pq-card="line">Save this card</button>
       </div>
     </div>
@@ -740,9 +791,16 @@ const isExample = view.code === EXAMPLE_CODE;
         <p class="pq-muted">{x.t.tagline}</p>
         <p>{x.t.portrait}</p>
         <p><b>Trap:</b> {x.trap}.</p>
-        {x.kindred.length > 0 && <p><b>Kindred:</b> {x.kindred.join(', ')}.</p>}
+        {x.kindred.length > 0 && (
+          <p><b>Kindred:</b> {x.kindred.map((k: { who: string; href: string | null }, i: number) => (
+            <>{i > 0 && ', '}{k.href
+              ? <a class="pq-ts-kin" href={k.href} target="_blank" rel="noopener">{nameEnds(k.who)[0]}<span class="pq-kin-end">{nameEnds(k.who)[1]}<svg class="pq-newtab" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={NEWTAB} /></svg></span><span class="pq-sr"> (opens in a new tab)</span></a>
+              : k.who}</>
+          ))}.</p>
+        )}
         <div class="pq-ts-row">
-          <a class="btn pq-ts-go" href={typeHref(x.key)} target="_blank" rel="noopener">
+          {/* autofocus: the sheet opens on its own button, as it did before the kindred became links */}
+          <a class="btn pq-ts-go" href={typeHref(x.key)} target="_blank" rel="noopener" autofocus>
             Explore {x.t.name}
             <svg class="pq-newtab" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-8.5 8.5M18 14v4.5A1.5 1.5 0 0 1 16.5 20h-11A1.5 1.5 0 0 1 4 18.5v-11A1.5 1.5 0 0 1 5.5 6H10" /></svg>
             <span class="pq-sr"> (opens in a new tab)</span>

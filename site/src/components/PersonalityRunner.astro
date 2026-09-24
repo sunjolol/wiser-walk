@@ -36,6 +36,7 @@ import QuizFoot from './QuizFoot.astro';
 import Icon from './Icon.astro';
 import { outcomeHref } from '../lib/engine/registry';
 import { focusOf } from '../lib/personality-art';
+import { nameEnds, personHref } from '../lib/person-links';
 import { ITEMS, PICK_IDS, SCALES, TYPE_KEYS } from '../lib/strategies/personality';
 // Server only: the report's words, for the deep dives. Read at build time; never in a client script.
 import report from '../data/personality.json';
@@ -120,6 +121,16 @@ const SAINTS: Array<{ name: string; face: string; say: string[] }> = [
   }
 ];
 
+/*
+ * Each saint's card goes to their own page where the site has one (lib/person-links.ts, by the
+ * picture's key): the three saints do; the desert fathers, as a company, have none.
+ */
+const saints = SAINTS.map(s => {
+  const href = personHref(s.face.replace(/^faces\/|\.jpg$/g, ''));
+  const [head, end] = nameEnds(s.name);
+  return { ...s, href, head, end };
+});
+
 /* ---------------------------------------------------------------- picture credits, for what this page shows */
 /* The band's mosaic, the eight type cards and the saints' faces: nothing else is drawn here. */
 const shown = new Set<string>([
@@ -184,11 +195,17 @@ const START = 'Start the test';
     <section class="pqr-sec pqr-saints">
       <SectionHead title="The saints behind it" />
       <ul class="pqr-saintlist">
-        {SAINTS.map(s => (
-          <li class="pqr-saint">
+        {/* A card with a page behind it is a link: the name, stretched over the card, with an arrow
+            after the name's last words (they never part, so no word is left alone on a line). */}
+        {saints.map(s => (
+          <li class:list={['pqr-saint', s.href && 'pqr-saint--link']}>
             <img class="pqr-face" src={pic(s.face)} width="220" height="220" alt="" loading="lazy" decoding="async" />
             <div>
-              <b>{s.name}</b>
+              <b>
+                {s.href
+                  ? <a class="pqr-saint-a" href={s.href}>{s.head}<span class="pqr-saint-end">{s.end}<Icon name="arrow" size={16} class="pqr-saint-go" /></span></a>
+                  : s.name}
+              </b>
               <p>{s.say.join(' ')}</p>
             </div>
           </li>

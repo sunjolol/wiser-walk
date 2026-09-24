@@ -34,6 +34,7 @@ import { quizHref } from '../../lib/engine/registry';
 import { artFor, COLOUR_PRINT } from '../../lib/art';
 import { clip } from '../../lib/seo';
 import { ITEMS } from '../../lib/strategies/personality';
+import { nameEnds, personHref } from '../../lib/person-links';
 import {
   ORDER, bringsOf, cap, costsOf, creditsFor, dispositionOf, focusOf, makeupOf, oppositeOf,
   paintingOf, picturer, trapLeadOf, typeHref, typeOf
@@ -55,15 +56,21 @@ const shown = new Set<string>();
 const pic = picturer(shown);
 const art = pic(`art/${t.art}.jpg`);
 
-const kindred = t.kindred.map(k => ({ ...k, face: pic(`faces/${k.img}.jpg`) }));
+/* Each saint links to their own page where the site has one (lib/person-links.ts). */
+const kindred = t.kindred.map(k => ({ ...k, face: pic(`faces/${k.img}.jpg`), href: personHref(k.img) }));
 
 const opp = oppositeOf(key);
 const oppArt = pic(`art/${opp.o.art}.jpg`);
-/* The two real people who were opposites, this type's first, each with the type they stand for. */
+/*
+ * The two real people who were opposites, each with the type they stand for. The opposite's
+ * person comes first, straight under the name and tagline they belong to, then this type's. The
+ * owner, 2026-09-24, on the Oak's page: the Lookout's tagline over Mary's picture "makes me think
+ * it's referring to her".
+ */
 const pair = [
-  opp.mine && { ...opp.mine, face: pic(`faces/${opp.mine.img}.jpg`), type: t.name },
-  opp.them && { ...opp.them, face: pic(`faces/${opp.them.img}.jpg`), type: opp.o.name }
-].filter(Boolean) as Array<{ who: string; face: ReturnType<typeof pic>; type: string }>;
+  opp.them && { ...opp.them, face: pic(`faces/${opp.them.img}.jpg`), type: opp.o.name, side: 'them', href: personHref(opp.them.img) },
+  opp.mine && { ...opp.mine, face: pic(`faces/${opp.mine.img}.jpg`), type: t.name, side: 'mine', href: personHref(opp.mine.img) }
+].filter(Boolean) as Array<{ who: string; face: ReturnType<typeof pic>; type: string; side: string; href: string | null }>;
 
 /* All eight, this one marked; and the pages either side of this one, going round. */
 const all = ORDER.map(k => ({ key: k, t: typeOf(k), art: pic(`art/${typeOf(k).art}.jpg`) }));
@@ -174,12 +181,19 @@ const breadcrumbs = [
       <SectionHead id="pt-kin-h" title="Who else was like this" />
       {kindred.length ? (
         <div class={`pt-kins pt-kins--${kindred.length}`}>
+          {/* A saint with a page of their own is a card that goes there: the name is the link,
+              stretched over the whole card (personality.css .pq-kin--link). */}
           {kindred.map(k => (
-            <div class="pq-kin">
+            <div class:list={['pq-kin', k.href && 'pq-kin--link']}>
               {k.face
-                ? <img class="pq-face" src={k.face.src} width={k.face.width} height={k.face.height} alt={k.who} loading="lazy" decoding="async" />
+                ? <img class="pq-face" src={k.face.src} width={k.face.width} height={k.face.height} alt={k.href ? '' : k.who} loading="lazy" decoding="async" />
                 : <span class="pq-face" aria-hidden="true"></span>}
-              <b>{k.who}{k.partial && <em>Partly like this type</em>}</b>
+              <b>
+                {k.href
+                  ? <a class="pq-kin-a" href={k.href}>{nameEnds(k.who)[0]}<span class="pq-kin-end">{nameEnds(k.who)[1]}<Icon name="arrow" size={15} class="pq-kin-go" /></span></a>
+                  : k.who}
+                {k.partial && <em>Partly like this type</em>}
+              </b>
               <p>{k.text}</p>
               <span class="pq-src">{k.src}</span>
             </div>
@@ -207,11 +221,18 @@ const breadcrumbs = [
           {pair.length === 2 && (
             <ul class="pt-pair">
               {pair.map(p => (
-                <li>
+                <li class:list={[`pt-pair--${p.side}`, p.href && 'pt-pair--link']}>
                   {p.face
-                    ? <img class="pq-face" src={p.face.src} width={p.face.width} height={p.face.height} alt={p.who} loading="lazy" decoding="async" />
+                    ? <img class="pq-face" src={p.face.src} width={p.face.width} height={p.face.height} alt={p.href ? '' : p.who} loading="lazy" decoding="async" />
                     : <span class="pq-face" aria-hidden="true"></span>}
-                  <span><b>{p.who}</b><span>{p.type}</span></span>
+                  <span>
+                    <b>
+                      {p.href
+                        ? <a class="pt-pair-a" href={p.href}>{nameEnds(p.who)[0]}<span class="pq-kin-end">{nameEnds(p.who)[1]}<Icon name="arrow" size={14} class="pq-kin-go" /></span></a>
+                        : p.who}
+                    </b>
+                    <span>{p.type}</span>
+                  </span>
                 </li>
               ))}
             </ul>

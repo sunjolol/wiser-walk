@@ -286,6 +286,26 @@ span.pq-face { display: inline-block; }
 .pq-src { font: 500 .7rem/1.3 var(--ui); color: var(--ink-mute); }
 .pq-kin-note { margin-top: .6rem !important; }
 
+/* A saint with a page of their own (lib/person-links.ts): the whole card goes there. The name is
+   the link, stretched over the card, so a reader hears one short link and a finger can land
+   anywhere. An arrow after the name in the site's link blue (on the result page, the new-tab
+   mark) says it goes somewhere, as on the early Christians' "Crossed paths" cards; a card with
+   no page stays exactly as above. The type pages use it too. */
+.pq-kin--link { position: relative; transition: transform .2s ease, box-shadow .2s ease; }
+.pq-kin .pq-kin-a { color: inherit; text-decoration: none; }
+.pq-kin-a::after { content: ""; position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
+/* the name's last words and the mark never part (person-links.ts nameEnds), so neither a word
+   nor the mark is ever alone on a line */
+.pq-kin-end { white-space: nowrap; }
+.pq-kin-go {
+  display: inline-block; vertical-align: -3px; margin-left: .35em; color: var(--accent); transition: transform .18s ease;
+}
+.pq-kin--link:hover { transform: translateY(-2px); box-shadow: 0 0 0 2px color-mix(in srgb, var(--pq-t) 60%, transparent), var(--lift); }
+.pq-kin--link:hover .pq-kin-a { color: var(--accent); }
+.pq-kin--link:hover .pq-kin-go { transform: translateX(3px); }
+.pq-kin-a:focus-visible { outline: none; }
+.pq-kin-a:focus-visible::after { outline: 3px solid var(--blue); outline-offset: 2px; }
+
 /* The opposite: their painting shows clearly at the top and around the edges; the words sit on a
    frosted panel so the picture never fights the reading. */
 .pq-opp {
@@ -308,6 +328,25 @@ span.pq-face { display: inline-block; }
 .pq-opp p.pq-opp-person { font: 600 .9rem/1.3 var(--ui); color: rgba(255,255,255,.85); margin-top: .15rem; text-wrap: balance; }
 .pq-opp p.pq-opp-tag { font-family: "Philosopher", var(--display); font-style: italic; font-weight: 400; font-size: 1.05rem; line-height: 1.35; color: rgba(255,255,255,.9); }
 .pq-opp p.pq-opp-src { font: 500 .7rem/1.3 var(--ui); color: rgba(255,255,255,.6); }
+/* The people in it link to their own pages where the site has one, in a new tab: names in white
+   with a quiet underline, the mark in the link blue. The opposite's face goes there too. */
+.pq-opp-face-a { display: block; border-radius: 50%; }
+.pq-report .pq-opp a.pq-opp-a {
+  color: #fff; text-decoration: underline; text-decoration-color: rgba(255,255,255,.35);
+  text-underline-offset: 3px; text-decoration-thickness: 1px;
+}
+.pq-report .pq-opp a.pq-opp-a:hover { text-decoration-color: #fff; }
+.pq-opp .pq-kin-go { color: var(--blue); }
+.pq-opp-a:focus-visible { outline: 2px solid #fff; outline-offset: 2px; border-radius: 4px; }
+/* The reader's own side of the pair, smaller, in the reader's colour, under the opposite's tagline. */
+.pq-opp-ours { position: relative; display: grid; grid-template-columns: auto 1fr; gap: .7rem; align-items: center; margin: .1rem 0 .25rem; }
+.pq-opp-ours .pq-face { width: 44px; height: 44px; box-shadow: 0 0 0 3px rgba(16,16,21,.9), 0 0 0 4px var(--pq-t); }
+.pq-opp p.pq-opp-ours-who { font: 600 .9rem/1.3 var(--ui); color: #fff; text-wrap: balance; }
+.pq-opp p.pq-opp-ours-type { font: 500 .74rem/1.3 var(--ui); color: rgba(255,255,255,.7); }
+.pq-opp-ours-a::after { content: ""; position: absolute; inset: -.3rem; z-index: 1; border-radius: 14px; }
+.pq-opp-ours-a:focus-visible { outline: none; }
+.pq-opp-ours-a:focus-visible::after { outline: 2px solid #fff; outline-offset: 2px; }
+.pq-opp-ours--link:hover .pq-opp-a { text-decoration-color: #fff; }
 .pq-opp .pq-quote { background: rgba(0,0,0,.28); border-left-color: var(--pq-o); }
 .pq-opp .pq-quote p { color: #fff; }
 .pq-opp .pq-quote cite { color: rgba(255,255,255,.7); }
@@ -527,6 +566,12 @@ span.pq-face { display: inline-block; }
 .pq-report .btn.pq-btn-line { margin-top: 1rem; background-image: none; background-color: #fff; color: #15161A; }
 .pq-line-in p { color: rgba(255,255,255,.93); }
 .pq-line p.pq-line-who { margin-top: .7rem; font: 500 .68rem/1.3 var(--ui); color: rgba(255,255,255,.6); }
+/* the person pictured, where they have a page of their own, in a new tab */
+.pq-report .pq-line a.pq-line-who-a {
+  color: rgba(255,255,255,.88); text-decoration: underline; text-decoration-color: rgba(255,255,255,.35); text-underline-offset: 2px;
+}
+.pq-report .pq-line a.pq-line-who-a:hover { color: #fff; text-decoration-color: #fff; }
+.pq-line-who-a .pq-newtab { display: inline-block; vertical-align: -1px; margin-left: .25em; }
 @media (min-width: 36rem) {
   .pq-line { min-height: 25rem; align-items: stretch; background: color-mix(in srgb, var(--pq-t) 22%, rgb(12,12,16)); }
   .pq-line-bg { right: auto; width: 46%; object-position: 50% 8%; }
@@ -617,6 +662,9 @@ span.pq-face { display: inline-block; }
   .pq-ts-row .btn { white-space: nowrap; }
 }
 .pq-report .btn.pq-ts-go { background-image: none; background-color: var(--pq-ty); color: #000; }
+/* a kindred saint with a page of their own, in a new tab */
+.pq-ts-kin { text-underline-offset: 2px; }
+.pq-ts-kin .pq-newtab { display: inline-block; vertical-align: -1px; margin-left: .2em; }
 .pq-newtab { flex: none; }
 .pq-ts-in p.pq-ts-note { margin-top: -.15rem; font-size: .78rem; line-height: 1.4; color: var(--ink-soft); }
 .pq-cs-k { font: 700 .64rem/1 var(--ui); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: .7rem !important; }
@@ -636,4 +684,6 @@ span.pq-face { display: inline-block; }
 }
 @media (prefers-reduced-motion: reduce) {
   .pq-report *, .pq-sheet * { transition: none !important; scroll-behavior: auto !important; }
+  .pq-kin--link, .pq-kin-go { transition: none; }
+  .pq-kin--link:hover, .pq-kin--link:hover .pq-kin-go { transform: none; }
 }

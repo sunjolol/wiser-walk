@@ -37,6 +37,10 @@ FACES = {
   'monica': (f'{HERE}/img/monica.jpg', 0.1, .5),
   # named only by the start page's "The saints behind it"
   'john-cassian': (f'{HERE}/img/john-cassian.jpg', 0.1, .5),
+  'john-the-baptist': (f'{HERE}/img/john-the-baptist.jpg', 0.5, .5),
+  'cuthbert-of-lindisfarne': (f'{HERE}/img/cuthbert-of-lindisfarne.jpg', 0.4, .6),
+  'guthlac-of-crowland': (f'{HERE}/img/guthlac-of-crowland.jpg', 0.3, .4),
+  'philip-neri': (f'{HERE}/img/philip-neri.jpg', 0.3, .7),
 }
 # colour pictures fetched for the preview win over the site's grey engravings
 for k in ('elijah', 'gideon', 'peter', 'abraham'):
@@ -58,6 +62,11 @@ def crop_square(im, fy, fx):
 
 # Whole-figure pictures get a tight square on the face: (centre x, centre y, side as a share of the width).
 FOCUS = {
+  'cuthbert-of-lindisfarne': (.63, .375, .155),
+  'guthlac-of-crowland': (.395, .32, .115),
+  'philip-neri': (.69, .305, .30),
+  'martin-of-tours': (.52, .105, .27),
+  'john-the-baptist': (.53, .49, .3),
   'jeremiah': (.44, .2, .42),
   'augustine-of-hippo': (.55, .1, .6),
   'john-chrysostom': (.5, .17, .4),

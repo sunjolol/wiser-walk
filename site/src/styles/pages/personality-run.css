@@ -196,6 +196,19 @@
   .pqr-saint p { text-wrap: balance; }
   .pqr-face { width: 5rem; height: 5rem; }
 }
+/* A saint with a page of their own (lib/person-links.ts): the whole card goes there. The name is
+   the link, stretched over the card, with an arrow in the site's link blue, as on the early
+   Christians' "Crossed paths" cards. */
+.pqr-saint--link { position: relative; transition: transform .2s ease, box-shadow .2s ease; }
+.pqr-saint .pqr-saint-a { color: inherit; text-decoration: none; }
+.pqr-saint-a::after { content: ""; position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
+.pqr-saint-end { white-space: nowrap; }
+.pqr-saint-go { display: inline-block; vertical-align: -2px; margin-left: .35em; color: var(--accent); transition: transform .18s ease; }
+.pqr-saint--link:hover { transform: translateY(-2px); box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 45%, transparent), var(--lift); }
+.pqr-saint--link:hover .pqr-saint-a { color: var(--accent); }
+.pqr-saint--link:hover .pqr-saint-go { transform: translateX(3px); }
+.pqr-saint-a:focus-visible { outline: none; }
+.pqr-saint-a:focus-visible::after { outline: 3px solid var(--blue); outline-offset: 2px; }
 /* The narrowest two-column cards keep the phone's face and padding, so the longest paragraph
    stays at six lines and is still balanced. */
 @media (min-width: 46rem) and (max-width: 47.99rem) {
@@ -390,7 +403,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pqr-ty, .pqr-opt, .pqr-dot, .pqr-bar i { transition: none; }
-  .pqr-ty:hover { transform: none; }
+  .pqr-ty, .pqr-opt, .pqr-dot, .pqr-bar i, .pqr-saint--link, .pqr-saint-go { transition: none; }
+  .pqr-ty:hover, .pqr-saint--link:hover, .pqr-saint--link:hover .pqr-saint-go { transform: none; }
   .pqr-opt:active { transform: none; }
 }

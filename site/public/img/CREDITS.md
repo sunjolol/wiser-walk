@@ -221,6 +221,10 @@ All are public domain (one is CC0), so no card or page owes a credit line by lic
 | faces/jeremiah.jpg | The Prophet Jeremiah, Sistine Chapel ceiling, Michelangelo, c. 1511 | `Пророк Иеремия, Микеланжело Буонаротти.jpg` | Public domain |
 | faces/arsenius.jpg | St Arsenius the Great, fresco in the Church of the Theotokos Peribleptos, Ohrid, Michael Astrapas and Eutychios, c. 1295 | `Paintings in the Church of the Theotokos Peribleptos of Ohrid 0139.jpg` | Public domain |
 | faces/john-cassian.jpg | St John Cassian, medallion in the Sacra Parallela manuscript, Bibliothèque nationale de France, Paris, 9th century (on the start page only) | `Saint Jean Cassien - Grec 923.jpg` | Public domain |
+| faces/john-the-baptist.jpg | John the Baptist in the Wilderness, Geertgen tot Sint Jans, c. 1480-1490 | `Geertgen tot Sint Jans (1455 - 1495) - John the Baptist in the Wilderness - 1631 - Gemäldegalerie.jpg` | Public domain |
+| faces/cuthbert-of-lindisfarne.jpg | King Athelstan presents Bede's Life of St Cuthbert to the saint, Corpus Christi College, Cambridge, MS 183, c. 930 | `Athelstan.jpg` | Public domain |
+| faces/guthlac-of-crowland.jpg | St Bartholomew gives St Guthlac a scourge, the Guthlac Roll, British Library, c. 1210 | `Guthlac-Bartholemew.png` | Public domain |
+| faces/philip-neri.jpg | St Philip Neri in Ecstasy, Guido Reni, 1614 | `Guido Reni - St Filippo Neri in Ecstasy - WGA19295.jpg` | Public domain |
 | faces/moses.jpg | Moses Presenting the Tablets of the Law, Philippe de Champaigne, c. 1648 | `Philippe de Champaigne - Moses Presenting the Tablets of the Law - c. 1648.jpg` | Public domain |
 | faces/gideon.jpg | The Righteous Gideon, from the prophets tier of the iconostasis of the Dormition Cathedral, Kirillo-Belozersky Monastery, 1497 | `Kirillo-Belozersky iconostasis 03. Micah, Elijah, Gideon.jpg` | Public domain |
 | faces/isaiah.jpg | The Prophet Isaiah, Sistine Chapel ceiling, Michelangelo, c. 1509 | `Jesaja (Michelangelo).jpg` | Public domain |

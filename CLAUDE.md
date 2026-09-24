@@ -60,7 +60,9 @@ rules so they don't happen again". `site/scripts/quiz-page-test.mjs` (postbuild)
    personality page).
 7. **Outcomes get real pages, not popups.** A result page may keep popups, each with a pill clearly labelled as opening
    the outcome's page in a new tab.
-8. **Touch-only hints ("Tap a type…") only under `(hover: none) and (pointer: coarse)`**, never on desktop.
+8. **Touch-only hints ("Tap a type…") only under `(hover: none) and (pointer: coarse)`**, never on desktop. Where the
+   sentence after it depends on the hint, desktop gets the "Click" wording instead (he approved "Click any line to open
+   it." on the personality result, 2026-09-24).
 9. **A special card among cards looks like its siblings**, marked only by an icon and a small tag.
 10. **No placeholder pictures** (a monogram where a face should be is "not acceptable").
 
