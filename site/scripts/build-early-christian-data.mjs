@@ -138,31 +138,40 @@ if (!existsSync(QUIZ_SRC) || !existsSync(PEOPLE_SRC) || !existsSync(CREDITS_SRC)
   for (const k of Object.keys(meta.people)) if (!quiz.people[k]) console.log(`build-early-christian-data: note: ${k} is in people.json but not a result`);
 
   // The portraits: downscaled only, progressive, and written only when the source is newer than the copy.
-  const sharp = (await import('sharp').catch(() => fail('sharp is not installed; run npm install in site/'))).default;
+  //
+  // The full-size sources in design/quiz-ideas/fathers/preview/img/ are NOT in git (they can be fetched again with
+  // preview/fetch-portraits.mjs), so a fresh clone, Vercel's included, has the design data but no sources. There the
+  // committed copies in public/img/early-christians/ are used as they are, and sharp is never loaded: the first
+  // deploy of this quiz failed on exactly that (2026-09-23). Sizes then come from the JPEG header.
+  let sharpLib = null;
+  const sharp = async () => sharpLib ??= (await import('sharp').catch(() => fail('sharp is not installed; run npm install in site/'))).default;
   mkdirSync(IMG_OUT, { recursive: true });
   let made = 0;
   for (const k of keys) {
     const from = resolve(SRC, 'preview/img', `${k}.jpg`);
     const to = resolve(IMG_OUT, `${full[k].slug}.jpg`);
-    if (!existsSync(from)) fail(`no portrait at design/quiz-ideas/fathers/preview/img/${k}.jpg`);
-    if (!existsSync(to) || statSync(to).mtimeMs < statSync(from).mtimeMs) {
-      await sharp(from)
+    const thumb = resolve(IMG_OUT, 'thumb', `${full[k].slug}.jpg`);
+    const haveSource = existsSync(from);
+    if (!haveSource && !existsSync(to)) fail(`no portrait for ${k}: neither preview/img/${k}.jpg nor public/img/early-christians/${full[k].slug}.jpg`);
+    if (haveSource && (!existsSync(to) || statSync(to).mtimeMs < statSync(from).mtimeMs)) {
+      await (await sharp())(from)
         .flatten({ background: '#ffffff' }) // one of them is a transparent PNG under a .jpg name
         .resize({ width: PORTRAIT_WIDTH, withoutEnlargement: true })
         .jpeg({ quality: 78, progressive: true, mozjpeg: true })
         .toFile(to);
       made++;
     }
-    const { width, height } = await sharp(to).metadata();
+    const { width, height } = jpegSize(readFileSync(to), to);
     full[k].portrait.width = width;
     full[k].portrait.height = height;
     // A small copy for the places a face is a chip or a strip (40-60px on screen): a result page shows all 22.
-    const thumb = resolve(IMG_OUT, 'thumb', `${full[k].slug}.jpg`);
-    if (!existsSync(thumb) || statSync(thumb).mtimeMs < statSync(to).mtimeMs) {
+    // Remade only where the full source is here too; otherwise the committed thumbnail stands (and must exist).
+    if (haveSource && (!existsSync(thumb) || statSync(thumb).mtimeMs < statSync(to).mtimeMs)) {
       mkdirSync(resolve(IMG_OUT, 'thumb'), { recursive: true });
-      await sharp(to).resize({ width: THUMB_WIDTH, withoutEnlargement: true })
+      await (await sharp())(to).resize({ width: THUMB_WIDTH, withoutEnlargement: true })
         .jpeg({ quality: 76, progressive: true, mozjpeg: true }).toFile(thumb);
     }
+    if (!existsSync(thumb)) fail(`no thumbnail at public/img/early-christians/thumb/${full[k].slug}.jpg`);
   }
 
   // Every portrait is credited where the site keeps its credits, or the build stops.
@@ -179,4 +188,18 @@ if (!existsSync(QUIZ_SRC) || !existsSync(PEOPLE_SRC) || !existsSync(CREDITS_SRC)
     `which-early-christian.json: ${keys.length} people, ${statements.length} statements, ${shown} lines shown; ` +
     `scoring file ${Math.round(readFileSync(SCORING_OUT).length / 1024)} KB; portraits: ${made} made, ${keys.length - made} up to date`
   );
+}
+
+/** Width and height from a JPEG's start-of-frame marker. */
+function jpegSize(buf, name) {
+  let i = 2;
+  while (i < buf.length) {
+    if (buf[i] !== 0xff) break;
+    const marker = buf[i + 1], len = buf.readUInt16BE(i + 2);
+    if (marker >= 0xc0 && marker <= 0xcf && marker !== 0xc4 && marker !== 0xc8 && marker !== 0xcc) {
+      return { height: buf.readUInt16BE(i + 5), width: buf.readUInt16BE(i + 7) };
+    }
+    i += 2 + len;
+  }
+  throw new Error('build-early-christian-data: cannot read the size of ' + name);
 }
