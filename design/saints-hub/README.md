@@ -141,11 +141,12 @@ for a pattern so he adjusts less. The pattern in his own choices:
   .myth-t b, .myth-k, .feast-col h4, .feasts-h p, .path-k, .answer h2, .portrait figcaption b`; tags `.scale-ends,
   .rz-when, .mo-when, .stat-chip, .gchips-k, .tchip, .navmenu-tag`. The number chips got letter-spacing .09em so
   "Raised the dead" stays on one line at 375.
-- **Where the pattern disagrees with the page and he has not ruled (asked him, 2026-09-24):** as labels (.7rem):
-  `.st-topic` ("On laughter"), `.later b` ("A later story", "Doubted from the start"), `.sources h3`, `.qf-k`
-  ("Before a battle near Worms"), `.frow-l` (the hub's filter names), `.temper-k` ("His personality type", which
-  shows at .83rem only because `.temper-b p` overrides it); as tags (.6rem): `.pcard-d` (dates on the hub's cards),
-  `.gchips li` ("Confident"); a citation in tight tiles: `.stat-src` (.64rem, he asked only to brighten it).
+- **His rulings on the cases the pattern raised (2026-09-24):** labels too, as he had meant: `.st-topic` ("On
+  laughter"), `.later b` ("A later story", "Doubted from the start"), `.qf-k` ("Before a battle near Worms").
+  **Leave as they are:** `.temper-k` ("His personality type", which shows at .83rem because `.temper-b p` sets it)
+  and `.sources h3`. So the pattern is a strong default, not a law: he may keep a heading bigger or a list heading
+  smaller. **Still open** (shown to him with a picture): `.frow-l` (the hub's filter names, Group / Lived / East or
+  West / Personality type), `.pcard-d` (dates on the hub's cards), `.gchips li` ("Confident"), `.stat-src`.
 
 ## Rules that bind every page (from CLAUDE.md, memory and the research)
 
