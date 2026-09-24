@@ -1,0 +1,115 @@
+---
+/**
+ * The reader's own type, on the Christian Personality Test's type pages (/personality-type/ and
+ * /personality-type/<key>/). MineNote and EarlyMine do this for the other quizzes; this is their
+ * twin for the test, whose result is one of eight types.
+ *
+ *   on the reader's own type    "This is your type. See your result"
+ *   on another type             "Your type is The Spark. See your result", the name a link
+ *   on /personality-type/       "Your type is The Spark. See your result"
+ *
+ * and a "You" tag on the reader's type wherever the page draws the eight as cards: each card
+ * carries a hidden [data-pt-you="<key>"] tag, and the script shows the one that is theirs.
+ *
+ * Someone browsing without a result sees the page exactly as it is: everything here is rendered
+ * hidden, and the script shows it only when this device holds a result for the test (lib/mine.ts
+ * finds it: the tab's own note first, then the newest one on the device shelf). Nothing is sent
+ * anywhere. The line always says "you": these are this device's own results.
+ *
+ * A code carries the answers, not the type, so the type has to be scored from it. The scorer is
+ * strategies/personality.ts and its scoring file (about 30 KB), which only a reader who has a
+ * result needs: the script checks the code's shape first, and loads the scorer on demand only
+ * then. Everyone else downloads nothing but this small script. personality.json, the report's
+ * words, never reaches the browser: the names the line prints are handed down here.
+ */
+import type { Quiz } from '../lib/engine/types';
+import { quizHref } from '../lib/engine/registry';
+import { CODE_LENGTH, CODE_PREFIX, CODE_VERSION, TYPES, TYPE_KEYS } from '../lib/strategies/personality';
+import '../styles/pages/mine.css';
+
+interface Props {
+  quiz: Quiz;
+  /** The type this page is about, on a type's page. Left out on the index. */
+  here?: string;
+}
+
+const { quiz, here } = Astro.props;
+const names = Object.fromEntries(TYPE_KEYS.map(k => [k, TYPES[k]!.name]));
+---
+<div
+  class="mine ptm"
+  data-pt-mine
+  data-quiz={quiz.slug}
+  data-head={CODE_PREFIX + CODE_VERSION}
+  data-length={CODE_LENGTH}
+  data-prefix={quiz.codePrefix ?? ''}
+  data-short={quiz.shortLinks ? '' : undefined}
+  data-here={here}
+  data-names={JSON.stringify(names)}
+  hidden
+>
+  <p class="mine-line">
+    <span class="you-chip" aria-hidden="true">You</span>
+    <span class="mine-say">
+      <span data-ptm="own" hidden>This is your type.</span>
+      <span data-ptm="other" hidden>Your type is <a data-ptm-type href={quizHref(quiz)}></a>.</span>{' '}
+      <a class="mine-go" data-ptm-result href={quizHref(quiz)}>See your result</a>
+    </span>
+  </p>
+</div>
+
+{import.meta.env.DEV && (
+  /* Development only, compiled out of anything served, as MineNote's and EarlyMine's: ?mine=<code>
+     makes this tab hold that result, so the page can be looked at (and captured headless) as a
+     reader who has one; ?mine=0 forgets it. Inline, so it runs before the module below. */
+  <script is:inline define:vars={{ devSlug: quiz.slug }}>
+    try {
+      var devMine = new URLSearchParams(location.search).get('mine');
+      if (devMine === '0') sessionStorage.removeItem('ww:took:' + devSlug);
+      else if (devMine) sessionStorage.setItem('ww:took:' + devSlug, devMine.toUpperCase());
+    } catch (e) {}
+  </script>
+)}
+
+<script>
+  import { latestFor, resultHref } from '../lib/mine';
+  import { typeHref } from '../lib/personality-art';
+
+  const box = document.querySelector<HTMLElement>('[data-pt-mine]');
+  if (box) {
+    show(box).catch(() => {
+      /* a page that cannot read the reader's result is simply the page it always was */
+    });
+  }
+
+  async function show(box: HTMLElement): Promise<void> {
+    const d = box.dataset;
+    const quiz = d.quiz ?? '';
+    const head = d.head ?? '';
+    const length = Number(d.length);
+    /* The shape of a code, checked before anything is loaded: the scorer below decides the rest. */
+    const found = latestFor(quiz, raw => {
+      const code = String(raw).trim().toUpperCase();
+      return code.length === length && code.startsWith(head) && /^[0-9A-Z]+$/.test(code) ? code : null;
+    });
+    if (!found) return;
+
+    const { typeOfCode } = await import('../lib/strategies/personality');
+    const type = typeOfCode(found.code);
+    const names = JSON.parse(d.names || '{}') as Record<string, string>;
+    if (!type || !names[type]) return;
+
+    const own = type === d.here;
+    box.querySelector<HTMLElement>(`[data-ptm="${own ? 'own' : 'other'}"]`)?.removeAttribute('hidden');
+    const name = box.querySelector<HTMLAnchorElement>('[data-ptm-type]');
+    if (name) {
+      name.textContent = names[type];
+      name.href = typeHref(type);
+    }
+    const result = box.querySelector<HTMLAnchorElement>('[data-ptm-result]');
+    if (result) result.href = resultHref(quiz, found.code, { codePrefix: d.prefix ?? '', shortLinks: d.short !== undefined });
+
+    document.querySelectorAll<HTMLElement>(`[data-pt-you="${type}"]`).forEach(tag => tag.removeAttribute('hidden'));
+    box.hidden = false;
+  }
+</script>

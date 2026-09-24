@@ -251,6 +251,27 @@ a { color: var(--accent); text-underline-offset: 2px; }
 @media (min-width: 30rem) {
   .site-head nav { gap: 1.35rem; }
 }
+/*
+ * Without accounts (a build with no account keys: local development, or accounts switched off)
+ * the header went to one row at 30rem, a rule measured before the owner's logo arrived 56px
+ * wider. That row needs about 41.6rem below 46rem and 49.5rem from it (the brand and "My
+ * results" grow there), so it ran off the right edge: by 46px at 600 and 28px at 736, with the
+ * bulb cut off (measured 2026-09-24). So the phone's two rows hold to 51rem (the 792px row plus
+ * a desktop scrollbar's 15), as the account header's do to 56rem: the brand and the bulb above,
+ * the nav below from the brand's left edge, its menus opening rightwards as they do there.
+ * Scoped with :not(), so the account header, which is what the live site serves, is untouched.
+ */
+@media (min-width: 30rem) and (max-width: 50.99rem) {
+  .site-head:not(.site-head--acct) .wrap { flex-wrap: wrap; }
+  .site-head:not(.site-head--acct) .brand { margin-right: 0; }
+  .site-head:not(.site-head--acct) .theme-toggle { margin-left: auto; }
+  .site-head:not(.site-head--acct) nav { order: 3; gap: .25rem; margin-left: -.7rem; width: calc(100% + .7rem); }
+  .site-head:not(.site-head--acct) nav > a:not(.nav-me),
+  .site-head:not(.site-head--acct) .navmenu > summary { padding: .42rem .7rem; }
+  .site-head:not(.site-head--acct) .navmenu-panel { left: 0; right: auto; }
+  .site-head:not(.site-head--acct) .navmenu:first-of-type .navmenu-panel { left: .7rem; }
+  .site-head:not(.site-head--acct) .navmenu:last-of-type .navmenu-panel { left: 50%; transform: translateX(-50%); }
+}
 
 .site-foot {
   margin-top: 3.5rem; background: var(--panel);

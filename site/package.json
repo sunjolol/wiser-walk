@@ -8,7 +8,7 @@
     "dev": "astro dev",
     "prebuild": "node scripts/build-data.mjs && node scripts/engine-test.mjs && node scripts/account-test.mjs && node scripts/auth-test.mjs && node scripts/seo-plumbing-test.mjs",
     "build": "astro build",
-    "postbuild": "node scripts/seo-test.mjs && node scripts/indexnow.mjs",
+    "postbuild": "node scripts/seo-test.mjs && node scripts/quiz-page-test.mjs && node scripts/indexnow.mjs",
     "preview": "astro preview",
     "data": "node scripts/build-data.mjs",
     "test": "node scripts/build-data.mjs && node scripts/engine-test.mjs && node scripts/account-test.mjs && node scripts/auth-test.mjs && node scripts/email-test.mjs && node scripts/seo-plumbing-test.mjs",

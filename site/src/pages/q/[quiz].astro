@@ -16,18 +16,21 @@ import QuizPreview from '../../components/QuizPreview.astro';
 import OutcomeIndex from '../../components/OutcomeIndex.astro';
 import PsalmIndex from '../../components/PsalmIndex.astro';
 import CompareRoom from '../../components/CompareRoom.astro';
-import ReadCard from '../../components/ReadCard.astro';
+import QuizFoot from '../../components/QuizFoot.astro';
+import CompassWheel from '../../components/CompassWheel.astro';
 import ReadingRunner from '../../components/ReadingRunner.astro';
 import PersonalityRunner from '../../components/PersonalityRunner.astro';
 import { READING, SITUATIONS } from '../../lib/strategies/reading';
-import { EXAMPLE_CODE, ITEMS as PERSONALITY_ITEMS, TYPE_KEYS } from '../../lib/strategies/personality';
+import { ITEMS as PERSONALITY_ITEMS, TYPE_KEYS } from '../../lib/strategies/personality';
 import type { KindredData } from '../../lib/strategies/kindred';
-import { getCollection } from 'astro:content';
 import { COMPARE_QUIZ } from '../../lib/comparisons';
-import { QUIZZES, getQuiz, outcomeHref } from '../../lib/engine/registry';
+import { QUIZZES, getQuiz, outcomeHref, resultFor, scoreQuiz } from '../../lib/engine/registry';
+import type { BipolarView } from '../../lib/engine/types';
 import { capitalise, groupNounPlural, outcomeNounPlural } from '../../lib/engine/types';
 // Server only: the early Christians' portraits and names, for the strip on that quiz's page.
 import earlyChristians from '../../data/which-early-christian.json';
+// Server only: the Compass's audited answer sheets, for the example wheel in its band.
+import audit from '../../data/compass-audit.json';
 import '../../styles/pages/reads.css';
 import '../../styles/pages/kindred.css';
 
@@ -38,23 +41,9 @@ export function getStaticPaths() {
 const quiz = getQuiz(Astro.params.quiz)!;
 
 /*
- * THE OTHER HALF OF THE LOOP.
- *
- * An article names the quizzes it belongs beside in its own front matter, and the article
- * template has always read that list to draw its "Keep going" block. Nothing read it the
- * other way, so every link between the two ran one way: eleven articles pointed at the
- * quizzes and not one quiz pointed back at an article on its own subject.
- *
- * So this is the same list, read backwards. No second list to keep in step: an article that
- * names this quiz appears here the day it is written, and one that does not, does not.
- * Three at most, and sorted by date and then by slug so that two articles published on the
- * same day come out in the same order on every machine that builds the site.
+ * "Read next", which every quiz page ends on, is drawn by QuizFoot.astro with the rest of the
+ * page's foot. Which three articles it shows is lib/read-next.ts.
  */
-const readNext = (await getCollection('articles'))
-  .filter(a => !a.data.draft && a.data.quizzes.includes(quiz.slug))
-  .sort((a, b) =>
-    b.data.published.valueOf() - a.data.published.valueOf() || a.id.localeCompare(b.id))
-  .slice(0, 3);
 const isDraft = quiz.status === 'draft';
 const bipolar = quiz.strategy.shape === 'bipolar';
 /*
@@ -107,8 +96,12 @@ const comparable = quiz.slug === COMPARE_QUIZ.slug;
  * with its one-sentence way in and none of the three notes, and the page drew a panel
  * promising "what this quiz can and cannot tell you" that opened on nothing. Now the sentence
  * prints whenever a quiz has one, and the panel only when there is a note to put in it.
+ *
+ * What a quiz leaves out (notes.omitted) is said on its result, not here: the owner asked for
+ * the gifts test's "Not scored here" paragraph to come out of this panel (2026-09-24). So it
+ * does not count towards the panel either.
  */
-const hasFrame = Boolean(quiz.notes?.intro || quiz.notes?.disputed || quiz.notes?.omitted);
+const hasFrame = Boolean(quiz.notes?.intro || quiz.notes?.disputed);
 const folded = Boolean(quiz.notes?.introShort) && hasFrame;
 
 /**
@@ -134,6 +127,21 @@ const painted = nounWord ?? quiz.title
 
 /** The quiz's own plate. Null for the Compass, which is drawn as an instrument, not a scene. */
 const art = artFor(quiz.slug);
+
+/*
+ * THE COMPASS'S BAND, which every other quiz fills with its painting on the right, wears its
+ * example wheel there instead (the owner, 2026-09-24). The same wheel as its shared card
+ * (CompassCard.astro) and its room in NextUp.astro: the published, audited Eastern Orthodox
+ * answer sheet, scored by the live engine, found exactly as they find it. No visible caption,
+ * as on those cards; a screen reader is told it is an example.
+ */
+const EXAMPLE = 'Eastern Orthodox';
+const exampleSheet = quiz.slug === 'theology-compass'
+  ? (audit.simulations as Array<Record<string, any>>).find(s => s.tradition === EXAMPLE && Array.isArray(s.answers))
+  : undefined;
+const exampleWheel = exampleSheet
+  ? (resultFor(quiz, scoreQuiz(quiz, exampleSheet.answers)) as BipolarView)
+  : null;
 
 /**
  * A draft says so in the hero chip, where the facts about the instrument are, rather than
@@ -219,7 +227,8 @@ const strip = kindred
     plate would be (four across and two down above the words on a phone, beside them from a
     tablet up; personality-run.css). The start button says where a returning reader left off
     ("Pick up at question N of 72", written before first paint by the runner), with a quiet
-    "Start over" beside it; "See an example" opens a simulated person's finished report.
+    "Start over" beside it. No "See an example": the owner took it off (2026-09-24), because it
+    "spoils the fun of seeing your result for the first time".
   */
   <header class="band band--pic band--long pqr-band">
     <div class="pqr-art" aria-hidden="true" style={`--pqr-mosaic:url('${PQ_MOSAIC}')`}>
@@ -233,7 +242,6 @@ const strip = kindred
       <div class="btn-row">
         <button class="btn" type="button" data-pqr-start>Start the test</button>
         <button class="pqr-over" type="button" data-pqr-over hidden>Start over</button>
-        <a class="btn glass" href={`/r/${quiz.slug}/${EXAMPLE_CODE}/`}>See an example</a>
       </div>
       <ul class="tiles">
         {pqTiles.map(t => <li class="tile"><b>{t.n}</b><span>{t.label}</span></li>)}
@@ -274,6 +282,11 @@ const strip = kindred
       than to a field every other quiz would carry empty.
     */}{quiz.slug === 'spiritual-gifts' && (
       <a class="btn glass" href="/q/spiritual-gifts/print/" slot="actions">Print it for a group</a>
+    )}{exampleWheel && (
+      <div class="qband-wheel" slot="aside">
+        <CompassWheel view={exampleWheel} />
+        <p class="sr-only">An example: the published {EXAMPLE} answer sheet.</p>
+      </div>
     )}
   </Hero>
   )}
@@ -283,90 +296,16 @@ const strip = kindred
     play begins. No #runner is drawn, so the statement script at the foot of this page finds
     nothing to bind; ReadingRunner binds the band's [data-start] itself. PsalmIndex stands where
     OutcomeIndex would: OutcomeIndex's sentences are about axes and traditions, untrue of psalms.
+    The runner draws the page's foot (how it works, the start box, Read next) under it.
 
-    THE PERSONALITY TEST, first in the same chain: its own runner, with the deep dives as its
-    intro and the page's "Read next" in its slot, all hidden the moment play begins. It draws no
-    #runner either.
+    THE PERSONALITY TEST, first in the same chain: its own runner, with the deep dives and the
+    page's foot as its intro, all hidden the moment play begins. It draws no #runner either.
   */}{personality ? (
-  <PersonalityRunner quiz={quiz}>
-    {readNext.length > 0 && (
-      <section class="qreads">
-        <SectionHead
-          title="Read next"
-          kicker="Alongside this test"
-          href="/articles/"
-          more="All articles"
-        />
-        <div class="hm-reads reads-foot">
-          {readNext.map(a => (
-            <ReadCard id={a.id} title={a.data.title} description={a.data.description}
-                      minutes={a.data.minutes} image={a.data.image} imageAlt={a.data.imageAlt}
-                      imagePosition={a.data.imagePosition} />
-          ))}
-        </div>
-      </section>
-    )}
-  </PersonalityRunner>
+  <PersonalityRunner quiz={quiz} />
   ) : reading ? (
   <ReadingRunner quiz={quiz}>
-    <SectionHead title="How it works" kicker="Three steps, no wrong answers" />
-    <ul class="steps">
-      <li class="step">
-        <span class="step-mark rd-mark--tap" aria-hidden="true"><i></i><i></i><i></i></span>
-        <div class="step-say">
-          <b>Answer quickly and honestly</b>
-          <p>{READING.core.length} short questions about your life right now, and a few more only if an answer needs them.</p>
-        </div>
-      </li>
-      <li class="step">
-        <span class="step-mark rd-mark--yes" aria-hidden="true"></span>
-        <div class="step-say">
-          <b>Say if it's you</b>
-          <p>You'll see your situation in plain words. It's yours only if you say so, and "Not quite" shows the next.</p>
-        </div>
-      </li>
-      <li class="step">
-        <span class="step-mark rd-mark--lines" aria-hidden="true"><i></i><i></i><i></i></span>
-        <div class="step-say">
-          <b>Read your psalm, in full</b>
-          <p>The psalm St Athanasius gave for exactly that, in the 300s, and why he gave it.</p>
-        </div>
-      </li>
-    </ul>
-
-    <section class="wayin wayin--night qway">
-      <div class="wayin-ghost" aria-hidden="true">begin</div>
-      <div class="wayin-in">
-        <p class="wayin-kicker">When you are ready</p>
-        {/* two lines, as the statement quizzes' longer heading wraps on its own */}
-        <h2>{READING.core.length} questions,<br /> about {quiz.minutes} minutes.</h2>
-        <p class="wayin-say">You can go back at any point, and nothing is yours until you say it is.</p>
-        <div class="btn-row">
-          <button class="btn" type="button" data-start>Start the quiz</button>
-        </div>
-      </div>
-    </section>
-
     {/* Every situation, each a way in to its psalm's page: this quiz's "one page each". */}
     <PsalmIndex />
-
-    {readNext.length > 0 && (
-      <section class="qreads">
-        <SectionHead
-          title="Read next"
-          kicker="Alongside this quiz"
-          href="/articles/"
-          more="All articles"
-        />
-        <div class="hm-reads reads-foot">
-          {readNext.map(a => (
-            <ReadCard id={a.id} title={a.data.title} description={a.data.description}
-                      minutes={a.data.minutes} image={a.data.image} imageAlt={a.data.imageAlt}
-                      imagePosition={a.data.imagePosition} />
-          ))}
-        </div>
-      </section>
-    )}
   </ReadingRunner>
   ) : (
   <div class="runner" id="runner" data-quiz={quiz.slug}>
@@ -416,12 +355,12 @@ const strip = kindred
       */}{quiz.notes?.introShort && <p class="qgo-say">{quiz.notes.introShort}</p>}{folded ? (
         <>
           {/*
-            THE FRAME, FOLDED. Three notes — what the quiz can see, the disagreement it
-            describes and does not settle, and what it leaves out — used to stand open above
-            the preview, which on the gifts quiz was four screens of qualification between a
-            reader and the start button. They are all still here, word for word and in the
-            DOM whether it is open or shut; the reader decides when to read them. "Read this
-            first" above opens it.
+            THE FRAME, FOLDED. Two notes — what the quiz can see, and the disagreement it
+            describes and does not settle — used to stand open above the preview, which on the
+            gifts quiz was four screens of qualification between a reader and the start
+            button. They are still here, word for word and in the DOM whether it is open or
+            shut; the reader decides when to read them. What the quiz leaves out is said on
+            its result only (the owner, 2026-09-24).
           */}
           <details class="frame-fold" id="before-you-start">
             <summary>
@@ -440,39 +379,21 @@ const strip = kindred
                   )}
                 </p>
               )}
-              {quiz.notes!.omitted && (
-                <p>
-                  {quiz.notes!.omitted.text}
-                  {quiz.notes!.omitted.href && quiz.notes!.omitted.linkText && (
-                    <>{' '}<a href={quiz.notes!.omitted.href}>{quiz.notes!.omitted.linkText}</a></>
-                  )}
-                </p>
-              )}
             </div>
           </details>
         </>
       ) : null}{!folded && quiz.notes?.intro && (
         <div class="note quiz-frame" id="before-you-start"><p>{quiz.notes.intro}</p></div>
       )}{/*
-        A disagreement the quiz describes and does not settle, before what it leaves out:
-        two different admissions, and running them together would read as the first being
-        the reason for the second. It says the same thing here and on the result, so a
-        reader who starts here and a reader who arrives at a shared link read it once each.
+        A disagreement the quiz describes and does not settle. It says the same thing here and
+        on the result, so a reader who starts here and a reader who arrives at a shared link
+        read it once each.
       */}{!folded && quiz.notes?.disputed && (
         <div class="note quiz-frame">
           <p>
             {quiz.notes.disputed.text}
             {quiz.notes.disputed.href && quiz.notes.disputed.linkText && (
               <>{' '}<a href={quiz.notes.disputed.href}>{quiz.notes.disputed.linkText}</a></>
-            )}
-          </p>
-        </div>
-      )}{!folded && quiz.notes?.omitted && (
-        <div class="note quiz-frame">
-          <p>
-            {quiz.notes.omitted.text}
-            {quiz.notes.omitted.href && quiz.notes.omitted.linkText && (
-              <> <a href={quiz.notes.omitted.href}>{quiz.notes.omitted.linkText}</a></>
             )}
           </p>
         </div>
@@ -486,7 +407,7 @@ const strip = kindred
           (2026-09-23). All the pictures are public domain; their credits stay one tap away.
         */
         <section class="kr-meet">
-          <SectionHead title="Who you might meet" kicker={`${strip.length} of the ${quiz.outcomes.length}`}
+          <SectionHead title="Who you might meet"
                        href="/early-christian/" more={`Meet all ${quiz.outcomes.length}`} />
           <ul class="kr-strip">
             {strip.map(p => (
@@ -507,65 +428,9 @@ const strip = kindred
           </details>
         </section>
       ) : (
-      <SectionHead
-        title="What you will see"
-        kicker={bipolar
-          ? `${quiz.groups.length} axes · both ends named`
-          : `${quiz.groups.length} ${groupNounPlural(quiz)} · ranked by strength`}
-      />
+      <SectionHead title="What you will see" />
       )}
       {!kindred && <QuizPreview quiz={quiz} />}
-
-      {/*
-        HOW TO ANSWER, as three marked points rather than a panel of prose over a dotted
-        spec list. Each mark is drawn from the thing it stands for: the five-step scale, the
-        quiet middle, the way back. Nothing here is decoration standing in for a sentence.
-      */}
-      <SectionHead title="How to answer" kicker="Five answers, none of them right" />
-      <p class="howto-line">Answer honestly rather than correctly. There is no score to win.</p>
-      <ul class="steps">
-        <li class="step">
-          <span class="step-mark step-mark--scale" aria-hidden="true">
-            <i></i><i></i><i></i><i></i><i></i>
-          </span>
-          <div class="step-say">
-            <b>Five answers</b>
-            <p>Strongly disagree through to strongly agree.</p>
-          </div>
-        </li>
-        <li class="step">
-          <span class="step-mark step-mark--middle" aria-hidden="true"></span>
-          <div class="step-say">
-            <b>{kindred ? 'Not sure is one of them' : 'Unsure is one of them'}</b>
-            <p>{kindred
-              ? "Use it when you can't lean either way. No one is matched to you on it."
-              : 'It counts as an answer and pushes you neither way.'}</p>
-          </div>
-        </li>
-        <li class="step">
-          <span class="step-mark step-mark--back" aria-hidden="true"><Icon name="arrow" size={16} /></span>
-          <div class="step-say">
-            <b>Go back any time</b>
-            <p>One statement at a time. Keys 1 to 5 work as well.</p>
-          </div>
-        </li>
-      </ul>
-
-      {/* The way in again at the foot, as a room on the night ground. Not the quiz's own
-          plate, which is already in the band at the top of this page, and not a dawn sky,
-          which is what the footer under this block is a photograph of. No icon tile over
-          the words (the owner, 2026-09-22); the ghost word says what the room is for. */}
-      <section class="wayin wayin--night qway">
-        <div class="wayin-ghost" aria-hidden="true">begin</div>
-        <div class="wayin-in">
-          <p class="wayin-kicker">When you are ready</p>
-          <h2>{quiz.items.length} statements, about {quiz.minutes} minutes.</h2>
-          <p class="wayin-say">You can stop at any point, and go back at any point.</p>
-          <div class="btn-row">
-            <button class="btn" id="start" type="button">Start the quiz</button>
-          </div>
-        </div>
-      </section>
 
       {/*
         Every outcome, each a way in to its own page.
@@ -579,32 +444,44 @@ const strip = kindred
       */}
       {quiz.outcomes.length > 0 && !kindred && <OutcomeIndex quiz={quiz} />}{/*
         Under that index, because it answers the question the index provokes: a reader
-        looking down eighteen names is usually holding two of them in mind. Hung with no
-        whitespace on either side, so the three quizzes that have no comparison pages come
-        out of this change byte for byte as they went in.
+        looking down eighteen names is usually holding two of them in mind.
       */}{comparable && <CompareRoom />}
 
-      {/* The articles written alongside this quiz, as the paintings they are — the same
-          cards, in the same grid, that the foot of an article and of a result already use.
-          Below the last way in, so nothing to read stands between a reader and the start
-          button. A quiz no article has named yet prints nothing. */}
-      {readNext.length > 0 && (
-        <section class="qreads">
-          <SectionHead
-            title="Read next"
-            kicker="Alongside this quiz"
-            href="/articles/"
-            more="All articles"
-          />
-          <div class="hm-reads reads-foot">
-            {readNext.map(a => (
-              <ReadCard id={a.id} title={a.data.title} description={a.data.description}
-                        minutes={a.data.minutes} image={a.data.image} imageAlt={a.data.imageAlt}
-                        imagePosition={a.data.imagePosition} />
-            ))}
-          </div>
-        </section>
-      )}
+      {/*
+        THE FOOT, the same on every quiz (QuizFoot.astro): how to answer, the start box, Read
+        next, in that order and last. How to answer is three marked points, each mark drawn
+        from the thing it stands for: the five-step scale, the quiet middle, the way back.
+      */}
+      <QuizFoot quiz={quiz} count={quiz.items.length} noun="statements">
+        <ul class="steps" slot="howto">
+          <li class="step">
+            <span class="step-mark step-mark--scale" aria-hidden="true">
+              <i></i><i></i><i></i><i></i><i></i>
+            </span>
+            <div class="step-say">
+              <b>Five answers</b>
+              <p>Strongly disagree through to strongly agree.</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step-mark step-mark--middle" aria-hidden="true"></span>
+            <div class="step-say">
+              <b>{kindred ? 'Not sure is one of them' : 'Unsure is one of them'}</b>
+              <p>{kindred
+                ? "Use it when you can't lean either way. No one is matched to you on it."
+                : 'It counts as an answer and pushes you neither way.'}</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step-mark step-mark--back" aria-hidden="true"><Icon name="arrow" size={16} /></span>
+            <div class="step-say">
+              <b>Go back any time</b>
+              <p>One statement at a time. Keys 1 to 5 work as well.</p>
+            </div>
+          </li>
+        </ul>
+        <button class="btn" id="start" type="button" slot="start">Start the quiz</button>
+      </QuizFoot>
     </div>
 
     <div id="play" hidden>

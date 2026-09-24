@@ -103,7 +103,9 @@ CARDS.compare = {
 /* Articles: the article's own painting and title. */
 const ART_DIR = join(ROOT, 'site/src/content/articles');
 for (const f of readdirSync(ART_DIR).filter(f => f.endsWith('.md'))) {
-  const fm = /^---\n([\s\S]*?)\n---/.exec(readFileSync(join(ART_DIR, f), 'utf8'))?.[1] ?? '';
+  // Line endings normalised first: a file saved with Windows endings matched nothing here, and its
+  // card silently dropped out of the manifest (five articles did, 2026-09-24).
+  const fm = /^---\n([\s\S]*?)\n---/.exec(readFileSync(join(ART_DIR, f), 'utf8').replace(/\r\n/g, '\n'))?.[1] ?? '';
   const get = k => (new RegExp(`^${k}:\\s*(.*)$`, 'm').exec(fm)?.[1] ?? '').trim().replace(/^["']|["']$/g, '');
   if (/^draft:\s*true/m.test(fm) || !get('image')) continue;
   CARDS[`article-${f.replace(/\.md$/, '')}`] = {

@@ -55,7 +55,7 @@
  *                                      the full report, private page included: only ever in the
  *                                      browser that has the private answers.
  *   derive(full) -> PersonalityFacts, leanOf(itemId, v), BAND, LEAN   (score.mjs's own)
- *   EXAMPLE_CODE                       The "See an example" result (simulated person p12 of
+ *   EXAMPLE_CODE                       The example result (simulated person p12 of
  *                                      design/quiz-ideas/personality/sim/answers-3.json), computed
  *                                      by the data build. /api/tally leaves it out of the counts.
  *   typeOfCode(code) -> type key | null   What /api/tally counts.
@@ -178,7 +178,7 @@ export const PRIVATE_NOTE = PQ.PRIVATE_NOTE;
 export const FREQ = PQ.FREQ;
 export const TYPES = PQ.TYPES;
 export const TYPE_KEYS = Object.keys(TYPES);
-/** The "See an example" result. Empty only for a moment inside the data build, before it is computed. */
+/** The example result, for checking the report (no page links it since 2026-09-24). Empty only for a moment inside the data build, before it is computed. */
 export const EXAMPLE_CODE: string = PQ.EXAMPLE_CODE ?? '';
 
 export const TWO_IDS = ITEMS.filter(it => it.kind === 'two').map(it => it.id);

@@ -522,6 +522,10 @@ export function ogImageFor(path: string): string {
   if (path.startsWith('/early-christian/') || path.startsWith('/early-church-on/')) {
     return card('quiz-which-early-christian', 'quizzes');
   }
+  /* The eight personality type pages and their index are the test's reference floor, shared as
+     the test. Each type's own card (r-personality-<type>) says "my type", which a type's page
+     is not, so none of them wears it. */
+  if (path.startsWith('/personality-type/')) return card('quiz-personality', 'quizzes');
   if (path.startsWith('/tradition/')) return card('quiz-theology-compass');
   if ((m = /^\/figure\/([^/]+)\//.exec(path))) return card(`figure-${m[1]}`, 'quiz-bible-figure');
   if ((m = /^\/articles\/([^/]+)\//.exec(path))) return card(`article-${m[1]}`, 'articles');

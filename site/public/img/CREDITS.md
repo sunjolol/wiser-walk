@@ -188,9 +188,9 @@ Origen's. Lactantius's is a 4th-century mural that may show him or may show Apul
 ## Public domain: the Christian Personality Test (`personality/`, Wikimedia Commons)
 
 Added 2026-09-24 for the Christian Personality Test. Eight paintings, one for each type (`art/<type>.jpg`, on the
-result's hero, the type sheets and the share card), round faces of the saints and Bible figures the report names
-(`faces/<key>.jpg`), the page-10 role pictures (`lines/l-<key>.jpg`, also on the role share card) and a mosaic of the
-eight paintings. Chosen in `design/quiz-ideas/personality/preview/img/credits.json`, cropped by that folder's
+result's hero, the type sheets and the share card), round faces of the saints and Bible figures the report and the
+start page name (`faces/<key>.jpg`), the page-10 role pictures (`lines/l-<key>.jpg`, also on the role share card) and
+a mosaic of the eight paintings. Chosen in `design/quiz-ideas/personality/preview/img/credits.json`, cropped by that folder's
 `faces.py`, and copied here by `site/scripts/build-personality-data.mjs`: paintings at most 1100 px on the long side,
 faces at most 240 px square, role pictures inside 760 x 1100, never enlarged, progressive JPEGs. The same script
 writes a reader's credit line for every one of them into the test's data for the report's "Picture credits", and
@@ -201,7 +201,7 @@ All are public domain (one is CC0), so no card or page owes a credit line by lic
 
 | file | picture | Commons file | licence |
 |---|---|---|---|
-| art/hearth.jpg | Reading Devotions to Grandfather, Albert Anker, 1893 | `Anker- Die Andacht des Grossvaters 1893.jpg` | Public domain |
+| art/hearth.jpg | A Luncheon: the artist, his wife and the writer Otto Benzon, Peder Severin Krøyer, 1893 | `Peder Severin Krøyer - A luncheon. The artist, his wife and the writer Otto Benzon - Google Art Project.jpg` | Public domain |
 | art/spark.jpg | The Wedding Dance, Pieter Bruegel the Elder, c. 1566 | `Pieter Bruegel the Elder - Wedding Dance in the Open Air - WGA03505.jpg` | Public domain |
 | art/deepwell.jpg | Rebecca and Eliezer, Bartolomé Esteban Murillo, c. 1660 | `Bartolomé Esteban Perez Murillo 022.jpg` | Public domain |
 | art/forge.jpg | An Iron Forge, Joseph Wright of Derby, 1772 | `Joseph Wright - An Iron Forge - Google Art Project.jpg` | Public domain |
@@ -220,6 +220,7 @@ All are public domain (one is CC0), so no card or page owes a credit line by lic
 | faces/gregory-of-nazianzus.jpg | Saint Gregory the Theologian, mosaic, Saint Sophia Cathedral, Kyiv, 11th century | cropped from `early-christians/gregory-of-nazianzus.jpg` (credited above) | Public domain |
 | faces/jeremiah.jpg | The Prophet Jeremiah, Sistine Chapel ceiling, Michelangelo, c. 1511 | `Пророк Иеремия, Микеланжело Буонаротти.jpg` | Public domain |
 | faces/arsenius.jpg | St Arsenius the Great, fresco in the Church of the Theotokos Peribleptos, Ohrid, Michael Astrapas and Eutychios, c. 1295 | `Paintings in the Church of the Theotokos Peribleptos of Ohrid 0139.jpg` | Public domain |
+| faces/john-cassian.jpg | St John Cassian, medallion in the Sacra Parallela manuscript, Bibliothèque nationale de France, Paris, 9th century (on the start page only) | `Saint Jean Cassien - Grec 923.jpg` | Public domain |
 | faces/moses.jpg | Moses Presenting the Tablets of the Law, Philippe de Champaigne, c. 1648 | `Philippe de Champaigne - Moses Presenting the Tablets of the Law - c. 1648.jpg` | Public domain |
 | faces/gideon.jpg | The Righteous Gideon, from the prophets tier of the iconostasis of the Dormition Cathedral, Kirillo-Belozersky Monastery, 1497 | `Kirillo-Belozersky iconostasis 03. Micah, Elijah, Gideon.jpg` | Public domain |
 | faces/isaiah.jpg | The Prophet Isaiah, Sistine Chapel ceiling, Michelangelo, c. 1509 | `Jesaja (Michelangelo).jpg` | Public domain |

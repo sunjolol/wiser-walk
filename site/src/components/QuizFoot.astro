@@ -1,0 +1,76 @@
+---
+/**
+ * The foot of every quiz's intro: how to answer, the start box, and Read next, in that order.
+ *
+ * The owner's rule (2026-09-24), for every quiz now and later: a quiz page ends in exactly
+ * these three, with nothing between them, and the start box looks and sits the same on every
+ * one. He saw the boxes spaced differently from quiz to quiz, and the "How it works" box above
+ * the start on one page and below it on another. So the three are drawn here, once, and each
+ * runner (the statement runner in q/[quiz].astro, ReadingRunner, PersonalityRunner) puts this
+ * last in its intro. The order is the component's, not each page's to remember.
+ * scripts/quiz-page-test.mjs holds the built pages to it.
+ *
+ * What differs from quiz to quiz comes in: the three steps (the "howto" slot, drawn with the
+ * shared .steps cards), the start buttons (the "start" slot, since each runner binds its own:
+ * #start, [data-start] or [data-pqr-start]), and the counts for the heading.
+ *
+ * No section kicker over "How to answer" and no sentence under the start box's heading (the
+ * owner took both off). The two small lines that stay are "When you are ready" and the one
+ * over Read next.
+ */
+import { getCollection } from 'astro:content';
+import SectionHead from './SectionHead.astro';
+import ReadCard from './ReadCard.astro';
+import { readNextFor } from '../lib/read-next';
+import type { Quiz } from '../lib/engine/types';
+
+interface Props {
+  quiz: Quiz;
+  /** How many a reader answers, and what they are called: "18 statements", "72 questions". */
+  count: number;
+  noun: 'statements' | 'questions';
+  /** "How to answer" on every quiz. The Psalm quiz asks no statements, so its is "How it works". */
+  howTitle?: string;
+  /** What the page calls itself over Read next: "Alongside this quiz", or "this test". */
+  kind?: 'quiz' | 'test';
+}
+const { quiz, count, noun, howTitle = 'How to answer', kind = 'quiz' } = Astro.props;
+
+const reads = readNextFor(await getCollection('articles'), quiz.slug);
+---
+<div class="qfoot" data-quiz-foot>
+  <section class="qhow" data-foot="howto">
+    <SectionHead title={howTitle} />
+    <slot name="howto" />
+  </section>
+
+  {/* The way in again, as a room on the night ground. Not the quiz's own plate, which is the
+      band at the top of the page, and not a dawn sky, which is what the footer under this
+      block is a photograph of. The ghost word says what the room is for. */}
+  <section class="wayin wayin--night qway" data-foot="start">
+    <div class="wayin-ghost" aria-hidden="true">begin</div>
+    <div class="wayin-in">
+      <p class="wayin-kicker">When you are ready</p>
+      <h2>{count} {noun}, about {quiz.minutes} minutes.</h2>
+      <div class="btn-row"><slot name="start" /></div>
+    </div>
+  </section>
+
+  {/* The articles written alongside this quiz first, then others to make three: the same
+      cards, in the same grid, that the foot of an article and of a result already use. */}
+  <section class="qreads" data-foot="reads">
+    <SectionHead
+      title="Read next"
+      kicker={`Alongside this ${kind}`}
+      href="/articles/"
+      more="All articles"
+    />
+    <div class="hm-reads reads-foot">
+      {reads.map(a => (
+        <ReadCard id={a.id} title={a.data.title} description={a.data.description}
+                  minutes={a.data.minutes} image={a.data.image} imageAlt={a.data.imageAlt}
+                  imagePosition={a.data.imagePosition} />
+      ))}
+    </div>
+  </section>
+</div>

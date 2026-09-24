@@ -1,0 +1,156 @@
+---
+/**
+ * /personality-type/: the Christian Personality Test's eight types.
+ *
+ * The hub the eight type pages hang from (their breadcrumbs lead here), and the page a search
+ * lands on for Christian personality types as a whole. So it says how the eight are made, in
+ * the start page's own words (St Gregory sorted people twice, by temper and by mind), shows
+ * them laid out that way, tempers down and minds across, and offers the test after them.
+ *
+ * Every type is a picture card with its name only (the site's rule for picture cards); the grid's
+ * row and column heads carry the two words that make it. A reader whose device holds a result
+ * for the test sees their own type tagged "You" and a line above the grid (PersonalityMine).
+ */
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import PersonalityMine from '../../components/PersonalityMine.astro';
+import { personality as quiz } from '../../lib/quizzes/personality';
+import { quizHref } from '../../lib/engine/registry';
+import { artFor } from '../../lib/art';
+import { ITEMS } from '../../lib/strategies/personality';
+import { ORDER, R, creditsFor, focusOf, picturer, sortingLead, typeHref, typeOf } from './_types';
+import '../../styles/pages/personality.css';
+import '../../styles/pages/personality-type.css';
+
+const shown = new Set<string>();
+const pic = picturer(shown);
+
+/* The band wears the test's own picture, the eight paintings together. */
+const art = artFor(quiz.slug);
+if (art) shown.add('mosaic.jpg');
+
+/*
+ * Tempers down, minds across. Each temper's two types in the design's order, quiet then
+ * restless, found by what they are rather than by their place in the list.
+ */
+const minds = Object.keys(R.MAKEUPS);
+const rows = Object.keys(R.DISPOSITIONS).map(d => ({
+  word: R.DISPOSITIONS[d]!.word,
+  types: minds.map(m => {
+    const key = ORDER.find(k => typeOf(k).disposition === d && typeOf(k).makeup === m);
+    if (!key) throw new Error(`/personality-type/: no type is ${d} and ${m}`);
+    const t = typeOf(key);
+    return { key, t, art: pic(`art/${t.art}.jpg`) };
+  })
+}));
+const credits = creditsFor(shown);
+
+const title = 'The 8 Christian personality types, from St Gregory the Great';
+const description =
+  'The eight types of the Christian Personality Test: four tempers from St Gregory the Great, ' +
+  'each with a quiet or a restless mind. Meet all eight.';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'The eight types',
+  description,
+  url: new URL('/personality-type/', Astro.site).href,
+  isPartOf: [
+    { '@id': new URL('/#website', Astro.site).href },
+    { '@type': 'Quiz', name: quiz.title, url: new URL(quizHref(quiz), Astro.site).href }
+  ],
+  mainEntity: {
+    '@type': 'ItemList',
+    numberOfItems: ORDER.length,
+    itemListElement: ORDER.map((k, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: new URL(typeHref(k), Astro.site).href,
+      name: typeOf(k).name
+    }))
+  }
+};
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: quiz.title, url: quizHref(quiz) },
+  { name: 'The eight types', url: '/personality-type/' }
+];
+---
+<Base title={title} description={description} jsonLd={jsonLd} breadcrumbs={breadcrumbs}>
+  {/*
+    The band: the test's own picture, the eight paintings together, kept whole on the right (above
+    the words on a phone), as the kit's painting band does. Composed by hand rather than through
+    Hero.astro only so it can carry pt-band, which holds a tall picture to the band's own height
+    (personality-type.css).
+  */}
+  <header class="band band--long band--pic band--painting band--has-img band--bare pt-band">
+    {art && (
+      <img class="band-img" src={art.src} width={R.PICTURES[art.src]?.width} height={R.PICTURES[art.src]?.height}
+           alt={art.alt} style={`object-position:${art.objectPosition}`} loading="eager" fetchpriority="high" decoding="async" />
+    )}
+    <div class="band-in">
+      <h1>The eight types</h1>
+      <p class="lede">{sortingLead()}</p>
+      <div class="btn-row">
+        <a class="btn" href={quizHref(quiz)}>Which one are you? <Icon name="arrow" size={15} /></a>
+      </div>
+      <ul class="tiles">
+        <li class="tile"><b>{rows.length}</b><span>Tempers</span></li>
+        <li class="tile"><b>{minds.length}</b><span>Minds</span></li>
+        <li class="tile"><b>{ORDER.length}</b><span>Types</span></li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="ref pt pt--index">
+    {/* Hidden unless this device holds a result for the test. */}
+    <PersonalityMine quiz={quiz} />
+
+    <div class="pt-table" role="list" aria-label="The eight types, by temper and by mind">
+      <span class="pt-th pt-th--corner" aria-hidden="true"></span>
+      {minds.map(m => <span class="pt-th" aria-hidden="true">{R.MAKEUPS[m]!.word} mind</span>)}
+      {rows.map((row, r) => (
+        <>
+          <span class="pt-rh" aria-hidden="true">{row.word}</span>
+          {row.types.map(x => (
+            <div class="pt-cell" role="listitem">
+              <a class="pt-card pt-card--big" href={typeHref(x.key)} style={`--pt-ink:${x.t.ink}`}
+                 aria-label={`${x.t.name}: ${R.DISPOSITIONS[x.t.disposition]!.word.toLowerCase()}, with a ${R.MAKEUPS[x.t.makeup]!.word.toLowerCase()} mind`}>
+                {x.art && (
+                  <img src={x.art.src} width={x.art.width} height={x.art.height} alt=""
+                       style={`object-position:${focusOf(x.key)}`} loading={r < 2 ? 'eager' : 'lazy'} decoding="async" />
+                )}
+                <span class="pt-card-tags">
+                  <span class="pt-tag pt-tag--you" data-pt-you={x.key} hidden>You</span>
+                </span>
+                <b>{x.t.name}</b>
+              </a>
+            </div>
+          ))}
+        </>
+      ))}
+    </div>
+
+    {/* The way into the test: its own card, drawn plain because the band above already wears
+        the test's picture (no page shows one picture twice). */}
+    <div class="qcard-wrap">
+      <a class="qcard qcard--plain qcard--personality" href={quizHref(quiz)}>
+        <div class="qcard-body">
+          <h2 class="qcard-title">{quiz.title}</h2>
+          <p class="qcard-say">{quiz.tagline} Find out which of the eight types is yours.</p>
+          <ul class="qcard-facts">
+            <li><Icon name="clock" size={13} /> {quiz.minutes} min</li>
+            <li>{ITEMS.length} questions</li>
+          </ul>
+          <span class="qcard-go go-pill">Start <Icon name="arrow" size={16} /></span>
+        </div>
+      </a>
+    </div>
+
+    <details class="pt-credits">
+      <summary>Picture credits</summary>
+      <ul>{credits.map(c => <li><a href={c.page} rel="noopener">{c.line}</a></li>)}</ul>
+    </details>
+  </div>
+</Base>

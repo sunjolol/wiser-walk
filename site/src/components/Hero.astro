@@ -30,6 +30,10 @@
  * home hero's two inks (a soft blue and #FFD2B0) so white type keeps its contrast.
  * The lede is the default slot (so it can carry links) or the `lede` prop. Buttons go in the
  * "actions" slot, and on a phone they sit above the fold.
+ *
+ * THE ASIDE (added 2026-09-24): an optional "aside" slot for something drawn beside the words,
+ * where a painting band has its painting. Only the Theology Compass's quiz page fills it, with
+ * its example wheel; its layout is in pages/quiz.css. A band without it is exactly what it was.
  */
 import Icon from './Icon.astro';
 import type { IconName } from '../lib/icons';
@@ -103,6 +107,10 @@ const hasLede = Boolean(lede) || slotHtml.trim().length > 0;
 /* A picture band is dark and composed; a band with no kind keeps the old wash and ghost. */
 const pic = Boolean(kind);
 const wash = !pic;
+/* The aside, measured the same way as the lede: a page that passes it conditionally passes a
+   slot either way, and an empty column beside the words would squeeze them for nothing. */
+const asideHtml = Astro.slots.has('aside') ? await Astro.slots.render('aside') : '';
+const aside = asideHtml.trim().length > 0;
 ---
 <header
   class:list={[
@@ -111,7 +119,8 @@ const wash = !pic;
     pic && 'band--pic',
     kind && `band--${kind}`,
     image && 'band--has-img',
-    !eyebrow && 'band--bare'
+    !eyebrow && 'band--bare',
+    aside && 'band--aside'
   ]}
 >
   {wash && <div class="wash" aria-hidden="true"></div>}
@@ -141,5 +150,5 @@ const wash = !pic;
       </ul>
     )}
     {credit && <p class="band-credit">{credit}</p>}
-  </div>
+  </div>{aside && <div class="band-aside"><Fragment set:html={asideHtml} /></div>}
 </header>

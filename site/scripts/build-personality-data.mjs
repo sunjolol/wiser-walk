@@ -33,7 +33,8 @@
 // The design folder is committed, but its pictures are not (preview/.gitignore): they rebuild from the Commons
 // originals. So on Vercel, and in any fresh clone, the text is regenerated and checked while every picture comes from
 // the committed copies in public/, and sharp is never loaded (the lesson of d53370a). With no design folder at all,
-// every output is used as committed. Either way the build stops if a picture the report names is missing.
+// every output is used as committed. Either way the build stops if a picture the report or the start page names is
+// missing.
 import { readFileSync, writeFileSync, existsSync, mkdirSync, statSync, readdirSync, copyFileSync, rmSync } from 'node:fs';
 import { dirname, resolve, relative } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -58,8 +59,11 @@ const IMG_OUT = resolve(ROOT, 'public/img/personality');
 const LOGO_OUT = resolve(ROOT, 'public/img/logo-w-large-white.png');
 const CREDITS_MD = resolve(ROOT, 'public/img/CREDITS.md');
 
-/** The example on the start page ("See an example"): one simulated person, the rideshare driver who sends money home. */
+/** The example result (no page links it since 2026-09-24): one simulated person, the rideshare driver who sends money home. */
 const EXAMPLE_ID = 'p12';
+
+/** The faces of the start page's "The saints behind it" (SAINTS in PersonalityRunner.astro); the report never names John Cassian. */
+const START_FACES = ['gregory-the-great', 'gregory-of-nazianzus', 'john-cassian', 'arsenius'];
 
 /** Picture sizes: how they are kept on the site. */
 const ART_MAX = 1100;       // a type painting's long side
@@ -289,9 +293,9 @@ function sizesOf() {
   return out;
 }
 
-/** The pictures the report names, and where each lives on the site. */
+/** The pictures the report and the start page name, and where each lives on the site. */
 function referenced(full) {
-  const refs = new Set(['/img/personality/mosaic.jpg']);
+  const refs = new Set(['/img/personality/mosaic.jpg', ...START_FACES.map(k => `/img/personality/faces/${k}.jpg`)]);
   for (const t of Object.values(full.TYPES)) {
     refs.add(`/img/personality/art/${t.art}.jpg`);
     for (const k of t.kindred || []) refs.add(`/img/personality/faces/${k.img}.jpg`);
@@ -349,11 +353,12 @@ function creditsFor(results, credits) {
   for (const t of Object.values(results.TYPES)) { add(`art/${t.art}.jpg`, t.art); add('mosaic.jpg', t.art); }
   const sized = Object.keys(sizesOf()).map(p => p.replace('/img/personality/', ''));
   const faceKey = f => f.replace(/^faces\//, '').replace(/^lines\/l-/, '').replace(/\.jpg$/, '');
-  // Faces and role pictures in the order the report first shows them, then any others.
+  // Faces and role pictures in the order the report first shows them, then the start page's saints, then any others.
   const order = [];
   for (const t of Object.values(results.TYPES)) for (const k of t.kindred) order.push(k.img);
   for (const o of Object.values(results.OPPOSITES)) for (const p of Object.values(o.people)) order.push(p.img);
   for (const l of Object.values(results.LINE_TEXT)) order.push(l.img);
+  order.push(...START_FACES);
   const files = sized.filter(f => /^(faces|lines)\//.test(f))
     .sort((a, b) => ((order.indexOf(faceKey(a)) + 1 || 999) - (order.indexOf(faceKey(b)) + 1 || 999)) || a.localeCompare(b));
   for (const f of files) add(f, faceKey(f));

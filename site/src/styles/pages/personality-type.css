@@ -1,0 +1,245 @@
+/*
+ * The Christian Personality Test's type pages: /personality-type/ and /personality-type/<key>/
+ * (pages/personality-type/, components/PersonalityMine.astro).
+ *
+ * A type page borrows the report's own pieces from personality.css, so a type reads the same
+ * here as on a result's page 2: the two lists (.pq-two), the starry trap (.pq-trap), the saints
+ * (.pq-kin), the opposite over its painting (.pq-opp) and the quotations (.pq-quote). Those are
+ * written for the report's panels; the rules below set them on the reference page's ground
+ * instead, where every block is its own panel with the kit's lift. The type's own colour is
+ * --pq-t, set on the band and on the page's column, as the report sets it.
+ *
+ * Added here: the band's two words, the portrait, the plain panels, the pair of opposites, the
+ * grid of eight picture cards (name only, the site's rule for picture cards), the index's table
+ * of tempers and minds, the pager and the credits. Tokens only, so the dark theme recolours it
+ * by itself. Phone first.
+ */
+
+/* The test's ink, as the home page's rail room, /quizzes/, NextUp and /me/ print it. */
+.qcard--personality { --room-ink: #BFE3AE; }
+
+/* ------------------------------------------------------------ the band */
+
+/* The type's colour along the band's foot, as on the result's hero. */
+.pt-band::before {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; height: 6px;
+  background: var(--pq-t);
+}
+.pt-band h1 { max-width: 12em; }
+.pt-band .band-in { position: relative; }
+.pt-band p.pt-tagline {
+  font-family: "Philosopher", var(--display); font-style: italic; font-weight: 400;
+  font-size: 1.22rem; line-height: 1.35; color: #fff;
+}
+.pt-words { display: flex; flex-wrap: wrap; gap: .45rem; margin: 1.1rem 0 0; padding: 0; list-style: none; }
+.pt-words li {
+  font-family: var(--ui); font-size: .66rem; font-weight: 700; line-height: 1; letter-spacing: .1em;
+  text-transform: uppercase; padding: .5rem .8rem; border-radius: 999px; background: var(--pq-t); color: #000;
+}
+@media (min-width: 40rem) { .pt-band p.pt-tagline { font-size: 1.38rem; } }
+/* The kit's painting band sizes itself by its picture. A tall one (the Lookout, and the index's
+   eight paintings together) made the band as tall as the picture, twice the words' height. So
+   from 46rem the picture takes the right of the band at the band's own height, which the words
+   set, and is cropped on its focal point like every other crop of it. */
+@media (min-width: 46rem) {
+  .pt-band.band--painting > .band-img {
+    position: absolute; top: 0; bottom: 0; right: -1px; z-index: 0; width: 51%; height: 100%; min-height: 0; margin: 0;
+  }
+  .pt-band.band--painting .band-in { grid-column: 1; }
+}
+/* Up to 60rem the words take a wider share, so "The eight types" and "The Still Water" stay on
+   one line (at 49% they broke with one word under them). */
+@media (min-width: 46rem) and (max-width: 59.99rem) {
+  .pt-band.band--painting { grid-template-columns: minmax(0, 1.27fr) minmax(0, 1fr); }
+  .pt-band.band--painting > .band-img { width: 44%; }
+}
+
+/* ------------------------------------------------------------ the column */
+
+.pt { --pq-raise: var(--shell); }
+:root[data-theme="dark"] .pt { --pq-raise: #2C2C34; }
+.pt :is(.pt-panel, .pq-trap, .pq-opp, .pq-kin, .ptm) p { margin: 0; }
+.pt .pq-quote { margin: .9rem 0 0; }
+/* the section heads stand straight above their panel */
+.pt > section > .sect { margin-bottom: 1rem; }
+
+/* the reader's own line (PersonalityMine): its own card, straight under the band */
+.ptm {
+  margin: 1.5rem 0 0; padding: .85rem 1rem; border-radius: var(--r);
+  background: var(--panel); box-shadow: var(--lift);
+}
+.ptm[hidden], .ptm [hidden], .pt-tag[hidden] { display: none !important; }
+.ptm a[data-ptm-type] { font-weight: 700; color: var(--ink); text-underline-offset: 3px; }
+@media (min-width: 40rem) { .ptm { padding: .95rem 1.25rem; } }
+
+/* The portrait: the type in its own words, set as the page's first statement. */
+.pt-portrait {
+  position: relative; overflow: hidden; margin: 1.5rem 0 0 !important; padding: 1.05rem 1.2rem 1.1rem 1.45rem;
+  border-radius: var(--r); background: var(--panel); box-shadow: var(--lift);
+  font-family: var(--display); font-size: 1.16rem; line-height: 1.5; color: var(--ink); text-wrap: pretty;
+}
+.pt-portrait::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: var(--pq-t); }
+@media (min-width: 40rem) { .pt-portrait { font-size: 1.26rem; padding: 1.3rem 1.6rem 1.35rem 1.8rem; } }
+
+/* What you bring and what it costs: the report's two lists, each a panel of its own. */
+.pt .pq-two { margin-top: .8rem; }
+.pt .pq-two > div { box-shadow: var(--lift); padding: 1rem 1.1rem 1.1rem; }
+.pt .pq-cost { background: var(--panel); }
+.pt .pq-two h2 { font: 700 1.1rem/1.2 var(--display); color: var(--ink); margin: 0 0 .5rem; }
+.pt .pq-two ul { font-size: .98rem; }
+
+/* The trap: the report's starry panel, as the section's own. */
+.pt .pq-trap { margin: 0; padding: 1.3rem 1.2rem 1.4rem; }
+.pt .pq-trap p.pq-trap-word { margin: 0 0 .1rem; }
+@media (min-width: 40rem) { .pt .pq-trap { padding: 1.7rem 1.8rem 1.8rem; } }
+
+/* A plain panel: the gift, the mind, and the Oak's note. */
+.pt-panel {
+  padding: 1.1rem 1.15rem 1.2rem; border-radius: var(--r); background: var(--panel); box-shadow: var(--lift);
+  font-size: 1rem; line-height: 1.6;
+}
+.pt-panel .pq-quote { background: var(--pq-raise); }
+.pt-panel p.pt-grace { font-family: "Philosopher", var(--display); font-weight: 400; font-size: 1.28rem; line-height: 1.45; }
+@media (min-width: 40rem) { .pt-panel { padding: 1.5rem 1.7rem 1.6rem; } }
+
+/* The saints: the report's cards, each a panel. No row is left half empty: from 46rem two sit
+   side by side, and a saint alone (one of one, or the third of three) is one wide card with the
+   face beside the words. From 60rem three sit three across. */
+.pt-kins { display: grid; gap: .7rem; }
+.pt .pq-kin { margin: 0; background: var(--panel); box-shadow: var(--lift); padding: 1rem; align-content: start; }
+.pt .pq-kin b { text-wrap: balance; }
+.pt .pq-kin em { font-size: .72rem; }
+@media (min-width: 46rem) {
+  .pt-kins { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  :is(.pt-kins--1, .pt-kins--3) > .pq-kin:last-child {
+    grid-column: 1 / -1; grid-template-columns: 88px minmax(0, 1fr); column-gap: 1.3rem; row-gap: .15rem;
+    align-items: start; padding: 1.35rem 1.6rem 1.4rem;
+  }
+  :is(.pt-kins--1, .pt-kins--3) > .pq-kin:last-child > .pq-face { grid-row: 1 / span 3; width: 88px; height: 88px; }
+  :is(.pt-kins--1, .pt-kins--3) > .pq-kin:last-child > :is(p, .pq-src) { grid-column: 2; }
+  :is(.pt-kins--1, .pt-kins--3) > .pq-kin:last-child > b { margin-top: .45rem; font-size: 1.08rem; }
+  /* a comfortable measure for the words; the card itself spans the row */
+  :is(.pt-kins--1, .pt-kins--3) > .pq-kin:last-child > p { max-width: 44em; margin-top: .3rem !important; font-size: 1rem; }
+}
+@media (min-width: 60rem) {
+  .pt-kins--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .pt-kins--3 > .pq-kin:last-child {
+    grid-column: auto; grid-template-columns: 64px 1fr; column-gap: .85rem; row-gap: .15rem; align-items: center; padding: 1rem;
+  }
+  .pt-kins--3 > .pq-kin:last-child > .pq-face { grid-row: auto; width: 64px; height: 64px; }
+  .pt-kins--3 > .pq-kin:last-child > :is(p, .pq-src) { grid-column: 1 / -1; }
+  .pt-kins--3 > .pq-kin:last-child > b { margin-top: 0; font-size: 1rem; }
+  .pt-kins--3 > .pq-kin:last-child > p { max-width: none; margin-top: .5rem !important; font-size: .95rem; }
+}
+.pt-note { margin-top: .8rem !important; font-size: .9rem; color: var(--ink-soft); }
+
+/* ------------------------------------------------------------ the opposite */
+
+.pt .pq-opp { margin: 0; }
+@media (min-width: 46rem) { .pt .pq-opp { padding: 9rem 1.2rem 1.2rem; } .pt .pq-opp-in { padding: 1.5rem 1.6rem 1.6rem; } }
+.pt .pq-opp h3 { margin: 0; font: 700 1.7rem/1.1 var(--display); color: #fff; }
+.pt .pq-opp h3 a { color: #fff; text-decoration-color: rgba(255, 255, 255, .45); text-underline-offset: 4px; text-decoration-thickness: 1.5px; }
+.pt .pq-opp h3 a:hover { text-decoration-color: #fff; }
+.pt .pq-opp .pq-quote { margin: .2rem 0 0; }
+/* the two real people who were opposites, each with the type they stand for */
+.pt-pair { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: .6rem; margin: .2rem 0; padding: 0; list-style: none; }
+.pt-pair li { display: grid; grid-template-columns: 52px 1fr; gap: .75rem; align-items: center; }
+.pt-pair .pq-face { width: 52px; height: 52px; }
+.pt-pair li:first-child .pq-face { box-shadow: 0 0 0 3px rgba(16, 16, 21, .9), 0 0 0 4px var(--pq-t); }
+.pt-pair b { display: block; font: 600 .92rem/1.3 var(--ui); color: #fff; text-wrap: balance; }
+.pt-pair li span span { display: block; font: 500 .74rem/1.3 var(--ui); color: rgba(255, 255, 255, .7); }
+.pt .btn.pt-opp-go {
+  align-self: flex-start; margin-top: .5rem; background-image: none; background-color: var(--pq-o); color: #000;
+}
+/* "See the Still Water" and its arrow on one line: 231px, where a 360 phone has 272 */
+@media (min-width: 22.5rem) { .pt .btn.pt-opp-go { white-space: nowrap; } }
+
+/* ------------------------------------------------------------ the eight, as picture cards */
+
+.pt-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; margin: 0; padding: 0; list-style: none; }
+@media (min-width: 48rem) { .pt-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .7rem; } }
+.pt-card {
+  position: relative; isolation: isolate; display: flex; flex-direction: column; justify-content: flex-end;
+  aspect-ratio: 4 / 3; overflow: hidden; border-radius: 16px; padding: .7rem .8rem .75rem;
+  background: #222; color: #fff; text-decoration: none; box-shadow: var(--lift);
+  transition: transform .2s ease;
+}
+.pt-card img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; transition: transform .3s ease; }
+.pt-card::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 38%, rgba(0, 0, 0, .45) 64%, rgba(0, 0, 0, .82));
+  box-shadow: inset 0 -4px 0 var(--pt-ink);
+}
+.pt-card b { font: 700 1.08rem/1.15 var(--display); text-shadow: 0 1px 10px rgba(0, 0, 0, .6); text-wrap: balance; }
+.pt-card:hover { transform: translateY(-2px); }
+.pt-card:hover img { transform: scale(1.03); }
+.pt-card:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+/* this page's own type, and the reader's */
+.pt-card.is-here { box-shadow: 0 0 0 3px var(--pt-ink), var(--lift); }
+.pt-card-tags { position: absolute; top: .5rem; right: .5rem; display: flex; gap: .3rem; }
+.pt-tag {
+  font: 700 .58rem/1 var(--ui); letter-spacing: .1em; text-transform: uppercase; white-space: nowrap;
+  padding: .32rem .55rem; border-radius: 999px; background: rgba(255, 255, 255, .92); color: #222;
+}
+.pt-tag--you { background: var(--pt-ink); color: #000; }
+
+/* The index: tempers down, minds across, as St Gregory's two sortings. On a phone each temper's
+   name heads its own pair; from 46rem it stands to the left of its row. */
+.pt-table {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem .6rem; margin: 2rem 0 0;
+}
+.pt-th--corner { display: none; }
+.pt-th, .pt-rh {
+  font: 700 .64rem/1.2 var(--ui); letter-spacing: .13em; text-transform: uppercase; color: var(--ink-mute);
+}
+.pt-th { align-self: end; padding: 0 .2rem; }
+.pt-rh { grid-column: 1 / -1; margin-top: .7rem; padding: 0 .2rem; color: var(--ink); font-size: .72rem; }
+.pt-cell { min-width: 0; }
+.pt-card--big { aspect-ratio: 4 / 3; }
+.pt-card--big b { font-size: 1.2rem; }
+@media (min-width: 46rem) {
+  .pt-table { grid-template-columns: 8.5rem repeat(2, minmax(0, 1fr)); gap: .9rem 1rem; align-items: center; }
+  .pt-th--corner { display: block; }
+  .pt-rh { grid-column: auto; margin: 0; font-size: .78rem; text-align: right; padding-right: .4rem; }
+  .pt-card--big { aspect-ratio: 2 / 1; padding: 1rem 1.2rem 1.05rem; }
+  .pt-card--big b { font-size: 1.6rem; }
+}
+
+/* ------------------------------------------------------------ previous and next */
+
+.pt-pager { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; margin: 2.6rem 0 0; }
+.pt-page {
+  display: flex; flex-direction: column; gap: .15rem; min-width: 0; padding: .85rem 1rem .9rem;
+  border-radius: var(--r); background: var(--panel); box-shadow: var(--lift);
+  text-decoration: none; color: var(--ink);
+}
+.pt-page--next { text-align: right; }
+.pt-page-dir { font-family: var(--ui); font-size: .6rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+.pt-page b { font-family: var(--display); font-weight: 400; font-size: 1.12rem; line-height: 1.25; }
+.pt-page:hover b { color: var(--accent); }
+.pt-page:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* one plain line with a way on, as the early Christians' pages have */
+.pt-way {
+  display: inline-flex; align-items: center; gap: .5rem; margin: 1rem 0 0 !important; padding: .55rem 1rem;
+  border-radius: var(--r-pill); font-size: .9rem; line-height: 1.4; color: var(--ink); background: var(--accent-soft);
+}
+.pt-way .icon { flex: none; color: var(--accent); }
+.pt-way a { color: var(--accent); font-weight: 600; text-underline-offset: 3px; }
+
+/* ------------------------------------------------------------ the foot */
+
+.pt > .qcard-wrap { margin: 2.6rem 0 0; }
+.pt-credits {
+  margin-top: 1.4rem; padding: 1rem 1.1rem; border-radius: var(--r); background: var(--panel); box-shadow: var(--lift);
+  font-size: .92rem; color: var(--ink-soft);
+}
+/* line-height, not min-height, holds the 28px tap height, so the words sit in its middle */
+.pt-credits summary { cursor: pointer; font: 600 .8rem/28px var(--ui); color: var(--ink); }
+.pt-credits ul { margin: .7rem 0 0; padding-left: 1.1rem; font-size: .76rem; line-height: 1.5; color: var(--ink-mute); display: flex; flex-direction: column; gap: .3rem; }
+.pt-credits a { color: inherit; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pt-card, .pt-card img { transition: none; }
+  .pt-card:hover, .pt-card:hover img { transform: none; }
+}

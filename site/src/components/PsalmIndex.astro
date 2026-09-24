@@ -26,7 +26,7 @@ const phrase = (id: string) => {
   <div class="pidx-say">
     <h2 id="pidx-h">{SITUATIONS.length} situations, one psalm each</h2>
     <p>Situations St Athanasius named in his letter, each with the psalm he gave for it.</p>
-    <p class="pidx-hint"><Icon name="arrow" size={14} /> <span>Open a group, then tap a psalm.</span></p>
+    <p class="pidx-hint"><Icon name="arrow" size={14} /> <span>Open a group, then choose a psalm.</span></p>
     <p class="pidx-hint"><Icon name="arrow" size={14} /> <span>Or <a href="/psalm/">read the whole guide</a>.</span></p>
   </div>
   <div class="pidx-groups">
@@ -60,7 +60,7 @@ const phrase = (id: string) => {
   /* The same panel as OutcomeIndex, so the Psalm quiz's page ends the way the others do. */
   .pidx {
     position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr; gap: 1.2rem;
-    margin: 2.2rem 0 .5rem; padding: 1.7rem 1.4rem 1.3rem; border-radius: 24px;
+    margin: 3rem 0 .5rem; padding: 1.7rem 1.4rem 1.3rem; border-radius: 24px;
     background: var(--panel); box-shadow: var(--lift);
   }
   .pidx::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 6px; background-image: linear-gradient(180deg, var(--blue), var(--orange)); }
@@ -85,7 +85,7 @@ const phrase = (id: string) => {
   }
   .pidx-group summary::-webkit-details-marker { display: none; }
   .pidx-group summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
-  .pidx-gtitle { flex: 1; min-width: 0; font-weight: 600; line-height: 1.35; text-wrap: pretty; }
+  .pidx-gtitle { flex: 1; min-width: 0; font-weight: 600; line-height: 1.35; text-wrap: balance; }
   .pidx-count {
     flex: none; min-width: 1.9rem; padding: .2rem .5rem; border-radius: 999px; text-align: center;
     font-family: var(--ui); font-size: .7rem; font-weight: 700; color: var(--ink-mute); background: var(--shell);
@@ -109,7 +109,7 @@ const phrase = (id: string) => {
     border-radius: 999px; font-family: var(--ui); font-size: .74rem; font-weight: 700;
     color: var(--accent); background: var(--shell); box-shadow: inset 0 0 0 1px var(--rule);
   }
-  .pidx-topic { flex: 1; min-width: 0; text-wrap: pretty; }
+  .pidx-topic { flex: 1; min-width: 0; text-wrap: balance; }
   .pidx-group a :global(.icon) { flex: none; color: var(--accent); transition: transform .18s ease; }
   .pidx-group a:hover { color: var(--accent); }
   .pidx-group a:hover .pidx-num { box-shadow: inset 0 0 0 1.5px var(--accent); }

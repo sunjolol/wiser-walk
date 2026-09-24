@@ -18,8 +18,8 @@
  * scripts/build-personality-data.mjs. This file only names the test. It has no items or groups
  * in the engine's sense: the test runs on its own runner, and its code carries its own answers.
  *
- * The outcomes are the eight types, keyed as the design keys them. No page is built for them
- * yet at /personality-type/<key>/; the base is reserved so a later type page cannot collide.
+ * The outcomes are the eight types, keyed as the design keys them. Each has its own page at
+ * /personality-type/<key>/, with all eight at /personality-type/ (pages/personality-type/).
  */
 import type { Outcome, Quiz } from '../engine/types';
 import { personality as strategy, TYPES, TYPE_KEYS } from '../strategies/personality';

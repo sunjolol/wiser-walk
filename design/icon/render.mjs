@@ -1,4 +1,7 @@
 /**
+ * RETIRED 2026-09-24. The site icon is now the owner's brush W, drawn by render-w.mjs. Running this
+ * file would put the old serif W back over it in site/public/. Kept as the record of the first icon.
+ *
  * The site icon, drawn once and cut to every size a browser or a search engine asks for.
  *
  *   node design/icon/render.mjs            (from the repo root; needs Chrome and site/node_modules)

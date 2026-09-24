@@ -102,7 +102,9 @@
 .dark .rankgrid-cell { color: var(--on-dark); }
 @media (min-width: 46rem) { .rankgrid-cell { font-size: .86rem; padding: .7rem .85rem; } }
 
-.axpv-note { margin: 1rem 0 0; max-width: 42rem; font-size: .8rem; line-height: 1.55; color: var(--on-dark-mute); }
+/* no measure cap: one short sentence, and at 42rem it wrapped with half the panel empty.
+   Balanced, so where it does wrap (a phone, a tablet) the lines come out even. */
+.axpv-note { margin: 1rem 0 0; font-size: .8rem; line-height: 1.55; color: var(--on-dark-mute); text-wrap: balance; }
 
 /* ------------------------------------------------------- how to answer
  *
@@ -361,6 +363,8 @@
 .frame-fold > summary::marker { content: ""; }
 .frame-fold > summary:hover { color: var(--accent); }
 .frame-fold > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -3px; }
+/* on a quiz's intro the summary is a full sentence, and at about 480px it left "you" alone */
+#intro .frame-fold > summary { text-wrap: balance; }
 /* drawn, not a character: the glyph escapes were mangled once already on this site */
 .frame-fold-caret {
   flex: none; width: 8px; height: 8px; margin-right: .2rem;
@@ -610,8 +614,9 @@
  * band above it now, so this is a line of type and nothing else: set in the display face
  * at reading size, because it is the first thing on the page that is not a heading.
  */
+/* no measure cap: it is one sentence, and at 40rem it wrapped early on a wide screen */
 .qgo-say {
-  margin: 1.3rem 0 0; max-width: 40rem; font-family: var(--display);
+  margin: 1.3rem 0 0; font-family: var(--display);
   font-size: 1.14rem; line-height: 1.4; color: var(--ink); text-wrap: pretty;
 }
 @media (min-width: 46rem) { .qgo-say { font-size: 1.24rem; } }
@@ -645,12 +650,11 @@
 }
 
 /* ------------------------------------------------------------- how to answer ---- */
-
-.howto-line {
-  margin: 1.1rem 0 0; max-width: 34rem; font-family: var(--display); font-style: italic;
-  font-size: clamp(1.25rem, 5.4vw, 1.6rem); line-height: 1.25; color: var(--ink);
-  text-wrap: balance;
-}
+/*
+ * The first of the three blocks every quiz page ends on (components/QuizFoot.astro). Its
+ * heading is a plain section head with no kicker, and no line under it: the owner took the
+ * "Answer honestly rather than correctly" line off every quiz (2026-09-24).
+ */
 
 .steps { list-style: none; margin: 1.2rem 0 0; padding: 0; display: grid; gap: .6rem; }
 .step {
@@ -658,9 +662,11 @@
   padding: .95rem 1.1rem 1rem; border-radius: var(--r);
   background: var(--panel); box-shadow: var(--lift);
 }
+/* balanced, so a title that wraps in a narrow card never leaves one word alone ("Answer
+   quickly and / honestly" at 768) */
 .step-say b {
   display: block; font-family: var(--display); font-weight: 400; font-size: 1.16rem;
-  line-height: 1.15; color: var(--ink);
+  line-height: 1.15; color: var(--ink); text-wrap: balance;
 }
 .step-say p { margin: .2rem 0 0; font-size: .89rem; line-height: 1.45; color: var(--ink-soft); text-wrap: pretty; }
 
@@ -689,33 +695,81 @@
 @media (min-width: 44rem) {
   .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8rem; }
   /* standing side by side they are read as a row, so the mark goes above the words and
-     every card starts at the same place whatever its sentence wrapped to */
-  .step { grid-template-columns: 1fr; align-items: start; gap: .8rem; padding: 1.2rem 1.25rem 1.3rem; }
+     every card starts at the same place whatever its sentence wrapped to (align-content: a
+     card with a shorter sentence is stretched to the row, and without it the spare height
+     was shared out between the mark and the words, which dropped its title below the others) */
+  .step { grid-template-columns: 1fr; align-items: start; align-content: start; gap: .8rem; padding: 1.2rem 1.25rem 1.3rem; }
 }
 
 /* ------------------------------------------------------------- the room at the foot ---- */
 /* .wayin is drawn by pages/reference.css; both files are loaded on every page, and one
-   room drawn once is better than the same room drawn twice in two stylesheets. */
-.qway { margin-top: 2.2rem; }
+   room drawn once is better than the same room drawn twice in two stylesheets. Its top
+   margin is there too, so the gap under the how-to-answer cards comes from one place. */
 .qway h2 { font-variant-numeric: tabular-nums; }
 .qway .btn { font-size: .88rem; padding: 1rem 1.7rem; min-height: 54px; }
 
 /* ------------------------------------------- the articles written alongside a quiz ---- */
 /*
- * "Read next" at the foot of a quiz's intro, under the last way in. The cards, the grid and
- * the spacing are the ones the foot of an article and of a result already use (.read from
- * pages/reads.css, .reads-foot from pages/prose.css); nothing new is drawn here.
- *
- * One exception, for the one-card case. The gifts quiz has exactly one article written
- * beside it, and a single auto-fit track stretches that card across the whole sheet — which
- * prints its painting at nearly twice the size of the 560px card copy the card asks for, so
- * the picture arrives soft. A shorter list keeps card-sized tracks instead and leaves the
- * rest of the row, the way a shelf does.
+ * "Read next" at the foot of a quiz's intro, under the start box. The cards, the grid and the
+ * spacing are the ones the foot of an article and of a result already use (.read from
+ * pages/reads.css, .reads-foot from pages/prose.css). It always holds three (lib/read-next.ts),
+ * so it is one column on a phone and three from 40rem up: prose.css's auto-fit grid split
+ * them two plus one at about 640 to 805px, with half a row empty.
  */
 .qreads { margin-top: 2.4rem; }
 @media (min-width: 40rem) {
-  .qreads .reads-foot.hm-reads:has(> .read:only-child) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .qreads .reads-foot.hm-reads { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.9rem 1.1rem; }
+}
+/* Three across a tablet leaves each card about 190px, where the 1.45rem title ran to four lines. */
+@media (min-width: 40rem) and (max-width: 59.99rem) {
+  .qreads .read h3 { font-size: 1.2rem; }
+}
+/* Each card is a column with its Read pill at the foot, so the pills line up across the row
+   when one title takes a line and its neighbour two. */
+.qreads .read { display: flex; flex-direction: column; }
+.qreads .read p { margin-bottom: .9rem; }
+.qreads .read .read-go { align-self: flex-start; margin-top: auto; }
+
+/* ------------------------------------------- the Compass's example wheel, in its band ---- */
+/*
+ * Every other quiz's band carries its painting on the right; the Compass's carries its example
+ * wheel there (Hero.astro's "aside" slot, which only this page fills). On a phone the band has
+ * one column and the start button has to stay above the fold, so the wheel is not drawn there.
+ * From a tablet up it fills the right of the band, as a painting does.
+ *
+ * Sized so the wheel WITH its labels fills its column. The side labels are 5.9rem boxes
+ * (site.css) whose inner edges sit 31.4% of the plot either side of its centre, so what
+ * shows is 0.628 of the plot plus 11.8rem: a plot of (column - 11.8rem) / 0.628 fills the
+ * column exactly, and no padding has to guess at it. 26rem is as large as it goes.
+ */
+.band--aside .band-aside { display: none; }
+.qband-wheel {
+  /* the tokens the wheel draws itself with, pointed at a dark ground, as .dark points them */
+  --panel: #2A2A33; --ink: var(--on-dark); --ink-soft: var(--on-dark-soft); --ink-mute: var(--on-dark-mute);
+  --accent: var(--blue-soft); --warn-ink: var(--orange-soft);
+  --zone-hatch: rgba(190, 196, 205, .2); --zone-edge: rgba(190, 196, 205, .34);
+}
+.qband-wheel .wheel-plot { margin: 0 auto; }
+.qband-wheel .wheel-cap { display: none; }
+@media (min-width: 46rem) {
+  /* The words keep about 25rem (four lines of lede, four tiles on a row) and the wheel takes
+     the rest, up to 28rem, so it grows with the tablet rather than sitting at its smallest. */
+  .band--aside {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, clamp(18.5rem, 100% - 26rem, 28rem));
+    align-items: center; column-gap: .75rem;
+  }
+  .band--aside .band-aside { display: block; }
+  .qband-wheel .wheel-plot { width: min(26rem, calc((100% - 11.8rem) / .628)); max-width: none; }
+}
+/* On a tablet the words' column is narrow enough that the fourth tile fell onto a row of its
+   own. The four share the row equally instead, as they do on a phone. The wheel's column also
+   reaches .75rem into the band's side padding, where a narrow band has the room and the words
+   do not; the labels still stop well inside the band's edge. */
+@media (min-width: 46rem) and (max-width: 59.99rem) {
+  .band--aside .tiles { flex-wrap: nowrap; }
+  .band--aside .tile { flex: 1 1 0; min-width: 0; padding-left: .4rem; padding-right: .4rem; }
+  .band--aside .band-aside { margin-right: -.75rem; }
 }
 @media (min-width: 60rem) {
-  .qreads .reads-foot.hm-reads:has(> .read:only-child) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .band--aside { grid-template-columns: minmax(0, 1fr) minmax(0, 28rem); column-gap: 1.5rem; }
 }

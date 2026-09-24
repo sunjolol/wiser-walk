@@ -35,6 +35,8 @@ FACES = {
   'barnabas': (f'{HERE}/img/barnabas.jpg', 0.1, .5),
   'paul': (f'{HERE}/img/paul.jpg', 0.1, .5),
   'monica': (f'{HERE}/img/monica.jpg', 0.1, .5),
+  # named only by the start page's "The saints behind it"
+  'john-cassian': (f'{HERE}/img/john-cassian.jpg', 0.1, .5),
 }
 # colour pictures fetched for the preview win over the site's grey engravings
 for k in ('elijah', 'gideon', 'peter', 'abraham'):
@@ -73,6 +75,8 @@ FOCUS = {
   'barnabas': (.5, .33, .7),
   'paul': (.47, .42, .72),
   'monica': (.48, .43, .6),
+  # a 9th-century medallion whose dotted border hugs his hair: the square stays inside the gold
+  'john-cassian': (.5, .49, .8),
 }
 
 def crop_focus(im, cx, cy, frac):

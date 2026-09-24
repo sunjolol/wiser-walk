@@ -36,6 +36,7 @@ import type { PersonalityView, Quiz } from '../lib/engine/types';
 import { getQuiz, quizHref } from '../lib/engine/registry';
 import { EXAMPLE_CODE, SCALES } from '../lib/strategies/personality';
 import { artFor } from '../lib/art';
+import { focusOf, typeHref } from '../lib/personality-art';
 import { ACCOUNTS_VISIBLE } from '../lib/account/config';
 import Q from './PersonalityQuote.astro';
 import full from '../data/personality.json';
@@ -293,7 +294,8 @@ const json = (x: unknown) => JSON.stringify(x).replace(/</g, '\\u003c');
 
 const LOCK = 'M7 10V7a5 5 0 0 1 10 0v3';
 
-/* The start page's "See an example" opens a simulated person's result: it is nobody's, so it says so. */
+/* The example result (a simulated person's) is nobody's, so it says so. The start page no longer links it
+   (the owner, 2026-09-24); it stays reachable by its link for checking the report. */
 const isExample = view.code === EXAMPLE_CODE;
 ---
 <script is:inline define:vars={{ pqSlug: quiz.slug, pqCode: view.code }}>
@@ -324,7 +326,7 @@ const isExample = view.code === EXAMPLE_CODE;
   <header class="pq-hero" id="pq-p1">
     {heroArt && (
       <img class="pq-hero-img" src={heroArt.src} width={heroArt.width} height={heroArt.height} alt=""
-           loading="eager" fetchpriority="high" decoding="async" />
+           style={`object-position:${focusOf(r.type, 'hero')}`} loading="eager" fetchpriority="high" decoding="async" />
     )}
     <div class="pq-hero-veil"></div>
     <div class="pq-hero-top">
@@ -423,7 +425,7 @@ const isExample = view.code === EXAMPLE_CODE;
     {T.kindredNote && kindred.length > 0 && <p class="pq-muted pq-small pq-kin-note">{T.kindredNote}</p>}
 
     <div class="pq-opp" style={`--pq-o:${O.ink}`}>
-      {oppArt && <img class="pq-opp-img" src={oppArt.src} width={oppArt.width} height={oppArt.height} alt="" loading="lazy" decoding="async" />}
+      {oppArt && <img class="pq-opp-img" src={oppArt.src} width={oppArt.width} height={oppArt.height} alt="" style={`object-position:${focusOf(T.opposite)}`} loading="lazy" decoding="async" />}
       <div class="pq-opp-in">
         <p class="pq-kicker">Your opposite, and why you need them</p>
         {them ? (
@@ -454,7 +456,7 @@ const isExample = view.code === EXAMPLE_CODE;
       {types.map(x => (
         <button class:list={['pq-ty', x.you && 'is-you', x.close && 'is-close']} type="button" style={`--pq-ty:${x.t.ink}`}
                 data-pq-type={x.key} aria-haspopup="dialog">
-          {x.art && <img class="pq-ty-img" src={x.art.src} width={x.art.width} height={x.art.height} alt="" loading="lazy" decoding="async" />}
+          {x.art && <img class="pq-ty-img" src={x.art.src} width={x.art.width} height={x.art.height} alt="" style={`object-position:${focusOf(x.key)}`} loading="lazy" decoding="async" />}
           {x.you ? <span class="pq-ty-tag">You</span> : x.close ? <span class="pq-ty-tag pq-ty-tag--close">Close second</span> : null}
           <span class="pq-ty-in"><b>{x.t.name}</b><span>{x.words}</span></span>
         </button>
@@ -480,7 +482,7 @@ const isExample = view.code === EXAMPLE_CODE;
     </div>
     <div class="pq-hint">
       <span class="pq-hint-i" aria-hidden="true">i</span>
-      <p><b>Tap any line to open it.</b> Each one says what your answer means, what you may not see in yourself, and Gregory’s counsel.</p>
+      <p><b><span class="pq-touch">Tap</span><span class="pq-no-touch">Click</span> any line to open it.</b> Each one says what your answer means, what you may not see in yourself, and Gregory’s counsel.</p>
     </div>
     {groups.map(g => (
       <div class="pq-grp">
@@ -728,16 +730,26 @@ const isExample = view.code === EXAMPLE_CODE;
   </div>
 
   {/* ---------------------------------------------------------------- the sheets */}
+  {/* A type's sheet: the type in brief, and its own page (/personality-type/<key>/) in a new tab,
+      so the reader keeps their place in the report. */}
   {types.map(x => (
     <dialog class="pq-sheet pq-tsheet" id={`pq-ts-${x.key}`} aria-label={x.t.name} style={`--pq-ty:${x.t.ink}`}>
-      {x.art && <img class="pq-ts-img" src={x.art.src} width={x.art.width} height={x.art.height} alt="" loading="lazy" decoding="async" />}
+      {x.art && <img class="pq-ts-img" src={x.art.src} width={x.art.width} height={x.art.height} alt="" style={`object-position:${focusOf(x.key)}`} loading="lazy" decoding="async" />}
       <div class="pq-ts-in">
         <h3>{x.t.name}</h3>
         <p class="pq-muted">{x.t.tagline}</p>
         <p>{x.t.portrait}</p>
         <p><b>Trap:</b> {x.trap}.</p>
         {x.kindred.length > 0 && <p><b>Kindred:</b> {x.kindred.join(', ')}.</p>}
-        <button class="btn" type="button" data-pq-close>Close</button>
+        <div class="pq-ts-row">
+          <a class="btn pq-ts-go" href={typeHref(x.key)} target="_blank" rel="noopener">
+            Explore {x.t.name}
+            <svg class="pq-newtab" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-8.5 8.5M18 14v4.5A1.5 1.5 0 0 1 16.5 20h-11A1.5 1.5 0 0 1 4 18.5v-11A1.5 1.5 0 0 1 5.5 6H10" /></svg>
+            <span class="pq-sr"> (opens in a new tab)</span>
+          </a>
+          <button class="btn ghost" type="button" data-pq-close>Close</button>
+        </div>
+        <p class="pq-ts-note" aria-hidden="true">Opens in a new tab, so you keep your place here.</p>
       </div>
     </dialog>
   ))}
@@ -956,6 +968,12 @@ const isExample = view.code === EXAMPLE_CODE;
     $$('[data-pq-type]').forEach(b => b.addEventListener('click', () => {
       openSheet(document.getElementById('pq-ts-' + b.dataset.pqType) as HTMLDialogElement | null);
     }));
+    /* Review captures in development only (stripped from the built site), as the runner's #q60:
+       #ts-deepwell opens that type's sheet, which a headless capture cannot click open. */
+    if (import.meta.env.DEV) {
+      const ts = /^#ts-([a-z]+)$/.exec(location.hash);
+      if (ts) openSheet(document.getElementById('pq-ts-' + ts[1]) as HTMLDialogElement | null);
+    }
 
     /* ---------------------------------------------------------------- the two cards */
     /*

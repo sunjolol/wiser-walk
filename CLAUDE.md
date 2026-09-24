@@ -41,23 +41,42 @@ Note he had earlier rejected the word "wiser" as "weird to say"; he has since ov
 
 State: local git repo initialised, **one commit** `c8fd322`, 137 files tracked, `node_modules` excluded. Authored as `Light <serenitybackto@gmail.com>` — he was offered a GitHub noreply address to keep his email out of public history and **chose to keep his real email**. Do not change it.
 
-## NOW (2026-09-24): THE CHRISTIAN PERSONALITY TEST IS LIVE (commit 68cc5e4)
+## RULES FOR EVERY QUIZ PAGE (the owner, 2026-09-24): binding for every quiz now and later
 
-**Live at /q/personality/** (named "Christian Personality Test"; the URL stays).
+He called the old ordering "the chaotic mess these quizzes are now in" and asked that what he standardized "turn into
+rules so they don't happen again". `site/scripts/quiz-page-test.mjs` (postbuild) fails the build on rules 1 to 5.
 
-**NEXT SESSION, in this order (his words, 2026-09-24):**
-1. **Ask for his notes on the quiz page first.** He said: "I also have quite a few notes about the quiz page, a few
-   things I want to change/remove/add." The page is `/q/personality/` (`site/src/components/PersonalityRunner.astro`
-   intro + `site/src/styles/pages/personality-run.css`; the band is in `site/src/pages/q/[quiz].astro`). Do those
-   before anything else.
-2. **A page for each of the eight types, like the other quizzes' outcome pages** ("we should definitely have a page for
-   each type, I thought that was always the plan, same as the other quizzes"). Model: quiz #4's `/early-christian/<slug>/`
-   pages and the Psalm quiz's `/psalm/<n>/` (outcome pages with the reader's own result marked through `lib/mine.ts`,
-   indexable, in the sitemap, browsable from the quiz page). The quiz object already sets `outcomePathBase:
-   'personality-type'` and `outcomeNoun: 'type'`; the eight type cards on the quiz page should link to them. Content
-   comes from `results.mjs` only (TYPES, DISPOSITIONS, MAKEUPS, kindred, OPPOSITES, traps). Propose the page's sections
-   to him (plain words, a mock-up) before building, per the method above.
-3. Then ask how the test is playing for real people.
+1. **No accent text (kicker) above any section title on a quiz page.** Only two stay: "When you are ready" on the
+   bottom start box, and "Alongside this quiz" ("this test" on the personality test) over Read next.
+2. **One bottom start box for every quiz**, drawn by `site/src/components/QuizFoot.astro`: "<N> statements|questions,
+   about <M> minutes.", no sentence under it, compact (no min-height).
+3. **The foot is always, and always last: How to answer (the Psalm quiz: How it works), the start box, Read next.**
+   QuizFoot renders the three in that order; each runner (the statement runner in `q/[quiz].astro`, `ReadingRunner`,
+   `PersonalityRunner`) puts it last in its intro. Everything else goes above it.
+4. **Never "Answer honestly rather than correctly. There is no score to win."**
+5. **Read next always shows exactly three articles:** the quiz's own first, then a stable seeded fill
+   (`site/src/lib/read-next.ts`).
+6. **Don't give the results away on a quiz page** ("let it be a surprise": the traps and anger grid came off the
+   personality page).
+7. **Outcomes get real pages, not popups.** A result page may keep popups, each with a pill clearly labelled as opening
+   the outcome's page in a new tab.
+8. **Touch-only hints ("Tap a type…") only under `(hover: none) and (pointer: coarse)`**, never on desktop.
+9. **A special card among cards looks like its siblings**, marked only by an icon and a small tag.
+10. **No placeholder pictures** (a monogram where a face should be is "not acceptable").
+
+## NOW (2026-09-24, afternoon): HIS QUIZ-PAGE NOTES ARE DONE AND THE EIGHT TYPE PAGES ARE LIVE
+
+Shipped with his list of 2026-09-24 (the commit after `e7fca25`): the rules above on all seven quiz pages; the eight
+type pages at `/personality-type/<key>/` plus the index `/personality-type/` (`site/src/pages/personality-type/`,
+words from `personality.json` only, the reader's own type marked by `PersonalityMine.astro`); the result page's type
+popups keep a new-tab "Explore" pill; one crop point per painting in `site/src/lib/personality-art.ts` (the Deep Well's
+faces at the well); St John Cassian's face (the 9th-century Sacra Parallela medallion); the Hearth's painting is now
+P. S. Krøyer's "A Luncheon" (1893), picked from eight researched candidates
+(`design/quiz-ideas/personality/hearth-candidates.json`, ranked; runner-up Larsson's "Breakfast under the Big Birch"); the Compass's band wears its Orthodox example wheel on the right (no
+visible caption: he had the Compass card's caption removed); the gifts page's "Not scored here: apostles…" paragraph is
+off the quiz page (still on the gifts RESULT page: ask if he wants it gone there too).
+
+**NEXT SESSION:** ask how the changes look to him, then how the test is playing for real people.
 Later, only if needed: store the type on the short link when the tally passes ~100,000 results. Known and pre-existing, not from
 this build: `sim-figures.mjs` misses one target (Judith closest for 1.1%, under the 1.5% floor), same on the old code.
 Read `design/quiz-ideas/personality/README.md` ("Shipped") first. He approved the full-report design

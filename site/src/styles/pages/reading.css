@@ -120,9 +120,9 @@
 
 /* ------------------------------------------------------ how it works, on the intro ---- */
 /*
- * The three points under the band use the quiz page's .steps; only the marks are this
- * quiz's own, drawn from what they stand for: a card tapped among cards, a yes, and lines
- * of a psalm with one of them lit.
+ * The three points above the start box (ReadingRunner.astro, through QuizFoot.astro) use the
+ * quiz page's .steps; only the marks are this quiz's own, drawn from what they stand for: a
+ * card tapped among cards, a yes, and lines of a psalm with one of them lit.
  */
 .rd-mark--tap, .rd-mark--lines { align-content: center; justify-items: start; gap: 3px; padding: 0 .5rem; }
 .rd-mark--tap i, .rd-mark--lines i { width: 100%; }

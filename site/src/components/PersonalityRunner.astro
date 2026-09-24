@@ -23,14 +23,20 @@
  * The questions, the scoring and the code all come from strategies/personality.ts (the design's
  * own score.mjs). This file draws screens and remembers answers.
  *
- * The intro is this test's own: the eight types, the four traps, the four kinds of anger, what
- * the report covers and the saints behind it, every word from src/data/personality.json (the
- * design's results.mjs), read here in the front matter and never shipped as data. The page's
- * "Read next" comes in through the default slot.
+ * The intro is this test's own: the eight types (each a way in to its own page), what the
+ * report covers and the saints behind it, every word from src/data/personality.json (the
+ * design's results.mjs), read here in the front matter and never shipped as data. The traps
+ * and the four kinds of anger were on it too; the owner took them off (2026-09-24: "we're
+ * basically providing the full results upfront at that point, let it be a surprise"). Then
+ * the foot every quiz page ends on (QuizFoot.astro): how to answer, the start box, Read next.
  */
 import type { Quiz } from '../lib/engine/types';
 import SectionHead from './SectionHead.astro';
-import { ITEMS, PICK_IDS, SCALES, TYPES, TYPE_KEYS } from '../lib/strategies/personality';
+import QuizFoot from './QuizFoot.astro';
+import Icon from './Icon.astro';
+import { outcomeHref } from '../lib/engine/registry';
+import { focusOf } from '../lib/personality-art';
+import { ITEMS, PICK_IDS, SCALES, TYPE_KEYS } from '../lib/strategies/personality';
 // Server only: the report's words, for the deep dives. Read at build time; never in a client script.
 import report from '../data/personality.json';
 import '../styles/pages/personality-run.css';
@@ -38,21 +44,12 @@ import '../styles/pages/personality-run.css';
 interface Props { quiz: Quiz; }
 const { quiz } = Astro.props;
 
-interface Q { q: string; cite: string }
-interface Kin { who: string; img: string; text: string; src: string; partial?: boolean }
-interface FullType {
-  name: string; tagline: string; disposition: string; makeup: string; ink: string; art: string;
-  portrait: string; kindred: Kin[]; kindredNote?: string;
-}
-interface Disposition { word: string; trapWho: string; trap: { name: string; quote: Q; plain: string } }
-interface AngerCell { name: string; short: string; quote?: Q }
+interface FullType { name: string; disposition: string; makeup: string; ink: string; art: string }
 interface Credit { key: string; line: string; page: string; files: string[] }
 interface Report {
   TYPES: Record<string, FullType>;
-  DISPOSITIONS: Record<string, Disposition>;
+  DISPOSITIONS: Record<string, { word: string }>;
   MAKEUPS: Record<string, { word: string }>;
-  TRAP_LEAD: string;
-  ANGER: { intro: Q; cells: Record<string, AngerCell> };
   CREDITS: Credit[];
   PICTURES: Record<string, { width: number; height: number }>;
 }
@@ -60,14 +57,16 @@ const R = report as unknown as Report;
 
 const pic = (file: string) => `/img/personality/${file}`;
 const size = (file: string) => R.PICTURES[pic(file)] ?? { width: 220, height: 220 };
-const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 /* ---------------------------------------------------------------- the eight types */
+/* Each card opens its type's own page, at the path the quiz's outcomePathBase gives it. */
 const types = TYPE_KEYS.map(k => {
   const t = R.TYPES[k]!;
   const d = R.DISPOSITIONS[t.disposition]!;
   const m = R.MAKEUPS[t.makeup]!;
-  return { key: k, t, words: `${d.word} · ${m.word}`, trap: d.trap.name, art: `art/${t.art}.jpg` };
+  const outcome = quiz.outcomes.find(o => o.slug === k);
+  if (!outcome) throw new Error(`PersonalityRunner: no outcome for the type ${k}`);
+  return { key: k, t, words: `${d.word} · ${m.word}`, art: `art/${t.art}.jpg`, href: outcomeHref(quiz, outcome) };
 });
 const DISP_KEYS = Object.keys(R.DISPOSITIONS);
 const tempers = DISP_KEYS.map(k => R.DISPOSITIONS[k]!.word.toLowerCase());
@@ -79,13 +78,6 @@ const typesLead = [
   `Once by mind: ${orList(minds)}.`,
   'The eight types are the two together.'
 ];
-
-/* ---------------------------------------------------------------- a trap for every temper */
-const traps = DISP_KEYS.map(k => ({ key: k, ...R.DISPOSITIONS[k]! }));
-
-/* ---------------------------------------------------------------- four kinds of anger */
-const A = R.ANGER.cells;
-const angerImages = (['reeds', 'wood'] as const).filter(k => A[k]?.quote).map(k => ({ name: A[k]!.name, quote: A[k]!.quote! }));
 
 /* ---------------------------------------------------------------- the report's ten pages */
 // The leanings page draws every scale that is not the anger grid, the speaker grid or the help card.
@@ -105,7 +97,11 @@ const PAGES: Array<{ title: string; say: string; card?: boolean; private?: boole
 ];
 
 /* ---------------------------------------------------------------- the saints behind it */
-const SAINTS: Array<{ name: string; face: string | null; mono?: string; say: string[] }> = [
+/*
+ * Every saint here wears a real picture. St John Cassian had a grey "JC" in a circle until the owner
+ * called it unacceptable (2026-09-24): his face is the ninth-century medallion in the Sacra Parallela.
+ */
+const SAINTS: Array<{ name: string; face: string; say: string[] }> = [
   {
     name: 'St Gregory the Great', face: 'faces/gregory-the-great.jpg',
     say: ['The test is built on his Pastoral Rule and his Moralia on Job, both from around 590.', 'They sort people by temperament and say what each one needs.']
@@ -115,7 +111,7 @@ const SAINTS: Array<{ name: string; face: string | null; mono?: string; say: str
     say: ['Gregory the Great names him as his teacher.', 'He wrote that some are led by teaching and others by example, and that no one remedy suits everyone. Your help card follows him.']
   },
   {
-    name: 'St John Cassian', face: null, mono: 'JC',
+    name: 'St John Cassian', face: 'faces/john-cassian.jpg',
     say: ['The private page follows his eight thoughts, as the desert fathers taught them.', 'Your line in the Body comes from his Conferences.']
   },
   {
@@ -125,11 +121,11 @@ const SAINTS: Array<{ name: string; face: string | null; mono?: string; say: str
 ];
 
 /* ---------------------------------------------------------------- picture credits, for what this page shows */
+/* The band's mosaic, the eight type cards and the saints' faces: nothing else is drawn here. */
 const shown = new Set<string>([
   'mosaic.jpg',
   ...types.map(t => t.art),
-  ...types.flatMap(t => t.t.kindred.map(k => `faces/${k.img}.jpg`)),
-  ...SAINTS.flatMap(s => (s.face ? [s.face] : []))
+  ...SAINTS.map(s => s.face)
 ]);
 const credits = R.CREDITS.filter(c => c.files.some(f => shown.has(f)));
 
@@ -147,98 +143,26 @@ const START = 'Start the test';
   <div id="pqr-intro">
     {/* ---------------------------------------------------------------- the eight types */}
     <section class="pqr-sec pqr-types">
-      <SectionHead title="The eight types" kicker="Temper and mind" />
+      <SectionHead title="The eight types" />
       <p class="pqr-lead">{typesLead.join(' ')}</p>
       <ul class="pqr-grid">
-        {types.map(({ key, t, words, art }) => (
+        {types.map(({ key, t, words, art, href }) => (
           <li>
-            <button class="pqr-ty" type="button" style={`--t:${t.ink}`} data-sheet={key} aria-haspopup="dialog">
-              <img src={pic(art)} width={size(art).width} height={size(art).height} alt="" loading="lazy" decoding="async" />
+            <a class="pqr-ty" href={href} style={`--t:${t.ink}`}>
+              <img src={pic(art)} width={size(art).width} height={size(art).height} alt="" loading="lazy" decoding="async"
+                   style={`object-position:${focusOf(key)}`} />
               <span class="pqr-ty-in"><b>{t.name}</b><span>{words}</span></span>
-            </button>
+            </a>
           </li>
         ))}
       </ul>
+      {/* Said only on a touch screen, where a picture card does not look like a link. */}
       <p class="pqr-hint">Tap a type to read about it.</p>
-
-      {types.map(({ key, t, words, trap, art }) => (
-        <dialog class="pqr-sheet" id={`pqr-sheet-${key}`} aria-labelledby={`pqr-sheet-${key}-h`} style={`--t:${t.ink}`}>
-          <img class="pqr-sheet-img" src={pic(art)} width={size(art).width} height={size(art).height} alt="" loading="lazy" decoding="async" />
-          <div class="pqr-sheet-in">
-            <p class="pqr-kicker">{words}</p>
-            <h3 id={`pqr-sheet-${key}-h`}>{t.name}</h3>
-            <p class="pqr-sheet-tag">{t.tagline}</p>
-            <p>{t.portrait}</p>
-            <p><b>Trap:</b> {trap}.</p>
-            {t.kindred.length > 0 && (
-              <div class="pqr-kin">
-                <b>Kindred:</b>
-                <ul>
-                  {t.kindred.map(k => (
-                    <li>
-                      <img src={pic(`faces/${k.img}.jpg`)} width="220" height="220" alt="" loading="lazy" decoding="async" />
-                      <span>{k.who}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            <form method="dialog"><button class="btn" type="submit">Close</button></form>
-          </div>
-        </dialog>
-      ))}
-    </section>
-
-    {/* ---------------------------------------------------------------- a trap for every temper */}
-    <section class="pqr-sec pqr-traps">
-      <SectionHead title="A trap for every temper" kicker="Four tempers, four traps" />
-      <p class="pqr-lead">{R.TRAP_LEAD}</p>
-      <div class="pqr-night pqr-trapgrid">
-        {traps.map(d => (
-          <article class="pqr-trap">
-            <p class="pqr-kicker">{d.word}</p>
-            <h3>{cap(d.trap.name)}</h3>
-            <blockquote class="pqr-quote">
-              <p>“{d.trap.quote.q}”</p>
-              <cite>{d.trap.quote.cite}</cite>
-            </blockquote>
-          </article>
-        ))}
-      </div>
-      <p class="pqr-close">The test tells you which one is set for you.</p>
-    </section>
-
-    {/* ---------------------------------------------------------------- four kinds of anger */}
-    <section class="pqr-sec pqr-anger">
-      <SectionHead title="Four kinds of anger" kicker="Quick or slow, brief or long" />
-      <blockquote class="pqr-quote pqr-quote--lead">
-        <p>“{R.ANGER.intro.q}”</p>
-        <cite>{R.ANGER.intro.cite}</cite>
-      </blockquote>
-      <div class="pqr-g2">
-        <span></span><span class="pqr-ax">Catches quickly</span><span class="pqr-ax">Catches slowly</span>
-        <span class="pqr-ay">Lets go quickly</span>
-        {(['reeds', 'brief'] as const).map(k => <div class="pqr-cell"><b>{A[k]!.name}</b><span>{A[k]!.short}</span></div>)}
-        <span class="pqr-ay">Lets go slowly</span>
-        {(['worst', 'wood'] as const).map(k => <div class="pqr-cell"><b>{A[k]!.name}</b><span>{A[k]!.short}</span></div>)}
-      </div>
-      <div class="pqr-images">
-        {angerImages.map(a => (
-          <figure class="pqr-image">
-            <p class="pqr-kicker">{a.name}</p>
-            <blockquote class="pqr-quote">
-              <p>“{a.quote.q}”</p>
-              <cite>{a.quote.cite}</cite>
-            </blockquote>
-          </figure>
-        ))}
-      </div>
-      <p class="pqr-close">Your report shows where you sit.</p>
     </section>
 
     {/* ---------------------------------------------------------------- what your report covers */}
     <section class="pqr-sec pqr-pages">
-      <SectionHead title="What your report covers" kicker="Ten pages, two cards" />
+      <SectionHead title="What your report covers" />
       <ol class="pqr-plist">
         {PAGES.map((p, i) => (
           <li class:list={['pqr-p', p.private && 'pqr-p--private']}>
@@ -254,18 +178,15 @@ const START = 'Start the test';
           </li>
         ))}
       </ol>
-      <p class="pqr-close">Two cards to save and share: your type, and your role in the Body.</p>
     </section>
 
     {/* ---------------------------------------------------------------- the saints behind it */}
     <section class="pqr-sec pqr-saints">
-      <SectionHead title="The saints behind it" kicker="Where it comes from" />
+      <SectionHead title="The saints behind it" />
       <ul class="pqr-saintlist">
         {SAINTS.map(s => (
           <li class="pqr-saint">
-            {s.face
-              ? <img class="pqr-face" src={pic(s.face)} width="220" height="220" alt="" loading="lazy" decoding="async" />
-              : <span class="pqr-face pqr-mono" aria-hidden="true">{s.mono}</span>}
+            <img class="pqr-face" src={pic(s.face)} width="220" height="220" alt="" loading="lazy" decoding="async" />
             <div>
               <b>{s.name}</b>
               <p>{s.say.join(' ')}</p>
@@ -281,21 +202,43 @@ const START = 'Start the test';
       </details>
     </section>
 
-    {/* The way in again at the foot, as on every quiz page. */}
-    <section class="wayin wayin--night qway">
-      <div class="wayin-ghost" aria-hidden="true">begin</div>
-      <div class="wayin-in">
-        <p class="wayin-kicker">When you are ready</p>
-        <h2>{ITEMS.length} questions,<br /> about {quiz.minutes} minutes.</h2>
-        <p class="wayin-say">You can stop at any point and pick up where you left off.</p>
-        <div class="btn-row">
-          <button class="btn" type="button" data-pqr-start>{START}</button>
-          <button class="pqr-over" type="button" data-pqr-over hidden>Start over</button>
-        </div>
-      </div>
-    </section>
-
-    <slot />
+    {/*
+      The foot every quiz page ends on. How to answer is three marked points, as on the other
+      quizzes: the seven points between two sides, the lock the private block wears, and the way
+      back. The start box keeps this test's two buttons: "Start the test", which the runner
+      rewrites to "Pick up at question N of 72", and the quiet "Start over".
+    */}
+    <QuizFoot quiz={quiz} count={ITEMS.length} noun="questions" kind="test">
+      <ul class="steps" slot="howto">
+        <li class="step">
+          <span class="step-mark pqr-mark--seven" aria-hidden="true">
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          </span>
+          <div class="step-say">
+            <b>Two sides, seven points</b>
+            <p>Pick the side that sounds more like you, and how much. The middle is both or neither.</p>
+          </div>
+        </li>
+        <li class="step">
+          <span class="step-mark pqr-mark--lock" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M7 10V7a5 5 0 0 1 10 0v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="4.5" y="10" width="15" height="11" rx="3" fill="currentColor"/></svg>
+          </span>
+          <div class="step-say">
+            <b>Twelve are just for you</b>
+            <p>Nobody sees those answers, and they never go on your share card.</p>
+          </div>
+        </li>
+        <li class="step">
+          <span class="step-mark step-mark--back" aria-hidden="true"><Icon name="arrow" size={16} /></span>
+          <div class="step-say">
+            <b>Stop any time</b>
+            <p>Your answers are saved on this device. Come back and pick up where you left off.</p>
+          </div>
+        </li>
+      </ul>
+      <button class="btn" type="button" data-pqr-start slot="start">{START}</button>
+      <button class="pqr-over" type="button" data-pqr-over hidden slot="start">Start over</button>
+    </QuizFoot>
   </div>
 
   <div id="pqr-play" hidden>
@@ -707,15 +650,6 @@ const START = 'Start the test';
 
     document.querySelectorAll('[data-pqr-start]').forEach(b => b.addEventListener('click', () => begin(false)));
     document.querySelectorAll('[data-pqr-over]').forEach(b => b.addEventListener('click', () => begin(true)));
-
-    // The eight types: each card opens its sheet, which closes on its button, Escape or a tap outside it.
-    document.querySelectorAll<HTMLElement>('[data-sheet]').forEach(b => b.addEventListener('click', () => {
-      const d = document.getElementById('pqr-sheet-' + b.dataset.sheet) as HTMLDialogElement | null;
-      if (d && typeof d.showModal === 'function') d.showModal();
-    }));
-    document.querySelectorAll<HTMLDialogElement>('.pqr-sheet').forEach(d => d.addEventListener('click', e => {
-      if (e.target === d) d.close();
-    }));
 
     refreshStart();
 

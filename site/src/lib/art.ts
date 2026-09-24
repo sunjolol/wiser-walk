@@ -50,11 +50,11 @@ const ART: Record<string, QuizArt> = {
   /* The eight paintings the test's eight types wear, two across and four down, in the types'
      own order (build-personality-data.mjs makes it from the report's pictures). Colour, on
      purpose: the owner loves the old art but wants colour, and the other quizzes are ink.
-     The crop keeps the top two rows, the grandfather and the wedding dance over the well and
-     the forge, which are the part a card shows above its words. */
+     The crop keeps the top two rows, the three at lunch and the wedding dance over the well
+     and the forge, which are the part a card shows above its words. */
   personality: {
     src: '/img/personality/mosaic.jpg',
-    alt: 'Eight paintings in a grid: a boy reading to his grandfather (Anker), a village wedding dance (Bruegel), Rebecca at the well (Murillo), a family at an iron forge (Wright of Derby), a monastery across a still river (Levitan), a sailor on watch under a ship’s bell (Homer), a lone oak in a wide valley (Friedrich) and Paul preaching in Athens (Raphael)',
+    alt: 'Eight paintings in a grid: the painter, his wife and a friend talking over lunch (Krøyer), a village wedding dance (Bruegel), Rebecca at the well (Murillo), a family at an iron forge (Wright of Derby), a monastery across a still river (Levitan), a sailor on watch under a ship’s bell (Homer), a lone oak in a wide valley (Friedrich) and Paul preaching in Athens (Raphael)',
     objectPosition: '50% 0%',
     colour: true
   },

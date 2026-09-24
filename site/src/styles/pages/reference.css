@@ -1029,15 +1029,21 @@
 
 /* ------------------------------------------------ the room at a quiz's intro ---- */
 /*
- * The start panel at the foot of a quiz's own intro (q/[quiz].astro; quiz.css adds .qway).
- * Not the quiz's plate, which is the band at the top of that page, and not a dawn sky,
+ * The start box at the foot of a quiz's own intro (components/QuizFoot.astro; quiz.css adds
+ * .qway). Not the quiz's plate, which is the band at the top of that page, and not a dawn sky,
  * which the footer under it is a photograph of: the night ground the instruments are drawn
  * on, with first light coming up one corner of it.
+ *
+ * Sized by its padding, not by a height (the owner, 2026-09-24: too much empty space). It used
+ * to stand 21rem tall with its words pushed to the foot, which with one sentence fewer was a
+ * dark room with a third of it empty.
+ *
+ * Its top margin is set here and nowhere else: 3rem, the same air a section head (.sect in
+ * kit.css) leaves above every other block on a quiz page.
  */
 .wayin {
   position: relative; isolation: isolate; overflow: hidden;
-  display: flex; flex-direction: column; justify-content: flex-end;
-  min-height: 21rem; margin: 2.6rem 0 0; padding: 1.5rem 1.35rem 1.6rem;
+  margin: 3rem 0 0; padding: 1.7rem 1.35rem 1.75rem;
   border-radius: 24px; color: #fff; background: #15161c;
 }
 .wayin--night {
@@ -1051,13 +1057,17 @@
 }
 /* A room with no picture in it needs something on the side the picture would have taken, or
    it is a wide dark rectangle with words in one corner. The ghost word is the kit's own
-   answer to that, and here it says what the room is for ("begin"). */
+   answer to that, and here it says what the room is for ("begin"). Sized to the room's own
+   height now that the room is only as tall as its words. */
 .wayin-ghost {
-  position: absolute; z-index: 0; right: -.04em; bottom: -.18em; pointer-events: none;
+  position: absolute; z-index: 0; right: -.04em; bottom: -.2em; pointer-events: none;
   user-select: none; font-family: var(--display); font-style: italic; font-weight: 400;
-  font-size: clamp(5.5rem, 26vw, 11rem); line-height: .8; letter-spacing: -.04em;
+  font-size: clamp(4.6rem, 22vw, 8.6rem); line-height: .8; letter-spacing: -.04em;
   white-space: nowrap; color: rgba(255, 255, 255, .055);
 }
+/* Below 30rem the start button takes the room's whole width and covers the word, leaving a
+   smudge ("pean") under it. It is drawn only where it stands beside the button. */
+@media (max-width: 29.99rem) { .wayin-ghost { display: none; } }
 .wayin-in { position: relative; z-index: 1; }
 .wayin-kicker {
   margin: 0 0 .3rem; font-family: var(--ui); font-size: .6rem; font-weight: 700;
@@ -1068,16 +1078,11 @@
   font-size: clamp(1.75rem, 7.6vw, 2.4rem); line-height: 1.05; letter-spacing: -.015em;
   text-wrap: balance;
 }
-.wayin-say {
-  margin: .6rem 0 0; max-width: 30rem; font-size: .95rem; line-height: 1.5;
-  color: rgba(255, 255, 255, .85); text-wrap: balance;
-}
-.wayin .btn-row { margin: 1.25rem 0 0; }
+.wayin .btn-row { margin: 1.25rem 0 0; align-items: center; }
 .wayin .btn { flex: 1 1 auto; box-shadow: 0 6px 20px rgba(12, 22, 44, .3); }
 @media (min-width: 30rem) { .wayin .btn { flex: 0 0 auto; } }
 @media (min-width: 52rem) {
-  .wayin { min-height: 22rem; padding: 2.2rem 2.2rem 2.3rem; }
-  .wayin-in { max-width: 34rem; }
+  .wayin { padding: 2.3rem 2.4rem 2.4rem; }
   .wayin h2 { font-size: clamp(2rem, 3.4vw, 2.7rem); }
 }
 

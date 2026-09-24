@@ -47,10 +47,10 @@ interface Props {
 const { quiz, kind, index = 0, psalm = [] } = Astro.props;
 
 /*
- * The Christian Personality Test has nothing for this note to mark: no page about one of its
- * types exists yet, and its code is its answers rather than a score per group, so there is no
- * rail, axis or row a reader's answer could stand on. Handed one, the note draws nothing. When
- * type pages are built they get a line of their own, like the early Christians' EarlyMine.
+ * The Christian Personality Test has nothing for this note to mark: its code is its answers
+ * rather than a score per group, so there is no rail, axis or row a reader's answer could stand
+ * on. Handed one, the note draws nothing. Its type pages mark the reader's own type with
+ * PersonalityMine.astro instead, as the early Christians' pages use EarlyMine.
  */
 const skip = quiz.strategy.shape === 'personality';
 const scored = !skip && quiz.strategy.shape !== 'reading';

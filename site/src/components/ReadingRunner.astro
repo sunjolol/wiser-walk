@@ -18,10 +18,13 @@
  * answers match all come from strategies/reading.ts, which the result page and the tests use
  * too; this file only draws screens and remembers the order they were answered in.
  *
- * The intro (how it works, the way in again, what to read next) is the default slot, and is
+ * The intro is the default slot (the page's index of every situation), then the foot every
+ * quiz page ends on (QuizFoot.astro): how it works, the start box, Read next. All of it is
  * hidden the moment play begins, so the question is the whole page.
  */
 import type { Quiz } from '../lib/engine/types';
+import QuizFoot from './QuizFoot.astro';
+import { READING } from '../lib/strategies/reading';
 import '../styles/pages/reading.css';
 
 interface Props { quiz: Quiz; }
@@ -34,7 +37,39 @@ const { quiz } = Astro.props;
     </div>
   </noscript>
 
-  <div id="reading-intro"><slot /></div>
+  <div id="reading-intro">
+    <slot />
+
+    {/* This quiz's how-to-answer box is "How it works": it asks no statements, so the scale,
+        the middle and the keys of the others would all be untrue here. Its marks are its own
+        (reading.css): a card tapped among cards, a yes, and lines of a psalm with one lit. */}
+    <QuizFoot quiz={quiz} count={READING.core.length} noun="questions" howTitle="How it works">
+      <ul class="steps" slot="howto">
+        <li class="step">
+          <span class="step-mark rd-mark--tap" aria-hidden="true"><i></i><i></i><i></i></span>
+          <div class="step-say">
+            <b>Answer quickly and honestly</b>
+            <p>{READING.core.length} short questions about your life right now, and a few more only if an answer needs them.</p>
+          </div>
+        </li>
+        <li class="step">
+          <span class="step-mark rd-mark--yes" aria-hidden="true"></span>
+          <div class="step-say">
+            <b>Say if it's you</b>
+            <p>You'll see your situation in plain words. It's yours only if you say so, and "Not quite" shows the next.</p>
+          </div>
+        </li>
+        <li class="step">
+          <span class="step-mark rd-mark--lines" aria-hidden="true"><i></i><i></i><i></i></span>
+          <div class="step-say">
+            <b>Read your psalm, in full</b>
+            <p>The psalm St Athanasius gave for exactly that, in the 300s, and why he gave it.</p>
+          </div>
+        </li>
+      </ul>
+      <button class="btn" type="button" data-start slot="start">Start the quiz</button>
+    </QuizFoot>
+  </div>
 
   <div id="reading-play" hidden>
     <div class="rd-card" id="reading-screen"></div>

@@ -9,8 +9,10 @@
  * A dark room on purpose. The block above it is a light panel listing eighteen names, and a
  * second light panel under it would read as more of the same list. Built from the files that
  * exist, so a pair that was never written cannot be offered.
+ *
+ * No kicker over the heading: the owner took the small line over every section off every quiz
+ * page (2026-09-24), and this block lives only on the Compass's.
  */
-import Icon from './Icon.astro';
 import { COMPARISONS, compareHref } from '../lib/comparisons';
 
 interface Props {
@@ -45,7 +47,6 @@ const rest = COMPARISONS.length - shown.length;
 {COMPARISONS.length > 0 && (
   <section class="cmpr dark" aria-labelledby="cmpr-h">
     <div class="dark-ghost" aria-hidden="true">versus</div>
-    <p class="feature-kicker"><Icon name="compass" size={13} /> Compare</p>
     <h2 id="cmpr-h">What is the difference between two of them?</h2>
     <p class="cmpr-say">
       {COMPARISONS.length === 1 ? 'One pair is' : `${COMPARISONS.length} pairs are`} written
@@ -70,12 +71,13 @@ const rest = COMPARISONS.length - shown.length;
 )}
 
 <style>
+  /* 3rem above, the air every section on a quiz page takes (.sect in kit.css) */
   .cmpr {
     position: relative; overflow: clip;
-    margin: 2.2rem 0 .5rem; padding: 1.7rem 1.35rem 1.5rem; border-radius: 24px;
+    margin: 3rem 0 0; padding: 1.7rem 1.35rem 1.5rem; border-radius: 24px;
   }
   .cmpr h2 {
-    margin: .55rem 0 0; font-family: var(--display); font-weight: 400;
+    margin: 0; font-family: var(--display); font-weight: 400;
     font-size: clamp(1.6rem, 6vw, 2.2rem); line-height: 1.1; text-wrap: balance;
   }
   .cmpr-say { margin: .7rem 0 0; max-width: 34rem; text-wrap: pretty; }

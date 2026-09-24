@@ -25,6 +25,9 @@ export interface Props {
 }
 const { quiz } = Astro.props;
 const bipolar = quiz.strategy.shape === 'bipolar';
+/* A name of three words or more keeps its last two together, so a narrow cell breaks "the word /
+   of knowledge" and never leaves one word alone on the last line ("the word of / knowledge"). */
+const tie = (name: string) => name.replace(/ (\S+)$/, (_, last) => (name.trim().split(/\s+/).length >= 3 ? '\u00A0' : ' ') + last);
 ---
 <div class="axpv-panel dark">
   <div class="dark-ghost" aria-hidden="true">{bipolar ? 'axes' : 'each one'}</div>
@@ -50,7 +53,7 @@ const bipolar = quiz.strategy.shape === 'bipolar';
           {/* The name is a block of its own inside the cell: ::first-letter, which is what
               capitalises these lowercase names, does not apply to a flex container. */}
           <a class="rankgrid-cell" href={groupHref(quiz, g)}>
-            <span class="rankgrid-name">{g.name}</span>
+            <span class="rankgrid-name">{tie(g.name)}</span>
           </a>
         </li>
       ))}

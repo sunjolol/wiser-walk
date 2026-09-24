@@ -1,0 +1,290 @@
+---
+/**
+ * One of the Christian Personality Test's eight types: /personality-type/<key>/.
+ *
+ * The owner, 2026-09-24: "we should definitely have a page for each type, I thought that was
+ * always the plan, same as the other quizzes". Built like the early Christians' person pages and
+ * the psalm pages: indexable, in the sitemap, reached from the test's page, from every result
+ * (the type popups' "Explore" button) and from each other. It is the type's page before it is
+ * the test's: someone who searched for the type, or met it on a friend's result, reads what it
+ * is first, and is offered the test last.
+ *
+ * Rules this page keeps:
+ *
+ * 1. **Every word is the test's.** The portrait, what it brings and costs, the trap, the gift,
+ *    the mind, the saints and the opposites come from src/data/personality.json (results.mjs),
+ *    composed as the report's page 2 composes them (_types.ts). Only the section titles and
+ *    the buttons are this page's.
+ * 2. **Nothing personal.** A type page is the same for everyone: no leanings, anger, speech,
+ *    help card, private page, virtue or line, which belong to a person's answers, and no count
+ *    of how many people have the type.
+ * 3. **The reader's own type, only when this device holds a result** (PersonalityMine): "This
+ *    is your type" here, or which one is theirs, and a "You" tag in the grid. Hidden otherwise.
+ * 4. **Every painting is cropped on its focal point** (lib/personality-art.ts), here as on the
+ *    result page.
+ */
+import Base from '../../layouts/Base.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import Icon from '../../components/Icon.astro';
+import CorrectionNote from '../../components/CorrectionNote.astro';
+import Q from '../../components/PersonalityQuote.astro';
+import PersonalityMine from '../../components/PersonalityMine.astro';
+import { personality as quiz } from '../../lib/quizzes/personality';
+import { quizHref } from '../../lib/engine/registry';
+import { artFor, COLOUR_PRINT } from '../../lib/art';
+import { clip } from '../../lib/seo';
+import { ITEMS } from '../../lib/strategies/personality';
+import {
+  ORDER, bringsOf, cap, costsOf, creditsFor, dispositionOf, focusOf, makeupOf, oppositeOf,
+  paintingOf, picturer, trapLeadOf, typeHref, typeOf
+} from './_types';
+import '../../styles/pages/personality.css';
+import '../../styles/pages/personality-type.css';
+
+export function getStaticPaths() {
+  return ORDER.map(key => ({ params: { slug: key }, props: { key } }));
+}
+
+const { key } = Astro.props as { key: string };
+const t = typeOf(key);
+const D = dispositionOf(t);
+const M = makeupOf(t);
+
+/* Every picture this page shows goes through `pic`, so the credits at the foot name exactly those. */
+const shown = new Set<string>();
+const pic = picturer(shown);
+const art = pic(`art/${t.art}.jpg`);
+
+const kindred = t.kindred.map(k => ({ ...k, face: pic(`faces/${k.img}.jpg`) }));
+
+const opp = oppositeOf(key);
+const oppArt = pic(`art/${opp.o.art}.jpg`);
+/* The two real people who were opposites, this type's first, each with the type they stand for. */
+const pair = [
+  opp.mine && { ...opp.mine, face: pic(`faces/${opp.mine.img}.jpg`), type: t.name },
+  opp.them && { ...opp.them, face: pic(`faces/${opp.them.img}.jpg`), type: opp.o.name }
+].filter(Boolean) as Array<{ who: string; face: ReturnType<typeof pic>; type: string }>;
+
+/* All eight, this one marked; and the pages either side of this one, going round. */
+const all = ORDER.map(k => ({ key: k, t: typeOf(k), art: pic(`art/${typeOf(k).art}.jpg`) }));
+const at = ORDER.indexOf(key);
+const prevKey = ORDER[(at + ORDER.length - 1) % ORDER.length]!;
+const nextKey = ORDER[(at + 1) % ORDER.length]!;
+const prev = { key: prevKey, t: typeOf(prevKey) };
+const next = { key: nextKey, t: typeOf(nextKey) };
+
+/* The card at the foot is the test's own, in its own picture: the eight paintings together. */
+const testArt = artFor(quiz.slug);
+if (testArt) shown.add('mosaic.jpg');
+const credits = creditsFor(shown);
+
+/*
+ * THE TITLE is the type's name and what it is, for someone who searched the type or "Christian
+ * personality types": "The Hearth: a Christian personality type" (45 characters at most). The
+ * description says where the types come from, then the type's own tagline.
+ */
+const title = `${t.name}: a Christian personality type`;
+const description = clip(
+  `${t.name} is one of eight Christian personality types drawn from St Gregory the Great. ` +
+  `${t.tagline} What it brings, what it costs, and where its trap is set.`
+);
+
+const url = new URL(typeHref(key), Astro.site).href;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: title,
+  description,
+  url,
+  isPartOf: [
+    { '@id': new URL('/#website', Astro.site).href },
+    { '@type': 'CollectionPage', name: 'The eight types', url: new URL('/personality-type/', Astro.site).href },
+    { '@type': 'Quiz', name: quiz.title, url: new URL(quizHref(quiz), Astro.site).href }
+  ],
+  about: { '@type': 'Thing', name: t.name, description: t.tagline },
+  ...(art ? { image: new URL(art.src, Astro.site).href } : {})
+};
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: quiz.title, url: quizHref(quiz) },
+  { name: 'The eight types', url: '/personality-type/' },
+  { name: t.name, url: typeHref(key) }
+];
+---
+<Base title={title} description={description} jsonLd={jsonLd} breadcrumbs={breadcrumbs}>
+  {/*
+    The band: the type's painting, kept whole on the right (above the words on a phone), as the
+    kit's painting band does (kit.css .band--painting). The name, its tagline and its two words,
+    in the type's own colour as the result's hero prints them.
+  */}
+  <header class="band band--pic band--painting band--has-img band--bare band--long pt-band" style={`--pq-t:${t.ink}`}>
+    {art && (
+      <img class="band-img" src={art.src} width={art.width} height={art.height} alt=""
+           style={`object-position:${focusOf(key)}`} loading="eager" fetchpriority="high" decoding="async" />
+    )}
+    <div class="band-in">
+      <h1>{t.name}</h1>
+      <p class="lede pt-tagline">{t.tagline}</p>
+      <ul class="pt-words" aria-label="Its two words">
+        <li>{D.word}</li>
+        <li>{M.word} mind</li>
+      </ul>
+      {paintingOf(t) && <p class="band-credit">Picture: {paintingOf(t)}</p>}
+    </div>
+  </header>
+
+  <div class="ref pt" style={`--pq-t:${t.ink}`}>
+    {/* Hidden unless this device holds a result for the test. */}
+    <PersonalityMine quiz={quiz} here={key} />
+
+    <p class="pt-portrait">{t.portrait}</p>
+
+    <div class="pq-two pt-two">
+      <div class="pq-bring"><h2>What you bring</h2><ul>{bringsOf(t).map(x => <li>{x}</li>)}</ul></div>
+      <div class="pq-cost"><h2>What it costs you</h2><ul>{costsOf(t).map(x => <li>{x}</li>)}</ul></div>
+    </div>
+
+    <section aria-labelledby="pt-trap-h">
+      <SectionHead id="pt-trap-h" title="Where the trap is set" />
+      <div class="pq-trap pq-starry pt-trap">
+        <p class="pq-trap-word">{cap(D.trap.name)}</p>
+        <p>{trapLeadOf(t)}</p>
+        <Q q={D.trap.quote} />
+        <p class="pq-trap-plain">{D.trap.plain}</p>
+      </div>
+    </section>
+
+    <section aria-labelledby="pt-gift-h">
+      <SectionHead id="pt-gift-h" title="The gift in it" />
+      <div class="pt-panel">
+        <p class="pt-grace">{D.grace.text}</p>
+        <Q q={D.grace.quote} />
+      </div>
+    </section>
+
+    <section aria-labelledby="pt-mind-h">
+      <SectionHead id="pt-mind-h" title={`A ${M.word.toLowerCase()} mind`} />
+      <div class="pt-panel">
+        <p>{M.text}</p>
+        <Q q={M.quote} />
+      </div>
+    </section>
+
+    <section aria-labelledby="pt-kin-h">
+      <SectionHead id="pt-kin-h" title="Who else was like this" />
+      {kindred.length ? (
+        <div class={`pt-kins pt-kins--${kindred.length}`}>
+          {kindred.map(k => (
+            <div class="pq-kin">
+              {k.face
+                ? <img class="pq-face" src={k.face.src} width={k.face.width} height={k.face.height} alt={k.who} loading="lazy" decoding="async" />
+                : <span class="pq-face" aria-hidden="true"></span>}
+              <b>{k.who}{k.partial && <em>Partly like this type</em>}</b>
+              <p>{k.text}</p>
+              <span class="pq-src">{k.src}</span>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div class="pt-panel">
+          <p>{t.kindredNote}</p>
+          <Q q={t.gregoryLine} />
+        </div>
+      )}
+      {t.kindredNote && kindred.length > 0 && <p class="pt-note">{t.kindredNote}</p>}
+    </section>
+
+    <section aria-labelledby="pt-opp-h">
+      <SectionHead id="pt-opp-h" title="Its opposite" />
+      <div class="pq-opp pt-opp" style={`--pq-o:${opp.o.ink}`}>
+        {oppArt && (
+          <img class="pq-opp-img" src={oppArt.src} width={oppArt.width} height={oppArt.height} alt=""
+               style={`object-position:${focusOf(opp.key)}`} loading="lazy" decoding="async" />
+        )}
+        <div class="pq-opp-in">
+          <h3><a href={typeHref(opp.key)}>{opp.o.name}</a></h3>
+          <p class="pq-opp-tag">{opp.o.tagline}</p>
+          {pair.length === 2 && (
+            <ul class="pt-pair">
+              {pair.map(p => (
+                <li>
+                  {p.face
+                    ? <img class="pq-face" src={p.face.src} width={p.face.width} height={p.face.height} alt={p.who} loading="lazy" decoding="async" />
+                    : <span class="pq-face" aria-hidden="true"></span>}
+                  <span><b>{p.who}</b><span>{p.type}</span></span>
+                </li>
+              ))}
+            </ul>
+          )}
+          {opp.pair && <p>{opp.pair.story}</p>}
+          {opp.pair?.src && <p class="pq-opp-src">{opp.pair.src}</p>}
+          <Q q={opp.quote} />
+          <a class="btn pt-opp-go" href={typeHref(opp.key)}>See {opp.o.name.replace(/^The /, 'the ')} <Icon name="arrow" size={16} /></a>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="pt-all-h">
+      <SectionHead id="pt-all-h" title="All eight types" />
+      <ul class="pt-grid">
+        {all.map(x => (
+          <li>
+            <a class:list={['pt-card', x.key === key && 'is-here']} href={typeHref(x.key)} style={`--pt-ink:${x.t.ink}`}
+               aria-current={x.key === key ? 'page' : undefined}>
+              {x.art && (
+                <img src={x.art.src} width={x.art.width} height={x.art.height} alt=""
+                     style={`object-position:${focusOf(x.key)}`} loading="lazy" decoding="async" />
+              )}
+              <span class="pt-card-tags">
+                <span class="pt-tag pt-tag--you" data-pt-you={x.key} hidden>You</span>
+                {x.key === key && <span class="pt-tag">This type</span>}
+              </span>
+              <b>{x.t.name}</b>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <nav class="pt-pager" aria-label="The eight types, in order">
+      <a class="pt-page pt-page--prev" href={typeHref(prev.key)}>
+        <span class="pt-page-dir">Previous</span>
+        <b>{prev.t.name}</b>
+      </a>
+      <a class="pt-page pt-page--next" href={typeHref(next.key)}>
+        <span class="pt-page-dir">Next</span>
+        <b>{next.t.name}</b>
+      </a>
+    </nav>
+    <p class="pt-way">
+      <Icon name="arrow" size={14} />
+      <span><a href="/personality-type/">All eight types</a>, and how St Gregory sorted them.</span>
+    </p>
+
+    {/* The way into the test: its own card (.qcard in pages/reference.css), in its own picture,
+        which is the eight paintings together, printed in colour as every card prints it. */}
+    <div class="qcard-wrap">
+      <a class={`qcard ${testArt ? 'qcard--pic' : 'qcard--plain'} qcard--personality`} href={quizHref(quiz)}
+         style={testArt ? `--img-pos:${testArt.objectPosition}` : undefined}>
+        {testArt && <img class="qcard-img" src={testArt.src} alt="" style={COLOUR_PRINT} loading="lazy" decoding="async" width="640" height="1024" />}
+        <div class="qcard-body">
+          <h2 class="qcard-title">{quiz.title}</h2>
+          <p class="qcard-say">{quiz.tagline} Find out which of the eight types is yours.</p>
+          <ul class="qcard-facts">
+            <li><Icon name="clock" size={13} /> {quiz.minutes} min</li>
+            <li>{ITEMS.length} questions</li>
+            <li>{ORDER.length} types</li>
+          </ul>
+          <span class="qcard-go go-pill">Start <Icon name="arrow" size={16} /></span>
+        </div>
+      </a>
+    </div>
+
+    <details class="pt-credits">
+      <summary>Picture credits</summary>
+      <ul>{credits.map(c => <li><a href={c.page} rel="noopener">{c.line}</a></li>)}</ul>
+    </details>
+
+    <CorrectionNote subject={t.name} />
+  </div>
+</Base>

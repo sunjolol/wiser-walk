@@ -41,7 +41,7 @@ const groupCount =
     {identified
       ? <p>One line on each, and where they stand on the {groupCount} axes.</p>
       : <p>Where each one stands on the {groupCount} questions, described the way its own people would.</p>}
-    <p class="oidx-hint"><Icon name="arrow" size={14} /> <span>Tap any of them to read more.</span></p>{/*
+    <p class="oidx-hint"><Icon name="arrow" size={14} /> <span>Open any of them to read more.</span></p>{/*
       The Compass's traditions also exist as one table with a file behind it. Only that quiz has
       one, so the line is keyed to its slug rather than to a field every other quiz would carry empty.
     */}{quiz.slug === 'theology-compass' && (
@@ -61,9 +61,10 @@ const groupCount =
 </section>
 
 <style>
+  /* 3rem above, the air every section on a quiz page takes (.sect in kit.css) */
   .oidx {
     position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr; gap: 1.2rem;
-    margin: 2.2rem 0 .5rem; padding: 1.7rem 1.4rem 1.3rem; border-radius: 24px;
+    margin: 3rem 0 0; padding: 1.7rem 1.4rem 1.3rem; border-radius: 24px;
     background: var(--panel); box-shadow: var(--lift);
   }
   .oidx::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 6px; background-image: linear-gradient(180deg, var(--blue), var(--orange)); }

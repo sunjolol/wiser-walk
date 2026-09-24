@@ -201,14 +201,17 @@ const navItems = ACCOUNTS_VISIBLE ? NAV.filter(n => n.href !== '/me/') : NAV;
       ? <meta name="robots" content="noindex, follow" />
       : <meta name="robots" content="max-image-preview:large" />}
     {/*
-      The site icon (design/icon/render.mjs draws it). Google only shows a favicon whose side is
-      a multiple of 48 px, which is why 48, 96 and 192 are all offered and the .ico leads with 48.
+      The site icon: the owner's brush W (design/icon/render-w.mjs draws it). Google only shows a
+      favicon whose side is a multiple of 48 px, so the .ico leads with 48 and 96 is offered too.
+      Tabs, bookmarks and search show the W on its own; a phone's home screen shows it on the night
+      tile (his picks, 2026-09-24), so the two home-screen files are offered only as
+      apple-touch-icon, where Android's Chrome, which takes the largest, finds the 192 as well.
       No web manifest: this is a website, not an app (see CLAUDE.md).
     */}
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" type="image/png" sizes="96x96" href="/icon-96.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png" />
     {/*
       Feed autodiscovery, on every page rather than on the articles alone: a reader who
       wants to follow the writing is as likely to be standing on a quiz as on the hub, and

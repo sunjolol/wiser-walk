@@ -73,7 +73,10 @@
   }
 }
 .pqr-band .band-in { margin-top: -.6rem; padding: 0 var(--gut); }
-.pqr-band h1 { max-width: 11em; }
+/* "Christian / Personality Test", never "Test" alone: balanced, and from a tablet up sized to the
+   half-width column (at 3.5rem "Personality Test" did not fit it between about 736 and 880px).
+   .band--pic is in the selector to outrank kit.css's .band.band--long h1. */
+.pqr-band.band--pic h1 { text-wrap: balance; }
 .pqr-band .btn-row { align-items: center; }
 /* "Start over": quiet, beside the button that picks up, and asking nothing. */
 .pqr-band .pqr-over { color: rgba(255, 255, 255, .86); }
@@ -91,6 +94,7 @@
     mask-image: linear-gradient(90deg, transparent, #000 16%);
   }
   .pqr-band .band-in { order: 1; align-self: center; margin: 0; padding: 3rem 1.5rem 3rem var(--gut); max-width: 34rem; }
+  .pqr-band.band--pic h1 { font-size: clamp(2rem, 6vw, 3.5rem); }
 }
 @media (min-width: 68rem) { .pqr-band .band-in { padding-left: 3rem; } }
 
@@ -109,22 +113,6 @@
 .pqr-lead {
   margin: 0; font-size: 1.02rem; line-height: 1.6; color: var(--ink-soft); text-wrap: pretty;
 }
-.pqr-close {
-  margin: 1rem 0 0; font-family: var(--display); font-style: italic; font-size: 1.15rem; line-height: 1.35;
-  color: var(--ink); text-wrap: balance;
-}
-.pqr-kicker {
-  margin: 0 0 .35rem; font: 700 .62rem/1.3 var(--ui); letter-spacing: .14em; text-transform: uppercase;
-  color: var(--ink-mute);
-}
-.pqr-root blockquote.pqr-quote {
-  margin: 0; padding: .85rem 1rem .8rem 1.1rem; border-radius: 14px;
-  background: var(--panel); border-left: 3px solid var(--orange); box-shadow: var(--lift);
-}
-.pqr-quote p { margin: 0; font: italic 400 1.08rem/1.42 var(--display); color: var(--ink); text-wrap: pretty; }
-.pqr-quote cite {
-  display: block; margin-top: .4rem; font: 500 .74rem/1.3 var(--ui); font-style: normal; color: var(--ink-mute);
-}
 
 /* ---------------------------------------------------------------- the eight types */
 .pqr-grid {
@@ -133,8 +121,8 @@
 }
 .pqr-ty {
   position: relative; display: block; width: 100%; aspect-ratio: 5 / 4; min-height: 7.5rem;
-  margin: 0; padding: 0; border: 0; border-radius: 16px; overflow: hidden; cursor: pointer;
-  text-align: left; color: #fff; background: #222; box-shadow: var(--lift);
+  margin: 0; padding: 0; border-radius: 16px; overflow: hidden;
+  text-align: left; text-decoration: none; color: #fff; background: #222; box-shadow: var(--lift);
   transition: transform .18s ease, box-shadow .18s ease;
 }
 .pqr-ty img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
@@ -151,82 +139,13 @@
 .pqr-ty-in span { font: 500 .68rem/1.3 var(--ui); color: rgba(255, 255, 255, .88); }
 .pqr-ty:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(20, 20, 30, .2); }
 .pqr-ty:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
-.pqr-hint { margin: .7rem 0 0; font-size: .85rem; color: var(--ink-mute); }
+/* Only on a touch screen, where a picture card does not look like a link; a mouse shows it
+   by the lift on hover. The site's touch test, as ShareBlock.astro's. */
+.pqr-hint { display: none; margin: .7rem 0 0; font-size: .85rem; color: var(--ink-mute); }
+@media (hover: none) and (pointer: coarse) { .pqr-hint { display: block; } }
 @media (min-width: 46rem) {
   .pqr-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .8rem; }
   .pqr-ty-in b { font-size: 1.24rem; }
-}
-
-/* A type's sheet: a native dialog, so Escape, focus and the page behind it are the browser's job. */
-.pqr-sheet {
-  width: min(30rem, calc(100% - 2rem)); max-height: calc(100svh - 2rem); margin: auto auto 1rem;
-  padding: 0; border: 0; border-radius: 22px; overflow: auto;
-  background: var(--panel); color: var(--ink); box-shadow: 0 20px 50px rgba(0, 0, 0, .35);
-}
-.pqr-sheet::backdrop { background: rgba(10, 10, 14, .58); }
-@media (min-width: 48rem) { .pqr-sheet { margin: auto; } }
-.pqr-sheet-img { display: block; width: 100%; height: 12rem; object-fit: cover; border-bottom: 4px solid var(--t); }
-.pqr-sheet-in { display: flex; flex-direction: column; gap: .6rem; padding: 1.1rem 1.2rem 1.3rem; }
-.pqr-sheet-in .pqr-kicker { margin: 0; font-size: .62rem; color: color-mix(in srgb, var(--t) 60%, var(--ink)); }
-.pqr-sheet-in h3 { margin: 0; font: 400 1.8rem/1.05 var(--display); color: var(--ink); }
-.pqr-sheet-in p { margin: 0; font-size: .96rem; line-height: 1.55; color: var(--ink); text-wrap: pretty; }
-.pqr-sheet-in .pqr-sheet-tag { font: italic 400 1.08rem/1.35 var(--display); color: var(--ink-soft); }
-.pqr-sheet-in b { font-weight: 600; }
-.pqr-kin { display: flex; flex-direction: column; gap: .5rem; font-size: .96rem; }
-.pqr-kin ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem .9rem; }
-.pqr-kin li { display: flex; align-items: center; gap: .5rem; font: 600 .84rem/1.25 var(--ui); }
-.pqr-kin img {
-  width: 2.6rem; height: 2.6rem; border-radius: 50%; object-fit: cover; flex: none;
-  box-shadow: 0 0 0 2px var(--panel), 0 0 0 3.5px var(--t);
-}
-.pqr-sheet form { margin: .4rem 0 0; }
-
-/* ---------------------------------------------------------------- a trap for every temper */
-/* The site's starry night, as the report's own trap box is drawn. */
-.pqr-night {
-  position: relative; isolation: isolate; overflow: hidden; border-radius: var(--r-lg);
-  background-color: var(--dark-fill);
-  background-image: radial-gradient(110% 80% at 88% 0%, rgba(240, 160, 111, .16), transparent 60%), var(--dark-fill-img);
-  background-size: auto, 520px; color: var(--on-dark); box-shadow: var(--lift);
-}
-.pqr-trapgrid { margin-top: 1.1rem; display: grid; grid-template-columns: minmax(0, 1fr); }
-.pqr-trap { padding: 1.2rem 1.2rem 1.3rem; display: flex; flex-direction: column; gap: .35rem; }
-.pqr-trap + .pqr-trap { border-top: 1px solid rgba(255, 255, 255, .09); }
-.pqr-trap .pqr-kicker { margin: 0; color: var(--orange-soft); }
-.pqr-trap h3 { margin: 0 0 .35rem; font: 400 2rem/1 var(--display); color: #fff; }
-.pqr-trap blockquote.pqr-quote { background: rgba(255, 255, 255, .06); box-shadow: none; border-left-color: var(--orange-soft); }
-.pqr-trap .pqr-quote p { color: var(--on-dark); font-size: 1.02rem; }
-.pqr-trap .pqr-quote cite { color: var(--on-dark-soft); }
-@media (min-width: 46rem) {
-  .pqr-trapgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .pqr-trap { padding: 1.5rem 1.5rem 1.6rem; }
-  .pqr-trap + .pqr-trap { border-top: 0; }
-  .pqr-trap:nth-child(n + 3) { border-top: 1px solid rgba(255, 255, 255, .09); }
-  .pqr-trap:nth-child(2n) { border-left: 1px solid rgba(255, 255, 255, .09); }
-}
-
-/* ---------------------------------------------------------------- four kinds of anger */
-.pqr-g2 {
-  display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(0, 1fr); gap: .5rem;
-  align-items: stretch; margin: 1.2rem 0 0;
-}
-.pqr-ax { font: 600 .68rem/1.2 var(--ui); color: var(--ink-mute); text-align: center; align-self: end; }
-.pqr-ay {
-  font: 600 .68rem/1.2 var(--ui); color: var(--ink-mute); writing-mode: vertical-rl; transform: rotate(180deg);
-  text-align: center; align-self: center;
-}
-.pqr-cell {
-  display: flex; flex-direction: column; gap: .25rem; min-height: 6.4rem; padding: .85rem .9rem;
-  border-radius: 14px; background: var(--panel); box-shadow: var(--lift);
-}
-.pqr-cell b { font: 400 1.12rem/1.15 var(--display); color: var(--ink); }
-.pqr-cell span { font-size: .84rem; line-height: 1.4; color: var(--ink-soft); text-wrap: pretty; }
-.pqr-images { display: grid; grid-template-columns: minmax(0, 1fr); gap: .7rem; margin-top: 1rem; }
-.pqr-image { margin: 0; }
-.pqr-image .pqr-kicker { margin-left: .2rem; }
-@media (min-width: 46rem) {
-  .pqr-images { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .pqr-cell { padding: 1rem 1.1rem; }
 }
 
 /* ---------------------------------------------------------------- what your report covers */
@@ -248,13 +167,9 @@
   font: 700 .58rem/1 var(--ui); font-style: normal; letter-spacing: .1em; text-transform: uppercase;
   color: var(--accent); background: var(--accent-soft);
 }
-/* The private page, drawn as the report draws it: on the night ground, with a lock. */
-.pqr-p--private {
-  background-color: var(--dark-fill); background-image: var(--dark-fill-img); background-size: 520px; color: var(--on-dark);
-}
-.pqr-p--private .pqr-pn { background: rgba(255, 255, 255, .08); box-shadow: none; color: var(--orange-soft); }
-.pqr-p--private .pqr-p-say b { color: #fff; }
-.pqr-p--private .pqr-p-say > span { color: var(--on-dark-soft); }
+/* The private page is the same card as the other nine (the owner, 2026-09-24: drawn on the night
+   ground it stood out far too much in the light theme). Only the lock where its number would be
+   and its "Only you see it" tag tell it apart. */
 .pqr-tag--lock { color: #2A1A10; background: var(--orange-soft); }
 @media (min-width: 46rem) {
   .pqr-plist { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(5, auto); grid-auto-flow: column; gap: .7rem; }
@@ -266,20 +181,26 @@
   display: grid; grid-template-columns: 4.4rem minmax(0, 1fr); gap: 1rem; align-items: start;
   padding: 1rem 1.05rem 1.1rem; border-radius: var(--r); background: var(--panel); box-shadow: var(--lift);
 }
-.pqr-saint b { display: block; font: 400 1.16rem/1.2 var(--display); color: var(--ink); }
+/* A two-column card at 768 left "Theologian" and "Conferences." alone. The name is balanced;
+   the paragraph is balanced only in the two-column cards, where it runs to six lines at most
+   (Chrome balances no more than six, and a seven-line one on a phone is left to pretty). */
+.pqr-saint b { display: block; font: 400 1.16rem/1.2 var(--display); color: var(--ink); text-wrap: balance; }
 .pqr-saint p { margin: .3rem 0 0; font-size: .9rem; line-height: 1.5; color: var(--ink-soft); text-wrap: pretty; }
 .pqr-face {
   width: 4.4rem; height: 4.4rem; border-radius: 50%; object-fit: cover; background: var(--shell);
   box-shadow: 0 0 0 3px var(--panel), 0 0 0 4.5px color-mix(in srgb, var(--orange) 70%, transparent);
 }
-.pqr-mono {
-  display: grid; place-items: center; font: 400 1.35rem/1 var(--display); color: var(--on-dark);
-  background-color: var(--dark-fill); background-image: var(--dark-fill-img); background-size: 300px;
-}
 @media (min-width: 46rem) {
   .pqr-saintlist { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem; }
   .pqr-saint { grid-template-columns: 5rem minmax(0, 1fr); gap: 1.15rem; padding: 1.2rem 1.25rem 1.3rem; }
+  .pqr-saint p { text-wrap: balance; }
   .pqr-face { width: 5rem; height: 5rem; }
+}
+/* The narrowest two-column cards keep the phone's face and padding, so the longest paragraph
+   stays at six lines and is still balanced. */
+@media (min-width: 46rem) and (max-width: 47.99rem) {
+  .pqr-saint { grid-template-columns: 4.4rem minmax(0, 1fr); gap: 1rem; padding-left: 1.05rem; padding-right: 1.05rem; }
+  .pqr-face { width: 4.4rem; height: 4.4rem; }
 }
 
 .pqr-credits { margin-top: 1.6rem; font-size: .8rem; color: var(--ink-mute); }
@@ -288,6 +209,23 @@
 }
 .pqr-credits ul { margin: .8rem 0 0; padding: 0; list-style: none; display: grid; gap: .45rem; max-width: 46rem; }
 .pqr-credits a { color: var(--ink-soft); }
+
+/* ---------------------------------------------------------------- how to answer */
+/*
+ * The shared step cards (.steps in quiz.css); only two marks are this test's own. Seven points
+ * between two sides, graded as the runner grades its dots, the A side in blue and the B side in
+ * orange as the runner draws them, the middle quiet. And the lock the private block wears.
+ */
+.step-mark.pqr-mark--seven { display: flex; align-items: center; justify-content: center; gap: 2px; padding: 0; }
+.pqr-mark--seven i { display: block; width: 3px; border-radius: 2px; background: var(--ink-mute); }
+.pqr-mark--seven i:nth-child(1), .pqr-mark--seven i:nth-child(7) { height: 16px; }
+.pqr-mark--seven i:nth-child(2), .pqr-mark--seven i:nth-child(6) { height: 11px; }
+.pqr-mark--seven i:nth-child(3), .pqr-mark--seven i:nth-child(5) { height: 7px; }
+.pqr-mark--seven i:nth-child(4) { height: 4px; }
+.pqr-mark--seven i:nth-child(-n + 3) { background: var(--blue); }
+.pqr-mark--seven i:nth-child(n + 5) { background: var(--orange); }
+.pqr-mark--lock { color: var(--orange); }
+.pqr-mark--lock svg { display: block; }
 
 /* ================================================================== the runner */
 /*

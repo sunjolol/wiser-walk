@@ -137,7 +137,7 @@
 .pq-badges, .pq-lean-chips { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .8rem; }
 .pq-badges span {
   font-family: var(--ui); font-size: .66rem; font-weight: 700; line-height: 1; letter-spacing: .1em;
-  text-transform: uppercase; padding: .45rem .7rem; border-radius: 999px; background: var(--pq-t); color: #15161A;
+  text-transform: uppercase; padding: .45rem .7rem; border-radius: 999px; background: var(--pq-t); color: #000;
   text-shadow: none;
 }
 .pq-lean-chips span {
@@ -153,7 +153,8 @@
 .pq-rarity b { font-family: var(--ui); font-size: .8rem; }
 .pq-rarity span { color: rgba(255,255,255,.78); }
 .pq-hero .btn { text-shadow: none; }
-.pq-report .btn.pq-btn-on { background-image: none; background-color: var(--pq-t); color: #15161A; }
+/* Labels on a type's ink are black: #15161A fell under 4.5:1 on the Deep Well, the Forge and the Oak. */
+.pq-report .btn.pq-btn-on { background-image: none; background-color: var(--pq-t); color: #000; }
 .pq-saved {
   margin-top: .9rem !important; font-family: var(--ui); font-size: .78rem; font-weight: 600; color: rgba(255,255,255,.86);
 }
@@ -280,7 +281,7 @@
   box-shadow: 0 0 0 3px var(--panel), 0 0 0 4px var(--pq-t);
 }
 span.pq-face { display: inline-block; }
-.pq-kin b { font: 600 1rem/1.3 var(--ui); }
+.pq-kin b { font: 600 1rem/1.3 var(--ui); text-wrap: balance; }
 .pq-kin em { display: block; margin-top: .2rem; font: 500 .72rem/1 var(--ui); color: var(--ink-mute); font-style: normal; }
 .pq-src { font: 500 .7rem/1.3 var(--ui); color: var(--ink-mute); }
 .pq-kin-note { margin-top: .6rem !important; }
@@ -304,7 +305,7 @@ span.pq-face { display: inline-block; }
 .pq-opp .pq-face { box-shadow: 0 0 0 3px rgba(16,16,21,.9), 0 0 0 4px var(--pq-o); }
 .pq-report .pq-opp h3 { font-size: 1.6rem; color: #fff; }
 .pq-opp p { color: rgba(255,255,255,.92); }
-.pq-opp p.pq-opp-person { font: 600 .9rem/1.3 var(--ui); color: rgba(255,255,255,.85); margin-top: .15rem; }
+.pq-opp p.pq-opp-person { font: 600 .9rem/1.3 var(--ui); color: rgba(255,255,255,.85); margin-top: .15rem; text-wrap: balance; }
 .pq-opp p.pq-opp-tag { font-family: "Philosopher", var(--display); font-style: italic; font-weight: 400; font-size: 1.05rem; line-height: 1.35; color: rgba(255,255,255,.9); }
 .pq-opp p.pq-opp-src { font: 500 .7rem/1.3 var(--ui); color: rgba(255,255,255,.6); }
 .pq-opp .pq-quote { background: rgba(0,0,0,.28); border-left-color: var(--pq-o); }
@@ -329,10 +330,18 @@ span.pq-face { display: inline-block; }
 .pq-ty.is-close { box-shadow: 0 0 0 2px var(--panel), 0 0 0 4px color-mix(in srgb, var(--pq-ty) 70%, transparent); }
 .pq-ty-tag {
   position: absolute; top: .5rem; right: .5rem; z-index: 2; font: 700 .6rem/1 var(--ui); letter-spacing: .1em;
-  text-transform: uppercase; padding: .32rem .55rem; border-radius: 999px; background: var(--pq-ty); color: #111;
+  text-transform: uppercase; padding: .32rem .55rem; border-radius: 999px; background: var(--pq-ty); color: #000;
 }
 .pq-ty-tag--close { background: rgba(255,255,255,.92); color: #222; }
-.pq-ty-hint { margin-top: .6rem !important; }
+/* "Tap a type" is said only where a finger does it: never on a desktop (the site's touch test).
+   The leanings hint says "Tap" or "Click" by the same test. */
+.pq-ty-hint { display: none; margin-top: .6rem !important; }
+.pq-touch { display: none; }
+@media (hover: none) and (pointer: coarse) {
+  .pq-ty-hint { display: block; }
+  .pq-touch { display: inline; }
+  .pq-no-touch { display: none; }
+}
 
 /* ------------------------------------------------------------ page 3: leanings */
 
@@ -568,7 +577,7 @@ span.pq-face { display: inline-block; }
   align-self: flex-start; font: 700 .7rem/1 var(--ui); letter-spacing: .12em; text-transform: uppercase; padding: .55rem .85rem;
   border-radius: 999px; color: var(--pq-peach); box-shadow: inset 0 0 0 1.5px var(--pq-peach);
 }
-.pq-qc-note { margin-top: .5rem !important; font-size: .78rem; color: var(--ink-mute); }
+.pq-qc-note { margin-top: .5rem !important; font-size: .78rem; color: var(--ink-soft); }
 @media (min-width: 36rem) { .pq-report a.pq-qc { grid-template-columns: 32% 1fr; height: 10.5rem; } }
 .pq-page--dark .pq-qc-lead { color: var(--on-dark); }
 .pq-page--dark .pq-qc-note, .pq-page--dark .pq-qc-note-six { color: var(--on-dark-soft); }
@@ -581,7 +590,7 @@ span.pq-face { display: inline-block; }
   margin-top: .9rem; background: var(--panel); border-radius: 18px; padding: 1rem 1.1rem; box-shadow: var(--lift);
   font-size: .92rem; color: var(--ink-soft);
 }
-.pq-how summary { cursor: pointer; min-height: 28px; font: 600 .8rem/1.2 var(--ui); color: var(--ink); }
+.pq-how summary { cursor: pointer; font: 600 .8rem/28px var(--ui); color: var(--ink); }   /* 28px tall, words centred */
 .pq-how p { margin-top: .7rem !important; }
 .pq-credits { margin: .7rem 0 0; padding-left: 1.1rem; font-size: .76rem; line-height: 1.5; color: var(--ink-mute); display: flex; flex-direction: column; gap: .3rem; }
 .pq-credits a { color: inherit; }
@@ -600,7 +609,16 @@ span.pq-face { display: inline-block; }
 .pq-ts-img { display: block; width: 100%; height: 11rem; object-fit: cover; border-bottom: 4px solid var(--pq-ty); }
 .pq-ts-in { padding: 1.1rem 1.2rem 1.3rem; display: flex; flex-direction: column; gap: .55rem; }
 .pq-report .pq-ts-in h3 { font-size: 1.7rem; }
-.pq-ts-in .btn { align-self: flex-start; margin-top: .3rem; }
+/* Its own page, in a new tab so the reader keeps their place here, and Close. On a phone both
+   are full width, Explore first; from 30rem they sit side by side, the same on all eight. */
+.pq-ts-row { display: grid; gap: .6rem; margin-top: .45rem; }
+@media (min-width: 30rem) {
+  .pq-ts-row { grid-template-columns: auto auto; justify-content: start; }
+  .pq-ts-row .btn { white-space: nowrap; }
+}
+.pq-report .btn.pq-ts-go { background-image: none; background-color: var(--pq-ty); color: #000; }
+.pq-newtab { flex: none; }
+.pq-ts-in p.pq-ts-note { margin-top: -.15rem; font-size: .78rem; line-height: 1.4; color: var(--ink-soft); }
 .pq-cs-k { font: 700 .64rem/1 var(--ui); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: .7rem !important; }
 .pq-cs-img { aspect-ratio: 1080 / 1350; border-radius: 14px; overflow: hidden; background: #1C1C23; display: grid; place-items: center; }
 .pq-cs-img img { width: 100%; height: 100%; display: block; }
