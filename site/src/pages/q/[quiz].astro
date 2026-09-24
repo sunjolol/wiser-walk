@@ -406,8 +406,8 @@ const strip = kindred
         /*
           Where another quiz previews its axes or categories: the people a result can name. Ten
           faces, as the approved preview printed them, then everyone on the page that lists all
-          twenty-two. Three of the pictures may only be shown with their credit, so the credits
-          are one tap away.
+          twenty-two. No caption under the strip: the owner found it loose, undesigned text
+          (2026-09-23). All the pictures are public domain; their credits stay one tap away.
         */
         <section class="kr-meet">
           <SectionHead title="Who you might meet" kicker={`${strip.length} of the ${quiz.outcomes.length}`}
@@ -423,10 +423,6 @@ const strip = kindred
               </li>
             ))}
           </ul>
-          <p class="kr-meet-say">
-            {quiz.outcomes.length} early Christians, East and West, from the 2nd century to the 7th.
-            Every line they say is their own.
-          </p>
           <details class="kr-credits">
             <summary>Picture credits</summary>
             <ul>

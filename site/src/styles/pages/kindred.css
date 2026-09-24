@@ -45,7 +45,7 @@
   margin: .5rem 0 0; font-family: var(--ui); font-size: .84rem; font-weight: 500;
   line-height: 1.4; color: var(--ink-mute);
 }
-.kr-who { margin: .8rem 0 0; max-width: 34rem; font-weight: 500; text-wrap: pretty; }
+.kr-who { margin: .8rem 0 0; font-weight: 500; text-wrap: pretty; }
 .kr-hook { margin: 0; max-width: 40rem; font-size: 1.04rem; line-height: 1.6; color: var(--ink); text-wrap: pretty; }
 .kr-who + .kr-hook { margin-top: .6rem; color: var(--ink-soft); }
 .kr-status {
@@ -229,7 +229,6 @@
 .kr-strip a:hover img { transform: translateY(-2px); }
 .kr-strip a:hover span { color: var(--accent); }
 .kr-strip a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 14px; }
-.kr-meet-say { margin: .5rem 0 0; max-width: 34rem; color: var(--ink-soft); text-wrap: pretty; }
 .kr-meet-go { margin: 1rem 0 0; color: var(--accent); }
 .kr-meet .kr-credits { margin-top: 1.1rem; }
 @media (min-width: 46rem) {
