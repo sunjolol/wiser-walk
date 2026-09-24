@@ -1,0 +1,458 @@
+/* ==========================================================================
+   THE CHRISTIAN PERSONALITY TEST: the start page and the runner
+   ==========================================================================
+
+   The questions are the owner's tap-through preview (design/quiz-ideas/personality/preview/
+   style.css), which he took and said "it's ready, push it live": A and B as tinted cards, seven
+   labelled points between them, the private statements on the site's starry ground. So this is
+   that look carried into the site's tokens, not a new one.
+
+   This sheet is imported by PersonalityRunner.astro, which the dynamic quiz route imports, so it
+   reaches EVERY quiz page. Every rule is scoped to a .pqr-* class, or to the runner's own ids
+   inside :has(), so it can touch nothing on another quiz.
+
+   Phone first. Light by default; dark only through the site's own switch.
+   ========================================================================== */
+
+.pqr-root {
+  --pqr-raise: #F6F6F4;
+  --pqr-blue-tint: rgba(126, 186, 238, .22);
+  --pqr-orange-tint: rgba(240, 160, 111, .22);
+  --pqr-blue-ink: #2F6EA6;
+  --pqr-orange-ink: #B35A22;
+  --pqr-night-2: #262B35;
+}
+:root[data-theme="dark"] .pqr-root {
+  --pqr-raise: #2C2C34;
+  --pqr-blue-tint: rgba(126, 186, 238, .14);
+  --pqr-orange-tint: rgba(240, 160, 111, .14);
+  --pqr-blue-ink: #9CCBF2;
+  --pqr-orange-ink: #F5B58D;
+  --pqr-night-2: #1A1D24;
+}
+
+/* ================================================================== the band */
+/*
+ * The eight paintings, as the preview's start screen showed them: four across and two down on
+ * a phone, above the words; on the right of the words from a tablet up. They are cut from the
+ * one mosaic (/img/personality/mosaic.jpg: two across, four down, 318 x 253 cells on a 4px gap,
+ * built by scripts/build-personality-data.mjs), so the band costs one small picture, not eight.
+ * Each cell is cropped to cover its box from its own painting only: container units give the
+ * box's size, and the cell's place in the mosaic (--x, --y) the offset.
+ */
+.pqr-band.band--pic {
+  padding: 0 0 2.4rem;
+  background-color: #1e1b1d;
+  background-image:
+    radial-gradient(85% 120% at 0% 0%, rgba(126, 186, 238, .2), transparent 58%),
+    radial-gradient(62% 90% at 30% 108%, rgba(240, 160, 111, .2), transparent 60%),
+    linear-gradient(rgba(38, 30, 24, .14), rgba(38, 30, 24, .14)),
+    url("/tex/starry.png");
+  background-size: auto, auto, auto, 520px;
+}
+.pqr-art {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 3px; height: 14rem; margin: 0 -2px;
+  -webkit-mask-image: linear-gradient(180deg, #000 78%, transparent);
+  mask-image: linear-gradient(180deg, #000 78%, transparent);
+}
+.pqr-art > i { position: relative; overflow: hidden; container-type: size; background: #2a2723; }
+.pqr-art > i > b {
+  position: absolute; inset: 0; background-image: var(--pqr-mosaic); background-repeat: no-repeat;
+  /* Without container units: the cell stretched to the box (a little out of proportion). */
+  background-size: 201.258% 404.743%;
+  background-position: calc(var(--c) * 100%) calc(var(--r) * 100% / 3);
+}
+@supports (width: 1cqw) {
+  .pqr-art > i > b {
+    --s: max(100cqw / 318, 100cqh / 253);
+    background-size: calc(var(--s) * 640) calc(var(--s) * 1024);
+    background-position:
+      calc((100cqw - var(--s) * 318) / 2 - var(--s) * var(--x))
+      calc((100cqh - var(--s) * 253) / 2 - var(--s) * var(--y));
+  }
+}
+.pqr-band .band-in { margin-top: -.6rem; padding: 0 var(--gut); }
+.pqr-band h1 { max-width: 11em; }
+.pqr-band .btn-row { align-items: center; }
+/* "Start over": quiet, beside the button that picks up, and asking nothing. */
+.pqr-band .pqr-over { color: rgba(255, 255, 255, .86); }
+@media (min-width: 46rem) {
+  .pqr-band.band--pic {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: stretch; padding: 0; min-height: 27rem;
+  }
+  /* Two across and four down beside the words: the paintings are wider than tall, and four
+     across a half-width column would cut each one to a sliver. Each row is one temper. */
+  .pqr-art {
+    order: 2; height: auto; margin: 0; gap: 4px;
+    grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(4, minmax(0, 1fr));
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 16%);
+    mask-image: linear-gradient(90deg, transparent, #000 16%);
+  }
+  .pqr-band .band-in { order: 1; align-self: center; margin: 0; padding: 3rem 1.5rem 3rem var(--gut); max-width: 34rem; }
+}
+@media (min-width: 68rem) { .pqr-band .band-in { padding-left: 3rem; } }
+
+.pqr-over {
+  min-height: 44px; margin: 0; padding: .4rem .5rem; border: 0; background: none; cursor: pointer;
+  font: 600 .74rem/1 var(--ui); letter-spacing: .08em; text-transform: uppercase;
+  color: var(--ink-soft); text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px;
+}
+.pqr-over:hover { color: #fff; }
+.wayin .pqr-over { color: rgba(255, 255, 255, .86); }
+.pqr-over:focus-visible { outline: 2px solid var(--blue-soft); outline-offset: 3px; border-radius: 4px; }
+
+/* ================================================================== the deep dives */
+
+.pqr-sec { margin-top: .5rem; }
+.pqr-lead {
+  margin: 0; font-size: 1.02rem; line-height: 1.6; color: var(--ink-soft); text-wrap: pretty;
+}
+.pqr-close {
+  margin: 1rem 0 0; font-family: var(--display); font-style: italic; font-size: 1.15rem; line-height: 1.35;
+  color: var(--ink); text-wrap: balance;
+}
+.pqr-kicker {
+  margin: 0 0 .35rem; font: 700 .62rem/1.3 var(--ui); letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.pqr-root blockquote.pqr-quote {
+  margin: 0; padding: .85rem 1rem .8rem 1.1rem; border-radius: 14px;
+  background: var(--panel); border-left: 3px solid var(--orange); box-shadow: var(--lift);
+}
+.pqr-quote p { margin: 0; font: italic 400 1.08rem/1.42 var(--display); color: var(--ink); text-wrap: pretty; }
+.pqr-quote cite {
+  display: block; margin-top: .4rem; font: 500 .74rem/1.3 var(--ui); font-style: normal; color: var(--ink-mute);
+}
+
+/* ---------------------------------------------------------------- the eight types */
+.pqr-grid {
+  list-style: none; margin: 1.1rem 0 0; padding: 0;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem;
+}
+.pqr-ty {
+  position: relative; display: block; width: 100%; aspect-ratio: 5 / 4; min-height: 7.5rem;
+  margin: 0; padding: 0; border: 0; border-radius: 16px; overflow: hidden; cursor: pointer;
+  text-align: left; color: #fff; background: #222; box-shadow: var(--lift);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.pqr-ty img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.pqr-ty::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 26%, rgba(0, 0, 0, .5) 56%, rgba(0, 0, 0, .86));
+  box-shadow: inset 0 -4px 0 var(--t);
+}
+.pqr-ty-in {
+  position: absolute; left: .8rem; right: .8rem; bottom: .75rem; z-index: 1;
+  display: flex; flex-direction: column; gap: .15rem; text-shadow: 0 1px 8px rgba(0, 0, 0, .6);
+}
+.pqr-ty-in b { font: 400 1.14rem/1.1 var(--display); }
+.pqr-ty-in span { font: 500 .68rem/1.3 var(--ui); color: rgba(255, 255, 255, .88); }
+.pqr-ty:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(20, 20, 30, .2); }
+.pqr-ty:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.pqr-hint { margin: .7rem 0 0; font-size: .85rem; color: var(--ink-mute); }
+@media (min-width: 46rem) {
+  .pqr-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .8rem; }
+  .pqr-ty-in b { font-size: 1.24rem; }
+}
+
+/* A type's sheet: a native dialog, so Escape, focus and the page behind it are the browser's job. */
+.pqr-sheet {
+  width: min(30rem, calc(100% - 2rem)); max-height: calc(100svh - 2rem); margin: auto auto 1rem;
+  padding: 0; border: 0; border-radius: 22px; overflow: auto;
+  background: var(--panel); color: var(--ink); box-shadow: 0 20px 50px rgba(0, 0, 0, .35);
+}
+.pqr-sheet::backdrop { background: rgba(10, 10, 14, .58); }
+@media (min-width: 48rem) { .pqr-sheet { margin: auto; } }
+.pqr-sheet-img { display: block; width: 100%; height: 12rem; object-fit: cover; border-bottom: 4px solid var(--t); }
+.pqr-sheet-in { display: flex; flex-direction: column; gap: .6rem; padding: 1.1rem 1.2rem 1.3rem; }
+.pqr-sheet-in .pqr-kicker { margin: 0; font-size: .62rem; color: color-mix(in srgb, var(--t) 60%, var(--ink)); }
+.pqr-sheet-in h3 { margin: 0; font: 400 1.8rem/1.05 var(--display); color: var(--ink); }
+.pqr-sheet-in p { margin: 0; font-size: .96rem; line-height: 1.55; color: var(--ink); text-wrap: pretty; }
+.pqr-sheet-in .pqr-sheet-tag { font: italic 400 1.08rem/1.35 var(--display); color: var(--ink-soft); }
+.pqr-sheet-in b { font-weight: 600; }
+.pqr-kin { display: flex; flex-direction: column; gap: .5rem; font-size: .96rem; }
+.pqr-kin ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem .9rem; }
+.pqr-kin li { display: flex; align-items: center; gap: .5rem; font: 600 .84rem/1.25 var(--ui); }
+.pqr-kin img {
+  width: 2.6rem; height: 2.6rem; border-radius: 50%; object-fit: cover; flex: none;
+  box-shadow: 0 0 0 2px var(--panel), 0 0 0 3.5px var(--t);
+}
+.pqr-sheet form { margin: .4rem 0 0; }
+
+/* ---------------------------------------------------------------- a trap for every temper */
+/* The site's starry night, as the report's own trap box is drawn. */
+.pqr-night {
+  position: relative; isolation: isolate; overflow: hidden; border-radius: var(--r-lg);
+  background-color: var(--dark-fill);
+  background-image: radial-gradient(110% 80% at 88% 0%, rgba(240, 160, 111, .16), transparent 60%), var(--dark-fill-img);
+  background-size: auto, 520px; color: var(--on-dark); box-shadow: var(--lift);
+}
+.pqr-trapgrid { margin-top: 1.1rem; display: grid; grid-template-columns: minmax(0, 1fr); }
+.pqr-trap { padding: 1.2rem 1.2rem 1.3rem; display: flex; flex-direction: column; gap: .35rem; }
+.pqr-trap + .pqr-trap { border-top: 1px solid rgba(255, 255, 255, .09); }
+.pqr-trap .pqr-kicker { margin: 0; color: var(--orange-soft); }
+.pqr-trap h3 { margin: 0 0 .35rem; font: 400 2rem/1 var(--display); color: #fff; }
+.pqr-trap blockquote.pqr-quote { background: rgba(255, 255, 255, .06); box-shadow: none; border-left-color: var(--orange-soft); }
+.pqr-trap .pqr-quote p { color: var(--on-dark); font-size: 1.02rem; }
+.pqr-trap .pqr-quote cite { color: var(--on-dark-soft); }
+@media (min-width: 46rem) {
+  .pqr-trapgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pqr-trap { padding: 1.5rem 1.5rem 1.6rem; }
+  .pqr-trap + .pqr-trap { border-top: 0; }
+  .pqr-trap:nth-child(n + 3) { border-top: 1px solid rgba(255, 255, 255, .09); }
+  .pqr-trap:nth-child(2n) { border-left: 1px solid rgba(255, 255, 255, .09); }
+}
+
+/* ---------------------------------------------------------------- four kinds of anger */
+.pqr-g2 {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(0, 1fr); gap: .5rem;
+  align-items: stretch; margin: 1.2rem 0 0;
+}
+.pqr-ax { font: 600 .68rem/1.2 var(--ui); color: var(--ink-mute); text-align: center; align-self: end; }
+.pqr-ay {
+  font: 600 .68rem/1.2 var(--ui); color: var(--ink-mute); writing-mode: vertical-rl; transform: rotate(180deg);
+  text-align: center; align-self: center;
+}
+.pqr-cell {
+  display: flex; flex-direction: column; gap: .25rem; min-height: 6.4rem; padding: .85rem .9rem;
+  border-radius: 14px; background: var(--panel); box-shadow: var(--lift);
+}
+.pqr-cell b { font: 400 1.12rem/1.15 var(--display); color: var(--ink); }
+.pqr-cell span { font-size: .84rem; line-height: 1.4; color: var(--ink-soft); text-wrap: pretty; }
+.pqr-images { display: grid; grid-template-columns: minmax(0, 1fr); gap: .7rem; margin-top: 1rem; }
+.pqr-image { margin: 0; }
+.pqr-image .pqr-kicker { margin-left: .2rem; }
+@media (min-width: 46rem) {
+  .pqr-images { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pqr-cell { padding: 1rem 1.1rem; }
+}
+
+/* ---------------------------------------------------------------- what your report covers */
+.pqr-plist { list-style: none; margin: 1.1rem 0 0; padding: 0; display: grid; gap: .55rem; }
+.pqr-p {
+  display: grid; grid-template-columns: 2.3rem minmax(0, 1fr); gap: .85rem; align-items: start;
+  padding: .9rem 1rem .95rem; border-radius: var(--r); background: var(--panel); box-shadow: var(--lift);
+}
+.pqr-pn {
+  width: 2.3rem; height: 2.3rem; border-radius: 50%; display: grid; place-items: center;
+  background: var(--shell); box-shadow: inset 0 0 0 1px var(--rule);
+  font: 700 .8rem/1 var(--ui); color: var(--ink); font-variant-numeric: tabular-nums;
+}
+.pqr-p-say { display: flex; flex-direction: column; align-items: flex-start; gap: .2rem; min-width: 0; }
+.pqr-p-say b { font: 400 1.1rem/1.2 var(--display); color: var(--ink); text-wrap: balance; }
+.pqr-p-say > span { font-size: .88rem; line-height: 1.45; color: var(--ink-soft); text-wrap: pretty; }
+.pqr-tag {
+  margin-top: .35rem; padding: .3rem .6rem; border-radius: var(--r-pill);
+  font: 700 .58rem/1 var(--ui); font-style: normal; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--accent); background: var(--accent-soft);
+}
+/* The private page, drawn as the report draws it: on the night ground, with a lock. */
+.pqr-p--private {
+  background-color: var(--dark-fill); background-image: var(--dark-fill-img); background-size: 520px; color: var(--on-dark);
+}
+.pqr-p--private .pqr-pn { background: rgba(255, 255, 255, .08); box-shadow: none; color: var(--orange-soft); }
+.pqr-p--private .pqr-p-say b { color: #fff; }
+.pqr-p--private .pqr-p-say > span { color: var(--on-dark-soft); }
+.pqr-tag--lock { color: #2A1A10; background: var(--orange-soft); }
+@media (min-width: 46rem) {
+  .pqr-plist { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(5, auto); grid-auto-flow: column; gap: .7rem; }
+}
+
+/* ---------------------------------------------------------------- the saints behind it */
+.pqr-saintlist { list-style: none; margin: 1.1rem 0 0; padding: 0; display: grid; gap: .6rem; }
+.pqr-saint {
+  display: grid; grid-template-columns: 4.4rem minmax(0, 1fr); gap: 1rem; align-items: start;
+  padding: 1rem 1.05rem 1.1rem; border-radius: var(--r); background: var(--panel); box-shadow: var(--lift);
+}
+.pqr-saint b { display: block; font: 400 1.16rem/1.2 var(--display); color: var(--ink); }
+.pqr-saint p { margin: .3rem 0 0; font-size: .9rem; line-height: 1.5; color: var(--ink-soft); text-wrap: pretty; }
+.pqr-face {
+  width: 4.4rem; height: 4.4rem; border-radius: 50%; object-fit: cover; background: var(--shell);
+  box-shadow: 0 0 0 3px var(--panel), 0 0 0 4.5px color-mix(in srgb, var(--orange) 70%, transparent);
+}
+.pqr-mono {
+  display: grid; place-items: center; font: 400 1.35rem/1 var(--display); color: var(--on-dark);
+  background-color: var(--dark-fill); background-image: var(--dark-fill-img); background-size: 300px;
+}
+@media (min-width: 46rem) {
+  .pqr-saintlist { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem; }
+  .pqr-saint { grid-template-columns: 5rem minmax(0, 1fr); gap: 1.15rem; padding: 1.2rem 1.25rem 1.3rem; }
+  .pqr-face { width: 5rem; height: 5rem; }
+}
+
+.pqr-credits { margin-top: 1.6rem; font-size: .8rem; color: var(--ink-mute); }
+.pqr-credits summary {
+  cursor: pointer; font: 700 .64rem/1.3 var(--ui); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mute);
+}
+.pqr-credits ul { margin: .8rem 0 0; padding: 0; list-style: none; display: grid; gap: .45rem; max-width: 46rem; }
+.pqr-credits a { color: var(--ink-soft); }
+
+/* ================================================================== the runner */
+/*
+ * While a question is on screen the page steps aside, exactly as it does for the other runners
+ * (quiz.css, reading.css): the band, the nav, the account pair and the footer go, the brand and
+ * the theme bulb stay. The play panel's own hidden attribute drives all of it, and the first
+ * question's Back leaves the test, so there is always a way out.
+ */
+.page:has(#pqr-play:not([hidden])) .band { display: none; }
+.page:has(#pqr-play:not([hidden])) { padding-top: .9rem; padding-bottom: 2.25rem; }
+.sheet:has(#pqr-play:not([hidden])) .site-head nav,
+.sheet:has(#pqr-play:not([hidden])) .site-head .head-acct,
+.sheet:has(#pqr-play:not([hidden])) .site-foot { display: none; }
+
+.pqr-root { margin: 1.5rem 0 0; }
+.page:has(#pqr-play:not([hidden])) .pqr-root { margin-top: .25rem; }
+
+.pqr-q {
+  max-width: 40rem; margin: 0 auto; padding: 1rem 1.1rem 1.4rem;
+  min-height: min(calc(100svh - 8.5rem), 44rem); display: flex; flex-direction: column;
+  background: var(--panel); border-radius: 24px; box-shadow: var(--lift); color: var(--ink);
+}
+.pqr-q--private {
+  color: var(--on-dark);
+  background-color: #1C1C23;
+  background-image: radial-gradient(120% 90% at 85% 8%, rgba(79, 163, 188, .2), transparent 60%), url("/tex/starry.png");
+  background-size: auto, 420px;
+}
+:root[data-theme="dark"] .pqr-q--private {
+  background-color: #18181A; background-image: radial-gradient(120% 90% at 85% 8%, rgba(79, 163, 188, .16), transparent 60%), url("/tex/starry-dark.png");
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .07);
+}
+
+.pqr-top { display: flex; justify-content: space-between; align-items: center; }
+.pqr-back {
+  width: 44px; height: 44px; margin: 0; padding: 0 0 2px; border: 0; border-radius: 50%; cursor: pointer;
+  background: var(--pqr-raise); color: var(--ink); font: 400 1.15rem/1 var(--ui);
+}
+.pqr-count { font: 600 .7rem/1 var(--ui); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mute); font-variant-numeric: tabular-nums; }
+.pqr-bar { height: 4px; border-radius: 4px; background: var(--rule); margin: .7rem 0 1.3rem; overflow: hidden; }
+.pqr-bar i { display: block; height: 100%; background-image: var(--grad-r); transition: width .3s ease; }
+.pqr-q--private .pqr-count { color: var(--on-dark-soft); }
+.pqr-q--private .pqr-back { background: var(--pqr-night-2); color: var(--on-dark); }
+.pqr-q--private .pqr-bar { background: rgba(255, 255, 255, .12); }
+
+.pqr-welcome {
+  margin: -.4rem 0 1rem; padding: .6rem .85rem; border-radius: 12px; font-size: .88rem; line-height: 1.4;
+  background: var(--accent-soft); color: var(--ink); text-wrap: pretty;
+}
+.pqr-q--private .pqr-welcome { background: rgba(255, 255, 255, .08); color: var(--on-dark); }
+
+.pqr-stem {
+  margin: .4rem 0 1.1rem; font: 400 clamp(1.45rem, 6vw, 1.8rem)/1.2 var(--display); color: var(--ink);
+  text-wrap: balance;
+}
+/* Philosopher's capital I reads as a small l, so the private statements, said in the first
+   person, are set in Inter (the preview's rule). */
+.pqr-stem--say {
+  font: 500 clamp(1.35rem, 5.6vw, 1.7rem)/1.35 var(--text); letter-spacing: -.01em; min-height: 3.4em;
+  color: var(--on-dark);
+}
+.pqr-stem:focus, .pqr-q h2:focus { outline: none; }
+.pqr-lockline {
+  margin: 0 0 .6rem; font: 600 .64rem/1 var(--ui); letter-spacing: .14em; text-transform: uppercase;
+  color: var(--on-dark-soft);
+}
+.pqr-choice { margin: auto 0; padding-bottom: 1rem; }
+
+.pqr-opt {
+  display: flex; gap: .7rem; align-items: flex-start; width: 100%; min-height: 4.6rem; margin: 0;
+  padding: 1.15rem 1.1rem; border: 0; border-radius: 16px; cursor: pointer; text-align: left;
+  font: 500 1.02rem/1.45 var(--text); color: var(--ink); touch-action: manipulation;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.pqr-opt > span:last-child { text-wrap: pretty; }
+.pqr-opt--a { background: var(--pqr-blue-tint); }
+.pqr-opt--b { background: var(--pqr-orange-tint); }
+.pqr-opt.is-on { box-shadow: inset 0 0 0 2px currentColor; }
+.pqr-opt--a.is-on { color: var(--pqr-blue-ink); }
+.pqr-opt--b.is-on { color: var(--pqr-orange-ink); }
+.pqr-opt:active { transform: scale(.99); }
+.pqr-ab {
+  flex: none; margin: .12rem 0 0; padding: .35rem .5rem; border-radius: 7px; letter-spacing: 0;
+  font: 700 .7rem/1 var(--ui); color: #1E2C3A; background: var(--blue);
+}
+.pqr-opt--b .pqr-ab { color: #3A2213; background: var(--orange); }
+
+/* The answer scale: seven labelled columns. The dots are graded by size; the words say what each means. */
+.pqr-scale {
+  position: relative; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); align-items: start;
+  margin: 1rem -.35rem .6rem;
+}
+.pqr-scale::before {
+  content: ""; position: absolute; left: calc(100% / 14); right: calc(100% / 14); top: 16px; height: 2px;
+  background: var(--rule);
+}
+.pqr-pt {
+  position: relative; display: flex; flex-direction: column; align-items: center; gap: .4rem; min-width: 0;
+  margin: 0; padding: 0 1px .2rem; border: 0; border-radius: 12px; background: none; color: inherit;
+  font: inherit; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+}
+.pqr-pt-d { height: 34px; display: grid; place-items: center; }
+.pqr-pt-l {
+  font: 500 .6rem/1.25 var(--text); letter-spacing: -.01em; text-align: center; text-wrap: balance;
+  color: var(--ink-mute);
+}
+.pqr-pt--a .pqr-pt-l { color: var(--pqr-blue-ink); }
+.pqr-pt--b .pqr-pt-l { color: var(--pqr-orange-ink); }
+.pqr-pt.is-on .pqr-pt-l { font-weight: 700; }
+.pqr-pt:hover .pqr-dot { transform: scale(1.08); }
+.pqr-dot {
+  display: block; border-radius: 50%; border: 2px solid var(--rule); background: var(--panel);
+  transition: transform .12s ease, background-color .12s ease;
+}
+.pqr-dot--3 { width: 34px; height: 34px; }
+.pqr-dot--2 { width: 28px; height: 28px; }
+.pqr-dot--1 { width: 22px; height: 22px; }
+.pqr-dot--0 { width: 18px; height: 18px; }
+.pqr-dot--a { border-color: color-mix(in srgb, var(--blue) 70%, transparent); }
+.pqr-dot--b { border-color: color-mix(in srgb, var(--orange) 70%, transparent); }
+.pqr-pt.is-on .pqr-dot--a { background: var(--blue); }
+.pqr-pt.is-on .pqr-dot--b { background: var(--orange); }
+.pqr-pt.is-on .pqr-dot--m { background: var(--ink-mute); border-color: var(--ink-mute); }
+
+/* The private block: every point the same, lit orange when chosen. */
+.pqr-scale--freq::before { background: rgba(255, 255, 255, .14); }
+.pqr-scale--freq .pqr-dot { border-color: rgba(255, 255, 255, .28); background: var(--pqr-night-2); }
+.pqr-scale--freq .pqr-pt.is-on .pqr-dot { background: var(--orange); border-color: var(--orange); }
+.pqr-scale--freq .pqr-pt-l { color: var(--on-dark-soft); }
+.pqr-scale--freq .pqr-pt.is-on .pqr-pt-l { color: var(--on-dark); }
+
+/* The note before the private block. */
+.pqr-note { justify-content: center; text-align: center; padding: 2.2rem 1.4rem 2rem; }
+.pqr-note .pqr-lock { width: 38px; height: 38px; margin: 0 auto; color: var(--orange); }
+.pqr-note h2 { margin: .7rem 0 .8rem; font: 400 1.9rem/1.1 var(--display); color: #fff; }
+.pqr-note p { max-width: 26rem; margin: 0 auto; color: var(--on-dark-soft); line-height: 1.6; text-wrap: pretty; }
+.pqr-note .pqr-row { justify-content: center; }
+
+/* The two "pick up to two" questions. */
+.pqr-picks { display: flex; flex-direction: column; gap: .5rem; }
+.pqr-pick {
+  margin: 0; padding: .85rem 1rem; border: 0; border-radius: 14px; cursor: pointer; text-align: left;
+  font: 500 .98rem/1.4 var(--text); color: var(--ink); background: var(--pqr-raise);
+  box-shadow: inset 0 0 0 1px var(--rule); touch-action: manipulation; text-wrap: pretty;
+}
+.pqr-pick.is-on { background: var(--pqr-blue-tint); box-shadow: inset 0 0 0 2px var(--pqr-blue-ink); }
+
+.pqr-row { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.3rem; }
+.pqr-row--quiet { margin-top: .6rem; }
+.pqr-textback {
+  min-height: 44px; margin: 0; padding: .4rem .2rem; border: 0; background: none; cursor: pointer;
+  font: 600 .72rem/1 var(--ui); letter-spacing: .08em; text-transform: uppercase; color: var(--on-dark-soft);
+}
+.pqr-textback:hover { color: #fff; }
+
+.pqr-back:focus-visible, .pqr-opt:focus-visible, .pqr-pt:focus-visible, .pqr-pick:focus-visible,
+.pqr-textback:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+
+@media (min-width: 40rem) {
+  .pqr-q { padding: 1.4rem 1.8rem 1.8rem; }
+  .pqr-pt-l { font-size: .66rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pqr-ty, .pqr-opt, .pqr-dot, .pqr-bar i { transition: none; }
+  .pqr-ty:hover { transform: none; }
+  .pqr-opt:active { transform: none; }
+}

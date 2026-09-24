@@ -41,7 +41,28 @@ Note he had earlier rejected the word "wiser" as "weird to say"; he has since ov
 
 State: local git repo initialised, **one commit** `c8fd322`, 137 files tracked, `node_modules` excluded. Authored as `Light <serenitybackto@gmail.com>` — he was offered a GitHub noreply address to keep his email out of public history and **chose to keep his real email**. Do not change it.
 
-## NEXT SESSION STARTS HERE (updated 2026-09-23, night): QUIZ #4 AND THE QUIZ STANDARD ARE LIVE
+## NOW (2026-09-23, late night): WRITING QUIZ #1, THE PERSONALITY QUIZ
+
+Read `design/quiz-ideas/personality/README.md` first. He approved the full-report design
+(https://claude.ai/artifact/TuppmFsRVEY1r5LWWRsj6D, "extremely good"): eight types (Gregory's four dispositions x quiet /
+restless mind), 72 questions on 7 answer points, the private "where the fight is" page (Cassian's eight thoughts; the
+sins and gifts quizzes are suggested as cards opening in a new tab, and their results may ADD context beside this
+result but never change it: his ruling of 2026-09-23), "how common your type is"
+built now and switched on automatically at 50 real results (leaning percentiles at about 200), fear / reward / love left
+out (a possible separate quiz later). His notes: page 10 must name ONE clear role (now Cassian's seven "lines",
+Conference 14.4) with how you got there, what the saints say and good tidbits; no confusing buttons; the demo's flat,
+grey, text-heavy look gets a FULL design pass (colour, images, every portrait filled) once the framework is complete.
+**The tap-through preview with that design pass is published (2026-09-24): https://claude.ai/artifact/WQ8CjTEjwAfk52yLutWsBG**
+(built from `design/quiz-ideas/personality/preview/`, README "The tap-through preview"). His notes on draft 2
+(2026-09-24) were all applied in draft 3 at the same link: TWO share cards (type and role) with his logo image and the
+link printed on them (memory: share-cards-never-regress, logo-always-with-name), a sticky pager, page 2 back to the
+avatar layout with Gregory's full trap sentence and real saint pairs as opposites, starry dark panels, a text audit (63
+fixes, 153 quotations re-checked). He took it, called it ready and asked to push it live (2026-09-24) with mid-quiz
+progress saving; it is named **"Christian Personality Test"** (URL stays /q/personality/), and the quiz page gets
+deep dives. Build: `design/quiz-ideas/personality/BUILD-BRIEF.md` (four Opus builders; private answers never leave
+the device: `score(answers, pub)` + `derive()`).
+
+## (previous) QUIZ #4 AND THE QUIZ STANDARD ARE LIVE (2026-09-23, night)
 
 Everything below shipped on 2026-09-23 with the owner's go, in order: Phase A `72f1dc2` (he verified it: "Everything
 looks great"), wave 1 `4238c9f`, quiz #4 `0f6ea8a` plus the deploy fix `d53370a`. Ask how quiz #4 and the new
@@ -191,8 +212,10 @@ never pays for ads or has to build a social following.
   it (removed from the site on 2026-09-20; `/method/` still describes how things work TODAY and must
   be updated when accounts ship). The growth plan's "nothing needing accounts, a database" and the
   kill-list line "anything social with accounts" are overridden.
-- **Still standing:** count knowledge, never devotion; never a percentage against a person or between
-  two people; real data only; both poles named; the fairness rules; no AI chat over theology.
+- **Still standing:** count knowledge, never devotion; no match percentage between two people or between a
+  person and a saint (from the 14 Sep growth plan's kill list; the owner says he never made a wider rule, so
+  population stats such as "about 1 in 8 people are this type" ARE allowed, from real data, ruled 2026-09-23);
+  real data only; both poles named; the fairness rules; no AI chat over theology.
 - **He finds the site over-explained and full of "inside baseball"** (method, audit changelog, reviewer
   counts, draft explainers). Say a thing once, where it is needed. No process talk on pages whose job
   is to get someone into a quiz, a game or an article. Method is out of the nav and footer; `/about/`

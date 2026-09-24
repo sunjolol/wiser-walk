@@ -46,7 +46,14 @@ interface Props {
 
 const { quiz, kind, index = 0, psalm = [] } = Astro.props;
 
-const scored = quiz.strategy.shape !== 'reading';
+/*
+ * The Christian Personality Test has nothing for this note to mark: no page about one of its
+ * types exists yet, and its code is its answers rather than a score per group, so there is no
+ * rail, axis or row a reader's answer could stand on. Handed one, the note draws nothing. When
+ * type pages are built they get a line of their own, like the early Christians' EarlyMine.
+ */
+const skip = quiz.strategy.shape === 'personality';
+const scored = !skip && quiz.strategy.shape !== 'reading';
 const radix = scored ? Number(quiz.config.radix) : 0;
 const steps = Math.max(1, radix - 1);
 const group = kind === 'axis' ? quiz.groups[index] : undefined;
@@ -93,6 +100,7 @@ const marks = kind === 'rails' || (kind === 'axis' && bipolar);
 /** A ranking's row, drawn as the result page draws it. */
 const tier = kind === 'axis' && !bipolar && group;
 ---
+{!skip && (
 <div
   class:list={[
     'mine', `mine--${kind}`,
@@ -158,8 +166,9 @@ const tier = kind === 'axis' && !bipolar && group;
     </>
   )}
 </div>
+)}
 
-{import.meta.env.DEV && (
+{!skip && import.meta.env.DEV && (
   /* Development only, and compiled out of anything that is ever served, like the result
      page's ?took=1: ?mine=<code> makes this tab hold that result, so the page can be looked
      at (and captured headless) as a reader who has one. &at=<ISO date> also puts it on the

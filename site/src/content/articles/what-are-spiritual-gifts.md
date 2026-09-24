@@ -5,7 +5,7 @@ published: 2026-09-20
 minutes: 6
 answer: "The New Testament gives four lists of gifts, no two alike and none complete. The Spirit apportions them as He determines, and they are given for the common good rather than for their holder. No passage explains how to find yours, so the instruction is to serve and ask afterwards."
 tags: [gifts, church]
-quizzes: [spiritual-gifts, theology-compass]
+quizzes: [spiritual-gifts, personality, theology-compass]
 image: /img/articles/what-are-spiritual-gifts.jpg
 imageAlt: "Tongues of fire descend on Mary and the apostles gathered in a great hall"
 imageCredit: "Jean II Restout, Pentecost, 1732"

@@ -40,7 +40,7 @@ import CompassWheel from '../components/CompassWheel.astro';
 import { QUIZZES, getQuiz, quizHref, scoreQuiz, resultFor } from '../lib/engine/registry';
 import { groupNounPlural, outcomeNounPlural } from '../lib/engine/types';
 import type { BipolarView, Quiz } from '../lib/engine/types';
-import { artFor } from '../lib/art';
+import { artFor, COLOUR_PRINT } from '../lib/art';
 import { SITUATIONS } from '../lib/strategies/reading';
 import { liveGames } from '../lib/games';
 import { ACCOUNTS_READY, ACCOUNTS_VISIBLE } from '../lib/account/config';
@@ -250,9 +250,12 @@ const games = liveGames();
           {art && (
             /* The first two rooms are on screen the moment the band is scrolled past, and a
                room whose picture has not arrived is a flat brown box with no quiz in it.
-               Those two load with the page; the rest wait until they are near. */
+               Those two load with the page; the rest wait until they are near. A picture
+               art.ts marks `colour` (the Christian Personality Test's eight paintings) is
+               printed as it is, never through the plates' sepia (me.css .mroom > img). */
             <img src={art.src} alt={art.alt} loading={i < 2 ? 'eager' : 'lazy'} decoding="async"
-                 width="1000" height="1255" style={`object-position:${art.objectPosition}`} />
+                 width="1000" height="1255"
+                 style={`object-position:${art.objectPosition}${art.colour ? `;${COLOUR_PRINT}` : ''}`} />
           )}
           {/* A draft says so once, in the corner, as it does on the home page and /quizzes/. */}
           {quiz.status === 'draft' && <span class="mroom-tab">Draft</span>}

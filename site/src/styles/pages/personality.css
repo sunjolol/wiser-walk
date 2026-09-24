@@ -1,0 +1,621 @@
+/*
+ * The Christian Personality Test: the result page (components/PersonalityResult.astro).
+ *
+ * The report is the owner's approved tap-through preview (design/quiz-ideas/personality/preview/
+ * app.js and style.css, draft 3), ported into the site's frame: the painted hero, the sticky pager,
+ * ten pages, the type sheets and the two share cards. The look is the preview's, on the site's own
+ * tokens (--panel, --ink, --ink-soft, --ink-mute, --rule, --lift, the starry --dark-fill ground) and
+ * fonts, with the site's .btn and .brand where they match.
+ *
+ * Every rule is scoped to .pq-*: a sheet imported by a dynamic route is bundled with every result
+ * page and every quiz page, and must not reach any other quiz. The preview's own colours that the
+ * site has no token for are declared once per theme below (--pq-*).
+ *
+ * The type's own colour is --pq-t, set on the report from the type (the preview called it --ink,
+ * which on this site is the text colour).
+ *
+ * Phone first. From 48rem the report gets the preview's wider padding and four types to a row.
+ */
+
+:root {
+  --pq-raise: #F6F6F4;
+  --pq-blue-ink: #2F6EA6;
+  --pq-orange-ink: #B35A22;
+  --pq-blue-tint: rgba(126, 186, 238, .22);
+  --pq-orange-tint: rgba(240, 160, 111, .22);
+  --pq-gold: #E6C36A;
+  --pq-note: #FBF7EE;
+  --pq-note-ink: #3A3530;
+  --pq-note-mute: #8A8077;
+  --pq-brown: #2A2622;
+  --pq-peach: #FFC98F;
+  --pq-rose: #F2A596;
+}
+:root[data-theme="dark"] {
+  --pq-raise: #2C2C34;
+  --pq-blue-ink: #9CCBF2;
+  --pq-orange-ink: #F5B58D;
+  --pq-blue-tint: rgba(126, 186, 238, .14);
+  --pq-orange-tint: rgba(240, 160, 111, .14);
+}
+
+/* ------------------------------------------------------------ who is looking */
+/*
+ * The server prints the visitor's page. An inline script before the first paint marks <html> as
+ * the taker's when this device finished this result (PersonalityResult.astro), and says whether
+ * the private answers are here. Hidden, never restyled.
+ */
+:root:not([data-pq-who="taker"]) .pq-mine,
+:root[data-pq-who="taker"] .pq-their { display: none !important; }
+.pq-priv-open, .pq-priv-away { display: none !important; }
+:root[data-pq-priv="open"] .pq-priv-open,
+:root[data-pq-priv="away"] .pq-priv-away { display: grid !important; }
+:root[data-pq-who="taker"] .pq-priv-visitor { display: none !important; }
+.pq-report [hidden] { display: none !important; }
+
+/* The sheet frame clips with overflow:hidden from 68rem, which would make the pager's sticky
+   inert. clip crops the same without becoming a scroll container (as prose.css does for the
+   reading rail). */
+@media (min-width: 68rem) {
+  .sheet:has(.pq-report) { overflow: clip; }
+}
+
+/* ------------------------------------------------------------ the column */
+
+.pq-report {
+  --pq-t: #4FA3BC;
+  max-width: 48rem; margin: 0 auto;
+  font-size: 1rem; line-height: 1.6; color: var(--ink);
+}
+.pq-report h1, .pq-report h2, .pq-report h3 {
+  font-family: var(--display); font-weight: 700; margin: 0; text-wrap: balance; color: var(--ink);
+}
+.pq-report p, .pq-report li { text-wrap: pretty; }
+.pq-report p { margin: 0; }
+.pq-kicker {
+  font-family: var(--ui); font-size: .66rem; font-weight: 600; line-height: 1.3; letter-spacing: .12em;
+  text-transform: uppercase; color: color-mix(in srgb, var(--pq-t) 70%, var(--ink)); margin: 0 0 .4rem !important;
+}
+.pq-muted { color: var(--ink-soft); }
+.pq-small { font-size: .88rem; }
+.pq-row { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.3rem; }
+.pq-report .btn { min-height: 46px; }
+.pq-report .btn:focus-visible, .pq-report summary:focus-visible, .pq-ty:focus-visible,
+.pq-pg-arrow:focus-visible, .pq-pg-cur:focus-visible, .pq-qc:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+.pq-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Quotations: word for word, in Philosopher's regular italic (the site's display face is bold). */
+.pq-quote {
+  margin: .9rem 0; padding: .9rem 1rem .85rem 1.1rem; border-radius: 14px;
+  background: var(--pq-raise); border-left: 3px solid var(--pq-t);
+}
+.pq-quote p { font-family: "Philosopher", var(--display); font-style: italic; font-weight: 400; font-size: 1.08rem; line-height: 1.42; }
+/* Philosopher's capital I looks like a small l, so a lone I borrows a serif that shows it. */
+.pq-cap-i { font-family: Georgia, "Times New Roman", serif; }
+.pq-quote cite {
+  display: block; margin-top: .35rem; font-family: var(--ui); font-size: .74rem; font-weight: 500;
+  line-height: 1.3; font-style: normal; color: var(--ink-mute);
+}
+
+/* ------------------------------------------------------------ the hero (page 1) */
+
+.pq-hero {
+  position: relative; border-radius: 26px; overflow: hidden; min-height: 34rem;
+  display: flex; align-items: flex-end; color: #fff; background: #222; box-shadow: var(--lift);
+}
+.pq-hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* Readable over any painting without hiding it: a light shade at the very top for the logo, the
+   sky left clear, then a steady darkening from where the words begin. */
+.pq-hero-veil {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(12,12,16,.5) 0, rgba(12,12,16,.06) 16%, rgba(12,12,16,.14) 30%, rgba(12,12,16,.62) 48%, rgba(12,12,16,.86) 68%, rgba(12,12,16,.95));
+  box-shadow: inset 0 -8px 0 var(--pq-t);
+}
+.pq-hero-in { position: relative; padding: 1.2rem 1.2rem 1.5rem; width: 100%; text-shadow: 0 1px 10px rgba(0,0,0,.45); }
+.pq-hero-top {
+  position: absolute; top: 1.1rem; left: 1.2rem; right: 1.2rem; z-index: 1;
+  display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+}
+.pq-hero-label {
+  font-family: var(--ui); font-size: .6rem; font-weight: 700; line-height: 1.25; letter-spacing: .14em;
+  text-transform: uppercase; text-align: right; color: rgba(255,255,255,.88); text-shadow: 0 1px 8px rgba(0,0,0,.5);
+  text-wrap: balance;
+}
+/* The owner's logo, white over the painting: his white W and the words as a mask. */
+:root .pq-hero-top .brand.pq-brand {
+  --brand-ink: #fff; margin-right: 0; flex: none; filter: drop-shadow(0 1px 6px rgba(0,0,0,.35));
+}
+.pq-hero .pq-kicker { color: #fff; opacity: .92; }
+.pq-hero h1 {
+  font-size: clamp(2.6rem, 12vw, 3.8rem); line-height: .98; color: #fff;
+  text-shadow: 0 2px 22px rgba(0,0,0,.5);
+}
+.pq-tagline {
+  margin-top: .45rem !important; font-family: "Philosopher", var(--display); font-style: italic; font-weight: 400;
+  font-size: 1.15rem; line-height: 1.35; color: #fff;
+}
+.pq-badges, .pq-lean-chips { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .8rem; }
+.pq-badges span {
+  font-family: var(--ui); font-size: .66rem; font-weight: 700; line-height: 1; letter-spacing: .1em;
+  text-transform: uppercase; padding: .45rem .7rem; border-radius: 999px; background: var(--pq-t); color: #15161A;
+  text-shadow: none;
+}
+.pq-lean-chips span {
+  font-family: var(--ui); font-size: .7rem; font-weight: 600; line-height: 1; padding: .45rem .7rem; border-radius: 999px;
+  background: rgba(20,20,26,.45); box-shadow: inset 0 0 0 1px rgba(255,255,255,.22);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.pq-rarity {
+  margin-top: 1rem; padding: .8rem .9rem; border-radius: 14px; background: rgba(20,20,26,.5);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); box-shadow: inset 0 0 0 1px rgba(255,255,255,.14);
+  display: flex; flex-direction: column; gap: .15rem; font-size: .88rem;
+}
+.pq-rarity b { font-family: var(--ui); font-size: .8rem; }
+.pq-rarity span { color: rgba(255,255,255,.78); }
+.pq-hero .btn { text-shadow: none; }
+.pq-report .btn.pq-btn-on { background-image: none; background-color: var(--pq-t); color: #15161A; }
+.pq-saved {
+  margin-top: .9rem !important; font-family: var(--ui); font-size: .78rem; font-weight: 600; color: rgba(255,255,255,.86);
+}
+.pq-saved a { color: #fff; }
+
+/* The visitor's note, straight under the hero. */
+.pq-visitor {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .7rem 1rem;
+  margin-top: .8rem; padding: .85rem 1rem; border-radius: 18px; background: var(--panel); box-shadow: var(--lift);
+}
+.pq-visitor p { font-size: .95rem; color: var(--ink-soft); flex: 1 1 16rem; }
+.pq-visitor .btn { flex: none; }
+
+/* ------------------------------------------------------------ the pager */
+/* Previous, the page you are on (tap it for all ten), next, and a thin bar for how far down you
+   are. Sticky, so it is always one tap away; the arrows are 44px targets. */
+.pq-pager {
+  position: sticky; top: 8px; z-index: 6; display: grid; grid-template-columns: 44px minmax(0, 1fr) 44px; align-items: center;
+  gap: .3rem; margin: .8rem 0 .2rem; padding: 5px; border-radius: 999px;
+  background: color-mix(in srgb, var(--panel) 86%, transparent);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2); backdrop-filter: blur(12px) saturate(1.2);
+  box-shadow: 0 6px 20px rgba(40,40,50,.12), inset 0 0 0 1px var(--rule);
+}
+.pq-pg-arrow {
+  width: 44px; height: 44px; border: 0; border-radius: 50%; background: var(--pq-raise); color: var(--ink);
+  font: 400 1.6rem/1 var(--ui); cursor: pointer; padding: 0 0 3px;
+}
+.pq-pg-arrow:disabled { opacity: .35; cursor: default; }
+.pq-pg-cur {
+  display: flex; align-items: center; justify-content: center; gap: .55rem; min-height: 44px; min-width: 0; border: 0;
+  background: transparent; color: var(--ink); cursor: pointer; font: 600 .86rem/1.2 var(--ui);
+}
+.pq-pg-t { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pq-pg-n {
+  flex: none; font: 700 .62rem/1 var(--ui); letter-spacing: .12em; text-transform: uppercase;
+  color: color-mix(in srgb, var(--pq-t) 75%, var(--ink));
+}
+.pq-pg-caret {
+  flex: none; width: 8px; height: 8px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
+  transform: translateY(-2px) rotate(45deg); opacity: .6;
+}
+.pq-pg-cur[aria-expanded="true"] .pq-pg-caret { transform: translateY(2px) rotate(225deg); }
+.pq-pg-bar { position: absolute; left: 26px; right: 26px; bottom: 2px; height: 3px; border-radius: 3px; overflow: hidden; }
+.pq-pg-bar i { display: block; height: 100%; width: 0; background: var(--pq-t); border-radius: 3px; }
+.pq-pg-menu {
+  position: absolute; top: calc(100% + 8px); left: 0; right: 0; margin: 0; padding: .5rem; list-style: none;
+  border-radius: 20px; background: var(--panel); box-shadow: 0 16px 40px rgba(20,20,30,.22), inset 0 0 0 1px var(--rule);
+  max-height: calc(100svh - 90px); overflow: auto;
+}
+.pq-pg-menu a {
+  display: flex; gap: .8rem; align-items: center; padding: .7rem .8rem; border-radius: 12px;
+  color: var(--ink); text-decoration: none; font: 500 .92rem/1.3 var(--text);
+}
+.pq-pg-menu a span {
+  flex: none; width: 1.7rem; height: 1.7rem; display: grid; place-items: center; border-radius: 50%;
+  background: var(--pq-raise); font: 700 .72rem/1 var(--ui);
+}
+.pq-pg-menu a:hover { background: var(--pq-raise); }
+.pq-pg-menu a.is-here { background: color-mix(in srgb, var(--pq-t) 16%, var(--panel)); font-weight: 600; }
+.pq-pg-menu a.is-here span { background: var(--pq-t); color: #15161A; }
+
+/* ------------------------------------------------------------ a page */
+
+.pq-page {
+  background: var(--panel); border-radius: 24px; box-shadow: var(--lift); padding: 1.4rem 1.2rem 1.6rem;
+  margin-top: .9rem; scroll-margin-top: 5rem; border-top: 5px solid var(--pq-t);
+}
+/* Every page ends the same distance above its bottom edge, whatever its last element is. */
+.pq-page > :last-child, .pq-page > :last-child > :last-child, .pq-page .pq-quote:last-child { margin-bottom: 0; }
+.pq-page > h2 { font-size: clamp(1.7rem, 7vw, 2.2rem); line-height: 1.08; margin-bottom: 1rem; }
+.pq-page h3 { font-size: 1.3rem; line-height: 1.2; }
+.pq-page .pq-sub { margin: 1.5rem 0 .7rem; }
+.pq-big { font-size: 1.1rem; line-height: 1.6; }
+.pq-close {
+  margin: .9rem 0 !important; padding: .7rem .9rem; border-radius: 12px; background: var(--pq-raise);
+  font-size: .92rem; color: var(--ink-soft);
+}
+.pq-page a { color: var(--pq-blue-ink); }
+
+/* Page 2 opens like being handed a character: the avatar, the name large, the two words under it. */
+.pq-typehead { display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: center; margin-bottom: 1.1rem; }
+.pq-type-face {
+  width: 84px; height: 84px; border-radius: 50%; object-fit: cover; background: var(--rule);
+  box-shadow: 0 0 0 3px var(--panel), 0 0 0 5px var(--pq-t), var(--lift);
+}
+.pq-typehead .pq-kicker { margin-bottom: .2rem !important; }
+.pq-type-name { font-size: clamp(2rem, 9vw, 2.6rem) !important; line-height: 1 !important; }
+.pq-type-sub { margin-top: .35rem !important; font-family: var(--ui); font-size: .82rem; font-weight: 500; line-height: 1.35; color: var(--ink-soft); }
+
+/* The site's dark panels: a night ground with its own stars, never a flat fill. */
+.pq-starry {
+  background-color: var(--dark-fill);
+  background-image: radial-gradient(120% 90% at 85% 8%, color-mix(in srgb, var(--pq-t) 20%, transparent), transparent 60%), var(--dark-fill-img);
+  background-size: auto, 420px; color: var(--on-dark);
+}
+:root[data-theme="dark"] .pq-starry { box-shadow: inset 0 0 0 1px rgba(255,255,255,.07); }
+
+.pq-trap { margin: 1.3rem 0; padding: 1.2rem 1.15rem 1.3rem; border-radius: 20px; display: flex; flex-direction: column; gap: .55rem; }
+.pq-report .pq-trap h3 { font-size: 1.22rem; color: var(--on-dark); }
+.pq-trap-word { font: 700 2.3rem/1 var(--display); color: color-mix(in srgb, var(--pq-t) 72%, #fff); margin: .1rem 0 .2rem !important; }
+.pq-trap p { color: var(--on-dark-soft); }
+.pq-trap .pq-quote { margin: .3rem 0; background: rgba(255,255,255,.06); }
+.pq-trap .pq-quote p { color: var(--on-dark); }
+.pq-trap .pq-quote cite { color: var(--on-dark-mute); }
+.pq-trap p.pq-trap-plain { color: var(--on-dark); font-size: 1.05rem; }
+.pq-trap p.pq-trap-quiet { padding: .65rem .8rem; border-radius: 12px; background: rgba(255,255,255,.07); color: var(--on-dark); font-size: .92rem; }
+
+.pq-two { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; margin-top: 1rem; }
+.pq-two > div { border-radius: 16px; padding: .9rem 1rem; }
+.pq-bring { background: color-mix(in srgb, var(--pq-t) 16%, var(--panel)); }
+.pq-cost { background: var(--pq-raise); }
+.pq-report .pq-two h3 { font-size: 1.05rem; margin-bottom: .45rem; }
+.pq-two ul { margin: 0; padding-left: 1.05rem; display: flex; flex-direction: column; gap: .35rem; font-size: .95rem; }
+@media (max-width: 30rem) { .pq-two { grid-template-columns: 1fr; } }
+
+.pq-kin {
+  display: grid; grid-template-columns: 64px 1fr; column-gap: .85rem; row-gap: .15rem; align-items: center;
+  padding: .9rem; margin-top: .6rem; border-radius: 16px; background: var(--pq-raise);
+}
+.pq-kin > p, .pq-kin > .pq-src { grid-column: 1 / -1; }
+.pq-kin > p { margin-top: .5rem !important; font-size: .95rem; }
+.pq-face {
+  width: 64px; height: 64px; flex: none; border-radius: 50%; object-fit: cover; background: var(--rule);
+  box-shadow: 0 0 0 3px var(--panel), 0 0 0 4px var(--pq-t);
+}
+span.pq-face { display: inline-block; }
+.pq-kin b { font: 600 1rem/1.3 var(--ui); }
+.pq-kin em { display: block; margin-top: .2rem; font: 500 .72rem/1 var(--ui); color: var(--ink-mute); font-style: normal; }
+.pq-src { font: 500 .7rem/1.3 var(--ui); color: var(--ink-mute); }
+.pq-kin-note { margin-top: .6rem !important; }
+
+/* The opposite: their painting shows clearly at the top and around the edges; the words sit on a
+   frosted panel so the picture never fights the reading. */
+.pq-opp {
+  position: relative; margin-top: 1.5rem; padding: 6.5rem .75rem .75rem; border-radius: 22px; overflow: hidden;
+  color: #fff; background: #222;
+}
+.pq-opp-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.pq-opp::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,10,14,.1), rgba(10,10,14,.45)); }
+.pq-opp-in {
+  position: relative; z-index: 1; padding: 1.1rem 1.05rem 1.15rem; display: flex; flex-direction: column; gap: .6rem;
+  border-radius: 16px; background: rgba(16,16,21,.74);
+  -webkit-backdrop-filter: blur(10px) saturate(1.1); backdrop-filter: blur(10px) saturate(1.1);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.08);
+}
+.pq-opp .pq-kicker { color: color-mix(in srgb, var(--pq-o) 50%, #fff); margin: 0 !important; }
+.pq-opp-who { display: grid; grid-template-columns: auto 1fr; gap: .8rem; align-items: center; }
+.pq-opp .pq-face { box-shadow: 0 0 0 3px rgba(16,16,21,.9), 0 0 0 4px var(--pq-o); }
+.pq-report .pq-opp h3 { font-size: 1.6rem; color: #fff; }
+.pq-opp p { color: rgba(255,255,255,.92); }
+.pq-opp p.pq-opp-person { font: 600 .9rem/1.3 var(--ui); color: rgba(255,255,255,.85); margin-top: .15rem; }
+.pq-opp p.pq-opp-tag { font-family: "Philosopher", var(--display); font-style: italic; font-weight: 400; font-size: 1.05rem; line-height: 1.35; color: rgba(255,255,255,.9); }
+.pq-opp p.pq-opp-src { font: 500 .7rem/1.3 var(--ui); color: rgba(255,255,255,.6); }
+.pq-opp .pq-quote { background: rgba(0,0,0,.28); border-left-color: var(--pq-o); }
+.pq-opp .pq-quote p { color: #fff; }
+.pq-opp .pq-quote cite { color: rgba(255,255,255,.7); }
+
+/* All eight types, each opening its own sheet. */
+.pq-types { display: grid; grid-template-columns: 1fr 1fr; gap: .55rem; }
+.pq-ty {
+  position: relative; border: 0; padding: 0; border-radius: 16px; overflow: hidden; min-height: 7.2rem; cursor: pointer;
+  text-align: left; color: #fff; background: #222; font: inherit;
+}
+.pq-ty-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.pq-ty::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 22%, rgba(0,0,0,.5) 52%, rgba(0,0,0,.86)); box-shadow: inset 0 -4px 0 var(--pq-ty);
+}
+.pq-ty-in { position: absolute; left: .75rem; right: .75rem; bottom: .7rem; z-index: 1; display: flex; flex-direction: column; text-shadow: 0 1px 8px rgba(0,0,0,.6); }
+.pq-ty b { font: 700 1.05rem/1.1 var(--display); }
+.pq-ty-in span { font: 500 .68rem/1.3 var(--ui); color: rgba(255,255,255,.88); }
+.pq-ty.is-you { box-shadow: 0 0 0 3px var(--pq-ty); }
+.pq-ty.is-close { box-shadow: 0 0 0 2px var(--panel), 0 0 0 4px color-mix(in srgb, var(--pq-ty) 70%, transparent); }
+.pq-ty-tag {
+  position: absolute; top: .5rem; right: .5rem; z-index: 2; font: 700 .6rem/1 var(--ui); letter-spacing: .1em;
+  text-transform: uppercase; padding: .32rem .55rem; border-radius: 999px; background: var(--pq-ty); color: #111;
+}
+.pq-ty-tag--close { background: rgba(255,255,255,.92); color: #222; }
+.pq-ty-hint { margin-top: .6rem !important; }
+
+/* ------------------------------------------------------------ page 3: leanings */
+
+.pq-tops { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; margin-bottom: .8rem; }
+@media (max-width: 30rem) { .pq-tops { grid-template-columns: 1fr; } }
+.pq-chip {
+  display: inline-block; margin: 0 .3rem .35rem 0; font: 600 .74rem/1 var(--ui); padding: .5rem .75rem; border-radius: 999px;
+  background: var(--pq-raise); box-shadow: inset 0 0 0 1px var(--rule);
+}
+.pq-chip--ink { background: color-mix(in srgb, var(--pq-t) 22%, var(--panel)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pq-t) 50%, transparent); }
+.pq-grp { margin-top: 1rem; }
+.pq-grp-n { font: 600 .64rem/1 var(--ui); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: .3rem !important; }
+.pq-rail { border-radius: 14px; padding: .55rem .6rem .65rem; }
+.pq-rail[open] { background: var(--pq-raise); }
+.pq-rail summary { list-style: none; cursor: pointer; display: flex; flex-direction: column; gap: .3rem; }
+.pq-rail summary::-webkit-details-marker { display: none; }
+.pq-rail-name { display: flex; justify-content: space-between; align-items: center; font: 600 .74rem/1 var(--ui); color: var(--ink-soft); }
+.pq-rail-open { width: 18px; height: 18px; border-radius: 50%; background: var(--pq-raise); box-shadow: inset 0 0 0 1px var(--rule); position: relative; flex: none; }
+.pq-rail-open::before, .pq-rail-open::after { content: ""; position: absolute; left: 5px; right: 5px; top: 8px; height: 2px; border-radius: 1px; background: var(--ink-soft); }
+.pq-rail-open::after { transform: rotate(90deg); transition: transform .15s ease; }
+.pq-rail[open] .pq-rail-open::after { transform: rotate(0); }
+/* A hint nobody can miss: every line starts closed. */
+.pq-hint {
+  display: grid; grid-template-columns: auto 1fr; gap: .75rem; align-items: start; margin: .2rem 0 .6rem; padding: .85rem .95rem;
+  border-radius: 16px; background: color-mix(in srgb, var(--blue) 16%, var(--panel));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--blue) 40%, transparent); font-size: .92rem;
+}
+.pq-hint-i {
+  width: 1.6rem; height: 1.6rem; border-radius: 50%; display: grid; place-items: center; background: var(--pq-blue-ink);
+  color: #fff; font: italic 700 .95rem/1 Georgia, serif;
+}
+:root[data-theme="dark"] .pq-hint-i { color: #15161A; }
+.pq-poles { display: flex; justify-content: space-between; gap: .6rem; font: 500 .82rem/1.2 var(--ui); }
+.pq-poles .pq-l { color: var(--pq-blue-ink); }
+.pq-poles .pq-r { color: var(--pq-orange-ink); text-align: right; }
+.pq-track { position: relative; display: block; height: 12px; border-radius: 6px; background: var(--pq-raise); box-shadow: inset 0 0 0 1px var(--rule); }
+.pq-rail[open] .pq-track { background: var(--panel); }
+.pq-track .pq-band {
+  position: absolute; left: 41%; width: 18%; top: 0; bottom: 0;
+  background: repeating-linear-gradient(135deg, transparent 0 4px, rgba(128,128,128,.16) 4px 6px);
+}
+.pq-track .pq-fill { position: absolute; top: 0; bottom: 0; border-radius: 6px; opacity: .38; }
+.pq-track .pq-fill.a { background: var(--blue); }
+.pq-track .pq-fill.b { background: var(--orange); }
+.pq-track .pq-knob {
+  position: absolute; top: 50%; width: 18px; height: 18px; border-radius: 50%; transform: translate(-50%, -50%);
+  border: 3px solid var(--panel); box-shadow: 0 0 0 1px var(--rule);
+}
+.pq-knob.a { background: var(--blue); }
+.pq-knob.b { background: var(--orange); }
+.pq-knob.m { background: var(--ink-mute); }
+.pq-rail-more { padding: .7rem .2rem .1rem; display: flex; flex-direction: column; gap: .45rem; font-size: .95rem; }
+.pq-unseen { color: var(--ink-soft); }
+.pq-counsel { font-weight: 600; }
+.pq-rail-more .pq-quote { margin: .2rem 0; background: var(--panel); }
+
+/* ------------------------------------------------------------ page 4: what you said */
+
+.pq-said { margin-top: 1rem; padding: 1rem; border-radius: 18px; background: var(--pq-raise); }
+.pq-said:first-of-type { margin-top: 0; }
+.pq-bub { position: relative; padding: .7rem .9rem; border-radius: 16px; font-size: .95rem; max-width: 88%; }
+.pq-bub--a { background: var(--pq-blue-tint); border-bottom-left-radius: 4px; }
+.pq-bub--b { background: var(--pq-orange-tint); margin: .45rem 0 0 auto; border-bottom-right-radius: 4px; }
+.pq-insight { margin-top: .9rem !important; font-size: 1.02rem; line-height: 1.6; }
+.pq-said .pq-quote { background: var(--panel); }
+
+/* ------------------------------------------------------------ pages 5 and 6: the two grids */
+
+.pq-g2 { display: grid; grid-template-columns: auto 1fr 1fr; gap: .45rem; align-items: stretch; margin-bottom: .6rem; }
+.pq-ax { font: 600 .66rem/1.2 var(--ui); color: var(--ink-mute); text-align: center; align-self: end; }
+.pq-ay { font: 600 .66rem/1.2 var(--ui); color: var(--ink-mute); writing-mode: vertical-rl; transform: rotate(180deg); text-align: center; align-self: center; }
+.pq-g2-cell {
+  background: var(--pq-raise); border-radius: 14px; padding: .75rem; min-height: 6rem; display: flex; flex-direction: column;
+  gap: .2rem; border: 2px solid transparent;
+}
+.pq-g2-cell b { font: 600 .9rem/1.2 var(--ui); text-wrap: balance; }
+.pq-g2-cell span { font-size: .8rem; color: var(--ink-soft); line-height: 1.35; }
+.pq-g2-cell.is-you { border-color: var(--pq-t); background: color-mix(in srgb, var(--pq-t) 18%, var(--panel)); }
+.pq-g2-cell .pq-you {
+  font: 700 .6rem/1 var(--ui); letter-spacing: .12em; text-transform: uppercase;
+  color: color-mix(in srgb, var(--pq-t) 70%, var(--ink));
+}
+.pq-cure { margin-top: 1rem; padding: .95rem 1rem; border-radius: 16px; background: color-mix(in srgb, var(--pq-t) 14%, var(--panel)); }
+
+/* ------------------------------------------------------------ page 7: how to help me */
+
+.pq-note {
+  margin-top: 1rem; padding: 1.3rem 1.2rem; border-radius: 6px 22px 22px 22px; background: var(--pq-note); color: var(--pq-note-ink);
+  box-shadow: 0 10px 26px rgba(40,30,20,.12), inset 0 0 0 1px rgba(60,40,20,.08), inset 4px 0 0 var(--pq-t);
+}
+.pq-note-k { font: 700 1.5rem/1 var(--display); margin-bottom: .8rem !important; }
+.pq-note ol { margin: 0; padding-left: 1.3rem; display: flex; flex-direction: column; gap: .6rem; font-size: 1.02rem; line-height: 1.45; }
+.pq-note small { display: block; font-size: .72rem; color: var(--pq-note-mute); margin-top: .15rem; }
+.pq-sep { border: 0; border-top: 1.5px dashed var(--rule); margin: 1.4rem 0 1rem; width: 100%; }
+
+/* ------------------------------------------------------------ page 8: the private page */
+
+.pq-page--dark { color: var(--on-dark); }
+.pq-report .pq-page--dark h2, .pq-report .pq-page--dark h3 { color: var(--on-dark); }
+.pq-page--dark .pq-muted { color: var(--on-dark-soft); }
+.pq-page--dark .pq-kicker { color: color-mix(in srgb, var(--orange) 70%, #fff); }
+.pq-page--dark .pq-quote { background: rgba(0,0,0,.22); border-left-color: var(--orange); }
+.pq-page--dark .pq-quote p { color: var(--on-dark); }
+.pq-page--dark .pq-quote cite { color: var(--on-dark-soft); }
+.pq-locked {
+  padding: 1.3rem 1.2rem; border-radius: 18px; background: rgba(255,255,255,.05); box-shadow: inset 0 0 0 1px rgba(255,255,255,.08);
+  display: grid; grid-template-columns: auto 1fr; gap: .9rem 1rem; align-items: start;
+}
+.pq-lock { width: 30px; height: 30px; color: var(--orange); margin-top: .1rem; }
+.pq-locked p { color: var(--on-dark-soft); }
+.pq-locked .btn { grid-column: 2; justify-self: start; }
+.pq-fight { display: flex; flex-direction: column; gap: .7rem; margin-top: .7rem; }
+/* the cards drawn on this device stand in the same column, with the same gap, as the rest */
+.pq-fight-top { display: contents; }
+.pq-fnote { padding: .2rem .2rem 0; color: var(--on-dark-soft); font-size: .95rem; }
+.pq-fnote b { color: var(--on-dark); }
+.pq-fcard {
+  padding: 1.05rem 1.1rem 1.1rem; border-radius: 18px; background: rgba(255,255,255,.055); box-shadow: inset 0 0 0 1px rgba(255,255,255,.08);
+  display: flex; flex-direction: column; gap: .45rem;
+}
+.pq-fcard p { color: var(--on-dark); }
+.pq-fcard .pq-quote { margin: .35rem 0 0; }
+.pq-fcard--lead { background: linear-gradient(160deg, rgba(240,160,111,.2), rgba(255,255,255,.04) 60%); box-shadow: inset 0 0 0 1px rgba(240,160,111,.3); }
+.pq-report .pq-fcard--lead h3 { font-size: 2rem; line-height: 1.05; }
+.pq-frow { display: flex; flex-direction: column; gap: .3rem; }
+.pq-frow + .pq-frow { margin-top: .5rem; padding-top: .8rem; border-top: 1px solid rgba(255,255,255,.08); }
+.pq-fcard .pq-kicker, .pq-frow .pq-kicker { margin: 0 !important; }
+.pq-fcard p.pq-fsmall { font-size: .86rem; color: var(--on-dark-soft); }
+.pq-old { font-family: "Philosopher", var(--display); font-style: italic; font-weight: 400; font-size: 1.05rem; line-height: 1; color: var(--on-dark-soft); }
+.pq-steps { list-style: none; padding: 0; margin: .2rem 0 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
+.pq-steps li { position: relative; padding: .8rem .8rem .85rem; border-radius: 14px; background: rgba(0,0,0,.22); font-size: .88rem; display: flex; flex-direction: column; gap: .25rem; }
+.pq-steps li b { font: 600 .86rem/1.2 var(--ui); color: var(--on-dark); }
+.pq-steps li span:last-child { color: var(--on-dark-soft); }
+.pq-step-n {
+  width: 1.5rem; height: 1.5rem; display: grid; place-items: center; border-radius: 50%; background: var(--orange);
+  color: #2A1A10; font: 700 .72rem/1 var(--ui); margin-bottom: .2rem;
+}
+@media (max-width: 30rem) {
+  .pq-steps { grid-template-columns: 1fr; }
+  .pq-steps li { display: grid; grid-template-columns: auto 1fr; column-gap: .7rem; }
+  .pq-steps li .pq-step-n { grid-row: span 2; margin: 0; }
+}
+.pq-bars { display: flex; flex-direction: column; gap: .5rem; margin-top: .2rem; }
+.pq-barr { display: grid; grid-template-columns: 7.4rem 1fr; align-items: center; gap: .6rem; font: 500 .85rem/1.2 var(--ui); }
+.pq-barr-t { height: 10px; border-radius: 5px; background: rgba(0,0,0,.3); overflow: hidden; }
+.pq-barr-t i { display: block; height: 100%; background: var(--on-dark-soft); opacity: .6; border-radius: 5px; }
+.pq-barr.is-lead .pq-barr-t i { background: var(--orange); opacity: 1; }
+.pq-page--dark a { color: var(--orange); }
+
+/* ------------------------------------------------------------ page 9: the coin */
+
+.pq-coin { display: grid; grid-template-columns: 1fr 1fr; border-radius: 20px; overflow: hidden; }
+.pq-coin > div { padding: 1.1rem 1rem 1.2rem; }
+.pq-coin-a { background: linear-gradient(160deg, color-mix(in srgb, var(--pq-gold) 45%, var(--panel)), color-mix(in srgb, var(--pq-gold) 18%, var(--panel))); }
+.pq-coin-b { background-color: var(--pq-raise); background-image: repeating-linear-gradient(135deg, transparent 0 6px, rgba(128,128,128,.1) 6px 7px); }
+.pq-report .pq-coin h3 { font-size: 1.35rem; margin-bottom: .35rem; }
+.pq-coin-b .pq-src { display: block; margin-top: .45rem; }
+@media (max-width: 30rem) { .pq-coin { grid-template-columns: 1fr; } }
+.pq-partner { margin-top: 1.2rem; padding: 1.1rem 1.1rem 1.15rem; border-radius: 18px; box-shadow: inset 0 0 0 1.5px var(--rule); }
+.pq-report .pq-partner h3 { margin: .1rem 0 .5rem; }
+
+/* ------------------------------------------------------------ page 10: the line */
+
+.pq-line {
+  position: relative; display: flex; align-items: flex-end; min-height: 31rem; border-radius: 24px; overflow: hidden;
+  margin: .4rem 0 1rem; color: #fff; background: #222; box-shadow: var(--lift);
+}
+.pq-line-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 12%; }
+.pq-line-veil {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(12,12,16,0) 22%, rgba(12,12,16,.5) 40%, color-mix(in srgb, var(--pq-t) 22%, rgba(12,12,16,.9)) 56%, color-mix(in srgb, var(--pq-t) 22%, rgb(12,12,16)));
+  box-shadow: inset 0 -8px 0 var(--pq-t);
+}
+.pq-line-in { position: relative; padding: 1.3rem 1.3rem 1.6rem; text-shadow: 0 1px 10px rgba(0,0,0,.45); }
+.pq-line-in .btn { text-shadow: none; }
+.pq-line .pq-kicker { color: #fff; opacity: .9; }
+.pq-report .pq-line h3 { font-size: clamp(2.4rem, 11vw, 3.2rem); line-height: 1; color: #fff; text-shadow: 0 2px 18px rgba(0,0,0,.35); }
+.pq-line p.pq-line-gift {
+  font-family: "Philosopher", var(--display); font-style: italic; font-weight: 400; font-size: 1.2rem; line-height: 1.3;
+  color: rgba(255,255,255,.92); margin: .35rem 0 .65rem;
+}
+.pq-line-gift b { font-style: normal; font-weight: 700; }
+.pq-report .btn.pq-btn-line { margin-top: 1rem; background-image: none; background-color: #fff; color: #15161A; }
+.pq-line-in p { color: rgba(255,255,255,.93); }
+.pq-line p.pq-line-who { margin-top: .7rem; font: 500 .68rem/1.3 var(--ui); color: rgba(255,255,255,.6); }
+@media (min-width: 36rem) {
+  .pq-line { min-height: 25rem; align-items: stretch; background: color-mix(in srgb, var(--pq-t) 22%, rgb(12,12,16)); }
+  .pq-line-bg { right: auto; width: 46%; object-position: 50% 8%; }
+  .pq-line-veil { background: linear-gradient(90deg, transparent 36%, color-mix(in srgb, var(--pq-t) 22%, rgb(12,12,16)) 46.5%); }
+  .pq-line-in { margin-left: 46%; padding: 2rem 1.7rem 2.2rem; display: flex; flex-direction: column; justify-content: center; }
+}
+.pq-gift-note { margin: -.2rem 0 1.1rem !important; padding: .8rem .95rem; border-radius: 14px; background: var(--pq-raise); font-size: .9rem; color: var(--ink-soft); }
+.pq-gift-note b { color: var(--ink); }
+.pq-whys { margin-bottom: .8rem; }
+.pq-tidbit { margin: 1rem 0; padding: 1rem 1.1rem; border-radius: 18px; background: color-mix(in srgb, var(--pq-t) 14%, var(--panel)); }
+.pq-tidbit--soft { background: var(--pq-raise); font-style: italic; }
+.pq-grace { display: flex; flex-direction: column; gap: .4rem; margin: 1.6rem 0 1.2rem; padding-top: 1.2rem; border-top: 1px solid var(--rule); }
+.pq-grace .pq-kicker { margin: 0 !important; }
+.pq-grace .pq-big { font-family: "Philosopher", var(--display); font-weight: 400; font-size: 1.25rem; }
+.pq-need { margin: 1.6rem 0 0; padding-top: 1.2rem; border-top: 1px solid var(--rule); }
+.pq-need-lead { margin-bottom: .2rem !important; }
+.pq-partner-line {
+  display: grid; grid-template-columns: 64px 1fr; column-gap: .85rem; align-items: center; padding: .95rem;
+  border-radius: 18px; margin: .8rem 0 0; background: var(--pq-raise);
+}
+.pq-partner-line b { font: 700 1.35rem/1.1 var(--display); }
+.pq-pl-gift { font: 500 .8rem/1.3 var(--ui); color: var(--ink-soft); margin-top: .2rem !important; }
+.pq-partner-line > p { grid-column: 1 / -1; font-size: .95rem; margin-top: .7rem !important; }
+
+/* Another quiz, as a card with its engraving (adapted from the home page's rail). It opens in a
+   new tab, so the reader keeps their place here. */
+.pq-qc-lead { margin-top: 1.5rem !important; font-size: .95rem; }
+.pq-qc-lead a { font-weight: 600; }
+.pq-qc-note-six { margin-top: .4rem !important; font-size: .8rem; color: var(--ink-mute); }
+.pq-report a.pq-qc {
+  position: relative; isolation: isolate; display: grid; grid-template-columns: 38% 1fr; height: 10rem; margin-top: .7rem;
+  border-radius: 20px; overflow: hidden; text-decoration: none; color: #fff; background: var(--pq-brown); box-shadow: var(--lift);
+  transition: transform .2s ease;
+}
+.pq-qc:hover { transform: translateY(-2px); }
+.pq-qc-img { width: 100%; height: 100%; min-height: 0; object-fit: cover; filter: sepia(.34) contrast(.9) brightness(1); }
+.pq-qc-in {
+  display: flex; flex-direction: column; justify-content: center; gap: .55rem; padding: 1rem 1.05rem;
+  background: linear-gradient(90deg, rgba(38,33,28,.96), rgba(34,30,26,1));
+}
+.pq-qc-in b { font: 700 1.12rem/1.2 var(--display); color: #fff; text-wrap: balance; }
+.pq-qc-facts { display: flex; flex-wrap: wrap; gap: .35rem; }
+.pq-qc-facts span {
+  font: 600 .6rem/1 var(--ui); letter-spacing: .08em; text-transform: uppercase; padding: .38rem .55rem; border-radius: 999px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.28); color: rgba(255,255,255,.88);
+}
+.pq-qc-go {
+  align-self: flex-start; font: 700 .7rem/1 var(--ui); letter-spacing: .12em; text-transform: uppercase; padding: .55rem .85rem;
+  border-radius: 999px; color: var(--pq-peach); box-shadow: inset 0 0 0 1.5px var(--pq-peach);
+}
+.pq-qc-note { margin-top: .5rem !important; font-size: .78rem; color: var(--ink-mute); }
+@media (min-width: 36rem) { .pq-report a.pq-qc { grid-template-columns: 32% 1fr; height: 10.5rem; } }
+.pq-page--dark .pq-qc-lead { color: var(--on-dark); }
+.pq-page--dark .pq-qc-note, .pq-page--dark .pq-qc-note-six { color: var(--on-dark-soft); }
+.pq-report .pq-page--dark a.pq-qc { color: #fff; box-shadow: inset 0 0 0 1px rgba(255,255,255,.1); }
+.pq-page--dark .pq-qc-go { color: var(--pq-rose); box-shadow: inset 0 0 0 1.5px var(--pq-rose); }
+
+/* ------------------------------------------------------------ under the ten pages */
+
+.pq-how {
+  margin-top: .9rem; background: var(--panel); border-radius: 18px; padding: 1rem 1.1rem; box-shadow: var(--lift);
+  font-size: .92rem; color: var(--ink-soft);
+}
+.pq-how summary { cursor: pointer; min-height: 28px; font: 600 .8rem/1.2 var(--ui); color: var(--ink); }
+.pq-how p { margin-top: .7rem !important; }
+.pq-credits { margin: .7rem 0 0; padding-left: 1.1rem; font-size: .76rem; line-height: 1.5; color: var(--ink-mute); display: flex; flex-direction: column; gap: .3rem; }
+.pq-credits a { color: inherit; }
+.pq-report .pq-linkbox { margin-top: 1.6rem; }
+
+/* ------------------------------------------------------------ the sheets */
+/* A type's sheet and the card sheet: native dialogs, a bottom sheet on a phone and centred from
+   48rem. */
+.pq-sheet {
+  width: calc(100% - 32px); max-width: 30rem; max-height: calc(100svh - 32px); margin: auto auto 16px; padding: 0; border: 0;
+  border-radius: 22px; overflow: auto; background: var(--panel); color: var(--ink); box-shadow: 0 20px 50px rgba(0,0,0,.35);
+  font-size: 1rem; line-height: 1.6;
+}
+.pq-sheet::backdrop { background: rgba(10,10,14,.55); }
+.pq-sheet.pq-csheet { max-width: 26rem; margin: auto; padding: 1rem 1rem 1.1rem; }
+.pq-ts-img { display: block; width: 100%; height: 11rem; object-fit: cover; border-bottom: 4px solid var(--pq-ty); }
+.pq-ts-in { padding: 1.1rem 1.2rem 1.3rem; display: flex; flex-direction: column; gap: .55rem; }
+.pq-report .pq-ts-in h3 { font-size: 1.7rem; }
+.pq-ts-in .btn { align-self: flex-start; margin-top: .3rem; }
+.pq-cs-k { font: 700 .64rem/1 var(--ui); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: .7rem !important; }
+.pq-cs-img { aspect-ratio: 1080 / 1350; border-radius: 14px; overflow: hidden; background: #1C1C23; display: grid; place-items: center; }
+.pq-cs-img img { width: 100%; height: 100%; display: block; }
+.pq-cs-wait { font: 500 .85rem/1 var(--ui); color: rgba(255,255,255,.7); }
+.pq-csheet .pq-row { margin-top: .9rem; }
+.pq-cs-note { margin-top: .7rem !important; font-size: .78rem; color: var(--ink-mute); }
+
+@media (min-width: 48rem) {
+  .pq-page { padding: 2rem 2.2rem 2.2rem; }
+  .pq-hero { min-height: 36rem; }
+  .pq-hero-in { padding: 2rem 2.2rem 2.2rem; }
+  .pq-hero-top { top: 1.6rem; left: 2.2rem; right: 2.2rem; }
+  .pq-types { grid-template-columns: repeat(4, 1fr); }
+  .pq-sheet { margin: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pq-report *, .pq-sheet * { transition: none !important; scroll-behavior: auto !important; }
+}

@@ -185,6 +185,63 @@ Origen's. Lactantius's is a 4th-century mural that may show him or may show Apul
 | benedict-of-nursia.jpg | Saint Benedict, Hans Memling, 1487 | `Memling, Trittico di Benedetto Portinari, San Benedetto.jpg` | Public domain |
 | boethius.jpg | Boethius teaching his students, manuscript initial, 1385 | `Boethius initial consolation philosophy.jpg` | Public domain |
 
+## Public domain: the Christian Personality Test (`personality/`, Wikimedia Commons)
+
+Added 2026-09-24 for the Christian Personality Test. Eight paintings, one for each type (`art/<type>.jpg`, on the
+result's hero, the type sheets and the share card), round faces of the saints and Bible figures the report names
+(`faces/<key>.jpg`), the page-10 role pictures (`lines/l-<key>.jpg`, also on the role share card) and a mosaic of the
+eight paintings. Chosen in `design/quiz-ideas/personality/preview/img/credits.json`, cropped by that folder's
+`faces.py`, and copied here by `site/scripts/build-personality-data.mjs`: paintings at most 1100 px on the long side,
+faces at most 240 px square, role pictures inside 760 x 1100, never enlarged, progressive JPEGs. The same script
+writes a reader's credit line for every one of them into the test's data for the report's "Picture credits", and
+stops the build if a file below is missing from this list. Faces cut from the early Christians' portraits carry
+those portraits' credits.
+
+All are public domain (one is CC0), so no card or page owes a credit line by licence; the report prints them anyway.
+
+| file | picture | Commons file | licence |
+|---|---|---|---|
+| art/hearth.jpg | Reading Devotions to Grandfather, Albert Anker, 1893 | `Anker- Die Andacht des Grossvaters 1893.jpg` | Public domain |
+| art/spark.jpg | The Wedding Dance, Pieter Bruegel the Elder, c. 1566 | `Pieter Bruegel the Elder - Wedding Dance in the Open Air - WGA03505.jpg` | Public domain |
+| art/deepwell.jpg | Rebecca and Eliezer, Bartolomé Esteban Murillo, c. 1660 | `Bartolomé Esteban Perez Murillo 022.jpg` | Public domain |
+| art/forge.jpg | An Iron Forge, Joseph Wright of Derby, 1772 | `Joseph Wright - An Iron Forge - Google Art Project.jpg` | Public domain |
+| art/stillwater.jpg | Quiet Abode, Isaac Levitan, 1890 | `Isaak Levitan Tihaya obitel.jpg` | Public domain |
+| art/lookout.jpg | The Lookout – “All's Well”, Winslow Homer, 1896 | `Winslow Homer - The Lookout – „All's Well“.jpg` | Public domain |
+| art/oak.jpg | The Lonely Tree, Caspar David Friedrich, 1822 | `Caspar David Friedrich - Der einsame Baum - Google Art Project.jpg` | Public domain |
+| art/herald.jpg | St Paul Preaching in Athens, Raphael, 1515 | `V&A - Raphael, St Paul Preaching in Athens (1515).jpg` | Public domain |
+| faces/antony-the-great.jpg | Saint Anthony the Great, 15th to 17th century | cropped from `early-christians/antony-the-great.jpg` (credited above) | Public domain |
+| faces/augustine-of-hippo.jpg | Fresco of Augustine, the oldest known portrait of him, c. 550-600 | cropped from `early-christians/augustine-of-hippo.jpg` (credited above) | Public domain |
+| faces/gregory-the-great.jpg | Saint Gregory the Great, Jusepe de Ribera, c. 1614 | cropped from `early-christians/gregory-the-great.jpg` (credited above) | Public domain |
+| lines/l-gregory-the-great.jpg | Saint Gregory the Great, Jusepe de Ribera, c. 1614 | cropped from `early-christians/gregory-the-great.jpg` (credited above) | Public domain |
+| faces/elijah.jpg | The Prophet Elijah in the Wilderness, detail of the icon from the Church of Elijah the Prophet at Vybuty, near Pskov, 13th century | `Elijah in the desert 01.jpg` | Public domain |
+| lines/l-elijah.jpg | The Prophet Elijah in the Wilderness, detail of the icon from the Church of Elijah the Prophet at Vybuty, near Pskov, 13th century | `Elijah in the desert 01.jpg` | Public domain |
+| faces/john-chrysostom.jpg | St John Chrysostom, mosaic in the north tympanum of Hagia Sophia, Byzantine mosaicist, late 9th century | cropped from `early-christians/john-chrysostom.jpg` (credited above) | Public domain |
+| faces/jerome.jpg | Saint Jerome Writing, Caravaggio, 1605-1606 | cropped from `early-christians/jerome.jpg` (credited above) | Public domain |
+| faces/gregory-of-nazianzus.jpg | Saint Gregory the Theologian, mosaic, Saint Sophia Cathedral, Kyiv, 11th century | cropped from `early-christians/gregory-of-nazianzus.jpg` (credited above) | Public domain |
+| faces/jeremiah.jpg | The Prophet Jeremiah, Sistine Chapel ceiling, Michelangelo, c. 1511 | `Пророк Иеремия, Микеланжело Буонаротти.jpg` | Public domain |
+| faces/arsenius.jpg | St Arsenius the Great, fresco in the Church of the Theotokos Peribleptos, Ohrid, Michael Astrapas and Eutychios, c. 1295 | `Paintings in the Church of the Theotokos Peribleptos of Ohrid 0139.jpg` | Public domain |
+| faces/moses.jpg | Moses Presenting the Tablets of the Law, Philippe de Champaigne, c. 1648 | `Philippe de Champaigne - Moses Presenting the Tablets of the Law - c. 1648.jpg` | Public domain |
+| faces/gideon.jpg | The Righteous Gideon, from the prophets tier of the iconostasis of the Dormition Cathedral, Kirillo-Belozersky Monastery, 1497 | `Kirillo-Belozersky iconostasis 03. Micah, Elijah, Gideon.jpg` | Public domain |
+| faces/isaiah.jpg | The Prophet Isaiah, Sistine Chapel ceiling, Michelangelo, c. 1509 | `Jesaja (Michelangelo).jpg` | Public domain |
+| faces/peter.jpg | Saint Peter, encaustic icon at St Catherine's Monastery, Mount Sinai, 6th or 7th century | `Saint Peter-Sinai (6th Century).jpg` | Public domain |
+| faces/basil-the-great.jpg | Saint Basil of Caesarea, mosaic in the Palatine Chapel, Palermo, 12th century | cropped from `early-christians/basil-the-great.jpg` (credited above) | Public domain |
+| faces/martha.jpg | Christ in the House of Martha and Mary, Scottish National Gallery, Edinburgh, Johannes Vermeer, c. 1654–1655 | `Johannes (Jan) Vermeer - Christ in the House of Martha and Mary - Google Art Project.jpg` | Public domain |
+| faces/mary-bethany.jpg | Christ in the House of Martha and Mary, Scottish National Gallery, Edinburgh, Johannes Vermeer, c. 1654–1655 | `Johannes (Jan) Vermeer - Christ in the House of Martha and Mary - Google Art Project.jpg` | Public domain |
+| faces/barnabas.jpg | St Barnabas, fresco medallion in the monastery of Hosios Loukas, Greece, 11th century | `Agios Barnabas Hosios Loukas.jpg` | Public domain |
+| faces/paul.jpg | Saint Paul, Saint Louis Art Museum, El Greco, 1598–1600 | `El Greco - St. Paul, 1598–1600.jpg` | Public domain |
+| faces/monica.jpg | Saint Augustine and his Mother Saint Monica, Musée du Louvre, Ary Scheffer, 1855 | `Saint Augustin et sa mère sainte Monique - Ary Scheffer - Musée du Louvre Peintures RF 2411.jpg` | Public domain |
+| faces/benedict-of-nursia.jpg | Saint Benedict, Hans Memling, 1487 | cropped from `early-christians/benedict-of-nursia.jpg` (credited above) | Public domain |
+| lines/l-benedict-of-nursia.jpg | Saint Benedict, Hans Memling, 1487 | cropped from `early-christians/benedict-of-nursia.jpg` (credited above) | Public domain |
+| faces/abraham.jpg | Abraham serving the three angels, mosaic in Monreale Cathedral, Sicily, 12th century | `Abraham and the Three Angels.jpg` | Public domain |
+| lines/l-abraham.jpg | Abraham serving the three angels, mosaic in Monreale Cathedral, Sicily, 12th century | `Abraham and the Three Angels.jpg` | Public domain |
+| faces/ephrem.jpg | St Ephrem the Syrian, mosaic in the Nea Moni monastery, Chios, 11th century | `Ephrem the Syrian (mosaic in Nea Moni).jpg` | Public domain |
+| lines/l-ephrem.jpg | St Ephrem the Syrian, mosaic in the Nea Moni monastery, Chios, 11th century | `Ephrem the Syrian (mosaic in Nea Moni).jpg` | Public domain |
+| faces/ambrose-of-milan.jpg | Saint Ambrose, mosaic in the Cappella Palatina, Palermo, c. 1140 | `Unknown artist St Ambrose of Milan capella palatina palazzo dei normann a palermo palermo sicily italy circa 1140.jpg` | Public domain |
+| lines/l-ambrose-of-milan.jpg | Saint Ambrose, mosaic in the Cappella Palatina, Palermo, c. 1140 | `Unknown artist St Ambrose of Milan capella palatina palazzo dei normann a palermo palermo sicily italy circa 1140.jpg` | Public domain |
+| faces/martin-of-tours.jpg | Saint Martin and the Beggar, El Greco, 1597-1599 | cropped from `early-christians/martin-of-tours.jpg` (credited above) | CC0 |
+| lines/l-martin-of-tours.jpg | Saint Martin and the Beggar, El Greco, 1597-1599 | cropped from `early-christians/martin-of-tours.jpg` (credited above) | CC0 |
+| mosaic.jpg | The eight type paintings above, each cropped to its centre and tiled two across and four down (the home rail and the test's band) | the eight files above | Public domain |
+
 ## Public-domain paintings used on hubs
 
 | file | what it shows | source |

@@ -1,0 +1,581 @@
+<title>Personality Quiz Full Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&family=Poppins:wght@500;600&family=Inter:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#E3E3E3; --sheet:#EEEEEE; --paper:#F6F6F5; --ink:#444444; --ink-soft:#63676c; --ink-faint:#8a8e93;
+  --line:#d3d4d6; --blue:#7EBAEE; --orange:#F0A06F; --blue-ink:#2f6ea6; --orange-ink:#b35a22;
+  --blue-tint:rgba(126,186,238,.30); --orange-tint:rgba(240,160,111,.30);
+  --shadow:3px 3px 5px rgba(68,68,68,.065); --quote-ground:#e7e8ea; --night:#2c3138; --night-ink:#f1efe9;
+  --display:"Philosopher",Georgia,"Times New Roman",serif;
+  --label:"Poppins",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --body:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --ground:#1c1f23; --sheet:#262a2f; --paper:#2d3238; --ink:#ecebe8; --ink-soft:#b9bcc0; --ink-faint:#8d9197;
+    --line:#3a3f46; --blue:#8cc3f0; --orange:#f3ac80; --blue-ink:#9ccbf2; --orange-ink:#f5b58d;
+    --blue-tint:rgba(140,195,240,.24); --orange-tint:rgba(243,172,128,.24);
+    --shadow:3px 3px 8px rgba(0,0,0,.25); --quote-ground:#30353c; --night:#15181c; --night-ink:#f1efe9;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --ground:#1c1f23; --sheet:#262a2f; --paper:#2d3238; --ink:#ecebe8; --ink-soft:#b9bcc0; --ink-faint:#8d9197;
+  --line:#3a3f46; --blue:#8cc3f0; --orange:#f3ac80; --blue-ink:#9ccbf2; --orange-ink:#f5b58d;
+  --blue-tint:rgba(140,195,240,.24); --orange-tint:rgba(243,172,128,.24);
+  --shadow:3px 3px 8px rgba(0,0,0,.25); --quote-ground:#30353c; --night:#15181c; --night-ink:#f1efe9;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font:400 16px/1.6 var(--body);padding-inline:16px;padding-block:28px 72px}
+.wrap{max-width:800px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+h1,h2,h3,h4{font-family:var(--display);font-weight:700;line-height:1.15;text-wrap:balance;margin:0}
+p,li{text-wrap:pretty}
+p{margin:0}
+.eyebrow{font:600 12px/1.2 var(--label);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+.muted{color:var(--ink-soft)} .small{font-size:14px} .faint{color:var(--ink-faint)}
+.sheet{background:var(--sheet);border-radius:20px;box-shadow:var(--shadow);padding:26px 24px;display:flex;flex-direction:column;gap:16px}
+.sheet > h2{font-size:clamp(25px,4.6vw,32px)}
+blockquote{margin:0;background:var(--quote-ground);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+blockquote p{font-family:var(--display);font-style:italic;font-size:19px;line-height:1.38}
+blockquote cite{font:500 13px/1.3 var(--label);font-style:normal;color:var(--ink-soft)}
+ul.plain{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:9px}
+ul.plain li::marker{color:var(--ink-faint)}
+
+header.hero{padding:10px 4px 4px;display:flex;flex-direction:column;gap:12px}
+header.hero h1{font-size:clamp(34px,7.4vw,54px);letter-spacing:-.01em}
+header.hero h1 em{font-style:italic;font-weight:400;color:var(--ink-soft)}
+header.hero .lede{font-size:18px;max-width:62ch}
+
+/* findings */
+.finds{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.find{background:var(--paper);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:8px}
+.find h3{font-size:19px}
+.find p{font-size:15px}
+.find .who{font:500 12.5px/1.3 var(--label);color:var(--ink-faint)}
+.find.out{border:1.5px dashed var(--line);background:transparent}
+@media (max-width:640px){.finds{grid-template-columns:1fr}}
+
+/* report shell */
+.toc{display:flex;flex-wrap:wrap;gap:6px 8px}
+.toc a{font:500 13px/1 var(--label);color:var(--ink);text-decoration:none;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:8px 12px}
+.toc a:hover,.toc a:focus-visible{border-color:var(--ink-soft);outline:none}
+.rpage{background:var(--paper);border-radius:20px;border:1.5px solid var(--line);padding:24px 22px;display:flex;flex-direction:column;gap:16px;scroll-margin-top:16px}
+.rpage .pn{font:600 12px/1 var(--label);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint)}
+.rpage h3.pt{font-size:clamp(24px,4.8vw,30px)}
+.rpage h4{font-size:19px}
+.rpage p{font-size:16px;line-height:1.62;max-width:66ch}
+.fed{font-size:13px;color:var(--ink-faint);border-top:1px dashed var(--line);padding-top:10px}
+.fed b{font-weight:600;color:var(--ink-soft)}
+.block{display:flex;flex-direction:column;gap:10px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.two > div{background:var(--sheet);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.two h4{font-size:17px}
+.two ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px;font-size:15px}
+@media (max-width:600px){.two{grid-template-columns:1fr}}
+
+/* snapshot card */
+.snap{background:linear-gradient(160deg,#6aa6dc 0%,#8fb9e2 45%,#e9a47a 100%);color:#fff;border-radius:22px;padding:24px 20px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;max-width:420px;margin:0 auto;width:100%}
+.snap .brand{font:600 12px/1 var(--label);letter-spacing:.18em;text-transform:uppercase;opacity:.92}
+.snap img{width:112px;height:112px;border-radius:50%;border:4px solid rgba(255,255,255,.85);object-fit:cover}
+.snap .mine{font:600 11px/1 var(--label);letter-spacing:.14em;text-transform:uppercase;background:rgba(255,255,255,.22);border-radius:999px;padding:6px 10px}
+.snap .tname{font-family:var(--display);font-weight:700;font-size:34px;line-height:1.05;color:#fff}
+.snap .sub{font:500 14px/1.3 var(--label)}
+.snap .lean{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
+.snap .lean span{font:500 12.5px/1 var(--label);background:rgba(255,255,255,.2);border-radius:999px;padding:6px 10px}
+.snap .help{font:500 14px/1.4 var(--body);background:rgba(20,30,40,.18);border-radius:12px;padding:10px 12px;width:100%}
+.snap .url{font:600 12px/1 var(--label);letter-spacing:.08em;opacity:.95}
+
+/* type page */
+.typehead{display:flex;gap:18px;align-items:center}
+.typehead img{width:104px;height:104px;border-radius:50%;object-fit:cover;flex:none;border:3px solid var(--sheet);box-shadow:0 0 0 1px var(--line)}
+.typehead .tn{font-family:var(--display);font-weight:700;font-size:clamp(32px,7vw,44px);line-height:1.02}
+.typehead .ts{font:500 14px/1.35 var(--label);color:var(--ink-soft)}
+.trap{background:var(--night);color:var(--night-ink);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.trap h4{color:var(--night-ink)}
+.trap p{color:var(--night-ink)}
+.trap blockquote{background:rgba(255,255,255,.08)}
+.trap blockquote p{color:var(--night-ink)} .trap cite{color:#c9cdd2}
+.kin{display:flex;flex-direction:column;gap:10px}
+.kin .k{display:flex;gap:12px;align-items:flex-start;background:var(--sheet);border-radius:14px;padding:12px}
+.kin .k img,.kin .k .ph{width:56px;height:56px;border-radius:50%;object-fit:cover;flex:none}
+.kin .k .ph{background:var(--line);display:flex;align-items:center;justify-content:center;font:600 13px/1 var(--label);color:var(--ink-soft)}
+.kin .k b{font:600 15px/1.3 var(--label)}
+.kin .k p{font-size:15px;line-height:1.5}
+.boats{border:1.5px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.close{font-size:14.5px;color:var(--ink-soft);background:var(--sheet);border-radius:12px;padding:10px 12px}
+
+/* rails */
+.groups{display:flex;flex-direction:column;gap:18px}
+.grp{display:flex;flex-direction:column;gap:12px}
+.grp .gname{font:600 12px/1 var(--label);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint)}
+.rail{display:flex;flex-direction:column;gap:5px}
+.rail .poles{display:flex;justify-content:space-between;gap:12px;font:500 13.5px/1.2 var(--label)}
+.rail .poles .l{color:var(--blue-ink)} .rail .poles .r{color:var(--orange-ink);text-align:right}
+.track{position:relative;height:12px;border-radius:6px;background:var(--sheet);border:1px solid var(--line)}
+.track .band{position:absolute;left:41%;width:18%;top:0;bottom:0;background:repeating-linear-gradient(135deg,transparent 0 4px,rgba(128,128,128,.14) 4px 6px)}
+.track .fill{position:absolute;top:0;bottom:0;border-radius:6px;opacity:.35}
+.track .fill.a{background:var(--blue)} .track .fill.b{background:var(--orange)}
+.track .knob{position:absolute;top:50%;width:18px;height:18px;border-radius:50%;transform:translate(-50%,-50%);border:3px solid var(--paper);box-shadow:0 0 0 1px var(--line)}
+.track .knob.a{background:var(--blue)} .track .knob.b{background:var(--orange)} .track .knob.m{background:var(--ink-faint)}
+.tops{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tops > div{background:var(--sheet);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:6px}
+.tops ol{margin:0;padding-left:1.2em;font:500 15px/1.5 var(--label)}
+@media (max-width:560px){.tops{grid-template-columns:1fr}}
+
+/* aha */
+.said{border-left:3px solid var(--line);padding-left:14px;display:flex;flex-direction:column;gap:8px}
+.said .you{font:500 14px/1.45 var(--label);color:var(--ink-soft)}
+.said .you b{color:var(--ink);font-weight:600}
+
+/* 2x2 grids */
+.grid2{display:grid;grid-template-columns:auto 1fr 1fr;grid-template-rows:auto 1fr 1fr;gap:8px;align-items:stretch}
+.grid2 .ax{font:600 12px/1.2 var(--label);color:var(--ink-faint);text-align:center;align-self:end}
+.grid2 .ay{font:600 12px/1.2 var(--label);color:var(--ink-faint);writing-mode:vertical-rl;transform:rotate(180deg);text-align:center;align-self:center;justify-self:center}
+.grid2 .cell{background:var(--sheet);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:4px;min-height:96px;border:2px solid transparent}
+.grid2 .cell b{font:600 14.5px/1.25 var(--label)}
+.grid2 .cell span{font-size:13.5px;color:var(--ink-soft);line-height:1.4}
+.grid2 .cell.you{border-color:var(--orange);background:var(--orange-tint)}
+.grid2 .cell .tag{font:600 11px/1 var(--label);letter-spacing:.08em;text-transform:uppercase;color:var(--orange-ink)}
+
+/* help card */
+.helpcard{background:var(--sheet);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:12px;border:1.5px solid var(--line)}
+.helpcard h4{font-size:21px}
+.helpcard ol{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px;font-size:16px}
+.helpcard ol small{display:block;color:var(--ink-faint);font-size:12.5px;margin-top:2px}
+.btns{display:flex;flex-wrap:wrap;gap:8px}
+.btn{font:600 14px/1 var(--label);border-radius:999px;padding:11px 16px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer}
+.btn.solid{background:var(--ink);color:var(--paper)}
+.btn:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+
+/* fight */
+.locked{background:var(--night);color:var(--night-ink);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.locked p{color:var(--night-ink)}
+.locked .btn{border-color:var(--night-ink);color:var(--night-ink)}
+.bars{display:flex;flex-direction:column;gap:8px}
+.bar{display:grid;grid-template-columns:120px 1fr;gap:10px;align-items:center;font:500 14px/1.2 var(--label)}
+.bar .t{height:12px;border-radius:6px;background:var(--sheet);border:1px solid var(--line);position:relative;overflow:hidden}
+.bar .t i{position:absolute;left:0;top:0;bottom:0;background:var(--ink-soft);opacity:.55;border-radius:6px}
+.bar.lead .t i{background:var(--orange);opacity:.9}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.steps div{background:var(--sheet);border-radius:12px;padding:10px;font-size:14px;display:flex;flex-direction:column;gap:4px}
+.steps b{font:600 13px/1.2 var(--label)}
+@media (max-width:520px){.bar{grid-template-columns:100px 1fr}.steps{grid-template-columns:1fr}}
+
+/* types grid */
+.types{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.types .colh{font:600 12px/1.2 var(--label);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);padding-left:4px}
+.ty{background:var(--paper);border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:8px;border:2px solid transparent}
+.ty.mine{border-color:var(--orange)}
+.ty .row{display:flex;gap:10px;align-items:center}
+.ty img,.ty .ph{width:48px;height:48px;border-radius:50%;object-fit:cover;flex:none}
+.ty .ph{background:var(--line)}
+.ty .nm{font-family:var(--display);font-weight:700;font-size:21px;line-height:1.1}
+.ty .dm{font:500 12.5px/1.3 var(--label);color:var(--ink-soft)}
+.ty p{font-size:14px;line-height:1.45}
+.ty .trapline{font-size:13.5px;color:var(--ink-soft)}
+.ty .trapline b{color:var(--ink);font-weight:600}
+@media (max-width:600px){.types{grid-template-columns:1fr}.types .colh{display:none}}
+
+/* budget */
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:14.5px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 12.5px/1.2 var(--label);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em}
+td.n{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+tr.tot td{font-weight:700;border-bottom:none}
+.q7{background:var(--paper);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.q7 .stem{font:600 16px/1.35 var(--label)}
+.sides{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.side{border-radius:12px;padding:10px 12px;font-size:15px;line-height:1.45}
+.side.a{background:var(--blue-tint)} .side.b{background:var(--orange-tint)}
+.dots7{display:flex;justify-content:space-between;align-items:center;position:relative;max-width:420px;margin:0 auto;width:100%}
+.dots7::before{content:"";position:absolute;left:8px;right:8px;top:50%;height:2px;background:var(--line);transform:translateY(-50%)}
+.dots7 span{width:18px;height:18px;border-radius:50%;background:var(--sheet);border:2px solid var(--line);position:relative}
+.dots7 span.m{width:13px;height:13px}
+@media (max-width:560px){.sides{grid-template-columns:1fr}}
+
+.ask{border:2px solid var(--ink);border-radius:20px;padding:22px 20px;display:flex;flex-direction:column;gap:14px;background:var(--sheet)}
+.ask h2{font-size:26px}
+.ask ol{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:12px}
+.ask li b{font-family:var(--label);font-weight:600}
+@media (max-width:560px){.sheet{padding:22px 16px}.rpage{padding:20px 14px}}
+</style>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Personality Quiz · the full report · first design</div>
+  <h1>Ten pages. <em>One person.</em></h1>
+  <p class="lede">You said the first result felt thin. So researchers went through the Fathers for every honest layer a Christian personality report could carry. Here's what they found. Then the whole report for one example person, the eight types, and what each extra block of questions buys.</p>
+</header>
+
+<section class="sheet" aria-labelledby="h-found">
+  <h2 id="h-found">What the research found</h2>
+  <div class="finds">
+    <div class="find">
+      <h3>Gregory sorted people himself. Twice.</h3>
+      <p>He says souls are made of different "dough". One sorting is four dispositions: "one person is of a cheerful, another of a morose, another of a timid, another of a proud disposition." The other is quiet minds and restless minds. Put the two together and you get eight types. Nothing invented.</p>
+      <span class="who">St Gregory the Dialogist, Moralia on Job</span>
+    </div>
+    <div class="find">
+      <h3>The enemy studies you first</h3>
+      <p>Gregory says the tempter "first beholds the character of each person, and then applies the snares." Pleasure for the cheerful. A quarrel for the gloomy. Fear for the timid. Praise for the proud. So every type gets its own trap.</p>
+      <span class="who">Same passage</span>
+    </div>
+    <div class="find">
+      <h3>The Orthodox root</h3>
+      <p>Gregory names St Gregory the Theologian as the teacher behind his method. His Oration 2 lists how people need different help: "Some are led by doctrine, others trained by example; some need the spur, others the curb." That becomes a card that tells people how to help you.</p>
+      <span class="who">St Gregory the Theologian, one of the Three Holy Hierarchs</span>
+    </div>
+    <div class="find">
+      <h3>Where the fight is for you</h3>
+      <p>The eight thoughts of the desert, as St John Cassian taught them. All eight attack everyone. But "every one should discover his besetting sin, and direct his main attack against it." That becomes a private page behind a tap.</p>
+      <span class="who">St John Cassian, whose teaching is in the Philokalia</span>
+    </div>
+    <div class="find">
+      <h3>Gregory's little grids</h3>
+      <p>Four speeds of anger, from "kindled reeds" that flare and die to "harder kinds of wood" that are slow to light and slow to go out. Four kinds of speakers. Each becomes a simple chart with you on it.</p>
+      <span class="who">Moralia on Job</span>
+    </div>
+    <div class="find">
+      <h3>Saints whose temper is on record</h3>
+      <p>Sometimes "by nature". Ephrem was quick to anger by nature, and grace changed it. Chrysostom was hot-tempered from his youth. Nazianzen loved quiet "from the first". Martin was never seen angry. And Bible figures: Isaiah volunteers, Jeremiah pleads, Peter rushes in.</p>
+      <span class="who">Early histories, letters and lives, all public domain</span>
+    </div>
+    <div class="find out">
+      <h3>What I left out, and why</h3>
+      <p>No sixteen made-up clusters, because no Father gives them. No "fear, reward or love" score, because it's a ladder everyone climbs and scoring it would grade holiness. No "three powers of the soul" type, because every soul has all three.</p>
+    </div>
+    <div class="find out">
+      <h3>How it's checked</h3>
+      <p>Eight researchers read the original texts. Every quote was machine-checked against the saved text. The lines on this page were checked again by me.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sheet" aria-labelledby="h-rep">
+  <h2 id="h-rep">The whole report, for one example person</h2>
+  <p class="muted">The same example person as last time. Everything comes from their answers and the sources. The grey line at the foot of each page says what feeds it.</p>
+  <nav class="toc" aria-label="Report pages">
+    <a href="#p1">1 Snapshot</a><a href="#p2">2 Your type</a><a href="#p3">3 Your leanings</a><a href="#p4">4 What you might not have noticed</a><a href="#p5">5 Your anger</a><a href="#p6">6 How you speak</a><a href="#p7">7 How to help you</a><a href="#p8">8 Where the fight is</a><a href="#p9">9 Your best quality</a><a href="#p10">10 In Christ and in the Body</a>
+  </nav>
+
+  <!-- PAGE 1 -->
+  <article class="rpage" id="p1" aria-labelledby="t1">
+    <span class="pn">Page 1</span>
+    <h3 class="pt" id="t1">Your snapshot</h3>
+    <div class="snap" aria-label="Share card">
+      <span class="brand">Wiser Walk</span>
+      <img src="{{P:gregory-of-nazianzus}}" alt="Mosaic of St Gregory the Theologian">
+      <span class="mine">My personality</span>
+      <span class="tname">The Still Water</span>
+      <span class="sub">Careful · Quiet</span>
+      <div class="lean"><span>Keeps the peace</span><span>Lets it go</span><span>Keeps it in</span></div>
+      <div class="help">How to help me: say it gently, and say it in private.</div>
+      <span class="sub">Kindred: St Gregory the Theologian</span>
+      <span class="url">wiserwalk.com/q/personality</span>
+    </div>
+    <p class="fed"><b>Fed by:</b> your type, your three strongest leanings and your help card. The card never shows the fight you're in.</p>
+  </article>
+
+  <!-- PAGE 2 -->
+  <article class="rpage" id="p2" aria-labelledby="t2">
+    <span class="pn">Page 2</span>
+    <div class="typehead">
+      <img src="{{P:gregory-of-nazianzus}}" alt="">
+      <div>
+        <div class="eyebrow">Your type</div>
+        <h3 class="tn" id="t2">The Still Water</h3>
+        <div class="ts">Careful by disposition. Quiet by make-up.</div>
+      </div>
+    </div>
+    <p>You take things in before you let anything out. You'd rather listen than talk, and you'd rather keep the peace than win. A crowded week wears you down faster than it does most people. Give you quiet and you do your best thinking. People trust you, because you're careful with them.</p>
+
+    <div class="trap">
+      <h4>Where the trap is set for you</h4>
+      <p>Gregory says the tempter studies each person first, then sets the trap right next door. For the cheerful it's pleasure. For the gloomy it's a quarrel. For the proud it's praise. For the careful, it's fear.</p>
+      <blockquote><p>"Because the timid dread punishments, he threatens terrors to the fearful."</p><cite>St Gregory the Great, Moralia on Job</cite></blockquote>
+      <p>So your temptation rarely looks like temptation. It looks like worry. What if they're upset? What if it goes wrong? What if I say it, and it costs me?</p>
+    </div>
+
+    <div class="two">
+      <div><h4>What you bring</h4><ul><li>You listen, and people can tell.</li><li>You're slow to judge out loud.</li><li>You rarely make an enemy.</li></ul></div>
+      <div><h4>What it costs you</h4><ul><li>You say less than you mean.</li><li>You carry hurts home with you.</li><li>You wait to be sure, and sometimes the moment passes.</li></ul></div>
+    </div>
+
+    <div class="block">
+      <h4>Saints and Bible figures like you</h4>
+      <div class="kin">
+        <div class="k"><img src="{{P:gregory-of-nazianzus}}" alt=""><div><b>St Gregory the Theologian</b><p>He loved "calm and retirement" from his youth, and ran away when they made him a priest. When Basil called him lazy, he wrote back: "My greatest business always is to keep free from business." Near the end he said, "I am weary of being charged with my gentleness."</p></div></div>
+        <div class="k"><span class="ph" aria-hidden="true">Jer</span><div><b>Jeremiah</b><p>When God called him, he pleaded that he was too young to speak. Gregory says he held back out of love: he longed to stay close to God in quiet.</p></div></div>
+        <div class="k"><span class="ph" aria-hidden="true">Ars</span><div><b>Abba Arsenius</b><p>The desert monk who fled the world to pray. In one old story he is seen sailing in silence, with the Spirit of God beside him.</p></div></div>
+      </div>
+    </div>
+
+    <div class="boats">
+      <h4>Your opposite, and why you need them</h4>
+      <div class="kin"><div class="k"><img src="{{P:basil-the-great}}" alt=""><div><b>The Herald · St Basil the Great</b><p>Confident and restless. Basil and Gregory were best friends for life. Basil pushed and Gregory held back. Basil wanted him in the fight. Gregory wrote back, "Give me before all things quiet." Both are saints.</p></div></div></div>
+      <p>The desert fathers saw it in a vision: two boats on a river. Arsenius sailed in silence with the Spirit of God. Moses the Ethiopian, who welcomed his guests, sailed with angels feeding him honey.</p>
+      <blockquote><p>"One fleeth from the world for Thy Name's sake, and another receiveth and is gracious for Thy Name's sake."</p><cite>The Sayings of the Desert Fathers</cite></blockquote>
+    </div>
+
+    <p class="close">Close call: your second leaning is Serious. A little stronger, and you'd be The Deep Well.</p>
+    <p class="fed"><b>Fed by:</b> 12 questions on mood, confidence and how busyness affects you. <b>Sources:</b> Gregory's Moralia (the four dispositions, the trap, quiet and restless minds); Nazianzen's own orations and letters; the Pastoral Rule on Jeremiah; the Sayings of the Desert Fathers.</p>
+  </article>
+
+  <!-- PAGE 3 -->
+  <article class="rpage" id="p3" aria-labelledby="t3">
+    <span class="pn">Page 3</span>
+    <h3 class="pt" id="t3">Your eighteen leanings</h3>
+    <div class="tops">
+      <div><span class="eyebrow">Most like you</span><ol><li>Keeps the peace</li><li>Lets it go</li><li>Keeps it in</li></ol></div>
+      <div><span class="eyebrow">Where you're balanced</span><ol><li>Pace</li><li>Comforts</li><li>Your mind</li></ol></div>
+    </div>
+    <div class="groups" id="rails"></div>
+    <p class="small muted">Every rail opens to three things: what people see, what they don't, and Gregory's counsel for that side. The striped middle is where the text names no leaning.</p>
+    <p class="fed"><b>Fed by:</b> two questions per pair (three on the pairs that decide your type). <b>Source:</b> the Pastoral Rule, Book III, with Nazianzen and Chrysostom behind it.</p>
+  </article>
+
+  <!-- PAGE 4 -->
+  <article class="rpage" id="p4" aria-labelledby="t4">
+    <span class="pn">Page 4</span>
+    <h3 class="pt" id="t4">What you might not have noticed</h3>
+    <div class="said">
+      <p class="you">You said <b>you listen more than you talk.</b> You also said <b>you have whole conversations in your head that never happen.</b></p>
+      <p>Those are the same thing. The talking doesn't stop. It moves inside, where nobody can answer back. And an argument nobody can answer is easy to win.</p>
+    </div>
+    <div class="said">
+      <p class="you">You said <b>you let rudeness go.</b> You also said <b>hours later you think of what you should have said.</b></p>
+      <p>You win in the moment by staying calm. Then, on a quiet evening, it comes back bigger than it was. The hard part for you isn't staying calm. It's the evening after.</p>
+    </div>
+    <div class="said">
+      <p class="you">You said <b>you're hard on yourself.</b> You also said <b>a mistake stays with you for days.</b></p>
+      <p>Your regret is trying to do the work that mercy is meant to do. Gregory tells people like you to lean on the mercy they're asking for, so the sorrow doesn't crush them.</p>
+      <blockquote><p>"They are to be admonished to build upon the mercy which they crave, lest they perish through the force of immoderate affliction."</p><cite>St Gregory the Great, Pastoral Rule</cite></blockquote>
+    </div>
+    <p class="fed"><b>Fed by:</b> pairs of your own answers that Gregory himself links. A link only prints if you gave both answers.</p>
+  </article>
+
+  <!-- PAGE 5 -->
+  <article class="rpage" id="p5" aria-labelledby="t5">
+    <span class="pn">Page 5</span>
+    <h3 class="pt" id="t5">How your anger works</h3>
+    <div class="grid2" role="img" aria-label="Four speeds of anger. You: slow to catch, slow to let go.">
+      <span></span><span class="ax">Catches quickly</span><span class="ax">Catches slowly</span>
+      <span class="ay">Lets go quickly</span>
+      <div class="cell"><b>Kindled reeds</b><span>A loud crackle, then ashes.</span></div>
+      <div class="cell"><b>Slow and brief</b><span>Gregory: the nearest to peace of mind.</span></div>
+      <span class="ay">Lets go slowly</span>
+      <div class="cell"><b>Quick and lasting</b><span>Gregory calls this one the worst.</span></div>
+      <div class="cell you"><span class="tag">You</span><b>Hard wood</b><span>Slow to light. Hard to put out.</span></div>
+    </div>
+    <blockquote><p>"Others, like the heavier and harder kinds of wood, are slow in taking fire, but being once kindled, are with difficulty put out."</p><cite>St Gregory the Great, Moralia on Job</cite></blockquote>
+    <p>It takes a lot to make you angry. But once it's lit, it stays lit. It just burns where no one can see it. Gregory even wrote down what that anger says to you, and it sounds reasonable:</p>
+    <blockquote><p>"Patiently to endure them is a sin; because if thou dost not withstand them with great indignation, they are afterwards heaped upon thee without measure."</p><cite>Moralia on Job, anger's own speech</cite></blockquote>
+    <p>His cure for your kind is to see it coming. Before the day starts, think through what might go wrong and how you'll meet it calmly. A blow you expected lands softer.</p>
+    <p class="fed"><b>Fed by:</b> two questions. How fast does it catch? How long does it stay? <b>Source:</b> Moralia on Job, the four sorts of anger and the two cures.</p>
+  </article>
+
+  <!-- PAGE 6 -->
+  <article class="rpage" id="p6" aria-labelledby="t6">
+    <span class="pn">Page 6</span>
+    <h3 class="pt" id="t6">How you speak</h3>
+    <div class="grid2" role="img" aria-label="Four kinds of speaker. You: deep thought, hard to get out.">
+      <span></span><span class="ax">Words come easily</span><span class="ax">Words come hard</span>
+      <span class="ay">Thinks deeply</span>
+      <div class="cell"><b>Full in both</b><span>Gregory: worthy of praise.</span></div>
+      <div class="cell you"><span class="tag">You</span><b>Deep, but held in</b><span>Gregory: "calls for aid".</span></div>
+      <span class="ay">Thinks lightly</span>
+      <div class="cell"><b>Fluent, not deep</b><span>The only one he blames.</span></div>
+      <div class="cell"><b>Spare in both</b><span>He asks for kindness here.</span></div>
+    </div>
+    <p>Gregory knew your kind of speaker: people "who have penetration of thought to support them, but from barrenness of expression are made silent." He didn't blame them. He said they need help getting it out. Try writing it down first, or saying it to one person instead of a room.</p>
+    <p class="fed"><b>Fed by:</b> two questions (full version only). <b>Source:</b> Moralia on Job, the four sorts of speakers.</p>
+  </article>
+
+  <!-- PAGE 7 -->
+  <article class="rpage" id="p7" aria-labelledby="t7">
+    <span class="pn">Page 7</span>
+    <h3 class="pt" id="t7">How to help someone like you</h3>
+    <p>Send this to someone who lives with you, works with you, or leads you.</p>
+    <div class="helpcard">
+      <h4>How to help me</h4>
+      <ol>
+        <li>Say it gently. A hint is enough.<small>Gregory, on the bashful</small></li>
+        <li>Say it in private, not in front of people.<small>Nazianzen: "some, when taken to task in public, others, when privately corrected"</small></li>
+        <li>Start with what I did well.<small>Gregory, on the faint-hearted</small></li>
+        <li>Say "next time, try this", not "you did this wrong".<small>Gregory, on the faint-hearted</small></li>
+        <li>Don't point out every small thing.<small>Nazianzen: "seeing not to see, and hearing not to hear them"</small></li>
+        <li>Show me, don't just tell me.<small>Nazianzen: "some are led by doctrine, others trained by example"</small></li>
+        <li>Ask what I think. I rarely offer it.<small>Gregory, on the silent</small></li>
+      </ol>
+      <div class="btns"><button class="btn solid" type="button">Send this card</button><button class="btn" type="button">Compare with them</button></div>
+    </div>
+    <p class="fed"><b>Fed by:</b> seven "what helps you" questions in the full version (four in the shorter one). <b>Sources:</b> Nazianzen's Oration 2 and Gregory's Pastoral Rule.</p>
+  </article>
+
+  <!-- PAGE 8 -->
+  <article class="rpage" id="p8" aria-labelledby="t8">
+    <span class="pn">Page 8</span>
+    <h3 class="pt" id="t8">Where the fight is for you now</h3>
+    <div class="locked" id="lock">
+      <p>This page is private. It shows where the fight is for you right now, not who you are. It never goes on your share card.</p>
+      <button class="btn" type="button" id="showit" aria-expanded="false" aria-controls="fight">Show it</button>
+    </div>
+    <div id="fight" class="block" hidden>
+      <h4>Right now: sadness</h4>
+      <p>The desert fathers called it lupe, a heavy sorrow. St John Cassian says it comes in two kinds. One "springs up when anger has died down". The other comes "from unreasonable anxiety of mind". Your answers show signs of both.</p>
+      <h4>How it talks to you</h4>
+      <blockquote><p>"What ground hast thou to rejoice, when thou endurest so many wrongs from thy neighbours?"</p><cite>Gregory, Moralia on Job, sadness's own speech</cite></blockquote>
+      <p>It sounds reasonable. That's how it works.</p>
+      <h4>How it shows</h4>
+      <p>The people you love come round, and everything they say seems badly timed. Cassian wrote it down 1,600 years ago: "we cannot receive with ordinary civility the visits of those who are near and dear to us."</p>
+      <h4>What feeds it</h4>
+      <p>Anger. Cassian's chain runs from anger to sadness, and from sadness to listlessness. Your anger is the slow, lasting kind. Deal with that, and this weakens.</p>
+      <h4>What takes its place</h4>
+      <p>Not cheerfulness. Cassian says its place is taken by "a godly sorrow and one full of joy".</p>
+      <h4>Catch it early</h4>
+      <div class="steps"><div><b>1. It suggests</b>A thought arrives. That isn't a sin.</div><div><b>2. You enjoy it</b>You turn it over. It feels good to.</div><div><b>3. You agree</b>Now it's yours. Catch it at step one.</div></div>
+      <h4>All eight, for you now</h4>
+      <div class="bars" role="img" aria-label="The eight thoughts, strongest first">
+        <div class="bar lead"><span>Sadness</span><span class="t"><i style="width:82%"></i></span></div>
+        <div class="bar"><span>Anger</span><span class="t"><i style="width:66%"></i></span></div>
+        <div class="bar"><span>Listlessness</span><span class="t"><i style="width:50%"></i></span></div>
+        <div class="bar"><span>Vainglory</span><span class="t"><i style="width:34%"></i></span></div>
+        <div class="bar"><span>Gluttony</span><span class="t"><i style="width:30%"></i></span></div>
+        <div class="bar"><span>Greed</span><span class="t"><i style="width:22%"></i></span></div>
+        <div class="bar"><span>Lust</span><span class="t"><i style="width:20%"></i></span></div>
+        <div class="bar"><span>Pride</span><span class="t"><i style="width:14%"></i></span></div>
+      </div>
+      <p class="small muted">Troubles you least now: pride. Take it again in a few months. Cassian says the fight moves. When one is beaten, you find "the worst fault which he can see among those still there".</p>
+    </div>
+    <p class="fed"><b>Fed by:</b> twelve questions of its own in the full version, plus links from your leanings. <b>Sources:</b> St John Cassian's Institutes and Conferences, with Gregory's Moralia. The seven deadly sins quiz would link here as its fuller version.</p>
+  </article>
+
+  <!-- PAGE 9 -->
+  <article class="rpage" id="p9" aria-labelledby="t9">
+    <span class="pn">Page 9</span>
+    <h3 class="pt" id="t9">Your best quality, and its counterfeit</h3>
+    <div class="two">
+      <div><h4>At its best: gentleness</h4><p>You bear with people. You give them room to be wrong.</p></div>
+      <div><h4>Its counterfeit: letting things slide</h4><p>Gregory warns that "inordinate laxity is believed to be loving-kindness". Letting something go can feel like kindness when it's really avoidance.</p></div>
+    </div>
+    <h4>Your strength needs a partner</h4>
+    <p>Gregory says every gift needs another beside it. Yours is counsel: you turn things over well. Its partner is courage.</p>
+    <blockquote><p>"Counsel is worthless, when the strength of fortitude is lacking thereto, since what it finds out by turning the thing over, from want of strength it never carries on so far as to the perfecting in deed."</p><cite>St Gregory the Great, Moralia on Job</cite></blockquote>
+    <p>In plain words: you think it through well. The risk is that you never get round to doing it.</p>
+    <p class="fed"><b>Fed by:</b> your leanings, with no new questions. <b>Sources:</b> Pastoral Rule on vices that pass for virtues; Moralia on the gifts that guard each other.</p>
+  </article>
+
+  <!-- PAGE 10 -->
+  <article class="rpage" id="p10" aria-labelledby="t10">
+    <span class="pn">Page 10</span>
+    <h3 class="pt" id="t10">Who you are in Christ, and in the Body</h3>
+    <h4>A gift, or a battlefield. Never a verdict.</h4>
+    <p>St John Climacus says some people are drawn to silence or gentleness by nature. Others fight their own nature to get there, and those who fight stand higher. Your quiet may be a gift you were given. Your patience may be a victory you won. Either way, it isn't the whole of you.</p>
+    <h4>What grace does with a temperament</h4>
+    <blockquote><p>"Some are possessed by anger, but while they submit this to reason, they convert it into service rendered to holy zeal."</p><cite>St Gregory the Great, Moralia on Job</cite></blockquote>
+    <p>Every leaning can be turned to God's use. St Ephrem was quick to anger by nature. After he became a monk, no one ever saw him angry again.</p>
+    <h4>Your place in the Body</h4>
+    <blockquote><p>"All rules of conduct are not alike. Abraham was a lover of strangers, David was a humble man, Elijah loved silence, and God accepted the work of all of them."</p><cite>Abba Nastir, The Sayings of the Desert Fathers</cite></blockquote>
+    <p>Gregory says a quiet mind shouldn't be buried in business. People with your make-up often serve best by listening, praying, caring for one person at a time, and doing quiet work well. Take the spiritual gifts test, and this page will join the two results.</p>
+    <blockquote><p>"Let all be eye or all head: will not the body perish?"</p><cite>St John Chrysostom, on 1 Corinthians</cite></blockquote>
+    <div class="btns"><button class="btn solid" type="button">Invite a Herald to compare</button><button class="btn" type="button">Take the gifts test</button></div>
+    <p class="fed"><b>Fed by:</b> your type and two or three questions on the work that draws you. <b>Sources:</b> Climacus (paraphrased; no public-domain English), Moralia on Job, the Sayings, Chrysostom's homily on the Body.</p>
+  </article>
+</section>
+
+<section class="sheet" aria-labelledby="h-types">
+  <h2 id="h-types">The eight types</h2>
+  <p class="muted">Gregory's four dispositions, each in a quiet or a restless mind. The names are drafts. Kindred only where a source records the temper. Where none does, the page says so.</p>
+  <div class="types">
+    <span class="colh">Quiet mind</span><span class="colh">Restless mind</span>
+
+    <div class="ty"><div class="row"><img src="{{P:antony-the-great}}" alt=""><div><div class="nm">The Hearth</div><div class="dm">Cheerful · Quiet</div></div></div><p>Warm, steady, glad to be where you are.</p><p class="trapline"><b>Trap:</b> pleasure. <b>Kindred:</b> St Antony, whose face was cheerful because his soul was at peace.</p></div>
+    <div class="ty"><div class="row"><img src="{{P:augustine-of-hippo}}" alt=""><div><div class="nm">The Spark</div><div class="dm">Cheerful · Restless</div></div></div><p>Quick, bright, always starting something.</p><p class="trapline"><b>Trap:</b> pleasure. <b>Kindred:</b> young Augustine, who loved talk, jokes and friends (partial match).</p></div>
+
+    <div class="ty"><div class="row"><img src="{{P:gregory-the-great}}" alt=""><div><div class="nm">The Deep Well</div><div class="dm">Serious · Quiet</div></div></div><p>Thoughtful, grave, feels things all the way down.</p><p class="trapline"><b>Trap:</b> a quarrel. <b>Kindred:</b> St Gregory the Great, who wrote of his own "sad and melancholy disposition"; Elijah, who "loved silence".</p></div>
+    <div class="ty"><div class="row"><img src="{{P:john-chrysostom}}" alt=""><div><div class="nm">The Forge</div><div class="dm">Serious · Restless</div></div></div><p>Intense, driven, can't stand things done badly.</p><p class="trapline"><b>Trap:</b> a quarrel. <b>Kindred:</b> St John Chrysostom, hot-tempered from his youth by his friends' account; St Jerome, a fighter by his own account.</p></div>
+
+    <div class="ty mine"><div class="row"><img src="{{P:gregory-of-nazianzus}}" alt=""><div><div class="nm">The Still Water</div><div class="dm">Careful · Quiet · the example person</div></div></div><p>Listens first, keeps the peace, thinks it through.</p><p class="trapline"><b>Trap:</b> fear. <b>Kindred:</b> St Gregory the Theologian, Jeremiah, Abba Arsenius.</p></div>
+    <div class="ty"><div class="row"><span class="ph" aria-hidden="true"></span><div><div class="nm">The Watchman</div><div class="dm">Careful · Restless</div></div></div><p>Alert, conscientious, sees the risks first.</p><p class="trapline"><b>Trap:</b> fear. <b>Kindred:</b> Moses, "slow of speech" yet he led; Gideon, "the youngest in my father's house".</p></div>
+
+    <div class="ty"><div class="row"><span class="ph" aria-hidden="true"></span><div><div class="nm">The Oak</div><div class="dm">Confident · Quiet</div></div></div><p>Self-possessed, steady, needs no one's approval.</p><p class="trapline"><b>Trap:</b> praise. <b>Kindred:</b> no saint is on record here yet, and we won't guess.</p></div>
+    <div class="ty"><div class="row"><img src="{{P:basil-the-great}}" alt=""><div><div class="nm">The Herald</div><div class="dm">Confident · Restless</div></div></div><p>Steps forward, speaks up, gets things moving.</p><p class="trapline"><b>Trap:</b> praise. <b>Kindred:</b> Isaiah, "Here am I. Send me!"; Peter, "I never will"; young Basil.</p></div>
+  </div>
+</section>
+
+<section class="sheet" aria-labelledby="h-count">
+  <h2 id="h-count">How many questions</h2>
+  <p>Here's what each layer needs, in a shorter and a full version.</p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Layer</th><th>Shorter</th><th>Full</th><th>What the extra buys</th></tr></thead>
+      <tbody>
+        <tr><td>Your type</td><td class="n">9</td><td class="n">12</td><td>A third question on each pair that decides it, so fewer close calls</td></tr>
+        <tr><td>Your eighteen leanings</td><td class="n">27</td><td class="n">34</td><td>Two questions on every pair, never one</td></tr>
+        <tr><td>Your anger</td><td class="n">2</td><td class="n">2</td><td>Same</td></tr>
+        <tr><td>How you speak</td><td class="n">0</td><td class="n">2</td><td>The whole page</td></tr>
+        <tr><td>How to help you</td><td class="n">4</td><td class="n">7</td><td>A seven-line card instead of four lines</td></tr>
+        <tr><td>Where the fight is</td><td class="n">6</td><td class="n">12</td><td>The biggest gain. Each of the eight gets its own questions instead of leaning on your other answers</td></tr>
+        <tr><td>Your place in the Body</td><td class="n">2</td><td class="n">3</td><td>A clearer read on the work that draws you</td></tr>
+        <tr class="tot"><td>Total</td><td class="n">50 · about 8 min</td><td class="n">72 · about 12 min</td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p><b>My pick: the full 72.</b> Clearer Thinking says 12 minutes too. In the best study I found, about 2 more people in every 100 quit for each extra 100 questions. So 22 more questions would lose fewer than 1 person in 100. People who are logged in could save and finish later.</p>
+  <p><b>Seven answer points: yes.</b> Honestly, the studies say seven points won't make results noticeably more accurate than five, and the best study found no gain past six. But it's what the best tests use, it feels finer, and it adds no questions. What really sharpens results is more questions per trait, and the full version gives that.</p>
+  <div class="q7">
+    <span class="eyebrow">What a question looks like now</span>
+    <div class="stem">Someone needs to tell you that you got something wrong. What gets through to you?</div>
+    <div class="sides"><div class="side a">Hearing it from a few people. One person's opinion I can shrug off.</div><div class="side b">Hearing it from one person, in private.</div></div>
+    <div class="dots7" aria-hidden="true"><span></span><span></span><span></span><span class="m"></span><span></span><span></span><span></span></div>
+    <p class="small muted">From Nazianzen: "some are wont to despise private admonitions, but are recalled to their senses by the condemnation of a number of people".</p>
+  </div>
+</section>
+
+<section class="ask" aria-labelledby="h-ask">
+  <h2 id="h-ask">Five things for you to decide</h2>
+  <ol>
+    <li><b>The eight types.</b> Gregory's four dispositions, each in a quiet or a restless mind. Keep the idea? The names are drafts, so change any you like.</li>
+    <li><b>Length.</b> The shorter one (50 questions, about 8 minutes) or the full one (72, about 12)? I recommend the full one.</li>
+    <li><b>The private page.</b> "Where the fight is for you now" sits inside the report, behind a tap. Your seven deadly sins quiz would point to it as the fuller version. Yes?</li>
+    <li><b>How common your type is.</b> Once enough real people have taken it, the report could say "about 1 in 9 people are The Still Water". It would be a real count, never a score against a person. Your rule is never a percentage against a person, so this one is yours to call.</li>
+    <li><b>What I left out.</b> "What moves you: fear, reward or love." The Fathers teach it as a ladder everyone climbs, so scoring it would grade someone's holiness. I'd leave it out. Agree?</li>
+  </ol>
+  <p class="muted">Once you've answered, I'll write every question and every part of every result from the texts. Then I'll test it on made-up people and bring you a tap-through version before anything goes on the site.</p>
+</section>
+
+</div>
+
+<script>
+(function(){
+  var groups = [
+    ["How you speak", [["Speaks up","Keeps it in",0.67],["Says it plainly","Chooses what to show",0.2]]],
+    ["When you're wronged", [["Lets them know","Lets it go",0.75],["Fiery","Gentle",0.6],["Takes a stand","Keeps the peace",1.0]]],
+    ["How you work", [["Rushes in","Puts it off",0.05],["Hard to start","Hard to finish",-0.3],["Careful with little things","Easy on little things",-0.5]]],
+    ["How you see yourself", [["Sure of your work","Hard on yourself",0.5],["Say it straight","A hint is enough",0.5],["Takes up room","Makes yourself small",0.55],["Holds firm","Easily swayed",0.12],["Light-hearted","Heavy-hearted",0.35]]],
+    ["With other people", [["Simply glad","Feels the sting",-0.5],["Better in public","Better in private",0.4],["Dwells on a mistake","Moves on",-0.6]]],
+    ["With what you have", [["Open-handed","Careful with what you have",0.2],["Enjoys comforts","Keeps a tight rein",-0.1]]]
+  ];
+  var host = document.getElementById('rails');
+  groups.forEach(function(g){
+    var grp = document.createElement('div'); grp.className='grp';
+    var h = document.createElement('span'); h.className='gname'; h.textContent=g[0]; grp.appendChild(h);
+    g[1].forEach(function(r){
+      var v=r[2], pos=(v+1)/2*100, side = Math.abs(v)<0.18 ? 'm' : (v>0?'b':'a');
+      var el=document.createElement('div'); el.className='rail';
+      var fill = side==='m' ? '' : (v>0 ? '<span class="fill b" style="left:50%;width:'+(pos-50)+'%"></span>' : '<span class="fill a" style="left:'+pos+'%;width:'+(50-pos)+'%"></span>');
+      el.innerHTML='<div class="poles"><span class="l">'+r[0]+'</span><span class="r">'+r[1]+'</span></div>'+
+        '<div class="track" role="img" aria-label="'+r[0]+' or '+r[1]+'"><span class="band"></span>'+fill+'<span class="knob '+side+'" style="left:'+pos+'%"></span></div>';
+      grp.appendChild(el);
+    });
+    host.appendChild(grp);
+  });
+  var b=document.getElementById('showit'), f=document.getElementById('fight');
+  b.addEventListener('click', function(){ var open=f.hidden; f.hidden=!open; b.setAttribute('aria-expanded', String(open)); b.textContent = open ? 'Hide it' : 'Show it'; });
+})();
+</script>

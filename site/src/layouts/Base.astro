@@ -740,7 +740,10 @@ const navItems = ACCOUNTS_VISIBLE ? NAV.filter(n => n.href !== '/me/') : NAV;
         // The runner's own element, so the listener is attached on the page a quiz is taken
         // on and nowhere else. Loading happens now; the reader is eighteen statements away
         // from needing it, and the write itself has to be there the instant they finish.
-        const running = document.getElementById('runner');
+        // The statement runner is #runner; a quiz with a runner of its own (the Psalm quiz,
+        // the personality test) marks its root [data-quiz-runner], or its finish would reach
+        // the account only on a later sync.
+        const running = document.querySelector('#runner, [data-quiz-runner]');
 
         if (waiting || running) {
           import('../lib/account/sync')

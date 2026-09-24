@@ -10,9 +10,16 @@ import { bibleFigure } from '../quizzes/bible-figure';
 import { spiritualGifts } from '../quizzes/spiritual-gifts';
 import { whichPsalm } from '../quizzes/which-psalm';
 import { whichEarlyChristian } from '../quizzes/which-early-christian';
+import { personality } from '../quizzes/personality';
 
+/*
+ * The order is the order the menus, /quizzes/, /me/ and "Keep going" (NextUp, which offers the
+ * first few) list them in. The Christian Personality Test, the newest, stands second, straight
+ * after the flagship, as it leads the home page's rail: at the end of the list it would rarely
+ * be offered under a finished result.
+ */
 export const QUIZZES: Quiz[] = [
-  theologyCompass, sevenDeadlySins, bibleFigure, spiritualGifts, whichPsalm, whichEarlyChristian
+  theologyCompass, personality, sevenDeadlySins, bibleFigure, spiritualGifts, whichPsalm, whichEarlyChristian
 ];
 
 /** Live quizzes only: what the hub lists and what search engines are invited to index. */
@@ -56,6 +63,16 @@ function validate(quiz: Quiz): void {
   if (quiz.strategy.shape === 'reading') {
     if (quiz.items.length || quiz.groups.length) throw new Error(`${where}: a reading carries no items or groups`);
     if (!quiz.outcomes.length) throw new Error(`${where}: a reading needs the psalms it can print as outcomes`);
+    return;
+  }
+  // A personality portrait asks its own 72 questions on its own runner and carries its answers in
+  // its own code (strategies/personality.ts), so it has no items or groups in the engine's sense.
+  // What must hold is the eight types and the prefix its codes are bound by; the questions, the
+  // scoring and the codes are checked by the data build and the engine test.
+  if (quiz.strategy.shape === 'personality') {
+    if (quiz.items.length || quiz.groups.length) throw new Error(`${where}: a personality portrait carries no items or groups`);
+    if (quiz.outcomes.length !== 8) throw new Error(`${where}: a personality portrait names eight types, not ${quiz.outcomes.length}`);
+    if (quiz.codePrefix !== 'PQ') throw new Error(`${where}: personality codes are bound by the prefix PQ, not ${quiz.codePrefix}`);
     return;
   }
   // Kindred spirits compare each statement on its own with what each person held: one statement

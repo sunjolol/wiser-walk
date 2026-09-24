@@ -5,7 +5,7 @@ published: 2026-09-20
 minutes: 7
 answer: "Scripture means two things by patience: being slow to anger with people, and staying steady while you wait. Both begin with God's patience towards you. So count what you were shown before you count what you are owed, slow the first ten seconds, overlook something, and wait like a farmer."
 tags: [formation, patience]
-quizzes: [seven-deadly-sins, which-early-christian]
+quizzes: [personality, seven-deadly-sins, which-early-christian]
 image: /img/articles/how-to-become-more-patient.jpg
 imageAlt: "A sower walks a ploughed field under a huge yellow sun"
 imageCredit: "Vincent van Gogh, The Sower, 1888"

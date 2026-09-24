@@ -200,6 +200,21 @@
   content: ""; position: absolute; inset: 0; z-index: -1;
   background: linear-gradient(180deg, rgba(38, 33, 28, 0) 28%, rgba(38, 33, 28, .74) 62%, rgba(34, 30, 26, .95));
 }
+/* The Christian Personality Test (2026-09-24): the one room in COLOUR, the eight paintings its
+   types wear, two across and four down, so it is left out of the sepia above. The crop keeps the
+   top two rows, which is all of the picture the words leave uncovered. Its ink is a soft leaf
+   green, the one hue the other five (a lilac, a sky blue, a cream, an apricot and a coral) are
+   not near, and the green of Levitan's river and Friedrich's oak inside its own picture. The
+   scrim is a neutral dark rather than the sepia plates' warm brown, so the paintings keep their
+   own colour down to the words, and it closes almost solid under them: the third row is a pale
+   river beside a night sea, and at the plates' strength it showed through as a light box. */
+.room--personality { --room-ink: #BFE3AE; background: #1c1b1a; }
+.hm-rail .room--personality { flex-basis: min(84vw, 24rem); }
+.room--personality > img { object-position: 50% 0%; }
+.room--personality::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, rgba(20, 18, 16, 0) 28%, rgba(20, 18, 16, .8) 56%, rgba(20, 18, 16, .96) 74%, rgba(20, 18, 16, .98));
+}
 
 @media (min-width: 46rem) {
   .room-body { padding: 1.6rem 1.5rem 1.6rem; }

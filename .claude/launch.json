@@ -30,6 +30,20 @@
       "port": 4321
     },
     {
+      "name": "site-alt",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--prefix",
+        "site",
+        "--",
+        "--port",
+        "4343"
+      ],
+      "port": 4343
+    },
+    {
       "name": "site-acct",
       "runtimeExecutable": "node",
       "runtimeArgs": [

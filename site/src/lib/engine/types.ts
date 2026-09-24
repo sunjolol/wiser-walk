@@ -429,7 +429,87 @@ export interface KindredView extends ViewBase {
   rows: [];
 }
 
-export type ResultView = BipolarView | UnipolarView | ReadingView | KindredView;
+/**
+ * THE FIFTH SHAPE: a personality portrait.
+ *
+ * The Christian Personality Test does not place a reader on axes to match a tradition, rank
+ * categories, read a situation or find a kindred spirit. Seventy-two quick choices are scored
+ * by the design's own score.mjs (see strategies/personality.ts) into ONE of eight types (St
+ * Gregory the Great's four dispositions, each with a quiet or a restless mind), and a
+ * ten-page report around it. Nothing on it is a percentage against a person.
+ *
+ * Twelve of the questions are private. Their answers never enter a code, a URL, the account
+ * database or the server: a result link carries the public answers and only the six facts
+ * `derive()` works out from the private ones on the device (PersonalityFacts). The private
+ * page itself is drawn only in the browser that took the test.
+ */
+
+/** The public answers: every two-sided item -3..3 (b3 included), and the two picks as lists of lines. */
+export type PersonalityAnswers = Record<string, number | string[]>;
+
+/** The six facts score.mjs's derive() reduces the twelve private answers to. All a link carries of them. */
+export interface PersonalityFacts {
+  lowCheer: boolean;
+  lowSer: boolean;
+  lowConf: boolean;
+  /** Gregory's four kinds of anger (Moralia V.80): kindled reeds, slow and brief, quick and lasting, hard wood. */
+  angerCell: 'reeds' | 'brief' | 'worst' | 'wood';
+  angerMiddle: boolean;
+  hardToCorrect: boolean;
+}
+
+/** The private page's scores (Cassian's eight thoughts). Only ever computed on the device that took the test. */
+export interface PersonalityThoughts {
+  scores: Record<string, number>;
+  order: string[];
+  lead: string;
+  least: string;
+  none: boolean;
+  several: string[] | null;
+  close: string | null;
+  bars: Record<string, number>;
+}
+
+/** What score.mjs's score() returns, field for field. With the facts in place of the private answers, `thoughts` is null. */
+export interface PersonalityReport {
+  /** Every scale from -1 (its left pole) to +1 (its right pole). */
+  scales: Record<string, number>;
+  type: string;
+  disposition: string;
+  secondDisposition: string;
+  makeup: 'quiet' | 'restless';
+  closeCalls: Array<{ kind: 'balanced' } | { kind: 'disposition'; type: string; second: string } | { kind: 'makeup'; type: string }>;
+  trap: string;
+  trapSwapped: boolean;
+  trapQuiet: boolean;
+  leanings: Array<{ key: string; value: number; side: 'left' | 'right' | 'middle'; pole: string | null }>;
+  strongest: Array<{ key: string; pole: string; value: number }>;
+  balanced: Array<{ key: string; label: string }>;
+  links: Array<{ id: string; strength: number }>;
+  anger: { cell: PersonalityFacts['angerCell']; middle: boolean };
+  speaker: { ease: number; weight: number; cell: 'full' | 'fluent' | 'deep' | 'spare'; middle: boolean };
+  help: Array<{ key: string; side: 'left' | 'right'; text: string; note: string }>;
+  thoughts: PersonalityThoughts | null;
+  virtue: string | null;
+  partner: 'counsel' | 'fortitude' | null;
+  line: { scores: Record<string, number>; lead: string; second: string; why: string[]; behind: number };
+}
+
+export interface PersonalityView extends ViewBase {
+  shape: 'personality';
+  /** The type's key ('hearth', 'stillwater'): also its outcome slug, and what `named` holds. */
+  type: string;
+  /** The public answers the code carries, rebuilt from it. Never a private answer. */
+  answers: PersonalityAnswers;
+  /** The six facts the code carries in place of the private answers. */
+  pub: PersonalityFacts;
+  /** score(answers, pub): the whole public report. Its `thoughts` is always null here. */
+  report: PersonalityReport;
+  ranked: [];
+  rows: [];
+}
+
+export type ResultView = BipolarView | UnipolarView | ReadingView | KindredView | PersonalityView;
 
 /**
  * A scoring strategy turns a sheet into per-group values, and values into a result.

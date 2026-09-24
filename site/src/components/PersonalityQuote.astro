@@ -1,0 +1,16 @@
+---
+/**
+ * One quotation on the Christian Personality Test's report: the words, word for word, and whose
+ * they are (preview/app.js q()). Philosopher's capital I reads as a small l, so a lone I is set in
+ * a serif that shows it, as the preview does.
+ */
+interface Props {
+  q?: { q: string; cite: string } | null;
+}
+
+const { q } = Astro.props;
+const parts = q ? q.q.split(/\b(I)\b/) : [];
+---
+{q && (
+  <blockquote class="pq-quote"><p>“{parts.map((p, i) => (i % 2 ? <span class="pq-cap-i">I</span> : p))}”</p><cite>{q.cite}</cite></blockquote>
+)}

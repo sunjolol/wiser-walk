@@ -21,7 +21,9 @@
  *     which is honest: we are not pretending to have a portrait we do not have
  *
  * Every plate is Gustave Doré, 1866, public domain, except the early Christians quiz's, which
- * is Dürer's (1514, public domain). Credits: public/img/CREDITS.md.
+ * is Dürer's (1514, public domain), and the Christian Personality Test's, which is not an
+ * engraving at all: the eight paintings its types wear, in colour (all public domain).
+ * Credits: public/img/CREDITS.md.
  */
 export interface QuizArt {
   src: string;
@@ -35,9 +37,27 @@ export interface QuizArt {
    * other plates need; home.css already dims that one picture for the same reason.
    */
   lift?: number;
+  /**
+   * Paintings in colour, printed as they are: never through the soft sepia the engravings get
+   * (and never the engravings' `lift`, which is a brightness for that sepia). A card sets its
+   * picture's filter to none; a band shows it as `kind="painting"`. Only the Christian
+   * Personality Test's picture is one so far.
+   */
+  colour?: boolean;
 }
 
 const ART: Record<string, QuizArt> = {
+  /* The eight paintings the test's eight types wear, two across and four down, in the types'
+     own order (build-personality-data.mjs makes it from the report's pictures). Colour, on
+     purpose: the owner loves the old art but wants colour, and the other quizzes are ink.
+     The crop keeps the top two rows, the grandfather and the wedding dance over the well and
+     the forge, which are the part a card shows above its words. */
+  personality: {
+    src: '/img/personality/mosaic.jpg',
+    alt: 'Eight paintings in a grid: a boy reading to his grandfather (Anker), a village wedding dance (Bruegel), Rebecca at the well (Murillo), a family at an iron forge (Wright of Derby), a monastery across a still river (Levitan), a sailor on watch under a ship’s bell (Homer), a lone oak in a wide valley (Friedrich) and Paul preaching in Athens (Raphael)',
+    objectPosition: '50% 0%',
+    colour: true
+  },
   'bible-figure': {
     src: '/img/dore-moses.jpg',
     alt: 'Gustave Doré’s engraving of Moses breaking the tablets of the law',
@@ -74,6 +94,17 @@ const ART: Record<string, QuizArt> = {
 };
 
 export const artFor = (slug: string): QuizArt | null => ART[slug] ?? null;
+
+/**
+ * How a card prints a `colour` picture, as an inline style on its <img> (the cards' own sheets
+ * set the engravings' sepia, and this undoes it for this one picture): as it is, with no filter,
+ * and fading into the card's dark ground from a little above the words. The Personality Test's
+ * lower rows are a pale river and a pale sky, and through the plates' scrim they showed as a
+ * light box behind the title. The home page does the same in home.css (.room--personality).
+ */
+export const COLOUR_PRINT =
+  'filter:none;-webkit-mask-image:linear-gradient(180deg,#000 40%,transparent 80%);' +
+  'mask-image:linear-gradient(180deg,#000 40%,transparent 80%)';
 
 /**
  * The plate for one figure in the "Who in the Bible are you most like?" quiz, keyed by the

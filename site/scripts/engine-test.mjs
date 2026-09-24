@@ -53,6 +53,29 @@ await build({
 const { isUniformSheet, centresUniformSheets, groupNoteFor, resultNotes } =
   await import(pathToFileURL(OUT_TYPES).href);
 
+/*
+ * The Christian Personality Test's strategy, bundled on its own like the other shapes' (section 20
+ * uses it most), because its helpers (encodeAnswers, decodeAnswers, derive, EXAMPLE_CODE) are not
+ * on the registry's surface.
+ */
+const OUT_PERSONALITY = resolve(ROOT, 'node_modules/.engine-test-personality.mjs');
+await build({
+  entryPoints: [resolve(ROOT, 'src/lib/strategies/personality.ts')],
+  outfile: OUT_PERSONALITY, bundle: true, format: 'esm', platform: 'node', target: 'node18', logLevel: 'silent'
+});
+const PQS = await import(pathToFileURL(OUT_PERSONALITY).href);
+rmSync(OUT_PERSONALITY, { force: true });
+
+/**
+ * One real result's values for any quiz, whatever its shape, for the checks that need "some code
+ * of this quiz": a reading's is one situation, a personality portrait's the digits of its example
+ * result, and every other quiz's a value per group.
+ */
+const sampleValues = (q, v = 50) =>
+  q.strategy.shape === 'reading' ? [0]
+    : q.strategy.shape === 'personality' ? decodeFor(q, PQS.EXAMPLE_CODE)
+      : q.groups.map(() => v);
+
 let failures = 0;
 const fail = m => { failures++; console.log('  FAIL ' + m); };
 const ok = m => console.log('  ok   ' + m);
@@ -82,7 +105,9 @@ console.log('1b. publication status');
     'bible-figure': 'live',
     'spiritual-gifts': 'live',
     'seven-deadly-sins': 'live',
-    'which-psalm': 'live'
+    'which-psalm': 'live',
+    'which-early-christian': 'live',
+    'personality': 'live'
   };
   for (const [slug, status] of Object.entries(want)) {
     const q = getQuiz(slug);
@@ -102,8 +127,9 @@ console.log('1b. publication status');
 // ------------------------------------------------------- 2. codec round-trips
 console.log('2. codec round-trips');
 for (const q of QUIZZES) {
-  // A reading's code carries one situation, not a value per group; section 18 checks it.
-  if (q.strategy.shape === 'reading') continue;
+  // A reading's code carries one situation, not a value per group; section 18 checks it. A
+  // personality code carries its own answers; section 20 checks it.
+  if (q.strategy.shape === 'reading' || q.strategy.shape === 'personality') continue;
   const steps = q.config.radix - 1;
   let bad = 0, n = 0;
   // Every reachable value on every group, plus the corners.
@@ -409,7 +435,7 @@ console.log('7. share text');
 {
   for (const q of QUIZZES) {
     if (q.strategy.shape === 'reading') continue; // section 18
-    const values = q.groups.map((_, i) => (i % 2 ? 70 : 30));
+    const values = q.strategy.shape === 'personality' ? sampleValues(q) : q.groups.map((_, i) => (i % 2 ? 70 : 30));
     const text = shareTextFor(q, values, 'https://wiserwalk.com');
     const lines = text.split('\n');
     if (lines[0] !== q.shareTitle) fail(`${q.slug}: share title is "${lines[0]}"`);
@@ -576,6 +602,7 @@ console.log('10. every group in every quiz is keyed in both directions');
   // in a thrown build error.
   for (const q of QUIZZES) {
     if (q.strategy.shape === 'kindred') continue; // one statement per question, never summed; section 19
+    if (q.strategy.shape === 'personality') continue; // no groups: its own 72 questions; section 20
     const bad = q.groups.filter((_, i) => {
       const dirs = q.items.filter(it => it.group === i).map(it => it.direction);
       return !dirs.includes(1) || !dirs.includes(-1);
@@ -1002,7 +1029,7 @@ console.log('12c. the wide codec carries nineteen gifts');
   // ...and no other quiz's code opens this one, or a reader would meet a fabricated result.
   for (const q of QUIZZES) {
     if (q.slug === sg.slug) continue;
-    const foreign = encodeFor(q, q.strategy.shape === 'reading' ? [0] : q.groups.map(() => 50));
+    const foreign = encodeFor(q, sampleValues(q));
     if (decodeFor(sg, foreign) !== null) fail(`a ${q.slug} code decoded under spiritual-gifts`);
   }
   ok('no other quiz\'s code decodes under spiritual-gifts');
@@ -1387,7 +1414,7 @@ console.log('14. the note travels with the name it belongs to');
    */
   for (const q of QUIZZES) {
     if (q.strategy.shape === 'reading') continue; // names nothing that carries a note; section 18
-    const values = q.groups.map((_, i) => (i % 2 ? 75 : 25));
+    const values = q.strategy.shape === 'personality' ? sampleValues(q) : q.groups.map((_, i) => (i % 2 ? 75 : 25));
     const lines = shareTextFor(q, values, 'https://wiserwalk.com');
     const view = resultFor(q, values);
     const printed = lines.split('\n').slice(1, -1);
@@ -1766,7 +1793,7 @@ console.log('18. which psalm are you living right now?');
   else ok(`${junk.length} malformed codes refused`);
   for (const other of QUIZZES) {
     if (other.slug === q.slug) continue;
-    const foreign = encodeFor(other, other.groups.map(() => 50));
+    const foreign = encodeFor(other, sampleValues(other));
     if (decodeFor(q, foreign) !== null) fail(`a ${other.slug} code decoded under which-psalm`);
     if (decodeFor(other, encodeFor(q, [0])) !== null) fail(`a which-psalm code decoded under ${other.slug}`);
   }
@@ -1908,6 +1935,20 @@ console.log('18b. short result links');
       for (let i = 0; i < 500 && out.size === i; i++) keep(() => encodeFor(q, [i]));
       return [...out];
     }
+    if (q.strategy.shape === 'personality') {
+      // Finished tests, private answers and all, as the runner encodes them; and the example.
+      keep(() => PQS.EXAMPLE_CODE);
+      for (let i = 0; i < 40; i++) {
+        const a = {};
+        for (const it of PQS.ITEMS) {
+          a[it.id] = it.kind === 'pick'
+            ? PQS.LINES.filter(() => rand() < 0.2).slice(0, 2)
+            : Math.floor(rand() * 7) - 3;
+        }
+        keep(() => PQS.encodeAnswers(a));
+      }
+      return [...out];
+    }
     [0, 50, 100].forEach(v => keep(() => encodeFor(q, q.groups.map(() => v))));
     for (let i = 0; i < 40; i++) {
       const sheet = q.items.map(() => [-2, -1, 0, 1, 2][Math.floor(rand() * 5)]);
@@ -1925,12 +1966,12 @@ console.log('18b. short result links');
   }));
   const want = {
     'theology-compass': 'same', 'which-psalm': 'same', 'seven-deadly-sins': 'strip', 'bible-figure': 'strip',
-    'spiritual-gifts': 'short', 'which-early-christian': 'short'
+    'spiritual-gifts': 'short', 'which-early-christian': 'short', 'personality': 'short'
   };
   for (const [slug, kind] of Object.entries(want)) {
     if (kinds[slug] !== kind) fail(`${slug} hands out ${kinds[slug]} links, expected ${kind}`);
   }
-  ok('Compass and Psalm keep their codes, the sins and the figures strip, the gifts and quiz #4 get short links');
+  ok('Compass and Psalm keep their codes, the sins and the figures strip, the gifts, quiz #4 and the personality test get short links');
 
   // Every form of every sample comes back to its result, and every public code is at most six.
   const db = supabase();
@@ -1983,7 +2024,9 @@ console.log('18b. short result links');
   }
   if (!leaked) ok(`${junk.length} kinds of junk refused by every quiz, with and without the table`);
 
-  // No form of one quiz's result ever opens a result under another quiz.
+  // No form of one quiz's result ever opens a result under another quiz. (A six-character short
+  // code is a letter and five characters, the shape of a stripped sins or figures code too, so
+  // links.ts never mints one starting with S or B: found 2026-09-24 and closed the same day.)
   let crossed = 0;
   for (const a of QUIZZES) {
     for (const b of QUIZZES) {
@@ -1999,6 +2042,7 @@ console.log('18b. short result links');
       }
     }
   }
+  if ([...shortOf.values()].some(s => s[0] === 'S' || s[0] === 'B')) fail('a short code starts with S or B, the first letter of a stripped code');
   // And a short link read by a quiz that also has short links, but not this row.
   const gifts = getQuiz('spiritual-gifts');
   const twin = { ...gifts, slug: 'gifts-twin' };
@@ -2190,7 +2234,7 @@ console.log('19. which early Christian thinks like you?');
     let crossed = 0;
     for (const other of QUIZZES) {
       if (other.slug === q.slug) continue;
-      const theirs = other.strategy.shape === 'reading' ? encodeFor(other, [0]) : encodeFor(other, other.groups.map(() => 50));
+      const theirs = encodeFor(other, sampleValues(other));
       if (decodeFor(q, theirs) !== null) { crossed++; fail(`a ${other.slug} code opened a result here`); }
       if (decodeFor(other, all4) !== null) { crossed++; fail(`a which-early-christian code opened a ${other.slug} result`); }
     }
@@ -2373,6 +2417,338 @@ console.log('19. which early Christian thinks like you?');
     });
     if (leaks.length) fail(`${leaks.length} lines or hooks from the server-only file are in the registry bundle, e.g. "${leaks[0].slice(0, 60)}"`);
     else ok(`the registry bundle carries no line, hook or credit (${Math.round(bundle.length / 1024)} KB in all)`);
+  }
+}
+
+// ------------------------- 20. the Christian Personality Test: a portrait, and a private page
+/*
+ * The fifth shape. Its scoring is the design's own score.mjs, copied by the data build with only
+ * its imports rewritten, so the first things checked are that the copy and the original agree and
+ * that a result link rebuilds exactly the report the person saw. Then what must never happen: a
+ * private answer in a code, a URL or a decoded result; a code that does not come back to the same
+ * answers; junk, an edited link or another quiz's code opening a result; a picture the report
+ * names that is not there; the report's texts in the bundle every page downloads; and a tally that
+ * counts wrong, counts the example, or breaks when Supabase is away.
+ */
+console.log('20. the Christian Personality Test');
+{
+  const q = getQuiz('personality');
+  const full = JSON.parse(readFileSync(resolve(ROOT, 'src/data/personality.json'), 'utf8'));
+  const scoringFile = JSON.parse(readFileSync(resolve(ROOT, 'src/data/personality-scoring.json'), 'utf8'));
+  const { ITEMS, LINES, TYPES, TYPE_KEYS, TWO_IDS, PRIVATE_IDS, PICK_IDS } = PQS;
+
+  // ---- the test as the brief set it out
+  {
+    const wrong = [];
+    if (!q) fail('personality is not in the registry');
+    if (q.title !== 'Christian Personality Test' || q.shareTitle !== 'Christian Personality Test') wrong.push(`named "${q.title}" / "${q.shareTitle}"`);
+    if (q.status !== 'live') wrong.push(`status ${q.status}`);
+    if (q.strategy.shape !== 'personality') wrong.push(`shape ${q.strategy.shape}`);
+    if (q.codePrefix !== 'PQ') wrong.push(`prefix ${q.codePrefix}`);
+    if (q.shortLinks !== true) wrong.push('no short links');
+    if (q.comparable !== false) wrong.push('comparable');
+    if (q.hideOutcomeScore !== true) wrong.push('prints scores against people');
+    if (q.icon !== 'sparkle' || q.minutes !== 12) wrong.push(`icon ${q.icon}, ${q.minutes} min`);
+    if (q.items.length || q.groups.length) wrong.push('carries engine items or groups');
+    if (q.outcomes.map(o => o.slug).join() !== TYPE_KEYS.join() || q.outcomes.some(o => o.name !== TYPES[o.slug].name)) wrong.push('outcomes are not the eight types');
+    if (q.outcomeNoun !== 'type' || q.outcomeNounPlural !== 'types' || q.outcomePathBase !== 'personality-type') wrong.push('outcome words');
+    if (q.description.length > 160) wrong.push(`description is ${q.description.length} characters`);
+    if (ITEMS.length !== 72 || TWO_IDS.length !== 58 || !TWO_IDS.includes('b3')) wrong.push(`${ITEMS.length} items, ${TWO_IDS.length} two-sided`);
+    if (PRIVATE_IDS.join() !== Array.from({ length: 12 }, (_, i) => 'y' + (i + 1)).join()) wrong.push('the private block is not y1..y12');
+    if (PICK_IDS.join() !== 'b1,b2' || LINES.length !== 7) wrong.push('the picks');
+    if (PQS.CODE_LENGTH > 96 || PQS.EXAMPLE_CODE.length !== PQS.CODE_LENGTH || !PQS.EXAMPLE_CODE.startsWith('PQ1')) wrong.push(`code length ${PQS.CODE_LENGTH}, example ${PQS.EXAMPLE_CODE}`);
+    if (scoringFile.EXAMPLE_CODE !== PQS.EXAMPLE_CODE) wrong.push('the example code is not the scoring file\'s');
+    if (wrong.length) fail('personality: ' + wrong.join('; '));
+    else ok(`live, PQ codes of ${PQS.CODE_LENGTH} characters with short links, no compare page, no score against a person; 72 items (58 two-sided, 12 private, 2 picks), 8 types`);
+  }
+
+  // A seeded maker of finished tests: plain, middling and all-out answerers, picks in any order.
+  let seed = 20;
+  const rand = () => (seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648;
+  const finished = i => {
+    const pool = [[-3, -2, -1, 0, 1, 2, 3], [-1, 0, 0, 1], [-3, -3, -2, 2, 3, 3]][i % 3];
+    const a = {};
+    for (const it of ITEMS) {
+      if (it.kind === 'pick') {
+        const lines = [...LINES].sort(() => rand() - 0.5);
+        a[it.id] = lines.slice(0, Math.floor(rand() * 3));
+      } else a[it.id] = pool[Math.floor(rand() * pool.length)];
+    }
+    return a;
+  };
+  /** What a code must give back: the two-sided answers, and each pick in LINES order. */
+  const publicOf = a => Object.fromEntries(ITEMS.filter(it => it.kind !== 'freq').map(it =>
+    [it.id, it.kind === 'pick' ? LINES.filter(l => (a[it.id] ?? []).includes(l)) : a[it.id]]));
+  const hasPrivate = o => Object.keys(o ?? {}).some(k => /^y\d+$/.test(k));
+  const J = JSON.stringify;
+
+  // ---- 2,000 finished tests: encode, decode, and the same public report as the full answers
+  const reached = new Map();
+  const made = [];
+  {
+    let bad = 0;
+    const why = (i, m) => { bad++; if (bad < 6) fail(`finished test ${i}: ${m}`); };
+    for (let i = 0; i < 2000; i++) {
+      const a = finished(i);
+      const code = PQS.encodeAnswers(a);
+      made.push([a, code]);
+      if (code.length !== PQS.CODE_LENGTH || !/^PQ1[0-9A-Z]+$/.test(code)) { why(i, `code ${code}`); continue; }
+      const back = PQS.decodeAnswers(code);
+      if (!back) { why(i, `${code} does not decode`); continue; }
+      if (J(back.answers) !== J(publicOf(a))) why(i, 'the public answers did not come back');
+      if (hasPrivate(back.answers) || hasPrivate(back.pub)) why(i, 'a private answer came back out of the code');
+      if (J(back.pub) !== J(PQS.derive(a))) why(i, 'the facts did not come back');
+      const whole = PQS.score(a);
+      const shared = PQS.score(back.answers, back.pub);
+      if (J(shared) !== J({ ...whole, thoughts: null })) why(i, 'the public report differs from the full answers\' report');
+      if (!whole.thoughts) why(i, 'the full answers did not score the private page');
+      const values = decodeFor(q, code);
+      if (!values || encodeFor(q, values) !== code) { why(i, `${code} does not round-trip through the registry`); continue; }
+      if (decodeFor(q, code.toLowerCase()) === null) why(i, `${code} in lower case is refused`);
+      const v = resultFor(q, values);
+      if (v.shape !== 'personality' || v.code !== code || v.type !== whole.type || v.named.join() !== whole.type ||
+        v.headline !== TYPES[whole.type].name || v.summary !== TYPES[whole.type].tagline || v.rows.length || v.ranked.length ||
+        v.headlineParts.length !== 1 || v.headlineParts[0].text !== v.headline) why(i, 'the view is wrong');
+      if (J(v.report) !== J(shared) || hasPrivate(v.answers) || v.report.thoughts !== null) why(i, 'the view\'s report is not the public report');
+      reached.set(v.type, (reached.get(v.type) ?? 0) + 1);
+    }
+    const never = TYPE_KEYS.filter(k => !reached.has(k));
+    if (never.length) fail('never reached in 2,000 finished tests: ' + never.join(', '));
+    if (!bad) ok(`2,000 finished tests: codes round-trip, give back every public answer and the six facts, and rebuild the report exactly (${TYPE_KEYS.map(k => `${k} ${reached.get(k) ?? 0}`).join(', ')})`);
+  }
+
+  // ---- privacy: the private answers change nothing in a code but the six facts
+  {
+    let bad = 0, same = 0, changed = 0;
+    const silent = PRIVATE_IDS.filter(id => !['y1', 'y2', 'y4', 'y5', 'y7', 'y9', 'y10'].includes(id)); // feed no fact
+    for (const [a, code] of made.slice(0, 600)) {
+      // Private answers that feed no fact: the code must not move at all.
+      const b = { ...a };
+      for (const id of silent) b[id] = Math.floor(rand() * 7) - 3;
+      if (PQS.encodeAnswers(b) !== code) { bad++; if (bad < 4) fail('a private answer that feeds no fact changed the code'); }
+      // Any private answers at all: the same facts give the same code, different facts a different one, and the
+      // public part of the code never moves.
+      const c = { ...a };
+      for (const id of PRIVATE_IDS) c[id] = Math.floor(rand() * 7) - 3;
+      const cc = PQS.encodeAnswers(c);
+      const sameFacts = J(PQS.derive(c)) === J(PQS.derive(a));
+      if (sameFacts) { same++; if (cc !== code) { bad++; if (bad < 4) fail('the same facts from other private answers gave another code'); } }
+      else { changed++; if (cc === code) { bad++; if (bad < 4) fail('different facts gave the same code'); } }
+      if (J(PQS.decodeAnswers(cc).answers) !== J(PQS.decodeAnswers(code).answers)) { bad++; if (bad < 4) fail('private answers moved a public answer'); }
+    }
+    // The strategy's own split, for the runner's store: the twelve, and nothing public.
+    const [a0] = made[0];
+    const priv = PQS.privateAnswers(a0);
+    if (Object.keys(priv).join() !== PRIVATE_IDS.join()) { bad++; fail('privateAnswers() is not y1..y12'); }
+    if (hasPrivate(PQS.publicAnswers(a0))) { bad++; fail('publicAnswers() kept a private answer'); }
+    if (PQS.unanswered(a0).length) { bad++; fail('a finished test has unanswered items: ' + PQS.unanswered(a0).join()); }
+    const half = Object.fromEntries(Object.entries(a0).slice(0, 30));
+    if (PQS.unanswered(half)[0] !== ITEMS[30].id) { bad++; fail(`the first unanswered item is ${PQS.unanswered(half)[0]}, not ${ITEMS[30].id}`); }
+    if (!same || !changed) { bad++; fail(`the privacy check met ${same} pairs with the same facts and ${changed} with different ones`); }
+    if (!bad) ok(`private answers: 600 that feed no fact left every code alone; ${same} other sets with the same facts gave the same code, ${changed} with different facts a different one; no public answer moved`);
+  }
+
+  // ---- junk, edited links and other quizzes' codes are refused
+  {
+    const code = PQS.EXAMPLE_CODE, body = code.slice(3), W = body.length;
+    const junk = ['', 'PQ', 'PQ1', 'PQ2' + body, 'PQ0' + body, 'PX1' + body, body, 'QP1' + body, code + '0', code.slice(0, -1),
+      'PQ1' + 'Z'.repeat(W), 'PQ1' + body.slice(0, -1) + '!', 'PQ1-' + body.slice(1), ' ' + code.slice(1), 'PQ1' + body.slice(0, -1) + 'é'];
+    const leaked = junk.filter(c => decodeFor(q, c) !== null || PQS.decodeAnswers(c) !== null || PQS.typeOfCode(c) !== null);
+    if (leaked.length) fail('junk decoded under personality: ' + leaked.join(', '));
+    else ok(`${junk.length} malformed codes refused, among them a wrong version, a code past the largest and one with no prefix`);
+
+    // An edited link: the same public answers with an anger reading no private answer could give.
+    let edited = 0, refused = 0;
+    for (const [, c] of made) {
+      const values = decodeFor(q, c);
+      const d = values[values.length - 1], cell = (d >> 3) & 3;
+      const flipped = [...values.slice(0, -1), d - 8 * cell + 8 * (cell ^ 1)]; // fast <-> slow to catch fire
+      edited++;
+      if (decodeFor(q, encodeFor(q, flipped)) === null) refused++;
+    }
+    if (refused !== edited) fail(`${edited - refused} of ${edited} edited anger readings were accepted`);
+    else ok(`${edited} links edited to an anger reading the public answers rule out: all refused`);
+
+    let crossed = 0;
+    for (const other of QUIZZES) {
+      if (other.slug === q.slug) continue;
+      if (decodeFor(q, encodeFor(other, sampleValues(other))) !== null) { crossed++; fail(`a ${other.slug} code opened a result here`); }
+      if (decodeFor(other, code) !== null) { crossed++; fail(`a personality code opened a ${other.slug} result`); }
+    }
+    if (!crossed) ok('no other quiz\'s code opens a result here, and no code from here opens another quiz');
+  }
+
+  // ---- parity with the design's own score.mjs, on the simulated people it was tested on
+  {
+    const DESIGN = resolve(ROOT, '../design/quiz-ideas/personality');
+    if (!existsSync(resolve(DESIGN, 'score.mjs')) || !existsSync(resolve(DESIGN, 'sim/answers-3.json'))) {
+      ok('the design folder is not here (a build from site/ alone), so parity with score.mjs is skipped');
+    } else {
+      const D = await import(pathToFileURL(resolve(DESIGN, 'score.mjs')).href);
+      const DI = await import(pathToFileURL(resolve(DESIGN, 'items.mjs')).href);
+      const sims = JSON.parse(readFileSync(resolve(DESIGN, 'sim/answers-3.json'), 'utf8')).results;
+      let differ = 0;
+      if (J(DI.ITEMS) !== J(scoringFile.ITEMS) || J(DI.SCALES) !== J(scoringFile.SCALES) || J(DI.LINES) !== J(scoringFile.LINES)) {
+        differ++; fail('the committed scoring file differs from items.mjs: rerun npm run data');
+      }
+      for (const p of sims) {
+        const want = D.score(p.answers);
+        const code = PQS.encodeAnswers(p.answers);
+        const v = resultFor(q, decodeFor(q, code));
+        const problems = [];
+        if (J(PQS.score(p.answers)) !== J(want)) problems.push('full scoring');
+        if (J(v.report) !== J({ ...want, thoughts: null })) problems.push('the report from the link');
+        if (J(PQS.derive(p.answers)) !== J(D.derive(p.answers))) problems.push('the facts');
+        if (problems.length) { differ++; fail(`${p.id}: ${problems.join('; ')} differ from score.mjs`); }
+      }
+      const example = sims.find(p => p.id === 'p12');
+      if (!example || PQS.encodeAnswers(example.answers) !== PQS.EXAMPLE_CODE) { differ++; fail('EXAMPLE_CODE is not simulated person p12\'s code: rerun npm run data'); }
+      if (!differ) ok(`all ${sims.length} simulated people: the site scores exactly as score.mjs, and a link rebuilds the same report without the private page; the example is p12`);
+    }
+  }
+
+  // ---- the example, and the share text
+  {
+    const values = decodeFor(q, PQS.EXAMPLE_CODE);
+    const v = resultFor(q, values);
+    const lines = shareTextFor(q, values, 'https://wiserwalk.com').split('\n');
+    const want = ['Christian Personality Test', `My type: ${TYPES[v.type].name}`, TYPES[v.type].tagline, `https://wiserwalk.com/r/personality/${PQS.EXAMPLE_CODE}`];
+    if (J(lines) !== J(want)) fail('share text:\n' + lines.join('\n'));
+    else if (/%|\d+\s*(?:percent|points?)/i.test(lines.slice(0, -1).join(' '))) fail('a number in the share text');
+    else ok(`the example is ${v.headline}; share text: ${lines.slice(1, -1).join(' / ')}, then the link`);
+  }
+
+  // ---- every picture the report names is on the site, credited
+  {
+    let bad = 0;
+    const need = new Set(['/img/personality/mosaic.jpg', '/img/logo-w-large-white.png']);
+    for (const t of Object.values(full.TYPES)) {
+      need.add(`/img/personality/art/${t.art}.jpg`);
+      for (const k of t.kindred) need.add(`/img/personality/faces/${k.img}.jpg`);
+    }
+    for (const o of Object.values(full.OPPOSITES)) for (const p of Object.values(o.people)) need.add(`/img/personality/faces/${p.img}.jpg`);
+    for (const l of Object.values(full.LINE_TEXT)) { need.add(`/img/personality/lines/l-${l.img}.jpg`); need.add(`/img/personality/faces/${l.img}.jpg`); }
+    for (const p of need) if (!existsSync(resolve(ROOT, 'public' + p))) { bad++; fail(`no picture at ${p}`); }
+    for (const p of Object.keys(full.PICTURES)) if (!existsSync(resolve(ROOT, 'public' + p))) { bad++; fail(`PICTURES lists ${p}, which is not there`); }
+    const credited = new Set(full.CREDITS.flatMap(c => c.files.map(f => '/img/personality/' + f)));
+    for (const p of Object.keys(full.PICTURES)) if (!credited.has(p)) { bad++; fail(`${p} has no credit`); }
+    for (const c of full.CREDITS) if (!c.line || /unknown|\(|;/i.test(c.line) || !/^https:\/\/commons\.wikimedia\.org\//.test(c.page)) { bad++; fail(`the credit for ${c.key} reads "${c.line}"`); }
+    // The report's pairs and lookups are whole: each type's opposite, and every line, thought and link has its words.
+    for (const [k, t] of Object.entries(full.TYPES)) if (!full.OPPOSITES[[k, t.opposite].sort().join('-')]) { bad++; fail(`no "your opposite" story for ${k} and ${t.opposite}`); }
+    for (const l of LINES) if (!full.LINE_TEXT[l] || !full.LINE_TEXT[full.LINE_TEXT[l].partner]) { bad++; fail(`line ${l} has no text or no partner`); }
+    for (const t of PQS.THOUGHTS) if (!full.THOUGHT_TEXT[t]) { bad++; fail(`thought ${t} has no text`); }
+    if (J(full.LINKS.map(l => l.id)) !== J(scoringFile.LINKS.map(l => l.id))) { bad++; fail('the links\' rules and words are out of step'); }
+    if (J(Object.keys(full.VIRTUES)) !== J(Object.keys(scoringFile.VIRTUES)) || J(Object.keys(full.LEANINGS)) !== J(Object.keys(scoringFile.LEANINGS))) { bad++; fail('the virtues or leanings are out of step'); }
+    if (!bad) ok(`${need.size} pictures the report names are all there; all ${Object.keys(full.PICTURES).length} are credited; every opposite, line, thought and link has its words`);
+  }
+
+  // ---- no two-person page, and the report's texts stay out of what every page downloads
+  {
+    const c = PQS.EXAMPLE_CODE;
+    if (parseCodes(q, `${c}.${c}`) !== null) fail('personality has a compare page');
+    else {
+      let threw = false;
+      try { compare(q, decodeFor(q, c), decodeFor(q, c)); } catch { threw = true; }
+      if (!threw) fail('compare() drew two portraits side by side');
+      else ok('no compare page, and compare() refuses personality results');
+    }
+    const bundle = readFileSync(OUT, 'utf8');
+    const serverOnly = [
+      ...Object.values(full.LEANINGS).flatMap(l => [l.left.unseen, l.right.unseen]),
+      ...Object.values(full.TYPES).map(t => t.portrait),
+      ...Object.values(full.LINE_TEXT).map(l => l.tidbit),
+      ...Object.values(full.THOUGHT_TEXT).map(t => t.what),
+      full.FIGHT.intro,
+      ...full.CREDITS.map(cr => cr.line)
+    ];
+    const leaks = serverOnly.filter(t => bundle.includes(t) || bundle.includes(J(t).slice(1, -1)));
+    if (leaks.length) fail(`${leaks.length} lines from the server-only personality.json are in the registry bundle, e.g. "${leaks[0].slice(0, 60)}"`);
+    else ok(`the registry bundle carries none of the report's ${serverOnly.length} checked lines (${Math.round(bundle.length / 1024)} KB in all)`);
+  }
+
+  // ---- /api/tally: how common each type is, counted from the short links table
+  {
+    const bundled = resolve(ROOT, 'node_modules/.engine-test-tally.mjs');
+    await build({
+      entryPoints: [resolve(ROOT, 'src/pages/api/tally.ts')], outfile: bundled, bundle: true, format: 'esm',
+      platform: 'node', target: 'node22', logLevel: 'silent'
+    });
+    const route = await import(pathToFileURL(bundled).href);
+    rmSync(bundled, { force: true });
+    const ENV = { PUBLIC_SUPABASE_URL: 'https://demo.supabase.co', SUPABASE_SECRET_KEY: 'sb_secret_demo' };
+    const NO_ENV = { PUBLIC_SUPABASE_URL: '', PUBLIC_SUPABASE_KEY: '', SUPABASE_SECRET_KEY: '' };
+
+    /** short_links, faked: PostgREST's filter, order and Range paging, as Supabase answers them. */
+    const table = rows => {
+      const calls = [];
+      const fetchImpl = async (input, init = {}) => {
+        const u = new URL(typeof input === 'string' ? input : input.url);
+        const h = init.headers || {};
+        calls.push({ url: u.href, range: h.range });
+        const answer = (status, body) => ({ status, ok: status < 300, json: async () => body });
+        if (h.apikey !== ENV.SUPABASE_SECRET_KEY || h.authorization) return answer(401, { message: 'wrong key' });
+        if (u.pathname !== '/rest/v1/short_links' || u.searchParams.get('select') !== 'long_code') return answer(404, {});
+        const quiz = (u.searchParams.get('quiz') || '').replace(/^eq\./, '');
+        const mine = rows.filter(r => r.quiz === quiz).sort((x, y) => (x.code < y.code ? -1 : 1));
+        const [from, to] = String(h.range || '0-999').split('-').map(Number);
+        if (mine.length && from >= mine.length) return answer(416, { message: 'Requested range not satisfiable' });
+        return answer(mine.length ? 206 : 200, mine.slice(from, to + 1).map(r => ({ long_code: r.long_code })));
+      };
+      return { fetchImpl, calls };
+    };
+    const shortOf = i => 'S' + String(i).padStart(5, '0');
+    const real = made.map(([, c]) => c);
+    const rows = [
+      ...real.map((c, i) => ({ code: shortOf(i), quiz: 'personality', long_code: c })),
+      { code: 'X00001', quiz: 'personality', long_code: PQS.EXAMPLE_CODE },
+      { code: 'X00002', quiz: 'personality', long_code: 'PQ1NOTACODE' },
+      { code: 'X00003', quiz: 'personality', long_code: 'EC0000000000A' },
+      { code: 'X00004', quiz: 'spiritual-gifts', long_code: real[0] }
+    ];
+    const want = {};
+    for (const c of real) { const t = resultFor(q, decodeFor(q, c)).type; want[t] = (want[t] ?? 0) + 1; }
+    let bad = 0;
+    const db = table(rows);
+    const t = await route.tallyFor('personality', ENV, db.fetchImpl);
+    if (t.total !== real.length) { bad++; fail(`the tally counted ${t.total}, not ${real.length}`); }
+    if (TYPE_KEYS.some(k => (t.types?.[k] ?? -1) !== (want[k] ?? 0))) { bad++; fail('the tally counted the types wrong: ' + J(t.types)); }
+    if (db.calls.length !== 3 || db.calls.map(c => c.range).join() !== '0-999,1000-1999,2000-2999') { bad++; fail('the tally did not page by a thousand: ' + db.calls.map(c => c.range).join()); }
+    if (db.calls.some(c => !c.url.includes('quiz=eq.personality') || !c.url.includes('order=code.asc'))) { bad++; fail('the tally did not ask for this quiz\'s rows in a steady order'); }
+    // The page limit, with small pages: it stops, and counts what it read.
+    const capped = await route.tallyFor('personality', ENV, table(rows).fetchImpl, 7, 3);
+    if (capped.total !== 21) { bad++; fail(`three pages of seven counted ${capped.total}`); }
+    // Supabase away, in every way it can be: nothing counted, nothing thrown.
+    const down = [
+      await route.tallyFor('personality', NO_ENV, db.fetchImpl),
+      await route.tallyFor('personality', ENV, async () => ({ status: 500, ok: false, json: async () => ({}) })),
+      await route.tallyFor('personality', ENV, async () => { throw new Error('offline'); }),
+      await route.tallyFor('personality', ENV, async () => ({ status: 200, ok: true, json: async () => ({ not: 'a list' }) }))
+    ];
+    if (down.some(d => d.total !== null)) { bad++; fail('with Supabase away the tally counted: ' + J(down)); }
+    const empty = await route.tallyFor('personality', ENV, table([]).fetchImpl);
+    if (empty.total !== 0 || TYPE_KEYS.some(k => empty.types[k] !== 0)) { bad++; fail('an empty table did not count nothing: ' + J(empty)); }
+
+    // The route itself, as the result page calls it.
+    const realFetch = globalThis.fetch;
+    globalThis.fetch = db.fetchImpl;
+    try {
+      const call = async (query, env = ENV) => {
+        const url = new URL('https://wiserwalk.com/api/tally' + query);
+        const res = await route.GET({ request: new Request(url), url, locals: { runtime: { env } } });
+        return { status: res.status, cache: res.headers.get('cache-control'), body: await res.json() };
+      };
+      const okCall = await call('?quiz=personality');
+      if (okCall.status !== 200 || okCall.body.total !== real.length || okCall.cache !== 'public, s-maxage=600, stale-while-revalidate=3600') { bad++; fail('GET /api/tally?quiz=personality: ' + J({ ...okCall, body: okCall.body.total })); }
+      const noKey = await call('?quiz=personality', NO_ENV);
+      if (noKey.status !== 200 || noKey.body.total !== null) { bad++; fail('GET /api/tally with no key: ' + J(noKey)); }
+      for (const query of ['?quiz=theology-compass', '?quiz=nope', '']) {
+        const r = await call(query);
+        if (r.status !== 400 || r.body.total !== null) { bad++; fail(`GET /api/tally${query}: ${r.status}`); }
+      }
+    } finally {
+      globalThis.fetch = realFetch;
+    }
+    if (!bad) ok(`/api/tally: ${real.length} results over three pages of a thousand, the example, junk and another quiz's rows left out, every type counted right; the page limit holds; no key, an error, no network or a bad answer give { total: null }; other quizzes are refused`);
   }
 }
 

@@ -247,6 +247,10 @@ export async function mintShortCode(
     if (seen.state === 'down') return null;
     if (mine(seen)) return short;
     if (seen.state === 'found') continue; // another result has it: try the next salt
+    // A six-character code starting with S or B is also a stripped sins or figures code (see the
+    // top of this file), so the same six characters would open a result of theirs too: never
+    // mint one. About 1 short code in 13 moves on to the next salt; rows already made still open.
+    if (short[0] === 'S' || short[0] === 'B') continue;
 
     const res = await ask(
       fetchImpl,

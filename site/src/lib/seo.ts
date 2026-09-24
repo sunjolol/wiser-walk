@@ -114,6 +114,15 @@ export const SEO: Record<string, { title: string; description: string }> = {
     description:
       'Agree or disagree with 23 opinions real early Christians held. Then meet the one who thinks most like you, and the one who would argue. Free, about 4 minutes.'
   },
+  /* Added with the test (2026-09-24). People search the words "Christian personality test", so
+     the title leads with them (the test's own name, the owner's ruling) and asks the question the
+     test answers. The description says what it costs and what comes back, and names the Father
+     the types are drawn from. */
+  '/q/personality/': {
+    title: 'Christian Personality Test: which of 8 types are you? Free',
+    description:
+      'A free Christian personality test built on St Gregory the Great. 72 quick choices, about 12 minutes. Then a ten-page portrait of who you are and where you fit.'
+  },
   /*
    * Its two hubs (2026-09-23). People search for "the early Church Fathers" and for what they
    * believed; nobody searches the quiz's word "kindred". "Church Fathers" is the phrase they
@@ -531,11 +540,14 @@ export function ogImageFor(path: string): string {
  *   - a ranking (sins, gifts) only when one category is clearly ahead
  *   - the Psalm quiz by the psalm the reading leads with (the situation never travels)
  *   - Which early Christian thinks like you? by the kindred spirit, whose slug is named[0]
+ *   - the Christian Personality Test by the type (every result has exactly one), never by
+ *     anything the reader answered
  * Anything else, or a card that was never drawn, is null, and the page keeps its quiz's card.
  */
 export function resultCardFor(quiz: Pick<Quiz, 'slug'>, view: ResultView): string | null {
   let key: string | undefined;
   if (quiz.slug === 'which-early-christian') key = view.named[0];
+  else if (view.shape === 'personality') key = view.type;
   else if (view.shape === 'reading') key = String(view.psalm);
   else if (view.shape === 'bipolar') key = view.state === 'near' || view.state === 'tie' ? view.named[0] : undefined;
   else if (view.shape === 'unipolar') key = view.state === 'clear' ? view.named[0] : undefined;

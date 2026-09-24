@@ -27,7 +27,7 @@ import '../styles/pages/reading.css';
 interface Props { quiz: Quiz; }
 const { quiz } = Astro.props;
 ---
-<div class="rd-root" id="reading" data-quiz={quiz.slug}>
+<div class="rd-root" id="reading" data-quiz={quiz.slug} data-quiz-runner>
   <noscript>
     <div class="note">
       <p>This quiz needs JavaScript enabled.</p>

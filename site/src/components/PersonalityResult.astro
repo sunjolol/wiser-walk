@@ -1,0 +1,1304 @@
+---
+/**
+ * The Christian Personality Test's result: the ten-page report.
+ *
+ * It is the owner's approved tap-through preview (design/quiz-ideas/personality/preview/app.js,
+ * result(), draft 3), rendered on the server in the same order and the same words. He took it and
+ * said "it's ready, push it live" (2026-09-24). So this file reproduces it inside the site's frame
+ * rather than reinterpreting it. Where the preview says "Personality Quiz", the site says
+ * "Christian Personality Test" (his ruling of the same day), and "the quiz" meaning this one is
+ * "the test".
+ *
+ *   page 1   the hero: the type's painting, the logo, the type, its tagline, the two words, the
+ *            strongest leanings, how common the type is, "Save image" and "Copy link"
+ *   the pager, sticky: previous, "N of 10" (tap for all ten), next, how far down you are
+ *   pages 2-10, then "How this test works", "Picture credits" and the result's link
+ *
+ * Everything public is rendered here from the code: view.report is score(answers, facts) run on the
+ * server, and the words come from src/data/personality.json, which is SERVER ONLY (imported in this
+ * front matter, never in the browser). The client script at the foot only works the pager, the
+ * sheets, the two canvas cards, "Copy", the count, page 8 and the other quizzes' context.
+ *
+ * TWO READERS, ONE URL. The server prints the visitor's page. The inline script at the top marks
+ * <html data-pq-who="taker"> before the first paint when this device finished this result: the
+ * runner's tab note ('ww:took:personality' holding this code), a private entry for this code in
+ * 'ww.private.personality', or this code on the device's shelf ('ww.shelf.v1', where a signed-in
+ * account also brings the reader's results from their other devices). A visitor gets a note under
+ * the hero and no "Save image" buttons; everything else is the same report.
+ *
+ * PAGE 8 IS PRIVATE BY CONSTRUCTION. The twelve private answers never enter the code, so the
+ * server cannot draw this page and does not try. The browser that took the test kept them
+ * ('ww.private.personality', entries of { code, answers: { y1..y12 }, at }), and only there, on
+ * "Show it", does this page score them with the design's own score() and draw the cards. Anyone
+ * else reads that the page is private.
+ */
+import type { PersonalityView, Quiz } from '../lib/engine/types';
+import { getQuiz, quizHref } from '../lib/engine/registry';
+import { EXAMPLE_CODE, SCALES } from '../lib/strategies/personality';
+import { artFor } from '../lib/art';
+import { ACCOUNTS_VISIBLE } from '../lib/account/config';
+import Q from './PersonalityQuote.astro';
+import full from '../data/personality.json';
+import '../styles/pages/personality.css';
+
+interface Props {
+  quiz: Quiz;
+  view: PersonalityView;
+  /** The site's origin, for the result's link. */
+  origin: string;
+  /** The code this page's link prints (links.ts linkCodeFor): the short one where there is one. */
+  linkCode: string;
+}
+
+const { quiz, view, origin, linkCode } = Astro.props;
+
+/* The report's words: every export of the design's results.mjs, plus the picture sizes and credits. */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const R: any = full;
+const r = view.report;
+const answers = view.answers as Record<string, unknown>;
+
+const T = R.TYPES[r.type];
+const D = R.DISPOSITIONS[r.disposition];
+const M = R.MAKEUPS[r.makeup];
+const TR = R.DISPOSITIONS[r.trap];
+const O = R.TYPES[T.opposite];
+const LN = R.LINE_TEXT[r.line.lead];
+const PL = R.LINE_TEXT[LN.partner];
+
+/** The eight types in the design's order: the grid on page 2 and the sheets. */
+const TYPE_ORDER = ['hearth', 'spark', 'deepwell', 'forge', 'stillwater', 'lookout', 'oak', 'herald'];
+
+/* ---------------------------------------------------------------- pictures */
+
+type Pic = { src: string; width: number; height: number };
+const PICS: Record<string, { width: number; height: number }> = R.PICTURES;
+/** Every picture this page shows, by its path under /img/personality/, for the credits. */
+const used = new Set<string>();
+const pic = (src: string): Pic | null => {
+  const size = PICS[src];
+  if (!size) return null;
+  used.add(src.replace('/img/personality/', ''));
+  return { src, width: size.width, height: size.height };
+};
+const artPic = (k: string) => pic(`/img/personality/art/${k}.jpg`);
+const facePic = (k: string) => pic(`/img/personality/faces/${k}.jpg`);
+const linePic = (k: string) => pic(`/img/personality/lines/l-${k}.jpg`);
+
+/* ---------------------------------------------------------------- the pages */
+
+/** [id, the pager's short name, the page's heading]: preview/app.js PAGES. */
+const PAGES: Array<[string, string, string]> = [
+  ['pq-p1', 'Your result', 'Your result'],
+  ['pq-p2', 'Your type', 'Your type'],
+  ['pq-p3', 'Leanings', 'Your leanings'],
+  ['pq-p4', 'Not noticed', 'What you might not have noticed'],
+  ['pq-p5', 'Anger', 'How your anger works'],
+  ['pq-p6', 'Speaking', 'How you speak'],
+  ['pq-p7', 'Help me', 'How to help someone like you'],
+  ['pq-p8', 'The fight', 'Where the fight is for you now'],
+  ['pq-p9', 'Best quality', 'Your best quality, and its counterfeit'],
+  ['pq-p10', 'Your role', 'Who you are in Christ, and in the Body']
+];
+const title = (n: number) => PAGES[n - 1]![2];
+
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+/* The trap sentence names all four, with the reader's own last (the owner preferred the whole of Gregory's list). */
+const trapLead = (own: string) => {
+  const order = ['cheerful', 'serious', 'confident', 'careful'].filter(k => k !== own).concat([own]);
+  return R.TRAP_LEAD + ' ' + order.map((k, i) => {
+    const d = R.DISPOSITIONS[k];
+    return 'For ' + d.trapWho + (i === order.length - 1 ? ', it’s ' : ' it’s ') + d.trap.name + '.';
+  }).join(' ');
+};
+
+/* The reasons a line was chosen: only the signals that really pushed this line up for this person. */
+const lineWhy = (lead: string): string[] => {
+  const L = R.LINE_TEXT[lead];
+  const why: string[] = [];
+  const picked = (id: string) => (Array.isArray(answers[id]) ? (answers[id] as string[]) : []);
+  if (picked('b1').includes(lead)) why.push(L.why1);
+  if (picked('b2').includes(lead)) why.push(L.why2);
+  const sig: Array<{ from: string; sign: number; say: string }> = (R.LINE_SIGNALS || {})[lead] || [];
+  for (const s of sig) {
+    const v = s.from === 'behind' ? r.line.behind : r.scales[s.from];
+    if ((v ?? 0) * s.sign >= 0.3) why.push(s.say);
+  }
+  return why.length ? why : ['Your answers, taken together'];
+};
+const why = lineWhy(r.line.lead);
+
+/* ---- page 1 and 2 */
+const heroArt = artPic(T.art);
+const closeTypes: string[] = r.closeCalls.flatMap(c => ('type' in c && c.type ? [c.type] : []));
+const balancedClose = r.closeCalls.some(c => c.kind === 'balanced');
+const headFace = T.kindred.length
+  ? { pic: facePic(T.kindred[0].img), alt: T.kindred[0].who }
+  : { pic: artPic(T.art), alt: '' };
+const mine = r.strongest.slice(0, 2).map(s => {
+  const L = R.LEANINGS[s.key];
+  return L ? L[s.value < 0 ? 'left' : 'right'].you : '';
+}).join(' ');
+const OP = R.OPPOSITES ? R.OPPOSITES[[r.type, T.opposite].sort().join('-')] : null;
+const them = OP ? OP.people[T.opposite] : null;
+const themFace = them ? facePic(them.img) : null;
+const oppArt = artPic(O.art);
+const brings: string[] = [].concat(D.bring, M.bring);
+const costs: string[] = [].concat(D.cost, r.trapSwapped ? [] : [D.trapCost], M.cost);
+const trapSwap = r.trapSwapped
+  ? ' ' + R.TRAP_SWAP.replace('{own}', D.trap.name).replace('{second}', R.DISPOSITIONS[r.trap].word.toLowerCase())
+  : '';
+const kindred = T.kindred.map((k: { img: string; who: string; text: string; src: string; partial?: boolean }) => ({
+  ...k, face: facePic(k.img)
+}));
+const types = TYPE_ORDER.map(k => {
+  const t = R.TYPES[k];
+  const d = R.DISPOSITIONS[t.disposition];
+  return {
+    key: k, t, art: artPic(t.art),
+    words: `${d.word} · ${R.MAKEUPS[t.makeup].word}`,
+    you: k === r.type,
+    close: k !== r.type && closeTypes.includes(k),
+    trap: d.trap.name,
+    kindred: t.kindred.map((x: { who: string }) => x.who)
+  };
+});
+
+/* ---- page 3: leanings. Every line closed at first; the hint says what opening one gives. */
+const round = (n: number) => Math.round(n * 100) / 100;
+const rail = (key: string) => {
+  const s = SCALES[key]!;
+  const value: number = r.scales[key] ?? 0;
+  const pos = ((value + 1) / 2) * 100;
+  const mid = Math.abs(value) < 0.18;
+  const side = mid ? 'm' : value < 0 ? 'a' : 'b';
+  const fill = mid ? null : value < 0
+    ? { cls: 'a', left: round(pos), width: round(50 - pos) }
+    : { cls: 'b', left: 50, width: round(pos - 50) };
+  const L = R.LEANINGS[key];
+  const d = L && !mid ? L[value < 0 ? 'left' : 'right'] : null;
+  return { key, label: s.label ?? key, left: s.left, right: s.right, pos: round(pos), side, fill, d };
+};
+const railGroups: Array<[string, string[]]> = [
+  ['Your type, in detail', ['mood', 'nerve', 'makeup']],
+  ['How you speak', ['talk', 'candour']],
+  ['When you’re wronged', ['wronged', 'temper', 'strife']],
+  ['How you work', ['pace', 'through', 'small']],
+  ['How you see yourself', ['work', 'critic', 'room', 'mind']],
+  ['With other people', ['wins', 'seen', 'after']],
+  ['With what you have', ['having', 'comforts']]
+];
+const groups = railGroups.map(([name, keys]) => ({ name, rails: keys.filter(k => SCALES[k]).map(rail) }));
+
+/* ---- page 4 */
+const links = r.links.slice(0, 4)
+  .map(l => R.LINKS.find((x: { id: string }) => x.id === l.id))
+  .filter(Boolean);
+
+/* ---- pages 5 and 6: Gregory's two-by-two grids, the reader's own cell marked */
+type Cell = { name: string; short: string };
+const grid = (cells: Record<string, Cell>, order: string[], you: string, axisX: [string, string], axisY: [string, string]) => ({
+  label: cells[you]!.name,
+  axisX, axisY,
+  rows: [order.slice(0, 2), order.slice(2, 4)].map(row => row.map(k => ({ key: k, ...cells[k]!, you: k === you })))
+});
+const A = R.ANGER.cells[r.anger.cell];
+const angerGrid = grid(R.ANGER.cells, ['reeds', 'brief', 'worst', 'wood'], r.anger.cell, ['Catches quickly', 'Catches slowly'], ['Lets go quickly', 'Lets go slowly']);
+const SP = R.SPEAKER.cells[r.speaker.cell];
+const speakGrid = grid(R.SPEAKER.cells, ['full', 'deep', 'fluent', 'spare'], r.speaker.cell, ['Words come easily', 'Words come hard'], ['Thinks first', 'Speaks first']);
+
+/* ---- page 9 */
+const V = r.virtue ? R.VIRTUES[r.virtue] : null;
+const P = r.partner ? R.PARTNERS[r.partner] : null;
+
+/* ---- page 10 */
+const lineArt = linePic(LN.img);
+const partnerFace = facePic(PL.img);
+
+/* ---------------------------------------------------------------- other quizzes */
+/*
+ * Two other quizzes are offered on pages 8 and 10, as cards with their engravings, opening in a
+ * new tab (the owner's ruling). Where this browser already has a result for one, the client script
+ * says what it was above the card. It reads the device's shelf the way lib/mine.ts does and ranks
+ * with the category strategy itself, so everything it needs from those quizzes is handed down here
+ * as a small object: their groups' names, their codec numbers and their own ranking settings. The
+ * registry is never sent to the browser. None of it ever changes this report.
+ */
+const other = (slug: string, facts: (q: Quiz) => string[]) => {
+  const q = getQuiz(slug);
+  if (!q || q.status !== 'live') return null;
+  const art = artFor(slug);
+  return {
+    card: { href: quizHref(q), title: q.title, facts: facts(q), img: art?.src ?? null, pos: art?.objectPosition ?? '50% 18%' },
+    slim: {
+      slug: q.slug,
+      codePrefix: q.codePrefix ?? '',
+      shortLinks: Boolean(q.shortLinks),
+      config: q.config,
+      groups: q.groups.map(g => ({ key: g.key, slug: g.slug, name: g.name })),
+      items: [],
+      outcomes: [],
+      unipolarCopy: q.unipolarCopy ?? null,
+      groupNote: q.groupNote ?? null,
+      numbers: { radix: q.config.radix, slots: q.groups.length, prefix: q.codePrefix ?? '' }
+    }
+  };
+};
+const sins = other('seven-deadly-sins', q => [`${q.minutes} min`, `${q.items.length} statements`]);
+const gifts = other('spiritual-gifts', q => [`${q.minutes} min`, `${q.items.length} statements`, `${q.groups.length} gifts`]);
+
+/* ---------------------------------------------------------------- credits */
+TYPE_ORDER.forEach(k => artPic(R.TYPES[k].art));
+const credits: Array<{ line: string; page: string }> = (R.CREDITS as Array<{ line: string; page: string; files: string[] }>)
+  .filter(c => c.files.some(f => used.has(f)));
+
+/* ---------------------------------------------------------------- for the browser */
+
+const url = `${origin}/r/${quiz.slug}/${linkCode}/`;
+/*
+ * A result opened by its long code (the example, /me/, or a runner that gave up waiting) asks for
+ * its six-character link after load and swaps it into the link box, as ShareBlock does.
+ */
+const mint = Boolean(quiz.shortLinks) && linkCode === view.code;
+
+const island = {
+  slug: quiz.slug,
+  code: view.code,
+  type: r.type,
+  name: T.name,
+  mint,
+  /* Everything the two cards draw, and nothing else. Never an answer. */
+  card: {
+    type: r.type,
+    name: T.name,
+    tagline: T.tagline,
+    ink: T.ink,
+    art: `/img/personality/art/${T.art}.jpg`,
+    disposition: D.word,
+    makeup: M.word,
+    poles: r.strongest.map(s => s.pole),
+    line: { key: r.line.lead, name: LN.name, gift: LN.gift, what: LN.what, img: `/img/personality/lines/l-${LN.img}.jpg` },
+    why
+  },
+  /* Page 8's words, for the browser that has the private answers. Nothing personal: the same for everyone. */
+  fight: {
+    thoughts: R.THOUGHT_TEXT,
+    none: R.FIGHT.none,
+    several: R.FIGHT.several
+  },
+  others: { sins: sins?.slim ?? null, gifts: gifts?.slim ?? null }
+};
+const json = (x: unknown) => JSON.stringify(x).replace(/</g, '\\u003c');
+
+const LOCK = 'M7 10V7a5 5 0 0 1 10 0v3';
+
+/* The start page's "See an example" opens a simulated person's result: it is nobody's, so it says so. */
+const isExample = view.code === EXAMPLE_CODE;
+---
+<script is:inline define:vars={{ pqSlug: quiz.slug, pqCode: view.code }}>
+  (function () {
+    var who = 'visitor', priv = '', code = String(pqCode).toUpperCase();
+    var same = function (c) { return typeof c === 'string' && c.toUpperCase() === code; };
+    try { if (same(sessionStorage.getItem('ww:took:' + pqSlug))) who = 'taker'; } catch (e) {}
+    try {
+      var p = JSON.parse(localStorage.getItem('ww.private.personality') || 'null');
+      if (p && p.v === 1 && Array.isArray(p.entries) && p.entries.some(function (x) { return x && same(x.code) && x.answers && typeof x.answers === 'object'; })) {
+        who = 'taker'; priv = 'open';
+      }
+    } catch (e) {}
+    if (who !== 'taker') {
+      try {
+        var s = JSON.parse(localStorage.getItem('ww.shelf.v1') || 'null');
+        if (Array.isArray(s) && s.some(function (x) { return x && x.quiz === pqSlug && same(x.code); })) who = 'taker';
+      } catch (e) {}
+    }
+    var d = document.documentElement;
+    d.setAttribute('data-pq-who', who);
+    if (who === 'taker') d.setAttribute('data-pq-priv', priv || 'away');
+  })();
+</script>
+
+<article class="pq-report" style={`--pq-t:${T.ink}`} aria-label="Your report">
+  {/* ---------------------------------------------------------------- 1. the snapshot */}
+  <header class="pq-hero" id="pq-p1">
+    {heroArt && (
+      <img class="pq-hero-img" src={heroArt.src} width={heroArt.width} height={heroArt.height} alt=""
+           loading="eager" fetchpriority="high" decoding="async" />
+    )}
+    <div class="pq-hero-veil"></div>
+    <div class="pq-hero-top">
+      <span class="brand pq-brand">
+        <img class="brand-mark" src="/img/logo-w-large-white.png" width="159" height="114" alt="" />
+        <span class="brand-word" aria-hidden="true"></span><span class="pq-sr">Wiser Walk</span>
+      </span>
+      <span class="pq-hero-label">Christian Personality Test</span>
+    </div>
+    <div class="pq-hero-in">
+      <p class="pq-kicker">Your type</p>
+      <h1>{T.name}</h1>
+      <p class="pq-tagline">{T.tagline}</p>
+      <div class="pq-badges"><span>{D.word}</span><span>{M.word} mind</span></div>
+      {r.strongest.length > 0 && (
+        <div class="pq-lean-chips">{r.strongest.map(s => <span>{s.pole}</span>)}</div>
+      )}
+      <div class="pq-rarity">
+        <b>How common is {T.name}?</b>
+        <span data-pq-rarity>We’ll show it once 50 people have taken the test.</span>
+      </div>
+      <div class="pq-row">
+        <button class="btn pq-btn-on pq-mine" type="button" data-pq-card="type">Save image</button>
+        <button class="btn glass" type="button" data-pq-copylink>Copy link</button>
+      </div>
+      <p class="pq-saved pq-mine">Saved to <a href="/me/">{ACCOUNTS_VISIBLE ? 'My profile' : 'My results'}</a></p>
+    </div>
+  </header>
+
+  {/* A visitor's one note: whose this is, and the way in for themselves. */}
+  <div class="pq-visitor pq-their">
+    <p>{isExample
+      ? 'This is an example result. Take the test to get yours.'
+      : 'This is someone’s Christian Personality Test result. Take it yourself to get yours.'}</p>
+    <a class="btn" href={quizHref(quiz)}>Take the test</a>
+  </div>
+
+  <nav class="pq-pager" aria-label="Report pages" data-pq-pager>
+    <button class="pq-pg-arrow" type="button" data-pq-dir="-1" aria-label="Previous page" disabled>‹</button>
+    <button class="pq-pg-cur" type="button" data-pq-menu aria-expanded="false" aria-controls="pq-pg-menu">
+      <span class="pq-pg-n">1 of {PAGES.length}</span><span class="pq-pg-t">{PAGES[0]![1]}</span><span class="pq-pg-caret" aria-hidden="true"></span>
+    </button>
+    <button class="pq-pg-arrow" type="button" data-pq-dir="1" aria-label="Next page">›</button>
+    <span class="pq-pg-bar" aria-hidden="true"><i></i></span>
+    <ol class="pq-pg-menu" id="pq-pg-menu" hidden>
+      {PAGES.map((p, i) => (
+        <li><a href={`#${p[0]}`} data-pq-go={p[0]} data-pq-short={p[1]}><span>{i + 1}</span>{p[2]}</a></li>
+      ))}
+    </ol>
+  </nav>
+
+  {/* ---------------------------------------------------------------- 2. your type */}
+  <section class="pq-page" id="pq-p2" aria-label={title(2)}>
+    <div class="pq-typehead">
+      {headFace.pic
+        ? <img class="pq-type-face" src={headFace.pic.src} width={headFace.pic.width} height={headFace.pic.height} alt={headFace.alt} loading="lazy" decoding="async" />
+        : <span class="pq-type-face" aria-hidden="true"></span>}
+      <div>
+        <p class="pq-kicker">Your type</p>
+        <h2 class="pq-type-name">{T.name}</h2>
+        <p class="pq-type-sub">{D.word} by disposition. {M.word} by make-up.</p>
+      </div>
+    </div>
+    <p class="pq-big">{T.portrait}{mine ? ' ' + mine : ''}</p>
+
+    <div class="pq-trap pq-starry">
+      <h3>Where the trap is set for you</h3>
+      <p class="pq-trap-word">{cap(TR.trap.name)}</p>
+      <p>{trapLead(r.disposition)}{trapSwap}</p>
+      {r.trapQuiet && <p class="pq-trap-quiet">{R.TRAP_QUIET}</p>}
+      <Q q={TR.trap.quote} />
+      <p class="pq-trap-plain">{TR.trap.plain}</p>
+    </div>
+
+    <div class="pq-two">
+      <div class="pq-bring"><h3>What you bring</h3><ul>{brings.map(x => <li>{x}</li>)}</ul></div>
+      <div class="pq-cost"><h3>What it costs you</h3><ul>{costs.map(x => <li>{x}</li>)}</ul></div>
+    </div>
+
+    <h3 class="pq-sub">Saints and Bible figures like you</h3>
+    {kindred.length ? kindred.map(k => (
+      <div class="pq-kin">
+        {k.face
+          ? <img class="pq-face" src={k.face.src} width={k.face.width} height={k.face.height} alt={k.who} loading="lazy" decoding="async" />
+          : <span class="pq-face" aria-hidden="true"></span>}
+        <b>{k.who}{k.partial && <em>partly like you</em>}</b>
+        <p>{k.text}</p>
+        <span class="pq-src">{k.src}</span>
+      </div>
+    )) : (
+      <>
+        <p class="pq-muted">{T.kindredNote}</p>
+        <Q q={T.gregoryLine} />
+      </>
+    )}
+    {T.kindredNote && kindred.length > 0 && <p class="pq-muted pq-small pq-kin-note">{T.kindredNote}</p>}
+
+    <div class="pq-opp" style={`--pq-o:${O.ink}`}>
+      {oppArt && <img class="pq-opp-img" src={oppArt.src} width={oppArt.width} height={oppArt.height} alt="" loading="lazy" decoding="async" />}
+      <div class="pq-opp-in">
+        <p class="pq-kicker">Your opposite, and why you need them</p>
+        {them ? (
+          <>
+            <div class="pq-opp-who">
+              {themFace
+                ? <img class="pq-face" src={themFace.src} width={themFace.width} height={themFace.height} alt={them.who} loading="lazy" decoding="async" />
+                : <span class="pq-face" aria-hidden="true"></span>}
+              <div><h3>{O.name}</h3><p class="pq-opp-person">{them.who}</p></div>
+            </div>
+            <p class="pq-opp-tag">{O.tagline}</p>
+            <p>{OP.story}</p>
+            {OP.src && <p class="pq-opp-src">{OP.src}</p>}
+          </>
+        ) : (
+          <>
+            <h3>{O.name}</h3>
+            <p>{O.tagline}</p>
+          </>
+        )}
+        <Q q={(OP && OP.quote) || R.BOATS.body} />
+      </div>
+    </div>
+
+    <h3 class="pq-sub">All eight types</h3>
+    {balancedClose && <p class="pq-muted pq-small">Your answers sit close to the middle, so your type was a close call.</p>}
+    <div class="pq-types">
+      {types.map(x => (
+        <button class:list={['pq-ty', x.you && 'is-you', x.close && 'is-close']} type="button" style={`--pq-ty:${x.t.ink}`}
+                data-pq-type={x.key} aria-haspopup="dialog">
+          {x.art && <img class="pq-ty-img" src={x.art.src} width={x.art.width} height={x.art.height} alt="" loading="lazy" decoding="async" />}
+          {x.you ? <span class="pq-ty-tag">You</span> : x.close ? <span class="pq-ty-tag pq-ty-tag--close">Close second</span> : null}
+          <span class="pq-ty-in"><b>{x.t.name}</b><span>{x.words}</span></span>
+        </button>
+      ))}
+    </div>
+    <p class="pq-muted pq-small pq-ty-hint">Tap a type to read about it.</p>
+  </section>
+
+  {/* ---------------------------------------------------------------- 3. leanings */}
+  <section class="pq-page" id="pq-p3">
+    <h2>{title(3)}</h2>
+    <div class="pq-tops">
+      <div>
+        <p class="pq-kicker">Most like you</p>
+        {r.strongest.map(s => <span class="pq-chip pq-chip--ink">{s.pole}</span>)}
+      </div>
+      <div>
+        <p class="pq-kicker">Where you’re balanced</p>
+        {r.balanced.length
+          ? r.balanced.map(b => <span class="pq-chip">{b.label}</span>)
+          : <span class="pq-muted pq-small">Nowhere, really. You lean on everything.</span>}
+      </div>
+    </div>
+    <div class="pq-hint">
+      <span class="pq-hint-i" aria-hidden="true">i</span>
+      <p><b>Tap any line to open it.</b> Each one says what your answer means, what you may not see in yourself, and Gregory’s counsel.</p>
+    </div>
+    {groups.map(g => (
+      <div class="pq-grp">
+        <p class="pq-grp-n">{g.name}</p>
+        {g.rails.map(x => (
+          <details class="pq-rail">
+            <summary>
+              <span class="pq-rail-name">{x.label}<span class="pq-rail-open" aria-hidden="true"></span></span>
+              <span class="pq-poles"><span class="pq-l">{x.left}</span><span class="pq-r">{x.right}</span></span>
+              <span class="pq-track" aria-hidden="true"><i class="pq-band"></i>{x.fill && <i class={`pq-fill ${x.fill.cls}`} style={`left:${x.fill.left}%;width:${x.fill.width}%`}></i>}<i class={`pq-knob ${x.side}`} style={`left:${x.pos}%`}></i></span>
+            </summary>
+            {x.d ? (
+              <div class="pq-rail-more">
+                <p><b>{x.d.you}</b></p>
+                <p class="pq-unseen">{x.d.unseen}</p>
+                <Q q={x.d.quote} />
+                <p class="pq-counsel">{x.d.counsel}</p>
+              </div>
+            ) : (
+              <div class="pq-rail-more"><p>You sit in the middle here. Gregory names no leaning for you on this one.</p></div>
+            )}
+          </details>
+        ))}
+      </div>
+    ))}
+  </section>
+
+  {/* ---------------------------------------------------------------- 4. what you might not have noticed */}
+  <section class="pq-page" id="pq-p4">
+    <h2>{title(4)}</h2>
+    {links.length ? links.map(L => (
+      <div class="pq-said">
+        <div class="pq-bub pq-bub--a">You said <b>{L.you[0]}.</b></div>
+        <div class="pq-bub pq-bub--b">You also said <b>{L.you[1]}.</b></div>
+        <p class="pq-insight">{L.text}</p>
+        <Q q={L.quote} />
+      </div>
+    )) : <p class="pq-muted">Your answers were even enough that no pattern stood out.</p>}
+  </section>
+
+  {/* ---------------------------------------------------------------- 5. anger */}
+  <section class="pq-page" id="pq-p5">
+    <h2>{title(5)}</h2>
+    <div class="pq-g2" role="img" aria-label={angerGrid.label}>
+      <span></span><span class="pq-ax">{angerGrid.axisX[0]}</span><span class="pq-ax">{angerGrid.axisX[1]}</span>
+      {angerGrid.rows.map((row, i) => (
+        <>
+          <span class="pq-ay">{angerGrid.axisY[i]}</span>
+          {row.map(c => (
+            <div class:list={['pq-g2-cell', c.you && 'is-you']}>{c.you && <span class="pq-you">You</span>}<b>{c.name}</b><span>{c.short}</span></div>
+          ))}
+        </>
+      ))}
+    </div>
+    {r.anger.middle && <p class="pq-close">Only just: you sit near the middle of all four.</p>}
+    <h3 class="pq-sub">{A.name}</h3>
+    <p class="pq-big">{A.text}</p>
+    <Q q={A.quote} />
+    <p class="pq-muted pq-small">Gregory even wrote down what anger says to people. It sounds reasonable:</p>
+    <Q q={R.ANGER.speech} />
+    <div class="pq-cure"><p class="pq-kicker">Gregory’s cure</p><p>{A.cure}</p></div>
+  </section>
+
+  {/* ---------------------------------------------------------------- 6. speaking */}
+  <section class="pq-page" id="pq-p6">
+    <h2>{title(6)}</h2>
+    <div class="pq-g2" role="img" aria-label={speakGrid.label}>
+      <span></span><span class="pq-ax">{speakGrid.axisX[0]}</span><span class="pq-ax">{speakGrid.axisX[1]}</span>
+      {speakGrid.rows.map((row, i) => (
+        <>
+          <span class="pq-ay">{speakGrid.axisY[i]}</span>
+          {row.map(c => (
+            <div class:list={['pq-g2-cell', c.you && 'is-you']}>{c.you && <span class="pq-you">You</span>}<b>{c.name}</b><span>{c.short}</span></div>
+          ))}
+        </>
+      ))}
+    </div>
+    <h3 class="pq-sub">{SP.name}</h3>
+    <p class="pq-big">{SP.text}</p>
+    <Q q={SP.quote} />
+  </section>
+
+  {/* ---------------------------------------------------------------- 7. how to help me */}
+  <section class="pq-page" id="pq-p7">
+    <h2>{title(7)}</h2>
+    <p>Send this to someone who lives with you, works with you, or leads you.</p>
+    <div class="pq-note">
+      <p class="pq-note-k">How to help me</p>
+      <ol data-pq-help>{r.help.map(h => <li>{h.text}<small>{h.note}</small></li>)}</ol>
+      <div class="pq-row"><button class="btn" type="button" data-pq-copyhelp>Copy this card</button></div>
+    </div>
+    <hr class="pq-sep" />
+    <p class="pq-muted pq-small">Drawn from St Gregory the Theologian, who wrote that some are led by teaching and others by example, and that no one remedy suits everyone.</p>
+  </section>
+
+  {/* ---------------------------------------------------------------- 8. where the fight is (private) */}
+  <section class="pq-page pq-page--dark pq-starry" id="pq-p8">
+    <h2>{title(8)}</h2>
+    <div class="pq-locked pq-priv-open">
+      <svg class="pq-lock" viewBox="0 0 24 24" aria-hidden="true"><path d={LOCK} fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" /><rect x="4.5" y="10" width="15" height="11" rx="3" fill="currentColor" /></svg>
+      <p>{R.FIGHT.intro}</p>
+      <button class="btn pq-btn-on" type="button" data-pq-showfight aria-expanded="false" aria-controls="pq-fight">Show it</button>
+    </div>
+    <div class="pq-locked pq-priv-away">
+      <svg class="pq-lock" viewBox="0 0 24 24" aria-hidden="true"><path d={LOCK} fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" /><rect x="4.5" y="10" width="15" height="11" rx="3" fill="currentColor" /></svg>
+      <p>Your private page stays on the device where you took the test.</p>
+    </div>
+    <div class="pq-locked pq-priv-visitor">
+      <svg class="pq-lock" viewBox="0 0 24 24" aria-hidden="true"><path d={LOCK} fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" /><rect x="4.5" y="10" width="15" height="11" rx="3" fill="currentColor" /></svg>
+      <p>This page is private. Only the person who took the test can open it.</p>
+    </div>
+    <div class="pq-fight" id="pq-fight" hidden>
+      <div class="pq-fight-top" data-pq-fight-top></div>
+      <div class="pq-fcard">
+        <p class="pq-kicker">Catch it early</p>
+        <ol class="pq-steps">
+          {R.FIGHT.steps.map((s: { name: string; text: string }, i: number) => (
+            <li><span class="pq-step-n">{i + 1}</span><b>{s.name}</b><span>{s.text}</span></li>
+          ))}
+        </ol>
+      </div>
+      <div class="pq-fcard">
+        <p class="pq-kicker">All eight, for you now</p>
+        <div class="pq-bars" data-pq-bars></div>
+        <p class="pq-fsmall" data-pq-least></p>
+        <Q q={R.FIGHT.moves} />
+      </div>
+      {sins && (
+        <>
+          <p class="pq-qc-lead" data-pq-lead="sins">{R.FIGHT.sins}</p>
+          <a class="pq-qc" href={sins.card.href} target="_blank" rel="noopener">
+            {sins.card.img && <img class="pq-qc-img" src={sins.card.img} alt="" style={`object-position:${sins.card.pos}`} loading="lazy" decoding="async" />}
+            <span class="pq-qc-in">
+              <b>{sins.card.title}</b>
+              <span class="pq-qc-facts">{sins.card.facts.map(f => <span>{f}</span>)}</span>
+              <span class="pq-qc-go"><span data-pq-go-label="sins">Start</span> <span aria-hidden="true">↗</span></span>
+            </span>
+          </a>
+          <p class="pq-qc-note">Opens in a new tab, so you keep your place here.</p>
+        </>
+      )}
+    </div>
+  </section>
+
+  {/* ---------------------------------------------------------------- 9. best quality */}
+  <section class="pq-page" id="pq-p9">
+    <h2>{title(9)}</h2>
+    {V ? (
+      <div class="pq-coin">
+        <div class="pq-coin-a"><p class="pq-kicker">At its best</p><h3>{V.best}</h3><p>{V.bestText}</p></div>
+        <div class="pq-coin-b"><p class="pq-kicker">Its counterfeit</p><h3>{V.fake}</h3><p>{V.warn}</p><p class="pq-src">{V.quote.cite}</p></div>
+      </div>
+    ) : <p class="pq-muted">No single quality stands out far enough to name here.</p>}
+    {P && (
+      <div class="pq-partner">
+        <p class="pq-kicker">Your strength needs a partner</p>
+        <h3>{P.strength} needs {P.partner.toLowerCase()}</h3>
+        <p>{P.plain}</p>
+        <Q q={P.quote} />
+      </div>
+    )}
+  </section>
+
+  {/* ---------------------------------------------------------------- 10. in Christ and in the Body */}
+  <section class="pq-page" id="pq-p10">
+    <h2>{title(10)}</h2>
+    <div class="pq-line">
+      {lineArt && <img class="pq-line-bg" src={lineArt.src} width={lineArt.width} height={lineArt.height} alt={LN.imgWho} loading="lazy" decoding="async" />}
+      <div class="pq-line-veil"></div>
+      <div class="pq-line-in">
+        <p class="pq-kicker">Your line in the Body</p>
+        <h3>{LN.name}</h3>
+        <p class="pq-line-gift">Spiritual gift: <b>{LN.gift}</b></p>
+        <p>{LN.what}</p>
+        <p class="pq-line-who">Pictured: {LN.imgWho}{LN.imgWhy ? ', ' + LN.imgWhy : ''}.</p>
+        <button class="btn pq-btn-line pq-mine" type="button" data-pq-card="line">Save this card</button>
+      </div>
+    </div>
+    {LN.giftNote && <p class="pq-gift-note"><b>Why {LN.gift.toLowerCase()}?</b> {LN.giftNote}</p>}
+    <p class="pq-kicker">How we got there</p>
+    <div class="pq-whys">{why.map(w => <span class="pq-chip">{w}</span>)}</div>
+    <p>{LN.cassian}</p>
+    <Q q={LN.quote} />
+    <div class="pq-tidbit"><p class="pq-kicker">Did you know?</p><p>{LN.tidbit}</p></div>
+    <div class="pq-grace">
+      <p class="pq-kicker">And in Christ</p>
+      <p class="pq-big">{D.grace.text}</p>
+      <Q q={D.grace.quote} />
+      <p class="pq-muted">{R.CHRIST.giftOrVictory}</p>
+    </div>
+    <p>{R.BODY.stay}</p>
+    <Q q={R.BODY.stayQuote} />
+    <div class="pq-tidbit pq-tidbit--soft"><p>{R.BODY.farmer}</p></div>
+    <div class="pq-need">
+      <p class="pq-kicker">The member you need most</p>
+      <p class="pq-need-lead">{R.BODY.needLead}</p>
+      <Q q={R.BODY.needQuote} />
+      <div class="pq-partner-line">
+        {partnerFace
+          ? <img class="pq-face" src={partnerFace.src} width={partnerFace.width} height={partnerFace.height} alt={PL.imgWho} loading="lazy" decoding="async" />
+          : <span class="pq-face" aria-hidden="true"></span>}
+        <div><b>{PL.name}</b><p class="pq-pl-gift">Spiritual gift: {PL.gift}</p></div>
+        <p>{LN.needWhy || PL.what}</p>
+      </div>
+    </div>
+    {gifts && (
+      <>
+        <p class="pq-qc-lead" data-pq-lead="gifts">{R.BODY.gifts}</p>
+        <p class="pq-qc-note-six" data-pq-six hidden></p>
+        <a class="pq-qc" href={gifts.card.href} target="_blank" rel="noopener">
+          {gifts.card.img && <img class="pq-qc-img" src={gifts.card.img} alt="" style={`object-position:${gifts.card.pos}`} loading="lazy" decoding="async" />}
+          <span class="pq-qc-in">
+            <b>{gifts.card.title}</b>
+            <span class="pq-qc-facts">{gifts.card.facts.map(f => <span>{f}</span>)}</span>
+            <span class="pq-qc-go"><span data-pq-go-label="gifts">Start</span> <span aria-hidden="true">↗</span></span>
+          </span>
+        </a>
+        <p class="pq-qc-note">Opens in a new tab, so you keep your place here.</p>
+      </>
+    )}
+  </section>
+
+  <details class="pq-how">
+    <summary>How this test works</summary>
+    <p>The questions and the report are built on St Gregory the Great’s Pastoral Rule and Moralia on Job (both around 590), which sort people by temperament and say what each needs. Behind him stands St Gregory the Theologian, whom he names as his teacher. The private page follows St John Cassian’s eight thoughts, as the desert fathers taught them. The saints and Bible figures are named only where an early source records their temper. Every quotation is word for word from a public-domain translation.</p>
+  </details>
+  <details class="pq-how">
+    <summary>Picture credits</summary>
+    <ul class="pq-credits">
+      {credits.map(c => <li><a href={c.page} rel="noopener">{c.line}</a></li>)}
+      {(sins || gifts) && (
+        <li>Adam and Eve Are Driven out of Eden, and St Paul Preaching to the Thessalonians, Gustave Doré, La Grande Bible de Tours, 1866. Wikimedia Commons, public domain.</li>
+      )}
+    </ul>
+  </details>
+
+  {/* ---------------------------------------------------------------- the result's link */}
+  <div class="share-box pq-linkbox">
+    <label class="share-label" for="pq-url"><span class="pq-mine">Your result link</span><span class="pq-their">This result’s link</span></label>
+    <div class="share-link">
+      <input id="pq-url" type="text" readonly value={url} spellcheck="false" data-pq-url />
+      <button class="btn ghost" type="button" data-pq-copyfield>Copy link</button>
+    </div>
+    <p class="share-note pq-mine">Opens this result for anyone. Keep it to come back to your result.</p>
+  </div>
+
+  {/* ---------------------------------------------------------------- the sheets */}
+  {types.map(x => (
+    <dialog class="pq-sheet pq-tsheet" id={`pq-ts-${x.key}`} aria-label={x.t.name} style={`--pq-ty:${x.t.ink}`}>
+      {x.art && <img class="pq-ts-img" src={x.art.src} width={x.art.width} height={x.art.height} alt="" loading="lazy" decoding="async" />}
+      <div class="pq-ts-in">
+        <h3>{x.t.name}</h3>
+        <p class="pq-muted">{x.t.tagline}</p>
+        <p>{x.t.portrait}</p>
+        <p><b>Trap:</b> {x.trap}.</p>
+        {x.kindred.length > 0 && <p><b>Kindred:</b> {x.kindred.join(', ')}.</p>}
+        <button class="btn" type="button" data-pq-close>Close</button>
+      </div>
+    </dialog>
+  ))}
+  <dialog class="pq-sheet pq-csheet" id="pq-card-sheet" aria-label="Your card">
+    <p class="pq-cs-k" data-pq-cs-k>Your type card</p>
+    <div class="pq-cs-img" data-pq-cs-img><span class="pq-cs-wait">Drawing your card…</span></div>
+    <div class="pq-row">
+      <button class="btn" type="button" data-pq-cs-save disabled>Save image</button>
+      <button class="btn ghost" type="button" data-pq-cs-share hidden>Share</button>
+      <button class="btn ghost" type="button" data-pq-close>Close</button>
+    </div>
+    <p class="pq-cs-note">On a phone you can also press and hold the picture to save it. The link printed on it brings people to the test.</p>
+  </dialog>
+
+  <script type="application/json" id="pq-data" set:html={json(island)}></script>
+</article>
+
+<script>
+  /*
+   * The report's moving parts. Everything public is already on the page; this only works the
+   * pager, the sheets, the two cards, "Copy", the count, page 8 and the other quizzes' context.
+   * Nothing here sends an answer anywhere: the count is a GET with no body, and page 8 is scored
+   * on this device from answers this device kept.
+   */
+  import { score, decodeAnswers } from '../lib/strategies/personality';
+  import { requestShortCode } from '../lib/engine/links';
+  import { category } from '../lib/strategies/category';
+  import { mineFor, resultHref } from '../lib/mine';
+  import type { Quiz, UnipolarView } from '../lib/engine/types';
+
+  type Q = { q: string; cite: string };
+  type Island = {
+    slug: string; code: string; type: string; name: string; mint: boolean;
+    card: {
+      type: string; name: string; tagline: string; ink: string; art: string; disposition: string; makeup: string;
+      poles: string[]; line: { key: string; name: string; gift: string; what: string; img: string }; why: string[];
+    };
+    fight: {
+      thoughts: Record<string, { name: string; old: string; what: string; speech?: Q; speechNote?: string; shows: string; showsQuote?: Q; when?: string; feeds: string; place: string; placeQuote?: Q }>;
+      none: string; several: string;
+    };
+    others: Record<'sins' | 'gifts', (Record<string, unknown> & { slug: string; codePrefix: string; shortLinks: boolean; numbers: { radix: number; slots: number; prefix: string }; groups: Array<{ key: string; slug: string; name: string }>; groupNote: { groups: string[]; result: string } | null }) | null>;
+  };
+
+  const report = document.querySelector<HTMLElement>('.pq-report');
+  const island = document.getElementById('pq-data');
+  if (report && island) {
+    let data: Island | null = null;
+    try { data = JSON.parse(island.textContent || 'null'); } catch { data = null; }
+    if (data) setUp(report, data);
+  }
+
+  function setUp(root: HTMLElement, data: Island) {
+    const $ = <T extends Element = HTMLElement>(sel: string) => root.querySelector<T>(sel);
+    const $$ = <T extends Element = HTMLElement>(sel: string) => Array.from(root.querySelectorAll<T>(sel));
+    const esc = (s: unknown) => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' } as Record<string, string>)[c]!);
+    // A quotation as the page prints it (PersonalityQuote.astro): a lone I in a serif that shows it.
+    const quote = (Q?: Q | null) => (Q
+      ? '<blockquote class="pq-quote"><p>“' + esc(Q.q).replace(/\bI\b/g, '<span class="pq-cap-i">I</span>') + '”</p><cite>' + esc(Q.cite) + '</cite></blockquote>'
+      : '');
+
+    /* ---------------------------------------------------------------- copy */
+    const flash = (btn: HTMLElement, text: string) => {
+      const was = btn.dataset.pqWas ?? btn.textContent ?? '';
+      btn.dataset.pqWas = was;
+      btn.textContent = text;
+      setTimeout(() => { btn.textContent = was; }, 1800);
+    };
+    const copy = async (text: string, btn: HTMLElement) => {
+      try { await navigator.clipboard.writeText(text); flash(btn, 'Copied'); }
+      catch { flash(btn, 'Press Ctrl+C'); }
+    };
+
+    /* ---------------------------------------------------------------- the result's link */
+    const field = $<HTMLInputElement>('[data-pq-url]');
+    field?.addEventListener('focus', () => field.select());
+    $('[data-pq-copyfield]')?.addEventListener('click', e => {
+      if (!field) return;
+      field.select();
+      copy(field.value, e.currentTarget as HTMLElement);
+    });
+    // The hero's "Copy link" copies the same link.
+    $('[data-pq-copylink]')?.addEventListener('click', e => {
+      if (field) copy(field.value, e.currentTarget as HTMLElement);
+    });
+    // Opened by the long code: ask for the six-character link and swap it in. No answer, and the long one works.
+    if (data.mint && field) {
+      requestShortCode(data.slug, data.code, 4000).then(short => {
+        if (short) field.value = field.value.split(data.code).join(short);
+      });
+    }
+
+    /* ---------------------------------------------------------------- how to help me */
+    $('[data-pq-copyhelp]')?.addEventListener('click', e => {
+      const lines = $$('[data-pq-help] li').map((li, i) => (i + 1) + '. ' + (li.firstChild?.textContent ?? ''));
+      copy('How to help me\n' + lines.join('\n'), e.currentTarget as HTMLElement);
+    });
+
+    /* ---------------------------------------------------------------- how common the type is */
+    const rarity = $('[data-pq-rarity]');
+    if (rarity) {
+      fetch('/api/tally?quiz=' + encodeURIComponent(data.slug), { headers: { accept: 'application/json' } })
+        .then(res => (res.ok ? res.json() : null))
+        .then((t: { total: number | null; types?: Record<string, number> } | null) => {
+          const total = t && typeof t.total === 'number' && t.total >= 0 ? t.total : null;
+          if (total === null) return;
+          if (total < 50) {
+            rarity.textContent = `We’ll show it once 50 people have taken the test. So far: ${total}.`;
+            return;
+          }
+          const n = Number(t?.types?.[data.type] ?? 0);
+          rarity.textContent = n > 0
+            ? `About 1 in ${Math.max(1, Math.round(total / n))} people who have taken the test are ${data.name}.`
+            : `Fewer than 1 in ${total} people who have taken the test are ${data.name} so far.`;
+        })
+        .catch(() => {});
+    }
+
+    /* ---------------------------------------------------------------- the pager */
+    /* A sticky bar: previous, the current page (tap for the list of all ten), next, and how far down you are. */
+    const nav = $('[data-pq-pager]');
+    const menu = $('#pq-pg-menu');
+    const menuBtn = $('[data-pq-menu]');
+    const links = $$<HTMLAnchorElement>('[data-pq-go]');
+    const pages = links.map(a => ({ id: a.dataset.pqGo!, short: a.dataset.pqShort ?? '' }));
+    const arrows = $$<HTMLButtonElement>('[data-pq-dir]');
+    let cur = -1;
+    const closeMenu = () => {
+      if (!menu || menu.hidden) return;
+      menu.hidden = true;
+      menuBtn?.setAttribute('aria-expanded', 'false');
+    };
+    function update() {
+      if (!nav) return;
+      const y = nav.getBoundingClientRect().height + 24;
+      let at = 0;
+      pages.forEach((p, i) => {
+        const el = document.getElementById(p.id);
+        if (el && el.getBoundingClientRect().top <= y) at = i;
+      });
+      // How far through the ten pages, not the whole document (the site's footer is below them).
+      const first = document.getElementById(pages[0]?.id ?? '');
+      const last = document.getElementById(pages[pages.length - 1]?.id ?? '');
+      if (first && last) {
+        const start = first.getBoundingClientRect().top + scrollY;
+        const end = last.getBoundingClientRect().bottom + scrollY - innerHeight;
+        const done = Math.min(1, Math.max(0, (scrollY - start) / Math.max(1, end - start)));
+        const bar = nav.querySelector<HTMLElement>('.pq-pg-bar i');
+        if (bar) bar.style.width = (done * 100) + '%';
+      }
+      if (at === cur) return;
+      cur = at;
+      const n = nav.querySelector('.pq-pg-n');
+      const t = nav.querySelector('.pq-pg-t');
+      if (n) n.textContent = (at + 1) + ' of ' + pages.length;
+      if (t) t.textContent = pages[at]?.short ?? '';
+      if (arrows[0]) arrows[0].disabled = at === 0;
+      if (arrows[1]) arrows[1].disabled = at === pages.length - 1;
+      links.forEach((a, i) => {
+        a.classList.toggle('is-here', i === at);
+        if (i === at) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+      });
+    }
+    function goPage(id: string) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const off = nav && id !== pages[0]?.id ? nav.getBoundingClientRect().height + 10 : 12;
+      const smooth = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+      scrollTo({ top: el.getBoundingClientRect().top + scrollY - off, behavior: smooth ? 'smooth' : 'auto' });
+    }
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => { ticking = false; update(); });
+    };
+    addEventListener('scroll', onScroll, { passive: true });
+    addEventListener('resize', onScroll);
+    update();
+    arrows.forEach(b => b.addEventListener('click', () => {
+      const n = cur + Number(b.dataset.pqDir);
+      if (n >= 0 && n < pages.length) goPage(pages[n]!.id);
+    }));
+    menuBtn?.addEventListener('click', () => {
+      if (!menu) return;
+      menu.hidden = !menu.hidden;
+      menuBtn.setAttribute('aria-expanded', String(!menu.hidden));
+    });
+    links.forEach(a => a.addEventListener('click', e => {
+      e.preventDefault();
+      closeMenu();
+      goPage(a.dataset.pqGo!);
+    }));
+    document.addEventListener('click', e => {
+      if (!(e.target as Element).closest?.('[data-pq-pager]')) closeMenu();
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeMenu();
+    });
+
+    /* ---------------------------------------------------------------- the sheets */
+    const openSheet = (d: HTMLDialogElement | null) => {
+      if (!d) return;
+      if (typeof d.showModal === 'function') { if (!d.open) d.showModal(); }
+      else d.setAttribute('open', '');
+    };
+    const closeSheet = (d: HTMLDialogElement | null) => {
+      if (!d) return;
+      if (typeof d.close === 'function') d.close(); else d.removeAttribute('open');
+    };
+    $$<HTMLDialogElement>('dialog.pq-sheet').forEach(d => {
+      // A tap on the shade around the sheet closes it.
+      d.addEventListener('click', e => { if (e.target === d) closeSheet(d); });
+    });
+    $$('[data-pq-close]').forEach(b => b.addEventListener('click', () => closeSheet(b.closest('dialog'))));
+    $$('[data-pq-type]').forEach(b => b.addEventListener('click', () => {
+      openSheet(document.getElementById('pq-ts-' + b.dataset.pqType) as HTMLDialogElement | null);
+    }));
+
+    /* ---------------------------------------------------------------- the two cards */
+    /*
+     * The type (page 1) and the role in the Body (page 10), drawn as the preview draws them
+     * (preview/app.js drawCard): 1080 x 1350, the picture under a veil, the owner's white W and the
+     * wordmark, the words laid out from the bottom up, and the footer with the way to the test.
+     * Only this site's own pictures are drawn, so the canvas can always be saved.
+     */
+    const QUIZ_URL = 'wiserwalk.com/q/personality';
+    const C = data.card;
+    const loadImg = (src: string) => new Promise<HTMLImageElement | null>(ok => {
+      const im = new Image();
+      im.onload = () => ok(im);
+      im.onerror = () => ok(null);
+      im.src = src;
+    });
+    const fonts = () => {
+      if (!document.fonts || !document.fonts.load) return Promise.resolve();
+      return Promise.all(['700 120px Philosopher', 'italic 400 44px Philosopher', '600 30px Poppins', '700 26px Poppins', '500 34px Inter']
+        .map(f => document.fonts.load(f).catch(() => null))).then(() => undefined);
+    };
+    let logo: Promise<[HTMLImageElement | null, HTMLImageElement | null]> | null = null;
+    const logoParts = () => (logo ??= Promise.all([
+      loadImg('/img/logo-w-large-white.png'),
+      fetch('/img/wordmark.svg')
+        .then(res => (res.ok ? res.text() : ''))
+        .then(svg => (svg
+          ? loadImg('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(
+              svg.replace(/currentColor/g, '#FFFFFF').replace('<svg ', '<svg width="540" height="78" ')))
+          : null))
+        .catch(() => null)
+    ]));
+    function drawLogo(g: CanvasRenderingContext2D, parts: [HTMLImageElement | null, HTMLImageElement | null], x: number, y: number, h: number) {
+      const w = h * 159 / 114, wordH = Math.round(h * 18.5 / 34), wordW = wordH * 5405 / 783;
+      g.save();
+      g.imageSmoothingEnabled = true;
+      g.imageSmoothingQuality = 'high';
+      if (parts[0]) g.drawImage(parts[0], x, y, w, h);
+      if (parts[1]) g.drawImage(parts[1], x + w + h * 15 / 34, y + (h - wordH) / 2 - 1.5, wordW, wordH);
+      g.restore();
+    }
+    function cover(g: CanvasRenderingContext2D, im: HTMLImageElement | null, x: number, y: number, w: number, h: number, fy?: number) {
+      if (!im) return;
+      const s = Math.max(w / im.width, h / im.height), sw = w / s, sh = h / s;
+      g.drawImage(im, (im.width - sw) / 2, (im.height - sh) * (fy == null ? .5 : fy), sw, sh, x, y, w, h);
+    }
+    function wrap(g: CanvasRenderingContext2D, text: string, maxW: number) {
+      const lines: string[] = [];
+      let line = '';
+      text.split(' ').forEach(w => {
+        const t = line ? line + ' ' + w : w;
+        if (g.measureText(t).width > maxW && line) { lines.push(line); line = w; } else line = t;
+      });
+      if (line) lines.push(line);
+      // No line ends on one stranded word (the owner's rule for the whole site): pull one down.
+      const n = lines.length;
+      if (n > 1 && !lines[n - 1]!.includes(' ') && lines[n - 2]!.split(' ').length > 2) {
+        const prev = lines[n - 2]!.split(' ');
+        lines[n - 1] = prev.pop() + ' ' + lines[n - 1];
+        lines[n - 2] = prev.join(' ');
+      }
+      return lines;
+    }
+    function rr(g: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
+      g.beginPath();
+      g.moveTo(x + r, y);
+      g.arcTo(x + w, y, x + w, y + h, r);
+      g.arcTo(x + w, y + h, x, y + h, r);
+      g.arcTo(x, y + h, x, y, r);
+      g.arcTo(x, y, x + w, y, r);
+      g.closePath();
+    }
+    type Pill = { font: string; h: number; pad: number; base: number; fill?: string; stroke?: string; ink: string };
+    // Pills that wrap to new rows. With `dry`, nothing is drawn: it only says how tall they would be.
+    function pills(g: CanvasRenderingContext2D, list: string[], x: number, y: number, maxW: number, style: Pill, dry?: boolean) {
+      g.font = style.font;
+      let px = x, py = y;
+      const h = style.h;
+      list.forEach(t => {
+        const w = g.measureText(t).width + style.pad * 2;
+        if (px + w > x + maxW && px > x) { px = x; py += h + 14; }
+        if (!dry) {
+          rr(g, px, py, w, h, h / 2);
+          if (style.fill) { g.fillStyle = style.fill; g.fill(); }
+          if (style.stroke) { g.strokeStyle = style.stroke; g.lineWidth = 2; g.stroke(); }
+          g.fillStyle = style.ink;
+          g.fillText(t, px + style.pad, py + h / 2 + style.base);
+        }
+        px += w + 12;
+      });
+      return py + h;
+    }
+    function footer(g: CanvasRenderingContext2D, W: number, H: number, ink: string, say: string) {
+      g.fillStyle = ink; g.fillRect(0, H - 14, W, 14);
+      g.fillStyle = 'rgba(255,255,255,.72)'; g.font = '600 26px Poppins, sans-serif'; g.fillText(say.toUpperCase(), 72, H - 62);
+      g.fillStyle = '#FFFFFF'; g.font = '700 34px Poppins, sans-serif';
+      const w = g.measureText(QUIZ_URL).width;
+      g.fillText(QUIZ_URL, W - 72 - w, H - 60);
+    }
+    async function drawCard(kind: 'type' | 'line') {
+      const W = 1080, H = 1350;
+      const c = document.createElement('canvas');
+      c.width = W; c.height = H;
+      const g = c.getContext('2d')!;
+      const [, parts, pic] = await Promise.all([fonts(), logoParts(), loadImg(kind === 'type' ? C.art : C.line.img)]);
+      g.fillStyle = '#16161B'; g.fillRect(0, 0, W, H);
+      if (kind === 'type') {
+        cover(g, pic, 0, 0, W, H, .4);
+        const v = g.createLinearGradient(0, 0, 0, H);
+        v.addColorStop(0, 'rgba(12,12,16,.55)'); v.addColorStop(.16, 'rgba(12,12,16,.08)'); v.addColorStop(.4, 'rgba(12,12,16,.3)'); v.addColorStop(.62, 'rgba(12,12,16,.8)'); v.addColorStop(1, 'rgba(12,12,16,.96)');
+        g.fillStyle = v; g.fillRect(0, 0, W, H);
+      } else {
+        cover(g, pic, 0, 0, W, H * .66, .12);
+        const v2 = g.createLinearGradient(0, 0, 0, H);
+        v2.addColorStop(0, 'rgba(12,12,16,.5)'); v2.addColorStop(.14, 'rgba(12,12,16,.05)'); v2.addColorStop(.42, 'rgba(12,12,16,.35)'); v2.addColorStop(.62, 'rgba(14,14,18,.97)'); v2.addColorStop(1, 'rgb(14,14,18)');
+        g.fillStyle = v2; g.fillRect(0, 0, W, H);
+        const tint = g.createLinearGradient(0, H * .5, 0, H);
+        tint.addColorStop(0, 'rgba(0,0,0,0)'); tint.addColorStop(1, C.ink + '33');
+        g.fillStyle = tint; g.fillRect(0, 0, W, H);
+      }
+      drawLogo(g, parts, 72, 64, 56);
+      g.fillStyle = 'rgba(255,255,255,.85)'; g.font = '700 24px Poppins, sans-serif'; g.textBaseline = 'alphabetic';
+      const tag = 'CHRISTIAN PERSONALITY TEST';
+      g.fillText(tag, W - 72 - g.measureText(tag).width, 102);
+      g.shadowColor = 'rgba(0,0,0,.35)'; g.shadowBlur = 18;
+      // Both cards are laid out from the bottom up: measure every block first, then start high enough that the last
+      // one ends above the footer, whatever the name, tagline or reasons are.
+      const X = 72, MW = W - 144, FLOOR = H - 128;
+      const BADGE: Pill = { font: '700 26px Poppins, sans-serif', h: 56, pad: 26, base: 9, fill: C.ink, ink: '#15161A' };
+      const CHIP: Pill = { font: '600 27px Poppins, sans-serif', h: 56, pad: 24, base: 10, fill: 'rgba(20,20,26,.45)', stroke: 'rgba(255,255,255,.3)', ink: '#FFFFFF' };
+      if (kind === 'type') {
+        g.font = '700 132px Philosopher, serif'; const nl = wrap(g, C.name, MW);
+        g.font = 'italic 400 44px Philosopher, serif'; const tl = wrap(g, C.tagline, MW);
+        const poles = C.poles;
+        const badges = [C.disposition.toUpperCase(), (C.makeup + ' mind').toUpperCase()];
+        const chipsH = poles.length ? pills(g, poles, X, 0, MW, CHIP, true) + 16 : 0;
+        let y = FLOOR - chipsH - 56 - 40 - tl.length * 58 - nl.length * 132;
+        g.fillStyle = 'rgba(255,255,255,.9)'; g.font = '700 28px Poppins, sans-serif'; g.fillText('MY TYPE', X, y);
+        g.fillStyle = '#FFFFFF'; g.font = '700 132px Philosopher, serif';
+        nl.forEach(l => { y += 132; g.fillText(l, X, y); });
+        g.font = 'italic 400 44px Philosopher, serif'; g.fillStyle = 'rgba(255,255,255,.94)';
+        tl.forEach(l => { y += 58; g.fillText(l, X, y); });
+        g.shadowBlur = 0;
+        y = pills(g, badges, X, y + 40, MW, BADGE);
+        if (poles.length) pills(g, poles, X, y + 16, MW, CHIP);
+        footer(g, W, H, C.ink, 'What’s your type?');
+      } else {
+        const LN = C.line;
+        const WHY: Pill = { font: '600 25px Poppins, sans-serif', h: 52, pad: 22, base: 9, fill: 'rgba(255,255,255,.1)', stroke: 'rgba(255,255,255,.26)', ink: '#FFFFFF' };
+        g.font = '500 32px Inter, sans-serif'; const wl = wrap(g, LN.what, MW).slice(0, 3);
+        const whyH = pills(g, C.why, X, 0, MW, WHY, true);
+        let y2 = FLOOR - 50 - whyH - 20 - 58 - wl.length * 46 - 64 - 118;
+        g.fillStyle = 'rgba(255,255,255,.9)'; g.font = '700 28px Poppins, sans-serif'; g.fillText('MY LINE IN THE BODY', X, y2);
+        g.fillStyle = '#FFFFFF'; g.font = '700 118px Philosopher, serif'; y2 += 118; g.fillText(LN.name, X, y2);
+        g.shadowBlur = 0;
+        g.font = 'italic 400 44px Philosopher, serif'; g.fillStyle = 'rgba(255,255,255,.94)'; y2 += 64; g.fillText('Spiritual gift: ' + LN.gift, X, y2);
+        g.font = '500 32px Inter, sans-serif'; g.fillStyle = 'rgba(255,255,255,.88)';
+        wl.forEach(l => { y2 += 46; g.fillText(l, X, y2); });
+        g.fillStyle = 'rgba(255,255,255,.62)'; g.font = '700 22px Poppins, sans-serif'; y2 += 58; g.fillText('HOW I GOT HERE', X, y2);
+        y2 = pills(g, C.why, X, y2 + 20, MW, WHY);
+        g.fillStyle = 'rgba(255,255,255,.75)'; g.font = '500 28px Inter, sans-serif'; g.fillText('My type: ' + C.name, X, y2 + 50);
+        footer(g, W, H, C.ink, 'Find yours');
+      }
+      return c;
+    }
+
+    const sheet = document.getElementById('pq-card-sheet') as HTMLDialogElement | null;
+    let drawing = 0;
+    let shown: { canvas: HTMLCanvasElement; name: string } | null = null;
+    const saveBtn = sheet?.querySelector<HTMLButtonElement>('[data-pq-cs-save]') ?? null;
+    const shareBtn = sheet?.querySelector<HTMLButtonElement>('[data-pq-cs-share]') ?? null;
+    // Share only where it can really send a file, and only on a touch screen (the site standard).
+    let canShare = false;
+    try {
+      const probe = new File([new Blob([''], { type: 'image/png' })], 'x.png', { type: 'image/png' });
+      canShare = matchMedia('(hover: none) and (pointer: coarse)').matches && Boolean(navigator.canShare && navigator.canShare({ files: [probe] }));
+    } catch { canShare = false; }
+    const blobOf = (c: HTMLCanvasElement) => new Promise<Blob | null>(res => c.toBlob(res, 'image/png'));
+
+    async function openCard(kind: 'type' | 'line') {
+      if (!sheet) return;
+      const token = ++drawing;
+      shown = null;
+      const k = sheet.querySelector('[data-pq-cs-k]');
+      const box = sheet.querySelector('[data-pq-cs-img]');
+      if (k) k.textContent = kind === 'type' ? 'Your type card' : 'Your role card';
+      if (box) box.innerHTML = '<span class="pq-cs-wait">Drawing your card…</span>';
+      if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Save image'; }
+      if (shareBtn) shareBtn.hidden = true;
+      openSheet(sheet);
+      let c: HTMLCanvasElement;
+      try { c = await drawCard(kind); } catch { if (box && token === drawing) box.innerHTML = '<span class="pq-cs-wait">The card could not be drawn here.</span>'; return; }
+      if (token !== drawing) return;
+      const name = 'wiser-walk-personality-' + (kind === 'type' ? C.type : C.line.key) + '.png';
+      shown = { canvas: c, name };
+      if (box) {
+        const img = new Image();
+        img.alt = kind === 'type' ? 'Your type card' : 'Your role card';
+        img.src = c.toDataURL('image/png');
+        box.replaceChildren(img);
+      }
+      if (saveBtn) saveBtn.disabled = false;
+      if (shareBtn) shareBtn.hidden = !canShare;
+    }
+    $$('[data-pq-card]').forEach(b => b.addEventListener('click', () => openCard(b.dataset.pqCard === 'line' ? 'line' : 'type')));
+    saveBtn?.addEventListener('click', async () => {
+      if (!shown) return;
+      const { canvas, name } = shown;
+      const b = await blobOf(canvas);
+      if (!b) return;
+      const href = URL.createObjectURL(b);
+      const a = document.createElement('a');
+      a.href = href; a.download = name;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(href), 4000);
+      saveBtn.textContent = 'Saved';
+    });
+    shareBtn?.addEventListener('click', async () => {
+      if (!shown) return;
+      const { canvas, name } = shown;
+      const b = await blobOf(canvas);
+      if (!b) return;
+      try {
+        await navigator.share({ files: [new File([b], name, { type: 'image/png' })], title: 'Christian Personality Test' });
+      } catch { /* the reader closed the share sheet */ }
+    });
+
+    /* ---------------------------------------------------------------- page 8, on this device only */
+    function privateAnswers(): Record<string, number> | null {
+      try {
+        const p = JSON.parse(localStorage.getItem('ww.private.personality') || 'null');
+        if (!p || p.v !== 1 || !Array.isArray(p.entries)) return null;
+        const e = p.entries.find((x: { code?: unknown; answers?: unknown }) =>
+          x && typeof x.code === 'string' && x.code.toUpperCase() === data.code && x.answers && typeof x.answers === 'object');
+        if (!e) return null;
+        const out: Record<string, number> = {};
+        for (const [k, v] of Object.entries(e.answers as Record<string, unknown>)) {
+          if (/^y\d{1,2}$/.test(k) && typeof v === 'number' && Number.isInteger(v) && v >= -3 && v <= 3) out[k] = v;
+        }
+        return out;
+      } catch {
+        return null;
+      }
+    }
+    let fightDrawn = false;
+    function drawFight(): boolean {
+      const priv = privateAnswers();
+      const dec = decodeAnswers(data.code);
+      if (!priv || !dec) return false;
+      let th;
+      try { th = score({ ...dec.answers, ...priv }).thoughts; } catch { return false; }
+      if (!th) return false;
+      const tt = data.fight.thoughts, lead = tt[th.lead];
+      if (!lead) return false;
+      let h = '';
+      if (th.none) {
+        h = '<div class="pq-fcard"><p class="pq-big">' + esc(data.fight.none) + '</p></div>';
+      } else {
+        if (th.several) h += '<p class="pq-fnote">' + esc(data.fight.several) + ' <b>' + th.several.map(t => esc(tt[t]?.name)).join(', ') + '</b>.</p>';
+        h += '<div class="pq-fcard pq-fcard--lead"><p class="pq-kicker">' + (th.several ? 'The first of them' : 'Right now') + '</p><h3>' + esc(lead.name) +
+          ' <span class="pq-old">' + esc(lead.old) + '</span></h3><p>' + esc(lead.what) + '</p></div>';
+        if (lead.speech || lead.speechNote) {
+          h += '<div class="pq-fcard"><p class="pq-kicker">How it talks to you</p>' +
+            (lead.speech ? quote(lead.speech) + '<p class="pq-fsmall">It sounds reasonable. That is how it works.</p>' : '<p>' + esc(lead.speechNote) + '</p>') + '</div>';
+        }
+        h += '<div class="pq-fcard"><div class="pq-frow"><p class="pq-kicker">How it shows</p><p>' + esc(lead.shows) + '</p></div>' +
+          (lead.showsQuote ? quote(lead.showsQuote) : '') +
+          (lead.when ? '<div class="pq-frow"><p class="pq-kicker">When it comes</p><p>' + esc(lead.when) + '</p></div>' : '') + '</div>';
+        h += '<div class="pq-fcard"><div class="pq-frow"><p class="pq-kicker">What feeds it</p><p>' + esc(lead.feeds) + '</p></div>' +
+          '<div class="pq-frow"><p class="pq-kicker">What takes its place</p><p>' + esc(lead.place) + '</p></div>' + quote(lead.placeQuote) + '</div>';
+      }
+      const top = $('[data-pq-fight-top]');
+      const bars = $('[data-pq-bars]');
+      const least = $('[data-pq-least]');
+      if (top) top.innerHTML = h;
+      if (bars) {
+        bars.innerHTML = th.order.map((t, i) =>
+          '<div class="pq-barr' + (i === 0 && !th.none ? ' is-lead' : '') + '"><span>' + esc(tt[t]?.name) + '</span><span class="pq-barr-t"><i style="width:' +
+          Math.round((th.bars[t] ?? 0) * 100) + '%"></i></span></div>').join('');
+      }
+      if (least) least.textContent = 'Troubles you least now: ' + (tt[th.least]?.name ?? '') + '. Cassian says the fight moves, so take it again in a few months.';
+      return true;
+    }
+    const show = $<HTMLButtonElement>('[data-pq-showfight]');
+    const fight = $('#pq-fight');
+    show?.addEventListener('click', () => {
+      if (!fight) return;
+      if (!fightDrawn) {
+        fightDrawn = drawFight();
+        if (!fightDrawn) {
+          // The private answers are not readable here after all: say so, rather than a button that does nothing.
+          document.documentElement.setAttribute('data-pq-priv', 'away');
+          return;
+        }
+      }
+      const open = fight.hidden;
+      fight.hidden = !open;
+      show.textContent = open ? 'Hide it' : 'Show it';
+      show.setAttribute('aria-expanded', String(open));
+      update();
+    });
+
+    /* ---------------------------------------------------------------- the other quizzes */
+    /*
+     * Where this browser already has a result for the quiz a card offers, say what it was above the
+     * card, with its link, and offer the card for a retake. It never changes this report.
+     */
+    const joinNames = (a: string[]) => (a.length < 2 ? a[0] ?? '' : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1]);
+    function context(which: 'sins' | 'gifts') {
+      const q = data.others[which];
+      const lead = $('[data-pq-lead="' + which + '"]');
+      if (!q || !lead) return;
+      const found = mineFor(q.slug, q.numbers);
+      if (!found) return;
+      let view: UnipolarView;
+      try { view = category.result(q as unknown as Quiz, found.values) as UnipolarView; } catch { return; }
+      let say: string;
+      let printed: string[] = [];
+      if (which === 'sins') {
+        const named = view.ranked.filter(x => view.named.includes(x.slug)).map(x => x.name);
+        say = view.state === 'flat' || !named.length
+          ? 'From your seven deadly sins quiz: no single one stood out.'
+          : 'From your seven deadly sins quiz: you are weakest to ' + joinNames(named) + '.';
+      } else {
+        const top = view.state === 'flat' ? [] : view.ranked.slice(0, 3).filter(x => x.score > 50);
+        printed = top.map(x => x.slug);
+        say = top.length
+          ? 'From your spiritual gifts test: ' + joinNames(top.map(x => x.name)) + '.'
+          : 'From your spiritual gifts test: no single gift stood out.';
+      }
+      const href = resultHref(q.slug, found.code, { codePrefix: q.codePrefix, shortLinks: q.shortLinks });
+      lead.innerHTML = esc(say) + ' <a href="' + esc(href) + '" target="_blank" rel="noopener">See that result</a>';
+      // The sentence that travels with six of the gifts wherever one of them is printed (the gifts quiz's own rule).
+      const note = q.groupNote;
+      const six = $('[data-pq-six]');
+      if (note && six && printed.length) {
+        const travels = new Set(q.groups.filter(g => note.groups.includes(g.key)).map(g => g.slug));
+        if (printed.some(s => travels.has(s))) { six.textContent = note.result; six.hidden = false; }
+      }
+      const go = $('[data-pq-go-label="' + which + '"]');
+      if (go) go.textContent = 'Take it again';
+    }
+    try { context('sins'); } catch { /* a stored result this page cannot read changes nothing */ }
+    try { context('gifts'); } catch { /* likewise */ }
+  }
+</script>

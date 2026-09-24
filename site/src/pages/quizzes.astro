@@ -26,7 +26,7 @@ import CompassCard from '../components/CompassCard.astro';
 import { QUIZZES, getQuiz, quizHref } from '../lib/engine/registry';
 import { groupNounPlural, outcomeNounPlural } from '../lib/engine/types';
 import type { Quiz } from '../lib/engine/types';
-import { artFor } from '../lib/art';
+import { artFor, COLOUR_PRINT } from '../lib/art';
 import { SITUATIONS } from '../lib/strategies/reading';
 
 const compass = getQuiz('theology-compass')!;
@@ -65,6 +65,7 @@ const countFact = (q: Quiz): string =>
 
 /** An ink per quiz, so no two rooms read alike: the home page's, kept the same on purpose. */
 const INK: Record<string, string> = {
+  personality: '#BFE3AE',
   'which-early-christian': '#DCC6EE',
   'which-psalm': '#BCD6F2',
   'bible-figure': '#EADFCB',
@@ -154,7 +155,10 @@ const breadcrumbs = [
       return (
         <a class:list={['qroom', art ? 'qroom--pic' : 'qroom--night']} href={quizHref(q)} style={roomStyle(q)}>
           {art && (
-            <img src={art.src} alt={art.alt} loading="lazy" decoding="async" width="820" height="1029" />
+            /* Paintings in colour (art.ts `colour`, the Christian Personality Test's) are printed
+               as they are, never through the engravings' sepia (quiz.css .qroom > img). */
+            <img src={art.src} alt={art.alt} loading="lazy" decoding="async" width="820" height="1029"
+                 style={art.colour ? COLOUR_PRINT : undefined} />
           )}
           {q.status === 'draft' && <span class="qroom-tab">Draft</span>}
           <div class="qroom-body">

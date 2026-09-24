@@ -10,6 +10,8 @@ const here = dirname(fileURLToPath(import.meta.url));
 await import('./build-psalm-data.mjs');
 // So does quiz #4's ("Which early Christian thinks like you?"), with the same kind of fallback.
 await import('./build-early-christian-data.mjs');
+// And the Christian Personality Test's, which also borrows the early Christians' portrait credits, so it comes after.
+await import('./build-personality-data.mjs');
 const SOURCE = resolve(here, '../../audit/compass-data.revised.json');
 const OUT = resolve(here, '../src/data/compass.json');
 const ASIDE = resolve(here, '../src/data/compass-audit.json');

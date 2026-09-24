@@ -14,6 +14,7 @@ import NextUp from '../../../components/NextUp.astro';
 import ReadCard from '../../../components/ReadCard.astro';
 import PsalmReading from '../../../components/PsalmReading.astro';
 import KindredResult from '../../../components/KindredResult.astro';
+import PersonalityResult from '../../../components/PersonalityResult.astro';
 import type { KindredData } from '../../../lib/strategies/kindred';
 import { QUIZZES, getQuiz, resultFor, decodeFor, outcomeHref } from '../../../lib/engine/registry';
 import { groupNoteFor, outcomeNounPlural, rankWord } from '../../../lib/engine/types';
@@ -224,7 +225,7 @@ const kindredCard = (() => {
       an instrument rather than a person — and the verdict keeps its two inks, because
       kit.css lifts them to the soft blue and #FFD2B0 wherever a band carries a picture.
     */}
-    <header
+    {view.shape !== 'personality' && (<header
       class:list={[
         'band', 'band--long', 'band--pic', 'result-band',
         art ? 'band--engraving' : 'band--night',
@@ -280,7 +281,7 @@ const kindredCard = (() => {
           <Icon name="users" size={14} /> Saved to <a href="/me/">{ACCOUNTS_VISIBLE ? 'My profile' : 'My results'}</a>
         </p>
       </div>
-    </header>{/*
+    </header>)}{/*
       Hung off the band with no whitespace between them: an expression that renders nothing
       still leaves the newline on each side of it, and the Compass's result page has to come
       out of this change unchanged. The Compass sets no group note, so this renders nothing
@@ -340,6 +341,14 @@ const kindredCard = (() => {
         is skipped for it too.
       */
       <KindredResult quiz={quiz} view={view} part="body" />
+    ) : view.shape === 'personality' ? (
+      /*
+        The Christian Personality Test: the whole ten-page report, its painted hero standing in
+        for the band above, then the result's link. Nothing else on this page is drawn for it
+        but the standard pieces under it: no share block (its two cards are in the report), and
+        no outcome list or depth panels (each skipped by its own test below).
+      */
+      <PersonalityResult quiz={quiz} view={view} origin={Astro.site!.origin} linkCode={linkCode} />
     ) : (
     <div class="panel layered result-panel">
       <div class="wash" aria-hidden="true"></div>
@@ -487,7 +496,7 @@ const kindredCard = (() => {
       </section>
     )}
 
-    {!kindredThin && (
+    {!kindredThin && view.shape !== 'personality' && (
       <ShareBlock quiz={quiz} view={view} origin={Astro.site!.origin} line={readingLine}
                   kindred={kindredCard} linkCode={linkCode} />
     )}
@@ -498,6 +507,25 @@ const kindredCard = (() => {
       and the account picks it up from there once a password is chosen.
     */}
     {!kindredThin && <SaveResult quiz={quiz} view={view} linkCode={linkCode} />}
+    {view.shape === 'personality' && (
+      /*
+        The personality report also knows its taker when they come back later (a private entry
+        or the shelf, PersonalityResult.astro), where the save box only reads this tab's note.
+        So the box follows the report's own mark, set before this ran.
+      */
+      <script is:inline>
+        try {
+          if (document.documentElement.getAttribute('data-pq-who') === 'taker') {
+            var pqSave = document.getElementById('save');
+            if (pqSave && pqSave.dataset.who !== 'taker') {
+              pqSave.dataset.who = 'taker';
+              var pqGo = document.getElementById('save-go');
+              if (pqGo) { pqGo.classList.remove('glass'); pqGo.textContent = 'Save my result'; }
+            }
+          }
+        } catch (e) {}
+      </script>
+    )}
 
     {/*
       The way on. A result used to end on the email form and, for some quizzes, three grey

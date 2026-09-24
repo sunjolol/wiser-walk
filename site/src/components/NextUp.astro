@@ -12,7 +12,9 @@
  *   a quiz     its Doré plate from lib/art.ts, printed soft sepia under a warm dark
  *              gradient, a white title lifted off the picture with no line under it, the
  *              counted facts and Start in the quiz's own ink (the home page's and
- *              /quizzes/'s; no line under a title on a picture, the owner, 2026-09-23)
+ *              /quizzes/'s; no line under a title on a picture, the owner, 2026-09-23). A
+ *              picture art.ts marks `colour` (the Christian Personality Test's eight
+ *              paintings) is printed as it is, never sepia
  *   Compass    no plate: it is an instrument, and it takes the night ground its shared
  *              card (CompassCard.astro) is drawn on, that card's example wheel at its top,
  *              that card's sentence, and Start in the soft blue
@@ -42,7 +44,7 @@ import type { BipolarView, Quiz } from '../lib/engine/types';
 import { groupNounPlural, outcomeNounPlural } from '../lib/engine/types';
 import type { Game } from '../lib/games';
 import { quizHref, scoreQuiz, resultFor } from '../lib/engine/registry';
-import { artFor } from '../lib/art';
+import { artFor, COLOUR_PRINT } from '../lib/art';
 import { SITUATIONS } from '../lib/strategies/reading';
 import audit from '../data/compass-audit.json';
 
@@ -58,6 +60,7 @@ const { quizzes = [], games = [], limit = 4 } = Astro.props;
 
 /** Each quiz's ink: the home page's (home.css .room--*) and /quizzes/'s, kept the same on purpose. */
 const QUIZ_INK: Record<string, string> = {
+  personality: '#BFE3AE',
   'which-early-christian': '#DCC6EE',
   'which-psalm': '#BCD6F2',
   'bible-figure': '#EADFCB',
@@ -157,6 +160,8 @@ interface Room {
   image?: string;
   imagePosition?: string;
   imageLift?: number;
+  /** A painting in colour (art.ts `colour`): printed as it is (COLOUR_PRINT), never sepia. */
+  imageColour?: boolean;
   ghost?: { glyph: string; kind: 'ask' | 'quote' };
   /** The Compass's example wheel. */
   wheel?: BipolarView;
@@ -179,6 +184,7 @@ const rooms: Room[] = [
         image: art?.src,
         imagePosition: art?.objectPosition,
         imageLift: art?.lift,
+        imageColour: art?.colour,
         wheel: exampleFor(q)
       };
     }),
@@ -225,7 +231,10 @@ const roomStyle = (room: Room) =>
                 decoding="async"
                 width="820"
                 height="1029"
-                style={room.imagePosition ? `object-position:${room.imagePosition}` : undefined}
+                style={[
+                  room.imagePosition ? `object-position:${room.imagePosition}` : '',
+                  room.imageColour ? COLOUR_PRINT : ''
+                ].filter(Boolean).join(';') || undefined}
               />
             )}
             {room.ghost && (

@@ -83,6 +83,10 @@
 .mroom--bible-figure { --room-ink: #EADFCB; }
 .mroom--spiritual-gifts { --room-ink: #FFC98F; }
 .mroom--seven-deadly-sins { --room-ink: #F2A596; }
+/* the Christian Personality Test's leaf green (home.css .room--personality): its picture is the
+   eight paintings in colour, printed as they are (me.astro), so the ground under them is a
+   neutral dark rather than the plates' brown */
+.mroom--personality { --room-ink: #BFE3AE; background: #1c1b1a; }
 /* the Thessalonica plate is the palest of the three; printed darker it joins the other two */
 .mroom--spiritual-gifts > img { filter: sepia(.34) contrast(.9) brightness(.88); }
 /* white type on a picture sits on the title lift (kit.css), as on every engraving card */

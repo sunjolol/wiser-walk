@@ -18,7 +18,9 @@ import PsalmIndex from '../../components/PsalmIndex.astro';
 import CompareRoom from '../../components/CompareRoom.astro';
 import ReadCard from '../../components/ReadCard.astro';
 import ReadingRunner from '../../components/ReadingRunner.astro';
+import PersonalityRunner from '../../components/PersonalityRunner.astro';
 import { READING, SITUATIONS } from '../../lib/strategies/reading';
+import { EXAMPLE_CODE, ITEMS as PERSONALITY_ITEMS, TYPE_KEYS } from '../../lib/strategies/personality';
 import type { KindredData } from '../../lib/strategies/kindred';
 import { getCollection } from 'astro:content';
 import { COMPARE_QUIZ } from '../../lib/comparisons';
@@ -69,6 +71,28 @@ const reading = quiz.strategy.shape === 'reading';
  * the middle answer, the word its result prints.
  */
 const kindred = quiz.strategy.shape === 'kindred';
+/*
+ * THE CHRISTIAN PERSONALITY TEST has its own runner (components/PersonalityRunner.astro: two
+ * sides and seven points, a private block, two picks, and progress saved on the device) and its
+ * own band: the eight type paintings where another quiz has one plate, as the preview the owner
+ * approved drew them. Its deep dives are the runner's intro. Nothing below changes for any
+ * other quiz.
+ */
+const personality = quiz.strategy.shape === 'personality';
+/*
+ * The band's paintings are cut from the test's mosaic (two across, four down, 318 x 253 cells
+ * on a 4px gap: MOSAIC in scripts/build-personality-data.mjs), in the design's order of the
+ * types, which is the order the preview's start screen laid them out four across.
+ */
+const PQ_MOSAIC = '/img/personality/mosaic.jpg';
+const pqCells = personality
+  ? TYPE_KEYS.map((_, i) => ({ c: i % 2, r: Math.floor(i / 2), x: (i % 2) * 322, y: Math.floor(i / 2) * 257 }))
+  : [];
+const pqTiles = [
+  { n: PERSONALITY_ITEMS.length, label: 'Questions' },
+  { n: quiz.outcomes.length, label: capitalise(outcomeNounPlural(quiz)) },
+  { n: `${quiz.minutes}m`, label: 'To take' }
+];
 /* The comparison pages are drawn on the Compass's own rails, so they belong to the Compass
    and to no other quiz. Asked of the data rather than of the slug typed here twice. */
 const comparable = quiz.slug === COMPARE_QUIZ.slug;
@@ -189,7 +213,34 @@ const strip = kindred
   breadcrumbs={breadcrumbs}
 >
   {/* The quiz's own Doré plate, printed soft. The Compass has none: it is an instrument,
-      so it wears the dark starry ground every page draws it on. */}
+      so it wears the dark starry ground every page draws it on. */}{personality ? (
+  /*
+    The personality test's band: the kit's picture band, with the eight type paintings where a
+    plate would be (four across and two down above the words on a phone, beside them from a
+    tablet up; personality-run.css). The start button says where a returning reader left off
+    ("Pick up at question N of 72", written before first paint by the runner), with a quiet
+    "Start over" beside it; "See an example" opens a simulated person's finished report.
+  */
+  <header class="band band--pic band--long pqr-band">
+    <div class="pqr-art" aria-hidden="true" style={`--pqr-mosaic:url('${PQ_MOSAIC}')`}>
+      {pqCells.map(c => <i><b style={`--c:${c.c};--r:${c.r};--x:${c.x};--y:${c.y}`}></b></i>)}
+    </div>
+    <div class="band-in">
+      <h1>{painted && quiz.title.includes(painted) ? (
+        <>{quiz.title.split(painted)[0]}<span class="verdict-part--left">{painted}</span>{quiz.title.split(painted).slice(1).join(painted)}</>
+      ) : quiz.title}</h1>
+      <p class="lede">{quiz.intro ?? quiz.description}</p>
+      <div class="btn-row">
+        <button class="btn" type="button" data-pqr-start>Start the test</button>
+        <button class="pqr-over" type="button" data-pqr-over hidden>Start over</button>
+        <a class="btn glass" href={`/r/${quiz.slug}/${EXAMPLE_CODE}/`}>See an example</a>
+      </div>
+      <ul class="tiles">
+        {pqTiles.map(t => <li class="tile"><b>{t.n}</b><span>{t.label}</span></li>)}
+      </ul>
+    </div>
+  </header>
+  ) : (
   <Hero
     title={quiz.title}
     blue={painted}
@@ -225,13 +276,38 @@ const strip = kindred
       <a class="btn glass" href="/q/spiritual-gifts/print/" slot="actions">Print it for a group</a>
     )}
   </Hero>
+  )}
 
   {/*
     A READING: its own runner, with the intro as the runner's slot so it is hidden the moment
     play begins. No #runner is drawn, so the statement script at the foot of this page finds
     nothing to bind; ReadingRunner binds the band's [data-start] itself. PsalmIndex stands where
     OutcomeIndex would: OutcomeIndex's sentences are about axes and traditions, untrue of psalms.
-  */}{reading ? (
+
+    THE PERSONALITY TEST, first in the same chain: its own runner, with the deep dives as its
+    intro and the page's "Read next" in its slot, all hidden the moment play begins. It draws no
+    #runner either.
+  */}{personality ? (
+  <PersonalityRunner quiz={quiz}>
+    {readNext.length > 0 && (
+      <section class="qreads">
+        <SectionHead
+          title="Read next"
+          kicker="Alongside this test"
+          href="/articles/"
+          more="All articles"
+        />
+        <div class="hm-reads reads-foot">
+          {readNext.map(a => (
+            <ReadCard id={a.id} title={a.data.title} description={a.data.description}
+                      minutes={a.data.minutes} image={a.data.image} imageAlt={a.data.imageAlt}
+                      imagePosition={a.data.imagePosition} />
+          ))}
+        </div>
+      </section>
+    )}
+  </PersonalityRunner>
+  ) : reading ? (
   <ReadingRunner quiz={quiz}>
     <SectionHead title="How it works" kicker="Three steps, no wrong answers" />
     <ul class="steps">

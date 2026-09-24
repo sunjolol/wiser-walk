@@ -5,7 +5,7 @@ published: 2026-09-20
 minutes: 6
 answer: "Jesus does not only say stop. He gives reasons: worry adds nothing, your Father already knows what you need, and tomorrow is not yours to carry today. Paul offers a replacement, not a suppression, turning each worry into a request with thanks. Concern itself is never treated as the fault."
 tags: [formation, worry]
-quizzes: [which-psalm]
+quizzes: [which-psalm, personality]
 image: /img/articles/what-the-bible-says-about-worry.jpg
 imageAlt: "A small boat is thrown about by a storm while its crew wake the sleeping Christ"
 imageCredit: "Rembrandt, Christ in the Storm on the Sea of Galilee, 1633"

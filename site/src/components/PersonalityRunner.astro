@@ -1,0 +1,746 @@
+---
+/**
+ * The runner for the Christian Personality Test, and the deep dives on its start page.
+ *
+ * THE PREVIEW IS THE SPEC. The owner took the tap-through preview
+ * (design/quiz-ideas/personality/preview/app.js) and said "it's ready, push it live"
+ * (2026-09-24). So every question screen here says and does what that one did: two sides, A
+ * and B, with seven labelled points between them (tapping A or B is the strongest point), the
+ * private note before the twelve private statements and those statements on the starry ground,
+ * the two "pick up to two" questions with Next, the way back, the bar and "N of 72".
+ *
+ * HIS ONE ADDITION: "make sure that if someone stops midway it saves their progress though ...
+ * it will be a pleasant surprise if they come back and it picks right up with the next
+ * question." After every answer the whole state is written to this device only
+ * (localStorage `ww.progress.personality`), and a start button on a later visit reads "Pick up at
+ * question N of 72". The private answers are in that record. It never leaves the browser.
+ *
+ * PRIVACY. The twelve private answers go nowhere but this device's storage. The finish turns
+ * the answers into a code with encodeAnswers(), which reduces the private ones to six facts;
+ * the private answers themselves are kept on this device (`ww.private.personality`), where the
+ * result page reads them to draw the private page for the person who took the test.
+ *
+ * The questions, the scoring and the code all come from strategies/personality.ts (the design's
+ * own score.mjs). This file draws screens and remembers answers.
+ *
+ * The intro is this test's own: the eight types, the four traps, the four kinds of anger, what
+ * the report covers and the saints behind it, every word from src/data/personality.json (the
+ * design's results.mjs), read here in the front matter and never shipped as data. The page's
+ * "Read next" comes in through the default slot.
+ */
+import type { Quiz } from '../lib/engine/types';
+import SectionHead from './SectionHead.astro';
+import { ITEMS, PICK_IDS, SCALES, TYPES, TYPE_KEYS } from '../lib/strategies/personality';
+// Server only: the report's words, for the deep dives. Read at build time; never in a client script.
+import report from '../data/personality.json';
+import '../styles/pages/personality-run.css';
+
+interface Props { quiz: Quiz; }
+const { quiz } = Astro.props;
+
+interface Q { q: string; cite: string }
+interface Kin { who: string; img: string; text: string; src: string; partial?: boolean }
+interface FullType {
+  name: string; tagline: string; disposition: string; makeup: string; ink: string; art: string;
+  portrait: string; kindred: Kin[]; kindredNote?: string;
+}
+interface Disposition { word: string; trapWho: string; trap: { name: string; quote: Q; plain: string } }
+interface AngerCell { name: string; short: string; quote?: Q }
+interface Credit { key: string; line: string; page: string; files: string[] }
+interface Report {
+  TYPES: Record<string, FullType>;
+  DISPOSITIONS: Record<string, Disposition>;
+  MAKEUPS: Record<string, { word: string }>;
+  TRAP_LEAD: string;
+  ANGER: { intro: Q; cells: Record<string, AngerCell> };
+  CREDITS: Credit[];
+  PICTURES: Record<string, { width: number; height: number }>;
+}
+const R = report as unknown as Report;
+
+const pic = (file: string) => `/img/personality/${file}`;
+const size = (file: string) => R.PICTURES[pic(file)] ?? { width: 220, height: 220 };
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+/* ---------------------------------------------------------------- the eight types */
+const types = TYPE_KEYS.map(k => {
+  const t = R.TYPES[k]!;
+  const d = R.DISPOSITIONS[t.disposition]!;
+  const m = R.MAKEUPS[t.makeup]!;
+  return { key: k, t, words: `${d.word} · ${m.word}`, trap: d.trap.name, art: `art/${t.art}.jpg` };
+});
+const DISP_KEYS = Object.keys(R.DISPOSITIONS);
+const tempers = DISP_KEYS.map(k => R.DISPOSITIONS[k]!.word.toLowerCase());
+const minds = Object.keys(R.MAKEUPS).map(k => R.MAKEUPS[k]!.word.toLowerCase());
+const orList = (xs: string[]) => xs.length > 1 ? `${xs.slice(0, -1).join(', ')} or ${xs[xs.length - 1]}` : xs.join('');
+const typesLead = [
+  'St Gregory the Great sorted people twice.',
+  `Once by temper: ${orList(tempers)}.`,
+  `Once by mind: ${orList(minds)}.`,
+  'The eight types are the two together.'
+];
+
+/* ---------------------------------------------------------------- a trap for every temper */
+const traps = DISP_KEYS.map(k => ({ key: k, ...R.DISPOSITIONS[k]! }));
+
+/* ---------------------------------------------------------------- four kinds of anger */
+const A = R.ANGER.cells;
+const angerImages = (['reeds', 'wood'] as const).filter(k => A[k]?.quote).map(k => ({ name: A[k]!.name, quote: A[k]!.quote! }));
+
+/* ---------------------------------------------------------------- the report's ten pages */
+// The leanings page draws every scale that is not the anger grid, the speaker grid or the help card.
+const leaningCount = Object.values(SCALES).filter(s => !['anger', 'speaker', 'help', 'thought', 'lines', 'front'].includes(s.group)).length;
+const numberWord = (n: number) => ({ 18: 'Eighteen', 19: 'Nineteen', 20: 'Twenty', 21: 'Twenty-one', 22: 'Twenty-two' } as Record<number, string>)[n] ?? String(n);
+const PAGES: Array<{ title: string; say: string; card?: boolean; private?: boolean }> = [
+  { title: 'Your result', say: 'Your type at a glance, and how common it is.', card: true },
+  { title: 'Your type', say: 'What you bring and what it costs you. Where your trap is set, and saints like you.' },
+  { title: 'Your leanings', say: `${numberWord(leaningCount)} ways you lean. Open any one for Gregory’s counsel.` },
+  { title: 'What you might not have noticed', say: 'Two of your answers side by side, and what they say together.' },
+  { title: 'How your anger works', say: 'Which of Gregory’s four kinds of anger is yours, and his cure for it.' },
+  { title: 'How you speak', say: 'Which of four kinds of speaker you are.' },
+  { title: 'How to help someone like you', say: 'A short card to send to the people around you.' },
+  { title: 'Where the fight is for you now', say: 'Which of the eight thoughts troubles you most right now. How to catch it early.', private: true },
+  { title: 'Your best quality, and its counterfeit', say: 'Your best quality, and the fake that can pass for it.' },
+  { title: 'Who you are in Christ, and in the Body', say: 'Your role in the Body and your spiritual gift. The member you need most.', card: true }
+];
+
+/* ---------------------------------------------------------------- the saints behind it */
+const SAINTS: Array<{ name: string; face: string | null; mono?: string; say: string[] }> = [
+  {
+    name: 'St Gregory the Great', face: 'faces/gregory-the-great.jpg',
+    say: ['The test is built on his Pastoral Rule and his Moralia on Job, both from around 590.', 'They sort people by temperament and say what each one needs.']
+  },
+  {
+    name: 'St Gregory the Theologian', face: 'faces/gregory-of-nazianzus.jpg',
+    say: ['Gregory the Great names him as his teacher.', 'He wrote that some are led by teaching and others by example, and that no one remedy suits everyone. Your help card follows him.']
+  },
+  {
+    name: 'St John Cassian', face: null, mono: 'JC',
+    say: ['The private page follows his eight thoughts, as the desert fathers taught them.', 'Your line in the Body comes from his Conferences.']
+  },
+  {
+    name: 'The desert fathers', face: 'faces/arsenius.jpg',
+    say: ['The report draws on their sayings too.', 'One of them, Abba Arsenius, fled the world to pray. In an old story he is seen sailing in silence, with the Spirit of God beside him.']
+  }
+];
+
+/* ---------------------------------------------------------------- picture credits, for what this page shows */
+const shown = new Set<string>([
+  'mosaic.jpg',
+  ...types.map(t => t.art),
+  ...types.flatMap(t => t.t.kindred.map(k => `faces/${k.img}.jpg`)),
+  ...SAINTS.flatMap(s => (s.face ? [s.face] : []))
+]);
+const credits = R.CREDITS.filter(c => c.files.some(f => shown.has(f)));
+
+/* What the start buttons read before a script has looked for saved progress. */
+const START = 'Start the test';
+---
+<div class="pqr-root" id="pqr" data-quiz={quiz.slug} data-quiz-runner
+     data-ids={ITEMS.map(it => it.id).join(',')} data-picks={PICK_IDS.join(',')}>
+  <noscript>
+    <div class="note">
+      <p>This test needs JavaScript enabled.</p>
+    </div>
+  </noscript>
+
+  <div id="pqr-intro">
+    {/* ---------------------------------------------------------------- the eight types */}
+    <section class="pqr-sec pqr-types">
+      <SectionHead title="The eight types" kicker="Temper and mind" />
+      <p class="pqr-lead">{typesLead.join(' ')}</p>
+      <ul class="pqr-grid">
+        {types.map(({ key, t, words, art }) => (
+          <li>
+            <button class="pqr-ty" type="button" style={`--t:${t.ink}`} data-sheet={key} aria-haspopup="dialog">
+              <img src={pic(art)} width={size(art).width} height={size(art).height} alt="" loading="lazy" decoding="async" />
+              <span class="pqr-ty-in"><b>{t.name}</b><span>{words}</span></span>
+            </button>
+          </li>
+        ))}
+      </ul>
+      <p class="pqr-hint">Tap a type to read about it.</p>
+
+      {types.map(({ key, t, words, trap, art }) => (
+        <dialog class="pqr-sheet" id={`pqr-sheet-${key}`} aria-labelledby={`pqr-sheet-${key}-h`} style={`--t:${t.ink}`}>
+          <img class="pqr-sheet-img" src={pic(art)} width={size(art).width} height={size(art).height} alt="" loading="lazy" decoding="async" />
+          <div class="pqr-sheet-in">
+            <p class="pqr-kicker">{words}</p>
+            <h3 id={`pqr-sheet-${key}-h`}>{t.name}</h3>
+            <p class="pqr-sheet-tag">{t.tagline}</p>
+            <p>{t.portrait}</p>
+            <p><b>Trap:</b> {trap}.</p>
+            {t.kindred.length > 0 && (
+              <div class="pqr-kin">
+                <b>Kindred:</b>
+                <ul>
+                  {t.kindred.map(k => (
+                    <li>
+                      <img src={pic(`faces/${k.img}.jpg`)} width="220" height="220" alt="" loading="lazy" decoding="async" />
+                      <span>{k.who}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            <form method="dialog"><button class="btn" type="submit">Close</button></form>
+          </div>
+        </dialog>
+      ))}
+    </section>
+
+    {/* ---------------------------------------------------------------- a trap for every temper */}
+    <section class="pqr-sec pqr-traps">
+      <SectionHead title="A trap for every temper" kicker="Four tempers, four traps" />
+      <p class="pqr-lead">{R.TRAP_LEAD}</p>
+      <div class="pqr-night pqr-trapgrid">
+        {traps.map(d => (
+          <article class="pqr-trap">
+            <p class="pqr-kicker">{d.word}</p>
+            <h3>{cap(d.trap.name)}</h3>
+            <blockquote class="pqr-quote">
+              <p>“{d.trap.quote.q}”</p>
+              <cite>{d.trap.quote.cite}</cite>
+            </blockquote>
+          </article>
+        ))}
+      </div>
+      <p class="pqr-close">The test tells you which one is set for you.</p>
+    </section>
+
+    {/* ---------------------------------------------------------------- four kinds of anger */}
+    <section class="pqr-sec pqr-anger">
+      <SectionHead title="Four kinds of anger" kicker="Quick or slow, brief or long" />
+      <blockquote class="pqr-quote pqr-quote--lead">
+        <p>“{R.ANGER.intro.q}”</p>
+        <cite>{R.ANGER.intro.cite}</cite>
+      </blockquote>
+      <div class="pqr-g2">
+        <span></span><span class="pqr-ax">Catches quickly</span><span class="pqr-ax">Catches slowly</span>
+        <span class="pqr-ay">Lets go quickly</span>
+        {(['reeds', 'brief'] as const).map(k => <div class="pqr-cell"><b>{A[k]!.name}</b><span>{A[k]!.short}</span></div>)}
+        <span class="pqr-ay">Lets go slowly</span>
+        {(['worst', 'wood'] as const).map(k => <div class="pqr-cell"><b>{A[k]!.name}</b><span>{A[k]!.short}</span></div>)}
+      </div>
+      <div class="pqr-images">
+        {angerImages.map(a => (
+          <figure class="pqr-image">
+            <p class="pqr-kicker">{a.name}</p>
+            <blockquote class="pqr-quote">
+              <p>“{a.quote.q}”</p>
+              <cite>{a.quote.cite}</cite>
+            </blockquote>
+          </figure>
+        ))}
+      </div>
+      <p class="pqr-close">Your report shows where you sit.</p>
+    </section>
+
+    {/* ---------------------------------------------------------------- what your report covers */}
+    <section class="pqr-sec pqr-pages">
+      <SectionHead title="What your report covers" kicker="Ten pages, two cards" />
+      <ol class="pqr-plist">
+        {PAGES.map((p, i) => (
+          <li class:list={['pqr-p', p.private && 'pqr-p--private']}>
+            <span class="pqr-pn" aria-hidden="true">{p.private ? (
+              <svg viewBox="0 0 24 24" width="15" height="15"><path d="M7 10V7a5 5 0 0 1 10 0v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="4.5" y="10" width="15" height="11" rx="3" fill="currentColor"/></svg>
+            ) : i + 1}</span>
+            <div class="pqr-p-say">
+              <b>{p.title}</b>
+              <span>{p.say}</span>
+              {p.private && <em class="pqr-tag pqr-tag--lock">Only you see it</em>}
+              {p.card && <em class="pqr-tag">A card to save and share</em>}
+            </div>
+          </li>
+        ))}
+      </ol>
+      <p class="pqr-close">Two cards to save and share: your type, and your role in the Body.</p>
+    </section>
+
+    {/* ---------------------------------------------------------------- the saints behind it */}
+    <section class="pqr-sec pqr-saints">
+      <SectionHead title="The saints behind it" kicker="Where it comes from" />
+      <ul class="pqr-saintlist">
+        {SAINTS.map(s => (
+          <li class="pqr-saint">
+            {s.face
+              ? <img class="pqr-face" src={pic(s.face)} width="220" height="220" alt="" loading="lazy" decoding="async" />
+              : <span class="pqr-face pqr-mono" aria-hidden="true">{s.mono}</span>}
+            <div>
+              <b>{s.name}</b>
+              <p>{s.say.join(' ')}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <details class="pqr-credits">
+        <summary>Picture credits</summary>
+        <ul>
+          {credits.map(c => <li><a href={c.page}>{c.line}</a></li>)}
+        </ul>
+      </details>
+    </section>
+
+    {/* The way in again at the foot, as on every quiz page. */}
+    <section class="wayin wayin--night qway">
+      <div class="wayin-ghost" aria-hidden="true">begin</div>
+      <div class="wayin-in">
+        <p class="wayin-kicker">When you are ready</p>
+        <h2>{ITEMS.length} questions,<br /> about {quiz.minutes} minutes.</h2>
+        <p class="wayin-say">You can stop at any point and pick up where you left off.</p>
+        <div class="btn-row">
+          <button class="btn" type="button" data-pqr-start>{START}</button>
+          <button class="pqr-over" type="button" data-pqr-over hidden>Start over</button>
+        </div>
+      </div>
+    </section>
+
+    <slot />
+  </div>
+
+  <div id="pqr-play" hidden>
+    <div id="pqr-screen"></div>
+  </div>
+</div>
+
+{/*
+  BEFORE FIRST PAINT: a start button that says where a returning reader left off. It has to be
+  inline, or the page paints "Start the test" and then changes its mind. It reads the same record
+  the runner writes and nothing else, and the runner below keeps the buttons right from then on.
+*/}
+<script is:inline>
+  (function () {
+    var root = document.getElementById('pqr');
+    if (!root) return;
+    var key = 'ww.progress.' + root.getAttribute('data-quiz');
+    var p = null;
+    try {
+      var raw = localStorage.getItem(key);
+      if (raw) {
+        p = JSON.parse(raw);
+        if (!p || p.v !== 1 || !p.answers || typeof p.answers !== 'object') { localStorage.removeItem(key); p = null; }
+      }
+    } catch (e) { p = null; }
+    if (!p) return;
+    var ids = root.getAttribute('data-ids').split(','), picks = root.getAttribute('data-picks').split(',');
+    var ok = function (id) {
+      var v = p.answers[id];
+      return picks.indexOf(id) > -1 ? Array.isArray(v) : typeof v === 'number' && v % 1 === 0 && v >= -3 && v <= 3;
+    };
+    if (!ids.some(ok)) return;
+    var n = 0;
+    while (n < ids.length - 1 && ok(ids[n])) n++;
+    var label = 'Pick up at question ' + (n + 1) + ' of ' + ids.length;
+    var starts = document.querySelectorAll('[data-pqr-start]');
+    for (var i = 0; i < starts.length; i++) starts[i].textContent = label;
+    var overs = document.querySelectorAll('[data-pqr-over]');
+    for (var j = 0; j < overs.length; j++) overs[j].hidden = false;
+  })();
+</script>
+
+<script>
+  import {
+    ITEMS, PRIVATE_NOTE, LINES, unanswered, encodeAnswers, privateAnswers
+  } from '../lib/strategies/personality';
+  import type { PersonalityItem } from '../lib/strategies/personality';
+  import { requestShortCode } from '../lib/engine/links';
+  // A finished result is kept on this device, so it can be found again on /me/. A blocked or
+  // full storage is a no-op rather than an error.
+  import { addResult } from '../lib/shelf';
+
+  const root = document.getElementById('pqr');
+  const intro = document.getElementById('pqr-intro');
+  const play = document.getElementById('pqr-play');
+  const screen = document.getElementById('pqr-screen');
+
+  if (root && intro && play && screen) {
+    const slug = root.dataset.quiz ?? 'personality';
+    const N = ITEMS.length;
+    /** Where a run in progress is kept: this device only, never sent anywhere. */
+    const PROGRESS_KEY = 'ww.progress.' + slug;
+    /** The private answers of finished runs, for the private page on the result. This device only. */
+    const PRIVATE_KEY = 'ww.private.' + slug;
+    const START = 'Start the test';
+
+    type Answers = Record<string, number | string[]>;
+    interface State { i: number; answers: Answers; seenPrivate: boolean }
+
+    const esc = (s: unknown) => String(s ?? '').replace(/[&<>"]/g, c =>
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
+
+    let state: State = { i: 0, answers: {}, seenPrivate: false };
+    /** Set on a resumed run until the reader answers or moves: the "Welcome back" line. */
+    let welcome = false;
+    /** The picks on a pick screen, committed only when Next is pressed. */
+    let draft: string[] = [];
+    let timer = 0;
+
+    /*
+     * A tap that lands in the first moment of a new screen is the second half of a double tap on
+     * the last one, not an answer: the points sit in the same place from question to question, so
+     * without this a quick thumb answers two questions with one gesture (ReadingRunner's rule).
+     */
+    let shownAt = 0;
+    const settled = () => performance.now() - shownAt > 250;
+
+    // ------------------------------------------------------------------ this device's copy
+
+    const isPoint = (v: unknown): v is number =>
+      typeof v === 'number' && Number.isInteger(v) && v >= -3 && v <= 3;
+
+    /** Only answers this test could have given, so a stale or edited record cannot break a run. */
+    function clean(raw: unknown): Answers {
+      const out: Answers = {};
+      if (!raw || typeof raw !== 'object') return out;
+      const a = raw as Record<string, unknown>;
+      for (const it of ITEMS) {
+        const v = a[it.id];
+        if (it.kind === 'pick') {
+          if (Array.isArray(v) && v.length <= (it.max ?? 2) && v.every(l => LINES.includes(String(l)))
+              && new Set(v).size === v.length) out[it.id] = v.map(String);
+        } else if (isPoint(v)) out[it.id] = v;
+      }
+      return out;
+    }
+
+    function loadProgress(): State | null {
+      try {
+        const raw = localStorage.getItem(PROGRESS_KEY);
+        if (!raw) return null;
+        const p = JSON.parse(raw);
+        if (!p || p.v !== 1 || !p.answers || typeof p.answers !== 'object') {
+          localStorage.removeItem(PROGRESS_KEY);
+          return null;
+        }
+        const answers = clean(p.answers);
+        if (!Object.keys(answers).length) return null;
+        return { i: 0, answers, seenPrivate: Boolean(p.seenPrivate) };
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function saveProgress() {
+      try {
+        localStorage.setItem(PROGRESS_KEY, JSON.stringify({
+          v: 1, at: new Date().toISOString(), i: state.i, answers: state.answers, seenPrivate: state.seenPrivate
+        }));
+      } catch (e) { /* storage blocked or full: the run goes on, it just cannot be picked up later */ }
+    }
+
+    function clearProgress() {
+      try { localStorage.removeItem(PROGRESS_KEY); } catch (e) {}
+    }
+
+    /** The first question without an answer: where a returning reader picks up. */
+    function firstOpen(answers: Answers): number {
+      const id = unanswered(answers)[0];
+      const at = id ? ITEMS.findIndex(it => it.id === id) : -1;
+      return at < 0 ? N - 1 : at;
+    }
+
+    /** The start buttons, as the saved progress says they should read. */
+    function refreshStart() {
+      const saved = loadProgress();
+      const label = saved ? `Pick up at question ${firstOpen(saved.answers) + 1} of ${N}` : START;
+      document.querySelectorAll<HTMLElement>('[data-pqr-start]').forEach(b => { b.textContent = label; });
+      document.querySelectorAll<HTMLElement>('[data-pqr-over]').forEach(b => { b.hidden = !saved; });
+    }
+
+    /** The private answers of a finished run, newest first, ten at most. Never sent anywhere. */
+    function keepPrivate(code: string, answers: Record<string, number>, at: string) {
+      try {
+        let entries: Array<{ code: string; answers: Record<string, number>; at: string }> = [];
+        const raw = localStorage.getItem(PRIVATE_KEY);
+        if (raw) {
+          const p = JSON.parse(raw);
+          if (p && p.v === 1 && Array.isArray(p.entries)) {
+            entries = p.entries.filter((e: { code?: unknown }) => e && typeof e.code === 'string' && e.code !== code);
+          }
+        }
+        entries.unshift({ code, answers, at });
+        localStorage.setItem(PRIVATE_KEY, JSON.stringify({ v: 1, entries: entries.slice(0, 10) }));
+      } catch (e) {}
+    }
+
+    // ------------------------------------------------------------------ screens
+
+    /*
+     * Seven points, each a column with its dot and its words under it, so nobody has to guess
+     * what a dot means (the owner, 2026-09-24). The whole column is the tap target.
+     */
+    const LABELS: Record<'two' | 'freq', string[]> = {
+      two: ['Very much A', 'Mostly A', 'A little A', 'Both / neither', 'A little B', 'Mostly B', 'Very much B'],
+      freq: ['Never', 'Almost never', 'Rarely', 'Sometimes', 'Often', 'Very often', 'All the time']
+    };
+
+    function points(v: number | undefined, kind: 'two' | 'freq') {
+      let out = '';
+      for (let n = -3; n <= 3; n++) {
+        const side = n < 0 ? 'a' : n > 0 ? 'b' : 'm';
+        const on = v === n;
+        out += `<button class="pqr-pt pqr-pt--${side}${on ? ' is-on' : ''}" type="button" data-v="${n}" aria-pressed="${on}">` +
+          `<span class="pqr-pt-d"><span class="pqr-dot pqr-dot--${side} pqr-dot--${Math.abs(n)}"></span></span>` +
+          `<span class="pqr-pt-l">${esc(LABELS[kind][n + 3])}</span></button>`;
+      }
+      return out;
+    }
+
+    const LOCK = '<svg class="pqr-lock" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><rect x="4.5" y="10" width="15" height="11" rx="3" fill="currentColor"/></svg>';
+
+    /** Every screen is drawn the same way: the markup, the top of the page, focus on its words. */
+    function show(html: string, dark: boolean) {
+      clearTimeout(timer);
+      screen!.innerHTML = html;
+      screen!.className = dark ? 'pqr-dark' : '';
+      shownAt = performance.now();
+      window.scrollTo(0, 0);
+      (screen!.querySelector('[data-focus]') as HTMLElement | null)?.focus({ preventScroll: true });
+    }
+
+    function head(i: number) {
+      const leaving = i === 0;
+      return `<div class="pqr-top">` +
+        `<button class="pqr-back" type="button" data-back aria-label="${leaving ? 'Leave the test' : 'Back'}">&larr;</button>` +
+        `<span class="pqr-count">${i + 1} of ${N}</span></div>` +
+        `<div class="pqr-bar" aria-hidden="true"><i style="width:${(100 * i) / N}%"></i></div>` +
+        (welcome ? '<p class="pqr-welcome">Welcome back. Your answers so far are saved on this device.</p>' : '');
+    }
+
+    function draw() {
+      const it: PersonalityItem = ITEMS[state.i]!;
+      const priv = it.block === 'private';
+      if (priv && !state.seenPrivate) return privateNote();
+      const v = state.answers[it.id];
+      let body: string;
+      if (it.kind === 'two') {
+        const n = typeof v === 'number' ? v : undefined;
+        body = `<h2 class="pqr-stem" tabindex="-1" data-focus>${esc(it.stem)}</h2>` +
+          `<div class="pqr-choice">` +
+          `<button class="pqr-opt pqr-opt--a${n !== undefined && n < 0 ? ' is-on' : ''}" type="button" data-v="-3"><span class="pqr-ab">A</span><span>${esc(it.A)}</span></button>` +
+          `<div class="pqr-scale" role="group" aria-label="How much A or B">${points(n, 'two')}</div>` +
+          `<button class="pqr-opt pqr-opt--b${n !== undefined && n > 0 ? ' is-on' : ''}" type="button" data-v="3"><span class="pqr-ab">B</span><span>${esc(it.B)}</span></button>` +
+          `</div>`;
+      } else if (it.kind === 'freq') {
+        const n = typeof v === 'number' ? v : undefined;
+        body = `<p class="pqr-lockline">Private</p>` +
+          `<h2 class="pqr-stem pqr-stem--say" tabindex="-1" data-focus>${esc(it.text)}</h2>` +
+          `<div class="pqr-choice"><div class="pqr-scale pqr-scale--freq" role="group" aria-label="How often">${points(n, 'freq')}</div></div>`;
+      } else {
+        draft = Array.isArray(v) ? [...v] : [];
+        body = `<h2 class="pqr-stem" tabindex="-1" data-focus>${esc(it.stem)}</h2>` +
+          `<div class="pqr-picks">${(it.options ?? []).map(o =>
+            `<button class="pqr-pick${draft.includes(o.line) ? ' is-on' : ''}" type="button" data-line="${esc(o.line)}" aria-pressed="${draft.includes(o.line)}">${esc(o.text)}</button>`).join('')}</div>` +
+          `<div class="pqr-row"><button class="btn" type="button" data-next>${state.i === N - 1 ? 'See my results' : 'Next'}</button></div>`;
+      }
+      show(`<section class="pqr-q${priv ? ' pqr-q--private' : ''}">${head(state.i)}${body}</section>`, priv);
+    }
+
+    function privateNote() {
+      show(`<section class="pqr-q pqr-q--private pqr-note">${LOCK}` +
+        `<h2 tabindex="-1" data-focus>Just for you</h2><p>${esc(PRIVATE_NOTE)}</p>` +
+        `<div class="pqr-row"><button class="btn" type="button" data-continue>Continue</button></div>` +
+        `<div class="pqr-row pqr-row--quiet"><button class="pqr-textback" type="button" data-back>&larr; Back</button></div>` +
+        `</section>`, true);
+    }
+
+    /** The chosen point, shown without redrawing the screen (so the settle guard is not reset). */
+    function mark(v: number) {
+      screen!.querySelectorAll<HTMLElement>('.pqr-pt').forEach(b => {
+        const on = Number(b.dataset.v) === v;
+        b.classList.toggle('is-on', on);
+        b.setAttribute('aria-pressed', String(on));
+      });
+      screen!.querySelector('.pqr-opt--a')?.classList.toggle('is-on', v < 0);
+      screen!.querySelector('.pqr-opt--b')?.classList.toggle('is-on', v > 0);
+    }
+
+    // ------------------------------------------------------------------ moving through
+
+    function answer(v: number) {
+      if (!settled()) return;
+      const it = ITEMS[state.i]!;
+      if (it.kind === 'pick' || (it.block === 'private' && !state.seenPrivate)) return;
+      state.answers[it.id] = v;
+      welcome = false;
+      saveProgress();
+      mark(v);
+      // A short beat so the choice is seen. Any other tap on this screen replaces it.
+      clearTimeout(timer);
+      timer = window.setTimeout(next, 260);
+    }
+
+    function next() {
+      clearTimeout(timer);
+      welcome = false;
+      if (state.i < N - 1) { state.i++; saveProgress(); draw(); }
+      else finish();
+    }
+
+    function back() {
+      clearTimeout(timer);
+      welcome = false;
+      if (state.i === 0) return leave();
+      state.i--;
+      saveProgress();
+      draw();
+    }
+
+    function begin(fresh: boolean) {
+      clearTimeout(timer);
+      const saved = fresh ? null : loadProgress();
+      if (saved) {
+        state = saved;
+        state.i = firstOpen(saved.answers);
+        welcome = true;
+      } else {
+        clearProgress();
+        state = { i: 0, answers: {}, seenPrivate: false };
+        welcome = false;
+      }
+      intro!.hidden = true;
+      play!.hidden = false;
+      draw();
+    }
+
+    function leave() {
+      clearTimeout(timer);
+      play!.hidden = true;
+      intro!.hidden = false;
+      refreshStart();
+      window.scrollTo(0, 0);
+    }
+
+    // ------------------------------------------------------------------ the finish
+
+    /**
+     * Set once the way to the result has begun, so a second tap cannot finish twice while a short
+     * link is asked for. Cleared when Back brings this page out of the browser's cache as it was.
+     */
+    let leaving = false;
+    window.addEventListener('pageshow', e => { if (e.persisted) leaving = false; });
+
+    async function finish() {
+      if (leaving) return;
+      // Every question has to be answered. A run picked up later can reach the end with a gap in
+      // it, and the gap is where the reader goes, rather than a result made without it.
+      const open = unanswered(state.answers);
+      if (open.length) {
+        state.i = ITEMS.findIndex(it => it.id === open[0]);
+        saveProgress();
+        return draw();
+      }
+      let code: string;
+      try { code = encodeAnswers(state.answers); } catch (e) { return; }
+      leaving = true;
+      const bar = screen!.querySelector<HTMLElement>('.pqr-bar i');
+      if (bar) bar.style.width = '100%';
+
+      // One instant, used everywhere: the device's copy of a finish and the account's carry the same moment.
+      const at = new Date().toISOString();
+      // The private answers stay on this device, for the private page. The code carries six facts only.
+      keepPrivate(code, privateAnswers(state.answers), at);
+      // A note for the result page, which is served the same to the person who took the test and to
+      // anyone they send the link to. Tab-scoped, never sent.
+      try { sessionStorage.setItem('ww:took:' + slug, code); } catch (e) {}
+      addResult(slug, code, at);
+      // Said out loud rather than done here: an account, where there is one, puts this on its queue.
+      // Dispatched synchronously, so the queue is written before the navigation below.
+      document.dispatchEvent(new CustomEvent('ww:finished', { detail: { quiz: slug, code, at } }));
+      clearProgress();
+      // Six characters where the site can give them, the long code where it cannot.
+      const link = await requestShortCode(slug, code).then(s => s || code);
+      window.location.href = `/r/${slug}/${link}/`;
+    }
+
+    // ------------------------------------------------------------------ events
+
+    screen.addEventListener('click', e => {
+      const t = e.target as HTMLElement;
+      const b = t.closest<HTMLElement>('button');
+      if (!b || !screen.contains(b)) return;
+      if (b.hasAttribute('data-back')) { if (settled()) back(); return; }
+      if (b.hasAttribute('data-continue')) {
+        if (!settled()) return;
+        state.seenPrivate = true;
+        saveProgress();
+        return draw();
+      }
+      if (b.hasAttribute('data-next')) {
+        if (!settled()) return;
+        const it = ITEMS[state.i]!;
+        // Nothing picked is an answer too ("none of these"), so it is stored as an empty list.
+        state.answers[it.id] = [...draft];
+        saveProgress();
+        return next();
+      }
+      if (b.hasAttribute('data-line')) {
+        const it = ITEMS[state.i]!;
+        const line = b.dataset.line!;
+        const at = draft.indexOf(line);
+        // Two at most: a third pick lets go of the oldest, rather than refusing the tap.
+        if (at > -1) draft.splice(at, 1);
+        else { if (draft.length >= (it.max ?? 2)) draft.shift(); draft.push(line); }
+        screen.querySelectorAll<HTMLElement>('.pqr-pick').forEach(p => {
+          const on = draft.includes(p.dataset.line!);
+          p.classList.toggle('is-on', on);
+          p.setAttribute('aria-pressed', String(on));
+        });
+        return;
+      }
+      if (b.hasAttribute('data-v')) answer(Number(b.dataset.v));
+    });
+
+    document.addEventListener('keydown', e => {
+      if (play.hidden || e.altKey || e.ctrlKey || e.metaKey) return;
+      const target = e.target as HTMLElement | null;
+      if (target && /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName)) return;
+      const it = ITEMS[state.i];
+      const onNote = it?.block === 'private' && !state.seenPrivate;
+      if (e.key === 'Backspace') { e.preventDefault(); if (settled()) back(); return; }
+      const n = Number(e.key);
+      if (it && !onNote && it.kind !== 'pick' && Number.isInteger(n) && n >= 1 && n <= 7) {
+        e.preventDefault();
+        answer(n - 4);
+      }
+    });
+
+    document.querySelectorAll('[data-pqr-start]').forEach(b => b.addEventListener('click', () => begin(false)));
+    document.querySelectorAll('[data-pqr-over]').forEach(b => b.addEventListener('click', () => begin(true)));
+
+    // The eight types: each card opens its sheet, which closes on its button, Escape or a tap outside it.
+    document.querySelectorAll<HTMLElement>('[data-sheet]').forEach(b => b.addEventListener('click', () => {
+      const d = document.getElementById('pqr-sheet-' + b.dataset.sheet) as HTMLDialogElement | null;
+      if (d && typeof d.showModal === 'function') d.showModal();
+    }));
+    document.querySelectorAll<HTMLDialogElement>('.pqr-sheet').forEach(d => d.addEventListener('click', e => {
+      if (e.target === d) d.close();
+    }));
+
+    refreshStart();
+
+    /*
+     * Review captures in development only (stripped from the built site): #q60 opens question 60,
+     * #seed-23 saves answers to the first 22 questions and leaves the start page to show "Pick up".
+     */
+    if (import.meta.env.DEV) {
+      const q = /^#q(\d+)$/.exec(location.hash);
+      const seed = /^#seed-(\d+)$/.exec(location.hash);
+      if (q) {
+        state.i = Math.min(N, Math.max(1, Number(q[1]))) - 1;
+        state.seenPrivate = ITEMS[state.i]!.block === 'private' && location.search.indexOf('note') < 0;
+        intro.hidden = true;
+        play.hidden = false;
+        draw();
+      } else if (seed) {
+        const answers: Answers = {};
+        ITEMS.slice(0, Math.min(N, Number(seed[1])) - 1).forEach((it, k) => {
+          answers[it.id] = it.kind === 'pick' ? [LINES[k % LINES.length]!] : (k % 7) - 3;
+        });
+        state = { i: 0, answers, seenPrivate: Object.keys(answers).some(id => id.startsWith('y')) };
+        saveProgress();
+        refreshStart();
+      }
+    }
+  }
+</script>

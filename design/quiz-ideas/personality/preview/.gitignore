@@ -1,0 +1,12 @@
+# Rebuildable pictures and the self-contained preview page. The originals in img/ can be fetched again from the
+# Commons pages in img/credits.json (which IS kept); faces.py remakes arts/, faces/ and lines/ from them; build.mjs
+# remakes personality.html. The site keeps its own committed copies in site/public/img/personality/, and
+# site/scripts/build-personality-data.mjs falls back to those when these are absent (as on Vercel).
+img/*.jpg
+small/
+alt/
+arts/
+faces/
+lines/
+personality.html
+contact-preview.jpg

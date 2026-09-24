@@ -11,8 +11,9 @@
  *              the next: the compass is an instrument on a night ground, the psalm, the
  *              figures, the gifts and the seven are four Doré engravings in one ink, so the
  *              art is one family and the subjects are not (the early Christians' room, added
- *              2026-09-23, is Dürer's engraving of Jerome, printed the same way). No marks over
- *              the titles: the owner found them distracting (2026-09-22)
+ *              2026-09-23, is Dürer's engraving of Jerome, printed the same way; the Christian
+ *              Personality Test's, 2026-09-24, is the one in colour, the eight paintings its
+ *              types wear). No marks over the titles: the owner found them distracting (2026-09-22)
  *   night      the games sit on a dark band over an old manuscript page, because they are played with the text
  *   morning    the articles are paintings first and words second: colour, where the quizzes are ink
  *   (the traditions list moved to the foot of the Compass's own page, 2026-09-21)
@@ -30,6 +31,8 @@ import ReadCard from '../components/ReadCard.astro';
 import { getQuiz, quizHref } from '../lib/engine/registry';
 import { liveGames } from '../lib/games';
 import { SITUATIONS } from '../lib/strategies/reading';
+import { ITEMS as PERSONALITY_ITEMS } from '../lib/strategies/personality';
+import { artFor } from '../lib/art';
 import { SEO } from '../lib/seo';
 import { SUPPORT_URL, SUPPORT_READY } from '../lib/support';
 import slsMeta from '../games/sounds-like-scripture.meta.json';
@@ -42,6 +45,8 @@ const gifts = getQuiz('spiritual-gifts');
 const sins = getQuiz('seven-deadly-sins');
 const psalm = getQuiz('which-psalm');
 const early = getQuiz('which-early-christian');
+const personality = getQuiz('personality');
+const personalityArt = artFor('personality');
 const games = liveGames();
 const sls = games.find(g => g.slug === 'sounds-like-scripture');
 const wsi = games.find(g => g.slug === 'who-said-it');
@@ -135,7 +140,26 @@ const jsonLd = {
     */}
     <div class="hm-rail" data-rail>
       <div class="hm-rail-track" data-rail-track tabindex="0" role="group" aria-label="More quizzes">
-        {/* The newest quiz leads the rail, straight after the Compass: Which early Christian
+        {/* The newest quiz leads the rail, straight after the Compass: the Christian Personality
+            Test (2026-09-24). It is the one room in colour: its picture is the eight paintings its
+            eight types wear (lib/art.ts), not an engraving, and printing them sepia would hide
+            what they are. Title only, as on every room; its facts are its minutes and its
+            questions, counted off the test's own item list. */}
+        {personality && personalityArt && (
+          <a class="room room--personality" href={quizHref(personality)}>
+            <img src={personalityArt.src} alt={personalityArt.alt} loading="lazy" decoding="async" width="640" height="1024" />
+            <div class="room-body">
+              <h3>{personality.title}</h3>
+              <ul class="room-facts">
+                <li><Icon name="clock" size={13} /> {personality.minutes} min</li>
+                <li>{PERSONALITY_ITEMS.length} questions</li>
+              </ul>
+              <span class="room-go">Start <Icon name="arrow" size={14} /></span>
+            </div>
+          </a>
+        )}
+
+        {/* Then Which early Christian
             thinks like you? (2026-09-23), with the people it can name counted off the registry.
             No line under any rail title (the owner, 2026-09-23): a blurb pushed the title up into
             the brighter part of the plate, and the quiz's own page says it better. Dürer's Jerome,

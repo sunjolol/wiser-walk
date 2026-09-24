@@ -46,6 +46,11 @@ export const CARDS = {
     h: 'Which early|Christian thinks|like *you?*', s: 'And which would argue with you?' },
   'quiz-seven-deadly-sins': { v: 'left', tone: 'engraving', img: '/img/dore-eden.jpg', pos: '50% 14%', k: 'Free quiz',
     h: 'Which of the 7|deadly sins are you|*weakest* to?', s: '14 statements. 2 minutes.' },
+  /* The test's own picture (lib/art.ts): its eight types' paintings, in colour, never sepia.
+     The kicker is its name, the owner's ruling of 2026-09-24, as the Compass's card carries its
+     own. The facts are the home page's: 72 questions, 12 minutes, 8 types. */
+  'quiz-personality': { v: 'left', tone: 'painting', img: '/img/personality/mosaic.jpg', pos: '50% 0%', k: 'Christian Personality Test',
+    h: 'Which of eight|types are *you?*', s: '72 questions. 12 minutes. A ten-page portrait.' },
 
   'game-sounds-like-scripture': { v: 'left', tone: 'night', img: '/img/game-manuscript.jpg', pos: '50% 20%', k: 'Bible game',
     h: 'In the Bible, or does|it only *sound* like it?', s: 'Ten lines, a few seconds each. Harder than you think.' },
@@ -238,6 +243,33 @@ if (existsSync(join(FATHERS, 'people.json'))) {
       k: 'Which early Christian thinks like you?', m: 'My kindred spirit in the early Church:',
       h: p.name, s: p.dates
     };
+  }
+}
+
+/*
+ * The Christian Personality Test (2026-09-24): one card per type, on the type's own painting in
+ * colour, as the test's own share card is, with the kicker the test's name (the result() default).
+ * Then "My type:", the type's name, and its tagline under it in the warm italic, which are the
+ * share card's two lines. Nothing else travels: no leaning, no page of the report and nothing the
+ * reader answered, because a type is all the link carries out. Names and taglines are the
+ * registry's outcomes; the pictures are the scoring file's TYPES[k].art, the very files the
+ * result page's hero shows. The crop keeps each painting's subject clear of the words.
+ */
+const PQ_POS = {
+  /* Homer's lookout is the one upright painting: its bell stays whole and the sailor's face
+     comes up out of the foot of the card. */
+  lookout: '50% 82%',
+  /* Raphael's Paul stands at the left of his cartoon, under the words' shade; this moves him out. */
+  herald: '0% 50%'
+};
+{
+  const q = quiz('personality');
+  const { TYPES } = JSON.parse(readFileSync(join(ROOT, 'site/src/data/personality-scoring.json'), 'utf8'));
+  for (const o of q.outcomes) {
+    result(q.slug, o.slug, {
+      v: 'left', tone: 'painting', img: `/img/personality/art/${TYPES[o.slug].art}.jpg`, pos: PQ_POS[o.slug] ?? '50% 50%',
+      m: 'My type:', h: o.name, u: o.who
+    });
   }
 }
 
