@@ -35,8 +35,9 @@ const outcomes: Outcome[] = PEOPLE_KEYS.map(k => ({ name: PEOPLE[k]!.name, slug:
 
 export const whichEarlyChristian: Quiz = {
   slug: 'which-early-christian',
-  // "And which would argue with you?" is printed directly under the title on the quiz's card
-  // and its start page (the owner's ruling, 2026-09-23). Where space is tight, the title alone.
+  // "And which would argue with you?" is printed directly under the title on the quiz's start
+  // page (the owner's ruling, 2026-09-23). The home and /quizzes/ cards show the title alone
+  // (the owner, 2026-09-23, later): no card on a picture carries a line under its title.
   title: 'Which early Christian thinks like you?',
   tagline: 'And which would argue with you?',
   // A search result's words: 160 characters at most (scripts/seo-test.mjs).

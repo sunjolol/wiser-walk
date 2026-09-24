@@ -145,7 +145,9 @@ const breadcrumbs = [
   {/* The flagship: the shared Compass card, the same one the home page and every other page offer. */}
   <div class="qhub-flag"><CompassCard /></div>
 
-  {/* Every other quiz, one room each, in its own plate and its own ink. */}
+  {/* Every other quiz, one room each, in its own plate and its own ink. No line under the
+      title (the owner, 2026-09-23): it pushed the title up into the brighter part of the plate,
+      and the quiz's own page describes it better. The room keeps its height for the picture. */}
   <div class="qhub-rooms">
     {rest.map(q => {
       const art = artFor(q.slug);
@@ -157,7 +159,6 @@ const breadcrumbs = [
           {q.status === 'draft' && <span class="qroom-tab">Draft</span>}
           <div class="qroom-body">
             <h3>{q.title}</h3>
-            <p class="qroom-say">{q.tagline}</p>
             <ul class="qroom-facts">
               <li><Icon name="clock" size={13} /> {q.minutes} min</li>
               <li>{countFact(q)}</li>

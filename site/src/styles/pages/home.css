@@ -102,7 +102,6 @@
   margin: 0; font-family: var(--display); font-weight: 400; color: #fff;
   font-size: clamp(1.55rem, 6.2vw, 1.95rem); line-height: 1.08; letter-spacing: -.012em; text-wrap: balance;
 }
-.room-say { margin: .55rem 0 0; max-width: 26rem; font-size: .95rem; line-height: 1.5; color: rgba(255, 255, 255, .84); }
 .room-facts {
   display: flex; flex-wrap: wrap; gap: .4rem; margin: .95rem 0 0; padding: 0; list-style: none;
   font-family: var(--ui); font-size: .62rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
@@ -139,8 +138,6 @@
    They are printed soft (sepia, lifted blacks), because a hard black plate fights the pale
    sheet. */
 .hm-rail { position: relative; margin: .9rem calc(-1 * var(--gut)) 0 0; }
-/* two lines held for every rail card's blurb, so the titles sit level */
-.hm-rail .room-say { min-height: 3em; }
 /* the picture dims softly behind the title, as it does under the footer's "Keep walking."
    (the owner, 2026-09-22): --title-lift in kit.css */
 .hm-rail .room h3 { text-shadow: var(--title-lift); }
@@ -321,4 +318,4 @@
 }
 
 /* short copy is balanced, so it never ends on one stranded word */
-.hm-lede, .room-say, .game p, .hm-trads-say p, .read p { text-wrap: balance; }
+.hm-lede, .game p, .hm-trads-say p, .read p { text-wrap: balance; }

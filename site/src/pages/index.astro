@@ -28,7 +28,6 @@ import Icon from '../components/Icon.astro';
 import CompassCard from '../components/CompassCard.astro';
 import ReadCard from '../components/ReadCard.astro';
 import { getQuiz, quizHref } from '../lib/engine/registry';
-import { groupNounPlural } from '../lib/engine/types';
 import { liveGames } from '../lib/games';
 import { SITUATIONS } from '../lib/strategies/reading';
 import { SEO } from '../lib/seo';
@@ -137,8 +136,9 @@ const jsonLd = {
     <div class="hm-rail" data-rail>
       <div class="hm-rail-track" data-rail-track tabindex="0" role="group" aria-label="More quizzes">
         {/* The newest quiz leads the rail, straight after the Compass: Which early Christian
-            thinks like you? (2026-09-23), with the question the owner ruled goes under its title
-            on its card, and the people it can name counted off the registry. Dürer's Jerome,
+            thinks like you? (2026-09-23), with the people it can name counted off the registry.
+            No line under any rail title (the owner, 2026-09-23): a blurb pushed the title up into
+            the brighter part of the plate, and the quiz's own page says it better. Dürer's Jerome,
             the plate lib/art.ts pairs with it, is an engraving of the same family as the Doré
             plates beside it. */}
         {early && (
@@ -146,7 +146,6 @@ const jsonLd = {
             <img src="/img/durer-jerome.jpg" alt="Albrecht Dürer’s engraving of Saint Jerome writing at his desk, a lion and a dog asleep on the floor of his study" loading="lazy" decoding="async" width="1000" height="1306" />
             <div class="room-body">
               <h3>{early.title}</h3>
-              <p class="room-say">{early.tagline}</p>
               <ul class="room-facts">
                 <li><Icon name="clock" size={13} /> {early.minutes} min</li>
                 <li>{early.outcomes.length} early Christians</li>
@@ -164,7 +163,6 @@ const jsonLd = {
             <img src="/img/figures/david.jpg" alt="Gustave Doré’s engraving of David standing crowned and bowed as he mourns Absalom" loading="lazy" decoding="async" width="807" height="1012" />
             <div class="room-body">
               <h3>{psalm.title}</h3>
-              <p class="room-say">A few honest taps, and the psalm an early Church Father gave for exactly that.</p>
               <ul class="room-facts">
                 <li><Icon name="clock" size={13} /> {psalm.minutes} min</li>
                 <li>{SITUATIONS.length} situations</li>
@@ -179,7 +177,6 @@ const jsonLd = {
             <img src="/img/dore-moses.jpg" alt="Gustave Doré’s engraving of Moses breaking the tablets of the law" loading="lazy" decoding="async" width="820" height="1029" />
             <div class="room-body">
               <h3>{figures.title}</h3>
-              <p class="room-say">Eighteen plain statements about you. None of them mentions the Bible.</p>
               <ul class="room-facts">
                 <li><Icon name="clock" size={13} /> {figures.minutes} min</li>
                 <li>{figures.outcomes.length} figures</li>
@@ -194,7 +191,6 @@ const jsonLd = {
             <img src="/img/dore-paul.jpg" alt="Gustave Doré’s engraving of Paul preaching to a gathered church at Thessalonica" loading="lazy" decoding="async" width="565" height="696" />
             <div class="room-body">
               <h3>{gifts.title}</h3>
-              <p class="room-say">All {gifts.groups.length} {groupNounPlural(gifts)} the New Testament names.</p>
               <ul class="room-facts">
                 <li><Icon name="clock" size={13} /> {gifts.minutes} min</li>
                 <li>{gifts.items.length} statements</li>
