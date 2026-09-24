@@ -40,6 +40,10 @@ export const CARDS = {
      plate the quiz wears on the site (lib/art.ts). */
   'quiz-which-psalm': { v: 'left', tone: 'engraving', img: '/img/figures/david.jpg', pos: '48% 30%', k: 'Free quiz',
     h: 'Which Psalm are|you living|right *now?*', s: '3 minutes. The psalm a Church Father gave for exactly that.' },
+  /* Dürer's Jerome writing in his study, the plate the quiz wears on the site (lib/art.ts). The
+     small line is the question printed under the title on its card and start page (his ruling). */
+  'quiz-which-early-christian': { v: 'left', tone: 'engraving', img: '/img/durer-jerome.jpg', pos: '62% 56%', k: 'Free quiz',
+    h: 'Which early|Christian thinks|like *you?*', s: 'And which would argue with you?' },
   'quiz-seven-deadly-sins': { v: 'left', tone: 'engraving', img: '/img/dore-eden.jpg', pos: '50% 14%', k: 'Free quiz',
     h: 'Which of the 7|deadly sins are you|*weakest* to?', s: '14 statements. 2 minutes.' },
 

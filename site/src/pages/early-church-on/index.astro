@@ -1,0 +1,119 @@
+---
+/**
+ * /early-church-on/: what the early Christians said, one question at a time.
+ *
+ * The hub the twenty-three question pages hang from (their breadcrumbs lead here), and the page
+ * a search lands on for "what did the early Christians believe" as a whole. It lists every
+ * statement in "Which early Christian thinks like you?", in the quiz's order, each with its
+ * topic, the statement as the quiz puts it and how many of the twenty-two are on record on each
+ * side. The counts are counted off the data; nothing is summed into a score.
+ */
+import Base from '../../layouts/Base.astro';
+import Hero from '../../components/Hero.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import Icon from '../../components/Icon.astro';
+import { whichEarlyChristian } from '../../lib/quizzes/which-early-christian';
+import { quizHref } from '../../lib/engine/registry';
+import { outcomeNounPlural } from '../../lib/engine/types';
+import { artFor } from '../../lib/art';
+import { OLDEST_FIRST, STATEMENTS, capital, questionHref, sidesOf, titleOf } from '../early-christian/_early';
+import '../../styles/pages/early-christian.css';
+
+const quiz = whichEarlyChristian;
+const art = artFor(quiz.slug);
+
+/** "4 would agree, 7 would disagree", or one side alone where nobody took the other. */
+const split = (id: string) => {
+  const { agree, disagree } = sidesOf(id);
+  if (!disagree.length) return `All ${agree.length} would agree`;
+  if (!agree.length) return `All ${disagree.length} would disagree`;
+  return `${agree.length} would agree, ${disagree.length} would disagree`;
+};
+
+const url = new URL('/early-church-on/', Astro.site).href;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'What the early Christians said',
+  url,
+  isPartOf: { '@id': new URL('/#website', Astro.site).href },
+  mainEntity: {
+    '@type': 'ItemList',
+    numberOfItems: STATEMENTS.length,
+    itemListElement: STATEMENTS.map((s, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: new URL(questionHref(s), Astro.site).href,
+      name: titleOf(s)
+    }))
+  }
+};
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'What the early Christians said', url: '/early-church-on/' }
+];
+---
+<Base
+  title="What the early Christians said"
+  description={`What ${OLDEST_FIRST.length} early Christians said on ${STATEMENTS.length} questions, from laughter to war. Both sides of each one, with the source of every line.`}
+  jsonLd={jsonLd}
+  breadcrumbs={breadcrumbs}
+>
+  <Hero
+    title="What the early Christians said"
+    blue="said"
+    kind={art ? 'engraving' : 'night'}
+    image={art?.src}
+    imageAlt={art?.alt}
+    imagePosition={art?.objectPosition}
+    imageLift={art?.lift}
+    long
+    lede={`They did not agree on everything. Here are ${STATEMENTS.length} questions, from laughter to war. Tap one to see who stood on each side, and why.`}
+    tiles={[
+      { n: STATEMENTS.length, label: 'Questions' },
+      { n: OLDEST_FIRST.length, label: 'People' }
+    ]}
+  >
+    <a class="btn" href={quizHref(quiz)} slot="actions">Where would you stand? <Icon name="arrow" size={15} /></a>
+  </Hero>
+
+  <div class="ref ref--early">
+    <SectionHead title="The questions" kicker="In the order the quiz asks them" />
+    <ul class="ec-rows">
+      {STATEMENTS.map(s => (
+        <li>
+          <a class="ec-row" href={questionHref(s)}>
+            <span class="ec-row-body">
+              <span class="ec-row-title">{capital(s.topic)}</span>
+              <span class="ec-row-text">“{s.text}”</span>
+              <span class="ec-row-meta">{split(s.id)}</span>
+            </span>
+            <Icon name="arrow" size={14} />
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <p class="ec-way">
+      <Icon name="arrow" size={14} />
+      <span>
+        Who were they? <a href="/early-christian/">Meet all {OLDEST_FIRST.length} {outcomeNounPlural(quiz)}</a>, oldest first.
+      </span>
+    </p>
+
+    <div class="qcard-wrap">
+      <a class={`qcard qcard--plain qcard--${quiz.slug}`} href={quizHref(quiz)}>
+        <div class="qcard-body">
+          <p class="qcard-kicker">Your turn</p>
+          <h2 class="qcard-title">{quiz.title}</h2>
+          <p class="qcard-say">{quiz.tagline}</p>
+          <ul class="qcard-facts">
+            <li><Icon name="clock" size={13} /> {quiz.minutes} min</li>
+            <li>{quiz.outcomes.length} {outcomeNounPlural(quiz)}</li>
+          </ul>
+          <span class="qcard-go go-pill">Start <Icon name="arrow" size={16} /></span>
+        </div>
+      </a>
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,73 @@
+---
+/**
+ * One early Christian's place on one statement: the card the quiz's result prints, for the
+ * pages a search lands on (the approved preview's lineCard, design/quiz-ideas/fathers/preview).
+ *
+ * Two heads, one body:
+ *
+ *   statement   a person's page, where every card is the same person: "On war", the
+ *               statement as the quiz puts it, then "Augustine strongly agrees:" and his line
+ *   person      a question page, where every card is the same statement: the person's
+ *               portrait, name and dates, then the same sentence and line
+ *
+ * A line that is on record but not shown (unclear out of its context, though it still counts
+ * in the matching) prints "On record in <work>" instead of a quotation, as the result does.
+ * Every word here is the data's; "Our translation" is printed where the words are ours.
+ *
+ * On a person's page the card also carries the reader's own answer, hidden: EarlyMine's
+ * script fills it in and shows it when this device holds a result for the quiz. A browsing
+ * reader sees the card exactly as it is. With the answer shown the person's "strongly" is
+ * dropped, as the preview drops it, so the card reads as two answers side by side.
+ */
+import { STATEMENTS, faceOf, onRecord, personHref, personOf, questionHref, sourceOf } from '../pages/early-christian/_early';
+
+interface Props {
+  /** The person's key ('augustine'). */
+  k: string;
+  /** The statement's id ('war'). */
+  id: string;
+  head: 'statement' | 'person';
+}
+
+const { k, id, head } = Astro.props;
+const p = personOf(k);
+const c = p.cells[id];
+if (!c) throw new Error(`EarlyLine: ${k} is not on record on ${id}`);
+const index = STATEMENTS.findIndex(s => s.id === id);
+const s = STATEMENTS[index]!;
+const side = c.v > 0 ? 'agrees' : 'disagrees';
+const strong = Math.abs(c.v) === 2;
+---
+<article class:list={['ecl', `ecl--${head}`]} data-ec-line data-id={id} data-index={index} data-v={c.v}>
+  {head === 'statement' ? (
+    <>
+      <p class="ecl-on"><a href={questionHref(s)}>On {s.topic}</a></p>
+      <p class="ecl-stmt">
+        “{s.text}”<span class="ecl-you" data-you hidden> You: <b data-you-word></b></span>
+      </p>
+    </>
+  ) : (
+    <a class="ecl-who" href={personHref(p)}>
+      <img
+        src={p.portrait.thumb} alt="" width={p.portrait.width} height={p.portrait.height}
+        loading="lazy" decoding="async" style={`object-position:${faceOf(k)}`}
+      />
+      <span class="ecl-who-text">
+        <span class="ecl-name">{p.name}</span>
+        <span class="ecl-dates">{p.dates} · {p.where}</span>
+      </span>
+    </a>
+  )}
+  <p class="ecl-says">
+    {p.short} {strong && <span class="ecl-strong">strongly </span>}{side}{c.hide ? '.' : ':'}
+  </p>
+  {c.hide ? (
+    <p class="ecl-src">{onRecord(c)}</p>
+  ) : (
+    <>
+      <blockquote class="ecl-quote"><p>“{c.line}”</p></blockquote>
+      <p class="ecl-src">{sourceOf(c)}</p>
+      {c.note && <p class="ecl-note">{c.note}</p>}
+    </>
+  )}
+</article>

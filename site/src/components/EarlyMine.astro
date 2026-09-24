@@ -1,0 +1,173 @@
+---
+/**
+ * The reader's own answers on the early Christians' pages (the owner, 2026-09-23: "when
+ * someone comes from a result, the in-depth pages should show my answer against theirs, just
+ * like the main results"). MineNote.astro does this for the other quizzes; this is its twin
+ * for "Which early Christian thinks like you?", whose result is people rather than rails, so
+ * what changes on the page is different:
+ *
+ *   person    a person's page. The cards regroup as the approved preview groups them: where
+ *             you agree, where you differ, where you were not sure. Each card shows your
+ *             answer under the statement. One line above says so.
+ *   question  a question page. "You said: Agree" under the statement, and a "You" tag on the
+ *             side your answer is on. Not sure tags neither side.
+ *   people    /early-christian/. Your kindred spirit and your sparring partner are tagged in
+ *             the grid, worked out by the quiz's own scorer, so the tags always name the two
+ *             people your result names.
+ *
+ * Someone browsing without a result sees every page exactly as it is: everything here is
+ * rendered hidden, and the script shows it only when this device holds a result for the quiz
+ * (lib/mine.ts finds it: the tab's own note first, then the newest one on the device shelf).
+ * Nothing is sent anywhere. The line always says "you": these are this device's own answers,
+ * never somebody else's shared link.
+ *
+ * The page prints the codec's numbers and the script decodes with them, as MineNote does. The
+ * people grid needs the scorer, so that one page loads it on demand (strategies/kindred.ts and
+ * its small scoring file, no lines); the other two need nothing but the code.
+ */
+import type { Quiz } from '../lib/engine/types';
+import { quizHref } from '../lib/engine/registry';
+import '../styles/pages/mine.css';
+
+interface Props {
+  quiz: Quiz;
+  kind: 'person' | 'question' | 'people';
+  /** kind="person": "his" or "hers", for "Your answers are next to his." */
+  hers?: string;
+  /** kind="question": which statement, by its place in the quiz (and so in the code). */
+  index?: number;
+}
+
+const { quiz, kind, hers = 'theirs', index = 0 } = Astro.props;
+---
+<div
+  class:list={['mine', 'ecm', `ecm--${kind}`]}
+  data-ec-mine={kind}
+  data-quiz={quiz.slug}
+  data-radix={quiz.config.radix}
+  data-slots={quiz.groups.length}
+  data-prefix={quiz.codePrefix ?? ''}
+  data-short={quiz.shortLinks ? '' : undefined}
+  data-index={kind === 'question' ? index : undefined}
+  hidden
+>
+  {kind === 'question' && (
+    <p class="ecm-said">You said: <b data-ecm-word></b></p>
+  )}
+  <p class="mine-line">
+    <span class="you-chip" aria-hidden="true">You</span>
+    <span class="mine-say">
+      {kind === 'person' && `Your answers are next to ${hers}. `}
+      {kind === 'people' && 'Your kindred spirit and sparring partner are marked. Tap anyone to see where they stood next to your answers. '}
+      From your result on <span data-ecm-day></span>.{' '}
+      <a class="mine-go" data-ecm-href href={quizHref(quiz)}>See your result</a>
+    </span>
+  </p>
+</div>
+
+{import.meta.env.DEV && (
+  /* Development only, compiled out of anything served, exactly as MineNote's: ?mine=<code>
+     makes this tab hold that result, so the page can be looked at (and captured headless) as a
+     reader who has one; ?mine=0 forgets it. Inline, so it runs before the module below. */
+  <script is:inline define:vars={{ devSlug: quiz.slug }}>
+    try {
+      var devMine = new URLSearchParams(location.search).get('mine');
+      if (devMine === '0') sessionStorage.removeItem('ww:took:' + devSlug);
+      else if (devMine) sessionStorage.setItem('ww:took:' + devSlug, devMine.toUpperCase());
+    } catch (e) {}
+  </script>
+)}
+
+<script>
+  import { dayOf, mineFor, resultHref } from '../lib/mine';
+
+  /** The quiz's five buttons, by answer. */
+  const WORD: Record<string, string> = {
+    '2': 'Strongly agree', '1': 'Agree', '0': 'Not sure', '-1': 'Disagree', '-2': 'Strongly disagree'
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-ec-mine]').forEach(box => {
+    show(box).catch(() => {
+      /* a page that cannot find the reader's answers is simply the page it always was */
+    });
+  });
+
+  async function show(box: HTMLElement): Promise<void> {
+    const d = box.dataset;
+    const quiz = d.quiz ?? '';
+    const mine = mineFor(quiz, { radix: Number(d.radix), slots: Number(d.slots), prefix: d.prefix ?? '' });
+    if (!mine) return;
+
+    /* A value per statement (0, 25 .. 100) is an answer from strongly disagree to strongly
+       agree; "Not sure" is the middle. strategies/kindred.ts stores it that way round. */
+    const answers = mine.values.map(v => Math.max(0, Math.min(4, Math.round(v / 25))) - 2);
+
+    const day = box.querySelector('[data-ecm-day]');
+    if (day) day.textContent = dayOf(mine.at);
+    const link = box.querySelector<HTMLAnchorElement>('[data-ecm-href]');
+    if (link) link.href = resultHref(quiz, mine.code, { codePrefix: d.prefix ?? '', shortLinks: d.short !== undefined });
+
+    if (d.ecMine === 'person') person(answers);
+    else if (d.ecMine === 'question') question(box, answers[Number(d.index)] ?? 0);
+    else if (d.ecMine === 'people' && !(await people(answers))) return;
+
+    box.hidden = false;
+  }
+
+  /**
+   * A person's page: each card gets the reader's answer, and the cards move from "Where he
+   * stood" into the three groups the preview shows, in the quiz's own order. A group with
+   * nothing in it stays hidden.
+   */
+  function person(answers: number[]): void {
+    const groups = {
+      agree: document.querySelector<HTMLElement>('[data-ec-group="agree"]'),
+      differ: document.querySelector<HTMLElement>('[data-ec-group="differ"]'),
+      unsure: document.querySelector<HTMLElement>('[data-ec-group="unsure"]')
+    };
+    const all = document.querySelector<HTMLElement>('[data-ec-group="all"]');
+    if (!groups.agree || !groups.differ || !groups.unsure || !all) return;
+    document.querySelectorAll<HTMLElement>('[data-ec-line]').forEach(card => {
+      const a = answers[Number(card.dataset.index)] ?? 0;
+      const v = Number(card.dataset.v);
+      const word = card.querySelector('[data-you-word]');
+      if (word) word.textContent = WORD[String(a)] ?? '';
+      card.querySelector<HTMLElement>('[data-you]')?.removeAttribute('hidden');
+      const to = !a ? groups.unsure : a * v > 0 ? groups.agree : groups.differ;
+      to.querySelector('[data-ec-cards]')?.append(card);
+    });
+    for (const g of Object.values(groups)) {
+      if (g && g.querySelector('[data-ec-line]')) g.hidden = false;
+    }
+    all.hidden = true;
+    document.body.classList.add('ec-has-mine');
+  }
+
+  /** A question page: the reader's answer, and a tag on the side it is on. */
+  function question(box: HTMLElement, a: number): void {
+    const word = box.querySelector('[data-ecm-word]');
+    if (word) word.textContent = WORD[String(a)] ?? '';
+    const side = a > 0 ? 'agree' : a < 0 ? 'disagree' : '';
+    if (side) document.querySelector<HTMLElement>(`[data-ec-you-side="${side}"]`)?.removeAttribute('hidden');
+  }
+
+  /**
+   * /early-christian/: the two people the reader's result names, tagged in the grid. The
+   * quiz's own scorer decides, on the same answers, so the tags cannot disagree with the
+   * result. A result with too few answers to name anyone tags nobody and shows no line.
+   */
+  async function people(answers: number[]): Promise<boolean> {
+    const { STATEMENTS, matchAnswers } = await import('../lib/strategies/kindred');
+    const byId: Record<string, number> = {};
+    STATEMENTS.forEach((s, i) => { byId[s.id] = answers[i] ?? 0; });
+    const r = matchAnswers(byId);
+    if (!r.kindred) return false;
+    const tag = (key: string, role: string) => {
+      const el = document.querySelector<HTMLElement>(`[data-ec-person="${key}"] [data-ec-tag="${role}"]`);
+      if (el) el.hidden = false;
+    };
+    tag(r.kindred.key, 'kindred');
+    if (r.sparring) tag(r.sparring.key, 'sparring');
+    return true;
+  }
+</script>

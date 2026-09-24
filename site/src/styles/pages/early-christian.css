@@ -1,0 +1,265 @@
+/* =====================================================================================
+ * The early Christians' pages: /early-christian/, /early-christian/<slug>/, /early-church-on/
+ * and /early-church-on/<topic>/ (components/EarlyLine.astro, components/EarlyMine.astro).
+ *
+ * These are the search pages of "Which early Christian thinks like you?". They use the kit
+ * (the band, section heads, panels, tiles, the quiz's own card at the foot) and add four
+ * things of their own, each written for 360px first:
+ *
+ *   the person band   a person's own portrait, framed, over a blur of itself: the same look as
+ *                     their link preview card (design/og/card.html, "framed"), so a shared
+ *                     person and a shared result read as one family
+ *   the line card     one person on one statement, as the quiz's result prints it
+ *   the two sides     a question page's "would agree" and "would disagree", drawn alike: the
+ *                     answering scale is never blue against orange here, because agreeing is
+ *                     not a pole (the rule the result page keeps)
+ *   the grid          all twenty-two, oldest first
+ *
+ * Tokens only below the bands, so the dark theme recolours everything by itself.
+ * ===================================================================================== */
+
+/* This quiz's ink, as the home page's rail room, /quizzes/, NextUp and /me/ print it: a soft
+   lilac, the one hue none of the other four rooms is near. */
+.qcard--which-early-christian { --room-ink: #DCC6EE; }
+
+/* Hidden means hidden, whatever a class says about display (as mine.css does for MineNote). */
+[data-ec-mine][hidden], [data-ec-group][hidden], [data-you][hidden],
+[data-ec-you-side][hidden], [data-ec-tag][hidden] { display: none !important; }
+
+/* ------------------------------------------------------------ the person band ---- */
+/*
+ * The portrait is small (never wider than 600px, most 500 or less), so it is never stretched
+ * across the band. It stands in a frame, and the band's ground is the same picture blurred
+ * and dimmed, so every person's page takes its colours from their own portrait.
+ * On a phone the frame sits beside the name; from 46rem it takes the right of the band.
+ */
+.ecp-band { background: #17140f; padding-top: 1.9rem; padding-bottom: 2.2rem; }
+.ecp-band > .band-img {
+  filter: blur(26px) saturate(1.15) brightness(.6);
+  transform: scale(1.3);
+}
+.ecp-band::after {
+  background:
+    radial-gradient(90% 120% at 0% 0%, rgba(126, 186, 238, .14), transparent 60%),
+    linear-gradient(180deg, rgba(20, 17, 13, .38), rgba(20, 17, 13, .74));
+}
+.ecp-band-in {
+  display: grid; grid-template-columns: 6.4rem minmax(0, 1fr); column-gap: 1.1rem;
+  grid-template-areas: "frame head" "who who" "tiles tiles" "credit credit";
+  align-items: end;
+}
+.ecp-frame {
+  grid-area: frame; position: relative; margin: 0; aspect-ratio: 4 / 5; overflow: hidden;
+  border-radius: 16px; background: #2a2622;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .45), 0 0 0 1.5px rgba(255, 255, 255, .2);
+}
+.ecp-frame img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.ecp-band-head { grid-area: head; min-width: 0; }
+.ecp-band h1 { margin: 0; }
+.ecp-meta {
+  margin: .5rem 0 0; font-family: var(--ui); font-size: .66rem; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase; line-height: 1.5; color: rgba(255, 255, 255, .8);
+  text-shadow: 0 1px 10px rgba(10, 12, 18, .5);
+}
+.ecp-band .lede { grid-area: who; margin-top: 1.15rem; }
+.ecp-band .tiles { grid-area: tiles; }
+.ecp-band .band-credit { grid-area: credit; }
+@media (min-width: 46rem) {
+  .ecp-band-in {
+    grid-template-columns: minmax(0, 1fr) 15.5rem; column-gap: 2.8rem;
+    grid-template-areas: "head frame" "who frame" "tiles frame" ". credit";
+    grid-template-rows: auto auto 1fr auto; align-items: start;
+  }
+  .ecp-frame { grid-row: 1 / 4; border-radius: 22px; }
+  .ecp-band .band-credit { margin-top: .8rem; font-size: .7rem; }
+  .ecp-meta { font-size: .72rem; margin-top: .7rem; }
+}
+
+/* the story, straight under the band, set as the page's first statement */
+.ecp-hook {
+  position: relative; overflow: hidden; margin: 1.5rem 0 0; padding: 1.05rem 1.2rem 1.1rem 1.45rem;
+  border-radius: var(--r); background: var(--panel); box-shadow: var(--lift);
+  font-family: var(--display); font-size: 1.14rem; line-height: 1.5; color: var(--ink); text-wrap: pretty;
+}
+.ecp-hook::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background-image: var(--grad);
+}
+@media (min-width: 40rem) { .ecp-hook { font-size: 1.24rem; padding: 1.3rem 1.6rem 1.35rem 1.8rem; } }
+
+/* ------------------------------------------------------------- the reader's line ---- */
+.ecm { margin: 1.5rem 0 0; padding: .85rem 1rem; border-radius: var(--r); background: var(--panel); box-shadow: var(--lift); }
+@media (min-width: 40rem) { .ecm { padding: .95rem 1.25rem; } }
+/* on a question page it sits inside the statement's own panel, under the statement */
+.ecm--question { margin: 1.1rem 0 0; padding: 1rem 0 0; border-radius: 0; background: none; box-shadow: none; border-top: 1px solid var(--rule); }
+.ecm-said { margin: 0 0 .55rem; font-family: var(--ui); font-size: .84rem; color: var(--ink-soft); }
+.ecm-said b { font-family: var(--display); font-weight: 400; font-size: 1.3rem; color: var(--ink); }
+
+/* ------------------------------------------------------------------ line cards ---- */
+.ecl-list { display: grid; gap: .8rem; }
+@media (min-width: 46rem) { .ecl-list { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; } }
+
+.ecl {
+  min-width: 0; padding: 1rem 1.1rem 1.05rem; border-radius: var(--r);
+  background: var(--panel); box-shadow: var(--lift);
+}
+@media (min-width: 40rem) { .ecl { padding: 1.15rem 1.3rem 1.2rem; } }
+.ecl-on {
+  margin: 0 0 .45rem; font-family: var(--ui); font-size: .62rem; font-weight: 700;
+  letter-spacing: .13em; text-transform: uppercase;
+}
+.ecl-on a { color: var(--ink-mute); text-decoration: none; }
+.ecl-on a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.ecl-stmt { margin: 0 0 .8rem; font-size: .95rem; line-height: 1.5; color: var(--ink-soft); text-wrap: pretty; }
+.ecl-you { white-space: nowrap; }
+.ecl-you b { font-weight: 600; color: var(--ink); }
+.ecl-says { margin: 0 0 .35rem; font-family: var(--ui); font-size: .88rem; font-weight: 600; line-height: 1.4; color: var(--ink); }
+/* next to the reader's own answer the card reads as two answers side by side, as the preview's */
+.ec-has-mine .ecl-strong { display: none; }
+.ecl-quote { margin: 0; }
+.ecl-quote p {
+  margin: 0; font-family: var(--display); font-style: italic; font-weight: 400;
+  font-size: 1.1rem; line-height: 1.5; color: var(--ink); text-wrap: pretty;
+}
+.ecl-src { margin: .55rem 0 0; font-family: var(--ui); font-size: .72rem; font-weight: 500; line-height: 1.45; color: var(--ink-mute); }
+.ecl-note { margin: .55rem 0 0; font-size: .84rem; line-height: 1.5; color: var(--ink-mute); }
+
+/* a question page's card: the person heads it */
+.ecl-who {
+  display: flex; align-items: center; gap: .75rem; margin: 0 0 .85rem;
+  text-decoration: none; color: var(--ink);
+}
+.ecl-who img {
+  flex: none; width: 2.9rem; height: 3.6rem; border-radius: 10px; object-fit: cover;
+  background: var(--shell); box-shadow: 0 0 0 1px var(--rule);
+}
+.ecl-who-text { min-width: 0; }
+.ecl-name { display: block; font-family: var(--display); font-size: 1.12rem; line-height: 1.2; }
+.ecl-dates {
+  display: block; margin-top: .2rem; font-family: var(--ui); font-size: .6rem; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase; line-height: 1.45; color: var(--ink-mute);
+}
+.ecl-who:hover .ecl-name { color: var(--accent); }
+
+/* ------------------------------------------------------------ crossed paths ---- */
+.ecp-pairs { display: grid; gap: .6rem; margin: 0; padding: 0; list-style: none; }
+@media (min-width: 46rem) { .ecp-pairs { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; } }
+.ecp-pair {
+  display: flex; align-items: flex-start; gap: .85rem; padding: .85rem 1rem .9rem;
+  border-radius: var(--r); background: var(--panel); box-shadow: var(--lift);
+  text-decoration: none; color: var(--ink);
+}
+.ecp-pair img {
+  flex: none; width: 2.9rem; height: 3.6rem; border-radius: 10px; object-fit: cover;
+  background: var(--shell); box-shadow: 0 0 0 1px var(--rule);
+}
+.ecp-pair-body { flex: 1; min-width: 0; }
+.ecp-pair-name { display: block; font-family: var(--display); font-size: 1.1rem; line-height: 1.25; }
+.ecp-pair-say { display: block; margin-top: .3rem; font-size: .9rem; line-height: 1.5; color: var(--ink-soft); text-wrap: pretty; }
+.ecp-pair > .icon { flex: none; margin-top: .35rem; color: var(--accent); transition: transform .18s ease; }
+.ecp-pair:hover .ecp-pair-name { color: var(--accent); }
+.ecp-pair:hover > .icon { transform: translateX(3px); }
+
+/* ---------------------------------------------------------- earlier and later ---- */
+.ecp-pager { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; margin: 2.6rem 0 0; }
+.ecp-page {
+  display: flex; flex-direction: column; gap: .15rem; min-width: 0; padding: .85rem 1rem .9rem;
+  border-radius: var(--r); background: var(--panel); box-shadow: var(--lift);
+  text-decoration: none; color: var(--ink);
+}
+.ecp-page--later { grid-column: 2; text-align: right; }
+.ecp-page-dir {
+  font-family: var(--ui); font-size: .6rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--accent);
+}
+.ecp-page b { font-family: var(--display); font-weight: 400; font-size: 1.08rem; line-height: 1.25; }
+.ecp-page span:last-child { font-size: .78rem; color: var(--ink-mute); }
+.ecp-page:hover b { color: var(--accent); }
+
+/* one plain line with a way on: the psalm pages' "All 53 situations" pill */
+.ec-way {
+  display: inline-flex; align-items: center; gap: .5rem; margin: 1rem 0 0; padding: .55rem 1rem;
+  border-radius: var(--r-pill); font-size: .9rem; line-height: 1.4; color: var(--ink); background: var(--accent-soft);
+}
+.ec-way .icon { flex: none; color: var(--accent); }
+.ec-way a { color: var(--accent); font-weight: 600; text-underline-offset: 3px; }
+
+/* ------------------------------------------------------------ a question page ---- */
+.ecq-statement { margin: 1.5rem 0 0; }
+.ecq-kicker {
+  margin: 0 0 .5rem; font-family: var(--ui); font-size: .6rem; font-weight: 700;
+  letter-spacing: .15em; text-transform: uppercase; color: var(--ink-mute);
+}
+.ecq-text {
+  margin: 0; font-family: var(--display); font-size: clamp(1.35rem, 5.6vw, 1.8rem); line-height: 1.3;
+  color: var(--ink); text-wrap: balance;
+}
+.ecq-how { margin: .8rem 0 0; font-size: .88rem; line-height: 1.55; color: var(--ink-mute); max-width: 40rem; }
+
+/* both sides the same weight and the same ink: neither is the right answer */
+.ecq-sides { display: grid; gap: 0 1.6rem; }
+@media (min-width: 62rem) { .ecq-sides { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; } }
+.ecq-side .ecl-list { grid-template-columns: 1fr; }
+/* the reader's side, tagged level with the side's own kicker, so the two columns stay level */
+.ecq-side { position: relative; }
+.ecq-yours {
+  position: absolute; top: 3rem; right: 0; display: flex; align-items: center; gap: .45rem; margin: 0;
+  font-family: var(--ui); font-size: .78rem; font-weight: 600; color: var(--ink-soft);
+}
+.ecq-none {
+  margin: 0; padding: 1rem 1.1rem; border-radius: var(--r); font-size: .92rem; color: var(--ink-mute);
+  box-shadow: inset 0 0 0 1.5px var(--rule);
+}
+
+/* ------------------------------------------------- lists of questions (rows) ---- */
+.ec-rows { display: grid; gap: .6rem; margin: 0; padding: 0; list-style: none; }
+@media (min-width: 46rem) { .ec-rows { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; } }
+.ec-row {
+  display: flex; align-items: flex-start; gap: .85rem; padding: .95rem 1rem 1rem;
+  border-radius: var(--r); background: var(--panel); box-shadow: var(--lift);
+  text-decoration: none; color: var(--ink);
+}
+.ec-row-body { flex: 1; min-width: 0; }
+.ec-row-title { display: block; font-family: var(--display); font-size: 1.16rem; line-height: 1.25; }
+.ec-row-text { display: block; margin-top: .3rem; font-size: .92rem; line-height: 1.5; color: var(--ink-soft); text-wrap: pretty; }
+.ec-row-meta {
+  display: block; margin-top: .45rem; font-family: var(--ui); font-size: .6rem; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mute);
+}
+.ec-row > .icon { flex: none; margin-top: .3rem; color: var(--accent); transition: transform .18s ease; }
+.ec-row:hover .ec-row-title { color: var(--accent); }
+.ec-row:hover > .icon { transform: translateX(3px); }
+.ec-row:focus-visible, .ecp-pair:focus-visible, .ecp-page:focus-visible, .eci-card:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------- the people grid ---- */
+.eci-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; margin: 0; padding: 0; list-style: none; }
+@media (min-width: 40rem) { .eci-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .9rem; } }
+@media (min-width: 58rem) { .eci-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.eci-card {
+  position: relative; display: flex; flex-direction: column; height: 100%; padding: .55rem .55rem .85rem;
+  border-radius: var(--r); background: var(--panel); box-shadow: var(--lift);
+  text-decoration: none; color: var(--ink);
+}
+.eci-pic { position: relative; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 12px; background: var(--shell); }
+.eci-pic img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .3s ease; }
+.eci-card:hover .eci-pic img { transform: scale(1.03); }
+.eci-name { display: block; margin: .65rem .25rem 0; font-family: var(--display); font-size: 1.08rem; line-height: 1.2; text-wrap: balance; }
+.eci-card:hover .eci-name { color: var(--accent); }
+.eci-dates {
+  display: block; margin: .3rem .25rem 0; font-family: var(--ui); font-size: .6rem; font-weight: 600;
+  letter-spacing: .09em; text-transform: uppercase; line-height: 1.45; color: var(--ink-mute);
+}
+.eci-who { display: none; margin: .5rem .25rem 0; font-size: .86rem; line-height: 1.5; color: var(--ink-soft); text-wrap: pretty; }
+@media (min-width: 40rem) { .eci-who { display: block; } }
+/* the reader's two people, tagged on the picture's corner (EarlyMine) */
+.eci-tag {
+  position: absolute; left: .45rem; bottom: .45rem; max-width: calc(100% - .9rem); padding: .3rem .55rem .28rem; border-radius: var(--r-pill); white-space: nowrap;
+  background: var(--ink); color: var(--panel);
+  font-family: var(--ui); font-size: .54rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; line-height: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ecp-pair > .icon, .ec-row > .icon, .eci-pic img { transition: none; }
+  .ecp-pair:hover > .icon, .ec-row:hover > .icon, .eci-card:hover .eci-pic img { transform: none; }
+}

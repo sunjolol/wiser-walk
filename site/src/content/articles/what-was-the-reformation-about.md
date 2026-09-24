@@ -4,7 +4,7 @@ description: Indulgences lit the fire. Underneath were five questions, and five 
 published: 2026-09-21
 minutes: 7
 tags: [history, church]
-quizzes: [theology-compass]
+quizzes: [theology-compass, which-early-christian]
 answer: "The Reformation began in 1517 as a protest against the sale of indulgences and became an argument about how a person is put right with God, and who has the last word when Christians disagree. It left five questions, on grace, authority, the Lord's Supper, baptism and worship, that churches still answer differently."
 image: /img/articles/what-was-the-reformation-about.jpg
 imageAlt: "Luther holds a document over a bonfire in a snowy town square while a crowd watches"

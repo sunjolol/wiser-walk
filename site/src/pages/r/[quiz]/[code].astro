@@ -13,6 +13,8 @@ import SaveResult from '../../../components/SaveResult.astro';
 import NextUp from '../../../components/NextUp.astro';
 import ReadCard from '../../../components/ReadCard.astro';
 import PsalmReading from '../../../components/PsalmReading.astro';
+import KindredResult from '../../../components/KindredResult.astro';
+import type { KindredData } from '../../../lib/strategies/kindred';
 import { QUIZZES, getQuiz, resultFor, decodeFor, outcomeHref } from '../../../lib/engine/registry';
 import { groupNoteFor, outcomeNounPlural, rankWord } from '../../../lib/engine/types';
 import { linkCodeFor, resolveCode } from '../../../lib/engine/links';
@@ -26,6 +28,8 @@ import { liveGames } from '../../../lib/games';
 import { getCollection } from 'astro:content';
 // Server only: the whole BSB text of every psalm a reading can print. Never in a client script.
 import bsb from '../../../data/psalms.json';
+// Server only, likewise: every early Christian's lines, portraits and story, for the share card.
+import earlyChristians from '../../../data/which-early-christian.json';
 
 // Rendered on demand: any valid code has a permanent page, without pre-building
 // millions of them. Nothing is scored here — the code already carries the scores.
@@ -171,6 +175,39 @@ const description = reading
       READING.outcomes[reading.situation]!.set ? 'them' : 'it'
     } in the 300s.`
   : view?.summary ?? '';
+
+/*
+ * KINDRED SPIRITS ("Which early Christian thinks like you?") name two people, so two things on
+ * this page are theirs. The result itself is KindredResult, in the band and under it. And the
+ * share card draws the preview's card: the kindred spirit's portrait, name, dates and who they
+ * were, the line of theirs the result chose for it, what the two agree on, and the sparring
+ * partner. The lines and portraits live in which-early-christian.json, which only the server may
+ * read, so they are looked up here and handed down, as the reading's verse is.
+ *
+ * "Not enough to go on" names nobody. Its page says so and offers the quiz again, and it has no
+ * card to share and no result to save (the approved preview drew neither for it).
+ */
+const kindred = view?.shape === 'kindred' ? view : null;
+const kindredThin = kindred?.state === 'thin';
+const kindredCard = (() => {
+  if (!kindred || !kindred.kindred || !kindred.show) return undefined;
+  const EC = earlyChristians as unknown as KindredData;
+  const topic = (id: string) => EC.statements.find(s => s.id === id)?.topic ?? '';
+  const k = EC.people[kindred.kindred.key]!;
+  const s = kindred.sparring ? EC.people[kindred.sparring.key]! : null;
+  const cell = kindred.show.card ? k.cells[kindred.show.card] : null;
+  return {
+    name: k.name,
+    dates: k.dates,
+    who: k.who,
+    portrait: k.portrait.src,
+    line: cell?.line ? { text: cell.line, cite: `${k.short}, ${cell.work}` } : null,
+    agree: kindred.show.cardTopics.map(topic),
+    sparring: s
+      ? { name: s.name, portrait: s.portrait.src, on: kindred.show.sparringTopics.map(topic) }
+      : null
+  };
+})();
 ---
 {quiz && view ? (
   <Base
@@ -213,6 +250,9 @@ const description = reading
         {view.shape === 'reading' ? (
           /* "You're living Psalm 3", its Greek number, and the verse that names it. */
           <PsalmReading quiz={quiz} view={view} part="band" />
+        ) : view.shape === 'kindred' ? (
+          /* The kindred spirit's portrait, name, dates and who they were. */
+          <KindredResult quiz={quiz} view={view} part="band" />
         ) : (
           <>
             {/* The first thing a reader sees, in the same two colours as the compass and rails. */}
@@ -293,6 +333,13 @@ const description = reading
         further down), because its rows and ranking are empty by design.
       */
       <PsalmReading quiz={quiz} view={view} part="body" />
+    ) : view.shape === 'kindred' ? (
+      /*
+        Kindred spirits: no rails and no bars. Two people, each proved by their own words, then
+        everyone from nearest to farthest. It lists everyone itself, so the outcome list below
+        is skipped for it too.
+      */
+      <KindredResult quiz={quiz} view={view} part="body" />
     ) : (
     <div class="panel layered result-panel">
       <div class="wash" aria-hidden="true"></div>
@@ -358,7 +405,7 @@ const description = reading
       entity from the rows. On a unipolar quiz `ranked` is just the rows again, and the
       stack above has already shown them in order; printing them twice would be padding.
     */}
-    {quiz.outcomes.length > 0 && view.ranked.length > 0 && (
+    {quiz.outcomes.length > 0 && view.ranked.length > 0 && view.shape !== 'kindred' && (
       <section class="outcomes">
         {view.state === 'central' ? (
           /*
@@ -440,14 +487,17 @@ const description = reading
       </section>
     )}
 
-    <ShareBlock quiz={quiz} view={view} origin={Astro.site!.origin} line={readingLine} linkCode={linkCode} />
+    {!kindredThin && (
+      <ShareBlock quiz={quiz} view={view} origin={Astro.site!.origin} line={readingLine}
+                  kindred={kindredCard} linkCode={linkCode} />
+    )}
 
     {/*
       Save it, or take it yourself: the one ask on a result page, for every shape, a reading
       too. It sends nothing about the result anywhere; the result is already on this device,
       and the account picks it up from there once a password is chosen.
     */}
-    <SaveResult quiz={quiz} view={view} linkCode={linkCode} />
+    {!kindredThin && <SaveResult quiz={quiz} view={view} linkCode={linkCode} />}
 
     {/*
       The way on. A result used to end on the email form and, for some quizzes, three grey

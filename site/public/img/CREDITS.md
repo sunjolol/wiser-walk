@@ -55,6 +55,19 @@ Commons holds about 250 more plates in `Category:Doré's English Bible` (Old Tes
 deuterocanon, including Judith and Tobit) and `Category:Art depicting the New Testament by
 Gustave Doré`.
 
+## Public domain: Albrecht Dürer, Saint Jerome in His Study, 1514 (Wikimedia Commons)
+
+Added 2026-09-23 as the picture of **Which early Christian thinks like you?** (`src/lib/art.ts`): its
+home-page room, its card on /quizzes/ and at the foot of its pages, its start page's band, the bands of
+/early-christian/ and /early-church-on/, and its social card. Doré drew the Bible and not the Church, so
+the quiz wears an engraving of the same family instead: Jerome, one of the twenty-two a result can name,
+writing, with the lion and the dog asleep. Resized to 1000 px wide from the National Gallery of Art's
+scan, which the NGA released under CC0.
+
+| file | picture | Commons file | licence |
+|---|---|---|---|
+| durer-jerome.jpg | Saint Jerome in His Study, engraving, Albrecht Dürer, 1514 (National Gallery of Art, Washington) | `Albrecht Dürer, Saint Jerome in His Study, 1514, NGA 6642.jpg` | Public domain (CC0) |
+
 ## Public domain paintings: one for each article (`articles/<article id>.jpg`, Wikimedia Commons)
 
 The quizzes wear Doré's engravings; the articles wear paintings, in colour. Every painter has
@@ -130,6 +143,47 @@ leaves on the road. It means "come in" without a word of church vocabulary, it i
 colour rather than another engraving, and it is on no other page: the five account flow pages
 share it so they read as one movement, and `/account/` and `/account/setup/` wear the dark
 starry ground instead because they are not a doorway.
+
+## Portraits of the early Christians (`early-christians/<person slug>.jpg`, Wikimedia Commons)
+
+Added 2026-09-23 for "Which early Christian thinks like you?". One picture of each of the 22 people a result can
+name, chosen in `design/quiz-ideas/fathers/preview/img/credits.json` (the first public-domain portrait listed for each
+person in the research). `site/scripts/build-early-christian-data.mjs` copies them here, never wider than 600 px and
+never enlarged, as progressive JPEGs, and writes the same credit line into the quiz's data for the person's page. It
+stops the build if a portrait below is missing from this list.
+
+All 22 are public domain (or CC0), so no card, preview or page owes a credit line by licence; the person page
+prints one anyway. Three were swapped on 2026-09-23 so that share cards need none: Clement (Ingres's drawing for the
+window, in place of a CC BY-SA photograph of his cartoon), Cyprian and Martin (in place of CC BY photographs of the
+Ravenna mosaics).
+
+Two are called imagined on their Commons pages, and the credit says so: Tertullian's (an engraving of 1584) and
+Origen's. Lactantius's is a 4th-century mural that may show him or may show Apuleius, and its credit says "possibly".
+
+| file | picture | Commons file | licence |
+|---|---|---|---|
+| augustine-of-hippo.jpg | Fresco of Augustine, the oldest known portrait of him, c. 550-600 | `Rome, Lateran, Capella Sancta Sanctorum, Fresco of Augustine.jpg` | Public domain |
+| john-chrysostom.jpg | St John Chrysostom, mosaic in the north tympanum of Hagia Sophia, late 9th century | `Johnchrysostom.jpg` | Public domain |
+| tertullian.jpg | Tertullian, an imagined likeness, André Thevet, Les vrais pourtraits et vies des hommes illustres, 1584 | `Tertullian2.png` | Public domain |
+| jerome.jpg | Saint Jerome Writing, Caravaggio, 1605-1606 | `Saint Jerome Writing-Caravaggio (1605-6).jpg` | Public domain |
+| clement-of-alexandria.jpg | Saint Clement of Alexandria, drawing for a stained-glass window of the Chapelle Saint-Ferdinand, Paris, Jean-Auguste-Dominique Ingres, c. 1842 | `Ingres - Saint Clément d'Alexandrie, INV 27213, Recto.jpg` (the catalogue caption trimmed) | Public domain |
+| ambrose-of-milan.jpg | Mosaic of Ambrose, chapel of San Vittore in Ciel d'Oro, Basilica of Sant'Ambrogio, Milan, late 5th century | `San Vittore in Ciel d'oro. Ambrosius Mediolanensis.jpg` | Public domain |
+| gregory-the-great.jpg | Saint Gregory the Great, Jusepe de Ribera, c. 1614 | `Carlo Saraceni - St Gregory the Great - WGA20833.jpg` | Public domain |
+| basil-the-great.jpg | Saint Basil of Caesarea, mosaic in the Palatine Chapel, Palermo, 12th century | `Sanctus Basilius Capella Palatina.jpg` | Public domain |
+| gregory-of-nazianzus.jpg | Saint Gregory the Theologian, mosaic, Saint Sophia Cathedral, Kyiv, 11th century | `Agios Gregorios Theologos Kiev.jpg` | Public domain |
+| gregory-of-nyssa.jpg | St. Gregory of Nyssa, fresco, 11th century | `St. Gregory of Nyssa.jpg` | Public domain |
+| lactantius.jpg | Portrait possibly of Lactantius, mural, 4th century | `Lactantius.jpg` | Public domain |
+| origen.jpg | Origen, an imagined likeness | `Origen3.jpg` | Public domain |
+| cyprian-of-carthage.jpg | Saint Cyprian as bishop and martyr, side-altar wing from St Martin, Messkirch, Master of Messkirch, c. 1535-40 | `Heiliger Cyprianus.jpg` | Public domain |
+| antony-the-great.jpg | Saint Anthony the Great, Cretan icon, 15th to 17th century | `Cretan Icon Saint Anthony the Great.jpg` | Public domain |
+| john-cassian.jpg | Saint John Cassian, miniature in the Sacra Parallela of John of Damascus, 9th century | `Saint Jean Cassien - Grec 923.jpg` | Public domain |
+| isaac-the-syrian.jpg | Isaac Sirin miniature, Ioasaf Khokholek, scribe of the Kirillo-Belozersky monastery, 1518 | `Isaac Sirin miniature.jpg` | Public domain |
+| macrina-the-younger.jpg | St. Macrina the Younger, fresco in Saint Sophia Cathedral, Kyiv, 11th century | `Macrina the Younger.jpg` | Public domain |
+| justin-martyr.jpg | Saint Justin the Philosopher, Theophanes the Cretan, 1545-1546 | `Saint Justin Martyr by Theophanes the Cretan.jpg` | Public domain |
+| irenaeus-of-lyons.jpg | Saint Irenaeus, stained-glass window, Lucien Bégule, 1901 | `San Ireneo, vitral (cropped).jpg` | Public domain |
+| martin-of-tours.jpg | Saint Martin and the Beggar, El Greco, 1597-99, National Gallery of Art, Washington | `El Greco (Domenikos Theotokopoulos), Saint Martin and the Beggar, 1597-1599, NGA 1164.jpg` | CC0 |
+| benedict-of-nursia.jpg | Saint Benedict, Hans Memling, 1487 | `Memling, Trittico di Benedetto Portinari, San Benedetto.jpg` | Public domain |
+| boethius.jpg | Boethius teaching his students, manuscript initial, 1385 | `Boethius initial consolation philosophy.jpg` | Public domain |
 
 ## Public-domain paintings used on hubs
 

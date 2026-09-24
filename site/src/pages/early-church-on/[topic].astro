@@ -1,0 +1,195 @@
+---
+/**
+ * One question, as the early Christians answered it: /early-church-on/<topic>/.
+ *
+ * Twenty-three of these, one for each statement in "Which early Christian thinks like you?".
+ * Each is for someone who typed the question in its title ("what did the early Christians say
+ * about war?"), so the band answers it first, in plain sentences counted off the data: who
+ * would say yes to the statement, who would say no. Then the statement itself, as the quiz puts
+ * it, and both sides, each person with the line that shows where they stood and where it comes
+ * from. The quiz comes last, as the way to see where you would stand.
+ *
+ * Rules this page keeps:
+ *
+ * 1. **Both sides alike.** The two sides get the same card, the same ink and the same weight,
+ *    oldest first on each. Agreeing is not a pole, so neither side is blue or orange. A side
+ *    nobody is on says so rather than disappearing.
+ * 2. **Every line is the data's.** The positions, lines, works and recorders come from
+ *    src/data/which-early-christian.json. The only words written here are the frame: the
+ *    title, the counts and the one sentence saying how the statement is worded.
+ * 3. **Nobody is placed who is not on record.** A person with nothing on this question is on
+ *    neither side and is not listed.
+ * 4. **"You said", only when this device holds a result** (EarlyMine): the reader's answer under
+ *    the statement and a tag on their side. Otherwise the page is the same for everyone.
+ */
+import Base from '../../layouts/Base.astro';
+import Hero from '../../components/Hero.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import Icon from '../../components/Icon.astro';
+import CorrectionNote from '../../components/CorrectionNote.astro';
+import EarlyLine from '../../components/EarlyLine.astro';
+import EarlyMine from '../../components/EarlyMine.astro';
+import { whichEarlyChristian } from '../../lib/quizzes/which-early-christian';
+import { quizHref } from '../../lib/engine/registry';
+import { outcomeNounPlural } from '../../lib/engine/types';
+import { artFor } from '../../lib/art';
+import { clip } from '../../lib/seo';
+import {
+  STATEMENTS, answerFor, capital, personHref, questionHref, sidesOf, titleInkOf, titleOf
+} from '../early-christian/_early';
+import '../../styles/pages/early-christian.css';
+
+export function getStaticPaths() {
+  return STATEMENTS.map(s => ({ params: { topic: s.slug }, props: { id: s.id } }));
+}
+
+const { id } = Astro.props as { id: string };
+const quiz = whichEarlyChristian;
+const index = STATEMENTS.findIndex(s => s.id === id);
+const s = STATEMENTS[index]!;
+const { agree, disagree } = sidesOf(id);
+const onRecord = agree.length + disagree.length;
+
+const title = titleOf(s);
+const lede = answerFor(id);
+/* The statement, then the counts, then what the page gives: the three things a search result
+   needs to say, in sentences short enough to read in one glance. */
+const counts = !disagree.length
+  ? `All ${onRecord} early Christians on record would agree.`
+  : !agree.length
+    ? `All ${onRecord} early Christians on record would disagree.`
+    : `${agree.length} would agree and ${disagree.length} would disagree.`;
+const description = clip(`“${s.text}” ${counts} See who said what, and where.`);
+
+/*
+ * Close to this: the questions after this one in the quiz's order, wrapping round, so a reader
+ * can walk all twenty-three the way the psalm pages are walked.
+ */
+const near = [...STATEMENTS.slice(index + 1), ...STATEMENTS.slice(0, index)].slice(0, 4);
+
+const art = artFor(quiz.slug);
+
+const url = new URL(questionHref(s), Astro.site).href;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: title,
+  description,
+  url,
+  isPartOf: [
+    { '@id': new URL('/#website', Astro.site).href },
+    { '@type': 'CollectionPage', name: 'What the early Christians said', url: new URL('/early-church-on/', Astro.site).href },
+    { '@type': 'Quiz', name: quiz.title, url: new URL(quizHref(quiz), Astro.site).href }
+  ],
+  about: { '@type': 'Thing', name: capital(s.topic) },
+  mentions: [...agree, ...disagree].map(x => ({
+    '@type': 'Person', name: x.p.name, url: new URL(personHref(x.p), Astro.site).href
+  }))
+};
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'What the early Christians said', url: '/early-church-on/' },
+  { name: capital(s.topic), url: questionHref(s) }
+];
+
+const sides = [
+  { key: 'agree', title: 'Would agree', list: agree, none: 'No one in the quiz is on record as agreeing.' },
+  { key: 'disagree', title: 'Would disagree', list: disagree, none: 'No one in the quiz is on record as disagreeing.' }
+];
+---
+<Base title={title} description={description} jsonLd={jsonLd} breadcrumbs={breadcrumbs}>
+  <Hero
+    title={title}
+    blue={titleInkOf(s)}
+    kind={art ? 'engraving' : 'night'}
+    image={art?.src}
+    imageAlt={art?.alt}
+    imagePosition={art?.objectPosition}
+    imageLift={art?.lift}
+    long
+    lede={lede}
+    tiles={[
+      { n: onRecord, label: 'On record' },
+      { n: agree.length, label: 'Would agree' },
+      { n: disagree.length, label: 'Would disagree' }
+    ]}
+  />
+
+  <div class="ref ref--early">
+    <section class="panel ecq-statement" aria-labelledby="ecq-statement-h">
+      <p class="ecq-kicker" id="ecq-statement-h">The statement in the quiz</p>
+      <p class="ecq-text">“{s.text}”</p>
+      <p class="ecq-how">
+        The quiz puts it in today’s words. Each person below is placed by what they wrote or
+        said. Where their line is clear on its own, it is printed with its source.
+      </p>
+      {/* Hidden unless this device holds a result for the quiz. */}
+      <EarlyMine quiz={quiz} kind="question" index={index} />
+    </section>
+
+    <div class="ecq-sides">
+      {sides.map(side => (
+        <section class="ecq-side" aria-labelledby={`ecq-${side.key}-h`}>
+          <SectionHead
+            id={`ecq-${side.key}-h`}
+            title={side.title}
+            kicker={side.list.length === 1 ? '1 early Christian' : `${side.list.length} early Christians`}
+          />
+          <p class="ecq-yours" data-ec-you-side={side.key} hidden>
+            <span class="you-chip" aria-hidden="true">You</span> Your side
+          </p>
+          {side.list.length ? (
+            <div class="ecl-list">
+              {side.list.map(x => <EarlyLine k={x.key} id={id} head="person" />)}
+            </div>
+          ) : (
+            <p class="ecq-none">{side.none}</p>
+          )}
+        </section>
+      ))}
+    </div>
+
+    <section aria-labelledby="ecq-near-h">
+      <SectionHead id="ecq-near-h" title="More questions" kicker="What they said" />
+      <ul class="ec-rows">
+        {near.map(n => (
+          <li>
+            <a class="ec-row" href={questionHref(n)}>
+              <span class="ec-row-body">
+                <span class="ec-row-title">{capital(n.topic)}</span>
+                <span class="ec-row-text">“{n.text}”</span>
+              </span>
+              <Icon name="arrow" size={14} />
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="ec-way">
+        <Icon name="arrow" size={14} />
+        <span>
+          <a href="/early-church-on/">All {STATEMENTS.length} questions</a>, and
+          <a href="/early-christian/">all {quiz.outcomes.length} {outcomeNounPlural(quiz)}</a>.
+        </span>
+      </p>
+    </section>
+
+    {/* The way into the quiz: its own card, drawn plain because the band above already wears
+        the quiz's picture (no page shows one picture twice). */}
+    <div class="qcard-wrap">
+      <a class={`qcard qcard--plain qcard--${quiz.slug}`} href={quizHref(quiz)}>
+        <div class="qcard-body">
+          <p class="qcard-kicker">Your turn</p>
+          <h2 class="qcard-title">{quiz.title}</h2>
+          <p class="qcard-say">{quiz.tagline} See where you would stand on this and {STATEMENTS.length - 1} more.</p>
+          <ul class="qcard-facts">
+            <li><Icon name="clock" size={13} /> {quiz.minutes} min</li>
+            <li>{quiz.outcomes.length} {outcomeNounPlural(quiz)}</li>
+          </ul>
+          <span class="qcard-go go-pill">Start <Icon name="arrow" size={16} /></span>
+        </div>
+      </a>
+    </div>
+
+    <CorrectionNote subject={title} />
+  </div>
+</Base>

@@ -20,7 +20,8 @@
  *   - a figure with no suitable plate gets none, and falls back to the quiz's own picture,
  *     which is honest: we are not pretending to have a portrait we do not have
  *
- * Every plate is Gustave Doré, 1866, public domain. Credits: public/img/CREDITS.md.
+ * Every plate is Gustave Doré, 1866, public domain, except the early Christians quiz's, which
+ * is Dürer's (1514, public domain). Credits: public/img/CREDITS.md.
  */
 export interface QuizArt {
   src: string;
@@ -60,6 +61,15 @@ const ART: Record<string, QuizArt> = {
     src: '/img/figures/david.jpg',
     alt: 'Gustave Doré’s engraving of David standing crowned and bowed as he mourns Absalom',
     objectPosition: '48% 30%'
+  },
+  /* Not Doré, who drew the Bible and not the Church, but an engraving of the same family:
+     Albrecht Dürer's Saint Jerome in His Study (1514). Jerome is one of the twenty-two a result
+     can name, and he is doing what every one of them is remembered for: writing. Calm, and
+     nothing violent in it; the lion and the dog are asleep. */
+  'which-early-christian': {
+    src: '/img/durer-jerome.jpg',
+    alt: 'Albrecht Dürer’s engraving of Saint Jerome writing at his desk, a lion and a dog asleep on the floor of his study',
+    objectPosition: '62% 58%'
   }
 };
 

@@ -112,7 +112,9 @@ export function parseCodes(
 export function compare(quiz: Quiz, a: number[], b: number[]): Comparison {
   const va = resultFor(quiz, a);
   const vb = resultFor(quiz, b);
-  if (va.shape === 'reading') throw new Error(`compare: "${quiz.slug}" is not comparable`);
+  // A reading and kindred spirits have no two-person page (Quiz.comparable), and parseCodes
+  // already refuses them; this is the same refusal for a caller that skipped it.
+  if (va.shape === 'reading' || va.shape === 'kindred') throw new Error(`compare: "${quiz.slug}" is not comparable`);
 
   if (va.shape === 'bipolar') {
     // Same quiz, so the same strategy and the same shape. The cast is the type system

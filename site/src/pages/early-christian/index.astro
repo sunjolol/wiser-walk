@@ -1,0 +1,149 @@
+---
+/**
+ * /early-christian/: everyone "Which early Christian thinks like you?" can name, oldest first.
+ *
+ * The hub the twenty-two person pages hang from (their breadcrumbs lead here), the quiz's
+ * "Meet all 22", and the page a search lands on for the early Church Fathers as a whole. So it
+ * shows the people first, each as a portrait with a name and dates and one line of who they
+ * were, and offers the question pages and the quiz after them. Every word about a person is the
+ * data's (src/data/which-early-christian.json).
+ *
+ * A reader whose device holds a result for the quiz sees their kindred spirit and sparring
+ * partner tagged in the grid (EarlyMine, worked out by the quiz's own scorer); everyone else
+ * sees the grid as it is.
+ */
+import Base from '../../layouts/Base.astro';
+import Hero from '../../components/Hero.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import Icon from '../../components/Icon.astro';
+import EarlyMine from '../../components/EarlyMine.astro';
+import { whichEarlyChristian } from '../../lib/quizzes/which-early-christian';
+import { quizHref } from '../../lib/engine/registry';
+import { artFor } from '../../lib/art';
+import { OLDEST_FIRST, STATEMENTS, capital, faceOf, personHref, personOf, questionHref } from './_early';
+import '../../styles/pages/early-christian.css';
+
+const quiz = whichEarlyChristian;
+const art = artFor(quiz.slug);
+const people = OLDEST_FIRST.map(key => ({ key, p: personOf(key) }));
+/** Every line the pages print in full, counted off the data rather than typed. */
+const quoted = people.reduce((n, { p }) => n + Object.values(p.cells).filter(c => !c.hide).length, 0);
+/** Four questions to start with (war, lying, wealth, grief), as a way into the other nineteen. */
+const featured = ['war', 'lie', 'rich', 'tears'].map(id => {
+  const s = STATEMENTS.find(x => x.id === id);
+  if (!s) throw new Error(`/early-christian/: no statement ${id}`);
+  return s;
+});
+
+const url = new URL('/early-christian/', Astro.site).href;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'The early Christians',
+  url,
+  isPartOf: { '@id': new URL('/#website', Astro.site).href },
+  mainEntity: {
+    '@type': 'ItemList',
+    numberOfItems: people.length,
+    itemListElement: people.map(({ p }, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: new URL(personHref(p), Astro.site).href,
+      name: p.name
+    }))
+  }
+};
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'The early Christians', url: '/early-christian/' }
+];
+---
+<Base
+  title="The early Christians"
+  description="Twenty-two early Christians, East and West, from the 2nd century to the 7th. Who each one was, and where they stood, with a source for every line."
+  jsonLd={jsonLd}
+  breadcrumbs={breadcrumbs}
+>
+  <Hero
+    title={`Meet ${people.length} early Christians`}
+    blue={String(people.length)}
+    kind={art ? 'engraving' : 'night'}
+    image={art?.src}
+    imageAlt={art?.alt}
+    imagePosition={art?.objectPosition}
+    imageLift={art?.lift}
+    long
+    lede={`East and West, from the 2nd century to the 7th, oldest first. Tap anyone to see where they stood on ${STATEMENTS.length} questions, and the lines that show it.`}
+    tiles={[
+      { n: people.length, label: 'People' },
+      { n: STATEMENTS.length, label: 'Questions' },
+      { n: quoted, label: 'Lines quoted' }
+    ]}
+  >
+    <a class="btn" href={quizHref(quiz)} slot="actions">Which one thinks like you? <Icon name="arrow" size={15} /></a>
+  </Hero>
+
+  <div class="ref ref--early">
+    {/* Hidden unless this device holds a result for the quiz. */}
+    <EarlyMine quiz={quiz} kind="people" />
+
+    <SectionHead title="Oldest first" kicker={`${people.length} early Christians`} />
+    <ul class="eci-grid">
+      {people.map(({ key, p }, i) => (
+        <li>
+          <a class="eci-card" href={personHref(p)} data-ec-person={key}>
+            <span class="eci-pic">
+              <img
+                src={p.portrait.src} alt="" width={p.portrait.width} height={p.portrait.height}
+                loading={i < 4 ? 'eager' : 'lazy'} decoding="async" style={`object-position:${faceOf(key)}`}
+              />
+              <span class="eci-tag" data-ec-tag="kindred" hidden>Kindred spirit</span>
+              <span class="eci-tag" data-ec-tag="sparring" hidden>Sparring partner</span>
+            </span>
+            <span class="eci-name">{p.name}</span>
+            <span class="eci-dates">{p.dates}</span>
+            <span class="eci-who">{p.who}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <SectionHead title="What they said" kicker="One question at a time" />
+    <ul class="ec-rows">
+      {featured.map(s => (
+        <li>
+          <a class="ec-row" href={questionHref(s)}>
+            <span class="ec-row-body">
+              <span class="ec-row-title">{capital(s.topic)}</span>
+              <span class="ec-row-text">“{s.text}”</span>
+            </span>
+            <Icon name="arrow" size={14} />
+          </a>
+        </li>
+      ))}
+    </ul>
+    <p class="ec-way">
+      <Icon name="arrow" size={14} />
+      <span>
+        <a href="/early-church-on/">All {STATEMENTS.length} questions</a>, with who stood where on each.
+      </span>
+    </p>
+
+    {/* The way into the quiz: its own card, drawn plain because the band above already wears
+        the quiz's picture (no page shows one picture twice). */}
+    <div class="qcard-wrap">
+      <a class={`qcard qcard--plain qcard--${quiz.slug}`} href={quizHref(quiz)}>
+        <div class="qcard-body">
+          <p class="qcard-kicker">Your turn</p>
+          <h2 class="qcard-title">{quiz.title}</h2>
+          <p class="qcard-say">{quiz.tagline}</p>
+          <ul class="qcard-facts">
+            <li><Icon name="clock" size={13} /> {quiz.minutes} min</li>
+            <li>{STATEMENTS.length} statements</li>
+          </ul>
+          <span class="qcard-go go-pill">Start <Icon name="arrow" size={16} /></span>
+        </div>
+      </a>
+    </div>
+  </div>
+</Base>

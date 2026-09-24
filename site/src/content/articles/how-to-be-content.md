@@ -5,7 +5,7 @@ published: 2026-09-20
 minutes: 6
 answer: "Paul says he learned contentment, in plenty and in need. It rests not on having enough but on God's promise never to leave you, which is why it survives a change in what you have. Ask for a portion, not a pile, name the want, and give some away."
 tags: [formation, contentment]
-quizzes: [seven-deadly-sins]
+quizzes: [seven-deadly-sins, which-early-christian]
 image: /img/articles/how-to-be-content.jpg
 imageAlt: "Two harvesters rest in the shade of a haystack at midday"
 imageCredit: "Vincent van Gogh, Noon: Rest from Work (after Millet), 1890"

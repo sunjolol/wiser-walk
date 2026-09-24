@@ -10,8 +10,9 @@
  *   four rooms each quiz has its own picture and its own ink, so none of them looks like
  *              the next: the compass is an instrument on a night ground, the psalm, the
  *              figures, the gifts and the seven are four Doré engravings in one ink, so the
- *              art is one family and the subjects are not. No marks over the titles: the owner found
- *              them distracting (2026-09-22)
+ *              art is one family and the subjects are not (the early Christians' room, added
+ *              2026-09-23, is Dürer's engraving of Jerome, printed the same way). No marks over
+ *              the titles: the owner found them distracting (2026-09-22)
  *   night      the games sit on a dark band over an old manuscript page, because they are played with the text
  *   morning    the articles are paintings first and words second: colour, where the quizzes are ink
  *   (the traditions list moved to the foot of the Compass's own page, 2026-09-21)
@@ -41,6 +42,7 @@ const figures = getQuiz('bible-figure');
 const gifts = getQuiz('spiritual-gifts');
 const sins = getQuiz('seven-deadly-sins');
 const psalm = getQuiz('which-psalm');
+const early = getQuiz('which-early-christian');
 const games = liveGames();
 const sls = games.find(g => g.slug === 'sounds-like-scripture');
 const wsi = games.find(g => g.slug === 'who-said-it');
@@ -134,10 +136,29 @@ const jsonLd = {
     */}
     <div class="hm-rail" data-rail>
       <div class="hm-rail-track" data-rail-track tabindex="0" role="group" aria-label="More quizzes">
-        {/* The Psalm quiz leads the rail, straight after the Compass: the newest quiz, and the
-            one the owner called "phenomenal and very powerful" when he played it. It has no
-            statements to count, so its facts are the minutes and the situations it can name,
-            counted off the data rather than typed. */}
+        {/* The newest quiz leads the rail, straight after the Compass: Which early Christian
+            thinks like you? (2026-09-23), with the question the owner ruled goes under its title
+            on its card, and the people it can name counted off the registry. Dürer's Jerome,
+            the plate lib/art.ts pairs with it, is an engraving of the same family as the Doré
+            plates beside it. */}
+        {early && (
+          <a class="room room--early" href={quizHref(early)}>
+            <img src="/img/durer-jerome.jpg" alt="Albrecht Dürer’s engraving of Saint Jerome writing at his desk, a lion and a dog asleep on the floor of his study" loading="lazy" decoding="async" width="1000" height="1306" />
+            <div class="room-body">
+              <h3>{early.title}</h3>
+              <p class="room-say">{early.tagline}</p>
+              <ul class="room-facts">
+                <li><Icon name="clock" size={13} /> {early.minutes} min</li>
+                <li>{early.outcomes.length} early Christians</li>
+              </ul>
+              <span class="room-go">Start <Icon name="arrow" size={14} /></span>
+            </div>
+          </a>
+        )}
+
+        {/* The Psalm quiz follows it: the one the owner called "phenomenal and very powerful"
+            when he played it. It has no statements to count, so its facts are the minutes and
+            the situations it can name, counted off the data rather than typed. */}
         {psalm && (
           <a class="room room--psalm" href={quizHref(psalm)}>
             <img src="/img/figures/david.jpg" alt="Gustave Doré’s engraving of David standing crowned and bowed as he mourns Absalom" loading="lazy" decoding="async" width="807" height="1012" />

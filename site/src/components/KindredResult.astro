@@ -1,0 +1,334 @@
+---
+/**
+ * Kindred spirits: the result page of "Which early Christian thinks like you?".
+ *
+ * It is the owner's tap-through preview (design/quiz-ideas/fathers/preview/app.js, show(),
+ * draft 4) rendered on the server, in the same order and the same words: he played it and said
+ * "Love this! ... change nothing else". So this file reproduces it in the site's kit rather than
+ * reinterpreting it. What the preview chose on the page (which lines, the face-off, who is also
+ * close) is chosen once, in strategies/kindred.ts, and read here from `view.show`.
+ *
+ * Two parts, because the page's band is shared with every other result: `band` is the kindred
+ * spirit as the band shows them (portrait, name, dates, who they were), and `body` is the rest,
+ * in the preview's order:
+ *
+ *   the kindred spirit's story      hook, and the status note where there is one
+ *   where you think alike           up to three of their lines, each beside your answer
+ *   where he would push back        their sharpest real clash with you, if there is one
+ *   the pair                        what really linked the two people, where anything did
+ *   the sparring partner            a dark room: who, the face-off, where he would argue,
+ *                                   where you would agree
+ *   also close, and everyone        each a link to that person's own page
+ *
+ * TWO READERS, ONE URL. The code is the answers, so the whole result reads the same to the
+ * person who took it and to anyone they send it to. Only the voice differs: the preview says
+ * "You" to the taker and "They" to everyone else. The server prints both and the visitor's is
+ * shown; a tab-scoped note the runner leaves behind ('ww:took:<slug>', exactly as the share
+ * block and the save box read it) switches the page to "You" before it is painted. Nothing
+ * else changes, and nothing is sent anywhere.
+ *
+ * The lines, hooks, portraits and pairs come from src/data/which-early-christian.json, which is
+ * imported here in the front matter and never in the browser (see strategies/kindred.ts).
+ */
+import type { KindredView, Quiz } from '../lib/engine/types';
+import type { KindredData, KindredLine } from '../lib/strategies/kindred';
+import { outcomeHref, quizHref } from '../lib/engine/registry';
+import full from '../data/which-early-christian.json';
+import '../styles/pages/kindred.css';
+
+interface Props {
+  quiz: Quiz;
+  view: KindredView;
+  part: 'band' | 'body';
+}
+
+const { quiz, view, part } = Astro.props;
+const EC = full as unknown as KindredData;
+
+/** The five answers as the runner and the preview word them. */
+const WORD: Record<string, string> = {
+  '2': 'Strongly agree', '1': 'Agree', '0': 'Not sure', '-1': 'Disagree', '-2': 'Strongly disagree'
+};
+
+const person = (k: string) => EC.people[k]!;
+const statement = (id: string) => EC.statements.find(s => s.id === id)!;
+const he = (k: string) => (person(k).she ? 'she' : 'he');
+
+/** Where the words are from: the work, who recorded them, and whether the English is ours. */
+const cite = (c: KindredLine) =>
+  `${c.work}${c.by ? `, ${c.by}` : ''}${c.own ? '. Our translation' : ''}`;
+
+/** A picture's description, from its credit: what it is, without the licence and the photographer. */
+const describe = (k: string) =>
+  person(k).portrait.credit
+    .replace(/\s*Photo by [^.]*\./, '')
+    .replace(/\s*Wikimedia Commons.*$/, '')
+    .replace(/\.$/, '');
+
+/**
+ * One statement between the reader and one person: preview/app.js lineCard(). The result only
+ * ever shows a line that is shown, but a hidden one is still drawn honestly ("On record in").
+ */
+const card = (k: string, id: string) => {
+  const c = person(k).cells[id]!;
+  const s = statement(id);
+  return {
+    id,
+    topic: s.topic,
+    text: s.text,
+    word: WORD[String(view.answers[id] ?? 0)],
+    says: `${person(k).short} ${c.v > 0 ? 'agrees' : 'disagrees'}${c.hide ? '.' : ':'}`,
+    hide: Boolean(c.hide),
+    line: c.line ?? '',
+    src: c.hide ? `On record in ${c.work}${c.by ? `, ${c.by}` : ''}.` : cite(c),
+    note: c.hide ? null : c.note ?? null
+  };
+};
+type Card = ReturnType<typeof card>;
+
+/** A heading in both voices. Where the two are the same it is printed once. */
+type Voice = { their: string; mine: string };
+const same = (text: string): Voice => ({ their: text, mine: text });
+type Section = { label: Voice; cards: Card[] };
+
+const matched = view.state === 'matched' && view.kindred && view.show;
+const K = view.kindred?.key ?? '';
+const S = view.sparring?.key ?? null;
+const show = view.show;
+
+const kindredSections: Section[] = matched ? [
+  { label: { their: 'Where they think alike', mine: 'Where you think alike' },
+    cards: show!.alike.map(id => card(K, id)) },
+  ...(show!.pushBack
+    ? [{ label: same(`Where ${he(K)} would push back`), cards: [card(K, show!.pushBack)] }]
+    : [])
+].filter(s => s.cards.length) : [];
+
+const sparringSections: Section[] = matched && S ? [
+  { label: { their: `Where ${he(S)} would argue with them`, mine: `Where ${he(S)} would argue with you` },
+    cards: show!.argue.map(id => card(S, id)) },
+  ...(show!.agree
+    ? [{ label: { their: 'Where they would agree', mine: 'Where you would agree' }, cards: [card(S, show!.agree)] }]
+    : [])
+].filter(s => s.cards.length) : [];
+
+/** What really linked the two, where anything did (people.json pairs, filled from both sides). */
+const pair = matched && S ? person(K).pairs[S] ?? null : null;
+
+/** The face-off: one statement the reader held strongly, on which the two stand opposite. */
+const face = matched && S && show!.face ? {
+  topic: statement(show!.face).topic,
+  text: statement(show!.face).text,
+  word: WORD[String(view.answers[show!.face] ?? 0)],
+  sides: [K, S].map(k => {
+    const c = person(k).cells[show!.face!]!;
+    return { says: `${person(k).short} ${c.v > 0 ? 'agrees:' : 'disagrees:'}`, line: c.line ?? '', src: cite(c) };
+  })
+} : null;
+
+/** A person as a way in to their own page. */
+const href = (k: string) => outcomeHref(quiz, { name: person(k).name, slug: person(k).slug });
+
+const also = matched ? show!.also.map(a => ({
+  key: a.key, href: href(a.key), short: person(a.key).short,
+  src: person(a.key).portrait.thumb, on: a.on ? statement(a.on).topic : null
+})) : [];
+
+const everyone = view.ranked.map(r => ({
+  key: r.key, href: href(r.key), short: person(r.key).short, src: person(r.key).portrait.thumb
+}));
+
+/** The hero of a named person: the band's kindred spirit, and the dark room's sparring partner. */
+const hero = (k: string) => {
+  const p = person(k);
+  return { ...p, alt: describe(k) };
+};
+const kh = matched ? hero(K) : null;
+const sh = matched && S ? hero(S) : null;
+---
+{part === 'band' ? (
+  <>
+    {kh ? (
+      <div class="kr-hero kr-hero--band">
+        <img class="kr-portrait" src={kh.portrait.src} width={kh.portrait.width} height={kh.portrait.height}
+             alt={kh.alt} loading="eager" fetchpriority="high" decoding="async" />
+        <div class="kr-hero-say">
+          <p class="kr-kicker"><span class="kr-their">Their</span><span class="kr-mine">Your</span> kindred spirit</p>
+          <h1 class="verdict kr-verdict">{kh.name}</h1>
+          <p class="kr-meta">{kh.dates} · {kh.where}</p>
+          <p class="lede kr-who">{kh.who}</p>
+        </div>
+      </div>
+    ) : (
+      /* The honest "Not enough to go on": nobody shares enough answered statements to be named. */
+      <>
+        <h1 class="verdict kr-verdict">{view.headline}</h1>
+        <p class="lede">{view.summary}</p>
+      </>
+    )}
+    <script is:inline define:vars={{ krSlug: quiz.slug, krCode: view.code }}>
+      try {
+        if (sessionStorage.getItem('ww:took:' + krSlug) === krCode) document.documentElement.dataset.krWho = 'taker';
+      } catch (e) {}
+    </script>
+  </>
+) : (
+  <article class="kr" aria-label="The result">
+    {!matched ? (
+      <section class="panel kr-panel kr-thin">
+        <p class="kr-mine">Try again and lean one way where you can.</p>
+        <p class="kr-their">Take it yourself and see who thinks like you.</p>
+        <p class="btn-row">
+          <a class="btn" href={quizHref(quiz)}>
+            <span class="kr-mine">Try again</span><span class="kr-their">Take it yourself</span>
+          </a>
+        </p>
+      </section>
+    ) : (
+      <>
+        {/* Said once, at the top, to a visitor only: what the preview says to a friend's link. */}
+        <p class="kr-shared kr-their">
+          Someone shared their result with you. <a href={quizHref(quiz)}>Take the quiz yourself</a>
+        </p>
+
+        <section class="panel kr-panel" aria-label={kh!.name}>
+          <p class="kr-hook">{kh!.hook}</p>
+          {kh!.status && <p class="kr-status">{kh!.status}</p>}
+
+          {kindredSections.map(sec => (
+            <div class="kr-sec">
+              <h2 class="kr-label">
+                {sec.label.their === sec.label.mine ? sec.label.mine : (
+                  <><span class="kr-their">{sec.label.their}</span><span class="kr-mine">{sec.label.mine}</span></>
+                )}
+              </h2>
+              <div class={`kr-lines kr-lines--${sec.cards.length}`}>
+                {sec.cards.map(c => (
+                  <div class="kr-line">
+                    <p class="kr-on">On {c.topic}</p>
+                    <p class="kr-you">“{c.text}” <span class="kr-their">They</span><span class="kr-mine">You</span>: <b>{c.word}</b></p>
+                    <p class="kr-says">{c.says}</p>
+                    {!c.hide && <blockquote class="kr-quote"><p>“{c.line}”</p></blockquote>}
+                    <p class="kr-src">{c.src}</p>
+                    {c.note && <p class="kr-note">{c.note}</p>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </section>
+
+        {pair && <p class="kr-pair">{pair}</p>}
+
+        {sh && (
+          <section class="kr-panel kr-spar dark" aria-label={sh.name}>
+            <div class="dark-ghost" aria-hidden="true">argue</div>
+            <div class="kr-hero kr-hero--spar">
+              <img class="kr-portrait" src={sh.portrait.src} width={sh.portrait.width} height={sh.portrait.height}
+                   alt={sh.alt} loading="lazy" decoding="async" />
+              <div class="kr-hero-say">
+                <p class="kr-kicker"><span class="kr-their">Their</span><span class="kr-mine">Your</span> sparring partner</p>
+                <h2 class="kr-name">{sh.name}</h2>
+                <p class="kr-meta">{sh.dates} · {sh.where}</p>
+                <p class="kr-who">{sh.who}</p>
+                <p class="kr-hook">{sh.hook}</p>
+                {sh.status && <p class="kr-status">{sh.status}</p>}
+              </div>
+            </div>
+
+            {face && (
+              <div class="kr-sec">
+                <h3 class="kr-label">Face to face on {face.topic}</h3>
+                <p class="kr-you kr-you--face">“{face.text}” <span class="kr-their">They</span><span class="kr-mine">You</span>: <b>{face.word}</b></p>
+                <div class="kr-face">
+                  {face.sides.map(x => (
+                    <div class="kr-line">
+                      <p class="kr-says">{x.says}</p>
+                      <blockquote class="kr-quote"><p>“{x.line}”</p></blockquote>
+                      <p class="kr-src">{x.src}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {sparringSections.map(sec => (
+              <div class="kr-sec">
+                <h3 class="kr-label">
+                  {sec.label.their === sec.label.mine ? sec.label.mine : (
+                    <><span class="kr-their">{sec.label.their}</span><span class="kr-mine">{sec.label.mine}</span></>
+                  )}
+                </h3>
+                <div class={`kr-lines kr-lines--${sec.cards.length}`}>
+                  {sec.cards.map(c => (
+                    <div class="kr-line">
+                      <p class="kr-on">On {c.topic}</p>
+                      <p class="kr-you">“{c.text}” <span class="kr-their">They</span><span class="kr-mine">You</span>: <b>{c.word}</b></p>
+                      <p class="kr-says">{c.says}</p>
+                      {!c.hide && <blockquote class="kr-quote"><p>“{c.line}”</p></blockquote>}
+                      <p class="kr-src">{c.src}</p>
+                      {c.note && <p class="kr-note">{c.note}</p>}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </section>
+        )}
+      </>
+    )}
+
+    {/*
+      Everyone, in the order the matching put them, each a way in to their own page. Nearest by
+      position, never a number: the likeness that orders this list is never printed. Not on the
+      honest "Not enough to go on", where an order would mean nothing.
+    */}
+    {matched && (
+    <section class="panel kr-panel kr-people" aria-label="Everyone">
+      {also.length > 0 && (
+        <div class="kr-sec">
+          <h2 class="kr-label">Also close</h2>
+          <ul class="kr-chips">
+            {also.map(a => (
+              <li>
+                <a class="kr-chip" href={a.href}>
+                  <img src={a.src} alt="" width="40" height="40" loading="lazy" decoding="async" />
+                  <span>{a.short}{a.on && <small> on {a.on}</small>}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      <div class="kr-sec">
+        <h2 class="kr-label">Everyone, from nearest to farthest</h2>
+        <ul class="kr-chips">
+          {everyone.map(p => (
+            <li>
+              <a class="kr-chip" href={p.href}>
+                <img src={p.src} alt="" width="40" height="40" loading="lazy" decoding="async" />
+                <span>{p.short}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+      {/* Three of the pictures are licensed on condition that they are credited wherever they show. */}
+      <details class="kr-credits">
+        <summary>Picture credits</summary>
+        <ul>
+          {everyone.map(p => (
+            <li><a href={person(p.key).portrait.page}>{person(p.key).name}</a>: {person(p.key).portrait.credit}</li>
+          ))}
+        </ul>
+      </details>
+    </section>
+    )}
+
+    <script is:inline define:vars={{ krSlug: quiz.slug, krCode: view.code }}>
+      try {
+        if (sessionStorage.getItem('ww:took:' + krSlug) === krCode) document.documentElement.dataset.krWho = 'taker';
+      } catch (e) {}
+    </script>
+  </article>
+)}

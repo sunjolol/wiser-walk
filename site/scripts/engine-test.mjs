@@ -575,6 +575,7 @@ console.log('10. every group in every quiz is keyed in both directions');
   // the counts is what makes a silent data edit visible in the test log rather than only
   // in a thrown build error.
   for (const q of QUIZZES) {
+    if (q.strategy.shape === 'kindred') continue; // one statement per question, never summed; section 19
     const bad = q.groups.filter((_, i) => {
       const dirs = q.items.filter(it => it.group === i).map(it => it.direction);
       return !dirs.includes(1) || !dirs.includes(-1);
@@ -1922,11 +1923,14 @@ console.log('18b. short result links');
     const c = codes.get(q.slug)[0];
     return [q.slug, q.shortLinks ? 'short' : L.publicCodeSync(q, c) !== c ? 'strip' : 'same'];
   }));
-  const want = { 'theology-compass': 'same', 'which-psalm': 'same', 'seven-deadly-sins': 'strip', 'bible-figure': 'strip', 'spiritual-gifts': 'short' };
+  const want = {
+    'theology-compass': 'same', 'which-psalm': 'same', 'seven-deadly-sins': 'strip', 'bible-figure': 'strip',
+    'spiritual-gifts': 'short', 'which-early-christian': 'short'
+  };
   for (const [slug, kind] of Object.entries(want)) {
     if (kinds[slug] !== kind) fail(`${slug} hands out ${kinds[slug]} links, expected ${kind}`);
   }
-  ok('Compass and Psalm keep their codes, the sins and the figures strip, the gifts get short links');
+  ok('Compass and Psalm keep their codes, the sins and the figures strip, the gifts and quiz #4 get short links');
 
   // Every form of every sample comes back to its result, and every public code is at most six.
   const db = supabase();
@@ -2102,6 +2106,273 @@ console.log('18b. short result links');
     if (off.length) fail('the setup line for short links: ' + off.map(([c]) => c.state + ' ' + c.say).join(' | '));
     else if (!checks.ALL_CHECKS.includes(checks.checkShortLinks)) fail('the short links line is not on the setup page');
     else ok('the setup page has a line for short links: done, to do and needs a look, in plain words');
+  }
+}
+
+// ------------------------- 19. which early Christian thinks like you? kindred spirits
+/*
+ * The fourth shape. Its matching is a port of the design's score.js, so the first thing checked
+ * is that the port and the original agree on every simulated person the owner's preview was
+ * tested on. Then what can go wrong: a code that does not come back to the same answers, junk or
+ * another quiz's code opening a result, a result that names nobody when it should name someone
+ * (or names someone on nothing), a line the result chooses that is not there to print, a person
+ * on record on too few questions, a number printed against a person, and the lines leaking into
+ * the bundle every page downloads.
+ */
+console.log('19. which early Christian thinks like you?');
+{
+  const OUT_KINDRED = resolve(ROOT, 'node_modules/.engine-test-kindred.mjs');
+  await build({
+    entryPoints: [resolve(ROOT, 'src/lib/strategies/kindred.ts')],
+    outfile: OUT_KINDRED, bundle: true, format: 'esm', platform: 'node', target: 'node18', logLevel: 'silent'
+  });
+  const KS = await import(pathToFileURL(OUT_KINDRED).href);
+  rmSync(OUT_KINDRED, { force: true });
+  const q = getQuiz('which-early-christian');
+  const full = JSON.parse(readFileSync(resolve(ROOT, 'src/data/which-early-christian.json'), 'utf8'));
+  const ids = KS.STATEMENTS.map(s => s.id);
+  const keys = KS.PEOPLE_KEYS;
+
+  // ---- the quiz as the brief set it out
+  {
+    const wrong = [];
+    if (!q) fail('which-early-christian is not in the registry');
+    if (q.status !== 'live') wrong.push(`status ${q.status}`);
+    if (q.codePrefix !== 'EC') wrong.push(`prefix ${q.codePrefix}`);
+    if (q.shortLinks !== true) wrong.push('no short links');
+    if (q.comparable !== false) wrong.push('comparable');
+    if (q.hideOutcomeScore !== true) wrong.push('prints scores against people');
+    if (q.items.length !== 23 || q.groups.length !== 23) wrong.push(`${q.items.length} statements in ${q.groups.length} groups`);
+    if (q.groups.some((g, i) => g.key !== ids[i] || g.slug !== KS.STATEMENTS[i].slug)) wrong.push('groups are not the statements in play order');
+    if (q.outcomes.length !== 22 || q.outcomes.some((o, i) => o.slug !== KS.PEOPLE[keys[i]].slug)) wrong.push('outcomes are not the 22 people');
+    if (KS.K !== 3 || KS.MIN_SHARED !== 6 || KS.SHRINK !== 0.5) wrong.push(`numbers K ${KS.K}, MIN_SHARED ${KS.MIN_SHARED}, SHRINK ${KS.SHRINK}`);
+    if (wrong.length) fail('which-early-christian: ' + wrong.join('; '));
+    else ok('live, EC codes, short links, no compare page, no score against a person; 23 questions, 22 people; K 3, MIN_SHARED 6, SHRINK 0.5');
+  }
+
+  // A seeded sheet maker: answers -2..2 per statement, with a chance of "Not sure" that varies.
+  let seed = 19;
+  const rand = () => (seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648;
+  const sheetOf = unsure => ids.map(() => (rand() < unsure ? 0 : [-2, -1, 1, 2][Math.floor(rand() * 4)]));
+  const answersOf = sheet => Object.fromEntries(ids.map((id, i) => [id, sheet[i]]));
+
+  // ---- the code: 23 base-5 digits in play order, the preview's link in capitals behind EC
+  {
+    let bad = 0;
+    const previewCode = a => {
+      let n = BigInt(0);
+      ids.forEach(id => { n = n * BigInt(5) + BigInt((a[id] || 0) + 2); });
+      return n.toString(36);
+    };
+    for (let i = 0; i < 2000; i++) {
+      const sheet = sheetOf(i % 5 === 0 ? 0.6 : 0.15);
+      const code = encodeFor(q, scoreQuiz(q, sheet));
+      const back = decodeFor(q, code);
+      if (code.length !== 13 || !code.startsWith('EC')) { bad++; if (bad < 4) fail(`code ${code} is not EC and eleven`); continue; }
+      if (!back || encodeFor(q, back) !== code) { bad++; if (bad < 4) fail(`${code} does not round-trip`); continue; }
+      const v = resultFor(q, back);
+      if (ids.some((id, j) => v.answers[id] !== sheet[j])) { bad++; if (bad < 4) fail(`${code} does not give back the answers`); }
+      const pc = previewCode(answersOf(sheet));
+      if (code.slice(2).replace(/^0+(?=.)/, '').toLowerCase() !== pc) { bad++; if (bad < 4) fail(`${code} is not the preview's ${pc}`); }
+      if (decodeFor(q, code.toLowerCase()) === null) { bad++; if (bad < 4) fail(`${code} in lower case is refused`); }
+    }
+    // An unanswered statement is "Not sure", as in the runner's finish and the preview's link.
+    const gaps = scoreQuiz(q, ids.map((_, i) => (i % 3 ? 2 : null)));
+    if (gaps.some((x, i) => x !== (i % 3 ? 100 : 50))) { bad++; fail('an unanswered statement did not score as Not sure'); }
+    if (!bad) ok('2,000 sheets: thirteen-character EC codes that round-trip, give back every answer, and match the preview\'s links');
+
+    const all4 = encodeFor(q, q.groups.map(() => 100));
+    const junk = ['', 'EC', 'EC' + 'Z'.repeat(11), 'EC' + '0'.repeat(10), 'EC' + '0'.repeat(12), 'XX' + all4.slice(2),
+      all4.slice(2), 'EC-' + all4.slice(3), 'ZZZZZZ', 'EC0000000000!'];
+    const leaked = junk.filter(c => decodeFor(q, c) !== null);
+    if (leaked.length) fail('junk decoded under which-early-christian: ' + leaked.join(', '));
+    else ok(`${junk.length} malformed codes refused, among them a code past 5^23 and one with no prefix`);
+    let crossed = 0;
+    for (const other of QUIZZES) {
+      if (other.slug === q.slug) continue;
+      const theirs = other.strategy.shape === 'reading' ? encodeFor(other, [0]) : encodeFor(other, other.groups.map(() => 50));
+      if (decodeFor(q, theirs) !== null) { crossed++; fail(`a ${other.slug} code opened a result here`); }
+      if (decodeFor(other, all4) !== null) { crossed++; fail(`a which-early-christian code opened a ${other.slug} result`); }
+    }
+    if (!crossed) ok('no other quiz\'s code opens a result here, and no code from here opens another quiz');
+  }
+
+  // ---- parity with the design's own scorer, on the thirty simulated people of people-test-1
+  {
+    const DESIGN = resolve(ROOT, '../design/quiz-ideas/fathers');
+    if (!existsSync(resolve(DESIGN, 'score.js')) || !existsSync(resolve(DESIGN, 'people-test-1'))) {
+      ok('the design folder is not here (a build from site/ alone), so parity with score.js is skipped');
+    } else {
+      const { createRequire } = await import('node:module');
+      const { readdirSync } = await import('node:fs');
+      const require = createRequire(import.meta.url);
+      const S = require(resolve(DESIGN, 'score.js'));
+      const dq = JSON.parse(readFileSync(resolve(DESIGN, 'quiz.json'), 'utf8'));
+      const players = readdirSync(resolve(DESIGN, 'people-test-1'))
+        .filter(f => /^players-\d+\.json$/.test(f))
+        .flatMap(f => JSON.parse(readFileSync(resolve(DESIGN, 'people-test-1', f), 'utf8')).people);
+      if (players.length !== 30) fail(`people-test-1 has ${players.length} players, expected 30`);
+
+      // The committed data is the design's, position for position and line for line.
+      let drift = 0;
+      if (JSON.stringify(dq.statements.map(s => [s.id, s.text])) !== JSON.stringify(KS.STATEMENTS.map(s => [s.id, s.text]))) { drift++; fail('the statements differ from quiz.json'); }
+      if (JSON.stringify(dq.centre) !== JSON.stringify(KS.KINDRED.centre)) { drift++; fail('the usual answers and positions differ from quiz.json'); }
+      if (JSON.stringify(Object.keys(dq.people)) !== JSON.stringify(keys)) { drift++; fail('the people, or their order, differ from quiz.json'); }
+      for (const k of keys) {
+        for (const id of ids) {
+          const d = dq.people[k]?.cells[id], s = KS.PEOPLE[k].cells[id], f = full.people[k].cells[id];
+          const same = !d ? !s && !f
+            : s && f && d.v === s.v && d.v === f.v && !!d.hide === !!s.hide && !!d.hide === !!f.hide &&
+              d.work === f.work && (d.by || null) === f.by && (d.hide || (d.line === f.line && (d.note || null) === f.note && !!d.own === !!f.own));
+          if (!same) { drift++; if (drift < 5) fail(`${k}.${id} differs from quiz.json: rerun npm run data`); }
+        }
+      }
+      if (!drift) ok('the committed data is quiz.json exactly: every position, every line, every work');
+
+      let differ = 0;
+      const tally = new Map();
+      for (const p of players) {
+        const d = S.result(dq, p.answers);
+        const values = scoreQuiz(q, ids.map(id => p.answers[id] ?? 0));
+        const ours = KS.matchAnswers(answersOf(ids.map(id => p.answers[id] ?? 0)));
+        const v = resultFor(q, values);
+        const order = x => x.map(r => r.key).join(' ');
+        const lines = r => r ? r.agree.map(x => x.id).join(',') + '|' + r.clash.map(x => x.id).join(',') : '-';
+        const problems = [];
+        if (order(d.ranked) !== order(ours.ranked) || order(d.ranked) !== v.ranked.map(r => r.key).join(' ')) problems.push('ranking');
+        if (d.ranked.some((r, i) => r.like !== ours.ranked[i].like || r.n !== ours.ranked[i].n)) problems.push('likeness');
+        if ((d.kindred?.key ?? null) !== (v.kindred?.key ?? null)) problems.push(`kindred ${d.kindred?.key} vs ${v.kindred?.key}`);
+        if ((d.sparring?.key ?? null) !== (v.sparring?.key ?? null)) problems.push(`sparring ${d.sparring?.key} vs ${v.sparring?.key}`);
+        if (lines(d.kindred) !== lines(v.kindred) || lines(d.sparring) !== lines(v.sparring)) problems.push('the order of the lines');
+        if (problems.length) { differ++; fail(`${p.id}: ${problems.join('; ')}`); }
+        if (v.kindred) tally.set(v.kindred.key, (tally.get(v.kindred.key) ?? 0) + 1);
+      }
+      const most = [...tally].sort((a, b) => b[1] - a[1])[0];
+      if (!differ) ok(`all ${players.length} simulated people: the same kindred spirit, sparring partner, ranking, likeness and lines as score.js (most often named: ${most[0]}, ${most[1]} of ${players.length})`);
+    }
+  }
+
+  // ---- every person is on record often enough, has a portrait, a card, and every shown line is there
+  {
+    let bad = 0;
+    for (const k of keys) {
+      const p = full.people[k];
+      const n = Object.keys(p.cells).length;
+      if (n < 7) { bad++; fail(`${k} is on record on ${n} statements (floor 7)`); }
+      for (const [id, c] of Object.entries(p.cells)) {
+        if (!ids.includes(id)) { bad++; fail(`${k} has a position on an unknown statement ${id}`); }
+        if (![-2, -1, 1, 2].includes(c.v)) { bad++; fail(`${k}.${id} has position ${c.v}`); }
+        if (!c.work) { bad++; fail(`${k}.${id} names no work`); }
+        if (!c.hide && !(typeof c.line === 'string' && c.line.trim())) { bad++; fail(`${k}.${id} is shown with no line`); }
+        if (/\b(book|chapter|letter|sermon|oration|homily|treatise)\s+\d/i.test(c.work)) { bad++; fail(`${k}.${id}: a number in "${c.work}"`); }
+        if (!c.hide && KS.PEOPLE[k].cells[id]?.len !== c.line.length) { bad++; fail(`${k}.${id}: the scoring file has the wrong line length`); }
+      }
+      if (!existsSync(resolve(ROOT, 'public' + p.portrait.src))) { bad++; fail(`no portrait at ${p.portrait.src}`); }
+      if (!(p.portrait.width > 0 && p.portrait.width <= 600)) { bad++; fail(`${k}'s portrait is ${p.portrait.width} px wide`); }
+      if (!p.portrait.credit || /unknown|\(|;/i.test(p.portrait.credit)) { bad++; fail(`${k}'s credit reads "${p.portrait.credit}"`); }
+      if (!existsSync(resolve(ROOT, `public/og/r-which-early-christian-${p.slug}.jpg`))) { bad++; fail(`no link preview for ${p.slug}`); }
+      for (const other of Object.keys(p.pairs)) if (full.people[other]?.pairs[k] !== p.pairs[other]) { bad++; fail(`the pair ${k}|${other} is not the same from both sides`); }
+      if (!['name', 'short', 'dates', 'where', 'who', 'hook'].every(f => p[f])) { bad++; fail(`${k} is missing who they were`); }
+    }
+    if (JSON.stringify([...full.oldestFirst].sort()) !== JSON.stringify([...keys].sort())) { bad++; fail('oldestFirst is not everyone once'); }
+    const shownCount = keys.reduce((n, k) => n + Object.values(full.people[k].cells).filter(c => !c.hide).length, 0);
+    if (!bad) ok(`22 people, each on record on 7 or more statements, with a portrait, a credit and a link preview; ${shownCount} lines shown, every one present`);
+  }
+
+  // ---- 20,000 random sheets: a kindred spirit, or the honest "not enough to go on", and every chosen line is there
+  {
+    let bad = 0, thin = 0, noSparring = 0;
+    const named = new Map();
+    const shownLine = (k, id) => Boolean(full.people[k]?.cells[id] && !full.people[k].cells[id].hide && full.people[k].cells[id].line);
+    const N = 20000;
+    for (let i = 0; i < N; i++) {
+      // Most sheets are answered as people answer; some are mostly "Not sure", which is where "thin" lives.
+      const sheet = sheetOf(i % 10 === 0 ? 0.55 + rand() * 0.45 : rand() * 0.3);
+      let v;
+      try { v = resultFor(q, scoreQuiz(q, sheet)); } catch (e) { bad++; if (bad < 4) fail('a sheet threw: ' + e.message); continue; }
+      const why = [];
+      if (v.shape !== 'kindred' || v.rows.length) why.push('shape');
+      if (v.ranked.length !== 22) why.push('not everyone is ranked');
+      if (v.state === 'thin') {
+        thin++;
+        if (v.kindred || v.sparring || v.show || v.named.length) why.push('a thin result named someone');
+        // Thin only when truly nobody shares six answered statements with the reader.
+        if (v.ranked.some(r => r.shared >= KS.MIN_SHARED)) why.push('thin, though someone shares six');
+      } else if (v.state === 'matched') {
+        const K = v.kindred, Sp = v.sparring, s = v.show;
+        if (!K || !s || v.named[0] !== K.slug || v.headline !== K.name) why.push('matched, but the kindred spirit is not named');
+        else {
+          if (K.shared < KS.MIN_SHARED) why.push('a kindred spirit on fewer than six shared answers');
+          if (Sp && (Sp.key === K.key || Sp.shared < KS.MIN_SHARED || Sp.clash.length <= Sp.agree.length)) why.push('a sparring partner who does not argue');
+          if (!Sp) noSparring++;
+          if (v.named.length !== (Sp ? 2 : 1) || (Sp && v.named[1] !== Sp.slug)) why.push('named');
+          const kAgree = new Set(K.agree.map(x => x.id)), kClash = new Map(K.clash.map(x => [x.id, x]));
+          if (s.alike.length > 3 || s.alike.some(id => !kAgree.has(id) || !shownLine(K.key, id) || id === s.face)) why.push('alike');
+          if (s.pushBack && (!kClash.has(s.pushBack) || kClash.get(s.pushBack).a * kClash.get(s.pushBack).v > -2 || !shownLine(K.key, s.pushBack))) why.push('push back');
+          if (s.face && (!Sp || Math.abs(v.answers[s.face]) !== 2 || !shownLine(K.key, s.face) || !shownLine(Sp.key, s.face) ||
+            full.people[K.key].cells[s.face].v * full.people[Sp.key].cells[s.face].v >= 0)) why.push('face to face');
+          if (!Sp && (s.face || s.argue.length || s.agree || s.sparringTopics.length)) why.push('sparring lines with no sparring partner');
+          if (Sp && s.argue.some(id => !Sp.clash.some(x => x.id === id) || !shownLine(Sp.key, id) || id === s.face)) why.push('argue');
+          if (Sp && s.agree && (!Sp.agree.some(x => x.id === s.agree) || !shownLine(Sp.key, s.agree))) why.push('agree');
+          if (s.also.length > 2 || s.also.some(a => a.key === K.key || a.key === Sp?.key || (a.on && !shownLine(a.key, a.on)))) why.push('also close');
+          if (s.card && (!s.cardTopics.length || !shownLine(K.key, s.card) || !K.agree.some(x => x.id === s.card))) why.push('the card line');
+          if (s.cardTopics.some(id => !shownLine(K.key, id)) || (Sp && s.sparringTopics.some(id => !shownLine(Sp.key, id)))) why.push('the card chips');
+          named.set(K.key, (named.get(K.key) ?? 0) + 1);
+        }
+      } else why.push('state ' + v.state);
+      // No number against a person anywhere the result travels.
+      const text = shareTextFor(q, scoreQuiz(q, sheet), 'https://wiserwalk.com');
+      if (/%|\d+\s*(?:percent|points?)/i.test(text + v.summary + v.headline)) why.push('a number against a person');
+      if (why.length) { bad++; if (bad < 6) fail(`sheet ${i}: ${why.join(', ')}`); }
+    }
+    const top = [...named].sort((a, b) => b[1] - a[1]);
+    if (named.size !== 22) {
+      const never = keys.filter(k => !named.has(k));
+      ok(`note: never a kindred spirit in ${N.toLocaleString('en')} random sheets: ${never.join(', ')}`);
+    }
+    if (!bad) {
+      ok(`${N.toLocaleString('en')} random sheets: every one names a kindred spirit or says "not enough to go on" (${thin} did), ` +
+         `every line it chooses is there to print; ${noSparring} named no sparring partner; most named ${top[0][0]} ` +
+         `(${(100 * top[0][1] / (N - thin)).toFixed(0)}% of named results), least ${top.at(-1)[0]}`);
+    }
+  }
+
+  // ---- the honest edge: nothing answered, and the share text
+  {
+    const none = resultFor(q, scoreQuiz(q, ids.map(() => 0)));
+    if (none.state !== 'thin' || none.named.length || none.headline !== 'Not enough to go on') fail('an all Not sure sheet named someone: ' + none.headline);
+    else ok(`all "Not sure": "${none.headline}". ${none.summary}`);
+
+    const sheet = [2, 2, -1, 1, 2, -2, 1, 2, -2, 1, 1, -2, 1, 1, 2, 1, -1, 1, -1, -2, -2, -2, -1];
+    const values = scoreQuiz(q, sheet);
+    const v = resultFor(q, values);
+    const lines = shareTextFor(q, values, 'https://wiserwalk.com').split('\n');
+    const want = [q.shareTitle, `${v.kindred.name}, ${KS.PEOPLE[v.kindred.key].dates}`,
+      ...(v.sparring ? [`Would argue with me: ${v.sparring.name}`] : []), `https://wiserwalk.com/r/${q.slug}/${v.code}`];
+    if (lines.join('\n') !== want.join('\n')) fail('share text:\n' + lines.join('\n'));
+    else ok(`share text: ${lines.slice(1, -1).join(' / ')}, then the link`);
+  }
+
+  // ---- no two-person page, and the lines stay out of what every page downloads
+  {
+    const c = encodeFor(q, q.groups.map(() => 100));
+    if (parseCodes(q, `${c}.${c}`) !== null) fail('which-early-christian has a compare page');
+    else {
+      let threw = false;
+      try { compare(q, decodeFor(q, c), decodeFor(q, c)); } catch { threw = true; }
+      if (!threw) fail('compare() drew two kindred results side by side');
+      else ok('no compare page, and compare() refuses kindred results');
+    }
+    // The registry is bundled into the browser for the runner and /me/. It must carry the scoring
+    // file only: no hook, no line, no credit from the server-only file.
+    const bundle = readFileSync(OUT, 'utf8');
+    const leaks = keys.flatMap(k => {
+      const p = full.people[k];
+      return [p.hook, p.portrait.credit, ...Object.values(p.cells).filter(x => x.line).map(x => x.line)]
+        .filter(t => bundle.includes(JSON.stringify(t).slice(1, -1)) || bundle.includes(t));
+    });
+    if (leaks.length) fail(`${leaks.length} lines or hooks from the server-only file are in the registry bundle, e.g. "${leaks[0].slice(0, 60)}"`);
+    else ok(`the registry bundle carries no line, hook or credit (${Math.round(bundle.length / 1024)} KB in all)`);
   }
 }
 

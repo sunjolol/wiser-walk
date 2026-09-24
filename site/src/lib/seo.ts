@@ -106,6 +106,31 @@ export const SEO: Record<string, { title: string; description: string }> = {
     description:
       'Answer a few honest questions about your life right now. Then read the psalm St Athanasius gave for exactly that in the 300s. Free, about 3 minutes.'
   },
+  /* Added with the quiz (2026-09-23). The title keeps the quiz's own question, which is what
+     makes it worth a tap, and says what it costs; the description says what happens: you agree
+     or disagree, then meet two real people. */
+  '/q/which-early-christian/': {
+    title: 'Which early Christian thinks like you? Free 4-minute quiz',
+    description:
+      'Agree or disagree with 23 opinions real early Christians held. Then meet the one who thinks most like you, and the one who would argue. Free, about 4 minutes.'
+  },
+  /*
+   * Its two hubs (2026-09-23). People search for "the early Church Fathers" and for what they
+   * believed; nobody searches the quiz's word "kindred". "Church Fathers" is the phrase they
+   * type, and the title says "and others" because Macrina, Antony, Martin, Benedict and
+   * Boethius are not usually counted among the Fathers. The question hub leads with the
+   * question as people ask it, and says what each page holds: both sides.
+   */
+  '/early-christian/': {
+    title: '22 early Christians: Church Fathers and others, in their words',
+    description:
+      'Meet Augustine, Chrysostom, Macrina, Jerome and 18 more, from the 2nd century to the 7th. Who each one was, and where they stood on 23 questions.'
+  },
+  '/early-church-on/': {
+    title: 'What did the early Christians believe? 23 questions, both sides',
+    description:
+      'What did 22 early Christians say about war, lying, wealth and grief? See both sides of 23 questions, with a source for every line.'
+  },
   '/q/seven-deadly-sins/': {
     title: 'Which of the 7 deadly sins are you weakest to? Free quiz',
     description:
@@ -482,6 +507,12 @@ export function ogImageFor(path: string): string {
   /* A psalm page is the Psalm quiz's reference floor, as a figure page is the figure quiz's,
      and it is shared as that quiz. No psalm has a card of its own. */
   if (path.startsWith('/psalm/')) return card('quiz-which-psalm', 'quizzes');
+  /* The early Christians' person and question pages are that quiz's reference floor, and are
+     shared as that quiz. A person's own result card says "my kindred spirit", which a person's
+     page is not, so none of them wears it. */
+  if (path.startsWith('/early-christian/') || path.startsWith('/early-church-on/')) {
+    return card('quiz-which-early-christian', 'quizzes');
+  }
   if (path.startsWith('/tradition/')) return card('quiz-theology-compass');
   if ((m = /^\/figure\/([^/]+)\//.exec(path))) return card(`figure-${m[1]}`, 'quiz-bible-figure');
   if ((m = /^\/articles\/([^/]+)\//.exec(path))) return card(`article-${m[1]}`, 'articles');

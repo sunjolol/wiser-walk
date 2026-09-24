@@ -19,11 +19,15 @@ import CompareRoom from '../../components/CompareRoom.astro';
 import ReadCard from '../../components/ReadCard.astro';
 import ReadingRunner from '../../components/ReadingRunner.astro';
 import { READING, SITUATIONS } from '../../lib/strategies/reading';
+import type { KindredData } from '../../lib/strategies/kindred';
 import { getCollection } from 'astro:content';
 import { COMPARE_QUIZ } from '../../lib/comparisons';
-import { QUIZZES, getQuiz } from '../../lib/engine/registry';
+import { QUIZZES, getQuiz, outcomeHref } from '../../lib/engine/registry';
 import { capitalise, groupNounPlural, outcomeNounPlural } from '../../lib/engine/types';
+// Server only: the early Christians' portraits and names, for the strip on that quiz's page.
+import earlyChristians from '../../data/which-early-christian.json';
 import '../../styles/pages/reads.css';
+import '../../styles/pages/kindred.css';
 
 export function getStaticPaths() {
   return QUIZZES.map(q => ({ params: { quiz: q.slug } }));
@@ -57,6 +61,14 @@ const bipolar = quiz.strategy.shape === 'bipolar';
  * runner and its own three points; the band and the articles are the same as every quiz's.
  */
 const reading = quiz.strategy.shape === 'reading';
+/*
+ * KINDRED SPIRITS ("Which early Christian thinks like you?") uses the statement runner as it is,
+ * five answers and all, but its result is two people, not axes or a ranking. So what this page
+ * says about the result is its own: the subtitle under the title (the owner's ruling), faces
+ * from the early Church where the preview of axes or categories would stand, and "Not sure" for
+ * the middle answer, the word its result prints.
+ */
+const kindred = quiz.strategy.shape === 'kindred';
 /* The comparison pages are drawn on the Compass's own rails, so they belong to the Compass
    and to no other quiz. Asked of the data rather than of the slug typed here twice. */
 const comparable = quiz.slug === COMPARE_QUIZ.slug;
@@ -89,7 +101,9 @@ const ghost = [...words].reverse().find(w => w.length >= 5) ?? words[words.lengt
  */
 const nounWord = reading
   ? quiz.title.split(/\s+/).find(w => w.toLowerCase().replace(/[^a-z]/g, '') === quiz.outcomeNoun)
-  : undefined;
+  : kindred && quiz.outcomeNoun && quiz.title.includes(quiz.outcomeNoun)
+    ? quiz.outcomeNoun   // "early Christian": two words, and the thing the result gives you
+    : undefined;
 const painted = nounWord ?? quiz.title
   .split(/\s+/)
   .find(w => w.toLowerCase().replace(/[^a-z]/g, '') === ghost);
@@ -114,6 +128,11 @@ const eyebrow = isDraft ? 'Unaudited draft' : undefined;
 const tiles = reading ? [
   { n: READING.core.length, label: 'Questions' },
   { n: SITUATIONS.length, label: 'Situations' },
+  { n: `${quiz.minutes}m`, label: 'To take' }
+] : kindred ? [
+  // One statement per question, so "23 statements" and "23 questions" would be one number twice.
+  { n: quiz.items.length, label: 'Statements' },
+  { n: quiz.outcomes.length, label: capitalise(outcomeNounPlural(quiz)) },
   { n: `${quiz.minutes}m`, label: 'To take' }
 ] : [
   { n: quiz.items.length, label: 'Statements' },
@@ -147,6 +166,20 @@ const breadcrumbs = isDraft
       { name: 'Quizzes', url: '/quizzes/' },
       { name: quiz.title, url: `/q/${quiz.slug}/` }
     ];
+
+/*
+ * The strip of faces on the kindred quiz's page: the ten the approved preview chose, in its
+ * order (East and West, men and a woman, bishops, monks and scholars), each a way in to their
+ * own page. "Meet all 22" goes to the page that lists everyone.
+ */
+const EC = earlyChristians as unknown as KindredData;
+const STRIP = ['augustine', 'macrina', 'chrysostom', 'antony', 'jerome', 'basil', 'origen', 'martin', 'isaac', 'benedict'];
+const strip = kindred
+  ? STRIP.filter(k => EC.people[k]).map(k => {
+      const p = EC.people[k]!;
+      return { key: k, name: p.name, short: p.short, portrait: p.portrait, href: outcomeHref(quiz, { name: p.name, slug: p.slug }) };
+    })
+  : [];
 ---
 <Base
   title={quiz.title}
@@ -167,10 +200,16 @@ const breadcrumbs = isDraft
     imageAlt={art?.alt}
     imagePosition={art?.objectPosition}
     imageLift={art?.lift}
-    lede={quiz.intro ?? quiz.description}
+    lede={kindred ? undefined : quiz.intro ?? quiz.description}
     tiles={tiles}
     long={quiz.title.length > 24}
-  >
+  >{/*
+      The kindred quiz's subtitle, "And which would argue with you?", printed directly under the
+      title (the owner's ruling, 2026-09-23), then its way in. It is the band's lede, so it is
+      hidden with the band the moment play begins. Every other quiz passes its lede above.
+    */}{kindred && (
+      <><span class="kr-sub">{quiz.tagline}</span> {quiz.intro ?? quiz.description}</>
+    )}
     {/*
       THE START BUTTON, IN THE BAND. "making the user scroll to get to the [main] button is
       bad design", and on a phone every other place is below the fold. It is a plain
@@ -363,13 +402,47 @@ const breadcrumbs = isDraft
         </div>
       )}
 
+      {kindred ? (
+        /*
+          Where another quiz previews its axes or categories: the people a result can name. Ten
+          faces, as the approved preview printed them, then everyone on the page that lists all
+          twenty-two. Three of the pictures may only be shown with their credit, so the credits
+          are one tap away.
+        */
+        <section class="kr-meet">
+          <SectionHead title="Who you might meet" kicker={`${strip.length} of the ${quiz.outcomes.length}`}
+                       href="/early-christian/" more={`Meet all ${quiz.outcomes.length}`} />
+          <ul class="kr-strip">
+            {strip.map(p => (
+              <li>
+                <a href={p.href}>
+                  <img src={p.portrait.thumb} width={p.portrait.width} height={p.portrait.height} alt=""
+                       loading="lazy" decoding="async" />
+                  <span>{p.short}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+          <p class="kr-meet-say">
+            {quiz.outcomes.length} early Christians, East and West, from the 2nd century to the 7th.
+            Every line they say is their own.
+          </p>
+          <details class="kr-credits">
+            <summary>Picture credits</summary>
+            <ul>
+              {strip.map(p => <li><a href={p.portrait.page}>{p.name}</a>: {p.portrait.credit}</li>)}
+            </ul>
+          </details>
+        </section>
+      ) : (
       <SectionHead
         title="What you will see"
         kicker={bipolar
           ? `${quiz.groups.length} axes · both ends named`
           : `${quiz.groups.length} ${groupNounPlural(quiz)} · ranked by strength`}
       />
-      <QuizPreview quiz={quiz} />
+      )}
+      {!kindred && <QuizPreview quiz={quiz} />}
 
       {/*
         HOW TO ANSWER, as three marked points rather than a panel of prose over a dotted
@@ -391,8 +464,10 @@ const breadcrumbs = isDraft
         <li class="step">
           <span class="step-mark step-mark--middle" aria-hidden="true"></span>
           <div class="step-say">
-            <b>Unsure is one of them</b>
-            <p>It counts as an answer and pushes you neither way.</p>
+            <b>{kindred ? 'Not sure is one of them' : 'Unsure is one of them'}</b>
+            <p>{kindred
+              ? "Use it when you can't lean either way. No one is matched to you on it."
+              : 'It counts as an answer and pushes you neither way.'}</p>
           </div>
         </li>
         <li class="step">
@@ -430,7 +505,7 @@ const breadcrumbs = isDraft
         data — a quiz with outcomes has pages for them — not which quiz this is. A quiz whose
         strategy reads no outcomes prints nothing here, as it always did.
       */}
-      {quiz.outcomes.length > 0 && <OutcomeIndex quiz={quiz} />}{/*
+      {quiz.outcomes.length > 0 && !kindred && <OutcomeIndex quiz={quiz} />}{/*
         Under that index, because it answers the question the index provokes: a reader
         looking down eighteen names is usually holding two of them in mind. Hung with no
         whitespace on either side, so the three quizzes that have no comparison pages come
@@ -491,10 +566,18 @@ const breadcrumbs = isDraft
         <div class="runner-nav">
           <button class="btn ghost" id="back" type="button">← Back</button>
         </div>
-        <p class="scale-hint">
+        <p class="scale-hint" hidden={kindred}>
           The scale runs from strongly disagree to strongly agree. Unsure sits in the middle
           and does not push you either way.
-        </p>
+        </p>{/*
+          The kindred quiz's own hint, in its word for the middle answer. Hung with no whitespace
+          on either side, so every other quiz's page is byte for byte what it was.
+        */}{kindred && (
+          <p class="scale-hint">
+            The scale runs from strongly disagree to strongly agree. Not sure sits in the middle,
+            and no one is matched to you on it.
+          </p>
+        )}
       </div>
     </div>
 
@@ -541,7 +624,8 @@ const breadcrumbs = isDraft
       const SCALE = [
         { v: -2, label: 'Strongly disagree' },
         { v: -1, label: 'Disagree' },
-        { v: 0, label: 'Unsure / neither' },
+        // "Not sure" on the kindred quiz, the word its result prints beside every answer.
+        { v: 0, label: quiz.strategy.shape === 'kindred' ? 'Not sure' : 'Unsure / neither' },
         { v: 1, label: 'Agree' },
         { v: 2, label: 'Strongly agree' }
       ];

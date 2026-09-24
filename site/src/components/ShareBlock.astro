@@ -42,13 +42,28 @@ interface Props {
    */
   line?: { text: string; cite: string };
   /**
+   * A kindred result's card ("Which early Christian thinks like you?") draws the two people it
+   * names, with a line of the kindred spirit's own. Those are server-only data too, so the page
+   * looks them up and hands them down; no other shape passes this.
+   */
+  kindred?: {
+    name: string;
+    dates: string;
+    who: string;
+    portrait: string;
+    line: { text: string; cite: string } | null;
+    /** The "We agree on" chips: topics, lower case. */
+    agree: string[];
+    sparring: { name: string; portrait: string; on: string[] } | null;
+  };
+  /**
    * The code the links print: the page's own public code (engine/links.ts). The result page
    * passes the one it was opened by, so a short link stays short. Defaults to the public code.
    */
   linkCode?: string;
 }
 
-const { quiz, view, origin, line } = Astro.props;
+const { quiz, view, origin, line, kindred } = Astro.props;
 const linkCode = Astro.props.linkCode ?? publicCodeSync(quiz, view.code);
 const url = `${origin}/r/${quiz.slug}/${linkCode}/`;
 /*
@@ -128,7 +143,9 @@ const card = {
   // Added only for a reading.
   ...(view.shape === 'reading'
     ? { reading: { line: line?.text ?? '', cite: line?.cite ?? '', say: quiz.shareTitle } }
-    : {})
+    : {}),
+  // Added only for kindred spirits, and only when somebody was named.
+  ...(view.shape === 'kindred' && kindred ? { kindred: { ...kindred, say: quiz.shareTitle } } : {})
 };
 ---
 <section class="share-block" data-quiz={quiz.slug} data-code={view.code} data-mint={mint ? '' : undefined}>
@@ -583,6 +600,183 @@ const card = {
       });
     }
 
+    /**
+     * Kindred spirits' card: the approved preview's (design/quiz-ideas/fathers/preview/app.js,
+     * drawCard), under the mark every card now wears. The kindred spirit's portrait, with their
+     * name, dates and who they were beside it; the line of theirs the result chose, and whose it
+     * is; what the two agree on, as chips; and, under a rule at the foot, the sparring partner
+     * and what they would argue about. Nothing about how anyone answered, and no number.
+     *
+     * The line is the one part whose length is not known, so everything else is measured first
+     * and the line is set in the room that is left, smaller until it fits. A line too long for
+     * the card even then gives up the chips rather than run into them. The portraits are this
+     * site's own files, so the canvas can still be saved.
+     */
+    async function drawKindred(g, x, top, w, footY) {
+      const k = data.kindred;
+      const [face, rival] = await Promise.all([
+        image(k.portrait).catch(() => null),
+        k.sparring ? image(k.sparring.portrait).catch(() => null) : null
+      ]);
+      const DISPLAY = "px 'Wiser Display', Philosopher, sans-serif";
+
+      /** A picture cut to its box from the top, so a face is never cropped off. */
+      const cover = (img, bx, by, bw, bh, r) => {
+        g.save();
+        roundRect(g, bx, by, bw, bh, r); g.clip();
+        if (img) {
+          const s = Math.max(bw / img.width, bh / img.height);
+          g.drawImage(img, bx + (bw - img.width * s) / 2, by, img.width * s, img.height * s);
+        } else {
+          g.fillStyle = P.shell; g.fillRect(bx, by, bw, bh);
+        }
+        g.restore();
+      };
+      /** A display name that shrinks until it takes no more than so many lines. */
+      const fitName = (text, max, size, min, most) => {
+        let lines;
+        do {
+          g.font = size + DISPLAY;
+          lines = unstrand(wrapWords(g, text.split(' '), max));
+          if (lines.length <= most) break;
+          size -= 2;
+        } while (size > min);
+        return { lines: lines.slice(0, most), size };
+      };
+      /** "laughter, war and money" */
+      const listed = a => (a.length > 1 ? a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1] : a[0] || '');
+
+      // ---- the kindred spirit: the portrait, and beside it who they were
+      const PW = 256, PH = 320, py = top + 36;
+      g.save();
+      g.shadowColor = 'rgba(68,68,68,.16)'; g.shadowBlur = 16; g.shadowOffsetX = 4; g.shadowOffsetY = 5;
+      g.fillStyle = P.shell; roundRect(g, x, py, PW, PH, 26); g.fill();
+      g.restore();
+      cover(face, x, py, PW, PH, 26);
+
+      const cx = x + PW + 40, cw = x + w - cx;
+      let cy = py;
+      g.fillStyle = P.mute;
+      g.font = '700 21px Poppins, system-ui, sans-serif';
+      wrapWords(g, (k.say || '').toUpperCase().split(' '), cw).slice(0, 2).forEach(l => {
+        cy += 28; g.fillText(l.join(' '), cx, cy);
+      });
+      const nm = fitName(k.name, cw, 66, 44, 3);
+      g.fillStyle = P.ink;
+      g.font = nm.size + DISPLAY;
+      cy += 8;
+      nm.lines.forEach(l => { cy += Math.round(nm.size * 1.04); g.fillText(l.join(' '), cx, cy); });
+      g.fillStyle = P.mute;
+      g.font = '600 24px Poppins, system-ui, sans-serif';
+      cy += 44; g.fillText(k.dates, cx, cy);
+      g.fillStyle = P.soft;
+      g.font = '25px Inter, system-ui, sans-serif';
+      cy += 14;
+      wrapWords(g, k.who.split(' '), cw).slice(0, 4).forEach(l => { cy += 36; g.fillText(l.join(' '), cx, cy); });
+      const start = Math.max(py + PH, cy) + 36;
+
+      // ---- everything under the line, measured before the line is set
+      const SPAR = 150;
+      const sparTop = footY - 62 - SPAR;
+      const bottom = k.sparring ? sparTop - 58 : footY - 60;
+      /*
+       * The chips stand in ONE row, so the room they take is known: smaller type first, down to
+       * a size still easy to read, and only then the last topic left off. Three long topics
+       * ("whether all are saved", "who belongs in church") are the case this is for.
+       */
+      let topics = (k.agree || []).slice();
+      let chipSize = 25;
+      const chipFont = () => '600 ' + chipSize + 'px Poppins, system-ui, sans-serif';
+      const chipWidth = t => { g.font = chipFont(); return g.measureText(t).width + chipSize * 1.6; };
+      const rowWidth = () => topics.reduce((sum, t) => sum + chipWidth(t), 0) + (topics.length - 1) * 14;
+      while (topics.length && rowWidth() > w) {
+        if (chipSize > 20) chipSize -= 1;
+        else topics.pop();
+      }
+      const chipsH = topics.length ? 44 + 50 : 0;
+
+      // ---- the line, in the room that is left
+      let chips = topics.length > 0;
+      let set = null;
+      if (k.line) {
+        const lineAt = (room) => {
+          let size = k.sparring ? 42 : 48, lines, lh;
+          do {
+            g.font = 'italic 400 ' + size + 'px Philosopher, serif';
+            lines = unstrand(wrapWords(g, ('“' + k.line.text + '”').split(' '), w));
+            lh = Math.round(size * 1.32);
+            if (lines.length * lh + 50 <= room) return { size, lines, lh };
+            size -= 2;
+          } while (size >= 24);
+          return null;
+        };
+        set = lineAt(bottom - start - (chips ? chipsH + 50 : 0));
+        if (!set && chips) { chips = false; set = lineAt(bottom - start); }
+        if (!set) {
+          // Longer than the card at its smallest: set it small and let the line's own end be the limit.
+          g.font = 'italic 400 24px Philosopher, serif';
+          set = { size: 24, lh: 32, lines: unstrand(wrapWords(g, ('“' + k.line.text + '”').split(' '), w)) };
+        }
+      }
+      const lineH = set ? set.lines.length * set.lh + 50 : 0;
+      const used = lineH + (chips ? (set ? 50 : 0) + chipsH : 0);
+      // what is left over goes a little more above the block than below it
+      let y = start + Math.max(0, (bottom - start - used) * 0.4);
+
+      if (set) {
+        g.fillStyle = P.ink;
+        g.font = 'italic 400 ' + set.size + 'px Philosopher, serif';
+        set.lines.forEach(l => { y += set.lh; g.fillText(l.join(' '), x, y); });
+        g.fillStyle = P.mute;
+        g.font = '600 22px Poppins, system-ui, sans-serif';
+        y += 46; g.fillText(k.line.cite.toUpperCase(), x, y);
+        y += 4;
+      }
+
+      if (chips) {
+        if (set) y += 50;
+        g.fillStyle = P.mute;
+        g.font = '700 21px Poppins, system-ui, sans-serif';
+        y += 20; g.fillText('WE AGREE ON', x, y);
+        let px = x;
+        const cyy = y + 22;
+        topics.forEach(t => {
+          const cwid = chipWidth(t);
+          g.fillStyle = '#F7F7F7';
+          roundRect(g, px, cyy, cwid, 50, 25); g.fill();
+          g.strokeStyle = 'rgba(68,68,68,.12)'; g.lineWidth = 1.5;
+          roundRect(g, px, cyy, cwid, 50, 25); g.stroke();
+          g.fillStyle = P.ink; g.font = chipFont();
+          g.fillText(t, px + chipSize * .8, cyy + 25 + chipSize * .36);
+          px += cwid + 14;
+        });
+      }
+
+      // ---- the sparring partner, at the foot
+      if (k.sparring) {
+        g.strokeStyle = 'rgba(68,68,68,.14)'; g.lineWidth = 2;
+        g.beginPath(); g.moveTo(x, sparTop - 32); g.lineTo(x + w, sparTop - 32); g.stroke();
+        const SW = 120;
+        cover(rival, x, sparTop, SW, SPAR, 18);
+        const sx = x + SW + 32, sw = x + w - sx;
+        g.fillStyle = P.accent;
+        g.font = '700 21px Poppins, system-ui, sans-serif';
+        g.fillText('WOULD ARGUE WITH ME', sx, sparTop + 26);
+        const sn = fitName(k.sparring.name, sw, 52, 36, 1);
+        g.fillStyle = P.ink;
+        g.font = sn.size + DISPLAY;
+        g.fillText(sn.lines[0].join(' '), sx, sparTop + 30 + sn.size);
+        if (k.sparring.on.length) {
+          g.fillStyle = P.soft;
+          g.font = '500 25px Poppins, system-ui, sans-serif';
+          let oy = sparTop + 30 + sn.size + 42;
+          wrapWords(g, ('on ' + listed(k.sparring.on)).split(' '), sw).slice(0, 2).forEach(l => {
+            g.fillText(l.join(' '), sx, oy); oy += 34;
+          });
+        }
+      }
+    }
+
     let drawn = false;
     /**
      * Drawn on load, not on click.
@@ -601,6 +795,8 @@ const card = {
         await Promise.all(['700 23px Poppins', '25px Inter', "58px 'Wiser Display'"].map(f => document.fonts.load(f)));
         // and the italic a reading's verse is set in
         if (data.reading) await document.fonts.load("italic 52px 'Wiser Display'");
+        // and the regular italic a kindred spirit's line is set in
+        if (data.kindred) await document.fonts.load('italic 400 40px Philosopher');
       } catch (e) {}
       const logo = await mark;
       const g = canvas.getContext('2d');
@@ -623,6 +819,15 @@ const card = {
 
       if (data.reading) {
         drawReading(g, x, y, w, H - pad - 44);
+        g.fillStyle = P.mute;
+        g.font = '600 22px Poppins, system-ui, sans-serif';
+        g.fillText(data.url.toUpperCase(), x, H - pad - 44);
+        drawn = true;
+        return;
+      }
+
+      if (data.kindred) {
+        await drawKindred(g, x, y, w, H - pad - 44);
         g.fillStyle = P.mute;
         g.font = '600 22px Poppins, system-ui, sans-serif';
         g.fillText(data.url.toUpperCase(), x, H - pad - 44);

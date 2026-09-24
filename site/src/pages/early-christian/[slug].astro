@@ -1,0 +1,238 @@
+---
+/**
+ * One early Christian: /early-christian/<slug>/.
+ *
+ * Twenty-two of these, one for everyone "Which early Christian thinks like you?" can name. It
+ * is the person's page before it is the quiz's: someone who typed "what did Augustine believe"
+ * or "Macrina the Younger" lands here, so the page says who this was and where they stood on
+ * every question the quiz asks, each with the line that shows it and where it comes from, and
+ * offers the quiz last. A result's links lead here too.
+ *
+ * Rules this page keeps:
+ *
+ * 1. **Every word about the person is the data's.** The dates, the place, the one line of who
+ *    they were, the story, the status note, the links to others and every line and its work
+ *    come from src/data/which-early-christian.json (checked against the sources in
+ *    design/quiz-ideas/fathers/VERIFY.md). This file arranges them and writes no claim.
+ * 2. **A position is never guessed.** A question the person is not on record on is left out,
+ *    not drawn in the middle. A line on record but unclear out of its context prints "On
+ *    record in <work>", as the result does.
+ * 3. **No number against a person.** The page counts questions and lines, never a likeness.
+ * 4. **The reader's own answers, only when this device holds a result** (EarlyMine): the cards
+ *    regroup as the approved preview's person page groups them, where you agree, where you
+ *    differ, where you were not sure. A browsing reader sees "Where he stood", in the quiz's
+ *    order, and nothing else changes.
+ * 5. **The portrait's credit prints under it.** Three portraits are under licences that ask for
+ *    it (CREDITS.md), and the rest are credited the same way so nothing looks singled out.
+ */
+import Base from '../../layouts/Base.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import Icon from '../../components/Icon.astro';
+import CorrectionNote from '../../components/CorrectionNote.astro';
+import EarlyLine from '../../components/EarlyLine.astro';
+import EarlyMine from '../../components/EarlyMine.astro';
+import { whichEarlyChristian } from '../../lib/quizzes/which-early-christian';
+import { quizHref } from '../../lib/engine/registry';
+import { outcomeNounPlural } from '../../lib/engine/types';
+import { artFor } from '../../lib/art';
+import { clip } from '../../lib/seo';
+import { OLDEST_FIRST, STATEMENTS, faceOf, he, hers, personHref, personOf, pictureOf } from './_early';
+import '../../styles/pages/early-christian.css';
+
+export function getStaticPaths() {
+  return OLDEST_FIRST.map(key => ({ params: { slug: personOf(key).slug }, props: { key } }));
+}
+
+const { key } = Astro.props as { key: string };
+const quiz = whichEarlyChristian;
+const p = personOf(key);
+
+/** The questions this person is on record on, in the quiz's order. */
+const ids = STATEMENTS.filter(s => p.cells[s.id]).map(s => s.id);
+const quoted = ids.filter(id => !p.cells[id]!.hide).length;
+const topics = STATEMENTS.filter(s => p.cells[s.id]).map(s => s.topic);
+
+/** Real links to others the quiz can name, oldest of them first, each to their page. */
+const pairs = Object.entries(p.pairs)
+  .sort(([a], [b]) => OLDEST_FIRST.indexOf(a) - OLDEST_FIRST.indexOf(b))
+  .map(([k, say]) => ({ k, o: personOf(k), say }));
+
+/** Earlier and later: the neighbours in /early-christian/'s own order, oldest first. */
+const at = OLDEST_FIRST.indexOf(key);
+const earlier = at > 0 ? personOf(OLDEST_FIRST[at - 1]!) : null;
+const later = at < OLDEST_FIRST.length - 1 ? personOf(OLDEST_FIRST[at + 1]!) : null;
+
+/*
+ * THE TITLE is what people type about these twenty-two: "what did Augustine believe", and
+ * "Augustine quotes". Every name fits: the longest title is 57 characters. The description
+ * leads with what the page holds for that search, then the person's own line.
+ */
+const title = `${p.name}: what ${he(p)} believed, with quotes`;
+const description = clip(
+  `Where ${p.name} stood on ${ids.length} questions, from ${topics[0]} to ${topics.at(-1)}, ` +
+  `with a source for each. ${p.who}`
+);
+
+/* The card at the foot is the quiz's own, wearing its picture: no portrait here is Dürer's,
+   so the page never shows one picture twice. */
+const art = artFor(quiz.slug);
+const cardStyle = art
+  ? [`--img-pos:${art.objectPosition}`, art.lift ? `--img-lift:${art.lift}` : ''].filter(Boolean).join(';')
+  : undefined;
+
+const url = new URL(personHref(p), Astro.site).href;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: title,
+  description,
+  url,
+  isPartOf: [
+    { '@id': new URL('/#website', Astro.site).href },
+    { '@type': 'CollectionPage', name: 'The early Christians', url: new URL('/early-christian/', Astro.site).href },
+    { '@type': 'Quiz', name: quiz.title, url: new URL(quizHref(quiz), Astro.site).href }
+  ],
+  mainEntity: {
+    '@type': 'Person',
+    name: p.name,
+    description: p.who,
+    image: new URL(p.portrait.src, Astro.site).href
+  }
+};
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'The early Christians', url: '/early-christian/' },
+  { name: p.name, url: personHref(p) }
+];
+---
+<Base title={title} description={description} jsonLd={jsonLd} breadcrumbs={breadcrumbs}>
+  {/*
+    The band: the person's own portrait, framed, over a blur of itself (styles in
+    pages/early-christian.css). The band's words and tiles are the kit's own, so it reads as
+    every other band on the site. The blurred copy is decoration and says nothing.
+  */}
+  <header class="band band--pic band--long ecp-band">
+    <img class="band-img" src={p.portrait.src} alt="" aria-hidden="true" style={`object-position:${faceOf(key)}`} />
+    <div class="band-in ecp-band-in">
+      <figure class="ecp-frame">
+        <img
+          src={p.portrait.src} alt={pictureOf(p)}
+          width={p.portrait.width} height={p.portrait.height} fetchpriority="high"
+          style={`object-position:${faceOf(key)}`}
+        />
+      </figure>
+      <div class="ecp-band-head">
+        <h1>{p.name}</h1>
+        <p class="ecp-meta">{p.dates} · {p.where}</p>
+      </div>
+      <p class="lede">{p.who}</p>
+      <ul class="tiles">
+        <li class="tile"><b>{ids.length}</b><span>Questions on record</span></li>
+        <li class="tile"><b>{quoted}</b><span>Lines quoted</span></li>
+      </ul>
+      <p class="band-credit">Picture: {p.portrait.credit}</p>
+    </div>
+  </header>
+
+  <div class="ref ref--early">
+    <p class="ecp-hook">{p.hook}</p>
+
+    {p.status && (
+      <aside class="caveat caveat--note">
+        <span class="caveat-mark" aria-hidden="true"><Icon name={quiz.icon} size={18} /></span>
+        <div>
+          <p class="caveat-label">Worth knowing</p>
+          <p>{p.status}</p>
+        </div>
+      </aside>
+    )}
+
+    {/* Hidden unless this device holds a result for the quiz. */}
+    <EarlyMine quiz={quiz} kind="person" hers={hers(p)} />
+
+    {/* What everyone sees: every question this person is on record on, in the quiz's order. */}
+    <section data-ec-group="all" aria-labelledby="ec-all-h">
+      <SectionHead id="ec-all-h" title={`Where ${he(p)} stood`} kicker={`On ${ids.length} of the ${STATEMENTS.length} questions`} />
+      <div class="ecl-list" data-ec-cards>
+        {ids.map(id => <EarlyLine k={key} id={id} head="statement" />)}
+      </div>
+    </section>
+
+    {/* With a result on this device, the same cards regroup here (EarlyMine's script). */}
+    <section data-ec-group="agree" aria-labelledby="ec-agree-h" hidden>
+      <SectionHead id="ec-agree-h" title="Where you agree" kicker={`You and ${p.short}`} />
+      <div class="ecl-list" data-ec-cards></div>
+    </section>
+    <section data-ec-group="differ" aria-labelledby="ec-differ-h" hidden>
+      <SectionHead id="ec-differ-h" title="Where you differ" kicker={`You and ${p.short}`} />
+      <div class="ecl-list" data-ec-cards></div>
+    </section>
+    <section data-ec-group="unsure" aria-labelledby="ec-unsure-h" hidden>
+      <SectionHead id="ec-unsure-h" title="Where you were not sure" kicker={`Where ${he(p)} stood`} />
+      <div class="ecl-list" data-ec-cards></div>
+    </section>
+
+    {pairs.length > 0 && (
+      <section aria-labelledby="ec-pairs-h">
+        <SectionHead id="ec-pairs-h" title="Crossed paths" kicker="With others in the quiz" />
+        <ul class="ecp-pairs">
+          {pairs.map(({ k, o, say }) => (
+            <li>
+              <a class="ecp-pair" href={personHref(o)}>
+                <img src={o.portrait.thumb} alt="" width={o.portrait.width} height={o.portrait.height} loading="lazy" decoding="async" style={`object-position:${faceOf(k)}`} />
+                <span class="ecp-pair-body">
+                  <span class="ecp-pair-name">{o.name}</span>
+                  <span class="ecp-pair-say">{say}</span>
+                </span>
+                <Icon name="arrow" size={14} />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <nav class="ecp-pager" aria-label={`The ${outcomeNounPlural(quiz)}, oldest first`}>
+      {earlier && (
+        <a class="ecp-page ecp-page--earlier" href={personHref(earlier)}>
+          <span class="ecp-page-dir">Earlier</span>
+          <b>{earlier.name}</b>
+          <span>{earlier.dates}</span>
+        </a>
+      )}
+      {later && (
+        <a class="ecp-page ecp-page--later" href={personHref(later)}>
+          <span class="ecp-page-dir">Later</span>
+          <b>{later.name}</b>
+          <span>{later.dates}</span>
+        </a>
+      )}
+    </nav>
+    <p class="ec-way">
+      <Icon name="arrow" size={14} />
+      <span>
+        <a href="/early-christian/">All {OLDEST_FIRST.length} {outcomeNounPlural(quiz)}</a>, oldest first.
+        Or see <a href="/early-church-on/">what they said</a>, one question at a time.
+      </span>
+    </p>
+
+    {/* The way into the quiz: its own card (.qcard in pages/reference.css), in its picture. */}
+    <div class="qcard-wrap">
+      <a class={`qcard ${art ? 'qcard--pic' : 'qcard--plain'} qcard--${quiz.slug}`} href={quizHref(quiz)} style={cardStyle}>
+        {art && <img class="qcard-img" src={art.src} alt="" loading="lazy" decoding="async" width="1000" height="1306" />}
+        <div class="qcard-body">
+          <p class="qcard-kicker">Your turn</p>
+          <h2 class="qcard-title">{quiz.title}</h2>
+          <p class="qcard-say">{quiz.tagline} See where you stand beside {p.short}.</p>
+          <ul class="qcard-facts">
+            <li><Icon name="clock" size={13} /> {quiz.minutes} min</li>
+            <li>{quiz.outcomes.length} {outcomeNounPlural(quiz)}</li>
+          </ul>
+          <span class="qcard-go go-pill">Start <Icon name="arrow" size={16} /></span>
+        </div>
+      </a>
+    </div>
+
+    <CorrectionNote subject={p.name} />
+  </div>
+</Base>

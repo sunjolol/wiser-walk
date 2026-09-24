@@ -5,7 +5,7 @@ published: 2026-09-20
 minutes: 7
 answer: "James says no man can tame the tongue, and still requires you to bridle it daily. Words are a readout of the heart, so the long repair is upstream of the mouth. Listen first, say less, give every sentence a job, and decline to be the second person gossip needs."
 tags: [formation, speech]
-quizzes: [seven-deadly-sins]
+quizzes: [seven-deadly-sins, which-early-christian]
 image: /img/articles/how-to-tame-your-tongue.jpg
 imageAlt: "A vast unfinished tower rises over a harbour town"
 imageCredit: "Pieter Bruegel the Elder, The Tower of Babel, 1563"

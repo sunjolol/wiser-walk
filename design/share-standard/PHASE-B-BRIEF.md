@@ -175,3 +175,46 @@ base-5 digit each (`makeCodec`/the wide codec, radix 5, 23 slots); `shortLinks: 
 
 Wave 2 closes with the main session checking every new page at 390 and 1360, light and dark, as a taker, a visitor
 and a browser.
+
+---
+
+## Wave 2 addendum (after wave 1 shipped as 4238c9f)
+
+What wave 1 built that K uses:
+- `site/src/lib/engine/links.ts`: set `shortLinks: true` on the quiz; the runner's `linkFor` does the minting; add
+  `'which-early-christian': 'short'` to the `want` table in engine-test 18b. `resultCardFor` (seo.ts) already knows
+  this quiz: put the kindred spirit's SLUG (people.json `slug`, e.g. `gregory-of-nyssa`) in `view.named[0]`; the 22
+  cards `r-which-early-christian-<slug>.jpg` exist.
+- `site/src/lib/mine.ts`: `mineFor('which-early-christian', { radix: 5, slots: 23, prefix: 'EC' })` finds the
+  reader's result in the browser for the person and question pages. `MineNote.astro` shows how the dev-only
+  `?mine=<code>` works.
+- Quiz #4's lines were checked against their sources (`design/quiz-ideas/fathers/VERIFY.md`); `quiz.json` is final.
+  Augustine is now the kindred spirit of 8 of the 30 test people (the "pure" statement was recoded to its wording);
+  that is accepted.
+
+Ownership in wave 2:
+- **K1** owns: `site/scripts/build-early-christian-data.mjs` (new) and its hook in `build-data.mjs`;
+  `site/src/data/which-early-christian.json`; `site/public/img/early-christians/`; the new lines in
+  `site/public/img/CREDITS.md`; `types.ts` (KindredView and the union); `strategies/kindred.ts`;
+  `quizzes/which-early-christian.ts`; `registry.ts` and `compare.ts` (branches for the shape); engine-test section 19
+  and the 18b entry; and a WORKS map in `design/quiz-ideas/fathers/model.mjs` (then rerun it and
+  `node preview/build.mjs`). The map gives every work ONE plain English name a reader would search for, with no
+  chapter, book or treatise numbers and no Latin tails (VERIFY.md lists them): e.g. "City of God", "Stromata",
+  "Divine Institutes", "Homilies on Matthew", "Morals on the Book of Job", "Rule of St Benedict", "Life of Antony",
+  "Life of St Martin", "On the Soul and the Resurrection", "Ascetical Homilies" (Isaac), and a letter always names
+  its reader ("Letter to the Emperor Valentinian II"). Where the work already names who recorded it, drop the
+  duplicate `by`. Status `live`.
+- **K2** owns: `site/src/pages/q/[quiz].astro` (the kindred branch and the start page), a new
+  `site/src/components/KindredResult.astro`, `site/src/pages/r/[quiz]/[code].astro` (kindred branches only),
+  `site/src/components/ShareBlock.astro` (the kindred card shape only), and a new `site/src/styles/pages/kindred.css`.
+  Use the site's kit (band, sheet, cards, kicker, pills), not the preview's one-off styles, but keep the preview's
+  content and order exactly.
+- **K3** owns: `site/src/pages/early-christian/` (index and `[slug]`), `site/src/pages/early-church-on/` (index and
+  `[topic]`), any new components and a stylesheet for them, the new route entries in `site/src/lib/seo.ts` (entries
+  only), the home page rail room (`pages/index.astro`, `styles/pages/home.css`), `/quizzes/` ink, `NextUp.astro`
+  ink, `/me/` colours (`me.astro` class list only, `me.css`), `FOOT_SHORT` in `Base.astro`, `lib/art.ts`, a line on
+  `method.astro` saying plainly that this quiz's short link keeps the answers on our server (its code is the 23
+  answers), the quiz's own social card in `design/og/cards.mjs` (render it with `node design/og/render.mjs site
+  quiz-which-early-christian`), and `quizzes:` front matter on articles that fit.
+- Person and question pages must read well to someone who has never taken the quiz: they are the search pages.
+  Plain titles people search for; a lede that answers the title; both sides fairly; every line with its work.

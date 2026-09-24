@@ -335,7 +335,101 @@ export interface ReadingView extends ViewBase {
   rows: [];
 }
 
-export type ResultView = BipolarView | UnipolarView | ReadingView;
+/**
+ * THE FOURTH SHAPE: kindred spirits.
+ *
+ * "Which early Christian thinks like you?" does not place a reader on axes or rank categories.
+ * Twenty-three plain statements are compared, one by one, with what twenty-two early Christians
+ * are on record as holding, and the result names two PEOPLE: the one whose positions sit nearest
+ * (the kindred spirit) and the one who would argue (the sparring partner), each proved by their
+ * own words. Nearest by position, never by a percentage: no number is ever printed against a
+ * person (`hideOutcomeScore`), so `score` below is for ordering only.
+ *
+ * The matching is a port of the design's score.js (see strategies/kindred.ts). A statement
+ * counts between the reader and a person only where BOTH take a side: "Not sure" is never
+ * compared, and neither is a question the person is not on record on.
+ */
+
+/** One statement as it stands between the reader and one early Christian. */
+export interface KindredCell {
+  /** The statement's id ('laugh', 'war'), as the quiz's data and its groups' keys spell it. */
+  id: string;
+  /** The reader's answer, -2 (strongly disagree) .. 2. Never 0: "Not sure" is never compared. */
+  a: Answer;
+  /** Their recorded position, -2 .. 2. Never 0: a middle view is not stored. */
+  v: Answer;
+}
+
+/**
+ * One early Christian as this reader's answers meet them. Extends Ranked, so the view's `ranked`
+ * is these, likest first, and every generic surface that reads `ranked` still can.
+ */
+export interface KindredPerson extends Ranked {
+  /** The key in the quiz's data (src/data/which-early-christian.json): 'augustine'. */
+  key: string;
+  /** The URL identity: /early-christian/<slug>/. `slug` and `name` come from Ranked. */
+  short: string;
+  /** For "he" or "she" in the copy. */
+  she: boolean;
+  /** How many statements the reader and this person both take a side on. */
+  shared: number;
+  /** Where the two lean the same way, the ones that made the match first (score.js's order). */
+  agree: KindredCell[];
+  /** Where the two lean opposite ways, the sharpest clash first (score.js's order). */
+  clash: KindredCell[];
+}
+
+/**
+ * What the result shows, chosen exactly as the owner's approved preview chooses it
+ * (design/quiz-ideas/fathers/preview/app.js, draft 4). Every entry is a statement id whose line
+ * is SHOWN for that person (a hidden line counts in the matching but is never printed).
+ */
+export interface KindredShow {
+  /** "Where you think alike": up to three of the kindred spirit's agreements, not the face-off. */
+  alike: string[];
+  /** "Where he would push back": the kindred spirit's sharpest real clash, if there is one. */
+  pushBack: string | null;
+  /**
+   * "Face to face on <topic>": the first statement, in play order, that the reader answered
+   * STRONGLY and on which the kindred spirit and the sparring partner stand on opposite sides,
+   * both with a line shown. Null when there is no sparring partner or no such statement.
+   */
+  face: string | null;
+  /** "Where he would argue with you": up to three of the sparring partner's clashes, not the face-off. */
+  argue: string[];
+  /** "Where you would agree": the sparring partner's first agreement with a line, if any. */
+  agree: string | null;
+  /** "Also close": the next two people with any agreement, each with the topic of their top shown line. */
+  also: Array<{ key: string; slug: string; on: string | null }>;
+  /** The line on the share card: the first of the kindred spirit's top four shown agreements
+   *  that is 170 characters or less, else the shortest of the four. */
+  card: string | null;
+  /** The card's "We agree on" chips: the kindred spirit's top three shown agreements. */
+  cardTopics: string[];
+  /** The card's "on ..." under the sparring partner: their top three shown clashes. */
+  sparringTopics: string[];
+}
+
+export interface KindredView extends ViewBase {
+  shape: 'kindred';
+  /**
+   *   matched — a kindred spirit is named (a sparring partner may or may not be)
+   *   thin    — nobody shares enough answered statements to be named: the honest
+   *             "Not enough to go on", which names nobody
+   */
+  state: 'matched' | 'thin';
+  /** Every statement id, -2 .. 2, with 0 for "Not sure". In play order. */
+  answers: Record<string, Answer>;
+  kindred: KindredPerson | null;
+  sparring: KindredPerson | null;
+  /** Everyone, likest first, however little the reader shares with them (score.js's ranked). */
+  ranked: KindredPerson[];
+  /** Null exactly when the state is 'thin'. */
+  show: KindredShow | null;
+  rows: [];
+}
+
+export type ResultView = BipolarView | UnipolarView | ReadingView | KindredView;
 
 /**
  * A scoring strategy turns a sheet into per-group values, and values into a result.

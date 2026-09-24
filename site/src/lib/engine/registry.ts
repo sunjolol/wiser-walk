@@ -9,8 +9,11 @@ import { sevenDeadlySins } from '../quizzes/seven-deadly-sins';
 import { bibleFigure } from '../quizzes/bible-figure';
 import { spiritualGifts } from '../quizzes/spiritual-gifts';
 import { whichPsalm } from '../quizzes/which-psalm';
+import { whichEarlyChristian } from '../quizzes/which-early-christian';
 
-export const QUIZZES: Quiz[] = [theologyCompass, sevenDeadlySins, bibleFigure, spiritualGifts, whichPsalm];
+export const QUIZZES: Quiz[] = [
+  theologyCompass, sevenDeadlySins, bibleFigure, spiritualGifts, whichPsalm, whichEarlyChristian
+];
 
 /** Live quizzes only: what the hub lists and what search engines are invited to index. */
 export const liveQuizzes = () => QUIZZES.filter(q => q.status === 'live');
@@ -53,6 +56,32 @@ function validate(quiz: Quiz): void {
   if (quiz.strategy.shape === 'reading') {
     if (quiz.items.length || quiz.groups.length) throw new Error(`${where}: a reading carries no items or groups`);
     if (!quiz.outcomes.length) throw new Error(`${where}: a reading needs the psalms it can print as outcomes`);
+    return;
+  }
+  // Kindred spirits compare each statement on its own with what each person held: one statement
+  // per group, a value that is the answer itself, so there is nothing to key both ways and no sum
+  // for a radix to follow from. What must hold instead is that every statement is its own group,
+  // in order, and that the code carries one base-5 digit for each. The people's positions and
+  // lines are checked by the build script and the engine test.
+  if (quiz.strategy.shape === 'kindred') {
+    if (!quiz.items.length || quiz.items.length !== quiz.groups.length) {
+      throw new Error(`${where}: kindred spirits need one statement per group`);
+    }
+    quiz.items.forEach((item, i) => {
+      if (item.group !== i) throw new Error(`${where}: statement ${item.n} is not group ${i}`);
+    });
+    if (quiz.config.radix !== 5) throw new Error(`${where}: kindred spirits code five answers, not radix ${quiz.config.radix}`);
+    if (quiz.groups.some(g => g.left || g.right || g.bands)) {
+      throw new Error(`${where}: a kindred spirits question carries no poles or bands`);
+    }
+    if (!quiz.outcomes.length) throw new Error(`${where}: kindred spirits need the people they can name`);
+    const seen = new Set<string>();
+    quiz.groups.forEach(g => {
+      if (!g.slug || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(g.slug) || seen.has(g.slug)) {
+        throw new Error(`${where}: question "${g.key}" has an unusable or repeated slug ${JSON.stringify(g.slug)}`);
+      }
+      seen.add(g.slug);
+    });
     return;
   }
   if (!quiz.items.length) throw new Error(`${where} has no items`);

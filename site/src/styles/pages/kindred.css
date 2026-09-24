@@ -1,0 +1,244 @@
+/*
+ * Kindred spirits: "Which early Christian thinks like you?".
+ *
+ * Two places wear it. The result page (KindredResult.astro): the kindred spirit in the band, then
+ * their story and their lines on one panel, the sparring partner in a dark room of the kit's own,
+ * and everyone as a row of portrait chips. And the quiz's start page (q/[quiz].astro): the strip
+ * of faces under the band, and "Meet all 22".
+ *
+ * The content and its order are the owner's approved preview's (design/quiz-ideas/fathers/
+ * preview/app.js); the look is the site's kit (band, panel, dark room, the small uppercase label,
+ * pills), not the preview's one-off styles. Every rule is scoped to .kr-*, because this file is
+ * bundled with every result page and every quiz page and must not reach any other quiz.
+ *
+ * Phone first. Wide, the lines stand in a grid of cards, the face-off side by side, and the
+ * kindred spirit's portrait moves to the right of the band's words.
+ */
+
+/* a line's card, a shade off the panel it sits on */
+:root { --kr-leaf: #F6F6F6; }
+:root[data-theme="dark"] { --kr-leaf: #2C2C34; }
+
+/* ------------------------------------------------------------ who is looking */
+/*
+ * The server prints both voices; the visitor's shows. The runner's tab-scoped note switches the
+ * whole page to the taker's before it is painted (KindredResult.astro). Hidden, never restyled,
+ * so each element keeps whatever display it already has.
+ */
+:root:not([data-kr-who="taker"]) .kr-mine,
+:root[data-kr-who="taker"] .kr-their { display: none !important; }
+
+/* ------------------------------------------------------------------ the hero */
+
+.kr-hero { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.1rem; align-items: start; }
+.kr-portrait {
+  display: block; width: 8.5rem; height: auto; aspect-ratio: 4 / 5;
+  object-fit: cover; object-position: top; border-radius: 16px;
+  background: var(--shell); box-shadow: var(--lift);
+}
+.kr-kicker {
+  margin: 0 0 .5rem; font-family: var(--ui); font-size: .68rem; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--accent);
+}
+/* dates and places in their own case: "c. 335" in capitals reads as a name */
+.kr-meta {
+  margin: .5rem 0 0; font-family: var(--ui); font-size: .84rem; font-weight: 500;
+  line-height: 1.4; color: var(--ink-mute);
+}
+.kr-who { margin: .8rem 0 0; max-width: 34rem; font-weight: 500; text-wrap: pretty; }
+.kr-hook { margin: 0; max-width: 40rem; font-size: 1.04rem; line-height: 1.6; color: var(--ink); text-wrap: pretty; }
+.kr-who + .kr-hook { margin-top: .6rem; color: var(--ink-soft); }
+.kr-status {
+  margin: .9rem 0 0; max-width: 40rem; padding-left: .8rem; border-left: 3px solid var(--rule-strong);
+  font-size: .9rem; line-height: 1.55; color: var(--ink-soft); text-wrap: pretty;
+}
+
+/* in the band: white words on the picture, as the Psalm's are */
+.result-band .kr-portrait {
+  width: 8.75rem; background: rgba(255, 255, 255, .08);
+  box-shadow: 0 10px 30px rgba(10, 16, 32, .45), 0 0 0 1px rgba(255, 255, 255, .16);
+}
+.result-band .kr-kicker { color: var(--blue-soft); }
+/* the band's long-verdict size is for sentences; a name stands larger, as a psalm's does */
+.band.result-band h1.kr-verdict {
+  margin: 0; max-width: 12em; font-size: clamp(2.4rem, 10.4vw, 4.2rem); line-height: 1.02;
+}
+.result-band .kr-meta { color: var(--on-dark-soft); }
+/* "Not enough to go on" has no portrait or dates: its sentence sits straight under it */
+.band.result-band h1.kr-verdict + .lede { margin-top: .85rem; }
+.band.result-band .kr-who { margin-top: .85rem; }
+
+@media (min-width: 46rem) {
+  .kr-hero--band { grid-template-columns: minmax(0, 1fr) auto; column-gap: 2.75rem; align-items: center; }
+  .kr-hero--band .kr-portrait { order: 2; width: 12.5rem; }
+}
+
+/* ---------------------------------------------------------------- the panels */
+
+.kr { margin: 0 0 2rem; }
+.kr [hidden] { display: none; }
+.kr-panel { margin: 0 0 1.5rem; }
+.kr-shared {
+  margin: 0 0 1.25rem; padding: .85rem 1.1rem; border-radius: 14px;
+  background: var(--accent-soft); color: var(--ink); font-weight: 500; text-wrap: pretty;
+}
+.kr-shared a { color: var(--accent); font-weight: 600; }
+
+.kr-sec { margin-top: 2rem; }
+.kr-panel > .kr-sec:first-child { margin-top: 0; }
+.kr-label {
+  margin: 0 0 .85rem; font-family: var(--ui); font-size: .66rem; font-weight: 700;
+  line-height: 1.35; letter-spacing: .1em; text-transform: uppercase; color: var(--accent);
+}
+
+/* ---------------------------------------------------------------- the lines */
+
+.kr-lines { display: grid; grid-template-columns: minmax(0, 1fr); gap: .85rem; }
+.kr-line {
+  padding: 1rem 1.1rem 1.1rem; border-radius: 16px;
+  background: var(--kr-leaf); box-shadow: var(--lift);
+}
+.kr-on {
+  margin: 0 0 .4rem; font-family: var(--ui); font-size: .62rem; font-weight: 700;
+  line-height: 1.3; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mute);
+}
+.kr-you { margin: 0 0 .8rem; font-size: .95rem; line-height: 1.5; color: var(--ink-soft); text-wrap: pretty; }
+.kr-you b { color: var(--ink); font-weight: 600; }
+.kr-you--face { margin-bottom: 1rem; max-width: 40rem; font-size: 1rem; }
+.kr-says { margin: 0 0 .3rem; font-family: var(--ui); font-size: .92rem; font-weight: 600; line-height: 1.35; color: var(--ink); }
+/* Paragraph-length words in the headline family take Philosopher's regular weight, as the
+   reference pages do: in the bold the headlines use, five lines of a quotation read dense. */
+.kr-quote { margin: 0; }
+.kr-quote p {
+  margin: 0; font-family: "Philosopher", var(--display); font-style: italic; font-weight: 400;
+  font-size: 1.12rem; line-height: 1.5; color: var(--ink); text-wrap: pretty;
+}
+.kr-src {
+  margin: .55rem 0 0; font-family: var(--ui); font-size: .62rem; font-weight: 600;
+  line-height: 1.5; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-mute);
+}
+.kr-note { margin: .55rem 0 0; font-size: .86rem; line-height: 1.5; color: var(--ink-soft); text-wrap: pretty; }
+
+.kr-face { display: grid; grid-template-columns: minmax(0, 1fr); gap: .85rem; }
+
+/* what really linked the two people, between the two rooms */
+.kr-pair {
+  margin: 0 0 1.5rem; padding: .95rem 1.15rem; border-radius: 16px;
+  background: var(--accent-soft); color: var(--ink); font-weight: 500; text-wrap: pretty;
+}
+
+/* ------------------------------------------------------- the sparring partner */
+
+.kr-spar { --kr-leaf: rgba(255, 255, 255, .06); padding: 1.5rem 1.25rem 1.6rem; }
+.kr-spar .dark-ghost { font-size: clamp(6rem, 30vw, 11rem); right: -.04em; bottom: -.22em; }
+.kr-spar .kr-line { box-shadow: none; }
+.kr-spar .kr-portrait { box-shadow: 0 8px 24px rgba(0, 0, 0, .35); }
+.kr-name {
+  margin: 0; font-family: var(--display); font-weight: 400; font-size: clamp(2rem, 8.4vw, 2.8rem);
+  line-height: 1.05; letter-spacing: -.015em; color: var(--on-dark);
+}
+/* the kit's dark room inks every paragraph soft (.dark p); these say which ink each one is */
+.kr-spar .kr-says, .kr-spar .kr-who, .kr-spar .kr-hook, .kr-spar .kr-quote p, .kr-spar .kr-you b { color: var(--ink); }
+.kr-spar .kr-who + .kr-hook, .kr-spar .kr-you, .kr-spar .kr-status, .kr-spar .kr-note { color: var(--ink-soft); }
+.kr-spar .kr-on, .kr-spar .kr-src, .kr-spar .kr-meta { color: var(--ink-mute); }
+.kr-spar .kr-kicker, .kr-spar .kr-label { color: var(--accent); }
+
+/* ------------------------------------------------------------ everyone, as chips */
+
+.kr-chips { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0; padding: 0; list-style: none; }
+.kr-chip {
+  display: inline-flex; align-items: center; gap: .55rem; min-height: 44px;
+  padding: .3rem .95rem .3rem .3rem; border-radius: var(--r-pill);
+  background: var(--kr-leaf); color: var(--ink); text-decoration: none; box-shadow: var(--lift);
+  font-family: var(--ui); font-size: .86rem; font-weight: 500; line-height: 1.25;
+  transition: box-shadow .18s ease, color .18s ease;
+}
+.kr-chip img {
+  flex: none; width: 2.1rem; height: 2.1rem; border-radius: 50%;
+  object-fit: cover; object-position: top; background: var(--shell);
+}
+.kr-chip small { font-size: 1em; font-weight: 500; color: var(--ink-mute); }
+.kr-chip:hover { color: var(--accent); box-shadow: inset 0 0 0 1.5px var(--accent), var(--lift); }
+.kr-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.kr-credits { margin-top: 2rem; font-size: .8rem; color: var(--ink-mute); }
+.kr-credits summary {
+  cursor: pointer; font-family: var(--ui); font-size: .64rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mute);
+}
+.kr-credits ul { margin: .8rem 0 0; padding: 0; list-style: none; display: grid; gap: .45rem; max-width: 46rem; }
+.kr-credits a { color: var(--ink-soft); }
+
+/* ------------------------------------------------------ not enough to go on */
+
+.kr-thin p { margin: 0; max-width: 34rem; color: var(--ink); }
+.kr-thin .btn-row { margin: 1.2rem 0 0; }
+
+/* ---------------------------------------------------------------- wider */
+
+@media (min-width: 40rem) {
+  .kr-panel.panel { padding: 2.1rem 2.3rem 2.3rem; }
+  .kr-spar { padding: 2.2rem 2.3rem 2.4rem; }
+  .kr-hero--spar { grid-template-columns: 10.5rem minmax(0, 1fr); column-gap: 1.8rem; }
+  .kr-hero--spar .kr-portrait { width: 100%; }
+  .kr-face { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+}
+/*
+ * Wide, the cards of one heading stand side by side, as many columns as there are cards, so
+ * three never leave a hole under the third. One card on its own keeps a reading measure.
+ */
+.kr-lines--1 { max-width: 40rem; }
+@media (min-width: 46rem) {
+  .kr-lines--2 { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+}
+@media (min-width: 62rem) {
+  .kr-lines--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) { .kr-chip { transition: none; } }
+
+/* ------------------------------------------------------- the quiz's start page */
+/*
+ * Under the band, before anything else: faces from the early Church, each a way in to their
+ * page, then the line that says who they are and "Meet all 22". The preview printed ten small
+ * faces; here they are a rail that a phone can swipe and a wide screen shows whole.
+ */
+/* "And which would argue with you?", directly under the title, as the preview set it */
+.band .lede .kr-sub {
+  display: block; margin: -.2rem 0 .85rem; max-width: 22em;
+  font-family: "Philosopher", var(--display); font-style: italic; font-weight: 400;
+  font-size: clamp(1.35rem, 5.6vw, 1.8rem); line-height: 1.2; color: var(--ink); text-wrap: balance;
+}
+.band--pic .lede .kr-sub { color: #fff; }
+
+.kr-meet { margin: 0 0 .5rem; }
+.kr-strip {
+  display: flex; gap: .55rem; margin: 0; padding: .2rem .2rem .9rem; list-style: none;
+  overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none;
+}
+.kr-strip::-webkit-scrollbar { display: none; }
+.kr-strip li { flex: none; scroll-snap-align: start; }
+.kr-strip a { display: block; width: 5.4rem; color: var(--ink); text-decoration: none; }
+.kr-strip img {
+  display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: top;
+  border-radius: 14px; background: var(--shell); box-shadow: var(--lift); transition: transform .18s ease;
+}
+.kr-strip span {
+  display: block; margin-top: .45rem; font-family: var(--ui); font-size: .72rem; font-weight: 600;
+  line-height: 1.25; text-align: center;
+}
+.kr-strip a:hover img { transform: translateY(-2px); }
+.kr-strip a:hover span { color: var(--accent); }
+.kr-strip a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 14px; }
+.kr-meet-say { margin: .5rem 0 0; max-width: 34rem; color: var(--ink-soft); text-wrap: pretty; }
+.kr-meet-go { margin: 1rem 0 0; color: var(--accent); }
+.kr-meet .kr-credits { margin-top: 1.1rem; }
+@media (min-width: 46rem) {
+  .kr-strip { gap: .8rem; }
+  .kr-strip a { width: 6.6rem; }
+}
+/* wide, every face in one row that fills the sheet, however many there are */
+@media (min-width: 62rem) {
+  .kr-strip { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: .9rem; overflow: visible; }
+  .kr-strip a { width: auto; }
+}
+@media (prefers-reduced-motion: reduce) { .kr-strip img { transition: none; } }
