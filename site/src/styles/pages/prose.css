@@ -564,6 +564,26 @@
   background-image: radial-gradient(120% 90% at 85% 10%, rgba(126, 186, 238, .22), transparent 60%), var(--dark-fill-img);
   background-size: auto, 520px;
 }
+/*
+ * And its shared card's example wheel at its top. Smaller than that card's, so it names the
+ * six axes and leaves the poles to the colour, as the wheel in /me/'s Compass room does
+ * (.mroom-eg in me.css); no caption, as on every Compass card. The tokens are the ones .dark
+ * re-points (kit.css), so the wheel draws itself for the night ground: the room cannot simply
+ * be .dark, whose own ground and rules would fight the room's. Stacked on a phone it stands
+ * over the words; in a row it sits in the band of night every room keeps over its title.
+ */
+.nx-room--night { flex-direction: column; align-items: stretch; }
+.nx-eg {
+  --panel: #2A2A33; --ink: var(--on-dark); --ink-soft: var(--on-dark-soft); --ink-mute: var(--on-dark-mute);
+  --accent: var(--blue-soft); --warn-ink: var(--orange-soft);
+  --zone-hatch: rgba(190, 196, 205, .2); --zone-edge: rgba(190, 196, 205, .34);
+  padding: .6rem 0 0;
+}
+.nx-eg .wheel-plot { width: 10rem; max-width: none; margin: 0 auto; padding-bottom: 0; }
+.nx-eg .wheel-cap { display: none; }
+.nx-eg .wheel-label { width: 4.7rem; }
+.nx-eg .wheel-label b { font-size: .6rem; letter-spacing: .08em; }
+.nx-eg .wheel-label i { display: none; }
 /* a game: the /games/ card's night, with a bloom of its own ink behind its corner glyph */
 .nx-room--game {
   background-color: #17161c; background-image: var(--dark-fill-img); background-size: 520px;
@@ -615,27 +635,49 @@
  * blurb in one room cannot knock the next room's words out of line: the titles end on one
  * line, the blurbs start on one line, and the facts and the buttons stand level. Every room
  * in a row keeps the same height of picture, glyph or night above its title.
+ *
+ * A quiz on a plate has no line under its title (the owner, 2026-09-23), so its title takes
+ * the line's row too and sits on its facts, as on the home rail. It holds the room of the
+ * lines of title and blurb it had, so the rooms keep their height; what that adds goes to
+ * the title row alone (the line row may not grow past its own words), so it lands as more
+ * night over the titles beside it, never as a gap under a blurb.
  */
 @supports (grid-template-rows: subgrid) {
   @container (min-width: 30rem) {
     /* the space between rows of rooms is each item's own foot, not a gap the subgrids
        would inherit between their own four lines */
-    .nx { row-gap: 0; margin-bottom: -.9rem; }
+    .nx { row-gap: 0; margin-bottom: -.9rem; grid-auto-rows: auto minmax(min-content, 0) auto auto; }
     .nx > li { display: grid; grid-row: span 4; grid-template-rows: subgrid; row-gap: 0; margin-bottom: .9rem; }
     .nx-room {
       grid-row: 1 / -1; display: grid; grid-template-rows: subgrid; row-gap: 0;
       align-items: start; justify-items: start; padding: 8.5rem 1.05rem 1.15rem;
     }
     /* a room alone on its row is twice as wide, and the same height of night over it read as
-       an empty panel */
-    .nx > li:last-child:nth-child(odd) .nx-room { padding-top: 6rem; }
+       an empty panel (not the Compass's: its night carries its wheel) */
+    .nx > li:last-child:nth-child(odd) .nx-room:not(:has(> .nx-eg)) { padding-top: 6rem; }
     .nx-room--pic { min-height: 0; }
     .nx-body { display: contents; }
-    .nx-title { align-self: end; }
+    .nx-title { grid-row: 1; align-self: end; }
+    .nx-say { grid-row: 2; }
+    .nx-facts { grid-row: 3; }
+    .nx-body .go-pill { grid-row: 4; }
+    .nx-room--pic .nx-title {
+      grid-row: 1 / span 2; min-height: calc(2.2em + 3rem);
+      display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    /* the wheel in the band of night over the title, a size down to fit it */
+    .nx-eg { position: absolute; top: .3rem; left: 0; right: 0; padding: 0; }
+    .nx-eg .wheel-plot { width: 7.6rem; }
+    .nx-eg .wheel-label { width: 4.2rem; }
+    .nx-eg .wheel-label b { font-size: .54rem; }
   }
   /* three across, the third is not alone any more */
   @container (min-width: 42rem) {
     .nx:has(> li:nth-child(3):last-child) > li:last-child .nx-room { padding-top: 8.5rem; }
+  }
+  /* four across, the rooms are narrow, and a plate's title and its blurb ran three lines each */
+  @container (min-width: 54rem) {
+    .nx:has(> li:nth-child(4)) .nx-room--pic .nx-title { min-height: calc(3.3em + 4.28rem); }
   }
 }
 

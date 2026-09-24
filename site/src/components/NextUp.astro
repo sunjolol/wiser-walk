@@ -10,11 +10,12 @@
  * into rather than a line of text, and a reader meets one face per thing wherever it is.
  *
  *   a quiz     its Doré plate from lib/art.ts, printed soft sepia under a warm dark
- *              gradient, a white title lifted off the picture, one line, the counted
- *              facts and Start in the quiz's own ink (the home page's and /quizzes/'s)
+ *              gradient, a white title lifted off the picture with no line under it, the
+ *              counted facts and Start in the quiz's own ink (the home page's and
+ *              /quizzes/'s; no line under a title on a picture, the owner, 2026-09-23)
  *   Compass    no plate: it is an instrument, and it takes the night ground its shared
- *              card (CompassCard.astro) is drawn on, that card's sentence, and Start in
- *              the soft blue
+ *              card (CompassCard.astro) is drawn on, that card's example wheel at its top,
+ *              that card's sentence, and Start in the soft blue
  *   a game     the /games/ card: a dark room with its ink in the corner and its giant
  *              faint glyph there (.corner-ghost in kit.css), Play in the game's ink
  *
@@ -28,19 +29,22 @@
  *
  * Nothing here invents a destination, a count or a description: the title, the line and
  * every fact are read off the registry and the games list, except the Compass's line, which
- * is its shared card's own sentence.
+ * is its shared card's own sentence. Its wheel is a real result, the published, audited
+ * Eastern Orthodox answer sheet scored by the live engine, as CompassCard.astro draws it.
  *
  * Drafts are left out. A quiz that has not been through its fairness audit is a poor thing
  * to push someone into at the moment they are most willing to go, and it is kept out of
  * everything that travels for the same reason.
  */
 import Icon from './Icon.astro';
-import type { Quiz } from '../lib/engine/types';
+import CompassWheel from './CompassWheel.astro';
+import type { BipolarView, Quiz } from '../lib/engine/types';
 import { groupNounPlural, outcomeNounPlural } from '../lib/engine/types';
 import type { Game } from '../lib/games';
-import { quizHref } from '../lib/engine/registry';
+import { quizHref, scoreQuiz, resultFor } from '../lib/engine/registry';
 import { artFor } from '../lib/art';
 import { SITUATIONS } from '../lib/strategies/reading';
+import audit from '../data/compass-audit.json';
 
 export interface Props {
   /** Quizzes to offer, in order. Drafts are dropped here rather than by every caller. */
@@ -90,9 +94,24 @@ const countFact = (q: Quiz): string =>
 /*
  * The Compass is introduced in its shared card's words (CompassCard.astro's default `say`), as
  * on the home page, /quizzes/ and /me/, so it reads as the same card wherever it is offered.
- * Every other quiz says its own tagline, as /quizzes/ does.
+ * A quiz on a plate says nothing under its title, as on the home rail and /quizzes/ (the owner,
+ * 2026-09-23): a line there pushed the title up into the brighter part of the plate, and the
+ * quiz's own page says it better. A quiz with no plate would say its own tagline.
  */
 const COMPASS_SAY = 'Six questions that divide Christians, and the tradition that sits nearest you.';
+
+/*
+ * And it wears its shared card's wheel at its top, found and scored exactly as CompassCard.astro
+ * finds and scores it. Without it the room was a starry box with nothing in it.
+ */
+const EXAMPLE = 'Eastern Orthodox';
+const exampleSheet = (audit.simulations as Array<Record<string, any>>).find(
+  s => s.tradition === EXAMPLE && Array.isArray(s.answers)
+);
+const exampleFor = (q: Quiz): BipolarView | undefined =>
+  q.slug === 'theology-compass' && exampleSheet
+    ? (resultFor(q, scoreQuiz(q, exampleSheet.answers)) as BipolarView)
+    : undefined;
 
 /*
  * A three-word title's last two words tied, the way the home page ties its game's: broken in
@@ -123,7 +142,8 @@ const hook = (text: string) => {
 interface Room {
   href: string;
   title: string;
-  say: string;
+  /** The line under the title; none on a quiz's plate. */
+  say?: string;
   /** The minutes, drawn with the clock, then any counted facts. */
   minutes: string;
   facts: string[];
@@ -138,6 +158,8 @@ interface Room {
   imagePosition?: string;
   imageLift?: number;
   ghost?: { glyph: string; kind: 'ask' | 'quote' };
+  /** The Compass's example wheel. */
+  wheel?: BipolarView;
 }
 
 const rooms: Room[] = [
@@ -148,7 +170,7 @@ const rooms: Room[] = [
       return {
         href: quizHref(q),
         title: tie(q.title),
-        say: q.slug === 'theology-compass' ? COMPASS_SAY : q.tagline,
+        say: art ? undefined : q.slug === 'theology-compass' ? COMPASS_SAY : q.tagline,
         minutes: `${q.minutes} min`,
         facts: [countFact(q)],
         go: 'Start',
@@ -156,7 +178,8 @@ const rooms: Room[] = [
         ink: art ? (QUIZ_INK[q.slug] ?? '#FFD2B0') : 'var(--blue-soft)',
         image: art?.src,
         imagePosition: art?.objectPosition,
-        imageLift: art?.lift
+        imageLift: art?.lift,
+        wheel: exampleFor(q)
       };
     }),
   ...games.map((g): Room => {
@@ -208,9 +231,12 @@ const roomStyle = (room: Room) =>
             {room.ghost && (
               <span class={`corner-ghost corner-ghost--${room.ghost.kind}`} aria-hidden="true">{room.ghost.glyph}</span>
             )}
+            {/* Somebody else's result, so it is hidden from a screen reader, as on /me/: read
+                out inside the link, six axes and their leanings would sound like the reader's. */}
+            {room.wheel && <div class="nx-eg" aria-hidden="true"><CompassWheel view={room.wheel} /></div>}
             <span class="nx-body">
               <b class="nx-title">{room.title}</b>
-              <span class="nx-say">{room.say}</span>
+              {room.say && <span class="nx-say">{room.say}</span>}
               <span class="nx-facts">
                 <span><Icon name="clock" size={13} /> {room.minutes}</span>
                 {room.facts.map(f => <span>{f}</span>)}
