@@ -1,0 +1,144 @@
+<title>Saints Hub Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap">
+<style>
+:root{
+  --page:#E3E3E3; --sheet:#ECECEC; --panel:#F6F6F5; --ink:#3F3F44; --soft:#5E5E66; --mute:#7A7A83;
+  --rule:#D6D6D8; --blue:#4F8FCC; --blue-soft:#7EBAEE; --orange:#D9834E; --orange-soft:#F0A06F;
+  --night:#1C1D24; --night-ink:#EDEDF0; --chip:#E4ECF6;
+  --display:"Philosopher",Georgia,serif; --text:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif; --ui:"Poppins","Inter",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --page:#17181D; --sheet:#1E1F25; --panel:#26272E; --ink:#E6E6EA; --soft:#BEBEC6; --mute:#9A9AA4;
+    --rule:#33343C; --blue:#8EC3F2; --orange:#F2AE82; --night:#101117; --night-ink:#EDEDF0; --chip:#26303D;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --page:#17181D; --sheet:#1E1F25; --panel:#26272E; --ink:#E6E6EA; --soft:#BEBEC6; --mute:#9A9AA4;
+  --rule:#33343C; --blue:#8EC3F2; --orange:#F2AE82; --night:#101117; --night-ink:#EDEDF0; --chip:#26303D;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--page);color:var(--ink);font:400 16px/1.6 var(--text);padding-inline:16px;padding-block:28px 56px}
+.sheet{max-width:52rem;margin:0 auto;background:var(--sheet);border-radius:26px;padding:28px 20px 36px;box-shadow:0 2px 0 rgba(0,0,0,.03)}
+@media (min-width:44rem){.sheet{padding:44px 48px 52px}}
+.kick{font:600 .72rem/1 var(--ui);letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin:0 0 .7rem}
+h1{font:700 clamp(2.1rem,6vw,3rem)/1.05 var(--display);margin:0;text-wrap:balance}
+h1 em{font-style:normal;background:linear-gradient(90deg,var(--blue-soft),var(--orange-soft));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lede{font-size:1.08rem;color:var(--soft);margin:.9rem 0 0;max-width:40rem;text-wrap:pretty}
+h2{font:italic 700 clamp(1.5rem,4vw,1.9rem)/1.1 var(--display);text-transform:lowercase;margin:2.6rem 0 .3rem;text-wrap:balance}
+h2::after{content:"";display:block;width:3rem;height:4px;border-radius:2px;margin-top:.55rem;background:linear-gradient(90deg,var(--blue-soft),var(--orange-soft))}
+h3{font:700 1.08rem/1.3 var(--ui);margin:0}
+p{margin:.7rem 0 0;text-wrap:pretty}
+ul{margin:.7rem 0 0;padding-left:1.15rem}
+li{margin:.35rem 0}
+a{color:var(--blue)}
+.grid{display:grid;gap:.8rem;margin-top:1rem}
+@media (min-width:40rem){.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.card{background:var(--panel);border-radius:18px;padding:1rem 1.1rem 1.1rem}
+.card p{font-size:.95rem;color:var(--soft);margin-top:.35rem}
+.night{background:var(--night);color:var(--night-ink);border-radius:20px;padding:1.3rem 1.3rem 1.4rem;margin-top:1rem;position:relative;overflow:hidden}
+.night::before{content:"";position:absolute;inset:0;background:radial-gradient(70% 60% at 95% 0%,rgba(126,186,238,.22),transparent 60%),radial-gradient(60% 60% at 0% 100%,rgba(240,160,111,.16),transparent 60%);pointer-events:none}
+.night > *{position:relative}
+.night h3{color:var(--night-ink)}
+.night p,.night li{color:#C9C9D1}
+.chips{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.8rem;padding:0;list-style:none}
+.chips li{margin:0;background:var(--chip);border-radius:999px;padding:.32rem .8rem;font:500 .85rem/1.3 var(--ui)}
+.q{margin-top:1rem;display:grid;gap:.7rem;counter-reset:q}
+.q .card{display:grid;grid-template-columns:auto 1fr;gap:.9rem;align-items:start}
+.q .card::before{counter-increment:q;content:counter(q);font:700 1.1rem/1 var(--display);width:2rem;height:2rem;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--blue-soft),var(--orange-soft));color:#2B2B30}
+.rec{display:inline-block;margin-top:.5rem;font:600 .8rem/1.3 var(--ui);color:var(--blue)}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+.tw{overflow-x:auto;margin-top:1rem;background:var(--panel);border-radius:16px;padding:.4rem .8rem}
+th,td{text-align:left;padding:.6rem .5rem;border-bottom:1px solid var(--rule);vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{font:600 .75rem/1.2 var(--ui);letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+td:first-child{white-space:nowrap;font-family:var(--ui);font-weight:600}
+.foot{margin-top:2.4rem;font-size:.85rem;color:var(--mute)}
+</style>
+
+<main class="sheet">
+  <p class="kick">Wiser Walk · plan for your review</p>
+  <h1>The <em>Saints</em> hub</h1>
+  <p class="lede">One beautiful, well-sourced page for every saint and early Christian, a hub to browse them, and a place in the menu. Built to be the best answer on the web to the questions people actually search.</p>
+
+  <h2>what it is</h2>
+  <p>Today we have 22 early-Christian pages tied to one quiz, 25 Bible people tied to another, and saints named in the personality test with nowhere to go. The hub brings the people together. Each person gets one page that covers their whole life and character, not just what one quiz asks. Every quiz, type page and article then links to it.</p>
+
+  <h2>what's on a saint page</h2>
+  <div class="night">
+    <h3>The sheet</h3>
+    <p>A quick-facts panel in the spirit of the character sheets the site's look came from. Only real, sourced facts. No made-up scores.</p>
+    <ul class="chips">
+      <li>Born and died</li><li>Where</li><li>What they did</li><li>Other names</li><li>Feast days, East and West</li><li>Saint in which churches</li><li>Patron of</li><li>How to spot them in art</li><li>Temperament, in Gregory's words</li><li>Their type in our test</li>
+    </ul>
+  </div>
+  <div class="grid two">
+    <div class="card"><h3>What were they like?</h3><p>Their character in their own words and their friends'.</p></div>
+    <div class="card"><h3>Their life in a few moments</h3><p>A short timeline, each moment with its source.</p></div>
+    <div class="card"><h3>In their own words</h3><p>Their best lines, each with the book and chapter.</p></div>
+    <div class="card"><h3>Often misquoted</h3><p>Famous lines they never said, and where they really came from.</p></div>
+    <div class="card"><h3>Where they stood</h3><p>Their views on the big questions, from the early-Christian quiz.</p></div>
+    <div class="card"><h3>Friends, family and rivals</h3><p>Who they crossed paths with, and how.</p></div>
+    <div class="card"><h3>How they died</h3><p>Plainly, with the source.</p></div>
+    <div class="card"><h3>Is this person a saint?</h3><p>Who honours them, and where churches disagree.</p></div>
+    <div class="card"><h3>What to read first</h3><p>Their best writing, with free links.</p></div>
+    <div class="card"><h3>Keep going</h3><p>The quizzes they appear in, and people like them.</p></div>
+  </div>
+
+  <h2>the hub and its groups</h2>
+  <p>The hub lists everyone, with a search box and filters: group, century, East or West, and personality type. Group pages answer the lists people search for.</p>
+  <ul class="chips">
+    <li>Church Fathers</li><li>Desert fathers and mothers</li><li>The Cappadocian fathers</li><li>Great teachers, East and West</li><li>Apostolic fathers</li><li>Martyrs</li><li>Women of the early Church</li><li>Saints of East and West</li><li>Quiet saints</li><li>People of the Bible</li>
+  </ul>
+
+  <h2>why it will rank</h2>
+  <ul>
+    <li>People search for the person and a question: "is Augustine a saint in the Orthodox Church", "how did Polycarp die", "St Benedict quotes", "John Chrysostom feast day Orthodox".</li>
+    <li>The pages that rank today are thin, list one church's calendar, and rarely say where a quote comes from. Goodreads' most-liked Augustine quote isn't his.</li>
+    <li>We answer each question near the top, give both calendars, source every line, and flag misquotes. Nobody does all four.</li>
+    <li>One page per person, so Google never has two of our pages about the same saint competing.</li>
+    <li>The menu links the hub from every page, which is the strongest internal link a site has.</li>
+  </ul>
+
+  <h2>where it lives</h2>
+  <div class="tw"><table>
+    <thead><tr><th>Address</th><th>What happens</th></tr></thead>
+    <tbody>
+      <tr><td>/saints/</td><td>The hub.</td></tr>
+      <tr><td>/saints/&lt;name&gt;/</td><td>One page per person.</td></tr>
+      <tr><td>/early-christian/</td><td>The 22 pages move into the hub, with permanent redirects so no link breaks. They're a day old, so moving now costs almost nothing.</td></tr>
+      <tr><td>/figure/</td><td>Stays as the home of Bible people. The hub links to it.</td></tr>
+      <tr><td>Menu</td><td>"Articles" becomes "Learn": Articles, Saints and early Christians, What the early Church said, Compare traditions.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>who comes first</h2>
+  <ul>
+    <li><b>Wave 1:</b> the 22 we already have, plus everyone the personality test names who has no page yet (Abba Arsenius, St Monica, St Cuthbert, St Guthlac, St Philip Neri). Isaiah, Jeremiah and Mary of Bethany become Bible pages.</li>
+    <li><b>Wave 2:</b> the most searched missing saints: St Athanasius, St Ignatius of Antioch, St Polycarp, St Moses the Black (a feature film about him came out this year), St Perpetua, St Ephrem.</li>
+    <li><b>Later:</b> the big seasonal names (St Nicholas, St Patrick) and the group pages.</li>
+  </ul>
+
+  <h2>how we keep it right</h2>
+  <ul>
+    <li>Every fact has a source. Every quote is checked word for word against a public-domain text by script, as we did for the quizzes.</li>
+    <li>Both calendars on every page. We check each date against the churches' own calendars. Our notes already disagreed on St Martin's Orthodox date, which is exactly why.</li>
+    <li>Honest labels: "Church Father. Not counted a saint." for Origen, Tertullian and Lactantius.</li>
+    <li>Hard topics are named plainly, in both sides' words, never hidden.</li>
+    <li>No made-up ratings, no tier lists, no prayers to saints. Count knowledge, never devotion.</li>
+  </ul>
+
+  <h2>decisions for you</h2>
+  <div class="q">
+    <div class="card"><div><h3>The menu</h3><p>"Learn" with "Saints and early Christians" inside it?</p><span class="rec">Recommended: yes</span></div></div>
+    <div class="card"><div><h3>The 22 early-Christian pages</h3><p>Move them into the hub with redirects, so each person has one page?</p><span class="rec">Recommended: yes, now, while it costs nothing</span></div></div>
+    <div class="card"><div><h3>The first wave</h3><p>Start with the 22 plus the test's saints, then the most searched names?</p><span class="rec">Recommended: yes</span></div></div>
+    <div class="card"><div><h3>A printable saint card</h3><p>People search for "saint trading cards". A card per saint to save or print could be a fun extra later.</p><span class="rec">Recommended: later</span></div></div>
+  </div>
+
+  <p class="foot">Built from two research passes: everything the site already knows about each person, and what people search for (Google and Bing autocomplete across 381 queries, plus a year of Wikipedia page views). Search volumes are estimates; no keyword tool was used.</p>
+</main>

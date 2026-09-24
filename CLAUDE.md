@@ -66,7 +66,20 @@ rules so they don't happen again". `site/scripts/quiz-page-test.mjs` (postbuild)
 9. **A special card among cards looks like its siblings**, marked only by an icon and a small tag.
 10. **No placeholder pictures** (a monogram where a face should be is "not acceptable").
 
-## NOW (2026-09-24, afternoon): HIS QUIZ-PAGE NOTES ARE DONE AND THE EIGHT TYPE PAGES ARE LIVE
+## NEXT SESSION STARTS HERE (2026-09-24, evening): BUILD THE SAINTS HUB
+
+**Read `design/saints-hub/README.md` first, whole.** The owner approved a Saints and early Christians hub
+(`/saints/`, one rich page per person, a "Learn" menu) and said yes to all four decisions in its plan. He wants
+it done right from the start ("I really want to make sure we nail this right from the start and do it right").
+Step one is the tap-through mock-up (St Martin of Tours, the hub, the Learn menu): its build was in progress when
+the session ended; the README says where its files are and what to do. Show him the mock-up before building.
+
+Also live that day (commits 0026af9, fd69270): the Oak has saints (Martin, Benedict, John the Baptist), the Hearth
+adds Cuthbert and Guthlac, the Spark adds Philip Neri; the opposite panel leads with the opposite's person; saint
+cards are built to link but `lib/person-links.ts` returns null until the hub exists; the gifts "Not scored here"
+paragraph is gone from its result page too; the site icon is his brush W.
+
+## (earlier the same day) HIS QUIZ-PAGE NOTES ARE DONE AND THE EIGHT TYPE PAGES ARE LIVE
 
 Shipped with his list of 2026-09-24 (the commit after `e7fca25`): the rules above on all seven quiz pages; the eight
 type pages at `/personality-type/<key>/` plus the index `/personality-type/` (`site/src/pages/personality-type/`,
