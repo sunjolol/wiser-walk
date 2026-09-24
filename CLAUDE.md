@@ -41,9 +41,13 @@ Note he had earlier rejected the word "wiser" as "weird to say"; he has since ov
 
 State: local git repo initialised, **one commit** `c8fd322`, 137 files tracked, `node_modules` excluded. Authored as `Light <serenitybackto@gmail.com>` — he was offered a GitHub noreply address to keep his email out of public history and **chose to keep his real email**. Do not change it.
 
-## NOW (2026-09-23, late night): WRITING QUIZ #1, THE PERSONALITY QUIZ
+## NOW (2026-09-24): THE CHRISTIAN PERSONALITY TEST IS LIVE (commit 68cc5e4)
 
-Read `design/quiz-ideas/personality/README.md` first. He approved the full-report design
+**Live at /q/personality/** (named "Christian Personality Test"; the URL stays). Ask how it plays for real people
+before proposing anything new. Open proposals for him: per-type SEO pages (e.g. a page for each of the eight types),
+and storing the type on the short link when the tally grows past ~100,000 results. Known and pre-existing, not from
+this build: `sim-figures.mjs` misses one target (Judith closest for 1.1%, under the 1.5% floor), same on the old code.
+Read `design/quiz-ideas/personality/README.md` ("Shipped") first. He approved the full-report design
 (https://claude.ai/artifact/TuppmFsRVEY1r5LWWRsj6D, "extremely good"): eight types (Gregory's four dispositions x quiet /
 restless mind), 72 questions on 7 answer points, the private "where the fight is" page (Cassian's eight thoughts; the
 sins and gifts quizzes are suggested as cards opening in a new tab, and their results may ADD context beside this

@@ -197,3 +197,21 @@ Draft 3 (2026-09-24, his notes on draft 2):
 - First-look page (12 questions, one complete result, "You keep it in"):
   https://claude.ai/artifact/7TYgNW3eTVcFsPCbUmGTnE . Awaiting his reaction. Next if he approves: all ~36
   questions and every result part written by the main session, a simulated-people test, a tap-through preview.
+
+## Shipped (2026-09-24): the Christian Personality Test
+
+He took the draft on the labelled scale, said "it's ready, push it live", asked for progress saving, named it
+"Christian Personality Test" (the URL stays `/q/personality/`) and asked for deep dives on the quiz page. Built from
+`BUILD-BRIEF.md` by four Opus builders; live in commit 68cc5e4.
+
+- Source of truth stays here: `items.mjs`, `results.mjs`, `score.mjs`. `site/scripts/build-personality-data.mjs`
+  writes `site/src/data/personality-scoring.json` (browser), `personality.json` (server only) and
+  `site/src/lib/strategies/personality-score.mjs` (a generated copy of `score.mjs`, checked equal on the 24 simulated
+  people and 500 random answer sets). Edit here, then build the site; never hand-edit the generated files.
+- Privacy: codes (`PQ1` + 35 characters) carry the 58 two-sided answers, the two picks and six facts from `derive()`;
+  never a private answer. The private page is drawn from `ww.private.personality` in the browser that took it.
+- Progress: `ww.progress.personality`, saved after every answer; "Pick up at question N of 72" on return.
+- Pages: `PersonalityRunner.astro` (+ `personality-run.css`, the start page's deep dives), `PersonalityResult.astro`
+  (+ `personality.css`), `/api/tally` ("how common", from `short_links`, shown from 50). Engine test section 20.
+- Pictures: `site/public/img/personality/` (committed; the design's `preview/` images are gitignored and rebuilt by
+  `python preview/faces.py`). Link previews: `site/public/og/r-personality-<type>.jpg` from `design/og/cards.mjs`.
