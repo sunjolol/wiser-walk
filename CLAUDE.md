@@ -43,9 +43,22 @@ State: local git repo initialised, **one commit** `c8fd322`, 137 files tracked, 
 
 ## NOW (2026-09-24): THE CHRISTIAN PERSONALITY TEST IS LIVE (commit 68cc5e4)
 
-**Live at /q/personality/** (named "Christian Personality Test"; the URL stays). Ask how it plays for real people
-before proposing anything new. Open proposals for him: per-type SEO pages (e.g. a page for each of the eight types),
-and storing the type on the short link when the tally grows past ~100,000 results. Known and pre-existing, not from
+**Live at /q/personality/** (named "Christian Personality Test"; the URL stays).
+
+**NEXT SESSION, in this order (his words, 2026-09-24):**
+1. **Ask for his notes on the quiz page first.** He said: "I also have quite a few notes about the quiz page, a few
+   things I want to change/remove/add." The page is `/q/personality/` (`site/src/components/PersonalityRunner.astro`
+   intro + `site/src/styles/pages/personality-run.css`; the band is in `site/src/pages/q/[quiz].astro`). Do those
+   before anything else.
+2. **A page for each of the eight types, like the other quizzes' outcome pages** ("we should definitely have a page for
+   each type, I thought that was always the plan, same as the other quizzes"). Model: quiz #4's `/early-christian/<slug>/`
+   pages and the Psalm quiz's `/psalm/<n>/` (outcome pages with the reader's own result marked through `lib/mine.ts`,
+   indexable, in the sitemap, browsable from the quiz page). The quiz object already sets `outcomePathBase:
+   'personality-type'` and `outcomeNoun: 'type'`; the eight type cards on the quiz page should link to them. Content
+   comes from `results.mjs` only (TYPES, DISPOSITIONS, MAKEUPS, kindred, OPPOSITES, traps). Propose the page's sections
+   to him (plain words, a mock-up) before building, per the method above.
+3. Then ask how the test is playing for real people.
+Later, only if needed: store the type on the short link when the tally passes ~100,000 results. Known and pre-existing, not from
 this build: `sim-figures.mjs` misses one target (Judith closest for 1.1%, under the 1.5% floor), same on the old code.
 Read `design/quiz-ideas/personality/README.md` ("Shipped") first. He approved the full-report design
 (https://claude.ai/artifact/TuppmFsRVEY1r5LWWRsj6D, "extremely good"): eight types (Gregory's four dispositions x quiet /
