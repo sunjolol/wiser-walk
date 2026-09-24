@@ -1,4 +1,5 @@
 import ogCards from '../data/og-cards.json';
+import type { Quiz, ResultView } from './engine/types';
 /**
  * What a page says to a search engine, where that should differ from what it says to a reader.
  *
@@ -486,4 +487,27 @@ export function ogImageFor(path: string): string {
   if ((m = /^\/articles\/([^/]+)\//.exec(path))) return card(`article-${m[1]}`, 'articles');
   if ((m = /^\/play\/([^/]+)\//.exec(path))) return card(`game-${m[1]}`, 'games');
   return card('home');
+}
+
+/**
+ * A result's own card (2026-09-23): the link preview says what this person got, not only
+ * which quiz they took. design/og/cards.mjs draws one per outcome a result can lead with,
+ * named `r-<quiz>-<outcome slug>`; the /r/ page passes this to Base as `ogImage`.
+ *
+ * Only where the result names ONE thing plainly, because the card prints that one name:
+ *   - a matched quiz (the Compass, the figures) when one outcome is nearest or two are level,
+ *     never a loose neighbour and never a centrist, who is named nothing
+ *   - a ranking (sins, gifts) only when one category is clearly ahead
+ *   - the Psalm quiz by the psalm the reading leads with (the situation never travels)
+ *   - Which early Christian thinks like you? by the kindred spirit, whose slug is named[0]
+ * Anything else, or a card that was never drawn, is null, and the page keeps its quiz's card.
+ */
+export function resultCardFor(quiz: Pick<Quiz, 'slug'>, view: ResultView): string | null {
+  let key: string | undefined;
+  if (quiz.slug === 'which-early-christian') key = view.named[0];
+  else if (view.shape === 'reading') key = String(view.psalm);
+  else if (view.shape === 'bipolar') key = view.state === 'near' || view.state === 'tie' ? view.named[0] : undefined;
+  else if (view.shape === 'unipolar') key = view.state === 'clear' ? view.named[0] : undefined;
+  const name = key ? `r-${quiz.slug}-${key}` : '';
+  return name && HAVE.has(name) ? `/og/${name}.jpg` : null;
 }

@@ -482,6 +482,15 @@ export interface Quiz {
    * at most one such quiz across the whole site.
    */
   codePrefix?: string;
+  /**
+   * Hand out a six-character link instead of the long code.
+   *
+   * For a quiz whose code is too long to send comfortably: the gifts quiz's is sixteen
+   * characters. The long code is still the result; the short one is a row in Supabase that
+   * points at it, made when the reader finishes (see engine/links.ts). Every long link keeps
+   * working, and with no table the long one is simply used.
+   */
+  shortLinks?: boolean;
 
   /**
    * What to do with a sheet where every answer is the same one.

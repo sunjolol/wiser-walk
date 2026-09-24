@@ -7,9 +7,10 @@
  * the question the page answers, in the fewest words, and the small line is the cost (minutes)
  * or the promise. Articles and figures are read from the site's own data, never typed here.
  */
-import { readFileSync, readdirSync, existsSync, writeFileSync } from 'node:fs';
-import { dirname, join, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { readFileSync, readdirSync, existsSync, writeFileSync, rmSync } from 'node:fs';
+import { createRequire } from 'node:module';
+import { dirname, join, relative, resolve } from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(here, '../..');
@@ -114,9 +115,133 @@ for (const f of figures) {
   };
 }
 
-/* The manifest the site reads. Written whenever this module is imported by render.mjs. */
+/*
+ * RESULTS (2026-09-23): one card per outcome a result can name, so a shared result link
+ * shows who or what the person got instead of the quiz's own card. seo.ts resultCardFor()
+ * picks it; a result that names nothing (a centrist, a flat ranking) keeps the quiz's card.
+ *
+ * Each says what the result page says, in the sharer's voice, and never more: no score, no
+ * percentage, not one of their answers. The kicker is the quiz's question, so whoever sees
+ * the card knows what was asked before they read what came out.
+ *
+ * The names, notes and plates are read from the site's own code (the registry and art.ts,
+ * bundled with the site's esbuild as the engine test does), so a renamed outcome or a new
+ * plate cannot leave a card saying something the page does not. Where the site's words and
+ * a shorter phrasing would differ, the site's words win:
+ *
+ *   - Figures say "Who in the Bible my answers sat nearest", the quiz's own share title. "I'm
+ *     most like", pasted beside the name of Jesus, is the boast both audits ruled out (F8).
+ *   - Gifts say "My answers pointed most to", the result page's own headline in the first
+ *     person. The quiz speaks about what the statements found, never about what a person is.
+ *   - A sentence that travels with a name travels onto its card too, verbatim: the note on
+ *     Jesus's card, where the books of Judith and Tobit are printed, and the disagreement
+ *     over the six gifts some Christians hold have ceased (types.ts notesFor, groupNoteFor).
+ */
+const SITE_REQUIRE = createRequire(join(ROOT, 'site/package.json'));
+async function bundled(entry) {
+  const out = join(ROOT, 'site/node_modules', `.og-${entry.replace(/\W+/g, '-')}.mjs`);
+  SITE_REQUIRE('esbuild').buildSync({
+    entryPoints: [join(ROOT, 'site/src', entry)], outfile: out, bundle: true, format: 'esm',
+    platform: 'node', target: 'node18', logLevel: 'silent'
+  });
+  try { return await import(pathToFileURL(out).href + '?t=' + Date.now()); }
+  finally { rmSync(out, { force: true }); }
+}
+const { QUIZZES } = await bundled('lib/engine/registry.ts');
+const { artFor, artForOutcome } = await bundled('lib/art.ts');
+const quiz = slug => QUIZZES.find(q => q.slug === slug);
+const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+/** "Lutheran (confessional)" -> the name large, and what is in the brackets under it. */
+const split = name => {
+  const i = name.indexOf(' (');
+  return i < 0 ? [name, ''] : [name.slice(0, i), name.slice(i + 1)];
+};
+const result = (slug, key, params) => { CARDS[`r-${slug}-${key}`] = { k: quiz(slug)?.title, ...params }; };
+
+/* The Compass has no plate (art.ts): it wears its own card's sky, centred, as its quiz card does. */
+{
+  const q = quiz('theology-compass');
+  for (const o of q.outcomes) {
+    const [name, under] = split(o.name);
+    result(q.slug, o.slug, {
+      v: 'center', tone: 'photo', img: '/img/sky-rays.jpg', pos: '70% 35%',
+      k: 'Which Christian tradition are you closest to?', m: 'Nearest tradition on my map:',
+      h: name, ...(under ? { u: under } : {}), ...(o.note ? { n: o.note } : {})
+    });
+  }
+}
+
+/* Figures: the figure's own plate where art.ts has one, the quiz's plate where it does not. */
+{
+  const q = quiz('bible-figure');
+  for (const o of q.outcomes) {
+    const art = artForOutcome(q.slug, o.slug);
+    result(q.slug, o.slug, {
+      v: 'left', tone: 'engraving', img: art.src, pos: art.objectPosition, ...(art.lift ? { lift: art.lift } : {}),
+      m: `${q.shareTitle}:`, h: o.name, ...(o.note ? { n: o.note } : {})
+    });
+  }
+}
+
+/* The two rankings. A card is drawn for a category only when it LEADS (seo.ts: state clear). */
+for (const [slug, mine] of [['seven-deadly-sins', 'The deadly sin I’m weakest to:'], ['spiritual-gifts', 'My answers pointed most to:']]) {
+  const q = quiz(slug);
+  const plate = CARDS[`quiz-${slug}`];
+  const lift = artFor(slug)?.lift;
+  const travels = new Set(q.groups.filter(g => q.groupNote?.groups.includes(g.key)).map(g => g.slug));
+  for (const g of q.groups) {
+    result(slug, g.slug, {
+      v: 'left', tone: 'engraving', img: plate.img, pos: plate.pos, ...(lift ? { lift } : {}),
+      m: mine, h: cap(g.name), ...(travels.has(g.slug) ? { n: q.groupNote.result } : {})
+    });
+  }
+}
+
+/*
+ * The Psalm quiz: one card per psalm a result can lead with, by its English number, on the
+ * quiz's own plate. The psalm and nothing else: a reading's situation does not travel (see
+ * ShareBlock's reading card), so the card says which psalm and never why.
+ */
+{
+  const q = quiz('which-psalm');
+  const art = artFor(q.slug);
+  const { outcomes } = JSON.parse(readFileSync(join(ROOT, 'site/src/data/which-psalm.json'), 'utf8'));
+  for (const o of Object.values(outcomes)) {
+    const set = o.set ? [Math.min(...o.set), Math.max(...o.set)] : null;
+    result(q.slug, String(o.psalm), {
+      v: 'left', tone: 'engraving', img: art.src, pos: art.objectPosition,
+      ...(set
+        ? { m: `The Psalms I’m living right now:`, h: 'The Songs of Ascents', u: `Psalms ${set[0]}–${set[1]}` }
+        : { m: `${q.shareTitle}:`, h: `Psalm ${o.psalm}` })
+    });
+  }
+}
+
+/*
+ * Which early Christian thinks like you? Drawn ahead of the quiz (wave 2 builds it), from its
+ * design folder: the name and dates from people.json, the colour portrait from the preview.
+ * The portraits are too small to fill a card, so each stands in a frame. The file is named
+ * by the person's slug, which is what the result's named[0] will carry.
+ */
+const FATHERS = join(ROOT, 'design/quiz-ideas/fathers');
+if (existsSync(join(FATHERS, 'people.json'))) {
+  const { people } = JSON.parse(readFileSync(join(FATHERS, 'people.json'), 'utf8'));
+  for (const [key, p] of Object.entries(people)) {
+    const img = join(FATHERS, 'preview/img', `${key}.jpg`);
+    if (!existsSync(img)) continue;
+    CARDS[`r-which-early-christian-${p.slug}`] = {
+      v: 'left', tone: 'painting', frame: '1', img: relative(here, img).replace(/\\/g, '/'), pos: '50% 0%',
+      k: 'Which early Christian thinks like you?', m: 'My kindred spirit in the early Church:',
+      h: p.name, s: p.dates
+    };
+  }
+}
+
+/* The manifest the site reads, written by render.mjs after it draws. Only a card whose picture
+   is on disk is listed, so the site can never point a preview at a file that was not drawn. */
 export function writeManifest() {
   const out = join(ROOT, 'site/src/data/og-cards.json');
-  writeFileSync(out, JSON.stringify({ generatedBy: 'design/og/render.mjs', cards: Object.keys(CARDS).sort() }, null, 2) + '\n');
+  const drawn = Object.keys(CARDS).filter(name => existsSync(join(PUB, 'og', name + '.jpg'))).sort();
+  writeFileSync(out, JSON.stringify({ generatedBy: 'design/og/render.mjs', cards: drawn }, null, 2) + '\n');
   return out;
 }

@@ -1,0 +1,304 @@
+---
+/**
+ * The reader's own answers, on a page that is not their result (the owner, 2026-09-23).
+ *
+ * "When someone comes from a result, the in-depth pages should show my answer against
+ * theirs, just like the main results." Someone browsing without a result sees these pages
+ * exactly as they were: everything here is rendered hidden, and the script at the foot shows
+ * it only when this device holds a result for the quiz (lib/mine.ts finds it).
+ *
+ * Three kinds, one line each, in plain words:
+ *
+ *   rails   a tradition or a figure page. "Your answers are marked. From your result on
+ *           23 September. See your result", above the rails; the marks themselves are the
+ *           hidden "You" markers RailStack (and the figure page's tally) carry, which the
+ *           script fills in wherever they are on the page.
+ *   axis    one axis or one category. The same line, then the reader's own reading of it in
+ *           the words the result page prints: the band words on a two-pole axis (with a mark
+ *           on the page's rail), and on a ranking the category's row as the result page draws
+ *           it, with its place and its strength in words.
+ *   psalm   a psalm page, and only when the reader's latest Psalm result IS this psalm: "Your
+ *           answers pointed to this psalm." with a link. Nothing else, because the answers
+ *           behind a reading are not in its code.
+ *
+ * Every word the reader is shown about their own answers is the engine's. The band words
+ * and the strength words are worked out HERE, on the server, by the same call the result page
+ * makes, once for every position the quiz can produce, and printed into the page as a table.
+ * The browser looks its answer up in that table; it never scores anything and never loads
+ * the registry. See lib/mine.ts for why.
+ */
+import type { Quiz, ResultView } from '../lib/engine/types';
+import { resultFor, quizHref } from '../lib/engine/registry';
+import '../styles/pages/mine.css';
+
+interface Props {
+  quiz: Quiz;
+  kind: 'rails' | 'axis' | 'psalm';
+  /** kind="axis": which of the quiz's groups this page is about. */
+  index?: number;
+  /**
+   * kind="psalm": the result codes that name this page's psalm, and the sentence for each.
+   * A psalm that leads a situation says "this psalm"; one of the fifteen Songs of Ascents
+   * says which set it belongs to.
+   */
+  psalm?: Array<{ code: string; say: string }>;
+}
+
+const { quiz, kind, index = 0, psalm = [] } = Astro.props;
+
+const scored = quiz.strategy.shape !== 'reading';
+const radix = scored ? Number(quiz.config.radix) : 0;
+const steps = Math.max(1, radix - 1);
+const group = kind === 'axis' ? quiz.groups[index] : undefined;
+const bipolar = quiz.strategy.shape === 'bipolar';
+
+/**
+ * What the result page prints for every position the quiz can produce, per group: the band
+ * words on a two-pole axis, the strength words on a ranking. Built by scoring a sheet that
+ * sits at that one position everywhere, so the words are the engine's own, never a copy.
+ */
+const views: ResultView[] = scored
+  ? Array.from({ length: radix }, (_, k) =>
+      resultFor(quiz, quiz.groups.map(() => Math.round((k * 100) / steps)))
+    )
+  : [];
+const wordsFor = (i: number): string[] =>
+  views.map(v =>
+    v.shape === 'bipolar' ? v.rows[i]!.band : v.shape === 'unipolar' ? v.rows[i]!.strength : ''
+  );
+
+/* The rails' pages label every marked rail for a screen reader; an axis page needs one row. */
+const words =
+  kind === 'rails' ? quiz.groups.map((_, i) => wordsFor(i)) : kind === 'axis' ? wordsFor(index) : [];
+
+/* On a two-pole axis the band words are set in the ink of the pole they lean to, as the
+   result page's verdict is; the middle band names neither, so it takes neither. */
+const sides =
+  kind === 'axis' && bipolar
+    ? views.map(v => {
+        const row = v.shape === 'bipolar' ? v.rows[index] : undefined;
+        return !row || row.noClaim ? 'centre' : row.value < 50 ? 'left' : 'right';
+      })
+    : [];
+
+/* A ranked place is worked out in the browser from the reader's scores, and it breaks ties by
+   name exactly as strategies/category.ts does, so the names travel too (a ranking only). */
+const names = kind === 'axis' && !bipolar ? quiz.groups.map(g => g.name) : [];
+
+/** "Prophecy", not "prophecy": the gifts are stored as words in a list. */
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+/** "Your answers are marked" is only true where something on the page is marked. */
+const marks = kind === 'rails' || (kind === 'axis' && bipolar);
+/** A ranking's row, drawn as the result page draws it. */
+const tier = kind === 'axis' && !bipolar && group;
+---
+<div
+  class:list={[
+    'mine', `mine--${kind}`,
+    tier && 'mine--tier panel layered ref-panel ref-panel--quiet'
+  ]}
+  data-mine={kind}
+  data-quiz={quiz.slug}
+  data-radix={scored ? radix : undefined}
+  data-slots={scored ? quiz.groups.length : undefined}
+  data-prefix={quiz.codePrefix ?? ''}
+  data-short={quiz.shortLinks ? '' : undefined}
+  data-index={kind === 'axis' ? index : undefined}
+  data-words={words.length ? JSON.stringify(words) : undefined}
+  data-sides={sides.length ? JSON.stringify(sides) : undefined}
+  data-names={names.length ? JSON.stringify(names) : undefined}
+  data-psalm={kind === 'psalm' ? JSON.stringify(psalm) : undefined}
+  hidden
+>
+  {tier && (
+    <>
+      <div class="wash" aria-hidden="true"></div>
+      <div class="veil" aria-hidden="true"></div>
+    </>
+  )}
+  <p class="mine-line">
+    <span class="you-chip" aria-hidden="true">You</span>
+    {kind === 'psalm' ? (
+      <span class="mine-say">
+        <span data-mine-say></span>{' '}
+        <a class="mine-go" data-mine-href href={quizHref(quiz)}>See your result</a>
+      </span>
+    ) : (
+      <span class="mine-say">
+        {marks && 'Your answers are marked. '}From your result on <span data-mine-day></span>.{' '}
+        <a class="mine-go" data-mine-href href={quizHref(quiz)}>See your result</a>
+      </span>
+    )}
+  </p>
+
+  {kind === 'axis' && bipolar && group && (
+    <p class="mine-read">Where you landed: <b data-mine-word></b></p>
+  )}
+
+  {tier && (
+    <>
+      {/* The category's own row from the result page's ranking, with its place said out of
+          how many there are, since here it stands alone. Styles: .tier in site.css. */}
+      <ol class="stack mine-stack">
+        <li class="tier" data-mine-tier>
+          <div class="tier-head">
+            <span class="tier-rank" data-mine-rank></span>
+            <span class="tier-name">{cap(group.name)}</span>
+            <span class="tier-strength" data-mine-word></span>
+          </div>
+          <div class="tier-track" role="img" data-mine-track>
+            <span class="tier-fill"></span>
+          </div>
+        </li>
+      </ol>
+      {/* What a low row means, where the quiz says it: printed only when this one came out
+          low, as the result page prints it only where a low row is shown. */}
+      {quiz.notes?.low && <p class="mine-low" data-mine-low hidden>{quiz.notes.low}</p>}
+    </>
+  )}
+</div>
+
+{import.meta.env.DEV && (
+  /* Development only, and compiled out of anything that is ever served, like the result
+     page's ?took=1: ?mine=<code> makes this tab hold that result, so the page can be looked
+     at (and captured headless) as a reader who has one. &at=<ISO date> also puts it on the
+     shelf with that date; ?mine=0 forgets the tab's note. Inline, so it runs before the
+     module below reads anything. */
+  <script is:inline define:vars={{ devSlug: quiz.slug }}>
+    try {
+      var devMine = new URLSearchParams(location.search);
+      var devCode = devMine.get('mine');
+      if (devCode === '0') sessionStorage.removeItem('ww:took:' + devSlug);
+      else if (devCode) {
+        sessionStorage.setItem('ww:took:' + devSlug, devCode.toUpperCase());
+        var devAt = devMine.get('at');
+        if (devAt) {
+          var devShelf = JSON.parse(localStorage.getItem('ww.shelf.v1') || '[]');
+          devShelf.unshift({ quiz: devSlug, code: devCode.toUpperCase(), at: new Date(devAt).toISOString() });
+          localStorage.setItem('ww.shelf.v1', JSON.stringify(devShelf));
+        }
+      }
+    } catch (e) {}
+  </script>
+)}
+
+<script>
+  import { dayOf, latestFor, mineFor, resultHref, stepOf } from '../lib/mine';
+
+  const box = document.querySelector<HTMLElement>('[data-mine]');
+  if (box) {
+    try {
+      show(box);
+    } catch {
+      /* a page that cannot find the reader's answers is simply the page it always was */
+    }
+  }
+
+  function show(box: HTMLElement): void {
+    const d = box.dataset;
+    const quiz = d.quiz ?? '';
+    /* What the result link needs to print the code a person sees (engine/links.ts). */
+    const linkQuiz = { codePrefix: d.prefix ?? '', shortLinks: d.short !== undefined };
+    const link = box.querySelector<HTMLAnchorElement>('[data-mine-href]');
+
+    /*
+     * A reading's code is the situation, never the answers: 'PS' and the situation's key
+     * (strategies/reading.ts, situationFor). The line shows only when the reader's LATEST
+     * Psalm result names this psalm.
+     */
+    if (d.mine === 'psalm') {
+      const found = latestFor(quiz, raw => {
+        const up = String(raw).trim().toUpperCase();
+        return /^PS\d{1,3}[A-Z]?$/.test(up) ? up : null;
+      });
+      const says = JSON.parse(d.psalm || '[]') as Array<{ code: string; say: string }>;
+      const hit = found ? says.find(s => s.code === found.code) : undefined;
+      const say = box.querySelector('[data-mine-say]');
+      if (!found || !hit || !say || !link) return;
+      say.textContent = hit.say;
+      link.href = resultHref(quiz, found.code, linkQuiz);
+      box.hidden = false;
+      return;
+    }
+
+    const mine = mineFor(quiz, {
+      radix: Number(d.radix),
+      slots: Number(d.slots),
+      prefix: d.prefix ?? ''
+    });
+    if (!mine) return;
+
+    const day = box.querySelector('[data-mine-day]');
+    if (day) day.textContent = dayOf(mine.at);
+    if (link) link.href = resultHref(quiz, mine.code, linkQuiz);
+
+    const words = JSON.parse(d.words || '[]');
+
+    if (d.mine === 'axis') {
+      const i = Number(d.index);
+      const value = mine.values[i];
+      if (value === undefined) return;
+      const step = stepOf(value, mine.steps);
+      const word: string = words[step] ?? '';
+      const said = box.querySelector<HTMLElement>('[data-mine-word]');
+      if (said) said.textContent = word;
+      const sides = JSON.parse(d.sides || '[]') as string[];
+      if (said && sides[step]) said.dataset.side = sides[step];
+
+      const row = box.querySelector<HTMLElement>('[data-mine-tier]');
+      if (row) {
+        /* The place in the reader's own ranking: highest first, ties by name, as
+           strategies/category.ts ranks them. */
+        const names = JSON.parse(d.names || '[]') as string[];
+        const order = names
+          .map((name, j) => ({ j, name, score: mine.values[j] ?? 50 }))
+          .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
+        const rank = order.findIndex(r => r.j === i) + 1;
+        const place = box.querySelector('[data-mine-rank]');
+        if (place) place.textContent = `${rank} of ${names.length}`;
+        /* The bar is the pull above no-net-agreement, exactly as CategoryStack draws it. */
+        row.style.setProperty('--v', String(Math.max(0, (value - 50) * 2)));
+        row.classList.toggle('is-below', value < 50);
+        box
+          .querySelector('[data-mine-track]')
+          ?.setAttribute('aria-label', `${names[i] ?? ''}: ${word}, ranked ${rank} of ${names.length}.`);
+        if (value < 50) {
+          const low = box.querySelector<HTMLElement>('[data-mine-low]');
+          if (low) low.hidden = false;
+        }
+      }
+    }
+
+    /*
+     * The marks, wherever the page drew them: RailStack's rails, the figure page's tally,
+     * the axis page's map. Each says which group it is. A mark that belongs inside a component
+     * which carries nothing of the reader's (the map) is printed beside it, in the element
+     * marked data-you-host, and moved into place here (data-you-into).
+     */
+    document.querySelectorAll<HTMLElement>('[data-you-axis]').forEach(mark => {
+      const i = Number(mark.dataset.youAxis);
+      const value = mine.values[i];
+      if (value === undefined) return;
+      const into = mark.dataset.youInto;
+      if (into) {
+        const target = mark.closest('[data-you-host]')?.querySelector(into);
+        if (!target) return;
+        target.append(mark);
+      }
+      const step = stepOf(value, mine.steps);
+      /* The rails and the tally draw from the integer step; the map draws every outcome at
+         its score, so the reader goes there at theirs. */
+      const at = mark.dataset.youGeo === 'value' ? value : (step / mine.steps) * 100;
+      mark.style.setProperty('--you', String(at));
+      mark.hidden = false;
+
+      const rail = Array.isArray(words[i]) ? (words[i][step] as string | undefined) : undefined;
+      const track = mark.closest('[role="img"]');
+      const label = track?.getAttribute('aria-label');
+      if (track && label && rail) track.setAttribute('aria-label', `${label}. Your answers: ${rail}`);
+    });
+
+    box.hidden = false;
+  }
+</script>

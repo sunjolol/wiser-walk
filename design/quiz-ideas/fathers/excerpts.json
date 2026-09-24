@@ -1,5 +1,5 @@
 {
- "_how": "Display lines, hand-picked from the research quote. Unlisted cells: a clean quote (under 33 words, whole sentences) shows whole; anything else is hidden (still scored). Values: '=' whole quote, '-' hidden, [start, end] the verbatim stretch from the first phrase to the end of the second ('' = to the end), optional third item {cap:true} to capitalise a first letter when the stretch starts mid-sentence, {fix:[[from,to],...]} only for capitals on pronouns for God. {stop:true} ends a stretch that stops at a comma or semicolon with a full stop. {note:'...'} prints a short fairness note under the line. {by:'...'} says who recorded words that are not the person's own pen. {use:{quote,work}} swaps in a line on the same position from research/figures (read in the source there).",
+ "_how": "Display lines, hand-picked from the research quote. Unlisted cells: a clean quote (under 33 words, whole sentences) shows whole; anything else is hidden (still scored). Values: '=' whole quote, '-' hidden, [start, end] the verbatim stretch from the first phrase to the end of the second ('' = to the end), optional third item {cap:true} to capitalise a first letter when the stretch starts mid-sentence, {fix:[[from,to],...]} only for capitals on pronouns for God, and for typing marks a plain-text copy spells differently (a '--' for a dash, small capitals at the start of a book). Every shown line was checked against its source page (VERIFY.md). {stop:true} ends a stretch that stops at a comma or semicolon with a full stop. {note:'...'} prints a short fairness note under the line. {by:'...'} says who recorded words that are not the person's own pen. {use:{quote,work}} swaps in a line on the same position from research/figures (read in the source there).",
  "augustine.learning": "=",
  "augustine.anger": [
   "In our ethics",
@@ -80,7 +80,10 @@
  ],
  "tertullian.pure": [
   "Far, far from Christ's betrothed",
-  ""
+  "",
+  {
+   "note": "He wrote this against a bishop who pardoned adultery after penance."
+  }
  ],
  "tertullian.war": [
   "the Lord afterward",
@@ -101,16 +104,13 @@
  ],
  "jerome.nature": "-",
  "jerome.calm": "-",
- "jerome.mystery": [
-  "I beg of you, my dear brother",
-  "to seek nothing else."
- ],
+ "jerome.mystery": "-",
  "jerome.calling": [
   "should your father prostrate himself",
   "go your way.",
   {
    "cap": true,
-   "note": "He wrote this in his twenties. Years later he called that letter the showy work of a young man."
+   "note": "He wrote this as a young man. Years later he said he had decked that letter out with the flourishes of the schools."
   }
  ],
  "jerome.pure": [
@@ -166,13 +166,12 @@
   "proves it by the fact."
  ],
  "ambrose.deeper": "-",
- "ambrose.pure": [
-  "with proud eyes and puffed-up hearts",
-  "",
-  {
-   "cap": true
+ "ambrose.pure": {
+  "use": {
+   "quote": "I dare not offer the sacrifice if you intend to be present. Is that which is not allowed after shedding the blood of one innocent person, allowed after shedding the blood of many? I do not think so.",
+   "work": "Letter 51, to the Emperor Theodosius"
   }
- ],
+ },
  "ambrose.war": [
   "For courage, which in war",
   "is full of justice",
@@ -452,7 +451,7 @@
    "fix": [
     [
      "army--an army of piety--by",
-     "army (an army of piety) by"
+     "army — an army of piety — by"
     ]
    ]
   }
@@ -551,7 +550,20 @@
    "by": "as Athanasius recorded his words"
   }
  ],
- "antony.mystery": "=",
+ "antony.quiet": [
+  "Put no confidence",
+  "",
+  {
+   "by": "as the desert monks remembered it"
+  }
+ ],
+ "antony.mystery": [
+  "Abba Joseph saith",
+  "",
+  {
+   "by": "as the desert monks remembered it"
+  }
+ ],
  "antony.effort": [
   "Wherefore virtue has need at our hands of willingness alone",
   "formed from us.",
@@ -662,12 +674,20 @@
   ""
  ],
  "justin.nature": "-",
- "justin.mystery": {
-  "use": {
-   "quote": "Reason directs those who are truly pious and philosophical to honour and love only what is true, declining to follow traditional opinions, if these be worthless.",
-   "work": "First Apology"
+ "justin.mystery": [
+  "philosophy is, in fact, the greatest possession",
+  "alone commends us",
+  {
+   "cap": true,
+   "stop": true,
+   "fix": [
+    [
+     "to whom it leads us",
+     "to Whom it leads us"
+    ]
+   ]
   }
- },
+ ],
  "justin.pure": "-",
  "justin.effort": "-",
  "justin.all": "-",
@@ -766,6 +786,7 @@
  ],
  "benedict.effort": "=",
  "boethius.quiet": "-",
+ "boethius.surplus": "-",
  "boethius.learning": [
   "examine carefully",
   "",

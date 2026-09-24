@@ -35,9 +35,11 @@ import { ACCOUNTS_VISIBLE } from '../lib/account/config';
 interface Props {
   quiz: Quiz;
   view: ResultView;
+  /** The code this page's links print (links.ts linkCodeFor): the short one where there is one. */
+  linkCode?: string;
 }
 
-const { quiz, view } = Astro.props;
+const { quiz, view, linkCode = view.code } = Astro.props;
 
 // No way in for the public, no box. A signed-in browser does not need one either.
 if (!ACCOUNTS_VISIBLE) return null;
@@ -46,14 +48,14 @@ if (!ACCOUNTS_VISIBLE) return null;
  * Log in comes back here. The log-in page runs `next` through safeNext(), which takes a
  * plain path on this site and nothing else.
  */
-const logIn = `/account/sign-in/?next=${encodeURIComponent(resultHref(quiz, view.code))}`;
+const logIn = `/account/sign-in/?next=${encodeURIComponent(resultHref(quiz, linkCode))}`;
 
 /*
  * A visitor who takes a comparable quiz lands beside the friend who sent it, which is the
  * same invite the share block carries. A quiz whose results are never set side by side (a
  * reading) sends them to its plain start.
  */
-const take = isComparable(quiz) ? inviteHref(quiz, view.code) : quizHref(quiz);
+const take = isComparable(quiz) ? inviteHref(quiz, linkCode) : quizHref(quiz);
 ---
 <section class="save dark" id="save" data-who="visitor" aria-labelledby="save-h">
   <div class="dark-ghost" aria-hidden="true">yours</div>

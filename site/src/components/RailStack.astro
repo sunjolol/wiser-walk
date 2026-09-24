@@ -27,9 +27,20 @@ interface Props {
    * and every rail it draws is exactly what it was.
    */
   masks?: AxisMask[];
+  /**
+   * Room for the READER's own answers, on a page that draws an outcome (a tradition, a
+   * figure). A hook only: every rail that has a position to be measured against carries a
+   * hidden "You" marker, which says which axis it is. The page's script (MineNote.astro, with
+   * lib/mine.ts) fills the markers in and shows them when this device holds a result, and
+   * leaves them hidden otherwise. Their look lives in pages/mine.css.
+   *
+   * The result page passes nothing here, and its rails come out byte for byte as they were:
+   * the hook is an expression that renders nothing, hung with no whitespace around it.
+   */
+  you?: boolean;
 }
 
-const { quiz, view, linked = true, masks } = Astro.props;
+const { quiz, view, linked = true, masks, you = false } = Astro.props;
 
 /** The reading beside an unplaced rail: the two honest sentences, never a band adjective. */
 const UNSHOWN = { none: 'not shown in the text', both: 'recorded at both ends' } as const;
@@ -98,7 +109,11 @@ const zoneStyle = `--zone-lo:${zoneLo};--zone-hi:${zoneHi}`;
             <span class="rail-zone" aria-hidden="true"></span>
             <span class="rail-spine" aria-hidden="true"></span>
             {!row.noClaim && <span class="rail-tint" aria-hidden="true"></span>}
-            <span class="rail-knob" aria-hidden="true"></span>
+            <span class="rail-knob" aria-hidden="true"></span>{you && !unshown && (
+              /* Only where the outcome has a position: a reader's mark on a rail the source
+                 leaves blank would stand alone, and read as the outcome's own. */
+              <span class="you-mark" data-you-axis={i} hidden aria-hidden="true"><span class="you-tag">You</span></span>
+            )}
           </div>
 
           <p class="rail-poles">

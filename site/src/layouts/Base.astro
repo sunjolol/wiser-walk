@@ -37,11 +37,17 @@ export interface Props {
    */
   breadcrumbs?: Array<{ name: string; url: string }> | null;
   ogType?: string;
+  /**
+   * The page's own social card, where it has a better one than its path would get: a result
+   * page passes the card of the outcome it names (seo.ts resultCardFor), so a shared result
+   * link shows what the person got. A path under /og/, like ogImageFor's.
+   */
+  ogImage?: string;
 }
 
 const {
   title, description, noindex = false, jsonLd = null, breadcrumbs = null, ogType = 'website',
-  referrer = null
+  referrer = null, ogImage: ownCard
 } = Astro.props;
 
 const breadcrumbLd =
@@ -77,7 +83,7 @@ const metaDescription = seo ? seo.description : description;
 /* What a feed shows: the search title where there is one (it is the inviting one), and the
    page's own card. Absolute URLs, because a crawler does not resolve a relative image. */
 const socialTitle = seo ? seo.title : title;
-const ogImage = new URL(ogImageFor(Astro.url.pathname), Astro.site).href;
+const ogImage = new URL(ownCard ?? ogImageFor(Astro.url.pathname), Astro.site).href;
 
 const here = Astro.url.pathname;
 // Finished quizzes before drafts, here as on the home page.

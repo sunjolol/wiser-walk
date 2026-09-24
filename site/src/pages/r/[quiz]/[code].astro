@@ -15,6 +15,10 @@ import ReadCard from '../../../components/ReadCard.astro';
 import PsalmReading from '../../../components/PsalmReading.astro';
 import { QUIZZES, getQuiz, resultFor, decodeFor, outcomeHref } from '../../../lib/engine/registry';
 import { groupNoteFor, outcomeNounPlural, rankWord } from '../../../lib/engine/types';
+import { linkCodeFor, resolveCode } from '../../../lib/engine/links';
+import { readEnv } from '../../../lib/email/env';
+// The card a shared link shows: the outcome this result names, where one was drawn.
+import { resultCardFor } from '../../../lib/seo';
 import { ACCOUNTS_VISIBLE } from '../../../lib/account/config';
 import { artFor } from '../../../lib/art';
 import { READING } from '../../../lib/strategies/reading';
@@ -29,12 +33,21 @@ export const prerender = false;
 
 const quiz = getQuiz(Astro.params.quiz);
 const raw = String(Astro.params.code ?? '').toUpperCase();
-const values = quiz ? decodeFor(quiz, raw) : null;
+/*
+ * The URL may carry the canonical code, the shorter public one, or a six-character short
+ * link (engine/links.ts). All three come back as the canonical code, so everything below,
+ * the "just took it" note included, sees the code it always saw.
+ */
+const code = quiz ? await resolveCode(quiz, raw, readEnv(Astro.locals)) : null;
+const values = quiz && code ? decodeFor(quiz, code) : null;
 
 if (quiz && values) Astro.response.headers.set('cache-control', 'public, max-age=600');
 else Astro.response.status = 404;
 
 const view = quiz && values ? resultFor(quiz, values) : null;
+
+/** The code this page's own links print: the one it was opened by, or its public code. */
+const linkCode = quiz && view ? linkCodeFor(quiz, raw, view.code) : '';
 
 // Articles that speak to this quiz, so a result is a doorway rather than a dead end.
 const related = quiz
@@ -165,6 +178,7 @@ const description = reading
     description={description}
     noindex={true}
     ogType="article"
+    ogImage={resultCardFor(quiz, view) ?? undefined}
   >
     {/*
       THE DAWN PASS, 2026-09-21. This was the last band on the site still wearing the pale
@@ -426,14 +440,14 @@ const description = reading
       </section>
     )}
 
-    <ShareBlock quiz={quiz} view={view} origin={Astro.site!.origin} line={readingLine} />
+    <ShareBlock quiz={quiz} view={view} origin={Astro.site!.origin} line={readingLine} linkCode={linkCode} />
 
     {/*
       Save it, or take it yourself: the one ask on a result page, for every shape, a reading
       too. It sends nothing about the result anywhere; the result is already on this device,
       and the account picks it up from there once a password is chosen.
     */}
-    <SaveResult quiz={quiz} view={view} />
+    <SaveResult quiz={quiz} view={view} linkCode={linkCode} />
 
     {/*
       The way on. A result used to end on the email form and, for some quizzes, three grey
@@ -471,8 +485,8 @@ const description = reading
     <div class="prose">
       <h1>That link is not a valid result</h1>
       <p>
-        Result codes are exact: one wrong character and there is no way to recover the
-        answers, because nothing about your result is stored on our side.
+        Result codes are exact. One wrong character and there is no way to recover the
+        answers.
       </p>
       <p>
         If someone sent you this link, ask them for it again — and check that nothing was

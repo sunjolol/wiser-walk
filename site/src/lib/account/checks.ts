@@ -338,6 +338,54 @@ export const checkTables: CheckFn = async (fetchImpl, env) => {
   return { step, name, state: 'ok', say: 'The account tables are there and answering.' };
 };
 
+/**
+ * Step 7 as well. The table behind the six-character result links (engine/links.ts).
+ *
+ * A line of its own rather than a third table in the check above: it came later, so the
+ * owner may have run the old file and needs telling to run the new one, and without it
+ * nothing breaks. Results just keep their long links.
+ */
+export const checkShortLinks: CheckFn = async (fetchImpl, env) => {
+  const step = 7;
+  const name = 'Short result links';
+  const base = projectUrl(env);
+  const secret = trim(env.SUPABASE_SECRET_KEY);
+  if (!base || !secret) {
+    return { step, name, state: 'todo', say: 'Nothing to check yet. Set the website keys and the secret key first.' };
+  }
+
+  const res = await ask(fetchImpl, `${base}/rest/v1/short_links?select=code&limit=1`, { apikey: secret });
+  if (!res) return { step, name, state: 'bad', say: UNREACHABLE };
+  if (res.status === 540) return { step, name, state: 'bad', say: PAUSED };
+  if (res.status === 401 || res.status === 403) {
+    const body = (await res.json().catch(() => null)) as { code?: unknown } | null;
+    if (body?.code === '42501') {
+      return {
+        step,
+        name,
+        state: 'todo',
+        say: 'The table for short links is there, but the site is not yet allowed to use it. In Supabase open the SQL Editor, paste the whole of the schema file again, and press Run.'
+      };
+    }
+    return {
+      step,
+      name,
+      state: 'bad',
+      say: 'Supabase refused the secret key. Copy it again from the API Keys screen, paste it into Vercel as SUPABASE_SECRET_KEY, and redeploy.'
+    };
+  }
+  if (res.status === 404 || res.status === 406) {
+    return {
+      step,
+      name,
+      state: 'todo',
+      say: 'The table for short result links is not there yet, so results use their long links. In Supabase open the SQL Editor, paste the whole of the schema file, and press Run. It is safe to run twice.'
+    };
+  }
+  if (res.status !== 200) return { step, name, state: 'bad', say: UNREACHABLE };
+  return { step, name, state: 'ok', say: 'The table for short result links is there and answering.' };
+};
+
 /** Step 15. Has Supabase ever actually asked us to send an email, and did it go? */
 export const checkHookFired: CheckFn = async (fetchImpl, env) => {
   const step = 15;
@@ -537,6 +585,7 @@ export const ALL_CHECKS: CheckFn[] = [
   checkHookSecret,
   checkProject,
   checkTables,
+  checkShortLinks,
   checkHookFired,
   checkSending,
   checkRedeploy

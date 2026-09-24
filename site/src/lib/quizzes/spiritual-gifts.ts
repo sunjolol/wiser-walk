@@ -1093,6 +1093,7 @@ export const spiritualGifts: Quiz = {
   },
   shareTitle: 'Where my answers pointed: spiritual gifts',
   codePrefix: 'SG',
+  shortLinks: true,
 
   /**
    * The honest frame, in the engine's generic slots: the intro before a reader starts, the

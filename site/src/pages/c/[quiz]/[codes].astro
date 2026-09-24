@@ -25,9 +25,11 @@ import RailOverlay from '../../../components/RailOverlay.astro';
 import CategoryStack from '../../../components/CategoryStack.astro';
 import NextUp from '../../../components/NextUp.astro';
 import {
-  QUIZZES, getQuiz, parseCodes, compare, resultHref, groupHref, inviteHref
+  QUIZZES, getQuiz, parseCodes, compare, resultHref, groupHref, inviteHref, CODE_SEPARATOR, MAX_CODES
 } from '../../../lib/engine/registry';
 import { groupNounPlural } from '../../../lib/engine/types';
+import { linkCodeFor, resolveCode } from '../../../lib/engine/links';
+import { readEnv } from '../../../lib/email/env';
 import { firstSentence } from '../../../lib/prose';
 import { artFor } from '../../../lib/art';
 import { liveGames } from '../../../lib/games';
@@ -35,17 +37,30 @@ import { liveGames } from '../../../lib/games';
 export const prerender = false;
 
 const quiz = getQuiz(Astro.params.quiz);
-const sheets = quiz ? parseCodes(quiz, String(Astro.params.codes ?? '')) : null;
+/*
+ * Each half may be a canonical code, a shorter public one or a six-character short link,
+ * and the two may differ (engine/links.ts). Each is turned into its canonical code first,
+ * and the pair then goes through the same guard as ever. Either half failing fails the page.
+ */
+const parts = String(Astro.params.codes ?? '').split(CODE_SEPARATOR);
+const env = readEnv(Astro.locals);
+const canon = quiz && parts.length === MAX_CODES
+  ? await Promise.all(parts.map(p => resolveCode(quiz, p, env)))
+  : null;
+const sheets = quiz && canon?.every(Boolean) ? parseCodes(quiz, canon.join(CODE_SEPARATOR)) : null;
 
 if (quiz && sheets) Astro.response.headers.set('cache-control', 'public, max-age=600');
 else Astro.response.status = 404;
 
 const cmp = quiz && sheets ? compare(quiz, sheets[0]!, sheets[1]!) : null;
 
-// Re-encoded from the decoded scores, so the page's own links are the canonical codes
-// whatever case or padding arrived in the URL.
+// Re-encoded from the decoded scores, so these are the canonical codes whatever case,
+// padding or form arrived in the URL. The "which one is you" note is keyed on them.
 const codeA = cmp?.a.code ?? '';
 const codeB = cmp?.b.code ?? '';
+// What the page's own links print: each half as it came, or its public code.
+const linkA = quiz && cmp ? linkCodeFor(quiz, parts[0] ?? '', codeA) : '';
+const linkB = quiz && cmp ? linkCodeFor(quiz, parts[1] ?? '', codeB) : '';
 
 const heading =
   cmp?.shape === 'bipolar'
@@ -91,8 +106,8 @@ const widestGroup =
     : undefined;
 const widestParts = widestGroup?.summaryParts;
 
-const inviteUrlA = quiz ? `${Astro.site!.origin}${inviteHref(quiz, codeA)}` : '';
-const inviteUrlB = quiz ? `${Astro.site!.origin}${inviteHref(quiz, codeB)}` : '';
+const inviteUrlA = quiz ? `${Astro.site!.origin}${inviteHref(quiz, linkA)}` : '';
+const inviteUrlB = quiz ? `${Astro.site!.origin}${inviteHref(quiz, linkB)}` : '';
 
 /* The way on, as on a single result: the other quizzes and the games as rooms. */
 const otherQuizzes = quiz ? QUIZZES.filter(q => q.slug !== quiz.slug) : [];
@@ -228,9 +243,9 @@ const tiles = quiz && cmp
     <section>
       <SectionHead title="Each on its own" kicker="The full result behind each code" />
       <div class="btn-row">
-        <a class="btn ghost" href={resultHref(quiz, codeA)}
+        <a class="btn ghost" href={resultHref(quiz, linkA)}
            data-who="a" data-self="Your result" data-other="Their result">The first result</a>
-        <a class="btn ghost" href={resultHref(quiz, codeB)}
+        <a class="btn ghost" href={resultHref(quiz, linkB)}
            data-who="b" data-self="Your result" data-other="Their result">The second result</a>
       </div>
     </section>
@@ -328,9 +343,8 @@ const tiles = quiz && cmp
     <div class="prose">
       <h1>That link is not a valid comparison</h1>
       <p>
-        A comparison link carries two result codes, joined by a dot. Both have to be exact:
-        one wrong character and there is no way to recover the answers, because nothing
-        about either result is stored on our side.
+        A comparison link carries two result codes, joined by a dot. Both have to be exact.
+        One wrong character and there is no way to recover the answers.
       </p>
       <p>
         If someone sent you this link, ask them for it again, and check that nothing was cut

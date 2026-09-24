@@ -1834,6 +1834,277 @@ console.log('18. which psalm are you living right now?');
   else ok(`20,000 random walks: at most ${longest} questions, every situation offered, ${(100 * empty / N).toFixed(1)}% meet the honest "the letter doesn't name it" page`);
 }
 
+// ----------------------------------- 18b. short result links: three forms, one result
+/*
+ * A result has one canonical code and up to three public forms (engine/links.ts): the code
+ * itself, the shorter stripped one, and a six-character short link kept in Supabase. What can
+ * go wrong is a form that does not come back to its result, a form of one quiz that opens a
+ * result under another, a short link that spells something, or a missing table that breaks
+ * a page instead of costing a longer link. Supabase is faked here: nothing leaves the machine.
+ */
+console.log('18b. short result links');
+{
+  const bundleOne = async (entry, name) => {
+    const outfile = resolve(ROOT, `node_modules/.engine-test-${name}.mjs`);
+    await build({
+      entryPoints: [resolve(ROOT, entry)], outfile, bundle: true, format: 'esm',
+      platform: 'node', target: 'node22', logLevel: 'silent'
+    });
+    const mod = await import(pathToFileURL(outfile).href);
+    rmSync(outfile, { force: true });
+    return mod;
+  };
+  const L = await bundleOne('src/lib/engine/links.ts', 'links');
+  const route = await bundleOne('src/pages/api/short.ts', 'short-route');
+  const checks = await bundleOne('src/lib/account/checks.ts', 'short-checks');
+
+  const ENV = { PUBLIC_SUPABASE_URL: 'https://demo.supabase.co', SUPABASE_SECRET_KEY: 'sb_secret_demo' };
+  const NO_ENV = { PUBLIC_SUPABASE_URL: '', PUBLIC_SUPABASE_KEY: '', SUPABASE_SECRET_KEY: '' };
+
+  /** Supabase's table, faked: a Map answering PostgREST's read and write as PostgREST does. */
+  const supabase = (rows = new Map()) => {
+    const calls = [];
+    const fetchImpl = async (input, init = {}) => {
+      const u = new URL(typeof input === 'string' ? input : input.url);
+      const method = (init.method || 'GET').toUpperCase();
+      calls.push({ method, url: u.href, headers: init.headers || {} });
+      const answer = (status, body) => ({ status, ok: status < 300, json: async () => body });
+      if (init.headers?.apikey !== ENV.SUPABASE_SECRET_KEY || init.headers?.authorization) {
+        return answer(401, { message: 'wrong key, or the key sent as a bearer token' });
+      }
+      if (u.pathname !== '/rest/v1/short_links') return answer(404, { code: 'PGRST205' });
+      if (method === 'GET') {
+        const code = (u.searchParams.get('code') || '').replace(/^eq\./, '');
+        const row = rows.get(code);
+        return answer(200, row ? [{ quiz: row.quiz, long_code: row.long_code }] : []);
+      }
+      const body = JSON.parse(init.body);
+      if (!/^[0-9A-Z]{6}$/.test(body.code)) return answer(400, { code: '23514' });
+      const twin = [...rows.values()].some(r => r.quiz === body.quiz && r.long_code === body.long_code);
+      if (rows.has(body.code) || twin) return answer(409, { code: '23505' });
+      rows.set(body.code, { quiz: body.quiz, long_code: body.long_code });
+      return answer(201, null);
+    };
+    return { fetchImpl, rows, calls };
+  };
+  const noTable = async () => ({ status: 404, ok: false, json: async () => ({ code: 'PGRST205' }) });
+  const offline = async () => { throw new Error('offline'); };
+
+  // A handful of real results per quiz: the corners, the middle, and seeded random sheets.
+  let seed = 7;
+  const rand = () => (seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648;
+  const samples = q => {
+    const out = new Set();
+    const keep = make => {
+      try {
+        const code = make();
+        const values = decodeFor(q, code);
+        if (values && encodeFor(q, values) === code) out.add(code);
+      } catch { /* not a result this quiz can give */ }
+    };
+    if (q.strategy.shape === 'reading') {
+      // one code per situation, as far as the list goes
+      for (let i = 0; i < 500 && out.size === i; i++) keep(() => encodeFor(q, [i]));
+      return [...out];
+    }
+    [0, 50, 100].forEach(v => keep(() => encodeFor(q, q.groups.map(() => v))));
+    for (let i = 0; i < 40; i++) {
+      const sheet = q.items.map(() => [-2, -1, 0, 1, 2][Math.floor(rand() * 5)]);
+      keep(() => encodeFor(q, scoreQuiz(q, sheet)));
+    }
+    return [...out];
+  };
+  const codes = new Map(QUIZZES.map(q => [q.slug, samples(q)]));
+  for (const [slug, list] of codes) if (list.length < 3) fail(`${slug}: only ${list.length} sample results to test links with`);
+
+  // The kinds, as the file describes them. A new quiz lands in one of these and is checked.
+  const kinds = Object.fromEntries(QUIZZES.map(q => {
+    const c = codes.get(q.slug)[0];
+    return [q.slug, q.shortLinks ? 'short' : L.publicCodeSync(q, c) !== c ? 'strip' : 'same'];
+  }));
+  const want = { 'theology-compass': 'same', 'which-psalm': 'same', 'seven-deadly-sins': 'strip', 'bible-figure': 'strip', 'spiritual-gifts': 'short' };
+  for (const [slug, kind] of Object.entries(want)) {
+    if (kinds[slug] !== kind) fail(`${slug} hands out ${kinds[slug]} links, expected ${kind}`);
+  }
+  ok('Compass and Psalm keep their codes, the sins and the figures strip, the gifts get short links');
+
+  // Every form of every sample comes back to its result, and every public code is at most six.
+  const db = supabase();
+  const shortOf = new Map();
+  let bad = 0, n = 0;
+  for (const q of QUIZZES) {
+    for (const c of codes.get(q.slug)) {
+      n++;
+      const pub = L.publicCodeSync(q, c);
+      if (L.resolveCodeSync(q, c) !== c) { bad++; fail(`${q.slug}: ${c} does not resolve to itself`); }
+      if (L.resolveCodeSync(q, pub) !== c) { bad++; fail(`${q.slug}: public ${pub} does not resolve to ${c}`); }
+      if (L.resolveCodeSync(q, pub.toLowerCase()) !== c) { bad++; fail(`${q.slug}: ${pub} in lower case is refused`); }
+      if (!/^[0-9A-Z.]{1,96}$/.test(pub)) { bad++; fail(`${q.slug}: ${pub} would be refused by the shelf and the table`); }
+      if (kinds[q.slug] === 'strip' && pub.length !== 6) { bad++; fail(`${q.slug}: ${c} did not shorten (${pub})`); }
+      if (kinds[q.slug] === 'short') {
+        if (pub !== c) { bad++; fail(`${q.slug}: the sync public code is not the long one`); }
+        const s = await L.mintShortCode(q, c, ENV, db.fetchImpl);
+        if (!s || !L.SHORT_RE.test(s)) { bad++; fail(`${q.slug}: no short code for ${c}`); continue; }
+        if ([...s].some(ch => !L.SHORT_ALPHABET.includes(ch))) { bad++; fail(`${q.slug}: ${s} uses a letter outside the alphabet`); }
+        if (await L.resolveCode(q, s, ENV, db.fetchImpl) !== c) { bad++; fail(`${q.slug}: short ${s} does not resolve to ${c}`); }
+        if (await L.resolveCode(q, s.toLowerCase(), ENV, db.fetchImpl) !== c) { bad++; fail(`${q.slug}: ${s} in lower case is refused`); }
+        if (L.resolveCodeSync(q, s) !== null) { bad++; fail(`${q.slug}: ${s} was read with no table`); }
+        if (await L.mintShortCode(q, c, ENV, db.fetchImpl) !== s) { bad++; fail(`${q.slug}: a second ask gave another code`); }
+        shortOf.set(c, s);
+      } else if (pub.length > 6) { bad++; fail(`${q.slug}: public code ${pub} is longer than six`); }
+    }
+  }
+  if (!bad) ok(`${n} results: canonical, public and short forms all come back to the result; no public code is over six`);
+  const rowsPerResult = new Set([...db.rows.values()].map(r => r.quiz + ':' + r.long_code)).size;
+  if (rowsPerResult !== db.rows.size || db.rows.size !== shortOf.size) fail('a result has more than one short link');
+  else ok(`${db.rows.size} gifts results, one row each; asking again finds the same row`);
+  const vowel = [...db.rows.keys()].filter(k => /[AEIOU0134]/.test(k));
+  if (vowel.length) fail('short codes that could spell a word: ' + vowel.join(', '));
+  else ok('no short code has a vowel or a digit that passes for one');
+
+  // Junk is refused by every quiz, in every form.
+  const junk = ['', '!!!!!!', 'ZZZZZZ', 'ZZZZZZZ', 'ZZZZZZZZZZZZZZZZZZZZ', '...', 'AB CDE', 'x'.repeat(200)];
+  let leaked = 0;
+  for (const q of QUIZZES) {
+    for (const j of junk) {
+      if (L.resolveCodeSync(q, j) !== null) { leaked++; fail(`${q.slug} accepted junk ${JSON.stringify(j)}`); }
+      if (await L.resolveCode(q, j, ENV, db.fetchImpl) !== null) { leaked++; fail(`${q.slug} looked up junk ${JSON.stringify(j)}`); }
+    }
+    // A stripped code with the wrong letter in front is not this quiz's.
+    if (kinds[q.slug] === 'strip') {
+      const pub = L.publicCodeSync(q, codes.get(q.slug)[0]);
+      const other = (pub[0] === 'Q' ? 'R' : 'Q') + pub.slice(1);
+      if (L.resolveCodeSync(q, other) !== null) { leaked++; fail(`${q.slug} accepted ${other}`); }
+    }
+  }
+  if (!leaked) ok(`${junk.length} kinds of junk refused by every quiz, with and without the table`);
+
+  // No form of one quiz's result ever opens a result under another quiz.
+  let crossed = 0;
+  for (const a of QUIZZES) {
+    for (const b of QUIZZES) {
+      if (a === b) continue;
+      for (const c of codes.get(a.slug)) {
+        const forms = [c, L.publicCodeSync(a, c), shortOf.get(c)].filter(Boolean);
+        for (const f of forms) {
+          if (L.resolveCodeSync(b, f) !== null || (await L.resolveCode(b, f, ENV, db.fetchImpl)) !== null) {
+            crossed++;
+            if (crossed < 5) fail(`a ${a.slug} code (${f}) opened a result under ${b.slug}`);
+          }
+        }
+      }
+    }
+  }
+  // And a short link read by a quiz that also has short links, but not this row.
+  const gifts = getQuiz('spiritual-gifts');
+  const twin = { ...gifts, slug: 'gifts-twin' };
+  const oneShort = [...shortOf.values()][0];
+  if (await L.resolveCode(twin, oneShort, ENV, db.fetchImpl) !== null) { crossed++; fail('a short link opened under a quiz that does not own it'); }
+  if (!crossed) ok('no canonical, stripped or short code of one quiz opens a result under another');
+
+  // The fail-soft path: no key, no table, no network. Nothing throws, the long code works.
+  {
+    const c = codes.get('spiritual-gifts')[0];
+    const quiet = supabase();
+    let soft = 0;
+    if (await L.mintShortCode(gifts, c, NO_ENV, quiet.fetchImpl) !== null) { soft++; fail('a short code was made with no key'); }
+    if (quiet.calls.length) { soft++; fail('Supabase was asked with no key to ask it with'); }
+    if (await L.mintShortCode(gifts, c, ENV, noTable) !== null) { soft++; fail('a short code was made with no table'); }
+    if (await L.mintShortCode(gifts, c, ENV, offline) !== null) { soft++; fail('a short code was made offline'); }
+    if (await L.resolveCode(gifts, oneShort, NO_ENV, offline) !== null) { soft++; fail('a short link resolved with no key'); }
+    if (await L.resolveCode(gifts, oneShort, ENV, noTable) !== null) { soft++; fail('a short link resolved with no table'); }
+    if (await L.resolveCode(gifts, oneShort, ENV, offline) !== null) { soft++; fail('a short link resolved offline'); }
+    const counted = supabase();
+    for (const q of QUIZZES) {
+      const cc = codes.get(q.slug)[0];
+      if (await L.resolveCode(q, cc, NO_ENV, offline) !== cc) { soft++; fail(`${q.slug}: the long code needs Supabase`); }
+      if (await L.resolveCode(q, L.publicCodeSync(q, cc), ENV, counted.fetchImpl) !== cc) { soft++; fail(`${q.slug}: the public code failed`); }
+    }
+    if (counted.calls.length) { soft++; fail('a canonical or stripped code asked Supabase'); }
+    if (!soft) ok('no key, no table or no network: nothing made, nothing throws, and every long link still opens');
+  }
+
+  // A code taken by another result moves to the next salt; one taken by a twin tab is shared.
+  {
+    const c = codes.get('spiritual-gifts').at(-1);
+    const first = await L.shortCodeFor('spiritual-gifts', c, 0);
+    const second = await L.shortCodeFor('spiritual-gifts', c, 1);
+    const squat = supabase(new Map([[first, { quiz: 'spiritual-gifts', long_code: codes.get('spiritual-gifts')[1] }]]));
+    const got = await L.mintShortCode(gifts, c, ENV, squat.fetchImpl);
+    if (got !== second) fail(`a taken code was not stepped past (${got}, wanted ${second})`);
+    else if (await L.resolveCode(gifts, first, ENV, squat.fetchImpl) !== codes.get('spiritual-gifts')[1]) fail('the earlier row was disturbed');
+    else ok(`a taken code steps to the next salt (${first} to ${second}) and the earlier row still opens its own result`);
+
+    // Two tabs: the look finds nothing, the write loses to the other tab, the second look finds ours.
+    const race = supabase();
+    let looked = 0;
+    const racing = async (input, init = {}) => {
+      if ((init.method || 'GET') === 'GET' && looked++ === 0) {
+        race.rows.set(first, { quiz: 'spiritual-gifts', long_code: c });
+        return { status: 200, ok: true, json: async () => [] };
+      }
+      return race.fetchImpl(input, init);
+    };
+    if (await L.mintShortCode(gifts, c, ENV, racing) !== first) fail('two tabs finishing one result got two codes');
+    else ok('two tabs finishing the same result meet on one code');
+  }
+
+  // The route: what the runner and the share block actually call.
+  {
+    const c = codes.get('spiritual-gifts')[2];
+    const site = supabase();
+    const realFetch = globalThis.fetch;
+    globalThis.fetch = site.fetchImpl;
+    const call = async (method, { body, query = '', origin = 'https://wiserwalk.com', env = ENV } = {}) => {
+      const url = new URL('https://wiserwalk.com/api/short' + query);
+      const request = new Request(url, {
+        method,
+        headers: { 'content-type': 'application/json', ...(origin ? { origin } : {}) },
+        ...(body !== undefined ? { body: JSON.stringify(body) } : {})
+      });
+      const res = await route[method]({ request, url, locals: { runtime: { env } } });
+      return { status: res.status, body: await res.json() };
+    };
+    try {
+      const made = await call('POST', { body: { quiz: 'spiritual-gifts', code: c } });
+      const back = await call('GET', { query: `?quiz=spiritual-gifts&code=${made.body.short}` });
+      const checksRun = [
+        [(await call('POST', { body: { quiz: 'spiritual-gifts', code: c }, origin: 'https://evil.example.com' })).status, 403, 'another site'],
+        [(await call('POST', { body: { quiz: 'theology-compass', code: codes.get('theology-compass')[0] } })).status, 400, 'a quiz with no short links'],
+        [(await call('POST', { body: { quiz: 'spiritual-gifts', code: 'SGZZZZZZZZZZZZZZ' } })).status, 400, 'a code that does not decode'],
+        [(await call('POST', { body: { quiz: 'spiritual-gifts', code: codes.get('theology-compass')[0] } })).status, 400, 'another quiz\'s code'],
+        [(await call('POST', { body: { quiz: 'spiritual-gifts', code: c }, env: NO_ENV })).status, 503, 'no key yet'],
+        [made.status, 200, 'a real result'],
+        [back.status, 200, 'looking the short code up'],
+        [(await call('GET', { query: '?quiz=spiritual-gifts&code=ZZZZZZ' })).status, 404, 'a short code nobody made'],
+        [(await call('GET', { query: '?quiz=nope&code=ZZZZZZ' })).status, 404, 'a quiz that does not exist']
+      ];
+      let wrong = 0;
+      for (const [got, wantStatus, what] of checksRun) {
+        if (got !== wantStatus) { wrong++; fail(`/api/short, ${what}: ${got}, expected ${wantStatus}`); }
+      }
+      if (back.body.full !== c) { wrong++; fail(`/api/short GET gave ${back.body.full}, expected ${c}`); }
+      if (!wrong) ok(`/api/short: ${checksRun.length} requests answered as they should, and the short code reads back`);
+    } finally {
+      globalThis.fetch = realFetch;
+    }
+  }
+
+  // The setup page's line for it.
+  {
+    const t = [
+      [await checks.checkShortLinks(supabase().fetchImpl, { ...ENV, PUBLIC_SUPABASE_KEY: 'k' }), 'ok'],
+      [await checks.checkShortLinks(noTable, ENV), 'todo'],
+      [await checks.checkShortLinks(offline, ENV), 'bad'],
+      [await checks.checkShortLinks(offline, NO_ENV), 'todo']
+    ];
+    const off = t.filter(([c, s]) => c.state !== s || c.step !== 7 || /sb_secret/.test(c.say));
+    if (off.length) fail('the setup line for short links: ' + off.map(([c]) => c.state + ' ' + c.say).join(' | '));
+    else if (!checks.ALL_CHECKS.includes(checks.checkShortLinks)) fail('the short links line is not on the setup page');
+    else ok('the setup page has a line for short links: done, to do and needs a look, in plain words');
+  }
+}
+
 rmSync(OUT, { force: true });
 rmSync(OUT_TYPES, { force: true });
 

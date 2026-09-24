@@ -58,6 +58,12 @@ export const OVERRIDE = {
   // 'nature' now names the Bible outright (draft 3): only Antony and Isaac put creation level with Scripture.
   'nature chrysostom': 1, 'nature augustine': 1, 'nature cassian': null, 'nature boethius': null,
   'deeper augustine': 0, 'deeper jerome': 0, 'all jerome': -2, 'effort augustine': -2, 'places jerome': -1, 'dreams jerome': null,
+  // Verification pass (VERIFY.md). 'pure' now says "keep out people who openly live in serious wrongdoing", and the
+  // Fathers who fought the pure-church sects still barred open, unrepentant sinners: Augustine and Jerome lean against,
+  // Ambrose kept Theodosius from the Eucharist, Gregory of Nazianzus took the middle line, and Antony's saying is about
+  // taking back a brother who repented. If 'pure' is ever reworded back to the research claim (a church only for those
+  // who live up to its standards), drop this line: the research codes fit that wording.
+  'pure augustine': -1, 'pure jerome': -1, 'pure ambrose': 1, 'pure nazianzen': 0, 'pure antony': null,
 };
 
 const side = s => (s.side === 'agree' ? 1 : s.side === 'disagree' ? -1 : 0) * (s.side === 'mixed' ? 0 : s.strength);

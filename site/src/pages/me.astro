@@ -367,6 +367,8 @@ const games = liveGames();
   <script>
     import { getQuiz, resultFor, decodeFor, scoreQuiz, encodeFor } from '../lib/engine/registry';
     import { clearShelf, readableResults } from '../lib/shelf';
+    // The shorter code a link prints, where a quiz has one (engine/links.ts).
+    import { publicCodeSync } from '../lib/engine/links';
     // One tiny pure module: the reader of a 60-byte key. Everything that can actually talk
     // to an account is fetched on demand, below, and only when there is an account to talk
     // to.
@@ -486,7 +488,7 @@ const games = liveGames();
           pick(room, 'headline').textContent = view.headline;
           pick(room, 'summary').textContent = view.summary;
           pick(room, 'when').textContent = `Taken ${whenWords(latest.at)}`;
-          pick(room, 'see').setAttribute('href', `/r/${slug}/${latest.code}/`);
+          pick(room, 'see').setAttribute('href', `/r/${slug}/${publicCodeSync(quiz, latest.code)}/`);
 
           const past = pick(room, 'past');
           const older = runs.slice(1);
@@ -499,7 +501,7 @@ const games = liveGames();
             older.slice(0, SHOWN).forEach(run => {
               const li = document.createElement('li');
               const a = document.createElement('a');
-              a.href = `/r/${slug}/${run.code}/`;
+              a.href = `/r/${slug}/${publicCodeSync(quiz, run.code)}/`;
               a.textContent = whenExactly(run.at);
               li.appendChild(a);
               list.appendChild(li);

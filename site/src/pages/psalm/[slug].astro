@@ -28,8 +28,9 @@ import Hero from '../../components/Hero.astro';
 import SectionHead from '../../components/SectionHead.astro';
 import Icon from '../../components/Icon.astro';
 import CorrectionNote from '../../components/CorrectionNote.astro';
+import MineNote from '../../components/MineNote.astro';
 import { whichPsalm } from '../../lib/quizzes/which-psalm';
-import { READING, SITUATIONS, greekNumber, groupOf, psalmLinkFor } from '../../lib/strategies/reading';
+import { READING, SITUATIONS, codeFor, greekNumber, groupOf, psalmLinkFor } from '../../lib/strategies/reading';
 import type { Situation } from '../../lib/strategies/reading';
 import { quizHref } from '../../lib/engine/registry';
 import { artFor } from '../../lib/art';
@@ -143,6 +144,21 @@ const near = [...group.ids.slice(at + 1), ...group.ids.slice(0, at)]
   .filter(id => psalmLinkFor(id).href !== `/psalm/${n}/` && !READING.outcomes[id]!.set?.includes(n))
   .slice(0, 4);
 
+/*
+ * For a reader whose latest Psalm result is this psalm: the result codes that name it, and
+ * the one line each says. A result that leads with this psalm says so; the Songs of Ascents
+ * are one result for fifteen psalms, and each of their pages says which set it belongs to.
+ * The line says nothing else, because a reading's code carries the situation, never the
+ * answers (strategies/reading.ts).
+ */
+const mine = SITUATIONS.flatMap(id => {
+  const o = READING.outcomes[id]!;
+  if (o.set?.includes(n)) {
+    return [{ code: codeFor(id), say: 'Your answers pointed to the Songs of Ascents. This psalm is one of them.' }];
+  }
+  return o.psalm === n ? [{ code: codeFor(id), say: 'Your answers pointed to this psalm.' }] : [];
+});
+
 /* The band: the quiz's own picture when it has one; the dark ground when it has none. */
 const art = artFor(quiz.slug);
 
@@ -194,6 +210,9 @@ const breadcrumbs = [
   />
 
   <div class="ref ref--psalm">
+    {/* Hidden unless this device's latest Psalm result is this psalm (see `mine` above). */}
+    {mine.length > 0 && <MineNote quiz={quiz} kind="psalm" psalm={mine} />}
+
     <SectionHead title="When to pray it" kicker="St Athanasius, Letter to Marcellinus" />
     <p class="ps-intro">
       In the 300s, St Athanasius of Alexandria wrote a letter to his friend Marcellinus about

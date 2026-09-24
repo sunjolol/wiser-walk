@@ -9,6 +9,7 @@ import TraditionNeighbours from '../../components/TraditionNeighbours.astro';
 import CorrectionNote from '../../components/CorrectionNote.astro';
 import CompareBlock from '../../components/CompareBlock.astro';
 import CompassCard from '../../components/CompassCard.astro';
+import MineNote from '../../components/MineNote.astro';
 import { theologyCompass } from '../../lib/quizzes/theology-compass';
 import { groupHref, quizHref, resultFor } from '../../lib/engine/registry';
 import { clip } from '../../lib/seo';
@@ -331,7 +332,11 @@ const breadcrumbs = [
     <div class="panel layered ref-panel ref-panel--quiet">
       <div class="wash" aria-hidden="true"></div>
       <div class="veil" aria-hidden="true"></div>
-      <RailStack quiz={quiz} view={view} />
+      {/* A reader who has taken the Compass on this device sees their own answers marked on
+          these six rails, with one line saying so. Anyone else sees the rails as they were:
+          both are hidden until the script in MineNote finds a result. */}
+      <MineNote quiz={quiz} kind="rails" />
+      <RailStack quiz={quiz} view={view} you />
     </div>
 
     {neighbours.length > 0 && (

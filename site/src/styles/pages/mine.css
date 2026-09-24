@@ -1,0 +1,107 @@
+/*
+ * mine.css — the reader's own answers on the in-depth pages (components/MineNote.astro).
+ *
+ * A tradition, a figure, an axis or a psalm page is the same for everyone. When this device
+ * holds a result for the quiz, the page adds the reader to it: one line saying so, and a
+ * "You" mark on every rail that has something to be measured against. Nothing here draws
+ * unless that happens, so a reader who is only browsing sees the page exactly as it was.
+ *
+ * THE MARK MUST NOT READ AS THE OUTCOME'S OWN. An outcome's knob is a round disc in its
+ * pole's colour. The reader's mark is none of those things: a thin upright stem in the plain
+ * ink, crossing the track, with a small "You" tag on top. No blue, no orange, no disc, so a
+ * rail with both on it is two different shapes whatever the colours, and where the two land
+ * on the same place the knob still shows round the stem.
+ *
+ * Tokens only, so the dark theme and the dark panels (.dark re-points --ink and --panel)
+ * recolour all of it: dark ink on a light page, light ink on a dark one.
+ */
+
+/* Hidden means hidden, whatever a class further down says about display. */
+[data-mine][hidden], .you-mark[hidden], .mine-low[hidden] { display: none !important; }
+
+/* ------------------------------------------------------------------ the tag ---- */
+
+/* The same small pill in the line and on every mark, so the line is the mark's key. */
+.you-chip, .you-tag {
+  display: inline-block; padding: .24rem .5rem .22rem; border-radius: var(--r-pill);
+  background: var(--ink); color: var(--panel);
+  font-family: var(--ui); font-size: .56rem; font-weight: 700; line-height: 1;
+  letter-spacing: .14em; text-transform: uppercase; white-space: nowrap;
+}
+
+/* ------------------------------------------------------------------ the line ---- */
+
+.mine-line {
+  display: flex; align-items: flex-start; gap: .6rem; margin: 0;
+  font-family: var(--ui); font-size: .84rem; line-height: 1.5; color: var(--ink-soft);
+  text-wrap: pretty;
+}
+.mine-line .you-chip { flex: none; margin-top: .2rem; }
+.mine-say { min-width: 0; }
+.mine-go {
+  font-weight: 700; color: var(--accent); white-space: nowrap;
+  text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px;
+}
+.mine-go:hover { text-decoration-thickness: 2px; }
+
+/* above the rails, inside their panel, ruled off from the legend under it */
+.mine--rails { margin: 0 0 1.15rem; padding: 0 0 1rem; border-bottom: 1px solid var(--rule); }
+
+/* inside the axis page's dark map panel, between its kicker and the map */
+.mine--axis { margin: 1.1rem 0 0; }
+.mine-read {
+  margin: .55rem 0 0; font-family: var(--ui); font-size: .84rem; color: var(--ink-soft);
+}
+/* the band words, in the ink of the pole they lean to, as the result page's verdict is set;
+   the middle band names no pole, so it takes neither */
+.mine-read b {
+  font-family: var(--display); font-weight: 400; font-size: 1.3rem; line-height: 1.2;
+  color: var(--ink);
+}
+.mine-read b[data-side="left"] { color: var(--accent); }
+.mine-read b[data-side="right"] { color: var(--warn-ink); }
+.mine-read b[data-side="centre"] { font-style: italic; color: var(--ink-soft); }
+
+/* a category: its own quiet panel at the top of the page, with the result page's row in it */
+.mine--tier { margin-top: 1.5rem; }
+.mine-stack { margin-top: 1rem; }
+/* the name is capitalised once, in the markup; "capitalize" would print "The Word Of Wisdom" */
+.mine--tier .tier-name { text-transform: none; }
+.mine--tier .tier-rank { min-width: 0; white-space: nowrap; }
+.mine-low { margin: .9rem 0 0; font-size: .8rem; line-height: 1.55; color: var(--ink-mute); }
+
+/* a psalm: one line on its own card, above "When to pray it" */
+.mine--psalm {
+  margin: 1.5rem 0 0; padding: .85rem 1rem; border-radius: var(--r);
+  background: var(--panel); box-shadow: var(--lift);
+}
+@media (min-width: 40rem) { .mine--psalm { padding: .95rem 1.25rem; } }
+
+/* ------------------------------------------------------------------ the mark ---- */
+/*
+ * A stem at the reader's position, running from just above the track to just below it,
+ * with the tag standing on its top. The tag slides along its own width as the position runs
+ * from one end to the other (at 0 it hangs to the right of the stem, at 100 to the left), so
+ * it never leaves the track at either end. Each track sets --you in its own geometry.
+ */
+.you-mark {
+  position: absolute; z-index: 3; top: -9px; bottom: -4px; width: 2px; margin-left: -1px;
+  border-radius: 1px; background: var(--ink); pointer-events: none;
+}
+.you-tag {
+  position: absolute; bottom: 100%; left: 0; margin-bottom: 1px;
+  transform: translateX(calc(var(--you) * -1%));
+}
+
+/* RailStack's rails: the knob's own geometry, inset half a knob at each end */
+.rail-track > .you-mark { left: calc(var(--knob) / 2 + var(--run) * var(--you) / 100); }
+/* the figure page's tally: a plain percentage of the track, as its dot is placed */
+.tally-track > .you-mark { left: calc(var(--you) * 1%); top: -8px; bottom: -3px; }
+/* the axis page's map: inset half a dot, as its dots are placed */
+.amap-rail > .you-mark { left: calc(var(--dot) / 2 + var(--run) * var(--you) / 100); }
+
+/* Room for the tag, only on a rail whose mark is showing. A rail the outcome is not placed
+   on carries no mark, and keeps its own spacing rather than an empty gap. */
+.rail:has(> .rail-track > .you-mark:not([hidden])) .rail-head { margin-bottom: 1.75rem; }
+.tally-row:has(.you-mark:not([hidden])) .tally-track { margin-top: 1.35rem; }
+.amap:has(.you-mark:not([hidden])) .amap-ends { margin-bottom: 1.9rem; }

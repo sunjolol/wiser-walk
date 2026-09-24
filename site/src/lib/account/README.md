@@ -15,6 +15,20 @@ Two things to know before you begin.
 - Do the steps in order. They are ordered so that the parts with waiting in them are
   started first.
 
+## One more step, now that accounts are on: short result links
+
+A result link for the gifts quiz is sixteen characters long. The site can hand out a
+six-character link instead, but it needs one new table to keep them in. Until you add it,
+everything works and those results keep their long links.
+
+1. Open **supabase.com** and choose the project.
+2. In the left-hand menu, click **SQL Editor**, then **New query**.
+3. Paste the whole of `schema.sql` (the file in the same folder as these instructions)
+   and press **Run**. It is safe to run again: nothing you already have is touched.
+
+*Done when:* **Table Editor** lists `short_links`, and the line called **Short result
+links** on **https://wiserwalk.com/account/setup/** says done.
+
 ## How this goes live, in four moves
 
 Worth reading now, because it explains why the steps are safe to do in daylight on the real
@@ -266,7 +280,7 @@ GitHub, whichever is easier to open. Copy the whole file, paste it into the quer
 press **Run**. It is safe to run twice: running it again changes nothing.
 
 *Done when:* it reports success, and **Table Editor** lists `profiles`, `results`,
-`game_stats` and `auth_email_log`.
+`game_stats`, `auth_email_log` and `short_links`.
 
 ## 8. Set the password rules
 
@@ -374,9 +388,10 @@ before, which had none of these values.
 
 Open **https://wiserwalk.com/account/setup/**. Nothing on the site links to it.
 
-It runs eight checks on the parts a page can see: the two website values, the secret key
+It runs nine checks on the parts a page can see: the two website values, the secret key
 and the hook secret; whether the site was rebuilt after you set them; whether your Supabase
-project answers; whether the tables are there; whether the sending account takes our key
+project answers; whether the tables are there, including the one for short result links;
+whether the sending account takes our key
 (and, on Brevo, whether the address we send from is verified); and whether Supabase has
 ever asked us to send an email.
 
@@ -452,7 +467,7 @@ breaks if you never set it.
 
 ## Start at the setup page
 
-**https://wiserwalk.com/account/setup/** runs its eight checks every time you load it, and
+**https://wiserwalk.com/account/setup/** runs its nine checks every time you load it, and
 names what to go and do. Remember what it cannot see (step 14): the DNS records, the domain
 verification, the Site URL, the password length, the email limit and whether the hook is
 switched on. Go there before anything else, but if every line is clean and emails still are

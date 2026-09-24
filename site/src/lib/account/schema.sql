@@ -325,12 +325,68 @@ revoke all on public.auth_email_log from anon, authenticated;
 -- ever touches this table, and that key bypasses row-level security.
 
 
+-- 5 ------------------------------------------------------------- short_links
+-- Six-character result links, for the quizzes whose codes are long (the gifts
+-- quiz's is sixteen characters). A row says "this short code means that result",
+-- and nothing else.
+--
+-- It holds NO person: no user id, no address. long_code is the same string that
+-- is already in the long link, and anyone who has the short link can open the
+-- result anyway, which is what a link is for. (Not called "full": that is a word
+-- Postgres keeps for itself, and a column by that name has to be quoted forever.)
+--
+-- The site makes the code from the result itself, so one result always gets the
+-- same short code, and unique (quiz, long_code) keeps it to one row. Rows are
+-- never changed or deleted: a link someone posted has to keep working.
+--
+-- Until this has been run, the site simply hands out the long links.
+
+create table if not exists public.short_links (
+  code       text        primary key check (code ~ '^[0-9A-Z]{6}$'),
+  quiz       text        not null check (quiz ~ '^[a-z0-9-]{1,64}$'),
+  long_code  text        not null check (long_code ~ '^[0-9A-Z]{1,96}$'),
+  created_at timestamptz not null default now(),
+  unique (quiz, long_code)
+);
+
+alter table public.short_links enable row level security;
+revoke all on public.short_links from anon, authenticated;
+-- No policies at all, as with the email log. Only the site's server, with the
+-- secret key, reads or writes it.
+
+-- A ceiling, so that a script cannot fill the free plan's database with links.
+-- Half a million is far more than the site will make. It reads Postgres's own
+-- estimate of the row count rather than counting, which costs nothing; once the
+-- ceiling is reached new results get their long links, and nothing else changes.
+create or replace function public.short_links_cap()
+returns trigger
+language plpgsql
+security definer
+set search_path = ''
+as $$
+begin
+  if (select greatest(c.reltuples, 0) from pg_catalog.pg_class c
+       where c.oid = 'public.short_links'::regclass) >= 500000 then
+    raise exception 'The short links table is full.'
+      using errcode = 'check_violation';
+  end if;
+  return new;
+end;
+$$;
+
+drop trigger if exists short_links_cap on public.short_links;
+create trigger short_links_cap
+  before insert on public.short_links
+  for each row execute function public.short_links_cap();
+
+
 -- ============================================================================
 -- The site's own server
 -- ============================================================================
 -- The secret key (Postgres calls it service_role) is how the site's server writes
--- the email log above, notes when somebody reached the mailing list, and sweeps
--- away old log lines and results marked as deleted. It skips the row-level rules,
+-- the email log above, notes when somebody reached the mailing list, keeps the
+-- short links, and sweeps away old log lines and results marked as deleted. It
+-- skips the row-level rules,
 -- but it still has to be allowed to touch each table at all. Supabase used to
 -- grant that to every new table by itself; a project made since 30 May 2026 does
 -- not, unless "Automatically expose new tables" was ticked when it was made. So
@@ -338,6 +394,8 @@ revoke all on public.auth_email_log from anon, authenticated;
 grant select, insert, update, delete
   on public.profiles, public.results, public.game_stats, public.auth_email_log
   to service_role;
+-- Read and add, and nothing more: a short link is never changed or taken away.
+grant select, insert on public.short_links to service_role;
 
 
 -- ============================================================================

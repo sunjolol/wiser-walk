@@ -30,6 +30,7 @@
 import type { BipolarView, Quiz, ResultView } from '../lib/engine/types';
 import { groupNoteFor, isComparable, resultNotes } from '../lib/engine/types';
 import { quizHref, inviteHref } from '../lib/engine/registry';
+import { publicCodeSync } from '../lib/engine/links';
 
 interface Props {
   quiz: Quiz;
@@ -40,16 +41,28 @@ interface Props {
    * data, so the page looks the verse up and hands it down; no other shape passes one.
    */
   line?: { text: string; cite: string };
+  /**
+   * The code the links print: the page's own public code (engine/links.ts). The result page
+   * passes the one it was opened by, so a short link stays short. Defaults to the public code.
+   */
+  linkCode?: string;
 }
 
 const { quiz, view, origin, line } = Astro.props;
-const url = `${origin}/r/${quiz.slug}/${view.code}/`;
+const linkCode = Astro.props.linkCode ?? publicCodeSync(quiz, view.code);
+const url = `${origin}/r/${quiz.slug}/${linkCode}/`;
 /*
  * The invite carries THIS result's code, so whoever follows it is compared with the person
  * whose result this is. That is right for both readers of the same URL: a visitor who
  * follows it lands beside the friend who sent it, and the owner hands it on to someone new.
  */
-const invite = `${origin}${inviteHref(quiz, view.code)}`;
+const invite = `${origin}${inviteHref(quiz, linkCode)}`;
+/*
+ * A quiz with short links whose page was opened by its LONG code (from /me/, or because the
+ * runner gave up waiting) asks for the short one once the page has loaded, and swaps it into
+ * both fields and the card. Until then, and if it never comes, the long link works.
+ */
+const mint = Boolean(quiz.shortLinks) && linkCode === view.code;
 
 /*
  * A quiz whose results are not set side by side (the Psalm quiz: its result is what someone
@@ -118,7 +131,7 @@ const card = {
     : {})
 };
 ---
-<section class="share-block" data-quiz={quiz.slug} data-code={view.code}>
+<section class="share-block" data-quiz={quiz.slug} data-code={view.code} data-mint={mint ? '' : undefined}>
   <h2 data-visitor="Their result" data-mine={mineHeading}>Their result</h2>
 
   {/* The picture first. It is the thing being shared; the buttons act on it. */}
@@ -182,6 +195,8 @@ const card = {
 </section>
 
 <script>
+  import { requestShortCode } from '../lib/engine/links';
+
   /*
    * Runs once per .share-block, scoped to that section.
    *
@@ -704,6 +719,27 @@ const card = {
 
     if ('requestIdleCallback' in window) requestIdleCallback(() => draw(), { timeout: 1200 });
     else setTimeout(draw, 200);
+
+    /* ---------------- the short link ---------------- */
+    /*
+     * Only where the page was opened by a long code that has a short one (see `mint` above).
+     * The long code is swapped out wherever this block printed it: the result link, the
+     * invite, the visitor's button and the card's last line. The card is drawn again if it
+     * was already drawn. No answer in time means the long link stays, and it works.
+     */
+    if (block.hasAttribute('data-mint')) {
+      const long = block.dataset.code;
+      requestShortCode(block.dataset.quiz, long, 4000).then(short => {
+        if (!short) return;
+        const swap = s => String(s || '').split(long).join(short);
+        if (field) field.value = swap(field.value);
+        if (inviteField) inviteField.value = swap(inviteField.value);
+        const cta = pick('cta');
+        if (cta) cta.setAttribute('href', swap(cta.getAttribute('href')));
+        data.url = swap(data.url);
+        if (drawn) { drawn = false; draw(); }
+      });
+    }
 
     const filename = 'wiser-walk-' + data.code + '.png';
     const blob = () => new Promise(res => canvas.toBlob(res, 'image/png'));

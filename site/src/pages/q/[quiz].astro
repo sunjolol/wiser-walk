@@ -523,6 +523,10 @@ const breadcrumbs = isDraft
 
   <script>
     import { getQuiz, scoreQuiz, encodeFor, decodeFor } from '../../lib/engine/registry';
+    // The code a person sees in a link, which can be shorter than the one the site keeps.
+    import {
+      SHORT_RE, publicCodeSync, requestFullCode, requestShortCode, resolveCodeSync
+    } from '../../lib/engine/links';
     // Straight from the contracts, not through the registry: the rule about a sheet with no
     // variation in it belongs beside the field that switches it on, and the runner is the
     // only place that can act on it, because a result page is rendered from the code alone.
@@ -554,18 +558,43 @@ const breadcrumbs = isDraft
        * It is only honoured if it actually DECODES for this quiz, so a mangled or foreign
        * code drops the invitation and the reader takes the quiz normally, rather than
        * finishing into a comparison page that 404s. The code is a set of scores and
-       * nothing else; it is kept tab-scoped and never sent anywhere.
+       * nothing else; it is kept tab-scoped.
+       *
+       * It may arrive in any of its public forms (engine/links.ts). What is kept is the
+       * canonical code, so the "same result" test below still compares like with like. A
+       * six-character short link is the one form this page cannot read by itself: the site
+       * is asked what it points at, and until it answers there is no invitation.
        */
       const WITH_KEY = 'ww:with:' + quiz.slug;
+      /** The inviter's code as their link printed it, for the comparison's URL. */
+      let withLink = null;
       const invited = new URLSearchParams(location.search).get('with');
+      const accept = (code, link) => {
+        try { sessionStorage.setItem(WITH_KEY, code); } catch (e) {}
+        withLink = link;
+        const note = $('with-note');
+        if (note) note.hidden = false;
+      };
       if (invited) {
-        const code = invited.trim().toUpperCase();
-        if (decodeFor(quiz, code)) {
-          try { sessionStorage.setItem(WITH_KEY, code); } catch (e) {}
-          const note = $('with-note');
-          if (note) note.hidden = false;
+        const raw = invited.trim().toUpperCase();
+        const code = resolveCodeSync(quiz, raw);
+        if (code) accept(code, publicCodeSync(quiz, code));
+        else if (quiz.shortLinks && SHORT_RE.test(raw)) {
+          requestFullCode(quiz.slug, raw).then(full => {
+            if (full && decodeFor(quiz, full)) accept(full, raw);
+          });
         }
       }
+
+      /**
+       * The code for the result's URL. Shorter where the quiz allows it; for a quiz with
+       * short links, the site is asked for one and given a second and a half to answer.
+       * Either way the long code works, so the reader never waits on it for longer.
+       */
+      const linkFor = (code) =>
+        quiz.shortLinks
+          ? requestShortCode(quiz.slug, code).then(short => short || code)
+          : Promise.resolve(publicCodeSync(quiz, code));
 
       SCALE.forEach(s => {
         const b = document.createElement('button');
@@ -600,7 +629,17 @@ const breadcrumbs = isDraft
         }, 180);
       }
 
-      function goToResult(values) {
+      /**
+       * Set once the way to the result has begun, so a second tap cannot finish twice while
+       * a short link is asked for. Cleared when Back brings this page out of the browser's
+       * cache as it was, or the last statement could never be finished again.
+       */
+      let leaving = false;
+      window.addEventListener('pageshow', e => { if (e.persisted) leaving = false; });
+
+      async function goToResult(values) {
+        if (leaving) return;
+        leaving = true;
         const code = encodeFor(quiz, values);
         // A note for the result page, which is served identically to the person who just
         // took the quiz and to anyone they send the link to. Tab-scoped, never sent.
@@ -628,12 +667,14 @@ const breadcrumbs = isDraft
         // result again, and an identical code is treated as no comparison at all.
         let other = null;
         try { other = sessionStorage.getItem(WITH_KEY); } catch (e) {}
+        // The URL carries the public codes; everything above keeps the canonical one.
+        const link = await linkFor(code);
         if (other && other !== code) {
           try { sessionStorage.removeItem(WITH_KEY); } catch (e) {}
-          window.location.href = `/c/${quiz.slug}/${other}.${code}/`;
+          window.location.href = `/c/${quiz.slug}/${withLink || publicCodeSync(quiz, other)}.${link}/`;
           return;
         }
-        window.location.href = `/r/${quiz.slug}/${code}/`;
+        window.location.href = `/r/${quiz.slug}/${link}/`;
       }
 
       /*

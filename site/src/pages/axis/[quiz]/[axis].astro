@@ -8,6 +8,7 @@ import HistoryTimeline from '../../../components/HistoryTimeline.astro';
 import PassagePills from '../../../components/PassagePills.astro';
 import CorrectionNote from '../../../components/CorrectionNote.astro';
 import CompassCard from '../../../components/CompassCard.astro';
+import MineNote from '../../../components/MineNote.astro';
 import { QUIZZES, getQuiz, groupHref, quizHref } from '../../../lib/engine/registry';
 import {
   capitalise, groupNoun, groupNounPlural, isSplitReadMore, outcomeNoun, outcomeNounPlural,
@@ -361,6 +362,14 @@ const breadcrumbs =
     )}
 
     {/*
+      A category, for a reader who has taken this quiz on this device: its row from their own
+      result, first, where somebody who came from their result looks for it. Hidden until
+      MineNote finds a result, so anyone else meets the page as it was. A two-pole axis marks
+      the reader on the map further down instead.
+    */}
+    {!bipolar && <MineNote quiz={quiz} kind="axis" index={index} />}
+
+    {/*
       The answer, first, in the words the question was asked in. See the note above the
       `answer` const: this is visible crawlable text and it is deliberately above the
       instruments, because a chart is not an answer to a question somebody typed.
@@ -392,12 +401,18 @@ const breadcrumbs =
           title={mapTitle}
           kicker={`All ${placed} ${collective} on one rail`}
         />
-        <section class="dark amap-panel">
+        <section class="dark amap-panel" data-you-host="map">
           <div class="dark-ghost" aria-hidden="true">{ghost}</div>
           <p class="feature-kicker">
             <Icon name="compass" size={13} /> One axis, everybody on it
           </p>
+          {/* The reader, for one who has taken this quiz on this device: one line, where
+              they landed in the band words, and a "You" mark on the map's rail. */}
+          <MineNote quiz={quiz} kind="axis" index={index} />
           <AxisMap quiz={quiz} group={group} index={index} />
+          {/* The mark is printed here and moved onto the map's rail by MineNote's script,
+              because AxisMap is the map for every visitor and carries nothing of anyone's. */}
+          <span class="you-mark" data-you-axis={index} data-you-into=".amap-rail" data-you-geo="value" hidden aria-hidden="true"><span class="you-tag">You</span></span>
         </section>
       </>
     )}

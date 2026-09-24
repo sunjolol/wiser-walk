@@ -32,6 +32,7 @@ import CompassWheel from '../../components/CompassWheel.astro';
 import RailStack from '../../components/RailStack.astro';
 import TraditionNeighbours from '../../components/TraditionNeighbours.astro';
 import CorrectionNote from '../../components/CorrectionNote.astro';
+import MineNote from '../../components/MineNote.astro';
 import { bibleFigure } from '../../lib/quizzes/bible-figure';
 import type { FigureEvidence, FigureOutcome } from '../../lib/quizzes/bible-figure';
 import { groupHref, quizHref, resultFor } from '../../lib/engine/registry';
@@ -373,7 +374,7 @@ const breadcrumbs = isDraft
           <div class="tally">
             <p class="tally-count">Placed on {matchedAxes} <i>of {quiz.groups.length}</i></p>
             <ul class="tally-rows">
-              {tally.map(t => (
+              {tally.map((t, i) => (
                 <li
                   class:list={['tally-row', `tally-row--${t.state}`, `tally-row--${t.side}`]}
                   style={`--pos:${t.at};--from:${t.from};--span:${t.span}`}
@@ -396,6 +397,9 @@ const breadcrumbs = isDraft
                       <>
                         <span class="tally-tint" aria-hidden="true"></span>
                         <span class="tally-dot" aria-hidden="true"></span>
+                        {/* The reader's own mark, as on the rails below: only where this
+                            person is placed, and hidden until MineNote finds a result. */}
+                        <span class="you-mark" data-you-axis={i} hidden aria-hidden="true"><span class="you-tag">You</span></span>
                       </>
                     )}
                     {t.state === 'both' && (
@@ -475,7 +479,11 @@ const breadcrumbs = isDraft
     <div class="panel layered ref-panel ref-panel--quiet">
       <div class="wash" aria-hidden="true"></div>
       <div class="veil" aria-hidden="true"></div>
-      <RailStack quiz={quiz} view={view} masks={figure.mask} />
+      {/* A reader who has taken this quiz on this device sees their answers marked on the
+          axes this person is placed on (RailStack leaves the others unmarked), with one line
+          saying so. Anyone else sees the rails as they were. */}
+      <MineNote quiz={quiz} kind="rails" />
+      <RailStack quiz={quiz} view={view} masks={figure.mask} you />
     </div>
 
     <SectionHead
