@@ -283,7 +283,7 @@ p { margin: 0 0 1rem; }
   font-size: clamp(2rem, 8.8vw, 3.1rem); line-height: .95; letter-spacing: -.02em; color: var(--ink); text-transform: lowercase;
 }
 .sect-title::after { content: ""; display: block; width: 58px; height: 7px; margin-top: .65rem; border-radius: var(--r-pill); background-image: var(--grad-r); }
-.sect-lede { margin: -.2rem 0 1.2rem; color: var(--ink-soft); max-width: 40rem; }
+.sect-lede { margin: -.2rem 0 1.2rem; color: var(--ink-soft); }
 
 .panel { position: relative; background: var(--panel); border-radius: var(--r); padding: 1.25rem 1.1rem 1.35rem; box-shadow: var(--lift); }
 @media (min-width: 40rem) { .panel { padding: 1.6rem 1.6rem 1.7rem; border-radius: var(--r-lg); } }
@@ -348,14 +348,14 @@ p { margin: 0 0 1rem; }
 
 /* St Martin's band: the painting takes a side */
 .band--saint > .band-img {
-  display: block; width: calc(100% + 4px); margin-left: -2px; height: 15rem; object-fit: cover; object-position: 50% 16%;
+  display: block; width: calc(100% + 4px); margin-left: -2px; height: clamp(17rem, 86vw, 23rem); object-fit: cover; object-position: var(--pos-m, 50% 10%);
   -webkit-mask-image: linear-gradient(180deg, #000 62%, transparent); mask-image: linear-gradient(180deg, #000 62%, transparent);
 }
 .band--saint .band-in { margin-top: -2.2rem; }
 @media (min-width: 46rem) {
   .band--saint { display: flex; align-items: center; min-height: 26rem; }
   .band--saint > .band-img {
-    position: absolute; top: 0; right: -2px; bottom: 0; z-index: 0; width: 46%; height: 100%; margin: 0; object-position: 50% 3%;
+    position: absolute; top: 0; right: -2px; bottom: 0; z-index: 0; width: 46%; height: 100%; margin: 0; object-position: var(--pos-d, 50% 3%);
     -webkit-mask-image: linear-gradient(90deg, transparent, #000 32%); mask-image: linear-gradient(90deg, transparent, #000 32%);
   }
   .band--saint .band-in { margin: 0; padding: 3rem 0 3rem var(--gut); max-width: 58%; }
@@ -418,7 +418,7 @@ p { margin: 0 0 1rem; }
 /* ============================================================ hub: filters and people */
 .filters { display: grid; gap: .55rem; margin: 0 0 1rem; }
 .frow { display: flex; align-items: center; gap: .6rem; min-width: 0; }
-.frow-l { flex: none; width: 5.6rem; font-family: var(--ui); font-size: .58rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-mute); }
+.frow-l { flex: none; width: 7.8rem; font-family: var(--ui); font-size: .58rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-mute); }
 .frow-chips { display: flex; gap: .35rem; overflow-x: auto; scrollbar-width: none; padding: 2px; min-width: 0; }
 .frow-chips::-webkit-scrollbar { display: none; }
 .fchip {
@@ -432,6 +432,7 @@ p { margin: 0 0 1rem; }
 .fchip i { width: 9px; height: 9px; border-radius: 50%; background: var(--t); flex: none; }
 @media (max-width: 39.99rem) {
   .frow { flex-direction: column; align-items: stretch; gap: .3rem; }
+  .frow-l { width: auto; }
   .frow-chips { margin: 0 calc(-1 * var(--gut)); padding: 2px var(--gut); }
 }
 @media (min-width: 40rem) { .frow-chips { flex-wrap: wrap; overflow: visible; } }
@@ -485,37 +486,62 @@ p { margin: 0 0 1rem; }
 .more-line { margin: 1rem 0 0; font-size: .92rem; color: var(--ink-soft); }
 
 /* ============================================================ St Martin */
-.jump {
-  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; margin: .9rem calc(-1 * var(--gut)) 0; padding: .45rem var(--gut);
-  background: color-mix(in srgb, var(--shell) 88%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+/* "Tap" on a touch screen, "Click" with a mouse */
+.on-touch { display: none; }
+@media (hover: none) and (pointer: coarse) { .on-touch { display: inline; } .on-mouse { display: none; } }
+/* The pager: previous, the section you are in (tap it for every section), next. Sticky, so the
+   whole page is one tap away on a phone. The personality result's pager, without its progress bar. */
+.pager {
+  position: sticky; top: 8px; z-index: 12; display: grid; grid-template-columns: 44px minmax(0, 1fr) 44px; align-items: center;
+  gap: .3rem; max-width: 30rem; margin: 1rem auto 0; padding: 5px; border-radius: var(--r-pill);
+  background: color-mix(in srgb, var(--panel) 86%, transparent);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2); backdrop-filter: blur(12px) saturate(1.2);
+  box-shadow: 0 6px 20px rgba(40, 40, 50, .12), inset 0 0 0 1px var(--rule);
 }
-.jump ul { display: flex; gap: .35rem; margin: 0; padding: 2px 0; list-style: none; overflow-x: auto; scrollbar-width: none; }
-.jump ul::-webkit-scrollbar { display: none; }
-.jump a {
-  display: inline-flex; align-items: center; min-height: 38px; padding: .4rem .8rem; border-radius: 11px; white-space: nowrap;
-  box-shadow: inset 0 0 0 1.5px var(--rule-strong); text-decoration: none; color: var(--ink-soft);
-  font-family: var(--ui); font-size: .6rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+.pg-arrow {
+  width: 44px; height: 44px; border: 0; border-radius: 50%; background: var(--shell); color: var(--ink);
+  font: 400 1.6rem/1 var(--ui); cursor: pointer; padding: 0 0 3px;
 }
-.jump a:hover { color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 0 0 1.5px var(--accent); }
-@media (min-width: 68rem) { .jump ul { justify-content: center; } }
-section[id], div[id] { scroll-margin-top: 4.2rem; }
+.pg-arrow:disabled { opacity: .35; cursor: default; }
+.pg-cur {
+  display: flex; align-items: center; justify-content: center; gap: .55rem; min-height: 44px; min-width: 0; border: 0;
+  background: transparent; color: var(--ink); cursor: pointer; font: 600 .86rem/1.2 var(--ui);
+}
+.pg-t { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pg-caret { flex: none; width: 8px; height: 8px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: translateY(-2px) rotate(45deg); opacity: .6; }
+.pg-cur[aria-expanded="true"] .pg-caret { transform: translateY(2px) rotate(225deg); }
+.pg-menu {
+  position: absolute; top: calc(100% + 8px); left: 0; right: 0; margin: 0; padding: .45rem; list-style: none;
+  border-radius: 20px; background: var(--panel); box-shadow: 0 16px 40px rgba(20, 20, 30, .22), inset 0 0 0 1px var(--rule);
+  max-height: calc(100svh - 90px); overflow: auto;
+}
+.pg-menu a {
+  display: flex; gap: .75rem; align-items: center; min-height: 44px; padding: .55rem .8rem; border-radius: 12px;
+  color: var(--ink); text-decoration: none; font: 500 .92rem/1.3 var(--text);
+}
+.pg-menu a::before { content: ""; flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--rule-strong); }
+.pg-menu a:hover { background: var(--shell); }
+.pg-menu a.is-here { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.pg-menu a.is-here::before { background: var(--accent); }
+.pg-arrow:focus-visible, .pg-cur:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+section[id], div[id] { scroll-margin-top: 5rem; }
 
 .answer { margin-top: 1.6rem; box-shadow: var(--lift), inset 4px 0 0 var(--blue); overflow: hidden; }
-.answer::before { content: ""; position: absolute; left: 0; top: 50%; bottom: 0; width: 4px; background: var(--orange); }
 .answer h2 { margin: 0 0 .5rem; font-family: var(--ui); font-style: normal; font-size: .64rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
 .answer p { margin: 0; font-family: var(--display); font-weight: 400; font-size: clamp(1.12rem, 4.4vw, 1.36rem); line-height: 1.45; color: var(--ink); text-wrap: pretty; }
 
 /* THE SHEET */
-.cs { display: grid; gap: .9rem; grid-template-columns: minmax(0, 1fr); grid-template-areas: "main" "feasts" "stats" "side"; }
+.cs { display: grid; gap: .9rem; grid-template-columns: minmax(0, 1fr); grid-template-areas: "path" "main" "feasts" "stats" "side"; }
+.cs-path { grid-area: path; }
 .cs-main { grid-area: main; }
 .cs-feasts { grid-area: feasts; }
 .cs-stats { grid-area: stats; }
 .cs-side { grid-area: side; display: grid; gap: .9rem; align-content: start; }
 @media (min-width: 46rem) {
-  .cs { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "main main" "feasts feasts" "stats side"; }
+  .cs { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "path path" "main main" "feasts feasts" "stats side"; }
 }
 @media (min-width: 62rem) {
-  .cs { grid-template-columns: 17.5rem minmax(0, 1fr) 15.5rem; grid-template-areas: "stats main side" "feasts feasts feasts"; }
+  .cs { grid-template-columns: 19rem minmax(0, 1fr) 15.5rem; grid-template-areas: "path path path" "stats main side" "feasts feasts feasts"; }
   .cs-main { display: flex; flex-direction: column; }
   .facts { flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
   .cs-stats { display: flex; flex-direction: column; }
@@ -527,42 +553,56 @@ section[id], div[id] { scroll-margin-top: 4.2rem; }
   letter-spacing: -.03em; text-transform: lowercase;
   background-image: var(--grad-r); -webkit-background-clip: text; background-clip: text; color: transparent;
 }
-.stats { display: grid; gap: 1.15rem; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0; padding: 0; list-style: none; }
-@media (min-width: 62rem) { .stats { grid-template-columns: minmax(0, 1fr); } }
-.stat { display: grid; gap: .55rem; }
-@media (min-width: 30rem) { .stat { grid-template-columns: 4.7rem minmax(0, 1fr); align-items: start; gap: .85rem; } }
-.stats > .stat:last-child:nth-child(odd) { grid-column: 1 / -1; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: .9rem; align-items: start; }
-@media (min-width: 30rem) { .stats > .stat:last-child:nth-child(odd) { grid-template-columns: 4.7rem minmax(0, 1fr); gap: .85rem; } }
-.stat-box { position: relative; padding: .55rem .4rem 1.15rem; border-radius: 16px; background: rgba(255, 255, 255, .07); text-align: center; }
-.stat-box b { display: block; font-family: var(--display); font-style: italic; font-weight: 700; font-size: 2.7rem; line-height: 1; letter-spacing: -.04em; color: var(--on-dark); font-variant-numeric: tabular-nums; }
+.stats { display: grid; gap: .6rem; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0; padding: 0; list-style: none; }
+.stat { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; padding: .8rem .8rem .85rem; border-radius: 14px; background: rgba(255, 255, 255, .06); }
+.stats > .stat:last-child:nth-child(odd) { grid-column: 1 / -1; }
 .stat-chip {
-  position: absolute; left: 50%; bottom: -.55rem; transform: translateX(-50%); white-space: nowrap;
-  padding: .28rem .55rem; border-radius: var(--r-pill); background-image: var(--grad-r); color: var(--on-grad);
-  font-family: var(--ui); font-size: .5rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; line-height: 1.1;
+  display: inline-block; max-width: 100%; padding: .3rem .55rem; border-radius: 8px; background-image: var(--grad-r); color: var(--on-grad);
+  font-family: var(--ui); font-size: .52rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; line-height: 1.25;
 }
-.stat-lines { margin: .45rem 0 0; padding: 0; list-style: none; }
-@media (min-width: 30rem) { .stat-lines { margin-top: .1rem; } }
-.stat-lines li { font-family: var(--ui); font-size: .72rem; font-weight: 600; line-height: 1.4; color: var(--on-dark); padding: .08rem 0; }
+.stat-n {
+  display: block; margin: .45rem 0 .2rem; font-family: var(--display); font-style: italic; font-weight: 700; font-size: 2.75rem; line-height: 1;
+  letter-spacing: -.035em; color: var(--orange-soft); font-variant-numeric: tabular-nums;
+}
+.stat-lines { margin: 0; padding: 0; list-style: none; }
+.stat-lines li { font-family: var(--ui); font-size: .72rem; font-weight: 600; line-height: 1.4; color: var(--on-dark); padding: .06rem 0 .06rem .8rem; text-indent: -.8rem; }
 .stat-lines li::before { content: "+ "; color: var(--orange-soft); }
-.stat-src { display: block; margin-top: .25rem; font-size: .66rem; font-style: italic; line-height: 1.35; color: var(--on-dark-mute); }
+.stat-src { display: block; margin-top: auto; padding-top: .35rem; font-size: .64rem; font-style: italic; line-height: 1.35; color: var(--on-dark-mute); }
+/* On a wide screen the numbers sit in a narrow column: one card per row, the label on top, the number beside its lines */
+@media (min-width: 62rem) {
+  .stats { grid-template-columns: minmax(0, 1fr); gap: .55rem; }
+  .stat { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "chip chip" "n lines" "n src"; column-gap: .9rem; align-items: start; padding: .75rem .85rem .8rem; }
+  .stat-chip { grid-area: chip; justify-self: start; }
+  .stat-n { grid-area: n; margin: .4rem 0 0; font-size: 2.55rem; }
+  .stat-lines { grid-area: lines; margin-top: .5rem; }
+  .stat-src { grid-area: src; margin-top: 0; }
+}
 
 .cs-main { padding-top: 1.15rem; }
-.klass { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem; margin: 0 0 1rem; padding: 0; list-style: none; }
-.klass li { display: inline-flex; align-items: center; gap: .3rem; }
-.klass li + li::before { content: ""; width: 9px; height: 2px; border-radius: 2px; background-image: var(--grad-r); opacity: .8; }
-.klass span {
-  display: inline-flex; align-items: center; min-height: 30px; padding: .3rem .55rem; border-radius: 9px;
-  background: var(--shell); box-shadow: inset 0 0 0 1px var(--rule);
-  font-family: var(--ui); font-size: .56rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: var(--ink-soft);
+/* His roles, in order: a path. Down the page on a phone, across it when there is room. */
+.cs-path { padding-top: 1.05rem; padding-bottom: 1.15rem; }
+.path-k { margin: 0 0 .8rem; font-family: var(--ui); font-size: .58rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-mute); }
+.path { list-style: none; margin: 0; padding: 0; display: grid; }
+.path li { position: relative; display: flex; flex-direction: column; gap: .1rem; padding: 0 0 1rem 2rem; }
+.path li:last-child { padding-bottom: 0; }
+.path li::before { content: ""; position: absolute; left: 0; top: .3rem; width: 15px; height: 15px; border-radius: 50%; background: var(--shell); box-shadow: inset 0 0 0 2px var(--rule-strong); }
+.path li:last-child::before { background-image: var(--grad); box-shadow: 0 0 0 3px color-mix(in srgb, var(--orange) 22%, transparent); }
+.path li::after { content: ""; position: absolute; left: 6.5px; top: 1.45rem; bottom: .2rem; border-left: 2px dotted var(--rule-strong); }
+.path li:last-child::after { display: none; }
+.path b { font-family: var(--display); font-weight: 700; font-size: 1.3rem; line-height: 1.15; color: var(--ink); }
+.path span { font-size: .86rem; line-height: 1.4; color: var(--ink-soft); }
+@media (min-width: 46rem) {
+  .path { grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); column-gap: 1rem; }
+  .path li { padding: 1.6rem 0 0; }
+  .path li::before { top: 0; }
+  .path li::after { left: 1.5rem; right: -.5rem; top: 6.5px; bottom: auto; border-left: 0; border-top: 2px dotted var(--rule-strong); }
 }
-@media (max-width: 29.99rem) { .klass span { padding: .3rem .5rem; letter-spacing: .12em; } .klass li + li::before { width: 8px; } }
-.klass li:last-child span { background-image: var(--grad); color: var(--on-grad); box-shadow: none; }
-.klass-k { width: 100%; margin: 0 0 .3rem; font-family: var(--ui); font-size: .58rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-mute); }
 .facts { margin: 0; }
-.facts > div { display: grid; grid-template-columns: 5.6rem minmax(0, 1fr); gap: .8rem; padding: .62rem 0; border-bottom: 2px dotted var(--rule-strong); }
-.facts > div:first-child { border-top: 2px dotted var(--rule-strong); }
-.facts dt { font-family: var(--ui); font-size: .58rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: var(--accent); padding-top: .25rem; }
-.facts dd { margin: 0; font-size: .9rem; line-height: 1.5; color: var(--ink-soft); }
+.facts > div { padding: .62rem 0 .7rem; border-bottom: 2px dotted var(--rule-strong); }
+.facts > div:first-child { padding-top: 0; }
+.facts > div:last-child { border-bottom: 0; padding-bottom: 0; }
+.facts dt { margin: 0 0 .15rem; font-family: var(--ui); font-size: .58rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: var(--accent); }
+.facts dd { margin: 0; font-size: .92rem; line-height: 1.5; color: var(--ink-soft); }
 .facts dd b { color: var(--ink); font-weight: 600; }
 .tbc {
   display: inline-block; padding: .05rem .4rem; border-radius: 6px; background: var(--warn-bg); color: var(--warn-ink);
@@ -643,7 +683,7 @@ section[id], div[id] { scroll-margin-top: 4.2rem; }
 .qf-word { position: absolute; z-index: 0; right: -.04em; bottom: -.22em; font-family: var(--display); font-style: italic; font-weight: 700; font-size: clamp(6rem, 26vw, 15rem); line-height: .8; letter-spacing: -.04em; color: rgba(255, 255, 255, .055); pointer-events: none; user-select: none; }
 .qf > *:not(.qf-ghost):not(.qf-word) { position: relative; z-index: 1; }
 .qf blockquote { margin: 0; font-family: var(--display); font-style: italic; font-weight: 700; font-size: clamp(1.7rem, 7vw, 2.7rem); line-height: 1.12; letter-spacing: -.015em; color: #fff; text-wrap: balance; }
-.qf .ctx { margin: 1rem 0 0; font-size: .92rem; color: var(--on-dark-soft); max-width: 36rem; }
+.qf .ctx { margin: 1rem 0 0; font-size: .92rem; color: var(--on-dark-soft); }
 .qf .cite { color: var(--on-dark-mute); }
 .qf-k { margin: 0 0 .9rem; font-family: var(--ui); font-size: .6rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--orange-soft); }
 .words-grid { display: grid; gap: .8rem; grid-template-columns: minmax(0, 1fr); }
@@ -670,6 +710,43 @@ section[id], div[id] { scroll-margin-top: 4.2rem; }
   .mo:nth-child(3n)::after { right: 0; }
   .mo .panel { height: 100%; }
 }
+
+/* MIRACLES: Sulpicius's promise, the three raised from the dead on a dark panel, then more wonders */
+.mir > .sect-lede { margin-bottom: .7rem; }
+.pledge { margin: 0 0 1.3rem; padding: .15rem 0 .15rem 1rem; box-shadow: inset 3px 0 0 var(--orange); }
+.pledge blockquote { margin: 0; font-family: var(--display); font-style: italic; font-weight: 700; font-size: 1.14rem; line-height: 1.45; color: var(--ink); }
+.pledge .cite { margin-top: .4rem; }
+.raised { padding: 1.4rem 1.2rem 1.3rem; }
+.raised-h { display: flex; align-items: center; gap: .75rem; margin: 0 0 1.2rem; }
+.raised-n { flex: none; font-family: var(--display); font-style: italic; font-weight: 700; font-size: 4.4rem; line-height: .78; letter-spacing: -.04em; color: var(--orange-soft); }
+.raised-h h3 { margin: 0; font-style: italic; font-size: clamp(1.55rem, 6.2vw, 2.2rem); line-height: 1; letter-spacing: -.02em; color: #fff; }
+.raised-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.2rem; }
+.rz + .rz { padding-top: 1.2rem; border-top: 2px dotted var(--rule-strong); }
+.rz-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: .25rem .7rem; margin: 0 0 .25rem; }
+.dark .rz-place { margin: 0; font-family: var(--display); font-style: italic; font-weight: 700; font-size: 1.4rem; line-height: 1.1; color: #fff; }
+.rz-when { font-family: var(--ui); font-size: .58rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--orange-soft); }
+.rz h4 { margin: 0 0 .4rem; font-family: var(--ui); font-size: .84rem; font-weight: 700; letter-spacing: .01em; color: var(--blue-soft); }
+.rz p { margin: 0 0 .65rem; font-size: .92rem; line-height: 1.6; }
+.rz blockquote { margin: 0 0 .65rem; padding-left: .8rem; box-shadow: inset 2px 0 0 var(--orange-soft); font-family: var(--display); font-style: italic; font-weight: 700; font-size: 1.02rem; line-height: 1.45; color: #fff; }
+.dark .rz-who { margin: 0; font-size: .82rem; color: var(--on-dark-mute); }
+.raised .cite { color: var(--on-dark-mute); }
+.dark .raised-note { margin: 1.3rem 0 0; padding-top: 1.1rem; border-top: 2px dotted var(--rule-strong); font-family: var(--display); font-style: italic; font-weight: 700; font-size: 1.08rem; line-height: 1.45; color: var(--on-dark); }
+.raised-note .cite { font-style: normal; }
+@media (min-width: 52rem) {
+  .raised { padding: 2rem 2rem 1.8rem; }
+  .raised-list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.8rem; }
+  .rz + .rz { padding-top: 0; border-top: 0; }
+  .rz { display: flex; flex-direction: column; }
+  .rz .cite { margin-top: auto; padding-top: .3rem; }
+}
+.wonders { display: grid; gap: .8rem; grid-template-columns: minmax(0, 1fr); margin-top: .9rem; }
+@media (min-width: 46rem) { .wonders { grid-template-columns: 1fr 1fr; } }
+.wonder { display: flex; flex-direction: column; }
+.wonder h3 { margin: 0 0 .45rem; font-style: italic; font-size: clamp(1.35rem, 5.2vw, 1.6rem); letter-spacing: -.02em; }
+.wonder p { margin: 0 0 .65rem; font-size: .92rem; color: var(--ink-soft); }
+.wonder blockquote { margin: 0; padding-left: .8rem; box-shadow: inset 2px 0 0 var(--orange); font-family: var(--display); font-style: italic; font-weight: 700; font-size: 1rem; line-height: 1.45; color: var(--ink); }
+.wonder .cite { margin-top: auto; padding-top: .55rem; }
+.doubt { margin-top: .9rem; }
 
 /* MISQUOTED */
 .myths { display: grid; gap: .8rem; grid-template-columns: minmax(0, 1fr); }
@@ -781,6 +858,14 @@ section[id], div[id] { scroll-margin-top: 4.2rem; }
 .foot-bar::before { content: ""; display: block; height: 2px; margin: 0 0 1rem; border-radius: 2px; background-image: var(--grad-r); opacity: .7; }
 .foot-bar p { margin: 0; font-family: var(--ui); font-size: .62rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--on-dark-mute); }
 
+/* ============================================================ phones: boxes run nearly edge to edge */
+/* Last in the file on purpose, so it wins over each box's own margins. The text inside gets the width. */
+@media (max-width: 39.99rem) {
+  [data-view] > :is(.panel, .cs, .said, .words, .moments, .myths, .stances, .split, .reads, .qcards, .kin, .colls, .people, .qcard),
+  .mir > :is(.raised, .wonders, .doubt) { margin-left: calc(6px - var(--gut)); margin-right: calc(6px - var(--gut)); }
+  .pager { margin-left: calc(6px - var(--gut)); margin-right: calc(6px - var(--gut)); }
+}
+
 /* ============================================================ views, toast */
 [data-view] { display: none; }
 body:not([data-show]) [data-view="martin"] { display: block; }
@@ -799,7 +884,7 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
 
 </style>
 <div class="mock">
-  <p class="mock-note">Mock-up. St Martin's page uses real, checked facts. Links inside are not live.</p>
+  <p class="mock-note">Mock-up, draft 2. St Martin's page uses real, checked facts. Links inside are not live.</p>
   <nav class="mock-tabs" aria-label="Mock-up views">
     <a href="#menu">The Learn menu</a>
     <a href="#hub">Saints hub</a>
@@ -809,8 +894,8 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
     <summary>How this page shows in search</summary>
     <div class="serp">
       <p class="serp-url" id="serp-url">wiserwalk.com › saints › martin-of-tours</p>
-      <p class="serp-t" id="serp-t">St Martin of Tours: the cloak, his words and his feast days</p>
-      <p class="serp-d" id="serp-d">Who Martin of Tours was in plain words: the cloak, why he left the army, his feast days East and West, and his words with the book and chapter.</p>
+      <p class="serp-t" id="serp-t">St Martin of Tours: the cloak, his miracles and his feast days</p>
+      <p class="serp-d" id="serp-d">Who Martin of Tours was, in plain words: the cloak, his miracles, his feast days East and West, and his words with the book and chapter.</p>
     </div>
   </details>
 </div>
@@ -898,7 +983,7 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
     </div>
   </section>
 
-  <div class="sect"><div class="sect-text"><p class="sect-kicker">Start here</p><h2 class="sect-title">collections</h2></div></div>
+  <div class="sect"><div class="sect-text"><h2 class="sect-title">collections</h2></div></div>
   <div class="colls"><button class="coll" type="button" data-group="fathers"><span class="coll-art"><img src="img/p/justin-martyr.jpg" alt="" loading="lazy" style="object-position:50% 18%"><img src="img/p/irenaeus-of-lyons.jpg" alt="" loading="lazy" style="object-position:50% 18%"><img src="img/p/origen.jpg" alt="" loading="lazy" style="object-position:50% 18%"><img src="img/p/augustine-of-hippo.jpg" alt="" loading="lazy" style="object-position:50% 18%"></span><span class="coll-t">Church Fathers</span></button>
 <button class="coll" type="button" data-group="desert"><span class="coll-art"><img src="img/p/antony-the-great.jpg" alt="" loading="lazy" style="object-position:50% 18%"></span><span class="coll-t">Desert fathers and mothers</span></button>
 <button class="coll" type="button" data-group="cappadocians"><span class="coll-art"><img src="img/p/basil-the-great.jpg" alt="" loading="lazy" style="object-position:50% 18%"><img src="img/p/gregory-of-nazianzus.jpg" alt="" loading="lazy" style="object-position:50% 18%"><img src="img/p/gregory-of-nyssa.jpg" alt="" loading="lazy" style="object-position:50% 18%"></span><span class="coll-t">The Cappadocian fathers</span></button>
@@ -907,11 +992,11 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
 <button class="coll" type="button" data-group="women"><span class="coll-art"><img src="img/p/macrina-the-younger.jpg" alt="" loading="lazy" style="object-position:50% 18%"></span><span class="coll-t">Women of the early Church</span></button>
 <button class="coll" type="button" data-group="bible"><span class="coll-art"><img src="img/f/moses.jpg" alt="" loading="lazy" style="object-position:50% 18%"><img src="img/f/isaiah.jpg" alt="" loading="lazy" style="object-position:50% 18%"><img src="img/f/peter.jpg" alt="" loading="lazy" style="object-position:50% 18%"></span><span class="coll-t">People of the Bible</span></button></div>
 
-  <div class="sect" id="people"><div class="sect-text"><p class="sect-kicker">Everyone, oldest first</p><h2 class="sect-title">all the people</h2></div></div>
+  <div class="sect" id="people"><div class="sect-text"><h2 class="sect-title">all the people</h2></div></div>
   <div class="filters" id="filters"><div class="frow"><span class="frow-l" id="fl-group">Group</span><div class="frow-chips" role="group" aria-labelledby="fl-group"><button class="fchip" type="button" data-key="group" data-val="all" aria-pressed="true">All</button><button class="fchip" type="button" data-key="group" data-val="fathers" aria-pressed="false">Church Fathers</button><button class="fchip" type="button" data-key="group" data-val="desert" aria-pressed="false">Desert fathers and mothers</button><button class="fchip" type="button" data-key="group" data-val="cappadocians" aria-pressed="false">The Cappadocian fathers</button><button class="fchip" type="button" data-key="group" data-val="teachers" aria-pressed="false">Great teachers of East and West</button><button class="fchip" type="button" data-key="group" data-val="martyrs" aria-pressed="false">Martyrs</button><button class="fchip" type="button" data-key="group" data-val="women" aria-pressed="false">Women of the early Church</button><button class="fchip" type="button" data-key="group" data-val="bible" aria-pressed="false">People of the Bible</button><button class="fchip" type="button" data-key="group" data-val="monks" aria-pressed="false">Monks and hermits</button></div></div>
 <div class="frow"><span class="frow-l" id="fl-cent">Lived</span><div class="frow-chips" role="group" aria-labelledby="fl-cent"><button class="fchip" type="button" data-key="cent" data-val="all" aria-pressed="true">All</button><button class="fchip" type="button" data-key="cent" data-val="pre300" aria-pressed="false">Before 300</button><button class="fchip" type="button" data-key="cent" data-val="300s" aria-pressed="false">The 300s</button><button class="fchip" type="button" data-key="cent" data-val="400s" aria-pressed="false">The 400s</button><button class="fchip" type="button" data-key="cent" data-val="500on" aria-pressed="false">500 and later</button><button class="fchip" type="button" data-key="cent" data-val="bible" aria-pressed="false">In the Bible</button></div></div>
 <div class="frow"><span class="frow-l" id="fl-side">East or West</span><div class="frow-chips" role="group" aria-labelledby="fl-side"><button class="fchip" type="button" data-key="side" data-val="all" aria-pressed="true">All</button><button class="fchip" type="button" data-key="side" data-val="east" aria-pressed="false">East</button><button class="fchip" type="button" data-key="side" data-val="west" aria-pressed="false">West</button></div></div>
-<div class="frow"><span class="frow-l" id="fl-type">Test type</span><div class="frow-chips" role="group" aria-labelledby="fl-type"><button class="fchip" type="button" data-key="type" data-val="all" aria-pressed="true">All</button><button class="fchip" type="button" data-key="type" data-val="hearth" aria-pressed="false"><i style="--t:#E3A55B"></i>The Hearth</button><button class="fchip" type="button" data-key="type" data-val="spark" aria-pressed="false"><i style="--t:#EE7F5E"></i>The Spark</button><button class="fchip" type="button" data-key="type" data-val="deepwell" aria-pressed="false"><i style="--t:#4F7FB5"></i>The Deep Well</button><button class="fchip" type="button" data-key="type" data-val="forge" aria-pressed="false"><i style="--t:#C9553B"></i>The Forge</button><button class="fchip" type="button" data-key="type" data-val="stillwater" aria-pressed="false"><i style="--t:#4FA3BC"></i>The Still Water</button><button class="fchip" type="button" data-key="type" data-val="lookout" aria-pressed="false"><i style="--t:#6F9E5C"></i>The Lookout</button><button class="fchip" type="button" data-key="type" data-val="oak" aria-pressed="false"><i style="--t:#8C7A4F"></i>The Oak</button><button class="fchip" type="button" data-key="type" data-val="herald" aria-pressed="false"><i style="--t:#D19A22"></i>The Herald</button></div></div></div>
+<div class="frow"><span class="frow-l" id="fl-type">Personality type</span><div class="frow-chips" role="group" aria-labelledby="fl-type"><button class="fchip" type="button" data-key="type" data-val="all" aria-pressed="true">All</button><button class="fchip" type="button" data-key="type" data-val="hearth" aria-pressed="false"><i style="--t:#E3A55B"></i>The Hearth</button><button class="fchip" type="button" data-key="type" data-val="spark" aria-pressed="false"><i style="--t:#EE7F5E"></i>The Spark</button><button class="fchip" type="button" data-key="type" data-val="deepwell" aria-pressed="false"><i style="--t:#4F7FB5"></i>The Deep Well</button><button class="fchip" type="button" data-key="type" data-val="forge" aria-pressed="false"><i style="--t:#C9553B"></i>The Forge</button><button class="fchip" type="button" data-key="type" data-val="stillwater" aria-pressed="false"><i style="--t:#4FA3BC"></i>The Still Water</button><button class="fchip" type="button" data-key="type" data-val="lookout" aria-pressed="false"><i style="--t:#6F9E5C"></i>The Lookout</button><button class="fchip" type="button" data-key="type" data-val="oak" aria-pressed="false"><i style="--t:#8C7A4F"></i>The Oak</button><button class="fchip" type="button" data-key="type" data-val="herald" aria-pressed="false"><i style="--t:#D19A22"></i>The Herald</button></div></div></div>
   <div class="people-head">
     <p class="people-count" id="people-count" aria-live="polite">38 people</p>
     <button class="people-clear" id="people-clear" type="button" hidden>Clear filters</button>
@@ -957,7 +1042,7 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
 <a class="pcard" href="#" data-dead data-groups="bible" data-cent="bible" data-side="" data-type="forge" data-search="paul "><span class="pcard-pic"><img src="img/f/paul.jpg" alt="Portrait of Paul" loading="lazy" style="object-position:50% 40%"></span><span class="pcard-b"><span class="pcard-n">Paul</span><span class="pcard-d">New Testament</span><span class="pcard-w">He would not give Mark a second chance. Years later he asked for him.</span><span class="pcard-foot"><span class="tchip" style="--t:#C9553B" title="The Christian Personality Test's reading">The Forge</span></span></span></a></div>
   <p class="people-empty" id="people-empty" hidden>No one matches that. Try another name, or clear the filters.</p>
 
-  <div class="sect"><div class="sect-text"><p class="sect-kicker">Your turn</p><h2 class="sect-title">where do you stand?</h2></div></div>
+  <div class="sect"><div class="sect-text"><h2 class="sect-title">where do you stand?</h2></div></div>
   <a class="qcard qcard--engr" href="#" data-dead>
     <img src="img/durer-jerome.jpg" alt="" loading="lazy">
     <span class="qcard-b">
@@ -973,7 +1058,7 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
 <!-- ================================================================== ST MARTIN -->
 <article data-view="martin">
   <section class="band band--saint">
-    <img class="band-img" src="img/martin-el-greco.jpg" alt="Saint Martin on a white horse cuts his green cloak with his sword for a beggar, by El Greco" width="900" height="1667">
+    <img class="band-img" style="--pos-m: 50% 3%; --pos-d: 50% 3%" src="img/martin-el-greco.jpg" alt="Saint Martin on a white horse cuts his green cloak with his sword for a beggar, by El Greco" width="900" height="1667">
     <div class="band-in">
       <a class="crumb" href="#hub">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
@@ -986,59 +1071,86 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
     </div>
   </section>
 
-  <nav class="jump" aria-label="On this page"><ul>
-    <li><a href="#glance" data-jump>At a glance</a></li>
-    <li><a href="#like" data-jump>What was he like?</a></li>
-    <li><a href="#life" data-jump>His life</a></li>
-    <li><a href="#words" data-jump>His words</a></li>
-    <li><a href="#myths" data-jump>Misquoted</a></li>
-    <li><a href="#stood" data-jump>Where he stood</a></li>
-    <li><a href="#death" data-jump>How he died</a></li>
-    <li><a href="#saint" data-jump>Is he a saint?</a></li>
-  </ul></nav>
+  <nav class="pager" aria-label="On this page" data-pager>
+    <button class="pg-arrow" type="button" data-pg-dir="-1" aria-label="Previous section" disabled>‹</button>
+    <button class="pg-cur" type="button" data-pg-menu aria-expanded="false" aria-controls="pg-menu">
+      <span class="pg-t">Who was Martin?</span><span class="pg-caret" aria-hidden="true"></span>
+    </button>
+    <button class="pg-arrow" type="button" data-pg-dir="1" aria-label="Next section">›</button>
+    <ol class="pg-menu" id="pg-menu" hidden>
+      <li><a href="#who" data-pg-go="who">Who was Martin?</a></li>
+      <li><a href="#glance" data-pg-go="glance">At a glance</a></li>
+      <li><a href="#like" data-pg-go="like">What was he like?</a></li>
+      <li><a href="#said" data-pg-go="said">What others said of him</a></li>
+      <li><a href="#life" data-pg-go="life">His life in six moments</a></li>
+      <li><a href="#miracles" data-pg-go="miracles">His miracles</a></li>
+      <li><a href="#words" data-pg-go="words">His words</a></li>
+      <li><a href="#myths" data-pg-go="myths">Often misquoted</a></li>
+      <li><a href="#stood" data-pg-go="stood">Where he stood</a></li>
+      <li><a href="#death" data-pg-go="death">How he died</a></li>
+      <li><a href="#saint" data-pg-go="saint">Is he a saint?</a></li>
+      <li><a href="#read" data-pg-go="read">What to read first</a></li>
+      <li><a href="#quizzes" data-pg-go="quizzes">Take the quizzes</a></li>
+      <li><a href="#kin" data-pg-go="kin">People like him</a></li>
+      <li><a href="#sources" data-pg-go="sources">Sources</a></li>
+    </ol>
+  </nav>
 
-  <section class="panel answer">
+  <section class="panel answer" id="who">
     <h2>Who was Martin?</h2>
     <p>Martin was a Roman cavalryman who became a monk, then bishop of Tours in Gaul. He is best known for cutting his cloak in two for a freezing beggar. He founded what may be the first monastery in Gaul. He refused to flatter an emperor. He was one of the first saints honoured who did not die a martyr.</p>
   </section>
 
   <!-- THE SHEET -->
-  <div class="sect" id="glance"><div class="sect-text"><p class="sect-kicker">Quick facts</p><h2 class="sect-title">at a glance</h2></div></div>
+  <div class="sect" id="glance"><div class="sect-text"><h2 class="sect-title">at a glance</h2></div></div>
   <div class="cs">
+    <section class="cs-path panel" aria-label="His roles, in order">
+      <p class="path-k">His roles, in order</p>
+      <ol class="path">
+        <li><b>Soldier</b><span>Forced to enlist at 15</span></li>
+        <li><b>Exorcist</b><span>Under Hilary of Poitiers</span></li>
+        <li><b>Monk</b><span>Founded a monastery near Poitiers</span></li>
+        <li><b>Bishop</b><span>Of Tours, 371 to 397</span></li>
+      </ol>
+    </section>
+
     <section class="cs-stats dark" aria-label="Martin in numbers">
       <p class="cs-stats-t">in numbers</p>
       <ul class="stats">
         <li class="stat">
-          <div class="stat-box"><b>15</b><span class="stat-chip">Enlisted at</span></div>
-          <div><ul class="stat-lines"><li>Forced to enlist</li><li>Imperial guard cavalry</li><li>Under Constantius, then Julian</li></ul>
-          <span class="stat-src">Life of St Martin, chapter 2</span></div>
+          <span class="stat-chip">Enlisted at</span><b class="stat-n">15</b>
+          <ul class="stat-lines"><li>Imperial guard cavalry</li><li>Under Constantius, then Julian</li></ul>
+          <span class="stat-src">Life of St Martin, chapter 2</span>
         </li>
         <li class="stat">
-          <div class="stat-box"><b>26</b><span class="stat-chip">Years bishop</span></div>
-          <div><ul class="stat-lines"><li>Bishop of Tours from 371</li><li>Died in office in 397</li><li>Still lived as a monk</li></ul>
-          <span class="stat-src">New Catholic Encyclopedia; Gregory of Tours</span></div>
+          <span class="stat-chip">Raised the dead</span><b class="stat-n">3</b>
+          <ul class="stat-lines"><li>Two as a monk</li><li>One as bishop</li></ul>
+          <span class="stat-src">Life, chapters 7 and 8; Dialogue II, chapter 4</span>
         </li>
         <li class="stat">
-          <div class="stat-box"><b>80</b><span class="stat-chip">Disciples</span></div>
-          <div><ul class="stat-lines"><li>At Marmoutier, near Tours</li><li>The older monks gave their time to prayer</li></ul>
-          <span class="stat-src">Life of St Martin, chapter 10</span></div>
+          <span class="stat-chip">Disciples</span><b class="stat-n">80</b>
+          <ul class="stat-lines"><li>At Marmoutier, near Tours</li><li>They owned nothing</li></ul>
+          <span class="stat-src">Life of St Martin, chapter 10</span>
         </li>
         <li class="stat">
-          <div class="stat-box"><b>81</b><span class="stat-chip">Age at death</span></div>
-          <div><ul class="stat-lines"><li>His 81st year, says Gregory of Tours</li><li>If he was born in 336, about 61</li></ul>
-          <span class="stat-src">History of the Franks, Book 1, chapter 48</span></div>
+          <span class="stat-chip">Years a bishop</span><b class="stat-n">26</b>
+          <ul class="stat-lines"><li>From 371</li><li>Still lived as a monk</li></ul>
+          <span class="stat-src">New Catholic Encyclopedia; Gregory of Tours</span>
         </li>
         <li class="stat">
-          <div class="stat-box"><b>3</b><span class="stat-chip">Days to burial</span></div>
-          <div><ul class="stat-lines"><li>Died at Candes on 8 November</li><li>Buried at Tours on the 11th</li></ul>
-          <span class="stat-src">New Catholic Encyclopedia; OCA</span></div>
+          <span class="stat-chip">Died at</span><b class="stat-n">81</b>
+          <ul class="stat-lines"><li>In his 81st year, says Gregory of Tours</li><li>About 61, if he was born in 336</li></ul>
+          <span class="stat-src">History of the Franks, Book 1, chapter 48</span>
+        </li>
+        <li class="stat">
+          <span class="stat-chip">At his funeral</span><b class="stat-n">2,000</b>
+          <ul class="stat-lines"><li>Monks, almost two thousand, it was said</li><li>The whole city came out</li></ul>
+          <span class="stat-src">Letter 3, to Bassula</span>
         </li>
       </ul>
     </section>
 
     <section class="cs-main panel" aria-label="Quick facts">
-      <p class="klass-k">His roles, in order</p>
-      <ul class="klass"><li><span>Soldier</span></li><li><span>Exorcist</span></li><li><span>Monk</span></li><li><span>Bishop</span></li></ul>
       <dl class="facts">
         <div><dt>Born</dt><dd>About 316. Some scholars say about 336. At Savaria in Pannonia, today <b>Szombathely in Hungary</b>.</dd></div>
         <div><dt>Grew up</dt><dd>At Ticinum, today <b>Pavia in Italy</b>. His parents were pagans.</dd></div>
@@ -1047,9 +1159,9 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
         <div><dt>Also called</dt><dd><b>Martin the Merciful</b>, in the Russian Church and the OCA. <b>Martin the Wonderworker</b>, in Greek.</dd></div>
         <div><dt>Status</dt><dd>A saint to Catholics, Orthodox and Anglicans. Lutherans remember him too.</dd></div>
         <div><dt>Patron of</dt><dd><b>France</b>. Britannica adds soldiers and tailors.</dd></div>
-        <div><dt>In art</dt><dd>Cutting his cloak with his sword for a beggar, usually on horseback. Some art shows a globe of fire over his head <span class="tbc">[checked before launch]</span></dd></div>
+        <div><dt>In art</dt><dd>Cutting his cloak in two with his sword for a beggar, usually on horseback.</dd></div>
         <div><dt>Wrote</dt><dd>Nothing that survives.</dd></div>
-        <div><dt>Say it</dt><dd><span class="tbc">[checked before launch]</span></dd></div>
+        <div><dt>Pronounced</dt><dd><b>MAR-tin of TOOR</b>. The s in Tours is silent.</dd></div>
       </dl>
     </section>
 
@@ -1061,11 +1173,11 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
       <section class="panel temper" aria-label="His temperament">
         <div class="temper-pic"><img src="img/oak.jpg" alt="The Lonely Tree, a painting by Caspar David Friedrich" loading="lazy"><span>The Oak</span></div>
         <div class="temper-b">
-          <p class="temper-k">The test's reading</p>
-          <p class="temper-tag">Sure of yourself, and at your best when life is quiet.</p>
+          <p class="temper-k">His personality type</p>
+          <p class="temper-tag">Sure of himself, and at his best when life is quiet.</p>
           <p class="gchips-k">In Gregory the Great's terms</p>
           <ul class="gchips"><li>Confident</li><li>Tranquil mind</li></ul>
-          <p>Confident here means steady and hard to rattle, never proud. His picture also stands for The Giver, one of the test's roles.</p>
+          <p>Our reading, from the Christian Personality Test. Confident here means steady and hard to rattle, never proud. His cloak also stands for The Giver, one of the test's seven roles.</p>
           <a class="go-pill" href="#" data-dead>See The Oak <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
       </section>
@@ -1076,16 +1188,16 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
           <div class="feast-col">
             <h4>West</h4>
             <ul>
-              <li class="feast"><span class="leaf"><span class="leaf-m">Nov</span><b class="leaf-d">11</b></span><p><b>Catholic</b> memorial. Also the <b>Church of England</b>, the <b>Episcopal Church</b> and the Missouri Synod's <b>Lutheran Service Book</b>.</p></li>
               <li class="feast"><span class="leaf"><span class="leaf-m">Jul</span><b class="leaf-d">4</b></span><p>In the <b>1916 Roman Martyrology</b>: his body moved, and his church at Tours dedicated.</p></li>
+              <li class="feast"><span class="leaf"><span class="leaf-m">Nov</span><b class="leaf-d">11</b></span><p><b>Catholic</b> memorial. Also the <b>Church of England</b>, the <b>Episcopal Church</b>, and Lutherans in the <b>Missouri Synod</b> and the <b>ELCA</b>.</p></li>
             </ul>
           </div>
           <div class="feast-col">
             <h4>East</h4>
             <ul>
-              <li class="feast"><span class="leaf"><span class="leaf-m">Nov</span><b class="leaf-d">12</b></span><p><b>Greek</b> churches.</p></li>
               <li class="feast"><span class="leaf"><span class="leaf-m">Oct</span><b class="leaf-d">12</b></span><p><b>Russian Church</b>, on the old calendar. That is 25 October on today's calendar.</p></li>
               <li class="feast"><span class="leaf"><span class="leaf-m">Nov</span><b class="leaf-d">11</b></span><p><b>OCA</b>, which also lists 12 October.</p></li>
+              <li class="feast"><span class="leaf"><span class="leaf-m">Nov</span><b class="leaf-d">12</b></span><p><b>Greek</b> churches.</p></li>
             </ul>
           </div>
         </div>
@@ -1094,7 +1206,7 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
   </div>
 
   <!-- WHAT WAS HE LIKE -->
-  <div class="sect" id="like"><div class="sect-text"><p class="sect-kicker">In his friend's words</p><h2 class="sect-title">what was he like?</h2></div></div>
+  <div class="sect" id="like"><div class="sect-text"><h2 class="sect-title">what was he like?</h2></div></div>
   <section class="panel traits">
     <div class="traits-tab" aria-hidden="true">His character</div>
     <div class="traits-list">
@@ -1121,7 +1233,7 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
     </div>
   </section>
 
-  <div class="sect"><div class="sect-text"><p class="sect-kicker">Sulpicius Severus, who knew him</p><h2 class="sect-title">what others said of him</h2></div></div>
+  <div class="sect" id="said"><div class="sect-text"><h2 class="sect-title">what others said of him</h2></div></div>
   <p class="sect-lede">Almost everything we know comes from one friend. Sulpicius Severus wrote his Life of St Martin while Martin was still alive.</p>
   <div class="said">
     <figure class="panel qc">
@@ -1139,7 +1251,7 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
   </div>
 
   <!-- LIFE -->
-  <div class="sect" id="life"><div class="sect-text"><p class="sect-kicker">From soldier to bishop</p><h2 class="sect-title">his life in six moments</h2></div></div>
+  <div class="sect" id="life"><div class="sect-text"><h2 class="sect-title">his life in six moments</h2></div></div>
   <ol class="moments">
     <li class="mo"><div class="panel">
       <div class="mo-h"><p class="mo-place">Amiens</p><span class="mo-when">A young soldier</span></div>
@@ -1175,12 +1287,81 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
       <div class="mo-h"><p class="mo-place">Trier</p><span class="mo-when">About 385</span></div>
       <h3>Before the emperor</h3>
       <p>At the court of the emperor Maximus, the other bishops flattered him. Martin would not. He begged Maximus not to put the followers of the heretic Priscillian to death. He said being put out of the Church was punishment enough, and a ruler should not judge a church case. Once, to save men already sentenced, he took communion for a day with the bishops who had pressed for the killings. He grieved over it for the rest of his life, and never went to a synod again.</p>
-      <span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.iv.iii.xiii.html" target="_blank" rel="noopener">Life 20; Sacred History 2.50; Dialogue III, chapters 11 to 13</a></span>
+      <span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.iv.iii.xiii.html" target="_blank" rel="noopener">Life, chapter 20; Sacred History, Book 2, chapter 50; Dialogue III, chapters 11 to 13</a></span>
     </div></li>
   </ol>
 
+  <!-- MIRACLES -->
+  <div class="sect" id="miracles"><div class="sect-text"><h2 class="sect-title">his miracles</h2></div></div>
+  <div class="mir">
+  <p class="sect-lede">Sulpicius tells dozens of wonders. He knew they would be doubted, and he made a promise at the start of the Life.</p>
+  <figure class="pledge"><blockquote>I implore those who are to read what follows to give full faith to the things narrated, and to believe that I have written nothing of which I had not certain knowledge and evidence.</blockquote>
+    <figcaption class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.ii.ii.html" target="_blank" rel="noopener">Life of St Martin, chapter 1</a></figcaption></figure>
+  <section class="dark raised" aria-labelledby="raised-h">
+    <div class="raised-h"><b class="raised-n" aria-hidden="true">3</b><h3 id="raised-h">raised from the dead</h3></div>
+    <ol class="raised-list">
+      <li class="rz">
+        <div class="rz-h"><p class="rz-place">Ligugé</p><span class="rz-when">As a monk</span></div>
+        <h4>The catechumen</h4>
+        <p>A catechumen had joined Martin's monastery. He died of a fever while Martin was away, before he could be baptised. Martin sent everyone out, lay down on the body and prayed. Within about two hours the man began to move. He was baptised and lived for many years.</p>
+        <blockquote>“they beheld the man alive whom they had formerly left dead”</blockquote>
+        <p class="rz-who">The man told the story himself. He said he had stood before God's judgment, until two angels said he was the man Martin was praying for.</p>
+        <span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.ii.viii.html" target="_blank" rel="noopener">Life of St Martin, chapter 7</a></span>
+      </li>
+      <li class="rz">
+        <div class="rz-h"><p class="rz-place">Lupicinus's estate</p><span class="rz-when">As a monk</span></div>
+        <h4>The slave</h4>
+        <p>Passing the estate of Lupicinus, a man of high standing, Martin found a crowd wailing. One of the household's slaves had hanged himself. Martin went in alone, lay on the body and prayed. The dead man woke, took Martin's right hand and stood up. Then he walked with Martin to the porch, in front of everyone.</p>
+        <blockquote>“with life beaming in his countenance, and with his drooping eyes fixed on Martin's face”</blockquote>
+        <p class="rz-who">The whole crowd saw him walk out, says Sulpicius.</p>
+        <span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.ii.ix.html" target="_blank" rel="noopener">Life of St Martin, chapter 8</a></span>
+      </li>
+      <li class="rz">
+        <div class="rz-h"><p class="rz-place">On the road to Chartres</p><span class="rz-when">As bishop</span></div>
+        <h4>The only son</h4>
+        <p>They passed a village where no one knew a single Christian, and a huge crowd of pagans came out to meet him. A mother held up her dead son and begged him. Martin took the body in his arms, knelt and prayed, and gave the child back to her alive. The crowd asked to become Christians on the spot, and he made them all catechumens there in the plain.</p>
+        <blockquote>“We know that you are a friend of God: restore me my son, who is my only one.”</blockquote>
+        <p class="rz-who">Gallus, his disciple, was there: “I myself am a witness to this latter occurrence”.</p>
+        <span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.iv.ii.iv.html" target="_blank" rel="noopener">Dialogues, Dialogue II, chapter 4</a></span>
+      </li>
+    </ol>
+    <p class="raised-note">Martin used to tell Sulpicius that as a bishop he had less power to work wonders than he had before. <span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.iv.ii.iv.html" target="_blank" rel="noopener">Dialogues, Dialogue II, chapter 4</a></span></p>
+  </section>
+  <div class="wonders">
+    <div class="panel wonder">
+      <h3>The falling pine</h3>
+      <p>Martin had torn down a village's old temple, and he meant to cut down the sacred pine beside it. The pagans made him a deal: they would cut it down themselves if he stood where it fell. They bound him and set him where it would fall. As the tree came down, he raised his hand and made the sign of the cross. It swung round and fell the other way. Almost the whole crowd asked to become Christians that day.</p>
+      <blockquote>“it swept round to the opposite side, to such a degree that it almost crushed the rustics”</blockquote>
+      <span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.ii.xiv.html" target="_blank" rel="noopener">Life of St Martin, chapter 13</a></span>
+    </div>
+    <div class="panel wonder">
+      <h3>The leper at Paris</h3>
+      <p>At the gate of Paris, with crowds around him, Martin kissed a leper and blessed him. The man was cleansed. The next day he came to church with healthy skin to give thanks.</p>
+      <blockquote>“he gave a kiss to a leper, of miserable appearance, while all shuddered at seeing him do so”</blockquote>
+      <span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.ii.xix.html" target="_blank" rel="noopener">Life of St Martin, chapter 18</a></span>
+    </div>
+    <div class="panel wonder">
+      <h3>Paulinus's eye</h3>
+      <p>Paulinus, later the famous bishop of Nola, had a thick skin growing over the pupil of one eye, and it hurt badly. Martin touched it with a paintbrush, and the pain went and the eye was healed.</p>
+      <blockquote>“Martin touched his eye with a painter's brush”</blockquote>
+      <span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.ii.xx.html" target="_blank" rel="noopener">Life of St Martin, chapter 19</a></span>
+    </div>
+    <div class="panel wonder">
+      <h3>A globe of fire</h3>
+      <p>On a great feast day, as Martin blessed the altar, a ball of fire rose from his head, trailing a long flame. The church was crowded, but only five people saw it: one consecrated virgin, one priest and three monks.</p>
+      <blockquote>“we beheld a globe of fire dart from his head”</blockquote>
+      <span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.iv.ii.ii.html" target="_blank" rel="noopener">Dialogues, Dialogue II, chapter 2</a></span>
+    </div>
+  </div>
+  <div class="later doubt">
+    <b>Doubted from the start</b>
+    Doubters came early. A friend told Sulpicius of one man who said he had “told many lies in that book of yours”. In the last Dialogue, Gallus says many doubted what he had told the day before. So from then on he names living witnesses, people a doubter could go and ask.
+    <span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.iv.i.xxvi.html" target="_blank" rel="noopener">Dialogues, Dialogue I, chapter 26</a>; <a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.iv.iii.v.html" target="_blank" rel="noopener">Dialogues, Dialogue III, chapter 5</a></span>
+  </div>
+</div>
+
   <!-- WORDS -->
-  <div class="sect" id="words"><div class="sect-text"><p class="sect-kicker">As his disciple recorded them</p><h2 class="sect-title">his words</h2></div></div>
+  <div class="sect" id="words"><div class="sect-text"><h2 class="sect-title">his words</h2></div></div>
   <p class="frame-note">Martin wrote nothing that survives. These are his words as Sulpicius Severus recorded them, in Alexander Roberts's translation of 1894.</p>
   <div class="words">
     <figure class="dark qf">
@@ -1193,7 +1374,7 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
     <div class="words-grid">
       <figure class="panel qc">
         <blockquote>The Lord Jesus did not predict that He would come clothed in purple, and with a glittering crown upon His head. I will not believe that Christ has come, unless He appears with that appearance and form in which He suffered, and openly displaying the marks of His wounds upon the cross.</blockquote>
-        <figcaption class="who">The devil came to him dressed as a king and claimed to be Christ. Sulpicius says he had this from Martin's own lips.<span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.ii.xxv.html" target="_blank" rel="noopener">Life of St Martin, chapter 24</a></span></figcaption>
+        <figcaption class="who">The devil came to him dressed as a king and claimed to be Christ. Sulpicius says he heard this from Martin himself.<span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.ii.xxv.html" target="_blank" rel="noopener">Life of St Martin, chapter 24</a></span></figcaption>
       </figure>
       <figure class="panel qc">
         <blockquote>See, she has fulfilled the precept of the Gospel: she had two coats, and one of them she has given to him who had none: thus, therefore, ye ought also to do.</blockquote>
@@ -1211,7 +1392,7 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
   </div>
 
   <!-- MYTHS -->
-  <div class="sect" id="myths"><div class="sect-text"><p class="sect-kicker">Checked against the sources</p><h2 class="sect-title">often misquoted</h2></div></div>
+  <div class="sect" id="myths"><div class="sect-text"><h2 class="sect-title">often misquoted</h2></div></div>
   <div class="myths">
     <div class="panel myth">
       <span class="myth-k">Often said</span>
@@ -1252,8 +1433,8 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
   </div>
 
   <!-- WHERE HE STOOD -->
-  <div class="sect" id="stood"><div class="sect-text"><p class="sect-kicker">On 10 of the quiz's 23 questions</p><h2 class="sect-title">where he stood</h2></div></div>
-  <p class="sect-lede">Every line is as Sulpicius Severus, who knew him, recorded it. Tap “Show his line” to read it.</p>
+  <div class="sect" id="stood"><div class="sect-text"><h2 class="sect-title">where he stood</h2></div></div>
+  <p class="sect-lede">Each line is Martin’s, as Sulpicius Severus recorded it. <span class="on-touch">Tap</span><span class="on-mouse">Click</span> “Show his line” to read it.</p>
   <div class="stances"><div class="panel st"><div class="st-top"><span class="st-topic">On laughter</span><a class="st-link" href="#" data-dead>Everyone on this</a></div><p class="st-q">“A good hearty laugh is good for the soul.”</p><div class="scale" aria-hidden="true"><i></i><i class="on"></i><i></i><i></i><i></i></div><div class="scale-ends" aria-hidden="true"><span>Disagree</span><span>Agree</span></div><p class="st-v">Martin disagrees.</p><details><summary>Show his line</summary><blockquote>No one ever saw him enraged, or excited, or lamenting, or laughing.</blockquote><span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.ii.xxviii.html" target="_blank" rel="noopener">Life of St Martin, chapter 27</a>, as Sulpicius Severus recorded it</span></details></div>
 <div class="panel st"><div class="st-top"><span class="st-topic">On solitude</span><a class="st-link" href="#" data-dead>Everyone on this</a></div><p class="st-q">“If you had to choose, you'd grow closer to God alone in quiet than among other people.”</p><div class="scale" aria-hidden="true"><i></i><i></i><i></i><i class="on"></i><i></i></div><div class="scale-ends" aria-hidden="true"><span>Disagree</span><span>Agree</span></div><p class="st-v">Martin agrees.</p><details><summary>Show his line</summary><blockquote>Martin was accustomed to say to you, that such an abundance of power was by no means granted him while he was a bishop, as he remembered to have possessed before he obtained that office.</blockquote><span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.iv.ii.iv.html" target="_blank" rel="noopener">Dialogues, Dialogue II, chapter 4</a>, as Sulpicius Severus recorded it</span></details></div>
 <div class="panel st"><div class="st-top"><span class="st-topic">On speaking up</span><a class="st-link" href="#" data-dead>Everyone on this</a></div><p class="st-q">“If someone you know is doing wrong, it's your job to tell them.”</p><div class="scale" aria-hidden="true"><i></i><i></i><i></i><i class="on"></i><i></i></div><div class="scale-ends" aria-hidden="true"><span>Disagree</span><span>Agree</span></div><p class="st-v">Martin agrees.</p><p class="st-off">On record in the Dialogues. Not quoted here.</p></div>
@@ -1267,7 +1448,7 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
   <p class="stood-foot">See where you stand beside him. <a class="go-pill" href="#" data-dead>Take the quiz <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
 
   <!-- DEATH -->
-  <div class="sect" id="death"><div class="sect-text"><p class="sect-kicker">Candes, 8 November 397</p><h2 class="sect-title">how he died</h2></div></div>
+  <div class="sect" id="death"><div class="sect-text"><h2 class="sect-title">how he died</h2></div></div>
   <div class="split">
     <div>
       <div class="panel prose">
@@ -1297,14 +1478,14 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
   </div>
 
   <!-- SAINT -->
-  <div class="sect" id="saint"><div class="sect-text"><p class="sect-kicker">East and West</p><h2 class="sect-title">is he a saint?</h2></div></div>
+  <div class="sect" id="saint"><div class="sect-text"><h2 class="sect-title">is he a saint?</h2></div></div>
   <div class="panel prose">
     <p class="big">Yes. Catholics, Orthodox and Anglicans count him a saint, and Lutherans remember him too.</p>
     <ul class="churches">
       <li><b>Catholic</b><span>Saint</span><small>A memorial on 11 November</small></li>
       <li><b>Orthodox</b><span>Saint</span><small>Called Martin the Merciful</small></li>
       <li><b>Anglican</b><span>Saint</span><small>A Lesser Festival in the Church of England</small></li>
-      <li><b>Lutheran</b><span>Remembered</span><small>Missouri Synod, 11 November. ELCA <span class="tbc">[checked before launch]</span></small></li>
+      <li><b>Lutheran</b><span>Remembered</span><small>Missouri Synod and ELCA, 11 November</small></li>
     </ul>
     <p>He was honoured as a saint from the first. He was one of the first saints honoured who did not die as a martyr. His disciple saw it coming:</p>
   </div>
@@ -1314,13 +1495,13 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
       <figcaption class="who">Sulpicius Severus<span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.iii.html" target="_blank" rel="noopener">Letters, Letter 2</a></span></figcaption>
     </figure>
     <figure class="panel qc">
-      <blockquote>At Tours in France, the birthday of blessed Martin, bishop and confessor, whose life was so renowned for miracles that he received the power to raise three persons from the dead.</blockquote>
-      <figcaption class="who">The Roman Martyrology, 1916 edition, for 11 November. A saint's “birthday” here is the day he entered heaven <span class="tbc">[checked before launch]</span><span class="cite"><a href="https://archive.org/details/romanmartyrology00cathuoft" target="_blank" rel="noopener">The Roman Martyrology (1916)</a></span></figcaption>
+      <blockquote>At Tours, in France, the birthday of blessed Martin, bishop and confessor, whose life was so renowned for miracles that he received the power to raise three persons from the dead.</blockquote>
+      <figcaption class="who">The Roman Martyrology, 1916 edition, for 11 November. In its own words, a saint's “birthday” is “the day on which a Saint enters heaven”.<span class="cite"><a href="https://archive.org/details/romanmartyrology00cathuoft" target="_blank" rel="noopener">The Roman Martyrology (1916)</a></span></figcaption>
     </figure>
   </div>
 
   <!-- READ -->
-  <div class="sect" id="read"><div class="sect-text"><p class="sect-kicker">Free, and short</p><h2 class="sect-title">what to read first</h2></div></div>
+  <div class="sect" id="read"><div class="sect-text"><h2 class="sect-title">what to read first</h2></div></div>
   <div class="reads">
     <div class="panel read">
       <h3>The Life of St Martin</h3>
@@ -1349,7 +1530,7 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
   </div>
 
   <!-- QUIZZES -->
-  <div class="sect" id="quizzes"><div class="sect-text"><p class="sect-kicker">Your turn</p><h2 class="sect-title">take the quizzes</h2></div></div>
+  <div class="sect" id="quizzes"><div class="sect-text"><h2 class="sect-title">take the quizzes</h2></div></div>
   <div class="qcards">
     <a class="qcard qcard--engr" href="#" data-dead>
       <img src="img/durer-jerome.jpg" alt="" loading="lazy">
@@ -1372,7 +1553,7 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
   </div>
 
   <!-- KIN -->
-  <div class="sect"><div class="sect-text"><p class="sect-kicker">The Oak, in the test's reading</p><h2 class="sect-title">people like him</h2></div></div>
+  <div class="sect" id="kin"><div class="sect-text"><h2 class="sect-title">people like him</h2></div></div>
   <div class="kin">
     <a class="panel kc" href="#" data-dead>
       <span class="kc-h"><img src="img/f/benedict-of-nursia.jpg" alt="" loading="lazy"><span><span class="kc-n">Benedict of Nursia</span><span class="tchip" style="--t:#8C7A4F">The Oak</span></span></span>
@@ -1392,7 +1573,7 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
   </div>
 
   <!-- SOURCES -->
-  <div class="sect" id="sources"><div class="sect-text"><p class="sect-kicker">Every fact on this page</p><h2 class="sect-title">sources</h2></div></div>
+  <div class="sect" id="sources"><div class="sect-text"><h2 class="sect-title">sources</h2></div></div>
   <div class="panel sources">
     <h3>His life, and his words</h3>
     <ul>
@@ -1409,6 +1590,7 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
       <li><a href="https://www.newadvent.org/cathen/09732b.htm" target="_blank" rel="noopener">Catholic Encyclopedia, 1910</a>, “St. Martin of Tours”</li>
       <li><a href="https://www.britannica.com/biography/Saint-Martin-of-Tours" target="_blank" rel="noopener">Britannica</a>, “St. Martin of Tours”</li>
       <li><a href="https://www.newliturgicalmovement.org/2022/11/saint-martin-of-tours-man-and-his-feast.html" target="_blank" rel="noopener">New Liturgical Movement</a>, on the goose legend, 2022</li>
+      <li><a href="https://www.merriam-webster.com/dictionary/Tours" target="_blank" rel="noopener">Merriam-Webster</a>, “Tours”, for how to say it</li>
     </ul>
     <h3>Calendars</h3>
     <ul>
@@ -1420,6 +1602,7 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
       <li><a href="https://www.churchofengland.org/prayer-and-worship/worship-texts-and-resources/common-worship/churchs-year/calendar" target="_blank" rel="noopener">Church of England</a>, Common Worship calendar</li>
       <li><a href="https://www.episcopalchurch.org/wp-content/uploads/2022/11/Lesser-Feasts-and-Fasts-2022_final.pdf" target="_blank" rel="noopener">The Episcopal Church</a>, Lesser Feasts and Fasts 2022</li>
       <li><a href="https://witness.lcms.org/2008/saints-more-than-a-short-list-11-2008/" target="_blank" rel="noopener">The Lutheran Witness</a>, LCMS, November 2008</li>
+      <li><a href="https://web.archive.org/web/20060908112753/http://www.renewingworship.org/ELW/content/PDF/ChurchYear_asm_20060119.pdf" target="_blank" rel="noopener">Evangelical Lutheran Worship</a>, ELCA, the church year</li>
     </ul>
     <h3>Pictures</h3>
     <ul>
@@ -1428,7 +1611,7 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
       <li>The Lonely Tree, Caspar David Friedrich, 1822. Public domain.</li>
     </ul>
   </div>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"St Martin of Tours: the cloak, his words and his feast days","about":{"@type":"Person","name":"Martin of Tours","alternateName":["Martin the Merciful","St Martin of Tours"],"birthPlace":"Savaria, Pannonia (Szombathely, Hungary)","deathPlace":"Candes, Gaul","sameAs":["https://en.wikipedia.org/wiki/Martin_of_Tours","https://www.wikidata.org/wiki/Q133704"]},"image":{"@type":"ImageObject","contentUrl":"https://wiserwalk.com/img/saints/martin-of-tours.jpg","license":"https://creativecommons.org/publicdomain/zero/1.0/","creator":{"@type":"Person","name":"El Greco"},"creditText":"National Gallery of Art, Washington"},"publisher":{"@type":"Organization","name":"Wiser Walk","url":"https://wiserwalk.com/"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"St Martin of Tours: the cloak, his miracles and his feast days","about":{"@type":"Person","name":"Martin of Tours","alternateName":["Martin the Merciful","St Martin of Tours"],"birthPlace":"Savaria, Pannonia (Szombathely, Hungary)","deathPlace":"Candes, Gaul","sameAs":["https://en.wikipedia.org/wiki/Martin_of_Tours","https://www.wikidata.org/wiki/Q133704"]},"image":{"@type":"ImageObject","contentUrl":"https://wiserwalk.com/img/saints/martin-of-tours.jpg","license":"https://creativecommons.org/publicdomain/zero/1.0/","creator":{"@type":"Person","name":"El Greco"},"creditText":"National Gallery of Art, Washington"},"publisher":{"@type":"Organization","name":"Wiser Walk","url":"https://wiserwalk.com/"}}</script>
 </article>
 </main>
 
@@ -1524,18 +1707,73 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
       toast("That link is not live in the mock-up. Only St Martin's page is built.");
       return;
     }
-    if (a.hasAttribute('data-jump')) {
-      var el = document.getElementById(a.getAttribute('href').slice(1));
-      if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-    }
   });
+
+  /* ---- the pager: previous, the section you are in (tap for them all), next */
+  var nav = document.querySelector('[data-pager]');
+  var menu = document.getElementById('pg-menu');
+  var menuBtn = document.querySelector('[data-pg-menu]');
+  var links = [].slice.call(document.querySelectorAll('[data-pg-go]'));
+  var secs = links.map(function (a) { return { id: a.getAttribute('data-pg-go'), name: a.textContent }; });
+  var arrows = [].slice.call(document.querySelectorAll('[data-pg-dir]'));
+  var cur = -1;
+  function closeMenu() { if (!menu.hidden) { menu.hidden = true; menuBtn.setAttribute('aria-expanded', 'false'); } }
+  function update() {
+    if (!nav.offsetParent) return;
+    var y = nav.getBoundingClientRect().bottom + 24, at = 0;
+    secs.forEach(function (s, i) {
+      var el = document.getElementById(s.id);
+      if (el && el.getBoundingClientRect().top <= y) at = i;
+    });
+    // At the very bottom the last sections may never reach the top; the last one is where you are.
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) at = secs.length - 1;
+    if (at === cur) return;
+    cur = at;
+    nav.querySelector('.pg-t').textContent = secs[at].name;
+    arrows[0].disabled = at === 0;
+    arrows[1].disabled = at === secs.length - 1;
+    links.forEach(function (a, i) {
+      a.classList.toggle('is-here', i === at);
+      if (i === at) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+    });
+  }
+  function goSec(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var off = nav.getBoundingClientRect().height + 18;
+    var smooth = !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - off, behavior: smooth ? 'smooth' : 'auto' });
+  }
+  var ticking = false;
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () { ticking = false; update(); });
+  }
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', onScroll);
+  arrows.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var n = cur + Number(b.getAttribute('data-pg-dir'));
+      if (n >= 0 && n < secs.length) goSec(secs[n].id);
+    });
+  });
+  menuBtn.addEventListener('click', function () {
+    menu.hidden = !menu.hidden;
+    menuBtn.setAttribute('aria-expanded', String(!menu.hidden));
+  });
+  links.forEach(function (a) {
+    a.addEventListener('click', function (e) { e.preventDefault(); closeMenu(); goSec(a.getAttribute('data-pg-go')); });
+  });
+  document.addEventListener('click', function (e) { if (!e.target.closest('[data-pager]')) closeMenu(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
 
   /* ---- the three views */
   var VIEWS = ['menu', 'hub', 'martin'];
   var SERP = {
     menu: ['wiserwalk.com › saints', 'Saints and Church Fathers: lives, quotes, feast days', 'Browse saints and early Christians: their lives, their own words with the book and chapter, and their feast days East and West.'],
     hub: ['wiserwalk.com › saints', 'Saints and Church Fathers: lives, quotes, feast days', 'Browse saints and early Christians: their lives, their own words with the book and chapter, and their feast days East and West.'],
-    martin: ['wiserwalk.com › saints › martin-of-tours', 'St Martin of Tours: the cloak, his words and his feast days', 'Who Martin of Tours was in plain words: the cloak, why he left the army, his feast days East and West, and his words with the book and chapter.']
+    martin: ['wiserwalk.com › saints › martin-of-tours', 'St Martin of Tours: the cloak, his miracles and his feast days', 'Who Martin of Tours was, in plain words: the cloak, his miracles, his feast days East and West, and his words with the book and chapter.']
   };
   var learn = document.getElementById('learn-menu');
   var tabs = [].slice.call(document.querySelectorAll('.mock-tabs a'));
@@ -1552,6 +1790,7 @@ body[data-show="hub"] [data-view="hub"], body[data-show="martin"] [data-view="ma
     document.getElementById('serp-d').textContent = s[2];
     if (current !== null && current !== h) window.scrollTo(0, 0);
     current = h;
+    cur = -1; update();
   }
   window.addEventListener('hashchange', route);
   tabs.forEach(function (a) {

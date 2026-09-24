@@ -62,8 +62,8 @@ built only from `research/martin-facts.json` (every item sourced; quotations che
 Roberts's unrevised 1894 translation on CCEL). The "stat sheet" uses sourced numbers only (15, the age he
 enlisted; 26, years a bishop; 80 disciples; 81, his age by Gregory of Tours; 3, days to burial), never ratings.
 
-**First thing next session:** ask the owner what he thinks of the mock-up (and the plan). Build nothing until he
-says go. Open items from the fact sheet (`could_not_verify`): GOARCH blocked the checker (the Greek 12 November
+**Draft 1 was reviewed on 2026-09-24; draft 2 is published (see the next section).** Ask what he thinks of draft 2
+and of the miracles proposal. Build nothing until he says go. Open items from the fact sheet (`could_not_verify`): GOARCH blocked the checker (the Greek 12 November
 is confirmed from synaxarion.gr and saint.gr instead); the ELCA listing; patronages beyond France, soldiers and
 tailors; the goose as an art attribute. The Eastern icon in the mock-up (Petit Palais PPP4870, CC0) is not yet in
 `site/public/img/CREDITS.md`.
@@ -71,6 +71,44 @@ tailors; the goose as an art attribute. The Eastern icon in the mock-up (Petit P
 Martin's Orthodox feast, settled: churches differ. Greek synaxaria keep 12 November; the Russian Church keeps
 12 October on the old calendar (25 October civil); the OCA keeps 11 November and also lists 12 October, calling
 the October date an error. So "East" is never one date: print each church's own.
+
+## Draft 2 of the mock-up: his 14 notes, now rules for EVERY saint page (2026-09-24)
+
+He read the whole Martin page ("so engaging I read the whole thing ... I constantly found myself saying 'wow' out
+loud") and gave 14 notes. All are applied in draft 2 (same link, version 2; source now lives in `mockup/src/`,
+rebuild with `node mockup/src/build.mjs`). They bind every person page:
+
+1. **The band picture shows the face at every width.** One crop point per painting (`--pos-m` phone, `--pos-d`
+   wide), checked at 320 to 390. Draft 1 cut Martin's head off on phones.
+2. **Page navigation is the sticky pager** from the personality result (previous, the section you are in, tap it
+   for every section, next), WITHOUT the progress bar: this is not an article or a result. Never a sideways chip row.
+3. **"His roles, in order" is a path**: down the page on phones, across it on wide screens, one short line under
+   each role. It must never wrap into a jumble and must not look missable.
+4. **Quick facts put the label above the text**, full width, at every size (he was unsure about desktop; stacked
+   looked right there too).
+5. **Boxes run nearly edge to edge on phones** (6px from the screen edge), so the text inside gets the width.
+6. **Labels in plain words**: "Pronounced", never "Say it".
+7. **Feast days in calendar order** within West and within East.
+8. **"In numbers": the label chip on top, then the number in #F4B991 (`--orange-soft`), then "+" lines.** Only numbers
+   people care about: "3 days to burial" was padding and is gone (now "Raised the dead 3" and "At his funeral 2,000").
+   His sentence about #F4B991 was cut off ("looks decent, but feels"): ask him how it ends.
+9. **"His personality type"**, never "The test's reading", with "Our reading, from the Christian Personality Test".
+10. **Plain words in our own voice**: "Sulpicius says he heard this from Martin himself", not "had this from Martin's
+    own lips".
+11. **No width caps on short lines** (ledes, captions): they wrapped on desktop. Same rule as the quiz pages.
+12. **The "Who was X?" box has one blue edge**, no orange half.
+13. **No small label (kicker) above any section title.** Labels inside a section ("Before a battle near Worms",
+    "East and West, side by side") stay.
+14. **Miracles get their own section when the sources record them** (his idea: "that's the super interesting stuff
+    everyone wants to hear about"). Built into draft 2 as a PROPOSAL for him to judge: Sulpicius's promise, "3 raised
+    from the dead" on a dark panel (each with where, who saw it and the line), four more wonders, and "Doubted from
+    the start" (in the sources' own words). Told as the source tells it, quoted and cited, never hedged in our voice.
+    Data: `research/martin-miracles.json` (adversarially checked: six fixes, all 14 quotations word for word).
+    Rule 8 of the quiz pages also applies: "Tap" only on touch screens, "Click" with a mouse.
+
+Also resolved in draft 2: the ELCA keeps 11 November; "MAR-tin of TOOR" (Merriam-Webster); the 1916 Martyrology's
+own footnote defines "birthday" as the day a saint enters heaven. Sources in `research/martin-miracles.json`
+(`checked.open_items_resolved`). No "[checked before launch]" marks remain.
 
 ## Rules that bind every page (from CLAUDE.md, memory and the research)
 

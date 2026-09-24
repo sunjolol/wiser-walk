@@ -72,7 +72,10 @@ rules so they don't happen again". `site/scripts/quiz-page-test.mjs` (postbuild)
 (`/saints/`, one rich page per person, a "Learn" menu) and said yes to all four decisions in its plan. He wants
 it done right from the start ("I really want to make sure we nail this right from the start and do it right").
 Step one: the tap-through mock-up is published (https://claude.ai/artifact/2XipDT23JpGHU1kYKi7VX9: the Learn menu,
-the hub, St Martin of Tours with checked facts). Ask what he thinks of it before building anything.
+the hub, St Martin of Tours with checked facts). He reviewed draft 1 the same evening (14 notes, "we are definitely
+on the right track"); **draft 2 is at the same link** with every note applied and a proposed miracles section. His
+notes are now binding rules for every saint page: README "Draft 2 of the mock-up". Ask what he thinks of draft 2
+before building anything.
 
 Also live that day (commits 0026af9, fd69270): the Oak has saints (Martin, Benedict, John the Baptist), the Hearth
 adds Cuthbert and Guthlac, the Spark adds Philip Neri; the opposite panel leads with the opposite's person; saint

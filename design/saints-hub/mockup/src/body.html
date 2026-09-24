@@ -1,0 +1,649 @@
+<div class="mock">
+  <p class="mock-note">Mock-up, draft 2. St Martin's page uses real, checked facts. Links inside are not live.</p>
+  <nav class="mock-tabs" aria-label="Mock-up views">
+    <a href="#menu">The Learn menu</a>
+    <a href="#hub">Saints hub</a>
+    <a href="#martin" aria-current="page">St Martin of Tours</a>
+  </nav>
+  <details class="mock-seo">
+    <summary>How this page shows in search</summary>
+    <div class="serp">
+      <p class="serp-url" id="serp-url">wiserwalk.com › saints › martin-of-tours</p>
+      <p class="serp-t" id="serp-t">St Martin of Tours: the cloak, his miracles and his feast days</p>
+      <p class="serp-d" id="serp-d">Who Martin of Tours was, in plain words: the cloak, his miracles, his feast days East and West, and his words with the book and chapter.</p>
+    </div>
+  </details>
+</div>
+
+<div class="sheet">
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="#" data-dead aria-label="Wiser Walk, home">
+      <img class="brand-mark" src="img/logo-w.png" width="47" height="34" alt="">
+      <span class="brand-word" aria-hidden="true"></span>
+    </a>
+    <nav aria-label="Site">
+      <details class="navmenu">
+        <summary>Quizzes {{CARET}}</summary>
+        <div class="navmenu-panel"><ul>
+          <li class="all"><a href="#" data-dead><span>All quizzes</span></a></li>
+          <li><a href="#" data-dead><span>Theology Compass</span></a></li>
+          <li><a href="#" data-dead><span>Christian Personality Test</span></a></li>
+          <li><a href="#" data-dead><span>Which of the 7 deadly sins are you weakest to?</span></a></li>
+          <li><a href="#" data-dead><span>Who in the Bible are you most like?</span></a></li>
+          <li><a href="#" data-dead><span>What are your spiritual gifts?</span></a></li>
+          <li><a href="#" data-dead><span>Which Psalm are you living?</span></a></li>
+          <li><a href="#" data-dead><span>Which early Christian thinks like you?</span></a></li>
+        </ul></div>
+      </details>
+      <details class="navmenu">
+        <summary>Games {{CARET}}</summary>
+        <div class="navmenu-panel"><ul>
+          <li class="all"><a href="#" data-dead><span>All games</span></a></li>
+          <li><a href="#" data-dead><span>Sounds Like Scripture</span></a></li>
+          <li><a href="#" data-dead><span>Who Said It?</span></a></li>
+        </ul></div>
+      </details>
+      <details class="navmenu navmenu--learn here" id="learn-menu">
+        <summary>Learn {{CARET}}</summary>
+        <div class="navmenu-panel navmenu-panel--learn"><ul>
+          <li><a href="#" data-dead>
+            <span class="nm-t">Articles</span>
+            <span class="nm-l">Short reads on gratitude, patience, worry and more.</span>
+          </a></li>
+          <li><a href="#hub" aria-current="page">
+            <span class="nm-t">Saints and early Christians <span class="navmenu-tag">New</span></span>
+            <span class="nm-l">Their lives, their own words and their feast days.</span>
+          </a></li>
+          <li><a href="#" data-dead>
+            <span class="nm-t">What the early Church said</span>
+            <span class="nm-l">23 questions, answered in the early Christians' own words.</span>
+          </a></li>
+          <li><a href="#" data-dead>
+            <span class="nm-t">Compare traditions</span>
+            <span class="nm-l">How two churches differ, side by side.</span>
+          </a></li>
+        </ul></div>
+      </details>
+      <a href="#" data-dead>Donate</a>
+    </nav>
+    <div class="head-acct">
+      <a class="head-login" href="#" data-dead>Log In</a>
+      <a class="head-join" href="#" data-dead>Sign Up</a>
+    </div>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch theme">
+      <svg viewBox="0 0 24 24" width="21" height="21" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+        <g class="rays"><path d="M12 1.3v1.8"/><path d="M4.4 4.4l1.3 1.3"/><path d="M19.6 4.4l-1.3 1.3"/><path d="M1.4 12.2h1.8"/><path d="M20.8 12.2h1.8"/></g>
+        <path class="glass" d="M12 5a5.3 5.3 0 0 0-3.5 9.3c.6.55.95 1.3.95 2.1v.4h5.1v-.4c0-.8.35-1.55.95-2.1A5.3 5.3 0 0 0 12 5z"/>
+        <path d="M9.7 18.6h4.6"/><path d="M10.5 20.8h3"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<main class="wrap page">
+
+<!-- ================================================================== THE HUB -->
+<div data-view="hub">
+  <section class="band band--hub">
+    <div class="wall" aria-hidden="true">{{WALL}}</div>
+    <div class="band-in">
+      <h1>Saints and early Christians</h1>
+      <p class="band-lede">Their lives, their own words and their feast days, East and West. Every quotation names the book and chapter it comes from.</p>
+      <form class="search" role="search" id="saint-search">
+        <label class="vh" for="saint-q">Search the saints</label>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+        <input id="saint-q" type="search" placeholder="Search by name, like Augustine" autocomplete="off">
+      </form>
+    </div>
+  </section>
+
+  <div class="sect"><div class="sect-text"><h2 class="sect-title">collections</h2></div></div>
+  <div class="colls">{{COLLS}}</div>
+
+  <div class="sect" id="people"><div class="sect-text"><h2 class="sect-title">all the people</h2></div></div>
+  <div class="filters" id="filters">{{FILTERS}}</div>
+  <div class="people-head">
+    <p class="people-count" id="people-count" aria-live="polite">38 people</p>
+    <button class="people-clear" id="people-clear" type="button" hidden>Clear filters</button>
+    <p class="people-key">A coloured chip is where the Christian Personality Test places that person. It is our reading, not a church's.</p>
+  </div>
+  <div class="people" id="people-grid">{{PEOPLE}}</div>
+  <p class="people-empty" id="people-empty" hidden>No one matches that. Try another name, or clear the filters.</p>
+
+  <div class="sect"><div class="sect-text"><h2 class="sect-title">where do you stand?</h2></div></div>
+  <a class="qcard qcard--engr" href="#" data-dead>
+    <img src="img/durer-jerome.jpg" alt="" loading="lazy">
+    <span class="qcard-b">
+      <span class="qcard-k" style="display:block">Quiz</span>
+      <span class="qcard-t" style="display:block">Which early Christian thinks like you?</span>
+      <span class="qcard-s" style="display:block">And which would argue with you?</span>
+      <span class="go-pill">Start {{ARROW}}</span>
+    </span>
+  </a>
+  <p class="more-line">Or see <a href="#" data-dead>what the early Church said</a> on 23 questions, from war to laughter.</p>
+</div>
+
+<!-- ================================================================== ST MARTIN -->
+<article data-view="martin">
+  <section class="band band--saint">
+    <img class="band-img" style="--pos-m: 50% 3%; --pos-d: 50% 3%" src="img/martin-el-greco.jpg" alt="Saint Martin on a white horse cuts his green cloak with his sword for a beggar, by El Greco" width="900" height="1667">
+    <div class="band-in">
+      <a class="crumb" href="#hub">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+        Saints and early Christians
+      </a>
+      <h1>Martin of Tours</h1>
+      <p class="band-meta">About 316 to 397 · Gaul, today's France</p>
+      <p class="band-lede">Soldier turned monk and bishop, and one of the best loved saints of Gaul.</p>
+      <p class="band-credit">Picture: Saint Martin and the Beggar, El Greco, 1597-1599. National Gallery of Art, Washington. CC0.</p>
+    </div>
+  </section>
+
+  <nav class="pager" aria-label="On this page" data-pager>
+    <button class="pg-arrow" type="button" data-pg-dir="-1" aria-label="Previous section" disabled>‹</button>
+    <button class="pg-cur" type="button" data-pg-menu aria-expanded="false" aria-controls="pg-menu">
+      <span class="pg-t">Who was Martin?</span><span class="pg-caret" aria-hidden="true"></span>
+    </button>
+    <button class="pg-arrow" type="button" data-pg-dir="1" aria-label="Next section">›</button>
+    <ol class="pg-menu" id="pg-menu" hidden>
+      <li><a href="#who" data-pg-go="who">Who was Martin?</a></li>
+      <li><a href="#glance" data-pg-go="glance">At a glance</a></li>
+      <li><a href="#like" data-pg-go="like">What was he like?</a></li>
+      <li><a href="#said" data-pg-go="said">What others said of him</a></li>
+      <li><a href="#life" data-pg-go="life">His life in six moments</a></li>
+      <li><a href="#miracles" data-pg-go="miracles">His miracles</a></li>
+      <li><a href="#words" data-pg-go="words">His words</a></li>
+      <li><a href="#myths" data-pg-go="myths">Often misquoted</a></li>
+      <li><a href="#stood" data-pg-go="stood">Where he stood</a></li>
+      <li><a href="#death" data-pg-go="death">How he died</a></li>
+      <li><a href="#saint" data-pg-go="saint">Is he a saint?</a></li>
+      <li><a href="#read" data-pg-go="read">What to read first</a></li>
+      <li><a href="#quizzes" data-pg-go="quizzes">Take the quizzes</a></li>
+      <li><a href="#kin" data-pg-go="kin">People like him</a></li>
+      <li><a href="#sources" data-pg-go="sources">Sources</a></li>
+    </ol>
+  </nav>
+
+  <section class="panel answer" id="who">
+    <h2>Who was Martin?</h2>
+    <p>Martin was a Roman cavalryman who became a monk, then bishop of Tours in Gaul. He is best known for cutting his cloak in two for a freezing beggar. He founded what may be the first monastery in Gaul. He refused to flatter an emperor. He was one of the first saints honoured who did not die a martyr.</p>
+  </section>
+
+  <!-- THE SHEET -->
+  <div class="sect" id="glance"><div class="sect-text"><h2 class="sect-title">at a glance</h2></div></div>
+  <div class="cs">
+    <section class="cs-path panel" aria-label="His roles, in order">
+      <p class="path-k">His roles, in order</p>
+      <ol class="path">
+        <li><b>Soldier</b><span>Forced to enlist at 15</span></li>
+        <li><b>Exorcist</b><span>Under Hilary of Poitiers</span></li>
+        <li><b>Monk</b><span>Founded a monastery near Poitiers</span></li>
+        <li><b>Bishop</b><span>Of Tours, 371 to 397</span></li>
+      </ol>
+    </section>
+
+    <section class="cs-stats dark" aria-label="Martin in numbers">
+      <p class="cs-stats-t">in numbers</p>
+      <ul class="stats">
+        <li class="stat">
+          <span class="stat-chip">Enlisted at</span><b class="stat-n">15</b>
+          <ul class="stat-lines"><li>Imperial guard cavalry</li><li>Under Constantius, then Julian</li></ul>
+          <span class="stat-src">Life of St Martin, chapter 2</span>
+        </li>
+        <li class="stat">
+          <span class="stat-chip">Raised the dead</span><b class="stat-n">3</b>
+          <ul class="stat-lines"><li>Two as a monk</li><li>One as bishop</li></ul>
+          <span class="stat-src">Life, chapters 7 and 8; Dialogue II, chapter 4</span>
+        </li>
+        <li class="stat">
+          <span class="stat-chip">Disciples</span><b class="stat-n">80</b>
+          <ul class="stat-lines"><li>At Marmoutier, near Tours</li><li>They owned nothing</li></ul>
+          <span class="stat-src">Life of St Martin, chapter 10</span>
+        </li>
+        <li class="stat">
+          <span class="stat-chip">Years a bishop</span><b class="stat-n">26</b>
+          <ul class="stat-lines"><li>From 371</li><li>Still lived as a monk</li></ul>
+          <span class="stat-src">New Catholic Encyclopedia; Gregory of Tours</span>
+        </li>
+        <li class="stat">
+          <span class="stat-chip">Died at</span><b class="stat-n">81</b>
+          <ul class="stat-lines"><li>In his 81st year, says Gregory of Tours</li><li>About 61, if he was born in 336</li></ul>
+          <span class="stat-src">History of the Franks, Book 1, chapter 48</span>
+        </li>
+        <li class="stat">
+          <span class="stat-chip">At his funeral</span><b class="stat-n">2,000</b>
+          <ul class="stat-lines"><li>Monks, almost two thousand, it was said</li><li>The whole city came out</li></ul>
+          <span class="stat-src">Letter 3, to Bassula</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="cs-main panel" aria-label="Quick facts">
+      <dl class="facts">
+        <div><dt>Born</dt><dd>About 316. Some scholars say about 336. At Savaria in Pannonia, today <b>Szombathely in Hungary</b>.</dd></div>
+        <div><dt>Grew up</dt><dd>At Ticinum, today <b>Pavia in Italy</b>. His parents were pagans.</dd></div>
+        <div><dt>Died</dt><dd><b>8 November 397</b>, at Candes in his own diocese. He had a fever, and he was old.</dd></div>
+        <div><dt>Buried</dt><dd>At Tours, three days later.</dd></div>
+        <div><dt>Also called</dt><dd><b>Martin the Merciful</b>, in the Russian Church and the OCA. <b>Martin the Wonderworker</b>, in Greek.</dd></div>
+        <div><dt>Status</dt><dd>A saint to Catholics, Orthodox and Anglicans. Lutherans remember him too.</dd></div>
+        <div><dt>Patron of</dt><dd><b>France</b>. Britannica adds soldiers and tailors.</dd></div>
+        <div><dt>In art</dt><dd>Cutting his cloak in two with his sword for a beggar, usually on horseback.</dd></div>
+        <div><dt>Wrote</dt><dd>Nothing that survives.</dd></div>
+        <div><dt>Pronounced</dt><dd><b>MAR-tin of TOOR</b>. The s in Tours is silent.</dd></div>
+      </dl>
+    </section>
+
+    <div class="cs-side">
+      <figure class="panel portrait">
+        <img src="img/martin-icon-petit-palais.jpg" alt="An icon on gold: the young Martin on a grey horse cuts his red cloak with a sword for a beggar, while the hand of God reaches down from the corner" width="720" height="898" loading="lazy">
+        <figcaption><b>In art</b>An icon painted in Venetian Crete, about 1500. He cuts his cloak for the beggar, and the hand of God reaches down. Petit Palais, Paris. CC0.</figcaption>
+      </figure>
+      <section class="panel temper" aria-label="His temperament">
+        <div class="temper-pic"><img src="img/oak.jpg" alt="The Lonely Tree, a painting by Caspar David Friedrich" loading="lazy"><span>The Oak</span></div>
+        <div class="temper-b">
+          <p class="temper-k">His personality type</p>
+          <p class="temper-tag">Sure of himself, and at his best when life is quiet.</p>
+          <p class="gchips-k">In Gregory the Great's terms</p>
+          <ul class="gchips"><li>Confident</li><li>Tranquil mind</li></ul>
+          <p>Our reading, from the Christian Personality Test. Confident here means steady and hard to rattle, never proud. His cloak also stands for The Giver, one of the test's seven roles.</p>
+          <a class="go-pill" href="#" data-dead>See The Oak {{ARROW}}</a>
+        </div>
+      </section>
+    </div>
+    <section class="panel cs-feasts" aria-label="Feast days">
+        <div class="feasts-h"><h3>feast days</h3><p>East and West, side by side</p></div>
+        <div class="feast-cols">
+          <div class="feast-col">
+            <h4>West</h4>
+            <ul>
+              <li class="feast"><span class="leaf"><span class="leaf-m">Jul</span><b class="leaf-d">4</b></span><p>In the <b>1916 Roman Martyrology</b>: his body moved, and his church at Tours dedicated.</p></li>
+              <li class="feast"><span class="leaf"><span class="leaf-m">Nov</span><b class="leaf-d">11</b></span><p><b>Catholic</b> memorial. Also the <b>Church of England</b>, the <b>Episcopal Church</b>, and Lutherans in the <b>Missouri Synod</b> and the <b>ELCA</b>.</p></li>
+            </ul>
+          </div>
+          <div class="feast-col">
+            <h4>East</h4>
+            <ul>
+              <li class="feast"><span class="leaf"><span class="leaf-m">Oct</span><b class="leaf-d">12</b></span><p><b>Russian Church</b>, on the old calendar. That is 25 October on today's calendar.</p></li>
+              <li class="feast"><span class="leaf"><span class="leaf-m">Nov</span><b class="leaf-d">11</b></span><p><b>OCA</b>, which also lists 12 October.</p></li>
+              <li class="feast"><span class="leaf"><span class="leaf-m">Nov</span><b class="leaf-d">12</b></span><p><b>Greek</b> churches.</p></li>
+            </ul>
+          </div>
+        </div>
+        <p class="feast-note">Why 11 November? He died on the 8th and was buried on the 11th, and the West keeps the day of his burial. Churches on the old calendar keep each date 13 days later, so 12 November falls on 25 November.</p>
+      </section>
+  </div>
+
+  <!-- WHAT WAS HE LIKE -->
+  <div class="sect" id="like"><div class="sect-text"><h2 class="sect-title">what was he like?</h2></div></div>
+  <section class="panel traits">
+    <div class="traits-tab" aria-hidden="true">His character</div>
+    <div class="traits-list">
+      <div class="trait">
+        <h3><i>+</i>always the same</h3>
+        <p>His disciple says no one ever saw him angry or excited, grieving or laughing. His face showed “a kind of heavenly happiness”.</p>
+        <span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.ii.xxviii.html" target="_blank" rel="noopener">Life of St Martin, chapter 27</a></span>
+      </div>
+      <div class="trait">
+        <h3><i>+</i>patient with a hard man</h3>
+        <p>His own priest, Brictio, was abusive. Martin kept him on, and often said, “If Christ bore with Judas, why should not I bear with Brictio?” Brictio became bishop after him, and is remembered as St Brice.</p>
+        <span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.iv.iii.xv.html" target="_blank" rel="noopener">Dialogues, Dialogue III, chapter 15</a></span>
+      </div>
+      <div class="trait">
+        <h3><i>+</i>gave it all away</h3>
+        <p>He was given a gift of silver, and he gave it away. His monks were hungry and in rags. He told them, “Let the church both feed and clothe us, as long as we do not appear to have provided, in any way, for our own wants.”</p>
+        <span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.iv.iii.xiv.html" target="_blank" rel="noopener">Dialogues, Dialogue III, chapter 14</a></span>
+      </div>
+      <div class="trait">
+        <h3><i>+</i>no flatterer</h3>
+        <p>At a banquet, he passed the emperor's cup to his own priest, “as thinking no one worthier to drink next to himself”.</p>
+        <span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.ii.xxi.html" target="_blank" rel="noopener">Life of St Martin, chapter 20</a></span>
+      </div>
+    </div>
+  </section>
+
+  <div class="sect" id="said"><div class="sect-text"><h2 class="sect-title">what others said of him</h2></div></div>
+  <p class="sect-lede">Almost everything we know comes from one friend. Sulpicius Severus wrote his Life of St Martin while Martin was still alive.</p>
+  <div class="said">
+    <figure class="panel qc">
+      <blockquote>Never did a single hour or moment pass in which he was not either actually engaged in prayer; or, if it happened that he was occupied with something else, still he never let his mind loose from prayer.</blockquote>
+      <figcaption class="who">Sulpicius Severus<span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.ii.xxvii.html" target="_blank" rel="noopener">Life of St Martin, chapter 26</a></span></figcaption>
+    </figure>
+    <figure class="panel qc">
+      <blockquote>…in Martin alone, apostolic authority continued to assert itself.</blockquote>
+      <figcaption class="who">Sulpicius Severus, on the emperor's court, where the other bishops gave way<span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.ii.xxi.html" target="_blank" rel="noopener">Life of St Martin, chapter 20</a></span></figcaption>
+    </figure>
+    <figure class="panel qc">
+      <blockquote>For who ever suffered but Martin suffered along with him?</blockquote>
+      <figcaption class="who">Sulpicius Severus, after Martin's death<span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.iii.html" target="_blank" rel="noopener">Letters, Letter 2</a></span></figcaption>
+    </figure>
+  </div>
+
+  <!-- LIFE -->
+  <div class="sect" id="life"><div class="sect-text"><h2 class="sect-title">his life in six moments</h2></div></div>
+  <ol class="moments">
+    <li class="mo"><div class="panel">
+      <div class="mo-h"><p class="mo-place">Amiens</p><span class="mo-when">A young soldier</span></div>
+      <h3>The cloak</h3>
+      <p>One bitter winter, at the gate of Amiens, a man with no clothes begged, and everyone walked past him. Martin had already given away his other clothes. So he cut his soldier's cloak in two with his sword and gave the man half. That night he dreamed of Christ wearing that half. Christ said to the angels, “Martin, who is still but a catechumen, clothed Me with this robe.”</p>
+      <span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.ii.iv.html" target="_blank" rel="noopener">Life of St Martin, chapter 3</a></span>
+    </div></li>
+    <li class="mo"><div class="panel">
+      <div class="mo-h"><p class="mo-place">Near Worms</p><span class="mo-when">Before a battle</span></div>
+      <h3>Leaving the army</h3>
+      <p>Julian, then Caesar, was handing out a bonus to his men. Martin asked to leave the army instead. Called a coward, he offered to stand unarmed in front of the battle line the next day. The enemy asked for peace first.</p>
+      <span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.ii.v.html" target="_blank" rel="noopener">Life of St Martin, chapter 4</a></span>
+    </div></li>
+    <li class="mo"><div class="panel">
+      <div class="mo-h"><p class="mo-place">Poitiers</p><span class="mo-when">About 360</span></div>
+      <h3>Hilary, and a monastery</h3>
+      <p>Free of the army, he went to Hilary, bishop of Poitiers. Hilary wanted to make him a deacon, but Martin kept saying he was unworthy. So Hilary made him an exorcist, a lowly office Martin would not refuse. After years of travel, he set up a monastery near Poitiers, at Ligugé. It may have been the first in Gaul.</p>
+      <span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.ii.vi.html" target="_blank" rel="noopener">Life of St Martin, chapters 5 to 7</a></span>
+    </div></li>
+    <li class="mo"><div class="panel">
+      <div class="mo-h"><p class="mo-place">Tours</p><span class="mo-when">371</span></div>
+      <h3>Made bishop</h3>
+      <p>Tours wanted him as its bishop, but he would not leave his monastery. So a citizen threw himself at his knees and said his wife was ill. Martin came out, and crowds along the road led him into the city. A few bishops said he looked shabby and his hair was a mess. The people laughed at them and had their way.</p>
+      <span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.ii.x.html" target="_blank" rel="noopener">Life of St Martin, chapter 9</a></span>
+    </div></li>
+    <li class="mo"><div class="panel">
+      <div class="mo-h"><p class="mo-place">Marmoutier</p><span class="mo-when">As bishop</span></div>
+      <h3>A hidden monastery</h3>
+      <p>As bishop he still lived as a monk. When the crowds of visitors grew too much, he built a hidden monastery about two miles outside the city. His wooden cell stood between a cliff and the Loire. About eighty disciples lived there, and they owned nothing.</p>
+      <span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.ii.xi.html" target="_blank" rel="noopener">Life of St Martin, chapter 10</a></span>
+    </div></li>
+    <li class="mo"><div class="panel">
+      <div class="mo-h"><p class="mo-place">Trier</p><span class="mo-when">About 385</span></div>
+      <h3>Before the emperor</h3>
+      <p>At the court of the emperor Maximus, the other bishops flattered him. Martin would not. He begged Maximus not to put the followers of the heretic Priscillian to death. He said being put out of the Church was punishment enough, and a ruler should not judge a church case. Once, to save men already sentenced, he took communion for a day with the bishops who had pressed for the killings. He grieved over it for the rest of his life, and never went to a synod again.</p>
+      <span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.iv.iii.xiii.html" target="_blank" rel="noopener">Life, chapter 20; Sacred History, Book 2, chapter 50; Dialogue III, chapters 11 to 13</a></span>
+    </div></li>
+  </ol>
+
+  <!-- MIRACLES -->
+  <div class="sect" id="miracles"><div class="sect-text"><h2 class="sect-title">his miracles</h2></div></div>
+  {{MIRACLES}}
+
+  <!-- WORDS -->
+  <div class="sect" id="words"><div class="sect-text"><h2 class="sect-title">his words</h2></div></div>
+  <p class="frame-note">Martin wrote nothing that survives. These are his words as Sulpicius Severus recorded them, in Alexander Roberts's translation of 1894.</p>
+  <div class="words">
+    <figure class="dark qf">
+      <span class="qf-ghost" aria-hidden="true">“</span>
+      <span class="qf-word" aria-hidden="true">miles</span>
+      <p class="qf-k">Before a battle near Worms</p>
+      <blockquote>I am the soldier of Christ: it is not lawful for me to fight.</blockquote>
+      <figcaption><p class="ctx">To Julian, then Caesar, when he asked to leave the army. In Latin, <i lang="la">Christi ego miles sum: pugnare mihi non licet.</i></p><span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.ii.v.html" target="_blank" rel="noopener">Life of St Martin, chapter 4</a></span></figcaption>
+    </figure>
+    <div class="words-grid">
+      <figure class="panel qc">
+        <blockquote>The Lord Jesus did not predict that He would come clothed in purple, and with a glittering crown upon His head. I will not believe that Christ has come, unless He appears with that appearance and form in which He suffered, and openly displaying the marks of His wounds upon the cross.</blockquote>
+        <figcaption class="who">The devil came to him dressed as a king and claimed to be Christ. Sulpicius says he heard this from Martin himself.<span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.ii.xxv.html" target="_blank" rel="noopener">Life of St Martin, chapter 24</a></span></figcaption>
+      </figure>
+      <figure class="panel qc">
+        <blockquote>See, she has fulfilled the precept of the Gospel: she had two coats, and one of them she has given to him who had none: thus, therefore, ye ought also to do.</blockquote>
+        <figcaption class="who">On seeing a sheep that had just been shorn.<span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.iv.ii.x.html" target="_blank" rel="noopener">Dialogues, Dialogue II, chapter 10</a></span></figcaption>
+      </figure>
+      <figure class="panel qc">
+        <blockquote>This is a picture of how the demons act: they lie in wait for the unwary and capture them before they know it: they devour their victims when taken, and they can never be satisfied with what they have devoured.</blockquote>
+        <figcaption class="who">On his last journey, watching water-birds dive for fish.<span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.iii.iii.html" target="_blank" rel="noopener">Letter 3, to Bassula</a></span></figcaption>
+      </figure>
+      <figure class="panel qc">
+        <blockquote>The Lord is my helper; I will not fear what man can do unto me.</blockquote>
+        <figcaption class="who">To the devil, on the road past Milan. He is quoting Psalm 118.<span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.ii.vii.html" target="_blank" rel="noopener">Life of St Martin, chapter 6</a></span></figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <!-- MYTHS -->
+  <div class="sect" id="myths"><div class="sect-text"><h2 class="sect-title">often misquoted</h2></div></div>
+  <div class="myths">
+    <div class="panel myth">
+      <span class="myth-k">Often said</span>
+      <p class="myth-c">He hid among geese to escape being made bishop, and their honking gave him away. That is why geese are eaten at Martinmas.</p>
+      <p class="myth-t"><b>What the sources say</b>A later legend. Sulpicius tells a different story: a citizen pretended his wife was ill, to get Martin out of his monastery.</p>
+      <span class="cite">Life of St Martin, chapter 9; New Liturgical Movement, 2022</span>
+    </div>
+    <div class="panel myth">
+      <span class="myth-k">Often said</span>
+      <p class="myth-c">He gave only half his cloak because the other half belonged to the army.</p>
+      <p class="myth-t"><b>What the sources say</b>Sulpicius does not say this. He says Martin had nothing left but the cloak, “for he had already parted with the rest of his garments for similar purposes”.</p>
+      <span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.ii.iv.html" target="_blank" rel="noopener">Life of St Martin, chapter 3</a></span>
+    </div>
+    <div class="panel myth">
+      <span class="myth-k">Often said</span>
+      <p class="myth-c">When he woke, his cloak was whole again.</p>
+      <p class="myth-t"><b>What the sources say</b>Not in Sulpicius, who says nothing of the cloak being restored. Britannica tells it as a legend.</p>
+      <span class="cite">Life of St Martin, chapter 3; Britannica</span>
+    </div>
+    <div class="panel myth">
+      <span class="myth-k">Often said</span>
+      <p class="myth-c">He was riding a horse when he met the beggar.</p>
+      <p class="myth-t"><b>What the sources say</b>Sulpicius never mentions a horse. The painters added it, as El Greco did.</p>
+      <span class="cite">Life of St Martin, chapter 3</span>
+    </div>
+    <div class="panel myth">
+      <span class="myth-k">Often said</span>
+      <p class="myth-c">He said it to the emperor Julian the Apostate.</p>
+      <p class="myth-t"><b>What the sources say</b>Julian was then Caesar, a junior ruler, not yet emperor. Sulpicius writes “Julian Cæsar”.</p>
+      <span class="cite">Life of St Martin, chapters 2 and 4</span>
+    </div>
+    <div class="panel myth">
+      <span class="myth-k">Often said</span>
+      <p class="myth-c">His sermons, or his Confession of Faith.</p>
+      <p class="myth-t"><b>What the sources say</b>Nothing he wrote survives. The confession of faith once credited to him is not thought to be his.</p>
+      <span class="cite">New Catholic Encyclopedia</span>
+    </div>
+  </div>
+
+  <!-- WHERE HE STOOD -->
+  <div class="sect" id="stood"><div class="sect-text"><h2 class="sect-title">where he stood</h2></div></div>
+  <p class="sect-lede">Each line is Martin’s, as Sulpicius Severus recorded it. <span class="on-touch">Tap</span><span class="on-mouse">Click</span> “Show his line” to read it.</p>
+  <div class="stances">{{STANCES}}</div>
+  <p class="stood-foot">See where you stand beside him. <a class="go-pill" href="#" data-dead>Take the quiz {{ARROW}}</a></p>
+
+  <!-- DEATH -->
+  <div class="sect" id="death"><div class="sect-text"><h2 class="sect-title">how he died</h2></div></div>
+  <div class="split">
+    <div>
+      <div class="panel prose">
+        <p class="big">He died of a fever in old age, at Candes in his own diocese, on 8 November 397.</p>
+        <p>He had gone there to make peace among the local clergy. He knew his end was near. Once they were reconciled, his strength failed, and his disciples begged him not to leave them.</p>
+        <p>He died lying on sackcloth and ashes, praying, with his eyes on heaven. He would not let them put straw under him. He was buried at Tours three days later.</p>
+        <p>Sulpicius was not there. Two monks from Tours brought him the news.</p>
+      </div>
+      <div class="later">
+        <b>A later story</b>
+        Gregory of Tours, writing about 590, says the people of Poitiers and Tours fought over the body. At midnight the men of Tours passed it out of a window. They took it by boat down the Vienne and the Loire to Tours. Gregory ran Martin's shrine, so treat his extra stories as late.
+        <span class="cite"><a href="https://sourcebooks.fordham.edu/basis/gregory-hist.asp" target="_blank" rel="noopener">History of the Franks, Book 1, chapter 48</a></span>
+      </div>
+    </div>
+    <div class="dark lastwords">
+      <div>
+        <p class="k">His prayer</p>
+        <blockquote>O Lord, if I am still necessary to Thy people, I do not shrink from toil: Thy will be done.</blockquote>
+      </div>
+      <div>
+        <p class="k">His last words, to the devil</p>
+        <blockquote>Why do you stand here, thou bloody monster? Thou shalt find nothing in me, thou deadly one: Abraham's bosom is about to receive me.</blockquote>
+        <p class="ctx">“As he uttered these words, his spirit fled.”</p>
+      </div>
+      <span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.iii.iii.html" target="_blank" rel="noopener">Sulpicius Severus, Letter 3, to Bassula</a></span>
+    </div>
+  </div>
+
+  <!-- SAINT -->
+  <div class="sect" id="saint"><div class="sect-text"><h2 class="sect-title">is he a saint?</h2></div></div>
+  <div class="panel prose">
+    <p class="big">Yes. Catholics, Orthodox and Anglicans count him a saint, and Lutherans remember him too.</p>
+    <ul class="churches">
+      <li><b>Catholic</b><span>Saint</span><small>A memorial on 11 November</small></li>
+      <li><b>Orthodox</b><span>Saint</span><small>Called Martin the Merciful</small></li>
+      <li><b>Anglican</b><span>Saint</span><small>A Lesser Festival in the Church of England</small></li>
+      <li><b>Lutheran</b><span>Remembered</span><small>Missouri Synod and ELCA, 11 November</small></li>
+    </ul>
+    <p>He was honoured as a saint from the first. He was one of the first saints honoured who did not die as a martyr. His disciple saw it coming:</p>
+  </div>
+  <div class="said said--two" style="margin-top:.8rem">
+    <figure class="panel qc">
+      <blockquote>…although the character of our times could not ensure him the honor of martyrdom, yet he will not remain destitute of the glory of a martyr.</blockquote>
+      <figcaption class="who">Sulpicius Severus<span class="cite"><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.iii.html" target="_blank" rel="noopener">Letters, Letter 2</a></span></figcaption>
+    </figure>
+    <figure class="panel qc">
+      <blockquote>At Tours, in France, the birthday of blessed Martin, bishop and confessor, whose life was so renowned for miracles that he received the power to raise three persons from the dead.</blockquote>
+      <figcaption class="who">The Roman Martyrology, 1916 edition, for 11 November. In its own words, a saint's “birthday” is “the day on which a Saint enters heaven”.<span class="cite"><a href="https://archive.org/details/romanmartyrology00cathuoft" target="_blank" rel="noopener">The Roman Martyrology (1916)</a></span></figcaption>
+    </figure>
+  </div>
+
+  <!-- READ -->
+  <div class="sect" id="read"><div class="sect-text"><h2 class="sect-title">what to read first</h2></div></div>
+  <div class="reads">
+    <div class="panel read">
+      <h3>The Life of St Martin</h3>
+      <p class="by">Sulpicius Severus</p>
+      <p>Written by a friend while Martin was still alive. It is short, and almost everything else comes from it.</p>
+      <a class="go-pill" href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.ii.html" target="_blank" rel="noopener">Read it free {{ARROW}}</a>
+    </div>
+    <div class="panel read">
+      <h3>Letters 1 to 3</h3>
+      <p class="by">Sulpicius Severus</p>
+      <p>Three short letters. The third tells how he died.</p>
+      <a class="go-pill" href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.iii.html" target="_blank" rel="noopener">Read them free {{ARROW}}</a>
+    </div>
+    <div class="panel read">
+      <h3>The Dialogues</h3>
+      <p class="by">Sulpicius Severus</p>
+      <p>Friends trading stories about Martin, over a long conversation.</p>
+      <a class="go-pill" href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.iv.html" target="_blank" rel="noopener">Read them free {{ARROW}}</a>
+    </div>
+    <div class="panel read">
+      <h3>History of the Franks, Book 1</h3>
+      <p class="by">Gregory of Tours</p>
+      <p>Chapters 36 and 48: his birth, his death and the fight over his body. Written nearly two centuries later, by a bishop of Tours.</p>
+      <a class="go-pill" href="https://sourcebooks.fordham.edu/basis/gregory-hist.asp" target="_blank" rel="noopener">Read it free {{ARROW}}</a>
+    </div>
+  </div>
+
+  <!-- QUIZZES -->
+  <div class="sect" id="quizzes"><div class="sect-text"><h2 class="sect-title">take the quizzes</h2></div></div>
+  <div class="qcards">
+    <a class="qcard qcard--engr" href="#" data-dead>
+      <img src="img/durer-jerome.jpg" alt="" loading="lazy">
+      <span class="qcard-b">
+        <span class="qcard-k" style="display:block">Quiz</span>
+        <span class="qcard-t" style="display:block">Which early Christian thinks like you?</span>
+        <span class="qcard-s" style="display:block">And which would argue with you? See where you stand beside Martin.</span>
+        <span class="go-pill">Start {{ARROW}}</span>
+      </span>
+    </a>
+    <a class="qcard qcard--mosaic" href="#" data-dead>
+      <img src="img/mosaic.jpg" alt="" loading="lazy">
+      <span class="qcard-b">
+        <span class="qcard-k" style="display:block">Quiz</span>
+        <span class="qcard-t" style="display:block">Christian Personality Test</span>
+        <span class="qcard-s" style="display:block">Martin reads as The Oak. Find your own type.</span>
+        <span class="go-pill">Start {{ARROW}}</span>
+      </span>
+    </a>
+  </div>
+
+  <!-- KIN -->
+  <div class="sect" id="kin"><div class="sect-text"><h2 class="sect-title">people like him</h2></div></div>
+  <div class="kin">
+    <a class="panel kc" href="#" data-dead>
+      <span class="kc-h"><img src="img/f/benedict-of-nursia.jpg" alt="" loading="lazy"><span><span class="kc-n">Benedict of Nursia</span><span class="tchip" style="--t:#8C7A4F">The Oak</span></span></span>
+      <p>As a young man he ran from praise and lived three years alone in a cave. When his own monks tried to poison him, he faced them “with a mild countenance and quiet mind”. When a raging Goth shouted at him to get up, the Goth ended at his feet, and Benedict “rose not up from his reading”.</p>
+      <span class="cite">St Gregory the Great, Dialogues</span>
+    </a>
+    <a class="panel kc" href="#" data-dead>
+      <span class="kc-h"><img src="img/f/john-the-baptist.jpg" alt="" loading="lazy"><span><span class="kc-n">John the Baptist</span><span class="tchip" style="--t:#8C7A4F">The Oak</span></span></span>
+      <p>He lived in the wilderness until the day he began to preach. Jesus asked the crowds if they had gone out to see “a reed swaying in the wind”. St Gregory says a reed bends to praise or blame, but “no variety of circumstance bent him from his uprightness”.</p>
+      <span class="cite">Luke 1:80; Matthew 11:7; St Gregory the Great, Homilies on the Gospels</span>
+    </a>
+    <a class="panel kc" href="#" data-dead>
+      <span class="kc-h"><img src="img/f/mary-bethany.jpg" alt="" loading="lazy"><span><span class="kc-n">Mary of Bethany</span><span class="tchip" style="--t:#8C7A4F">The Oak</span></span></span>
+      <p>When Jesus came to their home, her sister Martha was busy with all the preparations. Mary sat at His feet and listened. Jesus said she “has chosen the good portion”.</p>
+      <span class="cite">Luke 10:38-42</span>
+    </a>
+  </div>
+
+  <!-- SOURCES -->
+  <div class="sect" id="sources"><div class="sect-text"><h2 class="sect-title">sources</h2></div></div>
+  <div class="panel sources">
+    <h3>His life, and his words</h3>
+    <ul>
+      <li><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.ii.html" target="_blank" rel="noopener">Sulpicius Severus, Life of St Martin</a>. Tr. Alexander Roberts, 1894.</li>
+      <li><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.iii.html" target="_blank" rel="noopener">Sulpicius Severus, Letters 1 to 3</a>. Same edition.</li>
+      <li><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.iv.html" target="_blank" rel="noopener">Sulpicius Severus, Dialogues</a>. Same edition.</li>
+      <li><a href="https://ccel.org/ccel/schaff/npnf211/npnf211.ii.vi.ii.l.html" target="_blank" rel="noopener">Sulpicius Severus, Sacred History, Book 2</a>. Same edition.</li>
+      <li><a href="https://www.thelatinlibrary.com/sulpiciusseverusmartin.html" target="_blank" rel="noopener">The Latin text of the Life</a>, Halm's edition.</li>
+      <li><a href="https://sourcebooks.fordham.edu/basis/gregory-hist.asp" target="_blank" rel="noopener">Gregory of Tours, History of the Franks</a>. Tr. Ernest Brehaut, 1916.</li>
+    </ul>
+    <h3>Reference</h3>
+    <ul>
+      <li><a href="https://www.encyclopedia.com/religion/encyclopedias-almanacs-transcripts-and-maps/martin-tours-st" target="_blank" rel="noopener">New Catholic Encyclopedia, 2nd edition</a>, “Martin of Tours, St.”</li>
+      <li><a href="https://www.newadvent.org/cathen/09732b.htm" target="_blank" rel="noopener">Catholic Encyclopedia, 1910</a>, “St. Martin of Tours”</li>
+      <li><a href="https://www.britannica.com/biography/Saint-Martin-of-Tours" target="_blank" rel="noopener">Britannica</a>, “St. Martin of Tours”</li>
+      <li><a href="https://www.newliturgicalmovement.org/2022/11/saint-martin-of-tours-man-and-his-feast.html" target="_blank" rel="noopener">New Liturgical Movement</a>, on the goose legend, 2022</li>
+      <li><a href="https://www.merriam-webster.com/dictionary/Tours" target="_blank" rel="noopener">Merriam-Webster</a>, “Tours”, for how to say it</li>
+    </ul>
+    <h3>Calendars</h3>
+    <ul>
+      <li><a href="https://bible.usccb.org/bible/readings/111125.cfm" target="_blank" rel="noopener">USCCB</a>, Memorial of Saint Martin of Tours</li>
+      <li><a href="https://archive.org/details/romanmartyrology00cathuoft" target="_blank" rel="noopener">The Roman Martyrology</a>, 1916 edition</li>
+      <li><a href="https://www.oca.org/saints/lives/2021/11/11/103285-saint-martin-the-merciful-bishop-of-tours" target="_blank" rel="noopener">OCA</a>, Saint Martin the Merciful</li>
+      <li><a href="https://www.synaxarion.gr/gr/sid/1160/sxsaintinfo.aspx" target="_blank" rel="noopener">Great Synaxaristes</a> and <a href="https://www.saint.gr/3013/saint.aspx" target="_blank" rel="noopener">saint.gr</a>, Greek</li>
+      <li><a href="https://azbyka.ru/days/sv-martin-milostivyj-turskij" target="_blank" rel="noopener">azbyka.ru</a>, Russian</li>
+      <li><a href="https://www.churchofengland.org/prayer-and-worship/worship-texts-and-resources/common-worship/churchs-year/calendar" target="_blank" rel="noopener">Church of England</a>, Common Worship calendar</li>
+      <li><a href="https://www.episcopalchurch.org/wp-content/uploads/2022/11/Lesser-Feasts-and-Fasts-2022_final.pdf" target="_blank" rel="noopener">The Episcopal Church</a>, Lesser Feasts and Fasts 2022</li>
+      <li><a href="https://witness.lcms.org/2008/saints-more-than-a-short-list-11-2008/" target="_blank" rel="noopener">The Lutheran Witness</a>, LCMS, November 2008</li>
+      <li><a href="https://web.archive.org/web/20060908112753/http://www.renewingworship.org/ELW/content/PDF/ChurchYear_asm_20060119.pdf" target="_blank" rel="noopener">Evangelical Lutheran Worship</a>, ELCA, the church year</li>
+    </ul>
+    <h3>Pictures</h3>
+    <ul>
+      <li><a href="https://commons.wikimedia.org/wiki/File:El_Greco_(Domenikos_Theotokopoulos),_Saint_Martin_and_the_Beggar,_1597-1599,_NGA_1164.jpg" target="_blank" rel="noopener">Saint Martin and the Beggar</a>, El Greco, 1597-1599. National Gallery of Art, Washington. CC0.</li>
+      <li><a href="https://commons.wikimedia.org/wiki/File:Ecole_cr%C3%A9to-v%C3%A9nitienne_-_Saint_Martin_-_PPP4870_-_Mus%C3%A9e_des_Beaux-Arts_de_la_ville_de_Paris.jpg" target="_blank" rel="noopener">Saint Martin</a>, Cretan-Venetian school, about 1500. Petit Palais, Paris. Paris Musées, CC0.</li>
+      <li>The Lonely Tree, Caspar David Friedrich, 1822. Public domain.</li>
+    </ul>
+  </div>
+  {{JSONLD}}
+</article>
+</main>
+
+<footer class="site-foot">
+  <div class="foot-dawn">
+    <img src="img/hero-dawn.jpg" alt="" loading="lazy">
+    <div class="wrap foot-dawn-in">
+      <h2>Keep walking.</h2>
+      <p>New quizzes and games as they are made.</p>
+    </div>
+  </div>
+  <div class="wrap foot-main">
+    <div>
+      <p class="brand foot-brand"><img class="brand-mark" src="img/logo-w.png" width="47" height="34" alt=""><span class="brand-word" role="img" aria-label="Wiser Walk"></span></p>
+      <p class="foot-line">Quizzes, games and articles for understanding yourself, and your walk with God, a little better.</p>
+    </div>
+    <div class="foot-cols">
+      <div class="foot-col"><h4>Quizzes</h4><ul>
+        <li><a href="#" data-dead>Theology Compass</a></li>
+        <li><a href="#" data-dead>Christian Personality Test</a></li>
+        <li><a href="#" data-dead>Which early Christian thinks like you?</a></li>
+        <li><a href="#" data-dead>All quizzes</a></li>
+      </ul></div>
+      <div class="foot-col foot-col--o"><h4>Games</h4><ul>
+        <li><a href="#" data-dead>Sounds Like Scripture</a></li>
+        <li><a href="#" data-dead>Who Said It?</a></li>
+        <li><a href="#" data-dead>All games</a></li>
+      </ul></div>
+      <div class="foot-col"><h4>Learn</h4><ul>
+        <li><a href="#" data-dead>Articles</a></li>
+        <li><a href="#hub">Saints and early Christians</a></li>
+        <li><a href="#" data-dead>What the early Church said</a></li>
+        <li><a href="#" data-dead>Compare traditions</a></li>
+      </ul></div>
+    </div>
+  </div>
+  <div class="wrap foot-bar"><p>© 2026 Wiser Walk · Free to use, with credit</p></div>
+</footer>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
