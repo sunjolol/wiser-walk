@@ -301,6 +301,11 @@ licence tag of each was read on its Commons file page; modern icons, which are u
 | macrina-the-younger-2.jpg | Saint Macrina the Younger, fresco, St Sophia Cathedral, Kyiv, 11th century. Public domain. | `Macrina the Younger.jpg` | Public domain |
 | origen-2.jpg | Origen teaching new believers, Jan Luyken, 1700. Rijksmuseum, Amsterdam. Public domain. | `OrigenStudentsLuyken.jpg` | Public domain |
 | tertullian-2.jpg | Tertullien, an engraving published by Henri Bonnart, Paris, undated. KU Leuven. Public domain. | `Tertullien, PA02213.jpg` | Public domain |
+| polycarp-of-smyrna.jpg | Saint Polycarp, a Byzantine fresco of the early 1300s, probably in the church of St George, Staro Nagoričane, North Macedonia. CC0. | `Polycarp of Smyrna2.jpg` | CC0 |
+| polycarp-of-smyrna-2.jpg | Saint Polycarp, a statue by Ferdinand Edvard Ring, 1884. Frederik's Church (the Marble Church), Copenhagen. Photo: Orf3us, public domain. | `Polykarp Ferdinand Edvard Ring.JPG` | Public domain |
+| polycarp-of-smyrna-3.jpg | Saint Polycarp in the flames, Jan Luyken, 1701. Rijksmuseum, Amsterdam. CC0. | `H. Polycarpus wordt op een brandstapel gezet maar de vlammen verbranden hem niet, RP-P-OB-44.845.jpg` | CC0 |
+| polycarp-of-smyrna-6.jpg | S. Polycarpus, Michael Burghers, from William Cave's Apostolici, London, 1716 edition. Public domain. | `Apostolici- or, the history of the lives, acts, death, and martyrdoms of those who were contemporary with, or immediately succeeded the Apostles Fleuron T126603-18.png` | Public domain |
+| polycarp-of-smyrna-card.jpg | Saint Polycarp, a Byzantine fresco of the early 1300s, probably in the church of St George, Staro Nagoričane, North Macedonia. CC0. Cropped for the hub's card. | `Polycarp of Smyrna2.jpg` | CC0 |
 
 ## Public-domain paintings used on hubs
 

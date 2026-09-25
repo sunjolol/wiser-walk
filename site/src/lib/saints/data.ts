@@ -12,6 +12,9 @@
  *                            vercel.json. Nothing else changes.
  *   /figure/<slug>/          Bible people (their pages belong to the Bible figure quiz)
  *
+ * A full page for someone the quiz does not name (Polycarp first) joins the hub by its data file
+ * alone, placed among the early Christians by the first year of its dates.
+ *
  * Only people with a page are on the hub: a card that goes nowhere is a dead end, and there are
  * no placeholder pages (quiz page rule 10). The personality test's other people (Arsenius,
  * Monica, Cuthbert, Guthlac, Philip Neri; Isaiah, Jeremiah, Mary of Bethany) join when theirs
@@ -126,31 +129,53 @@ const cardStatus = (status: string) => {
   return s.charAt(0).toUpperCase() + s.slice(1);
 };
 
+/** A full page's card. `m` is the mock-up's row for one of the quiz's 22, `ec` their quiz key. */
+const fromPage = (full: SaintPage, m?: { focus: string; alias?: string }, ec?: string): HubPerson => ({
+  slug: full.slug, name: full.name, dates: full.band.dates, line: full.card.line,
+  status: full.status ? cardStatus(full.status) : undefined, href: `/saints/${full.slug}/`,
+  img: full.card.img, focus: full.card.focus ?? m?.focus ?? '50% 25%', groups: full.filters.groups, lived: full.filters.lived,
+  side: full.filters.side, type: full.type, young: full.typeYoung, alias: full.filters.alias ?? m?.alias ?? '', full: true, ec
+});
+
+/** The first year in a line of dates: "About 69 to 155" is 69. */
+const startYear = (dates: string) => Number(/\d{1,4}/.exec(dates)?.[0] ?? 9999);
+
+/** The quiz's 22, in the quiz's own order (oldest first). */
+const EARLY: HubPerson[] = WEC.oldestFirst.map((key): HubPerson => {
+  const w = WEC.people[key]!;
+  const full = hasMoved(w.slug) ? SAINTS[w.slug] : undefined;
+  const m = MOCK[key]!;
+  const [type, young] = TYPE_OF[key] ?? [];
+  if (full) return fromPage(full, m, key);
+  // Ambrose's quiz portrait is a mosaic that crops badly into a card; the mock-up used the
+  // personality test's crop of it, as here.
+  const ambrose = key === 'ambrose';
+  return {
+    slug: w.slug, name: w.name, dates: w.dates, line: w.who,
+    status: w.status ? 'Not counted a saint.' : undefined, href: `/early-christian/${w.slug}/`,
+    img: ambrose ? '/img/personality/faces/ambrose-of-milan.jpg' : w.portrait.src, focus: ambrose ? '50% 40%' : m.focus, groups: words(m.groups), lived: m.lived, side: words(m.side),
+    type, young, alias: m.alias ?? '', full: false, ec: key
+  };
+});
+
+/**
+ * The quiz's 22 with every other full page among them: each goes in before the first of the 22
+ * whose dates start later (Polycarp, born about 69, before Justin, about 100). The 22 keep the
+ * quiz's own order.
+ */
+const quizSlugs = new Set(EARLY.map(p => p.slug));
+const EARLY_AND_MORE = Object.values(SAINTS)
+  .filter(p => !quizSlugs.has(p.slug))
+  .sort((a, b) => startYear(a.band.dates) - startYear(b.band.dates))
+  .reduce((list, page) => {
+    const i = list.findIndex(p => startYear(p.dates) > startYear(page.band.dates));
+    list.splice(i < 0 ? list.length : i, 0, fromPage(page));
+    return list;
+  }, [...EARLY]);
+
 /** Everyone on the hub, oldest first, then the Bible people. */
 export const HUB: HubPerson[] = [
-  ...WEC.oldestFirst.map((key): HubPerson => {
-    const w = WEC.people[key]!;
-    const full = hasMoved(w.slug) ? SAINTS[w.slug] : undefined;
-    const m = MOCK[key]!;
-    const [type, young] = TYPE_OF[key] ?? [];
-    if (full) {
-      return {
-        slug: full.slug, name: full.name, dates: full.band.dates, line: full.card.line,
-        status: full.status ? cardStatus(full.status) : undefined, href: `/saints/${full.slug}/`,
-        img: full.card.img, focus: full.card.focus ?? m.focus, groups: full.filters.groups, lived: full.filters.lived,
-        side: full.filters.side, type: full.type, young: full.typeYoung, alias: full.filters.alias ?? m.alias ?? '', full: true, ec: key
-      };
-    }
-    // Ambrose's quiz portrait is a mosaic that crops badly into a card; the mock-up used the
-    // personality test's crop of it, as here.
-    const ambrose = key === 'ambrose';
-    return {
-      slug: w.slug, name: w.name, dates: w.dates, line: w.who,
-      status: w.status ? 'Not counted a saint.' : undefined, href: `/early-christian/${w.slug}/`,
-      img: ambrose ? '/img/personality/faces/ambrose-of-milan.jpg' : w.portrait.src, focus: ambrose ? '50% 40%' : m.focus, groups: words(m.groups), lived: m.lived, side: words(m.side),
-      type, young, alias: m.alias ?? '', full: false, ec: key
-    };
-  }),
+  ...EARLY_AND_MORE,
   ...BIBLE.map((b): HubPerson => ({
     slug: b.slug, name: b.name, dates: b.testament, line: b.line, href: `/figure/${b.slug}/`,
     img: `/img/personality/faces/${b.slug}.jpg`, focus: '50% 40%', groups: ['bible', ...words(b.groups ?? '')],

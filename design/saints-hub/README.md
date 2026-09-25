@@ -13,6 +13,36 @@ the fetched sources are intact here). Every saint note from now on is an edit to
 `main`, pushed after `npm run test` (the branch and the preview link are history). Run `measure-sheet.mjs` against the
 `site` dev server (port 4321).
 
+## POLYCARP'S PAGE IS WRITTEN (night of 2026-09-25): on the branch `saints/polycarp`, NOT merged
+
+He asked for it before bed ("While I sleep, work on Polycarp's full page"). It is the first full page for someone
+outside the early-Christian quiz, so the branch also teaches the site to take such pages:
+- `lib/saints/data.ts`: a full page whose slug is not one of the quiz's 22 joins the hub by its data file alone,
+  placed by the first year of its dates (Polycarp, about 69, before Justin). The hub now counts 31.
+- `tools/promote.mjs` also copies the gallery pictures and a card crop of its own (`card.img` under /img/saints/).
+- Irenaeus's "Friends, family and rivals" card for Polycarp now links to him.
+- No redirects (he never had an /early-christian/ page), no "Where he stood", no personality type, no "People like him".
+
+How it was made: workflow `wf_ad24188c-304` (four Opus researchers: life, words and myths, calendars, pictures; a
+writer; three adversarial checkers; a fixer), then the main session applied the third checker's findings (the fixer's
+brief was cut off before them), measured the sheet and read the page at 390 and 1360, light and dark. Evidence:
+`research/people/polycarp-of-smyrna-facts.{life,words,calendar,pictures}.json` (the `checker_2026_09_26` block in
+`.life.json` lists every fix) and `polycarp-of-smyrna.quotes.json` (147 quotations, all word for word; the 1916
+Martyrology line is read by eye in a scan).
+
+The page: 12 life moments, 4 stadium wonders plus the pillow and two later legends (marked later), the doubts in the
+sources' own words, 8 myths, and three sections of his own: "The letter from his church" (the *Martyrdom* as a
+document), "Where the story is argued over" (the Jews in the crowd, 155 or 166, was the letter added to: both sides in
+their own words) and "His prayer at the stake" (moved out of "How he died", which it had left 1,100 px lopsided, as
+Macrina's last prayer was). About 6,300 words, the longest page on the hub.
+
+Left for him (taste, or his call): the band fresco is 735 x 1182 (under the 1200 px aim; the best face found, CC0,
+"probably" Staro Nagoričane as its Commons categories say); the Ravenna mosaic (500s, his name above him) was dropped
+because it made the pictures column 400 px too tall and is dark and small; a Wellcome engraving was dropped for its
+CC BY licence; the last row of "Friends, family and rivals" (11 cards) and of the two three-panel sections holds a lone
+card, as on several live pages; there is no "Apostolic Fathers" filter on the hub yet (he would be its only member).
+Merge with his go: `git checkout main && git merge saints/polycarp`, test, build, push.
+
 ## THE PERSON SHAPES THE PAGE, NOT THE TEMPLATE (the owner, 2026-09-25): binding, and it overrides any count anywhere
 
 In his words: "Let's make sure we're not adhering rigidly to a template or memifying the entire concept by trying to

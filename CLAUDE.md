@@ -66,7 +66,15 @@ rules so they don't happen again". `site/scripts/quiz-page-test.mjs` (postbuild)
 9. **A special card among cards looks like its siblings**, marked only by an icon and a small tag.
 10. **No placeholder pictures** (a monogram where a face should be is "not acceptable").
 
-## NEXT SESSION STARTS HERE: ALL 22 SAINT PAGES ARE LIVE (2026-09-25); HIS NOTES NOW EDIT THE LIVE SITE
+## NEXT SESSION STARTS HERE: POLYCARP'S PAGE IS ON A PREVIEW, AND HE BRINGS NOTES ON THE LIVE SAINT PAGES
+
+He went to sleep on 2026-09-25 saying he will send notes on the other saint pages the next day, and asked for
+Polycarp's full page meanwhile. **Polycarp is written, checked and on the branch `saints/polycarp` (NOT merged)**,
+previewed at https://wiser-walk-git-saints-polycarp-sunjo.vercel.app/saints/polycarp-of-smyrna/ (behind his Vercel
+login). Ask how it reads to him; merge only with his go. What it holds, how it was made and what is left for him:
+`design/saints-hub/README.md` "POLYCARP'S PAGE IS WRITTEN". His notes on the 22 live pages go to `main` as below.
+
+## (earlier) ALL 22 SAINT PAGES ARE LIVE (2026-09-25); HIS NOTES NOW EDIT THE LIVE SITE
 
 Done with his go: `saints/the-21` merged into `main` (`82030a4`) and pushed; every test and guard passed; checked
 live: all 22 `/saints/<slug>/` answer 200 and sit on the hub, every old `/early-christian/<slug>` and

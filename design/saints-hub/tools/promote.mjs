@@ -6,7 +6,8 @@
  *
  * For each slug, it refuses unless the page's quotations pass verify-quotes.mjs, then:
  *   1. copies design/saints-hub/pages/<slug>.json to site/src/data/saints/<slug>.json
- *   2. copies the pictures the page names from design/saints-hub/pages/img/ to site/public/img/saints/
+ *   2. copies the pictures the page names (band, portrait, gallery, and a card crop under
+ *      /img/saints/) from design/saints-hub/pages/img/ to site/public/img/saints/
  *   3. adds the slug to MOVED in site/src/lib/saints/moved.ts (if he is one of the 22)
  *   4. adds the two permanent redirects from /early-christian/<slug> to site/vercel.json
  *   5. adds his pictures' credits to site/public/img/CREDITS.md
@@ -45,8 +46,12 @@ for (const slug of slugs) {
     continue;
   }
   const page = JSON.parse(readFileSync(src, 'utf8'));
-  // pictures
-  const pics = [page.band?.picture, page.portrait].filter(Boolean);
+  // pictures: the band, the portrait, the wide-screen gallery, and a card crop of its own where
+  // the page has one (a person outside the quiz has no quiz portrait to borrow)
+  const card = page.card?.img?.startsWith('/img/saints/')
+    ? { ...(page.band?.picture ?? {}), src: page.card.img, credit: `${page.band?.picture?.credit ?? ''} Cropped for the hub's card.`.trim() }
+    : null;
+  const pics = [page.band?.picture, page.portrait, ...(page.gallery ?? []), card].filter(Boolean);
   let missing = false;
   for (const pic of pics) {
     const name = basename(pic.src);

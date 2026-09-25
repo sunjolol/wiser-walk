@@ -1,0 +1,1059 @@
+{
+  "subject": "St Polycarp of Smyrna (the life researcher's file)",
+  "checked_on": "2026-09-25",
+  "researcher": "life researcher (Opus), for /saints/polycarp-of-smyrna/",
+  "text_used": {
+    "text": "Every quotation below was read in the fetched text itself. 'exact' is the translation as printed, with its footnote numbers (e.g. '[436]') taken out and nothing else changed. 'display' applies the site's rule of capitals for every pronoun for God, where it changes anything. 'checked_in' names the file in design/saints-hub/sources/people/polycarp-of-smyrna/ that holds the words. Default translations: the Martyrdom and the Letter to the Philippians in Roberts-Donaldson (ANF vol. 1, 1885, CCEL plain text), with Lightfoot's 1891 translation where his wording is the better-known or the more accurate one (he follows the Greek manuscripts' 'kalends of March', where ANF prints 'May'); Irenaeus, Ignatius, Tertullian in ANF vols 1 and 3; Eusebius in McGiffert (NPNF 2nd series vol. 1, 1890); Jerome in Richardson (NPNF 2nd series vol. 3, 1892).",
+    "files": {
+      "anf01-martyrdom.txt": "ANF 1, The Martyrdom of Polycarp with Coxe's and the translators' introductory notes (extract of anf01.txt). CCEL: https://www.ccel.org/ccel/schaff/anf01.iv.iv.html ; New Advent: https://www.newadvent.org/fathers/0102.htm",
+      "anf01-philippians.txt": "ANF 1, Polycarp's Epistle to the Philippians with notes (extract of anf01.txt). CCEL: https://www.ccel.org/ccel/schaff/anf01.iv.ii.html ; New Advent: https://www.newadvent.org/fathers/0136.htm",
+      "anf01.txt": "ANF 1 whole (Ignatius, Irenaeus Against Heresies, Irenaeus fragments). Copied from ../irenaeus-of-lyons/anf01.txt (CCEL).",
+      "npnf201.txt": "NPNF 2nd series vol. 1, Eusebius, Church History, tr. McGiffert (1890), with his notes. Copied from ../irenaeus-of-lyons/.",
+      "npnf203.txt": "NPNF 2nd series vol. 3, Jerome, Lives of Illustrious Men, tr. Richardson (1892). Copied from ../irenaeus-of-lyons/.",
+      "anf03.txt": "ANF 3, Tertullian (Prescription against Heretics, tr. Holmes). Copied from ../irenaeus-of-lyons/.",
+      "lightfoot-1891-apostolic-fathers.txt": "J. B. Lightfoot and J. R. Harmer, The Apostolic Fathers (1891), archive.org cu31924024254744 OCR: Lightfoot's translations of the Letter and the Martyrdom and his introductions. https://archive.org/details/cu31924024254744",
+      "lightfoot-martyrdom.txt / lightfoot-philippians.txt": "earlychristianwritings.com copies of the same Lightfoot translations (they carry an 'Adapt. and mod. (c) 1990 Athena Data Products' line, but every line used here was compared with the 1891 scan and is identical).",
+      "lightfoot-1889-part2-vol1.txt": "Lightfoot, The Apostolic Fathers Part II, S. Ignatius. S. Polycarp, vol. 1 (2nd ed. 1889), archive.org apostolicfathep2v1clemuoft: his life of Polycarp, the date of the martyrdom (Waddington, Aristides), the feast. https://archive.org/details/apostolicfathep2v1clemuoft",
+      "lightfoot-1889-part2-vol3.txt": "Same work vol. 3 (1889), archive.org apostolicfathep2v3clemuoft: notes on the Martyrdom (the dove) and his translation of the Life of Polycarp ascribed to Pionius. https://archive.org/details/apostolicfathep2v3clemuoft",
+      "dcb-polycarpus.txt": "George Salmon, 'Polycarpus (1), bp. of Smyrna', Dictionary of Christian Biography (abridged, Wace and Piercy 1911), Wikisource (wikitext stripped). https://en.wikisource.org/wiki/Dictionary_of_Christian_Biography_and_Literature_to_the_End_of_the_Sixth_Century/Polycarpus,_bishop_of_Smyrna",
+      "merriam-webster-polycarp.txt": "Merriam-Webster biographical entry via the Wayback Machine (the live page answers 403 to scripts).",
+      "moss-2010-abstract-de.txt": "Mohr Siebeck's abstract of Candida R. Moss, 'On the Dating of Polycarp', Early Christianity 1:4 (2010) 539-574 (German abstract, the only one on the page).",
+      "judaism-and-rome-martyrdom-extracts.txt": "Judaism and Rome project (ERC), commentary on the Martyrdom of Polycarp extracts. https://www.judaism-and-rome.org/martyrdom-polycarp-extracts"
+    },
+    "translation_differences_that_matter": [
+      "Chapter 8, the fall from the carriage: ANF 'he dislocated his leg' (margin: 'sprained his ankle'); Lightfoot 'he bruised his shin'; McGiffert's Eusebius 'he lacerated his shin'; Salmon 'scraped his shin'. The Greek is the shin: use 'hurt his shin' or Lightfoot's 'bruised his shin'.",
+      "Chapter 9, the voice: ANF 'Be strong, and show thyself a man, O Polycarp!'; Lightfoot and McGiffert 'Be strong, Polycarp, and play the man.' (the familiar form).",
+      "Chapter 9, the 86 years: ANF 'Eighty and six years have I served Him, and He never did me any injury: how then can I blaspheme my King and my Saviour?'; Lightfoot 'Fourscore and six years have I been His servant, and He hath done me no wrong. How then can I blaspheme my King who saved me?'",
+      "Chapter 15: ANF 'as bread that is baked'; Lightfoot brackets it: '[a loaf in the oven or like]'; Eusebius's text lacks it.",
+      "Chapter 16: ANF 'there came forth a dove, and a great quantity of blood'; Lightfoot '[a dove and]' in brackets; Eusebius lacks the dove.",
+      "Chapter 16 end: ANF 'bishop of the Catholic Church which is in Smyrna'; Lightfoot 'a bishop of the holy Church which is in Smyrna' (he reads 'holy' there on some manuscript support; McGiffert disagrees, note 1159).",
+      "Chapter 18: ANF 'the anniversary [margin: Literally, \"the birth-day\"] of his martyrdom'; Lightfoot 'the birth-day of his martyrdom'; McGiffert 'the birthday of his martyrdom'.",
+      "Chapter 20: the bearer is 'Marcus' in ANF, 'Marcianus' in Lightfoot; the writer 'Evarestus' (ANF) / 'Euarestus' (Lightfoot).",
+      "Chapter 21: ANF 'the seventh day before the Kalends of May' with a note that the translation is doubtful; Lightfoot 'on the seventh before the kalends of March' (23 February), which is the reading every modern date and every calendar uses. Salmon: '[there is a various reading May]'.",
+      "Chapter 3: ANF has the proconsul urge Germanicus 'to take pity upon his age'; Lightfoot 'have pity on his youth'; Eusebius (McGiffert) 'as he was very young and vigorous'. Germanicus was young: do not use ANF's wording here."
+    ]
+  },
+
+  "quick_facts": {
+    "born_year": {
+      "text": "About 69 or 70. Worked out backwards: at his trial he said he had served Christ 86 years, and he died in 155 or 156.",
+      "exact": "he must have been born about the year 69 or 70",
+      "checked_in": "lightfoot-1889-part2-vol1.txt",
+      "source": "Lightfoot, Apostolic Fathers Part II vol. 1 (1889), p. 438 ('As the date of his martyrdom is now shown with tolerable certainty to be about A.D. 155 or 156, he must have been born about the year 69 or 70'); McGiffert, note 1116 on Eusebius 4.14 ('he must have been born as early as 70 a.d.'); Salmon, DCB ('Born some 30 years before the end of the 1st cent.').",
+      "url": "https://archive.org/details/apostolicfathep2v1clemuoft",
+      "verified": true,
+      "note": "The 86 years may count from his baptism, not his birth: McGiffert (note 1147) 'Whether the eighty-six years are to be reckoned from Polycarp's birth, or from the time of his conversion or baptism, we cannot tell'; Salmon says they 'must clearly count from Polycarp's baptism'. Either way he was born about 69/70 or a little earlier. Plain wording that holds: 'About 69. He said at his trial he had served Christ 86 years.' The LCMS commemoration also says 'Born c. 69' (lsb-calendar.txt)."
+    },
+    "born_place_and_youth": {
+      "text": "No early source says where he was born or grew up. The first account of his boyhood is the later Life ascribed to Pionius (4th century): it says he came 'from the East' as a slave boy and was bought and raised in Smyrna by a Christian woman named Callisto. Mark it as a later legend.",
+      "source": "Life of Polycarp ascribed to Pionius, chapter 3 (Lightfoot's translation, Apostolic Fathers Part II vol. 3, 1889, p. 489: 'This child is a native of the East'); McGiffert, note 1164: the Life 'is manifestly spurious and entirely untrustworthy, and belongs to the latter part of the fourth century'.",
+      "url": "https://archive.org/details/apostolicfathep2v3clemuoft",
+      "verified": true,
+      "note": "Salmon (DCB) infers from the 86 years that he 'was born of Christian parents', which contradicts the Life's slave-boy story. Both are inferences or legend; the page should say plainly that nothing early tells us."
+    },
+    "bishop": {
+      "text": "Bishop of Smyrna (today Izmir, Turkey) for a long time, certainly by about 110, when Ignatius wrote to him as its bishop. Who appointed him depends on the source. Irenaeus, who heard him: 'by apostles in Asia'. Tertullian: the church of Smyrna's own records say John placed him there. Jerome: John ordained him. Eusebius: 'those who had seen and heard the Lord'. The later Life says the people and the neighbouring bishops chose him after the death of Bishop Bucolus.",
+      "sources": [
+        {
+          "exact": "But Polycarp also was not only instructed by apostles, and conversed with many who had seen Christ, but was also, by apostles in Asia, appointed bishop of the Church in Smyrna",
+          "checked_in": "anf01.txt",
+          "source": "Irenaeus, Against Heresies, Book 3, chapter 3, part 4 (ANF 1, Roberts and Rambaut)",
+          "url": "https://www.newadvent.org/fathers/0103303.htm"
+        },
+        {
+          "exact": "as the church of Smyrna, which records that Polycarp was placed therein by John",
+          "checked_in": "anf03.txt",
+          "source": "Tertullian, Prescription against Heretics, chapter 32 (ANF 3, tr. Peter Holmes)",
+          "url": "https://www.newadvent.org/fathers/0311.htm"
+        },
+        {
+          "exact": "disciple of the apostle John and by him ordained bishop of Smyrna was chief of all Asia",
+          "checked_in": "npnf203.txt",
+          "source": "Jerome, Lives of Illustrious Men, chapter 17 (NPNF 2.3, Richardson)",
+          "url": "https://www.newadvent.org/fathers/2708.htm"
+        },
+        {
+          "exact": "having been entrusted with the episcopate of the church of Smyrna by those who had seen and heard the Lord",
+          "checked_in": "npnf201.txt",
+          "source": "Eusebius, Church History, Book 3, chapter 36 (McGiffert)",
+          "url": "https://www.newadvent.org/fathers/250103.htm"
+        },
+        {
+          "exact": "They appointed him not- withstanding his earnest entreaties and his desire to decline.",
+          "checked_in": "lightfoot-1889-part2-vol3.txt",
+          "source": "Life of Polycarp ascribed to Pionius, chapters 20 to 23 (Lightfoot's translation, 1889): LATER LEGEND",
+          "url": "https://archive.org/details/apostolicfathep2v3clemuoft",
+          "note": "OCR line-break hyphen ('not- withstanding'); the printed words are 'The whole priesthood then having assented, they appointed him notwithstanding his earnest entreaties and his desire to decline.' Do not quote on the page; summarise and mark later."
+        }
+      ],
+      "verified": true,
+      "note": "Critics' words: McGiffert (note 1116): 'That he was at the head of the church of Smyrna cannot be doubted (cf. Ignatius' epistle to him), but Irenæus' statement that he was appointed bishop of Smyrna by apostles is probably to be looked upon as a combination of his own.' Salmon (DCB) takes the other side: 'doubtless Tertullian (de Praescrip. 32) is right in understanding this to mean that he had been so established by St. John'. The 'by about 110' is Salmon's ('it is certain that Polycarp was bp. of Smyrna at the time of the martyrdom of Ignatius, i.e. c. 110'); Ignatius's date is itself debated, so say 'early in the second century' if a year is not needed."
+    },
+    "died": {
+      "text": "Burned at the stake and then stabbed, in the stadium at Smyrna, on a Saturday afternoon: the Martyrdom gives 'the second day of the month Xanthicus', 'the seventh before the kalends of March' (23 February), 'on a great sabbath, at the eighth hour'. The year most scholars accept is 155 (some say 156). Eusebius put it about ten years later, under Marcus Aurelius (about 166 or 167), and Jerome followed him.",
+      "exact": "Now the blessed Polycarp was martyred on the second day of the first part of the month Xanthicus, on the seventh before the kalends of March, on a great sabbath, at the eighth hour.",
+      "checked_in": "lightfoot-1891-apostolic-fathers.txt",
+      "source": "Martyrdom of Polycarp, chapter 21 (Lightfoot 1891)",
+      "url": "https://archive.org/details/cu31924024254744",
+      "verified": true,
+      "both_sides": [
+        {
+          "side": "155 (or 155/156): the scholars since Waddington",
+          "exact": "Polycarp's martyrdom occurred in Smyrna, not during the reign of Marcus Aurelius, as Eusebius says, but during the reign of Antoninus Pius, between 154 and 156 (probably in 155).",
+          "checked_in": "npnf201.txt",
+          "source": "McGiffert, note 1132 on Eusebius, Church History 4.15 (1890): 'This has been proved by Waddington ... (1867) ... and the date is now almost universally accepted (for example, by Renan, Ewald, Hilgenfeld, Lightfoot, Harnack, &c.)'. Lightfoot (1889 vol. 1, p. 669): 'The 23rd of February was a Saturday in A.D. 155, but not in A.D. 154. This fact decides in favour of A.D. 155.' Lightfoot 1891 introduction: 'the martyrdom itself, which happened A.D. 155 or 156'.",
+          "url": "https://www.newadvent.org/fathers/250104.htm"
+        },
+        {
+          "side": "166/167: Eusebius, Jerome and those who followed them until 1867",
+          "exact": "At this time, when the greatest persecutions were exciting Asia, Polycarp ended his life by martyrdom.",
+          "checked_in": "npnf201.txt",
+          "source": "Eusebius, Church History, Book 4, chapter 15, part 1, placed after Marcus Aurelius's accession (4.14.10; chapter title 'Under Verus'). McGiffert note 1132: 'the Chron. of Eusebius seems to put the martyrdom in the seventh year of Marcus Aurelius (166-167 a.d.), and this is the date given by Jerome and others'. Salmon (DCB) says the Chronicle has 'the 6th year of Marcus Aurelius, i.e. 166'. Jerome, Lives 17: 'during the reign of Marcus Antoninus and Lucius Aurelius Commodus'. The 1916 Roman Martyrology keeps 'under Marcus Antoninus and Lucius Aurelius Commodus'.",
+          "url": "https://www.newadvent.org/fathers/250104.htm",
+          "note": "Footnote marker [1132] removed from the exact line. Wieseler and Keim (1878) defended 167 after Waddington; McGiffert calls their arguments 'worthless'. Salmon also weighs a 22 March/2 Nisan reading (155 or 159) and prefers 155."
+        }
+      ],
+      "how_the_year_was_found": "Waddington (1867) dated the proconsul Statius Quadratus from the diary of an illness kept by the orator Aelius Aristides, who names Quadratus as proconsul. Lightfoot (1889 vol. 1, p. 452): 'The proconsul Statius Quadratus, the sophist and friend of the rhetorician Aristides'. Salmon: 'Quadratus we know to have been consul A.D. 142', and a consul usually governed Asia 12 to 16 years later.",
+      "place": "The stadium at Smyrna (ANF 'the stadium'; Jerome 'the Amphitheater'; Salmon 'the racecourse'). Smyrna is today Izmir, Turkey.",
+      "how": "Burned alive; when the fire would not consume him, an executioner stabbed him with a dagger (Martyrdom 13 to 16)."
+    },
+    "remains": {
+      "text": "The authorities burned his body, so his friends could not take it. Afterwards the church gathered his bones and laid them 'in a fitting place', where they meant to meet each year on the day of his death. The Martyrdom does not say where.",
+      "exact": "we afterwards took up his bones, as being more precious than the most exquisite jewels, and more purified than gold, and deposited them in a fitting place",
+      "checked_in": "anf01-martyrdom.txt",
+      "source": "Martyrdom of Polycarp, chapter 18 (ANF 1)",
+      "url": "https://www.ccel.org/ccel/schaff/anf01.iv.iv.html",
+      "verified": true,
+      "note": "Footnote [469] removed after 'purified'. Lightfoot (1889 vol. 1, p. 470) only conjectures they 'ultimately' rested in the cemetery outside the Ephesian gate ('we may conjecture'). Any modern claim that relics are in a particular church is NOT checked (see could_not_verify)."
+    },
+    "pronounced": {
+      "text": "POL-ee-karp",
+      "exact": "ˈpä-li-ˌkärp",
+      "checked_in": "merriam-webster-polycarp.txt",
+      "source": "Merriam-Webster, biographical name 'Polycarp' (Wayback copy of 18 Feb 2025)",
+      "url": "https://www.merriam-webster.com/dictionary/Polycarp",
+      "verified": true,
+      "note": "Collins also answered 403; not checked. Merriam-Webster's gloss: 'Saint 2nd century Christian martyr and Apostolic Father; bishop of Smyrna'."
+    },
+    "smyrna_today": {
+      "text": "Smyrna is today Izmir, on the west coast of Turkey. The church at Smyrna is one of the seven churches of Revelation (Revelation 2:8-11).",
+      "source": "McGiffert, note 1117 on Eusebius 4.14 ('The church of Smyrna (situated in Asia Minor) was one of the \"seven churches of Asia,\" and is mentioned in Rev. i. 11; ii. 8-11.'); Izmir: the city's own tourism site calls Polycarp 'the Bishop of Izmir' (visitizmir.org).",
+      "url": "https://www.visitizmir.org/en/Content/354",
+      "verified": true,
+      "note": "Smyrna = Izmir is common knowledge; any gazetteer will do."
+    },
+    "other_names": {
+      "text": "Polycarp of Smyrna; Saint Polycarp; in Greek Polykarpos. Called in the Martyrdom 'the teacher of Asia' (by the crowd) and 'an apostolic and prophetic teacher'. Irenaeus calls him 'that blessed and apostolical presbyter'.",
+      "source": "Martyrdom 12 and 16 (ANF); Irenaeus, fragment 2, letter to Florinus (ANF 1)",
+      "url": "https://www.newadvent.org/fathers/0134.htm",
+      "verified": true
+    }
+  },
+
+  "roles": [
+    {"role": "Hearer of the apostles", "line": "He learned from John and others who had seen the Lord.", "source": "Irenaeus, Against Heresies 3.3.4; letter to Florinus (Eusebius 5.20)", "verified": true},
+    {"role": "Bishop of Smyrna", "line": "Set over the church of Smyrna, by John, his church said.", "source": "Irenaeus 3.3.4; Tertullian, Prescription 32", "verified": true},
+    {"role": "Friend of Ignatius", "line": "He welcomed the prisoner and sent on his letters.", "source": "Ignatius, Letter to Polycarp; Polycarp, Letter to the Philippians 13", "verified": true, "correction_2026_09_26": "'He welcomed the prisoner' goes beyond the sources: Eusebius 3.36.10 says only that Ignatius stopped at Smyrna, saw Polycarp, and 'commended to him, like a true and good shepherd, the flock at Antioch'. The page's step is now 'Friend: Of Ignatius, who asked him to care for Antioch' (it was 'Host')."},
+    {"role": "Teacher of Irenaeus", "line": "A boy in his audience remembered every word.", "source": "Irenaeus, letter to Florinus (Eusebius 5.20)", "verified": true},
+    {"role": "Envoy to Rome", "line": "Very old, he met Bishop Anicetus about Easter.", "source": "Irenaeus, letter to Victor (Eusebius 5.24)", "verified": true, "correction_2026_09_26": "Not an envoy: no source says anyone sent him. McGiffert note 1113: 'our authorities say only that he was in Rome at that time'. Jerome, Lives 17: he went 'on account of certain questions concerning the day of the Passover'. The page's step is now 'Visitor: To Rome, to talk with Anicetus about Easter'."},
+    {"role": "Martyr", "line": "Burned in the stadium at Smyrna, aged at least 86.", "source": "Martyrdom of Polycarp 9 to 16", "verified": true, "note": "'Aged at least 86' follows from the 86 years of service (Martyrdom 9); McGiffert note 1116: 'he was at least eighty-six years old at the time of his death'."}
+  ],
+
+  "life_moments": [
+    {
+      "id": "hearer",
+      "correction_2026_09_26": "No source says when he was taught; 'As a young man' is our inference. The page's time label is now 'When John still lived'.",
+      "title": "He knew men who had seen Jesus",
+      "place": "Asia (Ephesus and Smyrna)",
+      "when": "As a young man",
+      "text": "Polycarp was taught by apostles and talked with many who had seen Christ, Irenaeus says. He used to tell what John and others had told him about the Lord: His miracles and His teaching. Irenaeus heard him say it.",
+      "exact": "But Polycarp also was not only instructed by apostles, and conversed with many who had seen Christ",
+      "checked_in": "anf01.txt",
+      "source": "Irenaeus, Against Heresies, Book 3, chapter 3, part 4 (ANF 1); letter to Florinus in Eusebius, Church History 5.20.6 (McGiffert: 'the accounts which he gave of his intercourse with John and with the others who had seen the Lord')",
+      "url": "https://www.newadvent.org/fathers/0103303.htm",
+      "verified": true,
+      "note": "Which John: Irenaeus says 'John, the disciple of the Lord'. Some scholars since Eusebius's reading of Papias (3.39) ask whether this was the apostle or another John; Irenaeus and Jerome mean the apostle. Leave the debate out unless a checked source is added."
+    },
+    {
+      "id": "cerinthus",
+      "title": "The story of John at the bath-house",
+      "place": "Ephesus",
+      "when": "A story he told",
+      "text": "Polycarp told a story about John. John went to the public baths at Ephesus and saw Cerinthus inside, a teacher he thought false. He ran out without bathing. 'Let us fly,' he cried, 'lest even the bath-house fall down.' Irenaeus had the story from people who heard Polycarp tell it.",
+      "exact": "Let us fly, lest even the bath-house fall down, because Cerinthus, the enemy of the truth, is within.",
+      "checked_in": "anf01.txt",
+      "source": "Irenaeus, Against Heresies, Book 3, chapter 3, part 4 (ANF 1): 'There are also those who heard from him that John ...'",
+      "url": "https://www.newadvent.org/fathers/0103303.htm",
+      "verified": true,
+      "note": "Second-hand, and Irenaeus says so. McGiffert (Eusebius 3.28, note on the anecdote) remarks that Irenaeus 'did not himself hear it from Polycarp, but only from others to whom Polycarp had told it'."
+    },
+    {
+      "id": "ignatius",
+      "title": "A prisoner comes through Smyrna",
+      "place": "Smyrna",
+      "when": "About 110 (date debated)",
+      "text": "Ignatius, bishop of Antioch, was being taken under guard to Rome to die in the arena. His guards stopped at Smyrna, and Polycarp received him. From Smyrna Ignatius wrote four letters, and he later wrote from Troas to Smyrna's church and to Polycarp himself. 'I loudly glorify [His name] that I have been thought worthy to behold thy blameless face', he told him.",
+      "exact": "I loudly glorify [His name] that I have been thought worthy [to behold] thy blameless face",
+      "checked_in": "anf01.txt",
+      "source": "Ignatius, Letter to Polycarp, chapter 1 (ANF 1, shorter Greek version); Eusebius, Church History 3.36.5 and 10 (McGiffert): 'So when he came to Smyrna, where Polycarp was, he wrote an epistle to the church of Ephesus ... Magnesia ... Tralles' and 'to the Romans'; 'when he had left Smyrna he wrote again from Troas to the Philadelphians and to the church of Smyrna; and particularly to Polycarp'.",
+      "url": "https://www.newadvent.org/fathers/0110.htm",
+      "verified": true,
+      "note": "Ignatius also wrote to the Ephesians from Smyrna 'loving Polycarp even as I do you' (Ephesians 21). The date 'about 110' is Salmon's; Ignatius's date is debated (McGiffert note on 4.14 note 1127: 'a very difficult question, not yet fully decided')."
+    },
+    {
+      "id": "anvil",
+      "title": "'Stand firm, as does an anvil'",
+      "place": "Letter from Troas",
+      "when": "About 110",
+      "text": "Ignatius wrote Polycarp a letter of advice, bishop to bishop. Pray without ceasing. Bear with everyone, as the Lord bears with you. Win over the troublesome ones by gentleness, not just the good ones. And do not be shaken by clever false teachers: 'Stand firm, as does an anvil which is beaten.' He also asked Polycarp to send a messenger to Antioch and to write to the churches Ignatius had no time to reach.",
+      "exact": "Stand firm, as does an anvil which is beaten. It is the part of a noble athlete to be wounded, and yet to conquer.",
+      "checked_in": "anf01.txt",
+      "source": "Ignatius, Letter to Polycarp, chapters 1 to 3, 7 and 8 (ANF 1, shorter Greek version)",
+      "url": "https://www.newadvent.org/fathers/0110.htm",
+      "verified": true,
+      "note": "Footnote [1081] removed after 'noble'. Other lines, exact: 'If thou lovest the good disciples, no thanks are due to thee on that account; but rather seek by meekness to subdue the more troublesome.' (ch. 2); 'Be sober as an athlete of God' (ch. 2); 'Bear with all, even as the Lord does with thee.' (ch. 1: display 'Bear with all, even as the Lord does with thee' needs no change); 'thou ... wilt write to the adjacent Churches' (ch. 8)."
+    },
+    {
+      "id": "letter",
+      "title": "His one surviving letter",
+      "place": "Smyrna, writing to Philippi",
+      "when": "Soon after Ignatius's death",
+      "text": "The church at Philippi asked Polycarp for a letter of advice and for copies of Ignatius's letters. He sent both. He wrote humbly: he could not match Paul, who had written to them himself. He warned against the love of money, grieved over a presbyter named Valens who had fallen into it, and told them not to treat Valens and his wife as enemies. He sent every letter of Ignatius he had, and asked for news of how Ignatius had died.",
+      "exact": "For neither I, nor any other such one, can come up to the wisdom of the blessed and glorified Paul.",
+      "checked_in": "anf01-philippians.txt",
+      "source": "Polycarp, Letter to the Philippians, chapters 3, 4, 11 and 13 (ANF 1)",
+      "url": "https://www.newadvent.org/fathers/0136.htm",
+      "verified": true,
+      "note": "Footnote [357] removed after 'wisdom'. Lightfoot's introduction (1891): 'The visit of Ignatius had been recent—so recent indeed, that Polycarp, though he assumes that the saint has suffered martyrdom, is yet without any certain knowledge of the fact.' Date of the letter: tied to Ignatius's death (McGiffert note 1127); some think chapter 13 an interpolation (ANF intro), which Lightfoot, Zahn and McGiffert reject."
+    },
+    {
+      "id": "irenaeus-boy",
+      "title": "A boy who never forgot him",
+      "place": "Smyrna ('lower Asia')",
+      "when": "Late in his life",
+      "text": "Irenaeus, later bishop of Lyons, heard Polycarp as a boy. Decades later he wrote that he remembered those days better than last year. He could still describe where Polycarp sat to teach, how he came and went, what he looked like, and how he told what John had told him. He kept it all 'not on paper, but in my heart'.",
+      "exact": "I am able to describe the very place in which the blessed Polycarp sat as he discoursed, and his goings out and his comings in, and the manner of his life, and his physical appearance",
+      "checked_in": "npnf201.txt",
+      "source": "Irenaeus, letter to Florinus, in Eusebius, Church History, Book 5, chapter 20, parts 5 to 7 (McGiffert)",
+      "url": "https://www.newadvent.org/fathers/250105.htm",
+      "verified": true,
+      "note": "Also exact: 'noting them down, not on paper, but in my heart' (5.20.7). In Against Heresies 3.3.4 (ANF): 'whom I also saw in my early youth, for he tarried [on earth] a very long time'."
+    },
+    {
+      "id": "florinus",
+      "title": "The courtier who wanted his approval",
+      "place": "Smyrna",
+      "when": "Late in his life",
+      "text": "Among Polycarp's hearers was Florinus, a man of the royal court, 'endeavoring to gain his approbation', as Irenaeus remembered. Years later in Rome Florinus taught ideas Irenaeus thought false. Irenaeus wrote to him that Polycarp would have stopped his ears and cried out: 'O good God, unto what times hast Thou spared me that I should endure these things?'",
+      "exact": "For when I was a boy, I saw thee in lower Asia with Polycarp, moving in splendor in the royal court, and endeavoring to gain his approbation.",
+      "checked_in": "npnf201.txt",
+      "source": "Irenaeus, letter to Florinus, in Eusebius, Church History 5.20.5 and 5.20.7 (McGiffert)",
+      "url": "https://www.newadvent.org/fathers/250105.htm",
+      "verified": true,
+      "note": "Footnote [1668] removed after 'court,'. The cry, exact: 'O good God, unto what times hast thou spared me that I should endure these things?' (display 'hast Thou'). ANF's fragment 2 renders it 'O good God, for what times hast Thou reserved me, that I should endure these things?'"
+    },
+    {
+      "id": "rome",
+      "correction_2026_09_26": "Irenaeus says Anicetus followed 'the presbyters that had preceded him', not 'the Roman bishops'; and that the two also 'disagreed a little about certain other things' (Eusebius 5.24.16). Polycarp 'was at Rome' (McGiffert note 1113). Fixed on the page.",
+      "title": "Easter in Rome: agreeing to differ",
+      "place": "Rome",
+      "when": "About 154 or 155",
+      "text": "Very old, Polycarp was in Rome while Anicetus was its bishop. The two disagreed about keeping Easter. Polycarp kept it the way John and the other apostles he knew had kept it. Anicetus kept the custom of the Roman bishops before him. Neither could persuade the other. They stayed in communion anyway, and Anicetus let Polycarp celebrate the Eucharist in his own church, as a mark of respect. They parted in peace.",
+      "exact": "But though matters were in this shape, they communed together, and Anicetus conceded the administration of the eucharist in the church to Polycarp, manifestly as a mark of respect.",
+      "checked_in": "npnf201.txt",
+      "source": "Irenaeus, letter to Victor, in Eusebius, Church History, Book 5, chapter 24, parts 16 and 17 (McGiffert)",
+      "url": "https://www.newadvent.org/fathers/250105.htm",
+      "verified": true,
+      "note": "Footnote [1714] removed after 'respect.' What the Eucharist line means is disputed: McGiffert note 1714 gives Valesius's reading (Anicetus let Polycarp celebrate) and Heinichen's (he let him receive), and prefers the first; Salmon agrees ('permitted Polycarp to celebrate in his presence'). The date: McGiffert note 1113 (Anicetus's accession probably 154; Polycarp 'must have left Rome soon after'). What Polycarp's custom was: Salmon, DCB: 'the Asiatic observance of the 14th day' (the Quartodeciman practice). Jerome (Lives 17) says he went to Rome 'on account of certain questions concerning the day of the Passover'; Irenaeus does not give the purpose of the visit."
+    },
+    {
+      "id": "marcion",
+      "title": "'I do know thee, the first-born of Satan'",
+      "place": "Rome (probably)",
+      "when": "On one occasion",
+      "text": "In Rome, Irenaeus says, Polycarp turned many followers of Valentinus and Marcion back to the Church. Marcion taught that the God of the Old Testament was not the Father of Jesus. Once Marcion met Polycarp and asked, 'Dost thou know me?' Polycarp answered: 'I do know thee, the first-born of Satan.'",
+      "exact": "Dost thou know me?\" \"I do know thee, the first-born of Satan.",
+      "checked_in": "anf01.txt",
+      "source": "Irenaeus, Against Heresies, Book 3, chapter 3, part 4 (ANF 1)",
+      "url": "https://www.newadvent.org/fathers/0103303.htm",
+      "verified": true,
+      "note": "Irenaeus does not say where the meeting happened; McGiffert (note 1124) notes Marcion came to Rome about 135. The words 'Marcion taught that the God of the Old Testament was not the Father of Jesus' are our summary of a well-known fact (ANF 3.3.4 itself: those 'who conjure into existence another god beyond the Creator'); source it to Irenaeus Book 1 chapter 27 if the page uses it. McGiffert's Eusebius: 'Knowest thou us?' 'I know the first born of Satan.' Jerome: 'Do you know us' 'I know the firstborn of the devil.' The same phrase is in Polycarp's own letter, chapter 7."
+    },
+    {
+      "id": "sought",
+      "title": "'Let Polycarp be sought out!'",
+      "place": "The stadium at Smyrna",
+      "when": "February 155",
+      "text": "During games at Smyrna, eleven Christians from Philadelphia and Smyrna were put to death. A young man named Germanicus faced the beasts so bravely that the crowd turned on the old bishop: 'Away with the Atheists; let Polycarp be sought out!'",
+      "exact": "Away with the Atheists; let Polycarp be sought out!",
+      "checked_in": "anf01-martyrdom.txt",
+      "source": "Martyrdom of Polycarp, chapter 3 (ANF 1); chapter 19 for the twelve",
+      "url": "https://www.ccel.org/ccel/schaff/anf01.iv.iv.html",
+      "verified": true,
+      "note": "'Atheists' because Christians would not honour the gods (Lightfoot and Justin: see McGiffert note 1140). 'Eleven from Philadelphia': McGiffert's Eusebius 4.15.45 'with the eleven from Philadelphia'; ANF ch. 19 'the twelfth that was martyred in Smyrna (reckoning those also of Philadelphia)'. Whether all eleven were Philadelphians is unclear; say 'eleven others, some from Philadelphia'."
+    },
+    {
+      "id": "quintus",
+      "title": "The volunteer who gave way",
+      "place": "Smyrna",
+      "when": "The same days",
+      "text": "A Phrygian named Quintus, newly arrived, had pushed himself and others to come forward and give themselves up. When he saw the beasts he lost his nerve, swore the oath and offered sacrifice. The church of Smyrna drew the lesson plainly: we do not praise those who hand themselves over, 'seeing the Gospel does not teach so to do'.",
+      "exact": "Wherefore, brethren, we do not commend those who give themselves up [to suffering], seeing the Gospel does not teach so to do.",
+      "checked_in": "anf01-martyrdom.txt",
+      "source": "Martyrdom of Polycarp, chapter 4 (ANF 1)",
+      "url": "https://www.ccel.org/ccel/schaff/anf01.iv.iv.html",
+      "verified": true,
+      "note": "Lightfoot: 'For this cause therefore, brethren, we praise not those who deliver themselves up, since the Gospel doth not so teach us.'"
+    },
+    {
+      "id": "farm",
+      "title": "He withdrew, and prayed",
+      "place": "A farm near Smyrna",
+      "when": "Days before his arrest",
+      "text": "Polycarp was not afraid and wanted to stay in the city. His people persuaded him to leave. He went to a farm nearby with a few friends and did nothing, night and day, but pray for everyone and for the churches of the whole world, as he always did. Then he moved to a second farm.",
+      "exact": "engaged in nothing else night and day than praying for all men, and for the Churches throughout the world, according to his usual custom",
+      "checked_in": "anf01-martyrdom.txt",
+      "source": "Martyrdom of Polycarp, chapters 5 and 6 (ANF 1)",
+      "url": "https://www.ccel.org/ccel/schaff/anf01.iv.iv.html",
+      "verified": true
+    },
+    {
+      "id": "pillow",
+      "title": "The burning pillow",
+      "place": "The farm",
+      "when": "Three days before his arrest",
+      "text": "While he prayed, he saw his pillow on fire. He turned to those with him and said, 'I must be burnt alive.'",
+      "exact": "and, behold, the pillow under his head seemed to him on fire. Upon this, turning to those that were with him, he said to them prophetically, \"I must be burnt alive.\"",
+      "checked_in": "anf01-martyrdom.txt",
+      "source": "Martyrdom of Polycarp, chapter 5 (ANF 1)",
+      "url": "https://www.ccel.org/ccel/schaff/anf01.iv.iv.html",
+      "verified": true,
+      "note": "Told in full under miracles. Lightfoot: 'he saw his pillow burning with fire'; 'It must needs be that I shall be burned alive.'"
+    },
+    {
+      "id": "betrayed",
+      "title": "Betrayed by his own household",
+      "place": "The second farm",
+      "when": "The day before",
+      "text": "The searchers seized two slave boys. One confessed under torture. 'It was thus impossible that he should continue hid,' the letter says, 'since those that betrayed him were of his own household.' The police captain was named Herod, which the writers did not miss.",
+      "exact": "It was thus impossible that he should continue hid, since those that betrayed him were of his own household.",
+      "checked_in": "anf01-martyrdom.txt",
+      "source": "Martyrdom of Polycarp, chapter 6 (ANF 1)",
+      "url": "https://www.ccel.org/ccel/schaff/anf01.iv.iv.html",
+      "verified": true,
+      "note": "Lightfoot: 'the captain of the police, who chanced to have the very name, being called Herod'. ANF calls him 'The Irenarch'."
+    },
+    {
+      "id": "supper",
+      "title": "Supper for the men who came to take him",
+      "place": "An upper room in a cottage",
+      "when": "Friday evening",
+      "text": "Armed police and horsemen came on the Friday at supper time, 'as if going out against a robber'. He could have slipped away but said, 'The will of God be done.' He came down and talked with them. They were amazed at his age: 'Was so much effort made to capture such a venerable man?' He had food and drink set before them, as much as they wanted, and asked for an hour to pray. He prayed standing for two full hours. Many of them began to be sorry they had come.",
+      "exact": "Immediately then, in that very hour, he ordered that something to eat and drink should be set before them, as much indeed as they cared for, while he besought them to allow him an hour to pray without disturbance.",
+      "checked_in": "anf01-martyrdom.txt",
+      "source": "Martyrdom of Polycarp, chapter 7 (ANF 1). ANF note 431: 'That is, on Friday.'; Lightfoot: 'on the Friday about the supper hour'.",
+      "url": "https://www.ccel.org/ccel/schaff/anf01.iv.iv.html",
+      "verified": true,
+      "note": "Also exact: 'The will of God be done.' ; 'Was so much effort made to capture such a venerable man?' (footnotes [436] and [437] removed) ; 'he stood and prayed, being full of the grace of God, so that he could not cease for two full hours' (footnote [438] removed) ; 'insomuch that many began to repent that they had come forth against so godly and venerable an old man'."
+    },
+    {
+      "id": "prayer-for-all",
+      "title": "A prayer for everyone he had ever met",
+      "place": "The upper room",
+      "when": "Friday night",
+      "text": "In those two hours he named everyone who had ever crossed his path, small and great, famous and unknown, and the whole Catholic Church throughout the world.",
+      "exact": "having made mention of all that had at any time come in contact with him, both small and great, illustrious and obscure, as well as the whole Catholic Church throughout the world",
+      "checked_in": "anf01-martyrdom.txt",
+      "source": "Martyrdom of Polycarp, chapter 8 (ANF 1)",
+      "url": "https://www.ccel.org/ccel/schaff/anf01.iv.iv.html",
+      "verified": true,
+      "note": "Lightfoot: 'after remembering all who at any time had come in his way, small and great, high and low, and all the universal Church throughout the world'."
+    },
+    {
+      "id": "carriage",
+      "title": "'What harm is there in saying, Lord Caesar?'",
+      "place": "The road into Smyrna",
+      "when": "Saturday, 23 February",
+      "text": "They set him on a donkey and led him into the city on a 'great Sabbath'. Herod and his father Nicetes met him and took him into their carriage. They tried reason: 'What harm is there in saying, Lord Caesar', and sacrificing, and saving yourself? At first he said nothing. Then: 'I shall not do as you advise me.' They threw him out of the carriage so roughly that he hurt his shin. He walked on quickly, as if nothing had happened.",
+      "exact": "What harm is there in saying, Lord Cæsar, and in sacrificing, with the other ceremonies observed on such occasions, and so make sure of safety?",
+      "checked_in": "anf01-martyrdom.txt",
+      "source": "Martyrdom of Polycarp, chapter 8 (ANF 1; the shin from Lightfoot 1891: 'so that he bruised his shin, as he got down from the carriage')",
+      "url": "https://www.ccel.org/ccel/schaff/anf01.iv.iv.html",
+      "verified": true,
+      "note": "Footnote [440] removed after 'Cæsar,'. The quotation keeps the ligature 'Cæsar'. Also exact: 'I shall not do as you advise me.' Lightfoot: 'Why what harm is there in saying, Caesar is Lord, and offering incense'."
+    },
+    {
+      "id": "trial",
+      "title": "Before the proconsul",
+      "place": "The stadium",
+      "when": "Saturday afternoon",
+      "text": "In the uproar of the stadium the proconsul, Statius Quadratus, tried hard to save him. Respect your age. Swear by the fortune of Caesar. Say 'Away with the atheists.' Polycarp looked at the crowd, waved his hand at them, groaned, looked up to heaven and said: 'Away with the Atheists.' Revile Christ, said the proconsul, and I will let you go. 'Eighty and six years have I served Him, and He never did me any injury: how then can I blaspheme my King and my Saviour?'",
+      "exact": "Eighty and six years have I served Him, and He never did me any injury: how then can I blaspheme my King and my Saviour?",
+      "checked_in": "anf01-martyrdom.txt",
+      "source": "Martyrdom of Polycarp, chapter 9 (ANF 1); the proconsul's name from chapter 21",
+      "url": "https://www.ccel.org/ccel/schaff/anf01.iv.iv.html",
+      "verified": true,
+      "note": "ANF note 445: 'Referring the words to the heathen, and not to the Christians, as was desired.' Lightfoot: 'Fourscore and six years have I been His servant, and He hath done me no wrong. How then can I blaspheme my King who saved me?'"
+    },
+    {
+      "id": "christian",
+      "title": "'I am a Christian'",
+      "place": "The stadium",
+      "when": "Saturday afternoon",
+      "text": "Pressed again to swear, he said: stop pretending you do not know who I am. 'I am a Christian.' If you want to learn what Christians believe, give me a day and hear me. The proconsul said, persuade the people. Polycarp said he owed the proconsul an answer, because Christians are taught to honour the authorities God has set up. The crowd he did not think worthy of a defence.",
+      "exact": "hear me declare with boldness, I am a Christian. And if you wish to learn what the doctrines of Christianity are, appoint me a day, and thou shalt hear them.",
+      "checked_in": "anf01-martyrdom.txt",
+      "source": "Martyrdom of Polycarp, chapter 10 (ANF 1)",
+      "url": "https://www.ccel.org/ccel/schaff/anf01.iv.iv.html",
+      "verified": true,
+      "note": "Footnote [446] removed after 'doctrines'."
+    },
+    {
+      "id": "fire-for-an-hour",
+      "title": "'Fire which burneth for an hour'",
+      "place": "The stadium",
+      "when": "Saturday afternoon",
+      "text": "The proconsul threatened the beasts. Call them, said Polycarp. Then he threatened fire. Polycarp answered that the fire he threatened burns for an hour and goes out, but the fire of the coming judgment does not. 'But why tarriest thou? Bring forth what thou wilt.' His face, the letter says, was full of grace and joy, and the proconsul was astonished.",
+      "exact": "Thou threatenest me with fire which burneth for an hour, and after a little is extinguished, but art ignorant of the fire of the coming judgment and of eternal punishment, reserved for the ungodly. But why tarriest thou? Bring forth what thou wilt.",
+      "checked_in": "anf01-martyrdom.txt",
+      "source": "Martyrdom of Polycarp, chapters 11 and 12 (ANF 1)",
+      "url": "https://www.ccel.org/ccel/schaff/anf01.iv.iv.html",
+      "verified": true
+    },
+    {
+      "id": "herald",
+      "title": "Three cries, and a crowd that wanted a lion",
+      "place": "The stadium",
+      "when": "Saturday afternoon",
+      "text": "The herald cried three times: 'Polycarp has confessed that he is a Christian.' The crowd roared that he was 'the teacher of Asia, the father of the Christians, and the overthrower of our gods'. They asked Philip the Asiarch, the president of the games, to set a lion on him. Philip said he could not: the beast shows were over. So they shouted for him to be burned alive.",
+      "exact": "This is the teacher of Asia, the father of the Christians, and the overthrower of our gods, he who has been teaching many not to sacrifice, or to worship the gods.",
+      "checked_in": "anf01-martyrdom.txt",
+      "source": "Martyrdom of Polycarp, chapter 12 (ANF 1)",
+      "url": "https://www.ccel.org/ccel/schaff/anf01.iv.iv.html",
+      "verified": true,
+      "note": "Footnote [451] removed after 'Asia,'. The same chapter says the crowd was 'both of the heathen and Jews, who dwelt at Smyrna': see hard_topics."
+    },
+    {
+      "id": "pyre",
+      "title": "'Leave me as I am'",
+      "place": "The stadium",
+      "when": "Saturday afternoon",
+      "text": "The crowd ran to the workshops and baths for wood. Polycarp took off his clothes and his belt and tried to take off his own sandals. He was not used to it: the faithful always rushed to do it for him, eager to touch him. When they came to nail him to the stake he said: 'Leave me as I am.' He That gives me strength to bear the fire will let me stand still in it without your nails. So they only tied him.",
+      "exact": "Leave me as I am; for He that giveth me strength to endure the fire, will also enable me, without your securing me by nails, to remain without moving in the pile.",
+      "checked_in": "anf01-martyrdom.txt",
+      "source": "Martyrdom of Polycarp, chapters 13 and 14 (ANF 1)",
+      "url": "https://www.ccel.org/ccel/schaff/anf01.iv.iv.html",
+      "verified": true,
+      "note": "Display: 'for He That giveth' is not needed; 'He that giveth' stays (pronoun 'He' already capital; relative 'that' is not a pronoun for God in the site's list, which names Who and Whose). Also exact: 'a thing he was not accustomed to do, inasmuch as every one of the faithful was always eager who should first touch his skin'."
+    },
+    {
+      "id": "stake-prayer",
+      "title": "His prayer at the stake",
+      "place": "The stadium",
+      "when": "The eighth hour",
+      "text": "Bound, with his hands behind him, 'like a distinguished ram' from a great flock, he looked up to heaven and thanked God for counting him worthy of 'this day and this hour'. (Full text under death.prayer.)",
+      "source": "Martyrdom of Polycarp, chapter 14 (ANF 1)",
+      "url": "https://www.ccel.org/ccel/schaff/anf01.iv.iv.html",
+      "verified": true
+    },
+    {
+      "id": "birthday",
+      "title": "The first martyr's day kept by a church",
+      "place": "Smyrna",
+      "when": "After his death",
+      "text": "The church gathered his bones and planned to meet each year, 'with joy and rejoicing', to keep the day of his death as his birthday. Nearly a century later, in 250, a priest of Smyrna named Pionius was arrested while keeping it.",
+      "exact": "to celebrate the birth-day of his martyrdom for the commemoration of those that have already fought in the contest, and for the training and preparation of those that shall do so hereafter",
+      "checked_in": "lightfoot-1891-apostolic-fathers.txt",
+      "source": "Martyrdom of Polycarp, chapter 18 (Lightfoot 1891); Pionius: Lightfoot, Apostolic Fathers Part II vol. 1 (1889), pp. 470-471 and 607, citing the Acts of Pionius: 'Pionius, with his sister Sabina and the youth Asclepiades, were celebrating in Smyrna the \"true birth-day of the martyr Polycarp,\" when they were apprehended and dragged to prison'.",
+      "url": "https://archive.org/details/cu31924024254744",
+      "verified": true,
+      "note": "The Acts of Pionius themselves were not fetched; the Pionius fact rests on Lightfoot's report and quotation. 'Priest': Lightfoot calls him 'the true Pionius'; the Acts call him a presbyter (not checked by me: say 'a Christian of Smyrna named Pionius' unless the calendar researcher checks). 'First': see tidbits for McGiffert's wording."
+    },
+    {
+      "id": "copyists",
+      "title": "How the story reached us",
+      "place": "Smyrna, Lyons, Corinth",
+      "when": "155 to the 4th century",
+      "text": "The church of Smyrna wrote the account as a letter to the church at Philomelium, and asked them to send it on further. A man named Evarestus wrote it; Marcus (or Marcianus) carried it. Notes at the end say Gaius copied it from the papers of Irenaeus, Socrates copied Gaius's copy in Corinth, and a Pionius copied that. Eusebius copied most of it into his Church History about 300.",
+      "exact": "These things Caius transcribed from the copy of Irenæus (who was a disciple of Polycarp), having himself been intimate with Irenæus. And I Socrates transcribed them at Corinth from the copy of Caius.",
+      "checked_in": "anf01-martyrdom.txt",
+      "source": "Martyrdom of Polycarp, chapters 20 and 22 (ANF 1); Eusebius, Church History 4.15 (McGiffert)",
+      "url": "https://www.ccel.org/ccel/schaff/anf01.iv.iv.html",
+      "verified": true,
+      "note": "ANF note 480: 'What follows is, of course, no part of the original Epistle.' Lightfoot (1891 intro) identifies the Pionius of the last note with the later forger of the Life, not the martyr of 250: 'The writer of the Pionian Life is therefore the author of the History of the Transmission.' The Moscow manuscript's longer note (Irenaeus in Rome hearing a voice) is a later addition: see miracles.later."
+    }
+  ],
+
+  "miracles": {
+    "intro": {
+      "text": "The Martyrdom's writers say they were preserved to tell what they saw.",
+      "exact": "we, to whom it was given to witness it, beheld a great miracle, and have been preserved that we might report to others what then took place",
+      "checked_in": "anf01-martyrdom.txt",
+      "cite": "Martyrdom of Polycarp, chapter 15 (ANF 1)",
+      "url": "https://www.ccel.org/ccel/schaff/anf01.iv.iv.html",
+      "note": "Footnote [460] removed after 'fury,' (outside the quote). Lightfoot: 'we to whom it was given to see, saw a marvel, yea and we were preserved that we might relate to the rest what happened.'"
+    },
+    "items": [
+      {
+        "id": "pillow",
+        "title": "The burning pillow",
+        "when": "Three days before his arrest",
+        "text": "Praying at the farm, he saw the pillow under his head on fire. He told his companions he must be burned alive. The letter says it came true in the stadium: the crowd wanted a lion, the games were over, and they chose fire.",
+        "exact": "the pillow under his head seemed to him on fire",
+        "checked_in": "anf01-martyrdom.txt",
+        "witness": "Those who were with him at the farm heard him say it.",
+        "cite": "Martyrdom of Polycarp, chapters 5 and 12 (ANF 1); Eusebius, Church History 4.15.10 and 28",
+        "url": "https://www.ccel.org/ccel/schaff/anf01.iv.iv.html",
+        "verified": true,
+        "note": "Eusebius keeps it: 'he saw in a vision at night the pillow under his head suddenly seized by fire and consumed'."
+      },
+      {
+        "id": "voice",
+        "title": "A voice from heaven",
+        "when": "Entering the stadium",
+        "text": "As he entered the stadium a voice came from heaven: 'Be strong, Polycarp, and play the man.' No one saw who spoke. The Christians there heard it.",
+        "exact": "But as Polycarp entered into the stadium, a voice came to him from heaven; ‘Be strong, Polycarp, and play the man.’ And no one saw the speaker, but those of our people who were present heard the voice.",
+        "checked_in": "lightfoot-1891-apostolic-fathers.txt",
+        "witness": "The Christians in the stadium ('those of our people who were present').",
+        "cite": "Martyrdom of Polycarp, chapter 9 (Lightfoot 1891); also in Eusebius 4.15.17",
+        "url": "https://archive.org/details/cu31924024254744",
+        "verified": true,
+        "note": "The quote marks in the OCR are curly (‘ ’); a checker should normalise quotes. ANF: 'Be strong, and show thyself a man, O Polycarp!' Salmon offers a natural reading: 'Under the protection of the tumult the speaker remained undiscovered; and the Christians believed it a voice from heaven.' That is a scholar's doubt in his own words, usable under 'Doubted from the start'."
+      },
+      {
+        "id": "sail",
+        "title": "The fire like a sail",
+        "when": "At the stake",
+        "text": "The fire rose like a ship's sail filled with wind and made a wall around him. He was in the middle not like burning flesh, but like bread baking, or gold and silver glowing in a furnace.",
+        "exact": "For the fire, shaping itself into the form of an arch, like the sail of a ship when filled with the wind, encompassed as by a circle the body of the martyr. And he appeared within not like flesh which is burnt, but as bread that is baked, or as gold and silver glowing in a furnace.",
+        "checked_in": "anf01-martyrdom.txt",
+        "witness": "The writers themselves: 'we, to whom it was given to witness it'.",
+        "cite": "Martyrdom of Polycarp, chapter 15 (ANF 1)",
+        "url": "https://www.ccel.org/ccel/schaff/anf01.iv.iv.html",
+        "verified": true,
+        "note": "Eusebius (4.15.37) has the sail and 'gold and silver refined in a furnace' but not the bread. Lightfoot prints the bread in brackets as doubtful."
+      },
+      {
+        "id": "fragrance",
+        "title": "A sweet smell",
+        "when": "At the stake",
+        "text": "Instead of the smell of burning, they smelled something like frankincense or precious spices.",
+        "exact": "Moreover, we perceived such a sweet odour [coming from the pile], as if frankincense or some such precious spices had been smoking there.",
+        "checked_in": "anf01-martyrdom.txt",
+        "witness": "The writers.",
+        "cite": "Martyrdom of Polycarp, chapter 15 (ANF 1); Eusebius 4.15.37",
+        "url": "https://www.ccel.org/ccel/schaff/anf01.iv.iv.html",
+        "verified": true,
+        "note": "Footnote [461] removed after 'smoking'."
+      },
+      {
+        "id": "dove-blood",
+        "title": "The dove and the blood",
+        "when": "The end",
+        "text": "His body would not burn, so an executioner was ordered to stab him with a dagger. Out came a dove and so much blood that it put the fire out. The whole crowd, the letter says, wondered at the difference between unbelievers and the elect.",
+        "exact": "there came forth a dove, and a great quantity of blood, so that the fire was extinguished; and all the people wondered that there should be such a difference between the unbelievers and the elect",
+        "checked_in": "anf01-martyrdom.txt",
+        "witness": "The crowd and the writers.",
+        "cite": "Martyrdom of Polycarp, chapter 16 (ANF 1)",
+        "url": "https://www.ccel.org/ccel/schaff/anf01.iv.iv.html",
+        "verified": true,
+        "note": "Footnote [462] removed after 'dove,'. The dove is doubted from the start: see doubts. McGiffert's note 1157 on the executioner ('Komphektora'): 'It was the common business of the Confectores to dispatch such wild beasts as had not been killed outright during the combat in the arena.'"
+      },
+      {
+        "id": "prophecy",
+        "title": "Every word came true",
+        "when": "The letter's verdict",
+        "text": "The letter closes the scene with its own verdict on him: 'For every word that went out of his mouth either has been or shall yet be accomplished.'",
+        "exact": "For every word that went out of his mouth either has been or shall yet be accomplished.",
+        "checked_in": "anf01-martyrdom.txt",
+        "cite": "Martyrdom of Polycarp, chapter 16 (ANF 1)",
+        "url": "https://www.ccel.org/ccel/schaff/anf01.iv.iv.html",
+        "verified": true,
+        "note": "Not a wonder in itself; better as a line in 'What others said of him'."
+      }
+    ],
+    "doubts": [
+      {
+        "title": "Eusebius has no dove",
+        "text": "Eusebius copied the scene about 300, and his text has the blood but no dove. The translators of the Ante-Nicene Fathers noted it.",
+        "exact": "Eusebius omits all mention of the dove, and many have thought the text to be here corrupt. It has been proposed to read ep' aristera, \"on the left hand side,\" instead of peristera, \"a dove.\"",
+        "checked_in": "anf01-martyrdom.txt",
+        "cite": "ANF 1, note 462 on Martyrdom 16 (Roberts and Donaldson)",
+        "url": "https://www.ccel.org/ccel/schaff/anf01.iv.iv.html",
+        "verified": true,
+        "note": "Eusebius 4.15.39 (McGiffert), exact: 'And when he had done this there came forth a quantity of blood so that it extinguished the fire' (footnote [1158] removed after 'blood')."
+      },
+      {
+        "title": "Lightfoot: added by a later hand",
+        "text": "Bishop Lightfoot thought the dove was added by the later writer who made the Life of Polycarp, a 'miracle-monger' who also put a dove over Polycarp's head at his consecration.",
+        "exact": "Is it not the same dove which appears on the two occasions, and was it not uncaged and let fly by the same hand?",
+        "checked_in": "lightfoot-1891-apostolic-fathers.txt",
+        "cite": "Lightfoot, The Apostolic Fathers (1891), introduction to the Martyrdom, p. 187",
+        "url": "https://archive.org/details/cu31924024254744",
+        "verified": true,
+        "note": "Also exact (same page): 'Now our spurious Pionius was before all things a miracle-monger.' and 'But this miracle appears only in the Pionian copies, not in Eusebius.' In his larger edition (1889 vol. 3, note on ch. 16) he adds: 'the dove seems out of place. The blood does its work by extinguishing the fire; but nothing more is heard of the dove.' McGiffert, note 1158: 'It seems probable that these words did not belong to the original text'. A reading on the other side, in the same note of Lightfoot: the belief 'that the human soul departed from the body at death in the form of a bird', with the dove of St Eulalia in Prudentius as 'an exact parallel'."
+      },
+      {
+        "title": "'Many kinds of wood' (the fragrance)",
+        "text": "The American editor of the Ante-Nicene Fathers thought the sweet smell natural.",
+        "exact": "As for the \"fragrant smell\" that came from the fire, many kinds of wood emit the like in burning",
+        "checked_in": "anf01-martyrdom.txt",
+        "cite": "A. Cleveland Coxe, introductory note to the Martyrdom, ANF 1 (1885)",
+        "url": "https://www.ccel.org/ccel/schaff/anf01.iv.iv.html",
+        "verified": true,
+        "note": "Coxe in the same note: 'there seems nothing incredible in the narrative if we except \"the dove\"'. McGiffert, note 1156 on the sail: 'Natural causes may easily have produced some such phenomena as the writers describe, and which they of course regarded as miraculous.' Salmon (DCB): the flame 'bellied out under the wind like the sail of a ship'; the fumes 'seemed fragrant to the Christians, whether as the effect of imagination or because sweet-scented woods had been seized for the hasty structure'."
+      },
+      {
+        "title": "The oldest witness drops some wonders",
+        "text": "The translators' own notice says the most startling wonders are missing from Eusebius's copy.",
+        "exact": "some of the most startling miraculous phenomena recorded in the text as it now stands, have no place in the narrative as given by that early historian of the Church",
+        "checked_in": "anf01-martyrdom.txt",
+        "cite": "ANF 1, original introductory notice to the Martyrdom (Roberts and Donaldson)",
+        "url": "https://www.ccel.org/ccel/schaff/anf01.iv.iv.html",
+        "verified": true,
+        "note": "Strictly, what Eusebius lacks is the dove and the bread; he keeps the voice, the sail, the fragrance and the pillow. Say so, so the page does not overstate the doubt."
+      }
+    ],
+    "later": [
+      {
+        "title": "The Life of Polycarp (later legend)",
+        "correction_2026_09_26": "Callisto is never called a widow: 'a certain lady, devout and fearing God' (Life 3). He emptied the store-rooms 'as he advanced in age' (Life 3-4), not as a boy. The dove was seen by 'one' of the brethren at the gathering of bishops (Life 21). Fixed on the page.",
+        "text": "A Life of Polycarp under the name of Pionius, written in the late 4th century (Lightfoot and McGiffert) or later, tells many wonders. The widow Callisto's empty storerooms filled again after the boy Polycarp gave everything to the poor. A dove in light hovered over his head when he was made bishop. He stopped a great fire in Smyrna with a prayer, and at the city's request prayed for rain in a drought, and it rained.",
+        "exact": "One saw hovering over Polycarp’s head a white dove encircled in light.",
+        "checked_in": "lightfoot-1889-part2-vol3.txt",
+        "cite": "Life of Polycarp ascribed to Pionius, chapters 5, 21, 28 to 32 (Lightfoot's translation, Apostolic Fathers Part II vol. 3, 1889, pp. 489-506)",
+        "url": "https://archive.org/details/apostolicfathep2v3clemuoft",
+        "verified": true,
+        "note": "Date of the Life: McGiffert note 1164 'belongs to the latter part of the fourth century'; Lightfoot 1889 vol. 1 p. 608 'In the closing decades of the same century [the fourth]'; Lightfoot 1891 intro calls it 'manifestly the work of a forger of the fifth century' (he dates it both ways in different places). Say 'written two centuries or more after his death'. Also exact from the Life (ch. 5): 'Accordingly they were all found filled'. (ch. 32): 'When he had offered this prayer, the heaven gave rain'. The Life repeats a slander that Jews came to fires to plunder (ch. 28): do not use it except, if at all, as part of the hard topic."
+      },
+      {
+        "title": "Irenaeus hears a trumpet in Rome (a later note)",
+        "text": "One manuscript (at Moscow) adds that Irenaeus, in Rome on the day and hour Polycarp died, heard a voice like a trumpet: 'Polycarp is martyred.' It is part of the later note on how the text was copied, and Lightfoot gives it to the same later writer.",
+        "exact": "on the very day and hour when Polycarp was martyred in Smyrna Irenaeus being in the city of the Romans heard a voice as of a trumpet saying, ' Polycarp is martyred.'",
+        "checked_in": "lightfoot-martyrdom.txt",
+        "cite": "Martyrdom of Polycarp, chapter 22, as read in the Moscow manuscript (Lightfoot 1891)",
+        "url": "https://archive.org/details/cu31924024254744",
+        "verified": true,
+        "note": "The scan OCR reads 'Irenzus'/'Smyma' (OCR errors); the ECW copy (identical wording) is used as checked_in. The spacing before 'Polycarp is martyred' is in the source. Irenaeus's own surviving works do not tell this story (the note claims 'the writings of Irenaeus' do)."
+      }
+    ]
+  },
+
+  "death": {
+    "steps": [
+      {"step": "Arrested on a Friday evening at a farm, after a slave boy was tortured into telling where he was.", "cite": "Martyrdom 6 and 7", "verified": true},
+      {"step": "Fed his captors and prayed two hours for everyone he had known and the whole Church.", "cite": "Martyrdom 7 and 8", "verified": true},
+      {"step": "Taken on a donkey into Smyrna on a Saturday, a 'great Sabbath'; pressed in Herod's carriage; thrown out and hurt.", "cite": "Martyrdom 8", "verified": true},
+      {"step": "Heard a voice from heaven as he entered the stadium.", "cite": "Martyrdom 9", "verified": true},
+      {"step": "Refused before the proconsul to swear by Caesar's fortune or revile Christ; said 'I am a Christian'.", "cite": "Martyrdom 9 to 11", "verified": true},
+      {"step": "The herald proclaimed it three times; the crowd asked for a lion, then for fire.", "cite": "Martyrdom 12", "verified": true},
+      {"step": "Undressed himself, refused the nails, was tied, and prayed.", "cite": "Martyrdom 13 and 14", "verified": true},
+      {"step": "The fire arched round him like a sail and did not consume him.", "cite": "Martyrdom 15", "verified": true},
+      {"step": "Stabbed by an executioner; the blood put out the fire.", "cite": "Martyrdom 16", "verified": true},
+      {"step": "His body was refused to the Christians and burned; they gathered his bones.", "cite": "Martyrdom 17 and 18", "verified": true}
+    ],
+    "words_to_the_proconsul": [
+      {"exact": "Eighty and six years have I served Him, and He never did me any injury: how then can I blaspheme my King and my Saviour?", "checked_in": "anf01-martyrdom.txt", "cite": "chapter 9 (ANF)"},
+      {"exact": "hear me declare with boldness, I am a Christian.", "checked_in": "anf01-martyrdom.txt", "cite": "chapter 10 (ANF)"},
+      {"exact": "for we are taught to give all due honour (which entails no injury upon ourselves) to the powers and authorities which are ordained of God.", "checked_in": "anf01-martyrdom.txt", "cite": "chapter 10 (ANF)", "note": "Footnote [447] removed after 'God.'"},
+      {"exact": "Call them then, for we are not accustomed to repent of what is good in order to adopt that which is evil", "checked_in": "anf01-martyrdom.txt", "cite": "chapter 11 (ANF)"},
+      {"exact": "Thou threatenest me with fire which burneth for an hour, and after a little is extinguished, but art ignorant of the fire of the coming judgment and of eternal punishment, reserved for the ungodly.", "checked_in": "anf01-martyrdom.txt", "cite": "chapter 11 (ANF)"}
+    ],
+    "prayer": {
+      "text": "His prayer at the stake, whole. He actually prayed it (it is his, not a prayer to him), so it may be printed.",
+      "exact": "O Lord God Almighty, the Father of thy beloved and blessed Son Jesus Christ, by whom we have received the knowledge of Thee, the God of angels and powers, and of every creature, and of the whole race of the righteous who live before thee, I give Thee thanks that Thou hast counted me worthy of this day and this hour, that I should have a part in the number of Thy martyrs, in the cup of thy Christ, to the resurrection of eternal life, both of soul and body, through the incorruption [imparted] by the Holy Ghost. Among whom may I be accepted this day before Thee as a fat and acceptable sacrifice, according as Thou, the ever-truthful God, hast foreordained, hast revealed beforehand to me, and now hast fulfilled. Wherefore also I praise Thee for all things, I bless Thee, I glorify Thee, along with the everlasting and heavenly Jesus Christ, Thy beloved Son, with whom, to Thee, and the Holy Ghost, be glory both now and to all coming ages. Amen.",
+      "display": "O Lord God Almighty, the Father of Thy beloved and blessed Son Jesus Christ, by Whom we have received the knowledge of Thee, the God of angels and powers, and of every creature, and of the whole race of the righteous who live before Thee, I give Thee thanks that Thou hast counted me worthy of this day and this hour, that I should have a part in the number of Thy martyrs, in the cup of Thy Christ, to the resurrection of eternal life, both of soul and body, through the incorruption [imparted] by the Holy Ghost. Among whom may I be accepted this day before Thee as a fat and acceptable sacrifice, according as Thou, the ever-truthful God, hast foreordained, hast revealed beforehand to me, and now hast fulfilled. Wherefore also I praise Thee for all things, I bless Thee, I glorify Thee, along with the everlasting and heavenly Jesus Christ, Thy beloved Son, with Whom, to Thee, and the Holy Ghost, be glory both now and to all coming ages. Amen.",
+      "checked_in": "anf01-martyrdom.txt",
+      "cite": "Martyrdom of Polycarp, chapter 14 (ANF 1, Roberts and Donaldson)",
+      "url": "https://www.ccel.org/ccel/schaff/anf01.iv.iv.html",
+      "verified": true,
+      "note": "Footnotes [456] after 'cup', [457] after 'fat', [458] after 'ever-truthful', [459] after 'Amen.\"' removed. 'Among whom' refers to the martyrs, so it stays lower case. Lightfoot's version (1891), if preferred for readability: 'O Lord God Almighty, the Father of Thy beloved and blessed Son Jesus Christ, through whom we have received the knowledge of Thee ... I bless Thee for that Thou hast granted me this day and hour, that I might receive a portion amongst the number of martyrs in the cup of [Thy] Christ ... May I be received among these in Thy presence this day, as a rich and acceptable sacrifice ...' Eusebius's text differs ('through the eternal high priest, Jesus Christ')."
+    },
+    "last_words": "The Martyrdom records no words after the prayer's 'Amen'. His last recorded words are the prayer's close.",
+    "body": {
+      "text": "Nicetes, Herod's father and Alce's brother, asked the governor not to give up the body, 'lest ... they begin to worship this one'. The letter answers that Christians worship Christ alone and love the martyrs as His disciples. The centurion burned the body. The Christians gathered the bones.",
+      "exact": "For Him indeed, as being the Son of God, we adore; but the martyrs, as disciples and followers of the Lord, we worthily love on account of their extraordinary affection towards their own King and Master",
+      "checked_in": "anf01-martyrdom.txt",
+      "cite": "Martyrdom of Polycarp, chapters 17 and 18 (ANF 1)",
+      "url": "https://www.ccel.org/ccel/schaff/anf01.iv.iv.html",
+      "verified": true,
+      "note": "Footnote [466] removed after 'extraordinary'. Also exact: 'lest,\" said he, \"forsaking Him that was crucified, they begin to worship this one.' McGiffert note 1161: this 'shows that the martyrs were highly venerated even at this early date ... But it does not show that the Christians already worshiped or venerated their relics as they did in later centuries.'"
+    },
+    "the_day": {
+      "text": "Kept each year from the start as his 'birthday' into heaven (Martyrdom 18). 23 February in the Greek Church and, since 1969, the Roman calendar; 26 January in the Roman calendar before that (the 1916 Martyrology). The calendar researcher owns the feast dates.",
+      "source": "Martyrdom 18; Lightfoot 1889 vol. 1 p. 471 ('it appears as February 23 in the Syriac Calendar dating from the middle or latter half of the fourth century; and it remains still the same in the present use of the Greek Church. In the Latin Calendar the day is January 26'); martyrology-1916-polycarp.txt (26 January entry).",
+      "verified": true
+    }
+  },
+
+  "traits": [
+    {
+      "trait": "Kind to the men who came to kill him",
+      "shown_by": "He had a meal set before the police who came to arrest him, as much as they wanted, and only asked for an hour to pray.",
+      "exact": "he ordered that something to eat and drink should be set before them, as much indeed as they cared for",
+      "checked_in": "anf01-martyrdom.txt",
+      "cite": "Martyrdom of Polycarp, chapter 7 (ANF 1)",
+      "verified": true
+    },
+    {
+      "trait": "A man of prayer for everyone",
+      "shown_by": "At the farm he prayed night and day 'for all men'; under arrest he named everyone who had ever come his way, small and great. Ignatius had told him 'Give thyself to prayer without ceasing'.",
+      "exact": "having made mention of all that had at any time come in contact with him, both small and great, illustrious and obscure",
+      "checked_in": "anf01-martyrdom.txt",
+      "cite": "Martyrdom 5 and 8 (ANF 1); Ignatius, Letter to Polycarp 1",
+      "verified": true
+    },
+    {
+      "trait": "Brave, but he did not go looking for death",
+      "shown_by": "He wanted to stay in the city, but let his people hide him, and moved again when searched for. His church contrasted him with Quintus, who volunteered and then gave way: 'he waited to be delivered up, even as the Lord had done'.",
+      "exact": "For he waited to be delivered up, even as the Lord had done, that we also might become his followers",
+      "checked_in": "anf01-martyrdom.txt",
+      "cite": "Martyrdom of Polycarp, chapters 1, 4, 5 and 6 (ANF 1)",
+      "verified": true,
+      "note": "McGiffert, note 1141: 'The conduct of Polycarp, who avoided death as long as he could without dishonor, was in great contrast to this'. Salmon: 'neither courting nor fearing martyrdom'."
+    },
+    {
+      "trait": "Held to what he had heard",
+      "shown_by": "He always taught what he had learned from the apostles, Irenaeus says. His own letter says the same: 'let us return to the word which has been handed down to us from the beginning'.",
+      "exact": "having always taught the things which he had learned from the apostles, and which the Church has handed down, and which alone are true",
+      "checked_in": "anf01.txt",
+      "cite": "Irenaeus, Against Heresies 3.3.4 (ANF 1); Polycarp, Letter to the Philippians 7",
+      "verified": true,
+      "note": "Letter ch. 7 exact: 'let us return to the word which has been handed down to us from the beginning' (footnote [380] after 'from' is inside the phrase: exact source reads 'handed down to us from [380] the beginning'; with footnote removed it matches)."
+    },
+    {
+      "trait": "Could disagree and keep the peace",
+      "shown_by": "He and Anicetus of Rome could not agree about Easter, and neither gave way; they shared the Eucharist and parted in peace.",
+      "exact": "And they parted from each other in peace, both those who observed, and those who did not, maintaining the peace of the whole church.",
+      "checked_in": "npnf201.txt",
+      "cite": "Irenaeus, letter to Victor, in Eusebius, Church History 5.24.17 (McGiffert)",
+      "verified": true
+    },
+    {
+      "trait": "Sharp with false teachers",
+      "correction_2026_09_26": "Irenaeus (Eusebius 5.20.7) says what Polycarp WOULD have done had he heard Florinus's teaching; only the exclamation is 'as was his custom'. It is not a habit of stopping his ears. Fixed on the page.",
+      "shown_by": "He called Marcion 'the first-born of Satan' to his face. Irenaeus says he would stop his ears and flee from the place where he heard such teaching.",
+      "exact": "I do know thee, the first-born of Satan.",
+      "checked_in": "anf01.txt",
+      "cite": "Irenaeus, Against Heresies 3.3.4 (ANF 1); letter to Florinus (Eusebius 5.20.7)",
+      "verified": true,
+      "note": "Critics' word on the same trait: McGiffert (note 1116) 'yet he does not seem to have had the taste or talent to refute their errors. He simply wished to avoid them as instruments of Satan.'"
+    },
+    {
+      "trait": "Gentle with the fallen",
+      "correction_2026_09_26": "The Letter says Valens 'was once a presbyter among you' and never names his sin; it warns against covetousness straight after. 'Greed' is Lightfoot's inference ('guilty of some act of greed, perhaps of fraud'). Page: 'had done wrong, most likely out of greed'.",
+      "shown_by": "A presbyter at Philippi, Valens, had fallen into greed. Polycarp grieved, prayed for his repentance, and told the church not to treat him and his wife as enemies but to call them back.",
+      "exact": "And be ye then moderate in regard to this matter, and \"do not count such as enemies,\" but call them back as suffering and straying members, that ye may save your whole body.",
+      "checked_in": "anf01-philippians.txt",
+      "cite": "Polycarp, Letter to the Philippians, chapter 11 (ANF 1)",
+      "verified": true,
+      "note": "Footnote [402] removed after 'enemies,\"'. Lightfoot 1891: 'hold not such as enemies, but restore them as frail and erring members, that ye may save the whole body of you.' Also ch. 6, exact: 'not quickly crediting [an evil report] against any one, not severe in judgment, as knowing that we are all under a debt of sin.'"
+    },
+    {
+      "trait": "Humble",
+      "shown_by": "He wrote only because the Philippians asked, and said neither he nor anyone like him could match Paul's wisdom.",
+      "exact": "These things, brethren, I write to you concerning righteousness, not because I take anything upon myself, but because ye have invited me to do so.",
+      "checked_in": "anf01-philippians.txt",
+      "cite": "Polycarp, Letter to the Philippians, chapter 3 (ANF 1)",
+      "verified": true
+    },
+    {
+      "trait": "Calm under pressure",
+      "shown_by": "Thrown from the carriage and hurt, he walked on 'as if suffering nothing'. Before the proconsul his face was 'full of grace'.",
+      "exact": "But without being disturbed, and as if suffering nothing, he went eagerly forward with all haste",
+      "checked_in": "anf01-martyrdom.txt",
+      "cite": "Martyrdom of Polycarp, chapters 8 and 12 (ANF 1)",
+      "verified": true,
+      "note": "Footnote [444] removed after 'disturbed,'."
+    },
+    {
+      "trait": "Honoured by his people",
+      "shown_by": "The faithful always competed to touch him; he had not taken off his own sandals in years.",
+      "exact": "every one of the faithful was always eager who should first touch his skin",
+      "checked_in": "anf01-martyrdom.txt",
+      "cite": "Martyrdom of Polycarp, chapter 13 (ANF 1)",
+      "verified": true
+    }
+  ],
+
+  "others_on_him": [
+    {
+      "who": "Ignatius of Antioch, who met him",
+      "exact": "Having obtained good proof that thy mind is fixed in God as upon an immoveable rock, I loudly glorify [His name] that I have been thought worthy [to behold] thy blameless face",
+      "checked_in": "anf01.txt",
+      "cite": "Ignatius, Letter to Polycarp, chapter 1 (ANF 1)",
+      "url": "https://www.newadvent.org/fathers/0110.htm",
+      "verified": true,
+      "note": "Also 'It is fitting, O Polycarp, most blessed in God' (ch. 7) and 'loving Polycarp even as I do you' (Ephesians 21)."
+    },
+    {
+      "who": "Irenaeus, who heard him as a boy",
+      "exact": "a man who was of much greater weight, and a more stedfast witness of truth, than Valentinus, and Marcion, and the rest of the heretics",
+      "checked_in": "anf01.txt",
+      "cite": "Irenaeus, Against Heresies, Book 3, chapter 3, part 4 (ANF 1)",
+      "url": "https://www.newadvent.org/fathers/0103303.htm",
+      "verified": true,
+      "note": "Also: 'that blessed and apostolical presbyter' (ANF fragment 2, letter to Florinus); 'gloriously and most nobly suffering martyrdom' (3.3.4)."
+    },
+    {
+      "who": "The church of Smyrna, his own flock",
+      "exact": "He was not merely an illustrious teacher, but also a pre-eminent martyr, whose martyrdom all desire to imitate, as having been altogether consistent with the Gospel of Christ.",
+      "checked_in": "anf01-martyrdom.txt",
+      "cite": "Martyrdom of Polycarp, chapter 19 (ANF 1)",
+      "url": "https://www.ccel.org/ccel/schaff/anf01.iv.iv.html",
+      "verified": true,
+      "note": "Also ch. 16: 'having in our own times been an apostolic and prophetic teacher, and bishop of the Catholic Church which is in Smyrna'."
+    },
+    {
+      "who": "His enemies in the crowd",
+      "exact": "This is the teacher of Asia, the father of the Christians, and the overthrower of our gods",
+      "checked_in": "anf01-martyrdom.txt",
+      "cite": "Martyrdom of Polycarp, chapter 12 (ANF 1)",
+      "verified": true
+    },
+    {
+      "who": "Polycrates, bishop of Ephesus, about 190",
+      "exact": "in Smyrna, who was a bishop and martyr",
+      "checked_in": "npnf201.txt",
+      "cite": "Polycrates, letter to Victor of Rome, in Eusebius, Church History 5.24.4 (McGiffert), listing the 'great lights' of Asia after John",
+      "url": "https://www.newadvent.org/fathers/250105.htm",
+      "verified": true,
+      "note": "Full: 'And Polycarp [1697] in Smyrna, who was a bishop and martyr'. Weak as a quotation; better as a fact: Polycrates named him among the 'great lights' of Asia, right after the apostle John."
+    },
+    {
+      "who": "Jerome, about 392",
+      "exact": "He wrote a very valuable Epistle to the Philippians which is read to the present day in the meetings in Asia.",
+      "checked_in": "npnf203.txt",
+      "cite": "Jerome, Lives of Illustrious Men, chapter 17 (NPNF 2.3, Richardson)",
+      "url": "https://www.newadvent.org/fathers/2708.htm",
+      "verified": true
+    },
+    {
+      "who": "Eusebius, about 300",
+      "exact": "Of such an end was the admirable and apostolic Polycarp deemed worthy",
+      "checked_in": "npnf201.txt",
+      "cite": "Eusebius, Church History, Book 4, chapter 15, part 46 (McGiffert)",
+      "url": "https://www.newadvent.org/fathers/250104.htm",
+      "verified": true
+    }
+  ],
+
+  "people": [
+    {"name": "John", "key": null, "text": "Polycarp spoke of his 'intercourse with John'; Tertullian and Jerome say John made him bishop.", "cite": "Irenaeus to Florinus (Eusebius 5.20.6); Tertullian, Prescription 32; Jerome, Lives 17", "verified": true, "note": "Link to /figure/john/ or similar if the site has one; not checked."},
+    {"name": "Ignatius of Antioch", "key": "ignatius-of-antioch", "text": "The prisoner-bishop he welcomed at Smyrna, who wrote him a letter of advice and whose letters Polycarp gathered and sent on.", "cite": "Ignatius, Letter to Polycarp; Polycarp, Philippians 9 and 13", "verified": true, "note": "Ignatius is in the planned wave; slug not yet on the site."},
+    {"name": "Irenaeus of Lyons", "key": "irenaeus-of-lyons", "text": "Heard him as a boy in Asia and remembered him all his life; our main witness to him after the Martyrdom.", "cite": "Against Heresies 3.3.4; letter to Florinus", "verified": true},
+    {"name": "Papias of Hierapolis", "key": null, "text": "Irenaeus calls him 'the hearer of John, and a companion of Polycarp'.", "exact": "Papias, the hearer of John, and a companion of Polycarp", "checked_in": "anf01.txt", "cite": "Irenaeus, Against Heresies, Book 5, chapter 33, part 4 (ANF 1)", "url": "https://www.newadvent.org/fathers/0103533.htm", "verified": true},
+    {"name": "Anicetus", "key": null, "text": "Bishop of Rome who disagreed with him about Easter and still gave him the Eucharist in his church.", "cite": "Irenaeus to Victor (Eusebius 5.24.16-17)", "verified": true},
+    {"name": "Marcion", "key": null, "text": "The teacher of 'another god' whom Polycarp greeted as 'the first-born of Satan'.", "cite": "Irenaeus, Against Heresies 3.3.4", "verified": true},
+    {"name": "Florinus", "key": null, "text": "A courtier who sought Polycarp's approval in Asia and later taught in Rome what Irenaeus said Polycarp would have fled from.", "cite": "Irenaeus to Florinus (Eusebius 5.20)", "verified": true},
+    {"name": "Germanicus", "key": null, "text": "A young martyr who dragged the beast toward himself; his courage set the crowd shouting for Polycarp.", "correction_2026_09_26": "He did not die just before Polycarp: after his death the search began, Polycarp withdrew to two farms and had his vision 'three days before he was taken' (Martyrdom 3, 5, 6). Page: 'days before Polycarp died'.", "cite": "Martyrdom 3; Eusebius 4.15.5 ('very young and vigorous')", "verified": true},
+    {"name": "Quintus the Phrygian", "key": null, "text": "Gave himself up and then, seeing the beasts, swore and sacrificed; the letter's warning against volunteering.", "cite": "Martyrdom 4", "verified": true},
+    {"name": "Herod the police captain", "key": null, "text": "The irenarch who arrested him; the writers noted he bore the name of the Herod of the Gospels.", "cite": "Martyrdom 6, 8, 21", "verified": true},
+    {"name": "Nicetes", "key": null, "text": "Herod's father, who pressed him in the carriage and later asked the governor to keep his body from the Christians; he was 'brother of Alce'.", "cite": "Martyrdom 8 and 17", "verified": true},
+    {"name": "Alce", "key": null, "text": "A Christian woman of Smyrna whom Ignatius greeted twice ('my well-beloved'); the Martyrdom calls the persecutor Nicetes her brother.", "exact": "I salute Alce, my well-beloved", "checked_in": "anf01.txt", "cite": "Ignatius, Smyrnaeans 13 and Letter to Polycarp 8 (ANF 1); Martyrdom 17", "verified": true, "note": "That the two Alces are one woman is McGiffert's view (note 1160: 'the identification of the two seems to me beyond all reasonable doubt') and Lightfoot's; Eusebius's manuscripts mostly read 'Dalce'. Say 'probably the same Alce'."},
+    {"name": "Statius Quadratus", "key": null, "text": "The proconsul who tried to talk him into swearing and then sentenced him.", "cite": "Martyrdom 21 (named); 9 to 12 (the proconsul)", "verified": true},
+    {"name": "Philip of Tralles", "key": null, "text": "The Asiarch presiding at the games, who refused the crowd a lion because the shows were over.", "cite": "Martyrdom 12 and 21", "verified": true},
+    {"name": "The Philippians, and Valens", "key": null, "correction_2026_09_26": "Valens was ONCE a presbyter; his sin is inferred (see traits).", "text": "The church he wrote his one surviving letter to; Valens was their presbyter who fell into greed, and Polycarp asked them to win him back.", "cite": "Letter to the Philippians 1, 11, 13", "verified": true},
+    {"name": "Crescens", "key": null, "text": "Carried his letter to Philippi; Polycarp also commends his sister.", "cite": "Letter to the Philippians 14", "verified": true},
+    {"name": "Evarestus", "key": null, "text": "Wrote down the church of Smyrna's letter about his death.", "cite": "Martyrdom 20", "verified": true},
+    {"name": "Pionius", "key": null, "text": "A Christian of Smyrna martyred in 250, arrested while keeping Polycarp's day; a later writer used his name for a legendary Life of Polycarp.", "cite": "Lightfoot 1889 vol. 1 pp. 470-471; McGiffert note 1164", "verified": true}
+  ],
+
+  "numbers": [
+    {"n": "86", "chip": "Years he had served Christ", "plus": ["His answer to the proconsul", "'how then can I blaspheme my King?'"], "cite": "Martyrdom of Polycarp, chapter 9", "verified": true},
+    {"n": "2", "chip": "Hours he prayed on the night of his arrest", "plus": ["He had asked his captors for one", "They fed on his food meanwhile"], "cite": "Martyrdom of Polycarp, chapter 7 ('for two full hours'; he asked 'an hour')", "verified": true},
+    {"n": "12th", "chip": "Martyr of Smyrna in those days", "plus": ["Eleven died before him", "He is the one remembered"], "cite": "Martyrdom of Polycarp, chapter 19 ('the twelfth that was martyred in Smyrna'); Eusebius 4.15.45 ('with the eleven from Philadelphia')", "verified": true, "note": "An ordinal, but a count in the source's own words, not an award ordinal. Owner's call."},
+    {"n": "3", "chip": "Days' warning in a dream", "plus": ["He saw his pillow on fire", "'I must be burnt alive'"], "cite": "Martyrdom of Polycarp, chapter 5", "verified": true},
+    {"n": "3", "chip": "Times the herald cried his crime", "plus": ["'Polycarp has confessed that he is a Christian'"], "cite": "Martyrdom of Polycarp, chapter 12 ('thrice')", "verified": true},
+    {"n": "1", "chip": "Letter of his that survives", "plus": ["To the Philippians", "He wrote to other churches too"], "cite": "McGiffert note 1671 ('We know of only one epistle by Polycarp'); Irenaeus to Florinus ('the letters which he sent, either to the neighboring churches ... or to some of the brethren')", "verified": true},
+    {"n": "3", "chip": "Copyists named between Irenaeus and us", "plus": ["Gaius, Socrates, Pionius"], "cite": "Martyrdom of Polycarp, chapter 22", "verified": true, "note": "Weaker tile; the Pionius copy is itself later. Prefer as a tidbit."},
+    {"n": "4", "chip": "Times his martyrdom letter says 'Catholic Church'", "plus": ["Among the earliest uses of the name"], "cite": "Martyrdom, greeting and chapters 8, 16, 19 (ANF); McGiffert note 1136 ('In the present epistle it occurs four times')", "verified": true, "note": "Lightfoot reads 'holy' in chapter 16, making it three in his text. Owner's call; may be better as a tidbit."}
+  ],
+
+  "tidbits": [
+    {
+      "text": "The account of his death is the oldest story of a Christian martyr written outside the New Testament.",
+      "source": "ANF 1, original introductory notice: 'It is the earliest of all the Martyria'; Lightfoot 1889 vol. 1 p. 608: Eusebius intimates it was 'the earliest written record of a martyrdom with which he was acquainted'; Judaism and Rome commentary: 'The account also provides the oldest written martyrdom story outside of the New Testament.'",
+      "verified": true,
+      "note": "Coxe (ANF note) adds 'certainly not the earliest if we accept that of Ignatius as genuine'; the Martyrdom of Ignatius is now generally held to be much later (Lightfoot). Keep 'oldest surviving'. Moss (2010) dates the expanded text later, see hard_topics."
+    },
+    {
+      "text": "It is the earliest record of Christians keeping a martyr's death-day every year, as his 'birthday'.",
+      "exact": "This is, so far as I am aware, the earliest notice of the annual celebration of the day of a martyr's death",
+      "checked_in": "npnf201.txt",
+      "source": "McGiffert, note 1162 on Eusebius 4.15.44",
+      "verified": true
+    },
+    {
+      "text": "Ignatius's letters probably survive because Polycarp gathered them and sent copies to Philippi.",
+      "source": "Polycarp, Philippians 13 ('The Epistles of Ignatius written by him to us, and all the rest [of his Epistles] which we have by us, we have sent to you, as you requested.'); Lightfoot 1889 vol. 1 p. 343: 'if the first collection of these epistles was made, as it professes to have been made, by an early bishop of Smyrna'.",
+      "verified": true,
+      "note": "Lightfoot's 'if' is rhetorical (he holds it); keep 'probably'."
+    },
+    {
+      "text": "The persecutor who asked for his body to be kept from the Christians was, it seems, the brother of a Christian woman Ignatius had greeted as 'my well-beloved'.",
+      "source": "Martyrdom 17 ('Nicetes, the father of Herod and brother of Alce'); Ignatius, Smyrnaeans 13 and Letter to Polycarp 8; McGiffert note 1160.",
+      "verified": true
+    },
+    {
+      "text": "When he wrote to Philippi, he remembered that Paul had praised them before the church of Smyrna even existed: 'we [of Smyrna] had not yet known Him.'",
+      "exact": "but we [of Smyrna] had not yet known Him",
+      "checked_in": "anf01-philippians.txt",
+      "source": "Polycarp, Letter to the Philippians, chapter 11 (ANF 1). Lightfoot 1891 intro: 'Incidentally he states that the Philippians were converted to the Gospel before the Smyrnæans'.",
+      "verified": true
+    },
+    {
+      "text": "Every Greek copy of his letter breaks off in the middle of chapter 9 and runs straight into the Letter of Barnabas. The rest survives only in an old Latin translation and in Eusebius's quotations.",
+      "source": "Lightfoot 1891, introduction to the Epistle: the nine Greek manuscripts 'all belong to the same family, as appears from the fact that the Epistle of Polycarp runs on continuously into the Epistle of Barnabas without any break'; Salmon (DCB): 'The concluding chapters of Polycarp are only known to us by a Latin translation'; ANF note 391 on chapter 10: 'This and the two following chapters are preserved only in a Latin version.'",
+      "verified": true
+    },
+    {
+      "text": "His short letter is full of the New Testament: Salmon counts clear uses of Ephesians and 1 and 2 Timothy, and of Romans, 1 Corinthians, Galatians, Philippians, 2 Thessalonians, Acts and above all 1 Peter.",
+      "source": "Salmon, DCB: 'Polycarp's Pauline quotations include distinct recognition of Eph. and I. and II. Tim., and other passages clearly shew a use of Rom., I. Cor, Gal., Phil., II. Thess. The employment of I. Peter is especially frequent. There is one unmistakable coincidence with Acts.'; McGiffert note 1128 on 1 Peter.",
+      "verified": true,
+      "note": "Do not say 'first to call Paul's letters Scripture' (chapter 12 quotes Ephesians 4:26 beside Psalm 4 as 'these Scriptures'): no checked source makes the 'first' claim."
+    },
+    {
+      "text": "The year he died was worked out in 1867 from the diary of a pagan orator, Aelius Aristides, who wrote down which proconsul governed Asia in each year of his long illness.",
+      "source": "McGiffert note 1132 (Waddington's 'Memoire sur la Chronologie de la vie du rheteur Ælius Aristide', 1867); Lightfoot 1889 vol. 1 pp. 653-669 (the chronology of Aristides' sickness, 'the proconsulate of Quadratus ... is the fixed date by which the other incidents in the malady are regulated'); Lightfoot p. 452: Quadratus was 'the sophist and friend of the rhetorician Aristides'.",
+      "verified": true,
+      "note": "'Diary' is fair: Lightfoot speaks of Aristides 'giving a diary of the two months Poseideon and Lenæon during the proconsulship of Quadratus'."
+    },
+    {
+      "text": "Before 1867 almost everyone dated his death about 166, under Marcus Aurelius, because Eusebius did. The Roman Martyrology still said so in 1916.",
+      "source": "McGiffert note 1132; 1916 Roman Martyrology, 26 January ('under Marcus Antoninus and Lucius Aurelius Commodus').",
+      "verified": true
+    },
+    {
+      "text": "His letter to Philippi was still read aloud in the churches of Asia in Jerome's day, more than two centuries later.",
+      "source": "Jerome, Lives of Illustrious Men 17: 'which is read to the present day in the meetings in Asia'.",
+      "verified": true,
+      "note": "Salmon hedges Jerome's Latin as 'rather obscure'."
+    },
+    {
+      "text": "Izmir's oldest church is named for him: St Polycarp's, built in 1625 and rebuilt after the great fire of 1680.",
+      "source": "Izmir's official tourism site (visitizmir.org/en/Content/354): 'The present-day church bearing his name was built in 1625 with the permission of Sultan Süleyman the Magnificent and was restored after the great fire of 1680.'",
+      "verified": false,
+      "note": "PARTLY VERIFIED. The date 1625 and the 1680 fire are on the official page. The sultan it names cannot be right (Süleyman died in 1566). 'Oldest church in Izmir' is on Wikipedia and tour sites, not on the official page. Use only 'a Catholic church in Izmir is named for him' unless a better source is found."
+    }
+  ],
+
+  "hard_topics": [
+    {
+      "topic": "'The Jews' in the Martyrdom",
+      "holders_words": {
+        "text": "The letter names Jews four times: in the crowd that shouted for his death (ch. 12), gathering wood for the pyre 'according to custom' (ch. 13), urging Nicetes to keep the body (ch. 17), and stirring the strife that led the centurion to burn it (ch. 18).",
+        "exact": "the multitudes immediately gathering together wood and fagots out of the shops and baths; the Jews especially, according to custom, eagerly assisting them in it",
+        "checked_in": "anf01-martyrdom.txt",
+        "cite": "Martyrdom of Polycarp, chapters 12, 13, 17, 18 (ANF 1)",
+        "verified": true,
+        "note": "Lightfoot (1889 vol. 1 p. 469-470) explains the hostility historically: the Jews of Smyrna had been called a 'synagogue of Satan' in Revelation 2:9 and 'when they got their opportunity, they would not be backward in their retaliation'. McGiffert note 1151 (1890): 'The Jews appear very frequently as leading spirits in the persecution of Christians.' Both are 19th-century readings and should be quoted as such if used."
+      },
+      "critics_words": {
+        "text": "Many modern scholars read these lines as drawn from the Gospel passion story rather than as a record of what Smyrna's Jews did.",
+        "exact": "as Lloyd Gaston has argued, it is highly unlikely that the Jews’ behaviour described in Polycarp’s martyrdom narrative bears any historical credence",
+        "checked_in": "judaism-and-rome-martyrdom-extracts.txt",
+        "cite": "Judaism and Rome project, commentary on the Martyrdom of Polycarp, citing Lloyd Gaston, 'Jewish Communities in Sardis and Smyrna' (2006), p. 22",
+        "url": "https://www.judaism-and-rome.org/martyrdom-polycarp-extracts",
+        "verified": true,
+        "note": "Same commentary: 'the Jews are simply added to the crowd alongside the Gentiles in order to create a further imitation of Christ's passion'. It says 'Jews are mentioned twice in the text, at 12.2 and 13.1', which undercounts (17.2 and 18.1 also name them): do not repeat that count. The site's rule (Chrysostom's Against the Jews) applies: state both plainly. The later Life adds an open slander (Jews at fires to plunder, ch. 28): mention only as legend if at all."
+      },
+      "verified": true
+    },
+    {
+      "topic": "When did he die?",
+      "text": "See quick_facts.died: 155 (Waddington, Lightfoot, most since) or 156; Eusebius and Jerome put it under Marcus Aurelius, about 166/167.",
+      "verified": true
+    },
+    {
+      "topic": "Is the Martyrdom what it says it is, and was it added to?",
+      "holders_words": {
+        "exact": "The whole narrative of the martyrdom bears so plainly the mark of an eye-witness, that to imagine, as Lipsius and Keim have done, some one capable of inventing it a century after the death of Polycarp, seems to require great critical credulity.",
+        "checked_in": "dcb-polycarpus.txt",
+        "cite": "George Salmon, 'Polycarpus (1)', Dictionary of Christian Biography (1911 abridged)",
+        "url": "https://en.wikisource.org/wiki/Dictionary_of_Christian_Biography_and_Literature_to_the_End_of_the_Sixth_Century/Polycarpus,_bishop_of_Smyrna",
+        "verified": true,
+        "note": "Lightfoot 1891: 'The letter seems to have been written shortly after the martyrdom itself'; 'For the genuineness of the main document there is abundant evidence'."
+      },
+      "critics_words": [
+        {
+          "exact": "That this Epistle has been interpolated can hardly be doubted, when we compare it with the unvarnished specimen, in Eusebius.",
+          "checked_in": "anf01-martyrdom.txt",
+          "cite": "A. Cleveland Coxe, introductory note, ANF 1 (1885)",
+          "verified": true
+        },
+        {
+          "exact": "Not a few, however, deem it interpolated in several passages, and some refer it to a much later date than the middle of the second century, to which it has been commonly ascribed.",
+          "checked_in": "anf01-martyrdom.txt",
+          "cite": "Roberts and Donaldson, original introductory notice, ANF 1",
+          "verified": true
+        },
+        {
+          "text": "Candida Moss (2010) argues the story is a literary whole but not an eyewitness account, and that the expanded version was written long after the events, perhaps only in the middle of the third century.",
+          "exact": "dass die erweiterte Version der Darstellung eine erhebliche Zeit nach den Ereignissen, vielleicht erst Mitte des 3. Jh. verfasst wurde",
+          "checked_in": "moss-2010-abstract-de.txt",
+          "cite": "Candida R. Moss, 'On the Dating of Polycarp: Rethinking the Place of the Martyrdom of Polycarp in the History of Christianity', Early Christianity 1:4 (2010) 539-574 (publisher's abstract)",
+          "url": "https://www.mohrsiebeck.com/en/article/on-the-dating-of-polycarp-rethinking-the-place-of-the-martyrdom-of-polycarp-in-the-history-of-christianity-101628186870310793597051/",
+          "verified": true,
+          "note": "Copyrighted; paraphrase, do not quote on the page. The abstract names her reasons: legal questions, biblical parallels, the phrase 'Catholic Church', Quintus's behaviour, the apology for the missing relics, the epilogues, and concern over martyrs' status."
+        }
+      ],
+      "verified": true,
+      "note": "The Life of Polycarp and the Moscow epilogue are certainly later; the dove probably is (Lightfoot). Name those, then the wider debate."
+    },
+    {
+      "topic": "'By apostles', or Irenaeus's reasoning?",
+      "text": "See quick_facts.bishop: Irenaeus says apostles appointed him; McGiffert calls it probably 'a combination of his own'.",
+      "verified": true
+    }
+  ],
+
+  "could_not_verify": [
+    "The Acts of Pionius (the martyr of 250) were not fetched; the fact that he was arrested while keeping Polycarp's 'birthday' rests on Lightfoot's report and Latin quotation (1889 vol. 1 pp. 470-471, 607).",
+    "Where his bones lie today. The Martyrdom says only 'a fitting place'; Lightfoot conjectures the cemetery outside the Ephesian gate. No claim about relics in any modern church was checked.",
+    "Pronunciation in Collins (403 to scripts); Merriam-Webster's 'ˈpä-li-ˌkärp' was read in a Wayback copy.",
+    "St Polycarp's Church, Izmir: 1625 is on the official tourism page, but the same sentence names Süleyman the Magnificent, who died in 1566. 'Oldest church in Izmir' is not on the official page.",
+    "Campenhausen's theory (1957) that the Martyrdom was reworked to strengthen its Gospel parallels: not read (copyright; no PD summary found). Moss's abstract covers the later-dating view instead.",
+    "Whether 'John' in Irenaeus is the apostle or another John (the 'elder John' of Papias, Eusebius 3.39): not researched; Irenaeus, Tertullian and Jerome all mean the apostle.",
+    "Revelation 2:8-11 (the letter to the angel of Smyrna) as addressed to Polycarp: only a conjecture (Ussher, reported by Coxe in ANF 1: 'there is nothing improbable in the conjecture of Usher'). Do not state it as fact.",
+    "Saints the 1916 Martyrology says Polycarp sent to Gaul (Benignus of Dijon, Andochius, Thyrsus, Felix, Andeol): these are late legends in the Martyrology (martyrology-1916-polycarp.txt); not checked against any early source. Gregory of Tours's claim that Polycarp sent Irenaeus to Lyons is already rejected on Irenaeus's page.",
+    "Whether Polycarp and Ignatius were fellow disciples of John: said only by the later Martyrdom of Ignatius (ANF 1, 'For they had both, in old times, been disciples of St. John the Apostle'), which Lightfoot treats as late. Do not state as fact.",
+    "Feast dates in each church: left to the calendar researcher (files already in the folder: usccb-022322.txt, martyrology-1916-polycarp.txt, cofe-calendar.txt, lsb-calendar.txt, elca-churchyear.txt, lff2022.txt). In passing: Common Worship '23 Polycarp, Bishop of Smyrna, Martyr, c.155'; LSB '23 Polycarp of Smyrna, Pastor and Martyr'; ELCA lists him on 23 February; USCCB 23 Feb 2022 'Memorial of Saint Polycarp, Bishop and Martyr'."
+  ],
+  "checker_2026_09_26": {
+    "who": "Fixer and last reader, after the adversarial checkers (life; words and fairness; a third report was not relayed to the fixer)",
+    "checked": "Every finding re-read against the saved sources: npnf201.txt (Eusebius 3.36, 4.14-15, 5.15, 5.20, 5.24 and McGiffert notes 1113, 1116, 1127, 1132, 1134, 1136, 1147, 1152, 1159, 1163, 1164), npnf203.txt (Jerome 17), anf01-martyrdom.txt (intro, chapters 6-8, 10, 12-13, 17, note 477), anf01-philippians.txt (intro, chapters 7, 11, 12, 14), anf01.txt (Ignatius to Polycarp 8), lightfoot-martyrdom.txt (chapters 6, 13), lightfoot-1891-apostolic-fathers.txt (intros to Philippians and to the Letter of the Smyrnaeans), archive-apostolicfathep2v1clemuoft.joined.txt (Lightfoot 1889: lines 25698-25708, 26630-26642, 26780-26795, 27728-27738, 35970-35985, 37690-37700), lightfoot-1889-life-of-polycarp.txt (chapters 3-5, 21), judaism-and-rome-mpol.txt, ehrman-forgery.txt, moss-2010-abstract-de.txt, coptic-synaxarium-amshir-29.txt, martyrology-1916-polycarp.txt, cathen-benignus-of-dijon.txt, mcnaughtan-biber-polycarpi.txt, wikipedia-mpol.txt.",
+    "fixed": [
+      "Trait 'blunt': Irenaeus's hypothetical (what Polycarp WOULD have done had he heard Florinus) no longer reads as a habit; only the exclamation is 'as was his custom'. Added his own Letter's 'he is the first-born of Satan' (Philippians 7).",
+      "Letter section title: 'The oldest account of a martyr' was false (Acts 7). Now 'The oldest martyr story outside the Bible' (Wikipedia on the Martyrdom: 'the earliest account of Christian martyrdom outside of the New Testament'; Lightfoot 1891: Eusebius treated it as 'the earliest written record of a martyrdom' he knew). The lede no longer calls Roberts and Donaldson its first English translators (Wake, 1693).",
+      "The Jews in the crowd: the Jews urged NICETES, who asked the governor (Martyrdom 17). The two closing sentences that defended the text in our voice are gone; the critics' point on 'according to custom' is now given in the commentary's words ('a direct role in his death') and Ehrman's ('the enemy, more than the governor'). 'Not late additions' became 'older than the later editor's notes'. 'Many scholars' became 'Some scholars'.",
+      "Dating: added Rome's 1969 'about 156' and Wieseler and Keim for 167 (McGiffert note 1132). The Aelius Aristides tidbit moved into this item, since the item already told Waddington's 1867 work (a tidbit must not repeat the page).",
+      "Was the letter added to: Moss's 'not an eyewitness account' and 'perhaps as late as the middle of the 200s'; Ehrman's own word 'forgery' with his quotation; McGiffert's defence 'too well established to admit of doubt' added before Salmon.",
+      "Myths: 86 now gives McGiffert's lean toward baptism and his reason, beside Lightfoot's 'the more natural interpretation'. Twelve companions: 'most copies of Eusebius, and Rufinus's old Latin' (note 1163). Callisto is 'a devout lady', not a widow. The misquote's 'he' for Christ is capitalised. Angel of Smyrna: 'no early writer', and the Coptic synaxarium states it as fact. Burned at the stake: the Coptic synaxarium's beheading added in its own words. Added: the Gaul missionaries legend (1916 Martyrology; Catholic Encyclopedia, 'possess no historical value').",
+      "Myths removed: 'John made him bishop' (a church tradition since Tertullian, not a misquote: now told in the John card with Tertullian, Jerome and Irenaeus) and 'patron saint of earache' (a devotional custom, not a misquote; the calendar researcher had advised leaving patronage off). Catholic Online left the sources with it.",
+      "Path: 'Host' became 'Friend: Of Ignatius, who asked him to care for Antioch' (Eusebius 3.36.10); 'Envoy' became 'Visitor: To Rome, to talk with Anicetus about Easter' (McGiffert note 1113; Jerome 17).",
+      "Moments: 'As a young man' became 'When John still lived'. Rome: 'presbyters that had preceded him', 'disagreed a little about certain other things', Jerome's reason for the visit, comma stacks split. Ignatius: Eusebius's 'commended to him ... the flock at Antioch'. The Letter: the chapter 13 dispute in both voices (ANF 'considerable force'; McGiffert 'quite arbitrary'). Proconsul 'urged him to deny Christ' (not 'tried to save him'). 'Appoint me a day, and thou shalt hear them' added. The Herod line moved out of 'Hidden, then betrayed' into the carriage moment (the letter section tells its meaning).",
+      "Miracles: lede 'saw and heard'; the voice heard by 'the Christians who were there' (not 'over the noise'); the pillow no longer repeats the lion; the Life: 'as a young man', 'one of the brethren saw a white dove', chapters 4, 5, 21 and 28-32; Moscow voice: the note says Irenaeus wrote it, no surviving work tells it, Lightfoot would not 'dismiss the story at once as a pure fiction'. Doubt box: Lightfoot's defence is of the letter's honesty, with 'may be explained as a strictly natural occurrence'.",
+      "A death like the Lord's: only the likenesses the letter itself draws (Judas, Herod's name) are 'pointed out'; Friday, the robber and the donkey are 'readers have noticed more'. Carrier: 'Marcus in some copies, Marcianus or Marcion in others'. Pontus: McGiffert's guess that Eusebius misread 'in every place'. 'How it reached us' now cites Lightfoot 1889 Part 2 volume 1.",
+      "Circle: Germanicus died 'days before' Polycarp; the Marcion card quotes Polycarp's actual words; Alce's two greetings with the Letter to Polycarp 8; added Florinus (Eusebius 5.15, 5.20) and Philip of Tralles (Martyrdom 12 and 21; Lightfoot 1889 'a monument at Olympia').",
+      "Death: the paragraph retelling the fire and the dagger is gone (the big line, the miracles and the myth already tell it). The later box adds the 250 anniversary on a Saturday (Lightfoot 1889) and Eusebius's 'serious chronological blunder' (McGiffert note 1164).",
+      "Also: who-answer rewritten (bishop until his death, no comma stacks, 59 words); hieromartyr 'a priest or bishop'; feast note marks Lightfoot's 'March' and ANF's 'May'; Valens 'once a presbyter ... most likely out of greed'; trait 'honoured' adds Lightfoot's 'even before his gray hairs came'; trait 'kind' no longer repeats the hour of prayer; prayer intro 'Near the end'; Tobit line un-garbled; reads 'hearing Polycarp as a boy'; Biber tidbit follows the source's three occasions; tidbits: 'Syriac scraps', 'in most copies', and a new one on Philippi knowing Christ before Smyrna (Philippians 11); a new words quote against those who deny Christ came in the flesh (Philippians 7).",
+      "verify-quotes.mjs: 150 quotations printed, 143 evidence entries, all word for word (exit 0). Italics tool dry run: 0 strings to change."
+    ],
+    "rejected": [
+      "Checker 2's alternative line for the Jews item ('The letter speaks of the Jews who dwelt at Smyrna, not of every Jew') not used: it would put our own defence back in; the item's quotation already names 'the Jews, who dwelt at Smyrna'.",
+      "Tidbit on the Letter calling Ephesians 'Sacred Scriptures' (checker 2, missing): the ANF note calls the passage 'very obscure' and nothing saved supports 'among the earliest'. Not added.",
+      "'Which John?' (checker 2, missing): no saved source ties the two-Johns question to Polycarp. Not added.",
+      "Husenbeth's emblem of a heated oven shaped like an ox (checker 1, missing): an odd aside; the owner bars them.",
+      "Polycrates of Ephesus naming Polycarp (checker 2, missing): verified (Eusebius 5.24.4) but left out to keep the Rome moment readable.",
+      "Crescens carrying the Letter (checker 1, missing): verified (Philippians 14), too small to earn a line."
+    ],
+    "open": [
+      "The third checker's report was not in the brief this fixer received (the second checker's 'missing' list was also cut off mid-item). Anything only it found is unhandled.",
+      "The page is still a draft in design/saints-hub/pages/; it is not in site/src/data/saints/ and the site tests (saints-test.mjs) have not run on it. Promote with design/saints-hub/tools/promote.mjs once the owner has seen it, then run npm run test and look at 390 and 1360.",
+      "Pictures untouched: the band fresco is 735 x 1182 and the Ravenna mosaic 640 x 740, both under 1200 on the long side. Check the sheet with measure-sheet.mjs after promotion (a new circle card and a new tidbit changed the heights).",
+      "The Martyrology quote in 'Is he a saint?' is still 'read by eye in a scan' (OCR text); the verifier notes it.",
+      "The hieromartyr definition rests on the calendar researcher's note and Orthodox usage; no dictionary page is saved."
+    ]
+  }
+}
