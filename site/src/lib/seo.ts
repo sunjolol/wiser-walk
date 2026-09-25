@@ -124,17 +124,10 @@ export const SEO: Record<string, { title: string; description: string }> = {
       'A free Christian personality test built on St Gregory the Great. 72 quick choices, about 12 minutes. Then a ten-page portrait of who you are and where you fit.'
   },
   /*
-   * Its two hubs (2026-09-23). People search for "the early Church Fathers" and for what they
-   * believed; nobody searches the quiz's word "kindred". "Church Fathers" is the phrase they
-   * type, and the title says "and others" because Macrina, Antony, Martin, Benedict and
-   * Boethius are not usually counted among the Fathers. The question hub leads with the
-   * question as people ask it, and says what each page holds: both sides.
+   * Its question hub (2026-09-23): it leads with the question as people ask it, and says what
+   * each page holds, both sides. Its people hub, /early-christian/, is gone: the Saints hub
+   * (/saints/) replaced it on 2026-09-25 and the old address redirects there (vercel.json).
    */
-  '/early-christian/': {
-    title: '22 early Christians: Church Fathers and others, in their words',
-    description:
-      'Meet Augustine, Chrysostom, Macrina, Jerome and 18 more, from the 2nd century to the 7th. Who each one was, and where they stood on 23 questions.'
-  },
   '/early-church-on/': {
     title: 'What did the early Christians believe? 23 questions, both sides',
     description:

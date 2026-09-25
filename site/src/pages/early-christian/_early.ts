@@ -1,6 +1,7 @@
 /**
- * What the early Christians' pages share: /early-christian/, /early-christian/<slug>/,
- * /early-church-on/ and /early-church-on/<topic>/.
+ * What the early Christians' pages share: /early-christian/<slug>/ (until each moves to /saints/),
+ * /early-church-on/ and /early-church-on/<topic>/. The list of everyone that was /early-christian/
+ * is the Saints hub now (/saints/, 2026-09-25); the old address redirects there.
  *
  * These are the search pages of "Which early Christian thinks like you?". Someone who types
  * "what did Augustine believe" or "what did the early Christians say about war" lands here
@@ -24,7 +25,7 @@ export const EC = full as unknown as KindredData;
 /** The 23 statements, in play order, which is the order the result code stores them in. */
 export const STATEMENTS: KindredStatement[] = EC.statements;
 
-/** Everyone, oldest first, as /early-christian/ lists them. */
+/** Everyone, oldest first, as the Saints hub lists them. */
 export const OLDEST_FIRST: string[] = EC.oldestFirst;
 
 export const personOf = (key: string): EarlyChristian => {

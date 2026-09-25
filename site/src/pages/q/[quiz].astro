@@ -29,6 +29,10 @@ import type { BipolarView } from '../../lib/engine/types';
 import { capitalise, groupNounPlural, outcomeNounPlural } from '../../lib/engine/types';
 // Server only: the early Christians' portraits and names, for the strip on that quiz's page.
 import earlyChristians from '../../data/which-early-christian.json';
+// Server only: everyone the Saints hub lists, so that quiz's "Meet all" counts what the hub shows.
+import { HUB } from '../../lib/saints/data';
+// Server only: that quiz's questions, each with a page of its own at /early-church-on/.
+import { STATEMENTS, capital, questionHref } from '../early-christian/_early';
 // Server only: the Compass's audited answer sheets, for the example wheel in its band.
 import audit from '../../data/compass-audit.json';
 import '../../styles/pages/reads.css';
@@ -202,7 +206,8 @@ const breadcrumbs = isDraft
 /*
  * The strip of faces on the kindred quiz's page: the ten the approved preview chose, in its
  * order (East and West, men and a woman, bishops, monks and scholars), each a way in to their
- * own page. "Meet all 22" goes to the page that lists everyone.
+ * own page. "Meet all" goes to the Saints hub and counts everyone it lists (HUB.length), so
+ * the number grows with the hub and is never typed by hand.
  */
 const EC = earlyChristians as unknown as KindredData;
 const STRIP = ['augustine', 'macrina', 'chrysostom', 'antony', 'jerome', 'basil', 'origen', 'martin', 'isaac', 'benedict'];
@@ -210,6 +215,20 @@ const strip = kindred
   ? STRIP.filter(k => EC.people[k]).map(k => {
       const p = EC.people[k]!;
       return { key: k, name: p.name, short: p.short, portrait: p.portrait, href: outcomeHref(quiz, { name: p.name, slug: p.slug }) };
+    })
+  : [];
+
+/*
+ * The six topics the "Where they stood" card sends straight to their own pages: the ones
+ * people most often ask about. Six fill two rows of three, or three rows of two, so a renamed
+ * id must fail the build rather than quietly leave a lone tile on the last row.
+ */
+const ASK = ['laugh', 'rich', 'tears', 'lie', 'miracles', 'war'];
+const askTopics = kindred
+  ? ASK.map(id => {
+      const s = STATEMENTS.find(x => x.id === id);
+      if (!s) throw new Error(`/q/${quiz.slug}/: no statement ${id} for "Where they stood"`);
+      return s;
     })
   : [];
 ---
@@ -400,15 +419,18 @@ const strip = kindred
       )}
 
       {kindred ? (
-        /*
+        <>
+        {/*
           Where another quiz previews its axes or categories: the people a result can name. Ten
-          faces, as the approved preview printed them, then everyone on the page that lists all
-          twenty-two. No caption under the strip: the owner found it loose, undesigned text
-          (2026-09-23). All the pictures are public domain; their credits stay one tap away.
-        */
+          faces, as the approved preview printed them, then everyone on the Saints hub. "Meet all"
+          counts what the hub lists, not the quiz's twenty-two, so the number never has to be
+          changed by hand as the hub grows (the owner asked for exactly that). No caption under
+          the strip: the owner found it loose, undesigned text (2026-09-23). All the pictures are
+          public domain; their credits stay one tap away.
+        */}
         <section class="kr-meet">
           <SectionHead title="Who you might meet"
-                       href="/early-christian/" more={`Meet all ${quiz.outcomes.length}`} />
+                       href="/saints/" more={`Meet all ${HUB.length}`} />
           <ul class="kr-strip">
             {strip.map(p => (
               <li>
@@ -427,6 +449,49 @@ const strip = kindred
             </ul>
           </details>
         </section>
+        {/*
+          THE QUIZ'S ANSWER SHEET, /early-church-on/. The Saints hub is the broad, deep look at
+          each person; this is the narrow one, question by question: who would agree, who would
+          not, and the line that shows why. So it is offered as what it is, and as something to
+          read after answering. A few topics go straight to their own pages (the ones people
+          most often ask about), and the pill is the whole list. Never a count of who agreed,
+          or anyone's side: the reader has not answered yet, and this page does not give the
+          result away.
+
+          The painting is Raphael's Disputation, in colour because the band above is the soft
+          engraving, and cut twice so that no face is sliced by an edge. On a phone and a tablet,
+          where it sits over the words, it is the whole debate around the altar: Gregory the
+          Great and Jerome on the left, Ambrose and Augustine on the right, four of the
+          twenty-two. Wide, where it stands beside the words in a squarer frame, it is the right
+          of the altar only: the man pointing up, Ambrose and Augustine, and a scribe writing it
+          down. Each file is cut with its edges in the gaps between heads.
+        */}
+        <section class="kr-ask">
+          <SectionHead title="Where they stood" />
+          <div class="kr-ask-card">
+            <a class="kr-ask-art" href="/early-church-on/" tabindex="-1" aria-hidden="true">
+              <picture>
+                <source media="(min-width: 62rem)" srcset="/img/raphael-disputa-right.jpg" width="970" height="792" />
+                <img src="/img/raphael-disputa.jpg" width="1544" height="772" alt="" loading="lazy" decoding="async" />
+              </picture>
+            </a>
+            <div class="kr-ask-body">
+              <p>
+                Every statement in this quiz has a page of its own. See who would agree, who
+                would not, and the line that shows why. They are best read after you answer.
+              </p>
+              <ul class="kr-ask-topics">
+                {askTopics.map(s => (
+                  <li><a href={questionHref(s)}>{capital(s.topic)} <Icon name="arrow" size={14} /></a></li>
+                ))}
+              </ul>
+              <a class="go-pill kr-ask-go" href="/early-church-on/">
+                See all {STATEMENTS.length} questions <Icon name="arrow" size={16} />
+              </a>
+            </div>
+          </div>
+        </section>
+        </>
       ) : (
       <SectionHead title="What you will see" />
       )}

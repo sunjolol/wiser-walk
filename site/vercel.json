@@ -8,6 +8,8 @@
   ],
   "redirects": [
     { "source": "/sitemap.xml", "destination": "/sitemap-index.xml", "permanent": true },
+    { "source": "/early-christian/", "destination": "/saints/", "permanent": true },
+    { "source": "/early-christian", "destination": "/saints/", "permanent": true },
     { "source": "/early-christian/martin-of-tours/", "destination": "/saints/martin-of-tours/", "permanent": true },
     { "source": "/early-christian/martin-of-tours", "destination": "/saints/martin-of-tours/", "permanent": true },
     { "source": "/early-christian/ambrose-of-milan/", "destination": "/saints/ambrose-of-milan/", "permanent": true },

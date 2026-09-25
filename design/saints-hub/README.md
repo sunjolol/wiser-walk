@@ -34,6 +34,26 @@ So:
 - Uniformity where it helps the reader (the same section names, the same look, the same order); never where it
   flattens a life.
 
+## HIS NOTES OF 2026-09-25 (on the live hub and on Clement's preview page): binding for every page
+
+Applied the same evening (the template on `main`, carried to `saints/the-21`):
+- **The hub:** no collection cards (the Group filter does their job in less room, and they pushed the list down a
+  phone), no line explaining the type chips, no "Or see what the early Church said" line. The Group filter's options
+  are `GROUPS` in `lib/saints/data.ts`. The reader's kindred spirit and sparring partner from "Which early Christian
+  thinks like you?" are tagged on their hub cards (EarlyMine, moved from the old list).
+- **`/early-christian/` is gone:** 308 to `/saints/` (vercel.json, guarded by saints-test.mjs). Its 21 person pages
+  stay until the branch merges; their breadcrumbs lead to `/saints/`.
+- **The pager is sticky at every width.** Above 68rem the framed sheet's `overflow: hidden` had made it inert; saints.css
+  sets `.sheet:has(.sp) { overflow: clip }`. The numbers and pictures beside the facts are NOT sticky (a sticky grid
+  item slid over the feast days).
+- **"His roles, in order" is balanced on every page**, not only Martin's: where lines wrap, a script in the template
+  shrinks the gaps first, then draws each column in to its wrapped words, so the space either side is equal.
+- **Friends, family and rivals: cards with a portrait come first**, the data's order otherwise.
+- **The status pill stays short: 50 characters at most** (saints-test.mjs). Clement's is "Church Father, not a saint in
+  most traditions"; "Is he a saint?" carries the detail.
+- **"Is he a saint?": a wrapped status ("Not on the calendar") sits at 1.3rem line height**, with nothing else moving.
+- **No odd or ominous asides in plain text** ("Beware 23 and 24 November..." came off Clement's feast note).
+
 ## What the owner asked for (his words, 2026-09-24)
 
 > "would it be best to add them to this page, which is tied to a quiz ... Or would it be better to make a new
@@ -126,8 +146,8 @@ Live now (the port checklist below, items 1 to 4 and 6 to 8):
 `node design/saints-hub/tools/verify-quotes.mjs <slug>` exits 0 on the machine holding the fetched texts), his pictures
 into `site/public/img/saints/` and `CREDITS.md`, his slug into `MOVED` in `site/src/lib/saints/moved.ts`, and two 301s
 into `site/vercel.json` (with and without the closing slash). `npm run test` (saints-test.mjs) refuses any one of these
-without the others. Then `node design/og/render.mjs site saint-<slug>` for his share card. When all 22 have moved,
-`/early-christian/` itself redirects to `/saints/`.
+without the others. Then `node design/og/render.mjs site saint-<slug>` for his share card. `/early-christian/`
+itself already redirects to `/saints/` (his note of 2026-09-25).
 
 **The 21 are being researched** to this standard: `design/saints-hub/research/people/<slug>-facts.json` (evidence),
 `design/saints-hub/pages/<slug>.json` (the draft page), `design/saints-hub/pages/img/` (pictures), fetched texts under

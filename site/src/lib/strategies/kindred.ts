@@ -161,7 +161,7 @@ export interface EarlyChristian {
 
 export interface KindredData {
   statements: KindredStatement[];
-  /** Everyone's key, oldest first, as /early-christian/ lists them. */
+  /** Everyone's key, oldest first, as the Saints hub lists them. */
   oldestFirst: string[];
   people: Record<string, EarlyChristian>;
 }

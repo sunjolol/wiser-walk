@@ -7,6 +7,13 @@
  * statement in "Which early Christian thinks like you?", in the quiz's order, each with its
  * topic, the statement as the quiz puts it and how many of the twenty-two are on record on each
  * side. The counts are counted off the data; nothing is summed into a score.
+ *
+ * Two ways on (the owner's notes on the live page). The list ends on a twenty-fourth card, the way
+ * to the people themselves on the Saints hub: twenty-three questions in two columns left the
+ * right cell of the last row empty, and he wanted that cell to catch the eye rather than sit
+ * blank (it replaced a plain line, "Who were they? Meet all 22 early Christians"). The page
+ * then ends on the quiz as the hub ends on it, the quiz plate, on a painting of its own: the
+ * hub's plate wears Dürer's Jerome, and this page's band already does.
  */
 import Base from '../../layouts/Base.astro';
 import Hero from '../../components/Hero.astro';
@@ -14,13 +21,27 @@ import SectionHead from '../../components/SectionHead.astro';
 import Icon from '../../components/Icon.astro';
 import { whichEarlyChristian } from '../../lib/quizzes/which-early-christian';
 import { quizHref } from '../../lib/engine/registry';
-import { outcomeNounPlural } from '../../lib/engine/types';
 import { artFor } from '../../lib/art';
+import { HUB, faceFor } from '../../lib/saints/data';
 import { OLDEST_FIRST, STATEMENTS, capital, questionHref, sidesOf, titleOf } from '../early-christian/_early';
 import '../../styles/pages/early-christian.css';
 
 const quiz = whichEarlyChristian;
 const art = artFor(quiz.slug);
+
+/*
+ * The faces on the Saints hub card, East and West: a desert monk, a soldier turned bishop, and
+ * three bishops who preached (Basil, Ambrose, Chrysostom). They are taken in the hub's own order,
+ * so they stay oldest first, and a name the hub no longer lists simply drops out. Never Jerome:
+ * the band above already wears him. Not Augustine either: his crop is from a fresco where the face
+ * is small, and at this size his circle reads as a white robe. Each is the personality test's
+ * round crop where it has one (faceFor), else the hub's own card picture held on the face.
+ */
+const FACE_SLUGS = new Set(['antony-the-great', 'martin-of-tours', 'basil-the-great', 'ambrose-of-milan', 'john-chrysostom']);
+const FACES = HUB.filter(p => FACE_SLUGS.has(p.slug)).map(p => {
+  const src = faceFor(p.slug);
+  return { src, focus: src === p.img ? p.focus : '50% 50%' };
+});
 
 /** "4 would agree, 7 would disagree", or one side alone where nobody took the other. */
 const split = (id: string) => {
@@ -78,8 +99,8 @@ const breadcrumbs = [
   </Hero>
 
   <div class="ref ref--early">
-    <SectionHead title="The questions" kicker="In the order the quiz asks them" />
-    <ul class="ec-rows">
+    <SectionHead title="The questions" />
+    <ul class="ec-rows ec-rows--meet">
       {STATEMENTS.map(s => (
         <li>
           <a class="ec-row" href={questionHref(s)}>
@@ -92,28 +113,33 @@ const breadcrumbs = [
           </a>
         </li>
       ))}
+      <li>
+        <a class="ec-meet dark" href="/saints/">
+          <span class="ec-meet-body">
+            <span class="ec-meet-faces" aria-hidden="true">
+              {FACES.map(f => <img src={f.src} alt="" loading="lazy" style={`object-position:${f.focus}`} />)}
+            </span>
+            <span class="ec-meet-title">Meet the people behind the answers</span>
+            {/* No number: the band counts the 22 behind these answers, and the hub holds more than
+                them, so a count here would only argue with the band. */}
+            <span class="ec-meet-text">Their lives and their own words, one page each.</span>
+          </span>
+          <Icon name="arrow" size={14} />
+        </a>
+      </li>
     </ul>
 
-    <p class="ec-way">
-      <Icon name="arrow" size={14} />
-      <span>
-        Who were they? <a href="/early-christian/">Meet all {OLDEST_FIRST.length} {outcomeNounPlural(quiz)}</a>, oldest first.
+    {/* Not the hub's "where do you stand?": the band's button already asks it, and a thing is
+        said once. */}
+    <SectionHead title="your turn" />
+    <a class="squiz squiz--fathers" href={quizHref(quiz)}>
+      <img src="/img/jordaens-fathers.jpg" alt="" loading="lazy" />
+      <span class="squiz-b">
+        <span class="squiz-k">Quiz</span>
+        <span class="squiz-t">{quiz.title}</span>
+        <span class="squiz-s">{quiz.tagline}</span>
+        <span class="go-pill">Start <Icon name="arrow" size={16} /></span>
       </span>
-    </p>
-
-    <div class="qcard-wrap">
-      <a class={`qcard qcard--plain qcard--${quiz.slug}`} href={quizHref(quiz)}>
-        <div class="qcard-body">
-          <p class="qcard-kicker">Your turn</p>
-          <h2 class="qcard-title">{quiz.title}</h2>
-          <p class="qcard-say">{quiz.tagline}</p>
-          <ul class="qcard-facts">
-            <li><Icon name="clock" size={13} /> {quiz.minutes} min</li>
-            <li>{quiz.outcomes.length} {outcomeNounPlural(quiz)}</li>
-          </ul>
-          <span class="qcard-go go-pill">Start <Icon name="arrow" size={16} /></span>
-        </div>
-      </a>
-    </div>
+    </a>
   </div>
 </Base>

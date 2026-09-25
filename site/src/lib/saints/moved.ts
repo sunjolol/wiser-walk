@@ -10,8 +10,8 @@
  *
  * scripts/saints-test.mjs checks that this list, the data files and the redirects agree.
  *
- * Browser-safe: a plain list, no data. When all 22 have moved, /early-christian/ itself
- * redirects to /saints/ (design/saints-hub/README.md).
+ * Browser-safe: a plain list, no data. /early-christian/ itself already redirects to /saints/:
+ * the owner had the old list removed on 2026-09-25, the hub being the better page for it.
  */
 export const MOVED: readonly string[] = ['martin-of-tours', 'ambrose-of-milan', 'antony-the-great', 'augustine-of-hippo', 'basil-the-great', 'benedict-of-nursia', 'boethius', 'clement-of-alexandria', 'cyprian-of-carthage', 'gregory-of-nazianzus', 'gregory-of-nyssa', 'gregory-the-great', 'irenaeus-of-lyons', 'isaac-the-syrian', 'jerome', 'john-cassian', 'john-chrysostom', 'justin-martyr', 'lactantius', 'macrina-the-younger', 'origen', 'tertullian'];
 

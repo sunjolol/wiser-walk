@@ -4,7 +4,8 @@
  * Two places wear it. The result page (KindredResult.astro): the kindred spirit in the band, then
  * their story and their lines on one panel, the sparring partner in a dark room of the kit's own,
  * and everyone as a row of portrait chips. And the quiz's start page (q/[quiz].astro): the strip
- * of faces under the band, and "Meet all 22".
+ * of faces under the band, with "Meet all" (the Saints hub's count, linking to /saints/), then
+ * the "Where they stood" card, the way to the quiz's answer sheet at /early-church-on/.
  *
  * The content and its order are the owner's approved preview's (design/quiz-ideas/fathers/
  * preview/app.js); the look is the site's kit (band, panel, dark room, the small uppercase label,
@@ -199,8 +200,9 @@
 /* ------------------------------------------------------- the quiz's start page */
 /*
  * Under the band, before anything else: faces from the early Church, each a way in to their
- * page, then the line that says who they are and "Meet all 22". The preview printed ten small
- * faces; here they are a rail that a phone can swipe and a wide screen shows whole.
+ * page, under a title whose "Meet all" counts the Saints hub (HUB.length) and goes to /saints/.
+ * The preview printed ten small faces; here they are a rail that a phone can swipe and a wide
+ * screen shows whole.
  */
 /* "And which would argue with you?", directly under the title, as the preview set it */
 .band .lede .kr-sub {
@@ -241,3 +243,75 @@
   .kr-strip a { width: auto; }
 }
 @media (prefers-reduced-motion: reduce) { .kr-strip img { transition: none; } }
+
+/* ------------------------------------ the quiz's start page: where they stood */
+/*
+ * THE WAY TO THE ANSWER SHEET (/early-church-on/), under the strip of faces: every question on
+ * a page of its own. One card built as the kit's feature and game cards are, a painting and the
+ * words: on a phone and a tablet the painting on top, wide it takes the left and the words the
+ * right. Under the words, six of the questions' topics as tiles to their own pages, in the
+ * display face the questions' own list sets them in, then the pill to the whole list. The tiles
+ * are a shade off the card, as a line's card is on a result's panel, so they read as things to
+ * tap and not as a row of tags. Every rule is .kr-ask-*, for the reason at the top of this file.
+ */
+.kr-ask { margin: 0 0 .5rem; }
+.kr-ask-card {
+  display: grid; grid-template-columns: minmax(0, 1fr); overflow: hidden; overflow: clip;
+  border-radius: var(--r-lg); background: var(--panel); box-shadow: var(--lift);
+}
+/*
+ * The painting is a crowd, with a face wherever a frame could end, so each file is cut with its
+ * edges in the gaps between heads and shown at or near its own shape: a frame that trims it
+ * trims from the steps below, never from the sides. On a phone, the whole debate at its own 2:1.
+ */
+.kr-ask-art { position: relative; display: block; aspect-ratio: 2 / 1; background: var(--shell); }
+.kr-ask-art img {
+  position: absolute; inset: 0; width: 100%; height: 100%; max-width: none;
+  object-fit: cover; object-position: 50% 10%;
+}
+.kr-ask-body { padding: 1.25rem 1.15rem 1.4rem; }
+.kr-ask-body > p { margin: 0; font-size: 1rem; line-height: 1.55; color: var(--ink-soft); text-wrap: pretty; }
+
+.kr-ask-topics {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem;
+  margin: 1.1rem 0 0; padding: 0; list-style: none;
+}
+.kr-ask-topics a {
+  display: flex; align-items: center; justify-content: space-between; gap: .5rem; min-height: 46px;
+  padding: .45rem .75rem .45rem .95rem; border-radius: 12px;
+  background: var(--kr-leaf); box-shadow: var(--lift); color: var(--ink); text-decoration: none;
+  font-family: var(--display); font-size: 1.04rem; line-height: 1.2;
+  transition: box-shadow .18s ease, color .18s ease;
+}
+.kr-ask-topics .icon { flex: none; color: var(--accent); transition: transform .18s ease; }
+.kr-ask-topics a:hover { color: var(--accent); box-shadow: inset 0 0 0 1.5px var(--accent), var(--lift); }
+.kr-ask-topics a:hover .icon { transform: translateX(3px); }
+.kr-ask-topics a:focus-visible, .kr-ask-go:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.kr-ask-go { margin-top: 1.15rem; color: var(--accent); }
+
+/*
+ * A tablet still stacks the two, and at 2:1 the painting would stand taller than the words: 5:2,
+ * the same width of painting with some of the steps under the figures left off.
+ */
+@media (min-width: 46rem) {
+  .kr-ask-art { aspect-ratio: 5 / 2; }
+  .kr-ask-topics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+/*
+ * Wide, side by side, from the width the strip of faces above also spreads out. The frame beside
+ * the words is nearly square, which would cut the whole debate to the gold altar alone, so it
+ * shows its own file (the <picture> in q/[quiz].astro): the right of the altar, cut at about 6:5.
+ * That shape is the frame's least height, and the frame stretches with the words if they run
+ * taller; below this width the half beside the words is too narrow and tall for any cut of this
+ * crowd.
+ */
+@media (min-width: 62rem) {
+  .kr-ask-card { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+  .kr-ask-art { aspect-ratio: 970 / 792; align-self: stretch; }
+  .kr-ask-art img { object-position: 50% 40%; }
+  .kr-ask-body { align-self: center; padding: 1.9rem 2.1rem 2rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .kr-ask-topics a, .kr-ask-topics .icon { transition: none; }
+  .kr-ask-topics a:hover .icon { transform: none; }
+}

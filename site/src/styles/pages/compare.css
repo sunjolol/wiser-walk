@@ -360,3 +360,41 @@ a.cmpx-who:hover { text-decoration: underline; }
 :root[data-theme="dark"] .cmpx-side { box-shadow: inset 0 0 0 1px var(--rule); }
 :root[data-theme="dark"] .cmpx-glyph--ring { background: var(--panel); }
 :root[data-theme="dark"] .cmpx-sunday { box-shadow: inset 3px 0 0 var(--accent), inset 0 0 0 1px var(--rule); }
+
+/* ------------------------------------------------------------------ the hub's band */
+
+/*
+ * The hub's band carries a painting (El Greco's Peter and Paul), and from 46rem a painting band
+ * gives the words only half the width. Just past that, on a portrait tablet (768), the three
+ * tiles ("Comparisons", "Traditions", "Axes drawn") needed a few pixels more than the half, and
+ * the third fell to a line of its own. Between 46rem and 50rem the tiles take the phone's side
+ * padding instead, so the three stay on one row; from 50rem they fit as drawn.
+ */
+@media (min-width: 46rem) and (max-width: 49.99rem) {
+  .band--painting .tile { padding-left: .8rem; padding-right: .8rem; }
+}
+
+/*
+ * Two more fits for this painting. Only the hub's band is a painting band among the pages that
+ * load this file (a pair page's band is night), so neither reaches any other picture.
+ *
+ * Above the words (below 46rem) the kit gives a painting a fixed 12.5rem strip. This one is
+ * tall, so as the phone widens the strip holds less of it, and from about 540px the fade at its
+ * foot began at Peter's mouth: his beard went into the dark and his face read as cut in half.
+ * The strip grows with the width instead, keeping the framing a 390 phone gets (both heads and
+ * both beards whole), and stops at 19rem. A phone up to about 400px keeps the kit's strip.
+ *
+ * Beside the words (from 46rem) the kit fades a painting in over its first 36%. Peter stands
+ * near this painting's left edge, so that fade dimmed him to about two thirds and left Paul
+ * fully lit: one apostle in the light and one in shadow, on a page that must favour no side.
+ * The fade here is 17%, which still softens the join with the words and leaves Peter whole.
+ */
+@media (max-width: 45.99rem) {
+  .band--painting > .band-img { height: clamp(12.5rem, 51vw, 19rem); }
+}
+@media (min-width: 46rem) {
+  .band--painting > .band-img {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 17%);
+    mask-image: linear-gradient(90deg, transparent, #000 17%);
+  }
+}

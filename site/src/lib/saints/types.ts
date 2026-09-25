@@ -92,7 +92,10 @@ export interface SaintPage {
   she?: boolean;
   /**
    * An honest status line where churches do not count him a saint: "Church Father. Not counted a
-   * saint." Printed on his card and under his name. Never "St" for such a person anywhere.
+   * saint." Printed under his name as a pill, so it stays short: 50 characters at most (Clement's
+   * first ran to 88 and the owner found it "WAY too long for a pill"; it is now "Church Father,
+   * not a saint in most traditions"). The page's "Is he a saint?" holds the detail. The hub's
+   * card prints it without "Church Father". Never "St" for such a person anywhere.
    */
   status?: string;
 

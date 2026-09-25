@@ -263,3 +263,77 @@
   .ecp-pair > .icon, .ec-row > .icon, .eci-pic img { transition: none; }
   .ecp-pair:hover > .icon, .ec-row:hover > .icon, .eci-card:hover .eci-pic img { transform: none; }
 }
+
+/* ================================================ /early-church-on/: its two ways on ==== */
+/*
+ * THE PEOPLE CARD: the twenty-fourth cell of the list of questions (the owner's note: the last
+ * row's right cell sat empty on a wide screen, and he wanted it to catch the eye). It keeps its
+ * siblings' footprint (the same cell, corner, padding and arrow) and is richer inside: the kit's
+ * starry dark panel with a warm glow, a row of real faces overlapping like coins, and a title in
+ * the display face. On a phone it is simply the last card.
+ */
+.ec-rows .ec-meet {
+  display: flex; align-items: flex-start; gap: .85rem; height: 100%; padding: .95rem 1rem 1rem;
+  border-radius: var(--r); text-decoration: none; color: var(--on-dark);
+  background-image: radial-gradient(90% 120% at 100% 0%, rgba(244, 185, 145, .2), transparent 62%), var(--dark-fill-img);
+  background-size: auto, 520px;
+}
+.ec-meet-body { flex: 1; min-width: 0; }
+.ec-meet-faces { display: flex; margin: 0 0 .7rem; }
+.ec-meet-faces img {
+  display: block; width: 2.75rem; height: 2.75rem; border-radius: 50%; object-fit: cover;
+  background: var(--shell);
+  /* a ring of the panel's own ground, so each face reads as laid over the one before it */
+  box-shadow: 0 0 0 2px var(--dark-fill);
+}
+.ec-meet-faces img + img { margin-left: -.7rem; }
+/* its siblings' title size where the cell is narrow, so the card stays near their height; a step
+   larger once the cell has room for it */
+.ec-meet-title {
+  display: block; font-family: var(--display); font-size: 1.16rem; line-height: 1.25; color: #fff; text-wrap: balance;
+}
+@media (min-width: 64rem) { .ec-meet-title { font-size: 1.28rem; line-height: 1.2; } }
+.ec-meet-text { display: block; margin-top: .3rem; font-size: .92rem; line-height: 1.5; color: var(--on-dark-soft); text-wrap: pretty; }
+/* the arrow sits level with the middle of the faces, as its siblings' arrows sit level with their titles */
+.ec-meet > .icon { flex: none; margin-top: calc((2.75rem - 14px) / 2); color: var(--accent); transition: transform .18s ease; }
+.ec-meet:hover .ec-meet-title { color: var(--accent); }
+.ec-meet:hover > .icon { transform: translateX(3px); }
+/* The focus ring is its siblings' blue. .dark re-points --accent to a pale blue on the card itself,
+   which is right for the arrow on the panel but all but vanishes as a ring on the light page. So
+   the ring's colour is taken on the list, above the panel, where --accent is still the page's. */
+.ec-rows--meet { --ec-ring: var(--accent); }
+.ec-meet:focus-visible { outline: 2px solid var(--ec-ring); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  .ec-meet > .icon { transition: none; }
+  .ec-meet:hover > .icon { transform: none; }
+}
+/* Two columns: the list's rows sit top-aligned, and this card runs taller than the one-line
+   question beside it, so the last row alone is drawn to one height (the two cells stretch; the
+   question's own card fills its cell). Every other row keeps its natural height. */
+@media (min-width: 46rem) {
+  .ec-rows--meet > li:nth-last-child(-n+2) { align-self: stretch; }
+  .ec-rows--meet > li:nth-last-child(2) > .ec-row { height: 100%; }
+  /* The card fills a hole only while the quiz asks an odd number of questions. Should the count
+     turn even, it would stand alone at half width in a row of its own: it takes the whole row. */
+  .ec-rows--meet > li:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+/* On a tablet the cells are narrow enough that the title takes two lines and the sentence two
+   more, and the question beside the card is left with half its height blank. There the faces and
+   the title say where the card goes; the sentence returns on a phone and on a wide screen. */
+@media (min-width: 46rem) and (max-width: 63.99rem) { .ec-meet-text { display: none; } }
+
+/*
+ * THE QUIZ PLATE on Jordaens's Four Latin Church Fathers (kit.css .squiz), in colour, so without
+ * the sepia of --engr. The plate darkens toward its words on the left, and at the painting's own
+ * width Gregory and Ambrose sat in that shade while a cherub with Ambrose's beehive took the only
+ * clear light. So the picture is drawn a quarter wider than the plate and cut at the right edge:
+ * the two faces move into the light, and the band is held at their heads.
+ */
+.squiz--fathers > img { width: 125%; object-position: 50% 18%; }
+/* On a phone the plate is tall and narrow, and that crop set Gregory's face behind the title and
+   the tagline across both faces. Drawn nearly twice as wide, the words sit over the dark sky and
+   the cherubs, and both heads fall in the clear space beside Start. The plate grows wider than it
+   grows tall, so each step takes a little less: at 190% a plate past 30rem pushes the heads off its
+   foot, and from 37.5rem the quarter-wider crop above already clears the words. */
+@media (max-width: 30rem) { .squiz--fathers > img { width: 190%; left: -38%; object-position: 0 0; } }
+@media (min-width: 30.01rem) and (max-width: 37.49rem) { .squiz--fathers > img { width: 160%; left: -22%; object-position: 0 0; } }

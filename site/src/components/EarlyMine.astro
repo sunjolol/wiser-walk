@@ -11,8 +11,9 @@
  *             answer under the statement. One line above says so.
  *   question  a question page. "You said: Agree" under the statement, and a "You" tag on the
  *             side your answer is on. Not sure tags neither side.
- *   people    /early-christian/. Your kindred spirit and your sparring partner are tagged in
- *             the grid, worked out by the quiz's own scorer, so the tags always name the two
+ *   people    the Saints hub, /saints/ (until 2026-09-25 the old /early-christian/ list, which
+ *             the hub replaced). Your kindred spirit and your sparring partner are tagged on
+ *             their cards, worked out by the quiz's own scorer, so the tags always name the two
  *             people your result names.
  *
  * Someone browsing without a result sees every page exactly as it is: everything here is
@@ -58,7 +59,11 @@ const { quiz, kind, hers = 'theirs', index = 0 } = Astro.props;
     <span class="you-chip" aria-hidden="true">You</span>
     <span class="mine-say">
       {kind === 'person' && `Your answers are next to ${hers}. `}
-      {kind === 'people' && 'Your kindred spirit and sparring partner are marked. Tap anyone to see where they stood next to your answers. '}
+      {kind === 'people' && (
+        /* "Tap" only on a touch screen, "Click" with a mouse (quiz-page rule 8); the page styles
+           the two spans (saints.css) */
+        <>Your kindred spirit and sparring partner are marked. <span class="on-touch">Tap</span><span class="on-mouse">Click</span> either one to see where they stood next to your answers.{' '}</>
+      )}
       From your result on <span data-ecm-day></span>.{' '}
       <a class="mine-go" data-ecm-href href={quizHref(quiz)}>See your result</a>
     </span>
@@ -152,7 +157,7 @@ const { quiz, kind, hers = 'theirs', index = 0 } = Astro.props;
   }
 
   /**
-   * /early-christian/: the two people the reader's result names, tagged in the grid. The
+   * The Saints hub: the two people the reader's result names, tagged on their cards. The
    * quiz's own scorer decides, on the same answers, so the tags cannot disagree with the
    * result. A result with too few answers to name anyone tags nobody and shows no line.
    */

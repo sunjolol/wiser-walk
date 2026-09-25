@@ -110,9 +110,21 @@ export interface HubPerson {
   alias: string;
   /** A full /saints/ page, as opposed to an older page elsewhere. */
   full: boolean;
+  /** Their key in "Which early Christian thinks like you?", for the 22 it can name: the hub tags
+      the reader's kindred spirit and sparring partner by it (EarlyMine). */
+  ec?: string;
 }
 
 const words = (s: string) => s.split(' ').filter(Boolean);
+/**
+ * The card's status line: the page's own, without its "Church Father" (the card has no room for
+ * both, and the page says it). "Church Father. Not counted a saint." is "Not counted a saint.";
+ * Clement's "Church Father, not a saint in most traditions" is "Not a saint in most traditions."
+ */
+const cardStatus = (status: string) => {
+  const s = status.replace(/^Church Father[.,]\s*/i, '').replace(/\.?$/, '.');
+  return s.charAt(0).toUpperCase() + s.slice(1);
+};
 
 /** Everyone on the hub, oldest first, then the Bible people. */
 export const HUB: HubPerson[] = [
@@ -124,9 +136,9 @@ export const HUB: HubPerson[] = [
     if (full) {
       return {
         slug: full.slug, name: full.name, dates: full.band.dates, line: full.card.line,
-        status: full.status ? 'Not counted a saint.' : undefined, href: `/saints/${full.slug}/`,
+        status: full.status ? cardStatus(full.status) : undefined, href: `/saints/${full.slug}/`,
         img: full.card.img, focus: full.card.focus ?? m.focus, groups: full.filters.groups, lived: full.filters.lived,
-        side: full.filters.side, type: full.type, young: full.typeYoung, alias: full.filters.alias ?? m.alias ?? '', full: true
+        side: full.filters.side, type: full.type, young: full.typeYoung, alias: full.filters.alias ?? m.alias ?? '', full: true, ec: key
       };
     }
     // Ambrose's quiz portrait is a mosaic that crops badly into a card; the mock-up used the
@@ -136,7 +148,7 @@ export const HUB: HubPerson[] = [
       slug: w.slug, name: w.name, dates: w.dates, line: w.who,
       status: w.status ? 'Not counted a saint.' : undefined, href: `/early-christian/${w.slug}/`,
       img: ambrose ? '/img/personality/faces/ambrose-of-milan.jpg' : w.portrait.src, focus: ambrose ? '50% 40%' : m.focus, groups: words(m.groups), lived: m.lived, side: words(m.side),
-      type, young, alias: m.alias ?? '', full: false
+      type, young, alias: m.alias ?? '', full: false, ec: key
     };
   }),
   ...BIBLE.map((b): HubPerson => ({
@@ -157,23 +169,24 @@ export const faceFor = (slug: string): string => {
   return HUB.find(p => p.slug === slug)?.img ?? `/img/personality/faces/${slug}.jpg`;
 };
 
-/** A person's card picture by slug (for the collections' mosaics). */
-export const imgOf = (slug: string): string => HUB.find(p => p.slug === slug)?.img ?? `/img/personality/faces/${slug}.jpg`;
-
-/** The hub's collections, in the mock-up's order: a way in to the list, never a page yet. */
-export const COLLECTIONS: Array<{ group: string; title: string; imgs: string[] }> = [
-  { group: 'fathers', title: 'Church Fathers', imgs: ['justin-martyr', 'irenaeus-of-lyons', 'origen', 'augustine-of-hippo'] },
-  { group: 'desert', title: 'Desert fathers and mothers', imgs: ['antony-the-great'] },
-  { group: 'cappadocians', title: 'The Cappadocian fathers', imgs: ['basil-the-great', 'gregory-of-nazianzus', 'gregory-of-nyssa'] },
-  { group: 'teachers', title: 'Great teachers of East and West', imgs: ['john-chrysostom', 'ambrose-of-milan', 'gregory-the-great'] },
-  { group: 'martyrs', title: 'Martyrs', imgs: ['cyprian-of-carthage'] },
-  { group: 'women', title: 'Women of the early Church', imgs: ['macrina-the-younger'] },
-  { group: 'bible', title: 'People of the Bible', imgs: ['moses', 'peter', 'paul'] }
+/**
+ * The hub's groups, in the mock-up's order. They were also drawn as collection cards above the
+ * list until 2026-09-25; now they are the Group filter's options (and, later, group pages).
+ */
+export const GROUPS: Array<{ group: string; title: string }> = [
+  { group: 'fathers', title: 'Church Fathers' },
+  { group: 'desert', title: 'Desert fathers and mothers' },
+  { group: 'cappadocians', title: 'The Cappadocian fathers' },
+  { group: 'teachers', title: 'Great teachers of East and West' },
+  { group: 'martyrs', title: 'Martyrs' },
+  { group: 'women', title: 'Women of the early Church' },
+  { group: 'bible', title: 'People of the Bible' },
+  { group: 'monks', title: 'Monks and hermits' }
 ];
 
 /** The filters, as the mock-up drew them. */
 export const FILTER_KINDS: Array<{ key: string; label: string; note?: string; opts: Array<[string, string, string?]> }> = [
-  { key: 'group', label: 'Group', opts: [...COLLECTIONS.map(c => [c.group, c.title] as [string, string]), ['monks', 'Monks and hermits']] },
+  { key: 'group', label: 'Group', opts: GROUPS.map(c => [c.group, c.title] as [string, string]) },
   { key: 'lived', label: 'Lived', opts: [['pre300', 'Before 300'], ['300s', 'The 300s'], ['400s', 'The 400s'], ['500on', '500 and later'], ['bible', 'In the Bible']] },
   { key: 'side', label: 'East or West', opts: [['east', 'East'], ['west', 'West']] },
   {
