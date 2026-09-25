@@ -130,10 +130,14 @@ const breadcrumbs = [
     </ul>
 
     {/* Not the hub's "where do you stand?": the band's button already asks it, and a thing is
-        said once. */}
+        said once. The plate is an engraving printed soft sepia (--engr), like the hub's Dürer, but
+        not the Dürer, which the band above already wears: Cornelis van Dalen's print after Rubens
+        of Ambrose, Gregory, Jerome and Augustine reading one book, four of the people a result can
+        name. The owner found the Jordaens painting it replaced "very weird looking" (2026-09-25).
+        Its crop is in early-christian.css (.squiz--fathers). */}
     <SectionHead title="your turn" />
-    <a class="squiz squiz--fathers" href={quizHref(quiz)}>
-      <img src="/img/jordaens-fathers.jpg" alt="" loading="lazy" />
+    <a class="squiz squiz--engr squiz--fathers" href={quizHref(quiz)}>
+      <img src="/img/van-dalen-fathers.jpg" alt="" loading="lazy" />
       <span class="squiz-b">
         <span class="squiz-k">Quiz</span>
         <span class="squiz-t">{quiz.title}</span>

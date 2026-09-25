@@ -54,6 +54,23 @@ Applied the same evening (the template on `main`, carried to `saints/the-21`):
 - **"Is he a saint?": a wrapped status ("Not on the calendar") sits at 1.3rem line height**, with nothing else moving.
 - **No odd or ominous asides in plain text** ("Beware 23 and 24 November..." came off Clement's feast note).
 
+## HIS NOTES OF 2026-09-25, SECOND ROUND (Justin, Irenaeus): binding for every page
+
+- **"His path, in order"**, never "roles" ("calling 'Martyr' a role is odd"). The data key stays `roles`.
+- **Every number tile makes sense on its own.** The chip says exactly what is counted ("Gospels he defended", not
+  "Gospels"); the lines finish the thought. No number about someone else (Pothinus's age on Irenaeus's page), no award
+  ordinal ("37th Doctor"), no year dressed up as a statistic ("1904"), no padding. Two or three strong tiles are fine.
+- **The numbers column is filled with "Did you know?"** (`tidbits`), not forced numbers: short, surprising, sourced
+  facts that the page does not already tell, under the numbers in the same dark column, down to the facts' height.
+- **More art on wide screens** (`gallery`): where the pictures column ends above the facts, more pictures of the person,
+  as many as fit without making the sheet taller; phones show the portrait alone. Public domain or CC0, never a
+  picture the page already shows.
+- **Traits: the taller of each desktop row on the left**, above all in the row over a lone last trait.
+- Measure with the session tool `measure-sheet.mjs` (`design/saints-hub/tools/measure-sheet.mjs <slug> [port]`): the numbers and
+  pictures columns end within about one item of the facts, never below them.
+- **Polycarp goes in the next batch of full pages** (the owner: "a MASSIVELY important figure and VERY interesting",
+  prompted by Irenaeus's page). He is already named in the plan's list of most-searched missing saints; he now leads it.
+
 ## What the owner asked for (his words, 2026-09-24)
 
 > "would it be best to add them to this page, which is tied to a quiz ... Or would it be better to make a new
