@@ -66,6 +66,26 @@ rules so they don't happen again". `site/scripts/quiz-page-test.mjs` (postbuild)
 9. **A special card among cards looks like its siblings**, marked only by an icon and a small tag.
 10. **No placeholder pictures** (a monogram where a face should be is "not acceptable").
 
+## LATEST (2026-09-25, night): HIS FIRST ROUND OF NOTES IS DONE; HE IS STILL READING THE SAINT PAGES
+
+He sent notes on the live site and on Clement's preview page, and said he would keep reviewing the other saint pages
+and send more. Everything he listed is done: `main` commit `31f4a16` (live, checked), branch `saints/the-21`
+`b6c88f2` (Clement's data `ec3c731`, then `main` merged in; preview updated). The rules it produced are in
+`design/saints-hub/README.md` "HIS NOTES OF 2026-09-25": the hub has no collections, `/early-christian/` 308s to
+`/saints/` (his answer to call 3 below), the pager is sticky at every width (`.sheet:has(.sp) { overflow: clip }`),
+the roles path is balanced on every page, portraits first among friends, status pills 50 characters at most. Also
+live: the Quizzes menu is names only, the footer lists his five quizzes, `/compare/` wears El Greco's Peter and Paul,
+`/early-church-on/` and its 23 question pages end on the quiz plate (Jordaens), the early-Christian quiz page says
+"Meet all 30" (the hub's count, linked) and has a "where they stood" card. The quiz plate `.squiz` is in kit.css.
+
+**A second checkout of the branch exists at `../wiser-walk-saints`** (git worktree, its own node_modules, the fetched
+sources linked in under `design/saints-hub/sources/people`), served by the launch config `site-saints` on port 4344.
+Edit saint data there, run verify-quotes and `npm run test` there, push the branch. Template fixes go to `main` first,
+then `git merge main` in the worktree (the template files conflict harmlessly: take main's, they were identical).
+
+Open for him (taste, not done): the `/compare/` band is 653px tall on desktop because the painting is kept whole
+(a laptop's first screen is all band); crop the file to about 1200x1200 if he wants it shorter.
+
 ## NEXT SESSION STARTS HERE (2026-09-25, late): HE OPENS WITH HIS NOTES
 
 **He said: "I have many notes on the live site ... I will open by giving my notes while I review each saint's page

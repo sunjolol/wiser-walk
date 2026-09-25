@@ -53,6 +53,15 @@
       "port": 4322
     },
     {
+      "name": "site-saints",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "-e",
+        "require('child_process').spawn('node',['node_modules/astro/astro.js','dev','--port','4344'],{cwd:'C:/Users/Light/Desktop/claude/wiser-walk-saints/site',stdio:'inherit'})"
+      ],
+      "port": 4344
+    },
+    {
       "name": "themes",
       "runtimeExecutable": "python",
       "runtimeArgs": [
