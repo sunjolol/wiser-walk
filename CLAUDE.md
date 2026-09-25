@@ -66,6 +66,15 @@ rules so they don't happen again". `site/scripts/quiz-page-test.mjs` (postbuild)
 9. **A special card among cards looks like its siblings**, marked only by an icon and a small tag.
 10. **No placeholder pictures** (a monogram where a face should be is "not acceptable").
 
+## LATEST (2026-09-25, later): HIS THIRD ROUND (ORIGEN TO MACRINA) IS DONE
+
+He is still reading the saint pages top down (next after Macrina in the hub's order). Round three is live in the
+template (`main`) and on the preview (branch `93dedea`): a picture viewer on wide screens only, italic book titles
+everywhere (`design/saints-hub/tools/italicize.mjs`), the path centred under evenly spaced dots, the later story
+under the last words, the doubt box filling an empty wonder cell, 15px under the miracles quote; Antony, Cyprian and
+Macrina's own fixes. Macrina's band is an icon HE supplied (no credit, his call; CREDITS.md records it). Rules:
+`design/saints-hub/README.md` "THIRD ROUND".
+
 ## LATEST (2026-09-25, small hours): HIS SECOND ROUND (JUSTIN, IRENAEUS) IS DONE ON EVERY PAGE
 
 He is reading the saint pages top down on the preview and sending notes page by page. Round two is applied to all 21
