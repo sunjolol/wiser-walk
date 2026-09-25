@@ -75,8 +75,8 @@ menu, `/saints/` and `/saints/martin-of-tours/` (template `site/src/pages/saints
 the 21 (2026-09-24): they stay at `/early-christian/` until each has a page to Martin's standard, then move one by
 one** (the move procedure is in the README). **His steer (2026-09-25): the person shapes the page, not the template**:
 same sections, but as many moments, miracles, traits and lines as each record genuinely holds (README, top section).
-The drafts of the 21 are in `design/saints-hub/pages/` (researched, written, adversarially checked by a workflow);
-promote each only after `verify-quotes.mjs` passes and a look at 390 and 1360.
+**The 21 are written, checked and on the branch `saints/the-21`**, previewed for him at
+https://wiser-walk-git-saints-the-21-sunjo.vercel.app/saints/ . Merge only with his go (README "THE 21 ARE WRITTEN").
 
 ## (earlier) PORT THE SAINTS HUB LIVE (2026-09-24, late)
 
