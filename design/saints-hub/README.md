@@ -13,7 +13,11 @@ the fetched sources are intact here). Every saint note from now on is an edit to
 `main`, pushed after `npm run test` (the branch and the preview link are history). Run `measure-sheet.mjs` against the
 `site` dev server (port 4321).
 
-## POLYCARP'S PAGE IS WRITTEN (night of 2026-09-25): on the branch `saints/polycarp`, NOT merged
+## POLYCARP'S PAGE IS WRITTEN (night of 2026-09-25), LIVE since 2026-09-26 with his go
+
+**His one note (2026-09-26):** the section holding the blessing from his letter (Letter to the Philippians, chapter
+12) is titled "A letter he wrote", not "A prayer he wrote": "it's not a prayer". `prayer.title` in the data renames
+that section on any page where the passage is not a prayer as such.
 
 He asked for it before bed ("While I sleep, work on Polycarp's full page"). It is the first full page for someone
 outside the early-Christian quiz, so the branch also teaches the site to take such pages:
@@ -41,7 +45,8 @@ Left for him (taste, or his call): the band fresco is 735 x 1182 (under the 1200
 because it made the pictures column 400 px too tall and is dark and small; a Wellcome engraving was dropped for its
 CC BY licence; the last row of "Friends, family and rivals" (11 cards) and of the two three-panel sections holds a lone
 card, as on several live pages; there is no "Apostolic Fathers" filter on the hub yet (he would be its only member).
-Merge with his go: `git checkout main && git merge saints/polycarp`, test, build, push.
+Merged into `main` with his go ("Polycarp looks good to port live") and checked live: the page, the hub (first of
+31), Irenaeus's link, the pictures, the share card and the sitemap.
 
 ## THE PERSON SHAPES THE PAGE, NOT THE TEMPLATE (the owner, 2026-09-25): binding, and it overrides any count anywhere
 

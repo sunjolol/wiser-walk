@@ -66,13 +66,14 @@ rules so they don't happen again". `site/scripts/quiz-page-test.mjs` (postbuild)
 9. **A special card among cards looks like its siblings**, marked only by an icon and a small tag.
 10. **No placeholder pictures** (a monogram where a face should be is "not acceptable").
 
-## NEXT SESSION STARTS HERE: POLYCARP'S PAGE IS ON A PREVIEW, AND HE BRINGS NOTES ON THE LIVE SAINT PAGES
+## NEXT SESSION STARTS HERE: POLYCARP IS LIVE (23 SAINT PAGES); HE BRINGS NOTES ON THE OTHER PAGES
 
-He went to sleep on 2026-09-25 saying he will send notes on the other saint pages the next day, and asked for
-Polycarp's full page meanwhile. **Polycarp is written, checked and on the branch `saints/polycarp` (NOT merged)**,
-previewed at https://wiser-walk-git-saints-polycarp-sunjo.vercel.app/saints/polycarp-of-smyrna/ (behind his Vercel
-login). Ask how it reads to him; merge only with his go. What it holds, how it was made and what is left for him:
-`design/saints-hub/README.md` "POLYCARP'S PAGE IS WRITTEN". His notes on the 22 live pages go to `main` as below.
+Polycarp's full page, written overnight on 2026-09-25, is LIVE at /saints/polycarp-of-smyrna/ (main `600fd6c`) with
+his go ("looks good to port live"). His one change: the section holding the blessing from Polycarp's letter is titled
+"A letter he wrote", not "A prayer he wrote" ("it's not a prayer"); `prayer.title` lets any page rename that section
+(the other nine pages' passages are real prayers and keep the default). He said he will give his thoughts on the
+other saint pages next: each note is an edit on `main`, as below. What Polycarp's page holds and the taste calls
+still open on it: `design/saints-hub/README.md` "POLYCARP'S PAGE IS WRITTEN".
 
 ## (earlier) ALL 22 SAINT PAGES ARE LIVE (2026-09-25); HIS NOTES NOW EDIT THE LIVE SITE
 
