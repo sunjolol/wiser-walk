@@ -133,6 +133,14 @@ without the others. Then `node design/og/render.mjs site saint-<slug>` for his s
 `design/saints-hub/pages/<slug>.json` (the draft page), `design/saints-hub/pages/img/` (pictures), fetched texts under
 `sources/people/<slug>/` (gitignored). Each draft is written, then adversarially checked, before it is promoted.
 
+**IF THE SESSION WAS CUT OFF (usage cap, 2026-09-25):** the port is committed locally as `39e1467` and NOT pushed
+(the visual check of the small-text sweep had not reported yet: re-run it, then push). The research on the 21 ran as
+workflow `wf_2f636304-590` (research, write, adversarial check per person). To continue it without redoing finished
+agents: `Workflow({ scriptPath: "C:/Users/Light/.claude/projects/C--Users-Light-Desktop-claude-theology-compass-site/11721607-af0d-45f4-b7cb-e943d638c835/workflows/scripts/saints-deep-pages-wf_2f636304-590.js", resumeFromRunId: "wf_2f636304-590" })`
+(same session only; in a new session, re-launch the same script with the same 21 people as args: finished work is
+on disk as `research/people/<slug>-facts.json`, `pages/<slug>.json` and `pages/img/`, and a researcher told to
+start from an existing facts file saves most of the cost).
+
 ## APPROVED 2026-09-24: PORT IT LIVE (the next session does this)
 
 After his final pass he said "Looks great". The mock-up (`mockup/src/`, published link above) is the spec. The port:
