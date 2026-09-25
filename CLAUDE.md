@@ -66,7 +66,46 @@ rules so they don't happen again". `site/scripts/quiz-page-test.mjs` (postbuild)
 9. **A special card among cards looks like its siblings**, marked only by an icon and a small tag.
 10. **No placeholder pictures** (a monogram where a face should be is "not acceptable").
 
-## NEXT SESSION STARTS HERE (2026-09-26): BIBLE FIGURE PAGES FIRST, THEN THE NEXT 12 SAINTS
+## NEXT SESSION STARTS HERE (after 2026-09-26): THE OTHER 24 BIBLE FIGURES, AND PAGE 10'S SHARE CARD
+
+**Peter's enriched page is LIVE** (main, /figure/peter/). He loved it: "Peter's page looks fantastic, if we can complete
+the rest of the Biblical figures to this degree that would be amazing." Two jobs, in his order, and his standing steer:
+"be as efficient as possible where it makes sense (obviously we want to maximize quality so don't over-do it, but
+don't over-do verification checks either that eat up usage)". He wants weekly usage left for the 12 saints after.
+
+**1. Page 10 of the Christian Personality Test: the role card.** He opened a FRIEND's result link and saw no shareable
+card on page 10, on desktop or phone, though the test says it has one. What the code shows (checked 2026-09-26, not yet
+tested in a browser): `components/PersonalityResult.astro` page 10 has a "Save this card" button (`data-pq-card="line"`,
+drawn by `drawCard('line')` on a 1080x1350 canvas) but it carries `pq-mine`, which `styles/pages/personality.css` hides
+unless `<html data-pq-who="taker">`: only the device that took the test sees it. So a visitor never sees any card. To do:
+(a) take the test (or use a taker device) and check the role card at 390 and 1360: it must print the reader's own "how we
+got there" reasons, the logo (brush W + wordmark, as on the type card) and the link; (b) decide what a visitor sees:
+recommend showing the card to visitors too, with "Take the test for your own card" beside it, since his point is that
+the cards market the site. His original note, verbatim: "Page 10 is great, The Giver card is the exact 'personalized
+card' feel I love from personality tests. I'd go so far as to say there should be a share/save image button for it, I
+could see people wanting to share it or keep it. And the 'how we got there' bubbles should be included in the
+shareable card/image because that would be even more powerful because two people could have The Watcher but different
+reasons why, also add our logo same as the first card on page 1 and a link to the quiz somewhere in the card so it
+becomes a proper share-able card just like the initial result card. The idea is having TWO different cards that are
+both visual, personalized, and market our site for us is HUGE, and I mean MASSIVE because it allows us to
+self-perpetuate as people take and share the quiz - maximum SEO friendliness, maximum marketability, maximum user
+experience/fun."
+
+**2. The other 24 Bible figure pages to Peter's standard.** How it works and the rules: `design/saints-hub/README.md`
+"BIBLE FIGURE PAGES DRAWN LIKE A SAINT'S"; the exemplar is `site/src/data/figures/peter.json` (SaintPage shape).
+Efficient method: one Opus writer per figure (research and write together, verify-quotes until it exits 0, pictures
+in `site/public/img/figures/<slug>-band.jpg` and `<slug>-2.jpg`: NEVER overwrite `<slug>.jpg`, Doré's plate), and ONE
+light checking pass per few figures, not three checkers each. The person shapes the page: thin records (Abigail,
+Rahab, Hannah, Jonathan) get short pages. Type boxes only for the 7 still to do with a type (Moses, Gideon, Elijah, John
+the Baptist, Martha, Barnabas, Paul). Care points: Jesus (reverent capitals everywhere; no "Is He a saint?"; His page
+needs its own plan, ask him), Mary of Nazareth (Catholic, Orthodox and Protestant views in their own words), Judith and
+Tobit (which Bibles hold their books), Old Testament people ("honoured as a saint in the Orthodox and Catholic
+calendars", never "St Moses"). Then measure each sheet (`MSYS_NO_PATHCONV=1 node design/saints-hub/tools/measure-sheet.mjs
+/figure/<slug>/ 4321`), render its card (`node design/og/render.mjs site figure-<slug>`), test, push.
+
+**3. Then the 12 saints** (`design/saints-hub/research/NEXT-12.md`, with his ruling at its top).
+
+## (earlier, 2026-09-26) BIBLE FIGURE PAGES FIRST, THEN THE NEXT 12 SAINTS
 
 His notes on the saint pages are all done and live (main `b02b30a`): Chrysostom, Jerome and Cassian tiles that explain
 themselves; Boethius's band is Thevet's 1584 engraving and his page has "Who is Lady Philosophy?" (he had taken her for
