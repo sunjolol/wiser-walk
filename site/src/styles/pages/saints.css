@@ -345,6 +345,20 @@ html.is-locked { overflow: hidden; }
 .stat-lines li { font-family: var(--ui); font-size: .72rem; font-weight: 600; line-height: 1.4; color: var(--on-dark); padding: .06rem 0 .06rem .8rem; text-indent: -.8rem; }
 .stat-lines li::before { content: "+ "; color: var(--orange-soft); }
 .stat-src { display: block; margin-top: auto; padding-top: .35rem; font-size: .64rem; font-style: italic; line-height: 1.35; color: #A9A59F; }
+/* Did you know? Short facts under the numbers, in the same dark column: each a sentence or two and
+   its source, parted by the dotted rule the lists on the page use. */
+.stats + .tids { margin-top: 1.5rem; }
+.tid-list { margin: 0; padding: 0; list-style: none; }
+.tid { padding: .75rem 0 .8rem; border-top: 2px dotted rgba(255, 255, 255, .14); }
+.tid:first-child { padding-top: 0; border-top: 0; }
+.tid:last-child { padding-bottom: 0; }
+.tid p { margin: 0; font-size: .86rem; line-height: 1.55; color: var(--on-dark); text-wrap: pretty; }
+.tid p b { color: #fff; font-weight: 600; }
+.tid .cite { margin-top: .3rem; color: #A9A59F; }
+/* the source reads as the numbers' sources do, a quiet grey, and says it is a link on hover (the
+   kit colours every link on a dark panel blue with four classes, hence the five here) */
+.sp .cs-stats.dark .tid .cite a { color: inherit; text-decoration: underline; text-decoration-color: rgba(169, 165, 159, .45); text-underline-offset: 2px; }
+.sp .cs-stats.dark .tid .cite a:hover { color: #fff; }
 /* On a wide screen the numbers sit in a narrow column: one card per row, the label on top, the number beside its lines */
 @media (min-width: 62rem) {
   .stats { grid-template-columns: minmax(0, 1fr); gap: .55rem; }
@@ -356,7 +370,7 @@ html.is-locked { overflow: hidden; }
 }
 
 .cs-main { padding-top: 1.15rem; }
-/* His roles, in order: a path. Down the page on a phone, across it when there is room. */
+/* His path, in order (the data's `roles`): down the page on a phone, across it when there is room. */
 .cs-path { padding-top: 1.05rem; padding-bottom: 1.15rem; }
 .path-k { margin: 0 0 .8rem; font-family: var(--ui); font-size: var(--fs-label); font-weight: var(--fw-label); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-mute); }
 .path { list-style: none; margin: 0; padding: 0; display: grid; }
@@ -412,6 +426,11 @@ html.is-locked { overflow: hidden; }
 }
 
 .portrait { margin: 0; padding: .55rem; }
+/* more of him in art: a wide screen only, where the facts leave this column room (the page's
+   data carries only as many as fit) */
+.portrait--more { display: none; }
+@media (min-width: 62rem) { .portrait--more { display: block; } }
+.portrait--more figcaption { padding-top: .5rem; }
 .portrait img { display: block; width: 100%; border-radius: 12px; }
 .portrait figcaption { padding: .6rem .35rem .15rem; font-size: .74rem; line-height: 1.45; color: var(--ink-mute); }
 .portrait figcaption b { display: block; margin-bottom: .1rem; font-family: var(--ui); font-size: var(--fs-label); font-weight: var(--fw-label); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }

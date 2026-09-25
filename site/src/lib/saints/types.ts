@@ -150,11 +150,29 @@ export interface SaintPage {
 
   /** AT A GLANCE */
   roles?: Array<{ name: string; line: string }>;
-  /** "In numbers": only numbers people care about, each with its source. Never a rating. */
+  /**
+   * "In numbers": only numbers people care about, each with its source. Never a rating. A tile
+   * must make sense on its own: the chip says what is counted, and the lines finish the thought
+   * (the owner, 2026-09-25, on Irenaeus's "4 Gospels" and "1904": "what does this even mean").
+   * No number forced in to fill a column: a fact that is not a number is a tidbit.
+   */
   numbers?: Array<{ chip: string; n: string; lines: string[]; src: string }>;
+  /**
+   * "Did you know?": short facts worth telling, in a sentence or two each, printed under the
+   * numbers in the same dark column. They fill the column the way the numbers do, so the sheet's
+   * columns end together. Each has its source.
+   */
+  tidbits?: Array<{ text: Rich; cite: Cite }>;
   facts: Array<{ label: string; text: Rich }>;
   /** A second picture, usually an icon or a painting from the other half of the Church. */
   portrait?: Picture & { caption: Rich };
+  /**
+   * More pictures of him, shown under the portrait on a wide screen only (62rem up), where the
+   * facts beside that column leave it empty space; a phone shows the portrait alone. As many as
+   * fit without making the sheet taller than the facts (measured at 1360), and none that the
+   * page already shows. Public domain or CC0, credited in the sources and in CREDITS.md.
+   */
+  gallery?: Array<Picture & { caption: Rich }>;
   /** The personality box: why the test places him where it does, in a line or two. */
   typeNote?: Rich;
   feasts?: {

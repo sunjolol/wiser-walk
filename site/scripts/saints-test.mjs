@@ -18,7 +18,8 @@
  *                           counts a saint; a status short enough for its pill (50 characters:
  *                           Clement's first ran to 88, "WAY too long for a pill"); feast days in
  *                           calendar order in each column; the rich-text marks balanced; every
- *                           picture the page names is on disk
+ *                           picture the page names is on disk, and none shown twice; every
+ *                           "Did you know?" line has a source
  *
  * Quotations are checked word for word before a file is added, on the machine that fetched their
  * texts (design/saints-hub/tools/verify-quotes.mjs): those texts are gitignored, so that check
@@ -140,8 +141,16 @@ console.log('saints: each page');
         if (a.month * 100 + a.day > b.month * 100 + b.day) no(`${side} feast days are not in calendar order`);
       }
     }
-    const pics = [p.band.picture.src, p.card.img, p.portrait?.src].filter(Boolean);
+    const pics = [p.band.picture.src, p.card.img, p.portrait?.src, ...(p.gallery ?? []).map(g => g.src)].filter(Boolean);
     for (const src of pics) if (!existsSync(join(PUB, src))) no(`picture not on disk: ${src}`);
+    /* One picture once: the page never shows the same file twice (the band, the portrait and the
+       wide-screen pictures under it). */
+    const shown = [p.band.picture.src, p.portrait?.src, ...(p.gallery ?? []).map(g => g.src)].filter(Boolean);
+    if (new Set(shown).size !== shown.length) no('the same picture is shown twice');
+    for (const g of p.gallery ?? []) if (!g.caption || !g.alt || !g.license) no(`a gallery picture needs a caption, alt text and a licence: ${g.src}`);
+    for (const t of p.tidbits ?? []) if (!t.cite?.text) no(`a "Did you know?" line has no source: "${String(t.text).slice(0, 50)}…"`);
+    /* A number tile finishes its thought: a chip that says what is counted, and its lines. */
+    for (const n of p.numbers ?? []) if (!n.chip || !n.n || !n.src || !(n.lines?.length >= 1)) no(`a number tile is missing its chip, number, lines or source: ${n.chip} ${n.n}`);
     if (!bad) ok(`${at}: listing, answer (${n} words), feast order, marks and pictures`);
   }
 }
