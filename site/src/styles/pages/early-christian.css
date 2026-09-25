@@ -323,17 +323,34 @@
 @media (min-width: 46rem) and (max-width: 63.99rem) { .ec-meet-text { display: none; } }
 
 /*
- * THE QUIZ PLATE on Jordaens's Four Latin Church Fathers (kit.css .squiz), in colour, so without
- * the sepia of --engr. The plate darkens toward its words on the left, and at the painting's own
- * width Gregory and Ambrose sat in that shade while a cherub with Ambrose's beehive took the only
- * clear light. So the picture is drawn a quarter wider than the plate and cut at the right edge:
- * the two faces move into the light, and the band is held at their heads.
+ * THE QUIZ PLATE (kit.css .squiz, printed sepia by --engr) on Cornelis van Dalen's engraving after
+ * Rubens: Ambrose, Gregory, Jerome and Augustine reading one book. The group is drawn on the right
+ * of the plate, not across it: stretched over the whole plate it lost its mitres and put two faces
+ * behind the words. From 46rem there is room beside the words: at 27rem the picture is a little
+ * taller than the plate, it sits on the foot, the four show whole from mitres to book, and its left
+ * edge fades into the plate. (Two classes, so the kit's --engr crop never wins, whatever order the
+ * sheets load in.)
  */
-.squiz--fathers > img { width: 125%; object-position: 50% 18%; }
-/* On a phone the plate is tall and narrow, and that crop set Gregory's face behind the title and
-   the tagline across both faces. Drawn nearly twice as wide, the words sit over the dark sky and
-   the cherubs, and both heads fall in the clear space beside Start. The plate grows wider than it
-   grows tall, so each step takes a little less: at 190% a plate past 30rem pushes the heads off its
-   foot, and from 37.5rem the quarter-wider crop above already clears the words. */
-@media (max-width: 30rem) { .squiz--fathers > img { width: 190%; left: -38%; object-position: 0 0; } }
-@media (min-width: 30.01rem) and (max-width: 37.49rem) { .squiz--fathers > img { width: 160%; left: -22%; object-position: 0 0; } }
+.squiz.squiz--fathers > img {
+  left: auto; right: 0; width: 27rem; object-position: 50% 100%;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 30%); mask-image: linear-gradient(90deg, transparent, #000 30%);
+}
+/* Just past 46rem (a small tablet held upright) the question pages' two-line tagline reaches
+   Ambrose's mitre at 27rem; at 25rem the group sits far enough right to clear it. */
+@media (min-width: 46rem) and (max-width: 47.99rem) { .squiz.squiz--fathers > img { width: 25rem; } }
+/* On a phone the words fill the plate, and the tagline runs one line here and three on the
+   question pages. A crop from the top of a bigger picture put the faces at the plate's foot, cut at
+   the chin on the short plate and pressed against Start. So the picture keeps its own shape and
+   stands on the plate's bottom right corner, with its left and top edges faded. That puts the faces
+   in the same place whatever the tagline's length: below the words and beside Start, with the book
+   on the foot. 17rem is the widest at which the faces stay below the tagline. The cap keeps
+   Ambrose's face right of Start on a narrow phone (360px and under). */
+@media (max-width: 45.99rem) {
+  .squiz.squiz--fathers > img {
+    inset: auto 0 0 auto; width: min(17rem, calc(145% - 12.5rem)); height: auto;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 28%), linear-gradient(180deg, transparent, #000 30%);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(90deg, transparent, #000 28%), linear-gradient(180deg, transparent, #000 30%);
+    mask-composite: intersect;
+  }
+}

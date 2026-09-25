@@ -174,12 +174,14 @@ const sides = [
     </section>
 
     {/* The way into the quiz: the quiz plate the Saints hub and /early-church-on/ end on (the
-        owner, 2026-09-25: the plain card "has no background"). Its painting is Jordaens's Four
-        Latin Church Fathers, not the Dürer, because the band above already wears the Dürer (no
-        page shows one picture twice); its crops are in early-christian.css (.squiz--fathers). */}
+        owner, 2026-09-25: the plain card "has no background"). Its picture is an engraving printed
+        soft sepia (--engr), like the hub's Dürer, but not the Dürer, because the band above
+        already wears it (no page shows one picture twice): Cornelis van Dalen's print after Rubens
+        of Ambrose, Gregory, Jerome and Augustine reading one book. It replaced a Jordaens painting
+        the owner found "very weird looking"; its crop is in early-christian.css (.squiz--fathers). */}
     <SectionHead title="your turn" />
-    <a class="squiz squiz--fathers" href={quizHref(quiz)}>
-      <img src="/img/jordaens-fathers.jpg" alt="" loading="lazy" />
+    <a class="squiz squiz--engr squiz--fathers" href={quizHref(quiz)}>
+      <img src="/img/van-dalen-fathers.jpg" alt="" loading="lazy" />
       <span class="squiz-b">
         <span class="squiz-k">Quiz</span>
         <span class="squiz-t">{quiz.title}</span>
