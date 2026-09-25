@@ -3,6 +3,16 @@
 Read this whole file before touching the hub. Then read `research/SEARCH-BRIEF.md` and
 `research/PEOPLE-AUDIT.md`. Everything here was settled with the owner on 2026-09-24.
 
+## ALL 22 ARE LIVE (2026-09-25, with his go): edit `main` from now on
+
+`saints/the-21` was merged into `main` (fast-forward to `82030a4`) and pushed. Checked live: all 22 `/saints/<slug>/`
+answer 200 and are linked from the hub; every `/early-christian/<slug>` (with or without the slash) and
+`/early-christian/` answer 308 to the new address; no built page links an old address. The second checkout
+`../wiser-walk-saints` and its `site-saints` launch config are gone (its junctions into `sources/` were unlinked first;
+the fetched sources are intact here). Every saint note from now on is an edit to `site/src/data/saints/<slug>.json` on
+`main`, pushed after `npm run test` (the branch and the preview link are history). Run `measure-sheet.mjs` against the
+`site` dev server (port 4321).
+
 ## THE PERSON SHAPES THE PAGE, NOT THE TEMPLATE (the owner, 2026-09-25): binding, and it overrides any count anywhere
 
 In his words: "Let's make sure we're not adhering rigidly to a template or memifying the entire concept by trying to

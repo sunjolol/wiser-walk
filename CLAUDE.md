@@ -66,23 +66,21 @@ rules so they don't happen again". `site/scripts/quiz-page-test.mjs` (postbuild)
 9. **A special card among cards looks like its siblings**, marked only by an icon and a small tag.
 10. **No placeholder pictures** (a monogram where a face should be is "not acceptable").
 
-## NEXT SESSION STARTS HERE (after 2026-09-25): PUSH ALL 22 SAINT PAGES LIVE, HIS GO IS GIVEN
+## NEXT SESSION STARTS HERE: ALL 22 SAINT PAGES ARE LIVE (2026-09-25); HIS NOTES NOW EDIT THE LIVE SITE
 
-He said (2026-09-25): "this is definitely good enough to push and any further edits will be done on the live
-site ... set up for a new one where we will push everything live including the pages I haven't added notes about
-yet." So the first job is the merge, without asking again:
-1. `git checkout main && git pull && git merge saints/the-21` (the branch is `52efb46` or later; the template files
-   are identical on both sides, so any conflict there takes main's version).
-2. `cd site && npm run test && npm run build`: every guard must pass (saints, seo, quiz-page, small-text).
-3. Push `main`. Then check live: `/saints/` lists all 22 as full pages; each `/early-christian/<slug>/` answers 308
-   to `/saints/<slug>/` (curl -s -o /dev/null -w "%{http_code} %{redirect_url}"); `/early-christian/` 308s to
-   `/saints/`; spot-check a few pages at 390 and 1360.
-4. After that, his remaining notes (on the pages after Macrina in the hub's order) are edits to the LIVE site, in
-   `site/src/data/saints/<slug>.json` on `main`, pushed after the tests (memory: push-small-changes). The second
-   checkout `../wiser-walk-saints` and its `site-saints` launch config can then be removed
-   (`git worktree remove ../wiser-walk-saints`).
-Everything done so far, and the rules his notes made, are in `design/saints-hub/README.md` ("HIS NOTES OF 2026-09-25"
-rounds one to three). Polycarp leads the next batch of full pages.
+Done with his go: `saints/the-21` merged into `main` (`82030a4`) and pushed; every test and guard passed; checked
+live: all 22 `/saints/<slug>/` answer 200 and sit on the hub, every old `/early-christian/<slug>` and
+`/early-christian/` answer 308 to the new address, no page links an old one; four pages looked at on the live site
+(the hub and Macrina at 1360, Augustine at 390, Tertullian at 390 in dark). The second checkout and its `site-saints`
+launch config are removed. README: `design/saints-hub/README.md` "ALL 22 ARE LIVE".
+
+**Ask how the live pages look to him.** He will keep reading them top down (next after Macrina in the hub's order);
+each note is an edit to `site/src/data/saints/<slug>.json` on `main` (template notes: `[slug].astro`,
+`SaintExtra.astro`, `saints.css`), pushed after `cd site && npm run test` (memory: push-small-changes). Quotation
+changes still pass `verify-quotes.mjs`. The rules his notes made are in the README ("HIS NOTES OF 2026-09-25" rounds
+one to three). Polycarp leads the next batch of full pages (`design/saints-hub/tools/promote.mjs <slug>`).
+
+Wherever the older notes below say "the branch", "the preview" or `../wiser-walk-saints`, read `main` and the live site.
 
 ## LATEST (2026-09-25, later): HIS THIRD ROUND (ORIGEN TO MACRINA) IS DONE
 
