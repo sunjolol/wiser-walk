@@ -66,7 +66,17 @@ rules so they don't happen again". `site/scripts/quiz-page-test.mjs` (postbuild)
 9. **A special card among cards looks like its siblings**, marked only by an icon and a small tag.
 10. **No placeholder pictures** (a monogram where a face should be is "not acceptable").
 
-## NEXT SESSION STARTS HERE (2026-09-24, evening): BUILD THE SAINTS HUB
+## NEXT SESSION STARTS HERE (2026-09-24, late): PORT THE SAINTS HUB LIVE
+
+**He approved the final mock-up ("Looks great") and wants it live.** The port checklist is
+`design/saints-hub/README.md` "APPROVED 2026-09-24: PORT IT LIVE"; read that README whole first. The one question to ask
+before building, in plain words: only Martin has a full page's worth of checked facts. Should the other 21 early
+Christians move to `/saints/` now, in the new design, with what is already checked (then deepened one by one), or
+stay at `/early-christian/` until each has a full page? The brief's lean: move now, because the move costs more every
+week they sit at the old address, and their content is no thinner than today. Ship in reviewable chunks (kit and
+menu, then the hub and Martin, then the move), tests first, every page at 390 and 1360 in light and dark.
+
+## (earlier the same evening) BUILD THE SAINTS HUB
 
 **Read `design/saints-hub/README.md` first, whole.** The owner approved a Saints and early Christians hub
 (`/saints/`, one rich page per person, a "Learn" menu) and said yes to all four decisions in its plan. He wants

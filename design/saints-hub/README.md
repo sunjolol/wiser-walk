@@ -72,6 +72,36 @@ Martin's Orthodox feast, settled: churches differ. Greek synaxaria keep 12 Novem
 12 October on the old calendar (25 October civil); the OCA keeps 11 November and also lists 12 October, calling
 the October date an error. So "East" is never one date: print each church's own.
 
+## APPROVED 2026-09-24: PORT IT LIVE (the next session does this)
+
+After his final pass he said "Looks great". The mock-up (`mockup/src/`, published link above) is the spec. The port:
+
+1. **Kit first.** Put `--fs-label` (.7rem), `--fw-label` (600) and `--fs-tag` (.6rem) in the site's tokens; move the
+   site's existing small labels onto them by the two-size rule below; add a build check (like
+   `scripts/quiz-page-test.mjs`) that fails on readable small text under .6rem.
+2. **Header:** "Articles" becomes **"Learn"** (Articles, Saints and early Christians, What the early Church said,
+   Compare traditions). **Every** header menu gets the two-line items (a name plus one plain line), Quizzes and
+   Games too.
+3. **`/saints/`:** band with the portrait wall and search, collections, the filter bar (phone sheet, desktop pills,
+   picks written into the address like the articles page's `#topic=`), the people grid, the quiz card.
+   CollectionPage + ItemList.
+4. **`/saints/martin-of-tours/`:** the whole mock-up page (pager, sheet, numbers, feasts, miracles, words, often
+   misquoted, where he stood, death, is he a saint, read, quizzes, people like him, sources). Article with `about`
+   Person and `sameAs`, BreadcrumbList, its own share card. Pictures into `site/public/img/saints/` and
+   `CREDITS.md` (the Petit Palais icon is not credited yet). Data: `research/martin-facts.json` and
+   `research/martin-miracles.json`.
+5. **The other 21:** 301 `/early-christian/<slug>/` to `/saints/<slug>/` and `/early-christian/` to `/saints/`
+   (Vercel adapter redirects), in the same template, filled only with what is checked today. A section with no
+   checked data is left out, never faked. Each then gets Martin's depth, researched and checked the same way.
+   **Ask him which way first** (see CLAUDE.md "NEXT SESSION STARTS HERE").
+6. **Switch the links:** `lib/person-links.ts`, `lib/mine.ts`, `EarlyLine`/`EarlyMine`, `strategies/kindred.ts`,
+   the early-Christian quiz's `outcomePathBase` ('saints'), `lib/seo.ts` cards, the sitemap, then an IndexNow ping.
+7. **Checks:** `npm run test`, the quiz-page and SEO tests (extend the 30 to 70 word "In short" check to
+   `/saints/*`; add "no group slug equals a person slug"); every new page at 390 and 1360, light and dark.
+8. **Not ported:** the mock bar and tabs, the "not live" toasts, the `?theme=` test hook, the SERP preview.
+9. Small-text cases he never ruled on (hub card dates, the "Confident" chips, the sources under the numbers): he
+   approved the page as it stands, so they stay as they are.
+
 ## Draft 2 of the mock-up: his 14 notes, now rules for EVERY saint page (2026-09-24)
 
 He read the whole Martin page ("so engaging I read the whole thing ... I constantly found myself saying 'wow' out
