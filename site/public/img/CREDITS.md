@@ -325,6 +325,19 @@ licence tag of each was read on its Commons file page; modern icons, which are u
 | tertullian.jpg (in `saints/`, the band) | Tertullian, an imagined portrait, from André Thevet, Les vrais pourtraits et vies des hommes illustres, 1584. Public domain. | `Tertullian2.png` | Public domain |
 | boethius.jpg (in `saints/`, the band) | Boethius ("Boece Severin"), an imagined likeness, André Thevet, Les vrais pourtraits et vies des hommes illustres, volume 3, Paris, 1584, cropped to the engraving. The owner chose it (2026-09-26) in place of the Coëtivy Master's miniature. Internet Archive, lesvraispourtrai03thev, leaf 176 | archive.org, not Commons (the British Museum's copy on Commons, `Boece Severin (BM 1879,1213.257).jpg`, is the same print) | Public domain |
 
+## Public domain: Bible figure pages (`figures/`, Wikimedia Commons)
+
+Added 2026-09-26 with the first enhanced Bible figure page, Peter (data in `site/src/data/figures/peter.json`, drawn
+by the saint page template). These sit beside the Doré plates in the same folder and do not replace them: `peter.jpg`
+is still Doré's plate for the figure quiz, its share card and `lib/art.ts`, so the new band is `peter-band.jpg`. The
+licence tag of each was read on its Commons file page. Both are resized to 1800 px (band) and 1500 px (icon) on the
+long side.
+
+| file | picture | Commons file | licence |
+|---|---|---|---|
+| peter-band.jpg | The Tears of Saint Peter, El Greco, 1580s (Art UK via Wikidata Q9394999: 1580 to 1589), The Bowes Museum, Barnard Castle, B.M.642. The page's band. Cropped a little at the right and the foot (to 92% of the width and 86% of the height) so his face is larger, then resized to 1562 x 1800 | `El Greco - Tears of Saint Peter 3164.jpg` (3164 x 3900) | Public domain (PD-Art, PD-old-100-expired) |
+| peter-2.jpg | Saint Peter, encaustic icon of the 6th or 7th century (Commons gives both), St Catherine's Monastery, Mount Sinai. The page's second picture. The file's EXIF turn applied (the original is stored upside down); cropped from 16.5% to 87% of its height, from the top of his halo to the keys in his hand, leaving out the three medallions above him; resized to 1256 x 1500 | `Saint Peter-Sinai (6th Century).jpg` (7792 x 13200) | Public domain (PD-Art, PD-old-100-expired) |
+
 ## Another licence: the Saints hub (`saints/`)
 
 Added 2026-09-26. The owner chose this photograph for Isaac the Syrian over the 1518 miniature, which he found too hard to make out. It is not public domain: the photographer shares it under CC BY-SA 2.0, which asks for his name beside it (the page prints it) and for the crops to be shared under the same licence. The icon itself is modern and its painter is not named.

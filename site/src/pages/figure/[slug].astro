@@ -26,20 +26,18 @@
  */
 import Base from '../../layouts/Base.astro';
 import Hero from '../../components/Hero.astro';
-import SectionHead from '../../components/SectionHead.astro';
 import Icon from '../../components/Icon.astro';
-import CompassWheel from '../../components/CompassWheel.astro';
-import RailStack from '../../components/RailStack.astro';
-import TraditionNeighbours from '../../components/TraditionNeighbours.astro';
 import CorrectionNote from '../../components/CorrectionNote.astro';
-import MineNote from '../../components/MineNote.astro';
+import FigureRecord from '../../components/FigureRecord.astro';
+import PersonPage from '../../components/PersonPage.astro';
 import { bibleFigure } from '../../lib/quizzes/bible-figure';
-import type { FigureEvidence, FigureOutcome } from '../../lib/quizzes/bible-figure';
-import { groupHref, quizHref, resultFor } from '../../lib/engine/registry';
+import type { FigureOutcome } from '../../lib/quizzes/bible-figure';
+import { quizHref } from '../../lib/engine/registry';
 import { outcomeNounPlural } from '../../lib/engine/types';
-import type { BipolarView } from '../../lib/engine/types';
 import { artFor, artForOutcome } from '../../lib/art';
 import { clip } from '../../lib/seo';
+import { FIGURE_PAGES } from '../../lib/saints/figures';
+import { plain } from '../../lib/saints/rich';
 
 export function getStaticPaths() {
   return bibleFigure.outcomes.map(f => ({ params: { slug: f.slug }, props: { figure: f } }));
@@ -49,22 +47,10 @@ const { figure } = Astro.props as { figure: FigureOutcome };
 const quiz = bibleFigure;
 const isDraft = quiz.status === 'draft';
 
-/**
- * The figure's own view, built by the SAME call the result page makes for a reader. The
- * coordinates are the data; everything drawn here — the compass, the rails, the band
- * adjectives, the distance to every other figure — is what the engine says about them.
- */
-const view = resultFor(quiz, figure.position) as BipolarView;
+/** Counted as components/FigureRecord.astro counts them, for the band's tiles and the title. */
+const momentCount = quiz.groups.reduce((n, g) => n + (figure.evidence[g.key] ?? []).filter(e => e.ref).length, 0);
+const matchedAxes = figure.mask.filter(m => m === 'shown').length;
 
-/** A figure is its own nearest neighbour at zero distance; that is arithmetic, not news. */
-const neighbours = view.ranked.filter(r => r.slug !== figure.slug);
-const named = view.rows.filter(r => !r.noClaim).length;
-
-/**
- * The ghost word is one word of the name — the first real one, never anything invented.
- * Printed as the name is written, never lowercased: one of these pages is His.
- */
-const ghost = (figure.name.match(/[A-Za-z]{4,}/g) ?? [figure.name])[0]!;
 /* Doré's own plate of this person where one exists and shows nothing violent; the quiz's
    picture where it does not. A page never pretends to a portrait the plates do not hold. */
 const art = artForOutcome(quiz.slug, figure.slug);
@@ -98,156 +84,6 @@ const cardStyle = wayArt
       wayArt.lift && wayArt.lift < 1 ? '--room-dim:.38' : ''
     ].filter(Boolean).join(';')
   : undefined;
-
-/**
- * The evidence, in the engine's axis order, joined to the row the engine produced. Evidence
- * is keyed by group KEY, and the URL by group SLUG; on this quiz the fifth axis is keyed
- * `doubt` and published as `reasons`, so mixing them up would 404 and lose the cell.
- */
-const axes = quiz.groups.map((group, i) => {
-  const row = view.rows[i]!;
-  const items: FigureEvidence[] = figure.evidence[group.key] ?? [];
-  const cited = items.filter(e => e.ref);
-  return {
-    group,
-    row,
-    items,
-    cited,
-    /** Cited acts toward the left pole and toward the right pole, kept apart for the page. */
-    left: cited.filter(e => e.toward === 'left'),
-    right: cited.filter(e => e.toward === 'right'),
-    /**
-     * What this axis claims, straight from the quiz's own mask, so the page and the
-     * arithmetic can never say different things:
-     *   shown  the acts place this person, and a reader is measured against them here
-     *   both   the acts go both ways and do not settle anywhere — not counted
-     *   none   the text does not show this at all — not counted
-     */
-    mask: figure.mask[i]!,
-    bothEnds: figure.mask[i] === 'both',
-    notShown: figure.mask[i] === 'none',
-    /**
-     * A not-placed cell that says WHY instead of the stock sentence. One exists: Jesus on
-     * Reasons, where the Gospels say He knew what was coming, so neither pole describes Him.
-     * "The text does not show this" above a sentence citing three passages would be false.
-     */
-    explained: figure.mask[i] === 'none' && items[0]?.did !== 'The text does not show this.'
-  };
-});
-
-/**
- * An axis whose record goes both ways prints its acts under each pole, so a reader can see
- * the two ends rather than a list with the disagreement flattened out of it. Every other
- * axis keeps one list, in the data's own order.
- */
-/**
- * What to print where a band adjective would go. A band adjective is a POSITION ("between
- * planning ahead and meeting the day"), and printing one on an axis the text does not place
- * this person on is the exact claim this whole pass exists to stop making.
- */
-const reading = (a: (typeof axes)[number]) =>
-  a.explained
-    ? 'not placed'
-    : a.notShown ? 'not shown in the text' : a.bothEnds ? 'recorded at both ends' : a.row.band;
-
-/**
- * Which way the record points: the disc beside a reading in the feature, and the ink of the
- * reading on each axis's card of moments. It is the same fact the rail draws, and it is never
- * a judgement — blue is the left pole and orange the right, and neither is the better one. An
- * axis the acts do not settle gets both halves of the disc; an axis the text is silent on gets
- * a hollow ring, not a colour. On the cards, both of those keep the plain ink.
- */
-const pointing = (a: (typeof axes)[number]) =>
-  a.bothEnds ? 'both' : a.mask !== 'shown' ? 'none' : a.row.value < 50 ? 'left' : 'right';
-
-const blocksFor = (a: (typeof axes)[number]) =>
-  a.bothEnds
-    ? [
-        { label: a.group.left!, side: 'left' as const, items: a.left },
-        { label: a.group.right!, side: 'right' as const, items: a.right }
-      ]
-    : [{ label: null, side: null, items: a.items }];
-
-/**
- * A RECORD THE WHEEL CANNOT DRAW.
- *
- * The compass draws each axis as a ray whose length is how far from the middle the
- * coordinate sits. That is honest, and on most figures it is a picture. On a figure the
- * text places mildly, or on very few axes, it is six stubs in a huddle round the pin —
- * which does not read as "the Gospels say little about this"; it reads as a chart that
- * failed. Jesus is the case: three axes placed, every one of them at 40, so each arm is a
- * fifth of its length and three directions have no arm at all.
- *
- * So: when the record is SPARSE the panel draws a TALLY of the same facts instead. Nothing
- * is softened and no coordinate moves; the same three states the rest of the page uses are
- * simply set out as rows rather than as a wheel.
- *
- * Sparse = among the axes the text actually PLACES this figure on, no coordinate is 15 or
- * more points from the middle. Computed here from the mask the page already derived, so a
- * figure that moves in the data moves in and out of this by itself; no slug is listed.
- */
-const LEAN_UNITS = 15;
-const placedAxes = axes.filter(a => a.mask === 'shown');
-const sparse = placedAxes.every(a => Math.abs(a.row.value - 50) < LEAN_UNITS);
-
-/**
- * One row per axis, in quiz order, with the geometry taken from the integer step exactly
- * as RailStack takes it — so the tally and the rails further down the page cannot draw the
- * same coordinate in two different places.
- *
- * `both` and `none` carry no coordinate at all (the person is not anywhere on that axis),
- * so neither draws a position: both ends gets two hollow rings toward the two ends, which
- * are a mark and not a measurement, and an axis the text is silent on gets a hatched rail
- * with nothing on it.
- */
-const tally = axes.map(a => {
-  const at = (a.row.step / a.row.steps) * 100;
-  return {
-    axis: a,
-    state: a.mask === 'shown' ? 'placed' : a.bothEnds ? 'both' : 'none',
-    side: pointing(a),
-    pole: a.row.value < 50 ? a.group.left : a.group.right,
-    at,
-    from: Math.min(at, 50),
-    span: Math.abs(at - 50),
-    reading: reading(a)
-  };
-});
-
-/** Why there is no wheel, in the page's own plain words. Every number is counted above. */
-const sparseWhy =
-  placedAxes.length === 0
-    ? `The text does not place ${figure.name} anywhere on the ${quiz.groups.length}, so a wheel would have nothing to draw.`
-    : `The text places ${figure.name} on ${
-        placedAxes.length === quiz.groups.length
-          ? `all ${placedAxes.length}`
-          : `${placedAxes.length} of the ${quiz.groups.length}`
-      }, and on none of them far from the middle, so a wheel would have almost nothing to draw.`;
-
-const momentCount = axes.reduce((n, a) => n + a.cited.length, 0);
-const silentAxes = axes.filter(a => a.notShown && !a.explained).length;
-const explainedAxes = axes.filter(a => a.explained).length;
-const bothAxes = axes.filter(a => a.bothEnds).length;
-/** The axes this person is actually matched on. Never all six for every figure. */
-const matchedAxes = placedAxes.length;
-
-/**
- * Which Bible each quotation on this page is from, so the note above the moments names what
- * the page actually holds. Most are the World English Bible British Edition. A line that
- * carries a pronoun for God or Jesus is the Berean Standard Bible's wording instead (see
- * FigureEvidence.quotedFrom), and a page holding both names the translation under every
- * quotation rather than claiming one Bible for all of them.
- */
-const WEB = 'World English Bible British Edition';
-const quoteFrom = (e: FigureEvidence) => e.quotedFrom ?? WEB;
-const versions = [...new Set(axes.flatMap(a => a.items).filter(e => e.quote).map(quoteFrom))];
-const mixedVersions = versions.length > 1;
-const quoteNote =
-  versions.length === 0
-    ? ''
-    : mixedVersions
-      ? '; where it is in quotation marks it is verbatim, from the translation named under it'
-      : `; where it is in quotation marks it is verbatim from the ${versions[0]}`;
 
 /**
  * THE TITLE AND THE DESCRIPTION (2026-09-21).
@@ -318,7 +154,76 @@ const breadcrumbs = isDraft
       { name: quiz.title, url: quizHref(quiz) },
       { name: figure.name, url: `/figure/${figure.slug}/` }
     ];
+
+/*
+ * A FIGURE WITH A PAGE OF ITS OWN (src/data/figures/<slug>.json): drawn like a saint's page, with
+ * the quiz's record as its section "Where the quiz places him" and the quiz's card among the
+ * quizzes. Its search listing, structured data and trail are the page's own, as a saint's are.
+ */
+const full = FIGURE_PAGES[figure.slug];
+const fullUrl = new URL(`/figure/${figure.slug}/`, Astro.site).href;
+const LICENSE: Record<string, string> = {
+  CC0: 'https://creativecommons.org/publicdomain/zero/1.0/',
+  'Public domain': 'https://creativecommons.org/publicdomain/mark/1.0/'
+};
+const fullOrg = { '@type': 'Organization', name: 'Wiser Walk', url: new URL('/', Astro.site).href };
+const fullPic = full?.band.picture;
+const fullLd = full && fullPic
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: full.seo.title,
+      description: full.seo.description,
+      url: fullUrl,
+      mainEntityOfPage: fullUrl,
+      datePublished: full.published,
+      dateModified: full.modified,
+      image: {
+        '@type': 'ImageObject',
+        contentUrl: new URL(fullPic.src, Astro.site).href,
+        width: fullPic.width, height: fullPic.height,
+        ...(LICENSE[fullPic.license] ? { license: LICENSE[fullPic.license] } : {}),
+        ...(fullPic.creator ? { creator: { '@type': 'Person', name: fullPic.creator } } : {}),
+        ...(fullPic.credit ? { creditText: fullPic.credit } : {})
+      },
+      author: fullOrg,
+      publisher: fullOrg,
+      about: {
+        '@type': 'Person',
+        name: full.name,
+        ...(full.person.alternateName?.length ? { alternateName: full.person.alternateName } : {}),
+        ...(full.person.birthPlace ? { birthPlace: full.person.birthPlace } : {}),
+        ...(full.person.deathPlace ? { deathPlace: full.person.deathPlace } : {}),
+        description: plain(full.who),
+        sameAs: full.person.sameAs
+      },
+      isPartOf: [
+        { '@type': 'CollectionPage', name: 'Saints and early Christians', url: new URL('/saints/', Astro.site).href },
+        { '@type': 'Quiz', name: quiz.title, url: new URL(quizHref(quiz), Astro.site).href }
+      ]
+    }
+  : null;
+const fullCrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Saints and early Christians', url: '/saints/' },
+  { name: figure.name, url: `/figure/${figure.slug}/` }
+];
 ---
+{full ? (
+<Base title={full.seo.title} description={full.seo.description} jsonLd={fullLd} breadcrumbs={fullCrumbs} ogType="article">
+  <PersonPage
+    p={full}
+    crumb={{ href: '/saints/#group=bible', label: 'People of the Bible' }}
+    extraQuiz={{ href: quizHref(quiz), title: quiz.title, say: cardSay, img: (quizArt ?? art)?.src ?? '/img/durer-jerome.jpg' }}
+    recordTitle={`Where the quiz places ${full.she ? 'her' : 'him'}`}
+  >
+    <div slot="record" class="ref ref--figure ref--in-person">
+      <FigureRecord figure={figure} inPerson />
+      <CorrectionNote subject={figure.name} />
+    </div>
+  </PersonPage>
+</Base>
+) : (
 <Base
   title={title}
   description={description}
@@ -344,253 +249,7 @@ const breadcrumbs = isDraft
   />
 
   <div class="ref ref--figure">
-    {/* The outcome's own sentence, directly under the band, before anything is drawn. */}
-    {figure.note && (
-      <aside class="caveat caveat--note">
-        <span class="caveat-mark" aria-hidden="true"><Icon name={quiz.icon} size={18} /></span>
-        <div>
-          <p class="caveat-label">Read this first</p>
-          <p>{figure.note}</p>
-        </div>
-      </aside>
-    )}
-
-    {isDraft && quiz.draftNote && (
-      <div class="note draft ref-draft">
-        <p><strong>Unaudited draft.</strong>{' ' + quiz.draftNote}</p>
-      </div>
-    )}
-
-    <div class="feature trad-feature">
-      <div class="feature-art dark">
-        <div class="dark-ghost" aria-hidden="true">{ghost}</div>
-        <p class="feature-kicker">The record, drawn</p>
-        {sparse ? (
-          /*
-            The tally: the same three states, counted and drawn. Both pole names print on
-            every row, exactly as they do on every rail, and the words beside each one are
-            the page's own reading of that axis rather than anything written for here.
-          */
-          <div class="tally">
-            <p class="tally-count">Placed on {matchedAxes} <i>of {quiz.groups.length}</i></p>
-            <ul class="tally-rows">
-              {tally.map((t, i) => (
-                <li
-                  class:list={['tally-row', `tally-row--${t.state}`, `tally-row--${t.side}`]}
-                  style={`--pos:${t.at};--from:${t.from};--span:${t.span}`}
-                >
-                  <p class="tally-ax">
-                    <span class="tally-name">{t.axis.row.name}</span>
-                    <span class="tally-read">{t.reading}</span>
-                  </p>
-                  <div
-                    class="tally-track"
-                    role="img"
-                    aria-label={
-                      t.state === 'placed'
-                        ? `${t.axis.row.name}: ${t.reading}, toward ${t.pole}`
-                        : `${t.axis.row.name}: ${t.reading}, so no position is drawn`
-                    }
-                  >
-                    <span class="tally-spine" aria-hidden="true"></span>
-                    {t.state === 'placed' && (
-                      <>
-                        <span class="tally-tint" aria-hidden="true"></span>
-                        <span class="tally-dot" aria-hidden="true"></span>
-                        {/* The reader's own mark, as on the rails below: only where this
-                            person is placed, and hidden until MineNote finds a result. */}
-                        <span class="you-mark" data-you-axis={i} hidden aria-hidden="true"><span class="you-tag">You</span></span>
-                      </>
-                    )}
-                    {t.state === 'both' && (
-                      <>
-                        <span class="tally-end tally-end--l" aria-hidden="true"></span>
-                        <span class="tally-end tally-end--r" aria-hidden="true"></span>
-                      </>
-                    )}
-                  </div>
-                  <p class="tally-poles">
-                    <span>{t.axis.group.left}</span><span>{t.axis.group.right}</span>
-                  </p>
-                </li>
-              ))}
-            </ul>
-            <p class="tally-why">{sparseWhy}</p>
-          </div>
-        ) : (
-          <>
-            <CompassWheel view={view} />
-            <p class="feature-note">
-              Each arm is one axis; length is how far from the centre the recorded acts sit.
-              {matchedAxes < quiz.groups.length &&
-                ` An axis the text does not place ${figure.name} on has no arm.`}
-            </p>
-          </>
-        )}
-      </div>
-      <div class="feature-body">
-        <p class="feature-kicker trad-kicker">In the quiz's own words</p>
-        <h3 class="trad-verdict">
-          {view.headlineParts.map((part, i) => (
-            <><span class={`verdict-part verdict-part--${part.side}`}>{part.text}</span>{i < view.headlineParts.length - 1 && <span class="verdict-sep">, </span>}</>
-          ))}
-        </h3>
-        {/* Six axes and what the record says on each, on hairlines rather than dotted
-            rules. Every word of the reading is the quiz's own; the disc repeats the rail. */}
-        <ul class="axlist">
-          {axes.map(axis => (
-            <li>
-              <a href={groupHref(quiz, axis.row)}>
-                <span class:list={['axlist-dot', `axlist-dot--${pointing(axis)}`]} aria-hidden="true"></span>
-                <span class="axlist-name">{axis.row.name}</span>
-                <span class="axlist-read">{reading(axis)}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-
-    {/*
-      What the six axes ARE, under the record rather than over it. Above the picture it was
-      the second panel a reader had to get past before anything was shown; here it lands
-      where a reader has just seen the drawing and is about to read the rails. The outcome's
-      own sentence stays above, because that one travels with the name.
-    */}
-    <aside class="caveat">
-      <span class="caveat-mark" aria-hidden="true"><Icon name="compass" size={18} /></span>
-      <div>
-        <p class="caveat-label">What this is</p>
-        {/*
-          Two sentences, not five. Which axes a reader is matched on, and which are left
-          out, used to be spelled out here as well — and then again under the compass, and
-          again over the moments, where a reader meets the axes themselves and the sentence
-          is actually needed. It is said once now, there.
-        */}
-        <p>
-          Six axes of <strong>temperament, not virtue</strong>: neither end of any of them is
-          the better one. Every coordinate below is argued from cited, recorded acts, and
-          where the text shows nothing the page says so instead of guessing.
-        </p>
-      </div>
-    </aside>
-
-    <SectionHead title="The six axes" kicker="Both poles named on every rail" />
-    <div class="panel layered ref-panel ref-panel--quiet">
-      <div class="wash" aria-hidden="true"></div>
-      <div class="veil" aria-hidden="true"></div>
-      {/* A reader who has taken this quiz on this device sees their answers marked on the
-          axes this person is placed on (RailStack leaves the others unmarked), with one line
-          saying so. Anyone else sees the rails as they were. */}
-      <MineNote quiz={quiz} kind="rails" />
-      <RailStack quiz={quiz} view={view} masks={figure.mask} you />
-    </div>
-
-    <SectionHead
-      title="The moments behind each axis"
-      kicker={`${momentCount} cited acts, grouped by axis`}
-    />
-    <p class="ref-note">
-      Each line is one recorded act and the reference it is taken from. The sentence says
-      what the person did{quoteNote}. An act listed here is evidence of how this person moved,
-      not approval of it; read the passage for how it was received.
-      {silentAxes > 0 && ` On ${silentAxes} of the six the text does not show this, and that axis is left out of the match rather than filled in.`}
-      {bothAxes > 0 && ` On ${bothAxes} the text shows both ends and they do not settle, so that axis is left out too — the acts for each end are printed under it.`}
-    </p>
-
-    <div class="moments">
-      {axes.map(axis => (
-        <section class:list={['moment-axis', { 'is-silent': axis.notShown, 'is-both': axis.bothEnds }]}>
-          <h3 class="moment-head">
-            <a href={groupHref(quiz, axis.group)}>{axis.group.name}</a>
-            <span class="moment-poles">
-              <b class="pole-l">{axis.group.left}</b>
-              <i aria-hidden="true">↔</i>
-              <b class="pole-r">{axis.group.right}</b>
-            </span>
-          </h3>
-          {/* Which way the record points, said in that pole's own ink, as the verdict at the
-              top of the page says it. It was a round disc with an arrow beside the heading
-              until the owner had every mark beside a card's title taken off (2026-09-22). */}
-          <p class:list={['moment-band', `moment-band--${pointing(axis)}`]}>{reading(axis)}</p>
-
-          {/*
-            The two kinds of middle, said in full and never swapped. "The text does not show
-            this" is a fact about the record; "the text shows both ends" is a different fact
-            about it, and a reader who is told the wrong one has been told something false
-            about a person. Both sentences also say the consequence — the axis is left out
-            of the match — because that is the part a reader would otherwise have to guess.
-          */}
-          {axis.explained && (
-            <p class="moment-note">
-              <strong>Not placed on this axis.</strong> The reason is below. The axis is left
-              out when a reader is matched, rather than counted as a position in the middle.
-            </p>
-          )}
-
-          {axis.notShown && !axis.explained && (
-            <p class="moment-note">
-              <strong>The text does not show this.</strong> Nothing in the record puts
-              {' ' + figure.name} at either end of this axis, so it is left out when a reader
-              is matched, rather than counted as a position in the middle.
-            </p>
-          )}
-
-          {axis.bothEnds && (
-            <p class="moment-note">
-              <strong>The text shows both ends.</strong> The recorded acts go one way and the
-              other and do not settle, so this axis is left out when a reader is matched
-              rather than counted as a position in the middle. Both ends are below.
-            </p>
-          )}
-
-          {blocksFor(axis).map(block => (
-            <>
-              {block.label && (
-                <p class:list={['moment-side', `moment-side--${block.side}`]}>
-                  Toward {block.label}
-                </p>
-              )}
-              <ol class="moment-list">
-                {block.items.map(item => (
-                  <li class:list={['moment', item.toward ? `moment--${item.toward}` : 'moment--none']}>
-                    {item.ref
-                      ? <p class="moment-ref">
-                          <span class="moment-cite">{item.ref}</span>
-                          <span class="moment-toward">
-                            toward {item.toward === 'left' ? axis.group.left : axis.group.right}
-                          </span>
-                        </p>
-                      : <p class="moment-ref">
-                          {/* A not-placed cell that says WHY (Jesus on Reasons) cites records
-                              in its own sentence, so "No record" above it would be false. */}
-                          <span class="moment-cite">
-                            {item.did === 'The text does not show this.' ? 'No record' : 'Not placed'}
-                          </span>
-                        </p>}
-                    <p class="moment-did">{item.did}</p>
-                    {item.quote && <blockquote class="moment-quote">{item.quote}</blockquote>}
-                    {item.quote && mixedVersions && <p class="moment-quote-from">{quoteFrom(item)}</p>}
-                  </li>
-                ))}
-              </ol>
-            </>
-          ))}
-        </section>
-      ))}
-    </div>
-
-    {neighbours.length > 0 && (
-      <>
-        <SectionHead title="Nearest on the map" kicker="By the same arithmetic the quiz uses" />
-        <p class="ref-note">
-          Distance between two sets of coordinates across every axis, on the same scale a
-          reader's answers are measured on. No number is shown against a person, and nearness
-          is not likeness: two people can land in the same band for different reasons.
-        </p>
-        <TraditionNeighbours quiz={quiz} ranked={neighbours} limit={6} />
-      </>
-    )}
+    <FigureRecord figure={figure} />
 
     {/* The way back into the quiz: the quiz's own engraving card (see the note above
         `wayArt`). The plate is decorative here and carries no alt text: the card is one
@@ -621,3 +280,4 @@ const breadcrumbs = isDraft
     <CorrectionNote subject={figure.name} />
   </div>
 </Base>
+)}

@@ -1,5 +1,19 @@
 # The next twelve saint pages (research of 2026-09-25)
 
+## HIS RULING (2026-09-26): saints before about 1400, ideally before 700; no modern saints
+
+In his words: "I am not interested in modern saints. I mostly want to stick to saints before the year 1400 or so,
+ideally before 700, but I'd of course make exceptions up to the year 1400 for truly remarkable saints. We can maybe
+revisit modern saints later but for now it's too big of a headache and not the type of content I want at this moment."
+
+So section (c) below is settled (option 1: modern saints stay out), and two of the twelve leave the list:
+**Teresa of Ávila** (died 1582) and **Thérèse of Lisieux** (died 1897). Proposed in their place, both women, from the
+reserves: **Perpetua and Felicity** (died 203: her own prison diary, ideal by his rule) and **Catherine of Siena**
+(died 1380, a Doctor of the Church: a "truly remarkable" exception before 1400). Alternates: Helena (died about 330,
+the True Cross) and Olga of Kyiv (died 969). **Joan of Arc died in 1431**, just past his line: ask him.
+The other ten stand: Nicholas, Ignatius of Antioch, Francis of Assisi (an exception: died 1226), Athanasius, Thomas
+Aquinas (an exception: died 1274), Patrick, Mary of Egypt, George, Moses the Black, and Joan if he keeps her.
+
 The hub has 23 full pages. Five more are planned for the personality test (Monica, Cuthbert, Guthlac, Philip Neri,
 Arsenius). The owner wants 12 more, to reach 40. This file picks them.
 

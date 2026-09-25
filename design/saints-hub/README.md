@@ -13,6 +13,28 @@ the fetched sources are intact here). Every saint note from now on is an edit to
 `main`, pushed after `npm run test` (the branch and the preview link are history). Run `measure-sheet.mjs` against the
 `site` dev server (port 4321).
 
+## BIBLE FIGURE PAGES DRAWN LIKE A SAINT'S (2026-09-26): Peter first, on the branch `figures/peter`
+
+His ask: the 25 `/figure/<slug>/` pages become "a lightened version of the saints pages, but more complete than the
+Bible figures pages are now". The trigger: the hub's cards show a personality type for 8 of them that their pages never
+explained. He approved Peter first, then the other 24.
+
+How it is built (one template for both kinds, so every rule he makes for a saint page holds for a figure page):
+- `site/src/components/PersonPage.astro` is the whole saint page body, taken out of `pages/saints/[slug].astro`
+  (proved identical on all 23 saint pages, apart from where one script tag sits). Props: the page data, the band's
+  crumb, an extra quiz card, and a named slot "record" drawn as its own section before "Take the quizzes".
+- `site/src/components/FigureRecord.astro` is the figure quiz's argument (compass or tally, the six rails, every cited
+  act by axis, the nearest figures), taken out of `pages/figure/[slug].astro`.
+- A figure with a data file `site/src/data/figures/<slug>.json` (SaintPage shape, `lib/saints/figures.ts`) gets
+  PersonPage with its record as "Where the quiz places him"; a figure without one keeps its old page untouched.
+- Pictures in `site/public/img/figures/<slug>-band.jpg` and `<slug>-2.jpg`: **`<slug>.jpg` there is Doré's plate**,
+  used by the quiz and its share card, and must never be overwritten. The hub card keeps the personality face.
+- `saints-test.mjs` checks figure pages as it checks saint pages; `design/og/cards.mjs` gives each a "Who was X?" card;
+  `measure-sheet.mjs` takes a path (`MSYS_NO_PATHCONV=1 node ... /figure/peter/ 4321` in Git Bash).
+- Lighter than a saint page by design: no "What was he like?" (the type box and the quiz's record already show his
+  temperament), and sections only where Scripture or early sources fill them. The quiz's lines quote the World English
+  Bible; the page's own lines quote the BSB, and the notes say which is which.
+
 ## POLYCARP'S PAGE IS WRITTEN (night of 2026-09-25), LIVE since 2026-09-26 with his go
 
 **His one note (2026-09-26):** the section holding the blessing from his letter (Letter to the Philippians, chapter

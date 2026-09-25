@@ -148,6 +148,19 @@ if (existsSync(SAINTS_DIR)) {
   }
 }
 
+/* A Bible figure with a page of its own, drawn like a saint's (site/src/data/figures/, 2026-09-26),
+   wears a card like a saint's in place of the figure quiz's: its band painting and its name. */
+const FIGURES_DIR = join(ROOT, 'site/src/data/figures');
+if (existsSync(FIGURES_DIR)) {
+  for (const f of readdirSync(FIGURES_DIR).filter(f => f.endsWith('.json'))) {
+    const p = JSON.parse(readFileSync(join(FIGURES_DIR, f), 'utf8'));
+    CARDS[`figure-${p.slug}`] = {
+      v: 'left', tone: 'painting', img: p.band.picture.src, pos: p.band.posD, k: 'People of the Bible',
+      h: `Who was|*${p.name}?*`, s: `${p.she ? 'Her' : 'His'} life, ${p.she ? 'her' : 'his'} words and ${p.she ? 'her' : 'his'} feast days.`
+    };
+  }
+}
+
 /*
  * RESULTS (2026-09-23): one card per outcome a result can name, so a shared result link
  * shows who or what the person got instead of the quiz's own card. seo.ts resultCardFor()

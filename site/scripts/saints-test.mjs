@@ -45,6 +45,11 @@ const wec = JSON.parse(readFileSync(join(ROOT, 'src/data/which-early-christian.j
 const wecSlugs = new Set(Object.values(wec.people).map(p => p.slug));
 const files = existsSync(DATA) ? readdirSync(DATA).filter(f => f.endsWith('.json')) : [];
 const pages = files.map(f => ({ f, p: JSON.parse(readFileSync(join(DATA, f), 'utf8')) }));
+/* Bible figure pages drawn like a saint's (src/data/figures/, 2026-09-26): the same checks on each
+   page, none of the move list's (they never had an /early-christian/ address). */
+const FIG = join(ROOT, 'src/data/figures');
+const figPages = (existsSync(FIG) ? readdirSync(FIG).filter(f => f.endsWith('.json')) : [])
+  .map(f => ({ f, p: JSON.parse(readFileSync(join(FIG, f), 'utf8')), figure: true }));
 
 console.log('saints: one person, one page');
 {
@@ -104,8 +109,8 @@ console.log('saints: each page');
     else if (node && typeof node === 'object') Object.entries(node).forEach(([k, v]) => { if (!['url', 'src', 'page', 'img'].includes(k)) strings(v, out); });
     return out;
   };
-  for (const { p } of pages) {
-    const at = p.slug;
+  for (const { p, figure } of [...pages, ...figPages]) {
+    const at = figure ? `figure/${p.slug}` : p.slug;
     let bad = 0;
     const no = m => { fail(`${at}: ${m}`); bad++; };
     for (const k of ['slug', 'name', 'short', 'seo', 'person', 'band', 'card', 'filters', 'who', 'facts', 'saint', 'sources', 'published', 'modified']) {

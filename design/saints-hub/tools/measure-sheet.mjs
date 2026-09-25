@@ -9,7 +9,8 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
 const [slug, port = '4344'] = process.argv.slice(2);
-const url = `http://localhost:${port}/saints/${slug}/`;
+// A Bible figure page drawn like a saint's is measured by its path: /figure/peter/.
+const url = slug.startsWith('/') ? `http://localhost:${port}${slug}` : `http://localhost:${port}/saints/${slug}/`;
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 async function open(width, height, mobile) {
