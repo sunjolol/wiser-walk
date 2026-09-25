@@ -89,6 +89,7 @@ const plural = (n: number) => `${n} ${n === 1 ? 'person' : 'people'}`;
   */}
   <EarlyMine quiz={whichEarlyChristian} kind="people" />
   <div class="people-wrap" id="filters">
+    <div class="fsent" aria-hidden="true"></div>
     <div class="ftool-bar">
       <button class="fbtn" type="button" id="f-open" aria-haspopup="dialog" aria-controls="f-sheet" hidden>
         <Fragment set:html={SLIDERS} /><span>Filters</span><span class="fbadge" id="f-badge" hidden></span>
@@ -114,6 +115,13 @@ const plural = (n: number) => `${n} ${n === 1 ? 'person' : 'people'}`;
         ))}
       </div>
       <p class="people-count" id="people-count" aria-live="polite">{plural(people)}</p>
+      {/* Once the bar sticks, the count gives way to a search box that filters as you type, in step
+          with the one in the band (the owner, 2026-09-25). Its placeholder keeps the count. */}
+      <form class="fq" role="search" id="saint-search-2" action="#people">
+        <label class="sr-only" for="saint-q2">Search the saints</label>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+        <input id="saint-q2" type="search" placeholder={`Search ${plural(people)}`} autocomplete="off" />
+      </form>
     </div>
     <div class="factive" id="f-active" hidden></div>
 
@@ -205,6 +213,7 @@ const plural = (n: number) => `${n} ${n === 1 ? 'person' : 'people'}`;
   const showBtn = document.getElementById('f-show') as HTMLButtonElement;
   const openBtn = document.getElementById('f-open') as HTMLButtonElement;
   const qEl = document.getElementById('saint-q') as HTMLInputElement;
+  const q2El = document.getElementById('saint-q2') as HTMLInputElement;
   const CROSS = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
   openBtn.hidden = false;
 
@@ -248,6 +257,9 @@ const plural = (n: number) => `${n} ${n === 1 ? 'person' : 'people'}`;
     const n = KEYS.reduce((a, k) => a + picks[k].length, 0);
     const searching = !!norm(q).trim();
     countEl.textContent = n || searching ? `${shown} of ${total}` : people(total);
+    if (qEl.value !== q) qEl.value = q;
+    if (q2El.value !== q) q2El.value = q;
+    q2El.placeholder = `Search ${people(n ? shown : total)}`;
     emptyEl.hidden = shown > 0;
     badge.hidden = !n;
     badge.textContent = String(n);
@@ -333,6 +345,24 @@ const plural = (n: number) => `${n} ${n === 1 ? 'person' : 'people'}`;
   showBtn.addEventListener('click', () => { closeSheet(); toList(); });
 
   qEl.addEventListener('input', () => { q = qEl.value; apply(); });
+  document.getElementById('saint-search-2')!.addEventListener('submit', e => { e.preventDefault(); q2El.blur(); });
+  /* The bar is stuck once the line just above it has scrolled under its 8px top. While its search box
+     has the focus it stays a search box, so a list that shrinks as you type cannot take it away. */
+  const bar = document.querySelector<HTMLElement>('.ftool-bar')!;
+  const sent = document.querySelector<HTMLElement>('.fsent')!;
+  let stuck = false;
+  const paintBar = () => bar.classList.toggle('is-stuck', stuck || document.activeElement === q2El);
+  new IntersectionObserver(([e]) => { stuck = !e.isIntersecting && e.boundingClientRect.top < 9; paintBar(); },
+    { rootMargin: '-9px 0px 0px 0px' }).observe(sent);
+  /* Once focus has really left the box (after the blur event itself). */
+  q2El.addEventListener('blur', () => setTimeout(paintBar));
+  q2El.addEventListener('input', () => {
+    q = q2El.value;
+    apply();
+    /* A list that shrinks under the stuck bar can carry the bar, and the box being typed in, off the
+       top of the screen: bring the bar back to where it sticks, with the results under it. */
+    if (bar.getBoundingClientRect().top < 0) scrollTo({ top: sent.getBoundingClientRect().top + scrollY - 8 });
+  });
   document.getElementById('saint-search')!.addEventListener('submit', e => { e.preventDefault(); toList(); });
   addEventListener('hashchange', () => { readHash(); apply(); });
 
