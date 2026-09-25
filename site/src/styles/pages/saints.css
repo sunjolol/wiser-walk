@@ -383,15 +383,15 @@ html.is-locked { overflow: hidden; }
 .path b { font-family: var(--display); font-weight: 700; font-size: 1.3rem; line-height: 1.15; color: var(--ink); }
 .path span { font-size: .86rem; line-height: 1.4; color: var(--ink-soft); }
 @media (min-width: 46rem) {
-  /* the label and the path sit together in the middle, so the label starts over the first dot */
-  .path-in { width: fit-content; max-width: 100%; margin: 0 auto; }
-  .path { --gap: clamp(2rem, 5vw, 4.5rem); grid-auto-flow: column; grid-auto-columns: minmax(0, max-content); column-gap: var(--gap); }
-  .path li { max-width: 15rem; padding: 1.6rem 0 0; }
-  /* a role that has to wrap splits evenly ("Led its church, / 379 to 381"), never leaving a
-     scrap on its second line; the page's script then draws the column in to its words */
+  /* Across the box: evenly spaced dots, each step centred under its dot, so the path is centred
+     by construction on every page (the owner, 2026-09-25, on Macrina's: steps left-aligned under
+     their dots left the row of dots lopsided and unevenly spaced). A step that wraps splits
+     evenly ("Led its church, / 379 to 381"). */
+  .path { --gap: 1.5rem; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); column-gap: var(--gap); }
+  .path li { align-items: center; text-align: center; padding: 1.6rem 0 0; }
   .path :is(b, span) { text-wrap: balance; }
-  .path li::before { top: 0; }
-  .path li::after { left: 1.5rem; right: calc(.5rem - var(--gap)); top: 6.5px; bottom: auto; border-left: 0; border-top: 2px dotted var(--rule-strong); }
+  .path li::before { top: 0; left: 50%; transform: translateX(-50%); }
+  .path li::after { left: calc(50% + 14px); right: calc(14px - 50% - var(--gap)); top: 6.5px; bottom: auto; border-left: 0; border-top: 2px dotted var(--rule-strong); }
 }
 .sfacts { margin: 0; }
 .sfacts > div { padding: .62rem 0 .7rem; border-bottom: 2px dotted var(--rule-strong); }
@@ -426,6 +426,30 @@ html.is-locked { overflow: hidden; }
 }
 
 .portrait { margin: 0; padding: .55rem; }
+.art { display: block; position: relative; border-radius: 12px; }
+/* a wide screen opens a picture whole (the page's script and its dialog); a small mark on its
+   corner says so. A phone or a tablet shows the picture at full width already. */
+@media (min-width: 62rem) {
+  .art { cursor: zoom-in; }
+  .art::after {
+    content: ""; position: absolute; right: .45rem; bottom: .45rem; width: 30px; height: 30px; border-radius: 50%;
+    background: rgba(20, 20, 26, .62) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 4h5v5M9 20H4v-5M20 4l-6 6M4 20l6-6'/%3E%3C/svg%3E") center / 15px no-repeat;
+    opacity: .8; transition: opacity .15s ease;
+  }
+  .art:hover::after, .art:focus-visible::after { opacity: 1; }
+  .art:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+}
+.artbox { width: 100vw; height: 100vh; max-width: 100vw; max-height: 100vh; margin: 0; padding: 0; border: 0; background: transparent; }
+.artbox[open] { display: grid; place-items: center; }
+.artbox::backdrop { background: rgba(12, 12, 16, .9); }
+.artbox-fig { margin: 0; display: grid; justify-items: center; gap: .8rem; padding: 3.5rem 1.5rem 2rem; }
+.artbox-fig img { display: block; max-width: min(92vw, 70rem); max-height: 82vh; width: auto; height: auto; border-radius: 10px; box-shadow: 0 20px 60px rgba(0, 0, 0, .5); }
+.artbox-fig figcaption { max-width: 44rem; font-size: .86rem; line-height: 1.5; color: rgba(255, 255, 255, .8); text-align: center; text-wrap: pretty; }
+.artbox-x {
+  position: fixed; top: 1rem; right: 1rem; display: grid; place-items: center; width: 44px; height: 44px; border: 0; border-radius: 50%;
+  background: rgba(255, 255, 255, .14); color: #fff; cursor: pointer;
+}
+.artbox-x:hover { background: rgba(255, 255, 255, .24); }
 /* more of him in art: a wide screen only, where the facts leave this column room (the page's
    data carries only as many as fit) */
 .portrait--more { display: none; }
@@ -592,6 +616,9 @@ html.is-locked { overflow: hidden; }
 
 /* DEATH, SAINT */
 .split { display: grid; gap: .9rem; grid-template-columns: minmax(0, 1fr); }
+/* the right of "How he died": the last words, then any later story under them */
+.death-side { display: grid; gap: .9rem; align-content: start; }
+.death-side > .later { margin-top: 0; }
 @media (min-width: 52rem) { .split { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: start; } }
 .sprose p { font-size: .96rem; color: var(--ink-soft); }
 .sprose p:last-child { margin-bottom: 0; }
@@ -728,3 +755,11 @@ html.is-locked { overflow: hidden; }
    count allows it (four, eight, ten): set on the page from the count. */
 @media (min-width: 46rem) { .said.said--pairs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 52rem) { .kin.kin--pairs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* The miracles' opening quotation stands 15px clear of the dark panel under it. The general
+   "figure has no margin" rule above had taken its gap away (the owner, 2026-09-25). */
+.sp figure.spledge { margin-bottom: 15px; }
+
+/* "Doubted from the start" in the empty cell beside an odd last wonder: a cell of the grid, the
+   same height as its neighbour (the owner, 2026-09-25, on Macrina's page). */
+.wonders > .doubt--cell { margin-top: 0; }

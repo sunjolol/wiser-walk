@@ -101,6 +101,10 @@ const after = (id: string) => extras.filter(x => x.after === id);
 const title = (id: string) => SECTIONS.find(s => s[0] === id)?.[1] ?? '';
 /** A count that leaves one card alone in rows of three, but pairs off evenly: 4, 10, 16. */
 const pairs = (n: number) => n > 3 && n % 3 === 1 && n % 2 === 0;
+/* "Doubted from the start" (the miracles' doubt box). Where the wonders above it leave the last
+   cell of their two-across grid empty, it takes that cell instead of a row of its own (the owner,
+   2026-09-25, on Macrina's page); a phone reads it after the wonders either way. */
+const doubtInGrid = !!p.miracles?.doubt && (p.miracles.more?.length ?? 0) % 2 === 1;
 /* Friends, family and rivals: the people with a face (a page of their own on the site) come
    first, so the portraits sit together instead of scattered through the grid (the owner, on
    Clement's page, 2026-09-25). Otherwise the data's own order holds. */
@@ -145,7 +149,7 @@ const jsonLd = {
     ...(p.person.alternateName?.length ? { alternateName: p.person.alternateName } : {}),
     ...(p.person.birthPlace ? { birthPlace: p.person.birthPlace } : {}),
     ...(p.person.deathPlace ? { deathPlace: p.person.deathPlace } : {}),
-    description: p.who,
+    description: plain(p.who),
     image: imageLd.contentUrl,
     sameAs: p.person.sameAs
   },
@@ -189,7 +193,7 @@ const breadcrumbs = [
 
   <section class="panel answer" id="who">
     <h2>{title('who')}</h2>
-    <p>{p.who}</p>
+    <p set:html={rich(p.who)} />
   </section>
 
   {/* AT A GLANCE: the sheet */}
@@ -203,7 +207,7 @@ const breadcrumbs = [
         <div class="path-in">
           <p class="path-k">{His} path, in order</p>
           <ol class="path">
-            {p.roles.map(r => <li><b>{r.name}</b><span>{r.line}</span></li>)}
+            {p.roles.map(r => <li><b>{r.name}</b><span set:html={rich(r.line)} /></li>)}
           </ol>
         </div>
       </section>
@@ -218,7 +222,7 @@ const breadcrumbs = [
               {p.numbers.map(n => (
                 <li class="stat">
                   <span class="stat-chip">{n.chip}</span><b class="stat-n">{n.n}</b>
-                  <ul class="stat-lines">{n.lines.map(l => <li>{l}</li>)}</ul>
+                  <ul class="stat-lines">{n.lines.map(l => <li set:html={rich(l)} />)}</ul>
                   <span class="stat-src">{n.src}</span>
                 </li>
               ))}
@@ -235,7 +239,7 @@ const breadcrumbs = [
               {p.tidbits.map(t => (
                 <li class="tid">
                   <p set:html={rich(t.text)} />
-                  <span class="cite">{t.cite.url ? <a href={t.cite.url} target="_blank" rel="noopener">{t.cite.text}</a> : t.cite.text}</span>
+                  <span class="cite">{t.cite.url ? <a href={t.cite.url} target="_blank" rel="noopener" set:html={rich(t.cite.text)} /> : <Fragment set:html={rich(t.cite.text)} />}</span>
                 </li>
               ))}
             </ul>
@@ -254,7 +258,7 @@ const breadcrumbs = [
       <div class="cs-side">
         {p.portrait && (
           <figure class="panel portrait">
-            <img src={p.portrait.src} alt={p.portrait.alt} width={p.portrait.width} height={p.portrait.height} loading="lazy" />
+            <span class="art" data-art><img src={p.portrait.src} alt={p.portrait.alt} width={p.portrait.width} height={p.portrait.height} loading="lazy" /></span>
             <figcaption><b>In art</b><Fragment set:html={rich(p.portrait.caption)} /></figcaption>
           </figure>
         )}
@@ -264,7 +268,7 @@ const breadcrumbs = [
             sheet taller. */}
         {p.gallery?.map(g => (
           <figure class="panel portrait portrait--more">
-            <img src={g.src} alt={g.alt} width={g.width} height={g.height} loading="lazy" />
+            <span class="art" data-art><img src={g.src} alt={g.alt} width={g.width} height={g.height} loading="lazy" /></span>
             <figcaption><Fragment set:html={rich(g.caption)} /></figcaption>
           </figure>
         ))}
@@ -329,7 +333,7 @@ const breadcrumbs = [
             <div class="trait">
               <h3><i>+</i>{t.title}</h3>
               <p set:html={rich(t.text)} />
-              <span class="cite">{out(t.cite) ? <a href={t.cite.url} target="_blank" rel="noopener">{t.cite.text}</a> : t.cite.text}</span>
+              <span class="cite">{out(t.cite) ? <a href={t.cite.url} target="_blank" rel="noopener" set:html={rich(t.cite.text)} /> : <Fragment set:html={rich(t.cite.text)} />}</span>
             </div>
           ))}
         </div>
@@ -346,7 +350,7 @@ const breadcrumbs = [
         {p.said.quotes.map(q => (
           <figure class="panel qc">
             <blockquote>{q.q}</blockquote>
-            <figcaption class="who"><Fragment set:html={rich(q.who)} /><span class="cite">{q.cite.url ? <a href={q.cite.url} target="_blank" rel="noopener">{q.cite.text}</a> : q.cite.text}</span></figcaption>
+            <figcaption class="who"><Fragment set:html={rich(q.who)} /><span class="cite">{q.cite.url ? <a href={q.cite.url} target="_blank" rel="noopener" set:html={rich(q.cite.text)} /> : <Fragment set:html={rich(q.cite.text)} />}</span></figcaption>
           </figure>
         ))}
       </div>
@@ -361,9 +365,9 @@ const breadcrumbs = [
         {moments.map(m => (
           <li class="mo"><div class="panel">
             <div class="mo-h"><p class="mo-place">{m.place}</p><span class="mo-when">{m.when}</span></div>
-            <h3>{m.title}</h3>
+            <h3 set:html={rich(m.title)} />
             <p set:html={rich(m.text)} />
-            <span class="cite">{m.cite.url ? <a href={m.cite.url} target="_blank" rel="noopener">{m.cite.text}</a> : m.cite.text}</span>
+            <span class="cite">{m.cite.url ? <a href={m.cite.url} target="_blank" rel="noopener" set:html={rich(m.cite.text)} /> : <Fragment set:html={rich(m.cite.text)} />}</span>
           </div></li>
         ))}
       </ol>
@@ -378,7 +382,7 @@ const breadcrumbs = [
         <p class="sect-lede" set:html={rich(p.miracles.lede)} />
         {p.miracles.pledge && (
           <figure class="spledge"><blockquote>{p.miracles.pledge.q}</blockquote>
-            <figcaption class="cite">{p.miracles.pledge.cite.url ? <a href={p.miracles.pledge.cite.url} target="_blank" rel="noopener">{p.miracles.pledge.cite.text}</a> : p.miracles.pledge.cite.text}</figcaption>
+            <figcaption class="cite">{p.miracles.pledge.cite.url ? <a href={p.miracles.pledge.cite.url} target="_blank" rel="noopener" set:html={rich(p.miracles.pledge.cite.text)} /> : <Fragment set:html={rich(p.miracles.pledge.cite.text)} />}</figcaption>
           </figure>
         )}
         {p.miracles.feature && (
@@ -392,12 +396,12 @@ const breadcrumbs = [
                   <p set:html={rich(r.text)} />
                   <blockquote>“{r.quote}”</blockquote>
                   {r.witness && <p class="rz-who" set:html={rich(r.witness)} />}
-                  <span class="cite">{r.cite.url ? <a href={r.cite.url} target="_blank" rel="noopener">{r.cite.text}</a> : r.cite.text}</span>
+                  <span class="cite">{r.cite.url ? <a href={r.cite.url} target="_blank" rel="noopener" set:html={rich(r.cite.text)} /> : <Fragment set:html={rich(r.cite.text)} />}</span>
                 </li>
               ))}
             </ol>
             {p.miracles.feature.note && (
-              <p class="raised-note"><Fragment set:html={rich(p.miracles.feature.note.text) + ' '} /><span class="cite">{p.miracles.feature.note.cite.url ? <a href={p.miracles.feature.note.cite.url} target="_blank" rel="noopener">{p.miracles.feature.note.cite.text}</a> : p.miracles.feature.note.cite.text}</span></p>
+              <p class="raised-note"><Fragment set:html={rich(p.miracles.feature.note.text) + ' '} /><span class="cite">{p.miracles.feature.note.cite.url ? <a href={p.miracles.feature.note.cite.url} target="_blank" rel="noopener" set:html={rich(p.miracles.feature.note.cite.text)} /> : <Fragment set:html={rich(p.miracles.feature.note.cite.text)} />}</span></p>
             )}
           </section>
         )}
@@ -408,17 +412,26 @@ const breadcrumbs = [
                 <h3>{w.title}</h3>
                 <p set:html={rich(w.text)} />
                 <blockquote>“{w.quote}”</blockquote>
-                <span class="cite">{w.cite.url ? <a href={w.cite.url} target="_blank" rel="noopener">{w.cite.text}</a> : w.cite.text}</span>
+                <span class="cite">{w.cite.url ? <a href={w.cite.url} target="_blank" rel="noopener" set:html={rich(w.cite.text)} /> : <Fragment set:html={rich(w.cite.text)} />}</span>
               </div>
             ))}
-          </div>
-        ) : null}
-        {p.miracles.doubt && (
-          <div class="later doubt">
+            {doubtInGrid && p.miracles.doubt && (
+          <div class:list={['later doubt', doubtInGrid && 'doubt--cell']}>
             <b>{p.miracles.doubt.title}</b>
             <Fragment set:html={rich(p.miracles.doubt.text)} />
             <span class="cite">{p.miracles.doubt.cites.map((c, i) => (
-              <>{i > 0 && '; '}{c.url ? <a href={c.url} target="_blank" rel="noopener">{c.text}</a> : c.text}</>
+              <>{i > 0 && '; '}{c.url ? <a href={c.url} target="_blank" rel="noopener" set:html={rich(c.text)} /> : <Fragment set:html={rich(c.text)} />}</>
+            ))}</span>
+          </div>
+            )}
+          </div>
+        ) : null}
+        {p.miracles.doubt && !doubtInGrid && (
+          <div class:list={['later doubt', doubtInGrid && 'doubt--cell']}>
+            <b>{p.miracles.doubt.title}</b>
+            <Fragment set:html={rich(p.miracles.doubt.text)} />
+            <span class="cite">{p.miracles.doubt.cites.map((c, i) => (
+              <>{i > 0 && '; '}{c.url ? <a href={c.url} target="_blank" rel="noopener" set:html={rich(c.text)} /> : <Fragment set:html={rich(c.text)} />}</>
             ))}</span>
           </div>
         )}
@@ -440,7 +453,7 @@ const breadcrumbs = [
             <blockquote>{p.words.feature.q}</blockquote>
             <figcaption>
               {p.words.feature.ctx && <p class="ctx" set:html={rich(p.words.feature.ctx)} />}
-              <span class="cite">{p.words.feature.cite.url ? <a href={p.words.feature.cite.url} target="_blank" rel="noopener">{p.words.feature.cite.text}</a> : p.words.feature.cite.text}</span>
+              <span class="cite">{p.words.feature.cite.url ? <a href={p.words.feature.cite.url} target="_blank" rel="noopener" set:html={rich(p.words.feature.cite.text)} /> : <Fragment set:html={rich(p.words.feature.cite.text)} />}</span>
             </figcaption>
           </figure>
         )}
@@ -449,7 +462,7 @@ const breadcrumbs = [
             {p.words.quotes.map(q => (
               <figure class="panel qc">
                 <blockquote>{q.q}</blockquote>
-                <figcaption class="who"><Fragment set:html={rich(q.who)} /><span class="cite">{q.cite.url ? <a href={q.cite.url} target="_blank" rel="noopener">{q.cite.text}</a> : q.cite.text}</span></figcaption>
+                <figcaption class="who"><Fragment set:html={rich(q.who)} /><span class="cite">{q.cite.url ? <a href={q.cite.url} target="_blank" rel="noopener" set:html={rich(q.cite.text)} /> : <Fragment set:html={rich(q.cite.text)} />}</span></figcaption>
               </figure>
             ))}
           </div>
@@ -468,7 +481,7 @@ const breadcrumbs = [
             <span class="myth-k">Often said</span>
             <p class="myth-c" set:html={rich(m.claim)} />
             <p class="myth-t"><b>What the sources say</b><Fragment set:html={rich(m.truth)} /></p>
-            <span class="cite">{m.cite.url ? <a href={m.cite.url} target="_blank" rel="noopener">{m.cite.text}</a> : m.cite.text}</span>
+            <span class="cite">{m.cite.url ? <a href={m.cite.url} target="_blank" rel="noopener" set:html={rich(m.cite.text)} /> : <Fragment set:html={rich(m.cite.text)} />}</span>
           </div>
         ))}
       </div>
@@ -542,7 +555,7 @@ const breadcrumbs = [
             <Tag class="panel kc" href={href ?? undefined}>
               <span class="kc-h">{c.key && <img src={faceFor(c.key)} alt="" loading="lazy" />}<span><span class="kc-n">{c.name}</span></span></span>
               <p set:html={rich(c.text)} />
-              {c.cite && <span class="cite">{c.cite.text}</span>}
+              {c.cite && <span class="cite" set:html={rich(c.cite.text)} />}
             </Tag>
           );
         })}
@@ -554,20 +567,17 @@ const breadcrumbs = [
   {p.death && (
     <>
       <SectionHead id="death" title={title('death').toLowerCase()} />
+      {/* The account on the left; on the right the last words, then any later story. The owner,
+          2026-09-25, on Origen's and Cyprian's pages: the later story fills the space beside or
+          under the last words and reads better there. Measured on every page with one: it evens
+          the two columns in every case. A phone reads them in this order. */}
       <div class="split">
-        <div>
-          <div class="panel sprose">
-            <p class="big" set:html={rich(p.death.big)} />
-            {p.death.paras.map(t => <p set:html={rich(t)} />)}
-          </div>
-          {p.death.later && (
-            <div class="later">
-              <b>{p.death.later.title}</b>
-              <Fragment set:html={rich(p.death.later.text)} />
-              <span class="cite">{p.death.later.cite.url ? <a href={p.death.later.cite.url} target="_blank" rel="noopener">{p.death.later.cite.text}</a> : p.death.later.cite.text}</span>
-            </div>
-          )}
+        <div class="panel sprose">
+          <p class="big" set:html={rich(p.death.big)} />
+          {p.death.paras.map(t => <p set:html={rich(t)} />)}
         </div>
+        {(p.death.last || p.death.later) && (
+        <div class="death-side">
         {p.death.last && (
           <div class="dark lastwords">
             {p.death.last.items.map(it => (
@@ -577,8 +587,17 @@ const breadcrumbs = [
                 {it.ctx && <p class="ctx" set:html={rich(it.ctx)} />}
               </div>
             ))}
-            <span class="cite">{p.death.last.cite.url ? <a href={p.death.last.cite.url} target="_blank" rel="noopener">{p.death.last.cite.text}</a> : p.death.last.cite.text}</span>
+            <span class="cite">{p.death.last.cite.url ? <a href={p.death.last.cite.url} target="_blank" rel="noopener" set:html={rich(p.death.last.cite.text)} /> : <Fragment set:html={rich(p.death.last.cite.text)} />}</span>
           </div>
+        )}
+        {p.death.later && (
+          <div class="later">
+            <b>{p.death.later.title}</b>
+            <Fragment set:html={rich(p.death.later.text)} />
+            <span class="cite">{p.death.later.cite.url ? <a href={p.death.later.cite.url} target="_blank" rel="noopener" set:html={rich(p.death.later.cite.text)} /> : <Fragment set:html={rich(p.death.later.cite.text)} />}</span>
+          </div>
+        )}
+        </div>
         )}
       </div>
     </>
@@ -589,7 +608,7 @@ const breadcrumbs = [
   <div class="panel sprose">
     <p class="big" set:html={rich(p.saint.big)} />
     <ul class="churches">
-      {p.saint.churches.map(c => <li><b>{c.church}</b><span>{c.status}</span><small>{c.note}</small></li>)}
+      {p.saint.churches.map(c => <li><b>{c.church}</b><span>{c.status}</span><small set:html={rich(c.note)} /></li>)}
     </ul>
     {p.saint.paras?.map(t => <p set:html={rich(t)} />)}
   </div>
@@ -598,7 +617,7 @@ const breadcrumbs = [
       {p.saint.quotes.map(q => (
         <figure class="panel qc">
           <blockquote>{q.q}</blockquote>
-          <figcaption class="who"><Fragment set:html={rich(q.who)} /><span class="cite">{q.cite.url ? <a href={q.cite.url} target="_blank" rel="noopener">{q.cite.text}</a> : q.cite.text}</span></figcaption>
+          <figcaption class="who"><Fragment set:html={rich(q.who)} /><span class="cite">{q.cite.url ? <a href={q.cite.url} target="_blank" rel="noopener" set:html={rich(q.cite.text)} /> : <Fragment set:html={rich(q.cite.text)} />}</span></figcaption>
         </figure>
       ))}
     </div>
@@ -612,7 +631,7 @@ const breadcrumbs = [
       <figure class="dark qf qf--prayer">
         <span class="qf-ghost" aria-hidden="true">“</span>
         <blockquote>{p.prayer.q}</blockquote>
-        <figcaption><span class="cite">{p.prayer.cite.url ? <a href={p.prayer.cite.url} target="_blank" rel="noopener">{p.prayer.cite.text}</a> : p.prayer.cite.text}</span></figcaption>
+        <figcaption><span class="cite">{p.prayer.cite.url ? <a href={p.prayer.cite.url} target="_blank" rel="noopener" set:html={rich(p.prayer.cite.text)} /> : <Fragment set:html={rich(p.prayer.cite.text)} />}</span></figcaption>
       </figure>
     </>
   )}
@@ -692,6 +711,14 @@ const breadcrumbs = [
     ))}
   </div>
 </article>
+{/* The picture viewer: a wide screen only (the owner, 2026-09-25: a phone or a tablet already shows
+    each picture at full width). The browser's own dialog, as the site's other popups use. */}
+<dialog class="artbox" id="artbox" aria-label="Picture">
+  <button class="artbox-x" type="button" aria-label="Close" data-artbox-close>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <figure class="artbox-fig"><img id="artbox-img" alt="" /><figcaption id="artbox-cap"></figcaption></figure>
+</dialog>
 {import.meta.env.DEV && (
   /* Development only, compiled out of anything served, as EarlyMine's: ?mine=<code> makes this
      tab hold that early-Christian result, so the page can be captured as a reader who has one. */
@@ -740,64 +767,39 @@ const breadcrumbs = [
   }
 
   /*
-   * HIS ROLES, IN ORDER, on a wide screen: in the middle of its box, equal space either side, as
-   * the owner had Martin's drawn (draft 3). Martin's roles fit one line each and the CSS centres
-   * them. Most lives have longer lines, and there the grid squeezed every column and wrapped its
-   * words, so each wrapped column held less ink than width and the path looked pushed to the left
-   * (his note on the other 21, 2026-09-25). So where the lines do not fit at the natural gap, the
-   * gap gives way first, down to 2rem; where they still do not fit, each column is drawn in to its
-   * wrapped words and the room that frees is shared out as gap, so the ink runs edge to edge with
-   * the same space either side. Without the script the CSS layout stands.
+   * THE PICTURE VIEWER, on a wide screen only: a click (or Enter) on a picture in the sheet opens it
+   * whole, with its caption; the dialog's backdrop, its cross and Escape close it. On a phone or a
+   * tablet the pictures stay plain pictures.
    */
-  const path = document.querySelector<HTMLElement>('.cs-path .path');
-  if (path) {
-    const wide = matchMedia('(min-width: 46rem)');
-    const MIN_GAP = 32;
-    /** The right edge of the furthest line of words in a column. */
-    const inkRight = (li: HTMLElement) => {
-      let right = 0;
-      for (const el of li.children) {
-        const r = document.createRange();
-        r.selectNodeContents(el);
-        for (const b of r.getClientRects()) right = Math.max(right, b.right);
-      }
-      return right;
+  const artBox = document.getElementById('artbox') as HTMLDialogElement | null;
+  const wideArt = matchMedia('(min-width: 62rem)');
+  if (artBox && typeof artBox.showModal === 'function') {
+    const big = document.getElementById('artbox-img') as HTMLImageElement;
+    const cap = document.getElementById('artbox-cap')!;
+    const arts = [...document.querySelectorAll<HTMLElement>('[data-art]')];
+    const arm = () => arts.forEach(a => {
+      if (wideArt.matches) { a.tabIndex = 0; a.setAttribute('role', 'button'); a.setAttribute('aria-label', 'Open the picture full size'); }
+      else { a.removeAttribute('tabindex'); a.removeAttribute('role'); a.removeAttribute('aria-label'); }
+    });
+    const open = (a: HTMLElement) => {
+      const img = a.querySelector('img')!;
+      big.src = img.currentSrc || img.src;
+      big.alt = img.alt;
+      const fc = a.closest('figure')?.querySelector('figcaption');
+      const text = fc ? [...fc.childNodes].filter(n => !(n instanceof HTMLElement && n.tagName === 'B')).map(n => n.textContent).join('').trim() : '';
+      cap.textContent = text;
+      cap.hidden = !text;
+      artBox.showModal();
+      document.documentElement.classList.add('is-locked');
     };
-    const fit = () => {
-      const items = [...path.children] as HTMLElement[];
-      path.style.removeProperty('--gap');
-      items.forEach(li => { li.style.width = ''; });
-      if (!wide.matches || items.length < 2) return;
-      const box = path.closest<HTMLElement>('.cs-path')!;
-      const bs = getComputedStyle(box);
-      const room = box.clientWidth - parseFloat(bs.paddingLeft) - parseFloat(bs.paddingRight);
-      const gap = parseFloat(getComputedStyle(path).columnGap) || MIN_GAP;
-      const n = items.length - 1;
-      // each column at its words' full length (the CSS still caps a column at 15rem)
-      items.forEach(li => { li.style.width = 'max-content'; });
-      const whole = items.reduce((a, li) => a + li.getBoundingClientRect().width, 0);
-      items.forEach(li => { li.style.width = ''; });
-      if (whole + n * gap <= room) return;
-      if (whole + n * MIN_GAP <= room) {
-        path.style.setProperty('--gap', `${Math.floor((room - whole) / n) - 1}px`);
-        return;
-      }
-      path.style.setProperty('--gap', `${MIN_GAP}px`);
-      const ink = items.map(li => Math.ceil(inkRight(li) - li.getBoundingClientRect().left) + 1);
-      items.forEach((li, i) => { li.style.width = `${ink[i]}px`; });
-      // never wider than the natural gap: past it the path simply sits centred, as Martin's does
-      const used = ink.reduce((a, b) => a + b, 0);
-      path.style.setProperty('--gap', `${Math.min(gap, Math.max(MIN_GAP, Math.floor((room - used) / n) - 1))}px`);
-    };
-    let queued = false;
-    const refit = () => {
-      if (queued) return;
-      queued = true;
-      requestAnimationFrame(() => { queued = false; fit(); });
-    };
-    fit();
-    document.fonts?.ready.then(fit);
-    addEventListener('resize', refit);
+    arts.forEach(a => {
+      a.addEventListener('click', () => { if (wideArt.matches) open(a); });
+      a.addEventListener('keydown', e => { if (wideArt.matches && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); open(a); } });
+    });
+    artBox.addEventListener('close', () => document.documentElement.classList.remove('is-locked'));
+    artBox.addEventListener('click', e => { if (e.target === artBox || (e.target as Element).closest('[data-artbox-close]') || e.target === artBox.querySelector('.artbox-fig')) artBox.close(); });
+    arm();
+    wideArt.addEventListener('change', arm);
   }
 
   /*

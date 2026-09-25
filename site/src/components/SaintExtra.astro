@@ -20,7 +20,7 @@ const { x } = Astro.props;
         {i.title && <h3>{i.title}</h3>}
         <p set:html={rich(i.text)} />
         {i.quote && <blockquote>“{i.quote}”</blockquote>}
-        {i.cite && <span class="cite">{i.cite.url ? <a href={i.cite.url} target="_blank" rel="noopener">{i.cite.text}</a> : i.cite.text}</span>}
+        {i.cite && <span class="cite">{i.cite.url ? <a href={i.cite.url} target="_blank" rel="noopener" set:html={rich(i.cite.text)} /> : <Fragment set:html={rich(i.cite.text)} />}</span>}
       </div>
     ))}
   </div>
