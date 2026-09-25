@@ -430,7 +430,7 @@ long side.
 | daniel-west-band.jpg | Daniel Interpreting to Belshazzar the Writing on the Wall, Benjamin West, 1775, Saint Louis Art Museum. The page's band (the owner swapped it with the Rivière, 2026-09-25). The museum's free 5676 x 3934 download, resized whole to 1800 x 1248 | Saint Louis Art Museum, https://www.slam.org/collection/objects/63403/ (not Commons) | Public domain (the museum's own marking) |
 | daniel-west-card.jpg | The Saints hub card, cut from the same West painting around Daniel's face (box 1820,831 to 2720,1956 of the download), 480 x 600, the owner's choice | as for daniel-west-band.jpg | Public domain |
 | daniel-foster.jpg | Daniel in the Den of Lions, an engraving in Bible Pictures, with brief descriptions by Charles Foster, Philadelphia, 1897. A gallery picture, shown on wide screens only, the owner's choice in place of the Rubens. The scan's grey edges trimmed, resized to 911 x 1200 | `Foster Bible Pictures 0011-1.jpg` (1774 x 2274) | Public domain |
-| joseph-zurbaran-card.jpg | The Saints hub card, cut at its own size (460 x 575) around Joseph's face from joseph-3.jpg, Zurbarán's Joseph (Jacob and His Twelve Sons, 1640s, Auckland Castle), the owner's choice | as for joseph-3.jpg | Public domain |
+| joseph-zurbaran-card2.jpg | The Saints hub card, 480 x 600, centred on Joseph's whole head and turban (box 215,15 to 755,690) from joseph-3.jpg, Zurbarán's Joseph (Jacob and His Twelve Sons, 1640s, Auckland Castle), the owner's choice | as for joseph-3.jpg | Public domain |
 
 ## Another licence: the Saints hub (`saints/`)
 
