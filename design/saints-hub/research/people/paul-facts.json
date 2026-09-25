@@ -1,0 +1,251 @@
+{
+  "subject": "Paul",
+  "slug": "paul",
+  "page": "site/src/data/figures/paul.json",
+  "checked_on": "2026-09-25",
+  "note": "Evidence for Paul's enhanced Bible figure page. Every quotation the page prints is in paul.quotes.json and passes verify-quotes.mjs (144 printed, 130 entries). Fetched texts are in design/saints-hub/sources/people/paul/ (gitignored); the Fathers come from design/saints-hub/sources/shared/; the calendar texts for 29 and 30 June are reused from design/saints-hub/sources/people/peter/. The Bible is the Berean Standard Bible (public domain): the chapters of Acts, Paul's letters and 2 Peter are copied into bsb-paul-chapters.txt, one chapter a paragraph, so quotations across verses can be checked.",
+  "life": [
+    {
+      "text": "Born at Tarsus in Cilicia; a Roman citizen by birth; educated in Jerusalem at the feet of Gamaliel.",
+      "source": "Acts 21:39; 22:3; 22:28 (BSB). Britannica gives his birth as \"4 bce ?, Tarsus in Cilicia [now in Turkey]\".",
+      "url": "https://biblehub.com/bsb/acts/22.htm",
+      "verified": true,
+      "note": "The page gives no birth year: no source records one; Britannica's 4 BC carries a question mark."
+    },
+    {
+      "text": "Jerome says his family came from Gischala (Giscalis) in Judea and moved to Tarsus.",
+      "source": "Jerome, Lives of Illustrious Men, chapter 5 (NPNF2 3): \"of the tribe of Benjamin and the town of Giscalis in Judea. When this was taken by the Romans he removed with his parents to Tarsus in Cilicia.\" Catholic Encyclopedia, \"St. Paul\": Gischala, \"a small town of Galilee\"; the capture detail is \"certainly an anachronism\".",
+      "url": "https://ccel.org/ccel/schaff/npnf203.v.iii.vii.html",
+      "verified": true,
+      "note": "The page says \"in the Holy Land\", since Jerome says Judea and the Catholic Encyclopedia Galilee."
+    },
+    {
+      "text": "Tribe of Benjamin, Hebrew of Hebrews, a Pharisee, son of a Pharisee; his sister's son in Jerusalem.",
+      "source": "Philippians 3:5; Acts 23:6; 23:16 (BSB).",
+      "url": "https://biblehub.com/bsb/philippians/3.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Unmarried when he wrote 1 Corinthians; Clement of Alexandria thought he had a wife whom he did not take with him.",
+      "source": "1 Corinthians 7:7-8 (BSB); Clement of Alexandria, Stromata 3, in Eusebius, Church History 3.30.1 (NPNF2 1): \"And Paul does not hesitate, in one of his epistles, to greet his wife, whom he did not take about with him, that he might not be inconvenienced in his ministry.\"",
+      "url": "https://ccel.org/ccel/schaff/npnf201.iii.viii.xxx.html",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Saul and Paul: two names, Hebrew and Latin; Saul was the name of Israel's first king, a Benjamite.",
+      "source": "Catholic Encyclopedia, \"St. Paul\": \"he was given at the time of his circumcision the name of Saul, which must have been common in that tribe in memory of the first king of the Jews ... As a Roman citizen he also bore the Latin name of Paul. It was quite usual for the Jews of that time to have two names, one Hebrew, the other Latin or Greek\". Acts 13:21 (Saul son of Kish, of the tribe of Benjamin).",
+      "url": "https://www.newadvent.org/cathen/11567b.htm",
+      "verified": true,
+      "note": "Jerome (Lives 5) thinks he took the name from Sergius Paulus. Augustine's reading (paulus = small, humility) is in his sermon for 29 June as the OCA gives it in its own English translation, so it is paraphrased, not quoted."
+    },
+    {
+      "text": "A tentmaker, working with Priscilla and Aquila at Corinth; he worked with his own hands.",
+      "source": "Acts 18:1-3; 20:34 (BSB).",
+      "url": "https://biblehub.com/bsb/acts/18.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "The moments: Stephen, Damascus, Ananias, the basket, Barnabas in Jerusalem, Antioch, Cyprus, Lystra, the quarrel over Mark, Philippi, Athens, Corinth, Ephesus, Miletus, the arrest, Caesarea, the shipwreck, Rome.",
+      "source": "Acts 7:58 to 28:31; 2 Corinthians 11:32-33; Galatians 1:17-18 (BSB). Every quotation checked word for word in bsb-paul-chapters.txt.",
+      "url": "https://biblehub.com/bsb/acts/9.htm",
+      "verified": true,
+      "note": "Paraphrase checks: 'Roman governor' for proconsul (Acts 13:7); 'Greek-speaking Jews' for Grecian Jews (9:29); 'sailing on had become dangerous' (27:9)."
+    },
+    {
+      "text": "Chrysostom on the quarrel with Barnabas: one more tender and indulgent, the other more strict and austere; a plan of Providence.",
+      "source": "John Chrysostom, Homilies on Acts, Homily 34 (NPNF1 11): \"the one was more tender and indulgent, but this one more strict and austere ... the whole matter is a plan of the Divine Providence\".",
+      "url": "https://www.newadvent.org/fathers/210134.htm",
+      "verified": true,
+      "note": "The same line the Christian Personality Test quotes for the Forge and the Hearth."
+    },
+    {
+      "text": "Numbers: 39 lashes five times; three shipwrecks; 470 soldiers; more than 40 conspirators; 276 aboard; 13 letters.",
+      "source": "2 Corinthians 11:24-25; Acts 23:13, 23; 27:37 (BSB). Britannica: \"Of the 27 books in the New Testament, 13 or 14 (an East-West difference) are traditionally attributed to St. Paul. However, only seven of these are accepted as being entirely authentic\".",
+      "url": "https://www.britannica.com/biography/Saint-Paul-the-Apostle",
+      "verified": true,
+      "note": "13 of 27 books is 48%: 'nearly half'."
+    },
+    {
+      "text": "He quoted Epimenides (Titus 1:12), Menander (1 Corinthians 15:33) and Aratus (Acts 17:28).",
+      "source": "Jerome, Letter 70, to Magnus (NPNF2 6), fetched to jerome-letter70.txt: \"The Apostle Paul also, in writing to Titus, has used a line of the poet Epimenides ... In another epistle Paul quotes a line of Menander ... And when he is arguing with the Athenians upon the Areopagus he calls Aratus as a witness\".",
+      "url": "https://ccel.org/ccel/schaff/npnf206.v.LXX.html",
+      "verified": true,
+      "note": "The brief's list put Jerome's letters in npnf106; that file is Augustine, so the letter was fetched."
+    },
+    {
+      "text": "Patron of missionaries, evangelists, writers, journalists, publishers (and public workers) in the Catholic Church.",
+      "source": "Britannica, \"Saint Paul the Apostle\".",
+      "url": "https://www.britannica.com/biography/Saint-Paul-the-Apostle",
+      "verified": true,
+      "note": "'Public workers' left off the page."
+    }
+  ],
+  "letters": [
+    {
+      "text": "Nine letters to seven churches and four to friends.",
+      "source": "Jerome, Lives of Illustrious Men, chapter 5: \"He wrote nine epistles to seven churches: To the Romans one, To the Corinthians two, To the Galatians one, To the Ephesians one, To the Philippians one, To the Colossians one, To the Thessalonians two; and besides these to his disciples, To Timothy two, To Titus one, To Philemon one.\"",
+      "url": "https://ccel.org/ccel/schaff/npnf203.v.iii.vii.html",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "A scribe and his own hand: Tertius in Romans; 'in my own hand' at the end of 1 Corinthians, Colossians and 2 Thessalonians; 'large letters' in Galatians.",
+      "source": "Romans 16:22; 1 Corinthians 16:21; Colossians 4:18; 2 Thessalonians 3:17; Galatians 6:11 (BSB).",
+      "url": "https://biblehub.com/bsb/romans/16.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "The case against the six: followers writing in Paul's name (Britannica); Moffatt on vocabulary and style; the objection from church organisation.",
+      "source": "Britannica: \"The authorship of the others is debated and may have come from followers writing in Paul's name.\" Catholic Encyclopedia, \"Pastoral Epistles\", quoting Moffatt (Ency. Bib., IV): \"Favourite Pauline phrases and words are totally wanting\"; section headings \"Objection from style\" and \"Objection from the advanced state of Church organization\".",
+      "url": "https://www.newadvent.org/cathen/14727b.htm",
+      "verified": true,
+      "note": "No year is given for Moffatt on the page (volume 4 of the Encyclopaedia Biblica; its year was not checked)."
+    },
+    {
+      "text": "The case for: the early and universal tradition; Irenaeus names the Timothy letters as Paul's; differences of style run through the undisputed letters too; the amanuensis.",
+      "source": "Irenaeus, Against Heresies 3.3.3 (ANF 1). Catholic Encyclopedia, \"Pastoral Epistles\": \"Precisely the same thing could be urged against some of St. Paul's other Epistles\"; \"Their employment, too, depended greatly on the character of the amanuensis\"; \"it follows that the early and universal tradition ascribing the whole of them to the Apostle is correct.\"",
+      "url": "https://www.newadvent.org/cathen/14727b.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Hebrews: Eusebius's fourteen, Rome's doubt; Jerome on style; Tertullian's Barnabas; Luke or Clement; Origen: God knows.",
+      "source": "Eusebius, Church History 3.3.5 and 6.25.13-14 (NPNF2 1); Jerome, Lives 5: \"not considered his, on account of its difference from the others in style and language, but it is reckoned, either according to Tertullian to be the work of Barnabas, or according to others, to be by Luke the Evangelist or Clement\".",
+      "url": "https://ccel.org/ccel/schaff/npnf201.iii.xi.xxv.html",
+      "verified": true,
+      "note": ""
+    }
+  ],
+  "death": [
+    {
+      "text": "A second visit to Rome and martyrdom (Eusebius); Clement's seven imprisonments and the limit of the west; Spain probable (Catholic Encyclopedia).",
+      "source": "Eusebius, Church History 2.22.2; 1 Clement 5 (ANF 1); Catholic Encyclopedia, \"St. Paul\", Last years: \"the well-known text of St. Clement of Rome, the witness of the 'Muratorian Canon', and of the 'Acta Pauli' render probable Paul's journey to Spain\"; Romans 15:24.",
+      "url": "https://ccel.org/ccel/schaff/npnf201.iii.vii.xxiii.html",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Beheaded: Tertullian (a death like John's, the Baptist's), Eusebius 2.25; Jerome's fourteenth year of Nero and the Ostian Way; Gaius's trophies; the basilica marks the grave.",
+      "source": "Tertullian, Prescription 36 (ANF 3, note 2235: \"The Baptist's.\"); Scorpiace 15 (\"that Paul is beheaded\"); Eusebius, Church History 2.25.5-7; Jerome, Lives 5; Catholic Encyclopedia, \"St. Paul\": \"Aquae Salviae (now Tre Fontane), somewhat east of the Ostian Way, about two miles from the splendid Basilica of San Paolo fuori le mura which marks his burial place.\" Britannica: \"tradition holds that he was beheaded in Rome\".",
+      "url": "https://ccel.org/ccel/schaff/npnf201.iii.vii.xxvi.html",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Later stories: the milk (Acts of Paul); the veil (Coptic Synaxarium, 5 Abib); Aquae Salviae.",
+      "source": "Martyrdom of Paul 5, tr. M. R. James (ecw-acts-of-paul-james.txt); the Coptic Synaxarium for 5 Abib (people/peter/coptic-synaxarium-abib-5.txt): \"he met a damsel who was a kinswoman of the Emperor Nero ... He comforted her and asked her for her veil. He wrapped his head with the veil\"; Catholic Encyclopedia, \"St. Paul\".",
+      "url": "https://www.copticchurch.net/synaxarium/11_5.html?lang=en",
+      "verified": true,
+      "note": "The Coptic text's English is copticchurch.net's own: paraphrased, not quoted. The story that his head struck the ground three times and three springs rose was not found in a fetched text and is left off."
+    },
+    {
+      "text": "Chrysostom's love of Rome for Paul and Peter; the rose.",
+      "source": "Chrysostom, Homilies on Romans, Homily 32 (NPNF1 11): \"I love Rome even for this ... when Paul ariseth suddenly from that deposit, together with Peter ... What a rose will Rome send up to Christ!\"",
+      "url": "https://www.newadvent.org/fathers/210232.htm",
+      "verified": true,
+      "note": ""
+    }
+  ],
+  "myths": [
+    {
+      "text": "No horse in Acts; the only mount is Acts 23:24; Caravaggio's Conversion of Saint Paul (Cerasi Chapel, Santa Maria del Popolo, 1601) has the horse.",
+      "source": "Acts 9:4; 22:7; 26:14; 23:24 (BSB); the painting on Wikimedia Commons.",
+      "url": "https://commons.wikimedia.org/wiki/File:Conversion_on_the_Way_to_Damascus-Caravaggio_(c.1600-1).jpg",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "His looks come from the Acts of Paul and Thecla; Tertullian says the presbyter who wrote it was convicted and removed from office.",
+      "source": "Acts of Paul and Thecla 3, tr. M. R. James (1924); Tertullian, On Baptism 17 (ANF 3). Eusebius, Church History 3.3.5, did not find the Acts of Paul among the undisputed writings.",
+      "url": "https://www.earlychristianwritings.com/text/actspaul.html",
+      "verified": true,
+      "note": "M. R. James's translation (1924) is used for quotation as on Peter's page (the Acts of Peter)."
+    },
+    {
+      "text": "Not one of the Twelve: Matthias; 1 Corinthians 9:1; Jerome's 'an apostle outside the number of the twelve apostles'.",
+      "source": "Acts 1:26; 1 Corinthians 9:1 (BSB); Jerome, Lives 5.",
+      "url": "https://ccel.org/ccel/schaff/npnf203.v.iii.vii.html",
+      "verified": true,
+      "note": ""
+    }
+  ],
+  "feasts": [
+    {
+      "text": "25 January, the Conversion: Catholic feast (Calendarium Romanum 1969, 'In Conversione S. Pauli'; note: 'Conversionem S. Pauli die 25 ianuarii Martyrologium hieronymianum commemorat. Festum referunt libri liturgici in Gallia exarati saeculo VIII exeunte.'); Church of England Festival (cofe-calendar.txt); Episcopal (lff2022.txt: 'The feast of the Conversion of Saint Paul marks the end of the Week of Prayer for Christian Unity'); LCMS (lsb-calendar.txt); ELCA (elca-churchyear.txt).",
+      "source": "design/saints-hub/sources/shared/ calendar texts.",
+      "url": "https://archive.org/details/CalendariumRomanum1969",
+      "verified": true,
+      "note": "The USCCB's 2026 calendar has no 25 January entry because it falls on a Sunday in 2026, so the 1969 Calendarium is the source."
+    },
+    {
+      "text": "29 June, Peter and Paul: Catholic solemnity (USCCB 2026); Episcopal (LFF 2022); CofE; LCMS; ELCA; OCA and Greek (people/peter/oca-0629-peter-paul.txt, synaxarion-0629.txt).",
+      "source": "Calendar texts, as for Peter's page.",
+      "url": "https://www.usccb.org/resources/2026cal.pdf",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "30 June: the Commemoration of Paul (1916 Martyrology: 'The commemoration of the holy apostle Paul'; the 1962 calendar: 'On the Commemoration of St. Paul Apostle, III class'); since 1969 the First Martyrs of Rome (Calendarium Romanum 1969); why it was moved (Catholic Encyclopedia: the double ceremony across 'about five miles' was 'too exhausting'); the OCA's Synaxis of the Twelve (people/peter/oca-0630-synaxis.txt).",
+      "source": "martyrology-1916.txt; people/peter/wikipedia-grc-1960.txt; calendarium-romanum-1969-ocr.txt; cathen-st-paul.txt.",
+      "url": "https://www.newadvent.org/cathen/11567b.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "18 November, dedication of the basilicas (USCCB 2026); 12 July, Coptic 5 Abib, and the Russian Church's 29 June (people/peter/coptic-synaxarium-abib-5.txt, azbyka-2026-07-12.txt).",
+      "source": "Calendar texts, as for Peter's page.",
+      "url": "https://www.copticchurch.net/synaxarium/11_5.html?lang=en",
+      "verified": true,
+      "note": ""
+    }
+  ],
+  "pictures": [
+    {
+      "text": "Band: Saint Paul Writing His Epistles, attributed to Valentin de Boulogne, about 1618 to 1620, Museum of Fine Arts, Houston, BF.1991.4. Commons licence tag {{PD-Art|PD-old-auto-1923|deathyear=1632}}. 3200 x 2354 on Commons; resized whole (no crop) to 1800 x 1324, 300 KB, quality 82. posM 52% 30% (the face sits at about 52% across), posD 52% 22% (the face at about 27% down).",
+      "source": "Commons file page wikitext; Wikidata Q28038961: 'painting attributed to Valentin de Boulogne', inception 1619 (earliest 1618, latest 1620), collection Q1565911 (Museum of Fine Arts, Houston).",
+      "url": "https://commons.wikimedia.org/wiki/File:Valentin_de_Boulogne_-_Saint_Paul_Writing_His_Epistles_-_BF.1991.4_-_Museum_of_Fine_Arts.jpg",
+      "verified": true,
+      "note": "The Commons file also sits in the category 'Paintings by Nicolas Tournier': the attribution is not settled, so the credit says 'attributed to'. Also considered: Rembrandt's Saint Paul, about 1657 (National Gallery of Art, Washington; 3267 x 4096, public domain), darker, the face smaller."
+    },
+    {
+      "text": "Portrait: The Apostle Paul, Andrei Rublev, 1410 to 1420, from the Zvenigorod Deesis, Tretyakov Gallery. Commons licence tag {{PD-Art|PD-old-100}}. 1300 x 1980 on Commons; resized whole to 985 x 1500, 428 KB, quality 85.",
+      "source": "Commons file page wikitext: 'Apostle Paul 1410-1420 160*110 Tretyakov Gallery', {{Creator:Andrej Rublëv}}, categories 'Icons of Saint Paul from Deesis' and 'Zvenigorodskiy chin'.",
+      "url": "https://commons.wikimedia.org/wiki/File:Rublev_Paul.jpg",
+      "verified": true,
+      "note": "Neither picture is Doré's plate (figures/paul.jpg; the gifts quiz's dore-paul.jpg) nor the personality face (El Greco's Saint Paul, Saint Louis Art Museum)."
+    }
+  ],
+  "could_not_verify": [
+    "The three springs of Tre Fontane (the head striking the ground three times): no fetched text, left off; only the place name is given, from the Catholic Encyclopedia.",
+    "A source for the sword and book as his signs in art: none fetched, so the page has no 'In art' fact.",
+    "Augustine's sermon on the name Paul is quoted by the OCA in its own English: paraphrased only.",
+    "The Coptic Synaxarium's English (copticchurch.net) is modern: paraphrased only.",
+    "The year of Moffatt's article (Encyclopaedia Biblica, volume 4) was not checked: no year on the page.",
+    "The 2006 Vatican finds at the sarcophagus under St Paul Outside the Walls: not fetched, left off."
+  ],
+  "checker_2026_09_25": {
+    "by": "one light checking pass (Opus), 2026-09-25",
+    "checked": [
+      "Every number tile against the BSB (2 Corinthians 11:24-25; Acts 23:13, 23; 27:37) and Britannica (13 letters, seven accepted).",
+      "Every feast day in the calendar texts: 25 January (Calendarium Romanum 1969, CofE Festivals, LFF 2022 with the Week of Prayer line, LSB, ELCA), 29 and 30 June, 18 November, Coptic 5 Abib = 12 July; the Catholic Encyclopedia on the five miles between the basilicas.",
+      "Attributions: Jerome, Lives 5 (Gischala, Sergius Paulus, nine letters to seven churches, Hebrews, Ostian Way); Chrysostom, Homily 32 on Romans (\"Paul's heart was His heart\", in context of Galatians 2:20) and Homily 34 on Acts; Eusebius; Tertullian; Britannica's patronage list; the Acts of Paul's milk.",
+      "The letters section: both sides in their own words, no winner in our voice. Later legends (milk, veil, Tre Fontane) named as later.",
+      "Capitals for God, italics, plain sentences; both pictures' licences on their Commons pages (PD-Art|PD-old-auto-1923 and PD-Art|PD-old-100)."
+    ],
+    "changed": [
+      "Philippians 4:13: \"Christ who\" capitalised to \"Christ Who\" (the owner's rule for every pronoun for Christ, inside quotations too).",
+      "Born: Jerome says Paul was of Gischala and \"removed with his parents to Tarsus\", not that his parents alone came from there. Now \"Jerome says the family came to Tarsus from Gischala, in the Holy Land.\"",
+      "The scales tidbit: \"they owe the phrase to him\" became \"The saying about scales falling from someone's eyes comes from his story.\" (the idiom comes from the story in Acts, not from Paul).",
+      "Feast note: the Martyrology of Jerome and the Gaulish books on 25 January come from the Calendarium Romanum of 1969, not the Catholic Encyclopedia (which says the Hieronymian entry marked a translation of relics). The note now names the 1969 calendar as its source for that line."
+    ],
+    "left_for_owner": [
+      "The band is only 'attributed to' Valentin de Boulogne (Commons also files it under Nicolas Tournier); the credit says so.",
+      "The page is long (18 moments, 10 people, a letters section); the Mark quarrel is told three times (type box, moment, circle).",
+      "The Catholic Encyclopedia and the 1969 Calendarium differ on what the Martyrology of Jerome marks on 25 January; the page follows the Calendarium."
+    ]
+  }
+}

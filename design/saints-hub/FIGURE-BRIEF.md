@@ -33,9 +33,10 @@ of CREDITS.md). Do not commit, do not push.
     file (`"file": "shared/bsb-berean-standard-bible.txt"`) with the biblehub chapter as `url`
     (`https://biblehub.com/bsb/1_kings/19.htm`) and the reference as `ref`.
   - The Fathers: `anf01` (Clement of Rome, Ignatius, Polycarp, Justin, Irenaeus), `anf03` (Tertullian), `npnf106`
-    (Jerome), `npnf109` to `npnf114` (Chrysostom), `npnf201` (Eusebius), `npnf203` (Theodoret, Jerome, Rufinus),
+    (Augustine: the Sermon on the Mount, the Gospels, his sermons on the New Testament), `npnf109` to `npnf114`
+    (Chrysostom), `npnf201` (Eusebius), `npnf203` (Theodoret, Jerome, Rufinus),
     `npnf205` (Gregory of Nyssa), `npnf207` (Cyril of Jerusalem, Gregory Nazianzen), `npnf208` (Basil), `npnf210`
-    (Ambrose), `npnf211` (Sulpicius, Cassian), `npnf212` (Leo, Gregory the Great).
+    (Ambrose), `npnf211` (Sulpicius, Cassian), `npnf212` (Leo, Gregory the Great). Jerome's letters and commentaries are `npnf206`: fetch it from CCEL when needed.
   - Calendars: `martyrology-1916.txt` (the Roman Martyrology, 1916 English), `calendarium-romanum-1969-ocr.txt`,
     `usccb-2026cal.txt`, `cofe-calendar.txt`, `lff2022.txt` (Episcopal), `lsb-calendar.txt` (Lutheran, Missouri
     Synod), `elca-churchyear.txt`, `wikipedia-coptic-calendar.txt`.

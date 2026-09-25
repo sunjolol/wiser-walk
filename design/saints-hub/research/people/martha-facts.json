@@ -1,0 +1,225 @@
+{
+  "subject": "Martha of Bethany",
+  "slug": "martha",
+  "page": "site/src/data/figures/martha.json",
+  "checked_on": "2026-09-25",
+  "note": "Evidence for Martha's Bible figure page. A thin record (Luke 10:38-42; John 11; John 12:1-2), so a short page: five moments, no miracles section (the raising of Lazarus is Jesus' act and is told among the moments), no death section (Scripture says nothing of her end; the Provençal legend is a myth, named as later). Every quotation is in martha.quotes.json and passes verify-quotes.mjs. Fetched texts are in design/saints-hub/sources/people/martha/ (gitignored); Bible lines are from the Berean Standard Bible (shared/bsb-berean-standard-bible.txt; the chapters used are also copied to people/martha/bsb-martha-chapters.txt). The Fathers' texts on Martha and Mary were already on disk in sources/gregory-sources/martha-mary/ and are copied into people/martha/.",
+  "life": [
+    {
+      "text": "Martha is named only in Luke 10:38-42 and John 11 and 12; Matthew and Mark never name her.",
+      "source": "Catholic Encyclopedia (1910), \"St. Martha\": \"Mentioned only in Luke 10:38-42 ; and John 11, 12, sqq.\" Checked against the BSB: no verse of Matthew or Mark contains \"Martha\".",
+      "url": "https://www.newadvent.org/cathen/09721b.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Her home was Bethany, a little less than two miles from Jerusalem; Luke calls it only a village and says she welcomed Jesus into her home.",
+      "source": "John 11:1, 18; Luke 10:38 (BSB).",
+      "url": "https://biblehub.com/bsb/john/11.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "In His last week, Jesus went out to Bethany for the night.",
+      "source": "Matthew 21:17 (BSB): \"Then He left them and went out of the city to Bethany, where He spent the night.\" Mark 11:11.",
+      "url": "https://biblehub.com/bsb/matthew/21.htm",
+      "verified": true,
+      "note": "The page does not claim He stayed in Martha's house."
+    },
+    {
+      "text": "Her sister was Mary and her brother Lazarus; Luke never mentions Lazarus; no parents, husband or children are named.",
+      "source": "John 11:1-2, 19; Luke 10:38-42 (BSB). The Lazarus of Luke 16 is a different man, in a parable.",
+      "url": "https://biblehub.com/bsb/john/11.htm",
+      "verified": true,
+      "note": "The Golden Legend names parents (Syro and Encharia) and says she never married: a medieval legend, not used as fact."
+    },
+    {
+      "text": "Her name is probably Aramaic, meaning mistress.",
+      "source": "Bible Hub, Strong's Greek 3136: \"Word Origin: [probably of Chaldee origin (meaning mistress)]\"; \"of Aramaic origin\".",
+      "url": "https://biblehub.com/greek/3136.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "The name is found in a Nabataean inscription dated AD 5, found at Puteoli (near Naples).",
+      "source": "Catholic Encyclopedia (1910), \"St. Martha\": \"The Aramaic form occurs in a Nabatæan inscription found at Puteoli, and now in the Naples Museum; it is dated A.D. 5 (Corpus Inscr. Semit., 158)\".",
+      "url": "https://www.newadvent.org/cathen/09721b.htm",
+      "verified": true,
+      "note": "Puteoli is modern Pozzuoli, beside Naples (common knowledge)."
+    },
+    {
+      "text": "The moments: the visit and \"Martha, Martha\" (Luke 10:38-42); the message and the two days' wait (John 11:1-16); Martha meets Jesus, \"I am the resurrection and the life\", her confession (John 11:17-27); the tomb and Lazarus raised (John 11:28-44); the supper six days before the Passover, \"Martha served\" (John 12:1-11).",
+      "source": "BSB, quoted word for word (martha.quotes.json).",
+      "url": "https://biblehub.com/bsb/john/11.htm",
+      "verified": true,
+      "note": "John 12 does not say whose house the supper was in: Chrysostom (Homily 65 on John) takes it to be Martha's, 'Some, however, say, that it took place in the house of another'; the Catholic Encyclopedia argues for Simon the leper's (Matthew 26:6; Mark 14:3). The page does not name the house."
+    },
+    {
+      "text": "Her confession (John 11:27) is close to Peter's (Matthew 16:16).",
+      "source": "BSB: John 11:27 \"I believe that You are the Christ, the Son of God, who was to come into the world\"; Matthew 16:16 \"You are the Christ, the Son of the living God\".",
+      "url": "https://biblehub.com/bsb/matthew/16.htm",
+      "verified": true,
+      "note": "Used in kin (Peter), as a comparison of the two texts only."
+    },
+    {
+      "text": "John 11:5 names Martha first and does not name her sister: \"Now Jesus loved Martha and her sister and Lazarus.\"",
+      "source": "John 11:5 (BSB).",
+      "url": "https://biblehub.com/bsb/john/11.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "\"Jesus wept\" (John 11:35), the shortest verse in most English Bibles, is in her story.",
+      "source": "John 11:35 (BSB, KJV).",
+      "url": "https://biblehub.com/bsb/john/11.htm",
+      "verified": true,
+      "note": "Common knowledge for English Bibles; worded \"most English Bibles\" on purpose."
+    }
+  ],
+  "fathers": [
+    {
+      "text": "Augustine: both sisters good and loved; Martha the image of the present life, Mary of the life to come; the Lord did not blame Martha's work; the works of mercy end in heaven; \"The repetition of the name is a token of love\"; \"the handmaid received her Lord\".",
+      "source": "Augustine, Sermons 103 and 104 (Benedictine numbering; NPNF1 6 Sermons 53 and 54 on the New Testament), tr. R. G. MacMullen, 1888.",
+      "url": "https://www.newadvent.org/fathers/160354.htm",
+      "verified": true,
+      "note": "The Episcopal calendar quotes Sermon 104 as \"Martha has to set sail in order that Mary can remain quietly in port\", from another translation; not in the NPNF text and not used."
+    },
+    {
+      "text": "Abba Moses (Cassian, Conference 1, chapter 8): the monk's main effort is that the soul cleave to God; Martha's service was no unworthy work, but the Lord makes the chief good contemplation.",
+      "source": "John Cassian, Conferences 1.8, tr. Edgar C. S. Gibson, NPNF2 11, 1894.",
+      "url": "https://www.newadvent.org/fathers/350801.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Gregory the Great: Leah and Rachel as the active and contemplative lives; \"Martha's concern is not reproved\"; the active great, the contemplative far better.",
+      "source": "Gregory the Great, Moralia, Book 6, chapter 37 (sections 60-61), Library of the Fathers, Oxford, 1844.",
+      "url": "https://www.lectionarycentral.com/GregoryMoralia/Book06.html",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Chrysostom (Homily 44 on John): some abused Christ's words to live in idleness; Paul worked with his hands; the words to Martha concern knowing the right season. (Homily 62): Martha 'the weaker', her answer not understanding the whole meaning, yet the sisters 'truly wise as well as loving'.",
+      "source": "John Chrysostom, Homilies on the Gospel of John 44 and 62, tr. G. T. Stupart, NPNF1 14 (shared/npnf114.txt).",
+      "url": "https://www.newadvent.org/fathers/240162.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Meister Eckhart (Sermon 86) argued Martha was the more mature sister; most premodern writers put Mary higher, but stressed the need for both vocations.",
+      "source": "The Episcopal Church, Lesser Feasts and Fasts 2022, 29 July (shared/lff2022.txt).",
+      "url": "https://www.episcopalchurch.org/wp-content/uploads/2022/11/Lesser-Feasts-and-Fasts-2022_final.pdf",
+      "verified": true,
+      "note": "Told in our words from LFF's summary; Eckhart not quoted (no public-domain translation fetched)."
+    }
+  ],
+  "legend": [
+    {
+      "text": "The Golden Legend's Life of S. Martha: Martha, Mary, Lazarus, Maximin and others put in a ship without sail, oars or rudder, landing at Marseilles; the dragon between Arles and Avignon, tamed with holy water and the cross, bound with her girdle and killed by the people; Tarascon named after it; her death and burial at Tarascon.",
+      "source": "Jacobus de Voragine, The Golden Legend (compiled by 1275, per the Fordham edition's title page), Englished by William Caxton, 1483, ed. F. S. Ellis (Temple Classics, 1900), volume 4.",
+      "url": "https://sourcebooks.fordham.edu/basis/goldenlegend/GoldenLegend-Volume4.asp",
+      "verified": true,
+      "note": "Told on the page only as a medieval legend (myths); \"compiled in the 1200s\" covers both the 1260s dating in the brief and Fordham's 1275."
+    },
+    {
+      "text": "The Orthodox tradition: after Stephen's death the sisters helped Lazarus proclaim the Gospel in various lands; they are also commemorated on the Sunday of the Myrrh-bearing Women.",
+      "source": "OCA, Righteous Martha and Mary, the sisters of Lazarus (4 June).",
+      "url": "https://www.oca.org/saints/lives/2026/06/04/103797-righteous-martha-and-mary-the-sisters-of-lazarus",
+      "verified": true,
+      "note": "Paraphrased, not quoted (a modern text). The Sunday falls two weeks after Pascha (the third Sunday of Pascha): common knowledge."
+    },
+    {
+      "text": "Tarascon's processional dragon is one of the processional giants and dragons of Belgium and France on UNESCO's Representative List (inscribed 2008, proclaimed 2005).",
+      "source": "UNESCO Intangible Cultural Heritage, 'Processional giants and dragons in Belgium and France': \"French towns (Cassel, Douai, Pézenas and Tarascon), where they remain living traditions\".",
+      "url": "https://ich.unesco.org/en/RL/processional-giants-and-dragons-in-belgium-and-france-00153",
+      "verified": true,
+      "note": "UNESCO does not name the Tarasque or Martha; the page says only that Tarascon carries the legend's dragon in procession."
+    },
+    {
+      "text": "In art: Martha with the dragon and holy water (Cornelis Buys, about 1528; Correggio's Saints Peter, Martha, Mary Magdalen and Leonard, the Met; Charles-André van Loo, Tarascon; the Hôtel-Dieu de Beaune statue), and in the kitchen while Mary listens (Aertsen, Beuckelaer, Velázquez, Vermeer).",
+      "source": "Wikimedia Commons, files in Category:Paintings of Saint Martha and the 'Christ in the House of Martha and Mary' paintings found by search.",
+      "url": "https://commons.wikimedia.org/wiki/Category:Paintings_of_Saint_Martha",
+      "verified": true,
+      "note": "The page's 'often' rests on these examples, not on a reference work."
+    }
+  ],
+  "feasts": [
+    {
+      "text": "Catholic: 29 July, Memorial of Saints Martha, Mary and Lazarus, since the decree of 26 January 2021; before that Martha alone.",
+      "source": "USCCB Liturgical Calendar 2026 (shared/usccb-2026cal.txt): \"29 Wed Saints Martha, Mary, and Lazarus\". Congregation for Divine Worship, decree of 26 January 2021 (people/martha/vatican-2021-decree.txt): the Latin Church's uncertainty about Mary's identity \"resulted in the inclusion of Martha alone on 29 July\", now resolved; Pope Francis decreed the memorial of all three.",
+      "url": "https://press.vatican.va/content/salastampa/en/bollettino/pubblico/2021/02/02/210202c.html",
+      "verified": true,
+      "note": "The decree is paraphrased, not quoted (a modern translation)."
+    },
+    {
+      "text": "The Franciscans put Martha's feast in their calendar in 1262 on 29 July, the octave of Mary Magdalene; Rome received it by the end of the 1200s. The 1969 reform left Martha unchanged.",
+      "source": "Calendarium Romanum (1969), 29 July: \"Festum S. Marthae ascriptum est a Franciscanis in suo Calendario anno 1262, die 29 iulii celebrandum, i. e. in octava S. Mariae Magdalenae. Eodem saeculo xm exeunte, Romae receptum est.\" and \"Quoad S. Martham nihil mutatur.\"",
+      "url": "https://archive.org/details/CalendariumRomanum1969",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Roman Martyrology 1916, 29 July: at Tarascon, St Martha, hostess of our Saviour, sister of blessed Mary Magdalen and St Lazarus.",
+      "source": "shared/martyrology-1916.txt (OCR; a stray ^ before 'hostess').",
+      "url": "https://archive.org/details/romanmartyrology00cathuoft",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Church of England 29 July: Mary, Martha and Lazarus, Companions of Our Lord. Episcopal Church 29 July: Mary and Martha of Bethany. LCMS and ELCA 29 July: Mary, Martha, and Lazarus of Bethany.",
+      "source": "shared/cofe-calendar.txt; shared/lff2022.txt; shared/lsb-calendar.txt; shared/elca-churchyear.txt.",
+      "url": "https://www.churchofengland.org/prayer-and-worship/worship-texts-and-resources/common-worship/churchs-year/calendar",
+      "verified": true,
+      "note": "The CofE's rank for the day (lesser festival or commemoration) was not read from the text file and is not claimed."
+    },
+    {
+      "text": "Orthodox: 4 June, Righteous Martha and Mary, the sisters of Lazarus (OCA); also the Sunday of the Myrrh-bearing Women.",
+      "source": "OCA, lives for 4 June.",
+      "url": "https://www.oca.org/saints/lives/2026/06/04/103797-righteous-martha-and-mary-the-sisters-of-lazarus",
+      "verified": true,
+      "note": "Old-calendar churches keep 4 June on 17 June (the 13-day difference, stated generally on the page)."
+    }
+  ],
+  "pictures": [
+    {
+      "file": "site/public/img/figures/martha-band.jpg",
+      "what": "Saint Martha in a landscape, Cornelis Jacobsz Buys IV, between 1528 and 1530, oil on wood, 60.5 x 49.5 cm (sold at Koller, Zurich; private collection).",
+      "commons": "https://commons.wikimedia.org/wiki/File:Cornelis_Jacobsz_Buys_IV_Saint_Martha.jpg",
+      "license_tag": "{{PD-art|PD-old-auto-expired|deathyear=1532}}",
+      "size": "original 4912 x 6000; saved 1474 x 1800 (light blur against panel crackle), 350 KB",
+      "note": "She holds a holy-water sprinkler and bucket, with the Tarascon dragon's head at lower right."
+    },
+    {
+      "file": "site/public/img/figures/martha-2.jpg",
+      "what": "The Raising of Lazarus, Novgorod school, about 1497, from the festal tier of the iconostasis of the Dormition Cathedral, Kirillo-Belozersky Monastery; the Russian Museum, St Petersburg. 71.5 x 58 cm.",
+      "commons": "https://commons.wikimedia.org/wiki/File:The_Lazarus_Raising._Novgorod_icon-painting_school,_15th_cent.,_Kirillo-Belozersky_Monastery._Saint-Petersburg,_Russia.jpg",
+      "license_tag": "{{PD-Art|PD-old-100-expired}}",
+      "size": "original 2000 x 2521; saved 1190 x 1500, 397 KB",
+      "note": "The two women bowing at Christ's feet are the sisters, as in the standard iconography of the feast."
+    }
+  ],
+  "could_not_verify": [
+    "Patronages (cooks, servants, housekeepers, innkeepers): no source fetched; left out.",
+    "Her tomb or relics shown at the collegiate church of Sainte-Marthe, Tarascon: not fetched; the page says only that the legend and the 1916 Martyrology place her there.",
+    "A Coptic commemoration: not found in the files on disk; left out.",
+    "Pope Gregory the Great's identification of Mary of Bethany with Mary Magdalene (Homily 33 on the Gospels): not fetched; the page says only 'the Latin Church', as the 2021 decree does."
+  ],
+  "checker_2026_09_25": {
+    "by": "one light checking pass (Opus), 2026-09-25",
+    "checked": [
+      "Number tiles against the BSB (Luke 10:41; John 11:17, 39; 12:1-2).",
+      "Feasts: 29 July in USCCB 2026, the CofE calendar (Mary, Martha and Lazarus, Companions of Our Lord), LFF 2022 (Mary and Martha of Bethany), LSB and ELCA (all three); the Calendarium Romanum's 1262 note; OCA 4 June.",
+      "Attributions: Chrysostom Homily 62 on John read in context; Augustine Sermons 103 and 104; Cassian, Conference 1; Gregory's Moralia; LFF 2022's summary of Eckhart's Sermon 86 (the page retells, does not quote); the Golden Legend's voyage, dragon and Tarascon lines; the 1916 Martyrology's 29 July line read in the scan; the Catholic Encyclopedia on the Puteoli inscription.",
+      "The dragon told as a medieval legend with its source and date; the Mary Magdalene question in each side's terms; both pictures' licences on their Commons pages (PD-art|PD-old-auto-expired and PD-Art|PD-old-100-expired)."
+    ],
+    "changed": [
+      "Feast note: 'eight days after Mary Magdalene's' became 'a week after Mary Magdalene's'. The Calendarium says 'in octava', the octave day: 29 July is seven days after 22 July.",
+      "What others said: Chrysostom's line is about her answer to 'Do you believe this?' (her confession, John 11:27), so the 'who' now says so instead of 'her answer on the road'."
+    ],
+    "left_for_owner": [
+      "The band shows the Tarascon dragon and holy water, which come from the legend, not the Gospels.",
+      "Chrysostom's less flattering reading sits beside Augustine's warmer one; the myth 'Jesus told Martha off' overlaps the 'Two sisters' section.",
+      "'Jesus wept' as the shortest verse in most English Bibles rests on common knowledge, with no source fetched."
+    ]
+  }
+}

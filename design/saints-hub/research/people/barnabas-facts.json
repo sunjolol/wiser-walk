@@ -1,0 +1,252 @@
+{
+  "subject": "Barnabas",
+  "slug": "barnabas",
+  "page": "site/src/data/figures/barnabas.json",
+  "checked_on": "2026-09-25",
+  "note": "Evidence for Barnabas's Bible figure page. Every quotation is in barnabas.quotes.json and passes verify-quotes.mjs (exit 0). Bible lines are the Berean Standard Bible (public domain), checked against sources/shared/bsb-berean-standard-bible.txt; the Fathers against sources/shared (npnf111 Chrysostom on Acts, npnf201 Eusebius, npnf203 Jerome) and the newadvent pages fetched into sources/people/barnabas/ (gitignored). Later legends are named as later on the page, with source and date.",
+  "life": [
+    {
+      "text": "Joseph, a Levite from Cyprus, whom the apostles called Barnabas (Son of Encouragement), sold a field and laid the money at the apostles' feet.",
+      "source": "Acts 4:36-37 (BSB). Older English texts read Joses and 'son of consolation' (Chrysostom, Homily 11 and 12 on Acts, NPNF1 11, quoting Acts 4:36); the Coptic Synaxarium: 'His name was Joses.'",
+      "url": "https://biblehub.com/bsb/acts/4.htm",
+      "verified": true,
+      "note": "Catholic Encyclopedia (1907): the name was 'then interpreted as meaning \"son of exhortation\" or \"consolation\". (The real etymology, however, is disputed.)'"
+    },
+    {
+      "text": "Luke sets Barnabas's gift just before Ananias and Sapphira, who kept back part of the price; Chrysostom says Luke 'first mentions him who performed the virtuous deed'.",
+      "source": "Acts 5:1-3 (BSB); John Chrysostom, Homilies on Acts, Homily 12.",
+      "url": "https://www.newadvent.org/fathers/210112.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Chrysostom says the Joseph of Acts 4:36 is not Joseph Barsabbas of Acts 1:23: 'I do not think that this is the same with the companion of Matthias'.",
+      "source": "John Chrysostom, Homilies on Acts, Homily 11; Acts 1:23 (BSB).",
+      "url": "https://www.newadvent.org/fathers/210111.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "When the disciples in Jerusalem were afraid of Saul, Barnabas brought him to the apostles and told how he had seen the Lord and preached boldly at Damascus.",
+      "source": "Acts 9:26-28 (BSB). Chrysostom, Homily 21 on Acts: '\"Son of Consolation\" is his appellation, whence also he makes himself easy of access to the man'.",
+      "url": "https://biblehub.com/bsb/acts/9.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Jerusalem sent him to Antioch; he rejoiced and encouraged them; 'a good man, full of the Holy Spirit and faith'; he fetched Saul from Tarsus; a full year teaching; disciples first called Christians at Antioch; famine relief sent with Barnabas and Saul; they returned with John Mark.",
+      "source": "Acts 11:19-30; 12:25 (BSB).",
+      "url": "https://biblehub.com/bsb/acts/11.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Five prophets and teachers at Antioch, Barnabas first and Saul last; the Holy Spirit: 'Set apart for Me Barnabas and Saul'; Mark went as helper.",
+      "source": "Acts 13:1-5 (BSB).",
+      "url": "https://biblehub.com/bsb/acts/13.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Cyprus: Salamis synagogues, Paphos, Sergius Paulus 'a man of intelligence', Elymas blinded by Paul, the proconsul believed; Mark left them at Perga.",
+      "source": "Acts 13:4-13 (BSB).",
+      "url": "https://biblehub.com/bsb/acts/13.htm",
+      "verified": true,
+      "note": "The blinding is Paul's act in Acts, and the page says so."
+    },
+    {
+      "text": "Order of names: 'Barnabas and Saul' in Acts 11:30, 12:25, 13:2, 13:7; 'Paul and Barnabas' from 13:43 (13:46, 13:50, 14:1, 14:3, 14:23, 15:2, 15:22, 15:35); Barnabas first again at 14:12, 14:14, 15:12, 15:25.",
+      "source": "Counted in the BSB file.",
+      "url": "https://biblehub.com/bsb/acts/13.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Iconium: the Lord enabled Paul and Barnabas 'to perform signs and wonders'; at the council they told of signs and wonders done through them. Acts records no miracle by Barnabas alone (the Lystra healing and the blinding of Elymas are Paul's).",
+      "source": "Acts 14:3; 15:12; 13:11; 14:10 (BSB).",
+      "url": "https://biblehub.com/bsb/acts/14.htm",
+      "verified": true,
+      "note": "So no miracles section: a tidbit instead, as the brief allowed."
+    },
+    {
+      "text": "Lystra: Barnabas called Zeus, Paul Hermes; bulls and wreaths; they tore their clothes; Paul stoned; next day to Derbe with Barnabas. The way home: elders appointed with prayer and fasting; report at Antioch.",
+      "source": "Acts 14:8-28 (BSB).",
+      "url": "https://biblehub.com/bsb/acts/14.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "The council at Jerusalem; the letter calls them 'our beloved Barnabas and Paul'.",
+      "source": "Acts 15:1-29 (BSB).",
+      "url": "https://biblehub.com/bsb/acts/15.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "At Antioch 'even Barnabas was led astray' (Paul's account only).",
+      "source": "Galatians 2:11-14 (BSB).",
+      "url": "https://biblehub.com/bsb/galatians/2.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "The parting over Mark, with Paul's reason given; Barnabas took Mark to Cyprus, Paul chose Silas.",
+      "source": "Acts 15:36-40 (BSB).",
+      "url": "https://biblehub.com/bsb/acts/15.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Mark was Barnabas's cousin; Mark's mother Mary had a house in Jerusalem where the church prayed; later Mark was with Paul ('my fellow workers'; 'he is useful to me in the ministry').",
+      "source": "Colossians 4:10; Acts 12:12; Philemon 1:24; 2 Timothy 4:11 (BSB). Catholic Encyclopedia (1907) calls Mark 'the cousin, or nephew' and 'the future Evangelist'.",
+      "url": "https://biblehub.com/bsb/colossians/4.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Paul names Barnabas in three letters, five times: 1 Corinthians 9:6; Galatians 2:1, 2:9, 2:13; Colossians 4:10. 1 Corinthians 9:6: both worked for a living.",
+      "source": "BSB, counted.",
+      "url": "https://biblehub.com/bsb/1_corinthians/9.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Clement of Alexandria calls him 'the apostolic Barnabas (and he was one of the seventy, and a fellow-worker of Paul)' and quotes the Letter of Barnabas as 'the Apostle Barnabas'. Eusebius: 'Barnabas, indeed, is said to have been one of them' (the Seventy). Catholic Encyclopedia: 'A rather late tradition'.",
+      "source": "Clement, Stromata 2.6 and 2.20 (newadvent 02102, ANF 2); Eusebius, Church History 1.12 (NPNF2 1); Catholic Encyclopedia, St. Barnabas.",
+      "url": "https://www.newadvent.org/fathers/02102.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Chrysostom on the quarrel: 'the one was more tender and indulgent, but this one more strict and austere'; 'Now which of them advised best, it is not for us to pronounce'. Jerome: 'they still remained friends'.",
+      "source": "Chrysostom, Homilies on Acts, Homily 34; Jerome, Apology against Rufinus, Book 3, chapter 2 (NPNF2 3).",
+      "url": "https://www.newadvent.org/fathers/210134.htm",
+      "verified": true,
+      "note": "The Chrysostom line is the one the personality test quotes (personality.json OPPOSITES forge-hearth)."
+    },
+    {
+      "text": "Catholic Encyclopedia (1907): Barnabas 'appears to have been the most esteemed man of the first Christian generation'; Milan, Alexandria and Rome traditions 'are all late and untrustworthy'; Tertullian credits him (probably falsely) with Hebrews.",
+      "source": "Catholic Encyclopedia, St. Barnabas, J. F. Fenlon, 1907.",
+      "url": "https://www.newadvent.org/cathen/02300a.htm",
+      "verified": true,
+      "note": ""
+    }
+  ],
+  "writings": [
+    {
+      "text": "Letter of Barnabas: no author named in it (Catholic Encyclopedia); in Codex Sinaiticus after the New Testament; Eusebius 3.25 lists it among the rejected writings and all these 'among the disputed books'; Jerome, Illustrious Men 6: 'reckoned among the apocryphal writings'; McGiffert's note 798 (1890): the verdict against authenticity 'has become practically unanimous'; Britannica: tradition 'ascribes to him the Letter of Barnabas'.",
+      "source": "Catholic Encyclopedia, Epistle of Barnabas (P. Ladeuze, 1907); Eusebius, Church History 3.25 with McGiffert's notes; Jerome, De viris illustribus 6; Britannica.",
+      "url": "https://www.newadvent.org/cathen/02299a.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Hebrews: Tertullian, On Modesty 20: 'there is extant withal an Epistle to the Hebrews under the name of Barnabas'. Jerome, Illustrious Men 5: Barnabas 'according to Tertullian', or Luke, or Clement.",
+      "source": "Tertullian, De pudicitia 20 (ANF 4, newadvent 0407); Jerome, De viris illustribus 5.",
+      "url": "https://www.newadvent.org/fathers/0407.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Gospel of Barnabas: Italian MS in Vienna (Cod. 2662), Spanish copy known; paper watermark of the second half of the 1500s (Briquet); scribe 'a Venetian of the sixteenth or early seventeenth century'; points of contact with Dante; the hundred-year jubilee fits 1300-1350; Jesus foretells Muhammad; the Gelasian Decree names a lost Evangelium Barnabae.",
+      "source": "Lonsdale and Laura Ragg, The Gospel of Barnabas (Oxford, Clarendon Press, 1907), introduction, pp. x-xlv and the section on the Gelasian Decree (archive.org djvu text).",
+      "url": "https://archive.org/details/thegospelofbarn00unknuoft",
+      "verified": true,
+      "note": "Public domain (1907). Not quoted beyond one phrase. The later rediscovery of the Spanish manuscript is not claimed on the page: it says only that a Spanish copy is known."
+    }
+  ],
+  "death": [
+    {
+      "text": "Scripture tells no death. The last mention is 1 Corinthians 9:6. Catholic Encyclopedia: Mark with Paul in Rome (Colossians 4:10) 'is regarded as an indication that Barnabas was no longer living'.",
+      "source": "BSB; Catholic Encyclopedia, St. Barnabas.",
+      "url": "https://www.newadvent.org/cathen/02300a.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Britannica: 'Nothing is known for certain about the time or circumstances of his death'; the Journeys and Martyrdom of Barnabas is 'a 5th-century forgery'; reputed tomb discovered in 488 near the Monastery of St Barnabas at Salamis.",
+      "source": "Britannica, Saint Barnabas.",
+      "url": "https://www.britannica.com/biography/Saint-Barnabas",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Acts of Barnabas (ANF 8): burned at Salamis, 'so that even his bones became dust'; Mark, Timon and Rhodon hid the ashes in a cave 'with the documents which he had received from Matthew'; Barnabas laid Matthew's book on the sick; at the parting: 'The grace of God does not desert him who has once served the Gospel and journeyed with us.'",
+      "source": "The Journeyings and Martyrdom of St. Barnabas the Apostle, ANF 8 (newadvent 0817).",
+      "url": "https://www.newadvent.org/fathers/0817.htm",
+      "verified": true,
+      "note": "Named on the page as a story of the 400s, told as if by Mark; the page does not repeat its blame of 'the Jews' in our voice (it says 'his enemies at Salamis')."
+    },
+    {
+      "text": "Coptic Synaxarium, 21 Kiahk: beaten, stoned, body burnt; Mark laid the body in a cave. OCA: stoned outside the city, then the body burned; Mark buried it with the Gospel of Matthew he had copied; died about 62, aged 76; relics revealed to Archbishop Anthimus 'in the year 448, during the time of the emperor Zeno'.",
+      "source": "CopticChurch.net synaxarium 4_21; OCA, Apostle Barnabas of the Seventy (11 June).",
+      "url": "https://www.oca.org/saints/lives/2026/06/11/101691-apostle-barnabas-of-the-seventy",
+      "verified": true,
+      "note": "The OCA's 448 conflicts with Zeno's reign (474-491); the page gives 488 from Britannica and the Catholic Encyclopedia (Cyprus)."
+    },
+    {
+      "text": "488: Anthimus 'claimed to have learned by a revelation' where the grave was, near Salamis; found the body with a copy of Matthew's Gospel; took the relics to Zeno; Acacius decided for Cyprus against Antioch, and its independence was no more questioned. 1916 Martyrology: body found under Zeno 'together with a copy of St. Matthew's gospel copied with his own hand'.",
+      "source": "Catholic Encyclopedia, Cyprus (S. Pétridès, 1908); The Roman Martyrology (1916), 11 June.",
+      "url": "https://www.newadvent.org/cathen/04589a.htm",
+      "verified": true,
+      "note": ""
+    }
+  ],
+  "feasts": [
+    {
+      "text": "West, 11 June: Catholic memorial (USCCB 2026: 'Saint Barnabas, Apostle', Memorial); Calendarium Romanum 1969 ('Barnabas, 11 iunii'); Roman Martyrology 1916 (11 June); Church of England Festival (cofe-calendar.txt, listed among the Festivals); Episcopal (LFF 2022, 'SAINT BARNABAS THE APOSTLE', 11 June); LCMS (lsb-calendar.txt, 11 June); ELCA (elca-churchyear.txt, 11 June).",
+      "source": "The calendar files in sources/shared.",
+      "url": "https://www.usccb.org/resources/2026cal.pdf",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "East: OCA, 11 June, 'Apostle Barnabas of the Seventy' (the same day as Apostle Bartholomew of the Twelve). Coptic: 21 Kiahk, the martyrdom of St Barnabas, one of the Seventy Apostles; Kiahk 29 = 7 January, so 21 Kiahk = 30 December.",
+      "source": "OCA 11 June listing; CopticChurch.net 4_21; wikipedia-coptic-calendar.txt (29 Koiak = 7 January).",
+      "url": "https://www.copticchurch.net/synaxarium/4_21.html?lang=en",
+      "verified": true,
+      "note": "Greek synaxarion and Russian calendar not fetched; the page names only the OCA for the Orthodox day."
+    }
+  ],
+  "pictures": [
+    {
+      "text": "Band: the San Barnaba Altarpiece, Sandro Botticelli, Uffizi. Commons file 'Galería Uffizi, Florencia, Italia, 2022-09-18, DD 42.jpg' (photo by Diego Delso), 4907 x 4623; licence tag {{PD-Art|PD-old-100-expired}} read on the file page wikitext. Cropped to Barnabas (x 1500-2700, y 1450-2950), saved at 1200 x 1500 (native resolution, not upscaled), 344 KB, quality 85. posM 50% 16%, posD 50% 20% (face at about 27% across, 23% down).",
+      "source": "Commons API imageinfo and wikitext.",
+      "url": "https://commons.wikimedia.org/wiki/File:Galería_Uffizi,_Florencia,_Italia,_2022-09-18,_DD_42.jpg",
+      "verified": true,
+      "note": "Dates on Commons: this file 'ca. 1490'; others 1487 and '1487-88 ca.'. The page says 'about 1487'. Barnabas is about 950 px wide in the best photo, so the band is 1500 px, not 1800."
+    },
+    {
+      "text": "Second picture: Sts Epiphanius and Barnabas, wall painting in the sanctuary of Panagia tou Arakos, Lagoudera, Cyprus. Photograph by Byzantine Institute staff, 1968-1973, Dumbarton Oaks MSBZ004_BF_T_Lag_B_3_5; licence tag {{Cc-zero}} on the file page. 1800 x 2287; cropped to Barnabas (x 1160-1770, y 330-1130), saved at 610 x 800.",
+      "source": "Commons wikitext; UNESCO, Painted Churches in the Troodos Region (Lagoudera's paintings are Comnenian, 12th century).",
+      "url": "https://commons.wikimedia.org/wiki/File:Church_of_Panagia_tou_Arakos,_sanctuary,_apse,_wall_paintings,_Lagoudera,_Cyprus_-_Apse_wall,_between_windows,_lower_zone,_Sts._Epiphanius_and_Barnabus_(Cypriotes)_-_MSBZ004_BF_T_Lag_B_3_5_-_Dumbarton_Oaks.jpg",
+      "verified": true,
+      "note": "The face is worn. Low resolution (610 px wide) but the only CC0 or public-domain Eastern image of him found besides the Hosios Loukas mosaic, which is the personality test's face and so not allowed. The dated inscription of 1192 is well known but not fetched, so the page says 'of the 1100s'."
+    }
+  ],
+  "could_not_verify": [
+    "Theodore Lector as the source for the finding of the tomb: not fetched; the page names the Catholic Encyclopedia (Cyprus), Britannica and the 1916 Martyrology instead.",
+    "A patron list and art attributes for Barnabas: no fetched source, so left out of the facts.",
+    "The pronunciation: no source fetched, left out.",
+    "The Greek and Russian Orthodox days: not fetched (the OCA alone is named)."
+  ],
+  "checker_2026_09_25": {
+    "by": "one light checking pass (Opus), 2026-09-25",
+    "checked": [
+      "Every number tile and the order-of-names tidbit against the BSB (Acts 11:26; 13:1; 14:12; the five mentions in 1 Corinthians, Galatians, Colossians).",
+      "Feasts: 11 June in USCCB 2026, the CofE Festivals list, LFF 2022, LSB, ELCA and the 1916 Martyrology; OCA 11 June with Bartholomew; Coptic 21 Kiahk = 30 December.",
+      "Attributions: Chrysostom Homilies 11, 12, 21 and 34 on Acts; Eusebius 3.25 (rejected, and 'may be reckoned among the disputed books'); McGiffert's 'practically unanimous'; the Raggs' introduction (Venetian scribe, Dante, the jubilee, the Gelasian Decree); the Acts of Barnabas passages in context (the book laid on the sick, the kneeling and weeping, the rope and the burning); the Catholic Encyclopedia on Cyprus (Anthimus, 488, the relics to Zeno, Acacius) and on his death ('regarded as an indication ... This seems probable'); the OCA's 'about the year 62' and its Milan line; both 1916 Martyrology lines read in the scan.",
+      "Later legends named as later, with source and date; the quarrel told evenly; both pictures' licences on their Commons pages (PD-Art|PD-old-100-expired and Cc-zero)."
+    ],
+    "changed": [
+      "Died fact: 'stoned, or burned' became 'stoned, and his body burned': the OCA and the Coptic Synaxarium both say stoned and then burned.",
+      "'Is he a saint?': the Catholic Encyclopedia says Christianity was 'successfully preached in Cyprus' by Paul, Barnabas and Mark, not that it came through them (Acts 11:19 has believers there first). Now: it 'credits Paul, Barnabas and Mark with preaching the faith on Cyprus'.",
+      "Gospel of Barnabas myth: one comma-stacked sentence split in two (the jubilee and the Raggs' note)."
+    ],
+    "left_for_owner": [
+      "The Gospel of Barnabas myth says plainly that in it Jesus foretells Muhammad; some Muslim readers value the book. Everything else there is the Raggs' dating evidence, in their words.",
+      "The band is 1200 x 1500 (the best public-domain photograph is not larger); the second picture is small and worn (610 x 800).",
+      "2 Timothy 4:11 is credited to Paul in plain words here, while Paul's page lists 2 Timothy among the six letters whose writer is debated."
+    ]
+  }
+}
