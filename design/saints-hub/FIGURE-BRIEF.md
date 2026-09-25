@@ -17,7 +17,7 @@ For your figure `<slug>` (the Bible figure quiz's slug, `site/src/data/bible-fig
 | `design/saints-hub/research/people/<slug>.quotes.json` | one entry per quotation the page prints (format in `tools/verify-quotes.mjs`) |
 | `design/saints-hub/sources/people/<slug>/` | every text you fetch (gitignored: never commit it) |
 | `site/public/img/figures/<slug>-band.jpg`, `<slug>-2.jpg` | the band picture and the second picture |
-| `site/public/img/figures/<slug>-card.jpg` | the hub card, only where the person has no personality face (see Pictures) |
+| `site/public/img/figures/<slug>-card.jpg` | the hub card (thumbnail), cut from your band or second picture (see Pictures) |
 
 **Never touch anything else.** Other writers are working beside you. In particular: never overwrite
 `site/public/img/figures/<slug>.jpg` (Doré's plate, used by the quiz and its share card); never edit
@@ -52,6 +52,9 @@ of CREDITS.md). Do not commit, do not push.
 - **Translations must be public domain.** A modern copyrighted translation may be read for leads but never quoted.
 - The deuterocanon (Sirach, Judith, Tobit, Maccabees) is not in the BSB: quote it from the World English Bible (the
   quiz's own translation) and say which Bibles hold the book.
+  It is on disk: `shared/web-world-english-bible.txt`, one verse a line with book codes (`JDT 13:8`, `TOB 12:15`,
+  `ESG` for Greek Esther with its additions in [brackets], `SUS`, `BEL`, `SIR`). The WEB does not capitalise pronouns
+  for God: apply the capitals rule when you print its lines (verify-quotes ignores case).
 
 ## The page
 
@@ -93,11 +96,20 @@ of CREDITS.md). Do not commit, do not push.
 - **Status pill 50 characters at most** (usually no status at all for a Bible figure). seo title 65 characters or
   fewer; description 50 to 160, ending in a full stop. `published` and `modified`: today's date.
 - **Number tiles make sense on their own** (the chip says what is counted, the lines finish the thought). No number
-  forced in; a fact that is not a number is a tidbit.
+  forced in; a fact that is not a number is a tidbit. The owner rejected, on 2026-09-25: "Signs he performed: 0" on
+  John the Baptist ("comes across as negative towards him"), and on Barnabas "Gods the crowd at Lystra took them for"
+  ("so forced and nonsensical") and "Prophets and teachers named at Antioch". So: never a count of an absence or a
+  failing that reads as a slight, never trivia counted for its own sake. A good tile is a number people would repeat
+  (Peter's 153 fish, his 3 denials and 3 "Do you love Me?"). Numbers of 10,000 and up are written short: "32k",
+  "135k" (saints-test.mjs enforces it). Fewer good tiles and one more good "Did you know?" beat a weak tile.
 - **No placeholder pictures**, and no picture the page already shows elsewhere.
 
 ## Pictures
 
+- **The face must be large, clear and pleasing.** The owner rejected, on 2026-09-25, every picture of Barnabas ("you
+  can't even make out his face": a detail of a large altarpiece, and a rubbed fresco) and Rublev's Paul ("too damaged
+  to be visually pleasing"). No worn, flaked or small scans; no figure lost in a crowd scene. Look at each picture
+  before you choose it.
 - Two pictures: the band (`<slug>-band.jpg`, a painting or icon with the face clear, about 1800 px on the long side,
   about 300 KB) and a second picture (`<slug>-2.jpg`, often an icon or painting from the other half of the Church,
   about 1500 px, the page's `portrait`, with a plain caption). **Public domain or CC0 only**; read the licence tag
@@ -107,10 +119,11 @@ of CREDITS.md). Do not commit, do not push.
 - Resize with Python PIL (JPEG quality about 85). `width` and `height` in the data must be the file's own.
 - `band.posM` and `band.posD`: the object-position that keeps the face in frame on a 390 x 335 phone crop and on a
   wide band. Look at the picture (a downscaled view is enough) and reason from where the face is.
-- `card`: `{ line, img, focus }`. `img` is `/img/personality/faces/<slug>.jpg` where that file exists; otherwise cut
-  a card of your own, `site/public/img/figures/<slug>-card.jpg`: a 4:5 crop (400 x 500) around the face from your
-  band or second picture, about 40 KB, with `focus` "50% 30%" or wherever the face sits. The card is what the Saints
-  hub shows for the person (every figure with a page joins the hub, except Jesus). `filters`: groups
+- `card`: `{ line, img, focus }`. Cut a card of your own for every figure, `site/public/img/figures/<slug>-card.jpg`:
+  a 4:5 crop, 480 x 600, from your band (or the second picture where its face is better), with the face centred left
+  to right and the eyes about 38% from the top; `focus` "50% 50%". Look at the crop: the owner rejected thumbnails that
+  were off-centre or sat too low. Never the personality test's face. The card is what the Saints hub shows for the
+  person (every figure with a page joins the hub, except Jesus). `filters`: groups
   `["bible"]` (plus `"women"` for a woman), lived `"bible"`, side `[]`, and an alias string of other names and
   spellings.
 

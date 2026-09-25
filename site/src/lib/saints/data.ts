@@ -190,9 +190,13 @@ const NEW_TESTAMENT_FROM = BIBLE_ORDER.indexOf('mary-of-nazareth');
 
 const BIBLE_PEOPLE: HubPerson[] = BIBLE_ORDER.flatMap((slug, i): HubPerson[] => {
   const b = BIBLE.find(x => x.slug === slug);
+  /* The card is the page's own (its card.img, cut for the hub) where the figure has a page; the
+     personality test's face otherwise. The test keeps its faces either way. */
+  const own = FIGURE_PAGES[slug]?.card;
   if (b) return [{
     slug: b.slug, name: b.name, dates: b.testament, line: b.line, href: `/figure/${b.slug}/`,
-    img: `/img/personality/faces/${b.slug}.jpg`, focus: '50% 40%', groups: ['bible', ...words(b.groups ?? '')],
+    img: own?.img ?? `/img/personality/faces/${b.slug}.jpg`, focus: own ? own.focus ?? '50% 40%' : '50% 40%',
+    groups: ['bible', ...words(b.groups ?? '')],
     lived: 'bible', side: [], type: b.type, alias: FIGURE_PAGES[slug]?.filters.alias ?? '', full: !!FIGURE_PAGES[slug]
   }];
   const page = FIGURE_PAGES[slug];

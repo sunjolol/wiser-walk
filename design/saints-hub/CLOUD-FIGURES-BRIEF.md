@@ -51,9 +51,8 @@ and everything it tells you to read.** Everything in it holds here, with the dif
    or Chromium is installed, measure each sheet:
    `CHROME=$(command -v google-chrome chromium chromium-browser | head -1) node design/saints-hub/tools/measure-sheet.mjs /figure/<slug>/ 4321`.
    If none is, skip it: the desktop session measures after the merge. Do not render share cards (the desktop does).
-3. **The hub card.** None of the 16 has a personality type, so none gets a type box or `typeNote`. Only Abraham has a
-   face ready (`/img/personality/faces/abraham.jpg`, the test's Host role). Every other figure needs its own card
-   picture, `site/public/img/figures/<slug>-card.jpg` (FIGURE-BRIEF.md, Pictures). A figure page joins the Saints
+3. **The hub card.** None of the 16 has a personality type, so none gets a type box or `typeNote`. Every figure,
+   Abraham too, needs its own card picture, `site/public/img/figures/<slug>-card.jpg` (FIGURE-BRIEF.md, Pictures). A figure page joins the Saints
    hub by itself, in the Bible's order (`BIBLE_ORDER` in `site/src/lib/saints/data.ts`); do not edit that file.
 4. **CREDITS.md.** Writers still never touch it. After each group, add the group's rows to the "Public domain: Bible
    figure pages" section of `site/public/img/CREDITS.md` yourself, in one edit.

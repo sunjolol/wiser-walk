@@ -171,6 +171,9 @@ console.log('saints: each page');
     for (const t of p.tidbits ?? []) if (!t.cite?.text) no(`a "Did you know?" line has no source: "${String(t.text).slice(0, 50)}…"`);
     /* A number tile finishes its thought: a chip that says what is counted, and its lines. */
     for (const n of p.numbers ?? []) if (!n.chip || !n.n || !n.src || !(n.lines?.length >= 1)) no(`a number tile is missing its chip, number, lines or source: ${n.chip} ${n.n}`);
+    /* Ten thousand and up is written short, "32k", "135k", "100k" (the owner, 2026-09-25 on Gideon's
+       32,000: "for consistency and less negative space"). */
+    for (const n of p.numbers ?? []) if (/^\d{1,3}(,\d{3})+$/.test(n.n) && Number(n.n.replace(/,/g, '')) >= 10000) no(`the tile "${n.n}" is written long: write it as ${Math.round(Number(n.n.replace(/,/g, '')) / 1000)}k`);
     if (!bad) ok(`${at}: listing, answer (${n} words), feast order, marks and pictures`);
   }
 }

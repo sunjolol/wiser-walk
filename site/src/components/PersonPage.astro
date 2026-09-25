@@ -100,7 +100,9 @@ const SECTIONS = [
   ['prayer', p.prayer?.title ?? `A prayer ${he} wrote`, !!p.prayer],
   ['read', 'What to read first', !!p.reads?.length],
   ['record', recordTitle ?? '', hasRecord],
-  ['quizzes', 'Take the quizzes', true],
+  /* On a Bible figure's page the quizzes sit inside "Where the quiz places him": one pager item, not
+     two (the owner, 2026-09-25: "less dropdown menu clutter"). */
+  ['quizzes', 'Take the quizzes', !hasRecord],
   ['kin', `People like ${him}`, !!p.kin?.length],
   ['sources', 'Sources', true]
 ].filter(([, , on]) => on) as Array<[string, string, boolean]>;
@@ -629,8 +631,8 @@ const pic = p.band.picture;
       <slot name="record" />
     </>
   )}
-  <SectionHead id="quizzes" title="take the quizzes" />
-  <div class="squizzes">
+  {!hasRecord && <SectionHead id="quizzes" title="take the quizzes" />}
+  <div class:list={['squizzes', hasRecord && 'squizzes--in-record']} id={hasRecord ? 'quizzes' : undefined}>
     {extraQuiz && (
       <a class="squiz squiz--engr" href={extraQuiz.href}>
         <img src={extraQuiz.img} alt="" loading="lazy" />

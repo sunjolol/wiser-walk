@@ -255,6 +255,8 @@ html.is-locked { overflow: hidden; }
 .people-empty { padding: 1.4rem; text-align: center; color: var(--ink-soft); background: var(--panel); border-radius: var(--r); }
 
 /* the quiz card at the foot of a page (.squiz) is kit.css's "quiz plate": other pages end on it too */
+/* On a Bible figure's page the quiz cards close "Where the quiz places him" rather than open a section of their own. */
+.squizzes--in-record { margin-top: 1.6rem; scroll-margin-top: 5rem; }
 
 /* ============================================================ St Martin */
 /* "Tap" on a touch screen, "Click" with a mouse */
