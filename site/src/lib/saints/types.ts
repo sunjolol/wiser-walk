@@ -260,8 +260,12 @@ export interface SaintPage {
     quotes?: Quote[];
   };
 
-  /** A PRAYER HE WROTE, only when it is really his. */
-  prayer?: { intro?: Rich; q: string; cite: Cite };
+  /**
+   * A PRAYER HE WROTE, only when it is really his. `title` replaces the heading where the passage
+   * is not a prayer as such: Polycarp's is a blessing from his letter, so it is "A letter he wrote"
+   * (the owner, 2026-09-26: "it's not a prayer").
+   */
+  prayer?: { title?: string; intro?: Rich; q: string; cite: Cite };
 
   /** WHAT TO READ FIRST: free copies only. */
   reads?: Array<{ title: string; by: string; text: Rich; url: string; label?: string }>;
