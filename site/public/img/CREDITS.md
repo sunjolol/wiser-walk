@@ -306,6 +306,33 @@ licence tag of each was read on its Commons file page; modern icons, which are u
 | polycarp-of-smyrna-3.jpg | Saint Polycarp in the flames, Jan Luyken, 1701. Rijksmuseum, Amsterdam. CC0. | `H. Polycarpus wordt op een brandstapel gezet maar de vlammen verbranden hem niet, RP-P-OB-44.845.jpg` | CC0 |
 | polycarp-of-smyrna-6.jpg | S. Polycarpus, Michael Burghers, from William Cave's Apostolici, London, 1716 edition. Public domain. | `Apostolici- or, the history of the lives, acts, death, and martyrdoms of those who were contemporary with, or immediately succeeded the Apostles Fleuron T126603-18.png` | Public domain |
 | polycarp-of-smyrna-card.jpg | Saint Polycarp, a Byzantine fresco of the early 1300s, probably in the church of St George, Staro Nagoričane, North Macedonia. CC0. Cropped for the hub's card. | `Polycarp of Smyrna2.jpg` | CC0 |
+| ambrose-of-milan.jpg (in `saints/`, the band) | Saint Ambrose, Claude Vignon, 1623 or 1625. Minneapolis Institute of Art. Public domain. | `Claude Vignon - Saint Ambrose - 68.43 - Minneapolis Institute of Arts.jpg` | Public domain |
+| antony-the-great.jpg (in `saints/`, the band) | Saint Anthony Abbot, Fra Filippo Lippi, 1458. Cleveland Museum of Art. CC0. | `Filippo Lippi - Panel from a Triptych, St. Anthony Abbot - 1964.150.2 - Cleveland Museum of Art.tiff` | CC0 |
+| augustine-of-hippo.jpg (in `saints/`, the band) | Saint Augustine, Philippe de Champaigne, about 1645-1650. Los Angeles County Museum of Art. Public domain. | `Saint Augustine by Philippe de Champaigne.jpg` | Public domain |
+| basil-the-great.jpg (in `saints/`, the band) | Saint Basil the Great, Novgorod school, late 15th century (detail). Nasjonalmuseet, Oslo. Photo: Børre Høstland. Public domain. | `Novgorod School - Saint Basil the Great - NG.M.01523 - National Museum of Art, Architecture and Design.jpg` | Public domain |
+| benedict-of-nursia.jpg (in `saints/`, the band) | Saint Benedict at Prayer, Master of Messkirch, about 1530. Staatsgalerie Stuttgart. Public domain. | `Meister von Meßkirch 002.jpg` | Public domain |
+| clement-of-alexandria.jpg (in `saints/`, the band) | Clement of Alexandria, from André Thevet, Les vrais pourtraits et vies des hommes illustres, 1584. Boston Public Library. Public domain. | `Clement alexandrin.jpg` | Public domain |
+| cyprian-of-carthage.jpg (in `saints/`, the band) | Saint Cyprian, Master of Messkirch, about 1535-1540. Staatsgalerie Stuttgart. Public domain. | `Heiliger Cyprianus.jpg` | Public domain |
+| gregory-of-nazianzus.jpg (in `saints/`, the band) | St Gregory the Theologian, mosaic, Pammakaristos church, Istanbul, about 1310. Photo: Dumbarton Oaks, CC0. | `Fethiye Camii, parekklesion, diakonikon, mosaics, Istanbul, Turkey - Apse conch, St. Gregory the Theologian, detail of upper half - MSBZ004 BF T F 025 B - Dumbarton Oaks.jpg` | CC0 |
+| gregory-of-nyssa.jpg (in `saints/`, the band) | Saint Gregory of Nyssa, fresco by the painters Michael and Eutychios. Church of the Theotokos Peribleptos, Ohrid, North Macedonia. Public domain. | `Paintings in the Church of the Theotokos Peribleptos of Ohrid 0130.jpg` | Public domain |
+| gregory-the-great.jpg (in `saints/`, the band) | Saint Gregory the Great, Pope, Francisco de Goya, 1796-1799. Museo del Romanticismo, Madrid. Public domain. | `Francisco de Goya - Saint Gregory the Great, Pope - Google Art Project.jpg` | Public domain |
+| irenaeus-of-lyons.jpg (in `saints/`, the band) | Saint Irenaeus, a stained-glass window by Lucien Bégule, 1901. Église Saint-Irénée, Lyon. Public domain. | `Saint irenee saint irenee.jpg` | Public domain |
+| jerome.jpg (in `saints/`, the band) | Saint Jerome as Scholar, El Greco, about 1610. The Metropolitan Museum of Art, New York. Public domain. The cardinal's robes are the painter's: there were no cardinals in Jerome's day. | `Saint Jerome as Scholar MET DT3103.jpg` | Public domain |
+| john-chrysostom.jpg (in `saints/`, the band) | Saint John Chrysostom, from the Magdalen Altar, workshop of Lucas Cranach the Elder, about 1520-1525. Bavarian State Painting Collections. Public domain. | `Lucas Cranach d. Ä. (Anonymer Meister seiner Werkstatt) - Magdalenenaltar, Hl. Chrysostomus - 1046 - Bavarian State Painting Collections.jpg` | Public domain |
+| justin-martyr.jpg (in `saints/`, the band) | Saint Justin the Philosopher, fresco by Theophanes the Cretan and his son Symeon, about 1546. Stavronikita Monastery, Mount Athos. Public domain. | `Иустин Философ, Афон.jpg` | Public domain |
+| lactantius.jpg (in `saints/`, the band) | Lactance, an engraving by Henri Bonnart, late 1600s or early 1700s. An imagined likeness. KU Leuven Libraries. Public domain. | `Lactance, PA01382.jpg` | Public domain |
+| origen.jpg (in `saints/`, the band) | Origen, an imagined likeness. Engraving from André Thevet's Les vrais pourtraits, Paris, 1584. Public domain. | `Origen.jpg` | Public domain |
+| tertullian.jpg (in `saints/`, the band) | Tertullian, an imagined portrait, from André Thevet, Les vrais pourtraits et vies des hommes illustres, 1584. Public domain. | `Tertullian2.png` | Public domain |
+| boethius.jpg (in `saints/`, the band) | Boethius ("Boece Severin"), an imagined likeness, André Thevet, Les vrais pourtraits et vies des hommes illustres, volume 3, Paris, 1584, cropped to the engraving. The owner chose it (2026-09-26) in place of the Coëtivy Master's miniature. Internet Archive, lesvraispourtrai03thev, leaf 176 | archive.org, not Commons (the British Museum's copy on Commons, `Boece Severin (BM 1879,1213.257).jpg`, is the same print) | Public domain |
+
+## Another licence: the Saints hub (`saints/`)
+
+Added 2026-09-26. The owner chose this photograph for Isaac the Syrian over the 1518 miniature, which he found too hard to make out. It is not public domain: the photographer shares it under CC BY-SA 2.0, which asks for his name beside it (the page prints it) and for the crops to be shared under the same licence. The icon itself is modern and its painter is not named.
+
+| file | picture | source | licence |
+|---|---|---|---|
+| isaac-the-syrian.jpg | St. Isaac the Syrian Icon: a modern icon (painter not named), photographed by Ted (bobosh_t) on Flickr, https://www.flickr.com/photos/31801622@N07/5356122130 , trimmed of its printed border. Chosen by the owner (2026-09-26) over the 1518 miniature; the crop is shared under the same licence | Flickr | CC BY-SA 2.0 |
+| isaac-the-syrian-card.jpg | The same photograph, cropped to his face for the hub's card | as above | CC BY-SA 2.0 |
 
 ## Public-domain paintings used on hubs
 

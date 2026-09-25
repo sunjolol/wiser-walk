@@ -79,8 +79,12 @@ for (const slug of slugs) {
   // credits
   for (const pic of pics) {
     const file = basename(pic.src);
-    if (credits.includes(`| ${file} |`)) continue;
-    const row = `| ${file} | ${pic.credit.replace(/\|/g, '/')} | \`${commonsFile(pic.page ?? '') || pic.page || ''}\` | ${pic.license} |`;
+    // A band often shares its file name with the quiz's portrait in early-christians/, which has
+    // its own row elsewhere in the file: name the folder, as Macrina's row does, so the check and
+    // the row are about this picture and no other.
+    const label = `${file} (in \`saints/\`)`;
+    if (credits.includes(`| ${label} |`) || credits.includes(`| ${file} (in \`saints/\`,`)) continue;
+    const row = `| ${label} | ${pic.credit.replace(/\|/g, '/')} | \`${commonsFile(pic.page ?? '') || pic.page || ''}\` | ${pic.license} |`;
     credits = credits.replace(/(## Public domain and CC0: the Saints hub[\s\S]*?\n\| file \| picture \| Commons file \| licence \|\n\|---\|---\|---\|---\|\n(?:\|[^\n]*\n)*)/, `$1${row}\n`);
   }
   console.log(`moved ${slug}`);

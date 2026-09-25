@@ -119,7 +119,8 @@ const quizType = '/q/personality/';
 const url = new URL(`/saints/${p.slug}/`, Astro.site).href;
 const LICENSE: Record<string, string> = {
   CC0: 'https://creativecommons.org/publicdomain/zero/1.0/',
-  'Public domain': 'https://creativecommons.org/publicdomain/mark/1.0/'
+  'Public domain': 'https://creativecommons.org/publicdomain/mark/1.0/',
+  'CC BY-SA 2.0': 'https://creativecommons.org/licenses/by-sa/2.0/'
 };
 const pic = p.band.picture;
 const imageLd = {
@@ -609,7 +610,7 @@ const breadcrumbs = [
   <div class="panel sprose">
     <p class="big" set:html={rich(p.saint.big)} />
     <ul class="churches">
-      {p.saint.churches.map(c => <li><b>{c.church}</b><span>{c.status}</span><small set:html={rich(c.note)} /></li>)}
+      {p.saint.churches.map(c => <li><b style={c.spacing ? `letter-spacing: ${c.spacing}` : undefined}>{c.church}</b><span>{c.status}</span><small set:html={rich(c.note)} /></li>)}
     </ul>
     {p.saint.paras?.map(t => <p set:html={rich(t)} />)}
   </div>

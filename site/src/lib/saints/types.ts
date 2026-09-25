@@ -255,7 +255,12 @@ export interface SaintPage {
   /** IS HE A SAINT? */
   saint: {
     big: Rich;
-    churches: Array<{ church: string; status: string; note: string }>;
+    churches: Array<{
+      church: string; status: string; note: string;
+      /** Letter-spacing for this church's name where the usual .14em would wrap it: Isaac's
+          "Church of the East" at .12em (the owner, 2026-09-26, for that page only). */
+      spacing?: string;
+    }>;
     paras?: Rich[];
     quotes?: Quote[];
   };

@@ -29,19 +29,19 @@
     "lede": "Bishop of Nineveh for five months, then a hermit whose writings are now read across the churches.",
     "picture": {
       "src": "/img/saints/isaac-the-syrian.jpg",
-      "alt": "A Russian manuscript painting of Isaac the Syrian as an old monk with a long grey beard and a gold halo, standing in a red-brown robe on green ground and holding an open scroll of Slavonic writing",
-      "width": 699,
-      "height": 1087,
-      "credit": "Isaac the Syrian, a miniature in a Russian manuscript of 1518, written by the monk Ioasaf Khokholek at the Kirillo-Belozersky monastery. National Library of Russia. Public domain.",
-      "page": "https://commons.wikimedia.org/wiki/File:Isaac_Sirin_miniature.jpg",
-      "license": "Public domain"
+      "alt": "An icon of Saint Isaac the Syrian: an old monk with long white hair and beard sits at a lectern, his head resting on his hand, writing in an open book lettered with a line about silence, while a hand of blessing reaches down from heaven in the corner",
+      "width": 1176,
+      "height": 1535,
+      "credit": "Saint Isaac the Syrian, a modern icon. Photo: Ted (bobosh_t) on Flickr, CC BY-SA 2.0.",
+      "page": "https://www.flickr.com/photos/31801622@N07/5356122130",
+      "license": "CC BY-SA 2.0"
     },
-    "posM": "50% 4%",
-    "posD": "50% 2%"
+    "posM": "50% 18%",
+    "posD": "50% 20%"
   },
   "card": {
     "line": "Bishop of Nineveh for five months, then a hermit whose writings are now read across the churches.",
-    "img": "/img/early-christians/isaac-the-syrian.jpg",
+    "img": "/img/saints/isaac-the-syrian-card.jpg",
     "focus": "50% 22%"
   },
   "filters": {
@@ -370,19 +370,19 @@
         }
       },
       {
-        "q": "There is no prayer which is heard so soon as when a man asks to be reconciled with those who are angry with him. And when a man charges himself with the fault, this prayer is answered without delay.",
-        "who": "On prayer.",
-        "cite": {
-          "text": "Ascetical Homilies, chapter 23",
-          "url": "https://upload.wikimedia.org/wikipedia/commons/8/82/Isaac_of_Nineveh_-_Mystic_Treatises.pdf#page=175"
-        }
-      },
-      {
         "q": "This life has been given thee for repentance; do not spend it with various things.",
         "who": "From a chapter of short sayings.",
         "cite": {
           "text": "Ascetical Homilies, chapter 79",
           "url": "https://upload.wikimedia.org/wikipedia/commons/8/82/Isaac_of_Nineveh_-_Mystic_Treatises.pdf#page=421"
+        }
+      },
+      {
+        "q": "There is no prayer which is heard so soon as when a man asks to be reconciled with those who are angry with him. And when a man charges himself with the fault, this prayer is answered without delay.",
+        "who": "On prayer.",
+        "cite": {
+          "text": "Ascetical Homilies, chapter 23",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/8/82/Isaac_of_Nineveh_-_Mystic_Treatises.pdf#page=175"
         }
       },
       {
@@ -506,14 +506,6 @@
           }
         },
         {
-          "title": "A later story",
-          "text": "Some Orthodox hold that he was fully Orthodox. A book about St Paisios of Mount Athos, a monk of the 20th century, reports one testimony. In it, Paisios sees the holy fathers pass before him in a vision. One of them stops and says: “I am Isaac the Syrian. I am completely Orthodox.” The book itself adds: “We are not in a position to endorse or to reject the reliability of this witness.”",
-          "cite": {
-            "text": "Hieromonk Isaac, Elder Paisios of Mount Athos (2012), as quoted by OrthoChristian",
-            "url": "https://orthochristian.com/90545.html"
-          }
-        },
-        {
           "title": "Will hell end?",
           "text": "He wrote that sin had a beginning and will have an end. Hell too had a beginning, “but its end is not known”. Even those in hell, he says, “are tormented with the scourgings of love”. In this First Part he does not say plainly that hell will end. The line our quiz shows for him speaks of grace at the resurrection. These are plainer.",
           "quote": "Sin, hell and death do not at all exist with God. For they are facts, not persons. Sin is the fruit of will. There was a time, when it was not. And there will be a time, when it will not be. Hell is the fruit of sin; at some time or other it had beginning; but its end is not known.",
@@ -538,6 +530,14 @@
           "cite": {
             "text": "Ascetical Homilies, chapters 36, 41, 4 and 81",
             "url": "https://upload.wikimedia.org/wikipedia/commons/8/82/Isaac_of_Nineveh_-_Mystic_Treatises.pdf#page=436"
+          }
+        },
+        {
+          "title": "A later story",
+          "text": "Some Orthodox hold that he was fully Orthodox. A book about St Paisios of Mount Athos, a monk of the 20th century, reports one testimony. In it, Paisios sees the holy fathers pass before him in a vision. One of them stops and says: “I am Isaac the Syrian. I am completely Orthodox.” The book itself adds: “We are not in a position to endorse or to reject the reliability of this witness.”",
+          "cite": {
+            "text": "Hieromonk Isaac, Elder Paisios of Mount Athos (2012), as quoted by OrthoChristian",
+            "url": "https://orthochristian.com/90545.html"
           }
         }
       ]
@@ -632,7 +632,8 @@
       {
         "church": "Church of the East",
         "status": "Honoured",
-        "note": "His own church. He was one of its bishops"
+        "note": "His own church. He was one of its bishops",
+        "spacing": ".12em"
       },
       {
         "church": "Anglican",
@@ -846,9 +847,9 @@
       "heading": "Pictures",
       "items": [
         {
-          "text": "Isaac Sirin miniature",
-          "url": "https://commons.wikimedia.org/wiki/File:Isaac_Sirin_miniature.jpg",
-          "after": ", from a Russian manuscript of 1518. National Library of Russia. Public domain."
+          "text": "St. Isaac the Syrian Icon",
+          "url": "https://www.flickr.com/photos/31801622@N07/5356122130",
+          "after": ", photographed by Ted (bobosh_t) on Flickr. CC BY-SA 2.0."
         },
         {
           "text": "Abbate Ysaac",

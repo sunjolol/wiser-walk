@@ -97,17 +97,8 @@
       "src": "Gregory of Tours, History of the Franks, Book 10, chapter 1"
     },
     {
-      "chip": "Men who landed in Kent",
-      "n": "40",
-      "lines": [
-        "Augustine's mission, in 597",
-        "“Nearly forty men”, says Bede"
-      ],
-      "src": "Bede, Ecclesiastical History, Book 1, chapter 25"
-    },
-    {
       "chip": "English baptised one Christmas",
-      "n": "10,000",
+      "n": "10k",
       "lines": [
         "By Augustine, in 597",
         "“More than ten thousand”, he was told"
@@ -494,8 +485,8 @@
         }
       },
       {
-        "q": "Amor ipse notitia est.",
-        "who": "Love itself is knowledge. On Jesus calling His disciples friends, in John 15. Our translation of his Latin.",
+        "q": "Love itself is knowledge.",
+        "who": "On Jesus calling His disciples friends, in John 15. Our translation of his Latin: {la|Amor ipse notitia est.}",
         "cite": {
           "text": "Homilies on the Gospels, Homily 27",
           "url": "https://archive.org/details/patrologiaecursu76mign"
@@ -967,6 +958,21 @@
           "after": ". Tr. Henry Beveridge, 1845."
         },
         {
+          "text": "King Alfred's West-Saxon Version of Gregory's Pastoral Care",
+          "url": "https://archive.org/details/kingalfredswestsaxonverswe",
+          "after": ". Ed. and tr. Henry Sweet, 1871, for Alfred's preface."
+        },
+        {
+          "text": "Ashmolean Museum",
+          "url": "https://www.ashmolean.org/alfred-jewel",
+          "after": ", “The Alfred Jewel”"
+        },
+        {
+          "text": "Dante, Paradiso",
+          "url": "https://www.gutenberg.org/ebooks/1003",
+          "after": ". Tr. Henry Wadsworth Longfellow, 1867."
+        },
+        {
           "text": "Merriam-Webster",
           "url": "https://www.merriam-webster.com/dictionary/Gregory",
           "after": ", “Gregory”, for how to say it"
@@ -1061,17 +1067,24 @@
   ],
   "tidbits": [
     {
-      "text": "His estate manager in Sicily once sent him a poor nag and five good donkeys. He could not ride the nag, Gregory wrote back, because it was so poor, nor the donkeys, because they were donkeys.",
+      "text": "An empress once ordered him to send her “the head of Saint Paul, or some other part of his body”. He said he neither could nor dared. He offered filings from St Peter's chains instead, if the file would take any off.",
       "cite": {
-        "text": "Letters, Book 2, letter 32",
-        "url": "https://ccel.org/ccel/schaff/npnf212/npnf212.iii.v.ii.xvii.html"
+        "text": "Letters, Book 4, letter 30",
+        "url": "https://www.newadvent.org/fathers/360204030.htm"
       }
     },
     {
-      "text": "John the Deacon, his later biographer, says a poor man was once found dead in a back room of a lodging house. Gregory stopped saying Mass for some days, grieving as if he had killed the man himself.",
+      "text": "King Alfred the Great translated the *Pastoral Rule* into English himself. He sent a copy to each of his bishops, with a costly reading pointer. The Alfred Jewel in Oxford may be the handle of one.",
       "cite": {
-        "text": "John the Deacon, Life of Gregory, Book 2, chapter 29; Dudden, volume 1",
-        "url": "https://archive.org/details/gregorygreathisp01dudduoft"
+        "text": "Alfred's preface; the Ashmolean Museum",
+        "url": "https://www.ashmolean.org/alfred-jewel"
+      }
+    },
+    {
+      "text": "Dante tells a gentle joke about him. Gregory had ranked the nine orders of angels differently from the Greek writer Dionysius. So in the *Paradiso*, as soon as Gregory opened his eyes in heaven, “he at himself did smile”.",
+      "cite": {
+        "text": "Dante, Paradiso, Canto 28, tr. Longfellow",
+        "url": "https://www.gutenberg.org/ebooks/1003"
       }
     }
   ],

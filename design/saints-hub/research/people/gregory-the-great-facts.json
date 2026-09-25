@@ -4437,5 +4437,43 @@
       ],
       "picture": "Commons page re-read through the API on 2026-09-25: licence section {{cc-zero}}, original 1375 x 1500, description names Harley MS 3011, fol. 69v, and the inscription. The file on disk is 800 x 845 and shows the miniature (dove with a scroll reading Scs Spiritus, a haloed beardless writer on a chair, patterned brown border), as the alt text says. A different work from the band (Goya) and the portrait (Cretan icon)."
     }
+  },
+  "did_you_know_2026_09_25": {
+    "what": "The owner found the two \"Did you know?\" lines (the nag and the five donkeys; the poor man found dead) unsatisfying next to the other approved pages, and asked for more engaging tidbits. Both were removed (their evidence stays under owner_notes_2026_09_25.tidbits) and three new ones written. Each was checked against the page: none repeats anything it already tells.",
+    "measure_1360": "Before (two old lines, after the Kent tile came off): facts 1257, numbers 1060, sheetTallerThanFacts 0. Four new lines were tried first: numbers 1538 (281 too tall). After, with three: facts 1257, numbers 1241, pictures 1252, sheetTallerThanFacts 0.",
+    "items": [
+      {
+        "text": "An empress once ordered him to send her the head of Saint Paul, or some other part of his body. He said he neither could nor dared. He offered filings from St Peter's chains instead, if the file would take any off.",
+        "source": "Letters, Book 4, letter 30, to Constantina Augusta (Barmby, NPNF 2nd series 12)",
+        "evidence": "people/gregory-the-great/ccel-npnf212.txt lines 36916-36929: \"To Constantina Augusta ... has charged me with your commands to send to you the head of Saint Paul, or some other part of his body, for the church which is being built in honour of the same Saint Paul in the palace ... I neither can nor dare do what you enjoin.\" Lines 37008-37017: \"I will make haste to transmit to you some portion of the chains which Saint Peter the apostle himself bore on his neck and his hands ... if at least I should succeed in removing it by filing ... in the case of other seekers the file is drawn for long over the chains, and yet nothing can be got from them.\" The same words on New Advent, saved as people/gregory-the-great/newadvent-360204030.txt. Constantina was the empress, wife of Maurice (Dudden 1905, vol. 2, people/gregory-the-great/archive-dudden-gregory-vol2-1905.txt lines 10372-10380). The page already cites this letter only for the cloth that bled (Pope Leo and the scissors); the head of Paul and the chains are new.",
+        "url": "https://www.newadvent.org/fathers/360204030.htm",
+        "quotation": "the head of Saint Paul, or some other part of his body (in gregory-the-great.quotes.json)",
+        "verified": true
+      },
+      {
+        "text": "King Alfred the Great translated the Pastoral Rule into English himself. He sent a copy to each of his bishops, with a costly reading pointer. The Alfred Jewel in Oxford may be the handle of one.",
+        "source": "King Alfred's preface to his West Saxon Pastoral Care, tr. Henry Sweet (EETS, 1871); Ashmolean Museum, The Alfred Jewel",
+        "evidence": "people/gregory-the-great/archive-sweet-alfred-pastoral-care-1871.txt lines 819-826 (Sweet's translation of the preface to the Hatton MS., the copy for bishop Werferth of Worcester): \"to translate into English the book which is called in Latin Pastoralis, and in English Shepherd's Book, sometimes word by word and sometimes according to the sense, as I had learnt it from Plegmund my archbishop, and Asser my bishop, and Grimbold my mass-priest, and John my mass-priest ... I translated it into English\"; lines 865-867: \"[and I will send a] copy to every bishopric in my kingdom; and on each there is a clasp worth fifty mancus. And I command in God's name that no man take the clasp from the book or the book from the minster\". Sweet renders aestel as clasp; the Ashmolean renders it pointer: people/gregory-the-great/ashmolean-alfred-jewel.txt line 99: \"Some of these manuscripts were distributed throughout his kingdom and were accompanied by aestels, or pointers, used to follow the text. It is thought that the Alfred Jewel may be one of these aestels. The dragon-like head at the base of the jewel holds in its mouth a cylindrical socket, within which the actual pointer ... would have been held\" (so: the handle). Dudden 1905, vol. 1, people/gregory-the-great/archive-dudden-gregory-vol1-1905.txt lines 11825-11828: \"nearly three hundred years afterwards, it was paraphrased in the West Saxon tongue by King Alfred the Great, assisted by Plegmund his Archbishop, Asser his Bishop, and Grimbold and John his Mass-priests.\" \"Himself\" is Alfred's own account (\"I translated it\"), with the helpers he names.",
+        "url": "https://www.ashmolean.org/alfred-jewel",
+        "verified": true
+      },
+      {
+        "text": "Dante tells a gentle joke about him. Gregory had ranked the nine orders of angels differently from the Greek writer Dionysius. So in the Paradiso, as soon as Gregory opened his eyes in heaven, he at himself did smile.",
+        "source": "Dante, Paradiso, Canto 28, tr. Henry Wadsworth Longfellow (1867), Project Gutenberg 1003; Gregory, Homilies on the Gospels, Homily 34 (PL 76)",
+        "evidence": "people/gregory-the-great/gutenberg-dante-paradiso-longfellow.txt lines 5620-5626: \"And Dionysius with so great desire / To contemplate these Orders set himself, / He named them and distinguished them as I do. // But Gregory afterwards dissented from him; / Wherefore, as soon as he unclosed his eyes / Within this heaven, he at himself did smile.\" (Canto heading, line 5445.) Gregory's own nine orders: people/gregory-the-great/archive-migne-pl76.txt lines 99277-99279, Homily 34: \"novem esse angelorum ordines inveniuntur\".",
+        "url": "https://www.gutenberg.org/ebooks/1003",
+        "quotation": "he at himself did smile (in gregory-the-great.quotes.json)",
+        "verified": true
+      }
+    ],
+    "checked_not_used": [
+      "Pope Felix III as his great-great-grandfather: the page already has Tarsilla seeing \"an ancestor of theirs, Pope Felix\" (circle).",
+      "The Gregorian calendar is not his: already a myth on the page.",
+      "How many letters survive: already under Wrote (\"About 850 letters\") and in What to read first.",
+      "First monk to become pope: the Catholic Encyclopedia says \"the first monk to become pope\" (people/gregory-the-great/cathen-gregory-i.txt line 183) and Dudden \"the first monk-Pope\" (vol. 2, line 10130). True to the sources, but it did not fit: three lines filled the column.",
+      "His portrait painted in his lifetime, with a square frame round his head as the mark of a living man (John the Deacon, Life, Book 4, chapter 84, in people/gregory-the-great/archive-migne-pl75.txt lines 33590-33640, and Dudden vol. 1 lines 11940-11968). Checked and strong; tried as a fourth line, but four made the numbers column 281px taller than the facts. A good spare if the owner wants a swap.",
+      "Augustine asking why Rome and Gaul said Mass differently, and Gregory's \"things are not to be loved for the sake of places, but places for the sake of good things\" (Bede 1.27, people/gregory-the-great/gutenberg-bede-sellar-1907.txt lines 2662-2677). Checked; left out because the page's \"Steps, not leaps\" already shows him adapting to the English.",
+      "London and York planned as the two English metropolitan sees, each with twelve bishops (Bede 1.29, same file lines 3100-3128). Checked; not used."
+    ]
   }
 }

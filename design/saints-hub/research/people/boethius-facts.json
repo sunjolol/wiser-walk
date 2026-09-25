@@ -1376,5 +1376,61 @@
     "The picture's caption and its source entry (see the picture's 'checker' note)."
    ]
   }
+ },
+ "lady_philosophy_2026_09_25": {
+  "what": "The owner's note of 2026-09-25, verbatim: \"'Lady Philosophy' is mentioned constantly and is a major part of his life, clearly, but it's never explained who she was to him, I wasn't even aware there was a person called Philosophy, or that she taught him and helped him throughout his life, that's so interesting but there's no section explaining it plainly, it's simply scattered throughout, I feel we may need a section on this above the 'his prison book' section\". The page had led a careful reader to think she was a real woman who taught him all his life. New extra 'Who is Lady Philosophy?' (id lady-philosophy, after 'life', first in the extras array so it renders directly above 'His prison book'). It says first that she is Philosophy pictured as a woman, then her look, her torn robe, how she 'raised' him, what she teaches through the five books, and how later readers kept her. It leaves the Muses scene, Fortune's wheel, eternity and the last words to 'His prison book', which already tells them.",
+  "moment_fixed": "Life moment 'Two sons, two consuls': 'Fortune, says Philosophy, gave him ...' became 'In his prison book, Philosophy says Fortune gave him ...'. Without the book named, the line read as if a person called Philosophy had commented on his life in 522. No other mention of her was changed.",
+  "items": [
+   {
+    "claim": "She is not a real woman: she is Philosophy pictured as a woman, the other voice in the Consolation.",
+    "evidence": "Stanford Encyclopedia of Philosophy (sep-boethius.txt line 145): 'an imagined dialogue between the prisoner Boethius and a lady who personifies Philosophy'; line 496 again: 'a lady who personifies Philosophy'. James, Proem (raw-gutenberg-14328-james.txt lines 164 to 166): 'Suddenly there appears to him the Divine figure of Philosophy, in the guise of a woman of superhuman dignity and beauty'. 'Much as Justice is pictured today as a woman holding scales' is our own comparison, to make the idea plain; it makes no claim about Boethius.",
+    "url": "https://plato.stanford.edu/entries/boethius/",
+    "verified": true
+   },
+   {
+    "claim": "He gives Fortune a voice the same way, in Book 2.",
+    "evidence": "James's summary of Book 2 (raw-gutenberg-14328-james.txt line 1012): 'CH. II. Philosophy in Fortune's name replies to Boethius' reproaches'. Already on the page: His prison book, 'Fortune's wheel'.",
+    "url": "https://www.gutenberg.org/cache/epub/14328/pg14328-images.html#Page_50",
+    "verified": true
+   },
+   {
+    "claim": "Her look: very old yet strong; eyes like fire, keener than human; height that changes and pierces the heavens; a robe she wove herself, dulled by age and neglect; P on the hem, Th at the top, steps between; torn by violent hands; a note-book in her right hand, a staff in her left.",
+    "evidence": "Consolation, Book 1, prose 1 (james-b1-prose1.txt lines 3 to 23). 'Her eyes were bright as fire, and of a more than human keenness; her complexion was lively, her vigour showed no trace of enfeeblement; and yet her years were right full'; 'At one moment it exceeded not the common height, at another her forehead seemed to strike the sky' (quoted); 'as her own lips afterwards assured me, she had herself woven with her own hands'; 'somewhat tarnished by age and neglect'; 'On the lower-most edge was inwoven the Greek letter [Greek: P], on the topmost the letter [Greek: Th], and between the two were to be seen steps, like a staircase, from the lower to the upper letter'; 'torn by the hands of violent persons, who had each snatched away what he could clutch'; 'Her right hand held a note-book; in her left she bore a staff.' James's note A (line 49): 'P stands for the Political life, the life of action; Th for the Theoretical life, the life of thought.' The page keeps James's note-book and staff, as the facts line 'In art' does (see its checker_note); Cooper (1902) and the Loeb have books and a sceptre (Latin libellos, sceptrum).",
+    "url": "https://www.gutenberg.org/cache/epub/14328/pg14328-images.html#Page_6",
+    "verified": true
+   },
+   {
+    "claim": "Who tore the robe: after Socrates died, the Epicureans, the Stoics and the rest each tried to seize his heritage and dragged her off as booty.",
+    "evidence": "Consolation, Book 1, prose 3 (james-b1-prose3.txt lines 21 to 28): 'In his lifetime, too, Socrates, his master, won with my aid the victory of an unjust death. And when, one after the other, the Epicurean herd, the Stoic, and the rest ... went about to seize the heritage he left, and were dragging me off protesting and resisting, as their booty, they tore in pieces the garment ...' (quoted). 'He' is Socrates: the Latin is 'Cuius hereditatem' after 'praeceptor eius Socrates' (raw-gutenberg-13316.txt lines 4066 to 4067), and the Loeb English has 'Socrates ... whose inheritance' (line 4110).",
+    "url": "https://www.gutenberg.org/cache/epub/14328/pg14328-images.html#Page_14",
+    "verified": true
+   },
+   {
+    "claim": "She raised him: she calls him her child, he calls her his nurse, whose halls he had frequented from his youth; she fed him with her milk. That is his way of saying he had studied philosophy since he was young.",
+    "evidence": "Consolation, Book 1, prose 2 (james-b1-prose2.txt line 4): 'Art thou that man,' she cries, 'who, erstwhile fed with the milk and reared upon the nourishment which is mine to give, had grown up to the full vigour of a manly spirit?' (quoted, speaker's tag left out). Book 1, prose 3 (james-b1-prose3.txt line 6): 'I beheld my nurse, Philosophy, whose halls I had frequented from my youth up' (quoted); line 13: 'Could I desert thee, child,' said she. Cooper (raw-ccel-consolation.txt line 153): 'Should I,' said she, desert you, my nursling?'; Latin 'te alumne desererem' (raw-gutenberg-13316.txt line 4059). Sedgefield's summary of Book 1 (archive-sedgefield-1900-king-alfreds-boethius.txt line 2627): 'He then recognizes in her his old teacher whom he had known in his happier days.'",
+    "url": "https://www.gutenberg.org/cache/epub/14328/pg14328-images.html#Page_11",
+    "verified": true
+   },
+   {
+    "claim": "What she teaches, book by book: Book 1 the root of his sickness (he has forgotten his own nature); Book 2 Fortune's gifts were never his; Book 3 wealth, rank, power, fame and pleasure cannot make anyone happy, true happiness is God; Book 4 the wicked only seem to win, only the good have real power; Book 5 God foreknows, yet we choose freely.",
+    "evidence": "Book 1, prose 6 (james-b1-prose6.txt line 59): 'Thou hast ceased to know thy own nature.' (quoted). James's summaries (raw-gutenberg-14328-james.txt): Book 1 ch. VI (line 272): 'He has forgotten his own true nature'; Book 2 ch. II (line 1013): 'the gifts of Fortune are hers to give and to take away'; Book 3 ch. II (lines 1861 to 1862): 'wealth, or (b) rank, or (c) sovereignty, or (d) glory, or (e) pleasure'; ch. VIII (line 1878): 'All fail, then, to give what they promise'; ch. X (line 1890): 'Its seat is in God. Nay, God is very happiness'; Book 4 ch. II (line 3417): 'the good alone have power, the bad are altogether powerless'; Book 5 ch. VI (line 4663): 'It leaves the reality of free will unimpaired'. SEP (sep-boethius.txt line 546): 'the perfect good and perfect happiness are not merely in God: they are God.'",
+    "url": "https://www.gutenberg.org/cache/epub/14328/pg14328-images.html#Page_36",
+    "verified": true
+   },
+   {
+    "claim": "The Old English version, whose preface names King Alfred, has the prisoner know her as his own mother, who trained and taught him.",
+    "evidence": "Sedgefield 1900, chapter 3 (archive-sedgefield-1900-king-alfreds-boethius.txt lines 2851 to 2855): 'she asked it cheerily whether it knew again its foster-mother. With that the Mind turned towards her and forthwith [c]learly recognized his own mother, that same Philosophy that long before had trained and taught him.' The quoted words are clean in the scan. The preface naming Alfred: line 2726 (see the tidbit's evidence). Authorship is doubted today (wikipedia-old-english-boethius.txt line 4), so the page says only that the preface names him.",
+    "url": "https://archive.org/details/KingAlfredsfBoethius",
+    "verified": true
+   },
+   {
+    "claim": "Dante, when Beatrice died, turned to Boethius's book for comfort, found it hard at first, came to love Philosophy, and pictured her as a gentle lady.",
+    "evidence": "Dante, The Banquet, the second treatise, chapter 13 in Sayer's numbering (II.12 in modern editions), tr. Elizabeth Price Sayer, 1887, Project Gutenberg 12867, fetched 2026-09-25 to sources/people/boethius/gutenberg-12867-dante-banquet-sayer.txt. Lines 2186 to 2187: 'when I had lost the chief delight of my Soul in former time, I was left so stung with sadness that no consolation whatever availed me'; lines 2192 to 2194: 'I set myself to read that book of Boethius, not known to many, in which, when a captive exile, he had consoled himself'; line 2198: 'although at first it was difficult to me to enter into their meaning'; line 2207: 'Philosophy, who was the Lady of these authors, of these sciences, and of these books, might be a supreme thing. And I imagined her in the form of a gentle Lady; and I could imagine her in no other attitude than a compassionate one'; lines 2215 to 2216: 'my love for her chased away and destroyed all other thought'. That the lost delight is Beatrice: Catholic Encyclopedia (catholic-encyclopedia-boethius.txt line 42): 'The important part which it played in Dante's mental struggle after the death of Beatrice is described in the \"Convito\"'. SEP (line 960) names Dante's Convivio among the book's creative adaptations.",
+    "url": "https://www.gutenberg.org/cache/epub/12867/pg12867-images.html",
+    "verified": true
+   }
+  ],
+  "sources_added": "Dante, The Banquet (Sayer 1887) and Sedgefield's King Alfred's Version (1900) added to the page's sources, 'His life, and his words'.",
+  "verify_quotes": "boethius: 70 quotations printed, 71 evidence entries, all word for word (2026-09-25, after this change)."
  }
 }

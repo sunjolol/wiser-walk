@@ -11,6 +11,10 @@
  *       "file":    "people/<slug>/life.txt",   // under design/saints-hub/sources/ (gitignored)
  *       "url":     "https://…",                 // where the text was fetched from
  *       "kind":    "bible" }                     // optional: a Bible verse, checked by reference only
+ *
+ *   An English line that is OUR translation (the page says so beside it) has no English text to be
+ *   found in: { "display": "Love itself is knowledge.", "kind": "own", "original": "Amor ipse notitia
+ *   est.", "file": …, "url": … }. The original words are checked in the fetched text instead.
  *   ]
  *
  * Three checks, all case-insensitive (the capitals rule for God changes case, nothing else):
@@ -129,6 +133,13 @@ const partsIn = (t, parts) => {
 };
 
 for (const e of evidence) {
+  if (e.kind === 'own') {
+    const t = textOf(e.file);
+    if (t === null) fail(`source file missing: ${e.file}`);
+    else if (!e.original || !t.includes(bare(e.original))) fail(`own translation: the original is not in ${e.file}: "${String(e.original).slice(0, 60)}…"`);
+    else console.log(`  note  our translation of "${e.original.slice(0, 50)}": "${e.display.slice(0, 50)}"`);
+    continue;
+  }
   const parts = e.parts ?? [e.exact];
   if (words(bare(e.display)) !== words(bare(parts.join(' ')))) fail(`display and exact differ: "${e.display.slice(0, 60)}…"`);
   if (e.kind === 'bible') continue;
