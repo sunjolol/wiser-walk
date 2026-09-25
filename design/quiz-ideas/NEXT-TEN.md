@@ -120,6 +120,13 @@ Jesus, the Holy Spirit and every pronoun for Them in the site's own words; plain
 
 ---
 
+## HIS RULING (2026-09-25): ONLY #5 REMAINS
+
+**Scrapped: #6, #7, #8, #9 and #10** (his words: "Scrap all of them besides #5 'how you love'"). #3 was already
+dropped; #1, #2 and #4 are live. **#5 How You Love is the next quiz** "when we get around to it" (after the figure
+pages and the 12 saints): "How does your love hit or miss the mark?", 1 Corinthians 13 line by line, built on John
+Chrysostom (his ruling of 2026-09-23 below), not Jonathan Edwards.
+
 ## STATUS (updated 2026-09-23, night)
 
 - **#2 Which Psalm are you living right now?** LIVE (/q/which-psalm/, the /psalm/ guide, an article).

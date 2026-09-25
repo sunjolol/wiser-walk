@@ -82,7 +82,7 @@ He has $250 of cloud credits; how they bill was not confirmed (claude.ai/setting
 **Open with him:** his taste calls on the eight (the list in the last message of this session: Elijah's "Honoured by"
 fact reaching beyond the Church; Moses's length, Hobbes and Britannica's "erroneous"; Martha's band showing the
 Tarascon dragon; extras on Moses, Gideon, Paul). **Jesus's page needs a plan he approves before anything is written.**
-Then the 12 saints (`design/saints-hub/research/NEXT-12.md`).
+Then the 12 saints (`design/saints-hub/research/NEXT-12.md`). **Then quiz #5, "How You Love"** (1 Corinthians 13, on John Chrysostom): the only quiz idea left; he scrapped #6 to #10 on 2026-09-25 (`design/quiz-ideas/NEXT-TEN.md`).
 
 ## (earlier, 2026-09-25) THE OTHER 24 BIBLE FIGURES
 
