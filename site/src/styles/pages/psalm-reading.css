@@ -27,7 +27,7 @@
 .pr-kicker, .pr-greek, .pr-cite, .pr-label {
   font-family: var(--ui); text-transform: uppercase; letter-spacing: .1em;
 }
-.pr-kicker { margin: 0 0 .55rem; font-size: .68rem; font-weight: 600; color: var(--blue-soft); }
+.pr-kicker { margin: 0 0 .55rem; font-size: var(--fs-label); font-weight: var(--fw-label); color: var(--blue-soft); }
 /* the band's long-verdict size is for sentences; a psalm's name is two words and stands larger */
 .band.result-band h1.pr-verdict { font-size: clamp(2.8rem, 12vw, 4.4rem); line-height: 1; margin: 0; max-width: 11em; }
 .pr-greek { margin: .6rem 0 0; font-size: .64rem; font-weight: 600; color: var(--on-dark-soft); }
@@ -49,8 +49,8 @@
 .pr [hidden] { display: none; }
 .pr-sec { margin-top: 2rem; }
 .pr-main > .pr-sec:first-child { margin-top: 0; }
-.pr-label { margin: 0 0 .6rem; font-size: .66rem; font-weight: 700; color: var(--accent); }
-.pr-cite { display: block; margin-top: .5rem; font-size: .62rem; font-weight: 600; font-style: normal; color: var(--ink-mute); }
+.pr-label { margin: 0 0 .6rem; font-size: var(--fs-label); font-weight: var(--fw-label); color: var(--accent); }
+.pr-cite { display: block; margin-top: .5rem; font-size: var(--fs-label); font-weight: var(--fw-label); font-style: normal; color: var(--ink-mute); }
 .pr-cite--inline { display: inline; margin: 0 0 0 .3rem; }
 
 .pr-body { margin: 0; max-width: var(--measure); color: var(--ink); text-wrap: pretty; }

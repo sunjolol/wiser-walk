@@ -46,6 +46,7 @@ export const theologyCompass: Quiz = {
   slug: 'theology-compass',
   title: 'Theology Compass',
   tagline: 'Place yourself on six axes of Christian belief.',
+  menu: 'Where you stand on six questions Christians debate.',
   description:
     'Eighteen statements place you on six axes of Christian belief, then show which ' +
     'traditions sit nearest. Every position is described in words its own holders ' +

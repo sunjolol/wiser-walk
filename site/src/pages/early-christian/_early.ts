@@ -17,6 +17,7 @@
  */
 import full from '../../data/which-early-christian.json';
 import type { EarlyChristian, KindredData, KindredLine, KindredStatement } from '../../lib/strategies/kindred';
+import { hasMoved } from '../../lib/saints/moved';
 
 export const EC = full as unknown as KindredData;
 
@@ -32,7 +33,9 @@ export const personOf = (key: string): EarlyChristian => {
   return p;
 };
 
-export const personHref = (p: Pick<EarlyChristian, 'slug'>) => `/early-christian/${p.slug}/`;
+/** A person's page: in the Saints hub once his full page is written (lib/saints/moved.ts). */
+export const personHref = (p: Pick<EarlyChristian, 'slug'>) =>
+  hasMoved(p.slug) ? `/saints/${p.slug}/` : `/early-christian/${p.slug}/`;
 export const questionHref = (s: Pick<KindredStatement, 'slug'>) => `/early-church-on/${s.slug}/`;
 
 /** "he" or "she", and "his" or "hers", so no page has to guess. Macrina is the one "she". */

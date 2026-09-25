@@ -37,7 +37,7 @@
   background: var(--shell); box-shadow: var(--lift);
 }
 .kr-kicker {
-  margin: 0 0 .5rem; font-family: var(--ui); font-size: .68rem; font-weight: 600;
+  margin: 0 0 .5rem; font-family: var(--ui); font-size: var(--fs-label); font-weight: var(--fw-label);
   letter-spacing: .1em; text-transform: uppercase; color: var(--accent);
 }
 /* dates and places in their own case: "c. 335" in capitals reads as a name */
@@ -87,7 +87,7 @@
 .kr-sec { margin-top: 2rem; }
 .kr-panel > .kr-sec:first-child { margin-top: 0; }
 .kr-label {
-  margin: 0 0 .85rem; font-family: var(--ui); font-size: .66rem; font-weight: 700;
+  margin: 0 0 .85rem; font-family: var(--ui); font-size: var(--fs-label); font-weight: var(--fw-label);
   line-height: 1.35; letter-spacing: .1em; text-transform: uppercase; color: var(--accent);
 }
 
@@ -99,7 +99,7 @@
   background: var(--kr-leaf); box-shadow: var(--lift);
 }
 .kr-on {
-  margin: 0 0 .4rem; font-family: var(--ui); font-size: .62rem; font-weight: 700;
+  margin: 0 0 .4rem; font-family: var(--ui); font-size: var(--fs-label); font-weight: var(--fw-label);
   line-height: 1.3; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mute);
 }
 .kr-you { margin: 0 0 .8rem; font-size: .95rem; line-height: 1.5; color: var(--ink-soft); text-wrap: pretty; }
@@ -114,7 +114,7 @@
   font-size: 1.12rem; line-height: 1.5; color: var(--ink); text-wrap: pretty;
 }
 .kr-src {
-  margin: .55rem 0 0; font-family: var(--ui); font-size: .62rem; font-weight: 600;
+  margin: .55rem 0 0; font-family: var(--ui); font-size: var(--fs-label); font-weight: var(--fw-label);
   line-height: 1.5; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-mute);
 }
 .kr-note { margin: .55rem 0 0; font-size: .86rem; line-height: 1.5; color: var(--ink-soft); text-wrap: pretty; }

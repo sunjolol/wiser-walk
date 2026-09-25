@@ -164,7 +164,7 @@
 .pqr-p-say > span { font-size: .88rem; line-height: 1.45; color: var(--ink-soft); text-wrap: pretty; }
 .pqr-tag {
   margin-top: .35rem; padding: .3rem .6rem; border-radius: var(--r-pill);
-  font: 700 .58rem/1 var(--ui); font-style: normal; letter-spacing: .1em; text-transform: uppercase;
+  font: 700 var(--fs-tag)/1 var(--ui); font-style: normal; letter-spacing: .1em; text-transform: uppercase;
   color: var(--accent); background: var(--accent-soft);
 }
 /* The private page is the same card as the other nine (the owner, 2026-09-24: drawn on the night
@@ -302,7 +302,7 @@
 }
 .pqr-stem:focus, .pqr-q h2:focus { outline: none; }
 .pqr-lockline {
-  margin: 0 0 .6rem; font: 600 .64rem/1 var(--ui); letter-spacing: .14em; text-transform: uppercase;
+  margin: 0 0 .6rem; font: var(--fw-label) var(--fs-label)/1 var(--ui); letter-spacing: .14em; text-transform: uppercase;
   color: var(--on-dark-soft);
 }
 .pqr-choice { margin: auto 0; padding-bottom: 1rem; }

@@ -380,6 +380,7 @@ export const bibleFigure: FigureQuiz = {
   slug: 'bible-figure',
   title: 'Who in the Bible are you most like?',
   tagline: 'Eighteen plain statements, then the figure whose recorded acts sit nearest.',
+  menu: 'The figure in the Bible whose ways are most like yours.',
   description:
     'Eighteen statements about how you act, speak, lead, argue, question and plan. None ' +
     'mentions the Bible. The result names the figure whose recorded acts sit nearest, and ' +

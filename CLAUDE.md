@@ -66,7 +66,19 @@ rules so they don't happen again". `site/scripts/quiz-page-test.mjs` (postbuild)
 9. **A special card among cards looks like its siblings**, marked only by an icon and a small tag.
 10. **No placeholder pictures** (a monogram where a face should be is "not acceptable").
 
-## NEXT SESSION STARTS HERE (2026-09-24, late): PORT THE SAINTS HUB LIVE
+## NEXT SESSION STARTS HERE (2026-09-25): THE SAINTS HUB IS PORTED; THE 21 ARE BEING WRITTEN
+
+Read `design/saints-hub/README.md` "PORTED 2026-09-25" first. Live (with his go on the port): the two small-text
+sizes site-wide (tokens in kit.css, `scripts/small-text-test.mjs`), the Learn menu and two-line items in every header
+menu, `/saints/` and `/saints/martin-of-tours/` (template `site/src/pages/saints/[slug].astro`, data
+`site/src/data/saints/<slug>.json`, shape `site/src/lib/saints/types.ts`), person links switched on. **His answer on
+the 21 (2026-09-24): they stay at `/early-christian/` until each has a page to Martin's standard, then move one by
+one** (the move procedure is in the README). **His steer (2026-09-25): the person shapes the page, not the template**:
+same sections, but as many moments, miracles, traits and lines as each record genuinely holds (README, top section).
+The drafts of the 21 are in `design/saints-hub/pages/` (researched, written, adversarially checked by a workflow);
+promote each only after `verify-quotes.mjs` passes and a look at 390 and 1360.
+
+## (earlier) PORT THE SAINTS HUB LIVE (2026-09-24, late)
 
 **He approved the final mock-up ("Looks great") and wants it live.** The port checklist is
 `design/saints-hub/README.md` "APPROVED 2026-09-24: PORT IT LIVE"; read that README whole first. The one question to ask

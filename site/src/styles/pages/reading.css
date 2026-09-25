@@ -41,10 +41,10 @@
 
 /* "Question 3 · pick one or two", and the check screen's question to the reader */
 .rd-step, .rd-kicker {
-  margin: 0 0 .7rem; font-family: var(--ui); font-size: .64rem; font-weight: 600;
+  margin: 0 0 .7rem; font-family: var(--ui); font-size: var(--fs-label); font-weight: var(--fw-label);
   letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mute);
 }
-.rd-kicker { font-size: .68rem; color: var(--accent); margin-bottom: .55rem; }
+.rd-kicker { font-size: var(--fs-label); color: var(--accent); margin-bottom: .55rem; }
 
 /*
  * The answer that called for a follow-up, when the follow-up could not sit straight after

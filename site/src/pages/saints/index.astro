@@ -1,0 +1,347 @@
+---
+/**
+ * The Saints hub: /saints/.
+ *
+ * "Saints and early Christians": everyone on the site who has a page of their own, with search,
+ * collections and filters, as the mock-up the owner approved on 2026-09-24 draws it (design/
+ * saints-hub/mockup/). Who is listed and where each card goes is lib/saints/data.ts: a full
+ * /saints/ page where one exists, the early Christians' older pages until theirs is written, and
+ * the Bible figure quiz's pages for Bible people.
+ *
+ * THE FILTERS (his note, 2026-09-24): one bar that stays in reach while the list scrolls, with the
+ * count on its right. Phones get "Filters", which opens a sheet from the bottom; wide screens get
+ * one pill per kind, each opening a small panel. Several picks in one kind widen the list; picks
+ * in different kinds narrow it. Every option shows how many people it would leave, and one that
+ * would leave nobody is greyed out, so no one lands on an empty list. The picks are written into
+ * the address (/saints/#group=martyrs), as the articles page does with #topic=, so another page
+ * can link straight to a filtered list. Without the script every card is simply shown.
+ */
+import Base from '../../layouts/Base.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import Icon from '../../components/Icon.astro';
+import { HUB, COLLECTIONS, FILTER_KINDS, TYPES, imgOf } from '../../lib/saints/data';
+import '../../styles/pages/saints.css';
+
+const title = 'Saints and Church Fathers: lives, quotes, feast days';
+const description =
+  'Browse saints and early Christians: their lives, their own words with the book and chapter, and their feast days East and West.';
+
+/* The wall of real portraits in the band: the mock-up's twelve. */
+const WALL = ['justin-martyr', 'antony-the-great', 'basil-the-great', 'john-chrysostom', 'martin-of-tours', 'macrina-the-younger',
+  'irenaeus-of-lyons', 'augustine-of-hippo', 'gregory-of-nazianzus', 'cyprian-of-carthage', 'benedict-of-nursia', 'isaac-the-syrian']
+  .map(slug => HUB.find(p => p.slug === slug)!)
+  .filter(Boolean);
+
+const people = HUB.length;
+const url = new URL('/saints/', Astro.site).href;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Saints and early Christians',
+  description,
+  url,
+  mainEntity: {
+    '@type': 'ItemList',
+    numberOfItems: people,
+    itemListElement: HUB.map((p, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: p.name,
+      url: new URL(p.href, Astro.site).href
+    }))
+  }
+};
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Saints and early Christians', url: '/saints/' }
+];
+const SLIDERS = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>';
+const CROSS = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+const plural = (n: number) => `${n} ${n === 1 ? 'person' : 'people'}`;
+---
+<Base title={title} description={description} jsonLd={jsonLd} breadcrumbs={breadcrumbs}>
+<div class="sp">
+  <section class="sband sband--hub">
+    <div class="wall" aria-hidden="true">
+      {WALL.map(p => <img src={p.img} alt="" style={`object-position:${p.focus}`} />)}
+    </div>
+    <div class="sband-in">
+      <h1>Saints and early Christians</h1>
+      <p class="sband-lede">Their lives, their own words and their feast days, East and West. Every quotation names the book and chapter it comes from.</p>
+      <form class="search" role="search" id="saint-search" action="#people">
+        <label class="sr-only" for="saint-q">Search the saints</label>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+        <input id="saint-q" type="search" placeholder="Search by name, like Augustine" autocomplete="off" />
+      </form>
+    </div>
+  </section>
+
+  <SectionHead title="collections" />
+  <div class="colls">
+    {COLLECTIONS.map(c => (
+      <a class="coll" href={`#group=${c.group}`} data-group={c.group}>
+        <span class="coll-art">{c.imgs.map(s => <img src={imgOf(s)} alt="" loading="lazy" style="object-position:50% 18%" />)}</span>
+        <span class="coll-t">{c.title}</span>
+      </a>
+    ))}
+  </div>
+
+  <SectionHead id="people" title="all the people" />
+  <div class="people-wrap" id="filters">
+    <div class="ftool-bar">
+      <button class="fbtn" type="button" id="f-open" aria-haspopup="dialog" aria-controls="f-sheet" hidden>
+        <Fragment set:html={SLIDERS} /><span>Filters</span><span class="fbadge" id="f-badge" hidden></span>
+      </button>
+      <div class="fpills">
+        {FILTER_KINDS.map(g => (
+          <div class="fpill-w">
+            <button class="fpill" type="button" data-pop={g.key} aria-expanded="false" aria-controls={`pop-${g.key}`}>
+              <span>{g.label}</span><span class="fpill-n" hidden></span><span class="fcaret" aria-hidden="true"></span>
+            </button>
+            <div class="fpop" id={`pop-${g.key}`} role="group" aria-label={g.label} hidden>
+              {g.note && <p class="fnote">{g.note}</p>}
+              <div class="fopts">
+                {g.opts.map(([v, l, ink]) => (
+                  <button class="fopt" type="button" data-key={g.key} data-val={v} aria-pressed="false">
+                    {ink && <i style={`--t:${ink}`}></i>}<span>{l}</span><b class="fopt-n"></b>
+                  </button>
+                ))}
+              </div>
+              <div class="fpop-f"><button class="fclear" type="button" data-clear={g.key}>Clear</button><button class="fdone" type="button">Done</button></div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <p class="people-count" id="people-count" aria-live="polite">{plural(people)}</p>
+    </div>
+    <div class="factive" id="f-active" hidden></div>
+
+    <div class="people" id="people-grid">
+      {HUB.map(p => (
+        <a class="pcard" href={p.href} data-groups={p.groups.join(' ')} data-lived={p.lived} data-side={p.side.join(' ')}
+           data-type={p.type ?? ''} data-search={`${p.name} ${p.alias}`.toLowerCase()}>
+          <span class="pcard-pic"><img src={p.img} alt="" loading="lazy" style={`object-position:${p.focus}`} /></span>
+          <span class="pcard-b">
+            <span class="pcard-n">{p.name}</span>
+            <span class="pcard-d">{p.dates}</span>
+            <span class="pcard-w">{p.line}</span>
+            {p.status && <span class="pcard-s">{p.status}</span>}
+            {p.type && TYPES[p.type] && (
+              <span class="pcard-foot"><span class="tchip" style={`--t:${TYPES[p.type]!.ink}`} title="Where the Christian Personality Test places them: our reading">{TYPES[p.type]!.name}{p.young ? ', young' : ''}</span></span>
+            )}
+          </span>
+        </a>
+      ))}
+    </div>
+    <p class="people-empty" id="people-empty" hidden>No one matches that. Try another name, or <button class="fclear" type="button" data-clear-all>clear the filters</button>.</p>
+  </div>
+  <p class="people-key">A coloured chip is where the Christian Personality Test places that person. It is our reading, not a church's.</p>
+
+  <SectionHead title="where do you stand?" />
+  <a class="squiz squiz--engr" href="/q/which-early-christian/">
+    <img src="/img/durer-jerome.jpg" alt="" loading="lazy" />
+    <span class="squiz-b">
+      <span class="squiz-k">Quiz</span>
+      <span class="squiz-t">Which early Christian thinks like you?</span>
+      <span class="squiz-s">And which would argue with you?</span>
+      <span class="go-pill">Start <Icon name="arrow" size={16} /></span>
+    </span>
+  </a>
+  <p class="more-line">Or see <a href="/early-church-on/">what the early Church said</a> on 23 questions, from war to laughter.</p>
+</div>
+
+<dialog class="fsheet" id="f-sheet" aria-labelledby="f-sheet-t">
+  <div class="fsheet-h"><span class="fsheet-grab" aria-hidden="true"></span><h2 id="f-sheet-t">Filters</h2>
+    <button class="fsheet-x" type="button" aria-label="Close"><Fragment set:html={CROSS} /></button></div>
+  <div class="fsheet-b">
+    {FILTER_KINDS.map(g => (
+      <section class="fgroup">
+        <h3 class="fgroup-t">{g.label}</h3>
+        {g.note && <p class="fnote">{g.note}</p>}
+        <div class="fopts">
+          {g.opts.map(([v, l, ink]) => (
+            <button class="fopt" type="button" data-key={g.key} data-val={v} aria-pressed="false">
+              {ink && <i style={`--t:${ink}`}></i>}<span>{l}</span><b class="fopt-n"></b>
+            </button>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+  <div class="fsheet-f"><button class="fclear" type="button" data-clear-all>Clear all</button><button class="btn fshow" type="button" id="f-show">Show {plural(people)}</button></div>
+</dialog>
+</Base>
+
+<script>
+  /*
+   * The hub's search and filters: the mock-up's script (design/saints-hub/mockup/src/app.js),
+   * with the picks written into the address. Within one kind picks widen (Martyrs or Women);
+   * across kinds they narrow (Martyrs who lived in the 300s).
+   */
+  const KEYS = ['group', 'lived', 'side', 'type'] as const;
+  type Key = (typeof KEYS)[number];
+  const cards = [...document.querySelectorAll<HTMLAnchorElement>('.pcard')];
+  const total = cards.length;
+  const picks: Record<Key, string[]> = { group: [], lived: [], side: [], type: [] };
+  let q = '';
+  const LABEL: Record<string, string> = {};
+  document.querySelectorAll<HTMLButtonElement>('.fpop .fopt').forEach(b => {
+    LABEL[`${b.dataset.key}:${b.dataset.val}`] = b.querySelector('span')!.textContent || '';
+  });
+  const opts = [...document.querySelectorAll<HTMLButtonElement>('.fopt')];
+  const pills = [...document.querySelectorAll<HTMLButtonElement>('.fpill')];
+  const countEl = document.getElementById('people-count')!;
+  const emptyEl = document.getElementById('people-empty')!;
+  const activeEl = document.getElementById('f-active')!;
+  const badge = document.getElementById('f-badge')!;
+  const sheet = document.getElementById('f-sheet') as HTMLDialogElement;
+  const showBtn = document.getElementById('f-show') as HTMLButtonElement;
+  const openBtn = document.getElementById('f-open') as HTMLButtonElement;
+  const qEl = document.getElementById('saint-q') as HTMLInputElement;
+  const CROSS = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+  openBtn.hidden = false;
+
+  const norm = (s: string | undefined) => (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  const has = (list: string | undefined, v: string) => ` ${list || ''} `.includes(` ${v} `);
+  const fits = (c: HTMLElement, key: Key, v: string) =>
+    key === 'group' ? has(c.dataset.groups, v) : key === 'side' ? has(c.dataset.side, v) : c.dataset[key] === v;
+  const matches = (c: HTMLElement, skip?: Key) => {
+    for (const k of KEYS) {
+      if (k === skip || !picks[k].length) continue;
+      if (!picks[k].some(v => fits(c, k, v))) return false;
+    }
+    const nq = norm(q).trim();
+    return !nq || norm(c.dataset.search).includes(nq);
+  };
+  const people = (n: number) => `${n} ${n === 1 ? 'person' : 'people'}`;
+  const chip = (label: string, attrs: string) =>
+    `<button class="fchip-x" type="button" ${attrs} aria-label="Remove ${esc(label)}"><span>${esc(label)}</span>${CROSS}</button>`;
+
+  /* The picks in the address: #group=martyrs&lived=300s. The search is not written there. */
+  const writeHash = () => {
+    const parts = KEYS.filter(k => picks[k].length).map(k => `${k}=${picks[k].join(',')}`);
+    const next = parts.length ? '#' + parts.join('&') : location.pathname + location.search;
+    if (('#' + parts.join('&')) !== location.hash) history.replaceState(null, '', next);
+  };
+  const readHash = () => {
+    KEYS.forEach(k => { picks[k] = []; });
+    const h = decodeURIComponent(location.hash.slice(1));
+    for (const part of h.split('&')) {
+      const [k, v] = part.split('=');
+      if (k && v && (KEYS as readonly string[]).includes(k)) {
+        picks[k as Key] = v.split(',').filter(val => LABEL[`${k}:${val}`]);
+      }
+    }
+  };
+
+  const apply = () => {
+    let shown = 0;
+    cards.forEach(c => { const ok = matches(c); c.hidden = !ok; if (ok) shown++; });
+    const n = KEYS.reduce((a, k) => a + picks[k].length, 0);
+    const searching = !!norm(q).trim();
+    countEl.textContent = n || searching ? `${shown} of ${total}` : people(total);
+    emptyEl.hidden = shown > 0;
+    badge.hidden = !n;
+    badge.textContent = String(n);
+    showBtn.textContent = shown ? `Show ${people(shown)}` : 'No one matches';
+    showBtn.disabled = !shown;
+    opts.forEach(b => {
+      const k = b.dataset.key as Key, v = b.dataset.val!, on = picks[k].includes(v);
+      let m = 0;
+      cards.forEach(c => { if (matches(c, k) && fits(c, k, v)) m++; });
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      b.querySelector('.fopt-n')!.textContent = String(m);
+      b.disabled = !m && !on;
+    });
+    pills.forEach(p => {
+      const len = picks[p.dataset.pop as Key].length, pn = p.querySelector<HTMLElement>('.fpill-n')!;
+      pn.hidden = !len;
+      pn.textContent = String(len);
+      p.classList.toggle('is-on', len > 0);
+    });
+    let html = '';
+    KEYS.forEach(k => picks[k].forEach(v => { html += chip(LABEL[`${k}:${v}`] || v, `data-key="${k}" data-val="${esc(v)}"`); }));
+    if (searching) html += chip(`“${q.trim()}”`, 'data-q');
+    if (html) html += '<button class="fclear" type="button" data-clear-all>Clear all</button>';
+    activeEl.innerHTML = html;
+    activeEl.hidden = !html;
+    writeHash();
+  };
+  const clearAll = () => {
+    KEYS.forEach(k => { picks[k] = []; });
+    q = '';
+    qEl.value = '';
+    apply();
+  };
+  const closePops = (except?: HTMLButtonElement) => {
+    pills.forEach(p => {
+      if (p === except) return;
+      p.setAttribute('aria-expanded', 'false');
+      document.getElementById(`pop-${p.dataset.pop}`)!.hidden = true;
+    });
+  };
+  pills.forEach(p => p.addEventListener('click', () => {
+    const pop = document.getElementById(`pop-${p.dataset.pop}`)!;
+    closePops(p);
+    pop.hidden = !pop.hidden;
+    p.setAttribute('aria-expanded', String(!pop.hidden));
+  }));
+  const toList = () => document.getElementById('people')!.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  document.addEventListener('click', e => {
+    const t = e.target as Element;
+    const o = t.closest<HTMLButtonElement>('.fopt');
+    if (o) {
+      const k = o.dataset.key as Key, v = o.dataset.val!, i = picks[k].indexOf(v);
+      if (i >= 0) picks[k].splice(i, 1); else picks[k].push(v);
+      apply();
+      return;
+    }
+    const x = t.closest<HTMLButtonElement>('.fchip-x');
+    if (x) {
+      if (x.hasAttribute('data-q')) { q = ''; qEl.value = ''; }
+      else { const k = x.dataset.key as Key; picks[k].splice(picks[k].indexOf(x.dataset.val!), 1); }
+      apply();
+      return;
+    }
+    if (t.closest('[data-clear-all]')) { clearAll(); return; }
+    const one = t.closest<HTMLButtonElement>('[data-clear]');
+    if (one) { picks[one.dataset.clear as Key] = []; apply(); return; }
+    if (t.closest('.fdone')) { closePops(); return; }
+    /* A collection card starts the list afresh on its group. */
+    const coll = t.closest<HTMLAnchorElement>('.coll');
+    if (coll) {
+      e.preventDefault();
+      KEYS.forEach(k => { picks[k] = []; });
+      picks.group = [coll.dataset.group!];
+      q = '';
+      qEl.value = '';
+      apply();
+      toList();
+      return;
+    }
+    if (!t.closest('.fpill-w')) closePops();
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePops(); });
+
+  /* The phone sheet: it rises from the bottom, and "Show N people" closes it on the results. */
+  const lock = (on: boolean) => document.documentElement.classList.toggle('is-locked', on);
+  openBtn.addEventListener('click', () => {
+    if (typeof sheet.showModal === 'function') sheet.showModal(); else sheet.setAttribute('open', '');
+    lock(true);
+  });
+  const closeSheet = () => { if (sheet.open) sheet.close(); lock(false); };
+  sheet.addEventListener('close', () => lock(false));
+  sheet.addEventListener('click', e => { if (e.target === sheet) closeSheet(); });
+  sheet.querySelector('.fsheet-x')!.addEventListener('click', closeSheet);
+  showBtn.addEventListener('click', () => { closeSheet(); toList(); });
+
+  qEl.addEventListener('input', () => { q = qEl.value; apply(); });
+  document.getElementById('saint-search')!.addEventListener('submit', e => { e.preventDefault(); toList(); });
+  addEventListener('hashchange', () => { readHash(); apply(); });
+
+  readHash();
+  apply();
+  if (KEYS.some(k => picks[k].length)) requestAnimationFrame(toList);
+</script>

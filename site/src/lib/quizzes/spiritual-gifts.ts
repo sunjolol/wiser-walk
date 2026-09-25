@@ -1042,6 +1042,7 @@ export const spiritualGifts: Quiz = {
   slug: 'spiritual-gifts',
   title: 'What are your spiritual gifts?',
   tagline: 'Fifty-seven statements, nineteen gifts, and a conversation to have afterwards.',
+  menu: 'Which of the New Testament’s gifts are yours?',
   description:
     'Nineteen gifts the New Testament names, prophecy, healing and tongues among them, each ' +
     'in its passage’s own words. Fifty-seven plain statements about what you do and what has ' +

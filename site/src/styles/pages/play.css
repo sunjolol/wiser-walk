@@ -125,7 +125,7 @@
 }
 .gcard-facts {
   display: flex; flex-wrap: wrap; gap: .4rem; margin: .95rem 0 0; padding: 0; list-style: none;
-  font-family: var(--ui); font-size: .62rem; font-weight: 600; letter-spacing: .08em;
+  font-family: var(--ui); font-size: var(--fs-tag); font-weight: 600; letter-spacing: .08em;
   text-transform: uppercase;
 }
 .gcard-facts li {

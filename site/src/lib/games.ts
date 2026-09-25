@@ -11,6 +11,8 @@ export interface Game {
   slug: string;
   title: string;
   tagline: string;
+  /** One plain line under the title in the header's Games menu, about 50 characters at most. */
+  menu: string;
   /** The small grey line under the tagline. */
   meta: string;
   icon: 'compass' | 'flame' | 'scroll' | 'book' | 'arrow';
@@ -27,6 +29,7 @@ export const GAMES: Game[] = [
     title: 'Sounds Like Scripture',
     tagline:
       'A line appears. Is it in the Bible, or does it only sound like it? Ten lines, a few seconds each, and it is harder than you think.',
+    menu: 'Is the line in the Bible, or does it only sound like it?',
     meta: `${slsMeta.items} lines, every one quoted word for word · about two minutes a run`,
     icon: 'scroll',
     live: true
@@ -41,6 +44,7 @@ export const GAMES: Game[] = [
      * pool is still the development fixture that metadata reports zero lines on purpose,
      * so this card says what a run is instead of printing a placeholder count.
      */
+    menu: 'A line of speech and four names. Who said it?',
     meta: wsiMeta.items
       ? `${wsiMeta.items} lines, every speaker from the Glyssen character data · about two minutes a run`
       : 'Ten lines a run, four names under each one · about two minutes a run',

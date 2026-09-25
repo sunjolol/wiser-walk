@@ -188,7 +188,7 @@
 .pt-card.is-here { box-shadow: 0 0 0 3px var(--pt-ink), var(--lift); }
 .pt-card-tags { position: absolute; top: .5rem; right: .5rem; display: flex; gap: .3rem; }
 .pt-tag {
-  font: 700 .58rem/1 var(--ui); letter-spacing: .1em; text-transform: uppercase; white-space: nowrap;
+  font: 700 var(--fs-tag)/1 var(--ui); letter-spacing: .1em; text-transform: uppercase; white-space: nowrap;
   padding: .32rem .55rem; border-radius: 999px; background: rgba(255, 255, 255, .92); color: #222;
 }
 .pt-tag--you { background: var(--pt-ink); color: #000; }
@@ -202,7 +202,7 @@
 .pt-th, .pt-rh {
   font: 700 .64rem/1.2 var(--ui); letter-spacing: .13em; text-transform: uppercase; color: var(--ink-mute);
 }
-.pt-th { align-self: end; padding: 0 .2rem; }
+.pt-th { align-self: end; padding: 0 .2rem; font-size: var(--fs-label); font-weight: var(--fw-label); }
 .pt-rh { grid-column: 1 / -1; margin-top: .7rem; padding: 0 .2rem; color: var(--ink); font-size: .72rem; }
 .pt-cell { min-width: 0; }
 .pt-card--big { aspect-ratio: 4 / 3; }
@@ -224,7 +224,7 @@
   text-decoration: none; color: var(--ink);
 }
 .pt-page--next { text-align: right; }
-.pt-page-dir { font-family: var(--ui); font-size: .6rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+.pt-page-dir { font-family: var(--ui); font-size: var(--fs-tag); font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
 .pt-page b { font-family: var(--display); font-weight: 400; font-size: 1.12rem; line-height: 1.25; }
 .pt-page:hover b { color: var(--accent); }
 .pt-page:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

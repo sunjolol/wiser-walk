@@ -34,6 +34,26 @@
   --on-dark-mute: #8F8B86;
   --blue-soft: #A9D0F3;
   --orange-soft: #F4B991;
+
+  /*
+   * SMALL TEXT COMES IN TWO SIZES (the owner, 2026-09-24, set by hand on the Saints mock-up and
+   * meant for the whole site: "the exact type of issue that becomes a massive pain to fix if you
+   * regress"). Always these tokens, never a raw size, so one line changes them everywhere.
+   *
+   *   LABEL  --fs-label at --fw-label: small text a reader reads ON ITS OWN. A field name (Born,
+   *          Died), the label heading a box or card, an author or source line, a citation.
+   *   TAG    --fs-tag, weight unchanged: small text that RIDES ON something bigger beside it. A
+   *          chip or pill ("New"), a date beside a heading, the two ends of a scale, a sub-label
+   *          over a row of chips.
+   *
+   * The floor: nothing meant to be read goes below --fs-tag. Only text inside a drawing (the
+   * month on a calendar leaf, the ticks of an instrument) may. Buttons keep their own sizes.
+   * It is a strong default, not a law: he kept some headings bigger on purpose. What is
+   * already bigger than a label is left alone. scripts/small-text-test.mjs guards the floor.
+   */
+  --fs-label: .7rem;
+  --fw-label: 600;
+  --fs-tag: .6rem;
 }
 :root[data-theme="dark"] {
   --stripe: rgba(255, 255, 255, .018);
@@ -163,21 +183,36 @@ body {
   background: var(--panel); border-radius: var(--r);
   box-shadow: var(--frame-shadow), inset 0 0 0 1px var(--rule);
 }
-.navmenu-panel ul { margin: 0; padding: .35rem; list-style: none; }
+.navmenu-panel ul { display: grid; gap: .1rem; margin: 0; padding: .35rem; list-style: none; }
+/*
+ * EVERY ITEM IS A NAME AND ONE PLAIN LINE (the owner, 2026-09-24, from the Learn menu of the
+ * Saints mock-up, which he asked to have on every header menu). The name in Poppins at the
+ * menu's weight, the line in Inter, muted, and allowed to wrap without leaving a word alone.
+ */
 .site-head .navmenu-panel a {
-  display: flex; align-items: center; gap: .6rem; min-height: 44px;
-  padding: .5rem .65rem; border-radius: 12px;
-  color: var(--ink-soft); font-size: .82rem; font-weight: 600; white-space: normal;
+  display: flex; flex-direction: column; align-items: flex-start; gap: .12rem; min-height: 44px;
+  padding: .6rem .75rem; border-radius: 12px; color: var(--ink-soft); white-space: normal;
 }
-.site-head .navmenu-panel a:hover { background: var(--accent-soft); color: var(--accent); }
-/* the way back to the hub is the first item, and reads as its own thing */
-.navmenu-panel li:first-child {
+.nm-t {
+  display: flex; align-items: center; gap: .5rem; width: 100%;
+  font-family: var(--ui); font-size: .84rem; font-weight: 600; line-height: 1.3; color: var(--ink);
+}
+.nm-l {
+  font-family: var(--text); font-size: .76rem; font-weight: 400; line-height: 1.45;
+  color: var(--ink-mute); text-wrap: pretty;
+}
+.site-head .navmenu-panel a:hover,
+.site-head .navmenu-panel a[aria-current="page"] { background: var(--accent-soft); }
+.site-head .navmenu-panel a:hover .nm-t,
+.site-head .navmenu-panel a[aria-current="page"] .nm-t { color: var(--accent); }
+/* the way back to a hub ("All quizzes") is the first item, and reads as its own thing */
+.navmenu-panel li.all {
   margin-bottom: .3rem; padding-bottom: .3rem; border-bottom: 2px dotted var(--rule-strong);
 }
 .navmenu-tag {
-  margin-left: auto; flex: none; padding: .25rem .45rem; border-radius: var(--r-pill);
+  margin-left: auto; flex: none; padding: .28rem .5rem; border-radius: var(--r-pill);
   background-color: var(--dark-fill); background-image: var(--dark-fill-img); background-size: 420px;
-  color: var(--on-dark); font-family: var(--ui); font-size: .5rem; font-weight: 700;
+  color: var(--on-dark); font-family: var(--ui); font-size: var(--fs-tag); font-weight: 700;
   letter-spacing: .14em; text-transform: uppercase; line-height: 1;
 }
 :root[data-theme="dark"] .navmenu-tag {
@@ -189,7 +224,12 @@ body {
   /* right-anchored, so a menu near the right edge of the sheet cannot open past the frame
      the sheet clips itself to. The width is the min-width: an absolutely positioned box
      that takes its `right` from a summary-sized parent has almost no room to shrink into. */
-  .navmenu-panel { top: calc(100% + .45rem); left: auto; right: 0; min-width: 17.5rem; max-width: 22rem; }
+  .navmenu-panel { top: calc(100% + .45rem); left: auto; right: 0; width: 20rem; }
+}
+/* On one row (from 56rem) every panel hangs centred under its own word, wide enough for its
+   lines: the nav stands in the middle of the header, so there is room on both sides. */
+@media (min-width: 56rem) {
+  .navmenu-panel { width: 23rem; left: 50%; right: auto; transform: translateX(-50%); }
 }
 @media (prefers-reduced-motion: reduce) {
   .navmenu > summary, .navmenu-caret { transition: none; }
@@ -220,7 +260,7 @@ body {
   padding: .55rem .9rem; border-radius: var(--r-pill);
   background-color: var(--dark-fill); background-image: var(--dark-fill-img);
   background-size: 420px; color: var(--on-dark);
-  font-family: var(--ui); font-size: .6rem; font-weight: 700; letter-spacing: .16em;
+  font-family: var(--ui); font-size: var(--fs-tag); font-weight: 700; letter-spacing: .16em;
   text-transform: uppercase; line-height: 1;
 }
 .band-chip .icon { color: var(--orange-soft); }
@@ -257,7 +297,7 @@ body {
   line-height: 1.1; color: var(--ink); font-variant-numeric: tabular-nums;
 }
 .tile span {
-  display: block; margin-top: .15rem; font-family: var(--ui); font-size: .54rem; font-weight: 600;
+  display: block; margin-top: .15rem; font-family: var(--ui); font-size: var(--fs-tag); font-weight: 600;
   letter-spacing: .13em; text-transform: uppercase; color: var(--ink-mute); white-space: nowrap;
 }
 /* Four tiles across a 390px screen leave about 80px each, and a label of three tracked
@@ -270,7 +310,7 @@ body {
   .tiles { gap: .6rem; }
   .tile { flex: 0 0 auto; padding: .75rem 1.1rem .65rem; min-width: 5.6rem; }
   .tile b { font-size: 1.7rem; }
-  .tile span { font-size: .58rem; }
+  .tile span { font-size: var(--fs-tag); }
 }
 
 /* ----------------------------------------------- the band, with a picture
@@ -430,7 +470,7 @@ body {
 .sect { display: flex; align-items: flex-end; gap: .9rem; margin: 3rem 0 1.1rem; }
 .sect-text { flex: 1; min-width: 0; }
 .sect-kicker {
-  margin: 0 0 .2rem; font-family: var(--ui); font-size: .62rem; font-weight: 700;
+  margin: 0 0 .2rem; font-family: var(--ui); font-size: var(--fs-label); font-weight: var(--fw-label);
   letter-spacing: .16em; text-transform: uppercase; color: var(--ink-mute);
 }
 .sect-title {
@@ -548,7 +588,7 @@ a:hover .go-pill .icon, a.go-pill:hover .icon { transform: translateX(3px); }
 .ccard .wheel figcaption, .ccard .wheel-cap { display: none; }
 .ccard-body { padding: 1.35rem 1.3rem 1.4rem; }
 .ccard-kicker {
-  margin: 0 0 .25rem; font-family: var(--ui); font-size: .6rem; font-weight: 700; letter-spacing: .16em;
+  margin: 0 0 .25rem; font-family: var(--ui); font-size: var(--fs-label); font-weight: var(--fw-label); letter-spacing: .16em;
   text-transform: uppercase; color: var(--room-ink);
 }
 .ccard .ccard-title {
@@ -558,7 +598,7 @@ a:hover .go-pill .icon, a.go-pill:hover .icon { transform: translateX(3px); }
 .ccard .ccard-say { margin: .55rem 0 0; max-width: 26rem; font-size: .95rem; line-height: 1.5; text-wrap: balance; }
 .ccard-facts {
   display: flex; flex-wrap: wrap; gap: .4rem; margin: .95rem 0 0; padding: 0; list-style: none;
-  font-family: var(--ui); font-size: .62rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+  font-family: var(--ui); font-size: var(--fs-tag); font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
 }
 .ccard-facts li {
   display: inline-flex; align-items: center; gap: .35rem; padding: .36rem .62rem; border-radius: 999px;
@@ -588,7 +628,7 @@ a:hover .go-pill .icon, a.go-pill:hover .icon { transform: translateX(3px); }
 }
 .feature-art .dark-ghost { font-size: clamp(6rem, 30vw, 9.5rem); left: -.04em; top: .02em; }
 .feature-kicker {
-  margin: 0; font-family: var(--ui); font-size: .6rem; font-weight: 700; letter-spacing: .16em;
+  margin: 0; font-family: var(--ui); font-size: var(--fs-label); font-weight: var(--fw-label); letter-spacing: .16em;
   text-transform: uppercase; color: var(--orange-soft);
 }
 .feature-art .wheel { margin: auto; width: 100%; max-width: 15.5rem; }
@@ -618,7 +658,7 @@ a:hover .go-pill .icon, a.go-pill:hover .icon { transform: translateX(3px); }
 }
 .spec > div:first-child { border-top: 2px dotted var(--rule-strong); }
 .spec dt {
-  font-family: var(--ui); font-size: .62rem; font-weight: 700; letter-spacing: .13em;
+  font-family: var(--ui); font-size: var(--fs-label); font-weight: var(--fw-label); letter-spacing: .13em;
   text-transform: uppercase; color: var(--accent); flex: none;
 }
 .spec dd { margin: 0; text-align: right; font-size: .92rem; color: var(--ink-soft); }

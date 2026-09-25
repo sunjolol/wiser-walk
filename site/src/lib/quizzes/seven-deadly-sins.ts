@@ -111,6 +111,7 @@ export const sevenDeadlySins: Quiz = {
   slug: 'seven-deadly-sins',
   title: 'Which of the 7 deadly sins are you weakest to?',
   tagline: 'Fourteen plain statements against the oldest list of what goes wrong in people.',
+  menu: 'The oldest list of what goes wrong in people.',
   description:
     'The seven deadly sins as the Middle Ages settled them from Gregory the Great\u2019s list: ' +
     'pride, envy, wrath, sloth, greed, gluttony, lust. Fourteen plain statements, two minutes, ' +

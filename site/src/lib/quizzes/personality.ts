@@ -31,6 +31,7 @@ export const personality: Quiz = {
   title: 'Christian Personality Test',
   // The approved preview's lede, cut to its second half for the places a quiz shows one line.
   tagline: 'A ten-page portrait of who you are, what trips you up, and where you fit.',
+  menu: 'Your type, what trips you up, and where you fit.',
   // A search result's words: 160 characters at most (scripts/seo-test.mjs).
   description:
     'A free Christian personality test: 72 quick choices, then a ten-page portrait of who you are, ' +

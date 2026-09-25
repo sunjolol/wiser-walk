@@ -3,6 +3,37 @@
 Read this whole file before touching the hub. Then read `research/SEARCH-BRIEF.md` and
 `research/PEOPLE-AUDIT.md`. Everything here was settled with the owner on 2026-09-24.
 
+## THE PERSON SHAPES THE PAGE, NOT THE TEMPLATE (the owner, 2026-09-25): binding, and it overrides any count anywhere
+
+In his words: "Let's make sure we're not adhering rigidly to a template or memifying the entire concept by trying to
+force each saint's lives into the same structure, let the knowledge and details of their lives shine through and let
+the template be a tool to guide us on how to present the info, rather than the info being funneled into a strict
+structure just for the sake of uniformity ... if a saint has more miracles than Martin, or say we have much more
+knowledge about their lives ... we shouldn't try to cram that into only 6 life moments if there's genuinely more that
+would be presentable, and the same goes for if we know less, not trying to force 6 if we genuinely only have 4 ...
+the content within them should adapt to the actual person, not the other way around."
+
+So:
+- **The sections stay the same** for everyone (Who was X?, At a glance, What was he like?, What others said of him,
+  His life in N moments, His miracles, His words, Often misquoted, Where he stood, Friends family and rivals, How he
+  died, Is he a saint?, What to read first, the quizzes, People like him, Sources), each left out when there is
+  nothing checked to fill it.
+- **What is inside each section is sized to the person's record.** Every number in any brief or prompt ("5 to 7
+  moments", "4 traits", "2 or 3 quotations", "3 to 6 numbers") is a rough guide for an average record and NEVER a
+  quota or a cap. Augustine's Confessions, Gregory's Dialogues on Benedict, Athanasius's Life of Antony and Gregory
+  of Nyssa's Life of Macrina hold far more than Sulpicius's Life of Martin: tell as many moments, miracles, traits and
+  lines as the record genuinely makes worth reading (10 or 12 moments is fine where they are good). Where the record
+  is thin (Isaac the Syrian, Lactantius), 3 or 4 is right: never pad to match Martin.
+- **A person may have a section of their own** where their life calls for it (`extras` in `site/src/lib/saints/types.ts`):
+  e.g. Benedict's Rule, Jerome's Bible translation, Augustine's conversion in the garden, Chrysostom's two exiles,
+  Boethius's prison book. Use it only for something genuinely central to that person, not to fill space.
+- **If the facts file gathered less than the record holds, go back to the sources**: research the rest to the same
+  standard (primary text fetched, quotation word for word, source and chapter), add it to the facts file marked
+  verified, and then write it. The 1,000 to 1,800 word guide bends too: a rich life can run longer if every part
+  earns its place.
+- Uniformity where it helps the reader (the same section names, the same look, the same order); never where it
+  flattens a life.
+
 ## What the owner asked for (his words, 2026-09-24)
 
 > "would it be best to add them to this page, which is tied to a quiz ... Or would it be better to make a new
@@ -71,6 +102,36 @@ tailors; the goose as an art attribute. The Eastern icon in the mock-up (Petit P
 Martin's Orthodox feast, settled: churches differ. Greek synaxaria keep 12 November; the Russian Church keeps
 12 October on the old calendar (25 October civil); the OCA keeps 11 November and also lists 12 October, calling
 the October date an error. So "East" is never one date: print each church's own.
+
+## PORTED 2026-09-25: what is live, and how a saint moves
+
+**His answer to the one open question (2026-09-24, late):** the other 21 early Christians stay at
+`/early-christian/<slug>/` until each has a new page to Martin's standard; each moves only then.
+
+Live now (the port checklist below, items 1 to 4 and 6 to 8):
+- **Kit:** `--fs-label`, `--fw-label`, `--fs-tag` in `site/src/styles/kit.css`; about 107 small-text rules across the site
+  moved onto them by the two-size rule (the audit and every call: the session's scratchpad `small-text/`), the games too;
+  `site/scripts/small-text-test.mjs` fails the build on anything under .6rem outside a short allow-list of drawings.
+- **Menus:** "Articles" is "Learn"; every item in every header menu is a name plus one plain line (quizzes and games
+  carry theirs in a `menu` field). The footer's third column is Learn.
+- **The hub** `/saints/` and **Martin** `/saints/martin-of-tours/`, drawn by a template from data:
+  `site/src/pages/saints/[slug].astro` + `site/src/data/saints/<slug>.json` (shape: `site/src/lib/saints/types.ts`).
+  Martin's reader's-own-answers marks on "Where he stood" carry over from the old page. Share cards `saints` and
+  `saint-<slug>` (design/og/cards.mjs reads the data files).
+- **Links:** `lib/person-links.ts` now links every person the personality test names who has a page (a full saint page,
+  an early-Christian page until he moves, or a Bible figure page). Quiz results, person and question pages go straight
+  to `/saints/` for anyone who has moved.
+
+**How a saint moves (the whole procedure):** his checked data file goes into `site/src/data/saints/<slug>.json` (after
+`node design/saints-hub/tools/verify-quotes.mjs <slug>` exits 0 on the machine holding the fetched texts), his pictures
+into `site/public/img/saints/` and `CREDITS.md`, his slug into `MOVED` in `site/src/lib/saints/moved.ts`, and two 301s
+into `site/vercel.json` (with and without the closing slash). `npm run test` (saints-test.mjs) refuses any one of these
+without the others. Then `node design/og/render.mjs site saint-<slug>` for his share card. When all 22 have moved,
+`/early-christian/` itself redirects to `/saints/`.
+
+**The 21 are being researched** to this standard: `design/saints-hub/research/people/<slug>-facts.json` (evidence),
+`design/saints-hub/pages/<slug>.json` (the draft page), `design/saints-hub/pages/img/` (pictures), fetched texts under
+`sources/people/<slug>/` (gitignored). Each draft is written, then adversarially checked, before it is promoted.
 
 ## APPROVED 2026-09-24: PORT IT LIVE (the next session does this)
 

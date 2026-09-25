@@ -25,7 +25,7 @@
 .you-chip, .you-tag {
   display: inline-block; padding: .24rem .5rem .22rem; border-radius: var(--r-pill);
   background: var(--ink); color: var(--panel);
-  font-family: var(--ui); font-size: .56rem; font-weight: 700; line-height: 1;
+  font-family: var(--ui); font-size: var(--fs-tag); font-weight: 700; line-height: 1;
   letter-spacing: .14em; text-transform: uppercase; white-space: nowrap;
 }
 

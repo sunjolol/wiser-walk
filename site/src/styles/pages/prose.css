@@ -29,7 +29,7 @@
 /* the panel's own head: a whispered kicker over an italic display title on a spectrum rule */
 .pnl-head { margin: 0 0 1rem; }
 .pnl-kicker {
-  margin: 0 0 .25rem; font-family: var(--ui); font-size: .6rem; font-weight: 700;
+  margin: 0 0 .25rem; font-family: var(--ui); font-size: var(--fs-label); font-weight: var(--fw-label);
   letter-spacing: .16em; text-transform: uppercase; color: var(--ink-mute);
 }
 .dark .pnl-kicker { color: var(--orange-soft); }
@@ -110,7 +110,7 @@
   .jump ul { display: flex; flex-wrap: wrap; }
 }
 .jump-label {
-  margin: 0 0 .5rem; font-family: var(--ui); font-size: .58rem; font-weight: 700;
+  margin: 0 0 .5rem; font-family: var(--ui); font-size: var(--fs-tag); font-weight: 700;
   letter-spacing: .16em; text-transform: uppercase; color: var(--ink-mute);
 }
 .jump a {
@@ -281,7 +281,7 @@
 .doc blockquote p:last-child { margin: 0; }
 .doc blockquote cite {
   display: block; margin-top: .6rem; font-family: var(--ui); font-style: normal;
-  font-size: .62rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  font-size: var(--fs-label); font-weight: var(--fw-label); letter-spacing: .14em; text-transform: uppercase;
   color: var(--ink-mute);
 }
 
@@ -328,7 +328,7 @@
   line-height: 1.16; color: var(--on-dark); letter-spacing: -.01em; text-wrap: balance;
 }
 .gocard-text > span {
-  display: block; margin-top: .35rem; font-family: var(--ui); font-size: .56rem; font-weight: 700;
+  display: block; margin-top: .35rem; font-family: var(--ui); font-size: var(--fs-tag); font-weight: 700;
   letter-spacing: .13em; text-transform: uppercase; color: var(--on-dark-mute); line-height: 1.6;
 }
 .gocard-text > em {
@@ -378,7 +378,7 @@
   margin: 0 0 .9rem;
 }
 .method .clg-kicker {
-  margin: 0 0 .1rem; font-family: var(--ui); font-size: .6rem; font-weight: 700;
+  margin: 0 0 .1rem; font-family: var(--ui); font-size: var(--fs-label); font-weight: var(--fw-label);
   letter-spacing: .16em; text-transform: uppercase; color: var(--ink-mute);
 }
 .method .clg-title {
@@ -615,7 +615,7 @@
 .nx-facts { display: flex; flex-wrap: wrap; gap: .35rem; margin: .8rem 0 0; }
 .nx-facts > span {
   display: inline-flex; align-items: center; gap: .35rem; padding: .34rem .6rem; border-radius: 999px;
-  font-family: var(--ui); font-size: .6rem; font-weight: 600; letter-spacing: .08em;
+  font-family: var(--ui); font-size: var(--fs-tag); font-weight: 600; letter-spacing: .08em;
   text-transform: uppercase; line-height: 1;
   color: rgba(255, 255, 255, .92); background: rgba(255, 255, 255, .12); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16);
 }
@@ -712,7 +712,7 @@
   padding: .5rem .85rem; border-radius: var(--r-pill);
   background: rgba(255, 255, 255, .16); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .32);
   -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
-  font-family: var(--ui); font-size: .6rem; font-weight: 700; letter-spacing: .13em;
+  font-family: var(--ui); font-size: var(--fs-tag); font-weight: 700; letter-spacing: .13em;
   text-transform: uppercase; color: #fff; line-height: 1;
 }
 .saved-pill[hidden] { display: none; }
@@ -954,7 +954,7 @@
 }
 .toc-head {
   display: flex; align-items: baseline; justify-content: space-between; gap: .75rem;
-  margin: 0 0 .2rem; font-family: var(--ui); font-size: .6rem; font-weight: 700;
+  margin: 0 0 .2rem; font-family: var(--ui); font-size: var(--fs-label); font-weight: var(--fw-label);
   letter-spacing: .16em; text-transform: uppercase; color: var(--ink-soft);
 }
 /* the label is the thing; the count is the footnote to it. Same ink as the label
@@ -1038,8 +1038,8 @@
   .side-stick { position: sticky; top: 1.4rem; z-index: 1; }
 
   .side-tag {
-    display: block; margin: 0 0 .9rem; font-family: var(--ui); font-size: .58rem;
-    font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--orange-soft);
+    display: block; margin: 0 0 .9rem; font-family: var(--ui); font-size: var(--fs-label);
+    font-weight: var(--fw-label); letter-spacing: .18em; text-transform: uppercase; color: var(--orange-soft);
   }
   /* two clean lines in a 16.5rem column: on one line the date and the reading
      time wrapped with the separator leading the second line */
@@ -1071,7 +1071,7 @@
     background-image: var(--grad-r);
   }
   .side-pace-left {
-    display: block; margin-top: .45rem; font-family: var(--ui); font-size: .56rem;
+    display: block; margin-top: .45rem; font-family: var(--ui); font-size: var(--fs-tag);
     font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: var(--on-dark-mute);
     font-variant-numeric: tabular-nums;
   }
@@ -1194,7 +1194,7 @@
 /* the same ink as "In this article" directly above it: both are the eyebrow on a
    block, and --ink-mute is 3.35:1 on a panel, which fails AA at 9.6px */
 .inshort-head {
-  margin: 0 0 .45rem; font-family: var(--ui); font-size: .6rem; font-weight: 700;
+  margin: 0 0 .45rem; font-family: var(--ui); font-size: var(--fs-label); font-weight: var(--fw-label);
   letter-spacing: .16em; text-transform: uppercase; color: var(--ink-soft);
 }
 .inshort p:last-child {
@@ -1253,7 +1253,7 @@
    smallest type on the bar: --ink-mute puts it at about 3.3:1 on the bar's own
    paper, which is not readable on a phone held at arm's length in daylight */
 .rbar-left {
-  flex: none; font-size: .58rem; font-weight: 700; letter-spacing: .12em;
+  flex: none; font-size: var(--fs-tag); font-weight: 700; letter-spacing: .12em;
   text-transform: uppercase; color: var(--ink-soft); font-variant-numeric: tabular-nums;
 }
 .rbar-chev {

@@ -48,7 +48,7 @@
 }
 .axpv-poles {
   grid-column: 1 / -1; display: flex; justify-content: space-between; gap: .75rem;
-  margin: .45rem 0 0; font-family: var(--ui); font-size: .58rem; font-weight: 700;
+  margin: .45rem 0 0; font-family: var(--ui); font-size: var(--fs-tag); font-weight: 700;
   letter-spacing: .11em; text-transform: uppercase; line-height: 1.3;
 }
 .axpv-l { color: var(--accent); }
@@ -144,7 +144,7 @@
    something broken rather than as a label */
 .ask-quiz {
   display: none; flex: none; max-width: 48%; overflow: hidden; text-overflow: ellipsis;
-  white-space: nowrap; font-family: var(--ui); font-size: .55rem; font-weight: 700;
+  white-space: nowrap; font-family: var(--ui); font-size: var(--fs-tag); font-weight: 700;
   letter-spacing: .16em; text-transform: uppercase; color: var(--ink-mute);
 }
 @media (min-width: 30rem) { .ask-quiz { display: block; } }
@@ -305,7 +305,7 @@
   /* the number keys really do answer, so the instrument says so */
   #scale button::after {
     content: "1"; position: absolute; top: .55rem; right: .6rem;
-    font-family: var(--ui); font-size: .55rem; font-weight: 700; letter-spacing: .1em;
+    font-family: var(--ui); font-size: var(--fs-tag); font-weight: 700; letter-spacing: .1em;
     color: var(--ink-mute);
   }
   #scale button:nth-child(2)::after { content: "2"; }
@@ -535,7 +535,7 @@
 .qroom--pic h3 { text-shadow: var(--title-lift); }
 .qroom-facts {
   display: flex; flex-wrap: wrap; gap: .4rem; margin: .95rem 0 0; padding: 0; list-style: none;
-  font-family: var(--ui); font-size: .62rem; font-weight: 600; letter-spacing: .08em;
+  font-family: var(--ui); font-size: var(--fs-tag); font-weight: 600; letter-spacing: .08em;
   text-transform: uppercase;
 }
 .qroom-facts li {
@@ -559,7 +559,7 @@
 /* a draft says so once, in the corner, and nothing else about it is different */
 .qroom-tab {
   position: absolute; top: 0; right: 0; z-index: 1; padding: .45rem .9rem;
-  border-radius: 0 24px 0 14px; font-family: var(--ui); font-size: .58rem; font-weight: 700;
+  border-radius: 0 24px 0 14px; font-family: var(--ui); font-size: var(--fs-tag); font-weight: 700;
   letter-spacing: .14em; text-transform: uppercase; color: #17181d; background: var(--room-ink);
 }
 

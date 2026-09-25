@@ -16,6 +16,7 @@
  */
 import type { Outcome, Quiz, QuizGroup } from './types';
 import { outcomePathBase } from './types';
+import { hasMoved } from '../saints/moved';
 
 export const quizHref = (quiz: Quiz) => `/q/${quiz.slug}/`;
 export const groupHref = (quiz: Quiz, group: QuizGroup) => `/axis/${quiz.slug}/${group.slug}/`;
@@ -31,4 +32,6 @@ export const resultHref = (quiz: Quiz, code: string) => `/r/${quiz.slug}/${code}
  * share a slug.
  */
 export const outcomeHref = (quiz: Quiz, outcome: Outcome) =>
-  `/${outcomePathBase(quiz)}/${outcome.slug}/`;
+  quiz.slug === 'which-early-christian' && hasMoved(outcome.slug)
+    ? `/saints/${outcome.slug}/` // his page is in the Saints hub now (lib/saints/moved.ts)
+    : `/${outcomePathBase(quiz)}/${outcome.slug}/`;

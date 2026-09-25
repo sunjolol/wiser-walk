@@ -73,7 +73,7 @@
 .pq-report p, .pq-report li { text-wrap: pretty; }
 .pq-report p { margin: 0; }
 .pq-kicker {
-  font-family: var(--ui); font-size: .66rem; font-weight: 600; line-height: 1.3; letter-spacing: .12em;
+  font-family: var(--ui); font-size: var(--fs-label); font-weight: var(--fw-label); line-height: 1.3; letter-spacing: .12em;
   text-transform: uppercase; color: color-mix(in srgb, var(--pq-t) 70%, var(--ink)); margin: 0 0 .4rem !important;
 }
 .pq-muted { color: var(--ink-soft); }
@@ -117,7 +117,7 @@
   display: flex; justify-content: space-between; align-items: center; gap: 1rem;
 }
 .pq-hero-label {
-  font-family: var(--ui); font-size: .6rem; font-weight: 700; line-height: 1.25; letter-spacing: .14em;
+  font-family: var(--ui); font-size: var(--fs-tag); font-weight: 700; line-height: 1.25; letter-spacing: .14em;
   text-transform: uppercase; text-align: right; color: rgba(255,255,255,.88); text-shadow: 0 1px 8px rgba(0,0,0,.5);
   text-wrap: balance;
 }
@@ -283,7 +283,7 @@
 span.pq-face { display: inline-block; }
 .pq-kin b { font: 600 1rem/1.3 var(--ui); text-wrap: balance; }
 .pq-kin em { display: block; margin-top: .2rem; font: 500 .72rem/1 var(--ui); color: var(--ink-mute); font-style: normal; }
-.pq-src { font: 500 .7rem/1.3 var(--ui); color: var(--ink-mute); }
+.pq-src { font: var(--fw-label) var(--fs-label)/1.3 var(--ui); color: var(--ink-mute); }
 .pq-kin-note { margin-top: .6rem !important; }
 
 /* A saint with a page of their own (lib/person-links.ts): the whole card goes there. The name is
@@ -327,7 +327,7 @@ span.pq-face { display: inline-block; }
 .pq-opp p { color: rgba(255,255,255,.92); }
 .pq-opp p.pq-opp-person { font: 600 .9rem/1.3 var(--ui); color: rgba(255,255,255,.85); margin-top: .15rem; text-wrap: balance; }
 .pq-opp p.pq-opp-tag { font-family: "Philosopher", var(--display); font-style: italic; font-weight: 400; font-size: 1.05rem; line-height: 1.35; color: rgba(255,255,255,.9); }
-.pq-opp p.pq-opp-src { font: 500 .7rem/1.3 var(--ui); color: rgba(255,255,255,.6); }
+.pq-opp p.pq-opp-src { font: var(--fw-label) var(--fs-label)/1.3 var(--ui); color: rgba(255,255,255,.6); }
 /* The people in it link to their own pages where the site has one, in a new tab: names in white
    with a quiet underline, the mark in the link blue. The opposite's face goes there too. */
 .pq-opp-face-a { display: block; border-radius: 50%; }
@@ -368,7 +368,7 @@ span.pq-face { display: inline-block; }
 .pq-ty.is-you { box-shadow: 0 0 0 3px var(--pq-ty); }
 .pq-ty.is-close { box-shadow: 0 0 0 2px var(--panel), 0 0 0 4px color-mix(in srgb, var(--pq-ty) 70%, transparent); }
 .pq-ty-tag {
-  position: absolute; top: .5rem; right: .5rem; z-index: 2; font: 700 .6rem/1 var(--ui); letter-spacing: .1em;
+  position: absolute; top: .5rem; right: .5rem; z-index: 2; font: 700 var(--fs-tag)/1 var(--ui); letter-spacing: .1em;
   text-transform: uppercase; padding: .32rem .55rem; border-radius: 999px; background: var(--pq-ty); color: #000;
 }
 .pq-ty-tag--close { background: rgba(255,255,255,.92); color: #222; }
@@ -392,7 +392,7 @@ span.pq-face { display: inline-block; }
 }
 .pq-chip--ink { background: color-mix(in srgb, var(--pq-t) 22%, var(--panel)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pq-t) 50%, transparent); }
 .pq-grp { margin-top: 1rem; }
-.pq-grp-n { font: 600 .64rem/1 var(--ui); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: .3rem !important; }
+.pq-grp-n { font: var(--fw-label) var(--fs-label)/1 var(--ui); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: .3rem !important; }
 .pq-rail { border-radius: 14px; padding: .55rem .6rem .65rem; }
 .pq-rail[open] { background: var(--pq-raise); }
 .pq-rail summary { list-style: none; cursor: pointer; display: flex; flex-direction: column; gap: .3rem; }
@@ -460,7 +460,7 @@ span.pq-face { display: inline-block; }
 .pq-g2-cell span { font-size: .8rem; color: var(--ink-soft); line-height: 1.35; }
 .pq-g2-cell.is-you { border-color: var(--pq-t); background: color-mix(in srgb, var(--pq-t) 18%, var(--panel)); }
 .pq-g2-cell .pq-you {
-  font: 700 .6rem/1 var(--ui); letter-spacing: .12em; text-transform: uppercase;
+  font: 700 var(--fs-tag)/1 var(--ui); letter-spacing: .12em; text-transform: uppercase;
   color: color-mix(in srgb, var(--pq-t) 70%, var(--ink));
 }
 .pq-cure { margin-top: 1rem; padding: .95rem 1rem; border-radius: 16px; background: color-mix(in srgb, var(--pq-t) 14%, var(--panel)); }
@@ -615,7 +615,7 @@ span.pq-face { display: inline-block; }
 .pq-qc-in b { font: 700 1.12rem/1.2 var(--display); color: #fff; text-wrap: balance; }
 .pq-qc-facts { display: flex; flex-wrap: wrap; gap: .35rem; }
 .pq-qc-facts span {
-  font: 600 .6rem/1 var(--ui); letter-spacing: .08em; text-transform: uppercase; padding: .38rem .55rem; border-radius: 999px;
+  font: 600 var(--fs-tag)/1 var(--ui); letter-spacing: .08em; text-transform: uppercase; padding: .38rem .55rem; border-radius: 999px;
   box-shadow: inset 0 0 0 1px rgba(255,255,255,.28); color: rgba(255,255,255,.88);
 }
 .pq-qc-go {
@@ -667,7 +667,7 @@ span.pq-face { display: inline-block; }
 .pq-ts-kin .pq-newtab { display: inline-block; vertical-align: -1px; margin-left: .2em; }
 .pq-newtab { flex: none; }
 .pq-ts-in p.pq-ts-note { margin-top: -.15rem; font-size: .78rem; line-height: 1.4; color: var(--ink-soft); }
-.pq-cs-k { font: 700 .64rem/1 var(--ui); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: .7rem !important; }
+.pq-cs-k { font: var(--fw-label) var(--fs-label)/1 var(--ui); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: .7rem !important; }
 .pq-cs-img { aspect-ratio: 1080 / 1350; border-radius: 14px; overflow: hidden; background: #1C1C23; display: grid; place-items: center; }
 .pq-cs-img img { width: 100%; height: 100%; display: block; }
 .pq-cs-wait { font: 500 .85rem/1 var(--ui); color: rgba(255,255,255,.7); }

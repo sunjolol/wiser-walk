@@ -2,7 +2,9 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "crons": [{ "path": "/api/auth/health?ping=1", "schedule": "0 5 * * *" }],
   "redirects": [
-    { "source": "/sitemap.xml", "destination": "/sitemap-index.xml", "permanent": true }
+    { "source": "/sitemap.xml", "destination": "/sitemap-index.xml", "permanent": true },
+    { "source": "/early-christian/martin-of-tours/", "destination": "/saints/martin-of-tours/", "permanent": true },
+    { "source": "/early-christian/martin-of-tours", "destination": "/saints/martin-of-tours/", "permanent": true }
   ],
   "headers": [
     {

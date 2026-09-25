@@ -247,6 +247,18 @@ All are public domain (one is CC0), so no card or page owes a credit line by lic
 | lines/l-martin-of-tours.jpg | Saint Martin and the Beggar, El Greco, 1597-1599 | cropped from `early-christians/martin-of-tours.jpg` (credited above) | CC0 |
 | mosaic.jpg | The eight type paintings above, each cropped to its centre and tiled two across and four down (the home rail and the test's band) | the eight files above | Public domain |
 
+## Public domain and CC0: the Saints hub (`saints/`, Wikimedia Commons)
+
+Added 2026-09-25 with the Saints hub. Each saint with a full page (`/saints/<slug>/`, data in
+`site/src/data/saints/<slug>.json`) has a band painting (`<slug>.jpg`) and, where both halves of the Church painted
+him, a second picture from the other half (`<slug>-icon.jpg` or `<slug>-2.jpg`). The page prints both credits. The
+licence tag of each was read on its Commons file page; modern icons, which are usually still in copyright, are not used.
+
+| file | picture | Commons file | licence |
+|---|---|---|---|
+| martin-of-tours.jpg | Saint Martin and the Beggar, El Greco, 1597-1599, National Gallery of Art, Washington | `El Greco (Domenikos Theotokopoulos), Saint Martin and the Beggar, 1597-1599, NGA 1164.jpg` | CC0 |
+| martin-of-tours-icon.jpg | Saint Martin, Cretan-Venetian school, about 1500, Petit Palais, Paris (Paris Musées, PPP4870) | `Ecole créto-vénitienne - Saint Martin - PPP4870 - Musée des Beaux-Arts de la ville de Paris.jpg` | CC0 |
+
 ## Public-domain paintings used on hubs
 
 | file | what it shows | source |

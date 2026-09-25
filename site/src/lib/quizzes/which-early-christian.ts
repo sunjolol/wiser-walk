@@ -40,6 +40,7 @@ export const whichEarlyChristian: Quiz = {
   // (the owner, 2026-09-23, later): no card on a picture carries a line under its title.
   title: 'Which early Christian thinks like you?',
   tagline: 'And which would argue with you?',
+  menu: 'And which would argue with you?',
   // A search result's words: 160 characters at most (scripts/seo-test.mjs).
   description:
     'Agree or disagree with 23 opinions real early Christians held. Then meet the one who ' +

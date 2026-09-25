@@ -34,6 +34,7 @@ export const whichPsalm: Quiz = {
   slug: 'which-psalm',
   title: 'Which Psalm are you living right now?',
   tagline: 'A few honest taps about your life right now, and the psalm an early Church Father gave for exactly that.',
+  menu: 'The psalm St Athanasius gave for where you are.',
   description:
     'Answer a few honest questions about your life right now. Then read the psalm St Athanasius ' +
     'gave for exactly that in the 300s, and why he gave it.',

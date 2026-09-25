@@ -39,7 +39,7 @@
 }
 .ps-advice { margin: .85rem 0 0; max-width: var(--measure); font-weight: 600; color: var(--ink); }
 .ps-cite, .ps-ref {
-  font-family: var(--ui); font-size: .62rem; font-weight: 600; letter-spacing: .1em;
+  font-family: var(--ui); font-size: var(--fs-label); font-weight: var(--fw-label); letter-spacing: .1em;
   text-transform: uppercase; color: var(--ink-mute); font-style: normal;
 }
 .ps-cite { margin: .5rem 0 0; }
@@ -84,8 +84,8 @@
 /* the psalm's own heading is part of the text; the small label says so */
 .ps-sup { margin: 0 0 .9rem; font-size: .9rem; font-style: italic; color: var(--ink-soft); }
 .ps-sup-label {
-  display: block; margin-bottom: .15rem; font-family: var(--ui); font-size: .58rem;
-  font-weight: 700; font-style: normal; letter-spacing: .14em; text-transform: uppercase;
+  display: block; margin-bottom: .15rem; font-family: var(--ui); font-size: var(--fs-label);
+  font-weight: var(--fw-label); font-style: normal; letter-spacing: .14em; text-transform: uppercase;
   color: var(--ink-mute);
 }
 .ps-verses { display: grid; gap: .3rem; margin: 0; padding: 0; list-style: none; }
@@ -110,7 +110,7 @@
 .ps-note p + p { margin-top: .6rem; }
 .ps-note q { quotes: "“" "”"; color: var(--ink); font-style: italic; }
 .ps-note-label {
-  font-family: var(--ui); font-size: .6rem; font-weight: 700; letter-spacing: .15em;
+  font-family: var(--ui); font-size: var(--fs-label); font-weight: var(--fw-label); letter-spacing: .15em;
   text-transform: uppercase; color: var(--accent);
 }
 .ps-note .ps-note-label + p { margin-top: .35rem; }

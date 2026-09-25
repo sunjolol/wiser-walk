@@ -1,0 +1,27 @@
+---
+/**
+ * A section of a saint's own (lib/saints/types.ts, `extras`): something central to his life that
+ * no standard section holds. Drawn in the miracles section's language: a lede, then panels, each
+ * with a heading, the story, a quotation and its source.
+ */
+import SectionHead from './SectionHead.astro';
+import { rich } from '../lib/saints/rich';
+import type { SaintPage } from '../lib/saints/types';
+
+interface Props { x: NonNullable<SaintPage['extras']>[number] }
+const { x } = Astro.props;
+---
+<SectionHead id={x.id} title={x.title.toLowerCase()} />
+<div class="mir">
+  {x.lede && <p class="sect-lede" set:html={rich(x.lede)} />}
+  <div class:list={['wonders', x.items.length === 1 && 'wonders--one']}>
+    {x.items.map(i => (
+      <div class="panel wonder">
+        {i.title && <h3>{i.title}</h3>}
+        <p set:html={rich(i.text)} />
+        {i.quote && <blockquote>“{i.quote}”</blockquote>}
+        {i.cite && <span class="cite">{i.cite.url ? <a href={i.cite.url} target="_blank" rel="noopener">{i.cite.text}</a> : i.cite.text}</span>}
+      </div>
+    ))}
+  </div>
+</div>

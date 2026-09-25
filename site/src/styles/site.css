@@ -937,7 +937,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .pole-panel--left { box-shadow: inset 3px 0 0 var(--blue); }
 .pole-panel--right { box-shadow: inset 3px 0 0 var(--orange); }
 .pole-panel h4 {
-  font-family: var(--ui); font-size: .68rem; font-weight: 700; letter-spacing: .1em;
+  font-family: var(--ui); font-size: var(--fs-label); font-weight: var(--fw-label); letter-spacing: .1em;
   text-transform: uppercase; color: var(--ink-mute); margin: 0 0 .4rem;
 }
 /* Each heading takes its OWN pole's colour, never the reader's. Colouring by "your side"
@@ -947,7 +947,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
 /* the reader's own side is marked, but the other is never dimmed or shortened */
 .pole-panel.is-yours::after {
   content: "your side"; display: block; margin-top: .5rem;
-  font-family: var(--ui); font-size: .62rem; font-weight: 700; letter-spacing: .1em;
+  font-family: var(--ui); font-size: var(--fs-tag); font-weight: 700; letter-spacing: .1em;
   text-transform: uppercase; color: var(--ink-mute);
 }
 .pole-panel p { margin: 0; }
@@ -962,7 +962,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
 
 .passages { margin: .95rem 0 0; font-size: .85rem; color: var(--ink-soft); }
 .passages h4, .read-split--compact h4 {
-  font-family: var(--ui); font-size: .68rem; font-weight: 700; letter-spacing: .1em;
+  font-family: var(--ui); font-size: var(--fs-label); font-weight: var(--fw-label); letter-spacing: .1em;
   text-transform: uppercase; color: var(--ink-mute); margin: 0 0 .3rem;
 }
 .passages p { margin: 0; }
@@ -1038,7 +1038,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .tl { margin: 1.1rem 0 0; }
 .tl-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem; margin: 0 0 .7rem; }
 .tl-head h3, .tl-head h4, .pg-head h3, .pg-head h4 {
-  font-family: var(--ui); font-size: .68rem; font-weight: 700; letter-spacing: .1em;
+  font-family: var(--ui); font-size: var(--fs-label); font-weight: var(--fw-label); letter-spacing: .1em;
   text-transform: uppercase; color: var(--ink-mute); margin: 0;
 }
 .tl-span, .pg-note {
@@ -1111,7 +1111,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
   margin: .2rem 0 .3rem;
 }
 .pg-ref {
-  font-family: var(--ui); font-size: .66rem; font-weight: 700; letter-spacing: .08em;
+  font-family: var(--ui); font-size: var(--fs-label); font-weight: var(--fw-label); letter-spacing: .08em;
   text-transform: uppercase; color: var(--accent); margin: 0 0 .55rem;
 }
 .pg-more { color: var(--ink-mute); font-weight: 600; }
@@ -1122,7 +1122,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
   font-variant-numeric: tabular-nums; padding-top: .18rem;
 }
 .pg-verses span { font-size: .9rem; color: var(--ink); line-height: 1.55; text-wrap: pretty; }
-.pg-cite { font-size: .68rem; color: var(--ink-mute); margin: .7rem 0 0; }
+.pg-cite { font-size: var(--fs-label); font-weight: var(--fw-label); color: var(--ink-mute); margin: .7rem 0 0; }
 
 /* --------------------------------------------------- the unipolar stack */
 /*
@@ -1284,7 +1284,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
 /* the section head's kicker voice, a shade darker because it names a field */
 .share-label {
   display: block; margin: 0 0 .6rem;
-  font-family: var(--ui); font-size: .64rem; font-weight: 700; line-height: 1.3;
+  font-family: var(--ui); font-size: var(--fs-label); font-weight: var(--fw-label); line-height: 1.3;
   letter-spacing: .16em; text-transform: uppercase; color: var(--ink-soft);
 }
 /* two classes, so it wins over a panel's own paragraph rule (.pledge p stops at 34rem) */
@@ -1383,7 +1383,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .cl-body { padding: 0 .9rem 1rem; font-size: .88rem; color: var(--ink-soft); }
 .cl-body p { margin: 0 0 .85rem; text-wrap: pretty; }
 .cl-body h4 {
-  font-family: var(--ui); font-size: .68rem; font-weight: 700; letter-spacing: .1em;
+  font-family: var(--ui); font-size: var(--fs-label); font-weight: var(--fw-label); letter-spacing: .1em;
   text-transform: uppercase; color: var(--ink-mute); margin: 0 0 .35rem;
 }
 /* before/after are recorded exactly as the audit wrote them, and some are JSON. Wrap

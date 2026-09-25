@@ -364,5 +364,30 @@ console.log('4. comparisons');
   }
 }
 
+// ---- every saint's page answers "Who was X?" near the top, and has one address
+console.log('5. saints');
+{
+  /*
+   * A saint's page is built for the searches the hub was made for ("who was Martin of Tours"),
+   * so it answers its own question in the box under the band, in 30 to 70 words, the band the
+   * articles' "In short" is held to (40 to 60 is the target: saints-test.mjs). A person who has
+   * moved to the hub must not still be built at his old address, which vercel.json sends on.
+   */
+  const saints = [...built].filter(([path]) => /^\/saints\/[^/]+\/$/.test(path));
+  const hub = built.get('/saints/');
+  let bad = 0;
+  if (!hub) { fail('no /saints/ hub in the build'); bad++; }
+  for (const [path, html] of saints) {
+    const box = /<section[^>]*\bclass=["'][^"']*\banswer\b[^"']*["'][^>]*>([\s\S]*?)<\/section>/i.exec(html);
+    const p = box && /<p[^>]*>([\s\S]*?)<\/p>/i.exec(box[1]);
+    const words = p ? decode(p[1].replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim().split(' ').length : 0;
+    if (words < 30 || words > 70) { fail(path + ': the "Who was" answer is ' + words + ' words (30 to 70)'); bad++; }
+    const old = path.replace('/saints/', '/early-christian/');
+    if (built.has(old)) { fail(old + ' is still built beside ' + path); bad++; }
+    if (hub && !hub.includes('href="' + path + '"')) { fail('/saints/ does not link to ' + path); bad++; }
+  }
+  if (!bad) ok(saints.length + ' saint page(s), each answering "Who was" and each at one address');
+}
+
 console.log(failures ? '\nseo guard: ' + failures + ' problem(s)' : '\nseo guard: all checks passed');
 process.exit(failures ? 1 : 0);

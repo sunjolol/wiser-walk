@@ -127,6 +127,28 @@ for (const f of figures) {
 }
 
 /*
+ * THE SAINTS HUB (2026-09-25): the hub's card, three of its people side by side, and one card per
+ * saint with a full page, read from that page's own data file (site/src/data/saints/): his band
+ * painting at the band's own wide-screen crop, and his name.
+ */
+CARDS.saints = {
+  v: 'trip', tone: 'painting',
+  imgs: '/img/early-christians/basil-the-great.jpg,/img/saints/martin-of-tours.jpg,/img/early-christians/augustine-of-hippo.jpg',
+  poss: '50% 12%,50% 6%,50% 22%', k: 'Saints and early Christians',
+  h: 'Their lives, in their|own *words.*', s: 'Feast days East and West. Every quotation with its book and chapter.'
+};
+const SAINTS_DIR = join(ROOT, 'site/src/data/saints');
+if (existsSync(SAINTS_DIR)) {
+  for (const f of readdirSync(SAINTS_DIR).filter(f => f.endsWith('.json'))) {
+    const p = JSON.parse(readFileSync(join(SAINTS_DIR, f), 'utf8'));
+    CARDS[`saint-${p.slug}`] = {
+      v: 'left', tone: 'painting', img: p.band.picture.src, pos: p.band.posD, k: 'Saints and early Christians',
+      h: `Who was|*${p.name}?*`, s: `${p.band.dates}. ${p.she ? 'Her' : 'His'} life, ${p.she ? 'her' : 'his'} words and ${p.she ? 'her' : 'his'} feast days.`
+    };
+  }
+}
+
+/*
  * RESULTS (2026-09-23): one card per outcome a result can name, so a shared result link
  * shows who or what the person got instead of the quiz's own card. seo.ts resultCardFor()
  * picks it; a result that names nothing (a centrist, a flat ranking) keeps the quiz's card.

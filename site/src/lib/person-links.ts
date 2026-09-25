@@ -17,17 +17,26 @@
  *   /figure/<slug>/            the 25 people of the Bible figure quiz
  *                              (src/data/bible-figures.json, figures[*].slug)
  *
- * ON HOLD, 2026-09-24. The owner then decided on a full Saints database, with a richer page per
- * saint, and asked not to link to /early-christian/ and /figure/ in the meantime ("we'll just need
- * to re-do that again later"). So this returns null for everyone and every card renders plain.
- * The cards are already built to take a link: when the hub lands, return its page here (by the
- * same picture keys) and every card, pair and name across the test follows.
+ * THE SAINTS HUB IS LIVE (2026-09-25). The owner had put this on hold while the hub was built,
+ * so that nothing would have to be re-done ("we'll just need to re-do that again later"). Now a
+ * person's page is looked up in one place, the hub's own list (lib/saints/data.ts), which knows
+ * whether he has a full /saints/ page yet or is still on /early-christian/, so a saint who moves
+ * takes every card that names him along with him and nothing here changes. Bible people link to
+ * the Bible figure quiz's pages. Someone with no page yet (Mary of Bethany, Arsenius, Monica,
+ * Isaiah, Jeremiah, Cuthbert, Guthlac, Philip Neri) renders plain, as every card did before.
  *
  * SERVER ONLY. Import it in front matter; a <script> must never import it.
  */
+import figures from '../data/bible-figures.json';
+import { hubHref } from './saints/data';
 
-/** The page for the person with this picture key, or null while the Saints hub is being built. */
-export const personHref = (_img: string | null | undefined): string | null => null;
+const FIGURES = new Set((figures as { figures: Array<{ slug: string }> }).figures.map(f => f.slug));
+
+/** The page for the person with this picture key, or null where the site has none yet. */
+export const personHref = (img: string | null | undefined): string | null => {
+  if (!img) return null;
+  return hubHref(img) ?? (FIGURES.has(img) ? `/figure/${img}/` : null);
+};
 
 /**
  * A linked name split where it may wrap: [the start, the end]. The end is the last two words of

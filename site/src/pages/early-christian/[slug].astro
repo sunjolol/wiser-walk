@@ -37,10 +37,14 @@ import { outcomeNounPlural } from '../../lib/engine/types';
 import { artFor } from '../../lib/art';
 import { clip } from '../../lib/seo';
 import { OLDEST_FIRST, STATEMENTS, faceOf, he, hers, personHref, personOf, pictureOf } from './_early';
+import { hasMoved } from '../../lib/saints/moved';
 import '../../styles/pages/early-christian.css';
 
+/* Not built for anyone whose page has moved to the Saints hub: vercel.json sends the old address
+   there with a 301 (lib/saints/moved.ts). */
 export function getStaticPaths() {
-  return OLDEST_FIRST.map(key => ({ params: { slug: personOf(key).slug }, props: { key } }));
+  return OLDEST_FIRST.filter(key => !hasMoved(personOf(key).slug))
+    .map(key => ({ params: { slug: personOf(key).slug }, props: { key } }));
 }
 
 const { key } = Astro.props as { key: string };

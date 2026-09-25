@@ -526,6 +526,10 @@ export function ogImageFor(path: string): string {
      the test. Each type's own card (r-personality-<type>) says "my type", which a type's page
      is not, so none of them wears it. */
   if (path.startsWith('/personality-type/')) return card('quiz-personality', 'quizzes');
+  /* The Saints hub has a card of its own, and each saint with a full page has one naming him
+     (design/og/cards.mjs, from src/data/saints/). A saint whose card is not drawn yet wears the hub's. */
+  if (path === '/saints/') return card('saints', 'home');
+  if ((m = /^\/saints\/([^/]+)\//.exec(path))) return card(`saint-${m[1]}`, 'saints');
   if (path.startsWith('/tradition/')) return card('quiz-theology-compass');
   if ((m = /^\/figure\/([^/]+)\//.exec(path))) return card(`figure-${m[1]}`, 'quiz-bible-figure');
   if ((m = /^\/articles\/([^/]+)\//.exec(path))) return card(`article-${m[1]}`, 'articles');

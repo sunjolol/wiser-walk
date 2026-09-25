@@ -112,23 +112,31 @@ const year = new Date().getFullYear();
  * "All quizzes" is deliberately the first item: the menu replaces a link to the hub, and a
  * reader who wanted the hub must not have to hunt for it at the bottom of a list.
  */
+/*
+ * EVERY MENU ITEM IS A NAME AND ONE PLAIN LINE (the owner, 2026-09-24: he liked it on the Learn
+ * menu of the Saints mock-up and asked for it on every header menu). The line is the quiz's or
+ * the game's own `menu` field, so a new one arrives with its line. `all` marks the way back to
+ * a hub, which is the first item and reads as its own thing (a dotted rule under it).
+ */
+type NavItem = { href: string; label: string; line: string; tag?: string; all?: boolean };
 const NAV: Array<{
   href: string;
   label: string;
   /** A mark instead of the word, where the row is too tight for both. See "My results". */
   icon?: 'users';
-  items?: Array<{ href: string; label: string; tag?: string }>;
+  items?: NavItem[];
 }> = [
   {
     href: '/quizzes/',
     label: 'Quizzes',
     items: [
-      { href: '/quizzes/', label: 'All quizzes' },
+      { href: '/quizzes/', label: 'All quizzes', line: 'Every quiz, on one page.', all: true },
       // Finished quizzes before drafts, as on the home page, /quizzes/, /me/ and the footer.
       // The menu was the one place a draft sat in the middle of the live ones.
       ...footQuizzes.map(q => ({
         href: quizHref(q),
         label: q.title,
+        line: q.menu,
         tag: q.status === 'draft' ? 'Draft' : undefined
       }))
     ]
@@ -137,23 +145,24 @@ const NAV: Array<{
     href: '/games/',
     label: 'Games',
     items: [
-      { href: '/games/', label: 'All games' },
-      ...footGames.map(g => ({ href: g.href, label: g.title, tag: undefined }))
+      { href: '/games/', label: 'All games', line: 'Every game, on one page.', all: true },
+      ...footGames.map(g => ({ href: g.href, label: g.title, line: g.menu }))
     ]
   },
   /*
-   * Articles opens a menu for the same reason Quizzes and Games do: the comparison pages
-   * ("Lutheran vs Reformed") are writing, they are the only part of the site with no home
-   * in the row, and a reader who wanted them had no way to learn they existed. Two items,
-   * built exactly like the other two menus, so the phone's scroller, the keyboard and the
-   * close-on-open script all already handle it.
+   * LEARN (the owner, 2026-09-24, with the Saints hub): what was the Articles menu, now the
+   * home of everything that is read rather than taken or played. Four items, no "All" item:
+   * each is a hub of its own. "Articles" is five letters shorter than it was, which the phone's
+   * row needed.
    */
   {
     href: '/articles/',
-    label: 'Articles',
+    label: 'Learn',
     items: [
-      { href: '/articles/', label: 'All articles' },
-      { href: '/compare/', label: 'Compare traditions' }
+      { href: '/articles/', label: 'Articles', line: 'Short reads on gratitude, patience, worry and more.' },
+      { href: '/saints/', label: 'Saints and early Christians', line: 'Their lives, their own words and their feast days.', tag: 'New' },
+      { href: '/early-church-on/', label: 'What the early Church said', line: '23 questions, answered in the early Christians’ own words.' },
+      { href: '/compare/', label: 'Compare traditions', line: 'How two churches differ, side by side.' }
     ]
   },
   // No Method. It is a page about how the work was done, and the nav is for the things a
@@ -373,10 +382,10 @@ const navItems = ACCOUNTS_VISIBLE ? NAV.filter(n => n.href !== '/me/') : NAV;
               <div class="navmenu-panel">
                 <ul>
                   {n.items.map(i => (
-                    <li>
+                    <li class:list={[i.all && 'all']}>
                       <a href={i.href} aria-current={here === i.href ? 'page' : undefined}>
-                        <span>{i.label}</span>
-                        {i.tag && <span class="navmenu-tag">{i.tag}</span>}
+                        <span class="nm-t">{i.label}{i.tag && <span class="navmenu-tag">{i.tag}</span>}</span>
+                        <span class="nm-l">{i.line}</span>
                       </a>
                     </li>
                   ))}
@@ -556,10 +565,12 @@ const navItems = ACCOUNTS_VISIBLE ? NAV.filter(n => n.href !== '/me/') : NAV;
             </ul>
           </div>
           <div class="foot-col foot-col--blue">
-            <h4>More</h4>
+            <h4>Learn</h4>
             <ul>
+              {/* The header's Learn menu, in the same order, then the two pages that are neither. */}
               <li><a href="/articles/">Articles</a></li>
-              {/* The comparison pages are writing, and this is where the writing lives. */}
+              <li><a href="/saints/">Saints and early Christians</a></li>
+              <li><a href="/early-church-on/">What the early Church said</a></li>
               <li><a href="/compare/">Compare traditions</a></li>
               <li><a href="/about/">About</a></li>{ACCOUNTS_VISIBLE && (
                 /* The header's way to /me/ is the account pair, which a guest reads as "make an

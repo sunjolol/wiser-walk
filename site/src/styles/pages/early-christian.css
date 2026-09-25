@@ -104,7 +104,7 @@
 }
 @media (min-width: 40rem) { .ecl { padding: 1.15rem 1.3rem 1.2rem; } }
 .ecl-on {
-  margin: 0 0 .45rem; font-family: var(--ui); font-size: .62rem; font-weight: 700;
+  margin: 0 0 .45rem; font-family: var(--ui); font-size: var(--fs-label); font-weight: var(--fw-label);
   letter-spacing: .13em; text-transform: uppercase;
 }
 .ecl-on a { color: var(--ink-mute); text-decoration: none; }
@@ -168,7 +168,7 @@
 }
 .ecp-page--later { grid-column: 2; text-align: right; }
 .ecp-page-dir {
-  font-family: var(--ui); font-size: .6rem; font-weight: 700; letter-spacing: .14em;
+  font-family: var(--ui); font-size: var(--fs-tag); font-weight: 700; letter-spacing: .14em;
   text-transform: uppercase; color: var(--accent);
 }
 .ecp-page b { font-family: var(--display); font-weight: 400; font-size: 1.08rem; line-height: 1.25; }
@@ -186,7 +186,7 @@
 /* ------------------------------------------------------------ a question page ---- */
 .ecq-statement { margin: 1.5rem 0 0; }
 .ecq-kicker {
-  margin: 0 0 .5rem; font-family: var(--ui); font-size: .6rem; font-weight: 700;
+  margin: 0 0 .5rem; font-family: var(--ui); font-size: var(--fs-label); font-weight: var(--fw-label);
   letter-spacing: .15em; text-transform: uppercase; color: var(--ink-mute);
 }
 .ecq-text {
@@ -256,7 +256,7 @@
 .eci-tag {
   position: absolute; left: .45rem; bottom: .45rem; max-width: calc(100% - .9rem); padding: .3rem .55rem .28rem; border-radius: var(--r-pill); white-space: nowrap;
   background: var(--ink); color: var(--panel);
-  font-family: var(--ui); font-size: .54rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; line-height: 1;
+  font-family: var(--ui); font-size: var(--fs-tag); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; line-height: 1;
 }
 
 @media (prefers-reduced-motion: reduce) {

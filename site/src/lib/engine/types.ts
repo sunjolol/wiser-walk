@@ -626,6 +626,12 @@ export interface Quiz {
   title: string;
   /** One line under the title on the hub. */
   tagline: string;
+  /**
+   * One plain line under the title in the header's Quizzes menu (the owner, 2026-09-24: every
+   * header menu carries a name and one line). Short enough for one line at 22rem: about 50
+   * characters. Required, so a new quiz cannot join the menu without one.
+   */
+  menu: string;
   /** Written for a search result: it is the page's meta description and its JSON-LD. */
   description: string;
   /**
