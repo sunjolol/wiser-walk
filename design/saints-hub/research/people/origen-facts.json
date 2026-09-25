@@ -1470,5 +1470,91 @@
     "checked_on": "2026-09-25",
     "by": "adversarial checker, against the primary texts in sources/people/origen/ and the churches' own calendars",
     "note": "Each correction is also noted on its item as checker_note. Words also changed on the page: the lede and card now say \"Some of his ideas were condemned\" (not all); \"who\" says he died \"a few years later\", not \"soon after\"; the words note no longer says Jerome edited as he went (no source read says so); the Luyken plate title is printed as the plate spells it, \"onderwyzende\" (the Rijksmuseum title is \"Kerkleraar Origenes onderwijst de catechismus\")."
+  },
+  "owner_notes_2026_09_25": {
+    "what": "The owner's notes on Irenaeus's page, applied here: every number tile must make sense on its own. Removed: 'Ran a school at 18' (the path bar right above says 'Head of the Alexandrian school at 18', and Who was Origen? and the moments say it again) and 'Died at 69' (the Died fact beside it and How he died both say it). Kept and rewritten so the chip says what is counted and the lines finish the thought: 16, 7+, 6. Added three 'Did you know?' lines and two more pictures for wide screens. Traits: 'prayer and reading, day and night' (the taller) now sits left of 'lived as he taught'.",
+    "numbers": [
+      {
+        "n": "16",
+        "chip": "Age when his father was martyred",
+        "evidence": "Eusebius, Church History 6.2.12 (sources/people/origen/eusebius-church-history-book6.txt line ~152): 'he was left with his mother and six younger brothers when he was not quite seventeen years old.' Year 202: Britannica (britannica-origen.txt line 328): 'Origen's father, Leonides, was martyred in 202'. The quoted line is already in origen.quotes.json."
+      },
+      {
+        "n": "7+",
+        "chip": "Secretaries taking his dictation",
+        "evidence": "Eusebius, Church History 6.23.2 (eusebius-church-history-book6.txt line 3422): 'For he dictated to more than seven amanuenses, who relieved each other at appointed times. And he employed no fewer copyists, besides girls who were skilled in elegant writing. For all these Ambrose furnished the necessary expense in abundance'.",
+        "lines_now": [
+          "More than seven, taking turns as he spoke",
+          "No fewer copyists, all paid for by his patron Ambrose"
+        ],
+        "checker_note": "Second line was 'As many copyists too, all paid for by his friend Ambrose'. Now Eusebius's own 'no fewer', and 'patron' as the trait and the circle call him (so no one takes him for Ambrose of Milan)."
+      },
+      {
+        "n": "6",
+        "chip": "Columns in his Hexapla",
+        "evidence": "Britannica (britannica-origen.txt line 421): 'The Hexapla was a synopsis of Old Testament versions: the Hebrew and a transliteration, the Septuagint ..., the versions of Aquila, Symmachus, and Theodotion ... The purpose of the Hexapla was to provide a secure basis for debate with rabbis to whom the Hebrew alone was authoritative.' Hebrew + transliteration + four Greek versions = six. Eusebius 6.16 (line ~1992) for the Hexapla itself. The Hebrew 'in Greek letters' (Britannica says only 'a transliteration'): ANF 4, introductory note to Origen (sources/people/origen/anf04-origen-introductory-note.txt lines 593-594): 'In the first was placed the current Hebrew text; in the second, the same represented in Greek letters'; also Benedict XVI, audience of 25 April 2007 (benedict-xvi-audience-2007-04-25.txt line 110): 'the Hebrew text transliterated into Greek characters, and then four different translations in Greek'."
+      }
+    ],
+    "removed": [
+      {
+        "n": "18",
+        "why": "Told three times already, once directly above in the path bar ('Head of the Alexandrian school at 18')."
+      },
+      {
+        "n": "69",
+        "why": "Told in the Died fact beside the tile and in How he died; an age at death, nothing more."
+      }
+    ],
+    "tidbits": [
+      {
+        "text": "The boy's questions, and his father kissing his chest",
+        "evidence": "Eusebius, Church History 6.2.9-11 (eusebius-church-history-book6.txt lines 133-147): 'he puzzled his father with inquiries for the true meaning of the inspired Scriptures' ... 'And they say that often, standing by the boy when asleep, he uncovered his breast as if the Divine Spirit were enshrined within it, and kissed it reverently'. Not elsewhere on the page (Grew up has only the daily recitation, 6.2.8).",
+        "text_now": "As a boy he puzzled his father with questions about the deeper meaning of Scripture. The story went that his father would stand over the sleeping boy, bare his chest and kiss it, as if the Spirit of God lived there.",
+        "checker_note": "Eusebius gives the kiss as hearsay ('And they say that often ...'), so the line now says 'The story went', not a flat statement."
+      },
+      {
+        "text": "Jerome: on the Song of Songs he outdid himself",
+        "evidence": "Jerome, Preface to the Translation of Origen's Two Homilies on the Song of Songs, NPNF 2.6 (jerome-preface-origen-song-of-songs-npnf206.txt line 28-29): 'Origen, whilst in his other books he has surpassed all others, has in the Song of Songs surpassed himself. He wrote ten volumes upon it'. Free copy: https://ccel.org/ccel/schaff/npnf206.vii.ii.ii.html (checked 2026-09-25)."
+      },
+      {
+        "text": "Every philosopher and poet, except the atheists",
+        "evidence": "Gregory Thaumaturgus, Oration and Panegyric Addressed to Origen, Argument 13 (gregory-thaumaturgus-panegyric-on-origen-anf06.txt lines 1270-1280): 'he deemed it right for us to study philosophy in such wise, that we should read with utmost diligence all that has been written, both by the philosophers and by the poets of old, rejecting nothing ... except only the productions of the atheists, who ... deny that there is either a God or a providence. From these he would have us abstain, because they are not worthy of being read'."
+      }
+    ],
+    "pictures": [
+      {
+        "file": "site/public/img/saints/origen-3.jpg (800 x 1053, the statue, its niche and the name plaque cropped from the 1920px Commons rendering; the lower torture scene left out, since origen-4 shows it)",
+        "title": "Kerkvader Origenes. Origenes, Ouderling en Catechist t'Alexandriën. Word te Tyrus wreedelyk gepynigd",
+        "artist": "Jan Luyken and Zacharias Chatelain (II), after a drawing by Jan Goeree; verse by François Halma",
+        "date": "1698 (for W. Cave's Apostolische oudheden, Utrecht: François Halma, part II p. 254)",
+        "collection": "Rijksmuseum, Amsterdam, RP-P-1896-A-19368-1275",
+        "page": "https://commons.wikimedia.org/wiki/File:Kerkvader_Origenes_Origenes,_Ouderling_en_Catechist_t%27Alexandri%C3%ABn._Word_te_Tyrus_wreedelyk_gepynigd_(titel_op_object),_RP-P-1896-A-19368-1275.jpg",
+        "licence": "CC0 (Commons template CC-zero; LicenseShortName 'CC0'; Rijksmuseum: 'Publiek domein'; checked 2026-09-25)",
+        "note": "Rijksmuseum description: 'De kerkvader Origenes toont een engel een portretmedaillon.' The medallion reads 'IVLIA MAMEA AVG.' and the scroll 'Adamantius.' A different work from the band (Thevet, 1584) and the portrait (Luyken's 1700 etching of Origen teaching).",
+        "caption_note": "Caption and alt now spell her 'Mammaea', as the page's moment 'Sent for by the emperor's mother' does (Eusebius 6.21 in McGiffert's translation); the medallion itself reads 'IVLIA MAMEA AVG.'"
+      },
+      {
+        "file": "site/public/img/saints/origen-4.jpg (800 x 629, the plate with its margin trimmed, from the 1920px Commons rendering)",
+        "title": "Origenes in de gevangenis met vuur gepijnigd (Origen tortured with fire in prison)",
+        "artist": "Jan Luyken, after his own design",
+        "date": "1685 (for Tieleman Jansz. van Braght, Het bloedig tooneel, of Martelaers spiegel der doops-gesinde of weereloose christenen, Amsterdam 1685, part I, p. 88)",
+        "collection": "Rijksmuseum, Amsterdam, RP-P-OB-44.238",
+        "page": "https://commons.wikimedia.org/wiki/File:Origenes_in_de_gevangenis_met_vuur_gepijnigd,_RP-P-OB-44.238.jpg",
+        "licence": "CC0 (Commons template CC-zero; LicenseShortName 'CC0'; Rijksmuseum: 'Publiek domein'; checked 2026-09-25)",
+        "note": "Catalogue record names the subject: 'Wie: Origenes'. The scene matches Eusebius 6.39 (iron collar, feet stretched in the stocks, threatened with fire), which How he died retells.",
+        "caption_note": "Caption's last sentence rewritten without the comma stack: 'In prison under Decius, he is chained with his feet in the stocks and threatened with fire.'"
+      }
+    ],
+    "checker_2026_09_25": {
+      "by": "independent checker, against the sources in sources/people/origen/ and the Commons and Rijksmuseum records",
+      "confirmed": "Every kept number and all three tidbits read against the source lines cited above; both pictures CC0 on Commons (LicenseShortName 'CC0', Rijksmuseum 'Publiek domein'), both catalogued as Origen, both different works from the band (Thevet, 1584) and the portrait (Luyken, 1700, RP-P-OB-44.790). origen-4 keeps the plate's pencilled collector's number '29' and Luyken's signature below the image line.",
+      "fixed": [
+        "7+ tile, second line (see its checker_note)",
+        "Tidbit 1 now tells the kiss as a story (see its checker_note)",
+        "Gallery: 'Mammaea' spelled as on the rest of the page; origen-4 caption without the comma stack",
+        "Hexapla tile: evidence for 'in Greek letters' added"
+      ],
+      "measure_after": "facts 1147, numbers 1141, pictures 1124, sheetTallerThanFacts 0; phone gallery hidden"
+    }
   }
 }

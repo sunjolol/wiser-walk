@@ -2106,5 +2106,85 @@
   "Clark: DeGregorio's review says Clark held the Dialogues 'albeit not by Gregory, nevertheless contain a significant amount of genuine Gregorian material' (about 25%). 'Not Gregory's at all' overstated it; reworded.",
   "Theoprobus (ch 17): 'admonitione conversus' means turned to God (a devout life) at Benedict's urging, not necessarily brought to the Christian faith. Reworded.",
   "In art: the white-bearded monk with a scroll is one fresco (Peć), so the page says so rather than 'In the East'."
- ]
+ ],
+ "owner_notes_2026_09_25": {
+  "what": "The owner's notes on Irenaeus, applied here. Eight number tiles became three, rewritten so each chip says what is counted: 3 (years alone in a cave), 12 (monasteries he built), 150 (psalms sung each week). Removed: 'Raised the dead 2' (the Miracles section's dark panel is the same number, '2 raised from the dead'); 'Rule chapters 73' (already under Wrote and in the lede of His Rule); 'Wine a day 1' (a hemina, an obscure unit; the wine line itself is quoted under His words); 'Rule read aloud 3' (the same facts are the Newcomers panel of His Rule); 'Patron of Europe 1964' (a year dressed up as a number, and told under Patron of, Is he a saint? and How he died). Four 'Did you know?' lines added. No picture added: the pictures column (portrait and personality box) ends 137px above the facts, less than any picture with its caption. Traits: two desktop rows swapped so the taller sits left ('hard to rattle' 274 before 'calm under attack' 200; 'gave the credit away' 200 before 'moderate on purpose' 176, the row above the lone 'ran from praise').",
+  "numbers": [
+   {
+    "n": "3",
+    "chip": "Years alone in a cave",
+    "evidence": "Dialogues, Book 2, chapter 1 (sources/people/benedict-of-nursia/gregory-dialogues-book2-pw1608-gardner1911.txt line 186): 'lived there in a strait cave, where he continued three years unknown to all men, except to Romanus'. Romanus fed him: the same chapter (the loaves let down on a rope, told in His life)."
+   },
+   {
+    "n": "12",
+    "chip": "Monasteries he built",
+    "evidence": "Dialogues, Book 2, chapter 3 (line 441): 'he built there twelve Abbeys; over which he appointed governors, and in each of them placed twelve monks'. At Subiaco, before he went to Monte Cassino (chapter 8)."
+   },
+   {
+    "n": "150",
+    "chip": "Psalms sung each week",
+    "evidence": "Rule, chapter 18, tr. Verheyen (rule-verheyen-ccel.txt line 872): 'those monks show too lax a service in their devotion who in the course of a week chant less than the whole Psalter with is customary canticles; since we read, that our holy forefathers promptly fulfilled in one day what we lukewarm monks should, please God, perform at least in a week.'",
+    "lines": [
+     "Any order will do, if all are sung",
+     "The old monks sang them all in a day"
+    ],
+    "checker": "Lines changed 2026-09-25 by the checker: 'The whole Psalter, every week' only repeated the chip. Rule, chapter 18 (rule-verheyen-ccel.txt lines 867 to 877): 'if this distribution of the psalms should perchance displease anyone, he arrange them if he thinketh another better, by all means seeing to it that the whole Psalter of one hundred and fifty psalms be said every week ... since we read, that our holy forefathers promptly fulfilled in one day what we lukewarm monks should, please God, perform at least in a week.'"
+   }
+  ],
+  "numbers_removed": [
+   {
+    "n": "2",
+    "why": "Raised the dead: the same number heads the Miracles section's dark panel."
+   },
+   {
+    "n": "73",
+    "why": "Rule chapters: told under Wrote and in the lede of His Rule."
+   },
+   {
+    "n": "1",
+    "why": "A hemina of wine a day: an obscure unit; the wine line is quoted under His words."
+   },
+   {
+    "n": "3",
+    "why": "Readings of the Rule to a newcomer: the Newcomers panel of His Rule tells it; a second 3 beside the cave's."
+   },
+   {
+    "n": "1964",
+    "why": "A year, not a count; told under Patron of, Is he a saint? and How he died."
+   }
+  ],
+  "tidbits": [
+   {
+    "text": "Joseph Ratzinger became Pope in 2005 and took the name Benedict ...",
+    "evidence": "Benedict XVI, General Audience, 27 April 2005 (fetched 2026-09-25 to sources/people/benedict-of-nursia/vatican-benedict-xvi-general-audience-2005-04-27.txt, from https://www.vatican.va/content/benedict-xvi/en/audiences/2005/documents/hf_ben-xvi_aud_20050427.html), line 76: 'I wanted to be called Benedict XVI in order to create a spiritual bond with Benedict XV, who steered the Church through the period of turmoil caused by the First World War. He was a courageous and authentic prophet of peace'; line 78: 'The name \"Benedict\" also calls to mind the extraordinary figure of the great \"Patriarch of Western Monasticism\", St Benedict of Norcia ... he is a fundamental reference point for European unity and a powerful reminder of the indispensable Christian roots of his culture and civilization.' Paraphrased, no quotation marks (the Vatican's text is not public domain).",
+    "url": "https://www.vatican.va/content/benedict-xvi/en/audiences/2005/documents/hf_ben-xvi_aud_20050427.html"
+   },
+   {
+    "text": "His monks sleep in their clothes, belted ...",
+    "evidence": "Rule, chapter 22, tr. Verheyen (rule-verheyen-ccel.txt line 938): 'Let them sleep clothed and girded with cinctures or cords, that they may be always ready; but let them not have knives at their sides whilst they sleep, lest perchance the sleeping be wounded in their dreams; and the sign having been given, rising without delay, let them hasten to outstrip each other to the Work of God'. CCEL page rule.xxiv.html is Chapter XXII (checked: its neighbours are XXI and XXIII).",
+    "url": "https://ccel.org/ccel/benedict/rule/rule.xxiv.html"
+   },
+   {
+    "text": "In Lent each monk gets a book from the library ...",
+    "evidence": "Rule, chapter 48 (line 1538): 'During these days of Lent let all receive books from the library, and let them read them through in order. These books are to be given out at the beginning of the Lenten season. Above all, let one or two of the seniors be appointed to go about the monastery during the time that the brethren devote to reading and take notice, lest perhaps a slothful brother be found who giveth himself up to idleness or vain talk, and doth not attend to his reading'. CCEL rule.l.html is Chapter XLVIII.",
+    "url": "https://ccel.org/ccel/benedict/rule/rule.l.html"
+   },
+   {
+    "text": "The monk in charge of the stores must treat every pot and possession ...",
+    "evidence": "Rule, chapter 31, 'The Kind of Man the Cellarer of the Monastery Ought to Be' (line 1104): 'Let him regard all the vessels of the monastery and all its substance, as if they were sacred vessels of the altar.' CCEL rule.xxxiii.html is Chapter XXXI.",
+    "url": "https://ccel.org/ccel/benedict/rule/rule.xxxiii.html"
+   }
+  ],
+  "tidbits_left_out": [
+   "Rule, chapter 39: a pound of bread a day, two cooked dishes so that one who cannot eat one may eat the other, no meat of four-footed animals except for the sick (no room)."
+  ],
+  "verify_quotes_note": "In this worktree verify-quotes reports 5 'source file missing' for the kin quotes (gregory-sources/figures-bible/raw/npnf211.txt, bsb-berean-standard-bible.txt, oak-sources/gregory/catena-matt11.txt): those gitignored files exist only in the main checkout. The same 5 appear for the committed version (HEAD). Run with them present (a scratch copy of the tool, 2026-09-25): 'benedict-of-nursia: 90 quotations printed, 89 evidence entries, all word for word'.",
+  "checker_2026_09_25": {
+   "by": "Independent checker, after the builder",
+   "checked": "Every number and tidbit re-read against the fetched texts: Dialogues Book 2 chapters 1 and 3 (gregory-dialogues-book2-pw1608-gardner1911.txt lines 187 and 441); Rule chapters 18, 22, 31 and 48 (rule-verheyen-ccel.txt lines 867 to 877, 938 to 941, 1104 to 1105, 1537 to 1550); the General Audience of 27 April 2005 (vatican-benedict-xvi-general-audience-2005-04-27.txt lines 76 and 78). All four tidbits hold as written, and none repeats the page. The removed tiles are right to go.",
+   "fixed": [
+    "Number 150: the lines (see its 'checker' note)."
+   ]
+  }
+ }
 }

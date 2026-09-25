@@ -1291,5 +1291,90 @@
   "fails": [],
   "verified_items": 113,
   "items_with_verified_flag": 114
+ },
+ "owner_notes_2026_09_25": {
+  "what": "The owner's notes on Irenaeus, applied here. Removed: 'Greeks he translated 7' (the king's list is already quoted whole under What others said, and 'Several of these are lost' left the tile unfinished); 'Poems in his prison book 39' (our own count of James's headings, a number forced into a cell; the book's prose and poems in turn are told in the lede of His prison book). Kept and rewritten so each tile finishes its thought: 2 (sons made consul together) and 500 (miles from his judges). Four 'Did you know?' lines added. One picture added for wide screens. Traits swapped within both desktop rows so the taller sits left: 'honest about what he did not know' (330) before 'no friend to the powerful' (250); 'a lover of music' (244) before 'wrote for the few' (176).",
+  "numbers": [
+   {
+    "n": "2",
+    "chip": "Sons made consul together",
+    "evidence": "Consolation, Book 2, prose 3 (sources/people/boethius/james-b2-prose3.txt line 32): 'That day when thou didst see thy two sons ride forth from home joint consuls, followed by a train of senators ... when these two sat in curule chairs in the Senate-house, and thou by thy panegyric on the king didst earn the fame of eloquence and ability'. The year: James, Proem (raw-gutenberg-14328-james.txt line 151): 'His felicity seemed to culminate in the year 522 A.D., when ... his two sons, young as they were for so exalted an honour, were created joint Consuls ... Boethius himself, amid the general applause, delivered the public speech in the King's honour usual on such occasions.'",
+    "lines": [
+     "In 522, though both were young",
+     "He gave the speech praising the king that day"
+    ],
+    "checker": "First line changed 2026-09-25 by the checker from 'Both in the same year, 522', which only repeated the chip's 'together'. 'Though both were young' is James, Proem (raw-gutenberg-14328-james.txt line 151): 'his two sons, young as they were for so exalted an honour, were created joint Consuls'."
+   },
+   {
+    "n": "500",
+    "chip": "Miles from his judges",
+    "evidence": "Consolation, Book 1, prose 4 (james-b1-prose4.txt line 128): 'Now for my too great zeal towards the senate I have been condemned to outlawry and death, unheard and undefended, at a distance of near five hundred miles away. Oh, my judges, well do ye deserve ...' (the quotation is in boethius.quotes.json). James's note C (raw-gutenberg-14328-james.txt line 728): 'The distance from Rome to Pavia, the place of Boethius' imprisonment, is 455 Roman miles.'",
+    "lines": [
+     "Condemned “unheard and undefended”",
+     "“Near five hundred miles away”, he says"
+    ],
+    "src": "Consolation, Book 1, prose 4",
+    "checker": "Lines changed 2026-09-25 by the checker. The builder's 'Judged at Rome, held near Pavia' put James's reading in our own voice, and it disagrees with the sixth-century chronicle: Anonymus Valesianus, section 87 (rolfe-valesianus2.txt line 207): 'the king summoned Eusebius, prefect of the city, to Ticinum, and pronounced sentence on Boethius without giving him a hearing.' It also dropped Boethius's own 'near': the tile printed a round 500 as exact, where James's note C gives 455 Roman miles. Both lines are now his words, inside his sentence already in boethius.quotes.json ('... unheard and undefended, at a distance of near five hundred miles away.'); verify-quotes matches them to it."
+   }
+  ],
+  "numbers_removed": [
+   {
+    "n": "7",
+    "why": "Theodoric's list of Greek authors is already quoted in full under What others said; the tile added only 'Several of these are lost'."
+   },
+   {
+    "n": "39",
+    "why": "Our own count of poems and prose sections: a number forced into a cell."
+   }
+  ],
+  "tidbits": [
+   {
+    "text": "A geometry book under his name shows Hindu-Arabic numerals, zero and all ...",
+    "evidence": "D. E. Smith and L. C. Karpinski, The Hindu-Arabic Numerals (Boston, 1911), Project Gutenberg 22599 (fetched 2026-09-25 to sources/people/boethius/gutenberg-22599-smith-karpinski-hindu-arabic-numerals.txt). Line 1829: 'The genuineness of the arithmetic and the treatise on music is generally recognized, but the geometry, which contains the Hindu numerals with the zero, is under suspicion. There are plenty of supporters of the idea that Boethius knew the numerals and included them in this book, and on the other hand there are as many who feel that the geometry, or at least the part mentioning the numerals, is spurious.' Line 1431: the forms 'which tradition has so persistently assigned to Boethius (c. 500 A.D.)'. Line 1901: 'there is no reliable evidence that he did know them'. Put together later: Orthodox Encyclopedia, 'Boethius' (pravenc-boethius.txt line 191): the geometry ascribed to him in Migne, PL 63, 'имеет более позднее происхождение (X-XI вв.), хотя, возможно, и содержит отдельные фрагменты утерянного текста Б.' (is of later origin, 10th to 11th century, though it may contain fragments of his lost text); Catholic Encyclopedia (catholic-encyclopedia-boethius.txt): 'considered to be a ninth- or tenth-century elaboration of a work of Boethius. How far the work is genuine ... on the answer to this question depends the determination of the date of the first use of Arabic numerals in Western Europe.'",
+    "url": "https://www.gutenberg.org/ebooks/22599"
+   },
+   {
+    "text": "Chaucer put his prison book into English, and so did Queen Elizabeth I. An Old English version is older still ...",
+    "evidence": "W. J. Sedgefield, King Alfred's Version of the Consolations of Boethius, done into modern English (Oxford, 1900), archive.org KingAlfredsfBoethius (Public Domain Mark), fetched 2026-09-25 to sources/people/boethius/archive-sedgefield-1900-king-alfreds-boethius.txt. Line 596: 'In England no less a poet than Geoffrey Chaucer made a prose translation. He was followed by nearly a dozen others in the following centuries, including Queen Elizabeth'. The Old English version's own prose preface, in Sedgefield's English, line 2726: 'King Alfred was the interpreter of this book, and turned it from book Latin into English'. Also Stanford Encyclopedia of Philosophy (sep-boethius.txt line 951): 'Chaucer, who translated it into Middle English'.",
+    "url": "https://archive.org/details/KingAlfredsfBoethius",
+    "checker": "Rewritten 2026-09-25 by the checker. The builder's 'King Alfred the Great put his prison book into Old English, adding thoughts of his own on a king's duty' stated Alfred's authorship in our own voice, from Cooper (1902) and the Catholic Encyclopedia (1907). Modern scholarship doubts it: Wikipedia, 'Old English Boethius' (checked 2026-09-25): 'The translation is attributed in one manuscript to King Alfred (r. 870-899), and this was long accepted, but the attribution is now considered doubtful.' The line now reports what the preface says, which is true either way, and drops the 'thoughts of his own' that hang on his authorship."
+   },
+   {
+    "text": "He taught that music comes in three kinds ...",
+    "evidence": "Orthodox Encyclopedia, 'Boethius' (pravenc-boethius.txt line 300): 'Б. пишет о 3 родах музыки - мировой (mundana - гармония космоса), человеческой (humana - гармония человеческого естества) и издаваемой к.-л. инструментами (in quibusdam constituta instrumentis; I 2).' In English: he writes of three kinds of music, of the world (the harmony of the cosmos), human (the harmony of human nature), and that made by instruments (De institutione musica 1.2).",
+    "url": "https://www.pravenc.ru/text/%D0%91%D0%BE%D1%8D%D1%86%D0%B8%D0%B9.html",
+    "checker": "'the harmony of the heavens' became 'the harmony of the universe' (2026-09-25, the checker): the Orthodox Encyclopedia's gloss is 'гармония космоса' (the harmony of the cosmos), and Boethius's musica mundana takes in the elements and the seasons as well as the heavens."
+   },
+   {
+    "text": "He took up a question the medieval schools argued over for centuries ...",
+    "evidence": "Orthodox Encyclopedia, 'Boethius' (pravenc-boethius.txt line 235): the problem of universals, 'оказавшейся впосл. фундаментальной философско-богословской проблемой' (which later proved a fundamental philosophical and theological problem): 'имеют ли роды и виды (общие понятия, универсалии) самостоятельное бытие или же образуются разумом' (whether genera and species have their own being or are formed by the mind); his conclusion that 'универсалии существуют в телесных и чувственно воспринимаемых вещах, но постигаются отдельно от чувственного' (universals exist in bodily and sensible things, but are grasped apart from the sensible), Comm. in Porphyr. I; he 'фактически только намечает проблему буд. споров реалистов и номиналистов' (only sketches the problem of the later disputes of realists and nominalists). Porphyry raised the question and declined it: SEP (sep-boethius.txt line 213). 'Took up', not 'asked', for that reason.",
+    "url": "https://www.pravenc.ru/text/%D0%91%D0%BE%D1%8D%D1%86%D0%B8%D0%B9.html",
+    "checker": "The last sentence changed 2026-09-25 by the checker from 'His answer: they exist in things, and the mind grasps them apart.' to 'His answer, following Aristotle: they exist in things, and the mind draws them out.' The Orthodox Encyclopedia (pravenc-boethius.txt line 235) says he concludes it relying on Aristotle's theory of generalising by abstraction, and following Aristotle and Porphyry in his conclusion; the mind singles out the common features of things. SEP (sep-boethius.txt lines 230 to 260) describes the same answer as abstraction. 'Following Aristotle' keeps the line from presenting it as a settled view of his own. 'Apart' alone left the sentence unfinished."
+   }
+  ],
+  "picture": {
+   "file": "site/public/img/saints/boethius-3.jpg (800 x 1327, the miniature cropped from the 1920px Commons rendering, parchment margins cut away)",
+   "title": "De consolatione philosophiae, Hs. 1335, f. 86bis v: Philosophia in discussie met Boethius op zijn ziektebed (Philosophy in discussion with Boethius on his sickbed)",
+   "artist": "Unknown illuminator; scribe A. Drubbel",
+   "date": "1470",
+   "place": "Bruges",
+   "collection": "Universiteitsbibliotheek Utrecht, Hs. 1335 (Hs 2 C 15 fol), https://hdl.handle.net/1874/325272",
+   "page": "https://commons.wikimedia.org/wiki/File:De_consolatione_philosophiae-UBU_Hs._1335-f.086bis_v-Philosophia_in_discussie_met_Boethius_op_zijn_ziektebed.jpg",
+   "licence": "Public domain: {{PD-old-100}} (read from the file page wikitext, 2026-09-25)",
+   "note": "A different work from the band (Getty MS 42, Coëtivy Master) and the portrait (Urbino studiolo). Other candidates seen: BnF Fr. 809 fol. 40r (Philosophy and the wheel of Fortune, 15th century, a photograph of a printed page, 2521 x 3545); the same Utrecht manuscript f. 14bis v (the wheel above, his sickbed below); BSB Clm 2599 f. 106v (about 1200, grey photograph). One fills the column: 154px left, less than one more picture.",
+   "checker": "Checked 2026-09-25: Commons wikitext {{PD-old-100}}, LicenseShortName 'Public domain'; the manuscript is dated 1470 (Bruges). The Commons category 'Boethius, De Consolatione Philosophiae - UBU Ms. 1335' holds its three miniatures: f. 14bis v (the wheel of Fortune; Boethius on his sickbed), f. 86bis v (this one) and f. 178bis v (Philosophy with Boethius, well again). So this is not the book's opening scene: the builder's caption 'Philosophy comes to his bed, as his book begins' became 'Philosophy talks with him at his sickbed, in a copy of his book made at Bruges in 1470', after the library's own title. The Pictures source entry now gives that title in English. File on disk 800 x 1327."
+  },
+  "checker_2026_09_25": {
+   "by": "Independent checker, after the builder",
+   "checked": "Every number and tidbit re-read against the fetched texts (Consolation Book 1 prose 4 and Book 2 prose 3; James's Proem and note C; Smith and Karpinski lines 1829 and 1901 to 1905; the Orthodox Encyclopedia lines 235 and 300; SEP lines 205 to 262 and 951; Cooper's introduction lines 4300 to 4325; Sedgefield 1900).",
+   "fixed": [
+    "Number 2: first line (see its 'checker' note).",
+    "Number 500: lines and source (see its 'checker' note).",
+    "Tidbit 2 rewritten: Alfred's authorship is now doubted (see its 'checker' note).",
+    "Tidbit 3: 'heavens' became 'universe'.",
+    "Tidbit 4: 'His answer, following Aristotle ... draws them out'.",
+    "The picture's caption and its source entry (see the picture's 'checker' note)."
+   ]
+  }
  }
 }

@@ -1533,5 +1533,82 @@
   "Rule of St Benedict 42 (Verheyen): \"let one read the Conferences or the Lives of the Fathers, or something else that will edify\"; \"the four or five pages\". The number lines no longer say all 4 or 5 pages were from the Conferences.",
   "Conference 11.4: Chaeremon was the oldest of the three (Chaeremon, Nesteros, Joseph), not the oldest abbot Cassian met; the chip is now \"Chaeremon's age\".",
   "Band picture (Gallica, BnF Grec 923 fol. 30r) is not on Commons. It is a flat scan of a 9th-century page (PD-Art), but Gallica's own terms ask a fee for commercial reuse: the owner should know."
- ]
+ ],
+ "owner_notes_2026_09_25": {
+  "what": "The owner's notes on Irenaeus, applied here: numbers that make sense on their own, 'Did you know?' to fill the dark column, one more picture for wide screens. Removed: 'Chaeremon's age 100+' (about someone else, the kind of tile he called random on Irenaeus's page); 'Each evening 4 or 5' (a page count standing in for the real fact, that Benedict's Rule names the Conferences for evening reading: that is now a tidbit); 'Feast day 1 in 4' (the leap day is already told twice on the page, in the feast days with 'Why a leap day?' and in Often misquoted; with three tidbits it pushed the column 190px past the facts). Kept and rewritten so each chip says what is counted: 7 and 24. Three tidbits added. One picture added (the Nuremberg Chronicle woodcut). Traits left as they were: both desktop rows already have the taller (or equal) trait on the left.",
+  "numbers": [
+   {
+    "n": "7",
+    "chip": "Years in Egypt, first stay",
+    "evidence": "Conference 17, chapter 30 (sources/people/john-cassian/newadvent-conference17.txt line 206): 'though henceforward we were but a little anxious about our promise, yet when seven years were over we were very glad to fulfil it. For we hastened to our monastery ... and returned to the recesses of the desert of Scete, as they themselves forwarded us with joy.' The promise to come back soon: Conference 17, chapter 2 (line 36 onward, Germanus's anxiety over 'our promise'); Catholic Encyclopedia, 'John Cassian' (newadvent-cathen-03404a.txt): 'the friends promised to return as soon as possible ... they did not see Bethlehem again for seven years.'",
+    "lines": [
+     "They had promised to be back at Bethlehem soon",
+     "Then they went home, and came back to the desert"
+    ]
+   },
+   {
+    "n": "24",
+    "chip": "Conferences he wrote down",
+    "evidence": "Conference 24, chapter 1 (newadvent-conference24.txt line 30): 'as the number mystically corresponds to that of the four and twenty Elders who are said in the holy Apocalypse Revelation 4:4 to offer their crowns to the Lamb'. Fifteen abbots: the count in this file's numbers block (verified 2026-09-24)."
+   }
+  ],
+  "numbers_removed": [
+   {
+    "n": "1 in 4",
+    "why": "Already told in the feast days (both dates and the note 'Why a leap day?') and in Often misquoted (the folk tale); no room beside three tidbits."
+   },
+   {
+    "n": "100+",
+    "why": "Chaeremon's age: about another man, not Cassian."
+   },
+   {
+    "n": "4 or 5",
+    "why": "A page count from Benedict's Rule, chapter 42; the fact worth telling (the Rule names the Conferences) is now a tidbit."
+   }
+  ],
+  "tidbits": [
+   {
+    "text": "The seven deadly sins were once eight. Cassian was one of the early writers who counted eight ...",
+    "evidence": "Catholic Encyclopedia (1912), 'Sin' (fetched 2026-09-25 to sources/people/john-cassian/newadvent-cathen-14004b-sin.txt, line 55): 'These are enumerated by St. Thomas (I-II:84:4) as vainglory (pride), avarice, gluttony, lust, sloth, envy, anger. ... Earlier writers had distinguished eight capital sins: so St. Cyprian (De mort., iv); Cassian (Institutes 5, Conferences 5); Columbanus ...; Alcuin .... The number seven, however, had been given by St. Gregory the Great (Lib. mor. in Job. XXXI, xvii), and it was retained by the foremost theologians of the Middle Ages.' 'One of the early lists' because the Encyclopedia names others (Cyprian, Columbanus, Alcuin). The eight in the Institutes: Catholic Encyclopedia, 'John Cassian': 'the eight remaining books are devoted to the eight principal obstacles to perfection'.",
+    "url": "https://www.newadvent.org/cathen/14004b.htm",
+    "checker": "Reworded 2026-09-25 by the checker so each sentence sits on the Encyclopedia's words: 'Cassian was one of the early writers who counted eight' is its 'Earlier writers had distinguished eight capital sins: so St. Cyprian ...; Cassian ...; Columbanus ...; Alcuin'; 'The number seven comes from Gregory the Great, and the great teachers of the Middle Ages kept it' is 'The number seven, however, had been given by St. Gregory the Great ..., and it was retained by the foremost theologians of the Middle Ages.' The builder's 'kept his number' could be read as Cassian's number, and 'His Institutes are one of the early lists of eight' repeated The eight faults section."
+   },
+   {
+    "text": "A century later, Benedict's Rule named the Conferences first ...",
+    "evidence": "Rule of St Benedict, tr. Verheyen (sources/people/john-cassian/benedict-rule-verheyen-ccel.txt). Chapter 42, line 1368: 'as soon as they have risen from their evening meal, let all sit together in one place, and let one read the Conferences or the Lives of the Fathers, or something else that will edify the hearers' ... 'All, therefore, having assembled in one place, let them say Complin'. Chapter 16, line 780: the day hours are 'Lauds, Prime, Tierce, Sext, None, Vespers, and Complin', and 'let us rise at night': eight in all. Chapter 17, line 800: at Prime 'the hymn for the same Hour be said after the verse Deus, in adjutorium (Ps 69[70]:2)', and Tierce, Sext and None 'in the same order; namely, the verse, the hymn'; chapter 18, line 827: 'In the beginning let there be said the verse, Deus, in adjutorium meum intende; Domine, ad adjuvandum me festina (Ps 69[70]:2), and the Gloria, followed by the hymn for each Hour', in the chapter that orders Prime to Complin. The night office (chapter 9) and Lauds (chapters 12 and 13) are ordered differently: hence six of eight. Abba Isaac's verse: Conference 10, chapter 10 ('O God, make speed to save me: O Lord, make haste to help me', already verified in john-cassian.quotes.json). That the Rule's 'Conferences' are Cassian's: Catholic Encyclopedia, 'John Cassian': 'St. Benedict made use of Cassian in writing his Rule, and ordered selections from the \"Conferences\" ... to be read daily in his monasteries.' 'A century later': the Conferences about 420 to 428 (this page), the Rule written at Monte Cassino from about 529 (Benedict's page).",
+    "url": "https://ccel.org/ccel/benedict/rule/rule.xliv.html",
+    "checker": "Changed 2026-09-25 by the checker: 'Six of its eight hours of prayer a day open with the verse' became 'The Rule also opens most of its hours of prayer with the verse'. The count of six was our own reading. Chapter 18 opens with the verse 'followed by the hymn for each Hour' (line 827), which can be read to cover Lauds as well (seven of eight); chapter 17 gives it for Prime, Tierce, Sext and None; the night office opens otherwise (chapter 9). 'Most' holds on either reading. The Rule does not name Cassian as the verse's source, and the tidbit does not say it does: it says only that the verse is the one Abba Isaac taught him (Conference 10, chapter 10)."
+   },
+   {
+    "text": "Early in his desert years, restlessness drove him out of his cell ...",
+    "evidence": "Institutes, Book 10, chapter 25 (newadvent-institutes-book10.txt line 170): 'When I was beginning my stay in the desert, and had said to Abbot Moses, the chief of all the saints, that I had been terribly troubled yesterday by an attack of accidie, and that I could only be freed from it by running at once to Abbot Paul, he said, You have not freed yourself from it, but rather have given yourself up to it as its slave and subject. For the enemy will henceforth attack you more strongly as a deserter and runaway'.",
+    "url": "https://www.newadvent.org/fathers/350710.htm"
+   }
+  ],
+  "tidbits_left_out": [
+   "Institutes 2.5-6: the one who sang twelve psalms and vanished, taken for an angel (it fits the column only in place of another; kept here for later).",
+   "Institutes 10.24: Abba Paul burned a year's palm-leaf work each year. Institutes 4.24: Abba John watered a dry stick for a year. Both about other monks."
+  ],
+  "picture": {
+   "file": "site/public/img/saints/john-cassian-3.jpg (776 x 1105, cropped to the one print from the 1576 x 1873 Commons original; not enlarged)",
+   "title": "Johannes Cassianus. Cassianus (titel op object). Liber Chronicarum (serietitel)",
+   "artist": "Workshop of Michael Wolgemut and workshop of Wilhelm Pleydenwurff (Rijksmuseum record: 'Michel Wolgemut (atelier van)', 'Wilhelm Pleydenwurff (atelier van)')",
+   "date": "1493",
+   "collection": "Rijksmuseum, Amsterdam, RP-P-2016-49-82-3 (a woodcut cut from the book and pasted in an album)",
+   "page": "https://commons.wikimedia.org/wiki/File:Johannes_Cassianus_Cassianus_(titel_op_object)_Liber_Chronicarum_(serietitel),_RP-P-2016-49-82-3.jpg",
+   "museum": "https://hdl.handle.net/10934/RM0001.COLLECT.615162",
+   "licence": "CC0 (Commons LicenseShortName 'CC0', UsageTerms 'Creative Commons Zero, Public Domain Dedication'; Rijksmuseum 'Copyright: Publiek domein'; checked 2026-09-25)",
+   "identity": "The print is lettered 'Cassianus'. Rijksmuseum: 'De tekst identificeert hem als Johannes Cassianus'; 'Wie: Johannes Cassianus'. He has no halo, where the saints printed beside him in the album have one: consistent with John Cassian, not the martyr Cassian of Imola.",
+   "note": "The Rijksmuseum says the block was used repeatedly in the Chronicle (Latin edition, folio 135r for this one): the caption says so. It is not a likeness; no picture of him is. Alternatives checked: Sadeler after de Vos, 'Johannes Cassianus als kluizenaar' (Rijksmuseum RP-P-1890-A-16000, CC0, 1583 to 1588): lettered only 'IOANNES', the name Cassian is the museum's reading; left out because the print itself does not settle it. The Menaion Reader figure (582 x 1661) is too tall for the column."
+  },
+  "checker_2026_09_25": {
+   "by": "Independent checker, after the builder",
+   "checked": "Every number and tidbit re-read against the fetched texts: Conference 17 chapter 30 (newadvent-conference17.txt line 206, 'when seven years were over we were very glad to fulfil it'); Conference 24 chapter 1 (newadvent-conference24.txt line 30); the fifteen abbots (this file's numbers block); Catholic Encyclopedia 'Sin' (newadvent-cathen-14004b-sin.txt line 55); Rule chapters 16 to 18 and 42 (benedict-rule-verheyen-ccel.txt lines 780 to 830 and 1368); Institutes Book 10 chapter 25 (newadvent-institutes-book10.txt line 170). The picture: Commons wikitext {{CC-zero}}, LicenseShortName 'CC0'; the Rijksmuseum record (in the Commons description): 'De tekst identificeert hem als Johannes Cassianus', 'Wie: Johannes Cassianus', 'De houtsnede wordt herhaaldelijk gebruikt als boekillustratie in de Liber Chronicarum' (the block is used repeatedly), 'Copyright: Publiek domein'. The file on disk is 776 x 1105, the print cut from the 1576 x 1873 album page at its own size, not enlarged.",
+   "fixed": [
+    "Number 7, first line: 'They had promised Bethlehem to be back soon' (the promise was to their elders) became 'They had promised to be back at Bethlehem soon'.",
+    "Tidbit 1 reworded to follow the Catholic Encyclopedia's sentence (see its 'checker' note).",
+    "Tidbit 2: 'Six of its eight hours' became 'most of its hours' (see its 'checker' note)."
+   ]
+  }
+ }
 }

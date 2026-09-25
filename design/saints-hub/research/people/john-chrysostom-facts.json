@@ -1289,5 +1289,83 @@
    "Pictures: byzmuseum-exhibit53.txt, cranach-cda-1046.txt, aic-13612.json"
   ],
   "note": "Gitignored folder. The Moore, Allen and NPNF texts are public domain; the modern pages (Britannica, OCA, etc.) are kept only for re-checking and must never be committed."
+ },
+ "owner_notes_2026_09_25": {
+  "what": "The owner's notes on Irenaeus, applied here: 'Years a priest 12' removed (it repeats the Priest line in 'His path, in order', and a length of service is not a number people care about); 'Years to come home 31' removed (a year dressed up as a count; the Buried fact and the feast note already tell it); 'Months on the march 3' removed to make room (the page tells it twice already: Palladius's quotation under What others said, and How he died). New tile: 3,000 widows and virgins fed. Chips rewritten to say what is counted. Three 'Did you know?' lines. One more picture for wide screens (a landscape etching: the column had about 260px free). Traits left as they were: row 1 is level (268/268) and row 2 already has the taller on the left (244/200).",
+  "numbers": [
+   {
+    "n": "600",
+    "chip": "Sermons that survive",
+    "evidence": "Kept as it was. Schaff, Prolegomena, NPNF 9 (sources/people/john-chrysostom/ccel-npnf109.txt): 'About six hundred Homilies and Commentaries'; Catholic Encyclopedia (cathen-chrysostom.txt line 64): 'the ninety homilies on \"St. Matthew\"'."
+   },
+   {
+    "n": "3,000",
+    "chip": "Widows and virgins supported (the builder's 'Widows and virgins his church fed' changed by the checker)",
+    "evidence": "Homilies on Matthew, Homily 66 (ccel-npnf110.txt lines 37674-37687; the homily heading is line 37390): 'when the church is possessed of a revenue of one of the lowest among the wealthy, and not of the very rich, consider how many widows it succors every day, how many virgins; for indeed the list of them hath already reached unto the number of three thousand ... So that if ten men only were thus willing to spend, there would be no poor.' Preached at Antioch: the Catholic Encyclopedia (cathen-chrysostom.txt line 64) dates the Matthew homilies 'about the year 390', when he was a priest at Antioch. Free copy: https://www.newadvent.org/fathers/200166.htm The NPNF preface to the Matthew homilies (ccel-npnf110.txt lines 167-169): 'The Homilies of St. Chrysostom on St. Matthew were undoubtedly delivered at Antioch'.",
+    "lines": [
+     "By the church at Antioch, he said",
+     "If ten rich men did as much, there would be no poor"
+    ]
+   },
+   {
+    "n": "17",
+    "chip": "Letters to Olympias",
+    "evidence": "Kept as it was. Catholic Encyclopedia (cathen-chrysostom.txt line 64): 'The \"Letters\" of Chrysostom (about 238 in number ...) were all written during his exile ... the seventeen letters to the deaconess Olympias.'"
+   },
+   {
+    "n": "2",
+    "chip": "Times he was exiled (was 'Times exiled')",
+    "evidence": "Kept; chip reworded. Palladius, Dialogue, chapters 9 to 11; Socrates, Church History, Book 6, chapters 16 and 18 (na-26016.txt)."
+   }
+  ],
+  "removed": [
+   "Years a priest, 12 (Palladius, chapter 5): repeats 'Priest: Preaching at Antioch, 386 to 398' in His path, in order.",
+   "Years to come home, 31: the count 407 to 438; the page's Buried fact and feast note give 438.",
+   "Months on the march, 3: removed for space; the same fact is Palladius's quotation under What others said and the first paragraph of How he died."
+  ],
+  "tidbits": [
+   {
+    "text": "Some people in his day called another bishop, Antiochus of Ptolemais, Chrysostom for his fine voice; in 404 he was one of four bishops who pressed the emperor to drive John out",
+    "evidence": "Sozomen, Church History, Book 8, chapter 10 (na-26028.txt line 80): 'Antiochus had so fine a voice and delivery that, by some persons, he was surnamed Chrysostom.' Same chapter: 'Severian and Antiochus, bishop of Ptolemaïs, a city in Phœnicia'. Free copy: https://www.newadvent.org/fathers/26028.htm Palladius, Dialogue, chapter 10 (palladius-dialogue-moore.txt lines 752-757; chapter heading line 744): 'The feast of Pentecost passed, and five days afterwards Acacius, Antiochus, Severianus, and Cyrinus came to the king, and said: ... we said to you publicly, Upon our heads be the deposition of John.' and the king's message: 'Acacius, Antiochus, Severianus, and Cyrinus have taken your condemnation upon their own heads. Commend, therefore, your affairs to God, and leave the Church.' Socrates, Book 6, chapter 11 (na-26016.txt line 82) also says of Severian and Antiochus: 'two bishops flourished at that time'."
+   },
+   {
+    "text": "He sat on the readers' platform in the middle of the crowd",
+    "evidence": "Sozomen, Church History, Book 8, chapter 5 (na-26028.txt line 58): 'As the people pressed around him, and could not get enough of his words, so that when they were pushed hither and yon, and were pressing one another, they incurred danger; ... he placed himself in the midst of them upon the platform of the readers, and, having taken a seat, taught the multitude.' The chapter opens 'John governed the church of Constantinople', so the tidbit says 'At Constantinople'."
+   },
+   {
+    "text": "Babies named after the lamp that burned longest",
+    "evidence": "Homilies on First Corinthians, Homily 12, section 13 (ccel-npnf112.txt lines 6267-6273; the homily heading is line 5665): 'For when the time is come for giving the infant a name, caring not to call it after the saints as the ancients at first did, they light lamps and give them names, and name the child after that one which continues burning the longest; from thence conjecturing that he will live a long time.' Free copy: https://www.newadvent.org/fathers/220112.htm"
+   }
+  ],
+  "tidbits_considered_not_used": [
+   "Socrates, Church History, Book 6, chapter 4 (na-26016.txt line 44): his sermons were 'noted down by short-hand writers as he delivered them'. Good, but no room.",
+   "Sozomen, Book 8, chapter 5: the bread that turned to stone in a woman's mouth at Communion, the stone kept in the church's treasury. A sign story; it would belong in 'Signs, as the historians tell them' if ever wanted.",
+   "Sozomen, Book 8, chapter 9: his advice to Olympias that giving to the rich was 'as useless as if you had cast it into the sea'.",
+   "Sozomen, Book 8, chapter 6: 'deposed thirteen bishops' in Asia. Palladius tells the Ephesus affair differently, so the count was not used."
+  ],
+  "picture": {
+   "file": "site/public/img/saints/john-chrysostom-3.jpg (800 x 520, cropped inside the plate from the 1920px Commons rendering: the plate border and some sky and foreground taken off, no figure cut)",
+   "title": "Johannes Chrysostomus in ballingschap gestuurd (John Chrysostom sent into exile)",
+   "artist": "Jan Luyken (named on the object)",
+   "date": "1701; a proof of a book illustration for Gottfried Arnold, Waare afbeelding der eerste christenen, Amsterdam, 1700, part 2",
+   "collection": "Rijksmuseum, Amsterdam, RP-P-OB-44.846 (catalogue: 'Enkele soldaten begeleiden de H. Johannes Chrysostomus naar zijn ballingsoord')",
+   "page": "https://commons.wikimedia.org/wiki/File:Johannes_Chrysostomus_in_ballingschap_gestuurd,_RP-P-OB-44.846.jpg",
+   "museum": "http://hdl.handle.net/10934/RM0001.COLLECT.145309",
+   "licence": "CC0 (Commons licence template {{CC-zero}}, LicenseShortName 'CC0', checked 2026-09-25; the Rijksmuseum record says 'Copyright: Publiek domein')",
+   "why": "A different work from the band (Cranach workshop panel) and the portrait (Kimolos icon); same maker and style as Irenaeus's new picture. Landscape, because the column had about 260px to spare. Rejected: the Menologion of Basil II miniature of him riding into exile (Commons, PD) because the scan carries a visible Vatican Library watermark; the Menologion miniature of his relics (no picture of him, and the portrait already shows the relics' journey)."
+  },
+  "checker_2026_09_25": {
+   "by": "independent checker",
+   "fixed": [
+    "Tidbit 1 said 'He was not the only Golden Mouth of his day', which reads as if John was already called Chrysostom in his lifetime; the page's own 'who' says his sermons 'later earned him the name' and the Also called fact says the name is first found in writing in 553. Reworded so it claims only what Sozomen says (some people called Antiochus Chrysostom), and made worth telling with Palladius: Antiochus was one of the four bishops who pressed the emperor to drive John out in 404 ('Upon our heads be the deposition of John'). Not 'the first Chrysostom': Dio of Prusa had the name centuries earlier.",
+    "Tidbit 3 said Christians 'once' named children after the saints; the homily says 'as the ancients at first did', which does not say who the ancients were. Now: 'He wanted children named after the saints instead.'",
+    "The 3,000 tile: 'his church fed' became 'Widows and virgins supported', 'By the church at Antioch, he said': he was a priest at Antioch, not its bishop, and the homily says the church 'succors' them, not only feeds them. 'If ten rich men gave as much' became 'did as much'.",
+    "Tidbit 2 now says the crowds were at Constantinople (Sozomen's chapter is about his time as archbishop). The three tidbits were then trimmed so the numbers column ends with the facts (measured 1193 against 1191 at 1360)."
+   ],
+   "checked_and_kept": [
+    "600 sermons, 17 letters to Olympias, 2 exiles: supported as the builder cited; they repeat the Wrote fact and the moments, as Irenaeus's tiles repeat his.",
+    "The picture: Commons API read 2026-09-25, LicenseShortName 'CC0', category 'Prints of John Chrysostom'; the file on disk is the Luyken etching of soldiers leading him away. Different from the band (Cranach workshop) and the portrait (Kimolos icon)."
+   ]
+  }
  }
 }
