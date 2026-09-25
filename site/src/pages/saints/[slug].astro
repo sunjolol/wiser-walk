@@ -128,7 +128,7 @@ const imageLd = {
   width: pic.width, height: pic.height,
   ...(LICENSE[pic.license] ? { license: LICENSE[pic.license] } : {}),
   ...(pic.creator ? { creator: { '@type': 'Person', name: pic.creator } } : {}),
-  creditText: pic.credit
+  ...(pic.credit ? { creditText: pic.credit } : {})
 };
 const org = { '@type': 'Organization', name: 'Wiser Walk', url: new URL('/', Astro.site).href };
 const jsonLd = {
@@ -175,7 +175,8 @@ const breadcrumbs = [
       <p class="sband-meta">{p.band.dates} · {p.band.where}</p>
       {p.status && <p class="sband-status">{p.status}</p>}
       <p class="sband-lede" set:html={rich(p.band.lede)} />
-      <p class="sband-credit">Picture: {pic.credit}</p>
+      {/* A band picture the owner supplied without a credit to print (Macrina's icon) has none. */}
+      {pic.credit && <p class="sband-credit">Picture: {pic.credit}</p>}
     </div>
   </section>
 

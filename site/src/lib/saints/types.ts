@@ -53,7 +53,11 @@ export interface Picture {
   alt: string;
   width: number;
   height: number;
-  /** What the picture is and who made it, printed as a caption or credit line. */
+  /**
+   * What the picture is and who made it, printed as a caption or credit line. Empty only for a
+   * picture the owner supplied and said needs no credit (Macrina's band icon, 2026-09-25): the
+   * band then prints no credit line.
+   */
   credit: string;
   /** Its page on Wikimedia Commons or the museum, for the sources list and the image's metadata. */
   page?: string;
