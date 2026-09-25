@@ -66,7 +66,26 @@ rules so they don't happen again". `site/scripts/quiz-page-test.mjs` (postbuild)
 9. **A special card among cards looks like its siblings**, marked only by an icon and a small tag.
 10. **No placeholder pictures** (a monogram where a face should be is "not acceptable").
 
-## NEXT SESSION STARTS HERE: POLYCARP IS LIVE (23 SAINT PAGES); HE BRINGS NOTES ON THE OTHER PAGES
+## NEXT SESSION STARTS HERE (2026-09-26): BIBLE FIGURE PAGES FIRST, THEN THE NEXT 12 SAINTS
+
+His notes on the saint pages are all done and live (main `b02b30a`): Chrysostom, Jerome and Cassian tiles that explain
+themselves; Boethius's band is Thevet's 1584 engraving and his page has "Who is Lady Philosophy?" (he had taken her for
+a real woman: she is Philosophy personified); Gregory's three new tidbits, "10k", "Love itself is knowledge."; Isaac's
+band and card are the modern icon he chose from Flickr (CC BY-SA 2.0, credited to the photographer, Ted: the licence
+requires the name; his call that it is fine to use). Every other saint page is approved with no notes.
+
+His order from here (his words: "enhance the Biblical figures pages first ... before diving into" the saints):
+1. **Bible figure pages** (`/figure/<slug>/`, 25 of them): they should become "a lightened version of the saints
+   pages, but more complete than ... now". The trigger: the hub's thumbnails show a personality type for 8 of them
+   (Moses, Gideon, Elijah, John the Baptist, Martha, Peter, Barnabas, Paul) that their pages never mention or explain.
+   The plan proposed to him (awaiting his go): Peter first as the exemplar, then the rest.
+2. **The next 12 saints** (researched, not built): `design/saints-hub/research/NEXT-12.md`. He wants to reach 40 (23
+   live + the 5 personality-test people + 12) and then return to quizzes. Open for him: the modern saints (Carlo Acutis,
+   Mother Teresa, Padre Pio: their words and most photographs are in copyright; three options in the file) and
+   whether a "public domain in the US" photograph (Thérèse) is enough. He asked for efficiency: he wants weekly usage
+   left to finish the 12 before the reset.
+
+## (earlier) POLYCARP IS LIVE (23 SAINT PAGES); HE BRINGS NOTES ON THE OTHER PAGES
 
 Polycarp's full page, written overnight on 2026-09-25, is LIVE at /saints/polycarp-of-smyrna/ (main `600fd6c`) with
 his go ("looks good to port live"). His one change: the section holding the blessing from Polycarp's letter is titled
