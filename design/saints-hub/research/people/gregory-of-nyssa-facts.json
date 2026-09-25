@@ -1,0 +1,1321 @@
+{
+ "subject": "St Gregory of Nyssa",
+ "checked_on": "2026-09-24",
+ "saved_to": "C:/Users/Light/Desktop/claude/theology compass/design/saints-hub/research/people/gregory-of-nyssa-facts.json",
+ "texts_folder": "C:/Users/Light/Desktop/claude/theology compass/design/saints-hub/sources/people/gregory-of-nyssa/",
+ "text_used": {
+  "text": "Gregory's own works are quoted from the Moore and Wilson translation (NPNF 2nd series vol. 5, 1893), taken whole from CCEL's ThML file and split into one text file per work with the footnotes removed. Basil's letters from Jackson (NPNF2 vol. 8, 1895); Gregory Nazianzen's letters from Browne and Swallow (NPNF2 vol. 7, 1894); the historians from NPNF2 vols. 2 and 3; the councils from NPNF2 vol. 14. The Life of Macrina is W. K. Lowther Clarke's translation (1916), from tertullian.org. 'exact' is the text as printed; 'display' applies the site's capitals rule for pronouns of God (none needed changing here except where noted). Every 'exact' was checked by script (verify_facts.py: whitespace, curly quotes, dashes and Lowther Clarke's page and Migne column markers normalised, case-insensitive).",
+  "source": "CCEL ThML and plain text of NPNF2 vols. 2, 3, 5, 7, 8, 14 (marked Public Domain); tertullian.org",
+  "url": "https://ccel.org/ccel/schaff/npnf205",
+  "verified": true,
+  "note": "New Advent's copies are 'revised and edited' by Kevin Knight and modernise archaic forms (thee/thou/falleth become you/falls). The quiz line on solitude uses New Advent's modern wording (see where_he_stood). Chapter links below go to CCEL's chapter pages, each fetched (HTTP 200) and checked to contain the quoted words. Lowther Clarke (1879-1968) published in London in 1916: public domain in the US (published before 1931), but not yet in the UK. The site already quotes this translation (personality.json, the fathers quiz)."
+ },
+ "quick_facts": {
+  "born": {
+   "text": "About 335, most likely at Caesarea in Cappadocia, today Kayseri in Turkey. The year and the place are not certain. Some put his birth at Neocaesarea in Pontus, today Niksar, in about 332.",
+   "source": "Britannica ('born c. 335, Caesarea, in Cappadocia, Asia Minor [now Kayseri, Turkey]'); NPNF2-5 Prolegomena, chapter 1 ('born most probably at Cæsarea, the capital, about a.d. 335 or 336' and 'the uncertainty as to the year and place of his birth'); New Catholic Encyclopedia ('b. Caesarea, between 335 and 340'); Catholic Encyclopedia 1910 ('Date of birth unknown'); saint.gr ('γεννήθηκε στη Νεοκαισάρεια του Πόντου το 332'); Oxford Encyclopaedia of Early Christian World entry ('probably born in Neocaesarea, Pontus (the modern Nikar...)')",
+   "url": "https://www.britannica.com/biography/Saint-Gregory-of-Nyssa",
+   "verified": true,
+   "note": "Other years in print: 331 (Heyns and Rupp, NPNF2-5 'Dates of Treatises'), about 334 (Episcopal Lesser Feasts and Fasts 2022), c. 330 (dictionary.com, American). Plain wording that holds: 'About 335. Most likely at Caesarea in Cappadocia, today Kayseri in Turkey.' Niksar is the modern name (the Oxford entry misspells it 'Nikar')."
+  },
+  "grew_up": {
+   "text": "In a large Christian family in Cappadocia and Pontus. His father Basil was a famous rhetorician who died young. His mother Emmelia and his older sister Macrina taught him the faith. His older brother Basil was his teacher; Gregory called him 'our common father and teacher'.",
+   "source": "NPNF2-5 Prolegomena, chapter 1; Life of Macrina; Catholic Encyclopedia 1910 ('whom Gregory calls \"our father and our master\"')",
+   "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.vii.i.html",
+   "verified": true,
+   "note": "Schaff: 'it is not known where he received his education'; 'most probably at home'. Life of Macrina: 'Our father was greatly esteemed as a young man for his learning'. CHECKER 2026-09-25: the grandmother is dropped. Schaff says only 'If, as there is every reason to believe, the grandmother Macrina survived Gregory's early childhood' she taught him; it is Basil who credits his grandmother. Schaff calls the father 'known as a rhetorician' (Macrina: he 'excelled all others in rhetoric', famous in the law courts); no source says he taught."
+  },
+  "family_size": {
+   "text": "Nine children, in his sister's count: 'four sons and five daughters'. Schaff's sketch says ten.",
+   "source": "Life of Macrina ('For she had four sons and five daughters' and 'after their substance had been divided into nine parts according to the number of the children'); NPNF2-5 Prolegomena ('a family of ten children, five of whom were boys and five girls')",
+   "url": "https://www.tertullian.org/fathers/gregory_macrina_1_life.htm",
+   "verified": true,
+   "note": "Use 'nine' from the primary source, or say 'nine or ten'."
+  },
+  "died": {
+   "text": "After 394, probably about 395. No one recorded the day, the place or the cause. The last record of him is his presence at a council in Constantinople in 394.",
+   "source": "NPNF2-5 Prolegomena ('The last record we have of him is that he was present at a Synod of Constantinople, summoned a.d. 394' and 'His death (probably 395)'); Britannica ('died c. 394'; 'His last public appearance was at a council at Constantinople'); New Catholic Encyclopedia ('He died shortly after attending a council in Constantinople in 394'); OCA ('died soon after the Council of Constantinople')",
+   "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.vii.i.html",
+   "verified": true,
+   "note": "Place: Lesser Feasts and Fasts 2022 says 'probably in Nyssa'; the New Catholic Encyclopedia says 'd. Constantinople'. LFF's 'died on March 9' is the feast day, not a recorded date. Catholic Encyclopedia 1910: 'died after 385 or 386'. So: 'Died after 394. Where and how, no one recorded.'"
+  },
+  "buried": {
+   "text": "Not recorded.",
+   "source": "No source found that names his grave.",
+   "url": "",
+   "verified": true,
+   "note": "Say nothing, or 'Where he was buried is not known.'"
+  },
+  "nyssa_today": {
+   "text": "Nyssa was a small town in Cappadocia near the Halys river (today the Kizilirmak), on the road from Caesarea to Ancyra. Its site is usually placed near Harmandali in Aksaray province, Turkey.",
+   "source": "Catholic Encyclopedia 1910 ('a little town on the banks of the Halys, along the road between Cæsarea and Ancyra'); Encyclopedia.com (Columbia Encyclopedia) 'Nyssa' ('near the Halys (now the Kizil Irmak) River'); Wikipedia 'Nyssa (Cappadocia)' (Harmandali)",
+   "url": "https://www.newadvent.org/cathen/07016a.htm",
+   "verified": true,
+   "note": "The Harmandali identification rests on Wikipedia only (it cites scholarship I did not see). Wikipedia says the older identification with Nevsehir is doubted; saint.gr still says 'σήμερα Νεμσεχίρ' (Nevsehir). Safe wording: 'a small town in Cappadocia, near the Halys river in today's central Turkey'."
+  },
+  "also_called": [
+   {
+    "text": "Gregory Nyssen (older English), Gregorius Nyssenus (Latin).",
+    "source": "Roman Martyrology 2004 ('Gregórius Nyssénus'); the Bartolozzi print ('S. Gregorius Nyssenus'); NPNF2-7 note ('the article on Gregory Nyssen')",
+    "url": "https://archive.org/details/MartRom2004",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "Greek: Άγιος Γρηγόριος Επίσκοπος Νύσσης (Saint Gregory, Bishop of Nyssa).",
+    "source": "saint.gr, 10 January",
+    "url": "https://www.saint.gr/1109/saint.aspx",
+    "verified": true,
+    "note": "saint.gr also reports the title 'Πατήρ Πατέρων και Νυσσαέων Φωστήρ' (Father of Fathers and Light of the Nyssans), with no source."
+   },
+   {
+    "text": "Russian: Святитель Григорий, епископ Нисский (Saint Gregory, Bishop of Nyssa).",
+    "source": "azbyka.ru",
+    "url": "https://azbyka.ru/days/sv-grigorij-nisskij",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "'The Father of Fathers' and 'the Star of Nyssa', titles some gave him later.",
+    "source": "NPNF2-5 Prolegomena, chapter 1: 'some did not hesitate to call him ‘the Father of Fathers’ as well as ‘the Star of Nyssa’'; OCA: 'He has been called “the Father of Fathers.”'",
+    "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.vii.i.html",
+    "verified": true,
+    "note": "Who first called him this is not established here: see misquoted_or_legend, 'Father of Fathers'."
+   }
+  ],
+  "status": {
+   "text": "A saint in the Catholic and Orthodox churches. The Church of England, the Episcopal Church and Lutherans (Missouri Synod and ELCA) keep a day for him. He is not in the Catholic General Roman Calendar: the Roman Martyrology lists him.",
+   "source": "See is_he_a_saint.",
+   "url": "https://archive.org/details/MartRom2004",
+   "verified": true,
+   "note": ""
+  },
+  "patron_of": {
+   "text": "None found in any source checked.",
+   "source": "Britannica, Catholic Encyclopedia 1910, OCA, saint.gr, azbyka.ru",
+   "url": "",
+   "verified": true,
+   "note": "Leave 'Patron of' out."
+  },
+  "in_art": {
+   "text": "In the Ohrid fresco (the band picture): a bishop with a long dark beard, in a white vestment covered with dark crosses (the polystavrion), holding a scroll. In Bartolozzi's engraving: a Western bishop with a crozier and a clasped book.",
+   "source": "The pictures themselves (Ohrid fresco, Peribleptos church; Menologion of Basil II; Bartolozzi print after Domenichino), and the Commons categories 'Polystavrion' and 'Omophorion' on those files",
+   "url": "https://commons.wikimedia.org/wiki/File:Paintings_in_the_Church_of_the_Theotokos_Peribleptos_of_Ohrid_0130.jpg",
+   "verified": true,
+   "note": "No written source on his iconography was checked (the painters' manual of Dionysius of Fourna has no public-domain English). Describe only what the pictures show. CHECKER 2026-09-25: the page no longer generalises ('In the East', 'Western prints') from one fresco and one print; it describes the two pictures shown. The crosses on the right side of the fresco are red-brown, so 'dark', not 'black'."
+  },
+  "wrote": {
+   "text": "Much: twelve books against Eunomius, the Great Catechism, On the Making of Man, On the Soul and the Resurrection, the Life of Macrina, the Life of Moses, fifteen sermons on the Song of Songs, eight on the Beatitudes, five on the Lord's Prayer, eight on Ecclesiastes, and letters.",
+   "source": "Catholic Encyclopedia 1910 ('his refutation of Eunomius in twelve books'; 'fifteen homilies on the Canticle of Canticles', 'five very eloquent homilies on the Lord's Prayer, and eight highly rhetorical homilies on the Beatitudes', 'eight homilies on Ecclesiastes'; 'A few of his letters (twenty-six) have survived')",
+   "url": "https://www.newadvent.org/cathen/07016a.htm",
+   "verified": true,
+   "note": "Counts vary by edition. Modern editions divide Against Eunomius into three books, not twelve (the Oxford entry cites Contra Eunomium I, II and III). The letter count is 26 in the 1910 Catholic Encyclopedia; NPNF prints 18 plus On Pilgrimages. Avoid a total number of works."
+  },
+  "pronounced": {
+   "text": "GREG-uh-ree of NISS-uh.",
+   "source": "Merriam-Webster, 'Gregory of Nyssa' (biographical name): Nys·sa \\ˈni-sə\\; Merriam-Webster 'Gregory' \\ˈgre-g(ə-)rē\\; dictionary.com (Random House): [nis-uh], and Collins: /ˈnɪsə/",
+   "url": "https://www.merriam-webster.com/dictionary/Gregory%20of%20Nyssa",
+   "verified": true,
+   "note": ""
+  }
+ },
+ "who_was_he": {
+  "text": "Gregory was the younger brother of Basil the Great and one of the three Cappadocian Fathers. He taught rhetoric before Basil made him bishop of Nyssa, a small town in Cappadocia, in 372. An emperor who favoured the Arians drove him out for two years. He was a leader at the Council of Constantinople in 381. He wrote the Life of his sister Macrina, and he hoped that in the end God would heal everyone.",
+  "source": "Britannica; NPNF2-5 Prolegomena; Life of Macrina; Great Catechism, chapter 26",
+  "url": "https://www.britannica.com/biography/Saint-Gregory-of-Nyssa",
+  "verified": true,
+  "note": "About 70 words; trim to 40-60 for the page."
+ },
+ "roles": [
+  {
+   "text": "Reader: as a young man he held the lowly office of reader (lector) in the church, then gave it up.",
+   "source": "New Catholic Encyclopedia ('Gregory was ordained a lector, but apparently he abandoned this vocation'); NPNF2-5 Prolegomena; Nazianzen, letter to him ('the sacred and delightful books which you used once to read to the people')",
+   "url": "https://ccel.org/ccel/schaff/npnf207/npnf207.iv.iv.ii.i.html",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "Teacher of rhetoric: he took up his father's trade, and his friend Gregory Nazianzen rebuked him for it.",
+   "source": "Gregory Nazianzen, letter to Gregory of Nyssa ('preferred to be called a Professor of Rhetoric rather than of Christianity'); Britannica ('He began his adult life as a teacher of rhetoric')",
+   "url": "https://ccel.org/ccel/schaff/npnf207/npnf207.iv.iv.ii.i.html",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "Bishop of Nyssa: made bishop by Basil in 372, against his wishes. Deposed in 376, back in 378.",
+   "source": "Britannica ('In 372, Gregory became the bishop of Nyssa'; 'deposed in 376 by a synod of bishops and banished, but on Valens's death in 378 Gregory's congregation welcomed him back'); Catholic Encyclopedia 1910 ('it was necessary to overcome his brother's repugnance')",
+   "url": "https://www.britannica.com/biography/Saint-Gregory-of-Nyssa",
+   "verified": true,
+   "note": "The Catholic Encyclopedia puts the consecration 'about 371'."
+  },
+  {
+   "text": "Defender of the Nicene faith: a leader at the Council of Constantinople in 381, named by the emperor as a bishop to be in communion with.",
+   "source": "Socrates, Church History, Book 5, chapter 8; Sozomen, Church History, Book 7, chapter 9; Britannica",
+   "url": "https://ccel.org/ccel/schaff/npnf202/npnf202.iii.xii.ix.html",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "Writer and mystic: in his later years he wrote on the soul, the resurrection and the ascent of the soul to God.",
+   "source": "Britannica ('Primarily a scholar'; 'On Virginity and other treatises on the ascetic life are crowned by the mystical Life of Moses')",
+   "url": "https://www.britannica.com/biography/Saint-Gregory-of-Nyssa",
+   "verified": true,
+   "note": "Suggested path: Reader, Teacher of rhetoric, Bishop of Nyssa, Exile, Theologian. Lines: 'Read Scripture to the people'; 'Rebuked by his best friend'; 'Made bishop by his brother, 372'; 'Driven out, 376 to 378'; 'At the Council of 381'."
+  }
+ ],
+ "feast_days": {
+  "catholic": {
+   "text": "10 January in the Roman Martyrology (2004 edition). The 1916 edition kept him on 9 March. He has no memorial in the General Roman Calendar.",
+   "source": "Martyrologium Romanum 2004, 'Die 10 ianuarii', entry 3: 'Nyssae in Cappadócia, sancti Gregóri, epíscopi, sancti Basilii Magni fratris...'; The Roman Martyrology 1916, 9 March: 'At Nyssa, the demise of St. Gregory, bishop, brother of blessed Basil the Great'; USCCB readings for 10 January 2026: 'Saturday after Epiphany' (no memorial)",
+   "url": "https://archive.org/details/MartRom2004",
+   "verified": true,
+   "note": "The 2004 Martyrology has only this one entry for him; 9 March is gone. Why the Catholic date moved to 10 January is not stated in the Martyrology; 10 January is the Eastern date."
+  },
+  "orthodox": {
+   "text": "10 January in every Orthodox church checked. Churches on the old calendar (the Russian Church) keep it on 23 January on the civil calendar.",
+   "source": "OCA ('Commemorated on January 10'); saint.gr ('Εορτάζει στις 10 Ιανουαρίου εκάστου έτους'); azbyka.ru ('День памяти 23 января')",
+   "url": "https://www.oca.org/saints/lives/2026/01/10/100140-saint-gregory-bishop-of-nyssa",
+   "verified": true,
+   "note": "GOARCH returned 403 (bot check), as with Martin. The Greek date is confirmed by saint.gr. The OCA's same day also lists 'Blessed Theosebia the Deaconess, sister of Saints Basil the Great and Gregory of Nyssa'."
+  },
+  "anglican": {
+   "text": "Church of England: 19 July, with his sister Macrina, a Lesser Festival ('Gregory, Bishop of Nyssa, and his sister Macrina, Deaconess, Teachers of the Faith, c.394 and c.379'). Episcopal Church: 9 March ('Gregory of Nyssa, Bishop and Theologian, c. 394').",
+   "source": "Church of England, Common Worship calendar (the line is in roman type, not italic, so a Lesser Festival); Lesser Feasts and Fasts 2022, 9 March",
+   "url": "https://www.churchofengland.org/prayer-and-worship/worship-texts-and-resources/common-worship/churchs-year/calendar",
+   "verified": true,
+   "note": ""
+  },
+  "lutheran": {
+   "text": "Missouri Synod: 10 January, with Basil the Great and Gregory of Nazianzus ('Pastors and Confessors'). ELCA: 14 June, with Basil, Gregory of Nazianzus and Macrina ('Gregory, Bishop of Nyssa, c. 385').",
+   "source": "Concordia Publishing House, list of commemorations from Lutheran Service Book pages xii-xiii ('10 Basil the Great of Caesarea, Gregory of Nazianzus, and Gregory of Nyssa, Pastors and Confessors'); Evangelical Lutheran Worship, The Church Year (final draft, January 2006), June 14",
+   "url": "https://blog.cph.org/read/church-year/commemorations",
+   "verified": true,
+   "note": "The ELCA source is the 2006 final draft of Evangelical Lutheran Worship (the same archived PDF used for Martin), not a current ELCA web page. It dates him 'c. 385'."
+  },
+  "in_calendar_order": {
+   "west": [
+    "10 January: Catholic (Roman Martyrology, 2004); Lutherans, Missouri Synod",
+    "9 March: Episcopal Church; the 1916 Roman Martyrology",
+    "14 June: ELCA",
+    "19 July: Church of England, with Macrina"
+   ],
+   "east": [
+    "10 January: Greek churches, OCA",
+    "23 January: Russian Church (10 January on the old calendar)"
+   ]
+  },
+  "why_differ": {
+   "text": "The West kept him on 9 March and the East on 10 January. The 2004 Roman Martyrology now has him on 10 January. The Missouri Synod keeps the three Cappadocians together on 10 January.",
+   "source": "1916 and 2004 Roman Martyrology; NPNF2-5 Prolegomena ('commemorated by the Greek Church on January 10, by the Latin on March 9'); CPH, 'Reading for the Commemoration of Basil the Great, Gregory of Nazianzus, and Gregory of Nyssa' (January 10, 2017)",
+   "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.vii.i.html",
+   "verified": true,
+   "note": "A web search summary said the LCMS date is a 'compromise' between the Eastern and Western dates. That word is NOT in the saved CPH page (lcms-cph-reading-10-january.txt); it seems to come from a parish page (ourredeemernewark.org). Do not print it."
+  }
+ },
+ "numbers": [
+  {
+   "text": "9: children in the family, by his sister's count ('four sons and five daughters').",
+   "source": "Life of Macrina, 'Macrina resolves never to leave her mother'",
+   "url": "https://www.tertullian.org/fathers/gregory_macrina_1_life.htm",
+   "verified": true,
+   "note": "Chip 'In the family'. Schaff says ten."
+  },
+  {
+   "text": "2: years driven out of Nyssa, 376 to 378, until the emperor Valens died.",
+   "source": "Britannica; Catholic Encyclopedia 1910 ('A Synod of Nyssa (376) deposed him, and he was reduced to wander from town to town, until the death of Valens in 378'); Lesser Feasts and Fasts 2022 ('went into hiding for two years')",
+   "url": "https://www.newadvent.org/cathen/07016a.htm",
+   "verified": true,
+   "note": "Chip 'In exile'."
+  },
+  {
+   "text": "8: years without seeing Macrina, 'no less than eight years, or very nearly', before he found her dying.",
+   "source": "Life of Macrina, 'Gregory resolves to visit his sister'",
+   "url": "https://www.tertullian.org/fathers/gregory_macrina_1_life.htm",
+   "verified": true,
+   "note": "Chip 'Years apart'."
+  },
+  {
+   "text": "15: miles he rode over a road 'like a precipice' to make peace with a rival bishop, who gave him no seat, no greeting and no meal.",
+   "source": "Letter 18, to Flavian ('Fifteen milestones measured the distance we had to traverse')",
+   "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.xiii.xix.html",
+   "verified": true,
+   "note": "Chip 'Miles to make peace'."
+  },
+  {
+   "text": "150: bishops at the Council of Constantinople in 381, where he preached the funeral sermon for the council's first president.",
+   "source": "Socrates, Church History, Book 5, chapter 8 ('ordained accordingly by one hundred and fifty bishops then present'); NPNF2-5 Prolegomena ('one of the hundred and fifty Bishops summoned by Theodosius')",
+   "url": "https://ccel.org/ccel/schaff/npnf202/npnf202.ii.viii.ix.html",
+   "verified": true,
+   "note": "Weaker; use only if a sixth tile is wanted."
+  },
+  {
+   "text": "12: books he wrote against Eunomius, in defence of his brother Basil.",
+   "source": "Catholic Encyclopedia 1910 ('his refutation of Eunomius in twelve books'); NPNF2-5 (Books I-XII)",
+   "url": "https://www.newadvent.org/cathen/07016a.htm",
+   "verified": true,
+   "note": "Modern editions count three books. If used, say 'as printed in the old editions', or leave it out."
+  }
+ ],
+ "what_was_he_like": [
+  {
+   "trait": "too trusting",
+   "text": "To end a family feud he forged a letter from their uncle, and his brother Basil believed it and showed it round. When a third letter came, Basil wrote to him about 'your simplicity'.",
+   "quote": {
+    "exact": "How can I lay hold of you satisfactorily, with all your simplicity? Tell me; who ever falls a third time into the same nets?",
+    "display": "How can I lay hold of you satisfactorily, with all your simplicity? Tell me; who ever falls a third time into the same nets?",
+    "work": "Basil, Letter 58, to Gregory my brother",
+    "place": "",
+    "source": "Blomfield Jackson (tr.), NPNF 2nd series vol. 8 (1895), public domain",
+    "url": "https://ccel.org/ccel/schaff/npnf208/npnf208.ix.lix.html",
+    "file": "basil-letter-58.txt",
+    "verified": true,
+    "note": "Basil says Gregory forged ONE letter; the second and third were not really from the uncle either, but Basil does not say Gregory wrote them. Basil also wrote that he was 'quite inexperienced in ecclesiastical affairs' (Letter 215)."
+   }
+  },
+  {
+   "trait": "quick to tears",
+   "text": "When Basil died he went to Macrina to 'mingle my tears' with hers. When she died, he says he gave in to his grief.",
+   "quote": {
+    "exact": "My soul was right sorrow-stricken by this grievous blow, and I sought for one who could feel it equally, to mingle my tears with.",
+    "display": "My soul was right sorrow-stricken by this grievous blow, and I sought for one who could feel it equally, to mingle my tears with.",
+    "work": "On the Soul and the Resurrection",
+    "place": "the opening",
+    "source": "W. Moore and H. A. Wilson (tr.), NPNF 2nd series vol. 5 (1893), public domain",
+    "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.x.iii.ii.html",
+    "file": "on-the-soul-and-the-resurrection.txt",
+    "verified": true,
+    "note": "Also Life of Macrina: 'and so, neglecting my duties, I gave myself up to lamentation'. And his own welcome home: 'had rejoiced and wept with my people' (Letter 3)."
+   }
+  },
+  {
+   "trait": "stung by slights, and honest about it",
+   "text": "He rode fifteen miles to make peace with a proud bishop, sat in the sun till noon while people stared, and got no seat and no meal. He admitted the anger he felt.",
+   "quote": {
+    "exact": "This was the very array, in opposition, of two contending feelings that I saw within myself: the one, of anger at the insult caused by pride, the other prompting to appease the rising storm.",
+    "display": "This was the very array, in opposition, of two contending feelings that I saw within myself: the one, of anger at the insult caused by pride, the other prompting to appease the rising storm.",
+    "work": "Letter 18, to Flavian",
+    "place": "",
+    "source": "W. Moore and H. A. Wilson (tr.), NPNF 2nd series vol. 5 (1893), public domain",
+    "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.xiii.xix.html",
+    "file": "letters.txt",
+    "verified": true,
+    "note": "The researcher's quotation ('in education for instance, or in birth ... or in theology') is NOT in this translation; the nearest is 'looking at our lineage, whether as noble or as free, our position was about on a par'. Do not use the researcher's version."
+   }
+  },
+  {
+   "trait": "in love with the world's beauty",
+   "text": "Schaff notes his rare 'delight in the beauty of nature'. Writing to a friend, he said no famous beauty spot of the poets could match a country estate by the Halys.",
+   "quote": {
+    "exact": "below, the river Halys makes the place fair to look upon with his banks, and gleams like a golden ribbon through their deep purple, reddening his current with the soil he washes down.",
+    "display": "below, the river Halys makes the place fair to look upon with his banks, and gleams like a golden ribbon through their deep purple, reddening his current with the soil he washes down.",
+    "work": "Letter 15, to Adelphius the lawyer",
+    "place": "",
+    "source": "W. Moore and H. A. Wilson (tr.), NPNF 2nd series vol. 5 (1893), public domain",
+    "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.xiii.xvi.html",
+    "file": "letters.txt",
+    "verified": true,
+    "note": "Schaff's Prolegomena quotes this with 'glides'; the letter itself says 'gleams'. Quote the letter. Another: 'garrulity is just as characteristic of old age as to be blear-eyed, or for the limbs to fail' (Letter 8), for a playful, self-mocking side."
+   }
+  }
+ ],
+ "others_on_him": [
+  {
+   "exact": "let him be a bishop, not deriving dignity from his see, but conferring dignity on his see by himself.",
+   "display": "let him be a bishop, not deriving dignity from his see, but conferring dignity on his see by himself.",
+   "work": "Basil, Letter 98, to Eusebius of Samosata",
+   "place": "",
+   "source": "Blomfield Jackson (tr.), NPNF 2nd series vol. 8 (1895), public domain",
+   "url": "https://ccel.org/ccel/schaff/npnf208/npnf208.ix.xcix.html",
+   "file": "basil-letter-98.txt",
+   "verified": true,
+   "note": "Basil on why he made his brother bishop of little Nyssa. Just before: 'I, too, was anxious that our brother Gregory should have the government of a Church commensurate with his abilities'.",
+   "context": "Basil, his brother, on making him bishop of a small town"
+  },
+  {
+   "exact": "you who are the common prop of the whole Church.",
+   "display": "you who are the common prop of the whole Church.",
+   "work": "Gregory Nazianzen, Letter 74, to Gregory of Nyssa",
+   "place": "",
+   "source": "C. G. Browne and J. E. Swallow (tr.), NPNF 2nd series vol. 7 (1894), public domain",
+   "url": "https://ccel.org/ccel/schaff/npnf207/npnf207.iv.iv.ii.iv.html",
+   "file": "nazianzen-letters-to-gregory-of-nyssa.txt",
+   "verified": true,
+   "note": "Written while he was in exile under Valens (NPNF note).",
+   "context": "His friend Gregory Nazianzen, writing to him in exile"
+  },
+  {
+   "exact": "are renowned in cities and peoples and nations. Churches summon you as an ally and director, and do you not see the grace of God in it all?",
+   "display": "are renowned in cities and peoples and nations. Churches summon you as an ally and director, and do you not see the grace of God in it all?",
+   "work": "Life of Macrina",
+   "place": "'Gregory returns to Macrina'",
+   "source": "W. K. Lowther Clarke (tr.), The Life of St. Macrina (SPCK, 1916), public domain in the US; transcribed by Roger Pearse, 2003",
+   "url": "https://www.tertullian.org/fathers/gregory_macrina_1_life.htm",
+   "file": "life-of-macrina-lowther-clarke-1916.txt",
+   "verified": true,
+   "note": "Macrina's words, as Gregory recorded them, the day before she died. The sentence begins '\"But you,\" she said, \"are renowned...'.",
+   "context": "His sister Macrina, scolding him for complaining"
+  },
+  {
+   "exact": "a few years since read to Gregory Nazianzan and myself a work against Eunomius.",
+   "display": "a few years since read to Gregory Nazianzan and myself a work against Eunomius.",
+   "work": "Jerome, Lives of Illustrious Men",
+   "place": "chapter 128",
+   "source": "E. C. Richardson (tr.), NPNF2 vol. 3 (1892), public domain",
+   "url": "https://ccel.org/ccel/schaff/npnf203/npnf203.v.iii.cxxx.html",
+   "file": "jerome-lives-of-illustrious-men-128.txt",
+   "verified": true,
+   "note": "Jerome met him, at Constantinople in 381 (Schaff). Plain, not praise: use as a tidbit ('Jerome heard him read it aloud').",
+   "context": "Jerome, who heard him"
+  },
+  {
+   "exact": "Among the bishops were the two Gregorii, the one of Nazianzus and the other of Nyssa, the latter the brother and the former the friend and fellow worker of the great Basilius. These were foremost champions of piety in Cappadocia",
+   "display": "Among the bishops were the two Gregorii, the one of Nazianzus and the other of Nyssa, the latter the brother and the former the friend and fellow worker of the great Basilius. These were foremost champions of piety in Cappadocia",
+   "work": "Theodoret, Church History",
+   "place": "Book 4, chapter 27",
+   "source": "Blomfield Jackson (tr.), NPNF2 vol. 3 (1892), public domain",
+   "url": "https://ccel.org/ccel/schaff/npnf203/npnf203.iv.viii.iv.xxvii.html",
+   "file": "theodoret-church-history-4-27.txt",
+   "verified": true,
+   "note": "Theodoret wrote about 450, so not a witness; NPNF footnote marks after 'Nazianzus' and 'Nyssa' are removed in the file.",
+   "context": "Theodoret, writing about fifty years later"
+  }
+ ],
+ "life_moments": [
+  {
+   "place": "Cappadocia",
+   "when": "As a young man",
+   "title": "The rhetoric teacher",
+   "text": "He had read Scripture to the people as a church reader. Then he left to teach rhetoric, like his father. His friend Gregory Nazianzen wrote to scold him. People were whispering, he said, that Gregory now preferred to be called a professor of rhetoric rather than of Christianity.",
+   "quote": {
+    "exact": "preferred to be called a Professor of Rhetoric rather than of Christianity? I, thank God, would rather be the latter than the former.",
+    "display": "preferred to be called a Professor of Rhetoric rather than of Christianity? I, thank God, would rather be the latter than the former.",
+    "work": "Gregory Nazianzen, letter to Gregory of Nyssa",
+    "place": "the first of his letters to him in NPNF (marked 'Ep. I')",
+    "source": "C. G. Browne and J. E. Swallow (tr.), NPNF 2nd series vol. 7 (1894), public domain",
+    "url": "https://ccel.org/ccel/schaff/npnf207/npnf207.iv.iv.ii.i.html",
+    "file": "nazianzen-letters-to-gregory-of-nyssa.txt",
+    "verified": true,
+    "note": "NPNF labels it 'Ep. I.'. The researcher and other writers call it Letter 11 (the Benedictine number); not checked here. Cite as 'a letter to Gregory of Nyssa'. NPNF's headnote says the letter 'was not without effect'."
+   }
+  },
+  {
+   "place": "Caesarea",
+   "when": "About 372",
+   "title": "The forged letter",
+   "text": "Basil had fallen out with their uncle, a bishop. To make peace, Gregory forged a letter from the uncle to Basil. Basil was delighted and showed it to his friends, until the uncle said he never wrote it. Then two more letters came, and Basil did not believe them either. He wrote to Gregory in fury. The quarrel with the uncle was mended later.",
+   "quote": {
+    "exact": "You forged one letter, and brought it me as though it came from our right reverend uncle the bishop, trying to deceive me, I have no idea why.",
+    "display": "You forged one letter, and brought it me as though it came from our right reverend uncle the bishop, trying to deceive me, I have no idea why.",
+    "work": "Basil, Letter 58",
+    "place": "",
+    "source": "Blomfield Jackson (tr.), NPNF 2nd series vol. 8 (1895), public domain",
+    "url": "https://ccel.org/ccel/schaff/npnf208/npnf208.ix.lix.html",
+    "file": "basil-letter-58.txt",
+    "verified": true,
+    "note": "Basil also: 'I prayed that the earth might open for me'. The reconciliation: Basil, Letter 60, to his uncle ('Formerly I was glad to see my brother. Why not, since he is my brother and such a brother?'); Schaff: 'The reconciliation, however, which Gregory hoped for, was afterwards brought about.' The year is not given in the letter; Schaff places it around Basil's election (370) and Gregory's consecration."
+   }
+  },
+  {
+   "place": "Nyssa",
+   "when": "372",
+   "title": "Made bishop",
+   "text": "Basil needed allies against the Arian party, so he made his brother bishop of Nyssa, a small town. Gregory did not want it. A friend asked why Basil chose so obscure a place. Basil wrote that his brother should give honour to the see, not take honour from it.",
+   "quote": {
+    "exact": "let him be a bishop, not deriving dignity from his see, but conferring dignity on his see by himself.",
+    "display": "let him be a bishop, not deriving dignity from his see, but conferring dignity on his see by himself.",
+    "work": "Basil, Letter 98",
+    "place": "",
+    "source": "Blomfield Jackson (tr.), NPNF 2nd series vol. 8 (1895), public domain",
+    "url": "https://ccel.org/ccel/schaff/npnf208/npnf208.ix.xcix.html",
+    "file": "basil-letter-98.txt",
+    "verified": true,
+    "note": "Unwillingness: Catholic Encyclopedia 1910 ('St. Basil tells us that it was necessary to overcome his brother's repugnance'); Schaff ('in spite of his emphatic protest'). Lesser Feasts and Fasts and azbyka say he called his consecration the most miserable day of his life; no primary source found (could_not_verify)."
+   }
+  },
+  {
+   "place": "Ancyra and beyond",
+   "when": "375 to 378",
+   "title": "Arrested, and driven out",
+   "text": "A governor who served the Arian emperor Valens had him charged with wasting church money and with an irregular election. Soldiers took him away. On the road he fell ill with pain in his side and his old kidney trouble, and he slipped away. A synod at Nyssa deposed him in 376, and he wandered from place to place until Valens died in 378.",
+   "quote": {
+    "exact": "he was attacked by pain in the side, and at the same time, in consequence of a chill, was attacked by his old kidney complaint.",
+    "display": "he was attacked by pain in the side, and at the same time, in consequence of a chill, was attacked by his old kidney complaint.",
+    "work": "Basil, Letter 225, to Demosthenes",
+    "place": "",
+    "source": "Blomfield Jackson (tr.), NPNF 2nd series vol. 8 (1895), public domain",
+    "url": "https://ccel.org/ccel/schaff/npnf208/npnf208.ix.ccxxvi.html",
+    "file": "basil-letter-225.txt",
+    "verified": true,
+    "note": "Escape and wandering: Catholic Encyclopedia 1910 ('he took an opportunity of escape and reached a place of safety. A Synod of Nyssa (376) deposed him, and he was reduced to wander from town to town, until the death of Valens in 378'). Basil, Letter 231: 'my very God-beloved brother is in exile'. The Catholic Encyclopedia names the accuser Philocares (Basil's letter: Philochares)."
+   }
+  },
+  {
+   "place": "Nyssa",
+   "when": "378",
+   "title": "Home again",
+   "text": "When he came home, the villages along the river road were full of people weeping for joy. At the church, the crowd pressed so close he nearly fainted. The women's choir marched in with torches, like a stream of fire. He wrote to a friend the moment the prayers were done, before he even had a drink.",
+   "quote": {
+    "exact": "we see a stream of fire flowing into the church; for the choir of virgins, carrying their wax torches in their hands, were just marching in file along the entrance of the church",
+    "display": "we see a stream of fire flowing into the church; for the choir of virgins, carrying their wax torches in their hands, were just marching in file along the entrance of the church",
+    "work": "Letter 3, to Ablabius",
+    "place": "",
+    "source": "W. Moore and H. A. Wilson (tr.), NPNF 2nd series vol. 5 (1893), public domain",
+    "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.xiii.iv.html",
+    "file": "letters.txt",
+    "verified": true,
+    "note": "Also in the letter: 'their excessive kindness all but made us faint'; 'I wrote off this letter to your Holiness as fast as possible, under the pressure of extreme thirst'. Schaff thinks it most probably went to Basil; NPNF titles it 'To Ablabius'. The letter does not say it was the return from exile, but Schaff and the Catholic Encyclopedia place it there ('his return was greeted' / 'received with joy')."
+   }
+  },
+  {
+   "place": "Annesi, Pontus",
+   "when": "379",
+   "title": "His sister's deathbed",
+   "text": "Months after Basil died, Gregory went to see his sister Macrina, after nearly eight years apart. On the way he dreamed three times that he carried martyrs' relics that shone like the sun. He found her dying of fever, lying on boards on the floor. When he poured out his troubles, she scolded him for ingratitude. She died the next evening, praying. He laid her in their parents' grave and threw himself on it.",
+   "quote": {
+    "exact": "Will you not cease to be insensible to the divine blessings? Will you not remedy the ingratitude of your soul?",
+    "display": "Will you not cease to be insensible to the divine blessings? Will you not remedy the ingratitude of your soul?",
+    "work": "Life of Macrina",
+    "place": "'Gregory returns to Macrina'",
+    "source": "W. K. Lowther Clarke (tr.), The Life of St. Macrina (SPCK, 1916), public domain in the US; transcribed by Roger Pearse, 2003",
+    "url": "https://www.tertullian.org/fathers/gregory_macrina_1_life.htm",
+    "file": "life-of-macrina-lowther-clarke-1916.txt",
+    "verified": true,
+    "note": "Also: 'I first threw myself on the grave and embraced the dust' (Life, 'The funeral over, Gregory returns home'). Their talk became his dialogue On the Soul and the Resurrection (Lowther Clarke's note 6)."
+   }
+  },
+  {
+   "place": "Constantinople",
+   "when": "381",
+   "title": "The great council",
+   "text": "He was one of the bishops at the Council of Constantinople in 381. He preached the funeral sermon for Meletius of Antioch, the council's first president. Afterwards the emperor Theodosius named him as one of three bishops in his region whose communion marked the true faith.",
+   "quote": {
+    "exact": "with Gregory, bishop of Nyssa; and with Otreinus, bishop of Melitine",
+    "display": "with Gregory, bishop of Nyssa; and with Otreinus, bishop of Melitine",
+    "work": "Sozomen, Church History",
+    "place": "Book 7, chapter 9",
+    "source": "Chester D. Hartranft (tr.), NPNF2 vol. 2 (1890), public domain",
+    "url": "https://ccel.org/ccel/schaff/npnf202/npnf202.iii.xii.ix.html",
+    "file": "sozomen-church-history-7-9.txt",
+    "verified": true,
+    "note": "Sozomen adds: 'The emperor was personally acquainted with all these bishops'. Socrates, Book 5, chapter 8 says the same. Meletius sermon: NPNF2-5, Funeral Oration on Meletius. Schaff: the story that Gregory wrote the Creed's added clauses is 'very doubtful'."
+   }
+  },
+  {
+   "place": "Jerusalem",
+   "when": "About 381 to 382",
+   "title": "A pilgrim who was not impressed",
+   "text": "Sent by a council to sort out the churches of Arabia, he also visited Jerusalem, travelling in a carriage the emperor lent him. He came home unimpressed by the city's morals. He wrote that pilgrimage brings no one nearer to God, and that Cappadocia had more altars than anywhere else.",
+   "quote": {
+    "exact": "For how many Altars there are there, on which the name of our Lord is glorified! One could hardly count so many in all the rest of the world.",
+    "display": "For how many Altars there are there, on which the name of our Lord is glorified! One could hardly count so many in all the rest of the world.",
+    "work": "On Pilgrimages",
+    "place": "",
+    "source": "W. Moore and H. A. Wilson (tr.), NPNF 2nd series vol. 5 (1893), public domain",
+    "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.ix.iv.html",
+    "file": "on-pilgrimages.txt",
+    "verified": true,
+    "note": "'There' is Cappadocia. He also wrote of his 'intense joy' at the holy places (Letter 17), so he valued them, but denied they were needed. Schaff: Latin writers tried 'in vain' to deny the letter is his. Date: Britannica links the visit to his mission after the Council of Antioch (379); the Catholic Encyclopedia says possibly after 381."
+   }
+  }
+ ],
+ "miracles": {
+  "summary": "No early source records a miracle worked BY Gregory. But he wrote down wonders: his own dream that came true, the healings he heard of at Macrina's deathbed, and a storm that held off. He also expected to be doubted and said so. Proposed section title: 'Wonders he wrote down', with a line saying plainly that the healings are Macrina's.",
+  "items": [
+   {
+    "title": "The shining relics",
+    "place": "A day's journey from Annesi",
+    "who_saw": "Gregory himself, in a dream three times in one night",
+    "text": "On his way to Macrina he dreamed he held martyrs' relics that blazed like a mirror facing the sun. He understood it when he found her dying. After her death, even in a dark robe, rays seemed to shine from her.",
+    "quote": {
+     "exact": "I seemed to be carrying martyrs' relics in my hands; a light came from them, such as comes from a clear mirror when it is put facing the sun, so that my eyes were blinded by the brilliance of the rays.",
+     "display": "I seemed to be carrying martyrs' relics in my hands; a light came from them, such as comes from a clear mirror when it is put facing the sun, so that my eyes were blinded by the brilliance of the rays.",
+     "work": "Life of Macrina",
+     "place": "'Gregory resolves to visit his sister'",
+     "source": "W. K. Lowther Clarke (tr.), The Life of St. Macrina (SPCK, 1916), public domain in the US; transcribed by Roger Pearse, 2003",
+     "url": "https://www.tertullian.org/fathers/gregory_macrina_1_life.htm",
+     "file": "life-of-macrina-lowther-clarke-1916.txt",
+     "verified": true,
+     "note": "Then: 'so that, as in the vision of my dream, rays actually seemed to shine forth from her beauty'."
+    }
+   },
+   {
+    "title": "The healed tumour",
+    "place": "Annesi",
+    "who_saw": "Told to Gregory by the widow Vestiana, who showed him the scar as they laid Macrina out",
+    "text": "Years before, Macrina had a tumour on her breast but would not let a doctor see her body. She prayed all night and wept, and asked her mother to make the sign of the cross on the place. The tumour vanished and left a small scar.",
+    "quote": {
+     "exact": "But when the mother put her hand within her bosom, to make the sign of the cross on the part, the sign worked and the tumour disappeared.",
+     "display": "But when the mother put her hand within her bosom, to make the sign of the cross on the part, the sign worked and the tumour disappeared.",
+     "work": "Life of Macrina",
+     "place": "'They find on the body marks of Macrina's sanctity'",
+     "source": "W. K. Lowther Clarke (tr.), The Life of St. Macrina (SPCK, 1916), public domain in the US; transcribed by Roger Pearse, 2003",
+     "url": "https://www.tertullian.org/fathers/gregory_macrina_1_life.htm",
+     "file": "life-of-macrina-lowther-clarke-1916.txt",
+     "verified": true,
+     "note": "Her mother's words are in the same passage: 'the medical art ... was sent from God for the saving of men'. The page must not read as advice to skip a doctor."
+    }
+   },
+   {
+    "title": "The soldier's daughter",
+    "place": "Annesi, told at Sebastopolis",
+    "who_saw": "A soldier, a relative, and his wife; he told Gregory on the road home",
+    "text": "A soldier's little girl had a diseased eye. Macrina kissed the eye and promised them a medicine. They forgot to take it, and on the way home they found the child healed.",
+    "quote": {
+     "exact": "She has indeed given her the true drug which cures disease; it is the healing that comes from prayer.",
+     "display": "She has indeed given her the true drug which cures disease; it is the healing that comes from prayer.",
+     "work": "Life of Macrina",
+     "place": "'The soldier's story'",
+     "source": "W. K. Lowther Clarke (tr.), The Life of St. Macrina (SPCK, 1916), public domain in the US; transcribed by Roger Pearse, 2003",
+     "url": "https://www.tertullian.org/fathers/gregory_macrina_1_life.htm",
+     "file": "life-of-macrina-lowther-clarke-1916.txt",
+     "verified": true,
+     "note": "The soldier: 'And I understood the marvels of the Gospel that hitherto had been incredible to me'."
+    }
+   },
+   {
+    "title": "The grain that did not run out",
+    "place": "Annesi, in a famine",
+    "who_saw": "Those who lived with Macrina (Gregory heard it from them)",
+    "text": "In a famine, the corn given out to the hungry never seemed to get less. Gregory mentions it only briefly, and leaves out healings and exorcisms too.",
+    "quote": {
+     "exact": "the corn for the relief of need, though constantly distributed, suffered no perceptible diminution",
+     "display": "the corn for the relief of need, though constantly distributed, suffered no perceptible diminution",
+     "work": "Life of Macrina",
+     "place": "'Conclusion'",
+     "source": "W. K. Lowther Clarke (tr.), The Life of St. Macrina (SPCK, 1916), public domain in the US; transcribed by Roger Pearse, 2003",
+     "url": "https://www.tertullian.org/fathers/gregory_macrina_1_life.htm",
+     "file": "life-of-macrina-lowther-clarke-1916.txt",
+     "verified": true,
+     "note": ""
+    }
+   },
+   {
+    "title": "The storm that waited",
+    "place": "The road home to Nyssa",
+    "who_saw": "Gregory and his party",
+    "text": "On his journey home, a huge storm gathered all around them, but they reached shelter dry. Only then did the rain pour down, and it stopped again when they set off. Gregory calls it a sign of God's kindness, like the Israelites crossing the Red Sea.",
+    "quote": {
+     "exact": "and yet we, like the Israelites of old in their miraculous passage of the Red Sea, though surrounded on all sides by rain, arrived unwetted at Vestena.",
+     "display": "and yet we, like the Israelites of old in their miraculous passage of the Red Sea, though surrounded on all sides by rain, arrived unwetted at Vestena.",
+     "work": "Letter 3, to Ablabius",
+     "place": "",
+     "source": "W. Moore and H. A. Wilson (tr.), NPNF 2nd series vol. 5 (1893), public domain",
+     "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.xiii.iv.html",
+     "file": "letters.txt",
+     "verified": true,
+     "note": "He introduces it as 'a manifest token of His loving kindness'."
+    }
+   }
+  ],
+  "doubt": {
+   "title": "He expected doubt",
+   "text": "Gregory says he left most of Macrina's wonders out, because people judge what is believable by their own experience.",
+   "quote": {
+    "exact": "For most men judge what is credible in the way of a tale by the measure of their own experience. But what exceeds the capacity of the hearer, men receive with insult and suspicion of falsehood, as remote from truth.",
+    "display": "For most men judge what is credible in the way of a tale by the measure of their own experience. But what exceeds the capacity of the hearer, men receive with insult and suspicion of falsehood, as remote from truth.",
+    "work": "Life of Macrina",
+    "place": "'Conclusion'",
+    "source": "W. K. Lowther Clarke (tr.), The Life of St. Macrina (SPCK, 1916), public domain in the US; transcribed by Roger Pearse, 2003",
+    "url": "https://www.tertullian.org/fathers/gregory_macrina_1_life.htm",
+    "file": "life-of-macrina-lowther-clarke-1916.txt",
+    "verified": true,
+    "note": "No early doubter of these stories was found. This is Gregory's own expectation of doubt."
+   }
+  },
+  "not_used": "Two other stories are often told: (1) as a young man, sulking at a family festival, he dreamed the Forty Martyrs beat him with rods (from his sermon on the Forty Martyrs; Schaff says only 'is said to have been due to a remarkable dream'; no public-domain English found); (2) his Life of Gregory the Wonderworker, full of miracles, including a vision of the Virgin and John giving a creed (no public-domain English checked). Both belong in could_not_verify until read in a PD text."
+ },
+ "his_words": {
+  "framing": {
+   "text": "Gregory wrote a great deal. Every line below is from Moore and Wilson's translation (1893) unless marked. Many lines people search for (from the Life of Moses and the sermons on the Song of Songs) have no public-domain English and cannot be quoted here.",
+   "source": "NPNF2-5 contents; Life of Moses: no PD English found (Malherbe and Ferguson, 1978, is in copyright)",
+   "url": "https://ccel.org/ccel/schaff/npnf205",
+   "verified": true,
+   "note": ""
+  },
+  "feature": {
+   "exact": "Change of place does not effect any drawing nearer unto God, but wherever thou mayest be, God will come to thee, if the chambers of thy soul be found of such a sort that He can dwell in thee and walk in thee.",
+   "display": "Change of place does not effect any drawing nearer unto God, but wherever thou mayest be, God will come to thee, if the chambers of thy soul be found of such a sort that He can dwell in thee and walk in thee.",
+   "work": "On Pilgrimages",
+   "place": "",
+   "source": "W. Moore and H. A. Wilson (tr.), NPNF 2nd series vol. 5 (1893), public domain",
+   "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.ix.iv.html",
+   "file": "on-pilgrimages.txt",
+   "verified": true,
+   "note": "Written after his own journey to Jerusalem. New Advent modernises to 'wherever you may be, God will come to you'. Kicker idea: 'After seeing Jerusalem'. Greek original not sourced here (could_not_verify).",
+   "context": "To a friend who asked if monks should go on pilgrimage to Jerusalem. Suggested ghost word: 'topos' only if the Greek is checked; otherwise none."
+  },
+  "lines": [
+   {
+    "exact": "Before we saw Bethlehem we knew His being made man by means of the Virgin; before we saw His Grave we believed in His Resurrection from the dead; apart from seeing the Mount of Olives, we confessed that His Ascension into heaven was real.",
+    "display": "Before we saw Bethlehem we knew His being made man by means of the Virgin; before we saw His Grave we believed in His Resurrection from the dead; apart from seeing the Mount of Olives, we confessed that His Ascension into heaven was real.",
+    "work": "On Pilgrimages",
+    "place": "",
+    "source": "W. Moore and H. A. Wilson (tr.), NPNF 2nd series vol. 5 (1893), public domain",
+    "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.ix.iv.html",
+    "file": "on-pilgrimages.txt",
+    "verified": true,
+    "note": "",
+    "context": "On what his trip to the Holy Land taught him"
+   },
+   {
+    "exact": "for the soul immediately shows its royal and exalted character, far removed as it is from the lowliness of private station, in that it owns no lord, and is self-governed, swayed autocratically by its own will",
+    "display": "for the soul immediately shows its royal and exalted character, far removed as it is from the lowliness of private station, in that it owns no lord, and is self-governed, swayed autocratically by its own will",
+    "work": "On the Making of Man",
+    "place": "chapter 4",
+    "source": "H. A. Wilson (tr.), NPNF2 vol. 5 (1893), public domain",
+    "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.x.ii.ii.v.html",
+    "file": "on-the-making-of-man.txt",
+    "verified": true,
+    "note": "CCEL's section x.ii.ii.v is chapter 4 (x.ii.ii.i is the letter to Peter).",
+    "context": "On why every human being is born royal"
+   },
+   {
+    "exact": "They therefore do not understand that all virtue is found in moderation, and that any declension to either side of it becomes a vice.",
+    "display": "They therefore do not understand that all virtue is found in moderation, and that any declension to either side of it becomes a vice.",
+    "work": "On Virginity",
+    "place": "chapter 8",
+    "source": "W. Moore and H. A. Wilson (tr.), NPNF 2nd series vol. 5 (1893), public domain",
+    "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.ix.ii.ii.ix.html",
+    "file": "on-virginity.txt",
+    "verified": true,
+    "note": "The earlier research said chapter 7; both CCEL and New Advent put it in chapter 8.",
+    "context": "On monks who fast to extremes"
+   },
+   {
+    "exact": "This was the very array, in opposition, of two contending feelings that I saw within myself: the one, of anger at the insult caused by pride, the other prompting to appease the rising storm.",
+    "display": "This was the very array, in opposition, of two contending feelings that I saw within myself: the one, of anger at the insult caused by pride, the other prompting to appease the rising storm.",
+    "work": "Letter 18, to Flavian",
+    "place": "",
+    "source": "W. Moore and H. A. Wilson (tr.), NPNF 2nd series vol. 5 (1893), public domain",
+    "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.xiii.xix.html",
+    "file": "letters.txt",
+    "verified": true,
+    "note": "",
+    "context": "Snubbed by a proud bishop"
+   },
+   {
+    "exact": "I answered rather audaciously, and without due consideration of what I said, for my passionate grief had not yet given me back my judgment.",
+    "display": "I answered rather audaciously, and without due consideration of what I said, for my passionate grief had not yet given me back my judgment.",
+    "work": "On the Soul and the Resurrection",
+    "place": "the opening",
+    "source": "W. Moore and H. A. Wilson (tr.), NPNF 2nd series vol. 5 (1893), public domain",
+    "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.x.iii.ii.html",
+    "file": "on-the-soul-and-the-resurrection.txt",
+    "verified": true,
+    "note": "Next he says Scripture's promises 'seemed to me like mere commands'.",
+    "context": "Grieving Basil, arguing with his dying sister"
+   },
+   {
+    "exact": "garrulity is just as characteristic of old age as to be blear-eyed, or for the limbs to fail.",
+    "display": "garrulity is just as characteristic of old age as to be blear-eyed, or for the limbs to fail.",
+    "work": "Letter 8, to a student of the classics",
+    "place": "",
+    "source": "W. Moore and H. A. Wilson (tr.), NPNF 2nd series vol. 5 (1893), public domain",
+    "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.xiii.ix.html",
+    "file": "letters.txt",
+    "verified": true,
+    "note": "He opens the letter with Homer instead of Scripture, since the young man loved the poets.",
+    "context": "Teasing himself in a letter to a young classics lover"
+   },
+   {
+    "exact": "a harmony of thanksgiving will arise from all creation, as well from those who in the process of the purgation have suffered chastisement, as from those who needed not any purgation at all.",
+    "display": "a harmony of thanksgiving will arise from all creation, as well from those who in the process of the purgation have suffered chastisement, as from those who needed not any purgation at all.",
+    "work": "The Great Catechism",
+    "place": "chapter 26",
+    "source": "W. Moore and H. A. Wilson (tr.), NPNF 2nd series vol. 5 (1893), public domain",
+    "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.xi.ii.xxviii.html",
+    "file": "great-catechism.txt",
+    "verified": true,
+    "note": "His hope that all will be saved; see where_he_stood and hard_topics.",
+    "context": "On the end of all things"
+   }
+  ]
+ },
+ "misquoted_or_legend": [
+  {
+   "claim": "\"Concepts create idols; only wonder grasps anything.\"",
+   "truth": "Not a sentence found in any of his works we could read. Quote sites give it in at least three wordings ('grasps', 'understands', 'comprehends'), which is the sign of a modern paraphrase. The idea is often traced to his Life of Moses, which has no public-domain English.",
+   "source": "Goodreads (three variants), OCA reflection by Fr Steven Kostoff (gives no source); NPNF2-5 searched",
+   "url": "https://www.goodreads.com/author/quotes/219475.Gregory_of_Nyssa",
+   "verified": true,
+   "note": "The link to Life of Moses Book 2 (about sections 162-165) comes from the earlier researcher and was not checked against the Greek. Say only 'a modern summary; we could not find it in his works'."
+  },
+  {
+   "claim": "He forged three letters from his uncle.",
+   "truth": "Basil says Gregory forged one. A second came by Gregory's servant Asterius, and Anthimus told Basil it was not from the uncle either. Then Adamantius brought a third. Basil never says Gregory wrote the second or third.",
+   "source": "Basil, Letter 58",
+   "url": "https://ccel.org/ccel/schaff/npnf208/npnf208.ix.lix.html",
+   "verified": true,
+   "note": "Basil: 'You forged one letter' ... 'Even this second had not really been sent by the bishop' ... 'Now Adamantius has come bringing me a third.' CHECKER 2026-09-25: 'doubted them too' understated the second letter, which Basil reports was found not to be the bishop's."
+  },
+  {
+   "claim": "He wrote the added clauses of the Nicene Creed at Constantinople in 381.",
+   "truth": "Said by some, but doubted. Schaff calls it 'very doubtful'. The OCA's life says the Creed was completed 'on the initiative of Saint Gregory'.",
+   "source": "NPNF2-5 Prolegomena, chapter 1 ('it is said, though this is very doubtful, that the explanatory clauses added to the Nicene Creed are due to him'); OCA life",
+   "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.vii.i.html",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "claim": "His wife was Theosebia.",
+   "truth": "Disputed. Gregory Nazianzen's letter mourns Theosebia as 'truly consort of a priest', which some read as 'wife', but the same letter calls her 'your holy and blessed sister'. The OCA honours her as his sister. Some Greek sources call her his wife. Gregory's own On Virginity suggests he had married, but even that is read two ways.",
+   "source": "Gregory Nazianzen, Letter 197 (NPNF2-7, with its headnote); OCA, 10 January ('Blessed Theosebia the Deaconess, sister of Saints Basil the Great and Gregory of Nyssa'); saint.gr ('νυμφεύεται τη Θεοσέβεια'); NPNF2-5 Prolegomena (Rupp's view); On Virginity, chapter 3 ('whom a gulf now divides from glorious virginity'); Britannica ('may have been married')",
+   "url": "https://ccel.org/ccel/schaff/npnf207/npnf207.iv.iv.ii.viii.html",
+   "verified": true,
+   "note": "Catholic Encyclopedia 1910 and the New Catholic Encyclopedia say he married. Plain wording: 'He may have married. Whether Theosebia was his wife or his sister is argued.'"
+  },
+  {
+   "claim": "\"Let the inspired Scripture, then, be our umpire.\" (a Gregory line popular with Protestants)",
+   "truth": "The words are real, but the letter they come from is printed among both Gregory's works (On the Holy Trinity, to Eustathius) and Basil's letters (Letter 189). The editor of Basil's letters thought it 'more probably' Basil's.",
+   "source": "NPNF2-5, On the Holy Trinity; NPNF2-8, Basil Letter 189 and its note 2652 ('This doctrinal statement is also found among the works of Gregory of Nyssa; but is more probably to be attributed to Basil'); CPH reading for 10 January quotes it as Gregory's",
+   "url": "https://ccel.org/ccel/schaff/npnf208/npnf208.ix.cxc.html",
+   "verified": true,
+   "note": "Exact in Gregory's copy: 'Let the inspired Scripture, then, be our umpire, and the vote of truth will surely be given to those whose dogmas are found to agree with the Divine words.' CPH drops 'surely'. Jackson's Basil version words it differently ('let God-inspired Scripture decide between us'). Modern critical opinion not checked."
+  },
+  {
+   "claim": "The bath attendant who told you 'the Son was made out of nothing'.",
+   "truth": "Real. It comes from his sermon On the Deity of the Son and the Holy Spirit (383), mocking how everyone in Constantinople argued theology. But no public-domain translation exists; every English version in circulation is a modern paraphrase, and the wording changes from book to book.",
+   "source": "Roger Pearse, 'A famous passage of Gregory of Nyssa... but where from?' (2009): PG 46, column 557; Louis Duchesne, Early History of the Christian Church, vol. 2 (English 1912), page 456, a paraphrase",
+   "url": "https://www.roger-pearse.com/weblog/2009/06/19/a-famous-passage-of-gregory-of-nyssa-but-where-from/",
+   "verified": true,
+   "note": "May be told in our own words as a story ('He once joked that in Constantinople...'), citing the sermon, never in quotation marks. CHECKER 2026-09-25: Duchesne's 1912 paraphrase is public domain but not a translation, so the page says 'Every English version is a paraphrase', not 'a modern paraphrase'."
+  },
+  {
+   "claim": "The Seventh Ecumenical Council (787) named him 'Father of Fathers'.",
+   "truth": "Widely repeated, but we could not trace it. Schaff says only that 'some did not hesitate' to call him that. One scholarly entry that repeats the claim cites, in its own footnote, the title 'Luminary of Nyssa' from the council's sixth session, reported by a 14th-century historian.",
+   "source": "NPNF2-5 Prolegomena, chapter 1; Oxford Encyclopaedia of the Early Christian World entry (ora.ox.ac.uk), note 8; OCA ('He has been called')",
+   "url": "https://ora.ox.ac.uk/objects/uuid:23f9b21a-8ec2-46e1-9a4c-67037360ca37/files/rk3569607f",
+   "verified": true,
+   "note": "Safe wording: 'Later writers called him the Father of Fathers.' Do not name the council."
+  }
+ ],
+ "where_he_stood": {
+  "text": "Five of his eight quiz lines are shown. Values from site/src/data/which-early-christian.json (people.nyssa.cells). Hidden, not shown: anger (+1, Against Eunomius), miracles (+2, Life of Macrina), effort (+1, On Virginity).",
+  "rows": [
+   {
+    "key": "alone",
+    "statement": "If you had to choose, you'd grow closer to God alone in quiet than among other people.",
+    "value": -1,
+    "line": "Woe to him that is alone when he falls, for he has not another to help him up.",
+    "work": "On Virginity",
+    "place": "chapter 23",
+    "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.ix.ii.ii.xxiv.html",
+    "newadvent": "https://www.newadvent.org/fathers/2907.htm",
+    "verified": true,
+    "file": "on-virginity-newadvent-revised.txt",
+    "note": "Word for word in New Advent's revised copy (chapter 23). The 1893 print on CCEL reads 'woe to him that is alone when he falleth, for he hath not another to help him up.' So cite New Advent for this wording, or switch the site line to the 1893 wording. It is also a quotation of Ecclesiastes 4:10, which Gregory quotes (he names 'the Preacher' just before). The page should say 'quoting Ecclesiastes'."
+   },
+   {
+    "key": "tears",
+    "statement": "Even if you believe you'll see them again, it's right to weep openly for someone you've lost.",
+    "value": 1,
+    "line": "In no other way can the burning heart cool down, swelling as it is with its affliction, unless it relieves itself by sobs and tears.",
+    "work": "Funeral Oration on Meletius",
+    "place": "",
+    "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.xii.ii.html",
+    "newadvent": "https://www.newadvent.org/fathers/2909.htm",
+    "verified": true,
+    "file": "funeral-oration-on-meletius.txt",
+    "note": "Identical in the 1893 print and New Advent. Preached at Constantinople in 381."
+   },
+   {
+    "key": "body",
+    "statement": "Your body is a friend to look after, not an enemy to fight.",
+    "value": 2,
+    "line": "That is temperance's highest aim; it looks not to the afflicting of the body, but to the peaceful action of the soul's functions.",
+    "work": "On Virginity",
+    "place": "chapter 22",
+    "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.ix.ii.ii.xxiii.html",
+    "newadvent": "https://www.newadvent.org/fathers/2907.htm",
+    "verified": true,
+    "file": "on-virginity.txt",
+    "note": "Identical in both copies."
+   },
+   {
+    "key": "deeper",
+    "statement": "In many Bible stories, the deeper meaning matters more than the history.",
+    "value": 2,
+    "line": "The Divine intention lies hid under the body of the Scripture, as it were under a veil, some legislative enactment or some historical narrative being cast over the truths that are contemplated by the mind.",
+    "work": "Against Eunomius",
+    "place": "Book 7, section 1",
+    "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.viii.i.ix.i.html",
+    "newadvent": "https://www.newadvent.org/fathers/290107.htm",
+    "verified": true,
+    "file": "against-eunomius-book-1-12.txt",
+    "note": "The site line begins with a capital 'The'; in the text the sentence begins 'Such a boon as this, however, is not within any man's reach to lay hold of, but the Divine intention...'. Gregory is speaking (not quoting Eunomius)."
+   },
+   {
+    "key": "all",
+    "statement": "In the end, God will save everyone.",
+    "value": 2,
+    "line": "He accomplished all the results before mentioned, freeing both man from evil, and healing even the introducer of evil himself.",
+    "work": "The Great Catechism",
+    "place": "chapter 26",
+    "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.xi.ii.xxviii.html",
+    "newadvent": "",
+    "verified": true,
+    "file": "great-catechism.txt",
+    "note": "'The introducer of evil' is the devil. New Advent's Great Catechism page (2908) has only the chapter summaries, so link CCEL. The sentence continues: 'For the chastisement, however painful, of moral disease is a healing of its weakness.'"
+   }
+  ]
+ },
+ "hard_topics": {
+  "universalism": {
+   "holder": {
+    "exact": "In like manner, when, after long periods of time, the evil of our nature, which now is mixed up with it and has grown with its growth, has been expelled, and when there has been a restoration of those who are now lying in Sin to their primal state, a harmony of thanksgiving will arise from all creation",
+    "display": "In like manner, when, after long periods of time, the evil of our nature, which now is mixed up with it and has grown with its growth, has been expelled, and when there has been a restoration of those who are now lying in Sin to their primal state, a harmony of thanksgiving will arise from all creation",
+    "work": "The Great Catechism",
+    "place": "chapter 26",
+    "source": "W. Moore and H. A. Wilson (tr.), NPNF 2nd series vol. 5 (1893), public domain",
+    "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.xi.ii.xxviii.html",
+    "file": "great-catechism.txt",
+    "verified": true,
+    "note": "In On the Soul and the Resurrection the same teaching is in Macrina's mouth: 'the agony will be measured by the amount of evil there is in each individual' and the soul stays 'in the fire' 'until the spurious material alloy is consumed'."
+   },
+   "other_passages": {
+    "text": "Schaff notes that elsewhere Gregory speaks of eternal punishment without softening it, as in his second sermon On Loving the Poor.",
+    "source": "NPNF2-5 Prolegomena, chapter 3, 'His Origenism' ('passages have been adduced from Gregory's writings in which the language of Scripture as to future punishment is used without any modification')",
+    "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.vii.iii.html",
+    "verified": true,
+    "note": "Those sermons have no PD English checked; report Schaff's summary only."
+   },
+   "critics": {
+    "exact": "If anyone asserts the fabulous pre-existence of souls, and shall assert the monstrous restoration which follows from it: let him be anathema.",
+    "display": "If anyone asserts the fabulous pre-existence of souls, and shall assert the monstrous restoration which follows from it: let him be anathema.",
+    "work": "The Anathemas against Origen",
+    "place": "anathema 1",
+    "source": "H. R. Percival (ed.), NPNF2 vol. 14 (1900), public domain",
+    "url": "https://ccel.org/ccel/schaff/npnf214/npnf214.xii.ix.html",
+    "file": "anathemas-against-origen-553.txt",
+    "verified": true,
+    "note": "These condemn Origen's teaching, not Gregory by name. Whether the Council of 553 itself passed them is debated (NPNF2-14 excursus: 'the matter remains involved in the greatest obscurity'). Gregory rejected the pre-existence of souls (New Catholic Encyclopedia: 'He did not accept the Origenist theory of the pre-existence of individual human souls, but he did support the doctrine of apokatastasis')."
+   },
+   "never_condemned": {
+    "text": "He was never condemned by name. The emperor's letter read at the Council of 553 lists 'Gregory of Nyssa' among the holy Fathers the council follows, and the Council in Trullo (692) received his canons into church law.",
+    "source": "Fifth Ecumenical Council, Session I, the Emperor's letter ('in every way follow the holy Fathers, Athanasius, Hilary, Basil, Gregory the Theologian, Gregory of Nyssa, Ambrose'); Council in Trullo, Canon 2 ('of Gregory, Bishop of Nyssa')",
+    "url": "https://ccel.org/ccel/schaff/npnf214/npnf214.xiv.iii.ii.html",
+    "verified": true,
+    "note": ""
+   },
+   "defence": {
+    "text": "In the 8th century Germanus, patriarch of Constantinople, wrote a book (now lost) arguing that Origenists had slipped these ideas into Gregory's works. Schaff doubts this: the ideas are part of 'the very groundwork of his own theology'. The 1910 Catholic Encyclopedia calls the interpolation theory 'useless and gratuitous'.",
+    "source": "Photius, Bibliotheca, codex 233 (summary; the tertullian.org translation is modern and partly copyrighted, so cite, do not quote); NPNF2-5 Prolegomena, chapter 3; Catholic Encyclopedia 1910",
+    "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.vii.iii.html",
+    "verified": true,
+    "note": ""
+   }
+  },
+  "slavery": {
+   "text": "In his fourth sermon on Ecclesiastes he attacked owning slaves at all: a person made in God's image cannot be bought. Scholars call this unique in the ancient world, but no public-domain English exists.",
+   "source": "Homilies on Ecclesiastes 4 (PG 44.664); Greek text at earlychurchtexts.com (not fetched in this pass)",
+   "url": "https://earlychurchtexts.com/main/gregoryofnyss/ecclesiastes_slavery.shtml",
+   "verified": false,
+   "note": "Report in our own words only, citing the sermon. The earlier research quotes only its own rendering from the Greek. Needs a check of the Greek before the page states it."
+  },
+  "infant_deaths": {
+   "exact": "not only to heal evils that have been committed, but also to forestall them before they have been committed; and this, we suspect, is the cause of the deaths of new-born infants.",
+   "display": "not only to heal evils that have been committed, but also to forestall them before they have been committed; and this, we suspect, is the cause of the deaths of new-born infants.",
+   "work": "On Infants' Early Deaths",
+   "place": "",
+   "source": "W. Moore and H. A. Wilson (tr.), NPNF 2nd series vol. 5 (1893), public domain",
+   "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.ix.iii.html",
+   "file": "on-infants-early-deaths.txt",
+   "verified": true,
+   "note": "Painful for bereaved parents; if used, give it context."
+  }
+ },
+ "friends_family_rivals": [
+  {
+   "text": "Basil the Great: his older brother and teacher, who made him bishop and scolded him often.",
+   "source": "Basil, Letters 58, 98, 215; Catholic Encyclopedia 1910 ('our father and our master')",
+   "url": "https://ccel.org/ccel/schaff/npnf208/npnf208.ix.lix.html",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "Macrina: his older sister, the 'Teacher' of On the Soul and the Resurrection. He wrote her Life.",
+   "source": "Life of Macrina; On the Soul and the Resurrection",
+   "url": "https://www.tertullian.org/fathers/gregory_macrina_1_life.htm",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "Peter of Sebaste: his younger brother, raised by Macrina. Gregory addressed On the Making of Man to him.",
+   "source": "Life of Macrina ('Peter, the youngest brother'); On the Making of Man ('Gregory, Bishop of Nyssa, to his brother Peter, the servant of God')",
+   "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.x.ii.ii.i.html",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "Emmelia: his mother, who died in the arms of Macrina and Peter.",
+   "source": "Life of Macrina ('Death of the mother'); NPNF2-5 Prolegomena",
+   "url": "https://www.tertullian.org/fathers/gregory_macrina_1_life.htm",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "Naucratius: a brother who left a brilliant career to live alone by the Iris river, and died young on a fishing trip.",
+   "source": "Life of Macrina ('The story of Naucratius', 'The tragic death of Naucratius')",
+   "url": "https://www.tertullian.org/fathers/gregory_macrina_1_life.htm",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "Gregory Nazianzen: his brother's closest friend. He scolded Gregory for teaching rhetoric, then comforted him in exile.",
+   "source": "Gregory Nazianzen, letters to Gregory of Nyssa (NPNF2-7)",
+   "url": "https://ccel.org/ccel/schaff/npnf207/npnf207.iv.iv.ii.html",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "Theosebia: honoured by the OCA as his sister, a deaconess; some say she was his wife.",
+   "source": "Gregory Nazianzen, Letter 197; OCA",
+   "url": "https://ccel.org/ccel/schaff/npnf207/npnf207.iv.iv.ii.viii.html",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "Eunomius: the Arian leader he answered in his books Against Eunomius, defending Basil.",
+   "source": "Against Eunomius; Jerome, Lives of Illustrious Men 128",
+   "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.viii.i.html",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "Helladius: Basil's successor at Caesarea, who snubbed him; Gregory complained of it to Flavian of Antioch.",
+   "source": "Letter 18, to Flavian",
+   "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.xiii.xix.html",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "Meletius of Antioch: first president of the council of 381. Gregory preached at his funeral.",
+   "source": "Funeral Oration on Meletius",
+   "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.xii.ii.html",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "Jerome: heard Gregory read his work against Eunomius aloud.",
+   "source": "Jerome, Lives of Illustrious Men 128",
+   "url": "https://ccel.org/ccel/schaff/npnf203/npnf203.v.iii.cxxx.html",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "Their uncle Gregory, a bishop: the man whose letter he forged to reconcile him with Basil.",
+   "source": "Basil, Letters 58-60",
+   "url": "https://ccel.org/ccel/schaff/npnf208/npnf208.ix.lix.html",
+   "verified": true,
+   "note": ""
+  }
+ ],
+ "how_he_died": {
+  "text": "Not recorded. The last we hear of him is at a council in Constantinople in 394. He probably died soon after, about 395. No last words, no deathbed story, and no later legend were found.",
+  "source": "NPNF2-5 Prolegomena, chapter 1 ('Scarcely anything is known of the latter years of Gregory of Nyssa's life'); Britannica; New Catholic Encyclopedia; OCA ('Having reached old age, Saint Gregory of Nyssa died soon after the Council of Constantinople')",
+  "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.vii.i.html",
+  "verified": true,
+  "note": "Schaff: at the 394 synod, 'Nyssa was ennobled by the name of its bishop appearing on the roll of this Synod, between those of the Metropolitans of Cæsarea and Iconium.' Death section can say this plainly and turn to his own words on death (e.g. Macrina's dying prayer, which he recorded, clearly marked as hers)."
+ },
+ "is_he_a_saint": {
+  "text": "Yes. Catholics and Orthodox count him a saint, and the Church of England, the Episcopal Church and Lutherans keep his day. He was never condemned, though his hope that all will be saved has troubled some.",
+  "source": "Roman Martyrology 1916 ('the demise of St. Gregory') and 2004 ('sancti Gregorii'); OCA; saint.gr ('Άγιος'); Church of England; Lesser Feasts and Fasts 2022; CPH (LSB); ELW; Council in Trullo, Canon 2",
+  "url": "https://archive.org/details/MartRom2004",
+  "verified": true,
+  "note": "Exact 1916 wording for 9 March: 'At Nyssa, the demise of St. Gregory, bishop, brother of blessed Basil the Great, whose life and erudition have rendered him illustrious. He was expelled from his own city for having defended the Catholic faith during the reign of the Arian emperor Valens.' (OCR line break 'de- fended' fixed.) Catholic: no memorial in the General Roman Calendar (only the Martyrology). Russian: 'Святитель'."
+ },
+ "martyrology_1916": {
+  "exact": "At Nyssa, the demise of St. Gregory, bishop, brother of blessed Basil the Great, whose life and erudition have rendered him illustrious.",
+  "display": "At Nyssa, the demise of St. Gregory, bishop, brother of blessed Basil the Great, whose life and erudition have rendered him illustrious.",
+  "work": "The Roman Martyrology (1916 edition)",
+  "place": "9 March",
+  "source": "The Roman Martyrology, 1916 (public domain)",
+  "url": "https://archive.org/details/romanmartyrology00cathuoft",
+  "file": "martyrology-1916-9-march.txt",
+  "verified": true,
+  "note": ""
+ },
+ "martyrology_2004": {
+  "exact": "Nyssae in Cappadócia, sancti Gregóri, epíscopi, sancti Basilii Magni fratris",
+  "display": "Nyssae in Cappadócia, sancti Gregóri, epíscopi, sancti Basilii Magni fratris",
+  "work": "Martyrologium Romanum, editio typica altera (2004)",
+  "place": "10 January",
+  "source": "Latin, archive.org OCR",
+  "url": "https://archive.org/details/MartRom2004",
+  "file": "martyrologium-romanum-2004-10-january.txt",
+  "verified": true,
+  "note": "OCR reads 'Gregóri' for 'Gregórii'."
+ },
+ "prayer_he_wrote": {
+  "text": "None found. His works checked end with doxologies, not prayers of his own. The famous dying prayer in the Life of Macrina ('Thou, O Lord, hast freed us from the fear of death') is Macrina's, as he recorded it. Do not present it as his.",
+  "source": "Life of Macrina ('Macrina's dying prayer'); NPNF2-5 works searched",
+  "url": "https://www.tertullian.org/fathers/gregory_macrina_1_life.htm",
+  "verified": true,
+  "note": ""
+ },
+ "what_to_read_first": [
+  {
+   "text": "The Life of Macrina: his sister's life and death, told by an eyewitness. Short and moving. Lowther Clarke's translation (1916).",
+   "source": "tertullian.org (HTTP 200, full text)",
+   "url": "https://www.tertullian.org/fathers/gregory_macrina_1_life.htm",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "On the Soul and the Resurrection: his deathbed conversation with Macrina about death and what comes after.",
+   "source": "CCEL, NPNF2-5 (HTTP 200)",
+   "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.x.iii.ii.html",
+   "verified": true,
+   "note": "Also New Advent: https://www.newadvent.org/fathers/2915.htm"
+  },
+  {
+   "text": "Letters 3 and 18, and On Pilgrimages: his homecoming, his run-in with Helladius, and his view of pilgrimage. Short and very human.",
+   "source": "CCEL, NPNF2-5 (HTTP 200)",
+   "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.xiii.html",
+   "verified": true,
+   "note": "On Pilgrimages: https://ccel.org/ccel/schaff/npnf205/npnf205.ix.iv.html"
+  },
+  {
+   "text": "The Great Catechism: his summary of the faith, including his hope for the healing of all.",
+   "source": "CCEL, NPNF2-5 (HTTP 200)",
+   "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.xi.ii.html",
+   "verified": true,
+   "note": ""
+  }
+ ],
+ "pictures": {
+  "band": {
+   "file": "C:/Users/Light/Desktop/claude/theology compass/design/saints-hub/pages/img/gregory-of-nyssa.jpg",
+   "size": "1167 x 1800, 407 KB (from 1707 x 2633)",
+   "title": "Saint Gregory of Nyssa, fresco in the Church of the Theotokos Peribleptos, Ohrid",
+   "artist": "Michael and Eutychios (Commons: 'Painters Michael and Ephtichius')",
+   "date": "Commons says 14th century",
+   "collection": "Church of the Theotokos Peribleptos (St Clement), Ohrid, North Macedonia",
+   "page": "https://commons.wikimedia.org/wiki/File:Paintings_in_the_Church_of_the_Theotokos_Peribleptos_of_Ohrid_0130.jpg",
+   "licence": "Public domain. Commons tags: {{PD-Art|PD-old-auto-1923}} and {{PD-North Macedonia}}. A faithful photo of a 2D wall painting.",
+   "alt": "A fresco of Gregory of Nyssa as a bishop with a long dark beard and gold halo, in a white vestment patterned with black crosses, holding an open scroll",
+   "crop": "Face at about 52% across, 17% down. Try posM '52% 12%', posD '52% 14%'. The lower left is plaster loss.",
+   "verified": true,
+   "note": "The Greek inscription at the top right ends 'Ο ΝΥΣΙΣ' (of Nyssa). The scroll text is visible. Commons gives no exact date; the church's frescoes are usually dated about 1295 (not checked in a source here), so say 'about 1300' only after checking, or use Commons's '14th century'."
+  },
+  "second": {
+   "file": "C:/Users/Light/Desktop/claude/theology compass/design/saints-hub/pages/img/gregory-of-nyssa-2.jpg",
+   "size": "750 x 1312, 441 KB (original size; no larger scan found)",
+   "title": "S. Gregorius Nyssenus",
+   "artist": "Engraved by Francesco Bartolozzi (1727-1815) after Domenichino (Domenico Zampieri); drawn by N. Vanni (as printed on the plate: 'Dom. Zampieri pinx.', 'N. Vanni del.', 'F. Bartolozzi sc.')",
+   "date": "18th century (Commons says 19th century, which cannot be right for Bartolozzi, who died in 1815)",
+   "collection": "Commons source: a LiveJournal post; the print is plate XX of a series",
+   "page": "https://commons.wikimedia.org/wiki/File:Bartolozzi_St_Gregorius_Nyssenus.jpg",
+   "licence": "Public domain. Commons tag: {{PD-Art|PD-old-auto-expired|deathyear=1815}}. A 2D print.",
+   "alt": "An engraving of Gregory of Nyssa as a bearded Western bishop in a flowing cope, holding a crozier and a clasped book, looking down",
+   "verified": true,
+   "note": "The Western picture: a print after an Italian painting, not a painting. No Western oil painting of him was found on Commons. Its long side (1312) meets the 1200 rule; black and white. The plate also carries the Greek 'Ο ΓΡΗΓ. Ο ΝΥΣΣΗΣ'. Which Domenichino work it copies is not established (possibly the Grottaferrata frescoes); do not name it."
+  },
+  "rejected": [
+   "File:St._Gregory_of_Nyssa.jpg (the site's current portrait): 331 x 450 only, source a Serbian website; too small.",
+   "Fethiye Camii (Pammakaristos) mosaic, Dumbarton Oaks, CC0, 1052 x 1500: licence ideal, but the figure is badly damaged and seen at an angle, and the file says only 'St. Gregory'.",
+   "Menologion of Basil II miniature, 2008 x 1354, PD-Art: the figure is small in a landscape page.",
+   "Gregory of Nyssa.jpg (Meteora fresco), 396 x 450: too small; its attribution to 'Theophan the Greek' is doubtful.",
+   "Hosios Loukas mosaic by Shakko, CC BY-SA 4.0: licence not allowed.",
+   "St. Gregory Emroidered Icon.jpg, CC BY-SA 4.0: licence not allowed, and it is not clearly Gregory of Nyssa."
+  ]
+ },
+ "hub_card": {
+  "groups": {
+   "text": "fathers, cappadocians: correct. He is one of the three Cappadocian Fathers and a Church Father.",
+   "source": "Britannica ('the other two Cappadocian Fathers of the Church, his brother St. Basil of Caesarea and their friend St. Gregory of Nazianzus')",
+   "url": "https://www.britannica.com/biography/Saint-Gregory-of-Nyssa",
+   "verified": true,
+   "note": "'teachers' could also fit (Church of England: 'Teachers of the Faith'), but he is not a Doctor of the Church in the Catholic sense; leave the hint as is."
+  },
+  "lived": {
+   "text": "300s: correct (about 335 to about 395).",
+   "source": "Britannica",
+   "url": "https://www.britannica.com/biography/Saint-Gregory-of-Nyssa",
+   "verified": true,
+   "note": ""
+  },
+  "side": {
+   "text": "east: correct. A Greek-speaking bishop in Cappadocia, kept on 10 January in the East. The West keeps him too, but he lived and worked in the East.",
+   "source": "OCA; Britannica",
+   "url": "https://www.oca.org/saints/lives/2026/01/10/100140-saint-gregory-bishop-of-nyssa",
+   "verified": true,
+   "note": ""
+  }
+ },
+ "personality_test": {
+  "text": "The Christian Personality Test does not name him as a kindred saint or an opposite. He appears only as the source of the Herald's line about young Basil ('Gregory of Nyssa, Life of Macrina').",
+  "source": "site/src/data/personality.json (TYPES.*.kindred, OPPOSITES) searched for 'Nyssa'",
+  "url": "",
+  "verified": true,
+  "note": "So the page has no 'His personality type' box, unless the owner wants one."
+ },
+ "site_data_flags": [
+  {
+   "text": "people.nyssa.cells.alone quotes New Advent's modernised wording, not the 1893 print, and the words are Ecclesiastes 4:10, quoted by Gregory.",
+   "source": "On Virginity, chapter 23 (CCEL vs New Advent)",
+   "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.ix.ii.ii.xxiv.html",
+   "verified": true,
+   "note": "Either label it 'quoting Ecclesiastes' or pick another line."
+  },
+  {
+   "text": "people.nyssa.hook is accurate ('He forged a letter ... When a third letter came'). The older research hook ('forged letters ... got caught more than once') overstates it.",
+   "source": "Basil, Letter 58",
+   "url": "https://ccel.org/ccel/schaff/npnf208/npnf208.ix.lix.html",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "people.nyssa.portrait is 331 x 450 (below the 1200 px rule). Replace with the Ohrid fresco.",
+   "source": "Commons",
+   "url": "https://commons.wikimedia.org/wiki/File:St._Gregory_of_Nyssa.jpg",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "Researcher errors found: moderation line is On Virginity chapter 8, not 7; the Letter 18 'education ... birth ... theology' quotation is not in NPNF; Schaff's 'glides like a golden ribbon' is 'gleams' in the letter itself.",
+   "source": "NPNF2-5",
+   "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.ix.ii.ii.ix.html",
+   "verified": true,
+   "note": ""
+  }
+ ],
+ "could_not_verify": [
+  "GOARCH's date: goarch.org returned 403 (bot check). The Greek 10 January is confirmed from saint.gr.",
+  "'Father of Fathers' as a title given by the Seventh Ecumenical Council (787): repeated widely (Oxford ORA entry, many parish sites) but no primary text found; the ORA footnote itself points to 'Luminary of Nyssa' in Act VI via Nicephorus Callistus.",
+  "That Gregory called his consecration 'the most miserable day of his life' (Lesser Feasts and Fasts 2022; azbyka.ru 'самым ужасным днем его жизни'): no primary source found in his works in NPNF2-5.",
+  "The dream of the Forty Martyrs beating him with rods (Schaff: 'said to have been'; from In XL Martyres, PG 46): no public-domain English found.",
+  "The Homily on Ecclesiastes 4 attack on slavery (PG 44.664): Greek not fetched; no PD English. Report only after checking the Greek.",
+  "The modern site of Nyssa at Harmandali (Aksaray province): Wikipedia only.",
+  "The exact date of the Ohrid Peribleptos frescoes (usually 1294-95): not checked in a source; Commons says 14th century.",
+  "Which Domenichino work the Bartolozzi print copies.",
+  "The Greek original of the pilgrimage line (Letter 2 in Pasquali's numbering) for the feature panel.",
+  "'Concepts create idols' traced to Life of Moses Book 2 (about 162-165): not checked against the Greek; no PD English.",
+  "The Life of Gregory the Wonderworker's vision of the Virgin (often called the first recorded Marian apparition): no PD English checked.",
+  "Why the Missouri Synod chose 10 January: no LCMS source found (a parish page calls it a 'compromise').",
+  "Whether Nazianzen's rhetoric letter is Letter 11 in the standard numbering (NPNF prints 'Ep. I').",
+  "The ELCA date is from the 2006 final draft of Evangelical Lutheran Worship, not a current ELCA page.",
+  "Modern critical opinion on whether 'On the Holy Trinity, to Eustathius' is Gregory's or Basil's (NPNF's Basil editor leans Basil)."
+ ],
+ "writer_additions": {
+  "added_on": "2026-09-25",
+  "by": "the page writer, from the texts already fetched in sources/people/gregory-of-nyssa/; every quotation below is also in gregory-of-nyssa.quotes.json and passes verify-quotes.mjs",
+  "items": [
+   {
+    "text": "Basil on why Gregory should not go to Rome: 'quite inexperienced in ecclesiastical affairs', but a man 'to whom anything like mean servility is unknown'.",
+    "source": "Basil, Letter 215, to the presbyter Dorotheus (Jackson, NPNF2-8)",
+    "url": "https://ccel.org/ccel/schaff/npnf208/npnf208.ix.ccxvi.html",
+    "file": "basil-letter-215.txt",
+    "verified": true
+   },
+   {
+    "text": "Basil on the see: Gregory deserved 'the whole Church under the sun gathered into one place'.",
+    "source": "Basil, Letter 98",
+    "url": "https://ccel.org/ccel/schaff/npnf208/npnf208.ix.xcix.html",
+    "file": "basil-letter-98.txt",
+    "verified": true
+   },
+   {
+    "text": "Basil, reconciled with the uncle: 'Formerly I was glad to see my brother. Why not, since he is my brother and such a brother?'",
+    "source": "Basil, Letter 60, to Gregory his uncle",
+    "url": "https://ccel.org/ccel/schaff/npnf208/npnf208.ix.lxi.html",
+    "file": "basil-letter-60.txt",
+    "verified": true
+   },
+   {
+    "text": "Gregory calls Basil 'our common father and teacher' (the primary text; the Catholic Encyclopedia's 'our father and our master' is its own rendering). Use this.",
+    "source": "On the Making of Man, the dedicatory letter to Peter (Wilson, NPNF2-5)",
+    "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.x.ii.ii.i.html",
+    "file": "on-the-making-of-man.txt",
+    "verified": true
+   },
+   {
+    "text": "Nazianzen's first letter: Gregory has hung up the sacred books 'over the chimney, as men do in winter with rudders and hoes'; the headnote says the letter 'was not without effect'.",
+    "source": "Gregory Nazianzen, Ep. I (NPNF2-7)",
+    "url": "https://ccel.org/ccel/schaff/npnf207/npnf207.iv.iv.ii.i.html",
+    "file": "nazianzen-letters-to-gregory-of-nyssa.txt",
+    "verified": true
+   },
+   {
+    "text": "Nazianzen after Basil's death: 'seeing his character in you as in a bright and shining mirror, I may think myself to possess him also!'",
+    "source": "Gregory Nazianzen, Letter 76 (CCEL section iv.iv.ii.v)",
+    "url": "https://ccel.org/ccel/schaff/npnf207/npnf207.iv.iv.ii.v.html",
+    "file": "nazianzen-letters-to-gregory-of-nyssa.txt",
+    "verified": true
+   },
+   {
+    "text": "Nazianzen on Gregory's wanderings: like the planets, 'whose very wandering is harmonious'.",
+    "source": "Gregory Nazianzen, Letter 81 (CCEL section iv.iv.ii.vi)",
+    "url": "https://ccel.org/ccel/schaff/npnf207/npnf207.iv.iv.ii.vi.html",
+    "file": "nazianzen-letters-to-gregory-of-nyssa.txt",
+    "verified": true
+   },
+   {
+    "text": "Letter 15: 'Your Helicon is nothing: the Islands of the Blest are a fable'.",
+    "source": "Letter 15, to Adelphius the lawyer",
+    "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.xiii.xvi.html",
+    "file": "letters.txt",
+    "verified": true
+   },
+   {
+    "text": "CORRECTION to site_data_flags: the Letter 18 words ARE in the 1893 translation, only longer than the earlier research gave them: 'in education for instance, or in birth connecting with the noblest and most illustrious lineage, or in theology? These things will be found either equal, or at all events not inferior, in me.' The page prints 'in education for instance, or in birth … or in theology' (checked as two parts).",
+    "source": "Letter 18, to Flavian",
+    "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.xiii.xix.html",
+    "file": "letters.txt",
+    "verified": true
+   },
+   {
+    "text": "On Pilgrimages: 'our waggon was, in fact, as good as a church or monastery to us'; and 'counsel the brethren to be absent from the body to go to our Lord, rather than to be absent from Cappadocia to go to Palestine'.",
+    "source": "On Pilgrimages",
+    "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.ix.iv.html",
+    "file": "on-pilgrimages.txt",
+    "verified": true
+   },
+   {
+    "text": "Theodosius's list of 381 names Helladius of Caesarea, Gregory of Nyssa and Otreinus of Melitine together for the cities of Pontus; Helladius is the bishop who later snubbed him (Letter 18).",
+    "source": "Sozomen, Church History, Book 7, chapter 9; Socrates, Book 5, chapter 8",
+    "url": "https://ccel.org/ccel/schaff/npnf202/npnf202.iii.xii.ix.html",
+    "file": "sozomen-church-history-7-9.txt",
+    "verified": true
+   },
+   {
+    "text": "CORRECTION to his_words.lines (moderation): the context of On Virginity, chapter 8 is those who 'travesty the teaching of the Church' by abominating God's creatures and marriage, not monks who fast to extremes (the fasting unto death is chapter 23).",
+    "source": "On Virginity, chapters 8 and 23",
+    "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.ix.ii.ii.ix.html",
+    "file": "on-virginity.txt",
+    "verified": true
+   },
+   {
+    "text": "CORRECTION to hard_topics.universalism.never_condemned.url: the emperor's letter (Session I) is CCEL npnf214.xii.iv; npnf214.xiv.iii.ii is the Council in Trullo, canon 2. Both checked by fetch to contain the words.",
+    "source": "NPNF2-14",
+    "url": "https://ccel.org/ccel/schaff/npnf214/npnf214.xii.iv.html",
+    "file": "council-553-justinian-letter.txt",
+    "verified": true
+   },
+   {
+    "text": "The 1893 introduction to his life is not signed in the fetched text (NPNF2-5 is edited by Schaff and Wace, translated by Moore and Wilson). The page calls it 'the 1893 English edition' rather than naming Schaff as its author.",
+    "source": "NPNF2-5, prolegomena",
+    "url": "https://ccel.org/ccel/schaff/npnf205/npnf205.vii.i.html",
+    "file": "prolegomena-life-sketch.txt",
+    "verified": true
+   }
+  ]
+ },
+ "checker_corrections": {
+  "checked_on": "2026-09-25",
+  "by": "adversarial checker, against the fetched primary texts in sources/people/gregory-of-nyssa/ and a live fetch of every page URL (all HTTP 200) and both Commons file pages (licence tags PD-Art|PD-old-auto-1923 + PD-North Macedonia; PD-Art|PD-old-auto-expired, deathyear 1815; sizes 1707x2633 and 750x1312)",
+  "items": [
+   "Grew up: dropped the grandmother as a teacher of the faith (Schaff's conditional inference, not a record); 'His father taught rhetoric' became 'was a famous rhetorician' (Schaff: 'known as a rhetorician'; Life of Macrina: fame in the law courts).",
+   "In art and the portrait caption: no longer generalise to 'the East' or 'the West' from one picture each.",
+   "Band alt: 'black crosses' became 'dark crosses' (the right side of the fresco is red-brown).",
+   "Made bishop: 'A friend asked why' became 'A friend was surprised' (Schaff: 'When a friend expressed his surprise'; Basil's Letter 98 itself does not show the question). Schaff added to the cite, as it is also the source of 'to strengthen himself ... surround himself with defenders' and 'in spite of his emphatic protest'.",
+   "The forged letter: the motive 'to make peace' is Schaff's ('entreating reconciliation'); Basil himself says 'I have no idea why'. Schaff added to the cite.",
+   "Exile: Nazianzen's Letter 81 (the planets) carries no date or headnote in NPNF; only Letters 72 to 74 are placed in the exile by the headnote. The page now says he 'once cheered him about his travels'.",
+   "Jerusalem: 'a carriage the emperor lent him' became travel 'by the state post' (On Pilgrimages: 'granted us facilities for the journey, by postal conveyance ... our waggon').",
+   "The grain: 'never seemed to get less' was a hedge in our voice; the Life says it 'suffered no perceptible diminution, remaining always in bulk the same'. Now 'it never got less'.",
+   "Not his only word: added Schaff's own caveat that these are hortatory sermons and so 'less important as witnesses', so both sides are given.",
+   "Myth, three letters: see misquoted_or_legend. Myth, Constantinople joke: 'modern paraphrase' became 'paraphrase' (Duchesne 1912).",
+   "Lede and card line: the three-part comma list split into two plain sentences."
+  ]
+ }
+}

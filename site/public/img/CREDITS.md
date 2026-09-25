@@ -176,7 +176,6 @@ Origen's. Lactantius's is a 4th-century mural that may show him or may show Apul
 | origen.jpg | Origen, an imagined likeness | `Origen3.jpg` | Public domain |
 | cyprian-of-carthage.jpg | Saint Cyprian as bishop and martyr, side-altar wing from St Martin, Messkirch, Master of Messkirch, c. 1535-40 | `Heiliger Cyprianus.jpg` | Public domain |
 | antony-the-great.jpg | Saint Anthony the Great, Cretan icon, 15th to 17th century | `Cretan Icon Saint Anthony the Great.jpg` | Public domain |
-| john-cassian.jpg | Saint John Cassian, miniature in the Sacra Parallela of John of Damascus, 9th century | `Saint Jean Cassien - Grec 923.jpg` | Public domain |
 | isaac-the-syrian.jpg | Isaac Sirin miniature, Ioasaf Khokholek, scribe of the Kirillo-Belozersky monastery, 1518 | `Isaac Sirin miniature.jpg` | Public domain |
 | macrina-the-younger.jpg | St. Macrina the Younger, fresco in Saint Sophia Cathedral, Kyiv, 11th century | `Macrina the Younger.jpg` | Public domain |
 | justin-martyr.jpg | Saint Justin the Philosopher, Theophanes the Cretan, 1545-1546 | `Saint Justin Martyr by Theophanes the Cretan.jpg` | Public domain |
@@ -258,6 +257,27 @@ licence tag of each was read on its Commons file page; modern icons, which are u
 |---|---|---|---|
 | martin-of-tours.jpg | Saint Martin and the Beggar, El Greco, 1597-1599, National Gallery of Art, Washington | `El Greco (Domenikos Theotokopoulos), Saint Martin and the Beggar, 1597-1599, NGA 1164.jpg` | CC0 |
 | martin-of-tours-icon.jpg | Saint Martin, Cretan-Venetian school, about 1500, Petit Palais, Paris (Paris Musées, PPP4870) | `Ecole créto-vénitienne - Saint Martin - PPP4870 - Musée des Beaux-Arts de la ville de Paris.jpg` | CC0 |
+| john-cassian.jpg | Venerable John Cassian the Roman, with scenes from his life. Russian icon, the centre 18th century, the border scenes 19th century. Public domain. | `Иоанн Кассиан Римлянин.jpg` | Public domain |
+| ambrose-of-milan-2.jpg | Ambrose of Milan, Menologion of Basil II, Constantinople, about 976 to 1025. Vatican Library. Public domain. | `Ambrose of Milan (Menologion of Basil II).jpg` | Public domain |
+| antony-the-great-2.jpg | Saint Antony, Cretan icon, said to be 16th century. Dionysiou Monastery, Mount Athos. Public domain. | `Saint Anthony from the Dionysiou Monastery on Mount Athos.jpg` | Public domain |
+| augustine-of-hippo-2.jpg | Fresco of Augustine, about 550-600. Wikimedia Commons. Public domain. | `Rome, Lateran, Capella Sancta Sanctorum, Fresco of Augustine.jpg` | Public domain |
+| basil-the-great-2.jpg | Saint Basil Dictating His Doctrine, Francisco de Herrera the Elder, about 1639. Musée du Louvre, Paris. Public domain. | `Francisco de Herrera (I) - St Basil Dictating His Doctrine - WGA11378.jpg` | Public domain |
+| benedict-of-nursia-2.jpg | Saint Benedict, fresco. Patriarchate of Peć, Kosovo. Public domain. | `Saint Benedict of Nursia Fresco. Patriarchate of Peć. Kosovo.jpg` | Public domain |
+| boethius-2.jpg | Fl Boetio (Boethius), Justus van Gent and Pedro Berruguete, about 1472-1476. Galleria Nazionale delle Marche, Urbino. Public domain. | `Fl Boetio (Flavio Boezio) - Studiolo di Federico da Montefeltro.jpg` | Public domain |
+| clement-of-alexandria-2.jpg | Saint Clement of Alexandria, Jean-Auguste-Dominique Ingres, 1842. A design for a window of the Chapelle Saint-Ferdinand, Paris. Musée du Louvre. Public domain. | `Ingres - Saint Clément d'Alexandrie, INV 27213, Recto.jpg` | Public domain |
+| cyprian-of-carthage-2.jpg | St Cyprian, fresco, Panagia tou Arakos, Lagoudera, Cyprus, late 12th century. Photo: Dumbarton Oaks, CC0. | `Church of Panagia tou Arakos, bema, sanctuary, walls, wall paintings, Lagoudera, Cyprus - South recess, lunette, St. Cyprian - MSBZ004 BF T Lag D 2 1 - Dumbarton Oaks.jpg` | CC0 |
+| gregory-of-nazianzus-2.jpg | St. Gregory of Nazianzus, Peter Paul Rubens, 1621. Buffalo AKG Art Museum. Public domain. | `Peter Paul Rubens - St. Gregory of Nazianzus - 1952-14 - Albright–Knox Art Gallery.tiff` | Public domain |
+| gregory-of-nyssa-2.jpg | S. Gregorius Nyssenus, engraved by Francesco Bartolozzi after Domenichino. Public domain. | `Bartolozzi St Gregorius Nyssenus.jpg` | Public domain |
+| gregory-the-great-2.jpg | Icon of Saint Gregory the Dialogist, Cretan School, second half of the 17th century. Collection of Agia Aikaterini, Heraklion. CC0. | `Άγιος Γρηγόριος ο Διάλογος 0633.jpg` | CC0 |
+| irenaeus-of-lyons-2.jpg | H. Ireneüs van Lyon, an anonymous engraving, possibly Dutch, 1600s. Rijksmuseum, Amsterdam. CC0. | `H. Ireneüs van Lyon, RP-P-1907-47.jpg` | CC0 |
+| isaac-the-syrian-2.jpg | Abbate Ysaac, a woodcut in Isaac, De perfectione vitae theoreticae (Venice: Bonetus Locatellus, 1500). BEIC. Public domain. | `Isaac - De perfectione vitae theoreticae, 1500 - 511671.jpg` | Public domain |
+| jerome-2.jpg | Saint Jerome praying before the crucifix, Venetian-Cretan icon, 15th century. Museo nazionale di Ravenna. Photo: Sailko, Wikimedia Commons. Public domain. | `Madonnaro veneto-cretese, san girolamo in preghiera davanti al crocifisso, xv secolo.jpg` | Public domain |
+| john-chrysostom-2.jpg | St John Chrysostom, the widow's vineyard, and the transfer of his relic. Greek icon from Kimolos. Byzantine and Christian Museum, Athens. Public domain. | `John Chrysostom (Byzantine museum).jpg` | Public domain |
+| justin-martyr-2.jpg | Saint Justin Martyr, an imagined likeness engraved for André Thevet, Les vrais pourtraits et vies des hommes illustres, 1584. Public domain. | `Justin Martyr.jpg` | Public domain |
+| lactantius-2.jpg | The opening of Book 4 of the Divine Institutes, Master of the Chronique scandaleuse, about 1502 to 1505. Bibliothèque nationale de France, Latin 1671. Public domain. | `BnF-Lat1671- Lactance, Institutiones divinae.jpg` | Public domain |
+| macrina-the-younger-2.jpg | Saint Macrina the Younger, fresco, St Sophia Cathedral, Kyiv, 11th century. Public domain. | `Macrina the Younger.jpg` | Public domain |
+| origen-2.jpg | Origen teaching new believers, Jan Luyken, 1700. Rijksmuseum, Amsterdam. Public domain. | `OrigenStudentsLuyken.jpg` | Public domain |
+| tertullian-2.jpg | Tertullien, an engraving published by Henri Bonnart, Paris, undated. KU Leuven. Public domain. | `Tertullien, PA02213.jpg` | Public domain |
 
 ## Public-domain paintings used on hubs
 

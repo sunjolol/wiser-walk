@@ -13,6 +13,6 @@
  * Browser-safe: a plain list, no data. When all 22 have moved, /early-christian/ itself
  * redirects to /saints/ (design/saints-hub/README.md).
  */
-export const MOVED: readonly string[] = ['martin-of-tours'];
+export const MOVED: readonly string[] = ['martin-of-tours', 'ambrose-of-milan', 'antony-the-great', 'augustine-of-hippo', 'basil-the-great', 'benedict-of-nursia', 'boethius', 'clement-of-alexandria', 'cyprian-of-carthage', 'gregory-of-nazianzus', 'gregory-of-nyssa', 'gregory-the-great', 'irenaeus-of-lyons', 'isaac-the-syrian', 'jerome', 'john-cassian', 'john-chrysostom', 'justin-martyr', 'lactantius', 'macrina-the-younger', 'origen', 'tertullian'];
 
 export const hasMoved = (slug: string) => MOVED.includes(slug);

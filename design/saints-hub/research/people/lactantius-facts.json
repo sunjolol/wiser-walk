@@ -1,0 +1,1084 @@
+{
+ "subject": "Lactantius (Lucius Caecilius Firmianus Lactantius)",
+ "checked_on": "2026-09-24",
+ "status_rule": "Church Father. Not counted a saint. Never write 'St' for him anywhere.",
+ "text_used": {
+  "text": "Every quotation of Lactantius below is checked word for word (case-insensitive, whitespace, dashes and footnote marks normalised) against TWO fetched copies of William Fletcher's translation, Ante-Nicene Fathers vol. 7 (1886): the unrevised text on CCEL (the whole-volume plain text, and the chapter page given in each item's url) and New Advent's copy 'revised and edited by Kevin Knight'. 71 of 71 checked lines are in New Advent; every Lactantius line is also in the unrevised ANF, except two New Advent modernisations noted where they occur ('called there' for Fletcher's 'called thither', DI 5.2; 'watchtower' for 'watch-tower', DMP 12). 'exact' is the wording as printed (New Advent, unless noted); 'display' applies the site's capitals for every pronoun for God. Script: sources/people/lactantius/verify.py with quotes.json; chapter pages: ccel_map.py -> ccel-map.json (43 CCEL chapter pages fetched, each heading checked).",
+  "source": "William Fletcher (tr.), The Works of Lactantius, ANF 7 (1886), public domain. On the Deaths of the Persecutors in ANF 7 is Lord Hailes's translation (ANF introductory notice, note 14: 'Lord Hailes' translation has been adopted in the present edition').",
+  "url": "https://ccel.org/ccel/s/schaff/anf07/cache/anf07.txt",
+  "verified": true,
+  "note": "Chapter numbers are the ANF's. Modern Latin editions number some chapters one lower (Book 2: the ANF's chapter 15 is the Latin 2.14; Book 5: the ANF's chapter 20 is the Latin 5.19). Seen only in the fathers research (state-religion.json: '5.19.11 in modern Latin editions'; questioning.json: 'chapter 7 in some editions') and the Blogicaster post; the Latin of Books 2 to 7 was not fetched. Print 'Divine Institutes, Book 5, chapter 20' and link the ANF chapter page, so the reader lands on the right text."
+ },
+ "quick_facts": {
+  "born": {
+   "text": "About 250, in North Africa. An inscription found at Cirta in Numidia (today Constantine, Algeria) naming an 'L. Caecilius Firminianus' has led some to think his family came from there. His parents were pagans.",
+   "source": "Catholic Encyclopedia (1910), 'Lucius Caecilius Firmianus Lactantius' (P. Healy): 'he was an African by birth and a pupil of Arnobius who taught at Sicca Veneria. An inscription found at Cirta in Numidia ... has led to the conclusion in some quarters that his family belonged to that place'; 'Lactantius was born a pagan'. Orthodox Encyclopedia (Moscow Patriarchate), vol. 39 (2020), 'Лактанций': 'ок. 250, Цирта, Нумидия (ныне Константина, Алжир)'. Fletcher, ANF 7 introductory notice: 'He was probably born about the middle of the third century'.",
+   "url": "https://www.newadvent.org/cathen/08736a.htm",
+   "verified": true,
+   "note": "Britannica gives 'born ad 240, North Africa'. Wikidata carries both 240 and 250. Plain wording that holds: 'About 250 (Britannica says 240), in North Africa.' Fletcher mentions an old view that he was an Italian from Firmum (Fermo); the Catholic Encyclopedia calls that a misreading of the name Firmianus. The Cirta inscription itself (CIL VIII 7241, per the Orthodox Encyclopedia) was not seen. His pagan parentage: the Orthodox Encyclopedia cites Epitome 43 and Augustine, On Christian Doctrine 2.40.61."
+  },
+  "grew_up": {
+   "text": "In North Africa. He studied rhetoric under Arnobius, who taught at Sicca Veneria (today El Kef, Tunisia). As a young man in Africa he wrote a Banquet, now lost.",
+   "source": "Jerome, Lives of Illustrious Men, chapter 80 ('a disciple of Arnobius'; 'We have a Banquet of his which he wrote as a young man in Africa'); Jerome, Letter 70, section 5 ('his pupil Lactantius'); Catholic Encyclopedia (Sicca Veneria).",
+   "url": "https://www.newadvent.org/fathers/2708.htm",
+   "verified": true,
+   "note": "'Today El Kef, Tunisia' is standard (Sicca Veneria = El Kef) but was not checked in a fetched source. Leave the modern name out, or check it before printing."
+  },
+  "died": {
+   "text": "No one knows when or how. Probably at Trier in Gaul (today Germany), about 320 to 325, in old age.",
+   "source": "Catholic Encyclopedia (1910): 'This new appointment compelled him to follow his charge to Trier where he spent the remainder of his life ... when Lactantius died and in what circumstances is not known.' Britannica: 'died c. 320, Augusta Treverorum, Belgica [now Trier, Ger.]'. Fletcher, ANF 7: 'He is believed to have died at Trèves about a.d. 325.' Orthodox Encyclopedia: 'ок. 320 ... Трир'; 'Точная дата кончины Л. неизвестна' (the exact date of death is unknown).",
+   "url": "https://www.newadvent.org/cathen/08736a.htm",
+   "verified": true,
+   "note": "Sources split between about 320 (Britannica, Orthodox Encyclopedia) and about 325 (Fletcher; Wikipedia's 'c. 325'). The site's 'c. 250 to c. 325' holds; better: 'died about 320 to 325'. No cause of death is recorded anywhere."
+  },
+  "buried": {
+   "text": "Not recorded.",
+   "source": "None of the sources read (Jerome, the Catholic Encyclopedia, Britannica, the Orthodox Encyclopedia, Fletcher) names a burial place.",
+   "url": "https://www.newadvent.org/cathen/08736a.htm",
+   "verified": true,
+   "note": "Leave the 'Buried' line out of the sheet, or print 'Not recorded'."
+  },
+  "also_called": {
+   "text": "Firmianus, the name Jerome and the Gelasian Decree use. His full name is Lucius Caecilius Firmianus Lactantius (sometimes Caelius). Renaissance humanists called him 'the Christian Cicero'. No church gives him a saint's title.",
+   "source": "Jerome, Lives of Illustrious Men 80 ('Firmianus, known also as Lactantius'); Gelasian Decree, part 5 ('the works of Lactantius also known as Firmianus', tr. Roger Pearse); Britannica ('In full: Lucius Caecilius Firmianus Lactantius'; 'Caecilius also spelled: Caelius'; 'referred to as the “Christian Cicero” by Renaissance humanists'); Catholic Encyclopedia ('the \"Christian Cicero\" bestowed on him by the humanists'); Orthodox Encyclopedia (Cicero Christianus, citing Pico della Mirandola, De studio divinae atque humanae philosophiae 7).",
+   "url": "https://www.britannica.com/biography/Lactantius",
+   "verified": true,
+   "note": "Coxe's ANF preface calls him 'the Christian Tully' (Tully = Cicero). French: Lactance. The Pico source was not seen, only the Orthodox Encyclopedia's citation of it."
+  },
+  "status": {
+   "text": "Church Father. Not counted a saint. No Catholic, Orthodox, Anglican, Episcopal or Lutheran calendar we checked keeps a day for him.",
+   "source": "See is_he_a_saint and feast_days below.",
+   "url": "https://www.newadvent.org/cathen/08736a.htm",
+   "verified": true,
+   "note": ""
+  },
+  "patron_of": {
+   "text": "Nothing. No patronage is recorded, which fits: no church venerates him.",
+   "source": "No source read names a patronage; Wikidata has no P417 for him (people-audit.json: patronOfItems 0).",
+   "url": "https://www.wikidata.org/wiki/Q209102",
+   "verified": true,
+   "note": "Leave the 'Patron of' line out."
+  },
+  "in_art": {
+   "text": "He has no traditional emblem. Later printmakers imagined him as an old bearded scholar with a pen (Henri Bonnart's engraving). The small 4th-century ceiling portrait sometimes labelled Lactantius is only 'possibly' him.",
+   "source": "Commons: File:Lactance, PA01382.jpg (Bonnart, KU Leuven); File:Lactantius.jpg ('Probably portrait of Lucius Cecilio Firmiano Lattanzio. Wall painting from the fourth century'); Wikipedia caption: 'Fourth-century mural possibly depicting Lactantius (or possibly Apuleius)'.",
+   "url": "https://commons.wikimedia.org/wiki/File:Lactance,_PA01382.jpg",
+   "verified": true,
+   "note": "The 'possibly' mural is 350 x 261 px and its identification is a guess; do not use it as his face."
+  },
+  "wrote": {
+   "text": "Jerome lists 12 works. 5 survive, all written after he became a Christian: The Divine Institutes (seven books), its Epitome, On the Anger of God, On the Workmanship of God, and On the Deaths of the Persecutors. A poem, The Phoenix, is also often given to him, but that is disputed.",
+   "source": "Jerome, Lives of Illustrious Men 80 (the list, counted here: Banquet; Itinerary from Africa to Nicomedia in hexameters; The Grammarian; On the Wrath of God; Divine Institutes, seven books; Epitome; To Asclepiades, two books; On Persecution; Letters to Probus, four books; Letters to Severus, two books; Letters to Demetrius, two books; On the Work of God = 12). Orthodox Encyclopedia: 'Блж. Иероним перечисляет 12 сочинений Л., из которых сохранились лишь 5, написанных после его обращения в христианство'. Catholic Encyclopedia: the Phoenix genuine; Fletcher, ANF 7: 'The poem on the Phoenix appears to be of a comparatively modern date.'",
+   "url": "https://www.newadvent.org/fathers/2708.htm",
+   "verified": true,
+   "note": "Jerome's 'On Persecution' is taken to be On the Deaths of the Persecutors. The Catholic Encyclopedia: 'Many attempts have been made to show that the work was not written by Lactantius', but it judges the case for him too strong to deny. Fletcher: the Epitome's authorship 'has been questioned in modern times; but it is expressly assigned to Lactantius by Hieronymus'."
+  },
+  "pronounced": {
+   "text": "lak-TAN-shee-us",
+   "source": "The Century Cyclopedia of Names (1894): 'Lactantius Firmianus (lak-tan'shi-us ...)'. Also the 1903 edition, same respelling.",
+   "url": "https://archive.org/details/centurycyclopedi00insmit",
+   "verified": true,
+   "note": "Merriam-Webster has no entry ('Lactantius' returns 404). Collins blocked the checker (HTTP 403). The Free Dictionary and Dictionary.com have no pronunciation for him. The Century's respelling 'lak-tan'shi-us' puts the stress on the second syllable and 'shi' = 'shee'. OCR text saved as sources/people/lactantius/raw/cc-centurycyclopedi00insmit.txt (line 233321)."
+  },
+  "places_today": {
+   "text": "Nicomedia is today Izmit in Turkey. Trier (Augusta Treverorum) is in Germany.",
+   "source": "Britannica: 'Nicomedia (later İzmit, Tur.)'; 'Augusta Treverorum, Belgica [now Trier, Ger.]'.",
+   "url": "https://www.britannica.com/biography/Lactantius",
+   "verified": true,
+   "note": ""
+  }
+ },
+ "roles": [
+  {
+   "name": "Student",
+   "line": "Of Arnobius, in North Africa",
+   "source": "Jerome, Lives of Illustrious Men 80; Letter 70.5",
+   "url": "https://www.newadvent.org/fathers/2708.htm",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "name": "Professor",
+   "line": "Of Latin rhetoric at Nicomedia",
+   "source": "Jerome, Lives 80 ('summoned to Nicomedia ... taught rhetoric there'); Divine Institutes 5.2 ('When I was teaching rhetorical learning in Bithynia, having been called there')",
+   "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.v.ii.html",
+   "verified": true,
+   "note": "Called by the emperor Diocletian (Jerome: 'during the reign of Diocletian summoned'; Catholic Encyclopedia: 'At the request of Emperor Diocletian he became an official professor of rhetoric in Nicomedia')."
+  },
+  {
+   "name": "Apologist",
+   "line": "The Divine Institutes, 303 to 311",
+   "source": "Catholic Encyclopedia: 'written between 303 and 311'; 'the first attempt at a systematic exposition of Christian theology in Latin'",
+   "url": "https://www.newadvent.org/cathen/08736a.htm",
+   "verified": true,
+   "note": "Britannica: 'the first systematic Latin account of the Christian attitude toward life'."
+  },
+  {
+   "name": "Historian",
+   "line": "Of the Great Persecution",
+   "source": "Catholic Encyclopedia: On the Deaths of the Persecutors 'is of prime importance as a source of the last and greatest of the persecutions'",
+   "url": "https://www.newadvent.org/cathen/08736a.htm",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "name": "Tutor",
+   "line": "To Crispus, Constantine's son, in Gaul",
+   "source": "Jerome, Lives 80 ('In his extreme old age he was tutor to Crispus Cæsar a son of Constantine in Gaul'); Jerome, Chronicle (year 317)",
+   "url": "https://www.newadvent.org/fathers/2708.htm",
+   "verified": true,
+   "note": ""
+  }
+ ],
+ "feast_days": {
+  "text": "None. No church we checked keeps a feast day for him.",
+  "checks": [
+   {
+    "church": "Catholic",
+    "result": "Not in the Roman Martyrology (1916 English edition): 0 hits for 'Lactant' in the full text; control 'Martin' 28 hits. No feast in the General Roman Calendar.",
+    "url": "https://archive.org/details/romanmartyrology00cathuoft",
+    "verified": true,
+    "note": "The current (2004) Roman Martyrology was not checked. Wikidata lists no feast (P841)."
+   },
+   {
+    "church": "Orthodox (OCA)",
+    "result": "Not in the OCA's lives of the saints on any day: all 366 daily 'all lives' pages (2024) fetched and searched; 0 hits for 'Lactant' or 'Firmian'; control Martin the Merciful found on 12 October and 11 November.",
+    "url": "https://www.oca.org/saints/all-lives/2024/11/11",
+    "verified": true,
+    "note": "Pages saved in sources/people/lactantius/raw/oca/."
+   },
+   {
+    "church": "Orthodox (Russian)",
+    "result": "The Orthodox Encyclopedia (Moscow Patriarchate, vol. 39, 2020) calls him an 'early Christian apologist' and gives him no saint's title, while in the same article Augustine is 'блж.' (Blessed) and Constantine 'св.' (Saint).",
+    "url": "https://www.pravenc.ru/text/2462563.html",
+    "verified": true,
+    "note": "azbyka.ru search returned 404; GOARCH and the Greek synaxaria were not checked."
+   },
+   {
+    "church": "Church of England",
+    "result": "Not in the Common Worship calendar: 0 hits; control Martin 3 hits.",
+    "url": "https://www.churchofengland.org/prayer-and-worship/worship-texts-and-resources/common-worship/churchs-year/calendar",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "church": "Episcopal Church",
+    "result": "Not in Lesser Feasts and Fasts 2022: 0 hits in the whole PDF; control Martin 43 hits.",
+    "url": "https://www.episcopalchurch.org/wp-content/uploads/2022/11/Lesser-Feasts-and-Fasts-2022_final.pdf",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "church": "Lutheran (LCMS)",
+    "result": "Not in the Lutheran Service Book commemorations as listed in The Lutheran Witness (November 2008): 0 hits; control Martin 3 hits.",
+    "url": "https://witness.lcms.org/2008/saints-more-than-a-short-list-11-2008/",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "church": "Lutheran (ELCA)",
+    "result": "Not in the Evangelical Lutheran Worship church-year calendar (2006 draft PDF, archived): 0 hits; control Martin 4 hits.",
+    "url": "https://web.archive.org/web/20060908112753/http://www.renewingworship.org/ELW/content/PDF/ChurchYear_asm_20060119.pdf",
+    "verified": true,
+    "note": "A draft; the final ELW book was not checked."
+   }
+  ],
+  "why": "No church venerates him. A sixth-century list of books, the Gelasian Decree, puts 'the works of Lactantius also known as Firmianus' among the writings the Church 'does not in any way receive' (see is_he_a_saint).",
+  "verified": true
+ },
+ "numbers": [
+  {
+   "chip": "Books",
+   "n": "7",
+   "lines": [
+    "In the Divine Institutes",
+    "Written 303 to 311"
+   ],
+   "src": "Jerome, Lives of Illustrious Men 80; Catholic Encyclopedia",
+   "url": "https://www.newadvent.org/fathers/2708.htm",
+   "verified": true,
+   "note": "Jerome: 'Divine institutes against the nations, seven books'. Dates from the Catholic Encyclopedia."
+  },
+  {
+   "chip": "Works Jerome lists",
+   "n": "12",
+   "lines": [
+    "5 survive",
+    "The rest are lost"
+   ],
+   "src": "Jerome, Lives of Illustrious Men 80; Orthodox Encyclopedia (2020)",
+   "url": "https://www.newadvent.org/fathers/2708.htm",
+   "verified": true,
+   "note": "Counted from Jerome's list (see quick_facts.wrote); the Orthodox Encyclopedia gives the same 12 and 5."
+  },
+  {
+   "chip": "Years left, he reckoned",
+   "n": "200",
+   "lines": [
+    "At most, before the world's end",
+    "He wrote this about 310"
+   ],
+   "src": "Divine Institutes, Book 7, chapter 25",
+   "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.vii.xxv.html",
+   "verified": true,
+   "note": "Exact: 'yet all expectation does not exceed the limit of two hundred years.' 'About 310' is our inference from the Catholic Encyclopedia's 303 to 311 for the whole work; safer: drop the second line or say 'Writing in the early 300s'."
+  },
+  {
+   "chip": "Manuscripts",
+   "n": "1",
+   "lines": [
+    "Hold the whole of",
+    "On the Deaths of the Persecutors"
+   ],
+   "src": "Catholic Encyclopedia (1910)",
+   "url": "https://www.newadvent.org/cathen/08736a.htm",
+   "verified": true,
+   "note": "Exact: 'The full text is found in only one manuscript, which bears the title, \"Lucii Caecilii liber ad Donatum Confessorem de Mortibus Persecutorum\".'"
+  },
+  {
+   "chip": "First dated book printed in Italy",
+   "n": "1465",
+   "lines": [
+    "His works, at Subiaco",
+    "29 October 1465"
+   ],
+   "src": "Sotheby's, lot description (2026); Princeton University Library catalogue title",
+   "url": "https://www.sothebys.com/en/buy/auction/2026/books-manuscripts-objects-from-three-important-collections/lactantius-opera-subiaco-1465-first-edition-of-the",
+   "verified": true,
+   "note": "Sotheby's lot title: 'Lactantius | Opera. [Subiaco, 1465], first edition of the first dated book printed in Italy'. The date 29 October 1465 and the printers (Conrad Sweynheym and Arnold Pannartz) appear in the Princeton catalogue title seen in search results ('LACTANTIUS, OPERA. SUBIACO: [Conrad Sweynheym & Arnold Pannartz], 29 October 1465'); the Princeton page itself sat behind a bot check, and Cambridge University Library's exhibition page refused the connection. Orthodox Encyclopedia: 'Subiaco, [1465] [editio princeps]'."
+  }
+ ],
+ "traits": [
+  {
+   "title": "a stylist who wanted plain truth",
+   "text": "He was a famous teacher of eloquence. Yet he said God made Scripture plain on purpose, so that everyone could understand it. Of himself he said there was 'but a slight stream of eloquence' in him.",
+   "quote_exact": "He wished those things which are divine to be without adornment, that all might understand the things which He Himself spoke to all.",
+   "quote_display": "He wished those things which are divine to be without adornment, that all might understand the things which He Himself spoke to all.",
+   "cite": "Divine Institutes, Book 6, chapter 21; On the Workmanship of God, chapter 20",
+   "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.vi.xxi.html",
+   "verified": true,
+   "note": "The 'slight stream' line: Workmanship of God 20 ('because there is in me but a slight stream of eloquence')."
+  },
+  {
+   "title": "blunt about other writers",
+   "text": "He called Tertullian 'not sufficiently polished, and very obscure'. He said Cyprian should have answered a pagan with reason, not with Scripture the man thought false. He even passes on a pagan joke that changed one letter of Cyprian's name to make 'Coprianus'.",
+   "quote_exact": "Septimius Tertullianus also was skilled in literature of every kind; but in eloquence he had little readiness, and was not sufficiently polished, and very obscure.",
+   "quote_display": "Septimius Tertullianus also was skilled in literature of every kind; but in eloquence he had little readiness, and was not sufficiently polished, and very obscure.",
+   "cite": "Divine Institutes, Book 5, chapters 1 and 4",
+   "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.v.i.html",
+   "verified": true,
+   "note": "Cyprian, 5.4: 'for he ought to have been refuted not by the testimonies of Scripture, which he plainly considered vain, fictitious, and false, but by arguments and reason.' Coprianus, 5.1. The ANF footnote glosses the joke from the Greek κοπρίας (a buffoon); do not add a 'dung' gloss without a source."
+  },
+  {
+   "title": "poor, and kept writing",
+   "text": "He lost his pupils and lived in real want. Jerome says he 'generally lacked even the necessities'. He opens one book by telling his old pupil how troubled he is, 'and in the greatest necessities'.",
+   "quote_exact": "How disturbed I am, and in the greatest necessities, you will be able to judge from this little book",
+   "quote_display": "How disturbed I am, and in the greatest necessities, you will be able to judge from this little book",
+   "cite": "On the Workmanship of God, chapter 1; Jerome, Chronicle, year 317",
+   "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.iv.i.html",
+   "verified": true,
+   "note": "Jerome's Chronicle is Roger Pearse's translation (2005), marked 'in the public domain - copy freely'."
+  },
+  {
+   "title": "glad when persecutors fell",
+   "text": "He wrote a whole book on how the emperors who persecuted Christians died, and he lingers over the details. He wrote it so that later readers 'may learn how the Almighty manifested His power'.",
+   "quote_exact": "may learn how the Almighty manifested His power and sovereign greatness in rooting out and utterly destroying the enemies of His name.",
+   "quote_display": "may learn how the Almighty manifested His power and sovereign greatness in rooting out and utterly destroying the enemies of His name.",
+   "cite": "On the Deaths of the Persecutors, chapter 1",
+   "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.v.i.html",
+   "verified": true,
+   "note": "Galerius's death, chapter 33, is told in grisly detail ('The stench was so foul as to pervade not only the palace, but even the whole city'). The Catholic Encyclopedia speaks of 'the manifest bias of the author'. Alternative fourth trait if the owner prefers a warmer one: 'wisdom is for everyone' (Divine Institutes 3.25: 'both workmen, and country people, and women, and all ... should be taught to be wise')."
+  }
+ ],
+ "others_on_him": [
+  {
+   "exact": "Lactantius has a flow of eloquence worthy of Tully: would that he had been as ready to teach our doctrines as he was to pull down those of others!",
+   "who": "Jerome, about 70 years later",
+   "work": "Letter 58, to Paulinus",
+   "place": "section 10",
+   "source": "NPNF 2nd series vol. 6 (Fremantle, 1893); checked in the unrevised CCEL text and New Advent",
+   "url": "https://www.newadvent.org/fathers/3001058.htm",
+   "verified": true,
+   "note": "Tully = Cicero. 'About 70 years later' is ours (Letter 58 is usually dated about 395); safer: 'Jerome, writing later in the same century'."
+  },
+  {
+   "exact": "Lactantius, the most eloquent man of his time, educated Crispus in Latin literature; but he (Lactantius) was in fact a pauper in this life, as he generally lacked even the necessities.",
+   "who": "Jerome",
+   "work": "Chronicle",
+   "place": "the year 317",
+   "source": "Roger Pearse and friends (tr., 2005), public domain",
+   "url": "https://www.tertullian.org/fathers/jerome_chronicle_03_part2.htm",
+   "verified": true,
+   "note": "The '(Lactantius)' is the translator's insertion; print it as is or cut it with an ellipsis."
+  },
+  {
+   "exact": "Do we not see with what a quantity of gold and silver and garments Cyprian, that most persuasive teacher and most blessed martyr, was loaded when he came out of Egypt? How much Lactantius brought with him?",
+   "who": "Augustine, praising Christians who put pagan learning to good use",
+   "work": "On Christian Doctrine, Book 2",
+   "place": "chapter 40",
+   "source": "NPNF 1st series vol. 2 (J. F. Shaw, 1887), New Advent",
+   "url": "https://www.newadvent.org/fathers/12022.htm",
+   "verified": true,
+   "note": "Augustine's image: the gold of Egypt that Israel carried out (Exodus). The page can cut to '…How much Lactantius brought with him?'"
+  },
+  {
+   "exact": "Lactantius in his books and particularly in his letters to Demetrian altogether denies the subsistence of the Holy Spirit",
+   "who": "Jerome, the critic",
+   "work": "Letter 84, to Pammachius and Oceanus",
+   "place": "section 7",
+   "source": "NPNF 2nd series vol. 6, New Advent and unrevised CCEL",
+   "url": "https://www.newadvent.org/fathers/3001084.htm",
+   "verified": true,
+   "note": "Same section, the defence in the same breath: 'But who can forbid me to read his Institutes— in which he has written against the Gentiles with much ability — simply because this opinion of his is to be abhorred?' The letters to Demetrianus are lost, so the charge cannot be checked in his own words."
+  }
+ ],
+ "life_moments": [
+  {
+   "place": "North Africa",
+   "when": "A young man",
+   "title": "Arnobius's pupil",
+   "text": "He studied under Arnobius, a teacher of rhetoric who later became a Christian writer himself. As a young man in Africa he wrote a Banquet, now lost.",
+   "source": "Jerome, Lives of Illustrious Men, chapter 80; Letter 70, section 5",
+   "url": "https://www.newadvent.org/fathers/2708.htm",
+   "verified": true,
+   "note": "Whether he was already a Christian in Africa is debated (Orthodox Encyclopedia: most date his conversion to about 300 to 303 at Nicomedia; some place it in Africa)."
+  },
+  {
+   "place": "Nicomedia",
+   "when": "Under Diocletian",
+   "title": "Called to the emperor's city",
+   "text": "The emperor Diocletian summoned him to Nicomedia to teach Latin rhetoric. He wrote a poem about the journey from Africa. But it was a Greek city, and he had few pupils, so he turned to writing.",
+   "source": "Jerome, Lives of Illustrious Men, chapter 80 ('on account of his lack of pupils (since it was a Greek city) he betook himself to writing'; 'an Itinerary of a journey from Africa to Nicomedia written in hexameters')",
+   "url": "https://www.newadvent.org/fathers/2708.htm",
+   "verified": true,
+   "note": "The Orthodox Encyclopedia dates the summons to about 290 (not checked elsewhere). The poem is lost."
+  },
+  {
+   "place": "Nicomedia",
+   "when": "23 February 303",
+   "title": "The church torn down",
+   "text": "At dawn on a pagan feast day, officials forced the doors of the church. They burned the Scriptures and looted the rest. The church stood in view of the palace. Diocletian and Galerius watched 'as if on a watchtower', arguing about whether to set it on fire. Then the guards levelled it in a few hours. The next day an edict stripped Christians of their rights.",
+   "source": "On the Deaths of the Persecutors, chapters 12 and 13",
+   "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.v.xii.html",
+   "verified": true,
+   "note": "The day: 'the festival of the god Terminus, celebrated on the sevens of the kalends of March'; the ANF footnote gives '23d of February'. The year: 'in the eighth consulship of Diocletian and seventh of Maximian'; the Catholic Encyclopedia dates the first edict 24 February 303. Lactantius puts himself in Bithynia at the time (Divine Institutes 5.2), but he does not say in so many words that he watched. Keep the site's careful wording ('He was teaching in the emperor's city when ...'). ANF unrevised: 'watch-tower'."
+  },
+  {
+   "place": "Bithynia",
+   "when": "303 to 305",
+   "title": "Answering the mockers",
+   "text": "While the church lay in ruins, two men wrote against the Christians. One was a philosopher who praised simple living but dined better at home than in a palace. The other was a judge who had pushed for the persecution. Their books moved Lactantius to write the Divine Institutes. He watched the governor rejoice 'as though he had subdued some nation of barbarians' when one Christian gave way after two years.",
+   "source": "Divine Institutes, Book 5, chapters 2 and 11",
+   "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.v.ii.html",
+   "verified": true,
+   "note": "5.11 exact: 'I saw in Bithynia the præfect wonderfully elated with joy, as though he had subdued some nation of barbarians, because one who had resisted for two years with great spirit appeared at length to yield.' The judge is usually identified as Sossianus Hierocles (On the Deaths of the Persecutors 16 names Hierocles as 'the author and adviser of the persecution'; the identification of the two is a scholars' inference, not Lactantius's). '303 to 305' is loose: Britannica says he resigned 'about 305'; the Catholic Encyclopedia thinks he lost his post after the first edict of 303."
+  },
+  {
+   "place": "Gaul",
+   "when": "After 312",
+   "title": "For Constantine",
+   "text": "Constantine ended the persecution. Lactantius addressed the Institutes to him, as 'the first of the Roman princes to repudiate errors'. He also wrote the earliest account of Constantine's dream before the battle at the Milvian Bridge in 312. Constantine was told to mark 'the heavenly sign' on his soldiers' shields, and he marked the cipher of Christ.",
+   "source": "Divine Institutes, Book 1, chapter 1; On the Deaths of the Persecutors, chapter 44; Catholic Encyclopedia, 'Constantine the Great' (28 October 312)",
+   "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.v.xliv.html",
+   "verified": true,
+   "note": "Exact (DMP 44): 'Constantine was directed in a dream to cause the heavenly sign to be delineated on the shields of his soldiers, and so to proceed to battle.' Latin (The Latin Library): 'Commonitus est in quiete Constantinus, ut caeleste signum dei notaret in scutis atque ita proelium committeret.' The addresses to Constantine are missing from some manuscripts (ANF note at 7.26: 'wanting in some manuscripts and editions'); the Catholic Encyclopedia (1910) thought the 'panegyrical passages' not his. Say 'addressed' plainly but add the manuscript note in 'Often misquoted' or the sources."
+  },
+  {
+   "place": "Trier",
+   "when": "About 317",
+   "title": "Tutor to the emperor's son",
+   "text": "In extreme old age he became tutor to Crispus, Constantine's eldest son, in Gaul. Crispus was later put to death by his own father, in 326.",
+   "source": "Jerome, Lives of Illustrious Men 80; Jerome, Chronicle (year 317); Catholic Encyclopedia ('Crispus was put to death in 326'; Trier)",
+   "url": "https://www.newadvent.org/fathers/2708.htm",
+   "verified": true,
+   "note": "Jerome: 'In his extreme old age he was tutor to Crispus Cæsar a son of Constantine in Gaul, the same one who was afterwards put to death by his father.' 'Eldest son' is from the Catholic Encyclopedia's Constantine article ('Crispus his own son by his first marriage'); safer: 'Constantine's son'. Some date the move to Gaul to about 310 (Orthodox Encyclopedia); 317 is the year Crispus became Caesar."
+  }
+ ],
+ "miracles": {
+  "text": "No early source records a miracle worked by Lactantius, and no church venerates him. Leave the miracles section out.",
+  "verified": true,
+  "note": "He did RECORD wonders, which could go in a small 'Wonders he wrote down' box if the owner wants one, told as he tells them (not as his miracles):",
+  "recorded_wonders": [
+   {
+    "title": "The sign that stopped the omens",
+    "text": "While Diocletian sacrificed, Christian attendants made 'the immortal sign' on their foreheads, and the soothsayers could no longer read the entrails. This, he says, set off the persecution.",
+    "exact": "they put the immortal sign on their foreheads. At this the demons were chased away, and the holy rites interrupted.",
+    "cite": "On the Deaths of the Persecutors, chapter 10",
+    "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.v.x.html",
+    "verified": true
+   },
+   {
+    "title": "Constantine's dream",
+    "text": "See life_moments. The earliest account.",
+    "exact": "Constantine was directed in a dream to cause the heavenly sign to be delineated on the shields of his soldiers, and so to proceed to battle.",
+    "cite": "On the Deaths of the Persecutors, chapter 44",
+    "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.v.xliv.html",
+    "verified": true
+   },
+   {
+    "title": "An angel's prayer for Licinius",
+    "text": "Before his battle with Daia in 313, 'an angel of the Lord seemed to stand before Licinius while he was asleep' and taught him a prayer. His army prayed it three times on the field.",
+    "exact": "Supreme God, we beseech Thee; Holy God, we beseech Thee; unto Thee we commend all right; unto Thee we commend our safety; unto Thee we commend our empire. By Thee we live, by Thee we are victorious and happy. Supreme Holy God, hear our prayers; to Thee we stretch forth our arms. Hear, Holy Supreme God.",
+    "cite": "On the Deaths of the Persecutors, chapter 46",
+    "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.v.xlvi.html",
+    "verified": true,
+    "note": "ANF unrevised has 'Thee'; New Advent modernises to 'You'. The year 313 is not in the text; the Catholic Encyclopedia's Constantine article puts Licinius's alliance at the end of 312 or start of 313."
+   },
+   {
+    "title": "Christians casting out demons",
+    "text": "He says Christ's followers still drive out demons 'in the name of their Master, and by the sign of His passion'.",
+    "exact": "so now His followers, in the name of their Master, and by the sign of His passion, banish the same polluted spirits from men.",
+    "cite": "Divine Institutes, Book 4, chapter 27",
+    "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.iv.xxvii.html",
+    "verified": true
+   }
+  ],
+  "doubters": "Doubt in the sources' own words, if the box is used: Eusebius's later Life of Constantine tells a different story (a cross of light in the sky at noon, then Christ in a dream), and the Catholic Encyclopedia notes 'the manifest bias of the author' of On the Deaths of the Persecutors. Lactantius himself says: 'I relate all those things on the authority of well-informed persons' (chapter 52)."
+ },
+ "his_words": {
+  "framing": {
+   "text": "These are his own words, from his books, in William Fletcher's translation of 1886 (Lord Hailes's for On the Deaths of the Persecutors).",
+   "verified": true
+  },
+  "feature": {
+   "kicker": "Why he wrote",
+   "exact": "I shall think that I have lived enough, and that I have discharged the duty of a man, if my labour shall have freed some men from errors, and have directed them to the path which leads to heaven.",
+   "display": "I shall think that I have lived enough, and that I have discharged the duty of a man, if my labour shall have freed some men from errors, and have directed them to the path which leads to heaven.",
+   "ctx": "The last lines of his first Christian book, written to his old pupil Demetrianus as the persecution began.",
+   "latin": "Satis me vixisse arbitrabor, et officium hominis implesse, si labor meus aliquos homines ab erroribus liberatos, ad iter coeleste direxerit.",
+   "latin_source": "Quoted by A. Cleveland Coxe in the ANF 7 introductory notice (1886), from the Basel edition of 1521, which numbers it chapter 21. Coxe: 'I love the writings of Lactantius, and two of his sayings are always uppermost when I recall his name.'",
+   "cite": "On the Workmanship of God, chapter 20",
+   "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.iv.xx.html",
+   "ghost": "satis",
+   "verified": true,
+   "note": "Checked in both copies. 'As the persecution began': the Catholic Encyclopedia dates the work 303 or 304, 'during the Diocletian persecution'. The Latin was not checked against a modern critical edition; the ANF's Latin is Coxe's. The chapter number differs (20 in ANF, 21 in Coxe's Basel edition): print 'chapter 20' with the ANF link."
+  },
+  "lines": [
+   {
+    "exact": "For religion is to be defended, not by putting to death, but by dying; not by cruelty, but by patient endurance; not by guilt, but by good faith",
+    "display": "For religion is to be defended, not by putting to death, but by dying; not by cruelty, but by patient endurance; not by guilt, but by good faith.",
+    "ctx": "Against forcing faith, written during the persecution.",
+    "cite": "Divine Institutes, Book 5, chapter 20",
+    "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.v.xx.html",
+    "verified": true,
+    "note": "The sentence runs on after 'good faith' with a colon; the page ends it with a full stop. The most searched Lactantius line, with the next."
+   },
+   {
+    "exact": "There is no occasion for violence and injury, for religion cannot be imposed by force; the matter must be carried on by words rather than by blows, that the will may be affected.",
+    "display": "There is no occasion for violence and injury, for religion cannot be imposed by force; the matter must be carried on by words rather than by blows, that the will may be affected.",
+    "ctx": "Same chapter. The Latin core, 'religio cogi non potest', is widely quoted (not checked in a Latin text).",
+    "cite": "Divine Institutes, Book 5, chapter 20",
+    "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.v.xx.html",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "exact": "Therefore, with regard to this precept of God, there ought to be no exception at all; but that it is always unlawful to put to death a man, whom God willed to be a sacred animal.",
+    "display": "Therefore, with regard to this precept of God, there ought to be no exception at all; but that it is always unlawful to put to death a man, whom God willed to be a sacred animal.",
+    "ctx": "On 'Thou shalt not kill'. He applies it to war and to bringing a capital charge.",
+    "cite": "Divine Institutes, Book 6, chapter 20",
+    "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.vi.xx.html",
+    "verified": true,
+    "note": "'Sacred animal' is Fletcher's literal rendering; readers may stumble. The same chapter: 'it makes no difference whether you put a man to death by word, or rather by the sword, since it is the act of putting to death itself which is prohibited.'"
+   },
+   {
+    "exact": "For if God is not angry with the impious and the unrighteous, it is clear that He does not love the pious and the righteous.",
+    "display": "For if God is not angry with the impious and the unrighteous, it is clear that He does not love the pious and the righteous.",
+    "ctx": "His case against philosophers who said God feels nothing.",
+    "cite": "On the Anger of God, chapter 5",
+    "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.iii.v.html",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "exact": "nor is there any other cause why we mutually bestow upon each other the name of brethren, except that we believe ourselves to be equal.",
+    "display": "Nor is there any other cause why we mutually bestow upon each other the name of brethren, except that we believe ourselves to be equal.",
+    "ctx": "Why Christians, rich and poor, slave and free, call each other brothers.",
+    "cite": "Divine Institutes, Book 5, chapter 16",
+    "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.v.xvi.html",
+    "verified": true,
+    "note": "Starts mid-sentence (after 'There is none;'); capital N added for display."
+   },
+   {
+    "exact": "The last and greatest office of piety is the burying of strangers and the poor",
+    "display": "The last and greatest office of piety is the burying of strangers and the poor.",
+    "ctx": "On works of mercy the philosophers never mentioned.",
+    "cite": "Divine Institutes, Book 6, chapter 12",
+    "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.vi.xii.html",
+    "verified": true,
+    "note": "Sentence continues '; which subject those teachers of virtue and justice have not touched upon at all.'"
+   },
+   {
+    "exact": "But if the nature of man is capable of wisdom, it was befitting that both workmen, and country people, and women, and all, in short, who bear the human form, should be taught to be wise",
+    "display": "If the nature of man is capable of wisdom, it was befitting that both workmen, and country people, and women, and all, in short, who bear the human form, should be taught to be wise.",
+    "ctx": "Against philosophers who kept wisdom for the few.",
+    "cite": "Divine Institutes, Book 3, chapter 25",
+    "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.iii.xxv.html",
+    "verified": true,
+    "note": "Display drops the opening 'But'; mark with an ellipsis if the owner prefers strictness."
+   },
+   {
+    "exact": "We can take nothing with us, except a well and innocently spent life.",
+    "display": "We can take nothing with us, except a well and innocently spent life.",
+    "ctx": "Near the very end of the Divine Institutes.",
+    "cite": "Divine Institutes, Book 7, chapter 27",
+    "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.vii.xxvii.html",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "exact": "Therefore it is the Catholic Church alone which retains true worship.",
+    "display": "Therefore it is the Catholic Church alone which retains true worship.",
+    "ctx": "Warning against the sects of his day, which he names.",
+    "cite": "Divine Institutes, Book 4, chapter 30",
+    "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.iv.xxx.html",
+    "verified": true,
+    "note": "Searched by Catholics and apologists. 'Catholic' here is the early sense (the whole Church against sects: Phrygians, Novatians, Valentinians, Marcionites, Arians, named in the same chapter). Same chapter: 'the true Catholic Church is that in which there is confession and repentance'."
+   },
+   {
+    "exact": "But the first step towards wisdom is to understand what is false; the second, to ascertain what is true.",
+    "display": "The first step towards wisdom is to understand what is false; the second, to ascertain what is true.",
+    "ctx": "Closing his first book, on false religion.",
+    "cite": "Divine Institutes, Book 1, chapter 23",
+    "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.i.xxiv.html",
+    "verified": true,
+    "note": "Quote sites print 'The first point of wisdom is to discern what is false; the second, to know what is true' (a looser rendering). CCEL page id is .i.xxiv because Book 1 has a preface page; its heading reads 'Chap. xxiii'."
+   }
+  ],
+  "hard_lines": [
+   {
+    "exact": "Or is there any one so senseless as to believe that there are men whose footsteps are higher than their heads?",
+    "ctx": "Mocking the idea of people living on the other side of a round earth.",
+    "cite": "Divine Institutes, Book 3, chapter 24",
+    "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.iii.xxiv.html",
+    "verified": true
+   },
+   {
+    "exact": "yet all expectation does not exceed the limit of two hundred years.",
+    "ctx": "How long until the world ends.",
+    "cite": "Divine Institutes, Book 7, chapter 25",
+    "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.vii.xxv.html",
+    "verified": true
+   },
+   {
+    "exact": "at the end of the six thousandth year all wickedness must be abolished from the earth, and righteousness reign for a thousand years",
+    "ctx": "A literal thousand-year reign on earth.",
+    "cite": "Divine Institutes, Book 7, chapter 14",
+    "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.vii.xiv.html",
+    "verified": true
+   },
+   {
+    "exact": "Wherefore it is undoubted that there is no religion wherever there is an image.",
+    "ctx": "Aimed at pagan idols. Do not present it as a ruling on Christian icons.",
+    "cite": "Divine Institutes, Book 2, chapter 19",
+    "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.ii.xix.html",
+    "verified": true
+   }
+  ]
+ },
+ "hard_topics": [
+  {
+   "topic": "The Holy Spirit",
+   "holders": "Jerome still read and recommended the Institutes: 'who can forbid me to read his Institutes ... simply because this opinion of his is to be abhorred?' (Letter 84.7).",
+   "critics": "Jerome: 'Lactantius in his books and particularly in his letters to Demetrian altogether denies the subsistence of the Holy Spirit' (Letter 84.7). The letters are lost.",
+   "url": "https://www.newadvent.org/fathers/3001084.htm",
+   "verified": true
+  },
+  {
+   "topic": "A flat earth",
+   "holders": "He really did mock a round earth with people on the far side ('men whose footsteps are higher than their heads', Divine Institutes 3.24).",
+   "critics": "Copernicus singled him out in the preface of On the Revolutions (1543): 'Non enim obscurum est Lactantium, celebrem alioqui scriptorem, sed Mathematicum parum, admodum pueriliter de forma terrae loqui, cum deridet eos, qui terram globi formam habere prodiderunt' (Lactantius, a famous writer but no mathematician, speaks quite childishly about the shape of the earth when he mocks those who said it is a globe).",
+   "url": "https://la.wikisource.org/wiki/De_revolutionibus_orbium_coelestium/02",
+   "verified": true,
+   "note": "The English gloss is ours; print it as a paraphrase, not a quotation. That he was an outlier among Christian writers is widely said (Wikipedia; J. B. Russell, Inventing the Flat Earth, 1991) but not checked here: say only what he wrote and what Copernicus said."
+  },
+  {
+   "topic": "The end of the world",
+   "holders": "He expected six thousand years of history, then a thousand-year reign of the just on earth, with the end at most two hundred years off (Divine Institutes 7.14 and 7.25).",
+   "critics": "Jerome lists him among those who held this 'thousand years' view, with Irenaeus, Tertullian and Victorinus: 'Tertullian also in his work On the hope of the faithful, Victorinus of Petau and Lactantius follow this view' (Lives of Illustrious Men 18, on Papias).",
+   "url": "https://www.newadvent.org/fathers/2708.htm",
+   "verified": true
+  },
+  {
+   "topic": "Glee at the persecutors' deaths",
+   "holders": "He says he wrote so that later readers 'may learn how the Almighty manifested His power ... in rooting out and utterly destroying the enemies of His name' (Deaths of the Persecutors 1).",
+   "critics": "Catholic Encyclopedia (1910): 'notwithstanding the manifest bias of the author, [it] is of prime importance as a source'.",
+   "url": "https://www.newadvent.org/cathen/08736a.htm",
+   "verified": true
+  },
+  {
+   "topic": "No war, no death penalty",
+   "holders": "A just man may not fight in war, nor even bring a capital charge (Divine Institutes 6.20).",
+   "critics": "Most later Christian teaching allowed a just war (Augustine and Ambrose, per the fathers research). Not checked here in their own words; the site's quiz already pairs him against the just-war view.",
+   "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.vi.xx.html",
+   "verified": false,
+   "note": "His side is verified; the critics' side needs an Augustine quotation before printing (e.g. from the war topic research, design/quiz-ideas/fathers/research/topics/war.json)."
+  },
+  {
+   "topic": "A shallow theologian?",
+   "holders": "Jerome: 'the most eloquent man of his time' (Chronicle); Augustine counts him among those who carried Egypt's gold to God's use (On Christian Doctrine 2.40).",
+   "critics": "Catholic Encyclopedia (1910): 'polished rather than profound'; 'The beauty of the style ... cannot hide the author's lack of grasp of Christian principles and his almost utter ignorance of Scripture.' Britannica: 'Limited by an unprofound view of religion as popular morality'. Fletcher, ANF: 'his claims as a theologian are open to question'.",
+   "url": "https://www.newadvent.org/cathen/08736a.htm",
+   "verified": true
+  },
+  {
+   "topic": "Books 'not received'",
+   "holders": "",
+   "critics": "The Gelasian Decree, an early list of books to receive and avoid, puts 'the works of Lactantius also known as Firmianus' among those 'to be avoided by catholics' (part 5, tr. Roger Pearse).",
+   "url": "https://www.tertullian.org/decretum_eng.htm",
+   "verified": true,
+   "note": "Its heading: 'The remaining writings which have been compiled or been recognised by heretics or schismatics the Catholic and Apostolic Roman Church does not in any way receive; of these we have thought it right to cite below a few which have been handed down and which are to be avoided by catholics'. The same list includes Eusebius's History and Tertullian. The decree bears Pope Gelasius's name (late 5th century) but its date and author are disputed; do not call it 'Pope Gelasius's ruling'. The Orthodox Encyclopedia adds a letter of Pope Hormisdas (not checked)."
+  }
+ ],
+ "misquoted_or_legend": [
+  {
+   "claim": "'Is God willing to prevent evil, but not able? Then He is not omnipotent ... Then why call Him God?' Epicurus's famous riddle.",
+   "truth": "The riddle survives only in Lactantius, who quotes it as Epicurus's in order to answer it. His form is 'God, he says, either wishes to take away evils, and is unable; or He is able, and is unwilling ...'. The punchy modern wording comes from David Hume's Dialogues (1779), which has no 'Then why call Him God?'. Lactantius's own answer: God allows evil because He 'at the same time gives wisdom'.",
+   "source": "On the Anger of God, chapter 13 (ANF); David Hume, Dialogues Concerning Natural Religion, Part 10 (Project Gutenberg #4583: 'EPICURUS's old questions are yet unanswered. Is he willing to prevent evil, but not able? then is he impotent. Is he able, but not willing? then is he malevolent. Is he both able and willing? whence then is evil?')",
+   "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.iii.xiii.html",
+   "verified": true,
+   "note": "Where 'Then why call him God?' first appears was NOT traced. Say only: 'Not in Lactantius or Hume.' Whether Epicurus himself framed it is doubted by scholars (fathers research), not checked here."
+  },
+  {
+   "claim": "'Devils so work that things which are not, appear to men as if they were real.' (the Latin epigraph of H. P. Lovecraft's story 'The Festival', 1925)",
+   "truth": "Not his words. It is a later paraphrase. His real line says demons deceive men 'so that they do not see those things which exist, and think that they see those things which do not exist'. The Latin tag was traced back through Cotton and Increase Mather to Nicolas Remy's witch-hunting manual of 1595.",
+   "source": "Weird Tales vol. 5 no. 1 (January 1925), 'The Festival' (Wikisource): '\"Efficiunt daemones, ut quae non sunt, sic tamen quasi sint, conspicienda hominibus exhibeant.\"—Lactantius.' The real line: Divine Institutes, Book 2, chapter 15 (ANF). The chain: 'Lovecraft's Lactantius', The Blogicaster, 16 October 2011.",
+   "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.ii.xv.html",
+   "verified": true,
+   "note": "Verified: the epigraph and its attribution; the real line in the ANF. From the blog only (not checked): the Mather and Remy steps. Quote sites (AZ Quotes) still print 'Devils so work that things which are not, appear to men as if they were real' under his name."
+  },
+  {
+   "claim": "'Can anyone be so foolish as to believe that there are men whose feet are higher than their heads ... Where is the marvel of the Hanging Gardens of Babylon if we are to allow of a hanging world at the Antipodes?'",
+   "truth": "The idea is his, but not these words. He asks 'Or is there any one so senseless as to believe that there are men whose footsteps are higher than their heads?' and jokes that philosophers 'make hanging fields, and seas, and cities, and mountains'. He does not name Babylon; the ANF's footnote does.",
+   "source": "Divine Institutes, Book 3, chapter 24; the looser version is on AZ Quotes",
+   "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.iii.xxiv.html",
+   "verified": true,
+   "note": "ANF footnote on 'hanging gardens': 'He alludes to the hanging gardens of Semiramis at Babylon.'"
+  },
+  {
+   "claim": "Constantine saw a cross in the sky with the words 'Conquer by this'. (Often credited to Lactantius, or his account left out.)",
+   "truth": "Lactantius wrote the earliest account, and in his it is a dream: Constantine was told to mark 'the heavenly sign' on his soldiers' shields. The cross of light in the noon sky comes from Eusebius's later Life of Constantine, which says Constantine told him so on oath.",
+   "source": "On the Deaths of the Persecutors, chapter 44; Eusebius, Life of Constantine, Book 1, chapters 28 and 29 (NPNF, New Advent)",
+   "url": "https://www.newadvent.org/fathers/25021.htm",
+   "verified": true,
+   "note": "Eusebius: 'he saw with his own eyes the trophy of a cross of light in the heavens, above the sun, and bearing the inscription, Conquer by this.' The Catholic Encyclopedia ('Constantine the Great') sets the two side by side: 'according to the one in a dream, according to the other in a vision'."
+  },
+  {
+   "claim": "He was called 'the Christian Cicero' in his own day.",
+   "truth": "The nickname came from Renaissance humanists. Jerome did compare him to Cicero, saying he had 'a flow of eloquence worthy of Tully'.",
+   "source": "Britannica; Catholic Encyclopedia ('bestowed on him by the humanists'); Jerome, Letter 58.10",
+   "url": "https://www.britannica.com/biography/Lactantius",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "claim": "He was tutor to the emperor Constantine.",
+   "truth": "He was tutor to Constantine's son Crispus. He did address his great work to Constantine.",
+   "source": "Jerome, Lives of Illustrious Men 80; Divine Institutes, Book 1, chapter 1",
+   "url": "https://www.newadvent.org/fathers/2708.htm",
+   "verified": true,
+   "note": "Wikipedia's lead calls him 'an advisor to Roman emperor Constantine I', citing Digeser (2000); that is a modern reconstruction, not in the ancient sources read."
+  },
+  {
+   "claim": "'Memory tempers prosperity, mitigates adversity, controls youth, and delights old age.'",
+   "truth": "Found on quote sites under his name, but we could not find it in any of his surviving works (the whole ANF volume was searched).",
+   "source": "AZ Quotes (attribution); search of ANF 7 (Fletcher) and New Advent copies of all five works: no match for 'tempers prosperity' or 'Memory'",
+   "url": "https://www.azquotes.com/author/8387-Lactantius",
+   "verified": true,
+   "note": "Absence from an English translation is not full proof: say 'not found in his surviving works', never 'fake'."
+  }
+ ],
+ "where_he_stood": {
+  "text": "Ten shown lines (plus one hidden cell, 'nature'). All are his own pen, from the ANF translation. Values from site/src/data/which-early-christian.json (people.lactantius.cells). Every line is word for word in both the unrevised ANF (CCEL) and New Advent.",
+  "rows": [
+   {
+    "cell": "anger",
+    "value": 2,
+    "work": "On the Anger of God",
+    "place": "chapter 17",
+    "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.iii.xvii.html",
+    "verified": true,
+    "note": "Source reads '…; but the anger which relates to the correction of vices ought not to be taken away from man; nor can it be taken away from God'. The site capitalises 'The' and ends at 'man.' Right as an excerpt."
+   },
+   {
+    "cell": "alone",
+    "value": -1,
+    "work": "Divine Institutes",
+    "place": "Book 6, chapter 10",
+    "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.vi.x.html",
+    "verified": true,
+    "note": "ANF footnote on 'the body': 'A corpore, that is, from society.'"
+   },
+   {
+    "cell": "rich",
+    "value": 2,
+    "work": "Divine Institutes",
+    "place": "Book 3, chapter 22",
+    "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.iii.xxii.html",
+    "verified": true,
+    "note": "Context: he is criticising Plato's plan of common property; the line is his own remedy."
+   },
+   {
+    "cell": "lie",
+    "value": -1,
+    "work": "Divine Institutes",
+    "place": "Book 6, chapter 18",
+    "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.vi.xviii.html",
+    "verified": true,
+    "note": "Same chapter, stronger: 'he will think that it is not his part to speak falsely even to an enemy and a stranger'."
+   },
+   {
+    "cell": "calm",
+    "value": -2,
+    "work": "Divine Institutes",
+    "place": "Book 6, chapter 17",
+    "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.vi.xvii.html",
+    "verified": true,
+    "note": "The source has a colon after 'itself', not a full stop ('useless even to itself: nor will it be able to maintain life itself'). The site's stop is an excerpt cut."
+   },
+   {
+    "cell": "miracles",
+    "value": 2,
+    "work": "Divine Institutes",
+    "place": "Book 4, chapter 27",
+    "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.iv.xxvii.html",
+    "verified": true,
+    "note": "Starts mid-sentence ('so now His followers'); the site capitalises 'So'."
+   },
+   {
+    "cell": "mystery",
+    "value": -2,
+    "work": "Divine Institutes",
+    "place": "Book 2, chapter 8",
+    "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.ii.viii.html",
+    "verified": true,
+    "note": "Chapter 7 in modern Latin numbering (research note, unchecked)."
+   },
+   {
+    "cell": "war",
+    "value": -2,
+    "work": "Divine Institutes",
+    "place": "Book 6, chapter 20",
+    "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.vi.xx.html",
+    "verified": true,
+    "note": "The sentence continues: 'nor to accuse any one of a capital charge'."
+   },
+   {
+    "cell": "effort",
+    "value": 1,
+    "work": "Divine Institutes",
+    "place": "Book 6, chapter 5",
+    "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.vi.v.html",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "cell": "all",
+    "value": -2,
+    "work": "Divine Institutes",
+    "place": "Book 7, chapter 21",
+    "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.vii.xxi.html",
+    "verified": true,
+    "note": "Context: the fire that punishes the wicked forever, so it counts against universal salvation."
+   }
+  ],
+  "new_advent_book_pages": {
+   "Divine Institutes 1-7": "https://www.newadvent.org/fathers/07011.htm ... 07017.htm (one page per book)",
+   "On the Anger of God": "https://www.newadvent.org/fathers/0703.htm",
+   "On the Workmanship of God": "https://www.newadvent.org/fathers/0704.htm",
+   "On the Deaths of the Persecutors": "https://www.newadvent.org/fathers/0705.htm",
+   "Epitome": "https://www.newadvent.org/fathers/0702.htm"
+  }
+ },
+ "friends_family_rivals": [
+  {
+   "name": "Arnobius",
+   "rel": "teacher",
+   "text": "His teacher of rhetoric in Africa, who later wrote seven books against the pagans himself.",
+   "source": "Jerome, Lives 80; Letter 70.5",
+   "url": "https://www.newadvent.org/fathers/3001070.htm",
+   "verified": true
+  },
+  {
+   "name": "Demetrianus",
+   "rel": "pupil",
+   "text": "His former pupil, a rich Christian. Lactantius wrote On the Workmanship of God for him, and two books of letters that Jerome says denied the Holy Spirit.",
+   "source": "On the Workmanship of God 1; Catholic Encyclopedia; Jerome, Lives 80 and Letter 84.7",
+   "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.iv.i.html",
+   "verified": true
+  },
+  {
+   "name": "Donatus",
+   "rel": "friend",
+   "text": "A confessor he addressed On the Deaths of the Persecutors to. Donatus was tortured nine times and never gave way.",
+   "source": "On the Deaths of the Persecutors 1 and 16 ('Having been nine times exposed to racks and diversified torments')",
+   "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.v.xvi.html",
+   "verified": true,
+   "note": "The CCEL page for chapter 16 was not fetched; the line is checked in New Advent (chapter 16) only."
+  },
+  {
+   "name": "Pentadius",
+   "rel": "brother or friend",
+   "text": "The Epitome is 'Addressed to His Brother Pentadius'. Whether a real brother or a brother in faith is unclear.",
+   "source": "ANF 7 heading of the Epitome; Catholic Encyclopedia ('a friend named Pentadius'); Orthodox Encyclopedia (perhaps his brother; others say a friend)",
+   "url": "https://www.newadvent.org/fathers/0702.htm",
+   "verified": true
+  },
+  {
+   "name": "Constantine",
+   "rel": "patron",
+   "text": "The emperor who ended the persecution. Lactantius addressed the Institutes to him, and Constantine made him his son's tutor.",
+   "source": "Divine Institutes 1.1; Jerome, Lives 80; Catholic Encyclopedia ('The friendship of the Emperor Constantine raised him from penury')",
+   "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.i.ii.html",
+   "verified": true
+  },
+  {
+   "name": "Crispus",
+   "rel": "pupil",
+   "text": "Constantine's son, whom he taught Latin in Gaul. Constantine had Crispus put to death in 326.",
+   "source": "Jerome, Lives 80 and Chronicle; Catholic Encyclopedia",
+   "url": "https://www.newadvent.org/fathers/2708.htm",
+   "verified": true
+  },
+  {
+   "name": "Diocletian and Galerius",
+   "rel": "persecutors",
+   "text": "Diocletian brought him to Nicomedia. The two emperors later watched the church there torn down. He tells both their ends.",
+   "source": "Jerome, Lives 80; On the Deaths of the Persecutors 12, 33 and 42",
+   "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.v.xii.html",
+   "verified": true,
+   "note": "Diocletian's end (chapter 42) not quoted here."
+  },
+  {
+   "name": "Tertullian and Cyprian",
+   "rel": "Africans he criticised",
+   "text": "Fellow Africans who wrote before him. He found Tertullian obscure and faulted Cyprian's method with pagans.",
+   "source": "Divine Institutes 5.1 and 5.4",
+   "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.v.i.html",
+   "verified": true
+  },
+  {
+   "name": "Jerome",
+   "rel": "later critic",
+   "text": "Praised his eloquence, wished he had taught as well as he refuted, and said he denied the Holy Spirit.",
+   "source": "Jerome, Letters 58.10 and 84.7",
+   "url": "https://www.newadvent.org/fathers/3001058.htm",
+   "verified": true
+  },
+  {
+   "name": "Augustine",
+   "rel": "later reader",
+   "text": "Named him among Christians who put pagan learning to good use.",
+   "source": "On Christian Doctrine 2.40.61",
+   "url": "https://www.newadvent.org/fathers/12022.htm",
+   "verified": true
+  }
+ ],
+ "how_he_died": {
+  "text": "Nobody knows. The Catholic Encyclopedia says plainly: 'when Lactantius died and in what circumstances is not known.' He was very old, probably still at Trier, about 320 to 325. No last words are recorded, and no later legend fills the gap.",
+  "source": "Catholic Encyclopedia (1910); Britannica; Fletcher, ANF 7; Orthodox Encyclopedia",
+  "url": "https://www.newadvent.org/cathen/08736a.htm",
+  "verified": true,
+  "note": "For the page: a short section. The feature line ('I shall think that I have lived enough ...') makes a fitting close, labelled as his words from about 303, not last words."
+ },
+ "is_he_a_saint": {
+  "big": "No. He is counted a Church Father, but no church venerates him as a saint.",
+  "churches": [
+   {
+    "church": "Catholic",
+    "status": "Not a saint",
+    "note": "Not in the Roman Martyrology. An early list, the Gelasian Decree, put his works among books 'not received'."
+   },
+   {
+    "church": "Orthodox",
+    "status": "Not a saint",
+    "note": "No day in the OCA calendar; no saint's title in the Russian Orthodox Encyclopedia."
+   },
+   {
+    "church": "Anglican",
+    "status": "Not remembered",
+    "note": "Not in Common Worship or Lesser Feasts and Fasts."
+   },
+   {
+    "church": "Lutheran",
+    "status": "Not remembered",
+    "note": "Not in the LCMS or ELCA calendars."
+   }
+  ],
+  "paras": [
+   "He wrote as a devout Christian in a time of persecution, and later Christians kept reading him. The first printed book dated in Italy was his works, in 1465.",
+   "But doubts came early. Jerome admired his style and said he denied the Holy Spirit. A later list of books to avoid named his works."
+  ],
+  "source": "feast_days.checks; Gelasian Decree; Jerome, Letters 58 and 84; Sotheby's",
+  "url": "https://www.tertullian.org/decretum_eng.htm",
+  "verified": true,
+  "note": "No claim that the Catholic Church ever formally condemned him. The Catholic Encyclopedia treats him respectfully as 'A Christian apologist'."
+ },
+ "prayer_he_wrote": {
+  "text": "None found. No prayer in his own name survives in the five works. The prayer in On the Deaths of the Persecutors 46 is the one an angel is said to have taught Licinius; Lactantius only records it. His closing words to Donatus urge prayer ('let us in our prayers, by night and by day, beseech Him to confirm for ever that peace ...', chapter 52) but are not a prayer.",
+  "url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.v.lii.html",
+  "verified": true,
+  "note": "Leave the prayer section out."
+ },
+ "what_to_read_first": [
+  {
+   "title": "On the Deaths of the Persecutors",
+   "text": "Short and vivid: the Great Persecution as he lived it, and Constantine's dream. Biased, and he says so.",
+   "url": "https://www.newadvent.org/fathers/0705.htm",
+   "alt_url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.v.html",
+   "checked": "HTTP 200, right text (both)",
+   "verified": true
+  },
+  {
+   "title": "The Divine Institutes, Book 5",
+   "text": "Why he wrote, what he saw in Bithynia, and his case that faith cannot be forced.",
+   "url": "https://www.newadvent.org/fathers/07015.htm",
+   "alt_url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.ii.v.html",
+   "checked": "HTTP 200, right text",
+   "verified": true,
+   "note": "The CCEL book landing page (.iii.ii.v) was not itself fetched; its chapter pages were."
+  },
+  {
+   "title": "The Epitome of the Divine Institutes",
+   "text": "His own shorter version of the whole argument.",
+   "url": "https://www.newadvent.org/fathers/0702.htm",
+   "checked": "HTTP 200, right text",
+   "verified": true
+  },
+  {
+   "title": "On the Anger of God",
+   "text": "Why a loving God must be angry at evil, and his answer to Epicurus's riddle.",
+   "url": "https://www.newadvent.org/fathers/0703.htm",
+   "alt_url": "https://ccel.org/ccel/schaff/anf07/anf07.iii.iii.html",
+   "checked": "HTTP 200, right text",
+   "verified": true
+  }
+ ],
+ "pictures": {
+  "band": {
+   "file": "C:/Users/Light/Desktop/claude/theology compass/design/saints-hub/pages/img/lactantius.jpg",
+   "title": "Lactance",
+   "artist": "Henri Bonnart (I or II), engraver and publisher ('Chez H Bonnart au Coq')",
+   "date": "Late 17th or early 18th century (KU Leuven: publisher dates '1600-1800'; the Orthodox Encyclopedia prints a Bonnart engraving of him dated 'late 17th to early 18th c.')",
+   "collection": "KU Leuven Libraries, print PA01382",
+   "page": "https://commons.wikimedia.org/wiki/File:Lactance,_PA01382.jpg",
+   "licence": "Public domain (Commons tag PD-old; categories CC-PD-Mark, PD Old)",
+   "original_px": "1655 x 2243",
+   "saved_px": "1181 x 1600, 427,804 bytes (q70; at 1800 px the fine engraving lines would not fit under 450 KB)",
+   "alt": "An engraving of Lactantius as an old bearded scholar in profile, one hand raised over an inkwell and pen, inside a leafy frame with a French caption",
+   "inscription": "LACTANCE Philosophe tres chrestien, fut precepteur de Crispe fils de l'Empereur Constantin. St. Hierome en parle avec Eloge. Il nous à laissé plusieurs ouvrages aussi pieux que scavans, entre lesquels est un livre contre les Gentils. (as transcribed on Commons, spelling modernised in places)",
+   "posM": "47% 32%",
+   "posD": "47% 30%",
+   "verified": true,
+   "note": "An imagined likeness, as every picture of him is: no ancient portrait is securely his. Black and white; the owner prefers colour, but no colour painting of his face was found on Commons. The face sits at about x 47%, y 28-40% of the frame; check the crop at 320 to 390. Crediting: 'Lactance, Henri Bonnart, late 17th century. KU Leuven Libraries. Public domain.'"
+  },
+  "second": {
+   "file": "C:/Users/Light/Desktop/claude/theology compass/design/saints-hub/pages/img/lactantius-2.jpg",
+   "title": "The opening of Book 4 of the Divine Institutes (BnF, Latin 1671, folio 93v)",
+   "artist": "Master of the Chronique scandaleuse (anonymous illuminator, active in Paris in the late 15th and early 16th centuries)",
+   "date": "About 1490 to 1510 (the painter's working years, per French Wikipedia; the manuscript's own date was not seen)",
+   "collection": "Bibliothèque nationale de France, Paris, Latin 1671",
+   "page": "https://commons.wikimedia.org/wiki/File:BnF-Lat1671-_Lactance,_Institutiones_divinae.jpg",
+   "licence": "Public domain (Commons tag PD-Art, PD-old-100; a photograph of a flat work)",
+   "original_px": "1703 x 2425",
+   "saved_px": "1264 x 1800, 427,824 bytes",
+   "alt": "A painted manuscript page in gold columns: two cloaked women labelled False Wisdom and False Religion and a turbaned old man spread a dark mantle over a crowd of kings, bishops and townspeople, while a man in red reads at a desk on the left; below, a scroll holds the Latin opening of Book 4",
+   "verified": true,
+   "note": "No Eastern icon of him exists to pair with: no Eastern church venerates him. So the second picture shows his book instead. The Latin on the scroll ('Cogitanti mihi et cum animo meo saepe reputanti priorem illum generis humani statum ...') matches the opening of Book 4 ('When I reflect ... and often revolve in my mind the original condition of men', ANF 4.1), without the address to Constantine. The labels read 'FAULCE SAPIENCE' and 'FAULCE RELIGION'. The seated reader is NOT identified by any source seen: do not caption him as Lactantius. The Commons photo was taken with an iPad from the printed catalogue of Avril and Reynaud (slight glare and skew). The BnF catalogue page returned 403. Suggested caption: 'Book 4 of the Divine Institutes opens under False Wisdom and False Religion. A French manuscript painted about 1500 by the Master of the Chronique scandaleuse. Bibliothèque nationale de France. Public domain.'"
+  },
+  "rejected": [
+   {
+    "file": "File:Lactantius.jpg",
+    "why": "350 x 261 px, and only 'probably' or 'possibly' him (a 4th-century wall painting; Wikipedia says possibly Apuleius). This is the site's current portrait (site/public/img/early-christians/lactantius.jpg)."
+   },
+   {
+    "file": "File:Lactantius, Divinarum institutionum ... liber primus, manuscript, Florence 1420-1430 ca.jpg",
+    "why": "798 x 1297 px, a text page with a decorated initial, no figure."
+   },
+   {
+    "file": "File:Soffitto di Treviri, palazzo di Crispo, 310 - anni 330.jpg",
+    "why": "CC BY-SA 4.0 photo of a 3D ceiling; not PD or CC0."
+   }
+  ]
+ },
+ "hub_card": {
+  "groups": [
+   "fathers"
+  ],
+  "groups_note": "Hint 'fathers' is right: Britannica calls him 'one of the most reprinted of the Latin Church Fathers'. Not 'teachers' (never a Doctor of the Church), not 'martyrs' (not martyred; the Orthodox Encyclopedia says he never fell into the torturers' hands).",
+  "lived": "300s",
+  "lived_note": "Hint '300s' is right: born about 250, but all five surviving works date from 303 on, and he died about 320 to 325.",
+  "side": [
+   "west"
+  ],
+  "side_note": "Hint 'west' is right: a Latin writer from Africa who ended his life in Gaul. He did spend his best-known years in Nicomedia in the Greek East; say so on the page, but he belongs to the Latin tradition.",
+  "verified": true
+ },
+ "personality_test": {
+  "text": "The Christian Personality Test does not name him (0 hits for 'Lactantius' in site/src/data/personality.json; not in the kindred research files). The early-Christian quiz has no 'pairs' for him.",
+  "verified": true,
+  "note": "So the page has no 'His personality type' sheet line. Leave it out rather than invent one."
+ },
+ "site_data_flags": [
+  {
+   "text": "people.lactantius.dates 'c. 250 to c. 325' holds, but the sources split on the death year (about 320 in Britannica and the Orthodox Encyclopedia, about 325 in Fletcher). Consider 'about 250 to about 320-325' or keep as is."
+  },
+  {
+   "text": "people.lactantius.portrait is the 350 x 261 'possibly Lactantius' mural. The hub should use the Bonnart engraving (credit it as an imagined likeness) and add it to site/public/img/CREDITS.md."
+  },
+  {
+   "text": "The fathers research (group-03.json) puts the address to Constantine at Divine Institutes 7.27; in the ANF (New Advent) it sits in 7.26, with the note 'wanting in some manuscripts and editions'."
+  },
+  {
+   "text": "The fathers research gives the Epitome marriage line as 'chapter 66 (New Advent numbering)'. Checked: New Advent chapter 66 'Of Faith in Religion, and of Fortitude'. The CCEL page for it was not fetched."
+  },
+  {
+   "text": "The research calls the Gelasian Decree 'sixth-century'. Its date and author are disputed; describe it as 'an early list of books, known as the Gelasian Decree'."
+  }
+ ],
+ "could_not_verify": [
+  "A dictionary pronunciation from Merriam-Webster (no entry, 404) or Collins (HTTP 403). The respelling comes from the Century Cyclopedia of Names (1894 and 1903), which is public domain.",
+  "The current (2004) Roman Martyrology. Only the 1916 English edition was searched.",
+  "GOARCH, the Greek synaxaria and the Russian Church's own calendar (azbyka.ru search returned 404). The OCA was scanned for every day of the year, and the Orthodox Encyclopedia gives him no saint's title.",
+  "The final Evangelical Lutheran Worship (2006) book. Only the archived draft church-year PDF was searched.",
+  "The Cirta inscription (CIL VIII 7241). Seen only as cited by the Catholic Encyclopedia and the Orthodox Encyclopedia.",
+  "That Diocletian called him to Nicomedia about 290. The Orthodox Encyclopedia gives the date; Jerome says only 'during the reign of Diocletian'.",
+  "That Pico della Mirandola first called him 'Cicero Christianus'. Seen only as cited in the Orthodox Encyclopedia.",
+  "The letter of Pope Hormisdas listing his works as apocryphal. Seen only in the Orthodox Encyclopedia.",
+  "The Gelasian Decree's date and author.",
+  "Whether the addresses to Constantine are his. The ANF notes they are missing from some manuscripts; the Catholic Encyclopedia (1910) thought the 'panegyrical passages' not his. Modern scholarship (Heck, Digeser) was not read.",
+  "Whether The Phoenix is his. The Catholic Encyclopedia says yes; Fletcher's ANF notice doubts it.",
+  "Whether Pentadius was his brother or a friend.",
+  "The Latin of Books 2 to 7 of the Divine Institutes and of On the Workmanship of God (only Coxe's quoted Latin of the feature line, and the Latin Library's Book 1 and Deaths of the Persecutors, were fetched). So 'religio cogi non potest' and the Latin chapter numbering are unchecked.",
+  "The Mather and Remy steps in the Lovecraft misattribution (from the Blogicaster post only).",
+  "Where the tag 'Then why call Him God?' first appears.",
+  "The source of 'Memory tempers prosperity, mitigates adversity, controls youth, and delights old age.' Not found in his surviving works in English.",
+  "Cambridge University Library's exhibition page on the 1465 edition (connection refused) and Princeton's catalogue (bot check). The 'first dated book printed in Italy' claim rests on the Sotheby's lot title and the Princeton title seen in search results.",
+  "The BnF catalogue record for Latin 1671 (HTTP 403): the manuscript's date, its patron, and who the seated reader in the miniature is.",
+  "Which Henri Bonnart made the engraving, and its exact date. The KU Leuven record was not opened.",
+  "That he was an outlier among Christian writers on the shape of the earth (Russell, Inventing the Flat Earth) and that later teaching rejected his thousand-year reign in so many words.",
+  "An Augustine or Ambrose quotation for the just-war side of the war topic (use the fathers topic research, war.json, after checking it).",
+  "Sicca Veneria = El Kef, Tunisia (standard, not checked in a fetched source)."
+ ],
+ "adversarial_check": {
+  "date": "2026-09-25",
+  "verified": true,
+  "fixes": [
+   "Picture 2 date: BnF Latin 1671 is dated about 1502 to 1505 (French Wikipedia, Maitre de la Chronique scandaleuse, citing Avril and Reynaud; folio 93v confirmed there). The page had printed the Master's working life (about 1490 to 1510) as the picture's date.",
+   "The Phoenix: the Catholic Encyclopedia calls it genuine and the Orthodox Encyclopedia counts it his (church tradition, language and style); Jerome does not list it. The page had said the attribution is disputed.",
+   "In art: one engraving (Bonnart) was seen, so \"a later engraving shows him\", not \"later engravers drew\".",
+   "Cyprian joke (Divine Institutes 5.1): the source says a \"certain man who was skilful\" among the learned scoffers, not a pagan by name: now \"a scoffer's joke\".",
+   "Bithynia (Divine Institutes 5.11): the man \"appeared at length to yield\", so \"seemed at last to give way\", not \"gave way\". Cite now adds Book 5 chapter 4, where he says their books moved him to write.",
+   "Feature line (On the Workmanship of God 20): it is the last sentence of the book, so \"The last words\", not \"Near the end\".",
+   "Epicurus riddle: \"known only from Lactantius\" had no source read (a similar argument is in Sextus Empiricus); now \"Lactantius reports the riddle as Epicurus's, in a longer form\".",
+   "Lovecraft tag: Nicolas Remy (seen in raw/lovecraft.txt) gives it as Lactantius, Book 2 chapter 15, so it is a paraphrase of his line; searched all seven books of the Latin Divine Institutes (la.wikisource): no \"conspicienda\" or \"quasi sint\". Page now says \"Not his words, but a later paraphrase of them.\"",
+   "Arnobius: \"later\" wrote seven books is not in Jerome (ch. 79, Letter 70): dropped.",
+   "Cyprian card: Lactantius does not call him African; he calls him \"above all others distinguished and renowned\" and praises his style (plain and open), not his \"fame\". Rewritten.",
+   "Extras lede said \"with his own words beside them\" but the Holy Spirit panel quotes Jerome: lede shortened, and the panel now says \"In the same letter he asks:\".",
+   "A shallow theologian?: Augustine mentions him once in the sources read (On Christian Doctrine 2.40), so not \"knew his books well, kept reading and praising them\".",
+   "Is he a saint: \"no church venerates him\" is wider than what was checked; now \"counted a Church Father, but not a saint\", with the checked calendars in the paragraph below.",
+   "Gelasian Decree: Pearse's translation page carries no public-domain statement (his Chronicle page does), so the two phrases are now paraphrased, not quoted.",
+   "OCA: the scan script's link pattern matched nothing (361 empty days, control 0), but all 366 saved day pages hold their lives (Martin on 11-11, control found by a direct search); no Lactantius or Firmianus on any day."
+  ]
+ }
+}

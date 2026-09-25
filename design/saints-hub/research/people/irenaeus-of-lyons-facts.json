@@ -1,0 +1,1191 @@
+{
+ "subject": "St Irenaeus of Lyons",
+ "slug": "irenaeus-of-lyons",
+ "wec": "irenaeus",
+ "checked_on": "2026-09-24",
+ "text_used": {
+  "text": "Every quotation of Irenaeus is checked word for word (case-insensitive, footnote marks removed) against the UNREVISED Roberts and Rambaut translation, Ante-Nicene Fathers vol. 1 (1885), downloaded whole from CCEL as plain text and marked Public Domain. Lines from Eusebius are checked against McGiffert's translation, NPNF 2nd series vol. 1 (1890), also CCEL plain text. 'exact' is the translation as printed; 'display' applies the site's rule of capitals for every pronoun for God. Book, chapter and section were found by script from the headings in the CCEL text, and each CCEL chapter page was fetched (HTTP 200) and checked to contain the line.",
+  "source": "A. Roberts and W. H. Rambaut (tr.), Irenaeus, Against Heresies, ANF vol. 1 (1885), CCEL; A. C. McGiffert (tr.), Eusebius, Church History, NPNF2 vol. 1 (1890), CCEL",
+  "url": "https://www.ccel.org/ccel/s/schaff/anf01/cache/anf01.txt",
+  "verified": true,
+  "note": "The researcher notes in design/quiz-ideas/fathers/research/figures/group-01.json quote New Advent's REVISED text, which modernises archaic forms ('thy heart' becomes 'your heart') and some words ('reaping the corn' becomes 'reaping the grain'). New Advent carries its own copyright on the revision. The forms below are the unrevised CCEL ones. CCEL chapter URL pattern for Against Heresies: anf01.ix.{ii,iii,iv,vi,vii} for Books 1 to 5, then the chapter number plus one in lower-case Roman numerals (the preface is .i). Scripts and outputs: scratchpad iren_q.py, iren_quotes.json (89 lines, 0 failures), iren_urls.py. Local texts: design/saints-hub/sources/people/irenaeus-of-lyons/ (28 .txt files)."
+ },
+ "quick_facts": {
+  "born": {
+   "text": "About 130, in Asia Minor, probably at Smyrna, today Izmir in Turkey. The year is not known. Estimates run from about 115 to about 142.",
+   "source": "Catholic Encyclopedia (1910), 'St. Irenaeus' (A. Poncelet): 'born in Proconsular Asia, or at least in some province bordering thereon ... between the years 115 and 125, according to some, or, according to others, between 130 and 142'; McGiffert, NPNF2-1, Church History Book 4, chapter 21, note 9: 'born in Asia Minor, probably between the years 120 and 130'; Britannica: 'born c. 120/140, Asia Minor', 'born of Greek parents'; OCA: 'born in the year 130 in the city of Smyrna'",
+   "url": "https://www.newadvent.org/cathen/08130b.htm",
+   "verified": true,
+   "note": "Irenaeus himself never names his birthplace. He says he saw Polycarp as a boy 'in lower Asia' (letter to Florinus, Eusebius 5.20.5) and 'in my early youth' (Against Heresies 3.3.4). Smyrna is an inference from that. Lesser Feasts and Fasts 2022 gives the widest range ('estimates vary from 97 to 160') and says he learned the faith 'in Ephesus', which no source I read supports. saint.gr gives 140. Plain wording that holds: 'About 130, in Asia Minor, probably Smyrna. No one knows the year.'"
+  },
+  "grew_up": {
+   "text": "In Asia Minor, where as a boy he listened to Polycarp, bishop of Smyrna, who had known the apostle John.",
+   "source": "Irenaeus, letter to Florinus, in Eusebius, Church History, Book 5, chapter 20 (McGiffert); Against Heresies, Book 3, chapter 3, section 4",
+   "url": "https://ccel.org/ccel/schaff/npnf201.iii.x.xxi.html",
+   "verified": true,
+   "note": "Exact (Eusebius 5.20.5-6): 'For when I was a boy, I saw thee in lower Asia with Polycarp' and 'the accounts which he gave of his intercourse with John and with the others who had seen the Lord'."
+  },
+  "died": {
+   "text": "About 200, probably at Lyons. No early source gives the date, the place or the cause. He drops out of the record after the Easter dispute of about 190.",
+   "source": "Britannica: 'died c. 200/203, probably Lyon'; Catholic Encyclopedia (1910): 'Nothing is known of the date of his death, which must have occurred at the end of the second or the beginning of the third century'; OCA: 'After this incident, Saint Irenaeus drops out of sight, and we do not even know the exact year of his death'; McGiffert, NPNF2-1, Book 4, chapter 21, note 9",
+   "url": "https://www.britannica.com/biography/Saint-Irenaeus",
+   "verified": true,
+   "note": "The date 202 comes from the later tradition that he was martyred under Septimius Severus (see how_he_died). The Episcopal Church lists him as 'c. 202', the ELCA 'c. 202', the Church of England 'c.200'. Dalton's 1927 note to Gregory of Tours says 'died on 28 June, A.D. 202', a claim no ancient source I read makes."
+  },
+  "buried": {
+   "text": "At Lyons, says Gregory of Tours, under the altar in the crypt of the church of St John, between the tombs of the martyrs Epipodius and Alexander. The church was later renamed for him: Saint-Irénée.",
+   "source": "Gregory of Tours, Glory of the Martyrs, chapter 49 (written about 585-588). Latin (Krusch, MGH), as given by the Oxford Cult of Saints database, record E00570: 'Hic in cripta basilicae beati Iohannis sub altari est sepultus. Et ab uno quidem latere Epypodius, ab alio Alexander martyr est tumulatus.'",
+   "url": "http://csla.history.ox.ac.uk/record.php?recid=E00570",
+   "verified": true,
+   "note": "A source nearly four centuries later. The only English translation (Van Dam, 2004) is in copyright, so tell it in our own words or quote the Latin. The renaming to Saint-Irénée is the database's note (Bryan Ward-Perkins), not Gregory's."
+  },
+  "also_called": [
+   {
+    "text": "Doctor of Unity (Doctor unitatis): the title Pope Francis gave him when he declared him a Doctor of the Church on 21 January 2022.",
+    "source": "Decree of the Holy Father for the conferral of the title of Doctor of the Church on Saint Irenaeus of Lyon, 21 January 2022, Holy See Press Office",
+    "url": "https://press.vatican.va/content/salastampa/en/bollettino/pubblico/2022/01/21/220121b.html",
+    "verified": true,
+    "note": "Exact: 'I DECLARE him a Doctor of the Church with the title of Doctor unitatis.'"
+   },
+   {
+    "text": "Hieromartyr Irenaeus, Bishop of Lyons (OCA). In Greek, 'Ὁ Ἅγιος Εἰρηναῖος ὁ Ἱερομάρτυρας Ἐπίσκοπος Λουγδούνου'. In Russian, 'Священномученик Ириней, епископ Лионский'. A hieromartyr is a martyr who was a bishop or priest.",
+    "source": "OCA, 'Hieromartyr Irenaeus, Bishop of Lyons'; synaxarion.gr (Great Synaxaristes, sid 441); azbyka.ru, 'Ириней Лионский'",
+    "url": "https://www.oca.org/saints/lives/2026/08/23/102379-hieromartyr-irenaeus-bishop-of-lyons",
+    "verified": true,
+    "note": "The definition of 'hieromartyr' is general knowledge, not quoted from these pages."
+   },
+   {
+    "text": "Irenæus, Bishop of Lyons, Teacher of the Faith (Church of England). Irenaeus of Lyons, Bishop and Theologian (Episcopal Church). Irenaeus of Lyons, Pastor (Lutheran Church-Missouri Synod). Irénée de Lyon in French.",
+    "source": "Church of England, Common Worship calendar; Lesser Feasts and Fasts 2022; LSB commemorations (copy at goodshepherd.nb.ca)",
+    "url": "https://www.churchofengland.org/prayer-and-worship/worship-texts-and-resources/common-worship/churchs-year/calendar",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "His name means 'peaceful'. It comes from the Greek eirene, peace. Eusebius says he 'truly was well named'.",
+    "source": "McGiffert, NPNF2-1, Church History Book 5, chapter 24, note 1715: 'The Greek form of the name is Eirenaios, from eirene, which means \"peace.\"'; Eusebius 5.24.18; the 2022 decree: 'His name, Irenaeus, expresses that peace which comes from the Lord'",
+    "url": "https://ccel.org/ccel/schaff/npnf201.iii.x.xxv.html",
+    "verified": true,
+    "note": "saint.gr glosses the name 'ο ειρηνικός, ο ειρηνοποιός' (the peaceful one, the peacemaker)."
+   }
+  ],
+  "status": {
+   "text": "A saint to Catholics (a memorial, and a Doctor of the Church since 2022) and to the Orthodox (as a hieromartyr). The Church of England keeps him as a Lesser Festival, and the Episcopal Church, the Missouri Synod and the ELCA remember him on 28 June.",
+   "source": "USCCB; 2022 decree; OCA; synaxarion.gr; Church of England; Lesser Feasts and Fasts 2022; LSB; ELCA",
+   "url": "https://press.vatican.va/content/salastampa/en/bollettino/pubblico/2022/01/21/220121b.html",
+   "verified": true,
+   "note": "See is_he_a_saint for each church. The site's current data has status: null, which is right: he IS counted a saint."
+  },
+  "patron_of": {
+   "text": "No patronage found in any source checked. Leave the field out.",
+   "source": "Wikidata (Q182123) lists no 'patron saint of' items (people-audit.json: patronOfItems 0); Catholic Encyclopedia, Britannica, OCA and the calendars name none",
+   "url": "https://www.wikidata.org/wiki/Q182123",
+   "verified": true,
+   "note": "Lyons has other patrons. Do not invent one."
+  },
+  "in_art": {
+   "text": "As a bearded bishop with a crozier, holding a book or scroll. Later prints add the scene of his martyrdom.",
+   "source": "The pictures themselves: Lucien Bégule's window in Saint-Irénée, Lyon (1901: bishop's staff, a scroll, 'SANCTVS IRENÆVS'); Jan Luyken after Jan Goeree, 1698 (Rijksmuseum RP-P-1896-A-19368-1263: book, mitre, crozier, with a scene titled 'Door last van Zeverus, aldaar wreedelyk gedoodt', 'Cruelly killed there at the order of Severus')",
+   "url": "https://commons.wikimedia.org/wiki/File:Saint_irenee_saint_irenee.jpg",
+   "verified": false,
+   "note": "No reference work I read lists an attribute that is his alone. This is a description of pictures, not a rule of iconography. Safer site wording: 'Usually shown as a bishop with a book.' Or leave the field out."
+  },
+  "wrote": {
+   "text": "Two works survive whole: Against Heresies, in five books, and the Demonstration of the Apostolic Preaching. Against Heresies survives complete only in an early Latin translation. The Demonstration survives only in Armenian, and was found again in December 1904 in a church in Yerevan. Eusebius and Jerome name several more that are lost, some known from fragments.",
+   "source": "Catholic Encyclopedia (1910): 'None of these writings has come down to us in the original text'; McGiffert, NPNF2-1, Book 4, chapter 21, note 9: 'It consists of five books, and is extant only in a very ancient and literal Latin translation'; J. Armitage Robinson, introduction to The Demonstration of the Apostolic Preaching (SPCK, 1920): 'The manuscript which contains our treatise was found in December 1904, in the Church of the Blessed Virgin at Eriwan in Armenia, by Dr Karapet Ter-Mekerttshian'; Eusebius 5.26; Jerome, Lives of Illustrious Men, chapter 35",
+   "url": "https://www.tertullian.org/fathers/irenaeus_01_proof_intro.htm",
+   "verified": true,
+   "note": "Lost works named by Eusebius (5.20, 5.24, 5.26): On Knowledge (against the Greeks), On Schism (to Blastus), On the Monarchy, or That God is not the Author of Evil (to Florinus), On the Ogdoad, letters to Victor on Easter, a book of Dissertations. Robinson adds that Books 4 and 5 of Against Heresies were in the same Armenian manuscript. Eriwan is today's Yerevan."
+  },
+  "pronounced": {
+   "text": "eye-ruh-NEE-us. Lippincott's Pronouncing Dictionary of Biography gives 'ī-re-nee'us', with the stress on 'nee'.",
+   "source": "Joseph Thomas, Universal Pronouncing Dictionary of Biography and Mythology (Lippincott), entry 'Irenæus', 1892 and 1915 editions on archive.org",
+   "url": "https://archive.org/details/universalpronoun00thom",
+   "verified": true,
+   "note": "Checked in two editions' OCR text; both read '!r-e-nee'us', where '!' is the OCR of the long-i mark (ī). Merriam-Webster, Collins, Dictionary.com and the American Heritage Dictionary have no entry for Irenaeus (checked 2026-09-24). Suggested site line: 'eye-ruh-NEE-us'. Lyons in English is usually 'LEE-on' (French Lyon); not checked in a dictionary, so leave it out."
+  },
+  "roles": [
+   {
+    "name": "Pupil",
+    "line": "Heard Polycarp as a boy",
+    "source": "Eusebius, Church History 5.20.5-7; Against Heresies 3.3.4",
+    "url": "https://ccel.org/ccel/schaff/npnf201.iii.x.xxi.html",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "name": "Presbyter",
+    "line": "Of the church at Lyons, 177",
+    "source": "Eusebius 5.4.1: 'already at that time a presbyter of the parish of Lyons'; Catholic Encyclopedia: sent to Rome '177 or 178'",
+    "url": "https://ccel.org/ccel/schaff/npnf201.iii.x.v.html",
+    "verified": true,
+    "note": "He carried the martyrs' letter to Bishop Eleutherus of Rome. 'Envoy' could be its own role."
+   },
+   {
+    "name": "Bishop",
+    "line": "Of Lyons, after the martyr Pothinus",
+    "source": "Eusebius 5.5.8",
+    "url": "https://ccel.org/ccel/schaff/npnf201.iii.x.vi.html",
+    "verified": true,
+    "note": "The year is not known. McGiffert: not immediately after 177, but 'no great length of time'. OCA and azbyka say 178."
+   },
+   {
+    "name": "Writer",
+    "line": "Against Heresies, about 180",
+    "source": "Britannica: 'written about 180'; Against Heresies 3.3.3 (written while Eleutherus was bishop of Rome, 174-189 per McGiffert)",
+    "url": "https://ccel.org/ccel/schaff/anf01.ix.iv.iv.html",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "name": "Peacemaker",
+    "line": "In the Easter dispute, about 190",
+    "source": "Eusebius 5.24.9-18; Catholic Encyclopedia: '190 or 191'",
+    "url": "https://ccel.org/ccel/schaff/npnf201.iii.x.xxv.html",
+    "verified": true,
+    "note": ""
+   }
+  ],
+  "feast_days": {
+   "catholic": {
+    "text": "28 June, a memorial in the General Roman Calendar. The 1916 Roman Martyrology also has him on 28 June.",
+    "source": "USCCB readings page for 28 June 2024, 'Memorial of Saint Irenaeus, Bishop and Martyr'; The Roman Martyrology (1916), 28 June",
+    "url": "https://bible.usccb.org/bible/readings/062824.cfm",
+    "verified": true,
+    "note": "The USCCB page answers curl with a bot check; it was read in the browser pane. 2024 was chosen because 28 June fell on a Sunday in 2026 and on the Immaculate Heart of Mary in 2025, which displace the memorial. The 1916 entry, exact: 'At Lyons, in France, St. Irenaeus, bishop and martyr, who, as is related by St. Jerome, was the disciple of blessed Polycarp, bishop of Smyrna, and lived near the time of the Apostles. After having strenuously opposed the heretics by speech and writing, he was crowned with a glorious martyrdom, with almost all the people of his city, during the persecution of Severus.' (OCR reads 'Irenseus'.) Not checked: the 2004 Martyrology, and whether 'Doctor of the Church' has been added to the memorial's title in the US."
+   },
+   "orthodox": {
+    "text": "23 August. The OCA and the Greek synaxaria both keep 23 August. The Russian Church keeps 23 August on the old calendar, which is 5 September on today's calendar.",
+    "source": "OCA, 'Hieromartyr Irenaeus, Bishop of Lyons', 'Commemorated on August 23'; synaxarion.gr: '23 Αυγούστου'; saint.gr: 'Εορτάζει στις 23 Αυγούστου εκάστου έτους' (kept with Pothinus); azbyka.ru: 'День памяти 5 сентября'",
+    "url": "https://www.oca.org/saints/lives/2026/08/23/102379-hieromartyr-irenaeus-bishop-of-lyons",
+    "verified": true,
+    "note": "Unlike Martin, the East agrees on one day here. Catholic Encyclopedia (1910): 'His feast is celebrated on 28 June in the Latin Church, and on 23 August in the Greek.' Britannica: 'Western feast day June 28; Eastern feast day August 23'. GOARCH could not be checked (Cloudflare bot check). saint.gr lists the day as 'Άγιοι Ειρηναίος και Πόθεινος' (Irenaeus and Pothinus together)."
+   },
+   "old_calendar_note": {
+    "text": "Churches on the old (Julian) calendar keep 23 August 13 days later, on 5 September.",
+    "source": "azbyka.ru gives 5 September for the Russian Church",
+    "url": "https://azbyka.ru/days/sv-irinej-lionskij",
+    "verified": true,
+    "note": "Checked directly on azbyka.ru."
+   },
+   "anglican": {
+    "text": "28 June. A Lesser Festival in the Church of England ('Irenæus, Bishop of Lyons, Teacher of the Faith, c.200'). Kept by the Episcopal Church ('Irenaeus of Lyons, Bishop and Theologian, c. 202').",
+    "source": "Church of England, Common Worship calendar (printed in plain roman type, which marks a Lesser Festival; commemorations are in italics); The Episcopal Church, Lesser Feasts and Fasts 2022, calendar and pp. 291-293",
+    "url": "https://www.churchofengland.org/prayer-and-worship/worship-texts-and-resources/common-worship/churchs-year/calendar",
+    "verified": true,
+    "note": "Checked in the page's HTML: the Irenaeus line has no <em>, unlike Cyril of Alexandria on 27 June, which is a commemoration. Episcopal PDF: https://www.episcopalchurch.org/wp-content/uploads/2022/11/Lesser-Feasts-and-Fasts-2022_final.pdf . LFF ends: 'A late and uncertain tradition claims that he suffered martyrdom around the year 202.'"
+   },
+   "lutheran": {
+    "text": "28 June. 'Irenaeus of Lyons, Pastor' in the Missouri Synod's Lutheran Service Book. 'Irenaeus, Bishop of Lyons, c. 202' in the ELCA's Evangelical Lutheran Worship.",
+    "source": "LSB commemorations calendar (copy at goodshepherd.nb.ca); Evangelical Lutheran Worship, 'The Church Year', final draft January 2006 (renewingworship.org, via the Wayback Machine)",
+    "url": "https://goodshepherd.nb.ca/lectio/LSBCalendar.html",
+    "verified": true,
+    "note": "The ELCA line is from the final draft of 2006, not the printed book. ELCA PDF: https://web.archive.org/web/20060908112753/http://www.renewingworship.org/ELW/content/PDF/ChurchYear_asm_20060119.pdf . The LCMS's own site was not checked for Irenaeus; the Lutheran Witness 2008 article used for Martin does not mention him."
+   },
+   "why_they_differ": {
+    "text": "No source I read explains why the West keeps 28 June and the East 23 August.",
+    "source": "",
+    "url": "",
+    "verified": false,
+    "note": "Wikipedia (unchecked) says the 1960 Roman calendar moved him to 3 July, because 28 June became the vigil of Sts Peter and Paul, and 1969 restored 28 June. Not verified in the 1962 Missal or the 1969 Calendarium Romanum. Leave the 'why' line off the page."
+   }
+  }
+ },
+ "numbers": [
+  {
+   "chip": "Books",
+   "n": "5",
+   "lines": [
+    "Against Heresies",
+    "Whole only in Latin"
+   ],
+   "text": "Against Heresies is in five books.",
+   "source": "Eusebius 5.7.1 ('the work which comprises five books'); Jerome, Lives of Illustrious Men, chapter 35 ('He wrote five books Against heresies')",
+   "url": "https://ccel.org/ccel/schaff/npnf201.iii.x.viii.html",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "chip": "Gospels",
+   "n": "4",
+   "lines": [
+    "No more, no fewer",
+    "The first to say so firmly"
+   ],
+   "text": "'It is not possible that the Gospels can be either more or fewer in number than they are.'",
+   "source": "Against Heresies, Book 3, chapter 11, section 8",
+   "url": "https://ccel.org/ccel/schaff/anf01.ix.iv.xii.html",
+   "verified": true,
+   "note": "'The first to say so firmly' is the researcher's claim ('The earliest firm statement of the four-Gospel canon'), not checked in a reference work. Drop that sub-line unless a source is added."
+  },
+  {
+   "chip": "Bishop of Rome",
+   "n": "12th",
+   "lines": [
+    "Eleutherus, in his day",
+    "He lists all twelve"
+   ],
+   "text": "He lists the bishops of Rome from the apostles down to his own day: 'Eleutherius does now, in the twelfth place from the apostles, hold the inheritance of the episcopate.'",
+   "source": "Against Heresies, Book 3, chapter 3, section 3; Eusebius 5.5.9 on the list",
+   "url": "https://ccel.org/ccel/schaff/anf01.ix.iv.iv.html",
+   "verified": true,
+   "note": "The oldest surviving list of the bishops of Rome is often said to be this one; not checked, so do not print 'oldest'."
+  },
+  {
+   "chip": "Pothinus's age",
+   "n": "90+",
+   "lines": [
+    "The bishop before him",
+    "Died in prison, 177"
+   ],
+   "text": "The bishop he succeeded was 'more than ninety years of age, and very infirm'.",
+   "source": "Letter of the churches of Vienne and Lyons, in Eusebius 5.1.29; Eusebius 5.5.8 ('at ninety years of age'); Jerome, chapter 35 ('nearly ninety')",
+   "url": "https://ccel.org/ccel/schaff/npnf201.iii.x.ii.html",
+   "verified": true,
+   "note": "Pothinus died in prison after being beaten (5.1.31); the year 177 is McGiffert's (note 9 to Book 4, chapter 21)."
+  },
+  {
+   "chip": "Found again",
+   "n": "1904",
+   "lines": [
+    "The Demonstration",
+    "In Armenian, at Yerevan"
+   ],
+   "text": "His second surviving book was lost for centuries and found in December 1904.",
+   "source": "J. Armitage Robinson, introduction (1920)",
+   "url": "https://www.tertullian.org/fathers/irenaeus_01_proof_intro.htm",
+   "verified": true,
+   "note": "Robinson: 'This work was entirely lost sight of: no one seems ever to have quoted a word of it.'"
+  },
+  {
+   "chip": "Doctor of the Church",
+   "n": "37th",
+   "lines": [
+    "Pope Francis, 2022",
+    "'Doctor of Unity'"
+   ],
+   "text": "Named the 37th Doctor of the Church on 21 January 2022.",
+   "source": "Catholic World Report (CNA), 21 January 2022: 'officially declared St. Irenaeus of Lyon as the 37th Doctor of the Church'; the decree itself (no number)",
+   "url": "https://www.catholicworldreport.com/2022/01/21/pope-francis-declares-st-irenaeus-doctor-of-unity/",
+   "verified": true,
+   "note": "The number is the press's, not the decree's. It was 37th at the time; John Henry Newman was named later, so do not say 'one of 37'."
+  }
+ ],
+ "traits": [
+  {
+   "title": "funny, and cutting",
+   "text": "To mock one sect's grand names for the first powers of the universe, he made up his own: 'a power which I term a Gourd', with another he called 'Utter-Emptiness', then the Cucumber and the Melon. He ends by calling the whole system 'the delirious melons of Valentinus'.",
+   "exact": "But along with it there exists a power which I term a Gourd; and along with this Gourd there exists a power which again I term Utter-Emptiness.",
+   "source": "Against Heresies, Book 1, chapter 11, section 4",
+   "url": "https://ccel.org/ccel/schaff/anf01.ix.ii.xii.html",
+   "verified": true,
+   "note": "Also verified in the same section: 'Iu, Iu! Pheu, Pheu!', 'which fruit-language calls a Cucumber. Along with this Cucumber exists a power of the same essence, which again I call a Melon.' and 'remaining multitude of the delirious melons of Valentinus'; in section 5: 'O ye trifling sophists!'."
+  },
+  {
+   "title": "a peacemaker",
+   "text": "When the bishop of Rome cut off the churches of Asia over the date of Easter, Irenaeus wrote to him. He reminded him that Polycarp and an earlier bishop of Rome, Anicetus, had disagreed on the same thing and still 'parted from each other in peace'. His own church kept Easter on Sunday, like Rome, but he would not see anyone cut off for it.",
+   "exact": "Thus Irenæus, who truly was well named, became a peacemaker in this matter, exhorting and negotiating in this way in behalf of the peace of the churches.",
+   "source": "Eusebius, Church History, Book 5, chapter 24, sections 11-18",
+   "url": "https://ccel.org/ccel/schaff/npnf201.iii.x.xxv.html",
+   "verified": true,
+   "note": "Eusebius 5.24.11: he 'maintained that the mystery of the resurrection of the Lord should be observed only on the Lord's day'."
+  },
+  {
+   "title": "kind to his opponents",
+   "text": "He wrote five books against the teachers he thought most dangerous. He still ended one of them praying for them.",
+   "exact": "We pray for these things on their behalf, loving them better than they seem to love themselves.",
+   "display": "We pray for these things on their behalf, loving them better than they seem to love themselves.",
+   "source": "Against Heresies, Book 3, chapter 25, section 7",
+   "url": "https://ccel.org/ccel/schaff/anf01.ix.iv.xxvi.html",
+   "verified": true,
+   "note": "Same section: 'Wherefore it shall not weary us, to endeavour with all our might to stretch out the hand unto them.'"
+  },
+  {
+   "title": "never forgot a teacher",
+   "text": "Old, he wrote to a friend from his boyhood that he remembered Polycarp better than last year. He could still see where Polycarp sat to teach, how he came and went, and what he said about John.",
+   "exact": "I remember the events of that time more clearly than those of recent years. For what boys learn, growing with their mind, becomes joined with it; so that I am able to describe the very place in which the blessed Polycarp sat as he discoursed, and his goings out and his comings in",
+   "source": "Irenaeus, letter to Florinus, in Eusebius, Church History, Book 5, chapter 20, section 6",
+   "url": "https://ccel.org/ccel/schaff/npnf201.iii.x.xxi.html",
+   "verified": true,
+   "note": "'Old' is an inference (he writes of his boyhood decades later, under Pope Victor, 189-198 or 199, per McGiffert note 1663); the page can say 'Years later'."
+  },
+  {
+   "title": "humble about his style",
+   "text": "He warned his reader not to expect fine writing from a man living among the Celts.",
+   "exact": "Thou wilt not expect from me, who am resident among the Keltæ, and am accustomed for the most part to use a barbarous dialect, any display of rhetoric, which I have never learned",
+   "source": "Against Heresies, Book 1, preface, section 3",
+   "url": "https://ccel.org/ccel/schaff/anf01.ix.ii.i.html",
+   "verified": true,
+   "note": "Spare trait. Also available: meticulous (his charge to copyists, Eusebius 5.20.2, which Eusebius calls an example of 'painstaking carefulness')."
+  }
+ ],
+ "others_on_him": [
+  {
+   "text": "The martyrs of Lyons, in prison, recommending him to the bishop of Rome.",
+   "exact": "We have requested our brother and comrade Irenæus to carry this letter to you, and we ask you to hold him in esteem, as zealous for the covenant of Christ.",
+   "source": "Letter of the martyrs of Lyons to Eleutherus, in Eusebius, Church History, Book 5, chapter 4, section 2",
+   "url": "https://ccel.org/ccel/schaff/npnf201.iii.x.v.html",
+   "verified": true,
+   "note": "Also verified: 'For if we thought that office could confer righteousness upon any one, we should commend him among the first as a presbyter of the church, which is his position.'"
+  },
+  {
+   "text": "Eusebius, about 120 years later, on the Easter dispute.",
+   "exact": "Thus Irenæus, who truly was well named, became a peacemaker in this matter, exhorting and negotiating in this way in behalf of the peace of the churches.",
+   "source": "Eusebius, Church History, Book 5, chapter 24, section 18",
+   "url": "https://ccel.org/ccel/schaff/npnf201.iii.x.xxv.html",
+   "verified": true,
+   "note": "'About 120 years later' is rough arithmetic (the dispute about 190; Eusebius wrote in the early 300s). Safer: 'Eusebius, writing in the early 300s'."
+  },
+  {
+   "text": "Tertullian, writing in his own lifetime or just after, lists him among those who refuted the Valentinians.",
+   "exact": "Irenæus, that very exact inquirer into all doctrines",
+   "source": "Tertullian, Against the Valentinians, chapter 5 (ANF vol. 3; the volume marks this work 'Translated by Dr. Roberts', i.e. Alexander Roberts)",
+   "url": "https://ccel.org/ccel/schaff/anf03.v.vi.v.html",
+   "verified": true,
+   "note": "Tertullian is 'Church Father. Not counted a saint.' Never 'St Tertullian'."
+  }
+ ],
+ "life_moments": [
+  {
+   "place": "Lower Asia",
+   "when": "As a boy",
+   "title": "Listening to Polycarp",
+   "text": "As a boy he sat listening to Polycarp, the old bishop of Smyrna. Polycarp told what he had heard from John and from others who had seen the Lord. Irenaeus wrote that he stored it all 'not on paper, but in my heart'.",
+   "source": "Letter to Florinus, in Eusebius, Church History, Book 5, chapter 20, sections 5-7; Against Heresies, Book 3, chapter 3, section 4",
+   "url": "https://ccel.org/ccel/schaff/npnf201.iii.x.xxi.html",
+   "verified": true,
+   "note": "Exact: 'I listened to them attentively, noting them down, not on paper, but in my heart.' Against Heresies 3.3.4: 'whom I also saw in my early youth, for he tarried [on earth] a very long time'."
+  },
+  {
+   "place": "Lyons and Rome",
+   "when": "177",
+   "title": "The martyrs' letter",
+   "text": "By 177 he was a presbyter at Lyons, in Gaul. A persecution broke out. The Christians in prison sent him to Rome with a letter for Bishop Eleutherus. They asked Eleutherus to hold him 'in esteem, as zealous for the covenant of Christ'.",
+   "source": "Eusebius, Church History, Book 5, chapter 4",
+   "url": "https://ccel.org/ccel/schaff/npnf201.iii.x.v.html",
+   "verified": true,
+   "note": "Catholic Encyclopedia: '177 or 178', and the letter concerned Montanism. Eusebius 5.3.4 ties the letters to the Montanist question; I did not read 5.3, so leave Montanism off the page or check it."
+  },
+  {
+   "place": "Lyons",
+   "when": "After 177",
+   "title": "Bishop after a martyr",
+   "text": "Their bishop, Pothinus, was more than ninety. He was dragged to court and beaten by the crowd. He died in prison two days later. Irenaeus took his place as bishop of Lyons.",
+   "source": "Letter of the churches of Vienne and Lyons, in Eusebius 5.1.29-31; Eusebius 5.5.8",
+   "url": "https://ccel.org/ccel/schaff/npnf201.iii.x.vi.html",
+   "verified": true,
+   "note": "Irenaeus was away in Rome during at least part of the persecution (McGiffert)."
+  },
+  {
+   "place": "Lyons",
+   "when": "About 180",
+   "title": "Against Heresies",
+   "text": "He set out to expose the Gnostic teachers, above all the followers of Valentinus. First he described their systems in detail, then he answered them from Scripture and from what the churches founded by the apostles had always taught. He called the work a refutation of 'knowledge falsely so called'. For centuries it was one of the main records of what the Gnostics taught.",
+   "source": "Eusebius 5.7.1 (the title, 'Refutation and Overthrow of the Knowledge Falsely So-called'); Britannica ('Modern scholars rely on Irenaeus's writings to reconstruct Gnostic doctrines'; after the Nag Hammadi find 'he was proved to have been extremely precise in his report of the doctrines he rejected')",
+   "url": "https://www.britannica.com/biography/Saint-Irenaeus",
+   "verified": true,
+   "note": "The Britannica line on precision is a good fair-minded detail for the page."
+  },
+  {
+   "place": "Lyons, writing to Rome",
+   "when": "About 190",
+   "title": "Easter, and peace",
+   "text": "The churches of Asia kept Easter on the 14th day of the Jewish month, whatever the weekday. Rome kept it on a Sunday. Bishop Victor of Rome tried to cut the Asian churches off. Irenaeus kept Sunday himself, but he wrote to Victor not to cut off whole churches over an old custom. Different fasts, he said, only confirm the one faith.",
+   "source": "Eusebius, Church History, Book 5, chapter 24, sections 9-18",
+   "url": "https://ccel.org/ccel/schaff/npnf201.iii.x.xxv.html",
+   "verified": true,
+   "note": "Exact: 'the disagreement in regard to the fast confirms the agreement in the faith.' Date: Catholic Encyclopedia, '190 or 191'."
+  },
+  {
+   "place": "Lyons, writing to Rome",
+   "when": "Probably under Victor",
+   "title": "A letter to an old friend",
+   "text": "Florinus had known Polycarp too. Irenaeus remembered him in Asia, a man of the royal court, trying to win Polycarp's approval. Florinus became a presbyter at Rome. Then, Eusebius says, he seemed to teach that God is the author of evil. He was also being drawn toward Valentinus. Irenaeus wrote to him bluntly: 'These doctrines, O Florinus, to speak mildly, are not of sound judgment.' Polycarp, he said, would have stopped his ears.",
+   "source": "Eusebius, Church History, Book 5, chapter 15 and chapter 20, sections 1 and 4-7",
+   "url": "https://ccel.org/ccel/schaff/npnf201.iii.x.xxi.html",
+   "verified": true,
+   "note": "Exact, Polycarp's imagined cry: 'O good God, unto what times hast thou spared me that I should endure these things?' (display: 'hast Thou'). Timing: McGiffert note 1663 says Florinus taught under Victor (189-198 or 199). A Syriac fragment (ANF fragment 51) has Irenaeus asking Victor to 'expel these writings from among you'.",
+   "checker_note": "Checker 2026-09-25: 'as a young man' removed. Irenaeus says only 'when I was a boy, I saw thee in lower Asia with Polycarp, moving in splendor in the royal court, and endeavoring to gain his approbation' (5.20.5); McGiffert (note 1663) infers Florinus was 'somewhat older', not young. 'Now a presbyter' changed: 5.15 says he 'fell from the presbyterate'. The letter itself was 'On Monarchy, or That God is not the Author of Evil' (5.20.1); the Valentinian drift is what prompted On the Ogdoad. 'Under Pope Victor' was stated as fact; it is Lipsius's dating, reported by McGiffert, so now 'Probably under Victor'."
+  }
+ ],
+ "miracles": {
+  "text": "No early source records a miracle worked by Irenaeus. Leave the miracles section out, or replace it with 'Wonders in his own day', told in his own words.",
+  "source": "Eusebius (5.4-5.26), Jerome (chapter 35), Tertullian and the Catholic Encyclopedia record none. The first wonders connected with him are at his tomb, told by Gregory of Tours about 585-588.",
+  "url": "https://ccel.org/ccel/schaff/npnf201.iii.x.viii.html",
+  "verified": true,
+  "note": "Two options for the page, both sourced:",
+  "his_witness": [
+   {
+    "exact": "For some do certainly and truly drive out devils",
+    "source": "Against Heresies, Book 2, chapter 32, section 4",
+    "url": "https://ccel.org/ccel/schaff/anf01.ix.iii.xxxiii.html",
+    "verified": true
+   },
+   {
+    "exact": "Others have foreknowledge of things to come: they see visions, and utter prophetic expressions.",
+    "source": "Against Heresies, Book 2, chapter 32, section 4",
+    "url": "https://ccel.org/ccel/schaff/anf01.ix.iii.xxxiii.html",
+    "verified": true
+   },
+   {
+    "exact": "Others still, heal the sick by laying their hands upon them, and they are made whole.",
+    "source": "Against Heresies, Book 2, chapter 32, section 4",
+    "url": "https://ccel.org/ccel/schaff/anf01.ix.iii.xxxiii.html",
+    "verified": true
+   },
+   {
+    "exact": "the dead even have been raised up, and remained among us for many years.",
+    "source": "Against Heresies, Book 2, chapter 32, section 4",
+    "url": "https://ccel.org/ccel/schaff/anf01.ix.iii.xxxiii.html",
+    "verified": true,
+    "note": "Eusebius quotes the related passage from 2.31.2: when the whole church fasted and prayed, 'the spirit of the dead has returned, and the man has been restored through the prayers of the saints' (Church History 5.7.2, verified in McGiffert). Eusebius's chapter title: 'Even down to those Times Miracles were performed by the Faithful.'"
+   },
+   {
+    "exact": "In like manner we do also hear many brethren in the Church, who possess prophetic gifts, and who through the Spirit speak all kinds of languages",
+    "source": "Against Heresies, Book 5, chapter 6, section 1",
+    "url": "https://ccel.org/ccel/schaff/anf01.ix.vii.vii.html",
+    "verified": true
+   },
+   {
+    "exact": "nor does she perform anything by means of angelic invocations, or by incantations, or by any other wicked curious art",
+    "source": "Against Heresies, Book 2, chapter 32, section 5 (the Church works no wonders for money or by magic)",
+    "url": "https://ccel.org/ccel/schaff/anf01.ix.iii.xxxiii.html",
+    "verified": true
+   }
+  ],
+  "at_his_tomb": {
+   "text": "Gregory of Tours, about four centuries later, says that dust gathered in faith from the tombs in the crypt where Irenaeus lay healed the sick at once, and that a great brightness filled the crypt.",
+   "latin": "De quorum monumentis si pulvis cum fide collegatur, extemplo medetur infirmis. Magna enim claritas in cripta illa contenetur, quae, ut credo, meritum martyrum signat.",
+   "source": "Gregory of Tours, Glory of the Martyrs, chapter 49 (Latin, Krusch, via the Oxford Cult of Saints database, E00570)",
+   "url": "http://csla.history.ox.ac.uk/record.php?recid=E00570",
+   "verified": true,
+   "note": "The healing is credited to the martyrs of the crypt together (Irenaeus, Epipodius, Alexander), not to Irenaeus alone. Van Dam's English is in copyright: paraphrase, as above."
+  }
+ },
+ "his_words": {
+  "framing": {
+   "text": "His words in Alexander Roberts and W. H. Rambaut's translation (Ante-Nicene Fathers, 1885), from the Latin in which Against Heresies survives, and in Arthur McGiffert's translation of Eusebius (1890) for his letters.",
+   "source": "ANF vol. 1; NPNF2 vol. 1",
+   "url": "https://ccel.org/ccel/schaff/anf01.ix.html",
+   "verified": true,
+   "note": "Worth telling readers once: the Greek original of Against Heresies is lost except for quotations, so these are English from an ancient Latin translation."
+  },
+  "feature": {
+   "exact": "For the glory of God is a living man; and the life of man consists in beholding God.",
+   "display": "For the glory of God is a living man; and the life of man consists in beholding God.",
+   "ctx": "The line people half-remember as 'the glory of God is man fully alive'. The second half is the point: life comes from seeing God. In Latin, Gloria enim Dei vivens homo, vita autem hominis visio Dei.",
+   "work": "Against Heresies",
+   "place": "Book 4, chapter 20, section 7",
+   "url": "https://ccel.org/ccel/schaff/anf01.ix.vi.xxi.html",
+   "latin_source": "Catechism of the Catholic Church, Latin text, paragraph 294, quoting Irenaeus: 'Gloria enim Dei vivens homo, vita autem hominis visio Dei.'",
+   "latin_url": "https://www.vatican.va/archive/catechism_lt/p1s2c1p4_lt.htm",
+   "ghost": "vivens",
+   "verified": true,
+   "note": "The Latin is taken from the Catechism's Latin edition, which quotes Irenaeus; not checked against an edition of Against Heresies (Harvey, Rousseau). Very likely right, but flag it."
+  },
+  "lines": [
+   {
+    "exact": "who did, through His transcendent love, become what we are, that He might bring us to be even what He is Himself.",
+    "display": "who did, through His transcendent love, become what we are, that He might bring us to be even what He is Himself.",
+    "ctx": "On Jesus Christ, the Word of God. The seed of what the East calls theosis.",
+    "work": "Against Heresies",
+    "place": "Book 5, preface",
+    "url": "https://ccel.org/ccel/schaff/anf01.ix.vii.i.html",
+    "verified": true,
+    "note": "'The seed of what the East calls theosis' is our gloss; OCA's Life makes the same link ('Salvation consists in the \"Sonship\" and \"Theosis\"'). Could print without the gloss."
+   },
+   {
+    "exact": "For where the Church is, there is the Spirit of God; and where the Spirit of God is, there is the Church, and every kind of grace",
+    "display": "For where the Church is, there is the Spirit of God; and where the Spirit of God is, there is the Church, and every kind of grace",
+    "ctx": "Against teachers who claimed a secret knowledge outside the churches.",
+    "work": "Against Heresies",
+    "place": "Book 3, chapter 24, section 1",
+    "url": "https://ccel.org/ccel/schaff/anf01.ix.iv.xxv.html",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "exact": "Offer to Him thy heart in a soft and tractable state, and preserve the form in which the Creator has fashioned thee, having moisture in thyself, lest, by becoming hardened, thou lose the impressions of His fingers.",
+    "display": "Offer to Him thy heart in a soft and tractable state, and preserve the form in which the Creator has fashioned thee, having moisture in thyself, lest, by becoming hardened, thou lose the impressions of His fingers.",
+    "ctx": "You are God's clay, he says. Let Him finish the work.",
+    "work": "Against Heresies",
+    "place": "Book 4, chapter 39, section 2",
+    "url": "https://ccel.org/ccel/schaff/anf01.ix.vi.xl.html",
+    "verified": true,
+    "note": "Unrevised form 'thy heart ... thee ... thyself ... thou'. New Advent (and the researcher notes) have 'your heart ... you ... yourself ... you'."
+   },
+   {
+    "exact": "and the disagreement in regard to the fast confirms the agreement in the faith.",
+    "display": "and the disagreement in regard to the fast confirms the agreement in the faith.",
+    "ctx": "To Victor, bishop of Rome, in the Easter dispute.",
+    "work": "Letter to Victor, in Eusebius, Church History",
+    "place": "Book 5, chapter 24, section 13",
+    "url": "https://ccel.org/ccel/schaff/npnf201.iii.x.xxv.html",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "exact": "so that God should for ever teach, and man should for ever learn the things taught him by God",
+    "display": "so that God should for ever teach, and man should for ever learn the things taught him by God",
+    "ctx": "On the questions we cannot answer now, and why that is no shame.",
+    "work": "Against Heresies",
+    "place": "Book 2, chapter 28, section 3",
+    "url": "https://ccel.org/ccel/schaff/anf01.ix.iii.xxix.html",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "exact": "If, for instance, any one asks, \"What was God doing before He made the world?\" we reply that the answer to such a question lies with God Himself.",
+    "display": "If, for instance, any one asks, \"What was God doing before He made the world?\" we reply that the answer to such a question lies with God Himself.",
+    "ctx": "A question people still ask. His answer, some two centuries before Augustine's.",
+    "work": "Against Heresies",
+    "place": "Book 2, chapter 28, section 3",
+    "url": "https://ccel.org/ccel/schaff/anf01.ix.iii.xxix.html",
+    "verified": true,
+    "note": "'Before Augustine's' refers to Confessions 11; the comparison is ours. Could drop it."
+   },
+   {
+    "exact": "And thus also it was that the knot of Eve's disobedience was loosed by the obedience of Mary.",
+    "display": "And thus also it was that the knot of Eve's disobedience was loosed by the obedience of Mary.",
+    "ctx": "Mary as the new Eve, one of the earliest statements of it.",
+    "work": "Against Heresies",
+    "place": "Book 3, chapter 22, section 4",
+    "url": "https://ccel.org/ccel/schaff/anf01.ix.iv.xxiii.html",
+    "verified": true,
+    "note": "'One of the earliest' is safe (Justin, Dialogue 100, is earlier); do not say 'the first'."
+   },
+   {
+    "exact": "For no reformation of so great importance can be effected by them, as will compensate for the mischief arising from their schism.",
+    "display": "For no reformation of so great importance can be effected by them, as will compensate for the mischief arising from their schism.",
+    "ctx": "On those who break away to start a purer church.",
+    "work": "Against Heresies",
+    "place": "Book 4, chapter 33, section 7",
+    "url": "https://ccel.org/ccel/schaff/anf01.ix.vi.xxxiv.html",
+    "verified": true,
+    "note": ""
+   }
+  ],
+  "more_if_needed": [
+   {
+    "exact": "He commenced afresh the long line of human beings, and furnished us, in a brief, comprehensive manner, with salvation",
+    "place": "Against Heresies, Book 3, chapter 18, section 1",
+    "url": "https://ccel.org/ccel/schaff/anf01.ix.iv.xix.html",
+    "verified": true,
+    "note": "His idea of 'recapitulation': Christ sums up and restarts the human story."
+   },
+   {
+    "exact": "But our opinion is in accordance with the Eucharist, and the Eucharist in turn establishes our opinion.",
+    "place": "Against Heresies, Book 4, chapter 18, section 5",
+    "url": "https://ccel.org/ccel/schaff/anf01.ix.vi.xix.html",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "exact": "For there is no coercion with God, but a good will [towards us] is present with Him continually.",
+    "place": "Against Heresies, Book 4, chapter 37, section 1",
+    "url": "https://ccel.org/ccel/schaff/anf01.ix.vi.xxxviii.html",
+    "verified": true,
+    "note": "The bracket is the translator's."
+   },
+   {
+    "exact": "as if occupying but one house, carefully preserves it",
+    "place": "Against Heresies, Book 1, chapter 10, section 2",
+    "url": "https://ccel.org/ccel/schaff/anf01.ix.ii.xi.html",
+    "verified": true,
+    "note": "The Church, scattered through the world, keeps one faith."
+   },
+   {
+    "exact": "It is therefore better and more profitable to belong to the simple and unlettered class, and by means of love to attain to nearness to God",
+    "place": "Against Heresies, Book 2, chapter 26, section 1",
+    "url": "https://ccel.org/ccel/schaff/anf01.ix.iii.xxvii.html",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "exact": "so that under the fear of human rule, men may not eat each other up like fishes",
+    "place": "Against Heresies, Book 5, chapter 24, section 2",
+    "url": "https://ccel.org/ccel/schaff/anf01.ix.vii.xxv.html",
+    "verified": true,
+    "note": "Why God gives nations rulers."
+   },
+   {
+    "exact": "but even that we should present a gratuitous gift to those who take away our goods",
+    "place": "Against Heresies, Book 4, chapter 13, section 3",
+    "url": "https://ccel.org/ccel/schaff/anf01.ix.vi.xiv.html",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "exact": "but the lord, that is, man, was (but) small; for he was a child; and it was necessary that he should grow, and so come to (his) perfection.",
+    "place": "Demonstration of the Apostolic Preaching, chapter 12 (tr. J. Armitage Robinson, 1920)",
+    "url": "https://www.tertullian.org/fathers/irenaeus_02_proof.htm",
+    "verified": true,
+    "note": "Adam made as a child, meant to grow. Robinson (d. 1933), published 1920: public domain in the US; UK term (life + 70) ended 2003."
+   }
+  ]
+ },
+ "misquoted_or_legend": [
+  {
+   "claim": "'The glory of God is man fully alive.'",
+   "truth": "A loose rendering, and half a sentence. Roberts and Rambaut have 'the glory of God is a living man; and the life of man consists in beholding God'. The Latin is 'vivens homo', a living man. The popular form is the English Catechism's own wording (paragraph 294), and the Episcopal Church's Lesser Feasts and Fasts has 'a human being fully alive'. Either way, the second half says where that life comes from: seeing God.",
+   "source": "Against Heresies, Book 4, chapter 20, section 7 (CCEL); Catechism of the Catholic Church, paragraph 294 (English and Latin, vatican.va); Lesser Feasts and Fasts 2022, p. 292",
+   "url": "https://www.vatican.va/content/catechism/en/part_one/section_two/chapter_one/article_1/paragraph_4_the_creator.html",
+   "verified": true,
+   "note": "Careful wording: 'fully alive' is a translation choice in an official text, not an invention; but it is not what the Latin literally says, and the quote is nearly always cut in half."
+  },
+  {
+   "claim": "He died a martyr, beheaded in 202 under Septimius Severus.",
+   "truth": "No one in the first two centuries after him says he was martyred. Eusebius, who tells a great deal about him, says nothing of it. Jerome's Lives does not call him a martyr; Jerome first does so later, in a commentary on Isaiah. Gregory of Tours, about 590, is the first to tell a martyrdom, and he gives neither a year nor a sword. The date 202 and the beheading come from later tradition.",
+   "source": "McGiffert, NPNF2-1, Book 4, chapter 21, note 9 ('Jerome is the first to call him a martyr, and that not in his de vir. ill., but in his Comment. in Esaiam (chap. 64)'; the silence of 'Tertullian, Hippolytus, Eusebius, and all the earlier Fathers'); Jerome, Lives of Illustrious Men, chapter 35 (read: no martyrdom); Gregory of Tours, History of the Franks, Book 1, chapter 29 (Dalton 1927: tortures, then 'dedicated him by martyrdom to Christ the Lord'); OCA and azbyka.ru (beheaded by the sword, 202, under Severus); Catholic Encyclopedia ('not very probable')",
+   "url": "https://ccel.org/ccel/schaff/npnf201.iii.ix.xxi.html",
+   "verified": true,
+   "note": "Put this with care. The Catholic and Orthodox churches honour him as a martyr (USCCB 'Bishop and Martyr'; Orthodox 'Hieromartyr'). The honest line: 'He is honoured as a martyr. The earliest sources are silent, and many historians doubt it.' McGiffert goes further ('conclusive evidence that he was not a martyr'); quote him as one voice, not as the verdict. I did not see Jerome's Isaiah commentary myself."
+  },
+  {
+   "claim": "Polycarp baptised him, ordained him and sent him to Gaul.",
+   "truth": "Irenaeus says only that he saw and heard Polycarp as a boy. That Polycarp sent him to Lyons is first found in Gregory of Tours, about four centuries later. The baptism and ordination appear in modern Orthodox Lives.",
+   "source": "Against Heresies 3.3.4; Eusebius 5.20; Gregory of Tours, History of the Franks 1.29 ('sent to the city by the blessed Polycarp'); OCA Life ('Saint Polycarp baptized the youth, and afterwards ordained him presbyter and sent him')",
+   "url": "https://www.oca.org/saints/lives/2026/08/23/102379-hieromartyr-irenaeus-bishop-of-lyons",
+   "verified": true,
+   "note": "I did not find where the baptism and ordination story first appears; say 'later tradition'."
+  },
+  {
+   "claim": "He taught that Jesus was fifty when He died.",
+   "truth": "Close, but not quite. He argued Jesus had 'already passed the age of forty' and was 'not far from' fifty, from the words 'Thou art not yet fifty years old' (John 8:57). He also cites 'all the elders' who knew John in Asia.",
+   "source": "Against Heresies, Book 2, chapter 22, sections 5-6",
+   "url": "https://ccel.org/ccel/schaff/anf01.ix.iii.xxiii.html",
+   "verified": true,
+   "note": "Exact: 'He did not then want much of being fifty years old'. The ANF editor's note calls the claim 'simply astounding'. This belongs under hard topics too: it is his real view, and a minority one."
+  },
+  {
+   "claim": "The four 'fragments of Irenaeus' published by Christoph Pfaff in 1715.",
+   "truth": "Forgeries. Funk showed they were not his, and Harnack showed Pfaff made them himself.",
+   "source": "Catholic Encyclopedia (1910), 'St. Irenaeus': 'The four fragments which Pfaff published in 1715, ostensibly from a Turin manuscript, have been proven by Funk to be apocryphal, and Harnack has established the fact that Pfaff himself fabricated them.'",
+   "url": "https://www.newadvent.org/cathen/08130b.htm",
+   "verified": true,
+   "note": "Which four ANF fragments (numbered 35-38 or 36-39) are Pfaff's is NOT checked here; the ANF volume numbers them among other fragments. Do not print the fragments' text as his."
+  },
+  {
+   "claim": "Jesus said that in the kingdom every vine will have ten thousand branches.",
+   "truth": "Irenaeus really wrote this, but he says he had it from 'the elders who saw John' and from Papias. It is not in the Gospels. Eusebius thought Papias misunderstood the apostles, and that Irenaeus followed him.",
+   "source": "Against Heresies, Book 5, chapter 33, section 3; Eusebius, Church History, Book 3, chapter 39, sections 12-13",
+   "url": "https://ccel.org/ccel/schaff/anf01.ix.vii.xxxiv.html",
+   "verified": true,
+   "note": "The 2 Baruch 29:5 parallel is the researcher's; not checked. Leave it off or check it."
+  }
+ ],
+ "hard_topics": [
+  {
+   "title": "A thousand-year kingdom on earth",
+   "text": "He expected Christ to reign on a renewed earth before the end, and he read those prophecies literally. Eusebius disapproved. He blamed Papias, 'of very limited understanding', for leading Fathers 'as for instance Irenæus' into it. Most later churches did not follow him here.",
+   "exact_holder": "If, however, any shall endeavour to allegorize [prophecies] of this kind, they shall not be found consistent with themselves in all points",
+   "exact_critic": "For he appears to have been of very limited understanding, as one can see from his discourses. But it was due to him that so many of the Church Fathers after him adopted a like opinion, urging in their own support the antiquity of the man; as for instance Irenæus and any one else that may have proclaimed similar views.",
+   "source": "Against Heresies 5.35.1; Eusebius, Church History 3.39.13",
+   "url": "https://ccel.org/ccel/schaff/npnf201.iii.viii.xxxix.html",
+   "verified": true,
+   "note": "'Most later churches did not follow him' is general knowledge (Lippincott 1915: 'opinions on that subject which some consider extravagant'); soften to 'Many later Christians did not follow him here' if no stronger source is added."
+  },
+  {
+   "title": "Hard words for heretics",
+   "text": "He loved his opponents, and he prayed for them. He also passed on, with approval, Polycarp calling Marcion 'the first-born of Satan', and John fleeing a bath-house because a heretic was inside. He asked the bishop of Rome to remove Florinus's books from the church.",
+   "exact_holder": "\"Dost thou know me?\" \"I do know thee, the first-born of Satan.\"",
+   "exact_2": "Such was the horror which the apostles and their disciples had against holding even verbal communication with any corrupters of the truth",
+   "exact_3": "that for the sake of your reputation you may expel these writings from among you, as bringing disgrace upon you",
+   "source": "Against Heresies 3.3.4; ANF fragment 51 (Syriac, letter to Victor), New Advent 'Fragments'",
+   "url": "https://ccel.org/ccel/schaff/anf01.ix.iv.iv.html",
+   "verified": true,
+   "note": "Fragment URL: https://www.newadvent.org/fathers/0134.htm (line checked there and in the CCEL plain text, fragment LI). Britannica: toward Marcion and gnosticism he 'adopted a totally negative and unresponsive attitude'."
+  },
+  {
+   "title": "The church of Rome: a disputed sentence",
+   "text": "In one sentence he says every church must agree with the church of Rome 'on account of its pre-eminent authority'. Catholics read it as early witness to Rome's primacy. Others note that the Greek is lost, the Latin is hard, and that Irenaeus himself rebuked a bishop of Rome. The translators of 1885 wrote that they were 'far from sure' of their own English.",
+   "exact_holder": "For it is a matter of necessity that every Church should agree with this Church, on account of its pre-eminent authority, that is, the faithful everywhere, inasmuch as the apostolical tradition has been preserved continuously by those [faithful men] who exist everywhere.",
+   "exact_translators": "We are far from sure that the rendering given above is correct, but we have been unable to think of anything better.",
+   "latin": "Ad hanc enim ecclesiam propter potiorem principalitatem necesse est omnem convenire ecclesiam.",
+   "source": "Against Heresies 3.3.2, with ANF note 3313; Catholic Encyclopedia names 'the primacy of the Roman Church' among the passages 'so often and so fully commented upon'",
+   "url": "https://ccel.org/ccel/schaff/anf01.ix.iv.iv.html",
+   "verified": true,
+   "note": "The ANF note also carries a sharp Protestant aside by the American editor (Coxe): 'A most extraordinary confession. It would be hard to find a worse'. Present both readings in their holders' words; do not pick a side."
+  },
+  {
+   "title": "Jesus past forty",
+   "text": "See often misquoted. His real and unusual view that Jesus lived past forty.",
+   "source": "Against Heresies 2.22.5-6",
+   "url": "https://ccel.org/ccel/schaff/anf01.ix.iii.xxiii.html",
+   "verified": true,
+   "note": ""
+  }
+ ],
+ "where_he_stood": {
+  "text": "Eight of the quiz's 23 statements. Six show a line, two are on record but hidden. All from Against Heresies. Values from site/src/data/which-early-christian.json (people.irenaeus.cells).",
+  "rows": [
+   {
+    "statement": "There's nothing wrong with being rich, as long as you use it well.",
+    "key": "rich",
+    "side": "agree",
+    "value": 1,
+    "shown": true,
+    "line": "For whatsoever we acquired from unrighteousness when we were heathen, we are proved righteous, when we have become believers, by applying it to the Lord's advantage.",
+    "place": "Book 4, chapter 30, section 3",
+    "url": "https://ccel.org/ccel/schaff/anf01.ix.vi.xxxi.html",
+    "verified": true,
+    "note": "Context: answering Marcionites who mocked Israel for taking the Egyptians' gold."
+   },
+   {
+    "statement": "Your body is a friend to look after, not an enemy to fight.",
+    "key": "body",
+    "side": "agree",
+    "value": 1,
+    "shown": true,
+    "line": "Here he manifestly declares the body to be the temple in which the Spirit dwells.",
+    "place": "Book 5, chapter 6, section 2",
+    "url": "https://ccel.org/ccel/schaff/anf01.ix.vii.vii.html",
+    "verified": true,
+    "note": "The 'he' is the apostle Paul (1 Corinthians 3:16-17): Irenaeus is reading Paul. The page should say so, or the reader may think 'he' is someone else."
+   },
+   {
+    "statement": "God still speaks to people through dreams.",
+    "key": "dreams",
+    "side": "agree",
+    "value": 1,
+    "shown": true,
+    "line": "Others have foreknowledge of things to come: they see visions, and utter prophetic expressions.",
+    "place": "Book 2, chapter 32, section 4",
+    "url": "https://ccel.org/ccel/schaff/anf01.ix.iii.xxxiii.html",
+    "verified": true,
+    "note": "About visions and prophecy, not dreams as such (the topic research says so too). Value 1, not 2, reflects that."
+   },
+   {
+    "statement": "Miracles still happen today, just as they did in the Bible.",
+    "key": "miracles",
+    "side": "strongly agree",
+    "value": 2,
+    "shown": true,
+    "line": "Others still, heal the sick by laying their hands upon them, and they are made whole.",
+    "place": "Book 2, chapter 32, section 4",
+    "url": "https://ccel.org/ccel/schaff/anf01.ix.iii.xxxiii.html",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "statement": "Some questions about God are better left alone.",
+    "key": "mystery",
+    "side": "strongly agree",
+    "value": 2,
+    "shown": true,
+    "line": "We are able by the grace of God to explain some of them, while we must leave others in the hands of God.",
+    "place": "Book 2, chapter 28, section 3",
+    "url": "https://ccel.org/ccel/schaff/anf01.ix.iii.xxix.html",
+    "verified": true,
+    "note": "Printed with a capital W and a full stop (excerpt cap, stop); in the text it is mid-sentence and the sentence runs on. Value 2 is an OVERRIDE in table.mjs (the topic research coded him 'mixed')."
+   },
+   {
+    "statement": "In the end, God will save everyone.",
+    "key": "all",
+    "side": "strongly disagree",
+    "value": -2,
+    "shown": true,
+    "line": "Thus also the punishment of those who do not believe the Word of God, and despise His advent, and are turned away backwards, is increased; being not merely temporal, but rendered also eternal.",
+    "place": "Book 4, chapter 28, section 2",
+    "url": "https://ccel.org/ccel/schaff/anf01.ix.vi.xxix.html",
+    "verified": true,
+    "note": "Printed with a capital T (excerpt cap). The passage goes on: 'these shall be damned for ever'."
+   },
+   {
+    "statement": "Wisdom is worth learning from anyone, even people who don't share your faith.",
+    "key": "learning",
+    "side": "disagree",
+    "value": -1,
+    "shown": false,
+    "line": "On record, not quoted.",
+    "place": "Book 2, chapter 14, section 2 (research)",
+    "url": "https://ccel.org/ccel/schaff/anf01.ix.iii.xv.html",
+    "verified": false,
+    "note": "Hidden on the site. The research line (heretics sewing 'a motley garment' out of the philosophers) is not in my checked list; the location is the research's. Also relevant: 2.26.1, 'better ... to belong to the simple and unlettered class' (verified)."
+   },
+   {
+    "statement": "A Christian can fight in a just war with a clear conscience.",
+    "key": "war",
+    "side": "disagree",
+    "value": -1,
+    "shown": false,
+    "line": "On record, not quoted.",
+    "place": "Book 4, chapter 34, section 4",
+    "url": "https://ccel.org/ccel/schaff/anf01.ix.vi.xxxv.html",
+    "verified": true,
+    "note": "Hidden on the site. The passage (verified): nations 'did form the swords and war-lances into ploughshares, and changed them into pruning-hooks for reaping the corn ... and that they are now unaccustomed to fighting, but when smitten, offer also the other cheek'. CCEL has 'corn'; the research had New Advent's 'grain'. It is read as fulfilled prophecy about the Church, not a rule on soldiering."
+   }
+  ],
+  "source": "site/src/data/which-early-christian.json; CCEL ANF vol. 1",
+  "url": "https://ccel.org/ccel/schaff/anf01.ix.html",
+  "verified": true,
+  "note": "Every shown line is word for word in Roberts and Rambaut, and each CCEL chapter page was fetched and contains it."
+ },
+ "friends_family_rivals": [
+  {
+   "name": "Polycarp of Smyrna",
+   "kind": "teacher",
+   "text": "The bishop he listened to as a boy, who had known the apostle John.",
+   "source": "Eusebius 5.20.5-7; Against Heresies 3.3.4",
+   "url": "https://ccel.org/ccel/schaff/npnf201.iii.x.xxi.html",
+   "verified": true,
+   "note": "Not in the site's pairs yet. Polycarp is in the hub's planned wave (README: 'the most searched missing saints')."
+  },
+  {
+   "name": "Justin Martyr",
+   "kind": "read him",
+   "text": "Irenaeus read Justin and quotes him.",
+   "source": "Against Heresies, Book 4, chapter 6, section 2: 'In his book against Marcion, Justin does well say: \"I would not have believed the Lord Himself, if He had announced any other than He who is our framer, maker, and nourisher.'",
+   "url": "https://ccel.org/ccel/schaff/anf01.ix.vi.vii.html",
+   "verified": true,
+   "note": "Verified by script against CCEL. Justin's book against Marcion is lost; this is one of the few lines left of it. Irenaeus also cites Justin at 5.26.2 ('Truly has Justin remarked')."
+  },
+  {
+   "name": "Pothinus",
+   "kind": "bishop before him",
+   "text": "Bishop of Lyons, more than ninety, who died in prison in the persecution of 177. Irenaeus succeeded him.",
+   "source": "Eusebius 5.1.29-31, 5.5.8",
+   "url": "https://ccel.org/ccel/schaff/npnf201.iii.x.ii.html",
+   "verified": true,
+   "note": "Letter from Lyons (Eusebius 5.1.31), verified: 'Scarcely able to breathe, he was cast into prison and died after two days.'"
+  },
+  {
+   "name": "Eleutherus, bishop of Rome",
+   "kind": "received him",
+   "text": "The martyrs of Lyons sent Irenaeus to him with their letter. Irenaeus names him as the twelfth bishop from the apostles.",
+   "source": "Eusebius 5.4; Against Heresies 3.3.3",
+   "url": "https://ccel.org/ccel/schaff/npnf201.iii.x.v.html",
+   "verified": true,
+   "note": "Spelled Eleutherus in Eusebius, Eleutherius in ANF."
+  },
+  {
+   "name": "Victor, bishop of Rome",
+   "kind": "rebuked",
+   "text": "Tried to cut off the churches of Asia over Easter. Irenaeus wrote to talk him out of it.",
+   "source": "Eusebius 5.24.9-18",
+   "url": "https://ccel.org/ccel/schaff/npnf201.iii.x.xxv.html",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "name": "Florinus",
+   "kind": "old friend, then opponent",
+   "text": "He knew Polycarp in Asia, as Irenaeus did. He was a presbyter at Rome but lost the office. He was drawn toward Valentinus. Irenaeus wrote to him, and against him.",
+   "source": "Eusebius 5.15, 5.20",
+   "url": "https://ccel.org/ccel/schaff/npnf201.iii.x.xxi.html",
+   "verified": true,
+   "note": "Checker 2026-09-25: 5.15 now read: 'He fell from the presbyterate of the Church'. 'In his youth' removed (not in the source). 5.20 verified."
+  },
+  {
+   "name": "Blastus",
+   "kind": "opponent",
+   "text": "Led a split at Rome. Irenaeus wrote him a letter, On Schism, now lost.",
+   "source": "Eusebius 5.20.1",
+   "url": "https://ccel.org/ccel/schaff/npnf201.iii.x.xxi.html",
+   "verified": true,
+   "note": "McGiffert: probably a Quartodeciman and a Montanist."
+  },
+  {
+   "name": "Valentinus and his followers",
+   "kind": "chief opponents",
+   "text": "The Gnostic teachers his five books set out to refute.",
+   "source": "Against Heresies, Book 1, preface; McGiffert note 9",
+   "url": "https://ccel.org/ccel/schaff/anf01.ix.ii.i.html",
+   "verified": true,
+   "note": "McGiffert: 'The author's primary object was to refute Valentinianism'."
+  },
+  {
+   "name": "Tatian",
+   "kind": "opponent",
+   "text": "Justin's own pupil. Irenaeus says he left the Church, preached against marriage, and was 'puffed up by the thought of being a teacher'.",
+   "source": "Against Heresies, Book 1, chapter 28, section 1",
+   "url": "https://ccel.org/ccel/schaff/anf01.ix.ii.xxix.html",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "name": "Marcion",
+   "kind": "opponent",
+   "text": "Split God into a harsh Creator and a kind Father, and cut the Scriptures. Irenaeus answers him throughout.",
+   "source": "Against Heresies 3.3.4, 3.25 (summary in researcher notes)",
+   "url": "https://ccel.org/ccel/schaff/anf01.ix.iv.xxvi.html",
+   "verified": false,
+   "note": "Summary is the researcher's; the Marcion story in 3.3.4 is verified. Safer one-line: 'Polycarp called him the first-born of Satan, and Irenaeus wrote against him.'"
+  },
+  {
+   "name": "Eusebius of Caesarea",
+   "kind": "admirer and critic, a century later",
+   "text": "Quoted him often and called him well named, but thought his thousand-year kingdom came from Papias's misunderstanding.",
+   "source": "Eusebius 5.24.18; 3.39.13; McGiffert note 9 ('treated by him with the most profound respect')",
+   "url": "https://ccel.org/ccel/schaff/npnf201.iii.viii.xxxix.html",
+   "verified": true,
+   "note": ""
+  }
+ ],
+ "how_he_died": {
+  "text": "No one knows. After the Easter dispute of about 190 he drops out of the record. The earliest writers, Eusebius among them, say nothing of his death. Jerome, and then Gregory of Tours about 590, say he died a martyr. Gregory tells of so many Christians killed at Lyons 'that the streets ran with streams of Christian blood', and says the persecutor had Irenaeus tortured in front of him. The Martyrology of 1916 places it under the emperor Severus. Orthodox Lives today say he was beheaded in 202. No last words are recorded.",
+  "source": "Eusebius (silent); McGiffert, NPNF2-1, Book 4, chapter 21, note 9; Gregory of Tours, History of the Franks, Book 1, chapter 29 (tr. O. M. Dalton, 1927); The Roman Martyrology (1916), 28 June; OCA; azbyka.ru ('усечен мечом ... в 202 году')",
+  "url": "https://archive.org/details/historyoffranksb0002omda",
+  "verified": true,
+  "note": "Dalton (Oxford, 1927): Dalton died 1945, so public domain in the UK since 2016 and in the US since 2023 (published 1927). Exact Dalton lines verified: 'In a brief space of time, chiefly by his preaching, he made the whole city Christian.' / 'This executioner, after causing divers tortures to be inflicted on the blessed Irenaeus in his presence, dedicated him by martyrdom to Christ the Lord.' / 'After Irenaeus, forty-eight other martyrs suffered death'. Brehaut (1916) only summarises this chapter; in Brehaut's and the Latin numbering it is chapter 29 of Book 1 (Latin: 'De sancto Photino, Hirineo vel reliquis martyribus Lugdunensibus'). Mark it 'A later story', as on Martin's page."
+ },
+ "is_he_a_saint": {
+  "text": "Yes. Catholics keep him on 28 June as a bishop and martyr, and since 2022 as a Doctor of the Church, the 'Doctor of Unity'. The Orthodox keep him on 23 August as a hieromartyr. The Church of England, the Episcopal Church, the Missouri Synod and the ELCA remember him on 28 June. Every church that keeps him calls him a martyr or leaves it open, though the earliest sources are silent on how he died.",
+  "churches": [
+   {
+    "church": "Catholic",
+    "status": "Saint",
+    "note": "A memorial on 28 June. Doctor of the Church, 2022"
+   },
+   {
+    "church": "Orthodox",
+    "status": "Saint",
+    "note": "Hieromartyr, 23 August"
+   },
+   {
+    "church": "Anglican",
+    "status": "Saint",
+    "note": "A Lesser Festival in the Church of England, 28 June"
+   },
+   {
+    "church": "Lutheran",
+    "status": "Remembered",
+    "note": "Missouri Synod and ELCA, 28 June"
+   }
+  ],
+  "decree_quote": {
+   "exact": "Saint Irenaeus of Lyon, who came from the East, exercised his episcopal ministry in the West: he was a spiritual and theological bridge between Eastern and Western Christians.",
+   "source": "Pope Francis, decree of 21 January 2022",
+   "url": "https://press.vatican.va/content/salastampa/en/bollettino/pubblico/2022/01/21/220121b.html",
+   "verified": true
+  },
+  "martyrology_quote": {
+   "exact": "At Lyons, in France, St. Irenaeus, bishop and martyr, who, as is related by St. Jerome, was the disciple of blessed Polycarp, bishop of Smyrna, and lived near the time of the Apostles.",
+   "source": "The Roman Martyrology (1916), 28 June",
+   "url": "https://archive.org/details/romanmartyrology00cathuoft",
+   "verified": true,
+   "note": "OCR spells 'Irenseus'; checked by eye in sources/people/irenaeus-of-lyons/martyrology-1916-irenaeus.txt."
+  },
+  "source": "USCCB; 2022 decree; OCA; synaxarion.gr; saint.gr; azbyka.ru; Church of England; Lesser Feasts and Fasts 2022; LSB; ELW draft 2006",
+  "url": "https://www.oca.org/saints/lives/2026/08/23/102379-hieromartyr-irenaeus-bishop-of-lyons",
+  "verified": true,
+  "note": "Lesser Feasts and Fasts 2022, honest caveat in its own words: 'A late and uncertain tradition claims that he suffered martyrdom around the year 202.'"
+ },
+ "prayer_he_wrote": {
+  "text": "Yes: a prayer in the middle of Against Heresies, for everyone who reads the book.",
+  "exact": "Wherefore I do also call upon thee, Lord God of Abraham, and God of Isaac, and God of Jacob and Israel, who art the Father of our Lord Jesus Christ, the God who, through the abundance of Thy mercy, hast had a favour towards us, that we should know Thee, who hast made heaven and earth, who rulest over all, who art the only and the true God, above whom there is none other God; grant, by our Lord Jesus Christ, the governing power of the Holy Spirit; give to every reader of this book to know Thee, that Thou art God alone, to be strengthened in Thee, and to avoid every heretical, and godless, and impious doctrine.",
+  "display": "Wherefore I do also call upon Thee, Lord God of Abraham, and God of Isaac, and God of Jacob and Israel, Who art the Father of our Lord Jesus Christ, the God Who, through the abundance of Thy mercy, hast had a favour towards us, that we should know Thee, Who hast made heaven and earth, Who rulest over all, Who art the only and the true God, above Whom there is none other God; grant, by our Lord Jesus Christ, the governing power of the Holy Spirit; give to every reader of this book to know Thee, that Thou art God alone, to be strengthened in Thee, and to avoid every heretical, and godless, and impious doctrine.",
+  "source": "Against Heresies, Book 3, chapter 6, section 4",
+  "url": "https://ccel.org/ccel/schaff/anf01.ix.iv.vii.html",
+  "verified": true,
+  "note": "His own prayer, addressed to God, so it passes the 'no prayers to saints' rule. The CCEL heading for this chapter reads 'Chapter VI--' without a full stop, which first misled the locator; confirmed as 3.6.4 on the CCEL page."
+ },
+ "what_to_read_first": [
+  {
+   "title": "Against Heresies, Book 3",
+   "by": "Irenaeus",
+   "text": "The heart of the work: the apostles, the churches they founded, Polycarp, and the four Gospels. Book 1 is heavy going; start here.",
+   "url": "https://ccel.org/ccel/schaff/anf01.ix.iv.html",
+   "http": 200,
+   "verified": true,
+   "note": "Whole work: https://ccel.org/ccel/schaff/anf01.ix.html (200). 'Book 1 is heavy going' is our advice; drop if unwanted."
+  },
+  {
+   "title": "The Demonstration of the Apostolic Preaching",
+   "by": "Irenaeus",
+   "text": "A short handbook of the faith for a friend, Marcianus. Lost for centuries, found in Armenian in 1904.",
+   "url": "https://www.tertullian.org/fathers/irenaeus_02_proof.htm",
+   "http": 200,
+   "verified": true,
+   "note": "Robinson's translation (1920). Introduction: https://www.tertullian.org/fathers/irenaeus_01_proof_intro.htm (200)."
+  },
+  {
+   "title": "Church History, Book 5",
+   "by": "Eusebius",
+   "text": "Nearly everything known of his life: the martyrs' letter, his letter to Florinus about Polycarp, and the Easter dispute.",
+   "url": "https://ccel.org/ccel/schaff/npnf201.iii.x.html",
+   "http": 200,
+   "verified": true,
+   "note": "Chapters 4, 5, 20, 24 and 26 (CCEL pages .v, .vi, .xxi, .xxv, .xxvii)."
+  },
+  {
+   "title": "Lives of Illustrious Men, chapter 35",
+   "by": "Jerome",
+   "text": "One page: his works, and his letter to Victor.",
+   "url": "https://ccel.org/ccel/schaff/npnf203.v.iii.xxxvii.html",
+   "http": 200,
+   "verified": true,
+   "note": "Optional fourth."
+  }
+ ],
+ "pictures": {
+  "band": {
+   "file": "C:/Users/Light/Desktop/claude/theology compass/design/saints-hub/pages/img/irenaeus-of-lyons.jpg",
+   "pixels": "763 x 1800 (from 1276 x 3012), 428,709 bytes",
+   "title": "Saint Irénée (window, 'SANCTVS IRENÆVS')",
+   "artist": "Lucien Bégule (1848-1935), stained glass",
+   "date": "1901",
+   "collection": "Église Saint-Irénée, Lyon (in place); photograph by Gérald Gambier, 2010",
+   "page": "https://commons.wikimedia.org/wiki/File:Saint_irenee_saint_irenee.jpg",
+   "licence": "Public domain. Commons tag {{PD-old}} (Bégule died 1935: public domain in France since 2006; made 1901, so public domain in the US). The photograph carries no separate licence; Commons policy 'When to use the PD-Art tag' treats a straight photo of an old, flat stained-glass window as a faithful reproduction with no new copyright.",
+   "alt": "A stained-glass window: Saint Irenaeus in profile, an old bearded bishop with a green halo and a gold band in his hair, holding a scroll and a tall blue crozier, in a pink cloak before a deep red patterned ground, with 'SANCTVS IRENÆVS' beneath him and two doves by a Chi-Rho below.",
+   "crop_hint": "Face at about 55% across, 20% down: try --pos-m '55% 17%' and --pos-d '55% 15%'. The site's current portrait is a crop of the same window (San_Ireneo,_vitral_(cropped).jpg, 866 x 908).",
+   "verified": true,
+   "note": "Chosen because it is in colour, the face is clear and it is certainly free. No public-domain colour PAINTING of Irenaeus turned up on Commons. Commons policy quote (checked): 'As long as the surface is not noticeably curved or tattered/broken, and the original work is old enough to have entered the public domain, it is considered a faithful reproduction of the original with no original contribution.'"
+  },
+  "second": {
+   "file": "C:/Users/Light/Desktop/claude/theology compass/design/saints-hub/pages/img/irenaeus-of-lyons-2.jpg",
+   "pixels": "1256 x 1800 (from 1642 x 2354), 424,937 bytes",
+   "title": "H. Ireneüs van Lyon (lettered 'S. IRENÆVS EPISCOPVS LVGDVNENSIS')",
+   "artist": "Anonymous printmaker, the Netherlands",
+   "date": "1600-1699",
+   "collection": "Rijksmuseum, Amsterdam, RP-P-1907-47",
+   "page": "https://commons.wikimedia.org/wiki/File:H._Irene%C3%BCs_van_Lyon,_RP-P-1907-47.jpg",
+   "licence": "CC0 (Rijksmuseum; Commons tag CC-Zero)",
+   "alt": "A 17th-century engraving: the head and shoulders of Saint Irenaeus, bearded, with a halo, looking straight out from an oval frame lettered 'S. IRENAEVS EPISCOPVS LVGDVNENSIS', above two lines of Latin verse.",
+   "verified": true,
+   "note": "This is WESTERN, not Eastern. No public-domain or CC0 Eastern icon of Irenaeus exists on Commons: the two icons there are modern and licensed ('Saint Irenaeus icon.jpg', CC BY-SA 2.0; the Swiss synaxis icon, CC BY 4.0, 21st century), and the Lyon chapel icon photo is CC0 from the photographer but shows a modern icon whose painter's rights are not released. The Menologion of Basil II covers September to February only, so it has no 23 August entry. The Latin verse: 'Quem tantis donis altissimus ille beavit, / Et qui tanta facit, nominis omen habet' (roughly: whom the Most High blessed with such gifts, and who does such things, has the omen of his name, i.e. peace). Handle: http://hdl.handle.net/10934/RM0001.COLLECT.387024"
+  },
+  "alternatives": [
+   {
+    "title": "H. Ireneüs van Lyon, kerkvader (Jan Luyken after Jan Goeree, 1698), Rijksmuseum RP-P-1896-A-19368-1262 and -1263",
+    "page": "https://commons.wikimedia.org/wiki/File:H._Irene%C3%BCs_van_Lyon,_kerkvader,_RP-P-1896-A-19368-1262.jpg",
+    "licence": "CC0",
+    "pixels": "4378 x 6794",
+    "note": "Irenaeus as a statue with a book lettered 'Adversus Haereses' (on -1263), mitre and crozier; below, the massacre at Lyons, titled 'Door last van Zeverus, aldaar wreedelyk gedoodt'. Good for the 'How he died' section, marked as the later tradition. From W. Cave, Apostolische oudheden (1698)."
+   }
+  ],
+  "rejected": [
+   {
+    "file": "Saint Irenaeus.jpg (245 x 325) and its AI upscale 'Saint Irenaeus of Lyons.png'",
+    "reason": "Source is a crossroadsinitiative.com web image; the '4th century' date is unsupported and the work is unidentified."
+   },
+   {
+    "file": "Irenæus af Lyon Frederikskirken.JPG (Carl Rohl-Smith statue, 1883-84)",
+    "reason": "A photograph of a 3D statue; needs the photographer's CC0 or PD-self, not checked. Not needed."
+   },
+   {
+    "file": "Saint Irenaeus icon.jpg; Saint Irenaeus detail.jpg; the Swiss synaxis icon",
+    "reason": "Modern icons under CC BY-SA / CC BY, not PD or CC0."
+   }
+  ],
+  "credits_to_add": "Neither picture is yet in site/public/img/CREDITS.md under these file names. The site's current portrait (the cropped Bégule window) is credited there already per which-early-christian.json."
+ },
+ "personality_test": {
+  "text": "The Christian Personality Test does not name Irenaeus: he is in no type's kindred list and no opposite pair.",
+  "source": "site/src/data/personality.json (no match for 'Irenaeus'); design/saints-hub/research/kindred-research-*.json (only in an audit summary line)",
+  "url": "",
+  "verified": true,
+  "note": "So the page has no 'His personality type' block unless one is added through the test's own method."
+ },
+ "hub_card": {
+  "groups": [
+   "fathers",
+   "teachers"
+  ],
+  "lived": "pre300",
+  "side": [
+   "east",
+   "west"
+  ],
+  "verified": true,
+  "note": "Hint 'fathers': correct. ADD 'teachers': he is a Doctor of the Church (2022), and the planned great-teachers group answers 'what is a doctor of the church'. NOT 'martyrs': he is honoured as one, but the early sources are silent; if he is listed under martyrs, the card needs the caveat. 'pre300': correct (about 130 to about 200). 'east west': correct and worth saying: born in Asia Minor, bishop in Gaul; the 2022 decree calls him 'a spiritual and theological bridge between Eastern and Western Christians'. Also 'apostolic-fathers' is NOT right: he is a generation after them (he knew Polycarp, an Apostolic Father)."
+ },
+ "site_data_flags": [
+  {
+   "text": "which-early-christian.json 'dates': 'c. 130 to c. 202'. Holds as a convention, but 202 rests on the martyrdom tradition. Britannica: 'c. 200/203'; CofE 'c.200'. Consider 'About 130 to about 200'.",
+   "note": ""
+  },
+  {
+   "text": "'where': 'Smyrna, then Lyons'. Smyrna is probable, not stated by Irenaeus ('lower Asia'). Fine as a short label.",
+   "note": ""
+  },
+  {
+   "text": "The researcher notes' status_note says he 'is honoured as a martyr, but Eusebius ... says nothing of a martyrdom; the tradition appears in later sources (for example Gregory of Tours, 6th century)'. Confirmed, and Jerome's Isaiah commentary is earlier than Gregory (McGiffert).",
+   "note": ""
+  },
+  {
+   "text": "Researcher genuine_lines and opinions quote New Advent's revised wording. Differences found: 'Offer to Him your heart ... you ... yourself' (CCEL: thy/thee/thyself/thou); 'reaping the grain' (CCEL: 'reaping the corn'). All six shown quiz lines are identical in CCEL.",
+   "note": ""
+  },
+  {
+   "text": "Researcher misattributed list numbers the Pfaff fragments '36-39 on the New Advent fragments page' from 'standard knowledge, not re-checked'. Still unchecked.",
+   "note": ""
+  },
+  {
+   "text": "Researcher: 'declared a Doctor of the Church (\"Doctor of Unity\") by Pope Francis in 2022'. Confirmed by the decree.",
+   "note": ""
+  },
+  {
+   "text": "Researcher hook ('a power which I term a Gourd', 'Utter-Emptiness', 'the Cucumber', 'a Melon'): 'Gourd' and 'Utter-Emptiness' verified by script; 'Cucumber' and 'Melon' seen in the same passage.",
+   "note": ""
+  },
+  {
+   "text": "The site portrait (San_Ireneo,_vitral_(cropped).jpg) is a crop of the band window; licence reasoning above applies to both.",
+   "note": ""
+  }
+ ],
+ "texts_fetched": [
+  "anf01.txt (ANF vol. 1, CCEL, whole)",
+  "anf03.txt (ANF vol. 3, CCEL, whole: Tertullian)",
+  "npnf201.txt (NPNF2 vol. 1, CCEL, whole: Eusebius)",
+  "npnf203.txt (NPNF2 vol. 3, CCEL, whole: Jerome's Lives)",
+  "demonstration.txt and demonstration-intro.txt (Robinson 1920, tertullian.org)",
+  "gregory-hf-1-29-dalton.txt (Dalton 1927, archive.org, excerpt)",
+  "gregory-hf1-latin.txt (The Latin Library)",
+  "gregory-hist.txt (Brehaut 1916, Fordham)",
+  "csla-E00570.txt (Oxford Cult of Saints)",
+  "cathen.txt (Catholic Encyclopedia 1910)",
+  "britannica.txt",
+  "ccc-294.txt and ccc-294-latin.txt (vatican.va)",
+  "vatican-decree.txt (2022)",
+  "cwr.txt (Catholic World Report 2022)",
+  "usccb-062824.txt",
+  "martyrology-1916-irenaeus.txt (excerpt)",
+  "oca-life.txt",
+  "synaxarion-441.txt",
+  "saintgr-854.txt",
+  "azbyka.txt",
+  "cofe-calendar.txt",
+  "lff2022-irenaeus.txt",
+  "lsb-calendar.txt",
+  "elca-churchyear.txt",
+  "lcms-witness.txt",
+  "lippincott-1915-irenaeus.txt"
+ ],
+ "could_not_verify": [
+  "GOARCH's page for Irenaeus: goarch.org answered 403 and then a Cloudflare bot check, which I did not get round. The Greek 23 August is confirmed from synaxarion.gr and saint.gr.",
+  "Why the West keeps 28 June and the East 23 August. Also Wikipedia's claim that the 1960 calendar moved him to 3 July (vigil of Sts Peter and Paul) and 1969 restored 28 June: not seen in the 1962 Missal or the 1969 Calendarium Romanum.",
+  "The current (2004) Roman Martyrology's wording, and whether the US memorial's title now adds 'Doctor of the Church' (USCCB 2024 still reads 'Bishop and Martyr').",
+  "A modern dictionary pronunciation: Merriam-Webster, Collins, Dictionary.com and the American Heritage Dictionary have no entry. The respelling rests on Lippincott's Pronouncing Dictionary (1892, 1915), read through OCR.",
+  "Any patronage (none found anywhere; leave the field out).",
+  "An art attribute that is his alone, from a reference work (only the pictures themselves).",
+  "His birth year and birthplace (Smyrna is inferred; 'lower Asia' is his own phrase).",
+  "The date, place and cause of his death; the martyrdom tradition before Gregory of Tours. Jerome's Commentary on Isaiah (chapter 64), said by McGiffert to be the first to call him a martyr, was not read.",
+  "The Moscow manuscript of the Martyrdom of Polycarp's claim that Irenaeus was in Rome when Polycarp died (seen only in McGiffert's note; not used).",
+  "The Latin of Against Heresies 4.20.7 was taken from the Latin Catechism (paragraph 294), not from an edition of Irenaeus.",
+  "Whether his letter to Eleutherus (177) concerned Montanism (Catholic Encyclopedia says so; Eusebius 5.3 not read).",
+  "Which ANF fragment numbers are Pfaff's four forgeries.",
+  "The ELCA listing is from the January 2006 final draft of Evangelical Lutheran Worship, not the printed book or an ELCA web page.",
+  "RESOLVED by the checker 2026-09-25: the LCMS's own page, https://www.lcms.org/worship/church-year/commemorations (read in the browser), lists '28 — Irenaeus of Lyons, Pastor' under June. The page now cites it.",
+  "Coptic, Armenian and other Oriental Orthodox calendars were not checked.",
+  "The 2 Baruch 29:5 parallel to the vines saying (researcher's claim).",
+  "That Against Heresies 3.11.8 is 'the earliest firm statement' of the four-Gospel canon, and that 3.3.3 is the oldest list of Roman bishops (both commonly said; no reference checked).",
+  "A public-domain or CC0 Eastern icon of Irenaeus: none exists on Commons. The second picture is a Western engraving."
+ ],
+ "checker": {
+  "checked_on": "2026-09-25",
+  "by": "adversarial checker",
+  "fixes": [
+   "Tertullian line: 'writing soon after' dropped (Against the Valentinians is not dated in any fetched source).",
+   "Trait 'kind to his opponents': 'Then he prayed' implied the prayer came after the five books; it is in Book 3, chapter 25. Now 'Yet he prayed'.",
+   "Florinus moment and circle entry: see their checker notes.",
+   "Book 4, chapter 33 caption 'break away to start a purer church': the text says those who 'for trifling reasons ... cut in pieces and divide' the body of Christ; nothing about purity. Now 'split the Church over small things'.",
+   "Gregory of Tours 'about 590' (myth and death): History of the Franks Book 1 is not dated in any fetched source; CSLA gives Gregory bishop 573-594. Now 'in the late 500s'.",
+   "Glory of the Martyrs 49: Gregory writes in the present ('extemplo medetur', 'magna claritas in cripta illa continetur, quae, ut credo, meritum martyrum signat'). 'healed' and 'A great brightness filled the crypt' now 'heals' and 'There is a great brightness in that crypt ... a sign of the martyrs' merit'.",
+   "Engraving: Rijksmuseum gives the place as 'Nederland (mogelijk)', possibly the Netherlands; credit, caption and sources now say 'possibly'.",
+   "'Roberts and Rambaut's English of 1885' and 'the translators of 1885': 1885 is the Ante-Nicene Fathers printing, not the translation's date. Reworded to the edition.",
+   "LCMS calendar source: replaced the parish copy with the LCMS's own commemorations page."
+  ]
+ }
+}

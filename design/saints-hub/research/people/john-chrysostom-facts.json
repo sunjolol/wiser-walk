@@ -1,0 +1,1293 @@
+{
+ "subject": "St John Chrysostom",
+ "slug": "john-chrysostom",
+ "wec": "chrysostom",
+ "checked_on": "2026-09-24",
+ "text_used": {
+  "text": "Every English quotation below was checked by script (case-insensitive, whitespace and CCEL footnote marks removed) against texts fetched whole and saved in design/saints-hub/sources/people/john-chrysostom/. Chrysostom's own works: the NPNF First Series (vol. 9 Stephens and others, 1889; vol. 10 Prevost rev. Riddle, 1888; vol. 11 Walker, Sheppard and Browne, 1889; vol. 12 Chambers, 1889; vol. 13 Alexander, Broadus and others, 1889; vol. 14 Marriott rev. Schaff, 1889), checked twice: in CCEL's unrevised plain text (ccel-npnf109 to 114) and in New Advent's revised pages (na-*.txt). Where New Advent modernises (thee/thou/ye become you), both forms are given: 'exact' is the form at the URL given, 'exact_unrevised' is CCEL's. The historians: Socrates and Sozomen (NPNF2 vol. 2, 1890), Theodoret and Jerome (NPNF2 vol. 3, 1892), Cassian (NPNF2 vol. 11, 1894), all checked in CCEL and New Advent. His first biography: Palladius, Dialogue concerning the Life of St John Chrysostom, tr. Herbert Moore (London, SPCK, 1921), tertullian.org transcription marked public domain (published before 1929, so public domain in the US). The Lazarus sermon: F. Allen, Four Discourses of Chrysostom (London, 1869), tertullian.org.",
+  "source": "CCEL plain-text volumes npnf109-114, npnf202, npnf203, npnf211; New Advent; tertullian.org (Moore 1921, Allen 1869)",
+  "url": "https://www.ccel.org/ccel/s/schaff/npnf109/cache/npnf109.txt",
+  "verified": true,
+  "note": "Display rule: capitals for every pronoun for God are already present in these translations for the lines chosen (e.g. 'Neglect Him not', 'His house', 'blaspheme Him'); no line below needs a change for the rule except where marked 'display'. Section numbers are the NPNF/New Advent paragraph numbers, for the checker only; the page must show work and homily or chapter in words."
+ },
+ "quick_facts": {
+  "born": {
+   "text": "At Antioch in Syria, about 347. Antioch is today Antakya, in south-central Turkey.",
+   "source": "Catholic Encyclopedia (1910), 'St. John Chrysostom' (C. Baur): 'born at Antioch, c. 347'; Socrates, Church History, Book 6, chapter 3 ('a native of Antioch in Syria-Coele'); Palladius, Dialogue, chapter 5 ('by birth a man of Antioch'); Britannica, 'Antioch' summary: 'Antioch, Turkish Antakya or Hitay, City ... south-central Turkey'",
+   "url": "https://www.newadvent.org/cathen/08452b.htm",
+   "verified": true,
+   "note": "No ancient source gives a year. 347 is the usual modern date (CE 1910, OCA, Britannica, the Coptic synaxarium, the Greek synaxarion.gr). The Episcopal Church's Lesser Feasts and Fasts 2022 says 'around 354'; Wikidata gives 349. Print 'About 347'. Britannica place page: https://www.britannica.com/summary/Antioch-modern-and-ancient-city-south-central-Turkey"
+  },
+  "family": {
+   "text": "His father Secundus was a high-ranking officer in the army of Syria. He died soon after John was born. His mother Anthusa was widowed at twenty and never remarried. He had one elder sister.",
+   "source": "Socrates, Church History 6.3 ('son of Secundus and Anthusa'); Palladius, Dialogue, chapter 5 ('his father holding the office of military commander in Syria; an elder sister was the only other child'); Letter to a Young Widow, section 2 (NPNF 9): his mother was 'forty years of age of which twenty had elapsed since she lost my father'; On the Priesthood, Book 1, section 5 (his mother on refusing a second marriage)",
+   "url": "https://www.newadvent.org/fathers/1904.htm",
+   "verified": true,
+   "note": "Widowed at twenty is a calculation from his own words (forty years old, widowed twenty years); the CE, Schaff's Prolegomena and OCA all state it outright. On the Priesthood does not name her; Socrates does."
+  },
+  "grew_up": {
+   "text": "In Antioch. He studied rhetoric under Libanius, the most famous pagan orator of the day, and was headed for the law courts before he turned to the Scriptures.",
+   "source": "Socrates 6.3 ('He studied rhetoric under Libanius the sophist, and philosophy under Andragathius the philosopher. Being on the point of entering the practice of civil law...'); Sozomen, Church History 8.2",
+   "url": "https://www.newadvent.org/fathers/26016.htm",
+   "verified": true,
+   "note": "NPNF note to Socrates 6.3: it appears he had spent some time in the practice of the law."
+  },
+  "died": {
+   "text": "14 September 407, in a martyr's chapel five or six miles outside Comana in Pontus, on a forced march into a harsher exile. He was worn out by the journey and ill. Comana's ruins are near Tokat, in northern Turkey. He was about 60.",
+   "source": "Socrates 6.21 ('died in Comana on the Euxine, on the 14th of September' in 407); Palladius, Dialogue, chapter 11 (the martyr's shrine 'five or six miles from the town'); Schaff, Prolegomena, NPNF 9, chapter 10 ('in his sixtieth year, the tenth of his episcopate'); Britannica ('died September 14, 407, Comana, Helenopontus (aged 60)'); Britannica, 'Tokat': 'Tokat stands near the site of ancient Comana of Pontus'",
+   "url": "https://www.newadvent.org/fathers/26016.htm",
+   "verified": true,
+   "note": "Tokat page: https://www.britannica.com/place/Tokat-Turkey . Socrates's 'Comana on the Euxine' is loose; Comana is inland. Sozomen 8.28 writes 'Comani, in Armenia'."
+  },
+  "buried": {
+   "text": "First beside the martyr Basiliscus, in the same chapel at Comana. On 27 January 438 his body was brought to Constantinople and laid in the Church of the Holy Apostles. Much later part of his relics were in Rome, at St Peter's. In 2004 Pope John Paul II gave some of them back to Constantinople.",
+   "source": "Palladius, Dialogue, chapter 11 ('buried in the same shrine as Basiliscus'); Socrates, Church History 7.45 (27 January 438, 'the church termed The Apostles'); 1916 Roman Martyrology, 27 January ('it was afterwards taken to Rome and placed in the basilica of the Prince of the Apostles'); Letter of John Paul II to Bartholomew I, 27 November 2004 ('some of their relics ... return to Constantinople')",
+   "url": "https://www.vatican.va/content/john-paul-ii/en/letters/2004/documents/hf_jp-ii_let_20041127_consegna-reliquie.html",
+   "verified": true,
+   "note": "The Vatican letter covers Gregory Nazianzen and Chrysostom together and says 'some of their relics'. How and when the relics reached Rome (the 1204 sack is usually given) was not checked in a primary source."
+  },
+  "also_called": [
+   {
+    "text": "Chrysostom, 'golden-mouthed', for his preaching. It was a nickname given after his death; the Catholic Encyclopedia says it first appears in writing in 553.",
+    "source": "Catholic Encyclopedia (1910): '(Chrysostomos, \"golden-mouthed\" so called on account of his eloquence)'; 'whose surname \"Chrysostom\" occurs for the first time in the \"Constitution\" of Pope Vigilius ... in the year 553'",
+    "url": "https://www.newadvent.org/cathen/08452b.htm",
+    "verified": true,
+    "note": "The quiz data already says 'Chrysostom means golden-mouthed. It was a nickname.' In his lifetime and in Palladius he is simply John."
+   },
+   {
+    "text": "John of Antioch; John of Constantinople. In Russian, Ioann Zlatoust ('golden mouth').",
+    "source": "azbyka.ru, 'Святитель Иоанн Златоуст, архиепископ Константинопольский'",
+    "url": "https://azbyka.ru/days/sv-ioann-zlatoust",
+    "verified": true,
+    "note": "'John of Antioch/Constantinople' are descriptive; they are in the research file but no dictionary was checked for them. Safe to print only Chrysostom and Zlatoust."
+   },
+   {
+    "text": "One of the Three Holy Hierarchs, with Basil the Great and Gregory the Theologian (Orthodox, 30 January). The OCA calls the three 'Ecumenical Teachers and Hierarchs'.",
+    "source": "OCA, 'Synaxis of the Ecumenical Teachers and Hierarchs: Basil the Great, Gregory the Theologian, and John Chrysostom', commemorated 30 January",
+    "url": "https://www.oca.org/saints/lives/2027/01/30/100350-synaxis-of-the-ecumenical-teachers-and-hierarchs-basil-the-great",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "Doctor of the Church (Catholic), one of the four great Greek Doctors.",
+    "source": "USCCB readings page title 'Memorial of Saint John Chrysostom, Bishop and Doctor of the Church'; Catholic Encyclopedia (1910), 'Doctors of the Church': in 1568 Pius V's new Breviary raised 'the feasts of the four Greek Doctors' to doubles",
+    "url": "https://www.newadvent.org/cathen/05075a.htm",
+    "verified": true,
+    "note": "Many sites say Pius V 'declared' him a Doctor in 1568. The CE words it more carefully: the Breviary of 1568 raised the four Greek Doctors' feasts. Say 'honoured as a Doctor of the Church; Pius V's Breviary of 1568 gave the four Greek Doctors a higher feast'."
+   }
+  ],
+  "status": {
+   "text": "A saint to Catholics, Orthodox and Oriental Orthodox (Coptic). Anglicans and Lutherans remember him too.",
+   "source": "See is_he_a_saint",
+   "url": "https://bible.usccb.org/bible/readings/091325.cfm",
+   "verified": true,
+   "note": ""
+  },
+  "patron_of": {
+   "text": "Preachers. Pope Pius X named him the heavenly patron of preachers ('sacred orators'). Britannica adds orators and speakers, education, and people with epilepsy.",
+   "source": "1916 Roman Martyrology, 27 January: 'This illustrious preacher of the Word of God Pius X. declared and appointed heavenly patron of sacred orators.'; Britannica FAQ: 'the patron saint of orators, preachers, and speakers. He is also the patron of education and of people suffering from epilepsy.'",
+   "url": "https://archive.org/details/romanmartyrology00cathuoft",
+   "verified": true,
+   "note": "Wikidata lists 2 patronages (unverified). The year of Pius X's act (usually given as 1908) was not checked."
+  },
+  "in_art": {
+   "text": "In Eastern icons and mosaics: a bishop in a white omophorion with black crosses, holding a Gospel book, with a short dark beard and a high, bald forehead. In Western altarpieces he is dressed as a Latin bishop, in mitre and cope.",
+   "source": "The pictures themselves: Hagia Sophia north tympanum mosaic (late 9th century); Byzantine and Christian Museum, Athens, BXM 11598; Cranach workshop, Magdalen Altar panel (about 1520-1525). Schaff, Prolegomena, NPNF 9, chapter 9 (his appearance: 'small stature ... a large, bald head, a lofty, wrinkled forehead, deep-set, bright, piercing eyes, pallid, hollow cheeks, and a short, gray beard')",
+   "url": "https://commons.wikimedia.org/wiki/File:Byzantinischer_Mosaizist_des_9._Jahrhunderts_003.jpg",
+   "verified": true,
+   "note": "This is observation from the works named, plus Schaff (1889), who drew his description from later Byzantine tradition (he cites the frontispiece of Fronton du Duc's edition). No iconography handbook was checked. A Western legend also shows him as a naked penitent on all fours (Durer, Cranach): see misquoted_or_legend."
+  },
+  "wrote": {
+   "text": "More than any other Greek Father. About six hundred homilies and commentaries survive, with treatises (above all On the Priesthood) and about 240 letters, nearly all from exile.",
+   "source": "Catholic Encyclopedia (1910): 'Of none of the other Greek Fathers do we possess so many writings'; letters 'about 238 in number'. Schaff, Prolegomena, NPNF 9, chapter 12: '(2) About six hundred Homilies and Commentaries'; chapter 10: 'His 242 extant letters are nearly all from the three years of his exile'",
+   "url": "https://www.newadvent.org/cathen/08452b.htm",
+   "verified": true,
+   "note": "Counts of letters differ: CE about 238, Schaff 242, OCA 245. Print 'about 240'. The 'about 600' is Schaff's 1889 figure; modern catalogues were not checked."
+  },
+  "pronounced": {
+   "text": "KRIS-uh-stum. Also kri-SAH-stum.",
+   "source": "Merriam-Webster, 'Chrysostom' (biographical name): \\ˈkri-sə-stəm, kri-ˈsä-stəm\\",
+   "url": "https://www.merriam-webster.com/dictionary/Chrysostom",
+   "verified": true,
+   "note": "MW's first form puts the stress on the first syllable. Respelling is ours from MW's symbols. Checker 2026-09-25: MW's second form is kri-ˈsä-stəm; its 'ä' is the vowel of 'father', so 'SAH', not 'SOS'."
+  }
+ },
+ "roles": [
+  {
+   "name": "Monk",
+   "line": "Four years with an old hermit, two alone in a cave",
+   "source": "Palladius, Dialogue, chapter 5",
+   "url": "https://www.tertullian.org/fathers/palladius_dialogus_02_text.htm",
+   "verified": true,
+   "note": "The hermit is named Syrus. The two years 'without lying down by night or day' deadened his stomach, and the cold impaired his kidneys, and he came back to the city. Checker 2026-09-25: Palladius says the two years 'deadened his gastric organs, and the functions of the kidneys were impaired by the cold'; wording corrected."
+  },
+  {
+   "name": "Deacon",
+   "line": "At Antioch, from 381",
+   "source": "Catholic Encyclopedia ('Very probably in the beginning of 381 Meletius made him deacon'); Britannica ('an ordained deacon in 381')",
+   "url": "https://www.newadvent.org/cathen/08452b.htm",
+   "verified": true,
+   "note": "Palladius: 'after serving the altar for five years' as reader, 'he was ordained deacon by Meletius'."
+  },
+  {
+   "name": "Preacher",
+   "line": "Priest at Antioch for twelve years, from 386",
+   "source": "Palladius, Dialogue, chapter 5 ('For twelve years he was a shining light in the Church of Antioch'); CE (priest in 386; 'His chief task during the next twelve years was that of preaching')",
+   "url": "https://www.tertullian.org/fathers/palladius_dialogus_02_text.htm",
+   "verified": true,
+   "note": "Socrates 6.3 says he was ordained presbyter by Evagrius; Palladius and the CE say Flavian. Follow Palladius and the CE."
+  },
+  {
+   "name": "Archbishop",
+   "line": "Of Constantinople, from 398",
+   "source": "Socrates, Church History 6.2 (invested 'on the 26th of February' 398); CE ('ordained Bishop of Constantinople on 26 February, 398')",
+   "url": "https://www.newadvent.org/fathers/26016.htm",
+   "verified": true,
+   "note": "LFF 2022 says 397 (the year Nectarius died). 398 is the consecration."
+  },
+  {
+   "name": "Exile",
+   "line": "Deposed in 403 and 404; died on the road in 407",
+   "source": "Socrates 6.15-6.18, 6.21; Palladius, chapters 8-11",
+   "url": "https://www.newadvent.org/fathers/26016.htm",
+   "verified": true,
+   "note": "An exile is not an office. If the path must be offices only, stop at Archbishop and say the rest in the moments."
+  }
+ ],
+ "feast_days": {
+  "catholic": {
+   "text": "13 September, a memorial in the General Roman Calendar. Before 1969 his feast in Rome was 27 January, the day his body came back to Constantinople in 438. The 1916 Roman Martyrology lists him on 27 January (the feast) and on 14 September (his death, his 'birthday').",
+   "source": "USCCB, 'Memorial of Saint John Chrysostom, Bishop and Doctor of the Church' (13 September 2025); Calendarium Romanum (1969), historical commentary, 13 September; The Roman Martyrology (1916), 27 January and 14 September",
+   "url": "https://bible.usccb.org/bible/readings/091325.cfm",
+   "verified": true,
+   "note": "Calendarium Romanum 1969, commentary (Latin): 'S. Ioannes Chrysostomus obiit Cumanae in Ponto die 14 septembris 407, die qua celebratur Exaltatio sanctae Crucis. Apud Syros festum S. Ioannis agitur pridie huius diei, dum Byzantini et Copti id transtulerunt ad diem 13 novembris. Romae vero, inde a saeculo XIII, S. Ioannes Chrysostomus recolitur die 27 ianuarii, in anniversario translationis eius corporis Constantinopolim (438).' Text: https://archive.org/stream/CalendariumRomanum1969/Calendarium%20Romanum%20(1969)_djvu.txt . The 1916 Martyrology on 14 September: 'The same day, the birthday of St. John Chrysostom, bishop of Constantinople ... His feast is celebrated on the 27th of January'. The current (2004) Martyrology was not checked."
+  },
+  "orthodox": {
+   "text": "Three days, in every Orthodox church checked: 13 November (his repose, moved from 14 September because that is the Exaltation of the Cross), 27 January (the return of his relics), and 30 January (the Three Holy Hierarchs). Churches on the old calendar keep them 13 days later: 26 November, 9 February and 12 February. The Russian Church also marks 14 September (27 September on the civil calendar) as the day of his death.",
+   "source": "OCA, 'Saint John Chrysostom, Archbishop of Constantinople', commemorated 13 November: 'Although he died on September 14, Saint John's celebration was transferred to this day because of the Feast of the Elevation of the Holy Cross. Saint John Chrysostom is also celebrated on January 27 and January 30.' saint.gr 3021 ('Εορτάζει στις 13 Νοεμβρίου') and 3342, the translation of relics ('Εορτάζει στις 27 Ιανουαρίου'); synaxarion.gr sid 1168 (feast 13 Νοεμβρίου; repose 14/9/407; relics 27/1); azbyka.ru: 'Дни памяти: 9 февраля - Перенесение мощей; 12 февраля - Собор Трех святителей; 27 сентября - Преставление; 26 ноября'",
+   "url": "https://www.oca.org/saints/lives/2026/11/13/103270-st-john-chrysostom-the-archbishop-of-constantinople",
+   "verified": true,
+   "note": "Unlike Martin, the Orthodox churches agree on his dates; only the calendar differs. The Greek 30 January entry was not fetched from a Greek source (OCA only). GOARCH not tried (blocked a checker before). One Greek news site mentions 15 December for his ordination as patriarch; not verified, leave it out. Checker 2026-09-25: Greek 30 January now checked: saint.gr, 30 January 2026 ('Άγιοι Τρεις Ιεράρχες'; reading list: 'Τῶν τριῶν ἱεραρχῶν Βασιλείου τοῦ μεγάλου, Γρηγορίου τοῦ θεολόγου καὶ Ἰωάννου τοῦ Χρυσοστόμου'), https://www.saint.gr/01/30/index.aspx , saved as sources/people/john-chrysostom/saintgr-0130.txt. The page now prints the Russian Church's 14 September (azbyka.ru '27 сентября - Преставление'), which the draft had left out."
+  },
+  "coptic": {
+   "text": "17 Hator in the Coptic calendar, the day of his departure.",
+   "source": "Coptic Synaxarium, Hator 17, 'The Departure of Saint John Chrysostom' (copticchurch.net)",
+   "url": "https://www.copticchurch.net/synaxarium/3_17.html",
+   "verified": true,
+   "note": "The Gregorian equivalent was not checked on a Coptic source; leave it as '17 Hator'. Optional line on the page. Checker 2026-09-25: The page's 'Is he a saint?' row said '17 Hator, the day of his death'; he died on 14 September (the Calendarium Romanum 1969 says the Copts, like the Byzantines, moved him to 13 November, which 17 Hator matches on the old calendar). Now 'On 17 Hator, in its own calendar'."
+  },
+  "anglican": {
+   "text": "Church of England: 13 September, a Lesser Festival ('John Chrysostom, Bishop of Constantinople, Teacher of the Faith, 407'). The Episcopal Church: 27 January ('John Chrysostom, Bishop and Theologian, 407').",
+   "source": "Church of England, Common Worship calendar, September (printed in ordinary roman type, which the page's key says marks Lesser Festivals); Lesser Feasts and Fasts 2022, January calendar and the entry for 27 January",
+   "url": "https://www.churchofengland.org/prayer-and-worship/worship-texts-and-resources/common-worship/churchs-year/calendar",
+   "verified": true,
+   "note": "LFF 2022 PDF: https://www.episcopalchurch.org/wp-content/uploads/2022/11/Lesser-Feasts-and-Fasts-2022_final.pdf . LFF explains its date: 'Thirty-one years later, his remains were brought back to Constantinople, and were buried on January 27, which thus became the traditional date of his commemoration.'"
+  },
+  "lutheran": {
+   "text": "Missouri Synod: 27 January, 'John Chrysostom, Preacher'. ELCA: 13 September, 'John Chrysostom, Bishop of Constantinople, 407'.",
+   "source": "Concordia Publishing House (LCMS publisher), 'Complete List of Church Year Commemorations' (January 27, 'John Chrysostom, Preacher'); Good Shepherd Lutheran, 'Commemorations in LSB'; Evangelical Lutheran Worship, 'The Church Year' (archived renewingworship.org PDF, 2006): 'September ... 13 John Chrysostom, Bishop of Constantinople, 407'",
+   "url": "https://blog.cph.org/read/church-year/commemorations",
+   "verified": true,
+   "note": "ELW PDF: https://web.archive.org/web/20060908112753/http://www.renewingworship.org/ELW/content/PDF/ChurchYear_asm_20060119.pdf . This is the ELW draft listing, the same document used for Martin; not checked in the printed ELW."
+  },
+  "why_they_differ": {
+   "text": "He died on 14 September, which is the Feast of the Cross. So the Greek Church moved him to 13 November, and the Syrians to 13 September, the day before. Rome kept 27 January, the day his body came home in 438, until 1969, when it took 13 September.",
+   "source": "Calendarium Romanum (1969), commentary on 13 September; OCA 13 November life; LFF 2022, 27 January",
+   "url": "https://archive.org/stream/CalendariumRomanum1969/Calendarium%20Romanum%20(1969)_djvu.txt",
+   "verified": true,
+   "note": "Calendar order for the page. West: 27 January (Episcopal, LCMS; the pre-1969 Roman feast), 13 September (Catholic, Church of England, ELCA). East: 27 January, 30 January, 13 November (plus old-calendar note)."
+  }
+ },
+ "numbers": [
+  {
+   "chip": "Priest at Antioch",
+   "n": "12",
+   "unit": "years",
+   "lines": [
+    "386 to 398",
+    "Preaching most weeks, often twice"
+   ],
+   "source": "Palladius, Dialogue, chapter 5 ('For twelve years he was a shining light in the Church of Antioch'); CE (386; 'the next twelve years')",
+   "url": "https://www.tertullian.org/fathers/palladius_dialogus_02_text.htm",
+   "verified": true,
+   "note": "'usually twice a week, but sometimes daily' is OCA's line; drop it if only ancient sources are wanted."
+  },
+  {
+   "chip": "Sermons that survive",
+   "n": "about 600",
+   "lines": [
+    "Homilies and commentaries",
+    "90 on Matthew alone"
+   ],
+   "source": "Schaff, Prolegomena, NPNF 9, chapter 12 ('About six hundred Homilies and Commentaries'); CE ('the ninety homilies on \"St. Matthew\"')",
+   "url": "https://www.ccel.org/ccel/s/schaff/npnf109/cache/npnf109.txt",
+   "verified": true,
+   "note": "Schaff 1889; modern counts not checked."
+  },
+  {
+   "chip": "Letters to Olympias",
+   "n": "17",
+   "lines": [
+    "His closest friend in exile",
+    "A deaconess of Constantinople"
+   ],
+   "source": "Stephens, introduction to the Letters to Olympias, NPNF 9 ('seventeen of Chrysostom's extant letters are addressed'); CE ('the seventeen letters to the deaconess Olympias'); Schaff chapter 10",
+   "url": "https://www.newadvent.org/fathers/1916.htm",
+   "verified": true,
+   "note": "New Advent prints only a selection."
+  },
+  {
+   "chip": "Exiled",
+   "n": "2",
+   "unit": "times",
+   "lines": [
+    "403, recalled within days",
+    "404, never came back"
+   ],
+   "source": "Socrates 6.15-6.16 and 6.18; Palladius, chapters 9-11; Theodoret 5.34",
+   "url": "https://www.newadvent.org/fathers/26016.htm",
+   "verified": true,
+   "note": "Palladius, chapter 9: after 'only a single day' a catastrophe in the palace, and 'a few days afterwards they recalled John'."
+  },
+  {
+   "chip": "Last march",
+   "n": "3",
+   "unit": "months",
+   "lines": [
+    "In rain and scorching sun",
+    "He died before the end"
+   ],
+   "source": "Palladius, Dialogue, chapter 11 ('This most distressing journey took three months')",
+   "url": "https://www.tertullian.org/fathers/palladius_dialogus_02_text.htm",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "chip": "Came home after",
+   "n": "31",
+   "unit": "years",
+   "lines": [
+    "His body, to Constantinople",
+    "27 January 438"
+   ],
+   "source": "Schaff, Prolegomena ('Thirty-one years afterwards, January 27, 438'); LFF 2022 ('Thirty-one years later'); Britannica ('about 31 years later'); Socrates 7.45 (27 January, 438)",
+   "url": "https://www.newadvent.org/fathers/26017.htm",
+   "verified": true,
+   "note": "Socrates counts 'the thirty-fifth year after his deposition' (from 403); OCA says 'thirty years after'. 407 to 438 is 31. Other candidates: 'In a cave 2 years' (Palladius 5); 'Died at about 60' (Schaff, Britannica)."
+  }
+ ],
+ "traits": [
+  {
+   "title": "a hot temper, and he knew it",
+   "text": "Telling how he dodged being made a bishop, he says people thought him 'the more hot tempered (meaning me)'. In the dialogue his friend Basil protests that John is far from anger; John answers that his calm came 'not by any innate virtue, but by my love of retirement'. A friend from his youth said he was quick to irritation.",
+   "quotes": [
+    {
+     "exact": "generally reputed to be the more hot tempered (meaning me)",
+     "work": "On the Priesthood",
+     "place": "Book 1, section 6",
+     "url": "https://www.newadvent.org/fathers/19221.htm"
+    },
+    {
+     "exact": "Why then, my good friend, do you wish to bring me near the pyre, and to provoke the wild beast when he is tranquil? Are you not aware that I have achieved this condition, not by any innate virtue, but by my love of retirement?",
+     "work": "On the Priesthood",
+     "place": "Book 3, section 14",
+     "url": "https://www.newadvent.org/fathers/19223.htm"
+    },
+    {
+     "exact": "one of his early friends has said that in his youth he manifested a proneness to irritability, rather than to modesty.",
+     "work": "Socrates, Church History",
+     "place": "Book 6, chapter 3",
+     "url": "https://www.newadvent.org/fathers/26016.htm"
+    }
+   ],
+   "verified": true,
+   "note": "New Advent quotes Socrates's friend with inner quote marks; CCEL has them as a single quotation. The personality test's Forge card and the 'love of retirement' line already rest on these. Checker 2026-09-25: Basil does not tease him about a temper. On the Priesthood, Book 3: 'who knows not how far removed you are from this infirmity?' John replies: 'Why then ... provoke the wild beast when he is tranquil?'"
+  },
+  {
+   "title": "would not stop saying it",
+   "text": "He told the rich of Antioch to teach their slaves a trade and set them free. Then he added: 'And I know that I am giving disgust to my hearers. But what must I do? For this I am set, and I shall not cease to say these things, whether anything comes of them or not.' A historian who admired him says it was his nature to rebuke wrongdoing.",
+   "quotes": [
+    {
+     "exact": "And I know that I am giving disgust to my hearers. But what must I do? For this I am set, and I shall not cease to say these things, whether anything comes of them or not.",
+     "exact_unrevised": "And I know that I am giving disgust to my hearers. But what must I do? For this I am set, and I shall not cease to say these things, whether any thing come of them or not.",
+     "work": "Homilies on First Corinthians",
+     "place": "Homily 40, section 6",
+     "url": "https://www.newadvent.org/fathers/220140.htm"
+    },
+    {
+     "exact": "He was naturally disposed to reprehend the misconduct of others, and to antagonize righteously those who acted unjustly",
+     "work": "Sozomen, Church History",
+     "place": "Book 8, chapter 3",
+     "url": "https://www.newadvent.org/fathers/26028.htm"
+    }
+   ],
+   "verified": true,
+   "note": "The slave line: 'when you have purchased them and have taught them trades whereby to support themselves, let them go free' (same homily, section 6). He did not call for ending slavery; he allowed a household one or two servants."
+  },
+  {
+   "title": "ate alone, gave to the poor",
+   "text": "As archbishop he cut the bishop's own spending and sent the money to the hospital. Then he built more hospitals, with doctors and cooks. He would not give dinner parties and ate alone, which his enemies called pride. His friend Palladius says he drank no wine, had a bad stomach, and counted money spent on 'men of pleasure' as sacrilege (Palladius, chapter 12).",
+   "quotes": [
+    {
+     "exact": "he erected other hospitals, over which he appointed two devout priests, as well as doctors and cooks",
+     "work": "Palladius, Dialogue",
+     "place": "chapter 5",
+     "url": "https://www.tertullian.org/fathers/palladius_dialogus_02_text.htm"
+    },
+    {
+     "exact": "I admit that he used to eat alone",
+     "work": "Palladius, Dialogue",
+     "place": "chapter 12",
+     "url": "https://www.tertullian.org/fathers/palladius_dialogus_02_text.htm"
+    }
+   ],
+   "verified": true,
+   "note": "Socrates 6.4 gives both explanations (a delicate stomach, or strict habit) and says 'Whatever the real motive may have been', it fed the charges against him. Checker 2026-09-25: Palladius, chapter 12: 'counting the expenditure of money on such people [men of pleasure] as sacrilege'. The page had 'feasting the rich'. That it fed the charges against him is Socrates 6.4."
+  },
+  {
+   "title": "tender with a friend in trouble",
+   "text": "From exile he wrote long letters to lift the despair of his friend Olympias. He told her: 'pray do not deceive me by saying that you have thrown off all despondency'. And he begged her to look after her health.",
+   "quotes": [
+    {
+     "exact": "pray do not deceive me by saying that you have thrown off all despondency",
+     "work": "Letters to Olympias",
+     "place": "the first letter in the NPNF selection ('To my lady')",
+     "url": "https://www.newadvent.org/fathers/1916.htm"
+    }
+   ],
+   "verified": true,
+   "note": "Also playful: after tricking his friend Basil into being ordained, 'I laughed for joy, and, seizing his right hand, I forced a kiss on him' (On the Priesthood, Book 1, section 6)."
+  }
+ ],
+ "others_on_him": [
+  {
+   "exact": "\"It would have been John,\" replied he, \"had not the Christians taken him from us.\"",
+   "who": "Libanius, his pagan teacher, asked on his deathbed who should succeed him. As told by Sozomen.",
+   "work": "Sozomen, Church History",
+   "place": "Book 8, chapter 2",
+   "url": "https://www.newadvent.org/fathers/26028.htm",
+   "verified": true,
+   "note": "Reported speech; Sozomen wrote about 440. New Advent drops the inner quote marks. The best-known line about him."
+  },
+  {
+   "exact": "Remember your ancient teachers, and your priests; Gregory whose fame was spread through the world, Nectarius renowned for holiness, John a marvel of faith and purity.",
+   "who": "John Cassian, who was ordained by him ('For I was admitted into the sacred ministry by the Bishop John, of blessed memory'), writing about 430",
+   "work": "Cassian, On the Incarnation of the Lord",
+   "place": "Book 7, chapter 31",
+   "url": "https://www.newadvent.org/fathers/35097.htm",
+   "verified": true,
+   "note": "Same book, chapter 30: 'John the glory of the Episcopate of Constantinople, whose holy life obtained the reward of martyrdom without any show of Gentile persecution'. Both checked in CCEL npnf211 and New Advent."
+  },
+  {
+   "exact": "It is said that on account of his zeal for temperance he was stern and severe ... in private conversation he was frequently thought haughty and assuming by those who did not know him.",
+   "who": "Socrates, a Constantinople historian writing about 440, fair but not a fan",
+   "work": "Socrates, Church History",
+   "place": "Book 6, chapter 3",
+   "url": "https://www.newadvent.org/fathers/26016.htm",
+   "verified": true,
+   "note": "The ellipsis joins two checked sentences of the same paragraph; the page could quote just the second. Balanced by the same chapter: 'In public teaching he was powerful in reforming the morals of his auditors'."
+  },
+  {
+   "exact": "This most distressing journey took three months; yet the saint among all these annoyances was always the same shining star",
+   "who": "Palladius, a bishop who stood by him and wrote his Life as a dialogue soon after his death (the CE dates it about 408)",
+   "work": "Palladius, Dialogue",
+   "place": "chapter 11",
+   "url": "https://www.tertullian.org/fathers/palladius_dialogus_02_text.htm",
+   "verified": true,
+   "note": "Also Palladius 11, what his enemies' own clergy said: 'Here is a formidable dead man, who frightens living men, and men in authority too, as bogies frighten children.'"
+  }
+ ],
+ "life_moments": [
+  {
+   "place": "Antioch",
+   "when": "A boy",
+   "title": "His mother's plea",
+   "text": "His father died soon after he was born, and his mother, widowed at twenty, raised him. His pagan teacher Libanius heard her story and cried out, 'Heavens! what women there are amongst the Christians.' When John wanted to leave home to live as a monk with his friend Basil, she took him into her room, sat by him on the bed where she had given birth to him, and begged him in tears to stay. 'Do not plunge me into a second widowhood,' she said, 'wait for my death.' He stayed.",
+   "quotes": [
+    "Heavens! ... what women there are amongst the Christians.",
+    "do not plunge me into a second widowhood; nor revive the grief which is now laid to rest: wait for my death"
+   ],
+   "source": "Letter to a Young Widow, section 2; On the Priesthood, Book 1, sections 5 and 6",
+   "url": "https://www.newadvent.org/fathers/19221.htm",
+   "verified": true,
+   "note": "Libanius exact (CCEL): '\"Heavens!\" cried he \"what women there are amongst the Christians.\"' The widow letter: https://www.newadvent.org/fathers/1904.htm . The bed detail, exact (CCEL, On the Priesthood 1.5): 'she took me into her own private chamber, and, sitting near me on the bed where she had given birth to me, she shed torrents of tears'. The research file's 'sat him on the bed' is wrong: she sat. The same book (1.4) says that as a young man he 'attended the law-courts, and was in a flutter of excitement about the pleasures of the stage'."
+  },
+  {
+   "place": "The hills near Antioch",
+   "when": "In his twenties",
+   "title": "Two years in a cave",
+   "text": "He went to live with an old hermit in the hills for four years. Then he lived alone in a cave for two years. He hardly slept and never lay down. It wrecked his stomach and his kidneys, and he had to come back to the city. His biographer calls that the Saviour's providence, for the good of the Church.",
+   "quote": "Two years spent without lying down by night or day deadened his gastric organs, and the functions of the kidneys were impaired by the cold.",
+   "source": "Palladius, Dialogue, chapter 5",
+   "url": "https://www.tertullian.org/fathers/palladius_dialogus_02_text.htm",
+   "verified": true,
+   "note": "Dates are not given in Palladius; the CE puts the monastic years in the 370s."
+  },
+  {
+   "place": "Antioch",
+   "when": "387",
+   "title": "The statues",
+   "text": "Angry at new taxes, the people of Antioch pulled down the statues of the emperor Theodosius. The city waited in terror for his revenge. Through that Lent John preached twenty or so sermons, calming and warning his people, until Bishop Flavian came back from the capital with the emperor's pardon.",
+   "source": "Catholic Encyclopedia (1910); Homilies on the Statues (NPNF 9); Britannica",
+   "url": "https://www.newadvent.org/fathers/1901.htm",
+   "verified": true,
+   "note": "CE: 'a series of twenty or twenty-one (the nineteenth is probably not authentic) sermons'. Schaff: 'the famous twenty-one orations on the Statues'."
+  },
+  {
+   "place": "Constantinople",
+   "when": "398",
+   "title": "Taken by stealth",
+   "text": "The emperor wanted him as archbishop of the capital. But the people of Antioch would probably have rioted rather than let him go. So the governor invited him to a martyrs' shrine outside the gates, put him in a carriage and sent him off under guard. He was consecrated on 26 February 398.",
+   "source": "Palladius, Dialogue, chapter 5; Sozomen 8.2 ('Asterius acted very prudently in sending for John before the citizens of Antioch knew what was about to occur'); Socrates 6.2 (26 February)",
+   "url": "https://www.newadvent.org/fathers/26028.htm",
+   "verified": true,
+   "note": "Palladius names the gate 'Romanesia'. Theophilus of Alexandria consecrated him against his will (Socrates 6.2: threatened with charges by Eutropius). Checker 2026-09-25: Sozomen 8.2 says the people 'would probably have excited a sedition'; 'would never' overstated it."
+  },
+  {
+   "place": "Hagia Sophia",
+   "when": "399",
+   "title": "A consul at the altar",
+   "text": "Eutropius, the emperor's all-powerful chamberlain, had tried to end the right of sanctuary in churches. Then he fell from power and ran to the church himself. He clung to the altar while soldiers and people called for his death. The next day John preached over him: 'Vanity of vanities, all is vanity.' Eutropius was spared that day. He was later caught outside the church and put to death.",
+   "quote": "\"Vanity of vanities, all is vanity\"--it is always seasonable to utter this but more especially at the present time.",
+   "source": "Homily 1 on Eutropius, section 1 (NPNF 9); Socrates 6.5; CE",
+   "url": "https://www.newadvent.org/fathers/1914.htm",
+   "verified": true,
+   "note": "In the same sermon he reminds Eutropius: 'I love thee better than they do who flatter thee?' (CCEL; New Advent modernises). Socrates says some thought the sermon added 'insult to cruelty'. Checker 2026-09-25: Homily 1 on Eutropius: the army 'demanded him to be given up for execution' and 'the rage of the people'; Stephens's introduction (NPNF 9): the sermon was preached the next day, a Sunday."
+  },
+  {
+   "place": "The Oak, near Chalcedon",
+   "when": "403 and 404",
+   "title": "Deposed twice",
+   "text": "Theophilus of Alexandria gathered bishops at an estate called The Oak. They deposed John for refusing to appear before judges who were his enemies. He was sent away, and recalled within days after a catastrophe in the palace frightened the empress. Months later a silver statue of the empress went up beside the cathedral, with noisy games. He spoke against them, and she took it personally. In 404 he was sent into exile again. His answer to the emperor's order was: 'thrust me out by force'.",
+   "quote": "I have received this Church ... from God our Saviour, for the care of the salvation of the people, and I cannot desert it; if, then, this is your will----for the city is yours----thrust me out by force, that I may plead your authority in defence of my desertion of my post.",
+   "source": "Socrates 6.15-6.18; Palladius, Dialogue, chapters 8 and 9; Theodoret 5.34",
+   "url": "https://www.newadvent.org/fathers/26016.htm",
+   "verified": true,
+   "note": "The quotation is Palladius, chapter 9, exact apart from the ellipsis ('\"I have received this Church,\" John sent word back, \"from God our Saviour, ...'). 'Saviour' is not a pronoun, so no capital change. Theodoret 5.34 calls the catastrophe 'a great earthquake'. Checker 2026-09-25: 'Frightened the empress' stands on the Catholic Encyclopedia ('a sudden accident in the imperial palace, frightened the empress', citing Palladius 9) and Theodoret 5.34; Palladius himself says only that it 'caused such alarm'."
+  },
+  {
+   "place": "Cucusus and Comana",
+   "when": "404 to 407",
+   "title": "The long road",
+   "text": "He was sent to Cucusus, a lonely village in Armenia, raided by bandits. From there he wrote to friends everywhere, fed the hungry and bought back captives. His enemies thought he still had too much influence. They had him marched towards Pityus, on the far shore of the Black Sea. He died on the way.",
+   "source": "Palladius, Dialogue, chapter 11; Sozomen 8.27 ('he purchased the liberty of many captives from the Isaurian robbers, and restored them to their families'); Sozomen 8.28",
+   "url": "https://www.tertullian.org/fathers/palladius_dialogus_02_text.htm",
+   "verified": true,
+   "note": "Cucusus today is usually identified with Göksun, Turkey (not checked in a source; leave out). Checker 2026-09-25: No fetched source says 'mountains': Palladius 11 has 'a very lonely village in Armenia', the CE 'a secluded and rugged place on the east frontier of Armenia'. Removed."
+  }
+ ],
+ "miracles": {
+  "summary": {
+   "text": "The early sources credit him with no healings or raisings, as Sulpicius does Martin. What they record are signs around him: a martyr who told him in a vision that he would die the next day, a catastrophe (an earthquake, says Theodoret) that got him recalled, a fire that his friend called heaven-sent, and a hailstorm before the empress died. The historians report these with their own doubts. The healing wonders come in much later stories.",
+   "source": "Palladius, Dialogue, chapters 9, 10, 11; Socrates 6.18, 6.19; Sozomen 8.22, 8.27, 8.28; Theodoret 5.34",
+   "url": "https://www.tertullian.org/fathers/palladius_dialogus_02_text.htm",
+   "verified": true,
+   "note": "Proposal for the page: a smaller section than Martin's, titled for what it is (e.g. 'Signs, as the historians tell them'), with a 'Doubted from the start' box in the historians' words. The owner decides whether it belongs."
+  },
+  "items": [
+   {
+    "title": "The martyr in the night",
+    "place": "The chapel of Basiliscus, near Comana",
+    "when": "13 September 407",
+    "text": "On the last night of the march they lodged at the shrine of Basiliscus, a bishop of Comana martyred about a century before. That night, says Palladius, the martyr stood by John and spoke to him. John took it as a sure warning. The next morning he begged the soldiers to wait. They pushed on, but he fell so ill they had to turn back. He died at the shrine that day.",
+    "quote": "Be of good cheer, brother; to-morrow we shall be together.",
+    "who_saw": "John himself. Palladius adds, as a report ('It is said'), that the martyr had first told the priest of the shrine to get a place ready for 'our brother John'.",
+    "source": "Palladius, Dialogue, chapter 11; Sozomen 8.28 ('It is said that during this journey, Basiliscus, the martyr, appeared to him ... and apprised him of the day of his death'); Theodoret 5.34 (buried beside Basiliscus, 'for so the martyr had ordained in a dream')",
+    "url": "https://www.tertullian.org/fathers/palladius_dialogus_02_text.htm",
+    "verified": true,
+    "note": "OCA renders the words 'Despair not, brother John! Tomorrow we shall be together.' (its own wording, unsourced). Use Moore."
+   },
+   {
+    "title": "The earthquake",
+    "place": "Constantinople",
+    "when": "403",
+    "text": "The night after his first expulsion, says Theodoret, a great earthquake shook the city and terrified the empress. By morning messengers were crossing the Bosphorus to beg him to come back. The people lit torches and filled the strait with boats to bring him home.",
+    "quote": "In the night there was a great earthquake and the empress was struck with terror.",
+    "source": "Theodoret, Church History, Book 5, chapter 34",
+    "url": "https://www.newadvent.org/fathers/27025.htm",
+    "verified": true,
+    "note": "Palladius 9 speaks only of 'a catastrophe' in the royal palace 'which caused such alarm, that a few days afterwards they recalled John'. Socrates 6.16 says the recall was because of the people's riot. The CE: 'a sudden accident in the imperial palace, frightened the empress'."
+   },
+   {
+    "title": "The fire",
+    "place": "Hagia Sophia and the Senate house",
+    "when": "20 June 404",
+    "text": "As he was taken away for the last time, fire broke out from his own bishop's throne, burned the cathedral, jumped the street and destroyed the Senate house. Palladius saw the hand of God in it. He notes that the flames spared the small building where the church's treasures were kept, so no one could say John had stolen them, and that no one died.",
+    "quote": "This clearly showed that the marvel was heaven-sent",
+    "source": "Palladius, Dialogue, chapter 10",
+    "url": "https://www.tertullian.org/fathers/palladius_dialogus_02_text.htm",
+    "verified": true,
+    "note": "Date: Socrates 6.18 ('on the 20th of June'). See doubts."
+   },
+   {
+    "title": "Hail, and the empress",
+    "place": "Constantinople",
+    "when": "Autumn 404",
+    "text": "That autumn, hailstones of huge size fell on the city. Four days later the empress Eudoxia died. Many took both as God's anger at how John had been treated. One of his loudest accusers, Bishop Cyrinus, had already lost both feet to an infection after another bishop trod on him.",
+    "quote": "These occurrences were by many regarded as indications of Divine wrath on account of the persecution that had been carried on against John.",
+    "source": "Sozomen 8.27; Socrates 6.19 (the hail 'on the 30th of September', the empress four days later; Cyrinus)",
+    "url": "https://www.newadvent.org/fathers/26028.htm",
+    "verified": true,
+    "note": "Told as the people's reading, which is how both historians tell it."
+   }
+  ],
+  "doubt": {
+   "title": "Doubted from the start",
+   "text": "The historians who tell these things say plainly what they could not know. Socrates ends his account of the hail: 'God only knows, who is the discerner of secrets, and the just judge of truth itself. I have simply recorded the reports which were current at that time.' On the fire, he writes that 'some of the Johannites set fire to the church'. Sozomen says both sides blamed each other: 'The two parties mutually accused each other of incendiarism.' Of the parting prophecies between John and Epiphanius, Socrates writes: 'I cannot be sure that those who reported these things to me spoke the truth'.",
+   "cites": [
+    {
+     "text": "Socrates, Church History, Book 6, chapters 14, 18 and 19",
+     "url": "https://www.newadvent.org/fathers/26016.htm"
+    },
+    {
+     "text": "Sozomen, Church History, Book 8, chapter 22",
+     "url": "https://www.newadvent.org/fathers/26028.htm"
+    }
+   ],
+   "verified": true,
+   "note": "All four lines script-checked in CCEL and New Advent."
+  },
+  "later": {
+   "title": "A later story",
+   "text": "Later accounts, told today by the OCA, say the soldiers sent for his body could not lift the coffin until the emperor wrote to John asking forgiveness, that the body was found incorrupt, that John opened his mouth in the Church of the Apostles and said 'Peace be to all', and that many sick were healed at his tomb. None of this is in Socrates or Theodoret, who wrote within a generation of 438. Theodoret tells only that the young emperor laid his head against the bier and prayed for pardon for his parents.",
+   "source": "OCA, 'Translation of the relics of Saint John Chrysostom' (27 January); Theodoret 5.36 ('After first gazing upon the bier he laid his head against it, and prayed for his parents and for pardon on them who had ignorantly sinned'); Socrates 7.45",
+   "url": "https://www.oca.org/saints/lives/2027/01/27/100327-translation-of-the-relics-of-saint-john-chrysostom-archbishop-of",
+   "verified": true,
+   "note": "OCA gives no source. The OCA's own page says the feast of the translation 'was established in the ninth century'. Where the 'Peace be to all' story first appears was not checked."
+  }
+ },
+ "his_words": {
+  "feature": {
+   "exact": "Would you do honor to Christ's body? Neglect Him not when naked; do not while here you honor Him with silken garments, neglect Him perishing without of cold and nakedness.",
+   "exact_unrevised": "Wouldest thou do honor to Christ's body? Neglect Him not when naked; do not while here thou honorest Him with silken garments, neglect Him perishing without of cold and nakedness.",
+   "work": "Homilies on Matthew",
+   "place": "Homily 50, section 4",
+   "context": "Preached at Antioch about 390, on how to honour Christ in the Eucharist. A little later in the same homily: 'Do not therefore while adorning His house overlook your brother in distress, for he is more properly a temple than the other.'",
+   "url": "https://www.newadvent.org/fathers/200150.htm",
+   "verified": true,
+   "note": "Tr. Prevost rev. Riddle (NPNF 10, 1888). Capitals already in the text. Greek not sourced. Alternative feature: 'Glory to God for all things', his habitual words and his last (Palladius, chapter 11); Greek 'Doxa to theo panton eneken' as transliterated in the CE (Δόξα τῷ Θεῷ πάντων ἕνεκεν, Greek script not checked against a Greek edition). Suggest using 'Glory to God for all things' in How he died and Homily 50 here. The Homilies on Matthew date: CE ('about the year 390')."
+  },
+  "lines": [
+   {
+    "exact": "remember constantly that not to share our own riches with the poor is a robbery of the poor, and a depriving them of their livelihood; and that that which we possess is not only our own, but also theirs.",
+    "work": "Sermons on Lazarus and the Rich Man",
+    "place": "Sermon 2, near the end (section 5 in the Catechism's reference)",
+    "translation": "F. Allen, Four Discourses of Chrysostom (London, 1869)",
+    "context": "His best-known line on wealth. The Catechism of the Catholic Church quotes it at paragraph 2446 ('Hom. in Lazaro 2, 5: PG 48, 992').",
+    "greek": "τὸ μὴ μεταδιδόναι πένησιν ἐκ τῶν οἰκείων χρημάτων, ἁρπαγὴ πενήτων ἐστὶ καὶ ἀποστέρησις τῆς ἐκείνων ζωῆς· καὶ οὐ τὰ ἡμέτερα, ἀλλὰ τὰ ἐκείνων κατέχομεν.",
+    "url": "https://www.tertullian.org/fathers/chrysostom_four_discourses_02_discourse2.htm",
+    "verified": true,
+    "note": "Allen softens the end: the Greek says 'we hold not what is ours, but what is theirs', where Allen has 'not only our own, but also theirs'. The site's own translation in the quiz ('What we hold on to is not ours, but theirs') follows the Greek more closely. Greek checked on a substack reproduction of Migne (https://andreasfotiadis68agiosminas.substack.com/p/saint-john-chrysostom-second-discourse), not on a scan of PG 48. CCC: https://www.vatican.va/archive/ENG0015/__P8F.HTM"
+   },
+   {
+    "exact": "Mercy is called by that name for this reason, that it gives even to the unworthy.",
+    "work": "Sermons on Lazarus and the Rich Man",
+    "place": "Sermon 2",
+    "translation": "F. Allen (1869)",
+    "context": "Against checking whether a beggar deserves help. Same sermon: 'It becomes him that is truly well-disposed not to require an account of a man's past life, but simply to relieve poverty and to satisfy want.'",
+    "url": "https://www.tertullian.org/fathers/chrysostom_four_discourses_02_discourse2.htm",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "exact": "For there is only one thing, Olympias, which is really terrible, only one real trial, and that is sin",
+    "work": "Letters to Olympias",
+    "place": "the first letter in the NPNF selection, section 1",
+    "context": "Written from exile to his grieving friend.",
+    "url": "https://www.newadvent.org/fathers/1916.htm",
+    "verified": true,
+    "note": "Identical in CCEL."
+   },
+   {
+    "exact": "I do not think there are many among Bishops that will be saved, but many more that perish: and the reason is, that it is an affair that requires a great mind.",
+    "work": "Homilies on Acts",
+    "place": "Homily 3",
+    "context": "On the weight of being a bishop. The real source of the often-quoted 'skulls of bishops' line (see misquoted).",
+    "url": "https://www.newadvent.org/fathers/210103.htm",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "exact": "Why, this is what has ruined all, your supposing that the reading of the divine Scriptures appertains to those only, when you need it much more than they.",
+    "exact_unrevised": "Why, this is what hath ruined all, your supposing that the reading of the divine Scriptures appertains to those only, when ye need it much more than they.",
+    "work": "Homilies on Matthew",
+    "place": "Homily 2, section 10",
+    "context": "To people who said Bible reading was for monks.",
+    "url": "https://www.newadvent.org/fathers/200102.htm",
+    "verified": true,
+    "note": "He goes on: 'For they that dwell in the world, and each day receive wounds, these have most need of medicines.'"
+   },
+   {
+    "exact": "You both have become one man, one living creature; and do you still say my own? Cursed and abominable word that it is, it was brought in by the devil.",
+    "exact_unrevised": "ye both are become one man, one living creature; and dost thou still say \"mine own\"? cursed and abominable word that it is, it was brought in by the devil.",
+    "work": "Homilies on Ephesians",
+    "place": "Homily 20",
+    "context": "To husbands and wives who kept their money apart.",
+    "url": "https://www.newadvent.org/fathers/230120.htm",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "exact": "Tempers are wanted, not talking; character, not cleverness; deeds, not words.",
+    "work": "Homilies on Ephesians",
+    "place": "Homily 21",
+    "context": "On raising children: aim for good character, not a clever speaker. Said by a man trained by the best orator of his age.",
+    "url": "https://www.newadvent.org/fathers/230121.htm",
+    "verified": true,
+    "note": "Identical in CCEL."
+   },
+   {
+    "exact": "attempt, sir, no such promise, nor order what is holy to be given to the dogs. I will never suffer the worshippers and praisers of the Divine Word to be expelled and their church to be given to them that blaspheme Him.",
+    "work": "Theodoret, Church History",
+    "place": "Book 5, chapter 32",
+    "context": "To the emperor Arcadius, who wanted to give a church to the Arian general Gainas to keep him quiet. As Theodoret reports it (about 450).",
+    "url": "https://www.newadvent.org/fathers/27025.htm",
+    "verified": true,
+    "note": "Reported speech; the first sentence is script-checked and the second read in the same passage (CCEL line 15709-15712). Theodoret's text opens with '\"But,\" said that noble man, \"attempt, sir...'"
+   }
+  ]
+ },
+ "misquoted_or_legend": [
+  {
+   "claim": "\"He who is not angry when he has cause, sins.\"",
+   "truth": "Not his. It comes from the Opus Imperfectum on Matthew, a fifth-century commentary by an Arian writer that was long printed with his works. Aquinas quotes it as Chrysostom's; New Advent's edition of the Summa marks it 'falsely ascribed to St. John Chrysostom'.",
+   "source": "Summa Theologiae II-II, question 158, article 8, 'On the contrary' ('Chrysostom [Hom. xi in Matth. in the Opus Imperfectum, falsely ascribed to St. John Chrysostom] says: \"He who is not angry, whereas he has cause to be, sins.\"'); Catholic Encyclopedia ('The most important spurious work in Latin is the \"Opus imperfectum\", written by an Arian in the first half of the fifth century')",
+   "url": "https://www.newadvent.org/summa/3158.htm",
+   "verified": true,
+   "note": "His real line on anger (the quiz shows it): Homily 16 on Matthew, section 9."
+  },
+  {
+   "claim": "\"If you cannot find Christ in the beggar at the church door, you will not find Him in the chalice.\"",
+   "truth": "A modern summary. The words are not in his homilies as translated in the NPNF. The real passage is Homily 50 on Matthew: 'Neglect Him not when naked...' and 'he is more properly a temple than the other'.",
+   "source": "Search of the NPNF First Series vols. 9-14 (CCEL plain text) for 'church door' and 'in the chalice': no such sentence; Homilies on Matthew, Homily 50, sections 4-5",
+   "url": "https://www.newadvent.org/fathers/200150.htm",
+   "verified": true,
+   "note": "The NPNF is not the whole of his works (e.g. the Genesis and Psalms homilies are missing). Say 'not found in his works in English' only with that caveat; safer: 'Not his words. The idea is his, in Homily 50 on Matthew.'"
+  },
+  {
+   "claim": "\"The road to hell is paved with the skulls of priests\" (or 'the floor of hell ... bishops').",
+   "truth": "No such line in his homilies in the NPNF. What he did say is milder: 'I do not think there are many among Bishops that will be saved, but many more that perish'.",
+   "source": "Search of NPNF1 vols. 9-14 for 'skull' and 'paved' (no match in this sense); Homilies on Acts, Homily 3",
+   "url": "https://www.newadvent.org/fathers/210103.htm",
+   "verified": true,
+   "note": "No Quote Investigator page found; not searched further."
+  },
+  {
+   "claim": "He preached a sermon that began, \"Again Herodias raves; again she is troubled; she dances again...\"",
+   "truth": "Socrates and Sozomen report that he opened a sermon that way against the empress. The sermon that survives with those words is rejected as not his. So it is 'reported by Socrates', not a text of his.",
+   "source": "Socrates 6.18; Schaff, Prolegomena, NPNF 9, note 18: the homily with this opening 'is unworthy of his pen and rejected as spurious by Tillemont, Savile and Montfaucon'; NPNF 3 note to Theodoret 5.34 ('generally rejected as spurious')",
+   "url": "https://www.newadvent.org/fathers/26016.htm",
+   "verified": true,
+   "note": "Schaff adds that it is 'quite probable that Chrysostom made some allusion to Eudoxia which might be construed by his enemies in that way'."
+  },
+  {
+   "claim": "He wrote the Divine Liturgy of St John Chrysostom.",
+   "truth": "The Liturgy most used in Orthodox churches bears his name, but how much of it is his is doubtful. The Catholic Encyclopedia says he 'perhaps modified, but did not compose the ancient text'. Britannica calls the evidence 'unconvincing'. The OCA says he 'compiled a Liturgy'.",
+   "source": "Catholic Encyclopedia (1910); Britannica ('the evidence that he had anything to do with its composition is unconvincing'); OCA 13 November life",
+   "url": "https://www.britannica.com/biography/Saint-John-Chrysostom",
+   "verified": true,
+   "note": "Give both views; the Orthodox tradition holds the anaphora to be his."
+  },
+  {
+   "claim": "The 'Prayer of St Chrysostom' in the Book of Common Prayer is his.",
+   "truth": "It was taken from the Liturgy that bears his name, 'hence the attribution of the prayer', says Britannica.",
+   "source": "Britannica",
+   "url": "https://www.britannica.com/biography/Saint-John-Chrysostom",
+   "verified": true,
+   "note": "Where in the Liturgy (the prayer of the third antiphon) was not checked."
+  },
+  {
+   "claim": "He studied at Athens with his friend St Basil the Great.",
+   "truth": "His friend Basil in On the Priesthood was a different Basil. Basil the Great was eighteen years older. Socrates took the two for one man. Some Greek and Coptic lives today send John to school at Athens beside Basil; no early Life says so.",
+   "source": "NPNF 2 note to Socrates 6.3: 'Socrates and Kurtz ... confound this Basil with Basil the Great of Cappadocia, who was eighteen years older than Chrysostom, and died in 379'; synaxarion.gr sid 1168 ('σπούδασε ... στὴν Ἀθήνα, μαζὶ μὲ τὸν ἀγαπημένο του φίλο Μ. Βασίλειο'); Coptic Synaxarium, Hator 17 ('He went to the city of Athens')",
+   "url": "https://www.newadvent.org/fathers/26016.htm",
+   "verified": true,
+   "note": "Palladius and Socrates place his schooling at Antioch under Libanius. The friend was probably Basil of Raphanea (NPNF note, after Baronius and Montfaucon). Checker 2026-09-25: Socrates does not mention Athens, so 'the story spread' from him was an unsourced link; reworded. The Athens line is in saint.gr 3021 and synaxarion.gr 1168 ('στην Αθήνα, μαζί με τον αγαπημένο του φίλο Μέγα Βασίλειο') and the Coptic synaxarium."
+  },
+  {
+   "claim": "Pope Innocent I ordered him back from exile.",
+   "truth": "The 1916 Roman Martyrology says he 'was recalled by a decree of the Sovereign Pontiff, Innocent I'. The historians say Innocent tried: he sent bishops east to call a council, and they were sent home in disgrace. John died in exile.",
+   "source": "1916 Roman Martyrology, 14 September; Sozomen 8.28; Palladius, chapters 3-4; Britannica ('the pope attempted to intervene, but his efforts were brought to nothing')",
+   "url": "https://www.newadvent.org/fathers/26028.htm",
+   "verified": true,
+   "note": "Good example of an official text getting it wrong; say it gently."
+  },
+  {
+   "claim": "After a sin with an emperor's daughter, he wandered in the wilderness as a penitent.",
+   "truth": "A later legend, the 'Penance of St John Chrysostom', painted and engraved by Durer and Cranach. None of the early accounts (Palladius, Socrates, Sozomen, Theodoret) tell it.",
+   "source": "Art Institute of Chicago, Cranach, 'The Penitence of Saint John Chrysostom' (1509): 'the legendary remorse of the great 4th-century Bishop of Constantinople, who succumbed to the attractions of the emperor's daughter and then wandered the wilderness in penitence'; our reading of the four early sources",
+   "url": "https://www.artic.edu/artworks/13612",
+   "verified": true,
+   "note": "API record saved as sources/.../aic-13612.json. The AIC page itself was not opened in a browser. Checker 2026-09-25: The Art Institute says he 'wandered the wilderness in penitence'; 'crawled on all fours' and 'naked' and 'medieval Western' are not in any fetched source. Reworded."
+  },
+  {
+   "claim": "\"Approach, although you may have repented a thousand times.\"",
+   "truth": "Socrates says he preached this and was attacked for it. The words are not found in any sermon of his that survives.",
+   "source": "Socrates 6.21; NPNF 2 note: 'These words are not found in any of Chrysostom's extant homilies.'",
+   "url": "https://www.newadvent.org/fathers/26016.htm",
+   "verified": true,
+   "note": "Optional; interesting for the second-chances theme."
+  }
+ ],
+ "hard_topics": [
+  {
+   "title": "The sermons Against the Jews",
+   "text": "At Antioch, about 387, he preached eight sermons usually called Against the Jews. They attack Judaism and the Jews of his day in the harshest terms. In the first he calls the synagogue 'a brothel and a theatre', 'a den of robbers and a lair of wild beasts', applying lines from Jeremiah. He says whom he is aiming at: members of his own church who went to watch the Jewish feasts and joined the fasts. Britannica calls his language 'certainly hateful and unambiguous', and says it was unusual 'even among his peers'. It also notes that 'some scholars assert that it is anachronistic to apply a modern understanding of antisemitism to a figure from the 4th century'. The standard English translation (Harkins, 1979) is titled Discourses against Judaizing Christians. In modern times the sermons have been posted by antisemites: the only free English translation online was first found on an antisemitic website.",
+   "his_words_greek": "Ἔνθα δὲ πόρνη ἕστηκεν, πορνεῖόν ἐστιν ὁ τόπος· μᾶλλον δὲ οὐχὶ πορνεῖον καὶ θέατρον μόνον ἐστὶν ἡ συναγωγὴ, ἀλλὰ καὶ σπήλαιον λῃστῶν, καὶ καταγώγιον θηρίων",
+   "his_words_ours": "Where a prostitute stands, that place is a brothel. Or rather, the synagogue is not only a brothel and a theatre. It is also a den of robbers and a lair of wild beasts.",
+   "target_greek": "καὶ πολλοὶ τῶν μεθ' ἡμῶν τεταγμένων καὶ τὰ ἡμέτερα λεγόντων φρονεῖν, οἱ μὲν ἐπὶ τὴν θέαν ἀπαντῶσι τῶν ἑορτῶν, οἱ δὲ καὶ συνεορτάζουσι καὶ τῶν νηστειῶν κοινωνοῦσι· καὶ τοῦτο τὸ πονηρὸν ἔθος βούλομαι τῆς Ἐκκλησίας ἀπελάσαι νῦν.",
+   "target_ours": "Many of those ranked with us, who say they think as we do, go to watch the feasts. Others even keep the feasts with them and share their fasts. It is this evil habit I want to drive out of the Church now.",
+   "source": "Against the Jews, Homily 1, sections 1 and 3 (Greek, Migne PG 48, cols. 844-847, Greek Wikisource); Britannica, 'St. John Chrysostom'; Roger Pearse, preface to the online edition (tertullian.org), quoting Paul Halsall: the translation 'was on an anti-Semitic website [as a justification for current anti-Semitism]'",
+   "url": "https://el.wikisource.org/wiki/%CE%9B%CF%8C%CE%B3%CE%BF%CE%B9_%CE%9A%CE%B1%CF%84%CE%AC_%CE%99%CE%BF%CF%85%CE%B4%CE%B1%CE%AF%CF%89%CE%BD/1",
+   "verified": true,
+   "note": "No public-domain English translation exists. The anonymous online translation (tertullian.org, from the Medieval Sourcebook) has an unknown translator (possibly C. Mervyn Maxwell's 1967 thesis), so its status is uncertain: do not quote it. Print our own translations from the Greek, marked 'Our translation', as the quiz does for the Lazarus line. 'Applying lines from Jeremiah': just before, he quotes 'the prophet' (Jeremiah 3:3, the harlot's face), and just after, 'a hyena's den' (Jeremiah 12:9 in the Greek Bible). 'Den of robbers' echoes Jeremiah 7:11 but is not cited there. Date: Britannica gives 387; the first sermon was preached before the autumn feasts (Trumpets, Tabernacles, the fast), which it names. Socrates 6.3 says he wrote a book 'Against the Jews' while still a reader; that is probably a different work, and it was not checked. Britannica: https://www.britannica.com/biography/Saint-John-Chrysostom ; Pearse: https://roger-pearse.com/tertullian/fathers/chrysostom_adversus_judaeos_00_eintro.htm Checker 2026-09-25: πονηρὸν ἔθος rendered 'evil habit' (was 'bad habit')."
+  },
+  {
+   "title": "Temples torn down",
+   "text": "As archbishop he sent bands of monks, armed with imperial edicts, to tear down the pagan temples still standing in Phoenicia. He paid the workmen with gifts from rich Christian women, not public money. In the same years he gave the Goths of the capital a church with services in their own language.",
+   "quote": "John got together certain monks who were fired with divine zeal, armed them with imperial edicts and despatched them against the idols' shrines.",
+   "source": "Theodoret, Church History, Book 5, chapters 29 and 30",
+   "url": "https://www.newadvent.org/fathers/27025.htm",
+   "verified": true,
+   "note": "New Advent spells 'dispatched'; CCEL 'despatched'. Theodoret tells it as praise; say so."
+  },
+  {
+   "title": "Slavery",
+   "text": "He did not call for ending slavery. He told the rich to keep one or two servants at most, and to buy slaves only to teach them a trade and set them free.",
+   "source": "Homilies on First Corinthians, Homily 40, section 6",
+   "url": "https://www.newadvent.org/fathers/220140.htm",
+   "verified": true,
+   "note": "Optional. Checker 2026-09-25: Homily 40 on 1 Corinthians also says: 'But when Christ came, He put an end also to this.' Both sides now printed. 'Let them go free' is conditional: 'if it be in care for them'."
+  }
+ ],
+ "where_he_stood": {
+  "text": "Fourteen lines shown in the quiz (cells without hide), each found word for word in New Advent's revised NPNF text at the URL below, and (except where noted) in CCEL's unrevised text. Four more positions are hidden but scored (learning, nature, deeper, calling).",
+  "rows": [
+   {
+    "cell": "laugh",
+    "value": -2,
+    "work": "Homilies on Matthew",
+    "place": "Homily 6, section 9",
+    "url": "https://www.newadvent.org/fathers/200106.htm",
+    "verified": true,
+    "note": "Identical in CCEL."
+   },
+   {
+    "cell": "quiet",
+    "value": 1,
+    "work": "Homilies on Ephesians",
+    "place": "Homily 17 (on Ephesians 5:4), the moral part",
+    "url": "https://www.newadvent.org/fathers/230117.htm",
+    "verified": true,
+    "note": "New Advent has no section numbers on this page. Identical in CCEL."
+   },
+   {
+    "cell": "anger",
+    "value": 2,
+    "work": "Homilies on Matthew",
+    "place": "Homily 16, section 9",
+    "url": "https://www.newadvent.org/fathers/200116.htm",
+    "verified": true,
+    "note": "Identical in CCEL."
+   },
+   {
+    "cell": "alone",
+    "value": -2,
+    "work": "On the Priesthood",
+    "place": "Book 6, section 6",
+    "url": "https://www.newadvent.org/fathers/19226.htm",
+    "verified": true,
+    "note": "Identical in CCEL. Section 7: 'I would vote a thousand times over for accepting the former' (the life among people)."
+   },
+   {
+    "cell": "tell",
+    "value": 2,
+    "work": "Homilies on the Statues",
+    "place": "Homily 1, section 32",
+    "url": "https://www.newadvent.org/fathers/190101.htm",
+    "verified": true,
+    "note": "CCEL puts inner quote marks: 'make me not this cold reply. \"What matters it to me? I have nothing in common with him.\"'"
+   },
+   {
+    "cell": "tears",
+    "value": -2,
+    "work": "Homilies on First Thessalonians",
+    "place": "Homily 6 (on 1 Thessalonians 4:13)",
+    "url": "https://www.newadvent.org/fathers/230406.htm",
+    "verified": true,
+    "note": "CCEL unrevised: 'But thou, who expectest a resurrection, on what account dost thou lament?' New Advent: 'But you, who expectest...' (a half-revised form; the site prints New Advent's)."
+   },
+   {
+    "cell": "lie",
+    "value": 2,
+    "work": "On the Priesthood",
+    "place": "Book 1, section 8",
+    "url": "https://www.newadvent.org/fathers/19221.htm",
+    "verified": true,
+    "note": "Identical in CCEL. Written to defend his trick on Basil."
+   },
+   {
+    "cell": "surplus",
+    "value": 2,
+    "work": "Sermons on Lazarus and the Rich Man",
+    "place": "Sermon 2, section 5 (PG 48, col. 992)",
+    "url": "https://www.tertullian.org/fathers/chrysostom_four_discourses_02_discourse2.htm",
+    "verified": true,
+    "note": "The site shows OUR translation. Greek checked (substack copy of Migne). The public-domain Allen (1869) text is at this URL; see his_words for the difference."
+   },
+   {
+    "cell": "body",
+    "value": 2,
+    "work": "Letters to Olympias",
+    "place": "the second letter in the NPNF selection (beginning 'Do not be anxious on my behalf'), section 1",
+    "url": "https://www.newadvent.org/fathers/1916.htm",
+    "verified": true,
+    "note": "CCEL unrevised: 'I beseech thee dear lady, and entreat thee ... restoration of thy bodily health'."
+   },
+   {
+    "cell": "miracles",
+    "value": -2,
+    "work": "Homilies on First Corinthians",
+    "place": "Homily 6, section 5",
+    "url": "https://www.newadvent.org/fathers/220106.htm",
+    "verified": true,
+    "note": "Identical in CCEL. Fairness: he says miracles are 'not done now' because faith would be cut short, not that God cannot."
+   },
+   {
+    "cell": "mystery",
+    "value": 2,
+    "work": "Homilies on First Timothy",
+    "place": "Homily 1 (on 1 Timothy 1:4)",
+    "url": "https://www.newadvent.org/fathers/230601.htm",
+    "verified": true,
+    "note": "Identical in CCEL."
+   },
+   {
+    "cell": "pure",
+    "value": 2,
+    "work": "Homilies on Matthew",
+    "place": "Homily 82, section 6",
+    "url": "https://www.newadvent.org/fathers/200182.htm",
+    "verified": true,
+    "note": "Identical in CCEL."
+   },
+   {
+    "cell": "war",
+    "value": 1,
+    "work": "Homilies on First Corinthians",
+    "place": "Homily 5, section 11",
+    "url": "https://www.newadvent.org/fathers/220105.htm",
+    "verified": true,
+    "note": "Identical in CCEL."
+   },
+   {
+    "cell": "all",
+    "value": -2,
+    "work": "Homilies on Second Thessalonians",
+    "place": "Homily 3 (on 2 Thessalonians 1:9-10)",
+    "url": "https://www.newadvent.org/fathers/23053.htm",
+    "verified": true,
+    "note": "Identical in CCEL."
+   }
+  ]
+ },
+ "friends_family_rivals": [
+  {
+   "who": "Anthusa",
+   "kind": "family",
+   "text": "His mother, widowed at twenty, who raised him and begged him not to leave her for the monastery.",
+   "source": "Socrates 6.3; Letter to a Young Widow 2; On the Priesthood 1.5",
+   "url": "https://www.newadvent.org/fathers/19221.htm",
+   "verified": true
+  },
+  {
+   "who": "Libanius",
+   "kind": "teacher",
+   "text": "The great pagan orator who taught him rhetoric, and said on his deathbed that John should have succeeded him, 'had not the Christians taken him from us'.",
+   "source": "Sozomen 8.2; Socrates 6.3",
+   "url": "https://www.newadvent.org/fathers/26028.htm",
+   "verified": true
+  },
+  {
+   "who": "Diodore of Tarsus",
+   "kind": "teacher",
+   "text": "Ran the ascetic school near Antioch where John and his friends studied the Scriptures, reading them for their plain sense.",
+   "source": "Socrates 6.3; Sozomen 8.2; CE",
+   "url": "https://www.newadvent.org/fathers/26016.htm",
+   "verified": true
+  },
+  {
+   "who": "Meletius of Antioch",
+   "kind": "bishop",
+   "text": "Took the young John under his wing, baptised him, made him a reader and later a deacon.",
+   "source": "Palladius, chapter 5; CE",
+   "url": "https://www.tertullian.org/fathers/palladius_dialogus_02_text.htm",
+   "verified": true
+  },
+  {
+   "who": "Basil (his friend)",
+   "kind": "friend",
+   "text": "The friend he tricked into being made a bishop while he hid; On the Priesthood is written as their conversation. Not Basil the Great.",
+   "source": "On the Priesthood, Book 1, sections 6-7; NPNF note to Socrates 6.3",
+   "url": "https://www.newadvent.org/fathers/19221.htm",
+   "verified": true
+  },
+  {
+   "who": "Theodore",
+   "kind": "friend",
+   "text": "A fellow student who left the monastic life to marry; John's letter brought him back, says Sozomen. Sozomen and Socrates identify him with Theodore of Mopsuestia; the CE puts a question mark.",
+   "source": "Sozomen 8.2; CE ('Adhortatio ad Theodorum (Mopsuestensem?) lapsum')",
+   "url": "https://www.newadvent.org/fathers/1903.htm",
+   "verified": true
+  },
+  {
+   "who": "Olympias",
+   "kind": "friend",
+   "text": "A rich widow and deaconess of Constantinople, his closest friend; he wrote her seventeen letters from exile, and she was tried after his fall and would not give way.",
+   "source": "Stephens, NPNF 9; Sozomen 8.24",
+   "url": "https://www.newadvent.org/fathers/1916.htm",
+   "verified": true
+  },
+  {
+   "who": "John Cassian",
+   "kind": "disciple",
+   "text": "Ordained by him at Constantinople, and loyal to him all his life: 'John a marvel of faith and purity'.",
+   "source": "Cassian, On the Incarnation, Book 7, chapters 30-31",
+   "url": "https://www.newadvent.org/fathers/35097.htm",
+   "verified": true,
+   "note": "The site's pair text: 'Chrysostom ordained Cassian a deacon in Constantinople.' 'Deacon' is the NPNF editor's reading (npnf211 note 2552); Cassian says 'admitted into the sacred ministry'."
+  },
+  {
+   "who": "Palladius",
+   "kind": "friend",
+   "text": "A bishop who took his side and wrote his Life as a dialogue, soon after his death.",
+   "source": "Palladius, Dialogue; CE (written c. 408)",
+   "url": "https://www.tertullian.org/fathers/palladius_dialogus_02_text.htm",
+   "verified": true
+  },
+  {
+   "who": "Innocent I",
+   "kind": "ally",
+   "text": "Bishop of Rome, who backed him and broke communion with his enemies until his name was added to the roll of departed bishops.",
+   "source": "Sozomen 8.26-28; CE; Theodoret 5.34",
+   "url": "https://www.newadvent.org/cathen/08452b.htm",
+   "verified": true,
+   "note": "Checker 2026-09-25: Theodoret 5.34: 'until the name of that holy man had been inserted among those of deceased bishops'."
+  },
+  {
+   "who": "Theophilus of Alexandria",
+   "kind": "rival",
+   "text": "Consecrated him against his own wishes, then led the Synod of the Oak that deposed him.",
+   "source": "Socrates 6.2, 6.15; Palladius 5, 8",
+   "url": "https://www.newadvent.org/fathers/26016.htm",
+   "verified": true
+  },
+  {
+   "who": "Empress Eudoxia",
+   "kind": "rival",
+   "text": "At first she backed him: she paid for the silver crosses carried in his night processions. Then she took his sermons against luxury as aimed at her and pressed for both exiles.",
+   "source": "Socrates 6.8 (silver crosses 'provided at the expense of the empress Eudoxia'), 6.15, 6.18; CE",
+   "url": "https://www.newadvent.org/fathers/26016.htm",
+   "verified": true,
+   "note": "Checker 2026-09-25: 'At first his friend' replaced by the concrete, sourced act."
+  },
+  {
+   "who": "Epiphanius of Salamis",
+   "kind": "rival",
+   "text": "Came to the capital to condemn Origen's followers and turned against John; they parted with barbed prophecies, which Socrates reports with doubts.",
+   "source": "Socrates 6.14",
+   "url": "https://www.newadvent.org/fathers/26016.htm",
+   "verified": true
+  },
+  {
+   "who": "Severian of Gabala",
+   "kind": "rival",
+   "text": "A visiting bishop and preacher who fell out with John's staff and joined his enemies.",
+   "source": "Socrates 6.11; CE",
+   "url": "https://www.newadvent.org/fathers/26016.htm",
+   "verified": true
+  },
+  {
+   "who": "Eutropius",
+   "kind": "other",
+   "text": "The emperor's chamberlain who helped make him archbishop, and whom he later sheltered at the altar.",
+   "source": "Palladius 5; Socrates 6.5; Homily 1 on Eutropius",
+   "url": "https://www.newadvent.org/fathers/1914.htm",
+   "verified": true
+  }
+ ],
+ "how_he_died": {
+  "big": "He died on the road into a harsher exile, on 14 September 407, at a martyr's chapel near Comana in Pontus.",
+  "paras": [
+   "Soldiers marched him for three months towards Pityus, on the far edge of the empire. One guard was kind to him in secret. The other hurried him on through rain and sun, hoping he would die.",
+   "Near Comana they spent the night at the chapel of the martyr Basiliscus. John said the martyr came to him in the night: 'to-morrow we shall be together.' In the morning he begged them to wait. They set off anyway, but he fell so ill that they turned back.",
+   "At the chapel he asked for white clothes and put them on, down to his shoes. He gave away everything else. He received Communion. Then he prayed his usual words, 'Glory to God for all things', signed himself with the cross at the last Amen, and died.",
+   "He was buried beside Basiliscus. Monks and virgins came from Syria, Cilicia, Pontus and Armenia."
+  ],
+  "last_words": {
+   "exact": "Glory to God for all things",
+   "context": "'using his customary formula, \"Glory to God for all things;\"' and signing himself at the last Amen",
+   "greek_transliterated": "Doxa to theo panton eneken (Catholic Encyclopedia, citing Palladius)",
+   "source": "Palladius, Dialogue, chapter 11",
+   "url": "https://www.tertullian.org/fathers/palladius_dialogus_02_text.htm",
+   "verified": true
+  },
+  "source": "Palladius, Dialogue, chapter 11; Sozomen 8.28 ('Being attacked with pain in the head, and being unable to bear the heat of the sun'); Socrates 6.21",
+  "verified": true,
+  "later": {
+   "title": "A later story",
+   "text": "See miracles.later: the coffin that would not move, 'Peace be to all', healings at the tomb. Told today by the OCA; not in Socrates or Theodoret.",
+   "url": "https://www.oca.org/saints/lives/2027/01/27/100327-translation-of-the-relics-of-saint-john-chrysostom-archbishop-of",
+   "verified": true
+  },
+  "note": "The white clothes: Schaff calls them 'his white baptismal robes', which is Schaff's reading; Palladius says only 'white clothes ... befitting his life'."
+ },
+ "is_he_a_saint": {
+  "big": "Yes. Catholics, Orthodox and Copts count him a saint, and Anglicans and Lutherans remember him too.",
+  "churches": [
+   {
+    "church": "Catholic",
+    "status": "Saint and Doctor of the Church",
+    "note": "A memorial on 13 September"
+   },
+   {
+    "church": "Orthodox",
+    "status": "Saint",
+    "note": "One of the Three Holy Hierarchs; his name is on the Liturgy used most Sundays"
+   },
+   {
+    "church": "Anglican",
+    "status": "Remembered",
+    "note": "A Lesser Festival in the Church of England; 27 January in the Episcopal Church"
+   },
+   {
+    "church": "Lutheran",
+    "status": "Remembered",
+    "note": "Missouri Synod 27 January; ELCA 13 September"
+   }
+  ],
+  "paras_facts": [
+   {
+    "text": "He died deposed and in disgrace with the court. Rome and the West would not share communion with his enemies until his name was added to the roll of departed bishops. In 438 the emperor, son of the empress who had exiled him, laid his head against his coffin and prayed for pardon for his parents.",
+    "source": "Theodoret 5.34 and 5.36; CE",
+    "url": "https://www.newadvent.org/fathers/27025.htm",
+    "verified": true,
+    "note": "Checker 2026-09-25: Theodoret 5.34 says 'inserted among those of deceased bishops', not 'put back'."
+   },
+   {
+    "text": "His own deacon Cassian said his life 'obtained the reward of martyrdom without any show of Gentile persecution'.",
+    "source": "Cassian, On the Incarnation, Book 7, chapter 30",
+    "url": "https://www.newadvent.org/fathers/35097.htm",
+    "verified": true
+   }
+  ],
+  "martyrology_1916": {
+   "exact": "At Constantinople, St. John, bishop, who was surnamed Chrysostom, on account of his golden flow of eloquence. He greatly promoted the interests of the Christian religion by his preaching and exemplary life, and after many toils, closed his life in banishment.",
+   "place": "27 January",
+   "url": "https://archive.org/details/romanmartyrology00cathuoft",
+   "verified": true,
+   "note": "Read in the archive.org OCR text (line breaks and hyphens removed by eye: 'sur- named', 'exem- plary')."
+  },
+  "note": "No caveat needed: unlike Origen or Tertullian, he is a saint everywhere. Britannica's line on the Liturgy: 'The most frequently used of the three eucharistic services of the Eastern Orthodox Church is called the Liturgy of St. John Chrysostom'."
+ },
+ "prayer": {
+  "text": "The only prayer securely his is the one he said all his life and last of all: 'Glory to God for all things.' The 'Prayer of St Chrysostom' in the Book of Common Prayer comes from the Liturgy named after him, and is not known to be his.",
+  "source": "Palladius, Dialogue, chapter 11 ('his customary formula'); Britannica",
+  "url": "https://www.tertullian.org/fathers/palladius_dialogus_02_text.htm",
+  "verified": true,
+  "note": "The Orthodox bedtime 'Twenty-four prayers of St John Chrysostom' were not checked; leave them out."
+ },
+ "what_to_read_first": [
+  {
+   "title": "On the Priesthood",
+   "by": "John Chrysostom",
+   "text": "A dialogue with his friend Basil, after he tricked him into being made a bishop. Funny at the start, searching after that. Jerome read only this book of his.",
+   "url": "https://www.newadvent.org/fathers/1922.htm",
+   "status": 200,
+   "verified": true,
+   "note": "Tr. Stephens, NPNF 9. Jerome, Lives of Illustrious Men 129: 'of these I have only read his On the priesthood.'"
+  },
+  {
+   "title": "The Dialogue on the Life of St John Chrysostom",
+   "by": "Palladius",
+   "text": "Written by a bishop who stood by him, soon after he died. The best account of his fall and his death.",
+   "url": "https://www.tertullian.org/fathers/palladius_dialogus_02_text.htm",
+   "status": 200,
+   "verified": true,
+   "note": "Tr. Herbert Moore, 1921; transcribed by Roger Pearse, 'in the public domain'."
+  },
+  {
+   "title": "Letters to Olympias",
+   "by": "John Chrysostom",
+   "text": "Letters from exile to his closest friend. The man behind the pulpit.",
+   "url": "https://www.newadvent.org/fathers/1916.htm",
+   "status": 200,
+   "verified": true,
+   "note": "A selection; tr. Stephens, NPNF 9."
+  },
+  {
+   "title": "Four Discourses on the Rich Man and Lazarus",
+   "by": "John Chrysostom",
+   "text": "His sermons on the rich and the poor, with his most quoted line.",
+   "url": "https://www.tertullian.org/fathers/chrysostom_four_discourses_00_intro.htm",
+   "status": 200,
+   "verified": true,
+   "note": "Tr. F. Allen, 1869. Alternative: Homily 50 on Matthew, https://www.newadvent.org/fathers/200150.htm"
+  }
+ ],
+ "pictures": {
+  "band": {
+   "path": "C:/Users/Light/Desktop/claude/theology compass/design/saints-hub/pages/img/john-chrysostom.jpg",
+   "title": "Magdalen Altar: St John Chrysostom (Magdalenenaltar: Hl. Chrysostomus)",
+   "artist": "Unknown master of the workshop of Lucas Cranach the Elder",
+   "date": "about 1520-1525",
+   "medium_size": "Panel, 233 x 76 cm",
+   "collection": "Bavarian State Painting Collections, inv. 1046; shown at the Stiftsmuseum Aschaffenburg",
+   "commons": "https://commons.wikimedia.org/wiki/File:Lucas_Cranach_d._%C3%84._(Anonymer_Meister_seiner_Werkstatt)_-_Magdalenenaltar,_Hl._Chrysostomus_-_1046_-_Bavarian_State_Painting_Collections.jpg",
+   "licence": "Public domain (artwork). Commons tag: {{Licensed-PD-Art|PD-old-auto-1923|cc-by-sa-4.0|deathyear=1553}}: the museum's photo of this 2D painting is public domain where PD-Art applies (as in the US), CC BY-SA 4.0 elsewhere.",
+   "size": "original 991 x 3000; saved 595 x 1800, 387,568 bytes",
+   "alt": "St John Chrysostom as a Western bishop in a jewelled gold mitre and red robes, holding a book and a crozier against a sky of white clouds, his name written in his halo",
+   "crop": {
+    "posM": "48% 22%",
+    "posD": "48% 22%"
+   },
+   "credit": "Magdalen Altar: St John Chrysostom, workshop of Lucas Cranach the Elder, about 1520-1525. Bavarian State Painting Collections. Public domain.",
+   "verified": true,
+   "note": "Looked at: the face is large and clear in the top quarter; halo inscription 'SANCTVS CRISOSTIMVS' (as read). Why this one: no Western painting of him on Commons shows a clear, large face with a clean CC0/PD tag. Rejected: Laurens, 'Saint Jean Chrysostome et l'Imperatrice Eudoxie' (1893, Toulouse): superb scene but his face is small and turned away, and the big photo carries the photographer's CC BY-SA 4.0; Pedro de Orrente (Prado): the naked-penitent legend; Baumgartner (Belvedere): face tiny; Sebastiano del Piombo altarpiece: profile, small, high-res photos are Sailko CC BY. Cranach Digital Archive record: https://lucascranach.org/de/DE_BStGS_1046/ . If the owner holds strictly to plain PD/CC0 tags, see alternates."
+  },
+  "second": {
+   "path": "C:/Users/Light/Desktop/claude/theology compass/design/saints-hub/pages/img/john-chrysostom-2.jpg",
+   "title": "St John Chrysostom, the widow's vineyard, and the transfer of his relic",
+   "artist": "Unknown Greek icon painter",
+   "date": "Not given by the museum (post-Byzantine by its style; Commons says 'medieval')",
+   "medium_size": "Portable icon, 41 x 33 cm, from the island of Kimolos",
+   "collection": "Byzantine and Christian Museum, Athens, BXM 11598",
+   "commons": "https://commons.wikimedia.org/wiki/File:John_Chrysostom_(Byzantine_museum).jpg",
+   "licence": "Public domain. Commons tag: {{PD-old-100-expired}}. Photo of a 2D painted icon, from the museum's website.",
+   "size": "983 x 1249 (kept at original size), 391,573 bytes",
+   "alt": "A Greek icon: John Chrysostom in bishop's robes with red crosses above; below, a sailing ship carries his relics, and at the bottom lies the walled town of Comana among trees",
+   "credit": "St John Chrysostom and the transfer of his relic, Greek icon from Kimolos. Byzantine and Christian Museum, Athens. Public domain.",
+   "museum_page": "http://www.ebyzantinemuseum.gr/?i=bxm.en.exhibit&id=53",
+   "caption_suggestion": "A Greek icon from the island of Kimolos. Above, John in his bishop's robes. Below, a ship brings his body home, and at the bottom lies Comana, where he died. Byzantine and Christian Museum, Athens.",
+   "verified": true,
+   "note": "Looked at. The museum names the lower town 'Komana ... the Saint's place of exile' and ties the vineyard to a widow 'Kallitropi' (a later tradition; the CE, citing the Life of Porphyry, says only that the empress took a widow's vineyard). The museum gives no date: if the checker wants a firm date, use an alternate."
+  },
+  "alternates": [
+   {
+    "title": "Medallion of St John Chrysostom",
+    "date": "10th-11th century",
+    "what": "Byzantine cloisonne enamel on gold, 2.6 cm, from an icon frame",
+    "collection": "The Metropolitan Museum of Art, 17.190.661",
+    "licence": "CC0 (Met Open Access, isPublicDomain true)",
+    "url": "https://www.metmuseum.org/art/collection/search/464533",
+    "image": "https://images.metmuseum.org/CRDImages/md/original/sf17-190-661s1.jpg",
+    "size": "1762 x 1702",
+    "note": "The cleanest licence; face clear but the medallion is damaged."
+   },
+   {
+    "title": "John Chrysostom (from a Deesis tier)",
+    "date": "late 15th century",
+    "what": "Novgorod school icon, tempera on panel, 108.2 x 37 cm",
+    "collection": "Nasjonalmuseet, Oslo, NG.M.01522",
+    "licence": "Commons: {{Licensed-PD-Art|PD-old-100-expired|cc-by-4.0}}; the museum page states no photo licence",
+    "url": "https://commons.wikimedia.org/wiki/File:Novgorod_School_-_John_Chrysostom_-_NG.M.01522_-_National_Museum_of_Art,_Architecture_and_Design.jpg",
+    "size": "996 x 3000",
+    "note": "Large, beautiful face; full figure holding a scroll."
+   },
+   {
+    "title": "Hagia Sophia, north tympanum mosaic",
+    "date": "late 9th century",
+    "licence": "Commons PD-Art (Yorck Project); a mosaic photo, so the owner's 3D rule may apply",
+    "url": "https://commons.wikimedia.org/wiki/File:Byzantinischer_Mosaizist_des_9._Jahrhunderts_003.jpg",
+    "size": "2024 x 1821",
+    "note": "The current site portrait uses a smaller crop (Johnchrysostom.jpg, PD-Art)."
+   }
+  ]
+ },
+ "hub_card": {
+  "groups": {
+   "value": "fathers teachers",
+   "verified": true,
+   "note": "Right. A Church Father, and one of the Great Teachers of the East (Three Holy Hierarchs; Doctor of the Church). He also lived as a monk and hermit for about six years (Palladius 5), so 'monks' could be added; the brief's hint leaves it out, and he is known as a bishop, so leave it."
+  },
+  "lived": {
+   "value": "400s",
+   "verified": true,
+   "note": "Consistent with the mock-up's rule, which files people by the century they died in (Ambrose, d. 397, is '300s'; Jerome, d. 420, '400s'). Most of his life and nearly all his sermons fall in the 300s; if the rule changes to 'most of life', he becomes '300s'."
+  },
+  "side": {
+   "value": "east",
+   "verified": true,
+   "note": "Antioch and Constantinople, a Greek writer. Honoured in the West too, but so is every Father; 'east' is right."
+  },
+  "card_line_suggestion": "The golden-mouthed preacher of Antioch, who told the rich the poor had a claim on their money, and died in exile."
+ },
+ "personality_test": {
+  "text": "The Christian Personality Test names him first among the saints of The Forge ('Serious by nature, and at your best when there is something to do.'). His card: 'A friend from his youth called him irritable, and an admiring historian says it was his nature to rebuke wrongdoing. He preached so hard against the powerful that he died in exile.' (Socrates and Sozomen). He is also quoted three times: on the body (1 Corinthians: 'let all be eye or all head: will not the body perish?'), in the quiet leaning ('not by any innate virtue, but by my love of retirement', On the Priesthood), and on Barnabas and Paul in the Forge-Hearth opposites ('the one was more tender and indulgent, but this one more strict and austere', Homilies on Acts).",
+  "source": "site/src/data/personality.json: TYPES.forge.kindred[0]; BOATS.body; LEANINGS.makeup.right; OPPOSITES['forge-hearth']",
+  "url": "https://wiserwalk.com/personality-type/forge/",
+  "verified": true,
+  "note": "Every claim on the card checks: 'proneness to irritability' (Socrates 6.3, a friend's report); 'naturally disposed to reprehend the misconduct of others' (Sozomen 8.3). All three quotations were script-checked in CCEL (npnf112, npnf109 Book 3, npnf111). Label it 'His personality type', 'Our reading, from the Christian Personality Test'. The live URL was not opened."
+ },
+ "site_data_flags": [
+  {
+   "text": "people.chrysostom.cells.surplus shows 'Our translation'. A public-domain English exists (F. Allen, 1869), but it softens the Greek ('not only our own, but also theirs' for 'not ours, but theirs'). Keeping our translation is defensible; the page could show Allen beside it, or cite the Catechism (2446), which translates it 'Not to enable the poor to share in our goods is to steal from them and deprive them of life.'",
+   "note": "Owner's call."
+  },
+  {
+   "text": "people.chrysostom.hook: 'He told the rich that keeping their surplus from the poor was robbery.' The Lazarus line says not sharing is robbery; 'surplus' matches Britannica's summary ('what was superfluous ... ought to be given away'). Fine.",
+   "note": ""
+  },
+  {
+   "text": "people.chrysostom.pairs.cassian: 'Chrysostom ordained Cassian a deacon in Constantinople.' Cassian says only 'admitted into the sacred ministry by the Bishop John'; 'deacon' is the NPNF editor's reading (and standard). Fine.",
+   "note": ""
+  },
+  {
+   "text": "The research file (group-09) gives dates 'c. 347 to 14 September 407' and says Palladius wrote 'tr. H. Moore, 1921': both confirmed. It says the Herodias sermon was 'reported' by Socrates and Sozomen and the surviving one spurious: confirmed (Schaff note 18).",
+   "note": ""
+  },
+  {
+   "text": "Wikidata (unverified) gives birth 349 and feasts 27 January and 13 September; it lacks 13 November. Use the churches' own pages above.",
+   "note": ""
+  },
+  {
+   "text": "Lesser Feasts and Fasts 2022 says 'born around 354' and 'In 397, he became Bishop of Constantinople'. Both differ from the CE and Socrates (about 347; consecrated 26 February 398). Print the CE and Socrates dates.",
+   "note": ""
+  },
+  {
+   "text": "LFF 2022 also quotes the Paschal (Easter) homily as his. Its authorship was not checked; do not use it as his without a check.",
+   "note": ""
+  }
+ ],
+ "could_not_verify": [
+  "The Greek wording of 'Glory to God for all things' in a Greek edition of Palladius. Only the Catholic Encyclopedia's transliteration ('Doxa to theo panton eneken') and Schaff's note were seen.",
+  "The Greek of the Lazarus line in a scan of Migne, PG 48 col. 992. Seen only in a substack reproduction; the Catechism confirms the reference.",
+  "The year Pius X named him patron of preachers (usually 1908). The 1916 Martyrology confirms the act, not the year.",
+  "When and how his relics reached Rome (usually said: after the sack of Constantinople in 1204). The 1916 Martyrology says only that his body 'was afterwards taken to Rome'.",
+  "Where the later relic stories (the coffin that would not move, 'Peace be to all', incorruption) first appear. OCA tells them without a source.",
+  "The date of the Byzantine Museum icon (BXM 11598). The museum page gives none.",
+  "The Gregorian equivalent of the Coptic 17 Hator, and whether the Greek churches keep 30 January from a Greek source (OCA only).",
+  "Whether the Paschal (Easter) homily read in Orthodox churches is genuinely his.",
+  "Whether the online English 'Against the Jews' (tertullian.org, ex-Medieval Sourcebook) is public domain. Translator unknown. Not used.",
+  "Cucusus's modern name (Göksun) and Pityus's (Pitsunda): not checked in a source.",
+  "The ELCA date from the printed Evangelical Lutheran Worship (only the 2006 draft church-year PDF, the same used for Martin).",
+  "The 2004 Roman Martyrology's wording.",
+  "The OCA line that he preached 'usually twice a week, but sometimes daily' (no ancient source seen).",
+  "Pronunciation beyond Merriam-Webster (Collins not checked).",
+  "The iconography of Chrysostom in a handbook; 'in art' rests on the works themselves and Schaff (1889)."
+ ],
+ "sources_fetched": {
+  "folder": "C:/Users/Light/Desktop/claude/theology compass/design/saints-hub/sources/people/john-chrysostom/",
+  "count_txt": 84,
+  "main": [
+   "ccel-npnf109.txt to ccel-npnf114.txt (NPNF1 vols 9-14, his works, unrevised)",
+   "ccel-npnf202.txt (Socrates, Sozomen), ccel-npnf203.txt (Theodoret, Jerome), ccel-npnf211.txt (Cassian)",
+   "palladius-dialogue-moore.txt (Moore 1921), allen-lazarus-discourse2.txt (Allen 1869), lazarus2-greek.txt, wikisource-kata-ioudaion-1.txt (Greek, Against the Jews 1)",
+   "na-*.txt (New Advent pages for every homily and history chapter cited)",
+   "cathen-chrysostom.txt, cathen-doctors.txt, britannica-*.txt, summa-2-2-158.txt, ccc-2446.txt, vatican-2004-letter.txt",
+   "Calendars: usccb-091325.txt, martyrology-1916-djvu.txt, calendarium-romanum-1969.txt, oca-life-1113/0127/0130.txt, saintgr-3021/3342.txt, synaxarion-1168.txt, azbyka-zlatoust.txt, coptic-hator17.txt, cofe-calendar.txt, lff2022.txt, elw-churchyear.txt, cph-commemorations.txt, lsb-goodshepherd.txt",
+   "Pictures: byzmuseum-exhibit53.txt, cranach-cda-1046.txt, aic-13612.json"
+  ],
+  "note": "Gitignored folder. The Moore, Allen and NPNF texts are public domain; the modern pages (Britannica, OCA, etc.) are kept only for re-checking and must never be committed."
+ }
+}

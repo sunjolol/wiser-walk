@@ -1,0 +1,2721 @@
+{
+ "subject": "Justin Martyr (St Justin the Philosopher)",
+ "checked_on": "2026-09-24",
+ "saved_to": "C:/Users/Light/Desktop/claude/theology compass/design/saints-hub/research/people/justin-martyr-facts.json",
+ "texts_on_disk": "design/saints-hub/sources/people/justin-martyr/ (gitignored). raw/ holds whole CCEL volumes (anf01.txt, anf02.txt, anf03.txt, anf06.txt, npnf201.txt, npnf203.txt) and the fetched web pages; the named .txt files are the works or chapters cut from them, or stripped web pages (first line names the URL where it is an excerpt). Every 'exact' below was searched by script (scratchpad justin/chk.py: footnote marks like [1783] removed, whitespace, dashes and curly quotes folded, case ignored) in the file named in 'evidence_file', and for Justin's own works the chapter heading above the match was read back and compared with 'place'. The 'check' block records the result. For Justin's works each line was also searched in New Advent's revised copy ('newadvent_revised').",
+ "text_used": {
+  "text": "Justin's works are quoted from the translation of Marcus Dods and George Reith in the Ante-Nicene Fathers, vol. 1 (1885), as printed on CCEL (plain text marked 'Rights: Public Domain'). The Martyrdom is Marcus Dods's translation in the same volume. Other writers: Tatian (J. E. Ryland, ANF 2), Irenaeus (Roberts and Rambaut, ANF 1), Tertullian (ANF 3), Methodius (W. R. Clark, ANF 6), Eusebius (A. C. McGiffert, NPNF 2nd series vol. 1, 1890). 'exact' is the text as printed with footnote numbers taken out. 'display' applies the site's rule of capitals for every pronoun for God.",
+  "source": "Ante-Nicene Fathers vol. 1 (1885), CCEL plain text",
+  "url": "https://www.ccel.org/ccel/s/schaff/anf01/cache/anf01.txt",
+  "verified": true,
+  "note": "New Advent prints a revised copy of the same translation (Kevin Knight). It differs in small ways: 'whilst' becomes 'while', 'expected forthwith' becomes 'expected immediately', and Dialogue chapter 1 has '(In jest.)' where CCEL reads 'So I replied to him in jest.' Every line below is in the CCEL form; where New Advent differs, the note says so. CCEL chapter pages follow the pattern anf01.viii.ii.<chapter> (First Apology), viii.iii (Second Apology), viii.iv (Dialogue), viii.xi (Martyrdom). ANF numbers the chapters of the Second Apology in the traditional order; some modern editions renumber it."
+ },
+ "quick_facts": {
+  "born": {
+   "text": "Born about 100 at Flavia Neapolis in Palestine, today Nablus. Estimates run from about 100 to about 114.",
+   "source": "First Apology, chapter 1 ('I, Justin, the son of Priscus and grandson of Bacchius, natives of Flavia Neapolis in Palestine'); Catholic Encyclopedia (1910): 'born at Flavia Neapolis, about A.D. 100'; Britannica: 'born c. 100, Flavia Neapolis, Palestine [now Nāblus]'; Merriam-Webster: 'circa 100– circa 165'",
+   "url": "https://www.newadvent.org/cathen/08580c.htm",
+   "verified": true,
+   "note": "Other dates: Dods and Reith's ANF note says 'about a.d. 114'; OCA 'around 114'; the Episcopal Church (LFF 2022) 'about the year 110'; the Greek Great Synaxaristes 110. His own words fix only the town. Flavia Neapolis was founded by Vespasian near ancient Shechem (Catholic Encyclopedia); OCA's 'Sychem' is the old town nearby. Plain wording that holds: 'About 100. Some say as late as 114.'",
+   "evidence": [
+    {
+     "exact": "I, Justin, the son of Priscus and grandson of Bacchius, natives of Flavia Neapolis in Palestine",
+     "display": "I, Justin, the son of Priscus and grandson of Bacchius, natives of Flavia Neapolis in Palestine",
+     "work": "First Apology",
+     "place": "chapter 1",
+     "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+     "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+     "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.ii.i.html",
+     "url_newadvent": "https://www.newadvent.org/fathers/0126.htm",
+     "verified": true,
+     "check": {
+      "ccel": {
+       "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 1,
+       "work_in_file": "First Apology"
+      },
+      "newadvent_revised": {
+       "file": "newadvent-first-apology.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 1
+      }
+     },
+     "note": ""
+    }
+   ]
+  },
+  "grew_up": {
+   "text": "In a pagan family. His grandfather's name is Greek, his father's and his own Latin. He calls himself uncircumcised, and speaks of the Samaritans as his own people, though he was not a Samaritan by religion. He studied Greek philosophy before he met the Scriptures.",
+   "source": "First Apology 1; Dialogue 28 ('although I am an uncircumcised man'); Dialogue 120 ('any of my people, that is, the Samaritans'); Wace, Dictionary of Christian Biography (1911), 'Justinus Martyr' ('The name of his grandfather is Greek; of his father and himself Latin'; 'obviously not a Samaritan by blood or religion'); Catholic Encyclopedia (1910)",
+   "url": "https://ccel.org/ccel/wace/biodict/biodict.html?term=Justinus%20Martyr,%20philosopher",
+   "verified": true,
+   "note": "",
+   "evidence": [
+    {
+     "exact": "although I am an uncircumcised man",
+     "display": "although I am an uncircumcised man",
+     "work": "Dialogue with Trypho",
+     "place": "chapter 28",
+     "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+     "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+     "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.xxviii.html",
+     "url_newadvent": "https://www.newadvent.org/fathers/01282.htm",
+     "verified": true,
+     "check": {
+      "ccel": {
+       "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 28,
+       "work_in_file": "Dialogue with Trypho"
+      },
+      "newadvent_revised": {
+       "file": "newadvent-dialogue-10-30.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 28
+      }
+     },
+     "note": ""
+    },
+    {
+     "exact": "For I gave no thought to any of my people, that is, the Samaritans",
+     "display": "For I gave no thought to any of my people, that is, the Samaritans",
+     "work": "Dialogue with Trypho",
+     "place": "chapter 120",
+     "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+     "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+     "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.cxx.html",
+     "url_newadvent": "https://www.newadvent.org/fathers/01288.htm",
+     "verified": true,
+     "check": {
+      "ccel": {
+       "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 120,
+       "work_in_file": "Dialogue with Trypho"
+      },
+      "newadvent_revised": {
+       "file": "newadvent-dialogue-109-124.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 120
+      }
+     },
+     "note": ""
+    }
+   ]
+  },
+  "died": {
+   "text": "About 165, at Rome. He was scourged and beheaded with six companions, on the sentence of Rusticus, prefect of the city, after they refused to sacrifice to the gods.",
+   "source": "The Martyrdom of Justin, chapters 1 and 5; Catholic Encyclopedia (1910): 'condemned to death by the prefect, Rusticus, towards A.D. 165, with six companions'; Dods and Reith (ANF 1): 'The Chronicon Paschale gives as the date 165 a.d.'; McGiffert (NPNF2-1, Eusebius 4.16 note): Rusticus 'became prefect of Rome in 163'",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.xi.v.html",
+   "verified": true,
+   "note": "No ancient text gives the day. Rusticus's term (from 162 or 163 to about 168) brackets the year. The Episcopal Church prints 167; the Church of England and the ELCA print c. 165. Eusebius dates it under Marcus Aurelius (4.16).",
+   "evidence": [
+    {
+     "exact": "Let those who have refused to sacrifice to the gods and to yield to the command of the emperor be scourged, and led away to suffer the punishment of decapitation, according to the laws.",
+     "display": "Let those who have refused to sacrifice to the gods and to yield to the command of the emperor be scourged, and led away to suffer the punishment of decapitation, according to the laws.",
+     "work": "The Martyrdom of Justin",
+     "place": "chapter 5",
+     "translation": "Marcus Dods, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+     "evidence_file": "ccel-anf01-martyrdom-of-justin.txt",
+     "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.xi.v.html",
+     "url_newadvent": "https://www.newadvent.org/fathers/0133.htm",
+     "verified": true,
+     "check": {
+      "ccel": {
+       "file": "ccel-anf01-martyrdom-of-justin.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 5
+      },
+      "newadvent_revised": {
+       "file": "newadvent-martyrdom-of-justin.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 5
+      }
+     },
+     "note": ""
+    }
+   ]
+  },
+  "buried": {
+   "text": "The record of his trial does not say. It says only that some believers secretly took the bodies and laid them 'in a suitable place'. The OCA says his relics rest in Rome.",
+   "source": "The Martyrdom of Justin, chapter 5",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.xi.v.html",
+   "verified": true,
+   "note": "Later claims: OCA says 'The relics of Saint Justin the Philosopher rest in Rome'; the church of St John the Baptist at Sacrofano, north of Rome, claims his bones (Wikipedia, citing the church). Treat both as later tradition. Bones kept at Annapolis, Maryland, once linked to him, are now said to be of a third-century Justin (Wikipedia).",
+   "evidence": [
+    {
+     "exact": "And some of the faithful having secretly removed their bodies, laid them in a suitable place",
+     "display": "And some of the faithful having secretly removed their bodies, laid them in a suitable place",
+     "work": "The Martyrdom of Justin",
+     "place": "chapter 5",
+     "translation": "Marcus Dods, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+     "evidence_file": "ccel-anf01-martyrdom-of-justin.txt",
+     "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.xi.v.html",
+     "url_newadvent": "https://www.newadvent.org/fathers/0133.htm",
+     "verified": true,
+     "check": {
+      "ccel": {
+       "file": "ccel-anf01-martyrdom-of-justin.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 5
+      },
+      "newadvent_revised": {
+       "file": "newadvent-martyrdom-of-justin.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 5
+      }
+     },
+     "note": ""
+    }
+   ],
+   "checker_note": "Checker 2026-09-25: 'Nobody knows where' went beyond the source (the Martyrdom is silent; OCA and Sacrofano claim relics). Now states what the record says and gives the OCA's claim as the OCA's."
+  },
+  "also_called": [
+   {
+    "text": "Justin the Philosopher: OCA 'Martyr Justin the Philosopher and those with him at Rome'; Russian 'Мученик Иустин Философ, Великий, Римский' (Martyr Justin the Philosopher, the Great, of Rome).",
+    "source": "OCA life page, 1 June; azbyka.ru",
+    "url": "https://www.oca.org/saints/lives/2026/06/01/101570-martyr-justin-the-philosopher-and-those-with-him-at-rome",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "Justin the Apologist and Philosopher (Greek 'Άγιος Ιουστίνος ο Απολογητής και φιλόσοφος'); the Great Synaxaristes has 'Ὁ Ἅγιος Ἰουστίνος ὁ Μάρτυρας ὁ Φιλόσοφος'.",
+    "source": "saint.gr; synaxarion.gr",
+    "url": "https://www.saint.gr/445/saint.aspx",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "Saint Justin, Martyr (Catholic calendar). 'Martyr' is a title, not a surname.",
+    "source": "USCCB, Liturgical Calendar 2026",
+    "url": "https://www.usccb.org/resources/2026cal.pdf",
+    "verified": true,
+    "note": "The oldest use of the double title: Tertullian, about 207, 'Justin, philosopher and martyr' (Against the Valentinians, chapter 5)."
+   }
+  ],
+  "status": {
+   "text": "A saint to Catholics, Orthodox and Anglicans (Church of England Lesser Festival, printed in roman type, not italics; Episcopal Church). Lutherans (LCMS, ELCA) remember him, all on 1 June.",
+   "source": "USCCB 2026 calendar (Memorial); OCA; saint.gr; Church of England Common Worship calendar; Lesser Feasts and Fasts 2022; CPH (LCMS) commemorations; Evangelical Lutheran Worship church year",
+   "url": "https://www.usccb.org/resources/2026cal.pdf",
+   "verified": true,
+   "note": "",
+   "checker_note": "Checker 2026-09-25: the page's status line said Anglicans 'remember' him while its church table says Anglican 'Saint' (the Martin form). Made consistent with Martin's page."
+  },
+  "patron_of": {
+   "text": "Philosophers, in Catholic devotion (Franciscan Media). The OCA says he is invoked by those who seek help in their studies.",
+   "source": "Franciscan Media, Saint of the Day ('As patron of philosophers, Saint Justin Martyr...'); OCA ('He is invoked by those who seek help in their studies', of the Russian Church)",
+   "url": "https://www.franciscanmedia.org/saint-of-the-day/saint-justin-martyr/",
+   "verified": true,
+   "note": "No ancient source gives a patronage. Wikipedia's infobox also says 'Philosophers', citing Catholic News Agency (2011). Nothing else found with a source.",
+   "checker_note": "Checker 2026-09-25: the OCA sentence follows one about the Russian Church but does not itself limit the invoking to it; the page now attributes it to the OCA."
+  },
+  "in_art": {
+   "text": "In Eastern icons, such as the Stavronikita fresco: a dark-haired, bearded man in a cloak, with a small cross and a book; the fresco labels him 'the Philosopher'. A Western print of 1584 (Thevet) imagines an old man with a long beard.",
+   "source": "The pictures themselves: Theophanes the Cretan's fresco at Stavronikita (labelled Ο ΦΙΛΟΣΟΦΟΣ, cross in his right hand, book in his left); the Recklinghausen Menaion icon (cross); André Thevet, Les vrais pourtraits (1584)",
+   "url": "https://commons.wikimedia.org/wiki/File:%D0%98%D1%83%D1%81%D1%82%D0%B8%D0%BD_%D0%A4%D0%B8%D0%BB%D0%BE%D1%81%D0%BE%D1%84,_%D0%90%D1%84%D0%BE%D0%BD.jpg",
+   "verified": true,
+   "note": "Described from the images, not from an iconography handbook. No attribute list for Justin was found in a reference work.",
+   "checker_note": "Checker 2026-09-25: 'often labelled' and 'prints of the 1500s' generalised from two pictures; narrowed to the pictures actually seen."
+  },
+  "wrote": {
+   "text": "Three works survive that are surely his: the First Apology, the Second Apology and the Dialogue with Trypho. Eusebius lists more that are lost. Several works printed under his name are not his.",
+   "source": "Catholic Encyclopedia (1910): 'There are extant but three works of Justin, of which the authenticity is assured: the two \"Apologies\" and the \"Dialogue\"'; Eusebius, Church History 4.18; Dods and Reith, ANF 1 introductory note (three classes of works); Lesser Feasts and Fasts 2022 ('Three of his works survive'); Britannica",
+   "url": "https://www.newadvent.org/cathen/08580c.htm",
+   "verified": true,
+   "note": "Eusebius's list of lost works: a Discourse to the Greeks, a Refutation, On the Sovereignty of God, the Psaltes, On the Soul, a work against Marcion (4.11, 4.18), and his own 'work against all the heresies' (First Apology 26)."
+  },
+  "pronounced": {
+   "text": "JUS-tin MAR-ter.",
+   "source": "Merriam-Webster: Justin \\ˈjə-stən\\; martyr \\ˈmär-tər\\",
+   "url": "https://www.merriam-webster.com/dictionary/Justin%20Martyr",
+   "verified": true,
+   "note": "Merriam-Webster's biographical entry reads 'Jus·tin ˈjə-stən ... Saint circa 100– circa 165 Justin (the) Martyr church father'."
+  }
+ },
+ "roles": [
+  {
+   "text": "Philosopher: tried four schools of philosophy, and kept wearing the philosopher's cloak after he became a Christian.",
+   "source": "Dialogue 1-2 and 8; Eusebius 4.11 ('In the guise of a philosopher he preached the divine word')",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.ii.html",
+   "verified": true,
+   "note": "",
+   "short": "Tried four schools"
+  },
+  {
+   "text": "Teacher: taught in Rome from rooms 'above one Martinus', and anyone who came to him heard 'the doctrines of truth'.",
+   "source": "The Martyrdom of Justin, chapter 2",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.xi.ii.html",
+   "verified": true,
+   "note": "Vatican News and Britannica say he opened a school; the Martyrdom only says whoever came to him was taught.",
+   "short": "In Rome, twice"
+  },
+  {
+   "text": "Apologist: wrote defences of the Christians to the emperor Antoninus Pius and his sons, and to the Roman Senate.",
+   "source": "First Apology 1; Second Apology title; Eusebius 4.18",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.ii.i.html",
+   "verified": true,
+   "note": "",
+   "short": "Wrote to the emperor"
+  },
+  {
+   "text": "Martyr: beheaded at Rome about 165 with six companions.",
+   "source": "The Martyrdom of Justin, chapters 3 and 5",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.xi.v.html",
+   "verified": true,
+   "note": "",
+   "short": "Beheaded, about 165"
+  }
+ ],
+ "feast_days": {
+  "west": [
+   {
+    "text": "1 June, Memorial, General Roman Calendar.",
+    "source": "USCCB, Liturgical Calendar for the Dioceses of the United States 2026: '1 Mon Saint Justin, Martyr ... red ... Memorial'",
+    "url": "https://www.usccb.org/resources/2026cal.pdf",
+    "verified": true,
+    "note": "bible.usccb.org day pages answered 403 (bot check); the USCCB's own 2026 calendar PDF was read instead.",
+    "church": "Catholic",
+    "month": 6,
+    "day": 1
+   },
+   {
+    "text": "13 April in the 1916 Roman Martyrology ('there suffered at Rome that remarkable man, Justin the Philosopher'), with his feast on 14 April ('feast of St. Justin, martyr, who is mentioned on the 13th of this month').",
+    "source": "The Roman Martyrology (1916), 13 and 14 April",
+    "url": "https://archive.org/details/romanmartyrology00cathuoft",
+    "verified": true,
+    "note": "Text on disk: sources/people/justin-martyr/martyrology-1916-april-13-14.txt. The Catholic Encyclopedia (1910): 'Leo XIII had a Mass and an Office composed in his honour and set his feast for 14 April.' Catholic Culture: in the 1962 Missal 'St. Justin's feast was celebrated on April 14.'",
+    "church": "Catholic, before 1969",
+    "month": 4,
+    "day": 14
+   },
+   {
+    "text": "1 June, Lesser Festival: 'Justin, Martyr at Rome, c.165'.",
+    "source": "Church of England, Common Worship calendar (roman type = Lesser Festival; italics = Commemoration)",
+    "url": "https://www.churchofengland.org/prayer-and-worship/worship-texts-and-resources/common-worship/churchs-year/calendar",
+    "verified": true,
+    "note": "",
+    "church": "Church of England",
+    "month": 6,
+    "day": 1
+   },
+   {
+    "text": "1 June: 'Justin, Martyr, 167'.",
+    "source": "The Episcopal Church, Lesser Feasts and Fasts 2022",
+    "url": "https://www.episcopalchurch.org/wp-content/uploads/2022/11/Lesser-Feasts-and-Fasts-2022_final.pdf",
+    "verified": true,
+    "note": "",
+    "church": "Episcopal Church",
+    "month": 6,
+    "day": 1
+   },
+   {
+    "text": "1 June: 'Justin, Martyr'.",
+    "source": "Concordia Publishing House (LCMS), 'Complete List of Church Year Commemorations' (Lutheran Service Book)",
+    "url": "https://blog.cph.org/read/church-year/commemorations",
+    "verified": true,
+    "note": "",
+    "church": "Lutheran, Missouri Synod",
+    "month": 6,
+    "day": 1
+   },
+   {
+    "text": "1 June: 'Justin, martyr at Rome, c. 165'.",
+    "source": "Evangelical Lutheran Worship, The Church Year (final draft, January 2006, ELCA)",
+    "url": "https://web.archive.org/web/20060908112753/http://www.renewingworship.org/ELW/content/PDF/ChurchYear_asm_20060119.pdf",
+    "verified": true,
+    "note": "The same document used for Martin. Seen in the ELW draft, not in a current ELCA web page.",
+    "church": "Lutheran, ELCA",
+    "month": 6,
+    "day": 1
+   }
+  ],
+  "east": [
+   {
+    "text": "1 June: 'Martyr Justin the Philosopher and those with him at Rome'.",
+    "source": "OCA, Lives of the Saints",
+    "url": "https://www.oca.org/saints/lives/2026/06/01/101570-martyr-justin-the-philosopher-and-those-with-him-at-rome",
+    "verified": true,
+    "note": "",
+    "church": "OCA",
+    "month": 6,
+    "day": 1
+   },
+   {
+    "text": "1 June: 'Εορτάζει στις 1 Ιουνίου εκάστου έτους' (saint.gr); 'Ημ. Εορτής: 1 Ιουνίου' (Great Synaxaristes).",
+    "source": "saint.gr; synaxarion.gr",
+    "url": "https://www.saint.gr/445/saint.aspx",
+    "verified": true,
+    "note": "GOARCH answered 403 (bot check) and was not read.",
+    "church": "Greek churches",
+    "month": 6,
+    "day": 1
+   },
+   {
+    "text": "1 June on the old calendar, which is 14 June on today's calendar: 'День памяти 14 июня'.",
+    "source": "azbyka.ru, 'Мученик Иустин Философ, Великий, Римский'",
+    "url": "https://azbyka.ru/days/sv-iustin-filosof",
+    "verified": true,
+    "note": "",
+    "church": "Russian Church",
+    "month": 6,
+    "day": 14
+   }
+  ],
+  "note": {
+   "text": "East and West now share 1 June. The Roman calendar kept 14 April from 1882 until the 1969 reform, when it moved to 1 June.",
+   "source": "Catholic Encyclopedia (1910), 'St. Justin Martyr'; Catholic Culture (1962 Missal: April 14); USCCB 2026",
+   "url": "https://www.catholicculture.org/culture/liturgicalyear/calendar/day.cfm?date=2019-06-01",
+   "verified": true,
+   "note": "Why the move: Wikipedia says 14 April 'quite often falls within the main Paschal celebrations', and 1 June is 'the date on which he has been celebrated in the Byzantine Rite since at least the 9th century', citing Calendarium Romanum (1969), p. 94. I did not see the Calendarium itself (could_not_verify). Wikipedia also says 14 April was 'one day after the date of his death as indicated in the Martyrology of Florus'; the 1916 Martyrology's 13 April entry fits that, but Florus was not checked. Churches on the old calendar keep 1 June 13 days later, on 14 June."
+  }
+ },
+ "numbers": [
+  {
+   "text": "4 schools of philosophy before Christ: a Stoic, a Peripatetic, a Pythagorean and the Platonists.",
+   "source": "Dialogue with Trypho, chapter 2",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.ii.html",
+   "verified": true,
+   "note": "The Stoic 'did not know himself'; the Peripatetic asked for his fee after a few days; the Pythagorean sent him away for not knowing music, astronomy and geometry.",
+   "chip": "Schools he tried",
+   "n": "4",
+   "lines": [
+    "Stoic, Peripatetic, Pythagorean",
+    "Then the Platonists"
+   ],
+   "evidence": [
+    {
+     "exact": "this man, after having entertained me for the first few days, requested me to settle the fee",
+     "display": "this man, after having entertained me for the first few days, requested me to settle the fee",
+     "work": "Dialogue with Trypho",
+     "place": "chapter 2",
+     "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+     "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+     "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.ii.html",
+     "url_newadvent": "https://www.newadvent.org/fathers/01281.htm",
+     "verified": true,
+     "check": {
+      "ccel": {
+       "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 2,
+       "work_in_file": "Dialogue with Trypho"
+      },
+      "newadvent_revised": {
+       "file": "newadvent-dialogue-01-09.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 2
+      }
+     },
+     "note": ""
+    }
+   ]
+  },
+  {
+   "text": "3 works survive that are surely his.",
+   "source": "Catholic Encyclopedia (1910)",
+   "url": "https://www.newadvent.org/cathen/08580c.htm",
+   "verified": true,
+   "note": "",
+   "chip": "Works that survive",
+   "n": "3",
+   "lines": [
+    "Two Apologies",
+    "The Dialogue with Trypho"
+   ]
+  },
+  {
+   "text": "1 manuscript: all three works come down to us through a single medieval manuscript, Paris gr. 450, finished on 11 September 1364. The only other copy was made from it.",
+   "source": "Catholic Encyclopedia (1910): 'Paris gr. 450, finished on 11 September, 1364; and Claromont. 82, written in 1571 ... The second is only a copy of the first, which is therefore our sole authority'",
+   "url": "https://www.newadvent.org/cathen/08580c.htm",
+   "verified": true,
+   "note": "Wikipedia adds that it was bought in Venice about 1540 and first printed by Robert Estienne in 1551 (not checked further). The Catholic Encyclopedia says the manuscript has 'many large gaps'.",
+   "chip": "Manuscript",
+   "n": "1",
+   "lines": [
+    "Finished 11 September 1364",
+    "Now in Paris"
+   ]
+  },
+  {
+   "text": "2 days of debate with Trypho: the Dialogue speaks of those who came 'on the second day'.",
+   "source": "Dialogue with Trypho, chapters 85 and 142; Eusebius 4.18 (at Ephesus)",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.lxxxv.html",
+   "verified": true,
+   "note": "The Dialogue never says 'two days' in so many words; it refers to 'yesterday' and to those who came 'on the second day', and ends on that day.",
+   "chip": "Days with Trypho",
+   "n": "2",
+   "lines": [
+    "In a colonnade",
+    "Parted as friends"
+   ],
+   "evidence": [
+    {
+     "exact": "Then one of those who had come with them on the second day",
+     "display": "Then one of those who had come with them on the second day",
+     "work": "Dialogue with Trypho",
+     "place": "chapter 85",
+     "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+     "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+     "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.lxxxv.html",
+     "url_newadvent": "https://www.newadvent.org/fathers/01286.htm",
+     "verified": true,
+     "check": {
+      "ccel": {
+       "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 85,
+       "work_in_file": "Dialogue with Trypho"
+      },
+      "newadvent_revised": {
+       "file": "newadvent-dialogue-69-88.txt",
+       "found": false
+      }
+     },
+     "note": "New Advent's revised copy words this differently; print the CCEL (1885) form."
+    }
+   ]
+  },
+  {
+   "text": "6 companions died with him: Chariton, Charito (a woman), Euelpistus (a servant of Caesar), Hierax, Paeon and Liberianus.",
+   "source": "The Martyrdom of Justin, chapter 3; Catholic Encyclopedia (1910) ('six companions')",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.xi.iii.html",
+   "verified": true,
+   "note": "OCA's list differs (it adds Valerian and Justus); the three versions of the Acts do not agree on every name.",
+   "chip": "Died with him",
+   "n": "6",
+   "lines": [
+    "Five men and one woman",
+    "Only one says Justin taught him"
+   ]
+  },
+  {
+   "text": "150 years: he writes that Christ was born 'one hundred and fifty years ago', which dates the First Apology to about 150.",
+   "source": "First Apology, chapter 46; Wace (1911): 'the year 148—i.e. Justin's A.D. 150—should be taken as the approximate date'",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.ii.xlvi.html",
+   "verified": true,
+   "note": "A round number in his own words. Britannica: 'addressed about 150'.",
+   "chip": "Years after Christ",
+   "n": "150",
+   "lines": [
+    "His own count",
+    "In the First Apology"
+   ],
+   "evidence": [
+    {
+     "exact": "Christ was born one hundred and fifty years ago under Cyrenius",
+     "display": "Christ was born one hundred and fifty years ago under Cyrenius",
+     "work": "First Apology",
+     "place": "chapter 46",
+     "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+     "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+     "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.ii.xlvi.html",
+     "url_newadvent": "https://www.newadvent.org/fathers/0126.htm",
+     "verified": true,
+     "check": {
+      "ccel": {
+       "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 46,
+       "work_in_file": "First Apology"
+      },
+      "newadvent_revised": {
+       "file": "newadvent-first-apology.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 46
+      }
+     },
+     "note": ""
+    }
+   ]
+  }
+ ],
+ "traits": [
+  {
+   "text": "Restless and impatient. When the Pythagorean told him to learn music, astronomy and geometry first, he could not face the wait.",
+   "source": "Dialogue with Trypho, chapter 2",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.ii.html",
+   "verified": true,
+   "note": "",
+   "title": "a restless seeker",
+   "quote": {
+    "exact": "Accordingly I took it rather impatiently",
+    "display": "Accordingly I took it rather impatiently",
+    "work": "Dialogue with Trypho",
+    "place": "chapter 2",
+    "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+    "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.ii.html",
+    "url_newadvent": "https://www.newadvent.org/fathers/01281.htm",
+    "verified": true,
+    "check": {
+     "ccel": {
+      "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 2,
+      "work_in_file": "Dialogue with Trypho"
+     },
+     "newadvent_revised": {
+      "file": "newadvent-dialogue-01-09.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 2
+     }
+    },
+    "note": ""
+   },
+   "quote2": {
+    "exact": "I was not able to endure longer procrastination.",
+    "display": "I was not able to endure longer procrastination.",
+    "work": "Dialogue with Trypho",
+    "place": "chapter 2",
+    "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+    "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.ii.html",
+    "url_newadvent": "https://www.newadvent.org/fathers/01281.htm",
+    "verified": true,
+    "check": {
+     "ccel": {
+      "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 2,
+      "work_in_file": "Dialogue with Trypho"
+     },
+     "newadvent_revised": {
+      "file": "newadvent-dialogue-01-09.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 2
+     }
+    },
+    "note": ""
+   }
+  },
+  {
+   "text": "Good-humoured and courteous in argument. He answered Trypho's greeting with a line of Homer, 'in jest'. Two days later they parted as friends, and he left praying for them.",
+   "source": "Dialogue with Trypho, chapters 1 and 142 (ANF footnote: the reply quotes Homer, Iliad 6.123)",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.i.html",
+   "verified": true,
+   "note": "New Advent prints '(In jest.)' as a stage note; CCEL's 1885 text reads 'So I replied to him in jest.'",
+   "title": "joked, and parted friends",
+   "quote": {
+    "exact": "\"But who are you, most excellent man?\" So I replied to him in jest.",
+    "display": "\"But who are you, most excellent man?\" So I replied to him in jest.",
+    "work": "Dialogue with Trypho",
+    "place": "chapter 1",
+    "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+    "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.i.html",
+    "url_newadvent": "https://www.newadvent.org/fathers/01281.htm",
+    "verified": true,
+    "check": {
+     "ccel": {
+      "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 1,
+      "work_in_file": "Dialogue with Trypho"
+     },
+     "newadvent_revised": {
+      "file": "newadvent-dialogue-01-09.txt",
+      "found": false
+     }
+    },
+    "note": "New Advent's revised copy words this differently; print the CCEL (1885) form."
+   },
+   "quote2": {
+    "exact": "And I, praying for them, said",
+    "display": "And I, praying for them, said",
+    "work": "Dialogue with Trypho",
+    "place": "chapter 142",
+    "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+    "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.cxlii.html",
+    "url_newadvent": "https://www.newadvent.org/fathers/01289.htm",
+    "verified": true,
+    "check": {
+     "ccel": {
+      "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 142,
+      "work_in_file": "Dialogue with Trypho"
+     },
+     "newadvent_revised": {
+      "file": "newadvent-dialogue-125-142.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 142
+     }
+    },
+    "note": ""
+   }
+  },
+  {
+   "text": "Would not pretend. Pressed on whether he really believed in a rebuilt Jerusalem, he said so plainly, and admitted many good Christians disagreed with him. He wrote that Christians could deny their faith and live, but would not live by a lie.",
+   "source": "Dialogue 80; First Apology 8",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.lxxx.html",
+   "verified": true,
+   "note": "",
+   "title": "no double talk",
+   "quote": {
+    "exact": "I am not so miserable a fellow, Trypho, as to say one thing and think another.",
+    "display": "I am not so miserable a fellow, Trypho, as to say one thing and think another.",
+    "work": "Dialogue with Trypho",
+    "place": "chapter 80",
+    "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+    "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.lxxx.html",
+    "url_newadvent": "https://www.newadvent.org/fathers/01286.htm",
+    "verified": true,
+    "check": {
+     "ccel": {
+      "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 80,
+      "work_in_file": "Dialogue with Trypho"
+     },
+     "newadvent_revised": {
+      "file": "newadvent-dialogue-69-88.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 80
+     }
+    },
+    "note": ""
+   },
+   "quote2": {
+    "exact": "for it is in our power, when we are examined, to deny that we are Christians; but we would not live by telling a lie.",
+    "display": "for it is in our power, when we are examined, to deny that we are Christians; but we would not live by telling a lie.",
+    "work": "First Apology",
+    "place": "chapter 8",
+    "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+    "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.ii.viii.html",
+    "url_newadvent": "https://www.newadvent.org/fathers/0126.htm",
+    "verified": true,
+    "check": {
+     "ccel": {
+      "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 8,
+      "work_in_file": "First Apology"
+     },
+     "newadvent_revised": {
+      "file": "newadvent-first-apology.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 8
+     }
+    },
+    "note": ""
+   }
+  },
+  {
+   "text": "Bold in public debate. He cross-examined the Cynic Crescens in public and offered to do it again before the emperor. When Trypho's friends jeered, he got up to leave.",
+   "source": "Second Apology 3; Dialogue 9",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iii.iii.html",
+   "verified": true,
+   "note": "",
+   "title": "took on all comers",
+   "quote": {
+    "exact": "I proposed to him certain questions on this subject, and interrogated him, and found most convincingly that he, in truth, knows nothing.",
+    "display": "I proposed to him certain questions on this subject, and interrogated him, and found most convincingly that he, in truth, knows nothing.",
+    "work": "Second Apology",
+    "place": "chapter 3",
+    "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+    "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iii.iii.html",
+    "url_newadvent": "https://www.newadvent.org/fathers/0127.htm",
+    "verified": true,
+    "check": {
+     "ccel": {
+      "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 3,
+      "work_in_file": "Second Apology"
+     },
+     "newadvent_revised": {
+      "file": "newadvent-second-apology.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 3
+     }
+    },
+    "note": ""
+   },
+   "quote2": {
+    "exact": "Then I rose up and was about to leave",
+    "display": "Then I rose up and was about to leave",
+    "work": "Dialogue with Trypho",
+    "place": "chapter 9",
+    "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+    "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.ix.html",
+    "url_newadvent": "https://www.newadvent.org/fathers/01281.htm",
+    "verified": true,
+    "check": {
+     "ccel": {
+      "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 9,
+      "work_in_file": "Dialogue with Trypho"
+     },
+     "newadvent_revised": {
+      "file": "newadvent-dialogue-01-09.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 9
+     }
+    },
+    "note": ""
+   }
+  }
+ ],
+ "others_on_him": {
+  "lede": {
+   "text": "Nearly everything about his life comes from his own books and the short record of his trial. A few men who knew him or read him soon after left a line.",
+   "source": "Wace (1911): 'What we know of him is gathered almost entirely from his own writings'",
+   "url": "https://ccel.org/ccel/wace/biodict/biodict.html?term=Justinus%20Martyr,%20philosopher",
+   "verified": true,
+   "note": ""
+  },
+  "quotes": [
+   {
+    "who": "Tatian, his pupil",
+    "exact": "And the most admirable Justin has rightly denounced them as robbers.",
+    "display": "And the most admirable Justin has rightly denounced them as robbers.",
+    "work": "Tatian, Address to the Greeks",
+    "place": "chapter 18",
+    "translation": "J. E. Ryland, ANF vol. 2 (1885)",
+    "evidence_file": "ccel-anf02-tatian-address-18-19.txt",
+    "url": "https://www.newadvent.org/fathers/0202.htm",
+    "verified": true,
+    "check": {
+     "file": "ccel-anf02-tatian-address-18-19.txt",
+     "found": true,
+     "occurrences": 1,
+     "chapter_in_file": 18
+    },
+    "note": "Tatian was 'a hearer of Justin's' (Irenaeus, Against Heresies 1.28.1). In chapter 19 he says Crescens tried to have Justin, 'and indeed me', put to death. Also on New Advent 0202 (same wording)."
+   },
+   {
+    "who": "Tertullian, a generation later",
+    "exact": "for instance Justin, philosopher and martyr;",
+    "display": "Justin, philosopher and martyr",
+    "work": "Tertullian, Against the Valentinians",
+    "place": "chapter 5",
+    "translation": "ANF vol. 3 (1885)",
+    "evidence_file": "ccel-anf03-tertullian-against-valentinians-5.txt",
+    "url": "https://www.newadvent.org/fathers/0314.htm",
+    "verified": true,
+    "check": {
+     "file": "ccel-anf03-tertullian-against-valentinians-5.txt",
+     "found": true,
+     "occurrences": 1,
+     "chapter_in_file": 5
+    },
+    "note": "The earliest writer to give him both titles. Tertullian names him first among those who had already refuted the heretics. (Tertullian is not himself counted a saint.)",
+    "checker_note": "Checker 2026-09-25: 'the earliest writer to give him both titles' and 'about 207' had no source on disk; replaced with what the text itself shows (he names Justin first among those who refuted the heresy)."
+   },
+   {
+    "who": "Methodius of Olympus, about 300",
+    "exact": "Now Justin of Neapolis, a man not far removed either from the times or from the virtues of the apostles",
+    "display": "Justin of Neapolis, a man not far removed either from the times or from the virtues of the apostles",
+    "work": "Methodius, From the Discourse on the Resurrection, Part III",
+    "place": "section 6",
+    "translation": "W. R. Clark, ANF vol. 6 (1886)",
+    "evidence_file": "ccel-anf06-methodius-discourse-on-the-resurrection-part3.txt",
+    "url": "https://www.newadvent.org/fathers/0625.htm",
+    "verified": true,
+    "check": {
+     "file": "ccel-anf06-methodius-discourse-on-the-resurrection-part3.txt",
+     "found": true,
+     "occurrences": 1
+    },
+    "note": "Also on New Advent (fathers/0625.htm), same wording; that page is the link. Methodius wrote about a century and a half after Justin, so this is reputation, not memory."
+   },
+   {
+    "who": "Eusebius of Caesarea, about 325",
+    "exact": "But Justin was especially prominent in those days. In the guise of a philosopher he preached the divine word, and contended for the faith in his writings.",
+    "display": "But Justin was especially prominent in those days. In the guise of a philosopher he preached the divine word, and contended for the faith in his writings.",
+    "work": "Eusebius, Church History",
+    "place": "Book 4, chapter 11",
+    "translation": "A. C. McGiffert, NPNF 2nd series vol. 1 (1890)",
+    "evidence_file": "ccel-npnf201-eusebius-book-4-ch-8-18.txt",
+    "url": "https://www.newadvent.org/fathers/250104.htm",
+    "verified": true,
+    "check": {
+     "file": "ccel-npnf201-eusebius-book-4-ch-8-18.txt",
+     "found": true,
+     "occurrences": 1,
+     "chapter_in_file": 11
+    },
+    "note": "Also 4.8: 'Justin, a genuine lover of the true philosophy'."
+   }
+  ]
+ },
+ "life_moments": [
+  {
+   "text": "Born to a pagan family in Flavia Neapolis, a Roman town in Samaria built near ancient Shechem. He names his father and grandfather in the first line of his First Apology.",
+   "source": "First Apology, chapter 1; Catholic Encyclopedia (1910)",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.ii.i.html",
+   "verified": true,
+   "note": "",
+   "place": "Flavia Neapolis, Samaria",
+   "when": "About 100",
+   "title": "A Gentile in Samaria"
+  },
+  {
+   "text": "He went looking for God in the schools. A Stoic taught him nothing about God. A Peripatetic asked for his fee after a few days, so Justin decided he was no philosopher. A proud Pythagorean sent him away for not knowing geometry. The Platonists thrilled him, and he thought he would soon see God.",
+   "source": "Dialogue with Trypho, chapter 2",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.ii.html",
+   "verified": true,
+   "note": "The Catholic Encyclopedia warns the story is shaped to make a point: 'This account cannot be taken too literally.'",
+   "place": "The schools",
+   "when": "As a young man",
+   "title": "Shopping for a philosophy",
+   "quote": {
+    "exact": "and such was my stupidity, I expected forthwith to look upon God, for this is the end of Plato's philosophy.",
+    "display": "and such was my stupidity, I expected forthwith to look upon God, for this is the end of Plato's philosophy.",
+    "work": "Dialogue with Trypho",
+    "place": "chapter 2",
+    "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+    "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.ii.html",
+    "url_newadvent": "https://www.newadvent.org/fathers/01281.htm",
+    "verified": true,
+    "check": {
+     "ccel": {
+      "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 2,
+      "work_in_file": "Dialogue with Trypho"
+     },
+     "newadvent_revised": {
+      "file": "newadvent-dialogue-01-09.txt",
+      "found": false
+     }
+    },
+    "note": "New Advent's revised copy words this differently; print the CCEL (1885) form."
+   }
+  },
+  {
+   "text": "He liked to walk alone to think, in a field near the sea. An old man followed him there and took his Platonism apart, question by question. He sent Justin to the prophets, and Justin never saw him again. Watching Christians face death without fear had already shaken him.",
+   "source": "Dialogue with Trypho, chapters 3 to 8; Second Apology, chapter 12",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.viii.html",
+   "verified": true,
+   "note": "He does not name the place. The Catholic Encyclopedia calls it the seashore; Eusebius's 'Ephesus' belongs to the Trypho debate, not to this walk.",
+   "place": "A field near the sea",
+   "when": "Before 135",
+   "title": "The old man",
+   "quote": {
+    "exact": "When he had spoken these and many other things, which there is no time for mentioning at present, he went away, bidding me attend to them; and I have not seen him since.",
+    "display": "When he had spoken these and many other things, which there is no time for mentioning at present, he went away, bidding me attend to them; and I have not seen him since.",
+    "work": "Dialogue with Trypho",
+    "place": "chapter 8",
+    "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+    "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.viii.html",
+    "url_newadvent": "https://www.newadvent.org/fathers/01281.htm",
+    "verified": true,
+    "check": {
+     "ccel": {
+      "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 8,
+      "work_in_file": "Dialogue with Trypho"
+     },
+     "newadvent_revised": {
+      "file": "newadvent-dialogue-01-09.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 8
+     }
+    },
+    "note": ""
+   },
+   "quote2": {
+    "exact": "and heard the Christians slandered, and saw them fearless of death",
+    "display": "and heard the Christians slandered, and saw them fearless of death",
+    "work": "Second Apology",
+    "place": "chapter 12",
+    "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+    "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iii.xii.html",
+    "url_newadvent": "https://www.newadvent.org/fathers/0127.htm",
+    "verified": true,
+    "check": {
+     "ccel": {
+      "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 12,
+      "work_in_file": "Second Apology"
+     },
+     "newadvent_revised": {
+      "file": "newadvent-second-apology.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 12
+     }
+    },
+    "note": ""
+   }
+  },
+  {
+   "text": "One morning a Jew named Trypho, who had fled the war in Judea, greeted him in a colonnade because of his philosopher's cloak. When Trypho's friends jeered, Justin got up to go, but Trypho held him by the cloak. They argued over the Scriptures for two days and parted friends.",
+   "source": "Dialogue with Trypho, chapters 1, 9 and 142; Eusebius, Church History 4.18 (at Ephesus)",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.i.html",
+   "verified": true,
+   "note": "The war is the Bar Kokhba revolt (ANF footnote), 132 to 135.",
+   "place": "Ephesus",
+   "when": "About 135",
+   "title": "Two days with Trypho",
+   "quote": {
+    "exact": "remember us as friends when you are gone",
+    "display": "remember us as friends when you are gone",
+    "work": "Dialogue with Trypho",
+    "place": "chapter 142",
+    "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+    "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.cxlii.html",
+    "url_newadvent": "https://www.newadvent.org/fathers/01289.htm",
+    "verified": true,
+    "check": {
+     "ccel": {
+      "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 142,
+      "work_in_file": "Dialogue with Trypho"
+     },
+     "newadvent_revised": {
+      "file": "newadvent-dialogue-125-142.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 142
+     }
+    },
+    "note": ""
+   }
+  },
+  {
+   "text": "He wrote to the emperor Antoninus Pius and his sons for 'those of all nations who are unjustly hated'. He asked that Christians be judged by what they did, not by their name. He also described how Christians met on Sunday, read the Gospels and the prophets, prayed and shared the bread and cup.",
+   "source": "First Apology, chapters 1, 4 and 65 to 67",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.ii.i.html",
+   "verified": true,
+   "note": "Britannica: 'addressed about 150'. The Catholic Encyclopedia calls his account of the Mass 'a richness of detail unique for that age'.",
+   "place": "Rome",
+   "when": "About 150",
+   "title": "A letter to the emperor",
+   "quote": {
+    "exact": "present this address and petition in behalf of those of all nations who are unjustly hated and wantonly abused, myself being one of them.",
+    "display": "present this address and petition in behalf of those of all nations who are unjustly hated and wantonly abused, myself being one of them.",
+    "work": "First Apology",
+    "place": "chapter 1",
+    "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+    "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.ii.i.html",
+    "url_newadvent": "https://www.newadvent.org/fathers/0126.htm",
+    "verified": true,
+    "check": {
+     "ccel": {
+      "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 1,
+      "work_in_file": "First Apology"
+     },
+     "newadvent_revised": {
+      "file": "newadvent-first-apology.txt",
+      "found": false
+     }
+    },
+    "note": "New Advent's revised copy words this differently; print the CCEL (1885) form."
+   }
+  },
+  {
+   "text": "After the prefect Urbicus had a Christian teacher, Ptolemaeus, and two others put to death for the name alone, Justin wrote again. He said he expected the Cynic Crescens, whom he had beaten in public debate, to plot his death.",
+   "source": "Second Apology, chapters 1 to 3",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iii.iii.html",
+   "verified": true,
+   "note": "",
+   "place": "Rome",
+   "when": "Soon after",
+   "title": "He saw it coming",
+   "quote": {
+    "exact": "I too, therefore, expect to be plotted against and fixed to the stake, by some of those I have named, or perhaps by Crescens, that lover of bravado and boasting",
+    "display": "I too, therefore, expect to be plotted against and fixed to the stake, by some of those I have named, or perhaps by Crescens, that lover of bravado and boasting",
+    "work": "Second Apology",
+    "place": "chapter 3",
+    "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+    "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iii.iii.html",
+    "url_newadvent": "https://www.newadvent.org/fathers/0127.htm",
+    "verified": true,
+    "check": {
+     "ccel": {
+      "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 3,
+      "work_in_file": "Second Apology"
+     },
+     "newadvent_revised": {
+      "file": "newadvent-second-apology.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 3
+     }
+    },
+    "note": ""
+   },
+   "checker_note": "Checker 2026-09-25: the Catholic Encyclopedia says the Second Apology 'must have been written shortly afterwards'; 'A few years later' had no source. Also: Justin writes 'by some of those I have named, or perhaps by Crescens', so the page no longer says he expected Crescens; and the text addresses 'Romans' (the title 'to the Roman Senate' is the edition's)."
+  },
+  {
+   "text": "He and six others were brought before Rusticus, prefect of Rome. Justin gave his address, above one Martinus by the Timiotinian Bath, and said it was his second time living in Rome. All refused to sacrifice. They were scourged and beheaded.",
+   "source": "The Martyrdom of Justin, chapters 1 to 5",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.xi.ii.html",
+   "verified": true,
+   "note": "",
+   "place": "Rome",
+   "when": "About 165",
+   "title": "Before the prefect",
+   "quote": {
+    "exact": "I live above one Martinus, at the Timiotinian Bath; and during the whole time (and I am now living in Rome for the second time) I am unaware of any other meeting than his.",
+    "display": "I live above one Martinus, at the Timiotinian Bath; and during the whole time (and I am now living in Rome for the second time) I am unaware of any other meeting than his.",
+    "work": "The Martyrdom of Justin",
+    "place": "chapter 2",
+    "translation": "Marcus Dods, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+    "evidence_file": "ccel-anf01-martyrdom-of-justin.txt",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.xi.ii.html",
+    "url_newadvent": "https://www.newadvent.org/fathers/0133.htm",
+    "verified": true,
+    "check": {
+     "ccel": {
+      "file": "ccel-anf01-martyrdom-of-justin.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 2
+     },
+     "newadvent_revised": {
+      "file": "newadvent-martyrdom-of-justin.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 2
+     }
+    },
+    "note": ""
+   }
+  }
+ ],
+ "miracles": {
+  "text": "None recorded. The Martyrdom, Tatian, Irenaeus, Eusebius and Jerome tell no wonders worked by Justin or at his death. Leave the miracles section out of his page.",
+  "source": "The Martyrdom of Justin (read whole); Eusebius 4.8-4.18; Jerome, Lives of Illustrious Men 23; Tatian 18-19; Irenaeus 1.28.1",
+  "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.xi.i.html",
+  "verified": true,
+  "note": "Justin himself testifies that Christians of his day drove out demons in Jesus's name (Second Apology 6) and that 'the prophetical gifts remain with us' (Dialogue 82). That belongs in 'Where he stood', not here."
+ },
+ "his_words": {
+  "framing": {
+   "text": "Three of his books survive, and the record of his trial keeps his last answers. The lines below are in the 1885 translation of Marcus Dods and George Reith.",
+   "source": "Catholic Encyclopedia (1910); ANF 1",
+   "url": "https://www.ccel.org/ccel/s/schaff/anf01/cache/anf01.txt",
+   "verified": true,
+   "note": ""
+  },
+  "feature": {
+   "exact": "you can kill, but not hurt us.",
+   "display": "You can kill, but not hurt us.",
+   "work": "First Apology",
+   "place": "chapter 2",
+   "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+   "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.ii.ii.html",
+   "url_newadvent": "https://www.newadvent.org/fathers/0126.htm",
+   "verified": true,
+   "check": {
+    "ccel": {
+     "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+     "found": true,
+     "occurrences": 1,
+     "chapter_in_file": 2,
+     "work_in_file": "First Apology"
+    },
+    "newadvent_revised": {
+     "file": "newadvent-first-apology.txt",
+     "found": true,
+     "occurrences": 1,
+     "chapter_in_file": 2
+    }
+   },
+   "note": "Greek, from Gildersleeve's edition (1877): ὑμεῖς δ᾽ ἀποκτεῖναι μὲν δύνασθε, βλάψαι δ᾽ οὔ. Gildersleeve notes the thought is Socrates's in Plato's Apology (30c), in words Epictetus also used (Enchiridion 53) of Anytus and Meletus. The archive.org OCR reads δύνασδε; the θ is certain from the sense.",
+   "kicker": "To the emperor",
+   "ctx": "From the opening of the First Apology, addressed to Antoninus Pius and his sons. Christians, he says, can suffer no real harm unless they are proved to be evildoers.",
+   "ghost": "logos",
+   "greek": "ὑμεῖς δ᾽ ἀποκτεῖναι μὲν δύνασθε, βλάψαι δ᾽ οὔ.",
+   "greek_source": "B. L. Gildersleeve, The Apologies of Justin Martyr (New York, 1877), First Apology 2; archive.org OCR, sources/people/justin-martyr/archive-org-gildersleeve-1877-apologies-greek-with-notes-ocr.txt"
+  },
+  "lines": [
+   {
+    "exact": "But straightway a flame was kindled in my soul; and a love of the prophets, and of those men who are friends of Christ, possessed me; and whilst revolving his words in my mind, I found this philosophy alone to be safe and profitable.",
+    "display": "But straightway a flame was kindled in my soul; and a love of the prophets, and of those men who are friends of Christ, possessed me; and whilst revolving his words in my mind, I found this philosophy alone to be safe and profitable.",
+    "work": "Dialogue with Trypho",
+    "place": "chapter 8",
+    "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+    "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.viii.html",
+    "url_newadvent": "https://www.newadvent.org/fathers/01281.htm",
+    "verified": true,
+    "check": {
+     "ccel": {
+      "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 8,
+      "work_in_file": "Dialogue with Trypho"
+     },
+     "newadvent_revised": {
+      "file": "newadvent-dialogue-01-09.txt",
+      "found": false
+     }
+    },
+    "note": "New Advent's revised copy words this differently; print the CCEL (1885) form.",
+    "ctx": "How he became a Christian, after the old man by the sea left him."
+   },
+   {
+    "exact": "Whatever things were rightly said among all men, are the property of us Christians.",
+    "display": "Whatever things were rightly said among all men, are the property of us Christians.",
+    "work": "Second Apology",
+    "place": "chapter 13",
+    "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+    "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iii.xiii.html",
+    "url_newadvent": "https://www.newadvent.org/fathers/0127.htm",
+    "verified": true,
+    "check": {
+     "ccel": {
+      "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 13,
+      "work_in_file": "Second Apology"
+     },
+     "newadvent_revised": {
+      "file": "newadvent-second-apology.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 13
+     }
+    },
+    "note": "",
+    "ctx": "On the truth in Plato, the Stoics and the poets. Each saw part of the Word; Christians have the whole."
+   },
+   {
+    "exact": "we who valued above all things the acquisition of wealth and possessions, now bring what we have into a common stock, and communicate to every one in need; we who hated and destroyed one another, and on account of their different manners would not live with men of a different tribe, now, since the coming of Christ, live familiarly with them, and pray for our enemies",
+    "display": "we who valued above all things the acquisition of wealth and possessions, now bring what we have into a common stock, and communicate to every one in need; we who hated and destroyed one another, and on account of their different manners would not live with men of a different tribe, now, since the coming of Christ, live familiarly with them, and pray for our enemies",
+    "work": "First Apology",
+    "place": "chapter 14",
+    "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+    "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.ii.xiv.html",
+    "url_newadvent": "https://www.newadvent.org/fathers/0126.htm",
+    "verified": true,
+    "check": {
+     "ccel": {
+      "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 14,
+      "work_in_file": "First Apology"
+     },
+     "newadvent_revised": {
+      "file": "newadvent-first-apology.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 14
+     }
+    },
+    "note": "",
+    "ctx": "What becoming a Christian changed, in his words to the emperor."
+   },
+   {
+    "exact": "For not as common bread and common drink do we receive these; but in like manner as Jesus Christ our Saviour, having been made flesh by the Word of God, had both flesh and blood for our salvation, so likewise have we been taught that the food which is blessed by the prayer of His word, and from which our blood and flesh by transmutation are nourished, is the flesh and blood of that Jesus who was made flesh.",
+    "display": "For not as common bread and common drink do we receive these; but in like manner as Jesus Christ our Saviour, having been made flesh by the Word of God, had both flesh and blood for our salvation, so likewise have we been taught that the food which is blessed by the prayer of His word, and from which our blood and flesh by transmutation are nourished, is the flesh and blood of that Jesus Who was made flesh.",
+    "work": "First Apology",
+    "place": "chapter 66",
+    "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+    "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.ii.lxvi.html",
+    "url_newadvent": "https://www.newadvent.org/fathers/0126.htm",
+    "verified": true,
+    "check": {
+     "ccel": {
+      "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 66,
+      "work_in_file": "First Apology"
+     },
+     "newadvent_revised": {
+      "file": "newadvent-first-apology.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 66
+     }
+    },
+    "note": "",
+    "ctx": "The oldest description of the Eucharist outside the New Testament that explains what Christians believed they received. Catholics, Orthodox, Lutherans and others read it in different ways."
+   },
+   {
+    "exact": "And on the day called Sunday, all who live in cities or in the country gather together to one place, and the memoirs of the apostles or the writings of the prophets are read, as long as time permits",
+    "display": "And on the day called Sunday, all who live in cities or in the country gather together to one place, and the memoirs of the apostles or the writings of the prophets are read, as long as time permits",
+    "work": "First Apology",
+    "place": "chapter 67",
+    "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+    "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.ii.lxvii.html",
+    "url_newadvent": "https://www.newadvent.org/fathers/0126.htm",
+    "verified": true,
+    "check": {
+     "ccel": {
+      "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 67,
+      "work_in_file": "First Apology"
+     },
+     "newadvent_revised": {
+      "file": "newadvent-first-apology.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 67
+     }
+    },
+    "note": "",
+    "ctx": "The earliest account of a Sunday service, written for pagans."
+   },
+   {
+    "exact": "and those who lived reasonably are Christians, even though they have been thought atheists; as, among the Greeks, Socrates and Heraclitus, and men like them",
+    "display": "and those who lived reasonably are Christians, even though they have been thought atheists; as, among the Greeks, Socrates and Heraclitus, and men like them",
+    "work": "First Apology",
+    "place": "chapter 46",
+    "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+    "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.ii.xlvi.html",
+    "url_newadvent": "https://www.newadvent.org/fathers/0126.htm",
+    "verified": true,
+    "check": {
+     "ccel": {
+      "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 46,
+      "work_in_file": "First Apology"
+     },
+     "newadvent_revised": {
+      "file": "newadvent-first-apology.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 46
+     }
+    },
+    "note": "",
+    "ctx": "On good people who lived before Christ. Christ is the Word 'of whom every race of men were partakers'."
+   },
+   {
+    "exact": "I am not so miserable a fellow, Trypho, as to say one thing and think another.",
+    "display": "I am not so miserable a fellow, Trypho, as to say one thing and think another.",
+    "work": "Dialogue with Trypho",
+    "place": "chapter 80",
+    "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+    "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.lxxx.html",
+    "url_newadvent": "https://www.newadvent.org/fathers/01286.htm",
+    "verified": true,
+    "check": {
+     "ccel": {
+      "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 80,
+      "work_in_file": "Dialogue with Trypho"
+     },
+     "newadvent_revised": {
+      "file": "newadvent-dialogue-69-88.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 80
+     }
+    },
+    "note": "",
+    "ctx": "Asked if he truly believed what he had said, or only said it to win."
+   },
+   {
+    "exact": "I do not suppose it, but I know and am fully persuaded of it.",
+    "display": "I do not suppose it, but I know and am fully persuaded of it.",
+    "work": "The Martyrdom of Justin",
+    "place": "chapter 4",
+    "translation": "Marcus Dods, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+    "evidence_file": "ccel-anf01-martyrdom-of-justin.txt",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.xi.iv.html",
+    "url_newadvent": "https://www.newadvent.org/fathers/0133.htm",
+    "verified": true,
+    "check": {
+     "ccel": {
+      "file": "ccel-anf01-martyrdom-of-justin.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 4
+     },
+     "newadvent_revised": {
+      "file": "newadvent-martyrdom-of-justin.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 4
+     }
+    },
+    "note": "",
+    "ctx": "At his trial, when the prefect asked if he supposed he would go up to heaven. Recorded by the unnamed writer of the Martyrdom, not written by Justin."
+   }
+  ]
+ },
+ "misquoted_or_legend": [
+  {
+   "text": "Claim: 'What the soul is in the body, that are Christians in the world' is Justin's. Truth: it is from the anonymous Letter to Diognetus, chapter 6. After it was first printed in 1592 it was 'generally ascribed to Justin Martyr', but the ANF editors say its tone 'points to some other writer'.",
+   "source": "ANF 1, Introductory Note to the Epistle of Mathetes to Diognetus; Diognetus 6",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.iii.i.html",
+   "verified": true,
+   "note": "Evidence file: ccel-anf01-diognetus-note-and-chapter-6.txt. Chapter 6 on CCEL: https://ccel.org/ccel/schaff/anf01/anf01.iii.ii.vi.html",
+   "claim": "'What the soul is in the body, that are Christians in the world.'",
+   "evidence": [
+    {
+     "exact": "For a considerable period after its publication in 1592, it was generally ascribed to Justin Martyr.",
+     "display": "For a considerable period after its publication in 1592, it was generally ascribed to Justin Martyr.",
+     "work": "ANF 1, note on Diognetus",
+     "place": "introductory note",
+     "translation": "ANF vol. 1",
+     "evidence_file": "ccel-anf01-diognetus-note-and-chapter-6.txt",
+     "url": "https://ccel.org/ccel/schaff/anf01/anf01.iii.i.html",
+     "verified": true,
+     "check": {
+      "file": "ccel-anf01-diognetus-note-and-chapter-6.txt",
+      "found": true,
+      "occurrences": 1
+     },
+     "note": ""
+    },
+    {
+     "exact": "what the soul is in the body, that are Christians in the world.",
+     "display": "what the soul is in the body, that are Christians in the world.",
+     "work": "Letter to Diognetus",
+     "place": "chapter 6",
+     "translation": "ANF vol. 1",
+     "evidence_file": "ccel-anf01-diognetus-note-and-chapter-6.txt",
+     "url": "https://ccel.org/ccel/schaff/anf01/anf01.iii.ii.vi.html",
+     "verified": true,
+     "check": {
+      "file": "ccel-anf01-diognetus-note-and-chapter-6.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 6
+     },
+     "note": ""
+    }
+   ]
+  },
+  {
+   "text": "Claim: 'To yield and give way to our passions is the lowest slavery, even as to rule over them is the only liberty.' Truth: it is not in his three surviving works. It comes from a medieval anthology, Antonius's Melissa, which credits it to Justin. ANF prints it among 'Other Fragments', a group whose authorship is disputed. Goodreads labels it wrongly as from his work on the Resurrection.",
+   "source": "ANF 1, 'Other Fragments from the Lost Writings of Justin', fragment 18 ('From the writings of Antonius Melissa'); Dods and Reith's note on the three classes of works ('other Fragments' in the disputed class); Goodreads, Justin Martyr quotes",
+   "url": "https://www.goodreads.com/author/quotes/8002756.Justin_Martyr",
+   "verified": true,
+   "note": "",
+   "claim": "'To yield and give way to our passions is the lowest slavery.'",
+   "evidence": [
+    {
+     "exact": "To yield and give way to our passions is the lowest slavery, even as to rule over them is the only liberty.",
+     "display": "To yield and give way to our passions is the lowest slavery, even as to rule over them is the only liberty.",
+     "work": "Other Fragments",
+     "place": "fragment 18",
+     "translation": "A. Roberts, ANF vol. 1",
+     "evidence_file": "ccel-anf01-other-fragments.txt",
+     "url": "https://www.ccel.org/ccel/s/schaff/anf01/cache/anf01.txt",
+     "verified": true,
+     "check": {
+      "file": "ccel-anf01-other-fragments.txt",
+      "found": true,
+      "occurrences": 1
+     },
+     "note": ""
+    },
+    {
+     "exact": "From the writings of Antonius Melissa.",
+     "display": "From the writings of Antonius Melissa.",
+     "work": "Other Fragments",
+     "place": "fragment 18",
+     "translation": "A. Roberts, ANF vol. 1",
+     "evidence_file": "ccel-anf01-other-fragments.txt",
+     "url": "https://www.ccel.org/ccel/s/schaff/anf01/cache/anf01.txt",
+     "verified": true,
+     "check": {
+      "file": "ccel-anf01-other-fragments.txt",
+      "found": true,
+      "occurrences": 1
+     },
+     "note": ""
+    }
+   ]
+  },
+  {
+   "text": "Claim: Justin said 'plain singing' without 'lifeless organs, with dancing, and cymbals' is the Church's way. Truth: the line comes from the Answers to the Orthodox, a later work printed under his name. Dods and Reith put the 'Replies to the Orthodox' among works 'unquestionably not the works of Justin', and say they were written after the Council of Nicaea (325).",
+   "source": "Dods and Reith, ANF 1 introductory note; Wikipedia, 'Pseudo-Justin' (Quaestiones et responsiones ad orthodoxos); Goodreads",
+   "url": "https://en.wikipedia.org/wiki/Pseudo-Justin",
+   "verified": true,
+   "note": "The question number (often given as 107) is not checked; no public-domain English text of the Answers was fetched.",
+   "claim": "'Plain singing is not childish, but only the singing with lifeless organs...'",
+   "evidence": [
+    {
+     "exact": "The third class consists of those that are unquestionably not the works of Justin. These are: 1. An Exposition of the True Faith; 2. Replies to the Orthodox",
+     "display": "The third class consists of those that are unquestionably not the works of Justin. These are: 1. An Exposition of the True Faith; 2. Replies to the Orthodox",
+     "work": "Dods and Reith, introductory note",
+     "place": "ANF 1",
+     "translation": "ANF vol. 1",
+     "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+     "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.i.html",
+     "verified": true,
+     "check": {
+      "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+      "found": true,
+      "occurrences": 1
+     },
+     "note": ""
+    }
+   ]
+  },
+  {
+   "text": "Claim: 'The devil is the author of all war.' Truth: not found in his three works (the whole ANF text was searched). The words that follow it on quote sites loosely paraphrase First Apology 39: 'we who formerly used to murder one another do not only now refrain from making war upon our enemies'.",
+   "source": "Search of the full ANF vol. 1 text (no match for 'author of all war'); First Apology 39; Goodreads",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.ii.xxxix.html",
+   "verified": true,
+   "note": "A negative result: say 'not found in his works', not 'invented'.",
+   "claim": "'The devil is the author of all war.'"
+  },
+  {
+   "text": "Claim: he was converted on the beach at Ephesus. Truth: Justin names no place, only 'a certain field not far from the sea'. Eusebius puts the later debate with Trypho at Ephesus, not the conversion.",
+   "source": "Dialogue with Trypho, chapter 3; Eusebius 4.18; the Episcopal Church's Lesser Feasts and Fasts 2022 ('a walk along the beach at Ephesus'); Vatican News ('around the year 130, at Ephesus, he receives baptism')",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.iii.html",
+   "verified": true,
+   "note": "Britannica is careful: 'became a Christian in 132, possibly at Ephesus'.",
+   "claim": "He was converted on a beach at Ephesus.",
+   "evidence": [
+    {
+     "exact": "I used to go into a certain field not far from the sea",
+     "display": "I used to go into a certain field not far from the sea",
+     "work": "Dialogue with Trypho",
+     "place": "chapter 3",
+     "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+     "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+     "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.iii.html",
+     "url_newadvent": "https://www.newadvent.org/fathers/01281.htm",
+     "verified": true,
+     "check": {
+      "ccel": {
+       "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 3,
+       "work_in_file": "Dialogue with Trypho"
+      },
+      "newadvent_revised": {
+       "file": "newadvent-dialogue-01-09.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 3
+      }
+     },
+     "note": ""
+    }
+   ]
+  },
+  {
+   "text": "Claim: he died by drinking hemlock, like Socrates. Truth: the record of his trial says he was scourged and beheaded. The ANF editors call the hemlock story 'an absurd addition' made in some copies, which 'seems to have originated among the Greeks'. The Greek synaxarion's verse for 1 June still says hemlock took him.",
+   "source": "The Martyrdom of Justin, chapter 5; ANF 1, Introductory Note to the Martyrdom; saint.gr (verse: 'Ἰουστῖνον κώνειον ἦρεν ἐκ βίου')",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.xi.v.html",
+   "verified": true,
+   "note": "My plain rendering of the Greek verse: hemlock took Justin from life; if only those who gave it had drunk it first. Do not print that as a quotation.",
+   "claim": "He was poisoned with hemlock.",
+   "evidence": [
+    {
+     "exact": "An absurd addition was in some copies made to it, to the effect that Justin died by means of hemlock.",
+     "display": "An absurd addition was in some copies made to it, to the effect that Justin died by means of hemlock.",
+     "work": "ANF 1, Introductory Note to the Martyrdom",
+     "place": "introductory note",
+     "translation": "ANF vol. 1",
+     "evidence_file": "ccel-anf01-martyrdom-of-justin.txt",
+     "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.x.html",
+     "verified": true,
+     "check": {
+      "file": "ccel-anf01-martyrdom-of-justin.txt",
+      "found": true,
+      "occurrences": 1
+     },
+     "note": ""
+    }
+   ]
+  },
+  {
+   "text": "Claim: he died at thirty, under Hadrian. Truth: Epiphanius says so, but it cannot fit: Justin was already a philosopher when he met Trypho after 132, and was tried by Rusticus, prefect from about 163 under Marcus Aurelius. Wace: 'Epiphanius states that he died when 30 years old. The evidence is not forthcoming.'",
+   "source": "Wace, Dictionary of Christian Biography (1911); ANF 1, note 2642 to the Martyrdom (Epiphanius 'also connects it with the reign of Hadrian'); McGiffert (Rusticus prefect in 163)",
+   "url": "https://ccel.org/ccel/wace/biodict/biodict.html?term=Justinus%20Martyr,%20philosopher",
+   "verified": true,
+   "note": "Epiphanius's Panarion 46.1 was not read (no public-domain English translation fetched).",
+   "claim": "He died aged thirty, under Hadrian."
+  }
+ ],
+ "where_he_stood": {
+  "text": "Nine of the quiz's 23 statements. Five show a line (learning, dreams, miracles, mystery, war); four are scored but hidden (nature, pure, effort, all). Values from site/src/data/which-early-christian.json (people.justin.cells). Each shown line was found word for word in the CCEL text under the chapter given, and in New Advent's copy. The site prints capitals for God's pronouns ('Who was crucified', 'to Whom it leads us').",
+  "rows": [
+   {
+    "id": "learning",
+    "statement": "Wisdom is worth learning from anyone, even people who don't share your faith.",
+    "v": 2,
+    "line": "Whatever things were rightly said among all men, are the property of us Christians.",
+    "exact": "Whatever things were rightly said among all men, are the property of us Christians.",
+    "display": "Whatever things were rightly said among all men, are the property of us Christians.",
+    "work": "Second Apology",
+    "place": "chapter 13",
+    "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+    "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iii.xiii.html",
+    "url_newadvent": "https://www.newadvent.org/fathers/0127.htm",
+    "verified": true,
+    "check": {
+     "ccel": {
+      "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 13,
+      "work_in_file": "Second Apology"
+     },
+     "newadvent_revised": {
+      "file": "newadvent-second-apology.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 13
+     }
+    },
+    "note": ""
+   },
+   {
+    "id": "dreams",
+    "statement": "God still speaks to people through dreams.",
+    "v": 1,
+    "line": "For the prophetical gifts remain with us, even to the present time.",
+    "exact": "For the prophetical gifts remain with us, even to the present time.",
+    "display": "For the prophetical gifts remain with us, even to the present time.",
+    "work": "Dialogue with Trypho",
+    "place": "chapter 82",
+    "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+    "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.lxxxii.html",
+    "url_newadvent": "https://www.newadvent.org/fathers/01286.htm",
+    "verified": true,
+    "check": {
+     "ccel": {
+      "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 82,
+      "work_in_file": "Dialogue with Trypho"
+     },
+     "newadvent_revised": {
+      "file": "newadvent-dialogue-69-88.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 82
+     }
+    },
+    "note": ""
+   },
+   {
+    "id": "miracles",
+    "statement": "Miracles still happen today, just as they did in the Bible.",
+    "v": 2,
+    "line": "For numberless demoniacs throughout the whole world, and in your city, many of our Christian men exorcising them in the name of Jesus Christ, who was crucified under Pontius Pilate, have healed and do heal",
+    "exact": "For numberless demoniacs throughout the whole world, and in your city, many of our Christian men exorcising them in the name of Jesus Christ, who was crucified under Pontius Pilate, have healed and do heal",
+    "display": "For numberless demoniacs throughout the whole world, and in your city, many of our Christian men exorcising them in the name of Jesus Christ, Who was crucified under Pontius Pilate, have healed and do heal",
+    "work": "Second Apology",
+    "place": "chapter 6",
+    "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+    "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iii.vi.html",
+    "url_newadvent": "https://www.newadvent.org/fathers/0127.htm",
+    "verified": true,
+    "check": {
+     "ccel": {
+      "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 6,
+      "work_in_file": "Second Apology"
+     },
+     "newadvent_revised": {
+      "file": "newadvent-second-apology.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 6
+     }
+    },
+    "note": ""
+   },
+   {
+    "id": "mystery",
+    "statement": "Some questions about God are better left alone.",
+    "v": -1,
+    "line": "Philosophy is, in fact, the greatest possession, and most honourable before God, to whom it leads us and alone commends us",
+    "exact": "Philosophy is, in fact, the greatest possession, and most honourable before God, to whom it leads us and alone commends us",
+    "display": "Philosophy is, in fact, the greatest possession, and most honourable before God, to Whom it leads us and alone commends us.",
+    "work": "Dialogue with Trypho",
+    "place": "chapter 2",
+    "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+    "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.ii.html",
+    "url_newadvent": "https://www.newadvent.org/fathers/01281.htm",
+    "verified": true,
+    "check": {
+     "ccel": {
+      "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 2,
+      "work_in_file": "Dialogue with Trypho"
+     },
+     "newadvent_revised": {
+      "file": "newadvent-dialogue-01-09.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 2
+     }
+    },
+    "note": ""
+   },
+   {
+    "id": "war",
+    "statement": "A Christian can fight in a just war with a clear conscience.",
+    "v": -1,
+    "line": "we who formerly used to murder one another do not only now refrain from making war upon our enemies",
+    "exact": "we who formerly used to murder one another do not only now refrain from making war upon our enemies",
+    "display": "we who formerly used to murder one another do not only now refrain from making war upon our enemies",
+    "work": "First Apology",
+    "place": "chapter 39",
+    "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+    "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.ii.xxxix.html",
+    "url_newadvent": "https://www.newadvent.org/fathers/0126.htm",
+    "verified": true,
+    "check": {
+     "ccel": {
+      "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 39,
+      "work_in_file": "First Apology"
+     },
+     "newadvent_revised": {
+      "file": "newadvent-first-apology.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 39
+     }
+    },
+    "note": ""
+   }
+  ],
+  "places_for_site": {
+   "learning": {
+    "work": "Second Apology",
+    "place": "chapter 13",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iii.xiii.html"
+   },
+   "dreams": {
+    "work": "Dialogue with Trypho",
+    "place": "chapter 82",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.lxxxii.html"
+   },
+   "miracles": {
+    "work": "Second Apology",
+    "place": "chapter 6",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iii.vi.html"
+   },
+   "mystery": {
+    "work": "Dialogue with Trypho",
+    "place": "chapter 2",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.ii.html"
+   },
+   "war": {
+    "work": "First Apology",
+    "place": "chapter 39",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.ii.xxxix.html"
+   }
+  },
+  "note": "mystery: the site ends the line with a full stop after 'commends us'; in the text a semicolon follows ('and these are truly holy men who have bestowed attention on philosophy'). The site capitalises 'Whom'. dreams: the line is about prophecy, not dreams as such; VERIFY.md already scores it +1 for that reason. war: the line stops after 'upon our enemies'; the sentence goes on 'but also, that we may not lie nor deceive our examiners, willingly die confessing Christ.' The quiz's 'miracles' line: New Advent and CCEL both give Second Apology chapter 6."
+ },
+ "friends_family_rivals": [
+  {
+   "text": "Priscus and Bacchius: his father and grandfather, named in the first line of the First Apology.",
+   "source": "First Apology 1",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.ii.i.html",
+   "verified": true,
+   "note": "",
+   "name": "Priscus",
+   "rel": "father"
+  },
+  {
+   "text": "Trypho: a Jew who had fled the war in Judea. They argued for two days and parted friends.",
+   "source": "Dialogue 1 and 142; Eusebius 4.18 ('a most distinguished man among the Hebrews')",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.cxlii.html",
+   "verified": true,
+   "note": "The Catholic Encyclopedia says he may be the Rabbi Tarphon of the Talmud, but only 'in a general way'. Do not state it as fact.",
+   "name": "Trypho",
+   "rel": "friendly opponent"
+  },
+  {
+   "text": "Crescens: a Cynic philosopher whom Justin beat in public debate, and who he expected would plot his death. Tatian says Crescens tried.",
+   "source": "Second Apology 3; Tatian, Address 19; Eusebius 4.16",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iii.iii.html",
+   "verified": true,
+   "note": "",
+   "name": "Crescens",
+   "rel": "rival"
+  },
+  {
+   "text": "Tatian: his pupil. After Justin's death he broke with the Church and condemned marriage. Irenaeus says 'as long as he continued with him he expressed no such views'.",
+   "source": "Irenaeus, Against Heresies 1.28.1",
+   "url": "https://www.newadvent.org/fathers/0103128.htm",
+   "verified": true,
+   "note": "",
+   "name": "Tatian",
+   "rel": "pupil",
+   "evidence": [
+    {
+     "exact": "He was a hearer of Justin's, and as long as he continued with him he expressed no such views",
+     "display": "He was a hearer of Justin's, and as long as he continued with him he expressed no such views",
+     "work": "Irenaeus, Against Heresies",
+     "place": "Book 1, chapter 28",
+     "translation": "Roberts and Rambaut, ANF 1",
+     "evidence_file": "ccel-anf01-irenaeus-on-justin.txt",
+     "url": "https://www.newadvent.org/fathers/0103128.htm",
+     "verified": true,
+     "check": {
+      "file": "ccel-anf01-irenaeus-on-justin.txt",
+      "found": true,
+      "occurrences": 1
+     },
+     "note": ""
+    }
+   ]
+  },
+  {
+   "text": "Irenaeus: bishop of Lyon a generation later. He read Justin and quotes him twice with approval ('Justin does well say'; 'Truly has Justin remarked').",
+   "source": "Irenaeus, Against Heresies 4.6.2 and 5.26.2; Eusebius 4.18.9",
+   "url": "https://www.newadvent.org/fathers/0103406.htm",
+   "verified": true,
+   "note": "The site's quiz pair: 'Irenaeus read Justin and quotes him.' Checked.",
+   "name": "Irenaeus",
+   "rel": "reader",
+   "evidence": [
+    {
+     "exact": "Justin does well say",
+     "display": "Justin does well say",
+     "work": "Irenaeus, Against Heresies",
+     "place": "Book 4, chapter 6",
+     "translation": "Roberts and Rambaut, ANF 1",
+     "evidence_file": "ccel-anf01-irenaeus-on-justin.txt",
+     "url": "https://www.newadvent.org/fathers/0103406.htm",
+     "verified": true,
+     "check": {
+      "file": "ccel-anf01-irenaeus-on-justin.txt",
+      "found": true,
+      "occurrences": 1
+     },
+     "note": ""
+    },
+    {
+     "exact": "Truly has Justin remarked",
+     "display": "Truly has Justin remarked",
+     "work": "Irenaeus, Against Heresies",
+     "place": "Book 5, chapter 26",
+     "translation": "Roberts and Rambaut, ANF 1",
+     "evidence_file": "ccel-anf01-irenaeus-on-justin.txt",
+     "url": "https://www.newadvent.org/fathers/0103526.htm",
+     "verified": true,
+     "check": {
+      "file": "ccel-anf01-irenaeus-on-justin.txt",
+      "found": true,
+      "occurrences": 1
+     },
+     "note": ""
+    }
+   ]
+  },
+  {
+   "text": "Marcion: the teacher of a god higher than the Creator, still alive when Justin wrote. Justin wrote against him and against all the heresies; both books are lost.",
+   "source": "First Apology 26; Eusebius 4.11",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.ii.xxvi.html",
+   "verified": true,
+   "note": "",
+   "name": "Marcion",
+   "rel": "opponent",
+   "evidence": [
+    {
+     "exact": "And there is Marcion, a man of Pontus, who is even at this day alive",
+     "display": "And there is Marcion, a man of Pontus, who is even at this day alive",
+     "work": "First Apology",
+     "place": "chapter 26",
+     "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+     "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+     "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.ii.xxvi.html",
+     "url_newadvent": "https://www.newadvent.org/fathers/0126.htm",
+     "verified": true,
+     "check": {
+      "ccel": {
+       "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 26,
+       "work_in_file": "First Apology"
+      },
+      "newadvent_revised": {
+       "file": "newadvent-first-apology.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 26
+      }
+     },
+     "note": ""
+    }
+   ]
+  },
+  {
+   "text": "Euelpistus: a servant of Caesar who died with him. 'I willingly heard the words of Justin,' he told the judge, 'but from my parents also I learned to be a Christian.'",
+   "source": "The Martyrdom of Justin, chapter 3",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.xi.iii.html",
+   "verified": true,
+   "note": "",
+   "name": "Euelpistus",
+   "rel": "companion in death",
+   "evidence": [
+    {
+     "exact": "I willingly heard the words of Justin. But from my parents also I learned to be a Christian.",
+     "display": "I willingly heard the words of Justin. But from my parents also I learned to be a Christian.",
+     "work": "The Martyrdom of Justin",
+     "place": "chapter 3",
+     "translation": "Marcus Dods, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+     "evidence_file": "ccel-anf01-martyrdom-of-justin.txt",
+     "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.xi.iii.html",
+     "url_newadvent": "https://www.newadvent.org/fathers/0133.htm",
+     "verified": true,
+     "check": {
+      "ccel": {
+       "file": "ccel-anf01-martyrdom-of-justin.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 3
+      },
+      "newadvent_revised": {
+       "file": "newadvent-martyrdom-of-justin.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 3
+      }
+     },
+     "note": ""
+    }
+   ]
+  },
+  {
+   "text": "Rusticus: the prefect of Rome who sentenced him. He is usually identified with Junius Rusticus, the Stoic teacher whom Marcus Aurelius thanks in the first book of his Meditations.",
+   "source": "The Martyrdom of Justin; McGiffert (prefect from 163); Wikipedia, 'Junius Rusticus' (urban prefect 162-168; 'presiding over the trial of ... Justin Martyr'); Marcus Aurelius, Meditations Book 1 (Casaubon's section IV, modern 1.7)",
+   "url": "https://en.wikipedia.org/wiki/Junius_Rusticus",
+   "verified": false,
+   "note": "The identity of the prefect with Marcus's teacher is standard (Wikipedia) but I found no public-domain scholarly source saying it outright. Print it as 'usually identified' or leave it out. See could_not_verify.",
+   "name": "Rusticus",
+   "rel": "judge"
+  }
+ ],
+ "how_he_died": {
+  "big": {
+   "text": "He was scourged and beheaded at Rome about 165, with six companions, for refusing to sacrifice to the gods.",
+   "source": "The Martyrdom of Justin, chapters 4 and 5",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.xi.v.html",
+   "verified": true,
+   "note": ""
+  },
+  "paras": [
+   {
+    "text": "The prefect Rusticus asked where the Christians met, and what Justin taught. Justin said he had tried every teaching and settled on the Christians'.",
+    "source": "The Martyrdom of Justin, chapters 1 and 2",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.xi.i.html",
+    "verified": true,
+    "note": "",
+    "quote": {
+     "exact": "I have endeavoured to learn all doctrines; but I have acquiesced at last in the true doctrines, those namely of the Christians, even though they do not please those who hold false opinions.",
+     "display": "I have endeavoured to learn all doctrines; but I have acquiesced at last in the true doctrines, those namely of the Christians, even though they do not please those who hold false opinions.",
+     "work": "The Martyrdom of Justin",
+     "place": "chapter 1",
+     "translation": "Marcus Dods, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+     "evidence_file": "ccel-anf01-martyrdom-of-justin.txt",
+     "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.xi.i.html",
+     "url_newadvent": "https://www.newadvent.org/fathers/0133.htm",
+     "verified": true,
+     "check": {
+      "ccel": {
+       "file": "ccel-anf01-martyrdom-of-justin.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 1
+      },
+      "newadvent_revised": {
+       "file": "newadvent-martyrdom-of-justin.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 1
+      }
+     },
+     "note": ""
+    }
+   },
+   {
+    "text": "Each of the others said in turn that he was a Christian. Asked if Justin had made them Christians, Hierax said he always had been one, and Paeon that he had it from his parents.",
+    "source": "The Martyrdom of Justin, chapter 3",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.xi.iii.html",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "Rusticus asked whether Justin supposed he would go up to heaven if he was beheaded. He answered that he knew it. When they all refused to sacrifice, they were scourged and beheaded, and some believers secretly buried the bodies.",
+    "source": "The Martyrdom of Justin, chapters 4 and 5",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.xi.iv.html",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "The Martyrdom does not mention Crescens. Eusebius blames Crescens, but McGiffert notes that his proof, a line of Tatian, shows only that Crescens plotted, not that the plot worked.",
+    "source": "Eusebius 4.16; McGiffert's note 1172 (NPNF2-1)",
+    "url": "https://www.newadvent.org/fathers/250104.htm",
+    "verified": true,
+    "note": "",
+    "quote": {
+     "exact": "In the Acta Crescens is not mentioned in connection with the death of Justin",
+     "display": "In the Acta Crescens is not mentioned in connection with the death of Justin",
+     "work": "McGiffert's notes to Eusebius 4.16",
+     "place": "note 1172",
+     "translation": "NPNF2-1 (1890)",
+     "evidence_file": "ccel-npnf201-eusebius-4-16-notes.txt",
+     "url": "https://www.ccel.org/ccel/s/schaff/npnf201/cache/npnf201.txt",
+     "verified": true,
+     "check": {
+      "file": "ccel-npnf201-eusebius-4-16-notes.txt",
+      "found": true,
+      "occurrences": 1,
+      "chapter_in_file": 16
+     },
+     "note": ""
+    }
+   }
+  ],
+  "last": {
+   "items": [
+    {
+     "exact": "Through prayer we can be saved on account of our Lord Jesus Christ, even when we have been punished, because this shall become to us salvation and confidence at the more fearful and universal judgment-seat of our Lord and Saviour.",
+     "display": "Through prayer we can be saved on account of our Lord Jesus Christ, even when we have been punished, because this shall become to us salvation and confidence at the more fearful and universal judgment-seat of our Lord and Saviour.",
+     "work": "The Martyrdom of Justin",
+     "place": "chapter 4",
+     "translation": "Marcus Dods, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+     "evidence_file": "ccel-anf01-martyrdom-of-justin.txt",
+     "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.xi.iv.html",
+     "url_newadvent": "https://www.newadvent.org/fathers/0133.htm",
+     "verified": true,
+     "check": {
+      "ccel": {
+       "file": "ccel-anf01-martyrdom-of-justin.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 4
+      },
+      "newadvent_revised": {
+       "file": "newadvent-martyrdom-of-justin.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 4
+      }
+     },
+     "note": "His last recorded words. ANF's footnote gives Lord Hailes's other reading: 'It was our chief wish to endure tortures for the sake of our Lord Jesus Christ, and so to be saved.' The Catholic Encyclopedia translates it that way ('That is our desire, to be tortured for Our Lord').",
+     "k": "His last recorded words"
+    },
+    {
+     "exact": "Do what you will, for we are Christians, and do not sacrifice to idols.",
+     "display": "Do what you will, for we are Christians, and do not sacrifice to idols.",
+     "work": "The Martyrdom of Justin",
+     "place": "chapter 4",
+     "translation": "Marcus Dods, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+     "evidence_file": "ccel-anf01-martyrdom-of-justin.txt",
+     "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.xi.iv.html",
+     "url_newadvent": "https://www.newadvent.org/fathers/0133.htm",
+     "verified": true,
+     "check": {
+      "ccel": {
+       "file": "ccel-anf01-martyrdom-of-justin.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 4
+      },
+      "newadvent_revised": {
+       "file": "newadvent-martyrdom-of-justin.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 4
+      }
+     },
+     "note": "",
+     "k": "All the martyrs together"
+    }
+   ]
+  },
+  "later": {
+   "text": "A later story: that he died of hemlock. Some copies of the Acts added it, and the Greek synaxarion's verse for his day repeats it. The ANF editors call it 'an absurd addition'.",
+   "source": "ANF 1, Introductory Note to the Martyrdom; saint.gr",
+   "url": "https://www.saint.gr/445/saint.aspx",
+   "verified": true,
+   "note": "",
+   "title": "A later story"
+  },
+  "versions": {
+   "text": "Three versions of the Acts survive; the shortest is thought the most accurate. ANF's English follows one of them, and names differ slightly between versions.",
+   "source": "Wikipedia, 'Junius Rusticus' ('Three transcripts of the trial survive, of which the shortest is probably the most accurate'); McGiffert: the Acts are 'probably the third century' but 'bear every evidence of containing a comparatively truthful account'",
+   "url": "https://en.wikipedia.org/wiki/Junius_Rusticus",
+   "verified": true,
+   "note": "Which recension ANF translates was not checked."
+  }
+ },
+ "is_he_a_saint": {
+  "big": {
+   "text": "Yes. Catholics and Orthodox count him a saint. Anglicans and Lutherans remember him on the same day, 1 June.",
+   "source": "calendars above",
+   "url": "https://www.usccb.org/resources/2026cal.pdf",
+   "verified": true,
+   "note": ""
+  },
+  "churches": [
+   {
+    "church": "Catholic",
+    "status": "Saint",
+    "note": "A memorial on 1 June"
+   },
+   {
+    "church": "Orthodox",
+    "status": "Saint",
+    "note": "Called Justin the Philosopher"
+   },
+   {
+    "church": "Anglican",
+    "status": "Saint",
+    "note": "A Lesser Festival in the Church of England"
+   },
+   {
+    "church": "Lutheran",
+    "status": "Remembered",
+    "note": "Missouri Synod and ELCA, 1 June"
+   }
+  ],
+  "paras": [
+   {
+    "text": "He was honoured as a martyr from the start: Irenaeus mentions his martyrdom in passing, and Tertullian already calls him 'philosopher and martyr'.",
+    "source": "Irenaeus 1.28.1 ('after his martyrdom'); Tertullian, Against the Valentinians 5; McGiffert ('Irenæus ... is the first to mention it')",
+    "url": "https://www.newadvent.org/fathers/0103128.htm",
+    "verified": true,
+    "note": "",
+    "evidence": [
+     {
+      "exact": "but after his martyrdom he separated from the Church",
+      "display": "but after his martyrdom he separated from the Church",
+      "work": "Irenaeus, Against Heresies",
+      "place": "Book 1, chapter 28",
+      "translation": "ANF 1",
+      "evidence_file": "ccel-anf01-irenaeus-on-justin.txt",
+      "url": "https://www.newadvent.org/fathers/0103128.htm",
+      "verified": true,
+      "check": {
+       "file": "ccel-anf01-irenaeus-on-justin.txt",
+       "found": true,
+       "occurrences": 1
+      },
+      "note": ""
+     }
+    ]
+   }
+  ],
+  "quotes": [
+   {
+    "who": "The Roman Martyrology, 1916 edition, for 13 April",
+    "exact": "there suffered at Rome that remarkable man, Justin the Philosopher, who had addressed to the emperors his second Apology in defence of our religion",
+    "display": "there suffered at Rome that remarkable man, Justin the Philosopher, who had addressed to the emperors his second Apology in defence of our religion",
+    "work": "The Roman Martyrology (1916)",
+    "place": "13 April",
+    "translation": "English edition, 1916",
+    "evidence_file": "martyrology-1916-april-13-14.txt",
+    "url": "https://archive.org/details/romanmartyrology00cathuoft",
+    "verified": true,
+    "check": {
+     "file": "martyrology-1916-april-13-14.txt",
+     "found": true,
+     "occurrences": 1
+    },
+    "note": "The OCR has doubled spaces; the checker folds them. The entry goes on: 'Being accused of professing Chirstianity [sic] by the intrigues of the Cynic Crescens ... he obtained the reward of a martyr'."
+   }
+  ],
+  "caveats": {
+   "text": "None of the usual caveats apply: no church disputes his sainthood. Readers should know that some of his language about the Son reads as subordinationist to later ears, and that he held a thousand-year reign on earth (see hard_topics). Neither has touched his standing.",
+   "source": "Catholic Encyclopedia (1910) on his 'subordinationism'; Dialogue 80",
+   "url": "https://www.newadvent.org/cathen/08580c.htm",
+   "verified": true,
+   "note": ""
+  }
+ },
+ "prayer_he_wrote": {
+  "text": "None survives. He describes Christian prayer (First Apology 13, 65, 67) but no prayer in his own words is preserved. Leave the section out.",
+  "source": "First Apology and Dialogue read for prayers in his voice",
+  "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.ii.lxv.html",
+  "verified": true,
+  "note": "The nearest thing is his parting wish for Trypho and his friends (Dialogue 142): 'I can wish no better thing for you, sirs, than this, that, recognising in this way that intelligence is given to every man, you may be of the same opinion as ourselves, and believe that Jesus is the Christ of God.' ANF's note calls the last sentence 'very dubious' in the Greek. Not a prayer to God; do not present it as one."
+ },
+ "what_to_read_first": [
+  {
+   "text": "The Dialogue with Trypho, chapters 1 to 9: how he became a Christian, told by himself.",
+   "source": "Justin",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.i.html",
+   "verified": true,
+   "note": "New Advent: https://www.newadvent.org/fathers/01281.htm (chapters 1-9 on one page).",
+   "title": "Dialogue with Trypho, chapters 1 to 9",
+   "by": "Justin Martyr",
+   "label": "Read it free"
+  },
+  {
+   "text": "The First Apology: his defence of the Christians to the emperor, with the earliest full account of baptism, the Eucharist and Sunday worship (chapters 61 to 67).",
+   "source": "Justin",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.ii.html",
+   "verified": true,
+   "note": "New Advent: https://www.newadvent.org/fathers/0126.htm",
+   "title": "The First Apology",
+   "by": "Justin Martyr",
+   "label": "Read it free"
+  },
+  {
+   "text": "The Martyrdom of Justin: the short record of his trial and death, five chapters.",
+   "source": "The Martyrdom of Justin",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.xi.html",
+   "verified": true,
+   "note": "New Advent: https://www.newadvent.org/fathers/0133.htm",
+   "title": "The Martyrdom of Justin and his companions",
+   "by": "An early Christian writer",
+   "label": "Read it free"
+  },
+  {
+   "text": "The Second Apology: short, angry and personal, written after Christians were put to death for the name alone.",
+   "source": "Justin",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iii.html",
+   "verified": true,
+   "note": "New Advent: https://www.newadvent.org/fathers/0127.htm",
+   "title": "The Second Apology",
+   "by": "Justin Martyr",
+   "label": "Read it free"
+  }
+ ],
+ "hard_topics": [
+  {
+   "text": "The Jews in the Dialogue. The debate is courteous and ends in friendship, but Justin says the Jews' sufferings after the war came 'in fairness and justice', because they killed Christ and curse Christians in their synagogues. Britannica sums up his claim that 'the gentiles have been chosen to replace Israel as God's chosen people'.",
+   "source": "Dialogue 16 and 142; Britannica",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.xvi.html",
+   "verified": true,
+   "note": "Critics' voice: only Britannica's neutral summary was checked; no named modern critic is quoted here. The research note's 'you slew the Christ' wording was NOT found; the CCEL text reads 'for you have slain the Just One'.",
+   "topic": "The Jews",
+   "evidence": [
+    {
+     "exact": "Accordingly, these things have happened to you in fairness and justice, for you have slain the Just One, and His prophets before Him",
+     "display": "Accordingly, these things have happened to you in fairness and justice, for you have slain the Just One, and His prophets before Him",
+     "work": "Dialogue with Trypho",
+     "place": "chapter 16",
+     "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+     "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+     "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.xvi.html",
+     "url_newadvent": "https://www.newadvent.org/fathers/01282.htm",
+     "verified": true,
+     "check": {
+      "ccel": {
+       "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 16,
+       "work_in_file": "Dialogue with Trypho"
+      },
+      "newadvent_revised": {
+       "file": "newadvent-dialogue-10-30.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 16
+      }
+     },
+     "note": ""
+    }
+   ]
+  },
+  {
+   "text": "The Son 'in the second place'. Justin calls Christ God, but also 'another God and Lord subject to the Maker of all things', and puts Him 'in the second place'. The Catholic Encyclopedia (1910) speaks of 'the subordinationism of Justin's theology', from 'philosophic speculation', while crediting him with the Word's 'Divinity and Incarnation'. He wrote long before the Council of Nicaea (325).",
+   "source": "First Apology 13; Dialogue 56; Catholic Encyclopedia (1910)",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.ii.xiii.html",
+   "verified": true,
+   "note": "",
+   "topic": "Before Nicaea",
+   "evidence": [
+    {
+     "exact": "and holding Him in the second place, and the prophetic Spirit in the third",
+     "display": "and holding Him in the second place, and the prophetic Spirit in the third",
+     "work": "First Apology",
+     "place": "chapter 13",
+     "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+     "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+     "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.ii.xiii.html",
+     "url_newadvent": "https://www.newadvent.org/fathers/0126.htm",
+     "verified": true,
+     "check": {
+      "ccel": {
+       "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 13,
+       "work_in_file": "First Apology"
+      },
+      "newadvent_revised": {
+       "file": "newadvent-first-apology.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 13
+      }
+     },
+     "note": ""
+    },
+    {
+     "exact": "there is, and that there is said to be, another God and Lord subject to the Maker of all things",
+     "display": "there is, and that there is said to be, another God and Lord subject to the Maker of all things",
+     "work": "Dialogue with Trypho",
+     "place": "chapter 56",
+     "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+     "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+     "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.lvi.html",
+     "url_newadvent": "https://www.newadvent.org/fathers/01285.htm",
+     "verified": true,
+     "check": {
+      "ccel": {
+       "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 56,
+       "work_in_file": "Dialogue with Trypho"
+      },
+      "newadvent_revised": {
+       "file": "newadvent-dialogue-55-68.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 56
+      }
+     },
+     "note": ""
+    }
+   ]
+  },
+  {
+   "text": "A thousand years in Jerusalem. He held that the dead will rise and reign a thousand years in a rebuilt Jerusalem, and said plainly that many true Christians disagreed.",
+   "source": "Dialogue 80",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.lxxx.html",
+   "verified": true,
+   "note": "",
+   "topic": "The millennium",
+   "evidence": [
+    {
+     "exact": "many who belong to the pure and pious faith, and are true Christians, think otherwise",
+     "display": "many who belong to the pure and pious faith, and are true Christians, think otherwise",
+     "work": "Dialogue with Trypho",
+     "place": "chapter 80",
+     "translation": "Marcus Dods and George Reith, Ante-Nicene Fathers vol. 1 (1885), CCEL, public domain",
+     "evidence_file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+     "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.lxxx.html",
+     "url_newadvent": "https://www.newadvent.org/fathers/01286.htm",
+     "verified": true,
+     "check": {
+      "ccel": {
+       "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 80,
+       "work_in_file": "Dialogue with Trypho"
+      },
+      "newadvent_revised": {
+       "file": "newadvent-dialogue-69-88.txt",
+       "found": true,
+       "occurrences": 1,
+       "chapter_in_file": 80
+      }
+     },
+     "note": ""
+    }
+   ]
+  },
+  {
+   "text": "A puzzling line on angels. First Apology 6, read literally, says Christians worship 'the host of the other good angels'. The ANF translators call that 'the literal and obvious translation' but argue from chapters 13, 16 and 61 that he did not mean to teach the worship of angels.",
+   "source": "First Apology 6 and ANF note 1776",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.ii.vi.html",
+   "verified": true,
+   "note": "Optional for the page.",
+   "topic": "Angels"
+  }
+ ],
+ "pictures": {
+  "band": {
+   "file": "C:/Users/Light/Desktop/claude/theology compass/design/saints-hub/pages/img/justin-martyr.jpg",
+   "pixels": "767 x 1181 (the Commons original, not resized), JPEG, 201,933 bytes",
+   "title": "Saint Justin the Philosopher",
+   "artist": "Theophanes the Cretan (with his son Symeon, per Commons)",
+   "date": "About 1546",
+   "collection": "Fresco, St Nicholas church (katholikon), Stavronikita Monastery, Mount Athos",
+   "commons": "https://commons.wikimedia.org/wiki/File:%D0%98%D1%83%D1%81%D1%82%D0%B8%D0%BD_%D0%A4%D0%B8%D0%BB%D0%BE%D1%81%D0%BE%D1%84,_%D0%90%D1%84%D0%BE%D0%BD.jpg",
+   "licence": "Public domain: Commons tags it PD-Art (PD-old-100), 'Faithful photographic reproduction of a two-dimensional, public domain work of art', with a Public Domain Mark.",
+   "alt": "A fresco of Justin as a dark-haired, bearded man with a gold halo, in a red tunic and a pale cloak, holding a small cross and a closed book, with his name in Greek beside him.",
+   "pos": "50% 12% (the face is in the top fifth, centred)",
+   "verified": true,
+   "note": "Short of the 1200 px goal: no public-domain picture of Justin 1200 px or larger with a clear face was found on Commons. The larger Recklinghausen Menaion icon (1586 x 5784) has a darkened, unreadable face. The site's current portrait (490 x 616) is a crop of this same fresco from another scan. Commons source: pravicon.com. A fresco is painted on a wall but is treated as a two-dimensional work under Commons' PD-Art rule."
+  },
+  "second": {
+   "file": "C:/Users/Light/Desktop/claude/theology compass/design/saints-hub/pages/img/justin-martyr-2.jpg",
+   "pixels": "839 x 1013 (the Commons original, not resized), greyscale JPEG, 416,640 bytes",
+   "title": "Saint Justin Martyr (an imagined likeness)",
+   "artist": "Engraved for André Thevet, Les vrais pourtraits et vies des hommes illustres",
+   "date": "1584",
+   "collection": "Not stated on the Commons page",
+   "commons": "https://commons.wikimedia.org/wiki/File:Justin_Martyr.jpg",
+   "licence": "Public domain: Commons carries PD-Art and a Public Domain Mark (author died 1590; published before 1931).",
+   "alt": "An engraved half-length portrait of Justin as an old man with a long curly beard and a heavy cloak, both hands raised as if speaking.",
+   "pos": "50% 20%",
+   "verified": true,
+   "note": "The Western half: no Western painting of Justin in public domain was found on Commons; this engraving and a Jacques Callot etching (Justin handing his book to an emperor, 584 x 762, British Museum) are the Western images. Thevet's faces are invented; caption it as 'an imagined likeness'. The same book supplied the Origen picture, so the two pages will share a style. Another scan of the same print (750 x 1190, British Museum P_1879-1213-98) is File:Engraving of Justin Martyr.jpg."
+  }
+ },
+ "hub_card": {
+  "groups": [
+   "fathers",
+   "martyrs"
+  ],
+  "lived": "pre300",
+  "side": [
+   "east",
+   "west"
+  ],
+  "verified": true,
+  "note": "Groups and 'pre300' are right (born about 100, died about 165). Not 'teachers' (that collection is the Doctors). Side: the hint said 'east'; I suggest both. He was born in Samaria and wrote in Greek, but he lived in Rome twice, taught there, wrote to the emperor there and died there, and Rome's calendar and the Byzantine calendar both keep him on 1 June. If the filter means 'which half of the Church claims him', both do; if it means 'where he wrote', east. Owner's call."
+ },
+ "personality_test": {
+  "text": "Not named in the Christian Personality Test (no 'Justin' in site/src/data/personality.json). The kindred research lists him as a candidate for the Spark (light-hearted, restless: 'I took it rather impatiently', '(In jest.)'), but he was not chosen. So the page gets no 'His personality type' block.",
+  "source": "site/src/data/personality.json; design/saints-hub/research/kindred-research-hearth-spark.json",
+  "url": "",
+  "verified": true,
+  "note": ""
+ },
+ "site_data_flags": [
+  {
+   "text": "people.justin.who: 'Philosopher who became the first great defender of the faith.' 'First great' holds; avoid 'the first apologist'. Dods and Reith: 'He was not the first that wrote an Apology in behalf of the Christians, but his Apologies are the earliest extant' (1885), and Aristides' Apology, found later, may be older.",
+   "source": "ANF 1 introductory note",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.i.html",
+   "verified": true,
+   "note": "The Aristides point is from general knowledge; not checked here."
+  },
+  {
+   "text": "people.justin.hook: 'A stranger by the sea talked him into Christ.' Justin says 'a certain field not far from the sea'. Fair as plain words.",
+   "source": "Dialogue 3",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.iii.html",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "Research file group-01 status_note quotes the Dialogue as 'you slew the Christ'. Not found in CCEL or New Advent; the nearest is Dialogue 16, 'you have slain the Just One'. Do not use the research wording.",
+   "source": "Dialogue 16",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.xvi.html",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "Research file group-01 temperament cites '(In jest.)' from New Advent. CCEL's 1885 text reads 'So I replied to him in jest.' Print whichever edition the page cites, consistently.",
+   "source": "Dialogue 1",
+   "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.i.html",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "OCA's life contains later traditions not in the early sources: baptism 'in his thirtieth year', that the Apology made the emperor stop the persecution, and a journey to Asia Minor 'by decision of the emperor'. Do not use them as fact.",
+   "source": "OCA life, 1 June",
+   "url": "https://www.oca.org/saints/lives/2026/06/01/101570-martyr-justin-the-philosopher-and-those-with-him-at-rome",
+   "verified": true,
+   "note": ""
+  }
+ ],
+ "could_not_verify": [
+  "The reason for the 1969 move from 14 April to 1 June, and Wikipedia's source for it (Calendarium Romanum, 1969, p. 94). Only the move itself is confirmed (Catholic Encyclopedia 1910 for 14 April; USCCB 2026 for 1 June; Catholic Culture for the 1962 Missal).",
+  "That the prefect Rusticus was Marcus Aurelius's Stoic teacher Junius Rusticus. Wikipedia says so; no public-domain scholarly source was read that says it. Meditations Book 1 (Casaubon) confirms only that Marcus thanks a Rusticus.",
+  "GOARCH's page for 1 June (403, bot check). The Greek date is confirmed from saint.gr and synaxarion.gr.",
+  "USCCB's daily readings page (403). The USCCB's own 2026 calendar PDF was used instead.",
+  "The ELCA listing in a current ELCA document; seen only in the 2006 Evangelical Lutheran Worship draft (same as Martin).",
+  "Patronage beyond 'philosophers' (Franciscan Media) and the Russian custom of asking his help in study (OCA). No ancient patronage.",
+  "Epiphanius, Panarion 46.1, on his dying at thirty under Hadrian: known only through Wace and the ANF note, not read.",
+  "The question number (107) of the 'plain singing' line in the pseudo-Justinian Answers to the Orthodox.",
+  "Relics: Sacrofano's claim and OCA's 'rest in Rome'. Only reported, not checked.",
+  "Which of the three recensions of the Acts ANF translates.",
+  "A public-domain picture of Justin 1200 px or larger with a clear face. None found; the band fresco is 767 x 1181.",
+  "Commons licence tags were read through the file pages' rendered text (the API was rate-limited), not the raw wikitext."
+ ],
+ "url_checks": {
+  "text": "Every URL in this file was fetched on 2026-09-24 and answered HTTP 200 (list in scratchpad justin/urlres.json). Every CCEL chapter page's heading matched the chapter cited (e.g. anf01.viii.iv.lxxx = 'Chapter LXXX.—The opinion of Justin with regard to the reign of a thousand years'). CCEL anf01.viii.x is the Introductory Note to the Martyrdom; anf01.iii.i the note on Diognetus; anf01.iii.ii.vi Diognetus chapter 6. Blocked, so not used as links: bible.usccb.org day pages (403) and goarch.org (403).",
+  "verified": true
+ },
+ "texts_fetched": [
+  "archive-org-gildersleeve-1877-apologies-greek-with-notes-ocr.txt",
+  "azbyka-iustin-filosof.txt",
+  "britannica-justin-martyr.txt",
+  "catholic-culture-2019-06-01.txt",
+  "catholic-encyclopedia-1910-justin-martyr.txt",
+  "ccel-anf01-diognetus-note-and-chapter-6.txt",
+  "ccel-anf01-irenaeus-on-justin.txt",
+  "ccel-anf01-justin-intro-apologies-dialogue.txt",
+  "ccel-anf01-martyrdom-of-justin.txt",
+  "ccel-anf01-other-fragments.txt",
+  "ccel-anf02-tatian-address-18-19.txt",
+  "ccel-anf03-tertullian-against-valentinians-5.txt",
+  "ccel-anf06-methodius-discourse-on-the-resurrection-part3.txt",
+  "ccel-npnf201-eusebius-4-16-notes.txt",
+  "ccel-npnf201-eusebius-book-4-ch-8-18.txt",
+  "church-of-england-common-worship-calendar-excerpt.txt",
+  "dysinger-first-apology-greek-english.txt",
+  "elca-elw-church-year-excerpt.txt",
+  "episcopal-lff-2022-justin.txt",
+  "franciscan-media-justin.txt",
+  "goodreads-justin-martyr-quotes.txt",
+  "goodreads-quote-search-justin-martyr.txt",
+  "gutenberg-meditations-book-1-rusticus.txt",
+  "lcms-cph-commemorations-excerpt.txt",
+  "martyrology-1916-april-13-14.txt",
+  "merriam-webster-pronunciation.txt",
+  "newadvent-dialogue-01-09.txt",
+  "newadvent-dialogue-10-30.txt",
+  "newadvent-dialogue-109-124.txt",
+  "newadvent-dialogue-125-142.txt",
+  "newadvent-dialogue-31-47.txt",
+  "newadvent-dialogue-48-54.txt",
+  "newadvent-dialogue-55-68.txt",
+  "newadvent-dialogue-69-88.txt",
+  "newadvent-dialogue-89-108.txt",
+  "newadvent-eusebius-church-history-4.txt",
+  "newadvent-first-apology.txt",
+  "newadvent-irenaeus-against-heresies-1-28.txt",
+  "newadvent-irenaeus-against-heresies-4-6.txt",
+  "newadvent-irenaeus-against-heresies-5-26.txt",
+  "newadvent-jerome-illustrious-men.txt",
+  "newadvent-martyrdom-of-justin.txt",
+  "newadvent-methodius-discourse-on-the-resurrection.txt",
+  "newadvent-second-apology.txt",
+  "newadvent-tatian-address-to-the-greeks.txt",
+  "newadvent-tertullian-against-valentinians.txt",
+  "oca-life-justin-june-1.txt",
+  "saint-gr-ioustinos.txt",
+  "synaxarion-gr-3496.txt",
+  "usccb-2026-calendar-june-1.txt",
+  "vatican-news-justin.txt",
+  "wace-dictionary-of-christian-biography-1911-justinus-martyr.txt",
+  "wikipedia-junius-rusticus.txt",
+  "wikipedia-justin-martyr.txt",
+  "wikipedia-pseudo-justin.txt"
+ ],
+ "writer_additions": {
+  "text": "Items the page writer took from the fetched texts on 2026-09-25, beyond the researcher's list. Every quotation is in research/people/justin-martyr.quotes.json and passes verify-quotes.mjs; each one found in the CCEL file was also checked to sit under the chapter its link names (a scratchpad script splitting the file by chapter headings).",
+  "verified": true,
+  "items": [
+   {
+    "text": "Two puns, both pointed out in the translators' notes: Christos and chrestos (\"we are most excellent people\"), and Crescens as \"that lover of bravado and boasting\" (Greek philopsophou kai philokompou, sounding like philosopher).",
+    "source": "First Apology 4 with note 1772; Second Apology 3 with note 1930",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.ii.iv.html",
+    "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "verified": true
+   },
+   {
+    "text": "The old man said he had come looking for some of his household who had gone away from him.",
+    "source": "Dialogue with Trypho, chapter 3",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iv.iii.html",
+    "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "verified": true
+   },
+   {
+    "text": "Urbicus had Ptolemaeus put to death; Lucius protested and was led away too; then a third man. The Second Apology is titled as addressed to the Roman Senate.",
+    "source": "Second Apology, title and chapter 2",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.iii.ii.html",
+    "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "verified": true
+   },
+   {
+    "text": "Brief and concise utterances fell from Him, for He was no sophist, but His word was the power of God.",
+    "source": "First Apology, chapter 14",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.ii.xiv.html",
+    "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "verified": true
+   },
+   {
+    "text": "Baptism after prayer and fasting, with the church fasting too; washing in the name of the Father, the Son and the Holy Spirit.",
+    "source": "First Apology, chapter 61",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.ii.lxi.html",
+    "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "verified": true
+   },
+   {
+    "text": "The kiss, bread and a cup of wine mixed with water brought to the one presiding, thanks at length, Amen, deacons carry portions to the absent.",
+    "source": "First Apology, chapter 65",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.ii.lxv.html",
+    "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "verified": true
+   },
+   {
+    "text": "Only the baptised who live as Christ enjoined may receive the Eucharist; the translators' note 1911: the passage is claimed alike by Calvinists, Lutherans, and Romanists (Coxe's bracketed addition dissents from calling it inexact).",
+    "source": "First Apology, chapter 66 and note 1911",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.ii.lxvi.html",
+    "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "verified": true
+   },
+   {
+    "text": "Sunday: readings, the president's instruction, all rise to pray, the bread and cup, a collection from those well to do and willing for orphans, widows, the sick, those in bonds and strangers; Sunday because it is the first day of creation and the day of the resurrection.",
+    "source": "First Apology, chapter 67",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.ii.lxvii.html",
+    "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "verified": true
+   },
+   {
+    "text": "The fuller First Apology 13 line: we reasonably worship Him, having learned that He is the Son of the true God Himself, and holding Him in the second place, and the prophetic Spirit in the third.",
+    "source": "First Apology, chapter 13",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.ii.xiii.html",
+    "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "verified": true
+   },
+   {
+    "text": "Marcion teaching his disciples to believe in some other god greater than the Creator.",
+    "source": "First Apology, chapter 26",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.ii.xxvi.html",
+    "file": "ccel-anf01-justin-intro-apologies-dialogue.txt",
+    "verified": true
+   },
+   {
+    "text": "Irenaeus preserves a line of Justin's lost book against Marcion: I would not have believed the Lord Himself, if He had announced any other than He who is our framer, maker, and nourisher.",
+    "source": "Irenaeus, Against Heresies, Book 4, chapter 6",
+    "url": "https://www.newadvent.org/fathers/0103406.htm",
+    "file": "ccel-anf01-irenaeus-on-justin.txt",
+    "verified": true
+   },
+   {
+    "text": "Tatian: Crescens endeavoured to inflict on Justin, and indeed on me, the punishment of death.",
+    "source": "Tatian, Address to the Greeks, chapter 19",
+    "url": "https://www.newadvent.org/fathers/0202.htm",
+    "file": "ccel-anf02-tatian-address-18-19.txt",
+    "verified": true
+   },
+   {
+    "text": "McGiffert on Crescens: we have his portrait only from the pen of his bitterest enemies; and on Eusebius's proof: whether his plotting was successful is not stated.",
+    "source": "McGiffert, note 1172 to Eusebius, Church History 4.16",
+    "url": "https://www.ccel.org/ccel/s/schaff/npnf201/cache/npnf201.txt",
+    "file": "ccel-npnf201-eusebius-4-16-notes.txt",
+    "verified": true
+   },
+   {
+    "text": "At the trial: Hierax, Christ is our true father, and faith in Him is our mother; Justin, No right-thinking person falls away from piety to impiety.",
+    "source": "The Martyrdom of Justin, chapters 3 and 4",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.xi.iii.html",
+    "file": "ccel-anf01-martyrdom-of-justin.txt",
+    "verified": true
+   },
+   {
+    "text": "The hemlock story: the translator calls it an absurd addition; the editor says it seems to have originated among the Greeks, who naturally gave this turn to the sufferings of a philosopher.",
+    "source": "ANF 1, Introductory Note to the Martyrdom",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.viii.x.html",
+    "file": "ccel-anf01-martyrdom-of-justin.txt",
+    "verified": true
+   },
+   {
+    "text": "Diognetus: the editors say the tone of the Epistle points to some other writer than Justin.",
+    "source": "ANF 1, Introductory Note to Diognetus",
+    "url": "https://ccel.org/ccel/schaff/anf01/anf01.iii.i.html",
+    "file": "ccel-anf01-diognetus-note-and-chapter-6.txt",
+    "verified": true
+   },
+   {
+    "text": "The Great Synaxaristes page for Justin is https://www.synaxarion.gr/gr/sid/3496/sxsaintinfo.aspx (HTTP 200 on 2026-09-25; the facts file had its text, not its address).",
+    "source": "synaxarion.gr",
+    "url": "https://www.synaxarion.gr/gr/sid/3496/sxsaintinfo.aspx",
+    "file": "synaxarion-gr-3496.txt",
+    "verified": true
+   }
+  ]
+ },
+ "checker_2026_09_25": {
+  "by": "adversarial checker",
+  "summary": "Every claim on pages/justin-martyr.json checked against the fetched primary texts, the churches' calendars and the Commons licence tags. Fixes listed here; the page and quotes file were corrected to match.",
+  "fixes": [
+   "Shopping for a philosophy: the Pythagorean dismissed him for not knowing 'music, astronomy, and geometry' (Dialogue 2), not geometry alone.",
+   "The old man: 'had already shaken him' replaced by Second Apology 12's own sense: while still a Platonist he saw Christians fearless of death and 'perceived that it was impossible that they could be living in wickedness'.",
+   "Trypho 'held him by the cloak': the text says 'taking hold of my garment' (Dialogue 9).",
+   "Teacher: he 'lived' above Martinus (Martyrdom 2); 'taught from rooms' was a retelling. Role line now 'At his home in Rome'. Irenaeus says Tatian was 'a hearer of Justin's', not that he 'came' to the Rome lodging.",
+   "Letter to the emperor: 'to show there was nothing to hide' is not Justin's reason; First Apology 61 says 'lest, if we omit this, we seem to be unfair'.",
+   "Crescens: 'in public debate' is Eusebius's (4.16, 'frequently refuted him in public discussions'), not Justin's; cite added, 'in public' dropped from the Justin-cited trait.",
+   "Second Apology 13 context: 'Christians have the whole' is not in chapter 13; replaced by 'each man spoke well in proportion to the share he had of the spermatic word'.",
+   "Martyrdom: Rusticus told Justin (not all of them) to obey the gods; the companions include a woman (Charito), so 'each said that he was a Christian' became 'they were Christians'.",
+   "Last words note: footnote 2647 says Lord Hailes followed 'the common Latin version', not 'the Greek can also be read'.",
+   "Sunday: 'the earliest full account' had no source; the Catholic Encyclopedia's 'richness of detail unique for that age' kept. Baptism is 'in the name of God, the Father... and of our Saviour Jesus Christ, and of the Holy Spirit'. 'Catholics, Orthodox, Lutherans and others still read it in their own ways' (our voice, unsourced) replaced by the Catholic Encyclopedia's 'with a wonderful clearness' beside the translators' note.",
+   "Thousand years: Dialogue 80 says 'a thousand years in Jerusalem, which will then be built'; 'reign' is not in the text.",
+   "The Jews: the text says 'you have slain the Just One, and His prophets before Him'; prophets added.",
+   "Devil and war: the Goodreads lines closely paraphrase First Apology 39, which says 'refrain from making war', not 'refuse'.",
+   "Numbers: chip 'Years after Christ' misread ch. 46 ('Christ was born one hundred and fifty years ago'); now 'Years since Christ's birth'. 'Manuscripts 1' contradicted its own line (two manuscripts exist); now 'Manuscripts we rely on' (CE: 'our sole authority').",
+   "Saint section: 'honoured as a martyr from the start' replaced by McGiffert's point that Irenaeus mentions the martyrdom 'casually, as a fact well known'.",
+   "Fresco credit: Commons gives 'Theophanes the Cretan and his son Symeon'. Licence PD-Art / PD-old-100 checked; 767x1181 is the largest version on Commons. Thevet engraving: PD-Art / PD-old-auto-1923, 839x1013, matches.",
+   "Other Fragments: cite now links the fragment page (anf01.viii.ix.xviii.html) and the sources list the section page instead of the whole-volume text file."
+  ],
+  "open": [
+   "Plain singing myth: the attribution to the Answers to the Orthodox (question 107) is still not checked against any text of that work; only the ANF note that the 'Replies to the Orthodox' are 'unquestionably not the works of Justin' is checked.",
+   "The Jews: the critics' view is given only through Britannica's neutral summary; no named critic is quoted.",
+   "Band crop posM '50% 7%' / posD '50% 6%' not rendered at 320-390 or 1360."
+  ]
+ }
+}

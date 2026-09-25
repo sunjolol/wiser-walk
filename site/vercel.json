@@ -1,23 +1,85 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "crons": [{ "path": "/api/auth/health?ping=1", "schedule": "0 5 * * *" }],
+  "crons": [
+    {
+      "path": "/api/auth/health?ping=1",
+      "schedule": "0 5 * * *"
+    }
+  ],
   "redirects": [
     { "source": "/sitemap.xml", "destination": "/sitemap-index.xml", "permanent": true },
     { "source": "/early-christian/martin-of-tours/", "destination": "/saints/martin-of-tours/", "permanent": true },
-    { "source": "/early-christian/martin-of-tours", "destination": "/saints/martin-of-tours/", "permanent": true }
+    { "source": "/early-christian/martin-of-tours", "destination": "/saints/martin-of-tours/", "permanent": true },
+    { "source": "/early-christian/ambrose-of-milan/", "destination": "/saints/ambrose-of-milan/", "permanent": true },
+    { "source": "/early-christian/ambrose-of-milan", "destination": "/saints/ambrose-of-milan/", "permanent": true },
+    { "source": "/early-christian/antony-the-great/", "destination": "/saints/antony-the-great/", "permanent": true },
+    { "source": "/early-christian/antony-the-great", "destination": "/saints/antony-the-great/", "permanent": true },
+    { "source": "/early-christian/augustine-of-hippo/", "destination": "/saints/augustine-of-hippo/", "permanent": true },
+    { "source": "/early-christian/augustine-of-hippo", "destination": "/saints/augustine-of-hippo/", "permanent": true },
+    { "source": "/early-christian/basil-the-great/", "destination": "/saints/basil-the-great/", "permanent": true },
+    { "source": "/early-christian/basil-the-great", "destination": "/saints/basil-the-great/", "permanent": true },
+    { "source": "/early-christian/benedict-of-nursia/", "destination": "/saints/benedict-of-nursia/", "permanent": true },
+    { "source": "/early-christian/benedict-of-nursia", "destination": "/saints/benedict-of-nursia/", "permanent": true },
+    { "source": "/early-christian/boethius/", "destination": "/saints/boethius/", "permanent": true },
+    { "source": "/early-christian/boethius", "destination": "/saints/boethius/", "permanent": true },
+    { "source": "/early-christian/clement-of-alexandria/", "destination": "/saints/clement-of-alexandria/", "permanent": true },
+    { "source": "/early-christian/clement-of-alexandria", "destination": "/saints/clement-of-alexandria/", "permanent": true },
+    { "source": "/early-christian/cyprian-of-carthage/", "destination": "/saints/cyprian-of-carthage/", "permanent": true },
+    { "source": "/early-christian/cyprian-of-carthage", "destination": "/saints/cyprian-of-carthage/", "permanent": true },
+    { "source": "/early-christian/gregory-of-nazianzus/", "destination": "/saints/gregory-of-nazianzus/", "permanent": true },
+    { "source": "/early-christian/gregory-of-nazianzus", "destination": "/saints/gregory-of-nazianzus/", "permanent": true },
+    { "source": "/early-christian/gregory-of-nyssa/", "destination": "/saints/gregory-of-nyssa/", "permanent": true },
+    { "source": "/early-christian/gregory-of-nyssa", "destination": "/saints/gregory-of-nyssa/", "permanent": true },
+    { "source": "/early-christian/gregory-the-great/", "destination": "/saints/gregory-the-great/", "permanent": true },
+    { "source": "/early-christian/gregory-the-great", "destination": "/saints/gregory-the-great/", "permanent": true },
+    { "source": "/early-christian/irenaeus-of-lyons/", "destination": "/saints/irenaeus-of-lyons/", "permanent": true },
+    { "source": "/early-christian/irenaeus-of-lyons", "destination": "/saints/irenaeus-of-lyons/", "permanent": true },
+    { "source": "/early-christian/isaac-the-syrian/", "destination": "/saints/isaac-the-syrian/", "permanent": true },
+    { "source": "/early-christian/isaac-the-syrian", "destination": "/saints/isaac-the-syrian/", "permanent": true },
+    { "source": "/early-christian/jerome/", "destination": "/saints/jerome/", "permanent": true },
+    { "source": "/early-christian/jerome", "destination": "/saints/jerome/", "permanent": true },
+    { "source": "/early-christian/john-cassian/", "destination": "/saints/john-cassian/", "permanent": true },
+    { "source": "/early-christian/john-cassian", "destination": "/saints/john-cassian/", "permanent": true },
+    { "source": "/early-christian/john-chrysostom/", "destination": "/saints/john-chrysostom/", "permanent": true },
+    { "source": "/early-christian/john-chrysostom", "destination": "/saints/john-chrysostom/", "permanent": true },
+    { "source": "/early-christian/justin-martyr/", "destination": "/saints/justin-martyr/", "permanent": true },
+    { "source": "/early-christian/justin-martyr", "destination": "/saints/justin-martyr/", "permanent": true },
+    { "source": "/early-christian/lactantius/", "destination": "/saints/lactantius/", "permanent": true },
+    { "source": "/early-christian/lactantius", "destination": "/saints/lactantius/", "permanent": true },
+    { "source": "/early-christian/macrina-the-younger/", "destination": "/saints/macrina-the-younger/", "permanent": true },
+    { "source": "/early-christian/macrina-the-younger", "destination": "/saints/macrina-the-younger/", "permanent": true },
+    { "source": "/early-christian/origen/", "destination": "/saints/origen/", "permanent": true },
+    { "source": "/early-christian/origen", "destination": "/saints/origen/", "permanent": true },
+    { "source": "/early-christian/tertullian/", "destination": "/saints/tertullian/", "permanent": true },
+    { "source": "/early-christian/tertullian", "destination": "/saints/tertullian/", "permanent": true }
   ],
   "headers": [
     {
       "source": "/_astro/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     },
     {
       "source": "/(img|og|tex|fonts)/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, stale-while-revalidate=86400"
+        }
+      ]
     },
     {
       "source": "/(favicon.ico|apple-touch-icon.png|icon-48.png|icon-96.png|icon-192.png|icon-512.png)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, stale-while-revalidate=86400"
+        }
+      ]
     }
   ]
 }

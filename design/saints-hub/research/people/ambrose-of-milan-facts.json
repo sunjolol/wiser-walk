@@ -1,0 +1,1350 @@
+{
+ "subject": "St Ambrose of Milan",
+ "checked_on": "2026-09-24",
+ "saved_to": "C:/Users/Light/Desktop/claude/theology compass/design/saints-hub/research/people/ambrose-of-milan-facts.json",
+ "text_used": {
+  "text": "Ambrose's own words are checked against the NPNF 2nd series vol. 10 (1896) translation, both in CCEL's plain text (unrevised: thee/thou/thy kept, British spellings such as 'defence') and on New Advent's revised pages (modernised: 'You/Your', 'defense'). The quiz shows the New Advent form. Where the two differ, the note says so. On Naboth is checked against Martin R. P. McGuire's 1927 translation (US, public domain since 2023) in the archive.org OCR. The Life by Paulinus is checked against Sister Mary Simplicia Kaniecka's 1928 translation (US, public domain since 2024) in the archive.org OCR, English pages only. Augustine is Pilkington and Cunningham (NPNF 1st series vol. 1), Dods (vol. 2) and Holmes-Wallis-Warfield (vol. 5); Theodoret, Jerome and Rufinus are NPNF 2nd series vol. 3. 'exact' is the text as printed (footnote numbers removed; OCR line-break hyphens joined). 'display' applies the site's rule of capitals for every pronoun for God. The check script (scratchpad amb/vq.py) matches case-insensitively after joining whitespace; 151 quotations and phrases tested; every one is found word for word in the edition named, except one OCR page break in Paulinus, section 14 ('touched the / clothing'), read by eye. Where CCEL and New Advent differ (defence/defense, Thy/Your, durst/dared, learnt/learned, colours/colors, consisteth), the note says which edition the line follows.",
+  "source": "CCEL npnf210.txt, npnf101.txt, npnf102.txt, npnf105.txt, npnf203.txt (all marked Public Domain); New Advent Fathers pages; archive.org OCR of Kaniecka 1928 and McGuire 1927",
+  "url": "https://www.ccel.org/ccel/s/schaff/npnf210/cache/npnf210.txt",
+  "verified": true,
+  "note": "Letter numbers are the Benedictine numbers used by NPNF (Letter 17, 18, 20, 22, 40, 51, 63). Modern critical editions (Faller and Zelzer, CSEL 82) renumber them: the Sermon against Auxentius is 'Epistula 75a' there (Zelzer, Vox Patrum 34, 1998). Paulinus's Life is cited by his paragraph numbers 1 to 56 ('section'). Kaniecka dates the Life to 412-422; it was written at Augustine's request (section 1)."
+ },
+ "quick_facts": {
+  "born": {
+   "text": "Born about 339 or 340, in the governor's residence of the Prefecture of the Gauls, most likely at Trier (Augusta Treverorum), today Trier in Germany. His father, also called Ambrose, was then Prefect of the Gauls.",
+   "source": "Paulinus, Life, section 3 ('born while his father Ambrose was engaged in the administration of the Praefectureship of the Gallic provinces', the cradle 'within the court-yard of the governor's residence'); Britannica ('born 339 ce, Augusta Treverorum ... [now Trier, Germany]'); Catholic Encyclopedia 1907 ('born probably 340, at Trier, Arles, or Lyons'); NPNF 2-10 Prolegomena, Life ('Trèves, where probably St. Ambrose was born, as seems most likely, a.d. 340')",
+   "url": "https://www.britannica.com/biography/Saint-Ambrose",
+   "verified": true,
+   "note": "Paulinus does not name the city. Britannica says Trier and 339; the Catholic Encyclopedia and NPNF say 340 and give Trier as most likely (CE lists Arles and Lyons as rivals). NPNF footnote 17: the year hangs on the dating of Letter 59, 'so that the birth year of St. Ambrose might be 333 or 340. The latter date is, however, most generally accepted.' Plain wording that holds: 'Born about 339 or 340, probably at Trier.' Wikidata's third value, 350, is unsupported."
+  },
+  "grew_up": {
+   "text": "After his father's death the family moved to Rome, where he grew up with his widowed mother and his elder sister Marcellina, a consecrated virgin. As a boy he held out his hand for his sister to kiss, 'saying that he would be a bishop'.",
+   "source": "Paulinus, Life, section 4; Catholic Encyclopedia 1907 ('About the year 354 Ambrosius, the father, died, whereupon the family removed to Rome'); Britannica ('reared in Rome ... by his widowed mother and his elder sister Marcellina, a nun')",
+   "url": "https://www.newadvent.org/cathen/01383c.htm",
+   "verified": true,
+   "note": "He was the youngest of three: Marcellina, Satyrus, Ambrose (CE). He studied law and pleaded at the court of the Praetorian Prefect Probus, then became consular governor of Liguria and Aemilia at Milan about 370 (Paulinus 5; NPNF Prolegomena; Britannica)."
+  },
+  "died": {
+   "text": "Died before dawn on Holy Saturday, 4 April 397, at Milan, after an illness of some days. Easter fell the next day.",
+   "source": "Paulinus, Life, sections 45-48 ('he fell ill'; he died 'at the hour before daybreak', and the body lay in the great church 'the same night in which we kept the vigil of Easter'); Catholic Encyclopedia 1907 ('died 4 April, 397'; 'It was the fourth of April, 397')",
+   "url": "https://www.newadvent.org/cathen/01383c.htm",
+   "verified": true,
+   "note": "Sources wobble on the day of the week. CE says 'He died on Good Friday' and also 'the fourth of April'; NPNF says 'on Good Friday night, April 4-5, a.d. 397'. By my own computus, Easter 397 (Julian) was 5 April, so 4 April was Holy Saturday, which fits Paulinus exactly (died before daybreak, Easter vigil that night). Wikidata also gives 5 April: a stray. No named disease is recorded; Paulinus says only that he fell ill after ordaining a bishop for Ticinum (Pavia) and lay in bed many days."
+  },
+  "buried": {
+   "text": "In the Ambrosian Basilica at Milan (today Sant'Ambrogio), beside the martyrs Gervasius and Protasius, carried there on Easter morning. In 835 Bishop Angilbert II put the three bodies in one porphyry sarcophagus under the altar, where they were found in 1864.",
+   "source": "Paulinus, Life, section 48; Catholic Encyclopedia 1907 ('interred as he had desired, in his beloved basilica, by the side of the holy martyrs, Gervasius and Protasius'; 'In the year 835 one of his successors, Angilbert II, placed the relics of the three saints in as porphyry sarcophagus under the altar, where they were found in 1864.')",
+   "url": "https://www.newadvent.org/cathen/01383c.htm",
+   "verified": true,
+   "note": "CE's 'in as porphyry' is its own typo for 'in a porphyry'. The present-day crypt display was not checked."
+  },
+  "roles": [
+   {
+    "text": "Lawyer and governor: pleaded cases at the court of the Praetorian Prefect Probus, then governed Liguria and Aemilia from Milan, about 370.",
+    "source": "Paulinus, Life, section 5; NPNF 2-10 Prolegomena; Britannica ('promoted to the governorship of Aemilia-Liguria about 370')",
+    "url": "https://www.newadvent.org/cathen/01383c.htm",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "Bishop of Milan, 374 to 397: chosen by acclamation while still unbaptised, baptised, and made bishop eight days later, on 7 December 374.",
+    "source": "Paulinus, Life, sections 6-9; Catholic Encyclopedia 1907; NPNF 2-10 Prolegomena ('Eight days later, December 7, a.d. 374, he was consecrated Bishop.')",
+    "url": "https://www.newadvent.org/cathen/01383c.htm",
+    "verified": true,
+    "note": "The Episcopal Church's Lesser Feasts and Fasts 2022 says 'December 7, 373' and 'in 373 ... governor'. CE, NPNF, OCA and Britannica say 374. Use 374."
+   },
+   {
+    "text": "Hymn-writer: brought Eastern-style singing of hymns and psalms to Milan in 386; four hymns are universally accepted as his.",
+    "source": "Augustine, Confessions, Book 9, chapter 7; Paulinus, Life, section 13; Catholic Encyclopedia 1907, 'Ambrosian Hymnography'",
+    "url": "https://www.newadvent.org/cathen/01392a.htm",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "Teacher of Augustine: Augustine heard him preach every Sunday and was baptised by him at Easter 387.",
+    "source": "Augustine, Confessions, Books 5-6 and 9; Augustine, Against Julian 1.10 (Latin quoted in Pilkington's note, NPNF 1-1: 'per evangelium ipse me genuit, et eo Christi ministro lavacrum regenerationis accepi'); Lesser Feasts and Fasts 2022 ('baptized by Ambrose, Bishop of Milan, on Easter Eve in 387')",
+    "url": "https://www.newadvent.org/fathers/110106.htm",
+    "verified": true,
+    "note": "Confessions itself does not name the man who baptised Augustine; Against Julian and later sources do. Britannica: 'When he left, in 388, he had been baptized by Ambrose'."
+   },
+   {
+    "text": "Doctor of the Church: one of the four great Latin Doctors, with Jerome, Augustine and Gregory the Great; in 1298 Boniface VIII ordered their feasts kept as doubles everywhere.",
+    "source": "Britannica ('In 1298 Pope Boniface VIII declared him a doctor of the church along with Augustine, Gregory the Great, and Jerome'); Catholic Encyclopedia 1909, 'Doctors of the Church' ('a decree of Boniface VIII (1298) ordering their feasts to be kept as doubles in the whole Church'); USCCB title 'Bishop and Doctor of the Church'",
+    "url": "https://www.britannica.com/biography/Saint-Ambrose",
+    "verified": true,
+    "note": "CE is more exact than Britannica: the 1298 decree raised the feasts of the four 'Doctors', a title the West had long used. Say 'counted one of the four great Latin Doctors; a decree of 1298 honoured the four together'."
+   }
+  ],
+  "also_called": [
+   {
+    "text": "Ambrosius (Latin); Sant'Ambrogio (Italian, the name of his basilica in Milan).",
+    "source": "Britannica ('Latin: Ambrosius'); Catholic Encyclopedia 1907",
+    "url": "https://www.britannica.com/biography/Saint-Ambrose",
+    "verified": true,
+    "note": "The Italian form is on the basilica and in the research (figures group-08); no calendar page was needed for it."
+   },
+   {
+    "text": "Greek: 'Άγιος Αμβρόσιος επίσκοπος Μεδιολάνων', St Ambrose, bishop of Mediolanum (the old name of Milan).",
+    "source": "saint.gr, Orthodox Synaxaristis",
+    "url": "https://www.saint.gr/3182/saint.aspx",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "Russian: 'Святитель Амвросий, епископ Медиоланский', the Holy Hierarch Ambrose, bishop of Mediolanum.",
+    "source": "azbyka.ru",
+    "url": "https://azbyka.ru/days/sv-amvrosij-mediolanskij",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "In the Episcopal Church: 'Ambrose of Milan, Bishop and Theologian'. Church of England: 'Ambrose, Bishop of Milan, Teacher of the Faith'. LCMS: 'Ambrose of Milan, Pastor and Hymnwriter'.",
+    "source": "Lesser Feasts and Fasts 2022; Common Worship calendar; LSB commemorations list (CPH)",
+    "url": "https://blog.cph.org/read/church-year/commemorations",
+    "verified": true,
+    "note": ""
+   }
+  ],
+  "status": {
+   "text": "A saint to Catholics (also a Doctor of the Church) and to the Orthodox; kept as a Lesser Festival in the Church of England and remembered in the Episcopal Church; commemorated by Lutherans (LCMS and ELCA).",
+   "source": "USCCB; OCA; saint.gr; azbyka.ru; Church of England Common Worship; Lesser Feasts and Fasts 2022; CPH (LSB); ELW calendar",
+   "url": "https://www.oca.org/saints/lives/2024/12/07/103485-saint-ambrose-bishop-of-milan",
+   "verified": true,
+   "note": ""
+  },
+  "patron_of": {
+   "text": "Milan and beekeepers.",
+   "source": "Britannica ('Ambrose is a patron saint of Milan and of beekeepers.')",
+   "url": "https://www.britannica.com/biography/Saint-Ambrose",
+   "verified": true,
+   "note": "Neither the Catholic Encyclopedia nor the 1916 Martyrology lists a patronage. Wikidata's 65 patronages (Lombardy and others) are not verified. Beekeepers ties to the bees at his cradle (Paulinus 3)."
+  },
+  "in_art": [
+   {
+    "text": "A bishop with mitre and books; his attributes are a beehive (the bees at his cradle), a cradle with a baby, and a three-knotted scourge.",
+    "source": "Iconclass entry quoted on the Städel Museum's record 'Saint Ambrose vesting Saint Augustine' (Umbrian master, about 1500-1510): 'Ambrose, bishop of Milan; possible attributes: beehive, cradle with baby, three-knotted scourge'",
+    "url": "https://sammlung.staedelmuseum.de/en/work/saint-ambrose-vesting-saint-augustine",
+    "verified": true,
+    "note": "Claude Vignon's painting (the band picture) shows the knotted scourge lying on the table beside his books. Why a scourge: popular sites say it stands for driving out Arians or for the Trinity; that is not verified from a solid source, so do not print a reason."
+   },
+   {
+    "text": "Barring the emperor Theodosius from the church door: a favourite scene for painters (Rubens, about 1617, Vienna; Van Dyck, 1619-1620, National Gallery London).",
+    "source": "Wikimedia Commons file records for both paintings (Kunsthistorisches Museum GG 524; National Gallery NG50)",
+    "url": "https://commons.wikimedia.org/wiki/File:Anthonis_van_Dyck_005.jpg",
+    "verified": true,
+    "note": "The door scene itself comes from Theodoret, not from Ambrose or Paulinus (see misquoted)."
+   }
+  ],
+  "wrote": {
+   "text": "A great deal: sermons worked up into books on Scripture (more than half his writings), On the Duties of the Clergy, On the Christian Faith, On the Holy Spirit, On Repentance, On the Mysteries, books on virginity, funeral speeches, letters and hymns. Four hymns are accepted by all as his.",
+   "source": "Catholic Encyclopedia 1907 ('Altogether these Scripture commentaries make up more than one half of the writings of Ambrose'); Catholic Encyclopedia 1907, 'Ambrosian Hymnography' ('the four hymns acknowledged universally as authentic': Aeterne rerum Conditor, Deus Creator omnium, Iam surgit hora tertia, Veni Redemptor gentium)",
+   "url": "https://www.newadvent.org/cathen/01383c.htm",
+   "verified": true,
+   "note": "No total count of works is sourced, so none is given. NPNF says 'probably from four to twelve' hymns are genuine; CE's hymn article reports that recent scholarship (1907) gave 'fourteen hymns certainly, three very probably, and one probably'. Safe line: 'four hymns are accepted by all'. Augustine quotes three of them by name as his (CE)."
+  },
+  "pronounced": {
+   "text": "AM-brohz of muh-LAN.",
+   "source": "Merriam-Webster: Ambrose 'ˈam-ˌbrōz' (biographical name 'Saint 339–397 bishop of Milan'); Milan 'mə-ˈlan, -ˈlän'",
+   "url": "https://www.merriam-webster.com/dictionary/Ambrose",
+   "verified": true,
+   "note": "Milan page: https://www.merriam-webster.com/dictionary/Milan (second form muh-LAHN)."
+  }
+ },
+ "feast_days": {
+  "catholic": {
+   "text": "7 December, a memorial in the General Roman Calendar ('Memorial of Saint Ambrose, Bishop and Doctor of the Church'). The 1916 Roman Martyrology keeps two days: 4 April, his death ('the demise of St. Ambrose'), and 7 December, 'the consecration of St. Ambrose, bishop and doctor of the Church'.",
+   "source": "USCCB readings for 7 December 2024 (page title 'Memorial of Saint Ambrose, Bishop and Doctor of the Church', read through the Wayback Machine because usccb.org answered 403); The Roman Martyrology (1916), 4 April and 7 December",
+   "url": "http://web.archive.org/web/20260416080252/https://bible.usccb.org/bible/readings/120724.cfm",
+   "verified": true,
+   "note": "Direct URL https://bible.usccb.org/bible/readings/120724.cfm (403 to scripts). 1916 Martyrology, 4 April, exact: 'At Milan, the demise of St. Ambrose, bishop and confessor, through whose labors, learning and miracles, almost all Italy returned to the Catholic faith, at the time when the perfidious Arian heresy was widely diffused.' 7 December, exact: 'At Milan, the consecration of St. Ambrose, bishop and doctor of the Church, who has ennobled the universal Church by his holiness and teaching.' Copy: https://archive.org/details/romanmartyrology00cathuoft . The 2004 Martyrology was not checked."
+  },
+  "orthodox": {
+   "text": "7 December in every Orthodox calendar checked: OCA ('Commemorated on December 7'), the Greek synaxarion ('Εορτάζει στις 7 Δεκεμβρίου'), and the Russian Church, which keeps 7 December on the old calendar, 20 December on today's calendar.",
+   "source": "OCA, 'Saint Ambrose, Bishop of Milan'; saint.gr; azbyka.ru ('День памяти 20 декабря')",
+   "url": "https://www.oca.org/saints/lives/2024/12/07/103485-saint-ambrose-bishop-of-milan",
+   "verified": true,
+   "note": "Unlike Martin, East and West agree on the day. Wikidata's stray '20 December' is the Russian old-calendar date shown in civil terms. GOARCH was not checked (bot wall, as with Martin)."
+  },
+  "old_calendar_note": {
+   "text": "Churches on the old (Julian) calendar keep 7 December thirteen days later on today's calendar: 20 December.",
+   "source": "azbyka.ru gives 20 December; the 13-day gap holds from 1900 to 2099",
+   "url": "https://azbyka.ru/days/sv-amvrosij-mediolanskij",
+   "verified": true,
+   "note": ""
+  },
+  "anglican": {
+   "text": "7 December. A Lesser Festival in the Church of England ('Ambrose, Bishop of Milan, Teacher of the Faith, 397', printed in roman type), and kept in the Episcopal Church ('Ambrose of Milan, Bishop and Theologian, 397', with collects).",
+   "source": "Church of England, Common Worship calendar (the page's own key: Lesser Festivals in ordinary roman, Commemorations in italics; Ambrose is in roman); The Episcopal Church, Lesser Feasts and Fasts 2022, calendar and pp. 551-552",
+   "url": "https://www.churchofengland.org/prayer-and-worship/worship-texts-and-resources/common-worship/churchs-year/calendar",
+   "verified": true,
+   "note": "LFF PDF: https://www.episcopalchurch.org/wp-content/uploads/2022/11/Lesser-Feasts-and-Fasts-2022_final.pdf . In the pdftotext layout the calendar column shows Ambrose beside '6', but the entry page is headed 'December 7' and the collects follow on p. 552 under 'December 7'; the column shift is a layout artefact (the same happens to the other December entries)."
+  },
+  "lutheran": {
+   "text": "7 December. The Missouri Synod's Lutheran Service Book: 'Ambrose of Milan, Pastor and Hymnwriter'. The ELCA's Evangelical Lutheran Worship: 'Ambrose, Bishop of Milan, 397'.",
+   "source": "Concordia Publishing House, 'Complete List of Church Year Commemorations' (LSB); Evangelical Lutheran Worship, The Church Year, final draft January 2006 (Augsburg Fortress), page 5",
+   "url": "https://blog.cph.org/read/church-year/commemorations",
+   "verified": true,
+   "note": "ELW PDF (Wayback): https://web.archive.org/web/20060908112753/http://www.renewingworship.org/ELW/content/PDF/ChurchYear_asm_20060119.pdf . Like Martin's check, this is the final draft, not the printed book. CPH also notes three LSB hymns from him: 'Savior of the Nations, Come' (LSB 332); the other two (874, 890) come from a church blog and are not verified."
+  },
+  "why_this_date": {
+   "text": "7 December is the day he was made bishop, in 374. He died on 4 April 397, which the 1916 Roman Martyrology still marks.",
+   "source": "Catholic Encyclopedia 1907 ('eight days later, 7 December 374, the day on which East and West annually honour his memory'); 1916 Roman Martyrology",
+   "url": "https://www.newadvent.org/cathen/01383c.htm",
+   "verified": true,
+   "note": "No source read gives a reason why the ordination day was chosen over the death day. Do not guess (e.g. that 4 April falls in Lent or Easter week)."
+  }
+ },
+ "numbers": [
+  {
+   "text": "8 days: from his baptism to his consecration as bishop.",
+   "source": "Paulinus, Life, section 9 ('on the eighth day was consecrated bishop with the greatest favor and joy of all'); Britannica ('changed from an unbaptized layman to a bishop in eight days')",
+   "url": "https://archive.org/details/vitasanctiambros00paul",
+   "verified": true,
+   "note": "Paulinus says he 'is said to have fulfilled all the ecclesiastical offices' in between. OCA says 'in just seven days'."
+  },
+  {
+   "text": "34: his age when made bishop.",
+   "source": "Catholic Encyclopedia 1907 ('He was now in his thirty-fifth year')",
+   "url": "https://www.newadvent.org/cathen/01383c.htm",
+   "verified": true,
+   "note": "True if born in 340; 35 if born in 339 (Britannica). Print 'about 34'."
+  },
+  {
+   "text": "23 years a bishop, 374 to 397.",
+   "source": "Catholic Encyclopedia 1907 ('the comparatively long space of twenty-three active years')",
+   "url": "https://www.newadvent.org/cathen/01383c.htm",
+   "verified": true,
+   "note": "CHECKER 2026-09-25: 7 December 374 to 4 April 397 is 22 years and 4 months, so the page prints 22 (December 374 to April 397). The Catholic Encyclopedia rounds up to twenty-three."
+  },
+  {
+   "text": "7,000: the number said to have been killed at Thessalonica in 390, the massacre for which he barred Theodosius.",
+   "source": "Theodoret, Church History, Book 5, chapter 17 ('It is said that seven thousand perished.'); Paulinus, Life, section 24 ('given to the sword for almost three hours and many innocent were slain'); Catholic Encyclopedia 1907 and NPNF 2-10 Prolegomena repeat 7,000",
+   "url": "https://www.newadvent.org/fathers/27025.htm",
+   "verified": true,
+   "note": "Theodoret wrote about 450 and hedges it himself ('It is said'). Paulinus, closer, gives no number. Print it as Theodoret's figure."
+  },
+  {
+   "text": "4 hymns that everyone accepts as his.",
+   "source": "Catholic Encyclopedia 1907, 'Ambrosian Hymnography'",
+   "url": "https://www.newadvent.org/cathen/01392a.htm",
+   "verified": true,
+   "note": "Aeterne rerum Conditor, Deus Creator omnium, Iam surgit hora tertia, Veni Redemptor gentium."
+  },
+  {
+   "text": "5 bishops: after his death, it took five bishops, with difficulty, to baptise the crowds he had baptised alone.",
+   "source": "Paulinus, Life, section 38 ('what he alone had been accustomed to perform as regards those to be baptized, five bishops after the time of his death performed with difficulty'); Catholic Encyclopedia 1907 retells it",
+   "url": "https://archive.org/details/vitasanctiambros00paul",
+   "verified": true,
+   "note": ""
+  }
+ ],
+ "traits": [
+  {
+   "text": "Respectful to emperors, but would not give way. In 386, when the court demanded a church for the Arians: 'You yourselves know that I am wont to show respect to our emperors, but not to yield to them, to offer myself freely to punishment, and not to fear what is prepared for me.'",
+   "source": "Sermon against Auxentius, section 2, tr. H. de Romestin, E. de Romestin and H. T. F. Duckworth, NPNF 2nd series vol. 10 (1896)",
+   "url": "https://www.newadvent.org/fathers/3411.htm",
+   "verified": true,
+   "note": "CCEL: https://ccel.org/ccel/schaff/npnf210/npnf210.v.vii.html . Same wording in both."
+  },
+  {
+   "text": "Wept with sinners, and kept their secrets. When anyone confessed to him, 'he so wept that he compelled that one to weep'; the crimes confessed to him 'he told to no one except to the Lord alone with whom he pleaded'.",
+   "source": "Paulinus, Life, section 39",
+   "url": "https://archive.org/details/vitasanctiambros00paul",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "Gave things away. He gave his gold and silver to the church and the poor when made bishop (Paulinus 38). Later he broke up the church's sacred vessels to buy back captives from the Goths, and defended it: 'The Church has gold, not to store up, but to lay out, and to spend on those who need.'",
+   "source": "On the Duties of the Clergy, Book 2, chapter 28, sections 136-137, tr. H. de Romestin, E. de Romestin and H. T. F. Duckworth, NPNF 2nd series vol. 10 (1896); Paulinus, Life, section 38",
+   "url": "https://www.newadvent.org/fathers/34012.htm",
+   "verified": true,
+   "note": "Also 2.28.137: 'It had been better to preserve living vessels than gold ones.' The Arians attacked him for it (2.28.136)."
+  },
+  {
+   "text": "Overworked, and guarded his quiet. Augustine could seldom get a word with him for 'crowds of busy people, whose infirmities he devoted himself to'. In his few free minutes he read silently: 'his eyes glanced over the pages, and his heart searched out the sense, but his voice and tongue were silent.' Visitors sat and left: 'for who durst interrupt one so intent?'",
+   "source": "Augustine, Confessions, Book 6, chapter 3, tr. J. G. Pilkington, NPNF 1st series vol. 1 (1886)",
+   "url": "https://www.newadvent.org/fathers/110106.htm",
+   "verified": true,
+   "note": "New Advent's revised text has 'who dared interrupt'; Pilkington (CCEL npnf101) has 'who durst'. Use one and cite it. Also fits: private rebuke first (Letter 51.5: 'This vehemence of yours I preferred to commend privately to your own consideration')."
+  },
+  {
+   "text": "Frugal. He never took breakfast except on Saturday, Sunday and the greater martyrs' days, and wrote his books with his own hand.",
+   "source": "Paulinus, Life, section 38 ('whose habit was never to take breakfast except on the day of Sabbath and the Lord's Day, or when the birthdays of the most celebrated martyrs occurred'); Catholic Encyclopedia 1907 ('He ate but sparingly, dining only on Saturdays and Sundays and festivals of the more celebrated martyrs')",
+   "url": "https://archive.org/details/vitasanctiambros00paul",
+   "verified": true,
+   "note": "A fifth trait, spare if one is dropped."
+  }
+ ],
+ "others_on_him": [
+  {
+   "exact": "That man of God received me like a father, and looked with a benevolent and episcopal kindliness on my change of abode.",
+   "display": "That man of God received me like a father, and looked with a benevolent and episcopal kindliness on my change of abode.",
+   "work": "Confessions",
+   "place": "Book 5, chapter 13",
+   "source": "Augustine, tr. Pilkington, NPNF 1-1 (1886)",
+   "url": "https://www.newadvent.org/fathers/110105.htm",
+   "verified": true,
+   "note": "Same section calls him 'known to the whole world as among the best of men'. Augustine on arriving in Milan, 384."
+  },
+  {
+   "exact": "And he loved her truly ... so that he would often, when he saw me, burst forth into her praises, congratulating me that I had such a mother",
+   "display": "And he loved her truly ... so that he would often, when he saw me, burst forth into her praises, congratulating me that I had such a mother",
+   "work": "Confessions",
+   "place": "Book 6, chapter 2",
+   "source": "Augustine, tr. Pilkington, NPNF 1-1 (1886), CCEL text",
+   "url": "https://www.newadvent.org/fathers/110106.htm",
+   "verified": true,
+   "note": "Exact from 'so that he would often' in both Pilkington (CCEL npnf101) and New Advent; the words before the ellipsis are from the same sentence ('and he loved her truly, on account of her most religious conversation'). Ambrose on Monica. New Advent prints a dash where CCEL has '--'."
+  },
+  {
+   "exact": "I withhold my judgment of him, because he is still alive, fearing either to praise or blame lest in the one event, I should be blamed for adulation, and in the other for speaking the truth.",
+   "display": "I withhold my judgment of him, because he is still alive, fearing either to praise or blame lest in the one event, I should be blamed for adulation, and in the other for speaking the truth.",
+   "work": "Lives of Illustrious Men",
+   "place": "chapter 124",
+   "source": "Jerome, tr. E. C. Richardson, NPNF 2nd series vol. 3 (1892)",
+   "url": "https://www.newadvent.org/fathers/2708.htm",
+   "verified": true,
+   "note": "Written while Ambrose lived ('because he is still alive'). The last clause is a jab. Jerome was harsher elsewhere, without naming him: he called the author of a book on the Holy Spirit a jackdaw in borrowed feathers, and the book 'flaccid and soft, sleek and pretty' (preface to his Didymus, quoted by Rufinus, Apology against Jerome, Book 2, sections 23-25; Rufinus: 'You observe how he treats Ambrose.'). New Advent has 'colors', CCEL 'colours'."
+  },
+  {
+   "exact": "I have learnt after great difficulty the differences between an emperor and a priest. It is not easy to find a man capable of teaching me the truth. Ambrosius alone deserves the title of bishop.",
+   "display": "I have learnt after great difficulty the differences between an emperor and a priest. It is not easy to find a man capable of teaching me the truth. Ambrosius alone deserves the title of bishop.",
+   "work": "Church History",
+   "place": "Book 5, chapter 17",
+   "source": "Theodoret, tr. Blomfield Jackson, NPNF 2nd series vol. 3 (1892), CCEL text",
+   "url": "https://www.newadvent.org/fathers/27025.htm",
+   "verified": true,
+   "note": "Words Theodoret puts in Theodosius's mouth, written about 450, half a century later. Say so: 'the emperor Theodosius, as Theodoret tells it'. The Nectarius story closes chapter 17 (chapter 18 is on the empress Placilla). New Advent has 'I have learned' where CCEL has 'I have learnt'."
+  }
+ ],
+ "life_moments": [
+  {
+   "text": "Trier (the governor's house), as a baby. The bees. A swarm settled on the sleeping baby's face, going in and out of his mouth. His father stopped the nurse from driving them off. They flew up out of sight, and he said: 'If this little child shall live he shall be something great.'",
+   "source": "Paulinus, Life, section 3",
+   "url": "https://archive.org/details/vitasanctiambros00paul",
+   "verified": true,
+   "note": "Paulinus heard the family stories from Marcellina (section 1). He reads the bees as his future honeyed words."
+  },
+  {
+   "text": "Milan, 374. 'Ambrose Bishop!' The bishop had died, and Arians and Catholics were close to a riot over the choice. Ambrose, the governor, came to the church to keep order. A child's voice is said to have cried 'Ambrose Bishop', and the crowd took it up. He tried everything to escape: he had people tortured from the bench, tried to declare himself a philosopher, and brought prostitutes into his house. Then he fled at midnight for Pavia, and at dawn found himself at Milan's own Roman Gate. He hid on an estate until the owner gave him up. He was baptised, and on the eighth day made bishop.",
+   "source": "Paulinus, Life, sections 6-9",
+   "url": "https://archive.org/details/vitasanctiambros00paul",
+   "verified": true,
+   "note": "Exact phrases: 'the voice of a child is said to have suddenly cried out among the people'; 'he ordered tortures to be applied to certain persons'; 'he had common women come publicly to him'; 'leaving the city at midnight'; 'found at the gate of the city of Milan which is called Roman'. The Catholic Encyclopedia (1907) doubts the tricks: 'It is difficult to believe that he resorted to the questionable expedients mentioned by his biographer'. NPNF, with its own typo: 'if we accept the statements if his biographer Paulinus'."
+  },
+  {
+   "text": "Milan, 384-387. Augustine. A young teacher of rhetoric, still a Manichee, came to Milan and went to hear the famous preacher. Ambrose 'received me like a father'. Week by week his sermons untied Augustine's objections to the Bible. At Easter 387 Ambrose baptised him.",
+   "source": "Augustine, Confessions, Book 5, chapter 13; Book 6, chapters 3-4; Lesser Feasts and Fasts 2022 (Easter Eve 387)",
+   "url": "https://www.newadvent.org/fathers/110105.htm",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "Milan, Holy Week 386. The church sit-in. The boy emperor Valentinian II and his Arian mother Justina demanded a basilica for the Arians. Ambrose refused: 'The palaces belong to the Emperor, the churches to the Bishop.' Soldiers surrounded the church, and the people stayed inside with him for days. To keep their spirits up he had hymns and psalms sung 'after the manner of the Eastern Church'. Augustine's mother Monica was among them.",
+   "source": "Letter 20, section 19; Sermon against Auxentius, sections 2 and 34; Augustine, Confessions, Book 9, chapter 7; Paulinus, Life, section 13",
+   "url": "https://www.newadvent.org/fathers/340920.htm",
+   "verified": true,
+   "note": "Augustine: the custom of singing spread to 'almost all of Thy congregations throughout the rest of the world'. Paulinus: 'antiphons, hymns, and vigils began first to be practiced in the church of Milan'."
+  },
+  {
+   "text": "Milan, June 386. Two martyrs found. Ambrose had the ground dug before the screen of the church of Saints Felix and Nabor and found two skeletons, which he took to be the martyrs Gervasius and Protasius. As they were carried to his new basilica, a blind butcher named Severus touched the cloth over them and could see. (See the miracles.)",
+   "source": "Letter 22, sections 2 and 17; Augustine, Confessions, Book 9, chapter 7; Paulinus, Life, section 14",
+   "url": "https://www.newadvent.org/fathers/340922.htm",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "Callinicum, 388. The synagogue. Christians at Callinicum on the Euphrates burned a synagogue, 'at the instigation of the Bishop'. The emperor Theodosius ordered the bishop to rebuild it. Ambrose wrote to stop him, and then refused to go on with the Eucharist until the emperor promised in church to drop the order. (See the hard topic below.)",
+   "source": "Letter 40, sections 6-8; Letter 41; Paulinus, Life, sections 22-23",
+   "url": "https://www.newadvent.org/fathers/340940.htm",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "Thessalonica, 390. The emperor's penance. After a riot, Theodosius's troops killed many innocent people at Thessalonica. Ambrose did not preach against him in public. He wrote a letter 'with my own hand that which you alone may read': he dared not offer the sacrifice with the emperor present until he repented. Theodosius pleaded that David too had sinned. The answer came back: 'You who have followed him as he sinned, follow him as he corrected himself.' The emperor did public penance.",
+   "source": "Letter 51, sections 13-14; Paulinus, Life, section 24",
+   "url": "https://www.newadvent.org/fathers/340951.htm",
+   "verified": true,
+   "note": "The door scene with long speeches is Theodoret's, written about 450 (see misquoted)."
+  }
+ ],
+ "miracles": {
+  "recorded": true,
+  "framing": {
+   "text": "His secretary Paulinus fills the Life with wonders. He promises at the start: 'I beseech you all, in whose hands this book will fall, to believe that what we say is true.' He names his informants: Marcellina, older servants, what he saw himself, and people who saw Ambrose after his death.",
+   "source": "Paulinus, Life, sections 1-2",
+   "url": "https://archive.org/details/vitasanctiambros00paul",
+   "verified": true,
+   "note": "CHECKER 2026-09-25: 'older servants' goes beyond Paulinus 1 ('those most trustworthy men who served him before me'); the page says men who served Ambrose before him."
+  },
+  "feature": {
+   "title": "The blind man at the martyrs' tomb, 386",
+   "text": "When the bodies of Gervasius and Protasius were carried to the new basilica, a blind man touched the cloth over them and could see. This is the best-witnessed wonder of his life: Ambrose told it the next day, Augustine was in Milan and told it twice, and Paulinus names the man.",
+   "witnesses": [
+    {
+     "exact": "During the translation a blind man was healed.",
+     "display": "During the translation a blind man was healed.",
+     "work": "Letter 22, to his sister Marcellina",
+     "place": "section 2",
+     "source": "Ambrose, tr. H. de Romestin, E. de Romestin and H. T. F. Duckworth, NPNF 2nd series vol. 10 (1896)",
+     "url": "https://www.newadvent.org/fathers/340922.htm",
+     "verified": true,
+     "note": ""
+    },
+    {
+     "exact": "his name is Severus, a butcher by trade.",
+     "display": "his name is Severus, a butcher by trade.",
+     "work": "Letter 22, to his sister Marcellina",
+     "place": "section 17",
+     "source": "Ambrose, tr. H. de Romestin, E. de Romestin and H. T. F. Duckworth, NPNF 2nd series vol. 10 (1896)",
+     "url": "https://www.newadvent.org/fathers/340922.htm",
+     "verified": true,
+     "note": "He adds that Severus 'calls for evidence those persons by whose kindness he was supported'."
+    },
+    {
+     "exact": "a certain man also, who had been blind many years, a well-known citizen of that city",
+     "display": "a certain man also, who had been blind many years, a well-known citizen of that city",
+     "work": "Confessions",
+     "place": "Book 9, chapter 7",
+     "source": "Augustine, tr. Pilkington, NPNF 1-1",
+     "url": "https://www.newadvent.org/fathers/110109.htm",
+     "verified": true,
+     "note": ""
+    },
+    {
+     "exact": "The miracle which was wrought at Milan when I was there, and by which a blind man was restored to sight",
+     "display": "The miracle which was wrought at Milan when I was there, and by which a blind man was restored to sight",
+     "work": "City of God",
+     "place": "Book 22, chapter 8",
+     "source": "Augustine, tr. Marcus Dods, NPNF 1st series vol. 2 (1887)",
+     "url": "https://www.newadvent.org/fathers/120122.htm",
+     "verified": true,
+     "note": ""
+    },
+    {
+     "exact": "Even a blind man, Severus by name, who to the present day devoutly serves in that same basilica which is called the Ambrosian ... immediately received his sight.",
+     "display": "Even a blind man, Severus by name, who to the present day devoutly serves in that same basilica which is called the Ambrosian ... immediately received his sight.",
+     "work": "Life of St Ambrose",
+     "place": "section 14",
+     "source": "Paulinus of Milan, Life of St Ambrose (Vita Sancti Ambrosii), tr. Sister Mary Simplicia Kaniecka, Catholic University of America Patristic Studies 16 (Washington, 1928)",
+     "url": "https://archive.org/details/vitasanctiambros00paul",
+     "verified": true,
+     "note": "Two exact pieces joined by an ellipsis; a page break in the OCR splits 'touched the / clothing of the martyrs'."
+    }
+   ]
+  },
+  "more": [
+   {
+    "text": "The paralysed woman at Rome. Across the Tiber, a bath-keeper who lay paralysed had herself carried to the house where he was saying Mass. She touched his clothes as he prayed and kissed his hands: 'her health was restored immediately and she began to walk'. Paulinus: 'I learned this on the authority of holy men.'",
+    "source": "Paulinus, Life, section 10",
+    "url": "https://archive.org/details/vitasanctiambros00paul",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "A boy raised at Florence. At the house of Decens in Florence, the little son Pansophius died. His mother laid him on Ambrose's bed while he was out. Ambrose, 'like Elisaeus', 'laid himself down on the body of the child and through prayer succeeded in returning alive to the mother the child, whom he had found dead'. Paulinus adds: 'Nevertheless, he did not mention the occurrence in his writings'.",
+    "source": "Paulinus, Life, section 28",
+    "url": "https://archive.org/details/vitasanctiambros00paul",
+    "verified": true,
+    "note": "The OCR reads 'Hlisaeus' for 'Elisaeus'; the rest is clean. This is his only raising from the dead, and only Paulinus tells it. The OCA's Life repeats it ('at Florence, while staying at the house of Decentus, he resurrected a dead boy')."
+   },
+   {
+    "text": "Fire on his head. A few days before his last illness, Paulinus was taking down his dictation on Psalm 43 when 'suddenly a fire in the shape of a small shield covered his head, and gradually it entered through his mouth like a householder into his home, after which his face became like snow'. Ambrose stopped dictating that day and never finished the psalm.",
+    "source": "Paulinus, Life, section 42",
+    "url": "https://archive.org/details/vitasanctiambros00paul",
+    "verified": true,
+    "note": "Paulinus saw it himself. It matches NPNF's chronology: the commentary on Psalm 43 is unfinished. CHECKER 2026-09-25: Paulinus numbers the psalm as the Latin Bible does (43rd). It is Psalm 44 in the BSB and most Bibles today, so the page says Psalm 44 (43 in his Latin Bible). Paulinus says he could not finish that psalm, not that he never finished it."
+   },
+   {
+    "text": "The angel at his ear. A hardened Arian in the congregation 'saw, as he himself afterwards said, an angel speaking into the ears of the bishop as he preached', and changed sides.",
+    "source": "Paulinus, Life, section 17",
+    "url": "https://archive.org/details/vitasanctiambros00paul",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "Nicentius's feet. A retired tribune crippled in the feet was trodden on by Ambrose at the altar and heard: 'Go, and henceforth you will be well.' He told of his cure with tears at Ambrose's death.",
+    "source": "Paulinus, Life, section 44",
+    "url": "https://archive.org/details/vitasanctiambros00paul",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "Seen at his death. The children baptised that Easter night saw him, some on his throne, some walking, though their parents could not; others saw a star over his body. Paulinus also records visions of him after death at Florence and in Africa, each with its informant.",
+    "source": "Paulinus, Life, sections 48-52",
+    "url": "https://archive.org/details/vitasanctiambros00paul",
+    "verified": true,
+    "note": "Exact: 'many baptized infants as they were coming from the font saw him'. The OCA's Life: 'He even appeared in a vision to the children being baptized that night.'"
+   }
+  ],
+  "stern_stories": {
+   "text": "Paulinus also tells stories of judgment on those who opposed or slandered him: an Arian girl who grabbed his robe died the next day (section 11); two Arian chamberlains who skipped a debate were thrown from their carriage (section 18); two men who spoke against his memory after his death were struck down (section 54). Tell them as Paulinus tells them, if at all.",
+   "source": "Paulinus, Life, sections 11, 18, 54",
+   "url": "https://archive.org/details/vitasanctiambros00paul",
+   "verified": true,
+   "note": ""
+  },
+  "doubt": {
+   "title": "Doubted from the start",
+   "items": [
+    {
+     "exact": "They deny that the blind man received sight, but he denies not that he is healed.",
+     "display": "They deny that the blind man received sight, but he denies not that he is healed.",
+     "work": "Letter 22, to his sister Marcellina",
+     "place": "section 17",
+     "source": "Ambrose, tr. H. de Romestin, E. de Romestin and H. T. F. Duckworth, NPNF 2nd series vol. 10 (1896)",
+     "url": "https://www.newadvent.org/fathers/340922.htm",
+     "verified": true,
+     "note": "Ambrose answering the Arians of the court the day after."
+    },
+    {
+     "exact": "by means of money had procured men to say falsely that they were troubled by unclean spirits",
+     "display": "by means of money had procured men to say falsely that they were troubled by unclean spirits",
+     "work": "Life of St Ambrose",
+     "place": "section 15",
+     "source": "Paulinus of Milan, Life of St Ambrose (Vita Sancti Ambrosii), tr. Sister Mary Simplicia Kaniecka, Catholic University of America Patristic Studies 16 (Washington, 1928)",
+     "url": "https://archive.org/details/vitasanctiambros00paul",
+     "verified": true,
+     "note": "Paulinus reporting the Arians' charge against Ambrose over the cures at the martyrs' tomb."
+    },
+    {
+     "exact": "is extremely disappointing",
+     "display": "is extremely disappointing",
+     "work": "Catholic Encyclopedia (1907), 'St. Ambrose'",
+     "place": "",
+     "source": "James Loughlin",
+     "url": "https://www.newadvent.org/cathen/01383c.htm",
+     "verified": true,
+     "note": "The Catholic Encyclopedia's verdict on Paulinus's Life as a biography: 'the \"Life\" written after his death by his secretary, Paulinus, at the suggestion of St. Augustine, is extremely disappointing.' It is about the Life's value as history, not directly about the miracles."
+    }
+   ]
+  },
+  "note": "Paulinus himself is candid that he heard some things second-hand (sections 10, 47, 50-51 name the informants). Ambrose's own letter vouches only for the blind man and the exorcisms at the martyrs' tomb."
+ },
+ "his_words": {
+  "framing": {
+   "text": "Ambrose wrote a great deal. His lines below are from his own works in the NPNF translation (1896), McGuire's On Naboth (1927), and, for his spoken words, Paulinus and Augustine.",
+   "source": "NPNF 2-10; McGuire 1927; Kaniecka 1928; NPNF 1-1",
+   "url": "https://www.ccel.org/ccel/s/schaff/npnf210/cache/npnf210.txt",
+   "verified": true,
+   "note": ""
+  },
+  "feature": {
+   "exact": "For the Emperor is within the Church, not above it.",
+   "display": "For the Emperor is within the Church, not above it.",
+   "work": "Sermon against Auxentius on the Giving Up of the Basilicas",
+   "place": "section 36",
+   "source": "Ambrose, tr. H. de Romestin, E. de Romestin and H. T. F. Duckworth, NPNF 2nd series vol. 10 (1896)",
+   "url": "https://www.newadvent.org/fathers/3411.htm",
+   "verified": true,
+   "note": "Latin checked on catholiclibrary.org's Migne text ('Imperator Enim intra Ecclesiam, non supra Ecclesiam est'); the line is the title of M. Zelzer's article in Vox Patrum 34 (1998), which numbers the sermon Epistula 75a, 36. CCEL: https://ccel.org/ccel/schaff/npnf210/npnf210.v.vii.html (identical wording). Alternative feature, if the page wants his voice for the poor: Naboth 12.53, 'Not from your own do you bestow upon the poor man, but you make return from what is his.' (Latin 'non de tuo largiris pauperi, sed de suo reddis', McGuire's facing text).",
+   "context": "Preached in Milan in 386, while soldiers surrounded the basilica the court wanted for the Arians. Latin: 'Imperator enim intra Ecclesiam, non supra Ecclesiam est.' It continues: 'For a good emperor seeks the aid of the Church and does not refuse it.'"
+  },
+  "lines": [
+   {
+    "exact": "against weapons, soldiers, Goths, my tears are my weapons, for these are a priest's defense.",
+    "display": "against weapons, soldiers, Goths, my tears are my weapons, for these are a priest's defense.",
+    "work": "Sermon against Auxentius",
+    "place": "section 2",
+    "source": "Ambrose, tr. H. de Romestin, E. de Romestin and H. T. F. Duckworth, NPNF 2nd series vol. 10 (1896), New Advent",
+    "url": "https://www.newadvent.org/fathers/3411.htm",
+    "verified": true,
+    "note": "CCEL spells 'defence'. Said to the people in the besieged basilica, 386."
+   },
+   {
+    "exact": "The palaces belong to the Emperor, the churches to the Bishop.",
+    "display": "The palaces belong to the Emperor, the churches to the Bishop.",
+    "work": "Letter 20, to his sister Marcellina",
+    "place": "section 19",
+    "source": "Ambrose, tr. H. de Romestin, E. de Romestin and H. T. F. Duckworth, NPNF 2nd series vol. 10 (1896)",
+    "url": "https://www.newadvent.org/fathers/340920.htm",
+    "verified": true,
+    "note": "His reply to the court's demand for a basilica, 386."
+   },
+   {
+    "exact": "Not from your own do you bestow upon the poor man, but you make return from what is his. For what has been given as common for the use of all, you appropriate to yourself alone. The earth belongs to all, not to the rich",
+    "display": "Not from your own do you bestow upon the poor man, but you make return from what is his. For what has been given as common for the use of all, you appropriate to yourself alone. The earth belongs to all, not to the rich",
+    "work": "On Naboth",
+    "place": "chapter 12, section 53",
+    "source": "Ambrose, tr. Martin R. P. McGuire, S. Ambrosii De Nabuthae, CUA Patristic Studies 15 (1927)",
+    "url": "https://archive.org/details/sambrosiidenabut00ambr",
+    "verified": true,
+    "note": "The same section ends: 'Therefore you are paying a debt, you are not bestowing what is not due.' Chapter 13 opens at section 54, so 53 is in chapter 12."
+   },
+   {
+    "exact": "You cover your walls, you strip men naked.",
+    "display": "You cover your walls, you strip men naked.",
+    "work": "On Naboth",
+    "place": "chapter 13, section 56",
+    "source": "McGuire (1927)",
+    "url": "https://archive.org/details/sambrosiidenabut00ambr",
+    "verified": true,
+    "note": "Continues: 'The poor man seeks money and has it not; a man asks for bread, and your horse champs gold under his teeth.'"
+   },
+   {
+    "exact": "The Church has gold, not to store up, but to lay out, and to spend on those who need.",
+    "display": "The Church has gold, not to store up, but to lay out, and to spend on those who need.",
+    "work": "On the Duties of the Clergy",
+    "place": "Book 2, chapter 28, section 137",
+    "source": "Ambrose, tr. H. de Romestin, E. de Romestin and H. T. F. Duckworth, NPNF 2nd series vol. 10 (1896)",
+    "url": "https://www.newadvent.org/fathers/34012.htm",
+    "verified": true,
+    "note": "Defending his melting of church plate to ransom captives."
+   },
+   {
+    "exact": "For rebukes are good, and often better than a silent friendship.",
+    "display": "For rebukes are good, and often better than a silent friendship.",
+    "work": "On the Duties of the Clergy",
+    "place": "Book 3, chapter 22, section 127",
+    "source": "Ambrose, tr. H. de Romestin, E. de Romestin and H. T. F. Duckworth, NPNF 2nd series vol. 10 (1896)",
+    "url": "https://www.newadvent.org/fathers/34013.htm",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "exact": "Beasts do not drive out beasts, yet man shuts out man.",
+    "display": "Beasts do not drive out beasts, yet man shuts out man.",
+    "work": "On the Duties of the Clergy",
+    "place": "Book 3, chapter 7, section 45",
+    "source": "Ambrose, tr. H. de Romestin, E. de Romestin and H. T. F. Duckworth, NPNF 2nd series vol. 10 (1896)",
+    "url": "https://www.newadvent.org/fathers/34013.htm",
+    "verified": true,
+    "note": "Against expelling foreigners from Rome in a famine."
+   },
+   {
+    "exact": "Now no one can repent to good purpose unless he hopes for mercy.",
+    "display": "Now no one can repent to good purpose unless he hopes for mercy.",
+    "work": "Concerning Repentance",
+    "place": "Book 1, chapter 1, section 4",
+    "source": "Ambrose, tr. H. de Romestin, E. de Romestin and H. T. F. Duckworth, NPNF 2nd series vol. 10 (1896)",
+    "url": "https://www.newadvent.org/fathers/34061.htm",
+    "verified": true,
+    "note": "Against the Novatians, who refused pardon to grave sinners."
+   },
+   {
+    "exact": "So it happened that I began to teach before I began to learn.",
+    "display": "So it happened that I began to teach before I began to learn.",
+    "work": "On the Duties of the Clergy",
+    "place": "Book 1, chapter 1, section 4",
+    "source": "Ambrose, tr. H. de Romestin, E. de Romestin and H. T. F. Duckworth, NPNF 2nd series vol. 10 (1896)",
+    "url": "https://www.newadvent.org/fathers/34011.htm",
+    "verified": true,
+    "note": "On being carried 'from the judgment seat' to the bishop's chair."
+   },
+   {
+    "exact": "When I visit Rome, I fast on Saturday; when I am here, I do not fast.",
+    "display": "When I visit Rome, I fast on Saturday; when I am here, I do not fast.",
+    "work": "Augustine, Letter 54, to Januarius",
+    "place": "chapter 2, section 3",
+    "source": "tr. J. G. Cunningham, NPNF 1-1 (1886)",
+    "url": "https://www.newadvent.org/fathers/1102054.htm",
+    "verified": true,
+    "note": "His answer when Augustine asked for Monica. It goes on: 'On the same principle, do you observe the custom prevailing in whatever Church you come to, if you desire neither to give offence by your conduct, nor to find cause of offence in another's.' Augustine: 'I have always esteemed it as if I had received it by an oracle from heaven.'"
+   },
+   {
+    "exact": "I have not so lived among you that I am ashamed to live nor do I fear to die, because we have a good Lord!",
+    "display": "I have not so lived among you that I am ashamed to live nor do I fear to die, because we have a good Lord!",
+    "work": "Life of St Ambrose, by Paulinus",
+    "place": "section 45",
+    "source": "Paulinus of Milan, Life of St Ambrose (Vita Sancti Ambrosii), tr. Sister Mary Simplicia Kaniecka, Catholic University of America Patristic Studies 16 (Washington, 1928)",
+    "url": "https://archive.org/details/vitasanctiambros00paul",
+    "verified": true,
+    "note": "On his deathbed, to the nobles Stilicho sent to beg him to pray for longer life."
+   }
+  ]
+ },
+ "misquoted_or_legend": [
+  {
+   "text": "Claim: Ambrose and Augustine made up the Te Deum ('We praise Thee, O God') on the night of Augustine's baptism, singing verses in turn. Truth: a legend first traced to the end of the eighth century. 'This tradition is now generally rejected by scholars.' Many credit Nicetas of Remesiana. The hymn is in rhythmical prose, not in the metre of his known hymns.",
+   "source": "Catholic Encyclopedia 1912, 'Te Deum'",
+   "url": "https://www.newadvent.org/cathen/14468c.htm",
+   "verified": true,
+   "note": "Worth knowing: the OCA's Life still calls the Te Deum 'attributed to Saint Ambrose', and the Russian Life on azbyka.ru says he composed it ('составил гимн «Тебе Бога хвалим»'). Say so gently: the legend lives on in some church Lives."
+  },
+  {
+   "text": "Claim: 'When in Rome, do as the Romans do' is Ambrose's saying. Truth: what he said, as Augustine reports it, was about fasting on Saturdays: 'When I visit Rome, I fast on Saturday; when I am here, I do not fast.' The proverb in its familiar wording is not his.",
+   "source": "Augustine, Letter 54, chapter 2, section 3; also Letter 36",
+   "url": "https://www.newadvent.org/fathers/1102054.htm",
+   "verified": true,
+   "note": "Where the modern proverb's wording first appears was not checked; do not print a date for it."
+  },
+  {
+   "text": "Claim: Ambrose met Theodosius at the church door, laid his hand on him and turned him away with a long speech. Truth: that scene and its speeches are Theodoret's, written about 450. Ambrose's own account is a private letter; Paulinus says only that he refused the emperor entry until he did public penance. The Catholic Encyclopedia (1907): the story 'set afoot by the distant Theodoret ... is shown by modern criticism to have been greatly exaggerated'.",
+   "source": "Theodoret, Church History, Book 5, chapter 17; Letter 51, sections 13-14; Paulinus, Life, section 24; Catholic Encyclopedia 1907",
+   "url": "https://www.newadvent.org/fathers/27025.htm",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "Claim: all the 'Ambrosian' hymns are his. Truth: 'Ambrosian' came to mean a style. Four are accepted by all; Augustine quotes three of them by name as his.",
+   "source": "Catholic Encyclopedia 1907, 'Ambrosian Hymnography' ('As now used, the term implies no attribution of authorship, but rather a poetical form or a liturgical use.')",
+   "url": "https://www.newadvent.org/cathen/01392a.htm",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "Claim: Ambrose wrote the commentary on Paul's letters printed with his works. Truth: its author is unknown and is called 'Ambrosiaster'. 'He is not the author of the admirable commentary on the thirteen Epistles of St. Paul known as \"Ambrosiaster\".' Erasmus first doubted it in the sixteenth century.",
+   "source": "Catholic Encyclopedia 1907, 'St. Ambrose' and 'Ambrosiaster'",
+   "url": "https://www.newadvent.org/cathen/01406a.htm",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "Claim: 'All truth, by whomever it is spoken, is from the Holy Spirit' is Ambrose's. Truth: it comes from Ambrosiaster's commentary on 1 Corinthians 12:3 ('Quidquid verum a quocumque dicitur, a Sancto dicitur Spiritu'). Thomas Aquinas quotes it often under Ambrose's name.",
+   "source": "Alberto Strumia, '«Omne verum, a quocumque dicatur, a Spiritu Sancto est»'; Aquinas, Summa Theologiae I-II, question 109, article 1 (English: 'a gloss says: \"Every truth, by whomsoever spoken is from the Holy Ghost.\"')",
+   "url": "http://www.albertostrumia.it/%C2%ABomne-verum-quocumque-dicatur-spiritu-sancto-est%C2%BB",
+   "verified": true,
+   "note": "Strumia is a scholar's essay, not a peer-reviewed source; the Latin reference he gives is Ambrosiaster, In primam ad Cor. 12. The English Summa on New Advent says only 'a gloss'."
+  },
+  {
+   "text": "Claim: the long prayer before Mass beginning 'Summe sacerdos' ('High Priest and true Bishop') is the 'Prayer of St Ambrose'. Truth: it was credited to him from the twelfth century, but André Wilmart showed it is by John of Fécamp (died 1078).",
+   "source": "Les Enluminures / Text Manuscripts catalogue description, citing A. Wilmart, Auteurs spirituels, 'L'Oratio sancti Ambrosii du Missel Romain', pp. 101-124",
+   "url": "https://www.textmanuscripts.com/medieval/devotional-bonaventura-instructio-60521",
+   "verified": true,
+   "note": "Second-hand: a dealer's scholarly description quoting Wilmart. Wilmart's book was not seen. Keep the wording modest ('scholars now credit John of Fécamp')."
+  }
+ ],
+ "where_he_stood": {
+  "text": "Sixteen of the quiz's 23 statements have a value for Ambrose (site/src/data/which-early-christian.json, people.ambrose.cells). Fourteen show a line; two are scored but hidden: anger (+1, On the Duties of the Clergy, Book 1, chapter 21, section 96) and deeper (+2, Augustine, Confessions, Book 6, chapter 4, 'as Augustine recorded it'). Every shown line is his own writing, except effort (his words quoted by Augustine) and rich (his words excerpted in the Catena Aurea). The values in 'side' are the quiz's.",
+  "rows": [
+   {
+    "key": "laugh",
+    "statement": "A good hearty laugh is good for the soul.",
+    "side": "strongly disagree",
+    "value": -2,
+    "line": "Do we seek for something to laugh at, that laughing here we may weep hereafter?",
+    "work": "On the Duties of the Clergy",
+    "place": "Book 1, chapter 23, section 103",
+    "url": "https://www.newadvent.org/fathers/34011.htm",
+    "verified": true,
+    "note": "exact on New Advent and CCEL"
+   },
+   {
+    "key": "quiet",
+    "statement": "Most of the time, it's better to say less.",
+    "side": "strongly agree",
+    "value": 2,
+    "line": "How many have I seen to fall into sin by speaking, but scarcely one by keeping silent; and so it is more difficult to know how to keep silent than how to speak.",
+    "work": "On the Duties of the Clergy",
+    "place": "Book 1, chapter 2, section 5",
+    "url": "https://www.newadvent.org/fathers/34011.htm",
+    "verified": true,
+    "note": "exact on both"
+   },
+   {
+    "key": "learning",
+    "statement": "Wisdom is worth learning from anyone, even people who don't share your faith.",
+    "side": "disagree",
+    "value": -1,
+    "line": "But it was not by dialectic that it pleased God to save His people; for the kingdom of God consists in simplicity of faith, not in wordy contention.",
+    "work": "On the Christian Faith (Exposition of the Christian Faith)",
+    "place": "Book 1, chapter 5, section 42",
+    "url": "https://www.newadvent.org/fathers/34041.htm",
+    "verified": true,
+    "note": "Exact on New Advent. CCEL (unrevised) reads '...save His people; \"for the kingdom of God consisteth in simplicity of faith, not in wordy contention.\"' (a quotation mark and 'consisteth'). The quiz follows New Advent."
+   },
+   {
+    "key": "rich",
+    "statement": "There's nothing wrong with being rich, as long as you use it well.",
+    "side": "agree",
+    "value": 1,
+    "line": "Let the rich learn that guilt attaches not to the goods themselves, but to those who know not how to use them.",
+    "work": "Exposition of the Gospel of Luke",
+    "place": "Book 8, section 85 (on Zacchaeus), as excerpted in Aquinas's Catena Aurea on Luke 19, ed. J. H. Newman (Oxford, 1843)",
+    "url": "https://www.ecatholic2000.com/catena/untitled-80.shtml",
+    "verified": true,
+    "note": "Exact in the Catena Aurea copy. Latin confirmed at la.wikisource (Expositio 8.85: 'Discant non in facultatibus crimen haerere, sed in iis qui uti nesciant facultatibus'). The ecatholic2000 page is a reproduction; CCEL has no chapter page for the Catena that answered. No PD translation of the whole Exposition was found."
+   },
+   {
+    "key": "tell",
+    "statement": "If someone you know is doing wrong, it's your job to tell them.",
+    "side": "strongly agree",
+    "value": 2,
+    "line": "Should I keep silence? But then my conscience would be bound, my utterance taken away, which would be the most wretched condition of all.",
+    "work": "Letter 51, to the Emperor Theodosius",
+    "place": "section 3",
+    "url": "https://www.newadvent.org/fathers/340951.htm",
+    "verified": true,
+    "note": "exact on both; CCEL chapter: https://ccel.org/ccel/schaff/npnf210/npnf210.v.xi.html"
+   },
+   {
+    "key": "tears",
+    "statement": "Even if you believe you'll see them again, it's right to weep openly for someone you've lost.",
+    "side": "agree",
+    "value": 1,
+    "line": "But we have not incurred any grievous sin by our tears. Not all weeping proceeds from unbelief or weakness.",
+    "work": "On the Death of Satyrus (his brother)",
+    "place": "Book 1, section 10",
+    "url": "https://www.newadvent.org/fathers/34031.htm",
+    "verified": true,
+    "note": "exact on both"
+   },
+   {
+    "key": "surplus",
+    "statement": "Giving to the poor isn't generosity. It's paying back what's already theirs.",
+    "side": "strongly agree",
+    "value": 2,
+    "line": "Not from your own do you bestow upon the poor man, but you make return from what is his.",
+    "work": "On Naboth",
+    "place": "chapter 12, section 53",
+    "url": "https://archive.org/details/sambrosiidenabut00ambr",
+    "verified": true,
+    "note": "exact in McGuire (1927) OCR; djvu text https://archive.org/download/sambrosiidenabut00ambr/sambrosiidenabut00ambr_djvu.txt"
+   },
+   {
+    "key": "body",
+    "statement": "Your body is a friend to look after, not an enemy to fight.",
+    "side": "strongly disagree",
+    "value": -2,
+    "line": "So they who do not chasten their body, and desire to preach to others, are themselves esteemed reprobates.",
+    "work": "Letter 63, to the Church at Vercelli",
+    "place": "section 7",
+    "url": "https://www.newadvent.org/fathers/340963.htm",
+    "verified": true,
+    "note": "exact on both; CCEL chapter https://ccel.org/ccel/schaff/npnf210/npnf210.v.xv.html"
+   },
+   {
+    "key": "miracles",
+    "statement": "Miracles still happen today, just as they did in the Bible.",
+    "side": "strongly agree",
+    "value": 2,
+    "line": "He says: I who could not see now see. He says: I ceased to be blind, and proves it by the fact.",
+    "work": "Letter 22, to his sister Marcellina",
+    "place": "section 17",
+    "url": "https://www.newadvent.org/fathers/340922.htm",
+    "verified": true,
+    "note": "exact on both; about Severus, the blind butcher healed in 386; CCEL https://ccel.org/ccel/schaff/npnf210/npnf210.v.viii.html"
+   },
+   {
+    "key": "mystery",
+    "statement": "Some questions about God are better left alone.",
+    "side": "strongly agree",
+    "value": 2,
+    "line": "No man calls in question one who is better than he is: to believe is enjoined upon you, without permission to question.",
+    "work": "On the Christian Faith",
+    "place": "Book 1, chapter 12, section 78",
+    "url": "https://www.newadvent.org/fathers/34041.htm",
+    "verified": true,
+    "note": "exact on both"
+   },
+   {
+    "key": "calling",
+    "statement": "If you believe God is calling you, follow, even if your family begs you not to.",
+    "side": "strongly agree",
+    "value": 2,
+    "line": "And the anxious entreaties of your parents are your first battles. Conquer your affection first, O maiden. If you conquer your home, you conquer the world.",
+    "work": "Concerning Virgins",
+    "place": "Book 1, chapter 12, section 63",
+    "url": "https://www.newadvent.org/fathers/34071.htm",
+    "verified": true,
+    "note": "exact on both. New Advent puts sections 62-66 under chapter 12."
+   },
+   {
+    "key": "pure",
+    "statement": "A church should keep out people who openly live in serious wrongdoing.",
+    "side": "agree",
+    "value": 1,
+    "line": "I dare not offer the sacrifice if you intend to be present. Is that which is not allowed after shedding the blood of one innocent person, allowed after shedding the blood of many? I do not think so.",
+    "work": "Letter 51, to the Emperor Theodosius",
+    "place": "section 13",
+    "url": "https://www.newadvent.org/fathers/340951.htm",
+    "verified": true,
+    "note": "exact on both"
+   },
+   {
+    "key": "war",
+    "statement": "A Christian can fight in a just war with a clear conscience.",
+    "side": "strongly agree",
+    "value": 2,
+    "line": "For courage, which in war preserves one's country from the barbarians, or at home defends the weak, or comrades from robbers, is full of justice.",
+    "work": "On the Duties of the Clergy",
+    "place": "Book 1, chapter 27, section 129",
+    "url": "https://www.newadvent.org/fathers/34011.htm",
+    "verified": true,
+    "note": "Words exact; the source has a semicolon after 'justice' and the quiz closes with a full stop (an allowed edit). Note the other side of his view: Book 3, chapter 4, section 27, a Christian should not kill an armed robber to save his own life."
+   },
+   {
+    "key": "rulers",
+    "statement": "Governments should use their laws to promote the Christian faith.",
+    "side": "strongly agree",
+    "value": 2,
+    "line": "As all men who live under the Roman sway engage in military service under you, the Emperors and Princes of the world, so too do you yourselves owe service to Almighty God and our holy faith.",
+    "work": "Letter 17, to the Emperor Valentinian II",
+    "place": "section 1",
+    "url": "https://www.newadvent.org/fathers/340917.htm",
+    "verified": true,
+    "note": "exact on both; CCEL https://ccel.org/ccel/schaff/npnf210/npnf210.v.ii.html. Context: against restoring the pagan Altar of Victory in the Senate, 384."
+   },
+   {
+    "key": "effort",
+    "statement": "Becoming a better person is mostly down to your own effort.",
+    "side": "disagree",
+    "value": -1,
+    "line": "For our heart and our thoughts are not in our own power.",
+    "work": "On Flight from the World (De fuga saeculi), chapter 1, as quoted word for word by Augustine",
+    "place": "Augustine, On the Gift of Perseverance, chapter 20",
+    "url": "https://www.newadvent.org/fathers/15122.htm",
+    "verified": true,
+    "note": "Words exact; the source continues ', and these, poured forth unexpectedly...' and the quiz closes with a full stop. New Advent titles the page 'On the Predestination of the Saints, Book II' (NPNF prints Gift of Perseverance as its second book); Holmes-Wallis-Warfield, NPNF 1-5 (1887). No PD English translation of De fuga saeculi itself was found."
+   }
+  ]
+ },
+ "friends_family_rivals": [
+  {
+   "text": "Marcellina, his elder sister, about ten years older: a consecrated virgin who took the veil from Pope Liberius at St Peter's. He wrote his books On Virgins for her, and Paulinus got much of the Life from her. The 1916 Martyrology keeps her on 17 July.",
+   "source": "Catholic Encyclopedia 1907; Paulinus, Life, sections 1 and 4; 1916 Roman Martyrology, 17 July",
+   "url": "https://www.newadvent.org/cathen/01383c.htm",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "Satyrus, his elder brother, gave up his own office to run Ambrose's affairs. His death (378 or 379) drew two funeral speeches from Ambrose, On the Death of Satyrus. The 1916 Martyrology keeps him on 17 September.",
+   "source": "Catholic Encyclopedia 1907 (378); NPNF 2-10 Prolegomena (379); 1916 Roman Martyrology",
+   "url": "https://www.newadvent.org/fathers/34031.htm",
+   "verified": true,
+   "note": "The year differs between CE (378) and NPNF (379); say 'about 378'."
+  },
+  {
+   "text": "Augustine of Hippo: heard him preach, was won over, and was baptised by him at Easter 387.",
+   "source": "Augustine, Confessions, Books 5-6 and 9; Lesser Feasts and Fasts 2022",
+   "url": "https://www.newadvent.org/fathers/110106.htm",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "Monica, Augustine's mother: obeyed his ban on the African custom of bringing food to martyrs' shrines, and he praised her to her son whenever he saw him.",
+   "source": "Augustine, Confessions, Book 6, chapter 2; Letter 54",
+   "url": "https://www.newadvent.org/fathers/110106.htm",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "Theodosius I, emperor: Ambrose overruled him over the Callinicum synagogue (388) and brought him to public penance after Thessalonica (390). Theodosius died in Milan in 395 with Ambrose beside him, and Ambrose preached his funeral oration.",
+   "source": "Letters 40, 41, 51; Paulinus, Life, sections 22-24; Catholic Encyclopedia 1907",
+   "url": "https://www.newadvent.org/fathers/340951.htm",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "The empress Justina and her son Valentinian II: she, an Arian, tried to take a Milan basilica for the Arians in 385-386 and failed.",
+   "source": "Letter 20; Sermon against Auxentius; Paulinus, Life, sections 11-15",
+   "url": "https://www.newadvent.org/fathers/340920.htm",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "Symmachus, prefect of Rome and a pagan, asked the emperor to restore the Altar of Victory to the Senate in 384; Ambrose answered him in Letters 17 and 18 and won. Britannica says Symmachus was his relative.",
+   "source": "Letters 17-18; Britannica",
+   "url": "https://www.britannica.com/biography/Saint-Ambrose",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "Jerome: called the author of a book on the Holy Spirit (Ambrose's, as Rufinus pointed out) a jackdaw decked in borrowed feathers.",
+   "source": "Jerome's preface to Didymus, quoted in Rufinus, Apology against Jerome, Book 2, sections 23-25",
+   "url": "https://www.newadvent.org/fathers/27052.htm",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "Simplicianus: the old priest Ambrose named as his successor from his deathbed ('Old but good').",
+   "source": "Paulinus, Life, section 46",
+   "url": "https://archive.org/details/vitasanctiambros00paul",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "The usurper Maximus, at Trier: Ambrose went to him twice as envoy, and would not take communion with the bishops 'who sought the death of any one, even though they were heretics' (the accusers of Priscillian), so he was sent away. Martin of Tours took the same stand at the same court.",
+   "source": "Letter 24, section 12 (Library of the Fathers, Oxford 1881, on tertullian.org); Catholic Encyclopedia 1907",
+   "url": "https://www.tertullian.org/fathers/ambrose_letters_03_letters21_30.htm",
+   "verified": true,
+   "note": "The Oxford 1881 translation (anonymous, revised by H. Walford) is public domain; the letter is not in NPNF. Paulinus, his secretary, wrote the Life at Augustine's request (section 1)."
+  }
+ ],
+ "how_he_died": {
+  "text": {
+   "text": "He fell ill in early 397, soon after ordaining a bishop for Pavia. Count Stilicho, fearing for Italy, sent Milan's nobles to beg him to pray for a longer life. He answered: 'I have not so lived among you that I am ashamed to live nor do I fear to die, because we have a good Lord!' From late afternoon until he died he prayed with his arms stretched out in the form of a cross; they saw his lips move but heard no voice. Bishop Honoratus of Vercelli, resting upstairs, heard a voice call him three times, came down and gave him the Body of the Lord; 'when he took and swallowed it he breathed forth his spirit'. He died before dawn on Holy Saturday, 4 April 397.",
+   "source": "Paulinus, Life, sections 45-48",
+   "url": "https://archive.org/details/vitasanctiambros00paul",
+   "verified": true,
+   "note": ""
+  },
+  "last_words": {
+   "exact": "I have not so lived among you that I am ashamed to live nor do I fear to die, because we have a good Lord!",
+   "display": "I have not so lived among you that I am ashamed to live nor do I fear to die, because we have a good Lord!",
+   "work": "Life of St Ambrose",
+   "place": "section 45",
+   "source": "Paulinus of Milan, Life of St Ambrose (Vita Sancti Ambrosii), tr. Sister Mary Simplicia Kaniecka, Catholic University of America Patristic Studies 16 (Washington, 1928)",
+   "url": "https://archive.org/details/vitasanctiambros00paul",
+   "verified": true,
+   "note": "Not strictly his last words; his last recorded speech. Augustine is said to have admired it (CE), but that was not checked in Augustine."
+  },
+  "on_his_successor": {
+   "exact": "Old but good.",
+   "display": "Old but good.",
+   "work": "Life of St Ambrose",
+   "place": "section 46",
+   "source": "Paulinus of Milan, Life of St Ambrose (Vita Sancti Ambrosii), tr. Sister Mary Simplicia Kaniecka, Catholic University of America Patristic Studies 16 (Washington, 1928)",
+   "url": "https://archive.org/details/vitasanctiambros00paul",
+   "verified": true,
+   "note": "Overhearing deacons whispering about Simplicianus from the far end of the portico; he said it three times."
+  },
+  "later": {
+   "text": "Paulinus adds that Bassianus of Lodi saw the Lord Jesus come to him smiling (section 47), that children at the font saw him on Easter night (48), and that crowds threw handkerchiefs to touch his body (48). All these are Paulinus's reports, written 15 to 25 years later.",
+   "source": "Paulinus, Life, sections 47-48",
+   "url": "https://archive.org/details/vitasanctiambros00paul",
+   "verified": true,
+   "note": ""
+  }
+ },
+ "is_he_a_saint": {
+  "text": "Yes, in every church that keeps a calendar of saints. Catholics keep 7 December as a memorial and count him a Doctor of the Church. The Orthodox keep 7 December (20 December on the old calendar). The Church of England keeps a Lesser Festival and the Episcopal Church a feast; the LCMS and ELCA commemorate him. No church doubts his standing.",
+  "source": "USCCB; 1916 Roman Martyrology; OCA; saint.gr; azbyka.ru; Common Worship; Lesser Feasts and Fasts 2022; CPH (LSB); ELW calendar",
+  "url": "https://www.oca.org/saints/lives/2024/12/07/103485-saint-ambrose-bishop-of-milan",
+  "verified": true,
+  "note": "The 1916 Martyrology on 4 April: 'through whose labors, learning and miracles, almost all Italy returned to the Catholic faith, at the time when the perfidious Arian heresy was widely diffused.' The site's quiz data has status null (a saint, no caveat)."
+ },
+ "hard_topics": [
+  {
+   "text": "The Callinicum synagogue, 388. Christians burned a synagogue at Callinicum, 'at the instigation of the Bishop'. Theodosius ordered it rebuilt. Ambrose wrote to stop him, offered to take the blame ('I declare that I set fire to the synagogue, or at least that I ordered those who did it, that there might not be a place where Christ was denied'), called the building 'a home of unbelief, a house of impiety, a receptacle of folly, which God Himself has condemned', and would not go on with the Eucharist until the emperor promised in church to drop the order. Holder's view: Paulinus tells it as a victory for the Church (sections 22-23). Critic's view: Britannica's article (by the historian Peter Brown) says his dealings with the court combined 'the republican ideal of the prerogatives of a Roman senator with a sinister vein of demagoguery', and lists 'In 388 he rebuked the emperor Theodosius for having punished a bishop who had burnt a Jewish synagogue.'",
+   "source": "Letter 40, sections 6, 8, 14, tr. H. de Romestin, E. de Romestin and H. T. F. Duckworth, NPNF 2nd series vol. 10 (1896); Paulinus, Life, sections 22-23; Britannica",
+   "url": "https://www.newadvent.org/fathers/340940.htm",
+   "verified": true,
+   "note": "Letter 40.8 is rhetorical: he means 'blame me instead of the local bishop'; do not say he actually lit it. CCEL: https://ccel.org/ccel/schaff/npnf210/npnf210.v.ix.html"
+  },
+  {
+   "text": "The Altar of Victory, 384. He argued successfully against the pagan senators' plea to restore the Altar of Victory, while elsewhere he said faith cannot be forced. Britannica: 'In 384 he secured the rejection of an appeal for tolerance by pagan members of the Roman senate'.",
+   "source": "Letters 17-18; Britannica",
+   "url": "https://www.newadvent.org/fathers/340917.htm",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "Virginity over family. He urged young women to vow virginity even against their parents ('If you conquer your home, you conquer the world'), and so successfully that, says the Catholic Encyclopedia, 'many a mother refused to permit her daughters to listen to his words'.",
+   "source": "Concerning Virgins, Book 1, chapter 12, section 63; Catholic Encyclopedia 1907",
+   "url": "https://www.newadvent.org/fathers/34071.htm",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "text": "Borrowing. He drew heavily on Greek writers (Basil, Didymus, Origen, Philo). Jerome mocked him for it; NPNF: 'especially St. Basil the Great and Didymus of Alexandria, from whom no less a man than St. Jerome accused him of plagiarizing.'",
+   "source": "NPNF 2-10 Prolegomena, Life; Rufinus, Apology, Book 2",
+   "url": "https://ccel.org/ccel/schaff/npnf210/npnf210.iii.v.html",
+   "verified": true,
+   "note": ""
+  }
+ ],
+ "prayer_he_wrote": {
+  "exact": "Preserve, O Lord, Thy work, guard the gift which Thou hast given even to him who shrank from it. For I knew that I was not worthy to be called a bishop, because I had devoted myself to this world, but by Thy grace I am what I am. And I am indeed the least of all bishops, and the lowest in merit; yet since I too have undertaken some labour for Thy holy Church, watch over this fruit, and let not him whom when lost Thou didst call to the priesthood, to be lost when a priest. And first grant that I may know how with inmost affection to mourn with those who sin",
+  "display": "Preserve, O Lord, Thy work, guard the gift which Thou hast given even to him who shrank from it. For I knew that I was not worthy to be called a bishop, because I had devoted myself to this world, but by Thy grace I am what I am. And I am indeed the least of all bishops, and the lowest in merit; yet since I too have undertaken some labour for Thy holy Church, watch over this fruit, and let not him whom when lost Thou didst call to the priesthood, to be lost when a priest. And first grant that I may know how with inmost affection to mourn with those who sin",
+  "work": "Concerning Repentance",
+  "place": "Book 2, chapter 8, section 73",
+  "source": "Ambrose, tr. H. de Romestin, E. de Romestin and H. T. F. Duckworth, NPNF 2nd series vol. 10 (1896), CCEL text (unrevised)",
+  "url": "https://ccel.org/ccel/schaff/npnf210/npnf210.iv.vi.iii.viii.html",
+  "verified": true,
+  "note": "His own prayer, in his own book, about being made bishop. Exact in CCEL; New Advent modernises it ('Preserve, O Lord, Your work, guard the gift which You have given'). The prayer continues to the end of the section ('... saying, \"Tamar hath been more righteous than I.\"'); cut where the page needs. Also genuine: the evening hymn Deus Creator omnium, quoted by Augustine in Confessions, Book 9, chapter 12 (Latin only in Pilkington; his footnote gives a 1660 English version). Not his: the 'Summe sacerdos' prayer before Mass (see misquoted).",
+  "context": "He had been rushed from the governor's bench to the bishop's chair; here he prays about it."
+ },
+ "what_to_read_first": [
+  {
+   "text": "The Life of St Ambrose, by his secretary Paulinus, written about 412-422 at Augustine's request. Short, and full of stories.",
+   "source": "Paulinus of Milan, Life of St Ambrose (Vita Sancti Ambrosii), tr. Sister Mary Simplicia Kaniecka, Catholic University of America Patristic Studies 16 (Washington, 1928), Latin and English",
+   "url": "https://archive.org/details/vitasanctiambros00paul",
+   "verified": true,
+   "note": "HTTP 200 checked. The OCR text is at https://archive.org/download/vitasanctiambros00paul/vitasanctiambros00paul_djvu.txt"
+  },
+  {
+   "text": "Letter 51, to Theodosius after Thessalonica: a private letter in his own hand. With it, the Sermon against Auxentius (386), preached in the besieged basilica.",
+   "source": "Ambrose, tr. H. de Romestin, E. de Romestin and H. T. F. Duckworth, NPNF 2nd series vol. 10 (1896)",
+   "url": "https://www.newadvent.org/fathers/340951.htm",
+   "verified": true,
+   "note": "Sermon: https://www.newadvent.org/fathers/3411.htm . Both HTTP 200 and the right text."
+  },
+  {
+   "text": "On the Duties of the Clergy: his handbook of Christian conduct, modelled on Cicero.",
+   "source": "Ambrose, tr. H. de Romestin, E. de Romestin and H. T. F. Duckworth, NPNF 2nd series vol. 10 (1896)",
+   "url": "https://www.newadvent.org/fathers/34011.htm",
+   "verified": true,
+   "note": "Books 2 and 3: 34012.htm, 34013.htm. HTTP 200."
+  },
+  {
+   "text": "Augustine, Confessions, Books 5, 6 and 9: the best picture of him by someone who knew him.",
+   "source": "tr. Pilkington, NPNF 1-1",
+   "url": "https://www.newadvent.org/fathers/110106.htm",
+   "verified": true,
+   "note": "Books 5 and 9: 110105.htm, 110109.htm. HTTP 200. Also free: On Naboth, McGuire 1927, https://archive.org/details/sambrosiidenabut00ambr"
+  }
+ ],
+ "pictures": {
+  "band": {
+   "text": "Saint Ambrose, Claude Vignon, 1623 or 1625. Oil on canvas. Minneapolis Institute of Art, 68.43 (The William Hood Dunwoody Fund).",
+   "file": "C:/Users/Light/Desktop/claude/theology compass/design/saints-hub/pages/img/ambrose-of-milan.jpg",
+   "pixels": "1227 x 1800 (resized from the 4487 x 6585 Commons original), 392 KB",
+   "licence": "Public domain. Commons tag {{PD-Art|PD-old-auto-expired|deathyear=1670}}.",
+   "source": "Wikimedia Commons file page and wikitext; museum page https://collections.artsmia.org/index.php?page=detail&id=1683",
+   "url": "https://commons.wikimedia.org/wiki/File:Claude_Vignon_-_Saint_Ambrose_-_68.43_-_Minneapolis_Institute_of_Arts.jpg",
+   "alt": "St Ambrose, grey-bearded in a tall gold mitre and a shimmering blue and gold cope, sits at a table piled with books and turns to look at us, one hand on an open book, a knotted scourge beside his inkwell",
+   "crop": "Face at about 50% across and 22% down. Suggested posM '50% 20%', posD '50% 18%'.",
+   "verified": true,
+   "note": "The museum page was not opened. Wikidata Q20891083. A 17th-century imagining, not a likeness."
+  },
+  "second": {
+   "text": "Ambrose of Milan, a miniature from the Menologion of Basil II, Constantinople, about 976-1025. Vatican Library, Vat. gr. 1613 (the page for 7 December).",
+   "file": "C:/Users/Light/Desktop/claude/theology compass/design/saints-hub/pages/img/ambrose-of-milan-2.jpg",
+   "pixels": "1067 x 755 (the Commons original, not upscaled), 443 KB",
+   "licence": "Public domain. Commons tag {{PD-Art}}; a photograph of a flat manuscript page.",
+   "source": "Wikimedia Commons; source link http://digi.vatlib.it/view/MSS_Vat.gr.1613/0249",
+   "url": "https://commons.wikimedia.org/wiki/File:Ambrose_of_Milan_(Menologion_of_Basil_II).jpg",
+   "alt": "A Byzantine miniature on gold: the white-haired, bearded Ambrose in a red cloak and bishop's stole stands before an arcaded church and a green hill, lifting his hands toward the hand of God in the sky",
+   "verified": true,
+   "note": "Below the 1200 px target: it is the largest copy on Commons. The face is small in the frame, so it suits a figure or card, not a face crop. A faint diagonal watermark shows on the right edge of the gold (from the source scan). The Vatican's 'Menologion' page for 7 December was not opened. Why this and not the Palermo mosaic (c. 1140, 1000 x 2250, tagged PD-old-100): that file is a photo of a mosaic from a blog source, and Commons treats mosaic photos cautiously."
+  },
+  "rejected": [
+   "Zurbarán, San Ambrosio (Seville): the 1964 x 3878 file is CC BY-SA 4.0 (a visitor's photo); the Yorck Project copy (1256 x 2595, PD) is usable but the face is small.",
+   "Goya, Saint Ambrose (Cleveland Museum of Art 1969.23, CC0, 4580 x 7762): excellent licence, but the face is small in a full seated figure. A good alternative band if the owner prefers CC0.",
+   "Giovanni di Paolo, Saint Ambrose (Met DT3022, CC0, 2333 x 3722): a large, clear profile face; a good alternative.",
+   "Van Dyck, Saint Ambrose barring Theodosius (National Gallery, PD, 3189 x 4226): shows the legendary door scene, which the page says is Theodoret's embellishment.",
+   "Modern Greek and Russian icons on Commons: not checked for copyright; modern icons are usually still in copyright."
+  ]
+ },
+ "hub_card": {
+  "groups": {
+   "text": "fathers, teachers. He is a Church Father and one of the four great Latin Doctors. Not a monk founder, not a martyr, not desert, not Cappadocian.",
+   "source": "Britannica; Catholic Encyclopedia 'Doctors of the Church'",
+   "url": "https://www.newadvent.org/cathen/05075a.htm",
+   "verified": true,
+   "note": "The hint 'fathers teachers' is right."
+  },
+  "lived": {
+   "text": "300s (about 339/340 to 397).",
+   "source": "Britannica; Catholic Encyclopedia",
+   "url": "https://www.britannica.com/biography/Saint-Ambrose",
+   "verified": true,
+   "note": "Hint '300s' is right."
+  },
+  "side": {
+   "text": "West (Trier, Rome, Milan). The East keeps his feast too.",
+   "source": "OCA; saint.gr",
+   "url": "https://www.oca.org/saints/lives/2024/12/07/103485-saint-ambrose-bishop-of-milan",
+   "verified": true,
+   "note": "Hint 'west' is right."
+  }
+ },
+ "personality_test": {
+  "text": "He is not among any type's saints (TYPES.*.kindred) or in OPPOSITES. His picture stands for The Advocate, one of the seven 'lines' on the result's role page, with the tidbit: 'When the emperor Theodosius ordered a massacre in Thessalonica, St Ambrose wrote to him and would not let it pass until the emperor repented in public.' The face crop used there is the Palermo mosaic (Cappella Palatina, about 1140).",
+  "source": "site/src/data/personality.json (LINE_TEXT.advocate; PICTURES key 'ambrose')",
+  "url": "https://wiserwalk.com/q/personality/",
+  "verified": true,
+  "note": "The tidbit checks out against Letter 51 and Paulinus 24, with one nuance: Paulinus says the counts arranged it 'secretly with the emperor', and Ambrose's letter blames the emperor's temper; 'ordered a massacre' is fair shorthand."
+ },
+ "site_data_flags": [
+  "which-early-christian.json portrait for Ambrose is 138 x 400 px (San Vittore in Ciel d'Oro mosaic, a photo from pravenc.ru tagged PD-Art|PD-old-100). Too small for the hub, and a photo of a mosaic: the band and second picture above replace it on the saint page.",
+  "The quiz's 'learning' line follows New Advent's revised wording; the unrevised NPNF has 'consisteth' and a quotation mark. Cite New Advent for it.",
+  "The 'effort' line is Ambrose quoted by Augustine; the quiz shows work 'On Flight from the World' with by: null. Consider 'as quoted by Augustine'.",
+  "The 'rich' line comes through the Catena Aurea (an excerpt). Its work name 'Exposition of the Gospel of Luke' is right (Book 8, section 85, Latin checked).",
+  "The pair sentence 'Ambrose baptised Augustine in Milan, at Easter in 387' is supported by Lesser Feasts and Fasts 2022 and Britannica; Confessions alone does not name the baptiser."
+ ],
+ "could_not_verify": [
+  "GOARCH's listing (not tried: goarch.org blocked the Martin check). The Greek 7 December is confirmed from saint.gr; synaxarion.gr was not checked.",
+  "The current (2004) Roman Martyrology's wording. Only the 1916 English edition was checked.",
+  "A PD English translation of the whole Exposition of Luke and of De fuga saeculi (the two quiz lines rest on the Catena Aurea excerpt and on Augustine's quotation).",
+  "'No one heals himself by wounding another': everywhere online as Ambrose, with no work named. Not found in NPNF 2-10, the Oxford letters or McGuire. Neither confirmed nor refuted: do not print it.",
+  "The 'Honey-Tongued Doctor' nickname and the reason for the scourge in art (Trinity, or the Arians): only on popular sites.",
+  "Where the proverb 'When in Rome, do as the Romans do' first appears in that wording.",
+  "Wilmart's attribution of 'Summe sacerdos' to John of Fécamp: seen only through a manuscript dealer's description.",
+  "Two of the three LSB hymn numbers (874, 890) from a church blog; only LSB 332 is confirmed by CPH.",
+  "Britannica's claim that Symmachus was his relative (in Britannica; not checked elsewhere).",
+  "The exact date of the Milan siege and the finding of the martyrs (Holy Week and June 386 are the usual dates; NPNF's chronology was not opened for them).",
+  "The museum pages for the two pictures (Mia; Vatican Library) were not opened; details come from Commons.",
+  "The present state of his tomb in the crypt of Sant'Ambrogio."
+ ],
+ "fetched_texts": "design/saints-hub/sources/people/ambrose-of-milan/ (plain .txt; raw HTML/PDF in raw/)",
+ "writer_additions": {
+  "text": "Added by the page writer on 2026-09-25. Each was read in the fetched text under sources/people/ambrose-of-milan/, and every quotation the page prints is checked word for word (evidence: ambrose-of-milan.quotes.json; tools/verify-quotes.mjs exits 0).",
+  "corrections": [
+   {
+    "text": "The hand-kiss story (Paulinus 4 and 9): the girl the boy held out his hand to was not his sister. Paulinus 9 calls her the holy virgin mentioned above, to whom he used to offer his hand, and says he found her in the family house with his sister (Latin: sanctam puellam ... cui manum offerre solitus erat, in domo propria cum germana). Paulinus 4 says Marcellina had professed virginity with another girl as her companion. So she is that companion virgin. The grew_up item above ('for his sister to kiss') is wrong on this point; the page follows Paulinus.",
+    "source": "Paulinus, Life, sections 4 and 9, Kaniecka 1928, Latin and English",
+    "url": "https://archive.org/details/vitasanctiambros00paul",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "The reply about David ('You who have followed him as he sinned, follow him as he corrected himself') is in Paulinus, Life, section 24, not in Letter 51. The page cites Paulinus for it.",
+    "source": "Paulinus, Life, section 24",
+    "url": "https://archive.org/details/vitasanctiambros00paul",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "Letter 20 and the Sermon against Auxentius: the NPNF chronology dates Letter 20 to Holy Week 385 and puts the sermon in 385; the siege is often put in 386, and Britannica says 385-386. The page says 385 and 386 and gives no Holy Week date.",
+    "source": "NPNF 2-10, Chronology; Britannica",
+    "url": "https://www.ccel.org/ccel/s/schaff/npnf210/cache/npnf210.txt",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "'On the Euphrates' was not found in the fetched texts for Callinicum. The page says 'a fortified town in the East' (Paulinus 22: 'in the regions of the East, in a certain fortified city'; Letter 40: 'the military count of the East').",
+    "source": "Paulinus, Life, section 22; Letter 40, section 6",
+    "url": "https://www.newadvent.org/fathers/340940.htm",
+    "verified": true,
+    "note": ""
+   }
+  ],
+  "items": [
+   {
+    "text": "Paulinus 8: Probus, sending him to govern, said 'Go, act not as judge but as bishop.' Paulinus 7: the crowd shouted 'Your sin be upon us' after the tortures and again after the common women. Paulinus 8: he left at midnight meaning to reach Ticinum, and in the morning was found at the gate of Milan called Roman.",
+    "source": "Paulinus, Life, sections 7-8",
+    "url": "https://archive.org/details/vitasanctiambros00paul",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "Paulinus 9: a few years after his ordination he visited Rome and found the holy virgin in the family house with his sister; she kissed his hand and he said, smiling: 'Behold, as I used to tell you, you are kissing the hand of a bishop.'",
+    "source": "Paulinus, Life, section 9",
+    "url": "https://archive.org/details/vitasanctiambros00paul",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "Paulinus 11: at Sirmium an Arian girl seized his robe; he warned her that it did not become her 'to lay hands on any bishop'; 'on the following day he conducted her dead to the grave repaying kindness for insult'. Paulinus 54: Donatus and Muranus, who spoke against him after his death, died suddenly.",
+    "source": "Paulinus, Life, sections 11 and 54",
+    "url": "https://archive.org/details/vitasanctiambros00paul",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "Paulinus 23: after his sermon the emperor said 'You spoke against us today, bishop'; he would not approach the altar until the emperor promised; the emperor answered 'Go on, with my promise.'",
+    "source": "Paulinus, Life, section 23",
+    "url": "https://archive.org/details/vitasanctiambros00paul",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "Paulinus 38: 'he did not shun the work of writing books with his own hand'. Paulinus 40: he said he would be with them until Easter. Paulinus 47: 'We indeed saw his lips move but his voice we did not hear'; Honoratus heard 'Arise, hasten, because now he is about to depart.' Paulinus 48: Jews and pagans at the funeral; handkerchiefs or girdles thrown to touch the body. Paulinus 50: Pansophia, mother of the boy Pansophius, is his source for a Florence story. Kaniecka's note on section 28: 'the only reference to this name and miracle'.",
+    "source": "Paulinus, Life, sections 28, 38, 40, 47, 48, 50",
+    "url": "https://archive.org/details/vitasanctiambros00paul",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "Confessions 5.13: 'To him was I unknowingly led by You, that by him I might knowingly be led to You'; Symmachus, then prefect, sent Augustine to Milan. Confessions 6.1: 'she loved that man as an angel of God'. Confessions 6.4: 'every Lord's day'; 'all those knots of crafty calumnies ... could be unravelled'. Confessions 9.7: the blind man touched the bier with his handkerchief; the mind of 'that enemy' was 'restrained from the fury of persecuting'.",
+    "source": "Augustine, Confessions, tr. Pilkington, New Advent",
+    "url": "https://www.newadvent.org/fathers/110105.htm",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "City of God 22.8: 'the emperor was there at the time, and the occurrence was witnessed by an immense concourse of people'.",
+    "source": "Augustine, City of God, Book 22, chapter 8",
+    "url": "https://www.newadvent.org/fathers/120122.htm",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "Letter 22.1-2: 'Certainly I will if I find any relics of martyrs'; 'We found two men of marvellous stature, such as those of ancient days'; the ground was dug before the chancel screen of SS. Felix and Nabor. Letter 22.14: section 17 is in his second sermon, preached the following day. 22.17: 'he declares that when he touched the hem of the robe of the martyrs, wherewith the sacred relics were covered, his sight was restored'.",
+    "source": "Ambrose, Letter 22",
+    "url": "https://www.newadvent.org/fathers/340922.htm",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "Sermon against Auxentius 1: an imperial order through the tribunes to leave the city. 4 and 10: 'The soldiers around'; 'Armed men surrounded the basilica'. 34: 'They declare also that the people have been led astray by the strains of my hymns. I certainly do not deny it.' 36 continues: 'For a good emperor seeks the aid of the Church and does not refuse it.'",
+    "source": "Ambrose, Sermon against Auxentius",
+    "url": "https://www.newadvent.org/fathers/3411.htm",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "Letter 17.7: 'No one is injured because God is set before him. He keeps his own opinion. You do not compel a man against his will to worship what he dislikes.'",
+    "source": "Ambrose, Letter 17",
+    "url": "https://www.newadvent.org/fathers/340917.htm",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "Letter 51.14: 'I am writing with my own hand that which you alone may read'; he dreamed the emperor came into the church and he was not permitted to offer the sacrifice.",
+    "source": "Ambrose, Letter 51",
+    "url": "https://www.newadvent.org/fathers/340951.htm",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "On the Duties of the Clergy 2.28.137: the Lord Himself would say ... 'It had been better to preserve living vessels than gold ones.' NPNF chronology for 378: 'Many Christians having been made captives, St. Ambrose sells Church plate to redeem them'; NPNF note: the Goths, after Hadrianople.",
+    "source": "Ambrose, On the Duties of the Clergy; NPNF 2-10 chronology and notes",
+    "url": "https://www.newadvent.org/fathers/34012.htm",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "On the Duties of the Clergy, Book 3, chapter 7, heading: 'Strangers must never be expelled the city in a time of famine ... the shameful deed committed at Rome'.",
+    "source": "Ambrose, On the Duties of the Clergy, Book 3, chapter 7",
+    "url": "https://www.newadvent.org/fathers/34013.htm",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "Jerome, preface to Didymus, as quoted by Rufinus: 'I read some time ago the treatise of a certain person on the Holy Spirit, and I recognized then, according to the sentence of Terence, bad things in Latin taken from good things in Greek.' Rufinus: 'he calls him a jackdaw who decks himself in other birds' showy feathers'.",
+    "source": "Rufinus, Apology against Jerome, Book 2",
+    "url": "https://www.newadvent.org/fathers/27052.htm",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "Theodoret 5.17: Theodosius said it at Constantinople, to the bishop Nectarius. New Advent reads 'I have learned'.",
+    "source": "Theodoret, Church History, Book 5, chapter 17",
+    "url": "https://www.newadvent.org/fathers/27025.htm",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "Catholic Encyclopedia: Theodosius died at Milan (January 395) 'with Ambrose at his bedside and the name of Ambrose on his lips'; 'He died on Good Friday'; 'The saint was forced to refute the charge that he was depopulating the empire'; 'The response of the saint made a deep impression on St. Augustine'.",
+    "source": "Catholic Encyclopedia 1907, St. Ambrose",
+    "url": "https://www.newadvent.org/cathen/01383c.htm",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "Britannica (Peter Brown): 'In confrontations with this court, Ambrose showed a directness that combined the republican ideal of the prerogatives of a Roman senator with a sinister vein of demagoguery.' The sentence heads his list of 384, 385-386, 388 and 390.",
+    "source": "Britannica, St. Ambrose",
+    "url": "https://www.britannica.com/biography/Saint-Ambrose",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "Latin of the feature line in Migne: 'Imperator Enim intra Ecclesiam, non supra Ecclesiam est.' The Catholic Library's canonical page for the letters (English with the Latin beside it).",
+    "source": "Catholic Library",
+    "url": "https://catholiclibrary.org/library/view?docId=Synchronized-EN/Ambrose.Letters.en.html&chunk.id=00000026",
+    "verified": true,
+    "note": ""
+   },
+   {
+    "text": "The English Wikipedia article linked from Q43689 is titled 'Ambrose' (checked 2026-09-25).",
+    "source": "en.wikipedia.org",
+    "url": "https://en.wikipedia.org/wiki/Ambrose",
+    "verified": true,
+    "note": ""
+   }
+  ]
+ },
+ "checker_corrections": {
+  "checked_on": "2026-09-25",
+  "by": "adversarial checker",
+  "items": [
+   "Trait 'wept with sinners': the page printed 'the Lord alone with whom he pleaded'. The capitals rule covers every pronoun for God, so the page now prints 'Whom' (the evidence keeps the exact lower case).",
+   "Number 'Years a bishop': 23 changed to 22. Made bishop 7 December 374 (Paulinus 9; Catholic Encyclopedia), died 4 April 397 (Paulinus 48; Catholic Encyclopedia): 22 years and 4 months.",
+   "Number chip 'Hymns surely his': changed to 'Hymns no one doubts'. The Catholic Encyclopedia (Ambrosian Hymnography) says four are 'acknowledged universally as authentic', but also that 'the most recent scholarship ... gives fourteen hymns certainly' to him, so 'surely his: 4' undercounted.",
+   "Number line 'To baptise the crowds he baptised alone': Paulinus 38 says five bishops after his death performed with difficulty 'what he alone had been accustomed to perform as regards those to be baptized'. No crowds: now 'For the baptising he had done alone'.",
+   "Fact 'In art': 'a mitre, with books' was not in the cited source. The Staedel Museum catalogue (Iconclass 11H(AMBROSE)) gives 'beehive, cradle with baby, three-knotted scourge'. Now: 'A bishop. His signs are a beehive, a baby in a cradle and a scourge with three knots.'",
+   "Moment 'Ambrose Bishop!': 'A nobleman who hid him gave him up' ran two flights together. Paulinus 9: while the report to the emperor was pending he fled again and hid on the estate of 'a certain Honorable Leontius'; when the answer came (and an edict was published) Leontius betrayed him. Rewritten to say so.",
+   "Moment 'Governor': 'He studied law' is the Catholic Encyclopedia's ('the study and practice of the law'); Paulinus 5 says only 'the liberal disciplines'. Catholic Encyclopedia added to the cite.",
+   "Moment 'Two martyrs found': 'He took them to be the martyrs' put a doubt in our voice. Letter 22 names them as Protasius and Gervasius 'long unknown'. Now: 'He names them as the martyrs Gervasius and Protasius, long forgotten.'",
+   "Moment 'The emperor's penance': 'After a riot at Thessalonica' is in neither Letter 51 nor Paulinus 24. Britannica ('punished a riot in Thessalonica by a massacre') added to the cite.",
+   "Miracle, Ambrose's account: 'the people who had fed him'. Letter 22: 'those persons by whose kindness he was supported'. Now 'supported'.",
+   "Miracle, Paulinus's account: 'touched the cloth over the martyrs'. Paulinus 14: 'touched the clothing of the martyrs'. Now 'the martyrs' clothing'.",
+   "Miracle 'Fire on his head': Psalm 43 is the Latin numbering, Psalm 44 in the BSB. 'Never finished the psalm' went beyond Paulinus 42 ('he could not finish that psalm').",
+   "Miracles lede: 'older servants' changed to 'men who served Ambrose before him' (Paulinus 1).",
+   "Death, 'Seen that night': the handkerchiefs and girdles were thrown at the funeral on Sunday morning (Paulinus 48, 'the crowd at the obsequies'), not in the night. Now 'At the funeral next morning'."
+  ]
+ }
+}
