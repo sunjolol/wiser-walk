@@ -54,6 +54,22 @@ Applied the same evening (the template on `main`, carried to `saints/the-21`):
 - **"Is he a saint?": a wrapped status ("Not on the calendar") sits at 1.3rem line height**, with nothing else moving.
 - **No odd or ominous asides in plain text** ("Beware 23 and 24 November..." came off Clement's feast note).
 
+## HIS NOTES OF 2026-09-25, THIRD ROUND (Origen to Macrina): binding for every page
+
+- **Book titles are italic** in running text, short forms too ("the *Life*", "the *Rule*", *Britannica*); letters,
+  chapters and books of the Bible are not. Mark them `*like this*` in the data; the template reads the marks
+  everywhere a title can appear, citations included. `design/saints-hub/tools/italicize.mjs <data dir> [--write]`
+  applies the site's list of titles (dry run without `--write`); quotations are never touched.
+- **A click opens a picture whole**, on a wide screen only (phones and tablets already show it full width).
+- **The path is centred:** evenly spaced dots, each step centred under its dot.
+- **How he died:** the later story goes on the right, under the last words.
+- **"Doubted from the start" fills the empty cell** beside an odd last wonder.
+- **The miracles' opening quotation stands 15px clear** of the dark panel under it.
+- **Plain words for the facts too**: "kept what he heard read" was unclear; say what the source says.
+- **A person with a personality type keeps the pictures column short** (Antony: the type box must not be pushed
+  far down); extra art there only if it truly fits.
+- Cyprian's tile reads "100k", not "100,000".
+
 ## HIS NOTES OF 2026-09-25, SECOND ROUND (Justin, Irenaeus): binding for every page
 
 - **"His path, in order"**, never "roles" ("calling 'Martyr' a role is odd"). The data key stays `roles`.
