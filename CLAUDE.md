@@ -78,11 +78,14 @@ His order from here (his words: "enhance the Biblical figures pages first ... be
 1. **Bible figure pages** (`/figure/<slug>/`, 25 of them): they should become "a lightened version of the saints
    pages, but more complete than ... now". The trigger: the hub's thumbnails show a personality type for 8 of them
    (Moses, Gideon, Elijah, John the Baptist, Martha, Peter, Barnabas, Paul) that their pages never mention or explain.
-   The plan proposed to him (awaiting his go): Peter first as the exemplar, then the rest.
+   **Peter is built (his go: "Go ahead with Peter first") on the branch `figures/peter`, NOT merged**, previewed at
+   https://wiser-walk-git-figures-peter-sunjo.vercel.app/figure/peter/ (behind his Vercel login). Ask how it reads;
+   with his go, merge and then do the other 24 the same way (README "BIBLE FIGURE PAGES DRAWN LIKE A SAINT'S").
 2. **The next 12 saints** (researched, not built): `design/saints-hub/research/NEXT-12.md`. He wants to reach 40 (23
-   live + the 5 personality-test people + 12) and then return to quizzes. Open for him: the modern saints (Carlo Acutis,
-   Mother Teresa, Padre Pio: their words and most photographs are in copyright; three options in the file) and
-   whether a "public domain in the US" photograph (Thérèse) is enough. He asked for efficiency: he wants weekly usage
+   live + the 5 personality-test people + 12) and then return to quizzes. His ruling (2026-09-26): saints before about 1400, ideally before
+   700, and no modern saints for now (memory saints-scope-before-1400): Teresa of Ávila and Thérèse leave the list,
+   Perpetua and Felicity and Catherine of Siena are proposed instead, Joan of Arc (died 1431) is his call. His "40" was
+   a miscount, he says: the job is simply the 12. He asked for efficiency: he wants weekly usage
    left to finish the 12 before the reset.
 
 ## (earlier) POLYCARP IS LIVE (23 SAINT PAGES); HE BRINGS NOTES ON THE OTHER PAGES
