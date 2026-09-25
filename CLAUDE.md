@@ -66,7 +66,25 @@ rules so they don't happen again". `site/scripts/quiz-page-test.mjs` (postbuild)
 9. **A special card among cards looks like its siblings**, marked only by an icon and a small tag.
 10. **No placeholder pictures** (a monogram where a face should be is "not acceptable").
 
-## NEXT SESSION STARTS HERE (after 2026-09-26): THE OTHER 24 BIBLE FIGURES
+## NEXT SESSION STARTS HERE (2026-09-25, evening): 8 FIGURE PAGES LIVE; THE OTHER 16 ARE BRIEFED FOR A CLOUD SESSION
+
+**Live on `main`:** Elijah (`cbcf98e`, first and alone: someone he knows was waiting for it), then Moses, Gideon, John
+the Baptist, Martha, Barnabas, Paul (`f019530`). One Opus writer per page from `design/saints-hub/FIGURE-BRIEF.md`,
+one light check-and-fix per group; about 420k to 510k subagent tokens a page. Each page was looked at at 390 and 1360.
+
+**His rulings today:** every Bible figure with a page joins the Saints hub, in the Bible's order (`BIBLE_ORDER` in
+`lib/saints/data.ts`), **except Jesus, never** ("He doesn't belong in a saints list as it would send the wrong
+message"); saints-test.mjs guards it, and that no Old Testament person is called St. He asked for a brief so a cloud
+session can write the other 16: `design/saints-hub/CLOUD-FIGURES-BRIEF.md` (his five setup steps at its top; it pushes
+to `claude/figures-wave-2`; merge it here, then measure each sheet, render each card, look at each page, test, push).
+He has $250 of cloud credits; how they bill was not confirmed (claude.ai/settings/usage).
+
+**Open with him:** his taste calls on the eight (the list in the last message of this session: Elijah's "Honoured by"
+fact reaching beyond the Church; Moses's length, Hobbes and Britannica's "erroneous"; Martha's band showing the
+Tarascon dragon; extras on Moses, Gideon, Paul). **Jesus's page needs a plan he approves before anything is written.**
+Then the 12 saints (`design/saints-hub/research/NEXT-12.md`).
+
+## (earlier, 2026-09-25) THE OTHER 24 BIBLE FIGURES
 
 **Peter's enriched page is LIVE** (main, /figure/peter/). He loved it: "Peter's page looks fantastic, if we can complete
 the rest of the Biblical figures to this degree that would be amazing." His standing steer:
