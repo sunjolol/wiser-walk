@@ -158,7 +158,7 @@
   padding: 0 .95rem; border-radius: var(--r-pill); background: var(--shell); color: var(--ink-soft);
 }
 .fq:focus-within { box-shadow: inset 0 0 0 2px var(--accent); color: var(--accent); }
-.fq input { flex: 1; min-width: 0; border: 0; padding: 0; background: transparent; color: var(--ink); font-family: var(--ui); font-size: 1rem; outline: none; }
+.fq input { flex: 1; min-width: 0; border: 0; padding: 0; background: transparent; color: var(--ink); font-family: var(--ui); font-size: .9rem; outline: none; }
 .fq input::placeholder { color: var(--ink-soft); }
 .ftool-bar.is-stuck .people-count { display: none; }
 .ftool-bar.is-stuck .fq { display: flex; }
