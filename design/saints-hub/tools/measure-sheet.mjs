@@ -1,5 +1,6 @@
 // Measure a saint page's "At a glance" sheet on a dev server (the saints worktree runs on port 4344).
 //   node measure-sheet.mjs <slug> [port]
+// CHROME=<path> picks another Chrome (a Linux cloud session: CHROME=$(command -v google-chrome chromium | head -1)).
 // Prints, at 1360 wide with every picture decoded: the heights of the facts column (main), the
 // numbers column (stats) and the pictures column (side), the gaps, and each desktop traits row's
 // left and right content heights. Then, at 390, whether any gallery picture shows (it must not).
@@ -16,7 +17,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 async function open(width, height, mobile) {
   const p = 9300 + Math.floor(Math.random() * 600);
   const prof = mkdtempSync(join(tmpdir(), 'measure-'));
-  const chrome = spawn('C:/Program Files/Google/Chrome/Application/chrome.exe', [
+  const chrome = spawn(process.env.CHROME ?? 'C:/Program Files/Google/Chrome/Application/chrome.exe', [
     '--headless=new', '--disable-gpu', '--hide-scrollbars', '--no-first-run',
     `--user-data-dir=${prof}`, `--remote-debugging-port=${p}`, `--window-size=${Math.max(width, 500)},${height}`, 'about:blank'
   ], { stdio: 'ignore' });

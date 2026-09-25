@@ -32,7 +32,17 @@ How it is built (one template for both kinds, so every rule he makes for a saint
 - `saints-test.mjs` checks figure pages as it checks saint pages; `design/og/cards.mjs` gives each a "Who was X?" card;
   `measure-sheet.mjs` takes a path (`MSYS_NO_PATHCONV=1 node ... /figure/peter/ 4321` in Git Bash).
 - Lighter than a saint page by design: no "What was he like?" (the type box and the quiz's record already show his
-  temperament), and sections only where Scripture or early sources fill them. The quiz's lines quote the World English
+  temperament), and sections only where Scripture or early sources fill them.
+- **The other 24 (2026-09-25):** each page is written by one Opus writer from `FIGURE-BRIEF.md` (research and write in
+  one pass), with ONE light check-and-fix pass per few pages (his steer: quality first, but no verifier fleets).
+  Elijah went first and alone (someone he knows was waiting for it); then Moses, Gideon, John the Baptist, Martha,
+  Barnabas, Paul. The other 16 are for a cloud session: `CLOUD-FIGURES-BRIEF.md`. Jesus waits for a plan he approves.
+- **Every figure with a page joins the hub** in the Bible's order (`BIBLE_ORDER` in `lib/saints/data.ts`), with the
+  personality face where one exists and otherwise its own `<slug>-card.jpg`. **Never Jesus** (his ruling: a list of
+  saints "would send the wrong message"); saints-test.mjs guards both, and that no Old Testament person is called St.
+- `death.title` renames "How he died" where the record tells no death (Elijah: "How he was taken up").
+- `tools/italicize.mjs --write` rewrites every JSON file in the folder it is given: while other writers are working
+  in that folder, run it without `--write` and apply its suggestions to your own file by hand. The quiz's lines quote the World English
   Bible; the page's own lines quote the BSB, and the notes say which is which.
 
 ## POLYCARP'S PAGE IS WRITTEN (night of 2026-09-25), LIVE since 2026-09-26 with his go

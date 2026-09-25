@@ -48,6 +48,12 @@ const pages = files.map(f => ({ f, p: JSON.parse(readFileSync(join(DATA, f), 'ut
 /* Bible figure pages drawn like a saint's (src/data/figures/, 2026-09-26): the same checks on each
    page, none of the move list's (they never had an /early-christian/ address). */
 const FIG = join(ROOT, 'src/data/figures');
+/* Every figure with a page joins the hub in the Bible's order (lib/saints/data.ts BIBLE_ORDER),
+   except Jesus, who never does: a list of saints is not a place for Him (the owner, 2026-09-25). */
+const bibleOrder = [...readFileSync(join(ROOT, 'src/lib/saints/data.ts'), 'utf8')
+  .matchAll(/const BIBLE_ORDER = \[([^\]]*)\]/g)][0]?.[1].match(/'[^']+'/g)?.map(s => s.slice(1, -1)) ?? [];
+const OLD_TESTAMENT = new Set(['abraham', 'moses', 'joseph', 'david', 'jonathan', 'elijah', 'nehemiah', 'daniel', 'gideon',
+  'deborah', 'esther', 'ruth', 'hannah', 'abigail', 'rahab', 'judith', 'tobit']);
 const figPages = (existsSync(FIG) ? readdirSync(FIG).filter(f => f.endsWith('.json')) : [])
   .map(f => ({ f, p: JSON.parse(readFileSync(join(FIG, f), 'utf8')), figure: true }));
 
@@ -138,6 +144,15 @@ console.log('saints: each page');
          title, his description, his band or his card. Other people's titles may say it. */
       const his = [p.name, p.short, p.seo.title, p.seo.description, p.band.lede, p.card.line, p.who].map(plainText);
       if (his.some(s => /\bSt\.? /.test(s) || /\bSaint /.test(s))) no('"St" used for a person not counted a saint');
+    }
+    /* An Old Testament person is "honoured as a saint in the Orthodox and Catholic calendars",
+       never "St Moses" or "Saint Elijah" (the owner's rule for the figure pages, 2026-09-25). */
+    if (figure && p.slug !== 'jesus' && !bibleOrder.includes(p.slug)) no('not in BIBLE_ORDER (lib/saints/data.ts), so the hub would leave it out');
+    if (bibleOrder.includes('jesus')) no('Jesus is in BIBLE_ORDER: He is never listed among the saints');
+    if (figure && OLD_TESTAMENT.has(p.slug)) {
+      const named = new RegExp(`\\b(St\\.?|Saint) (${p.name}|${p.short})\\b`);
+      const { sources, ...shown } = p;
+      if (strings(shown).map(plainText).some(s => named.test(s))) no(`"St ${p.short}" or "Saint ${p.short}": an Old Testament person is never called St`);
     }
     for (const side of ['west', 'east']) {
       const list = p.feasts?.[side] ?? [];

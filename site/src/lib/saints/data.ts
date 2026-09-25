@@ -26,6 +26,7 @@ import wec from '../../data/which-early-christian.json';
 import personality from '../../data/personality.json';
 import type { SaintPage } from './types';
 import { hasMoved } from './moved';
+import { FIGURE_PAGES } from './figures';
 
 const files = import.meta.glob<SaintPage>('../../data/saints/*.json', { eager: true, import: 'default' });
 
@@ -173,15 +174,39 @@ const EARLY_AND_MORE = Object.values(SAINTS)
     return list;
   }, [...EARLY]);
 
-/** Everyone on the hub, oldest first, then the Bible people. */
-export const HUB: HubPerson[] = [
-  ...EARLY_AND_MORE,
-  ...BIBLE.map((b): HubPerson => ({
+/**
+ * The Bible figure quiz's people in the Bible's order, roughly when they lived. The personality
+ * test's eight (BIBLE, above) are always on the hub with its face and line; every other figure
+ * joins when it has a page of its own (src/data/figures/<slug>.json), with that page's card (the
+ * owner, 2026-09-25). Jesus is not in this list and never joins: a list of saints is not a place
+ * for Him ("it would send the wrong message").
+ */
+const BIBLE_ORDER = [
+  'abraham', 'joseph', 'moses', 'rahab', 'deborah', 'gideon', 'ruth', 'hannah', 'jonathan', 'david', 'abigail',
+  'elijah', 'tobit', 'judith', 'daniel', 'esther', 'nehemiah',
+  'mary-of-nazareth', 'john-the-baptist', 'martha', 'mary-magdalene', 'peter', 'barnabas', 'paul'
+];
+const NEW_TESTAMENT_FROM = BIBLE_ORDER.indexOf('mary-of-nazareth');
+
+const BIBLE_PEOPLE: HubPerson[] = BIBLE_ORDER.flatMap((slug, i): HubPerson[] => {
+  const b = BIBLE.find(x => x.slug === slug);
+  if (b) return [{
     slug: b.slug, name: b.name, dates: b.testament, line: b.line, href: `/figure/${b.slug}/`,
     img: `/img/personality/faces/${b.slug}.jpg`, focus: '50% 40%', groups: ['bible', ...words(b.groups ?? '')],
-    lived: 'bible', side: [], type: b.type, alias: '', full: false
-  }))
-];
+    lived: 'bible', side: [], type: b.type, alias: FIGURE_PAGES[slug]?.filters.alias ?? '', full: !!FIGURE_PAGES[slug]
+  }];
+  const page = FIGURE_PAGES[slug];
+  if (!page) return [];
+  return [{
+    slug, name: page.name, dates: i < NEW_TESTAMENT_FROM ? 'Old Testament' : 'New Testament', line: page.card.line,
+    href: `/figure/${slug}/`, img: page.card.img, focus: page.card.focus ?? '50% 25%',
+    groups: page.filters.groups.includes('bible') ? page.filters.groups : ['bible', ...page.filters.groups],
+    lived: 'bible', side: [], type: page.type, young: page.typeYoung, alias: page.filters.alias ?? '', full: true
+  }];
+});
+
+/** Everyone on the hub, oldest first, then the Bible people. */
+export const HUB: HubPerson[] = [...EARLY_AND_MORE, ...BIBLE_PEOPLE];
 
 /** A person's page by their slug, or null where the site has none (Mary of Bethany, today). */
 export const hubHref = (slug: string): string | null => HUB.find(p => p.slug === slug)?.href ?? null;

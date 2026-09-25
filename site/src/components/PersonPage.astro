@@ -95,7 +95,7 @@ const SECTIONS = [
   ['myths', 'Often misquoted', !!p.myths?.length],
   ['stood', `Where ${he} stood`, stances.length > 0],
   ['circle', 'Friends, family and rivals', !!p.circle?.length],
-  ['death', `How ${he} died`, !!p.death],
+  ['death', p.death?.title ?? `How ${he} died`, !!p.death],
   ['saint', `Is ${he} a saint?`, true],
   ['prayer', p.prayer?.title ?? `A prayer ${he} wrote`, !!p.prayer],
   ['read', 'What to read first', !!p.reads?.length],

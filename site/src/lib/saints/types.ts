@@ -245,6 +245,9 @@ export interface SaintPage {
 
   /** HOW HE DIED */
   death?: {
+    /** Replaces the heading where the record tells no death: Elijah is taken up in a whirlwind,
+        so his is "How he was taken up". */
+    title?: string;
     big: Rich;
     paras: Rich[];
     later?: { title: string; text: Rich; cite: Cite };

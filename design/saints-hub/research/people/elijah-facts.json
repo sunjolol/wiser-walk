@@ -1,0 +1,278 @@
+{
+  "subject": "Elijah",
+  "slug": "elijah",
+  "page": "site/src/data/figures/elijah.json",
+  "checked_on": "2026-09-25",
+  "note": "Evidence for Elijah's Bible figure page. Every quotation is in elijah.quotes.json and passes verify-quotes.mjs. Fetched texts are in design/saints-hub/sources/people/elijah/ (gitignored): the BSB chapters quoted (bsb-elijah-chapters.txt, one verse a line; bsb-elijah-running.txt, the same chapters as running text for quotations that cross verses), Sirach 48 in the World English Bible British Edition and two KJV passages (copied from demos/sounds-like-scripture/raw), Josephus (Whiston, Gutenberg 2848), the OCA life, the Catholic Encyclopedia (Elijah; The Carmelite Order), the Jewish Encyclopedia (Elijah's Chair), azbyka.ru for 2 August, Strong's Hebrew 1827 and the Quran 37 (Pickthall). Some evidence points at texts already on disk elsewhere under sources/ (shared/, gregory-sources/).",
+  "life": [
+    {
+      "text": "Ahab son of Omri married Jezebel, daughter of Ethbaal king of the Sidonians, served Baal, and built Baal a temple and an altar in Samaria.",
+      "source": "1 Kings 16:29-33 (BSB).",
+      "url": "https://biblehub.com/bsb/1_kings/16.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Elijah the Tishbite, among the settlers of Gilead, foretold neither dew nor rain except at his word.",
+      "source": "1 Kings 17:1 (BSB). Catholic Encyclopedia, Elijah: \"Of Elias's origin nothing is known, except that he was a Thesbite; whether from Thisbe of Nephtali ... or from Thesbon of Galaad ... is not absolutely certain\".",
+      "url": "https://www.newadvent.org/cathen/05381b.htm",
+      "verified": true,
+      "note": "Page: where Tishbe was is not certain."
+    },
+    {
+      "text": "Ravens fed him at the Brook of Cherith; the widow of Zarephath's flour and oil lasted; her son was raised.",
+      "source": "1 Kings 17:2-24 (BSB).",
+      "url": "https://biblehub.com/bsb/1_kings/17.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Obadiah, over Ahab's palace, had hidden a hundred prophets, fifty to a cave; Ahab had searched every nation for Elijah.",
+      "source": "1 Kings 18:1-16 (BSB).",
+      "url": "https://biblehub.com/bsb/1_kings/18.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Carmel: 450 prophets of Baal and 400 of Asherah; twelve stones; four waterpots poured three times (twelve); the fire fell; the prophets of Baal were taken to the Kishon and killed; seven looks toward the sea; the cloud like a man's hand; he ran ahead of Ahab to Jezreel.",
+      "source": "1 Kings 18:17-46 (BSB).",
+      "url": "https://biblehub.com/bsb/1_kings/18.htm",
+      "verified": true,
+      "note": "The killing is told plainly, as the text tells it, with no detail added."
+    },
+    {
+      "text": "The drought: \"in the third year\" (1 Kings 18:1); \"three and a half years\" (Luke 4:25; James 5:17).",
+      "source": "BSB.",
+      "url": "https://biblehub.com/bsb/james/5.htm",
+      "verified": true,
+      "note": "Number tile 3½."
+    },
+    {
+      "text": "Jezebel's threat; the broom tree; the angel's bread twice; forty days and forty nights to Horeb; the cave; wind, earthquake, fire and \"a still, small voice\"; seven thousand who had not bowed to Baal; Elisha called at the plough with twelve teams of oxen.",
+      "source": "1 Kings 19 (BSB). The BSB, the KJV and the WEB all read \"still small voice\" (the BSB with a comma).",
+      "url": "https://biblehub.com/bsb/1_kings/19.htm",
+      "verified": true,
+      "note": "The owner's steer named \"gentle whisper\" as the other rendering; that is the NIV (copyrighted), so it is not quoted. The page's tidbit uses Strong's Hebrew 1827 instead."
+    },
+    {
+      "text": "Naboth's vineyard: Jezebel's letters, Naboth stoned, Elijah meets Ahab (\"So you have found me out, my enemy\"), Ahab's sackcloth, the disaster put off to his son's days.",
+      "source": "1 Kings 21 (BSB).",
+      "url": "https://biblehub.com/bsb/1_kings/21.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Ahaziah's fall and his inquiry of Baal-zebub; \"a hairy man ... with a leather belt around his waist\"; fire on two captains and their fifties; the third captain spared; Ahaziah died.",
+      "source": "2 Kings 1 (BSB). Sirach 48:3 (WEBBE): \"He brought down fire three times.\"",
+      "url": "https://biblehub.com/bsb/2_kings/1.htm",
+      "verified": true,
+      "note": "Told plainly, not dwelt on."
+    },
+    {
+      "text": "The last walk (Gilgal, Bethel, Jericho, the Jordan), the Jordan parted by the cloak, the double portion, the chariot of fire that separated them, the whirlwind, Elisha's cry, the cloak, fifty men searching three days.",
+      "source": "2 Kings 2:1-18 (BSB).",
+      "url": "https://biblehub.com/bsb/2_kings/2.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "A letter came to Jehoram (of Judah) from Elijah the prophet.",
+      "source": "2 Chronicles 21:12-15 (BSB).",
+      "url": "https://biblehub.com/bsb/2_chronicles/21.htm",
+      "verified": true,
+      "note": "Its timing is a known puzzle (Elisha is active under Jehoshaphat in 2 Kings 3); no source for the puzzle was fetched, so the page states the letter only."
+    },
+    {
+      "text": "Transfiguration: Moses and Elijah with Jesus; Luke: they spoke of His departure at Jerusalem.",
+      "source": "Matthew 17:1-8; Luke 9:30-33 (BSB).",
+      "url": "https://biblehub.com/bsb/matthew/17.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Menander on the drought under Ethbaal: \"a want of rain\" for a year, \"there came great thunders\" after supplication.",
+      "source": "Josephus, Antiquities, book 8, chapter 13 (Whiston), Gutenberg 2848.",
+      "url": "https://www.gutenberg.org/ebooks/2848",
+      "verified": true,
+      "note": "This Gutenberg text misprints the month as Hyperberetmus; the page quotes around it. 1 Kings 16:31 makes Ethbaal Jezebel's father."
+    },
+    {
+      "text": "Josephus: \"Elijah disappeared from among men, and no one knows of his death to this very day.\"",
+      "source": "Josephus, Antiquities, book 9, chapter 2 (Whiston).",
+      "url": "https://www.gutenberg.org/ebooks/2848",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "The Hebrew demamah (Strong's 1827): silence, stillness, calm; three occurrences (1 Kings 19:12, Job 4:16, Psalm 107:29).",
+      "source": "Bible Hub, Strong's Hebrew 1827, with Brown-Driver-Briggs.",
+      "url": "https://biblehub.com/hebrew/1827.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Luke 9:54: the KJV adds \"even as Elias did\"; the BSB does not have the words.",
+      "source": "KJV (Gutenberg 10); BSB Luke 9:54.",
+      "url": "https://biblehub.com/bsb/luke/9.htm",
+      "verified": true,
+      "note": ""
+    }
+  ],
+  "names_and_art": [
+    {
+      "text": "The name means \"My God is Yahweh [the Lord]\".",
+      "source": "LCMS commemorations, 20 July (shared/lsb-calendar.txt); Catholic Encyclopedia: \"Yahveh is God\".",
+      "url": "https://www.lcms.org/worship/church-year/commemorations",
+      "verified": true,
+      "note": "Page: my God is the LORD."
+    },
+    {
+      "text": "Family: the Bible names none. The OCA passes on from Epiphanius of Cyprus that his father Sobach saw angels swaddle him with fire and feed him with flames. The OCA calls him the first dedicated to virginity in the Old Testament; Cassian (Institutes, Book 1, chapter 1) says he \"displayed the flowers of a virgin life\".",
+      "source": "OCA life (sources/people/elijah/oca-elijah.txt); shared/npnf211.txt.",
+      "url": "https://www.oca.org/saints/lives/2026/07/20/102060-holy-glorious-prophet-elijah",
+      "verified": true,
+      "note": "The OCA's English is modern: paraphrased, not quoted."
+    },
+    {
+      "text": "Icons show him rising in a fiery chariot; the Orthodox pray to him against drought and for good weather; the first church in Russia (Kiev, under Igor) was his; the first Divine Liturgy in Alaskan waters was served on his feast in 1741 aboard Bering's ship.",
+      "source": "OCA life.",
+      "url": "https://www.oca.org/saints/lives/2026/07/20/102060-holy-glorious-prophet-elijah",
+      "verified": true,
+      "note": "Kiev and Alaska were cut from the page for space (the numbers column)."
+    },
+    {
+      "text": "Jews: a carved chair for Elijah at every circumcision, at the right hand of the sandek.",
+      "source": "Jewish Encyclopedia (1906), \"Elijah's Chair\".",
+      "url": "https://www.jewishencyclopedia.com/articles/5636-elijah-s-chair",
+      "verified": true,
+      "note": "The Passover cup of Elijah was not found in the Jewish Encyclopedia pages fetched; left out."
+    },
+    {
+      "text": "The Quran: \"Elias was of those sent (to warn)\", who asked his people why they cried to Baal.",
+      "source": "Quran 37:123-132, tr. Pickthall (1930), at sacred-texts.com.",
+      "url": "https://sacred-texts.com/isl/pick/037.htm",
+      "verified": true,
+      "note": "Not quoted on the page."
+    },
+    {
+      "text": "Carmel's Arabic name Jebel Mar Elyas; the Druze feast at El-Muhraka; Muslim reverence; the Carmelites hailed him as their founder; Innocent XII silenced both parties in 1698; both Greek and Latin Churches keep 20 July.",
+      "source": "Catholic Encyclopedia (1909), \"Elijah\".",
+      "url": "https://www.newadvent.org/cathen/05381b.htm",
+      "verified": true,
+      "note": "The Druze feast is given as the Encyclopedia reported it in 1909."
+    },
+    {
+      "text": "The Carmelites' own notice (1247 to 1274): \"from the days of Elias and Eliseus the holy fathers of the Old and the New Dispensation dwelt on Mount Carmel\"; Elias on the Carmelite calendar in some places about 1480, in the whole order from 1551.",
+      "source": "Catholic Encyclopedia (1908), \"The Carmelite Order\", by Benedict Zimmerman.",
+      "url": "https://www.newadvent.org/cathen/03354a.htm",
+      "verified": true,
+      "note": "The claim is given in the order's own words; the historians' doubt in the Encyclopedia's."
+    }
+  ],
+  "later": [
+    {
+      "text": "Tertullian, A Treatise on the Soul 35: John came in Elijah's spirit and power, \"not (observe) in his soul and his body\", against a transmigration reading; 50: Enoch and Elijah \"are reserved for the suffering of death, that by their blood they may extinguish Antichrist.\"",
+      "source": "ANF 3 (shared/anf03.txt).",
+      "url": "https://www.newadvent.org/fathers/0310.htm",
+      "verified": true,
+      "note": "Dated about 210 (common dating of De Anima)."
+    },
+    {
+      "text": "Chrysostom, Homily 57 on Matthew: two comings; John was Elias by his office; \"if thou wouldest seek the Tishbite, he is coming.\"",
+      "source": "NPNF1 10 (shared/npnf110.txt).",
+      "url": "https://www.newadvent.org/fathers/200157.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "The OCA: Elijah will be the forerunner of the Second Coming, will preach repentance and be slain by the Antichrist.",
+      "source": "OCA life.",
+      "url": "https://www.oca.org/saints/lives/2026/07/20/102060-holy-glorious-prophet-elijah",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "What others said: Clement of Rome (1 Clement 17); Athanasius, Life of Antony 7 (the great Elias as a mirror); Cassian, Conferences 14.4 (Elijah and Elisha first among those \"joined most closely to God by the silence of solitude\"); Abba Nastir (\"Elijah loved silence\"), Budge, Paradise vol. 2, no. 605.",
+      "source": "shared/anf01.txt; gregory-sources/figures-saints/athanasius-life-of-antony.txt; shared/npnf211.txt; gregory-sources/figures-saints/budge-paradise-vol2.txt.",
+      "url": "https://archive.org/details/paradiseorgarden02ann",
+      "verified": true,
+      "note": "The owner's steer asked for the desert saying in a public-domain text or not at all: Budge (1907) has it word for word as the personality test prints it."
+    }
+  ],
+  "feasts": [
+    {
+      "text": "20 July: the Roman Martyrology (1916): \"On Mount Carmel, the holy prophet Elias.\"",
+      "source": "shared/martyrology-1916.txt, read as a scan (OCR splits \"Eli as\").",
+      "url": "https://archive.org/details/romanmartyrology00cathuoft",
+      "verified": true,
+      "note": "The present Roman Martyrology (2004) was not fetched; the Catholic row says \"In the Roman Martyrology, 20 July\" on the 1916 edition and the Catholic Encyclopedia."
+    },
+    {
+      "text": "The Litany of the Saints in the Calendarium Romanum (1969): Sancte Abraham, Sancte Moyses, Sancte Elia, ora pro nobis.",
+      "source": "shared/calendarium-romanum-1969-ocr.txt, lines 2345 to 2353.",
+      "url": "https://archive.org/details/CalendariumRomanum1969",
+      "verified": true,
+      "note": "Not quoted (the page never prints Saint before his name)."
+    },
+    {
+      "text": "LCMS: Elijah, 20 July. Not in the Church of England's calendar, the Episcopal Church's Lesser Feasts and Fasts 2022, or the ELCA's list.",
+      "source": "shared/lsb-calendar.txt; shared/cofe-calendar.txt; shared/lff2022.txt; shared/elca-churchyear.txt.",
+      "url": "https://www.lcms.org/worship/church-year/commemorations",
+      "verified": true,
+      "note": "The ELCA is not named on the page."
+    },
+    {
+      "text": "OCA: Holy, Glorious Prophet Elijah, 20 July. Russian Church: 2 August (Прор. Илии), with the troparion \"Во плоти Ангел, пророков основание, второй Предтеча пришествия Христова, Илия славный\".",
+      "source": "OCA day page; azbyka.ru/days/2026-08-02.",
+      "url": "https://azbyka.ru/days/2026-08-02",
+      "verified": true,
+      "note": "The troparion's English on the page is our translation. The Greek churches' 20 July rests on the Catholic Encyclopedia (\"Greek and Latin Churches\"); no Greek synaxarion was fetched. The Coptic calendar was not checked."
+    }
+  ],
+  "pictures": [
+    {
+      "text": "Band: Elijah Fed by the Raven, Giovanni Girolamo Savoldo, about 1510, National Gallery of Art, Washington, 1961.9.35. Commons licence tag {{CC0}} (NGA open access). 2371 x 2949 on Commons; whole picture, saved at 1447 x 1800, 331 KB (quality 74). posM 50% 10%, posD 50% 14%: the face is at about 51% across and 28% down, with the raven top right and the small fiery chariot in the sky top left.",
+      "source": "Commons file page wikitext, read 2026-09-25.",
+      "url": "https://commons.wikimedia.org/wiki/File:Giovanni_Girolamo_Savoldo,_Elijah_Fed_by_the_Raven,_c._1510,_NGA_46134.jpg",
+      "verified": true,
+      "note": "Guercino's Elijah Fed by Ravens (National Gallery, London) was only 633 x 800 on Commons."
+    },
+    {
+      "text": "Portrait: Elijah on the fiery chariot, a Russian icon of the 16th century (Moscow), State Historical Museum (Wikidata Q1140429), 107 x 124 cm. Commons licence tag {{PD-Russia}}; scanned from M. V. Alpatov, Early Russian Icon Painting (1978). 4080 x 5056, stored upside down (EXIF); turned, cropped 4.5% top and bottom and 1.5% each side to remove the frame clamps, saved at 1290 x 1500, 411 KB.",
+      "source": "Commons file page wikitext, read 2026-09-25.",
+      "url": "https://commons.wikimedia.org/wiki/File:Elie_with_the_firey_wagon.jpg",
+      "verified": true,
+      "note": "Rejected: the Novgorod icon (Tretyakov) at 814 x 996, too small; a 17th-century North Russian icon (0159Hb) whose Commons page adds {{self|cc-by-sa-4.0}} for the photograph; the MET's Fiery Ascension (CC0) is black and white; the Vybuty icon is the personality face."
+    }
+  ],
+  "could_not_verify": [
+    "The Passover cup of Elijah: not found in the Jewish Encyclopedia articles fetched; the chair at circumcision is told instead.",
+    "The present Roman Martyrology (2004) and the Carmelites' own calendar today: not fetched. The page rests on the 1916 Martyrology and the Catholic Encyclopedia.",
+    "A Greek synaxarion and the Coptic calendar for Elijah: not fetched; the Coptic Church is not named.",
+    "\"Gentle whisper\" (NIV) and \"a sound of sheer silence\" (NRSV) are copyrighted renderings: not quoted.",
+    "Whether the widow's son is the first person raised from the dead in the Bible: no source fetched, so the page does not say it.",
+    "Mount Saint Elias in Alaska, named on his feast in 1741: not fetched, left out."
+  ],
+  "checker_2026_09_25": {
+    "checked": [
+      "Every number and date against the texts on disk: 3½ years (Luke 4:25; James 5:17), 450 and 400 prophets, 12 jars (four, three times), 7 looks, 40 days, fifty men for three days, 1551 and 1698 (Catholic Encyclopedia, Carmelite Order), the notice of 1247 to 1274, Tertullian about 210.",
+      "Feasts in the calendar texts: 20 July in the 1916 Martyrology (read in the OCR: 'On Mount Carmel, the holy prophet Eli as', between St Margaret and Joseph Barsabbas), LCMS 20 July, azbyka old style 20 July = 2 August, the OCA; the Catholic Encyclopedia's 'honoured by both the Greek and Latin Churches on 20 July'.",
+      "Attributions in context: Menander in Josephus (Antiquities 8.13), Josephus 9.2, Athanasius Life of Antony 7, Abba Nastir (Budge no. 605), Tertullian On the Soul 35 and 50, Chrysostom Homily 57, Cassian Institutes 1.1, the OCA life (Epiphanius and Sobach, the first dedicated to virginity, prayed to against drought, slain by the Antichrist), the Druze feast at El-Muhraka and Innocent XII (Catholic Encyclopedia, Elijah), Gregory's Dialogues line in kin, the test's own words for the type note (personality.json).",
+      "The two myths' truths against 2 Kings 2:11, Sirach 48:9, 1 Kings 19 and Romans 11.",
+      "Capitals for God in quotations and our text; no 'Saint Elijah' or 'St Elijah'; book titles in italics; no section marks.",
+      "Both pictures' licences in the Commons wikitext (Savoldo: {{CC0}}, NGA 1961.9.35; the icon: {{PD-Russia}}, 16th century, State Historical Museum); both files looked at: the icon is the right way up and the alt texts match."
+    ],
+    "changed": [
+      "1 Kings 18:24 on Carmel: 'The God who answers by fire' now 'The God Who answers by fire' (the capitals rule), in the page and in elijah.quotes.json.",
+      "The fact labelled 'Prayed to' is now 'Patron of' ('Rain and good weather: the Orthodox pray to him in drought.'), so the Carmelite line under it fits the label.",
+      "The dark panel's first label 'His last words to Elisha' is now 'Across the Jordan, to Elisha': 2 Kings 2:10, the second line on the panel, came after it.",
+      "The words note and the BSB source line said every Bible line was BSB except Sirach; the Luke 9:54 tidbit also quotes the King James Version. Both now name the one King James line."
+    ],
+    "left_for_owner": [
+      "The 'Honoured by' fact reaches beyond the Church (the chair at circumcision, the Quran, the Druze feast as the Catholic Encyclopedia reported it in 1909). Cut it if he wants the page kept to Christian practice.",
+      "The second picture's Commons tag is PD-Russia (scanned from Alpatov's 1978 book), not the usual PD-Art; the icon itself is an anonymous work of the 1500s.",
+      "'published' and 'modified' say 2026-09-25; Peter's page says 2026-09-26.",
+      "The Catholic row rests on the 1916 Martyrology and the Catholic Encyclopedia; the 2004 Martyrology was not fetched. No Greek synaxarion or Coptic calendar was checked."
+    ]
+  }
+}

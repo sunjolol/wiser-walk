@@ -337,6 +337,8 @@ long side.
 |---|---|---|---|
 | peter-band.jpg | The Tears of Saint Peter, El Greco, 1580s (Art UK via Wikidata Q9394999: 1580 to 1589), The Bowes Museum, Barnard Castle, B.M.642. The page's band. Cropped a little at the right and the foot (to 92% of the width and 86% of the height) so his face is larger, then resized to 1562 x 1800 | `El Greco - Tears of Saint Peter 3164.jpg` (3164 x 3900) | Public domain (PD-Art, PD-old-100-expired) |
 | peter-2.jpg | Saint Peter, encaustic icon of the 6th or 7th century (Commons gives both), St Catherine's Monastery, Mount Sinai. The page's second picture. The file's EXIF turn applied (the original is stored upside down); cropped from 16.5% to 87% of its height, from the top of his halo to the keys in his hand, leaving out the three medallions above him; resized to 1256 x 1500 | `Saint Peter-Sinai (6th Century).jpg` (7792 x 13200) | Public domain (PD-Art, PD-old-100-expired) |
+| elijah-band.jpg | Elijah Fed by the Raven, Giovanni Girolamo Savoldo, about 1510, National Gallery of Art, Washington, 1961.9.35. The page's band. The whole picture, resized to 1447 x 1800 | `Giovanni Girolamo Savoldo, Elijah Fed by the Raven, c. 1510, NGA 46134.jpg` (2371 x 2949) | CC0 (NGA open access) |
+| elijah-2.jpg | Elijah on the fiery chariot, a Russian icon of the 16th century (Moscow), State Historical Museum, Moscow; the Commons scan is from M. V. Alpatov, Early Russian Icon Painting (1978). The page's second picture. The file's EXIF turn applied (the original is stored upside down); cropped 4.5% at the top and foot and 1.5% at each side to take off the frame clamps; resized to 1290 x 1500 | `Elie with the firey wagon.jpg` (4080 x 5056) | Public domain (PD-Russia) |
 
 ## Another licence: the Saints hub (`saints/`)
 
