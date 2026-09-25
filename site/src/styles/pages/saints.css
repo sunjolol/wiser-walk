@@ -643,7 +643,7 @@ html.is-locked { overflow: hidden; }
 /* The owner's note 5: on a phone a box stands 6px from the screen's edge, so the text inside gets
    the width. Last in the file on purpose, so it wins over each box's own margins. */
 @media (max-width: 39.99rem) {
-  .sp > :is(.panel, .cs, .said, .words, .smoments, .myths, .stances, .split, .sreads, .squizzes, .kin, .colls, .people-wrap, .squiz, .circle),
+  .sp > :is(.panel, .cs, .said, .words, .smoments, .myths, .stances, .split, .sreads, .squizzes, .kin, .colls, .people-wrap, .squiz, .circle, .qf--prayer),
   .mir > :is(.raised, .wonders, .doubt) { margin-left: calc(6px - var(--gut)); margin-right: calc(6px - var(--gut)); }
   .spager { margin-left: calc(6px - var(--gut)); margin-right: calc(6px - var(--gut)); }
 }
@@ -678,3 +678,50 @@ html.is-locked { overflow: hidden; }
 .st-scale i.you { outline: 2px dashed var(--ink-mute); outline-offset: 3px; }
 /* the quiz card's kicker, title and line each on their own line (the mock-up set this inline) */
 .squiz-k, .squiz-t, .squiz-s { display: block; }
+
+/* ============================================================ the template meets other lives
+   Fixes for the 21 pages whose records are not Martin's shape (the visual check of 2026-09-25).
+   Martin's page comes out the same or closer to the mock-up. */
+
+/* A figure has no margin here, as in the mock-up: the browser's own 40px each side had made
+   every dark quotation panel narrower, and a long prayer a thin column 270px wide on a phone. */
+.sp figure { margin: 0; }
+
+/* A tall narrow icon never takes more than a screen's worth of height: Macrina's Kyiv fresco
+   ran to 865px on a phone. It keeps its shape and stands centred. */
+.portrait img { max-height: 30rem; object-fit: contain; }
+
+/* A long quotation keeps its last line whole (the owner's no-orphans rule): balance only works
+   up to six lines, and a prayer or a long line ran past it and left one word alone. */
+.qf blockquote { text-wrap: pretty; }
+
+/* The numbers on a phone: two tiles side by side share their rows, so a label that wraps to two
+   lines does not push its number lower than its neighbour's. */
+@media (max-width: 61.99rem) {
+  .stats { grid-auto-rows: auto; }
+  .stat { display: grid; grid-row: span 4; grid-template-rows: subgrid; justify-items: start; align-content: start; row-gap: 0; }
+  .stat-src { margin-top: 0; align-self: end; }
+}
+
+/* On a wide screen the two narrow columns beside the facts (the numbers, and the pictures) stay
+   in view while the facts scroll, instead of ending early above an empty stretch of page; and the
+   number tiles stay together at the top rather than spreading down a tall panel. */
+@media (min-width: 62rem) {
+  .cs-stats, .cs-side { align-self: start; position: sticky; top: 5rem; }
+  .stats { align-content: start; }
+}
+
+/* Feast days: a church calendar with four or more days on one side stacks West over East, each
+   across the full width, instead of squeezing them into its share of one row. */
+@media (min-width: 52rem) {
+  .cs-feasts--stack .feast-cols { grid-template-columns: minmax(0, 1fr); }
+  .cs-feasts--stack .feast-col ul { grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr)); }
+}
+
+/* Is he a saint? Five churches fit one row on a wide screen, rather than four and one alone. */
+@media (min-width: 46rem) { .churches { grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr)); } }
+
+/* Three-across grids with one card left alone on the last row go two across instead, where the
+   count allows it (four, eight, ten): set on the page from the count. */
+@media (min-width: 46rem) { .said.said--pairs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 52rem) { .kin.kin--pairs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

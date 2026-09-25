@@ -99,6 +99,8 @@ for (const x of [...extras].reverse()) {
 }
 const after = (id: string) => extras.filter(x => x.after === id);
 const title = (id: string) => SECTIONS.find(s => s[0] === id)?.[1] ?? '';
+/** A count that leaves one card alone in rows of three, but pairs off evenly: 4, 10, 16. */
+const pairs = (n: number) => n > 3 && n % 3 === 1 && n % 2 === 0;
 
 /* ---- links */
 const out = (c: Cite) => c.url;
@@ -257,7 +259,7 @@ const breadcrumbs = [
     )}
 
     {p.feasts && (p.feasts.west.length || p.feasts.east.length) ? (
-      <section class:list={['panel cs-feasts', !(p.feasts.west.length && p.feasts.east.length) && 'cs-feasts--one']} aria-label="Feast days"
+      <section class:list={['panel cs-feasts', !(p.feasts.west.length && p.feasts.east.length) && 'cs-feasts--one', Math.max(p.feasts.west.length, p.feasts.east.length) >= 4 && 'cs-feasts--stack']} aria-label="Feast days"
                style={p.feasts.west.length && p.feasts.east.length ? `--feast-cols: minmax(0, ${Math.min(p.feasts.west.length, 3)}fr) minmax(0, ${Math.min(p.feasts.east.length, 3)}fr)` : undefined}>
         <div class="feasts-h"><h3>feast days</h3>{p.feasts.west.length && p.feasts.east.length ? <p>East and West, side by side</p> : null}</div>
         <div class="feast-cols">
@@ -304,7 +306,7 @@ const breadcrumbs = [
     <>
       <SectionHead id="said" title={title('said').toLowerCase()} />
       {p.said.lede && <p class="sect-lede" set:html={rich(p.said.lede)} />}
-      <div class:list={['said', p.said.quotes.length === 2 && 'said--two', p.said.quotes.length === 1 && 'said--one']}>
+      <div class:list={['said', p.said.quotes.length === 2 && 'said--two', p.said.quotes.length === 1 && 'said--one', pairs(p.said.quotes.length) && 'said--pairs']}>
         {p.said.quotes.map(q => (
           <figure class="panel qc">
             <blockquote>{q.q}</blockquote>
@@ -496,7 +498,7 @@ const breadcrumbs = [
   {p.circle?.length ? (
     <>
       <SectionHead id="circle" title="friends, family and rivals" />
-      <div class="kin circle">
+      <div class:list={['kin circle', pairs(p.circle.length) && 'kin--pairs']}>
         {p.circle.map(c => {
           const href = c.key ? hubHref(c.key) : null;
           const Tag = href ? 'a' : 'div';
@@ -624,7 +626,7 @@ const breadcrumbs = [
   {p.kin?.length ? (
     <>
       <SectionHead id="kin" title={title('kin').toLowerCase()} />
-      <div class="kin">
+      <div class:list={['kin', pairs(p.kin.length) && 'kin--pairs']}>
         {p.kin.map(k => {
           const href = hubHref(k.key);
           const Tag = href ? 'a' : 'div';
