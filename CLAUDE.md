@@ -66,7 +66,19 @@ rules so they don't happen again". `site/scripts/quiz-page-test.mjs` (postbuild)
 9. **A special card among cards looks like its siblings**, marked only by an icon and a small tag.
 10. **No placeholder pictures** (a monogram where a face should be is "not acceptable").
 
-## LATEST (2026-09-25, night): HIS FIRST ROUND OF NOTES IS DONE; HE IS STILL READING THE SAINT PAGES
+## LATEST (2026-09-25, small hours): HIS SECOND ROUND (JUSTIN, IRENAEUS) IS DONE ON EVERY PAGE
+
+He is reading the saint pages top down on the preview and sending notes page by page. Round two is applied to all 21
+(branch `0883b0e`, preview updated): "His path, in order"; number tiles that make sense on their own; "Did you know?"
+(`tidbits`) filling the numbers column; more public-domain art on wide screens only (`gallery`); the taller trait
+of each desktop row on the left. Rules: `design/saints-hub/README.md` "HIS NOTES OF 2026-09-25, SECOND ROUND".
+Measure any sheet with `node design/saints-hub/tools/measure-sheet.mjs <slug> 4344`. On `main` (`91115e6`, live): the
+template, Martin's traits, and van Dalen's engraving on the /early-church-on/ quiz plate (he disliked the Jordaens).
+**Polycarp leads the next batch of full pages** (his ask). Taste items he may raise: several pages now share Jan
+Luyken's 1698 prints of the Fathers (a consistent series, but repeated across the hub); Macrina's new picture is a
+19th-century devotional print; Lactantius's and Cassian's are Nuremberg Chronicle stock woodcuts (captioned as such).
+
+## (earlier) HIS FIRST ROUND OF NOTES IS DONE; HE IS STILL READING THE SAINT PAGES
 
 He sent notes on the live site and on Clement's preview page, and said he would keep reviewing the other saint pages
 and send more. Everything he listed is done: `main` commit `31f4a16` (live, checked), branch `saints/the-21`
