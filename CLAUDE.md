@@ -66,6 +66,24 @@ rules so they don't happen again". `site/scripts/quiz-page-test.mjs` (postbuild)
 9. **A special card among cards looks like its siblings**, marked only by an icon and a small tag.
 10. **No placeholder pictures** (a monogram where a face should be is "not acceptable").
 
+## NEXT SESSION STARTS HERE (after 2026-09-25): PUSH ALL 22 SAINT PAGES LIVE, HIS GO IS GIVEN
+
+He said (2026-09-25): "this is definitely good enough to push and any further edits will be done on the live
+site ... set up for a new one where we will push everything live including the pages I haven't added notes about
+yet." So the first job is the merge, without asking again:
+1. `git checkout main && git pull && git merge saints/the-21` (the branch is `52efb46` or later; the template files
+   are identical on both sides, so any conflict there takes main's version).
+2. `cd site && npm run test && npm run build`: every guard must pass (saints, seo, quiz-page, small-text).
+3. Push `main`. Then check live: `/saints/` lists all 22 as full pages; each `/early-christian/<slug>/` answers 308
+   to `/saints/<slug>/` (curl -s -o /dev/null -w "%{http_code} %{redirect_url}"); `/early-christian/` 308s to
+   `/saints/`; spot-check a few pages at 390 and 1360.
+4. After that, his remaining notes (on the pages after Macrina in the hub's order) are edits to the LIVE site, in
+   `site/src/data/saints/<slug>.json` on `main`, pushed after the tests (memory: push-small-changes). The second
+   checkout `../wiser-walk-saints` and its `site-saints` launch config can then be removed
+   (`git worktree remove ../wiser-walk-saints`).
+Everything done so far, and the rules his notes made, are in `design/saints-hub/README.md` ("HIS NOTES OF 2026-09-25"
+rounds one to three). Polycarp leads the next batch of full pages.
+
 ## LATEST (2026-09-25, later): HIS THIRD ROUND (ORIGEN TO MACRINA) IS DONE
 
 He is still reading the saint pages top down (next after Macrina in the hub's order). Round three is live in the
