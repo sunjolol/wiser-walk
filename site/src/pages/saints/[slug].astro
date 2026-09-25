@@ -197,9 +197,11 @@ const breadcrumbs = [
   <SectionHead id="glance" title="at a glance" />
   <div class="cs">
     {p.roles?.length ? (
-      <section class="cs-path panel" aria-label={`${His} roles, in order`}>
+      /* "path", not "roles": the owner, 2026-09-25, on Justin's page ("calling 'Martyr' a role
+         is odd"). The data keeps the name `roles`. */
+      <section class="cs-path panel" aria-label={`${His} path, in order`}>
         <div class="path-in">
-          <p class="path-k">{His} roles, in order</p>
+          <p class="path-k">{His} path, in order</p>
           <ol class="path">
             {p.roles.map(r => <li><b>{r.name}</b><span>{r.line}</span></li>)}
           </ol>
@@ -207,18 +209,38 @@ const breadcrumbs = [
       </section>
     ) : null}
 
-    {p.numbers?.length ? (
-      <section class="cs-stats dark" aria-label={`${p.short} in numbers`}>
-        <p class="cs-stats-t">in numbers</p>
-        <ul class="stats">
-          {p.numbers.map(n => (
-            <li class="stat">
-              <span class="stat-chip">{n.chip}</span><b class="stat-n">{n.n}</b>
-              <ul class="stat-lines">{n.lines.map(l => <li>{l}</li>)}</ul>
-              <span class="stat-src">{n.src}</span>
-            </li>
-          ))}
-        </ul>
+    {p.numbers?.length || p.tidbits?.length ? (
+      <section class="cs-stats dark" aria-label={p.numbers?.length ? `${p.short} in numbers` : 'Did you know?'}>
+        {p.numbers?.length ? (
+          <>
+            <p class="cs-stats-t">in numbers</p>
+            <ul class="stats">
+              {p.numbers.map(n => (
+                <li class="stat">
+                  <span class="stat-chip">{n.chip}</span><b class="stat-n">{n.n}</b>
+                  <ul class="stat-lines">{n.lines.map(l => <li>{l}</li>)}</ul>
+                  <span class="stat-src">{n.src}</span>
+                </li>
+              ))}
+            </ul>
+          </>
+        ) : null}
+        {/* DID YOU KNOW? Short facts worth telling that are not numbers, under the numbers in the
+            same dark column (the owner, 2026-09-25, on Irenaeus's page: fill the space "without
+            forcing numbers where they don't belong"). */}
+        {p.tidbits?.length ? (
+          <div class="tids">
+            <p class="cs-stats-t">did you know?</p>
+            <ul class="tid-list">
+              {p.tidbits.map(t => (
+                <li class="tid">
+                  <p set:html={rich(t.text)} />
+                  <span class="cite">{t.cite.url ? <a href={t.cite.url} target="_blank" rel="noopener">{t.cite.text}</a> : t.cite.text}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
       </section>
     ) : null}
 
@@ -228,7 +250,7 @@ const breadcrumbs = [
       </dl>
     </section>
 
-    {(p.portrait || type) && (
+    {(p.portrait || type || p.gallery?.length) && (
       <div class="cs-side">
         {p.portrait && (
           <figure class="panel portrait">
@@ -236,6 +258,16 @@ const breadcrumbs = [
             <figcaption><b>In art</b><Fragment set:html={rich(p.portrait.caption)} /></figcaption>
           </figure>
         )}
+        {/* MORE OF HIM IN ART, on a wide screen only, where the facts beside this column leave it
+            room (the owner, 2026-09-25: fill the empty space on the right with more art of him;
+            phones keep the one picture). Each page carries only as many as fit without making the
+            sheet taller. */}
+        {p.gallery?.map(g => (
+          <figure class="panel portrait portrait--more">
+            <img src={g.src} alt={g.alt} width={g.width} height={g.height} loading="lazy" />
+            <figcaption><Fragment set:html={rich(g.caption)} /></figcaption>
+          </figure>
+        ))}
         {type && p.type && (
           <section class="panel temper" aria-label={`${His} personality type`} style={`--type: ${type.ink}`}>
             <div class="temper-pic">
