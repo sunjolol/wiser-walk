@@ -147,7 +147,9 @@
   white-space: nowrap; font-family: var(--ui); font-size: var(--fs-tag); font-weight: 700;
   letter-spacing: .16em; text-transform: uppercase; color: var(--ink-mute);
 }
-@media (min-width: 30rem) { .ask-quiz { display: block; } }
+/* from 37.5rem: at the tag size the early-Christian quiz's name was cut to "…" between 480 and
+   590px, a phone held sideways (2026-09-25) */
+@media (min-width: 37.5rem) { .ask-quiz { display: block; } }
 /*
  * "Statement 13 of 18", read at a glance: the display face at reading size with tabular
  * numerals, not a 9px tracked label that has to be hunted for.

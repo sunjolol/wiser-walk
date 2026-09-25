@@ -43,7 +43,9 @@
   text-transform: uppercase; color: var(--ink-mute); font-style: normal;
 }
 .ps-cite { margin: .5rem 0 0; }
-.ps-ref { white-space: nowrap; }
+/* The reference after a quotation rides on it: a tag, not a label. At the label size it pushed a
+   word of the quotation onto a line of its own on Psalms 31, 40 and 118 (2026-09-25). */
+.ps-ref { white-space: nowrap; font-size: var(--fs-tag); }
 .ps-soft { margin: .8rem 0 0; max-width: var(--measure); font-size: .94rem; color: var(--ink-soft); }
 .ps-soft a, .ps-greek a { color: var(--accent); text-underline-offset: 3px; }
 

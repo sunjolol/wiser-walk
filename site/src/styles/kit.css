@@ -304,7 +304,15 @@ body {
    uppercase words ("axes matched on") was being cut off mid-word at the tile's edge. Below
    the tablet it wraps instead; the tiles are flex items and stretch to the tallest. */
 @media (max-width: 39.99rem) {
-  .tile span { white-space: normal; text-wrap: balance; }
+  /* A one-word label cannot wrap, so the tracking gives way instead: at the tag size with the
+     wide tracking, "STATEMENTS" ran 5px past its tile at 390 (2026-09-25). */
+  .tile span { white-space: normal; text-wrap: balance; letter-spacing: .06em; }
+}
+/* and below 24rem (a 360px Android) the tile's own side padding gives way too: four tiles
+   across leave about 74px each there, and "STATEMENTS" needs 70 */
+@media (max-width: 23.99rem) {
+  .tile { padding-left: .35rem; padding-right: .35rem; }
+  .tile span { letter-spacing: .04em; }
 }
 @media (min-width: 40rem) {
   .tiles { gap: .6rem; }
