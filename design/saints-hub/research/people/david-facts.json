@@ -1,0 +1,371 @@
+{
+  "subject": "David",
+  "slug": "david",
+  "page": "site/src/data/figures/david.json",
+  "checked_on": "2026-09-25",
+  "note": "Evidence for the David figure page. Every quotation is in david.quotes.json and passes verify-quotes.mjs (123 printed, 111 entries, all word for word). Fetched texts are in design/saints-hub/sources/people/david/ (gitignored). The Bible is the Berean Standard Bible (public domain): the chapters quoted are copied, one chapter a line, into bsb-david-chapters.txt from shared/bsb-berean-standard-bible.txt; 1 Kings 15:5 is checked in the shared file. Sirach 47:8 is the World English Bible (shared/web-world-english-bible.txt). Josephus is Whiston's Antiquities (Gutenberg 2848, copied from the Moses folder). Augustine's two passages are excerpts of the NPNF volumes already fetched for Augustine (npnf108, npnf102). The LCMS lines come from shared/lsb-calendar.txt, whose broken characters (U+FFFD) were restored as apostrophes and one en dash in lsb-calendar-david.txt; no word changed.",
+  "life": [
+    {
+      "text": "Samuel sent to Bethlehem; Eliab passed over ('the LORD sees the heart'); seven sons pass; the youngest tending sheep; anointed before his brothers; the Spirit 'rushed upon David from that day forward'.",
+      "source": "1 Samuel 16:1-13 (BSB).",
+      "url": "https://biblehub.com/bsb/1_samuel/16.htm",
+      "verified": true
+    },
+    {
+      "text": "Saul tormented by a spirit of distress; a servant describes David ('a mighty man of valor, a warrior, eloquent and handsome'); Saul loved him, made him armour-bearer; David's harp brought relief.",
+      "source": "1 Samuel 16:14-23 (BSB).",
+      "url": "https://biblehub.com/bsb/1_samuel/16.htm",
+      "verified": true
+    },
+    {
+      "text": "Goliath of Gath, forty days morning and evening; David brings bread for his brothers (the cheese is for their commander); 'You are just a boy'; lions and bears; could not walk in Saul's armour; five smooth stones; ran toward the line; 'the battle is the LORD's'; the stone sank into his forehead. Only one stone is thrown.",
+      "source": "1 Samuel 17:4-51 (BSB).",
+      "url": "https://biblehub.com/bsb/1_samuel/17.htm",
+      "verified": true
+    },
+    {
+      "text": "The women's song (thousands / tens of thousands); Saul's jealous eye; the spear hurled while David played ('David eluded him twice'), and again in 19:10; Michal lowers him from a window and lays an idol with goat hair in the bed.",
+      "source": "1 Samuel 18:6-12; 19:9-17 (BSB).",
+      "url": "https://biblehub.com/bsb/1_samuel/18.htm",
+      "verified": true
+    },
+    {
+      "text": "Jonathan loved him as himself (18:1, 3); the New Moon (20:5); the arrow signal (20:20-22, 35-38: 'Isn't the arrow beyond you?'); Saul meant to kill him (20:33); 'kissed each other and wept together—though David wept more' (20:41).",
+      "source": "1 Samuel 18:1-4; 20 (BSB).",
+      "url": "https://biblehub.com/bsb/1_samuel/20.htm",
+      "verified": true
+    },
+    {
+      "text": "Nob: five loaves asked of Ahimelech; only the consecrated bread; Goliath's sword wrapped in a cloth ('There is none like it; give it to me'). Jesus cites the bread in Matthew 12:3-4.",
+      "source": "1 Samuel 21:1-9; Matthew 12:3-4 (BSB).",
+      "url": "https://biblehub.com/bsb/1_samuel/21.htm",
+      "verified": true
+    },
+    {
+      "text": "Gath: recognised, feigned madness, scratched on the doors, saliva on his beard; Psalm 34's heading: 'so that the king drove him away'; Adullam: family came; 'all who were distressed or indebted or discontented'; about 400 men. Psalm 142's heading: 'when he was in the cave'.",
+      "source": "1 Samuel 21:10 to 22:2; Psalm 34:1; 142:1 (BSB).",
+      "url": "https://biblehub.com/bsb/1_samuel/22.htm",
+      "verified": true
+    },
+    {
+      "text": "En-gedi: Saul with 3,000 men; the cave; David's men urge him; the corner of the robe; conscience stricken; 'The LORD forbid...'; calls after Saul, bows, shows the corner (24:11); Saul weeps: 'You are more righteous than I.'",
+      "source": "1 Samuel 24 (BSB).",
+      "url": "https://biblehub.com/bsb/1_samuel/24.htm",
+      "verified": true
+    },
+    {
+      "text": "Nabal and Abigail at Carmel: David's men had guarded Nabal's flocks (25:7, 15-16); 'Who is David?'; swords strapped on; Abigail's provisions; falls at his feet, takes the blame; 'Blessed is your discernment...'; Nabal dies ten days later; she becomes David's wife.",
+      "source": "1 Samuel 25 (BSB).",
+      "url": "https://biblehub.com/bsb/1_samuel/25.htm",
+      "verified": true
+    },
+    {
+      "text": "Saul and Jonathan die on Gilboa (Saul falls on his own sword, 31:4); at Ziklag David tears his clothes, mourns and fasts until evening; the Song of the Bow ('How the mighty have fallen!' three times: 1:19, 25, 27; 'I grieve for you, Jonathan, my brother'); anointed king of Judah at Hebron (2:4).",
+      "source": "1 Samuel 31; 2 Samuel 1:1, 11-27; 2:4 (BSB).",
+      "url": "https://biblehub.com/bsb/2_samuel/1.htm",
+      "verified": true
+    },
+    {
+      "text": "Seven years and six months at Hebron; the tribes: 'your own flesh and blood'; anointed king over Israel; thirty years old; the Jebusites' boast of the blind and lame; the fortress of Zion named the City of David.",
+      "source": "2 Samuel 5:1-9 (BSB).",
+      "url": "https://biblehub.com/bsb/2_samuel/5.htm",
+      "verified": true
+    },
+    {
+      "text": "The ark brought up with shouting and the ram's horn; linen ephod; 'danced with all his might before the LORD'; Michal despised him and mocked him before the maidservants; his answer (6:21-22).",
+      "source": "2 Samuel 6:12-22 (BSB).",
+      "url": "https://biblehub.com/bsb/2_samuel/6.htm",
+      "verified": true
+    },
+    {
+      "text": "House of cedar vs the tent; Nathan's night word: God will build David a house; 'Your house and kingdom will endure forever'; 'Who am I, O Lord GOD...'. Why he could not build it: 'You have shed much blood' (1 Chronicles 22:8).",
+      "source": "2 Samuel 7; 1 Chronicles 22:7-8 (BSB).",
+      "url": "https://biblehub.com/bsb/2_samuel/7.htm",
+      "verified": true
+    },
+    {
+      "text": "Spring, kings go to war, David stays; the roof; Bathsheba, wife of Uriah the Hittite; sent messengers, slept with her, she conceived; Uriah would not go home; the letter to Joab; Uriah killed; married her; 'the thing that David had done was evil in the sight of the LORD'.",
+      "source": "2 Samuel 11 (BSB).",
+      "url": "https://biblehub.com/bsb/2_samuel/11.htm",
+      "verified": true
+    },
+    {
+      "text": "Nathan's parable of the ewe lamb; 'You are that man!' (BSB wording); 'I have sinned against the LORD'; 'The LORD has taken away your sin'; the child dies on the seventh day; David washes, worships, eats: 'I will go to him...'.",
+      "source": "2 Samuel 12:1-23 (BSB).",
+      "url": "https://biblehub.com/bsb/2_samuel/12.htm",
+      "verified": true
+    },
+    {
+      "text": "Absalom stole the hearts of Israel (15:6), proclaimed in Hebron (15:10); David flees, crosses the Kidron (15:23), goes up the Mount of Olives weeping, barefoot, head covered (15:30); Shimei curses and stones him; Abishai; 'Leave him alone and let him curse me'.",
+      "source": "2 Samuel 15:1 to 16:13 (BSB).",
+      "url": "https://biblehub.com/bsb/2_samuel/15.htm",
+      "verified": true
+    },
+    {
+      "text": "Forest of Ephraim; 'Treat the young man Absalom gently for my sake'; Absalom's head caught in an oak, the mule goes on; Joab's three spears and his armour-bearers; David weeps in the chamber over the gate: 'O my son Absalom...'.",
+      "source": "2 Samuel 18 (BSB).",
+      "url": "https://biblehub.com/bsb/2_samuel/18.htm",
+      "verified": true
+    },
+    {
+      "text": "The census; Joab objects; conscience stricken ('I have sinned greatly'); the plague; 'Surely I, the shepherd, have sinned...'; Gad sends him to Araunah's threshing floor; refuses the gift: 'offerings that cost me nothing'; plague halted. The temple later built there (2 Chronicles 3:1, Ornan = Araunah).",
+      "source": "2 Samuel 24; 2 Chronicles 3:1 (BSB).",
+      "url": "https://biblehub.com/bsb/2_samuel/24.htm",
+      "verified": true
+    }
+  ],
+  "glance": [
+    {
+      "text": "Five smooth stones chosen; one thrown.",
+      "source": "1 Samuel 17:40, 49 (BSB).",
+      "url": "https://biblehub.com/bsb/1_samuel/17.htm",
+      "verified": true
+    },
+    {
+      "text": "Spared Saul twice: the cave at En-gedi (24) and the camp in the Wilderness of Ziph, taking the spear and water jug (26:1-12).",
+      "source": "1 Samuel 24; 26 (BSB).",
+      "url": "https://biblehub.com/bsb/1_samuel/26.htm",
+      "verified": true
+    },
+    {
+      "text": "Thirty when he became king; forty years: seven and a half in Hebron, thirty-three in Jerusalem.",
+      "source": "2 Samuel 5:4-5; 1 Kings 2:11 (BSB).",
+      "url": "https://biblehub.com/bsb/2_samuel/5.htm",
+      "verified": true
+    },
+    {
+      "text": "The mighty men: 'There were thirty-seven in all', the list ending with Uriah the Hittite.",
+      "source": "2 Samuel 23:8-39 (BSB).",
+      "url": "https://biblehub.com/bsb/2_samuel/23.htm",
+      "verified": true
+    },
+    {
+      "text": "73 psalms headed with his name in the Hebrew: counted from the BSB headings (Psalm 3-41 except 10 and 33; 51-65; 68-70; 86; 101; 103; 108-110; 122; 124; 131; 133; 138-145; Psalm 132 names David but is not headed with his name). The Catholic Encyclopedia gives the same count, 'and of many more in the Septuagint'. The LCMS: 'the author of no less than 73 psalms'.",
+      "source": "BSB Psalms; Catholic Encyclopedia (1911), 'Psalms'; LSB commemorations.",
+      "url": "https://www.newadvent.org/cathen/12533a.htm",
+      "verified": true
+    },
+    {
+      "text": "Water from the well of Bethlehem, poured out to the LORD.",
+      "source": "2 Samuel 23:13-17 (BSB).",
+      "url": "https://biblehub.com/bsb/2_samuel/23.htm",
+      "verified": true
+    },
+    {
+      "text": "Psalm 72:20 'Thus conclude the prayers of David son of Jesse'; more Davidic psalms follow (86, 101, 103...). The CE notes the same verse.",
+      "source": "Psalm 72:20 (BSB); Catholic Encyclopedia, 'Psalms'.",
+      "url": "https://biblehub.com/bsb/psalms/72.htm",
+      "verified": true
+    },
+    {
+      "text": "The Fathers' typology: Bethlehem, the shepherd and the Good Shepherd, five stones and five wounds, Ahithophel's betrayal, the passage over the Kidron. Jesus crosses the Kidron in John 18:1.",
+      "source": "Catholic Encyclopedia (1908), 'King David'; 2 Samuel 15:23; John 18:1 (BSB).",
+      "url": "https://www.newadvent.org/cathen/04642b.htm",
+      "verified": true
+    },
+    {
+      "text": "Anointed three times: Samuel at Bethlehem (1 Samuel 16:13), the men of Judah at Hebron (2 Samuel 2:4), the elders of Israel at Hebron (2 Samuel 5:3).",
+      "source": "BSB.",
+      "url": "https://biblehub.com/bsb/2_samuel/5.htm",
+      "verified": true
+    },
+    {
+      "text": "Family: Jesse son of Obed son of Boaz and Ruth (Ruth 4:17, 22); sister Zeruiah mother of Abishai, Joab and Asahel (1 Chronicles 2:16); nineteen sons named in 1 Chronicles 3:1-9 (six in Hebron, four by Bathsheba, nine more), 'besides the sons by his concubines', and Tamar their sister. Wives named include Michal, Ahinoam, Abigail, Maacah, Haggith, Abital, Eglah, Bathsheba.",
+      "source": "Ruth 4; 1 Chronicles 2 and 3; 2 Samuel 3:2-5 (BSB).",
+      "url": "https://biblehub.com/bsb/1_chronicles/3.htm",
+      "verified": true
+    },
+    {
+      "text": "Reign dated about 1010 to 970 BC by the LCMS; Britannica: flourished c. 1000 BCE. Died at seventy: thirty plus forty years (2 Samuel 5:4); Josephus, 'having lived seventy years'; the CE, 'at the age of seventy'.",
+      "source": "LSB commemorations; Britannica, 'David'; Josephus, Antiquities 7.15; CE 'King David'.",
+      "url": "https://www.britannica.com/biography/David",
+      "verified": true
+    },
+    {
+      "text": "Buried in the City of David (1 Kings 2:10); CE: 'He was buried on Mount Sion'; Peter at Pentecost (Acts 2:29). Poems of his in 2 Samuel 1, 3, 22, 23 (CE).",
+      "source": "1 Kings 2:10; Acts 2:29 (BSB); Catholic Encyclopedia, 'King David'.",
+      "url": "https://www.newadvent.org/cathen/04642b.htm",
+      "verified": true
+    },
+    {
+      "text": "No one else in the Bible bears the name David (CE). Not printed after the sheet was measured.",
+      "source": "Catholic Encyclopedia, 'King David'.",
+      "url": "https://www.newadvent.org/cathen/04642b.htm",
+      "verified": true
+    }
+  ],
+  "psalms_section": [
+    {
+      "text": "Headings: 73 in the Masoretic Text, many more in the Septuagint; thirteen headings tie a psalm to an event (3 and 63 Absalom; 51 his sin). NT citations of headless psalms as David's: Psalm 2 (Acts 4:25), Psalm 95 (Hebrews 4:7). Psalm 110 quoted by Jesus (Mark 12:36). Psalm 151 in the older Septuagint manuscripts, 'outside the number'; the Vulgate omits it.",
+      "source": "Catholic Encyclopedia (1911), 'Psalms'; BSB.",
+      "url": "https://www.newadvent.org/cathen/12533a.htm",
+      "verified": true
+    },
+    {
+      "text": "Talmud, Baba Bathra (14b): 'David wrote Psalms, with the assistance of ten elders' (Rodkinson spells Malachi Zedek and Hyman: Melchizedek and Heman on the page). Pesachim gives all to David (CE).",
+      "source": "Rodkinson, Baba Bathra ch. 1; CE 'Psalms'.",
+      "url": "https://sacred-texts.com/book/babylonian-talmud-tract-baba-bathra-last-gate/read/chapter-i",
+      "verified": true
+    },
+    {
+      "text": "Augustine, City of God 17.14: reports those who give David only the headed psalms, and those who give him only those 'of David' not 'for David'; himself holds all 150, with other men's names prefixed by inspiration. Ambrose also held sole authorship (CE).",
+      "source": "Augustine, City of God 17.14 (NPNF1 2); CE 'Psalms'.",
+      "url": "https://www.newadvent.org/fathers/120117.htm",
+      "verified": true
+    },
+    {
+      "text": "Jerome, Letter 140.4, in the CE's English: 'they err who deem all the psalms are David's...'; Origen, Hilary and Eusebius defended plural authorship (CE).",
+      "source": "CE 'Psalms'.",
+      "url": "https://www.newadvent.org/cathen/12533a.htm",
+      "verified": true
+    },
+    {
+      "text": "Trent's 'Psalterium Davidicum, 150 Psalmorum' did not define authorship (CE); the Biblical Commission, 1 May 1910: David not sole author of the whole Psalter, but 'It cannot be prudently denied that David is the chief author of the songs of the Psalter.'",
+      "source": "CE 'Psalms'.",
+      "url": "https://www.newadvent.org/cathen/12533a.htm",
+      "verified": true
+    },
+    {
+      "text": "Britannica: scholars believe the Psalter reflects all periods of Israel's history; 'The dating of individual psalms poses an extremely difficult problem, as does the question of their authorship.'",
+      "source": "Britannica, 'Psalms'.",
+      "url": "https://www.britannica.com/topic/Psalms",
+      "verified": true
+    }
+  ],
+  "myths": [
+    {
+      "text": "Goliath's height: MT 'six cubits and a span' (BSB footnote about 9 ft 9 in); LXX, DSS and Josephus 'four cubits and a span' (about 6 ft 9 in); Britannica: 'a sizable man, but not improbably tall'. Josephus, Antiquities 6.9.1.",
+      "source": "Bible Hub BSB 1 Samuel 17 footnote; Britannica, 'How Tall Was Goliath in the Bible?'; Josephus (Whiston).",
+      "url": "https://biblehub.com/bsb/1_samuel/17.htm",
+      "verified": true
+    },
+    {
+      "text": "Bathsheba: the text has David see, inquire, and send messengers; Nathan's parable and 11:27 lay it on David.",
+      "source": "2 Samuel 11:1-4, 27; 12:1-9 (BSB).",
+      "url": "https://biblehub.com/bsb/2_samuel/11.htm",
+      "verified": true
+    },
+    {
+      "text": "Absalom's hair: 18:9 'his head was caught fast'; 14:26 hair cut yearly, 200 shekels; Josephus 7.10.2 'entangled his hair greatly in the large boughs of a knotty tree'.",
+      "source": "2 Samuel 14:26; 18:9 (BSB); Josephus, Antiquities 7.10.",
+      "url": "https://www.gutenberg.org/ebooks/2848",
+      "verified": true
+    },
+    {
+      "text": "Star of David: JE (vol. 8, 1904): neither Bible nor Talmud; 'the shield of David is not mentioned in rabbinical literature'; earliest literary source Judah Hadassi, mid-12th century; Charles IV's red flag for the Jews of Prague, 1354, with David's shield and Solomon's seal; now the symbol of Judaism.",
+      "source": "Jewish Encyclopedia, 'Magen Dawid'.",
+      "url": "https://www.jewishencyclopedia.com/articles/10257-magen-dawid",
+      "verified": true
+    }
+  ],
+  "death": [
+    {
+      "text": "Adonijah's bid ('I will be king!'), Nathan and Bathsheba, Solomon anointed ('Long live King Solomon!'); the charge to Solomon (1 Kings 2:1-9, including Joab and Shimei, and Barzillai's sons to be rewarded); 'rested with his fathers and was buried in the City of David'; 1 Chronicles 29:28; Acts 2:29-31; the last words, 2 Samuel 23:1-4.",
+      "source": "1 Kings 1-2; 1 Chronicles 29:26-28; Acts 2:29-31; 2 Samuel 23:1-4 (BSB).",
+      "url": "https://biblehub.com/bsb/1_kings/2.htm",
+      "verified": true
+    },
+    {
+      "text": "Josephus 7.15.3: great wealth buried with him; 'a thousand and three hundred years afterward' Hyrcanus, besieged by Antiochus, opened one room and took 3,000 talents, part paid to Antiochus to raise the siege; Herod opened another; 'neither of them came at the coffins of the kings themselves'. Josephus's own reckoning of the years is printed as his.",
+      "source": "Josephus, Antiquities 7.15 (Whiston).",
+      "url": "https://www.gutenberg.org/ebooks/2848",
+      "verified": true
+    }
+  ],
+  "said": [
+    {
+      "text": "Acts 13:22; 1 Kings 15:5; Sirach 47:8 (WEB); Josephus, Antiquities 7.15.2; 1 Clement 18 (ANF 1: 'Yet this very man saith to God...'; 'a man after Mine own heart'); Augustine, Exposition on Psalm 51, section 3 ('many men will to fall with David...').",
+      "source": "BSB; WEB; Whiston; ANF 1; NPNF1 8.",
+      "url": "https://www.newadvent.org/fathers/1801051.htm",
+      "verified": true
+    }
+  ],
+  "calendars": [
+    {
+      "text": "Roman Martyrology 1916, 29 December: 'At Jerusalem, holy David, king and prophet.' Index: 'David, St., King and Prophet ... Dec. 29'.",
+      "source": "shared/martyrology-1916.txt.",
+      "url": "https://archive.org/details/romanmartyrology00cathuoft",
+      "verified": true
+    },
+    {
+      "text": "OCA: Holy Righteous David the King, with Joseph the Betrothed and James the Brother of the Lord, on the Sunday after the Nativity; moved to 26 December when no Sunday falls between 25 December and 1 January (so 26 to 31 December). The OCA life: 'a forefather of our Lord Jesus Christ according to the flesh'; 'He was also an example of great repentance.'",
+      "source": "oca-david.txt; oca-david-joseph-james.txt.",
+      "url": "https://www.oca.org/saints/lives/2026/12/27/86-commemoration-of-the-holy-righteous-david-the-king-joseph-the-be",
+      "verified": true
+    },
+    {
+      "text": "Coptic Synaxarium, 23 Kiahk (1 January; 2 January in the winter before a Gregorian leap day, by the Coptic leap rule): 'The Departure of David, the Prophet and King'; 'God was with him in all his ways, for his purity of heart and his meekness.'",
+      "source": "coptic-kiahk23.txt; shared/wikipedia-coptic-calendar.txt for the date rule.",
+      "url": "https://www.copticchurch.net/synaxarium/4_23.html?lang=en",
+      "verified": true
+    },
+    {
+      "text": "LCMS (LSB): 29 December, David; reign about 1010 to 970 B.C.; 'the author of no less than 73 psalms'; 'coupled with his willingness to acknowledge his sins and ask for God's forgiveness'.",
+      "source": "lsb-calendar-david.txt (from shared/lsb-calendar.txt).",
+      "url": "https://www.lcms.org/worship/church-year/commemorations",
+      "verified": true
+    },
+    {
+      "text": "Not in the Church of England (cofe-calendar.txt), Episcopal (lff2022.txt), ELCA (elca-churchyear.txt) or USCCB 2026 calendars: searched, only David of Wales, David of Scotland and psalm canticles found.",
+      "source": "shared calendars.",
+      "url": "",
+      "verified": true
+    }
+  ],
+  "pictures": [
+    {
+      "file": "site/public/img/figures/david-band.jpg",
+      "what": "King David Playing the Harp, Gerard van Honthorst, 1622, oil on canvas, 81 x 65 cm, Centraal Museum, Utrecht (inv. 8670), Google Art Project scan.",
+      "commons": "https://commons.wikimedia.org/wiki/File:Gerard_van_Honthorst_-_King_David_Playing_the_Harp_-_Google_Art_Project.jpg",
+      "license": "{{PD-Art|PD-old-100-1923|deathyear=1656}}, read on the file page",
+      "done": "1920 px Commons thumbnail resized to 1441 x 1800, JPEG q70 (about 390 KB: the fur and brocade do not compress smaller without visible loss)."
+    },
+    {
+      "file": "site/public/img/figures/david-2.jpg",
+      "what": "King David, icon, Novgorod school, late 1400s ('Slutten av 1400-tallet'), tempera on wood, Nasjonalmuseet, Oslo, NG.M.01771, gift of the Friends of the National Gallery 1934. Photo: Børre Høstland (museum record).",
+      "commons": "https://commons.wikimedia.org/wiki/File:Novgorod_School_-_King_David_-_NG.M.01771_-_National_Museum_of_Art,_Architecture_and_Design.jpg",
+      "license": "{{Licensed-PD-Art|PD-old-100-expired|cc-by-4.0}}: the icon is public domain and a faithful photo of a 2D work is public domain in the US; the museum also offers the photo under CC BY 4.0. Same tag and credit form as Basil's band (Nasjonalmuseet, Høstland).",
+      "done": "1280 px thumbnail resized to 1170 x 1500, q70 (about 450 KB)."
+    },
+    {
+      "file": "site/public/img/figures/david-3.jpg",
+      "what": "King David, Pedro Berruguete, late 1400s (Commons: c. 1458-1500), oil on panel, Bowdoin College Museum of Art, Kress Foundation.",
+      "commons": "https://commons.wikimedia.org/wiki/File:King_David_by_Pedro_Berruguete,_c._1458_-_1500,_Bowdoin_College_Museum_of_Art.png",
+      "license": "{{PD-old-70}}, read on the file page",
+      "done": "Original PNG 1166 x 951 saved as JPEG q80 (about 250 KB). Gallery, wide screens only."
+    },
+    {
+      "file": "site/public/img/figures/david-4.jpg",
+      "what": "King David, Guercino, 1651, a detail (head, shoulders, sceptre and the top of the tablet). Ex Spencer House; Commons source Christie's.",
+      "commons": "https://commons.wikimedia.org/wiki/File:%27King_David%27,_painting_by_Giovanni_Francesco_Barbieri_(il_Guercino)_c._1768.jpg",
+      "license": "{{PD-Art|PD-old-100-1923}}, read on the file page",
+      "done": "Detail cut from the 1280 px thumbnail, 892 x 923, q80 (about 200 KB). Gallery, wide screens only."
+    },
+    {
+      "file": "site/public/img/figures/david-card.jpg",
+      "what": "480 x 600 crop of the band (box 177,36 to 977,1036), face centred, eyes about 38 to 40% from the top.",
+      "commons": "",
+      "license": "as the band",
+      "done": ""
+    }
+  ],
+  "could_not_verify": [
+    "The present Roman Martyrology (2004) entry for 29 December: not fetched; the page cites only the 1916 edition.",
+    "Where Guercino's King David hangs today: the Commons file cites a Christie's sale; the credit names no collection.",
+    "The Talmud's folio (14b) is the Catholic Encyclopedia's 'Baba Bathra (14 f)' and the usual reference; Rodkinson's chapter 1 gives no folio numbers.",
+    "Michelangelo's statue and its height: Britannica's page could not be fetched (error page at every address tried), so it is not on the page."
+  ],
+  "checker_2026_09_25": {
+    "checked": "One light pass on 2026-09-25. Read the page and this file whole. Checked against the fetched texts: every number tile, the Catholic Encyclopedia David article (the Fathers' types: the shepherd, five stones and five wounds, the Cedron; buried on Mount Sion; the name borne by the king alone), the Psalms article (73 in the Massoretic text; Ambrose and Augustine for all; Origen, Hilary, Eusebius and Jerome's Letter 140 against; Trent's Psalterium Davidicum not defining authorship; the 1910 Commission's points), the BSB footnote and Britannica on Goliath's height, the Jewish Encyclopedia on the Magen Dawid (Hadassi, 12th century; Prague 1354), the LSB text (about 1010 to 970 BC, 'no less than 73', 'coupled with'), the OCA and Coptic lines, the 1916 Martyrology for 29 December, Possidius chapter 31, Josephus on Absalom's hair. Coptic 23 Kiahk = 1 January (2 January before a leap day) and the OCA Sunday range checked by calendar arithmetic. Commons licences: all four public domain. Card looked at: face centred, eyes about 38 percent. verify-quotes exit 0; saints-test passed; measure-sheet after the changes leftGap 11, rightGap 238, sheetTallerThanFacts 0.",
+    "changed": [
+      "The City of David moment said he was thirty when all Israel anointed him. 2 Samuel 5:4-5 puts thirty at the start of his reign in Hebron, seven and a half years earlier. Now 'He was thirty when he became king.' comes first, then the anointing over all Israel.",
+      "Number tile '37 mighty men, the last on the list Uriah the Hittite' removed: its punchline is the man David had killed, and after the owner's ruling on John the Baptist's '0 signs' (2026-09-25) a tile that lands on a failing reads as a jab. In its place, the writer's cut tidbit, checked in the Catholic Encyclopedia: no one else in the Bible is called David.",
+      "Family fact: 'Michal, Saul's daughter, Abigail and Bathsheba' (reads as four people) became 'Saul's daughter Michal, Abigail and Bathsheba'.",
+      "Wrote fact: 'See The psalms of David, below.' became 'More on the psalms below.'"
+    ],
+    "for_owner": [
+      "The psalms section is new ground (six panels, the 1910 Rome ruling labelled with its year): worth a read.",
+      "Band and icon files are about 380 KB and 440 KB, over the brief's 300 KB aim."
+    ]
+  }
+}

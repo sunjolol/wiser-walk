@@ -1,0 +1,310 @@
+{
+  "subject": "Mary Magdalene",
+  "slug": "mary-magdalene",
+  "page": "site/src/data/figures/mary-magdalene.json",
+  "checked_on": "2026-09-25",
+  "note": "Evidence for Mary Magdalene's Bible figure page. No personality type (no type box, no typeNote). A short record in Scripture (Luke 8:1-3; the passion and resurrection in all four Gospels) but a large later history, so the page is sized that way: seven moments, no miracles section (she worked none in the record; her healing is Jesus' act and is told in the moments), no death section (Scripture says nothing of her end; Ephesus and Provence are later traditions, told in the myths and the facts), and one section of her own, 'One woman, or three?', on Gregory the Great's joining of three women and its undoing, each side in its own words. Every quotation is in mary-magdalene.quotes.json and passes verify-quotes.mjs (five lines are our translations from Latin, one is read in the 1916 Martyrology scan). Fetched texts are in design/saints-hub/sources/people/mary-magdalene/ (gitignored). Bible lines are from the Berean Standard Bible (shared/bsb-berean-standard-bible.txt; the chapters used are copied to people/mary-magdalene/bsb-mary-magdalene-chapters.txt).",
+  "life": [
+    {
+      "text": "Luke first names her among the women travelling with Jesus and the Twelve, healed of evil spirits and infirmities: 'Mary called Magdalene, from whom seven demons had gone out'; with Joanna, Susanna and many others they ministered 'out of their own means'.",
+      "source": "Luke 8:1-3, BSB",
+      "url": "https://biblehub.com/bsb/luke/8.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Luke alone names her before the passion; all other mentions are at the cross, the burial and the tomb. 'Magdalene' is in 12 BSB verses: Matthew 27:56, 61; 28:1; Mark 15:40, 47; 16:1, 9; Luke 8:2; 24:10; John 19:25; 20:1, 18 (John 20:11 and 20:16 call her 'Mary').",
+      "source": "grep of the BSB text for 'Magdalene' (12 lines)",
+      "url": "https://biblehub.com/bsb/john/20.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "In every Gospel list of the women she comes first, except John 19:25 (His mother, her sister, Mary the wife of Clopas, then Mary Magdalene). Lists checked: Matthew 27:56, 61; 28:1; Mark 15:40, 47; 16:1; Luke 8:2; 24:10. The OCA says the same of the lists at the cross ('all mention Mary Magdalene first').",
+      "source": "BSB; OCA, 22 July",
+      "url": "https://biblehub.com/bsb/matthew/27.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "At the cross: Matthew and Mark say the women were 'watching from a distance' and name her first; John puts her 'near the cross of Jesus' with His mother. Luke 23:49 has the Galilean women at a distance but does not name them. Mark 14:50: 'Then everyone deserted Him and fled.'",
+      "source": "Matthew 27:55-56; Mark 14:50; 15:40-41; Luke 23:49; John 19:25",
+      "url": "https://biblehub.com/bsb/mark/15.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Three Gospels name her at the cross (Matthew, Mark, John); all four name her at the empty tomb (Matthew 28:1; Mark 16:1; Luke 24:10; John 20:1).",
+      "source": "BSB",
+      "url": "https://biblehub.com/bsb/matthew/28.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "The burial: Joseph of Arimathea, a rich man and a disciple, laid the body in his own new tomb cut in the rock and rolled a great stone across the entrance; 'Mary Magdalene and the other Mary were sitting there opposite the tomb.' The women prepared spices and rested on the Sabbath.",
+      "source": "Matthew 27:57-61; Mark 15:46-47; Luke 23:55-56",
+      "url": "https://biblehub.com/bsb/matthew/27.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Mark: she, Mary the mother of James and Salome bought spices; very early, just after sunrise, asking 'Who will roll away the stone from the entrance of the tomb?'; the stone was rolled away; a young man in white: 'He has risen! He is not here!' Matthew: Jesus met the women, 'Greetings!', they grasped His feet and worshiped Him. Luke 24:10-11: she, Joanna, Mary the mother of James and others told the apostles; their words 'seemed like nonsense to them'.",
+      "source": "Mark 16:1-8; Matthew 28:1-10; Luke 24:1-11",
+      "url": "https://biblehub.com/bsb/mark/16.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "John: while it was still dark she found the stone removed and ran to Simon Peter and the other disciple; they ran, saw the linen cloths, and returned home. She stood weeping; two angels in white sat where the body had lain, one at the head and one at the feet; she took Jesus for the gardener; He said 'Mary', she said 'Rabboni!' (Teacher); 'Do not cling to Me... go and tell My brothers'; she announced 'I have seen the Lord!'",
+      "source": "John 20:1-18",
+      "url": "https://biblehub.com/bsb/john/20.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Mark 16:9-11: 'He appeared first to Mary Magdalene, from whom He had driven out seven demons'; the others 'did not believe it'. The BSB's note at Bible Hub: 'Some early manuscripts end the Gospel of Mark after verse 8.' The page says 'missing from some early copies'.",
+      "source": "Mark 16:9-11 and its BSB note, at Bible Hub (people/mary-magdalene/biblehub-bsb-mark-16.txt)",
+      "url": "https://biblehub.com/bsb/mark/16.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Magdala: a small city on the Sea of Galilee between Capernaum and Tiberias (OCA). 'Magdalene', literally 'woman of Magdala', from Aramaic Maghdela, literally 'tower' (Etymonline).",
+      "source": "OCA, 22 July; Etymonline, 'Magdalene' (on the 'maudlin' page)",
+      "url": "https://www.etymonline.com/word/maudlin",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "'maudlin' (c. 1600, 'tearful, weeping') comes from the Middle English form of Magdalene; she was believed to be the repentant sinner of Luke 7, so paintings often showed her weeping.",
+      "source": "Etymonline, 'maudlin'",
+      "url": "https://www.etymonline.com/word/maudlin",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "The Orthodox title: Myrrhbearer and Equal of the Apostles (OCA heading). The Orthodox tradition: she preached in Rome, went to Ephesus where John laboured, died and was buried there; relics moved to Constantinople in the ninth century (Catholic Encyclopedia: 886).",
+      "source": "OCA, 22 July; Catholic Encyclopedia (1910)",
+      "url": "https://www.oca.org/saints/lives/2026/07/22/102070-myrrhbearer-and-equal-of-the-apostles-mary-magdalene",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "The Bible names no parents, husband or children for her.",
+      "source": "BSB: no verse gives any",
+      "url": "",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Art: the jar of ointment (the spices of Mark 16:1; the Commons category of the band calls it 'Mary Magdalene as Myrrhbearer'); the weeping penitent comes from her being taken for the woman of Luke 7 (Etymonline; the Holy See Press Office note of 2016 says the identification 'continued to influence ... Christian art').",
+      "source": "Etymonline; Holy See Press Office, 10 June 2016",
+      "url": "https://press.vatican.va/content/salastampa/en/bollettino/pubblico/2016/06/10/160610c.html",
+      "verified": true,
+      "note": ""
+    }
+  ],
+  "said": [
+    {
+      "text": "Augustine: 'this gardener was sowing in her heart, as in His own garden, the grain of mustard seed.'",
+      "source": "Augustine, Tractates on John, Tractate 121 (NPNF1 7, tr. Gibb and Innes)",
+      "url": "https://www.newadvent.org/fathers/1701121.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Chrysostom: 'she received no small reward for this her great zeal. For what the disciples saw not, this saw the woman first'. The same paragraph calls hers 'a feeble nature'; that is not quoted.",
+      "source": "John Chrysostom, Homilies on John, Homily 86 (NPNF1 14; shared/npnf114.txt)",
+      "url": "https://www.newadvent.org/fathers/240186.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Gregory the Great, Homily 25 on John 20: 'Unde contigit ut eum sola tunc videret, quae remansit ut quaereret' (our translation on the page). The same homily opens by calling her the sinner of the city of Luke 7.",
+      "source": "Homiliae in Evangelia 25 (Migne text at la.wikisource)",
+      "url": "https://la.wikisource.org/wiki/Homiliarum_in_Evangelia/XXV",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Aquinas: 'Tertio officium apostolicum, immo facta est apostolorum apostola, per hoc quod ei committitur ut resurrectionem dominicam discipulis annuntiet' (our translation on the page).",
+      "source": "Super Evangelium S. Ioannis lectura, cap. 20, lect. 3 (Corpus Thomisticum)",
+      "url": "https://www.corpusthomisticum.org/cih20.html",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "The Golden Legend (Caxton): 'made of our Lord apostolesse of the apostles'.",
+      "source": "The Golden Legend, Life of S. Mary Magdalene (Caxton 1483, ed. Ellis, vol. 4)",
+      "url": "https://sourcebooks.fordham.edu/basis/goldenlegend/GoldenLegend-Volume4.asp",
+      "verified": true,
+      "note": ""
+    }
+  ],
+  "one_or_three": [
+    {
+      "text": "Luke 7:36-50: an unnamed 'sinful woman from that town' wet Jesus' feet with tears, wiped them with her hair and anointed them at a Pharisee's house; Luke 7:47. John 12:1-3: Mary of Bethany anointed Jesus' feet with nard six days before the Passover. No Gospel identifies any two.",
+      "source": "BSB",
+      "url": "https://biblehub.com/bsb/luke/7.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Gregory the Great, Homily 33 (on Luke 7), 'Habita ad populum in basilica sancti Clementis, feria sexta Quatuor temporum Septembris': 'Hanc vero quam Lucas peccatricem mulierem, Joannes Mariam nominat, illam esse Mariam credimus de qua Marcus septem daemonia ejecta fuisse testatur. Et quid per septem daemonia, nisi universa vitia designantur?' and 'Liquet, fratres, quod illicitis actibus prius mulier intenta unguentum sibi pro odore suae carnis adhibuit. Quod ergo sibi turpiter exhibuerat, hoc jam Deo laudabiliter offerebat.' The page paraphrases the second passage (perfume once used on herself for forbidden deeds, now offered to God).",
+      "source": "Homiliae in Evangelia 33 (Migne text at la.wikisource)",
+      "url": "https://la.wikisource.org/wiki/Homiliarum_in_Evangelia/XXXIII",
+      "verified": true,
+      "note": "The year 591 is the standard dating of the homily; it is not printed in the fetched Latin. The page says 'in about 591'."
+    },
+    {
+      "text": "Catholic Encyclopedia (1910): 'The Greek Fathers, as a whole, distinguish the three persons'; 'most of the Latins hold that these three were one and the same'; 'Protestant critics, however, believe there were two, if not three, distinct persons'; it argues for one woman: 'To the Catholic mind it all seems fitting and natural.'",
+      "source": "Catholic Encyclopedia, 'St. Mary Magdalen' (Hugh Pope, 1910)",
+      "url": "https://www.newadvent.org/cathen/09761a.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Orthodox: three separate commemorations: Mary Magdalene 22 July; Martha and Mary, sisters of Lazarus, 4 June (listed on the Myrrhbearers Sunday page); Holy Wednesday's hymns 'remind us of the sinful woman who poured precious ointment on Christ's head at Simon the leper's house'. Britannica: 'The Eastern Church also distinguishes between the three'. The OCA's life of her also says 'Tradition informs us that Mary of Magdala was young and pretty, and led a sinful life' before her healing; the page reports this.",
+      "source": "OCA, Great and Holy Wednesday; OCA, 22 July; OCA, Sunday of the Myrrhbearing Women; Britannica",
+      "url": "https://www.oca.org/saints/lives/2026/04/08/23-great-and-holy-wednesday",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Calendarium Romanum (1969), 22 July: 'Martyrologium Bedae mentionem facit, die 22 iulii, de S. Maria Magdalena. Eadem die eius festum celebratur apud Syros, Byzantinos et Coptos. Sed cultus S. Mariae Magdalenae in Occidente non est evulgatus ante saeculum xii. In liturgia romana instaurata iam non habebitur memoria Mariae de Bethania neque mulieris peccatricis de qua agitur in Lc 7, 36-50, sed tantum de Maria Magdalena cui Christus post suam resurrectionem primae [so the OCR] apparuit.'",
+      "source": "shared/calendarium-romanum-1969-ocr.txt",
+      "url": "https://archive.org/details/CalendariumRomanum1969",
+      "verified": true,
+      "note": ""
+    }
+  ],
+  "myths": [
+    {
+      "text": "Prostitute: no Gospel says so; Luke 7:37 says 'sinful woman' and never names her or calls her a prostitute; the joining is Gregory's (above).",
+      "source": "BSB; Homily 33",
+      "url": "https://biblehub.com/bsb/luke/7.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "'Touch me not': BSB 'Do not cling to Me'; KJV 'Touch me not'; Vulgate 'Noli me tangere'; Matthew 28:9 the women 'grasped His feet'. Augustine: 'who could be so absurd as to affirm that He was willing indeed to be touched by the disciples before He ascended to the Father, but refused it in the case of women till after His ascension?'",
+      "source": "John 20:17 (BSB; KJV at Bible Hub; Vulgate at The Latin Library); Augustine, Tractate 121",
+      "url": "https://www.newadvent.org/fathers/1701121.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Wife of Jesus: Britannica: Gnostics 'regarded her as a medium of secret revelation, so described in their Gospel of Mary, Gospel of Philip, and Pistis Sophia'; 'Medieval legend relates that she was John's wife.' CNN (2020): Karen King announced the 'Gospel of Jesus' Wife' in 2012; it 'was exposed by scholars as fake'; after Sabar's Atlantic piece King said it 'tips the balance towards forgery.'",
+      "source": "Britannica, 'Saint Mary Magdalene'; CNN, 13 September 2020",
+      "url": "https://www.cnn.com/2020/09/13/us/jesus-wife-gospel-forgery-sabar",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Gospel of Mary: in the Berlin Gnostic Codex (Papyrus Berolinensis 8502), bought in Cairo in 1896, copied in the late fourth or early fifth century; Coptic translations of texts that 'date to the second century and were originally authored in Greek'; published 1955; two Greek fragments from Oxyrhynchus; pages 1 to 6 and 11 to 14 missing. In the text Peter asks her what the Savior told her; Andrew and Peter doubt; 'Levi answered and said to Peter, Peter you have always been hot tempered.'",
+      "source": "The Gnostic Society Library, notes and text",
+      "url": "http://gnosis.org/library/marygosp.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Provence: Golden Legend: put in a ship 'without any tackle or rudder, for to be drowned', came to Marseilles; later 'abode there by the space of thirty years without knowledge of anybody'; 'every day at every hour canonical she was lifted up in the air of angels'. Catholic Encyclopedia: the French tradition, La Sainte-Baume, Saint-Maximin, relics to Vezelay in 745 (Sigebert), found in 1279. Britannica calls the French tradition spurious (not repeated on the page).",
+      "source": "Golden Legend (Caxton); Catholic Encyclopedia; Britannica",
+      "url": "https://sourcebooks.fordham.edu/basis/goldenlegend/GoldenLegend-Volume4.asp",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Red egg: OCA: 'Tradition relates that in Italy Mary Magdalene visited Emperor Tiberias (14-37 A.D.) and proclaimed to him Christ's Resurrection. According to Tradition, she brought him a red egg as a symbol of the Resurrection, a symbol of new life with the words: Christ is Risen!' and 'Thanks to Mary Magdalene the custom to give each other paschal eggs ... spread among Christians over all the world.' The popular telling in which the egg turns red in her hand is not in the OCA text and is not on the page.",
+      "source": "OCA, 22 July",
+      "url": "https://www.oca.org/saints/lives/2026/07/22/102070-myrrhbearer-and-equal-of-the-apostles-mary-magdalene",
+      "verified": true,
+      "note": ""
+    }
+  ],
+  "calendar": [
+    {
+      "text": "Catholic: 22 July, 'Saint Mary Magdalene', Feast (USCCB 2026). Raised from obligatory memorial to feast by a decree of the Congregation for Divine Worship dated 3 June 2016 (Holy See Press Office, 10 June 2016), whose note also gives Aquinas's and Rabanus Maurus's 'apostolorum apostola' and calls her the first witness of the risen Christ and the first messenger to the apostles.",
+      "source": "USCCB 2026 calendar; Holy See Press Office",
+      "url": "https://press.vatican.va/content/salastampa/en/bollettino/pubblico/2016/06/10/160610c.html",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Church of England: Mary Magdalene, 22 July, listed among the Festivals. Episcopal Church: 22 July, Saint Mary Magdalene (LFF 2022). LCMS: 22 July, St Mary Magdalene. ELCA: 22 July, 'MARY MAGDALENE, Apostle'.",
+      "source": "shared/cofe-calendar.txt, lff2022.txt, lsb-calendar.txt, elca-churchyear.txt",
+      "url": "",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Orthodox: 22 July, 'Myrrhbearer and Equal of the Apostles Mary Magdalene' (OCA); also the Sunday of the Myrrhbearing Women (26 April 2026 on the OCA's site, two weeks after Pascha on 12 April). Old calendar: 22 July falls on 4 August civil.",
+      "source": "OCA",
+      "url": "https://www.oca.org/saints/lives/2026/04/26/36-sunday-of-the-holy-myrrhbearing-women-with-the-noble-joseph",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "1916 Roman Martyrology, 22 July: 'At Marseilles, the birthday of St. Mary Magdalen, out of whom our Lord expelled seven demons, and who deserved to be the first to see the Saviour after He had risen from the dead.'",
+      "source": "shared/martyrology-1916.txt",
+      "url": "https://archive.org/details/romanmartyrology00cathuoft",
+      "verified": true,
+      "note": ""
+    }
+  ],
+  "pictures": [
+    {
+      "file": "mary-magdalene-band.jpg",
+      "what": "Mary Magdalene, Jan van Scorel, about 1530, oil on panel, Rijksmuseum SK-A-372 (Commons category: Mary Magdalene as Myrrhbearer)",
+      "commons": "File:Maria_Magdalena_Rijksmuseum_SK-A-372.jpeg (5094 x 4432)",
+      "license": "CC0 (Rijksmuseum; {{cc-zero}} on the file page)",
+      "done": "Cropped to x 1250-5094, y 0-4050 (the figure with the crags; the foot of the skirt off), resized to 1708 x 1800, 0.6 px blur against the panel's crackle, JPEG quality 70 (386 KB). Face centre about 43% across, eyes about 33% down."
+    },
+    {
+      "file": "mary-magdalene-card.jpg",
+      "what": "Card cut from the same Scorel original: a 1700 x 2125 box at (2057, 527), eyes at 38%, face centred; 480 x 600.",
+      "commons": "as above",
+      "license": "CC0"
+    },
+    {
+      "file": "mary-magdalene-2.jpg",
+      "what": "Mary Magdalene, Konstantinos Tzanes, third quarter of the 17th century, 26 x 32.5 cm, after an engraving by J. Sadeler (the file page, in Greek); she sits by the empty sarcophagus, the myrrh jar on its lid, Golgotha behind",
+      "commons": "File:Mary_Magdalene_by_Constantin_Tzanes_(17th_c.).jpg (2693 x 3516)",
+      "license": "Public domain ({{PD-old}})",
+      "done": "The photo's white ground and mounting clips cropped off (about 5% at the sides, top and foot), resized to 1168 x 1500."
+    },
+    {
+      "file": "mary-magdalene-3.jpg",
+      "what": "Mary Magdalene (reading), Piero di Cosimo, 1495-1500, Galleria di Palazzo Barberini, Rome. The page's one gallery picture (wide screens).",
+      "commons": "File:Piero_di_Cosimo,_Maria_Maddalena,_1495-1500._Galleria_Barberini_-FG.jpg (3354 x 4164), photograph by Fabrizio Garrisi",
+      "license": "CC0 ({{self|cc-zero}}); the painting is public domain",
+      "done": "The gilt frame cropped off (x 640-2680, y 660-3560), resized to 1055 x 1500."
+    },
+    {
+      "rejected": "A Greek icon 'Agia Maria i Magdalini' (2006, eikonografos.com): its 'PD-author ... used with permission' tag is not a clear public-domain release. Holbein's Noli me tangere (Royal Collection): the faces would be tiny in the pictures column. The Russian riza icon of about 1890 (Clinton): the face is dark and small under the metal cover."
+    }
+  ],
+  "could_not_verify": [
+    "The year 591 for Gregory's Homily 33 is not printed in the Latin text fetched; it is the standard dating. The page says 'in about 591'.",
+    "The Coptic day for Mary Magdalene was not checked in a Coptic synaxarium; the page only repeats the 1969 Roman note that Syrians, Byzantines and Copts keep 22 July, and gives no Coptic row.",
+    "'primae apparuit' in the 1969 OCR is probably 'primo' in print; the translation 'first appeared' holds either way."
+  ],
+  "checker_2026_09_25": {
+    "checked_on": "2026-09-25",
+    "checked": [
+      "Every quotation: verify-quotes exits 0 (67 printed, 53 entries).",
+      "Numbers: all four Gospels at the tomb and three at the cross; two angels (John 20:12); one word. Named first in every list but John 19:25; twelve namings in all (Mark 16:9 counted).",
+      "The 1969 Calendarium note on 22 July (Bede's martyrology; Syrians, Byzantines and Copts; not spread in the West before the 1100s), read in the OCR.",
+      "Gregory's Homily 33 heading (preached in the basilica of St Clement); the OCA life (Magdala between Capernaum and Tiberias, 'led a sinful life', Rome, the red egg, the egg custom, Ephesus); Britannica (Gnostic books, 'Medieval legend relates that she was John's wife'); Etymonline on maudlin and Magdala; the LSB, Church of England and ELCA entries for 22 July.",
+      "Pictures: Commons licence tags read by API (Scorel cc-zero, Tzanes PD-old, Piero di Cosimo self cc-zero); card looked at downscaled: face centred."
+    ],
+    "changed": [
+      "Feasts, 22 July: 'So do the Episcopal Church and Lutherans...' implied they all keep it as a Festival; now 'The Episcopal Church keeps it too, and so do Lutherans in the Missouri Synod and the ELCA. The ELCA's calendar calls her Apostle.'",
+      "The Tzanes portrait gets its creator field, like the other pictures."
+    ],
+    "left_for_owner": [
+      "John 20:15 'Sir, if you have carried Him off' keeps the BSB's lower-case 'you' (she takes Him for the gardener). The capitals rule would make it 'You'; his call.",
+      "The Orthodox panel repeats the OCA's 'led a sinful life'; keep or cut, as the writer asked."
+    ]
+  }
+}

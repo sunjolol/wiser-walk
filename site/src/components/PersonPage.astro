@@ -363,7 +363,7 @@ const pic = p.band.picture;
               {p.miracles.feature.items.map(r => (
                 <li class="rz">
                   <div class="rz-h"><p class="rz-place">{r.place}</p><span class="rz-when">{r.when}</span></div>
-                  <h4>{r.title}</h4>
+                  <h4 set:html={rich(r.title)} />
                   <p set:html={rich(r.text)} />
                   <blockquote>“{r.quote}”</blockquote>
                   {r.witness && <p class="rz-who" set:html={rich(r.witness)} />}
@@ -563,7 +563,7 @@ const pic = p.band.picture;
         )}
         {p.death.later && (
           <div class="later">
-            <b>{p.death.later.title}</b>
+            <b set:html={rich(p.death.later.title)} />
             <Fragment set:html={rich(p.death.later.text)} />
             <span class="cite">{p.death.later.cite.url ? <a href={p.death.later.cite.url} target="_blank" rel="noopener" set:html={rich(p.death.later.cite.text)} /> : <Fragment set:html={rich(p.death.later.cite.text)} />}</span>
           </div>
@@ -614,8 +614,8 @@ const pic = p.band.picture;
       <div class="sreads">
         {p.reads.map(r => (
           <div class="panel sread">
-            <h3>{r.title}</h3>
-            <p class="by">{r.by}</p>
+            <h3 set:html={rich(r.title)} />
+            <p class="by" set:html={rich(r.by)} />
             <p set:html={rich(r.text)} />
             <a class="go-pill" href={r.url} target="_blank" rel="noopener">{r.label ?? 'Read it free'} <Icon name="arrow" size={16} /></a>
           </div>

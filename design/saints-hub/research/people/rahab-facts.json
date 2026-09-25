@@ -1,0 +1,231 @@
+{
+  "subject": "Rahab of Jericho",
+  "slug": "rahab",
+  "page": "site/src/data/figures/rahab.json",
+  "checked_on": "2026-09-25",
+  "note": "Evidence for Rahab's Bible figure page. A thin record (Joshua 2; 6:17-25; Matthew 1:5; Hebrews 11:31; James 2:25), so a short page: five moments, no miracles section (the fall of the wall is God's act, told among the moments), no death section (Scripture tells nothing of her end; the Talmud's marriage to Joshua is a myth, named as a Jewish tradition), no feasts block (no church gives her a day of her own; 'Is she a saint?' carries what the calendars do). One section of her own: 'Was she right to lie?', each side in its own words. Every quotation is in rahab.quotes.json and passes verify-quotes.mjs. Bible lines are from the BSB (shared/bsb-berean-standard-bible.txt). Fetched texts are in design/saints-hub/sources/people/rahab/ (gitignored).",
+  "life": [
+    {
+      "text": "Joshua secretly sent two spies from Shittim; they entered the house of a prostitute named Rahab; the king of Jericho sent to her; she hid them among the stalks of flax on her roof and told the king's men they had gone at dusk; the men pursued toward the fords of the Jordan and the gate was shut.",
+      "source": "Joshua 2:1-7 (BSB).",
+      "url": "https://biblehub.com/bsb/joshua/2.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "On the roof she told the spies what Jericho had heard (the Red Sea, Sihon and Og), confessed 'the LORD your God is God in the heavens above and on the earth below', and asked an oath for her father, mother, brothers and sisters. 'Our lives for your lives!'",
+      "source": "Joshua 2:8-14 (BSB).",
+      "url": "https://biblehub.com/bsb/joshua/2.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Her house was built into the city wall; she let them down by a rope through the window; told them to hide three days in the hill country; the scarlet cord in the window as the sign; 'Let it be as you say'; she tied the cord; the spies hid three days and reported to Joshua.",
+      "source": "Joshua 2:15-24 (BSB). The BSB has 'rope' in 2:15 and 'scarlet cord' in 2:18, 21.",
+      "url": "https://biblehub.com/bsb/joshua/2.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Israel marched around Jericho once a day for six days and seven times on the seventh; Joshua ordered that only Rahab and those in her house would live; the wall collapsed; the two spies brought her whole family out and settled them outside the camp; the city was destroyed and burned; 'So she has lived among the Israelites to this day.'",
+      "source": "Joshua 6:1-25 (BSB).",
+      "url": "https://biblehub.com/bsb/joshua/6.htm",
+      "verified": true,
+      "note": "The number tile '7 days' rests on Joshua 6:3-4, 14-15."
+    },
+    {
+      "text": "Matthew's genealogy: 'Salmon was the father of Boaz by Rahab, Boaz the father of Obed by Ruth, Obed the father of Jesse, and Jesse the father of David the king.' So Rahab is David's great-great-grandmother (four generations: Boaz, Obed, Jesse, David).",
+      "source": "Matthew 1:5-6 (BSB). Ruth 4:20-22 names Salmon as Boaz's father but not his mother. Salmon's father Nahshon was the leader of Judah (Numbers 2:3), hence 'a man of Judah'.",
+      "url": "https://biblehub.com/bsb/matthew/1.htm",
+      "verified": true,
+      "note": "The Bible does not say she married Salmon; the page says 'She became the mother of Boaz, by a man of Judah named Salmon'."
+    },
+    {
+      "text": "The New Testament names her three times: Matthew 1:5, Hebrews 11:31, James 2:25.",
+      "source": "BSB, every verse containing 'Rahab' (Job 9:13; 26:12; Psalm 87:4; 89:10; Isaiah 30:7; 51:9 are the other Rahab, a poetic name).",
+      "url": "https://biblehub.com/bsb/hebrews/11.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Hebrews 11 names only two women: Sarah (11:11) and Rahab (11:31). James's two examples of faith shown by deeds are Abraham (2:21-24) and Rahab (2:25).",
+      "source": "Hebrews 11; James 2:21-25 (BSB).",
+      "url": "https://biblehub.com/bsb/hebrews/11.htm",
+      "verified": true,
+      "note": "The BSB makes Sarah the subject of 11:11 (some translations make it Abraham)."
+    },
+    {
+      "text": "Her name: Hebrew Rachab, 'the same as H7342 (broad)'; BDB: 'harlot in Jericho'; the Greek is Raab in Hebrews and James, Rhachab in Matthew. The Rahab of Job, Psalms and Isaiah is a different word (H7294 rahab, 'an epithet of Egypt'; a sea monster in the poetry).",
+      "source": "Bible Hub, Strong's Hebrew 7343 and 7294 (fetched: people/rahab/bh-7343.txt, bh-7294.txt); Jewish Encyclopedia, 'RAHAB (= \"broad\")'.",
+      "url": "https://biblehub.com/hebrew/7343.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Tiqvah, the word for her scarlet cord (Joshua 2:18, 21), is elsewhere the Bible's word for hope.",
+      "source": "Bible Hub, Strong's Hebrew 8615: BDB 'I. [tiqvah] noun feminine cord ... Joshua 2:18,21. II. tiqvah 34 noun feminine hope'; Strong's 'literally, a cord ... figuratively, expectancy'.",
+      "url": "https://biblehub.com/hebrew/8615.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Josephus tells the story with the spies at 'the inn kept by Rahab'; after the fall Joshua 'gave her certain lands immediately, and had her in great esteem ever afterwards.'",
+      "source": "Josephus, Antiquities of the Jews, book 5, chapter 1, sections 2 and 7, tr. William Whiston (people/rahab/josephus-ant-5.txt).",
+      "url": "https://sacred-texts.com/jud/josephus/ant-5.htm",
+      "verified": true,
+      "note": "Whiston's own note there also calls her 'the innkeeper Rahab'; not used."
+    }
+  ],
+  "fathers": [
+    {
+      "text": "1 Clement 12: saved 'on account of her faith and hospitality'; the scarlet thread showed 'that redemption should flow through the blood of the Lord'; 'not only faith, but prophecy, in this woman'. The ANF note names Justin (Dialogue 111) and Irenaeus (Against Heresies 4.20) for the same reading.",
+      "source": "shared/anf01.txt, 1 Clement chapter 12 and its note [54].",
+      "url": "https://ccel.org/ccel/schaff/anf01.ii.ii.xii.html",
+      "verified": true,
+      "note": "Irenaeus writes 'three spies' and reads them as the Trinity; the ANF note calls it a lapse of memory. Not used."
+    },
+    {
+      "text": "Justin, Dialogue with Trypho 111: the scarlet thread 'manifested the symbol of the blood of Christ'. Irenaeus, Against Heresies 4.20.12: Rahab, 'inasmuch as she was a Gentile', saved 'through faith of the scarlet sign'. Ambrose, Exposition of the Christian Faith 5.10.127: she 'uplifted a sign of her faith and the banner of the Lord's Passion'.",
+      "source": "shared/anf01.txt; shared/npnf210.txt.",
+      "url": "https://ccel.org/ccel/schaff/anf01.viii.iv.cxi.html",
+      "verified": true,
+      "note": "Backs 'Justin Martyr, Irenaeus and Ambrose read it the same way' and the fact 'saw in her the Gentiles coming to Christ' (Justin: 'harlots and unrighteous persons out of all nations are saved')."
+    },
+    {
+      "text": "Cyril of Jerusalem, Catechetical Lecture 10.11: 'The typical Jesus saved Rahab the harlot when she believed'. Lecture 2.9 reads Psalm 87:4 as about her; the NPNF2 7 (1894) note: '\"Rahab\" is there a poetical name of Egypt, and the passage has nothing to do with Rahab the harlot.'",
+      "source": "shared/npnf207.txt, tr. Edwin Hamilton Gifford.",
+      "url": "https://www.newadvent.org/fathers/310110.htm",
+      "verified": true,
+      "note": "Ambrose reads Psalm 87:4 the same way (Exposition of the Christian Faith 5.10.127)."
+    },
+    {
+      "text": "Chrysostom, Homily 3 on Matthew: why Matthew names Tamar, Rahab, Ruth and Uriah's wife rather than Sarah and Rebecca; 'He hath come as a Physician, not as a Judge.'",
+      "source": "shared/npnf110.txt (Homily 3, sections 2 and 5).",
+      "url": "https://www.newadvent.org/fathers/200103.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Augustine, Against Lying 32-34: God rewarded the midwives and Rahab 'not because they lied, but because they were merciful'; she was not yet one of whom 'Yea be yea' could be required; she could have been kept safe without the lie; 'let her be praised' for hiding them, her faith and her counsel; the lie 'mercifully overlooked', not to be imitated.",
+      "source": "people/rahab/augustine-against-lying-npnf103.txt (copied from the NPNF1 3 text on disk), tr. H. Browne.",
+      "url": "https://www.newadvent.org/fathers/1313.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Cassian, Conference 17 (the second conference of Abba Joseph), chapter 17: a lie used like hellebore; Rahab saved by it and 'inserted in the progenitors of our Lord's nativity'; in grave danger a lie as a refuge, but with 'the guilt of a humbled conscience'.",
+      "source": "shared/npnf211.txt, tr. Edgar C. S. Gibson.",
+      "url": "https://www.newadvent.org/fathers/350817.htm",
+      "verified": true,
+      "note": "Cassian also says Scripture records of her 'no good deed but actually of unchastity'; not quoted."
+    },
+    {
+      "text": "Ambrose, Concerning Virginity 2.4: 'Rahab, too, was a harlot, but after she believed in God, she found salvation. And Judith...' (the kin line for Judith).",
+      "source": "shared/npnf210.txt.",
+      "url": "https://www.newadvent.org/fathers/34072.htm",
+      "verified": true,
+      "note": "The words are the virgin of Antioch's in Ambrose's story; the page says only that Ambrose names the two women together."
+    },
+    {
+      "text": "Dante, Paradiso 9: Rahab in the heaven of Venus, 'before all other souls / First of Christ's triumph was she taken up'.",
+      "source": "people/rahab/longfellow-paradiso.txt, tr. Longfellow (Gutenberg 1003).",
+      "url": "https://www.gutenberg.org/ebooks/1003",
+      "verified": true,
+      "note": ""
+    }
+  ],
+  "jewish_tradition": [
+    {
+      "text": "Later Jewish commentators, Rashi among them, read her title as 'one who sells food', following Targum Jonathan's 'innkeeper'; the Talmud accepts she was a harlot; she married Joshua and was the ancestress of eight priests who were also prophets, Jeremiah among them, and of the prophetess Huldah (Megillah 14b); her confession ranked above Jethro's and Naaman's.",
+      "source": "Jewish Encyclopedia (1905, vol. 10), 'Rahab', by Emil G. Hirsch and M. Seligsohn (people/rahab/je-rahab.txt).",
+      "url": "https://www.jewishencyclopedia.com/articles/12535-rahab",
+      "verified": true,
+      "note": "The article's lines on her beauty and her clients are left out on purpose (the owner's steer: her trade told plainly, without leering). The Jethro and Naaman tidbit was cut to fit the sheet; it is checked and can come back."
+    }
+  ],
+  "calendars": [
+    {
+      "text": "No day of her own: 'Rahab' does not occur in the 1916 Roman Martyrology, the Calendarium Romanum (1969), the USCCB 2026 calendar, the Church of England calendar, Lesser Feasts and Fasts 2022, the LSB or ELCA calendars, or the Coptic calendar list on disk.",
+      "source": "grep of shared/martyrology-1916.txt, calendarium-romanum-1969-ocr.txt, usccb-2026cal.txt, cofe-calendar.txt, lff2022.txt, lsb-calendar.txt, elca-churchyear.txt, wikipedia-coptic-calendar.txt (also for 'Raab').",
+      "url": "https://www.usccb.org/resources/2026cal.pdf",
+      "verified": true,
+      "note": "Web searches found no fixed Orthodox or Catholic day for her either."
+    },
+    {
+      "text": "Orthodox: the Sunday before the Nativity commemorates the forefathers of Christ; its Liturgy Gospel is Matthew 1:1-25, which names her.",
+      "source": "OCA, Sunday before the Nativity (people/rahab/oca-sunday-before-nativity.txt); OCA readings for 21 December 2025 (oca-readings-2025-12-21.html: Matthew 1:1-25).",
+      "url": "https://www.oca.org/saints/lives/2025/12/21/81-sunday-before-the-nativity",
+      "verified": true,
+      "note": "The OCA's own list of the day's righteous women (Sarah to Susanna) does not name her; the page claims only that the Gospel read that day does. Edith Humphrey's Orthodox blog (2015) ends with 'we celebrate the memory of Righteous Rahab' for that Sunday (a lead, not cited)."
+    },
+    {
+      "text": "Catholic: the Roman Martyrology (2004 edition) opens 24 December with the commemoration of all the holy forefathers of Jesus Christ; the Gospel of the Christmas vigil Mass is Matthew's genealogy.",
+      "source": "Fr John Zuhlsdorf, wdtprs.com, 24 December 2025, quoting the Martyrology's Latin (people/rahab/frz-martyrology-2412.txt).",
+      "url": "https://wdtprs.com/2025/12/vigil-of-christmas-2005-roman-martyrology-fascinating-entry/",
+      "verified": true,
+      "note": "A secondary source quoting the primary. USCCB's readings page for the vigil answered 403 to our fetch, so the vigil Gospel rests on Fr Zuhlsdorf's statement (it is Lectionary 13, Matthew 1:1-25, with a shorter form 1:18-25)."
+    }
+  ],
+  "pictures": [
+    {
+      "file": "site/public/img/figures/rahab-band.jpg",
+      "what": "Rahab and the Emissaries of Joshua (La courtisane Rahab fait échapper de Jéricho les espions envoyés par Josué), attributed to Matteo Rosselli, about 1630, oil on canvas, 175 x 200 cm, Musée des Beaux-Arts de Nîmes, IP 416 (Robert Gower bequest, 1869).",
+      "commons": "https://commons.wikimedia.org/wiki/File:N%C3%AEmes,Beaux_Arts020.jpg",
+      "license_tag": "Artwork: {{PD-old-100-1923}}. The file page's licence header is the photographer's {{self|cc-by-sa-4.0}} (Finoskov, 2017).",
+      "size": "original 3183 x 2767; cropped to Rahab (x 0 to 1496, y 55 to 1826: from her pointing hand to the spy's hands holding the cord, below her waist), light 0.6 px blur against the canvas weave, kept at 1496 x 1771, 308 KB.",
+      "note": "Under the owner's 2D rule (a faithful photo of a 2D public-domain work is public domain; as for Barnabas's and Jerome's pictures) this is public domain; flagged. Strictly PD fallback: File:Rahab_and_the_Emissaries_of_Joshua.jpg, the same painting, {{PD-Art|PD-old-100-1923}}, but only 1000 x 858."
+    },
+    {
+      "file": "site/public/img/figures/rahab-card.jpg",
+      "what": "The hub card, cut from the same photograph: x 651 to 1099, y 227 to 787, resized to 480 x 600. Face centred, eyes about 40% from the top; the crop stops at the lace of her neckline.",
+      "commons": "https://commons.wikimedia.org/wiki/File:N%C3%AEmes,Beaux_Arts020.jpg",
+      "license_tag": "as the band",
+      "size": "480 x 600, 46 KB",
+      "note": ""
+    },
+    {
+      "file": "site/public/img/figures/rahab-2.jpg",
+      "what": "Rahab and the spies: a miniature from the Illustrated Chronicle of Ivan the Terrible (Litsevoy letopisny svod), the Museum volume, Moscow, 1560s to 1570s; Biblical history, book 2, page 331. Left: Rahab with the king's men; right: she leads the spies up her steps; top right: the spies hidden with her among the flax on the roof.",
+      "commons": "https://commons.wikimedia.org/wiki/File:Facial_Chronicle_-_b.02,_p.331_-_Rahab.jpg",
+      "license_tag": "{{PD-old-100-expired}}",
+      "size": "original 1668 x 1812; the partial text line above the picture trimmed (y 88 to 1776), resized to 1482 x 1500, 396 KB.",
+      "note": "Faint pen strokes of the text line above remain along the top edge; left as they are (the manuscript's own)."
+    }
+  ],
+  "rejected_pictures": [
+    "Tissot (or follower), The Harlot of Jericho and the Two Spies, Jewish Museum, New York (PD, 3000 x 4058): colour, but her face is small and the scene plays on her trade (a coy smile, a hand at a spy's beard). A possible wide-screen gallery picture if the owner wants the pictures column filled.",
+    "Tissot, La fuite des espions (1904 print, photographed by Phillip Medhurst): CC BY-SA 4.0.",
+    "Santa Maria Maggiore nave mosaics (5th century) of Rahab and the spies: photos by Sailko, CC BY-SA 3.0; faces small.",
+    "Righteous Rahab roundel from Solntsev's plate of the Shuya-Smolensk icon frame (Annunciation Cathedral, Moscow): PD but 176 x 175.",
+    "Master of the Flemish Boethius, BnF Français 12 fol. 111: CC BY-SA 4.0 (the PD copy is 582 x 396).",
+    "Philipp Veit's Paradiso fresco, Casino Massimo: photo CC BY 3.0.",
+    "Engravings (Collaert after de Vos; Rijksmuseum prints): black and white.",
+    "Fouquet's Taking of Jericho (Antiquités judaïques): PD, but Rahab is not in it."
+  ],
+  "could_not_verify": [
+    "A feast day of her own in any Orthodox calendar beyond the OCA (Greek synaxaria not searched in full); the page says only what the OCA and the readings show.",
+    "The KJV wording 'Rahab the harlot' was not fetched; the facts line rests on the Fathers' texts on disk ('Rahab the harlot' in 1 Clement, Cyril, Gregory Nazianzen) and common knowledge of the KJV.",
+    "Where Jericho's wall and her house stood in archaeology: not used."
+  ],
+  "checker_2026_09_25": {
+    "checked": [
+      "Tiles: 7 days (Joshua 6:3-4, 14-15); 4 generations to David (Matthew 1:5-6); 3 New Testament mentions (Matthew 1:5; Hebrews 11:31; James 2:25). None counts her trade.",
+      "Tidbits: tiqvah is 'cord' only at Joshua 2:18, 21 and 'hope' in every other use (BDB on people/rahab/bh-8615.txt); Hebrews 11 names only Sarah and Rahab; Dante, Paradiso 9 (Longfellow).",
+      "Attributions: Josephus's inn and 'certain lands'; 1 Clement 12 and the ANF note naming Justin and Irenaeus; Cyril, Lecture 10; Chrysostom, Homily 3 on Matthew; Augustine, Against Lying, and Cassian, Conference 17, each in his own words with no winner in our voice; the Jewish Encyclopedia on the Targum, Rashi, the Talmud and Megillah 14b.",
+      "'Rahab Who Sits Still' (Isaiah 30:7) is the BSB's own capital for a name, not a capital for God.",
+      "Calendars: the Orthodox Gospel for the Sunday before the Nativity is Matthew 1:1-25; the Roman Martyrology's 24 December entry rests on Fr Zuhlsdorf's quotation of the Latin.",
+      "The band's Commons wikitext, fetched: the painting is {{PD-old-100-1923}}; the file's licence header is the photographer's {{self|cc-by-sa-4.0}} (Finoskov).",
+      "Rules: capitals for God; never 'St Rahab'; her trade told plainly; plain sentences; no violent band; verify-quotes exits 0; saints-test passes."
+    ],
+    "changed": [
+      "The Judith line under 'People like her' read 'Another woman who went among her people's enemies, told them what they wanted to hear, and saved her city', which fits Judith but not Rahab (she stayed home, and Jericho fell). Now: 'Another woman who used deception to save lives: Judith saved her city, Rahab her household.'",
+      "The band credit and its sources line now name the photographer ('Photograph by Finoskov'), as Barnabas's and Jerome's credits name Sailko, because the file page's own licence header is his CC BY-SA 4.0."
+    ],
+    "left_for_owner": [
+      "The band's licence: a CC BY-SA 4.0 photograph of a public-domain painting, kept as public domain with the photographer named. The strictly public-domain copy is 1000 x 858.",
+      "The Catholic 'Remembered' row rests on a blog's quotation of the Martyrology and on the vigil Mass Gospel.",
+      "The pictures column ends about 650 px above the facts (Tissot's colour painting was turned down for taste).",
+      "The section 'Was she right to lie?': keep it, or fold it into What others said."
+    ]
+  }
+}

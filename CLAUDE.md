@@ -66,7 +66,24 @@ rules so they don't happen again". `site/scripts/quiz-page-test.mjs` (postbuild)
 9. **A special card among cards looks like its siblings**, marked only by an icon and a small tag.
 10. **No placeholder pictures** (a monogram where a face should be is "not acceptable").
 
-## NEXT SESSION STARTS HERE (2026-09-25, evening): 8 FIGURE PAGES LIVE; THE OTHER 16 ARE BRIEFED FOR A CLOUD SESSION
+## NEXT SESSION STARTS HERE (2026-09-25, night): ALL 24 BIBLE FIGURE PAGES ARE LIVE
+
+**Done today, all on `main` and live:** every Bible figure but Jesus has a page drawn like a saint's, and every one
+of them is on the Saints hub (47 people). He liked the cost of the first seven ("very impressed with how few resources
+were used"), so the other 16 were written here the same way (about 6.8M subagent tokens, 425k a page), not in the
+cloud; `design/saints-hub/CLOUD-FIGURES-BRIEF.md` is kept only as a recipe. His notes on the first batch are live:
+figure pages fold "Take the quizzes" into "Where the quiz places him"; hub thumbnails are cut from each page's own
+painting, centred on the face; the brief (`FIGURE-BRIEF.md`) carries his rejected tiles and pictures.
+
+**Waiting on him:** (1) Macrina's thumbnail: the picture he linked is lettered St Melania; the card is cut
+(`site/public/img/saints/macrina-the-younger-card.jpg`, uncommitted) but not switched on. (2) Ambrose's thumbnail: Look
+and Learn blocks automated visits and sells watermarked images; he was asked for the print's title and artist.
+(3) Barnabas has no "In art" picture: offered the 1921 Salamis icon (CC BY-SA 3.0, Gerhard Haubold, credit printed).
+Taste calls from the 16 are in the last message of this session (the writers' own sections on Abraham, Rahab, David,
+Judith and Tobit; Jonathan's "surpassing the love of women"; Deborah and women leading; Mary's two sentences).
+**Then:** Jesus's page (a plan he approves first), the 12 saints (`design/saints-hub/research/NEXT-12.md`), then quiz #5.
+
+## (earlier, 2026-09-25 evening) 8 FIGURE PAGES LIVE; THE OTHER 16 WERE BRIEFED FOR A CLOUD SESSION
 
 **Live on `main`:** Elijah (`cbcf98e`, first and alone: someone he knows was waiting for it), then Moses, Gideon, John
 the Baptist, Martha, Barnabas, Paul (`f019530`). One Opus writer per page from `design/saints-hub/FIGURE-BRIEF.md`,
