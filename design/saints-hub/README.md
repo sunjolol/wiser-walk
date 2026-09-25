@@ -133,6 +133,16 @@ without the others. Then `node design/og/render.mjs site saint-<slug>` for his s
 `design/saints-hub/pages/<slug>.json` (the draft page), `design/saints-hub/pages/img/` (pictures), fetched texts under
 `sources/people/<slug>/` (gitignored). Each draft is written, then adversarially checked, before it is promoted.
 
+**THE 21 ARE WRITTEN AND ON A PREVIEW (2026-09-25).** All 21 were researched, written and adversarially checked
+(workflow `wf_2f636304-590`: 63 agents, about 400 corrections; every quotation passes verify-quotes.mjs). They are
+promoted on the branch `saints/the-21` (NOT main), previewed at https://wiser-walk-git-saints-the-21-sunjo.vercel.app/saints/
+(behind his Vercel login). The per-page verdicts and open items are in the session scratchpad (verdicts.json) and in each
+`research/people/<slug>-facts.json` ("checker_2026_09_25" blocks). A second small pass (`wf_a47f9760-59a`) adds the
+critics' own words where a hard topic had only the holder's (Justin, Antony, Jerome, Augustine, Isaac, Chrysostom).
+**Waiting on him:** length (pages run 2,800 to 6,400 words), Benedict's band (a small figure in a landscape),
+Macrina's band (a statue photographed against the sky), whether /early-christian/ itself now redirects to /saints/.
+Merge the branch to main only with his go.
+
 **IF THE SESSION WAS CUT OFF (usage cap, 2026-09-25):** the port is committed locally as `39e1467` and NOT pushed
 (the visual check of the small-text sweep had not reported yet: re-run it, then push). The research on the 21 ran as
 workflow `wf_2f636304-590` (research, write, adversarial check per person). To continue it without redoing finished
