@@ -66,7 +66,49 @@ rules so they don't happen again". `site/scripts/quiz-page-test.mjs` (postbuild)
 9. **A special card among cards looks like its siblings**, marked only by an icon and a small tag.
 10. **No placeholder pictures** (a monogram where a face should be is "not acceptable").
 
-## NEXT SESSION STARTS HERE (2026-09-25): THE SAINTS HUB IS PORTED; THE 21 ARE BEING WRITTEN
+## NEXT SESSION STARTS HERE (2026-09-25, late): HE OPENS WITH HIS NOTES
+
+**He said: "I have many notes on the live site ... I will open by giving my notes while I review each saint's page
+and also make notes on those too."** So the session opens with his notes, in two kinds:
+
+1. **Notes on the live site** (wiserwalk.com, `main`): what shipped today is the Saints hub `/saints/`, Martin's page,
+   the Learn menu, two-line items in every header menu, the two small-text sizes site-wide (about 107 rules, the games
+   too; audit and every call in `design/small-text/`), person links switched on in the personality test, and four
+   early-Christian quiz data fixes. Small changes he asks for go straight to `main` after the tests (memory:
+   push-small-changes).
+2. **Notes on each saint's page**, which he reads on the PREVIEW of the branch `saints/the-21` (NOT merged):
+   https://wiser-walk-git-saints-the-21-sunjo.vercel.app/saints/ (behind his Vercel login). Work on that branch:
+   `git checkout saints/the-21`. Pushing it updates the same preview link.
+
+**How to act on a saint note:**
+- The page is `site/src/data/saints/<slug>.json` on the branch; it is now the only copy that counts. The drafts in
+  `design/saints-hub/pages/` are stale working copies (untracked): do not edit them.
+- A note that applies to every page is a change to the template (`site/src/pages/saints/[slug].astro`,
+  `site/src/components/SaintExtra.astro`) or `site/src/styles/pages/saints.css`, made once. Martin's page is on `main`
+  and uses the same template: a template fix goes to `main` too (cherry-pick), as the fixes of 2026-09-25 did.
+- Any new or changed quotation: fetch its text into `design/saints-hub/sources/people/<slug>/` (gitignored, this
+  machine only), add its evidence to `design/saints-hub/research/people/<slug>.quotes.json`, and run
+  `node design/saints-hub/tools/verify-quotes.mjs <slug> site/src/data/saints/<slug>.json` until it exits 0.
+- Then `cd site && npm run test` (saints-test.mjs checks listing lengths, the 40-60 word answer, feast order, no "St"
+  for Origen/Tertullian/Lactantius, pictures on disk, and that moves and redirects agree), and look at the page at 390
+  and 1360 (`sh design/tools/shot.sh`; the dev server config with the account header is `site-acct`, port 4322).
+- What each checker left open, per page: `design/saints-hub/research/review-2026-09-25/checker-verdicts.json` and the
+  `checker_2026_09_25` blocks in each `research/people/<slug>-facts.json`.
+
+**Three calls I asked him (he may answer them in his notes):** (1) length: the pages run 2,800 to 6,400 words
+(Martin about 3,200), keep or trim the thin records (Isaac, Lactantius)? (2) Benedict's band is a small figure in a
+landscape and Macrina's a statue photographed against the sky: keep or find others? (3) once all 22 move, does
+`/early-christian/` itself redirect to `/saints/` (the plan says yes; that page alone marks the reader's two quiz
+matches)? Taste items the visual check left (his call, not fixed): uneven blank space at the foot of life-moment cards,
+a lone card on the last row of some grids, a taller band on Clement and Origen because of their status pill.
+
+**When he says go:** `git checkout main && git merge saints/the-21`, `cd site && npm run test && npm run build` (all
+guards), push, then check live that each `/early-christian/<slug>/` answers 308 to `/saints/<slug>/`.
+`design/saints-hub/tools/promote.mjs <slug>` does the whole move for any future saint (the five personality-test
+people with no page yet: Arsenius, Monica, Cuthbert, Guthlac, Philip Neri; then Athanasius, Ignatius, Polycarp, Moses
+the Black, Perpetua, Ephrem). Not started: the printable saint card (show him a mock-up first) and the group pages.
+
+## (earlier the same day) THE SAINTS HUB IS PORTED; THE 21 ARE BEING WRITTEN
 
 Read `design/saints-hub/README.md` "PORTED 2026-09-25" first. Live (with his go on the port): the two small-text
 sizes site-wide (tokens in kit.css, `scripts/small-text-test.mjs`), the Learn menu and two-line items in every header
