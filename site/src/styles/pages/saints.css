@@ -116,30 +116,6 @@
 .search input::placeholder { color: rgba(255, 255, 255, .72); }
 .search input:focus-visible { outline: 2px solid var(--blue-soft); outline-offset: 2px; }
 
-/* ============================================================ hub: collections */
-.colls { display: grid; gap: .7rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.coll {
-  position: relative; isolation: isolate; overflow: hidden; display: flex; align-items: flex-end;
-  min-height: 9.5rem; padding: .9rem 1rem; border-radius: var(--r); text-decoration: none; color: #fff;
-  background: #2a2622; box-shadow: var(--lift); border: 0; cursor: pointer; text-align: left; font: inherit;
-  transition: transform .2s ease, box-shadow .2s ease;
-}
-.coll:first-child { grid-column: span 2; min-height: 11rem; }
-.coll:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(20, 24, 40, .22); }
-.coll-art { position: absolute; inset: 0; z-index: -2; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; }
-.coll-art img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.coll::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(20, 18, 16, 0) 30%, rgba(20, 18, 16, .78)); }
-.coll::before { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 4px; z-index: 1; background-image: var(--grad-r); }
-.coll-t { font-family: var(--display); font-weight: 700; font-size: 1.14rem; line-height: 1.1; text-shadow: var(--title-lift); text-wrap: balance; }
-.coll:first-child .coll-t { font-size: 1.45rem; }
-@media (max-width: 29.99rem) { .coll-t { font-size: 1rem; } }
-.coll--engr .coll-art img { filter: sepia(.34) contrast(.94) brightness(1.05); }
-@media (min-width: 46rem) {
-  .colls { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .8rem; }
-  .coll { min-height: 12rem; }
-  .coll:first-child { min-height: 12rem; }
-}
-
 /* ============================================================ hub: the filter bar and the people */
 /* One bar that stays in reach while the list scrolls. Phones get "Filters", which opens a sheet from
    the bottom; wide screens get one pill per kind, each opening a small panel. What is picked shows
@@ -242,7 +218,6 @@ html.is-locked { overflow: hidden; }
 .fshow:disabled { opacity: .5; cursor: default; }
 @media (prefers-reduced-motion: reduce) { .fsheet[open] { animation: none; } }
 
-.people-key { margin: 1rem 0 0; font-size: .8rem; color: var(--ink-mute); }
 .people { display: grid; gap: .7rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @media (min-width: 34rem) { .people { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (min-width: 52rem) { .people { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .8rem; } }
@@ -251,7 +226,18 @@ html.is-locked { overflow: hidden; }
   padding: .45rem .45rem .8rem; color: inherit; text-decoration: none; transition: transform .2s ease, box-shadow .2s ease;
 }
 .pcard:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(62, 134, 196, .16); }
-.pcard-pic { display: block; border-radius: 12px; overflow: hidden; background: var(--shell); aspect-ratio: 4 / 5; }
+.pcard-pic { position: relative; display: block; border-radius: 12px; overflow: hidden; background: var(--shell); aspect-ratio: 4 / 5; }
+/* the reader's kindred spirit and sparring partner, tagged on the picture's corner (EarlyMine),
+   as the old /early-christian/ grid tagged them: a small tag, the card otherwise its siblings' */
+.pcard-tag {
+  position: absolute; left: .4rem; bottom: .4rem; max-width: calc(100% - .8rem); padding: .3rem .5rem .28rem; border-radius: var(--r-pill);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; background: var(--ink); color: var(--panel);
+  font-family: var(--ui); font-size: var(--fs-tag); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; line-height: 1;
+}
+.pcard-tag[hidden] { display: none; }
+/* the line over the list that says so, when there is a result to say it of */
+.sp .ecm { margin: 0 0 .9rem; padding: .85rem 1rem; border-radius: var(--r); background: var(--panel); box-shadow: var(--lift); }
+@media (min-width: 40rem) { .sp .ecm { padding: .95rem 1.25rem; } }
 .pcard-pic img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .pcard-b { display: flex; flex-direction: column; gap: .2rem; padding: .6rem .4rem 0; flex: 1; }
 .pcard-n { font-family: var(--display); font-weight: 700; font-size: 1.02rem; line-height: 1.15; color: var(--ink); text-wrap: balance; }
@@ -268,25 +254,7 @@ html.is-locked { overflow: hidden; }
 .tchip::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--t); flex: none; }
 .people-empty { padding: 1.4rem; text-align: center; color: var(--ink-soft); background: var(--panel); border-radius: var(--r); }
 
-/* the quiz card at the foot of a page */
-.squiz {
-  position: relative; isolation: isolate; overflow: hidden; display: grid; border-radius: 24px; color: #fff; text-decoration: none;
-  background: #221e1a; box-shadow: 0 10px 30px rgba(20, 24, 40, .16);
-}
-.squiz > img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
-.squiz--engr > img { filter: sepia(.34) contrast(.94) brightness(1.06); object-position: 70% 40%; }
-.squiz::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(95deg, rgba(26, 22, 18, .95), rgba(26, 22, 18, .72) 55%, rgba(26, 22, 18, .25)); }
-.squiz-b { padding: 1.6rem 1.35rem 1.5rem; max-width: 30rem; }
-.squiz-k { margin: 0 0 .35rem; font-family: var(--ui); font-size: var(--fs-label); font-weight: var(--fw-label); letter-spacing: .16em; text-transform: uppercase; color: var(--orange-soft); }
-.squiz-t { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(1.6rem, 6.4vw, 2.2rem); line-height: 1.06; color: #fff; text-shadow: var(--title-lift); }
-.squiz-s { margin: .4rem 0 0; font-size: .98rem; color: rgba(255, 255, 255, .9); }
-.squiz .go-pill { margin-top: 1.1rem; color: #F6D9C5; }
-@media (min-width: 46rem) { .squiz-b { padding: 2.3rem 2.2rem; } }
-.squizzes { display: grid; gap: .9rem; }
-@media (min-width: 52rem) { .squizzes { grid-template-columns: 1fr 1fr; } .squizzes .squiz-t { font-size: 1.75rem; } }
-.squiz--mosaic > img { object-position: 50% 30%; }
-.squiz--mosaic::after { background: linear-gradient(95deg, rgba(20, 20, 28, .94), rgba(20, 20, 28, .7) 60%, rgba(20, 20, 28, .35)); }
-.more-line { margin: 1rem 0 0; font-size: .92rem; color: var(--ink-soft); }
+/* the quiz card at the foot of a page (.squiz) is kit.css's "quiz plate": other pages end on it too */
 
 /* ============================================================ St Martin */
 /* "Tap" on a touch screen, "Click" with a mouse */
@@ -327,6 +295,12 @@ html.is-locked { overflow: hidden; }
 .pg-menu a.is-here { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
 .pg-menu a.is-here::before { background: var(--accent); }
 .pg-arrow:focus-visible, .pg-cur:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+/* On a wide screen the page sits in the framed sheet (kit.css), which crops its children to its
+   round corners with overflow: hidden. That also makes the sheet a scroll container, and a
+   scroll container leaves every position: sticky inside it inert: the pager scrolled away with
+   the page above 68rem (the owner's note, 2026-09-25), and so did the hub's filter bar. `clip`
+   crops the same without becoming one, as the articles and the personality report already do. */
+@media (min-width: 68rem) { .sheet:has(.sp) { overflow: clip; } }
 .sp section[id], .sp div[id] { scroll-margin-top: 5rem; }
 
 .answer { margin-top: 1.6rem; box-shadow: var(--lift), inset 4px 0 0 var(--blue); overflow: hidden; }
@@ -399,6 +373,9 @@ html.is-locked { overflow: hidden; }
   .path-in { width: fit-content; max-width: 100%; margin: 0 auto; }
   .path { --gap: clamp(2rem, 5vw, 4.5rem); grid-auto-flow: column; grid-auto-columns: minmax(0, max-content); column-gap: var(--gap); }
   .path li { max-width: 15rem; padding: 1.6rem 0 0; }
+  /* a role that has to wrap splits evenly ("Led its church, / 379 to 381"), never leaving a
+     scrap on its second line; the page's script then draws the column in to its words */
+  .path :is(b, span) { text-wrap: balance; }
   .path li::before { top: 0; }
   .path li::after { left: 1.5rem; right: calc(.5rem - var(--gap)); top: 6.5px; bottom: auto; border-left: 0; border-top: 2px dotted var(--rule-strong); }
 }
@@ -611,6 +588,12 @@ html.is-locked { overflow: hidden; }
 .churches li { background: var(--shell); border-radius: 12px; padding: .65rem .75rem .7rem; }
 .churches b { display: block; font-family: var(--ui); font-size: var(--fs-label); font-weight: var(--fw-label); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-mute); }
 .churches li > span { display: block; margin-top: .1rem; font-family: var(--display); font-weight: 700; font-size: 1.15rem; color: var(--ink); }
+/* A status that wraps ("Not on the calendar") sat on the body's loose 1.65 line height, with a
+   gap between its two lines like a paragraph's. The owner asked for its lines to sit together
+   like a card title's, at 1.3rem, and for nothing else to move (2026-09-25). So the lines are
+   tightened and the space given back as padding: a one-line status is exactly as tall as it
+   was, and only a wrapped one draws its second line closer. */
+.churches li > span { line-height: 1.3rem; padding-block: calc((1.15rem * 1.65 - 1.3rem) / 2); }
 .churches .tbc { white-space: normal; }
 .churches li > small { display: block; font-size: .74rem; color: var(--ink-soft); line-height: 1.35; margin-top: .1rem; }
 
@@ -643,12 +626,12 @@ html.is-locked { overflow: hidden; }
 /* The owner's note 5: on a phone a box stands 6px from the screen's edge, so the text inside gets
    the width. Last in the file on purpose, so it wins over each box's own margins. */
 @media (max-width: 39.99rem) {
-  .sp > :is(.panel, .cs, .said, .words, .smoments, .myths, .stances, .split, .sreads, .squizzes, .kin, .colls, .people-wrap, .squiz, .circle, .qf--prayer),
+  .sp > :is(.panel, .cs, .said, .words, .smoments, .myths, .stances, .split, .sreads, .squizzes, .kin, .people-wrap, .ecm, .squiz, .circle, .qf--prayer),
   .mir > :is(.raised, .wonders, .doubt) { margin-left: calc(6px - var(--gut)); margin-right: calc(6px - var(--gut)); }
   .spager { margin-left: calc(6px - var(--gut)); margin-right: calc(6px - var(--gut)); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .pcard, .coll, .pcard:hover, .coll:hover { transition: none; transform: none; }
+  .pcard, .pcard:hover { transition: none; transform: none; }
 }
 
 /* ============================================================ beyond the mock-up
@@ -676,8 +659,6 @@ html.is-locked { overflow: hidden; }
 .st-you { margin: .35rem 0 0; font-family: var(--ui); font-size: .8rem; font-weight: 600; color: var(--ink-soft); }
 .st-you .you-chip { margin-right: .3rem; vertical-align: 1px; }
 .st-scale i.you { outline: 2px dashed var(--ink-mute); outline-offset: 3px; }
-/* the quiz card's kicker, title and line each on their own line (the mock-up set this inline) */
-.squiz-k, .squiz-t, .squiz-s { display: block; }
 
 /* ============================================================ the template meets other lives
    Fixes for the 21 pages whose records are not Martin's shape (the visual check of 2026-09-25).
@@ -703,11 +684,14 @@ html.is-locked { overflow: hidden; }
   .stat-src { margin-top: 0; align-self: end; }
 }
 
-/* On a wide screen the two narrow columns beside the facts (the numbers, and the pictures) stay
-   in view while the facts scroll, instead of ending early above an empty stretch of page; and the
-   number tiles stay together at the top rather than spreading down a tall panel. */
+/* On a wide screen the two narrow columns beside the facts (the numbers, and the pictures) sit at
+   the top of their row, and the number tiles stay together rather than spreading down a tall
+   panel. They are NOT sticky: they were written sticky once, which did nothing while the sheet
+   was a scroll container (above), and once it was not, a sticky grid item turned out to slide
+   within the whole sheet, over the feast days below it, and a column taller than the screen
+   kept its foot out of sight until the facts ended (seen on Augustine's, 2026-09-25). */
 @media (min-width: 62rem) {
-  .cs-stats, .cs-side { align-self: start; position: sticky; top: 5rem; }
+  .cs-stats, .cs-side { align-self: start; }
   .stats { align-content: start; }
 }
 

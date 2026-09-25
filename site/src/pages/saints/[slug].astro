@@ -101,6 +101,10 @@ const after = (id: string) => extras.filter(x => x.after === id);
 const title = (id: string) => SECTIONS.find(s => s[0] === id)?.[1] ?? '';
 /** A count that leaves one card alone in rows of three, but pairs off evenly: 4, 10, 16. */
 const pairs = (n: number) => n > 3 && n % 3 === 1 && n % 2 === 0;
+/* Friends, family and rivals: the people with a face (a page of their own on the site) come
+   first, so the portraits sit together instead of scattered through the grid (the owner, on
+   Clement's page, 2026-09-25). Otherwise the data's own order holds. */
+const circle = [...(p.circle ?? [])].sort((a, b) => Number(!a.key) - Number(!b.key));
 
 /* ---- links */
 const out = (c: Cite) => c.url;
@@ -499,7 +503,7 @@ const breadcrumbs = [
     <>
       <SectionHead id="circle" title="friends, family and rivals" />
       <div class:list={['kin circle', pairs(p.circle.length) && 'kin--pairs']}>
-        {p.circle.map(c => {
+        {circle.map(c => {
           const href = c.key ? hubHref(c.key) : null;
           const Tag = href ? 'a' : 'div';
           return (
@@ -701,6 +705,67 @@ const breadcrumbs = [
     } catch {
       /* a page that cannot find the reader's answers is simply the page it always was */
     }
+  }
+
+  /*
+   * HIS ROLES, IN ORDER, on a wide screen: in the middle of its box, equal space either side, as
+   * the owner had Martin's drawn (draft 3). Martin's roles fit one line each and the CSS centres
+   * them. Most lives have longer lines, and there the grid squeezed every column and wrapped its
+   * words, so each wrapped column held less ink than width and the path looked pushed to the left
+   * (his note on the other 21, 2026-09-25). So where the lines do not fit at the natural gap, the
+   * gap gives way first, down to 2rem; where they still do not fit, each column is drawn in to its
+   * wrapped words and the room that frees is shared out as gap, so the ink runs edge to edge with
+   * the same space either side. Without the script the CSS layout stands.
+   */
+  const path = document.querySelector<HTMLElement>('.cs-path .path');
+  if (path) {
+    const wide = matchMedia('(min-width: 46rem)');
+    const MIN_GAP = 32;
+    /** The right edge of the furthest line of words in a column. */
+    const inkRight = (li: HTMLElement) => {
+      let right = 0;
+      for (const el of li.children) {
+        const r = document.createRange();
+        r.selectNodeContents(el);
+        for (const b of r.getClientRects()) right = Math.max(right, b.right);
+      }
+      return right;
+    };
+    const fit = () => {
+      const items = [...path.children] as HTMLElement[];
+      path.style.removeProperty('--gap');
+      items.forEach(li => { li.style.width = ''; });
+      if (!wide.matches || items.length < 2) return;
+      const box = path.closest<HTMLElement>('.cs-path')!;
+      const bs = getComputedStyle(box);
+      const room = box.clientWidth - parseFloat(bs.paddingLeft) - parseFloat(bs.paddingRight);
+      const gap = parseFloat(getComputedStyle(path).columnGap) || MIN_GAP;
+      const n = items.length - 1;
+      // each column at its words' full length (the CSS still caps a column at 15rem)
+      items.forEach(li => { li.style.width = 'max-content'; });
+      const whole = items.reduce((a, li) => a + li.getBoundingClientRect().width, 0);
+      items.forEach(li => { li.style.width = ''; });
+      if (whole + n * gap <= room) return;
+      if (whole + n * MIN_GAP <= room) {
+        path.style.setProperty('--gap', `${Math.floor((room - whole) / n) - 1}px`);
+        return;
+      }
+      path.style.setProperty('--gap', `${MIN_GAP}px`);
+      const ink = items.map(li => Math.ceil(inkRight(li) - li.getBoundingClientRect().left) + 1);
+      items.forEach((li, i) => { li.style.width = `${ink[i]}px`; });
+      // never wider than the natural gap: past it the path simply sits centred, as Martin's does
+      const used = ink.reduce((a, b) => a + b, 0);
+      path.style.setProperty('--gap', `${Math.min(gap, Math.max(MIN_GAP, Math.floor((room - used) / n) - 1))}px`);
+    };
+    let queued = false;
+    const refit = () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(() => { queued = false; fit(); });
+    };
+    fit();
+    document.fonts?.ready.then(fit);
+    addEventListener('resize', refit);
   }
 
   /*

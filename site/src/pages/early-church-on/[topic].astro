@@ -168,27 +168,25 @@ const sides = [
         <Icon name="arrow" size={14} />
         <span>
           <a href="/early-church-on/">All {STATEMENTS.length} questions</a>, and
-          <a href="/early-christian/">all {quiz.outcomes.length} {outcomeNounPlural(quiz)}</a>.
+          <a href="/saints/">all {quiz.outcomes.length} {outcomeNounPlural(quiz)}</a>.
         </span>
       </p>
     </section>
 
-    {/* The way into the quiz: its own card, drawn plain because the band above already wears
-        the quiz's picture (no page shows one picture twice). */}
-    <div class="qcard-wrap">
-      <a class={`qcard qcard--plain qcard--${quiz.slug}`} href={quizHref(quiz)}>
-        <div class="qcard-body">
-          <p class="qcard-kicker">Your turn</p>
-          <h2 class="qcard-title">{quiz.title}</h2>
-          <p class="qcard-say">{quiz.tagline} See where you would stand on this and {STATEMENTS.length - 1} more.</p>
-          <ul class="qcard-facts">
-            <li><Icon name="clock" size={13} /> {quiz.minutes} min</li>
-            <li>{quiz.outcomes.length} {outcomeNounPlural(quiz)}</li>
-          </ul>
-          <span class="qcard-go go-pill">Start <Icon name="arrow" size={16} /></span>
-        </div>
-      </a>
-    </div>
+    {/* The way into the quiz: the quiz plate the Saints hub and /early-church-on/ end on (the
+        owner, 2026-09-25: the plain card "has no background"). Its painting is Jordaens's Four
+        Latin Church Fathers, not the Dürer, because the band above already wears the Dürer (no
+        page shows one picture twice); its crops are in early-christian.css (.squiz--fathers). */}
+    <SectionHead title="your turn" />
+    <a class="squiz squiz--fathers" href={quizHref(quiz)}>
+      <img src="/img/jordaens-fathers.jpg" alt="" loading="lazy" />
+      <span class="squiz-b">
+        <span class="squiz-k">Quiz</span>
+        <span class="squiz-t">{quiz.title}</span>
+        <span class="squiz-s">{quiz.tagline} See where you would stand on this and {STATEMENTS.length - 1} more.</span>
+        <span class="go-pill">Start <Icon name="arrow" size={16} /></span>
+      </span>
+    </a>
 
     <CorrectionNote subject={title} />
   </div>

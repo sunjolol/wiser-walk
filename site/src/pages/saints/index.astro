@@ -2,9 +2,11 @@
 /**
  * The Saints hub: /saints/.
  *
- * "Saints and early Christians": everyone on the site who has a page of their own, with search,
- * collections and filters, as the mock-up the owner approved on 2026-09-24 draws it (design/
- * saints-hub/mockup/). Who is listed and where each card goes is lib/saints/data.ts: a full
+ * "Saints and early Christians": everyone on the site who has a page of their own, with search
+ * and filters, as the mock-up the owner approved on 2026-09-24 draws it (design/saints-hub/
+ * mockup/). Its collection cards came off on 2026-09-25 (the owner: the Group filter already does
+ * their job in less room, and they stood between the search and the list, a long scroll on a
+ * phone). So did the line explaining the type chips and the link to the early Church's questions. Who is listed and where each card goes is lib/saints/data.ts: a full
  * /saints/ page where one exists, the early Christians' older pages until theirs is written, and
  * the Bible figure quiz's pages for Bible people.
  *
@@ -19,7 +21,9 @@
 import Base from '../../layouts/Base.astro';
 import SectionHead from '../../components/SectionHead.astro';
 import Icon from '../../components/Icon.astro';
-import { HUB, COLLECTIONS, FILTER_KINDS, TYPES, imgOf } from '../../lib/saints/data';
+import EarlyMine from '../../components/EarlyMine.astro';
+import { HUB, FILTER_KINDS, TYPES } from '../../lib/saints/data';
+import { whichEarlyChristian } from '../../lib/quizzes/which-early-christian';
 import '../../styles/pages/saints.css';
 
 const title = 'Saints and Church Fathers: lives, quotes, feast days';
@@ -76,17 +80,14 @@ const plural = (n: number) => `${n} ${n === 1 ? 'person' : 'people'}`;
     </div>
   </section>
 
-  <SectionHead title="collections" />
-  <div class="colls">
-    {COLLECTIONS.map(c => (
-      <a class="coll" href={`#group=${c.group}`} data-group={c.group}>
-        <span class="coll-art">{c.imgs.map(s => <img src={imgOf(s)} alt="" loading="lazy" style="object-position:50% 18%" />)}</span>
-        <span class="coll-t">{c.title}</span>
-      </a>
-    ))}
-  </div>
-
   <SectionHead id="people" title="all the people" />
+  {/*
+    THE READER'S TWO PEOPLE. Where this device holds a result for "Which early Christian thinks
+    like you?", their kindred spirit and their sparring partner are tagged on their cards, worked
+    out by the quiz's own scorer (EarlyMine). This was the old /early-christian/ page's, which the
+    hub replaced. Everyone else sees nothing here.
+  */}
+  <EarlyMine quiz={whichEarlyChristian} kind="people" />
   <div class="people-wrap" id="filters">
     <div class="ftool-bar">
       <button class="fbtn" type="button" id="f-open" aria-haspopup="dialog" aria-controls="f-sheet" hidden>
@@ -119,8 +120,16 @@ const plural = (n: number) => `${n} ${n === 1 ? 'person' : 'people'}`;
     <div class="people" id="people-grid">
       {HUB.map(p => (
         <a class="pcard" href={p.href} data-groups={p.groups.join(' ')} data-lived={p.lived} data-side={p.side.join(' ')}
-           data-type={p.type ?? ''} data-search={`${p.name} ${p.alias}`.toLowerCase()}>
-          <span class="pcard-pic"><img src={p.img} alt="" loading="lazy" style={`object-position:${p.focus}`} /></span>
+           data-type={p.type ?? ''} data-search={`${p.name} ${p.alias}`.toLowerCase()} data-ec-person={p.ec}>
+          <span class="pcard-pic">
+            <img src={p.img} alt="" loading="lazy" style={`object-position:${p.focus}`} />
+            {p.ec && (
+              <>
+                <span class="pcard-tag" data-ec-tag="kindred" hidden>Kindred spirit</span>
+                <span class="pcard-tag" data-ec-tag="sparring" hidden>Sparring partner</span>
+              </>
+            )}
+          </span>
           <span class="pcard-b">
             <span class="pcard-n">{p.name}</span>
             <span class="pcard-d">{p.dates}</span>
@@ -135,7 +144,6 @@ const plural = (n: number) => `${n} ${n === 1 ? 'person' : 'people'}`;
     </div>
     <p class="people-empty" id="people-empty" hidden>No one matches that. Try another name, or <button class="fclear" type="button" data-clear-all>clear the filters</button>.</p>
   </div>
-  <p class="people-key">A coloured chip is where the Christian Personality Test places that person. It is our reading, not a church's.</p>
 
   <SectionHead title="where do you stand?" />
   <a class="squiz squiz--engr" href="/q/which-early-christian/">
@@ -147,7 +155,6 @@ const plural = (n: number) => `${n} ${n === 1 ? 'person' : 'people'}`;
       <span class="go-pill">Start <Icon name="arrow" size={16} /></span>
     </span>
   </a>
-  <p class="more-line">Or see <a href="/early-church-on/">what the early Church said</a> on 23 questions, from war to laughter.</p>
 </div>
 
 <dialog class="fsheet" id="f-sheet" aria-labelledby="f-sheet-t">
@@ -309,18 +316,6 @@ const plural = (n: number) => `${n} ${n === 1 ? 'person' : 'people'}`;
     const one = t.closest<HTMLButtonElement>('[data-clear]');
     if (one) { picks[one.dataset.clear as Key] = []; apply(); return; }
     if (t.closest('.fdone')) { closePops(); return; }
-    /* A collection card starts the list afresh on its group. */
-    const coll = t.closest<HTMLAnchorElement>('.coll');
-    if (coll) {
-      e.preventDefault();
-      KEYS.forEach(k => { picks[k] = []; });
-      picks.group = [coll.dataset.group!];
-      q = '';
-      qEl.value = '';
-      apply();
-      toList();
-      return;
-    }
     if (!t.closest('.fpill-w')) closePops();
   });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closePops(); });

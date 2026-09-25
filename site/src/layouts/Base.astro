@@ -86,16 +86,22 @@ const socialTitle = seo ? seo.title : title;
 const ogImage = new URL(ownCard ?? ogImageFor(Astro.url.pathname), Astro.site).href;
 
 const here = Astro.url.pathname;
-// Finished quizzes before drafts, here as on the home page.
-const footQuizzes = [...QUIZZES].sort((a, b) => Number(a.status === 'draft') - Number(b.status === 'draft'));
+// Finished quizzes before drafts, in the header's Quizzes menu as on the home page.
+const menuQuizzes = [...QUIZZES].sort((a, b) => Number(a.status === 'draft') - Number(b.status === 'draft'));
 const footGames = liveGames();
+/*
+ * THE FOOTER'S QUIZZES: five, chosen by the owner (2026-09-25: "the footer is too tall"), in his
+ * order, then "All quizzes". A slug that stops being a live quiz fails the build here rather
+ * than leaving a hole in the footer.
+ */
+const FOOT_PICKS = ['theology-compass', 'personality', 'spiritual-gifts', 'which-psalm', 'bible-figure'];
+const footPicks = FOOT_PICKS.map(slug => {
+  const q = QUIZZES.find(x => x.slug === slug && x.status === 'live');
+  if (!q) throw new Error(`Base.astro: the footer names ${slug}, which is not a live quiz`);
+  return q;
+});
 const FOOT_SHORT: Record<string, string> = {
-  'seven-deadly-sins': 'Which of the 7 deadly sins are…',
   'which-psalm': 'Which Psalm are you living?'
-  /* No entry for 'which-early-christian': "Which early Christian thinks like you?" is already the
-     short form the owner ruled for tight spaces (2026-09-23), and it fits the footer's quiz
-     column on one line at 960px, the narrowest width the brand stands beside the columns
-     (measured 2026-09-23, with the Games column still clear of it). */
 };
 const isCurrent = (href: string) => here === href || here.startsWith(href.replace(/\/$/, '') + '/');
 /** Computed at build, so the footer cannot be caught printing last year. */
@@ -113,12 +119,14 @@ const year = new Date().getFullYear();
  * reader who wanted the hub must not have to hunt for it at the bottom of a list.
  */
 /*
- * EVERY MENU ITEM IS A NAME AND ONE PLAIN LINE (the owner, 2026-09-24: he liked it on the Learn
- * menu of the Saints mock-up and asked for it on every header menu). The line is the quiz's or
- * the game's own `menu` field, so a new one arrives with its line. `all` marks the way back to
- * a hub, which is the first item and reads as its own thing (a dotted rule under it).
+ * A MENU ITEM IS A NAME AND ONE PLAIN LINE (the owner, 2026-09-24: he liked it on the Learn menu
+ * of the Saints mock-up and asked for it on every header menu), EXCEPT THE QUIZZES (2026-09-25):
+ * their names say what they are, and on a phone seven lines under seven names made a wall of
+ * text people skip. So the Quizzes menu is names only; Games and Learn keep their lines, which
+ * are each game's own `menu` field and the Learn pages' own. `all` marks the way back to a hub,
+ * which is the first item and reads as its own thing (a dotted rule under it).
  */
-type NavItem = { href: string; label: string; line: string; tag?: string; all?: boolean };
+type NavItem = { href: string; label: string; line?: string; tag?: string; all?: boolean };
 const NAV: Array<{
   href: string;
   label: string;
@@ -130,13 +138,12 @@ const NAV: Array<{
     href: '/quizzes/',
     label: 'Quizzes',
     items: [
-      { href: '/quizzes/', label: 'All quizzes', line: 'Every quiz, on one page.', all: true },
-      // Finished quizzes before drafts, as on the home page, /quizzes/, /me/ and the footer.
-      // The menu was the one place a draft sat in the middle of the live ones.
-      ...footQuizzes.map(q => ({
+      { href: '/quizzes/', label: 'All quizzes', all: true },
+      // Finished quizzes before drafts, as on the home page, /quizzes/ and /me/. The menu was
+      // the one place a draft sat in the middle of the live ones.
+      ...menuQuizzes.map(q => ({
         href: quizHref(q),
         label: q.title,
-        line: q.menu,
         tag: q.status === 'draft' ? 'Draft' : undefined
       }))
     ]
@@ -385,7 +392,7 @@ const navItems = ACCOUNTS_VISIBLE ? NAV.filter(n => n.href !== '/me/') : NAV;
                     <li class:list={[i.all && 'all']}>
                       <a href={i.href} aria-current={here === i.href ? 'page' : undefined}>
                         <span class="nm-t">{i.label}{i.tag && <span class="navmenu-tag">{i.tag}</span>}</span>
-                        <span class="nm-l">{i.line}</span>
+                        {i.line && <span class="nm-l">{i.line}</span>}
                       </a>
                     </li>
                   ))}
@@ -546,12 +553,9 @@ const navItems = ACCOUNTS_VISIBLE ? NAV.filter(n => n.href !== '/me/') : NAV;
           <div class="foot-col foot-col--blue">
             <h4>Quizzes</h4>
             <ul>
-              {/*
-                ONE title is cut short here BY HAND, by the owner's instruction (2026-09-21): at full
-                length it ran into the Games column. It is a stopgap, not a rule: he plans to replace
-                that quiz's title with a shorter one, and then this map goes. Do not add to it.
-              */}
-              {footQuizzes.map(q => (
+              {/* A title may be cut short here BY HAND (FOOT_SHORT, above), where at full length it
+                  ran into the Games column. Do not add to it. */}
+              {footPicks.map(q => (
                 <li><a href={`/q/${q.slug}/`} title={FOOT_SHORT[q.slug] ? q.title : undefined}>{FOOT_SHORT[q.slug] ?? q.title}</a></li>
               ))}
               <li><a class="foot-all" href="/quizzes/">All quizzes <Icon name="arrow" size={12} /></a></li>

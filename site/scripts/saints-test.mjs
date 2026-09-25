@@ -7,15 +7,18 @@
  *   one person, one page    every early Christian with a full /saints/ page is on the move list,
  *                           everyone on the list has a file, and his old /early-christian/
  *                           address is a permanent redirect to the new one (with and without the
- *                           closing slash)
+ *                           closing slash); /early-christian/ itself redirects to /saints/, which
+ *                           replaced it, and no page is built there (the owner, 2026-09-25)
  *   no clashing addresses   no group slug the hub uses or plans (/saints/<group>/) equals a
  *                           person's slug
  *   the search listing      a title of 65 characters or fewer, a description of 50 to 160
  *                           ending with a full stop, a "Who was X?" answer of 40 to 60 words
  *                           (the owner's target; seo-test.mjs holds the built page to 30 to 70)
  *   the owner's rules       no § mark or "section" number shown; never "St" for anyone no church
- *                           counts a saint; feast days in calendar order in each column; the
- *                           rich-text marks balanced; every picture the page names is on disk
+ *                           counts a saint; a status short enough for its pill (50 characters:
+ *                           Clement's first ran to 88, "WAY too long for a pill"); feast days in
+ *                           calendar order in each column; the rich-text marks balanced; every
+ *                           picture the page names is on disk
  *
  * Quotations are checked word for word before a file is added, on the machine that fetched their
  * texts (design/saints-hub/tools/verify-quotes.mjs): those texts are gitignored, so that check
@@ -65,7 +68,18 @@ console.log('saints: one person, one page');
       }
     }
   }
-  if (!bad) ok(`${pages.length} full page(s), ${moved.length} moved from /early-christian/ with a 301 each`);
+  for (const source of ['/early-christian/', '/early-christian']) {
+    const r = (vercel.redirects ?? []).find(x => x.source === source);
+    if (!r || r.destination !== '/saints/' || r.permanent !== true) {
+      fail(`vercel.json: no permanent redirect from ${source} to /saints/ (the hub replaced that list)`);
+      bad++;
+    }
+  }
+  if (existsSync(join(ROOT, 'src/pages/early-christian/index.astro'))) {
+    fail('src/pages/early-christian/index.astro is back, but /early-christian/ redirects to /saints/');
+    bad++;
+  }
+  if (!bad) ok(`${pages.length} full page(s), ${moved.length} moved from /early-christian/ with a 301 each; the old list sends on to /saints/`);
 }
 
 console.log('saints: no group address equals a person');
@@ -112,6 +126,7 @@ console.log('saints: each page');
       if (opens % 2) no(`unbalanced ** in "${s.slice(0, 50)}…"`);
       if ((s.match(/\{(la|el)\|/g) || []).length !== (s.match(/\}/g) || []).length) no(`unbalanced {la|…} in "${s.slice(0, 50)}…"`);
     }
+    if (p.status && p.status.length > 50) no(`the status "${p.status}" is ${p.status.length} characters: too long for its pill (50 at most)`);
     if (p.status) {
       /* "St" is never used for a Church Father no church counts a saint: not in his name, his
          title, his description, his band or his card. Other people's titles may say it. */

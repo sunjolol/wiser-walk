@@ -93,7 +93,7 @@ const jsonLd = {
   url,
   isPartOf: [
     { '@id': new URL('/#website', Astro.site).href },
-    { '@type': 'CollectionPage', name: 'The early Christians', url: new URL('/early-christian/', Astro.site).href },
+    { '@type': 'CollectionPage', name: 'Saints and early Christians', url: new URL('/saints/', Astro.site).href },
     { '@type': 'Quiz', name: quiz.title, url: new URL(quizHref(quiz), Astro.site).href }
   ],
   mainEntity: {
@@ -105,7 +105,7 @@ const jsonLd = {
 };
 const breadcrumbs = [
   { name: 'Home', url: '/' },
-  { name: 'The early Christians', url: '/early-christian/' },
+  { name: 'Saints and early Christians', url: '/saints/' },
   { name: p.name, url: personHref(p) }
 ];
 ---
@@ -215,7 +215,7 @@ const breadcrumbs = [
     <p class="ec-way">
       <Icon name="arrow" size={14} />
       <span>
-        <a href="/early-christian/">All {OLDEST_FIRST.length} {outcomeNounPlural(quiz)}</a>, oldest first.
+        <a href="/saints/">All {OLDEST_FIRST.length} {outcomeNounPlural(quiz)}</a>, oldest first.
         Or see <a href="/early-church-on/">what they said</a>, one question at a time.
       </span>
     </p>
