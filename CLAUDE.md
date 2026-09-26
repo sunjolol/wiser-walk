@@ -66,6 +66,20 @@ rules so they don't happen again". `site/scripts/quiz-page-test.mjs` (postbuild)
 9. **A special card among cards looks like its siblings**, marked only by an icon and a small tag.
 10. **No placeholder pictures** (a monogram where a face should be is "not acceptable").
 
+## COMBING PROGRESS (2026-09-26): SINS, COMPASS AND GIFTS DONE; SAINTS LIST WAITING FOR HIS ORDER
+
+Live (main `9c67894`): the seven deadly sins (each sin page a painting + Latin/opposite/Dante tiles, result rows
+open to the short answer), the Theology Compass (result leads with ONE tradition, `headlineLeadsWithOutcome`;
+statements 1 and 10 reworded; no kickers on result/axis/tradition/compare; site-wide early-wrap sweep), the
+spiritual gifts (17 gifts, 51 weighted statements 6/5/4, numbers on bars, headline max two names, tongues and
+interpreting tongues page-only, old codes decode via `legacyCodes`), progress saved in the statement runner, every
+card counts questions (`lib/quiz-count.ts`), home rail pins Personality then Bible figure, 17 gift paintings and 18
+tradition pictures (`lib/tradition-art.ts`, also on Compass results and /me/ cards). Still to comb: Which Psalm,
+Which early Christian, the Personality Test, the games. **Saints next:** he is ordering 19 people (the 12 in
+`design/saints-hub/research/NEXT-12.md` plus Mary of Bethany, Monica, Arsenius, Cuthbert, Guthlac, Isaiah, Jeremiah;
+Athanasius is in both; Philip Neri stays an unlinked name in the personality test). Vercel: Hobby has 10GB of
+deployment storage and ~140MB per push (memory vercel-storage-per-deploy): batch pushes.
+
 ## NEXT SESSION STARTS HERE (after 2026-09-25): HE COMBS THROUGH THE OLDER QUIZZES
 
 **His plan, in his words:** "In the next session I'm going to go through the older quizzes with a fine tooth comb to
