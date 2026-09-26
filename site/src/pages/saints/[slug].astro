@@ -9,12 +9,18 @@ import PersonPage from '../../components/PersonPage.astro';
 import { SAINTS } from '../../lib/saints/data';
 import { plain } from '../../lib/saints/rich';
 import type { SaintPage } from '../../lib/saints/types';
+import { getQuiz, quizHref } from '../../lib/engine/registry';
+import { artFor } from '../../lib/art';
 
 export function getStaticPaths() {
   return Object.values(SAINTS).map(p => ({ params: { slug: p.slug }, props: { slug: p.slug } }));
 }
 
 const p: SaintPage = SAINTS[(Astro.props as { slug: string }).slug]!;
+const ownQuiz = p.quiz ? getQuiz(p.quiz.slug) : undefined;
+const extraQuiz = ownQuiz && p.quiz
+  ? { href: quizHref(ownQuiz), title: ownQuiz.title, say: p.quiz.say, img: artFor(ownQuiz.slug)?.src ?? '/img/durer-jerome.jpg' }
+  : undefined;
 /* ---- search and structured data */
 const url = new URL(`/saints/${p.slug}/`, Astro.site).href;
 const LICENSE: Record<string, string> = {
@@ -62,5 +68,5 @@ const breadcrumbs = [
   { name: p.name, url: `/saints/${p.slug}/` }
 ];---
 <Base title={p.seo.title} description={p.seo.description} jsonLd={jsonLd} breadcrumbs={breadcrumbs} ogType="article">
-  <PersonPage p={p} crumb={{ href: '/saints/', label: 'Saints and early Christians' }} />
+  <PersonPage p={p} crumb={{ href: '/saints/', label: 'Saints and early Christians' }} extraQuiz={extraQuiz} />
 </Base>

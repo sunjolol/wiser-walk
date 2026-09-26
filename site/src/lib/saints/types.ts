@@ -83,6 +83,11 @@ export interface SaintPage {
    * where he is one of its 22. Draws "Where he stood" from the quiz's own checked cells.
    */
   wec?: string;
+  /**
+   * A quiz built on this person's own work (Athanasius: his Letter to Marcellinus is the Psalm quiz's
+   * premise): its slug in the registry and one line for its card under "Take the quizzes".
+   */
+  quiz?: { slug: string; say: string };
   /** His type in the Christian Personality Test (src/data/personality.json TYPES), where it names him. */
   type?: string;
   /** Where the test names him as a young man (the Spark's Augustine, the Herald's Basil). */

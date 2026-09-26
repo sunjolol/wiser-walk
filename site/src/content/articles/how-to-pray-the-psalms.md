@@ -16,7 +16,7 @@ draft: false
 In the 300s, a man named Marcellinus was getting over an illness. He spent the time
 reading the Psalms and trying to understand each one.
 
-His friend Athanasius was the bishop of Alexandria. He wrote back to Marcellinus and passed
+His friend [Athanasius](/saints/athanasius-of-alexandria/) was the bishop of Alexandria. He wrote back to Marcellinus and passed
 on what a studious old man had once taught him about the Psalms.
 
 The Church has kept that letter close. One of the oldest Bibles in the world, the Codex

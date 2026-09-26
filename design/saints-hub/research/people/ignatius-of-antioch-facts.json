@@ -1,0 +1,298 @@
+{
+  "subject": "Ignatius of Antioch",
+  "slug": "ignatius-of-antioch",
+  "checked_on": "2026-09-26",
+  "method": "One writer, research and writing together (SAINT-BRIEF.md). Every quotation is in ignatius-of-antioch.quotes.json and passes verify-quotes.mjs. Ignatius's own words are quoted ONLY from the shorter Greek (middle recension) in ANF vol. 1: sources/people/ignatius-of-antioch/anf01-ignatius-middle-recension.txt was split by script from shared/anf01.txt, which prints each chapter twice (shorter first, then longer). Every chapter but Ephesians 20 (printed as two separate chapters XX) and Philadelphians 10 (a title wrapped over two lines) has exactly two paragraphs; both exceptions were checked by hand. The longer recension is in anf01-ignatius-longer-recension.txt and is used only for the myth about the padded Smyrnaeans 6.",
+  "life": [
+    {
+      "text": "Eusebius makes Ignatius the second bishop of Antioch, Evodius the first.",
+      "source": "Eusebius, Church History 3.22 (McGiffert)",
+      "url": "https://ccel.org/ccel/schaff/npnf201.iii.viii.xxii.html",
+      "verified": true
+    },
+    {
+      "text": "Eusebius: 'chosen bishop of Antioch, second in succession to Peter'; 'Report says that he was sent from Syria to Rome, and became food for wild beasts'; he wrote Ephesians, Magnesians, Trallians and Romans from Smyrna, Philadelphians, Smyrnaeans and Polycarp from Troas; succeeded by Heros.",
+      "source": "Eusebius, Church History 3.36",
+      "url": "https://ccel.org/ccel/schaff/npnf201.iii.viii.xxxvi.html",
+      "verified": true
+    },
+    {
+      "text": "Jerome: third bishop after Peter; condemned under Trajan; 'the remains of his body lie in Antioch outside the Daphnitic gate in the cemetery'; puts his death in Trajan's 11th year.",
+      "source": "Jerome, Lives of Illustrious Men 16 (Richardson)",
+      "url": "https://ccel.org/ccel/schaff/npnf203.v.iii.xviii.html",
+      "verified": true
+    },
+    {
+      "text": "Chrysostom: 'the hands of the blessed apostles touched his sacred head'; Ignatius succeeded Peter at Antioch; he 'had not even seen him [Christ], nor enjoyed his companionship'; 'in the midst of the theatre, while the whole city was seated above him'; the cities carried his remains 'upon their shoulders as far as this city'; 'Ye sent forth a Bishop, and received a martyr'.",
+      "source": "John Chrysostom, Homily on St Ignatius, 2 to 5 (Stephens)",
+      "url": "https://ccel.org/ccel/schaff/npnf109.vii.iii.html",
+      "verified": true
+    },
+    {
+      "text": "Theodoret: Ignatius received the high priesthood 'by the right hand of the great Peter'.",
+      "source": "Theodoret, Letter 151 (npnf203); Lightfoot 1889 p. 29 cites the same letter",
+      "url": "https://www.newadvent.org/fathers/2707151.htm",
+      "verified": true
+    },
+    {
+      "text": "Lightfoot: nothing known of birth or family; probably raised a pagan and converted in mature life; 'broken' natures out of which 'God's heroes are made' (after Zahn); the attempts to name his apostolic teacher are 'excrescences on the earliest tradition'; accession 69 and death 107 have no claim to respect; death 'within a few years of A.D. 110, before or after'.",
+      "source": "Lightfoot, Apostolic Fathers Part 2 vol. 1 (1889), pp. 28 to 30",
+      "url": "https://archive.org/details/apostolicfathep2v1clemuoft",
+      "verified": true
+    },
+    {
+      "text": "Lightfoot on the journey: the Antiochene church disturbed; no appeal; condemned already; 'He goes to Rome therefore for the execution of his sentence'; guard of ten soldiers; gratuities made them crueller; northern road through Philadelphia and Sardis; tidings down the southern road; delegates from Ephesus (Onesimus, Burrhus, Crocus, Euplus, Fronto), Magnesia (Damas, Bassus, Apollonius, Zotion) and Tralles (Polybius); Burrhus as amanuensis at Troas; Philo of Cilicia and Rhaius Agathopus; Alce sister of Nicetes and aunt of Herodes; 'Here the curtain drops on the career of the martyr'.",
+      "source": "Lightfoot 1889, pp. 31 to 37",
+      "url": "https://archive.org/details/apostolicfathep2v1clemuoft",
+      "verified": true
+    },
+    {
+      "text": "Lightfoot: the Epistle to the Romans is the only one of the seven that bears a date; Irenaeus's quotation of Romans 4 is the earliest direct quotation of Ignatius; 'It is a cheap wisdom which ... declaims against the extravagance of the feelings and language of Ignatius'.",
+      "source": "Lightfoot 1889, pp. 35 and 38",
+      "url": "https://archive.org/details/apostolicfathep2v1clemuoft",
+      "verified": true
+    },
+    {
+      "text": "Lightfoot: by the late 300s his grave was shown outside the Daphnitic gate; the translation from Rome cannot be traced earlier; more probable that his ashes stayed in Rome; 17 October assigned as his day; Chrysostom preached on that anniversary in the martyrium; Theodosius II moved the relics to the Tychaeum (Temple of Fortune), henceforth the Church of Ignatius (Evagrius 1.16); the 20 December of the later Greek calendar is probably the anniversary of that translation; Syriac (Jacobite) patriarchs take the name Ignatius; in the West never a popular saint.",
+      "source": "Lightfoot 1889, pp. 45 to 49",
+      "url": "https://archive.org/details/apostolicfathep2v1clemuoft",
+      "verified": true
+    },
+    {
+      "text": "Stephens (NPNF 1.9 introduction): the translation to Antioch cannot be traced before the late 300s; the younger Theodosius moved the relics to the temple of the Fortune of Antioch.",
+      "source": "npnf109 introduction to the homilies",
+      "url": "https://ccel.org/ccel/schaff/npnf109.vii.ii.html",
+      "verified": true
+    },
+    {
+      "text": "Roman Martyrology (1916), 17 December: translation of his relics from Rome to Antioch; afterwards carried back to Rome and placed in the church of St Clement. Catholic Encyclopedia gives 637 for the move to St Clement's; OCA gives 540 or 637.",
+      "source": "martyrology-1916.txt; cathen-ignatius.txt; oca-0129.txt",
+      "url": "https://archive.org/details/romanmartyrology00cathuoft",
+      "verified": true
+    },
+    {
+      "text": "Polycarp's letter: the Philippians accompanied 'those who were bound in chains'; names 'the blessed Ignatius, and Zosimus, and Rufus'; sent the letters of Ignatius; asks for news of Ignatius.",
+      "source": "Polycarp, Philippians 1, 9, 13 (ANF)",
+      "url": "https://ccel.org/ccel/schaff/anf01.iv.ii.xiii.html",
+      "verified": true
+    },
+    {
+      "text": "Irenaeus quotes Romans 4 without naming him: 'I am the wheat of Christ...'.",
+      "source": "Irenaeus, Against Heresies 5.28.4 (ANF)",
+      "url": "https://ccel.org/ccel/schaff/anf01.ix.vii.xxix.html",
+      "verified": true
+    },
+    {
+      "text": "McGiffert: 'leopards' in Romans 5 is 'the earliest use of this word in any extant writing'; reasons for doubting the letters: 'the highly developed form of church government which they reveal; and secondly, the attacks upon heresy'; the Zahn/Lightfoot defence 'may be regarded as finally settling the matter'; quotes Schaff ('the incarnation, as it were, of the three closely connected ideas...', 'carries him beyond the bounds of sobriety', 'the earliest advocate of the hierarchical principle').",
+      "source": "McGiffert, notes on Eusebius 3.36",
+      "url": "https://ccel.org/ccel/schaff/npnf201.iii.viii.xxxvi.html",
+      "verified": true
+    },
+    {
+      "text": "Theophorus: a second name (Lightfoot); legend of the child in Christ's arms first in Anastasius Bibliothecarius, end of 9th century; heart legend in Vincent of Beauvais; Severus of Antioch linked 'Ignatius' to 'ignis', 'altogether false'.",
+      "source": "Lightfoot 1889, pp. 24 to 28",
+      "url": "https://archive.org/details/apostolicfathep2v1clemuoft",
+      "verified": true
+    },
+    {
+      "text": "Socrates (c. 440): Ignatius 'saw a vision of angels hymning in alternate chants the Holy Trinity'. Lightfoot: 'Antiphonal singing did not need to be suggested by a heavenly Vision' (quoted in NPNF 2.3, note on Theodoret).",
+      "source": "Socrates, Church History 6.8 (Zenos); npnf203",
+      "url": "https://ccel.org/ccel/schaff/npnf202.ii.ix.ix.html",
+      "verified": true
+    },
+    {
+      "text": "The Martyrdom of Ignatius (Martyrium Colbertinum, the 'Antiochene Acts'): trial before Trajan at Antioch, 'He who has Christ within his breast', voyage, Portus, death at the close of the games on 20 December, only 'the harder portions of his holy remains' left and taken to Antioch, visions. ANF translators: 'no reference to this narrative is to be traced during the first six centuries'. Lightfoot heads it 'Antiochene Acts of Ignatius [5th or 6th cent.]' and says 'the Martyrologies of Ignatius cannot be accepted as authentic history'. McGiffert: the Acts 'belong to the fourth and subsequent centuries'.",
+      "source": "ANF vol. 1; Lightfoot 1889 pp. 31 and 566; npnf201",
+      "url": "https://ccel.org/ccel/schaff/anf01.v.xxv.html",
+      "verified": true
+    }
+  ],
+  "letters_and_recensions": [
+    {
+      "text": "Fifteen letters bear his name; the first eight (Virgin Mary, two to John in Latin only; Mary of Cassobelae, Tarsians, Antiochians, Hero, Philippians) are universally held spurious; neither Eusebius nor Jerome refers to them.",
+      "source": "ANF vol. 1, introductory note",
+      "url": "https://ccel.org/ccel/schaff/anf01.v.i.html",
+      "verified": true
+    },
+    {
+      "text": "Long recension: a 4th-century revision with interpolations and six spurious letters, the usual form until Ussher's Latin find of 1644; Voss published the Greek in 1646; the Syriac 'short recension' is 'merely an abridgment'; Joly 1979 still argues against authenticity; Zahn and Lightfoot 'continue to dominate the scholarship'.",
+      "source": "William R. Schoedel, Anchor Bible Dictionary 3 (1992), as given by earlychristianwritings.com",
+      "url": "https://www.earlychristianwritings.com/ignatius.html",
+      "verified": true
+    },
+    {
+      "text": "Catholic Encyclopedia: long recension from the latter part of the 4th century, probably an Apollinarist of the early 5th; Calvin repudiated the letters; Newman quotation; lists of doctrines ('the threefold character of the hierarchy', 'the primacy of the See of Rome', 'the Judaizing heresies').",
+      "source": "Catholic Encyclopedia (1910)",
+      "url": "https://www.newadvent.org/cathen/07644a.htm",
+      "verified": true
+    },
+    {
+      "text": "Calvin: 'Nothing can be more nauseating, than the absurdities which have been published under the name of Ignatius' (in context of laws about Lent, which are in the spurious Philippians).",
+      "source": "Calvin, Institutes 1.13.29 (Beveridge)",
+      "url": "https://ccel.org/ccel/calvin/institutes.iii.xiv.html",
+      "verified": true
+    },
+    {
+      "text": "Barnes 2008 abstract: Eusebius's Trajanic date not authoritative; letters 'probably written in the 140s'. Lookadoo 2020 abstract: three general views since 1997; date separated from authenticity.",
+      "source": "Crossref abstracts",
+      "url": "https://doi.org/10.1177/0014524608098730",
+      "verified": true
+    }
+  ],
+  "hard_topics": [
+    {
+      "text": "Magnesians 8 to 10 and Philadelphians 6 in the middle recension; Kotrosits (via Harland): 'Judaizing' and 'Christianizing' linked, 'do not denote two religions'; he is 'possibly coining' christianismos; the context 'later get erased' as supersessionism.",
+      "source": "Harland blog, comments by Maia Kotrosits",
+      "url": "https://www.philipharland.com/Blog/2022/10/judeans-jews-ignatius-on-judaizing-and-christianizing-early-second-century-ce/",
+      "verified": true
+    },
+    {
+      "text": "Coxe (ANF American editor): 'Ignatius has been censured for his language to the Romans... But he was already condemned, in law a dead man'; the Epistle to the Romans 'utterly inconsistent' with a bishop of Rome over him.",
+      "source": "ANF vol. 1, introductory note",
+      "url": "https://ccel.org/ccel/schaff/anf01.v.i.html",
+      "verified": true
+    },
+    {
+      "text": "LCMS: 'the supreme authority of the bishop, and the unity of the Church found in her bishops'; 'the first to use the word catholic'.",
+      "source": "lsb-calendar.txt (LCMS commemorations)",
+      "url": "https://www.lcms.org/worship/church-year/commemorations",
+      "verified": true
+    }
+  ],
+  "myths": [
+    {
+      "text": "QuoteFancy lists 'Where the bishop is present, there is the Catholic Church', the heart line 'My dear Jesus, my Savior, is so deeply written in my heart...', and 'Let no man's place, or dignity, or riches, puff him up...' (the long recension of Smyrnaeans 6).",
+      "source": "quotes-quotefancy.txt",
+      "url": "https://quotefancy.com/ignatius-of-antioch-quotes",
+      "verified": true
+    },
+    {
+      "text": "OCA life tells the child legend and the heart in gold letters as tradition.",
+      "source": "oca-1220.txt",
+      "url": "https://www.oca.org/saints/lives/2026/12/20/103594-hieromartyr-ignatius-the-god-bearer-bishop-of-antioch",
+      "verified": true
+    },
+    {
+      "text": "Spurious Hero 2: 'If any one says that the Lord is a mere man, he is a Jew, a murderer of Christ.' Spurious Philippians 13: fasting on the Lord's Day or the Sabbath 'is a murderer of Christ'.",
+      "source": "ANF vol. 1",
+      "url": "https://ccel.org/ccel/schaff/anf01.v.xvi.html",
+      "verified": true
+    }
+  ],
+  "feasts": [
+    {
+      "text": "1 February: Roman Martyrology 1916 ('birthday of St. Ignatius'); Calendarium Romanum 1969: in Ado's martyrology on 1 February, kept at Rome from the 12th century; pre-1969 memoria III cl. on 1 February.",
+      "source": "martyrology-1916.txt; calendarium-romanum-1969-ocr.txt",
+      "url": "https://archive.org/details/CalendariumRomanum1969",
+      "verified": true
+    },
+    {
+      "text": "17 October: Calendarium 1969: kept by the Syrians on 17 October, in the Syriac breviary of the late 4th century; obligatory memorial among the martyrs kept (Agnes, Justin, Cornelius with Cyprian, Ignatius). USCCB 2026: Saturday 17 October, memorial. Church of England: Lesser Festival (roman type, like Polycarp's entry). Episcopal LFF 2022, LCMS, ELCA: 17 October.",
+      "source": "calendarium-romanum-1969-ocr.txt; usccb-2026cal.txt; cofe-calendar.txt; lff2022.txt; lsb-calendar.txt; elca-churchyear.txt",
+      "url": "https://www.usccb.org/resources/2026cal.pdf",
+      "verified": true
+    },
+    {
+      "text": "17 December: Roman Martyrology 1916, translation of relics.",
+      "source": "martyrology-1916.txt",
+      "url": "https://archive.org/details/romanmartyrology00cathuoft",
+      "verified": true
+    },
+    {
+      "text": "20 December: OCA, Hieromartyr Ignatius the God-Bearer; ANF note: the Greeks celebrate it 'to this day'.",
+      "source": "oca-1220.txt; anf01",
+      "url": "https://www.oca.org/saints/lives/2026/12/20/103594-hieromartyr-ignatius-the-god-bearer-bishop-of-antioch",
+      "verified": true
+    },
+    {
+      "text": "29 January: OCA, Translation of the relics.",
+      "source": "oca-0129.txt",
+      "url": "https://www.oca.org/saints/lives/2026/01/29/100335-translation-of-the-relics-of-the-hieromartyr-ignatius-the-godbea",
+      "verified": true
+    },
+    {
+      "text": "Coptic: 24 Kiahk, martyrdom (Kiahk = 10 December to 8 January Gregorian, so 2 January); 7 Epip, martyrdom in Rome (Epip = 8 July to 6 August, so 14 July).",
+      "source": "coptic-synaxarium-kiahk-24.txt; coptic-synaxarium-epip-7.txt; shared/wikipedia-coptic-calendar.txt (month table)",
+      "url": "https://www.copticchurch.net/synaxarium/4_24.html?lang=en",
+      "verified": true
+    },
+    {
+      "text": "Old-calendar arithmetic: +13 days (20 December = 2 January; 29 January = 11 February).",
+      "source": "calendar arithmetic, as on Polycarp's page",
+      "url": "",
+      "verified": true
+    }
+  ],
+  "pictures": [
+    {
+      "file": "ignatius-of-antioch.jpg",
+      "what": "Lorenzo Lotto, Madonna and Child with Saints Ignatius of Antioch and Onuphrius, 1508, Galleria Borghese (detail). Commons: Public domain (PD-Art, PD-old-100-expired). Commons dates the scan 1512; the museum says signed and dated 1508. The museum's catalogue now names the bishop Ignatius of Antioch (earlier read as Nicholas or Flavian); the heart with Christ's trigram is his attribute; the 1693 inventory mistook it for a 'pagnotta' (loaf).",
+      "page": "https://commons.wikimedia.org/wiki/File:Lotto,_ges%C3%B9_bambino_e_sant%27gnazio_di_antiochia.jpg",
+      "license": "Public domain",
+      "size": "2423x3251 original, saved 1341x1800 q84"
+    },
+    {
+      "file": "ignatius-of-antioch-2.jpg",
+      "what": "Mosaic head of St Ignatius, parekklesion of the Pammakaristos (Fethiye Camii), Istanbul; photo by Byzantine Institute staff 1949 to 1963, Dumbarton Oaks MSBZ004. Commons: CC0.",
+      "page": "https://commons.wikimedia.org/wiki/File:Fethiye_Camii,_parekklesion,_northeast_bay,_mosaics,_Istanbul,_Turkey_-_Vault,_St._Ignatius,_detail_of_head_-_MSBZ004_BF_T_F_028_C_-_Dumbarton_Oaks.jpg",
+      "license": "CC0",
+      "size": "1052x1500"
+    },
+    {
+      "file": "ignatius-of-antioch-3.jpg",
+      "what": "Jesus presents the young St Ignatius to the disciples, Roman school around 1600, oil on copper, sold by the Dorotheum. Inscription read by eye: MARTYR OBIT ROMAE, ANTIOCHENAE IGNATIUS URBIS PRAESUL HIC EST CHRISTI QUEM TENET ULNA PUER. Commons: Public domain.",
+      "page": "https://commons.wikimedia.org/wiki/File:Jesus_stellt_den_J%C3%BCngern_den_hl_Ignatius_vor_(r%C3%B6mische_Schule_c1600).jpg",
+      "license": "Public domain",
+      "size": "1920 thumbnail, saved 1500x1157"
+    },
+    {
+      "file": "ignatius-of-antioch-4.jpg",
+      "what": "Translation of the relics of St Ignatius, Menologion of Basil II, Constantinople about 985, Vatican Library. Commons: Public domain.",
+      "page": "https://commons.wikimedia.org/wiki/File:Ignatius_of_Antioch_(Menologion_of_Basil_II).jpg",
+      "license": "Public domain",
+      "size": "1280 thumbnail (original 1772 was rate-limited)"
+    },
+    {
+      "file": "ignatius-of-antioch-card.jpg",
+      "what": "480x600 crop of the mosaic head (-2), eyes at 38%, face centred.",
+      "page": "",
+      "license": "CC0",
+      "size": "480x600"
+    },
+    {
+      "rejected": "Botticelli's San Barnaba altarpiece detail and its predella of the heart (photos by Sailko, CC BY-SA); Hagia Sophia tympanum mosaics (CC BY-SA photos); Hosios Loukas mosaic (372x524, too small); Walters ceramic tile (broken, damaged); lion scenes (Pushkin icon, Neapolitan painting, Menologion martyrdom) as violent for a band."
+    }
+  ],
+  "could_not_verify": [
+    "A Greek text of Romans 4 (sitos) on disk, so the words feature has no ghost word.",
+    "Origen's Homily 6 on Luke and his Song of Songs prologue in a public-domain English translation; the page only reports, via Lightfoot's Latin, that Origen applied 'my love is crucified' to Christ.",
+    "Hübner (1997), Lechner (1999) and Vinzent (2019) in their own words: not open to fetch. The page names only Joly (via Schoedel) and quotes Barnes's abstract.",
+    "Whether the Menologion miniature is the page for 29 January (not stated on Commons); the caption says only that the relics are carried to the city.",
+    "The exact date of the Pammakaristos mosaics; the caption gives none."
+  ],
+  "checker_2026_09_26": {
+    "by": "one light check (main session's checker), 2026-09-26",
+    "checked": [
+      "Numbers, dates and feasts against the texts on disk: USCCB 2026 (17 Oct), Calendarium Romanum 1969 (Syriac breviary of the late 300s, Rome's 1 Feb from the 1100s, the four obligatory martyrs), 1916 Roman Martyrology (1 Feb; 17 Dec translation, then St Clement's), Church of England (17 Oct, Lesser Festival by indentation), LFF 2022, LCMS, ELCA, OCA 20 Dec and 29 Jan, Coptic 24 Kiahk and 7 Epip.",
+      "Lightfoot (sources/people/polycarp-of-smyrna/archive-apostolicfathep2v1clemuoft.joined.txt): Anastasius Bibliothecarius at the end of the 800s, Vincent of Beauvais, 'altogether false', late convert and 'God's heroes are made', 'excrescences', ashes more probably left at Rome, 20 December as the Tychaeum translation, Jacobite patriarchs, Antiochene Acts '[5th or 6th cent.]'.",
+      "Attributions: Coxe wrote the 'lions encountered a lion' and 'utterly inconsistent' lines (ANF reviser's note); Chrysostom's 'had not even seen Him' is said of Ignatius; McGiffert's leopard note and the 107 of the Chronicle; Kotrosits's 'possibly coining'; the Borghese inventory of 1693 (the heart taken for a loaf, the bishop called St Nicholas).",
+      "Martyrdom chapters 6 and 7 (Portus, the games closing, the harder remains).",
+      "Rules: capitals for God in quotations and our text; plain sentences; italics; tiles; seo lengths (title 63, description 142); licences read from Commons extmetadata (Lotto PD, Fethiye mosaic CC0, Roman school c1600 PD, Menologion PD); the hub card looked at downscaled: face centred, eyes at about 38%.",
+      "verify-quotes exit 0 (131 printed, 113 entries); saints-test passes; measure-sheet after the edits: facts 1235, numbers 1238, pictures 1036, sheetTallerThanFacts 3, phoneGallery none."
+    ],
+    "changed": [
+      "Number tile 'Letters that bear his name': 'Only seven are his' became 'At most seven are his', so the tile does not pick a side on the minority who doubt even the seven (the page gives both in 'Which letters are his?').",
+      "East feast 2 January: dropped 'In most years': Julian 20 December falls on 2 January every year this century.",
+      "Is he a saint?: the 1969 sentence said Rome 'kept only a few martyrs' as obligatory memorials, which overstates it (Polycarp, Perpetua and others are also obligatory). The Calendarium's passage is about the old martyrs honoured at Rome; the page now says so, and that of most little more than a name is known.",
+      "Heart myth: 'Lightfoot traced it to Vincent of Beauvais' became 'found it in': Vincent himself tells it 'as we read', so it is older than him.",
+      "Circle, Paul: 'hoped to be found “at whose feet may I be found...”' read doubled; rewritten.",
+      "Band alt text: 'Christ Child in red, who reaches down' became 'Who' (capitals rule)."
+    ],
+    "left_for_owner": [
+      "The band shows the heart legend (Lotto), and the tidbit on the 1693 inventory leans into it; the writer flagged it as a taste call.",
+      "The Judaizing panel's balance (Catholic Encyclopedia's reading beside Kotrosits's), as the writer flagged.",
+      "The hub card is a crop of the portrait (the Fethiye mosaic), not of the band: the band's face is turned and bowed, the mosaic's is frontal and clear. Fine by the brief, noted only.",
+      "Trait title 'gentle in deed, fierce in word': the 'gentle' side is his counsel to others, not a deed of his own. Left as written."
+    ]
+  }
+}

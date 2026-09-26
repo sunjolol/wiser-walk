@@ -1,0 +1,332 @@
+{
+  "subject": "Athanasius of Alexandria",
+  "slug": "athanasius-of-alexandria",
+  "page": "site/src/data/saints/athanasius-of-alexandria.json",
+  "checked_on": "2026-09-26",
+  "note": "Evidence for the saint page. Every quotation the page prints is in athanasius-of-alexandria.quotes.json and passes verify-quotes.mjs. Fetched texts are in design/saints-hub/sources/people/athanasius-of-alexandria/ (gitignored): npnf204.txt (Athanasius, ed. Robertson 1892, CCEL), npnf202.txt (Socrates, Sozomen), npnf206.txt (Jerome), julian-letters-wright-1923.txt, gibbon-vol2.txt, hooker-keble-1874-vol2.txt, bell-1924-jews-and-christians-in-egypt.txt, swete-1900-introduction-ot-greek.txt, marcellinus-greek.txt/.pdf (TLG Greek via Documenta Catholica Omnia), Catholic Encyclopedia articles, OCA, Coptic synaxarium, azbyka, Greek synaxarion pages, Merriam-Webster, Goodreads. Also used from disk: shared/npnf203.txt (Theodoret, Jerome), shared/npnf207.txt (Gregory Nazianzen, Oration 21), shared/npnf208.txt (Basil), the calendars in shared/, and people/antony-the-great/ (Palladius, Lowther Clarke 1918; Augustine, Confessions 8.6). The research lead was design/quiz-ideas/fathers/research/figures/group-04.json (researcher-checked); everything used from it was re-read in the texts above.",
+  "life": [
+    {
+      "text": "Born about 296 to 298; the Chronological Table (Robertson) puts the earliest possible 'boy-baptism' after 311 and the contra Gentes about 318.",
+      "source": "npnf204.txt, Prolegomena, Chronological Table; CE 'St. Athanasius' ('Born c. 296').",
+      "url": "https://ccel.org/ccel/schaff/npnf204",
+      "verified": true,
+      "note": "Page: About 296 to 298; aged about 75 at death."
+    },
+    {
+      "text": "Parents: Greek synaxarion (18 January): born 295 in Alexandria of Christian parents. Coptic synaxarium (7 Pashons): born to pagan parents; after his father died, his mother brought him to Alexander, who taught and baptized them.",
+      "source": "synaxarion-gr-jan-18.txt; coptic-synaxarium-pashons-7.txt",
+      "url": "https://www.copticchurch.net/synaxarium/9_7.html?lang=en",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "The boy-bishop story: Rufinus first; Socrates 1.15 ('nor is it improbable that it took place'); Sozomen 2.17 (the shore, the baptisms of the uninitiated, Alexander decided not to rebaptize, took him as table companion and secretary). Robertson: 'seems highly improbable'.",
+      "source": "npnf202.txt Socrates 1.15, Sozomen 2.17; npnf204.txt Prolegomena ch. 2 sec. 1",
+      "url": "https://www.ccel.org/ccel/s/schaff/npnf202/cache/npnf202.txt",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Deacon and secretary; at Nicaea with Alexander. Robertson: the anti-Arian group 'owed much--how much it is hard to determine--to the energy and eloquence of the deacon Athanasius'. Gregory, Or. 21.14: 'Though not yet ranked among the Bishops, he held the first rank among the members of the Council'.",
+      "source": "npnf204.txt Prolegomena ch. 2 sec. 3; shared/npnf207.txt Or. 21.14",
+      "url": "https://www.newadvent.org/fathers/310221.htm",
+      "verified": true,
+      "note": "The homoousion of the creed: common knowledge; Robertson discusses 'The Omoousion'."
+    },
+    {
+      "text": "Alexander died 17 April 328; Athanasius bishop 8 June 328 (Festal Index, Robertson's table). Socrates 4.20 counts 46 years; Martyrology 1916 'forty-sixth year'; Gibbon 'above forty-six years'; OCA 'forty-seven years'.",
+      "source": "npnf204.txt Chronological Table; npnf202.txt Socrates 4.20; gibbon-vol2.txt ch. 21; oca-may2-athanasius.txt",
+      "url": "https://ccel.org/ccel/schaff/npnf204",
+      "verified": true,
+      "note": "Page: 45 years; older histories say 46. Theodoret (note in Socrates 1.15) puts Alexander's death in 325-326, which is where 46 comes from."
+    },
+    {
+      "text": "Election: Apology against the Arians 6 (the Egyptian bishops' letter): the people 'cried, shouted, that Athanasius should be Bishop'; titles 'good, pious, Christian, an ascetic, a genuine Bishop'; the opponents' claim 'six or seven Bishops elected him clandestinely in a secret place'. Sozomen 2.17: the Arians' version (seven bishops, secretly), and Apolinarius's account of his flight and Alexander's words.",
+      "source": "npnf204.txt Apol. c. Ar. 6; npnf202.txt Sozomen 2.17",
+      "url": "https://www.newadvent.org/fathers/28081.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Eusebius urged him to admit Arius; Constantine's letter threatening deposition; his reply (Apol. c. Ar. 59-60). Robertson dates it about 330.",
+      "source": "npnf204.txt Apol. c. Ar. 59-60; Prolegomena ch. 2 sec. 4",
+      "url": "https://www.newadvent.org/fathers/28082.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Ischyras and the chalice (Socrates 1.27; Mareotic clergy's letter, Apol. c. Ar. 74 'never had a Church'; Robertson: Ischyras recanted in writing, then renewed the charge; in the letter of the council of Philippopolis the cottage 'becomes a basilica').",
+      "source": "npnf202.txt Socrates 1.27; npnf204.txt Apol. c. Ar. 74; Prolegomena ch. 2 sec. 4",
+      "url": "https://www.newadvent.org/fathers/26011.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Arsenius: hand carried about (Apol. c. Ar. 63); the scene at Tyre (Socrates 1.29); the accusers' account of Plusian burning his house and binding him, 'they naturally supposed him to be dead' (Sozomen 2.25); Robertson: induced 'by a large bribe, as it is stated' to hide; Arsenius's letter of peace 'dearly beloved Pope' (Apol. c. Ar. 69); Tyre deposed him (Sozomen 2.25).",
+      "source": "npnf202.txt; npnf204.txt",
+      "url": "https://www.newadvent.org/fathers/26022.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Meletian charges of blows and prison (Sozomen 2.25: 'accused him of inflicting blows', 'treated them with violence and thrown them into prison'). Papyrus London 1914 (Callistus), published by H. I. Bell, 1924: drunken soldiers beat Meletian monks; 'he carried off a Bishop of the Lower Country and shut him in the Meat Market'; Bell: 'these charges were in part true'; Athanasius's responsibility for the soldiers 'is not probable'; the letter is 'an ex parte statement'; 'Both sides were tarred with the same brush'. Bell dates it 'highly probable ... May-June, 335'.",
+      "source": "bell-1924-jews-and-christians-in-egypt.txt, Papyrus 1914 translation and commentary",
+      "url": "https://archive.org/details/jewschristiansin00bell",
+      "verified": true,
+      "note": "Bell (1924) is public domain in the US. The page says Callistus was a Meletian: Bell says the letter 'comes from the Meletian side'."
+    },
+    {
+      "text": "Grain charge and exile to Gaul (Apol. c. Ar. 87); first exile 11 July 335 to 23 November 337, 2 years 4 months 11 days (Hist. Aceph. via Robertson, Appendix (b)); Constantine II's letter from Trier ('the interpreter of the adorable Law').",
+      "source": "npnf204.txt Apol. c. Ar. 87; Prolegomena, Appendix on chronology",
+      "url": "https://www.newadvent.org/fathers/28082.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Antony in Alexandria, 25-27 July 338 (Festal Index, note in npnf204); Life of Antony 69-71 ('the man of God'; 'as one would have seen made in a year'; 'we were setting him forth on his way ... at the gate').",
+      "source": "npnf204.txt Life of Antony 69-71",
+      "url": "https://www.newadvent.org/fathers/2811.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Second exile: Gregory appointed at Antioch (Jan 339), arrived 22 March 339; Athanasius left for Rome 16 April 339; Roman council and Julius's reply (340); Sardica 343 (Socrates 2.22 heading 'The Council of Sardica restores Paul and Athanasius'); return 21 October 346; 7 years 6 months 3 days (Hist. Aceph., Robertson Appendix (c)). 'the golden decade (346-356, really nine years and a quarter)'.",
+      "source": "npnf204.txt Chronological Table and Appendix; npnf202.txt Socrates 2.22",
+      "url": "https://ccel.org/ccel/schaff/npnf204",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "The night of 8-9 February 356 in the church of Theonas: Syrianus 'with more than five thousand soldiers'; the psalm with the refrain 'For His mercy endureth for ever' (Psalm 136, footnote 1501); he refused to leave first; monks dragged him out.",
+      "source": "npnf204.txt Defence of his Flight 24",
+      "url": "https://www.newadvent.org/fathers/2814.htm",
+      "verified": true,
+      "note": "Church of Theonas: Robertson's table 'Feb. 8. Church of Theonas stormed by Syrianus'."
+    },
+    {
+      "text": "Third exile 356-362: Robertson: most of the time 'in the numberless cells of Upper and Lower Egypt', part of 357-358 hidden in Alexandria itself; the Life of Antony probably written 'at some date during this exile'; Rufinus's dry cistern 'probably a confused version of this general fact'. Palladius, Lausiac History 63: the virgin who hid him six years; Lowther Clarke's note 352: 'Athanasius may have hid for a little while in a virgin's house, but the story as it stands is unhistorical.' Sozomen 5.6 tells the same story.",
+      "source": "npnf204.txt Prolegomena ch. 2 sec. 8; people/antony-the-great/palladius-lausiac-history-lowther-clarke-1918.txt; npnf202.txt Sozomen 5.6",
+      "url": "https://www.tertullian.org/fathers/palladius_lausiac_02_text.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Ariminum 359: 'the term Usia was abolished: the Nicene Faith stood condemned by acclamation. The whole world groaned, and was astonished to find itself Arian.'",
+      "source": "npnf206.txt, Jerome, Dialogue against the Luciferians 19",
+      "url": "https://www.newadvent.org/fathers/3005.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "George lynched 24 December 361 (Robertson; Gregory Or. 21.26 'in a way I cannot praise'); Julian's edict posted 9 February 362; return 21 February 362; Gregory 21.27-29 describes a triumphal entry (colt, branches, garments, 'one river' like the Nile).",
+      "source": "npnf204.txt Chronological Table and Appendix (g); shared/npnf207.txt Or. 21.26-29",
+      "url": "https://www.newadvent.org/fathers/310221.htm",
+      "verified": true,
+      "note": "Gregory's order (after George's death) places the colt entry in 362; he says only the entry from 'the same exile' before it could compare. The page attaches it to 362 and says 'Gregory describes a homecoming', not a claim beyond his words."
+    },
+    {
+      "text": "Julian's letters: Letter 24 (exiles only to their countries, not churches); Letter 46 to Ecdicius ('that enemy of the gods', 'by mighty Serapis', before the December Kalends, 'a hundred pounds of gold', the postscript in his own hand about baptizing Greek women of rank); Letter 47 ('clever rascal', 'not even a man but only a contemptible puppet'). Robertson note 88: 'Julian sneers at his small stature'.",
+      "source": "julian-letters-wright-1923.txt; npnf204.txt Prolegomena note 88",
+      "url": "https://www.tertullian.org/fathers/julian_apostate_letters_1_trans.htm",
+      "verified": true,
+      "note": "Wright's Loeb translation (1923) is public domain in the US."
+    },
+    {
+      "text": "'a small cloud' and the boat: Socrates 3.14 (his companions answer 'not a great way off'); Theodoret 3.5 (he ordered the boat turned, and himself answered 'Not far'); Sozomen 4.10 has a similar boat story.",
+      "source": "npnf202.txt Socrates 3.14; shared/npnf203.txt Theodoret 3.5",
+      "url": "https://www.newadvent.org/fathers/27023.htm",
+      "verified": true,
+      "note": "Page tells Theodoret's version, citing both."
+    },
+    {
+      "text": "Fifth exile: rescript of May 365; 5 October 365 the church of Dionysius broken into at night; he had gone to 'a country house which belonged to him near the New River' (Robertson from Hist. Aceph.); Socrates 4.13: 'for four entire months in an ancestral tomb'; restored 1 February 366 by the notary Brasidas.",
+      "source": "npnf204.txt Prolegomena ch. 2 sec. 10; npnf202.txt Socrates 4.13",
+      "url": "https://www.newadvent.org/fathers/26014.htm",
+      "verified": true,
+      "note": "Robertson calls Socrates' tomb 'a similar mistake'."
+    },
+    {
+      "text": "Festal Letter 39 (367): 22 Old Testament books ('the number of the letters among the Hebrews'), Jeremiah with Baruch, Lamentations and the epistle; the 27 New Testament books listed; 'Let no man add to these'; Wisdom, Sirach, Esther, Judith, Tobit, the Teaching of the Apostles and the Shepherd 'appointed by the Fathers to be read by those who newly join us'; 'those called apocryphal'.",
+      "source": "npnf204.txt Letter 39",
+      "url": "https://www.newadvent.org/fathers/2806039.htm",
+      "verified": true,
+      "note": "'The first list known to match ours exactly' is the standard claim (NEXT-12.md research); not tied to a single quoted source."
+    },
+    {
+      "text": "Last years: Memorial Church begun 22 September 368, dedicated 7 August 370; correspondence with Basil begins 370; death 2-3 May 373 (Robertson's table). Socrates 4.20: Valens held off while he lived; successor Peter 'a devout and eloquent man'. Socrates 4.22: Peter escaped from prison and fled to Damasus of Rome. Gregory Or. 21.37: 'In a good old age he closed his life'.",
+      "source": "npnf204.txt Chronological Table; npnf202.txt Socrates 4.20-22; shared/npnf207.txt Or. 21.37",
+      "url": "https://www.newadvent.org/fathers/26014.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Relics: Robertson: translation to Constantinople 'an event surrounded with no little uncertainty'; to Venice via 'a thievish sea-captain, who had stolen it from a church in Stamboul', proved 'by prodigies'; the Spanish cook legend (Act. SS. 2 Maii); 'Not a single miracle of any kind is related of him'; reputation 'on his life and character alone'.",
+      "source": "npnf204.txt Prolegomena ch. 2, character section",
+      "url": "https://ccel.org/ccel/schaff/npnf204",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Frumentius: Socrates 1.19 (Athanasius 'requested Frumentius himself to accept the bishopric'); Coptic synaxarium 7 Pashons: first Metropolitan of Ethiopia, Anba 'Salama'.",
+      "source": "npnf202.txt Socrates 1.19; coptic-synaxarium-pashons-7.txt",
+      "url": "https://www.newadvent.org/fathers/26011.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Traits: Gregory Or. 21.9 (gentle...), 21.30 (mild to those who injured him), 21.31 (adamant / magnet), 21.35 (each party its own terms); Robertson Prolegomena: 'Like most men of great power, he had a real sense of humour', 'With Arius and Arianism no compromise was to be thought of', 'a total lack of self-interest', 'treats Serapion and the monks as equals or superiors', the Arian History 'the one work which we would gladly believe to have come from any other pen'. Sozomen 4.10: the crow ('cras'). Hist. Ar. 76 (Antichrist); Apol. c. Ar. 59 (dogs); To the Bishops of Egypt 19 ('we ought not to insult the dead'); Letter 52.1-2; Tome to the Antiochenes 8.",
+      "source": "shared/npnf207.txt; npnf204.txt; npnf202.txt",
+      "url": "https://ccel.org/ccel/schaff/npnf204",
+      "verified": true,
+      "note": "Section numbers checked in the text: the Antichrist line is under heading 76 in NPNF (group-04 had 77)."
+    },
+    {
+      "text": "Codex Alexandrinus: 'The Psalter ... is preceded by the Epistle of Athanasius to Marcellinus' (Swete 1900). The quiz's 53 situations come from sections 15-25 and 28 of the Letter (site/src/data/which-psalm.json 'sec'); examples on the page (Pss 52, 51, 118, 103) are the quiz's own reasons.",
+      "source": "swete-1900-introduction-ot-greek.txt; site/src/data/which-psalm.json",
+      "url": "https://archive.org/details/introductiontool00swet",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Doctor of the Church: Calendarium Romanum 1969 ('S. Athanasii, episcopi et Ecclesiae doctoris', 2 May, memoria); USCCB 2026 ('Saint Athanasius, Bishop and Doctor of the Church'). 'Father of Orthodoxy': CE 1907.",
+      "source": "shared/calendarium-romanum-1969-ocr.txt; shared/usccb-2026cal.txt; catholic-encyclopedia-st-athanasius.txt",
+      "url": "https://www.newadvent.org/cathen/02035a.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Myths: Athanasian Creed (CE 1907: thought his until the 17th century; Voss 1644; 'most probably it cannot'; LCMS: 'though not composed by Athanasius, is named in his honor'); the Goodreads line; Hooker, Laws V.42 (Keble 1874 vol. 2, p. 181): 'the whole world against Athanasius, and Athanasius against it'; Theodoret 2.13 (Liberius and Constantius); Gibbon ch. 21 'twenty years he passed as an exile or a fugitive'; OCA 'more than twenty years in exile'.",
+      "source": "catholic-encyclopedia-athanasian-creed.txt; shared/lsb-calendar.txt; goodreads-athanasius-world.txt; hooker-keble-1874-vol2.txt; shared/npnf203.txt; gibbon-vol2.txt; oca-may2-athanasius.txt",
+      "url": "https://www.newadvent.org/cathen/02033b.htm",
+      "verified": true,
+      "note": "Hooker (1597) is the oldest form of the 'against the world' idea found; the Latin tag's first user was not found (see could_not_verify)."
+    },
+    {
+      "text": "Exile total: 2y 4m 11d + 7y 6m 3d + 6y 0m 13d (8 Feb 356 to 21 Feb 362) + 1y 3m 22d (Hist. Aceph.: fourth exile 'fifteen months and twenty-two days') + about 3m 27d (5 Oct 365 to 1 Feb 366) = about 17 years 6 months.",
+      "source": "npnf204.txt Prolegomena and Appendix",
+      "url": "https://ccel.org/ccel/schaff/npnf204",
+      "verified": true,
+      "note": "Counted by the writer from Robertson's dates; the page says 'about 17 ... and about six months more'."
+    }
+  ],
+  "names_and_art": [
+    {
+      "text": "Pronounced: Merriam-Webster \\ˌa-thə-ˈnā-zh(ē-)əs\\.",
+      "source": "merriam-webster-athanasius.txt",
+      "url": "https://www.merriam-webster.com/dictionary/Athanasius",
+      "verified": true,
+      "note": "Page: ath-uh-NAY-zhus."
+    },
+    {
+      "text": "Name: Greek ἀθανασία, immortality (LSJ).",
+      "source": "LSJ entry",
+      "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.04.0057:entry=a)qanasi/a",
+      "verified": false,
+      "note": "Common knowledge; the LSJ page was not fetched."
+    },
+    {
+      "text": "Also called: Athanasius the Great (OCA, Greek synaxarion 'ὁ Μέγας'); 'the Apostolic', twentieth Pope of Alexandria (Coptic synaxarium).",
+      "source": "oca-may2-athanasius.txt; synaxarion-gr-jan-18.txt; coptic-synaxarium-pashons-7.txt",
+      "url": "https://www.copticchurch.net/synaxarium/9_7.html?lang=en",
+      "verified": true,
+      "note": ""
+    }
+  ],
+  "feasts": [
+    {
+      "text": "2 May: Catholic memorial (Calendarium Romanum 1969; USCCB 2026 'Sat Saint Athanasius, Bishop and Doctor of the Church'); Roman Martyrology 1916 ('At Alexandria, the birthday of St. Athanasius', OCR 'Athauasius'); Church of England (Common Worship: '2 Athanasius, Bishop of Alexandria, Teacher of the Faith, 373', set like the other Lesser Festivals); Episcopal LFF 2022 ('Athanasius of Alexandria, Bishop and Theologian, 373'); LCMS ('May 2 Athanasius of Alexandria'); ELCA ('2 Athanasius, Bishop of Alexandria, 373').",
+      "source": "shared/ calendars",
+      "url": "https://www.usccb.org/resources/2026cal.pdf",
+      "verified": true,
+      "note": "The Lesser Festival rank is read from the layout of cofe-calendar.txt (same indentation as Catherine of Siena, not the Commemorations)."
+    },
+    {
+      "text": "18 January: Greek synaxarion ('Ὁ Ἅγιος Ἀθανάσιος ὁ Μέγας'); OCA (Saint Athanasius the Great, Archbishop of Alexandria; 'celebrated also on January 18 with Saint Cyril'); Russian: azbyka memory days 31 January and 15 May (civil dates).",
+      "source": "synaxarion-gr-jan-18.txt; oca-jan18-athanasius.txt; oca-may2-athanasius.txt; azbyka-afanasij-velikij.txt",
+      "url": "https://www.oca.org/saints/lives/2026/01/18/100219-saint-athanasius-the-great-archbishop-of-alexandria",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "2 May in the East: OCA main life; Greek synaxarion: 'Ἀνακομιδή Τιμίων Λειψάνων Ἁγίου Ἀθανασίου τοῦ Μεγάλου', 'Δὲν ἔχουμε λεπτομέρειες γιὰ τὸ γεγονὸς τῆς ἀνακομιδῆς'. NPNF 2/7 introduction to Oration 21 (1894): Jan. 18 'as the day of the actual death', May 2 'in memory of the translation of his remains to the church of S. Sophia at Constantinople'.",
+      "source": "synaxarion-gr-may-2.txt; shared/npnf207.txt",
+      "url": "https://www.synaxarion.gr/gr/m/5/d/2/sxsaintlist.aspx",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Coptic: 7 Pashons (Bashans), 'The Departure of St. Athanasius the Apostolic the 20th. Pope of Alexandria', 373. 7 Pashons = 15 May in the Gregorian calendar (Pashons 1 = 9 May).",
+      "source": "coptic-synaxarium-pashons-7.txt; shared/wikipedia-coptic-calendar.txt",
+      "url": "https://www.copticchurch.net/synaxarium/9_7.html?lang=en",
+      "verified": true,
+      "note": ""
+    }
+  ],
+  "pictures": [
+    {
+      "text": "Band and card: 'Hiérodiacre - Saint Athanase - PPP4896 - Petit Palais.jpg', Georges Hiérodiacre, 1728, Petit Palais (Paris Musées). Commons licence CC0 (Paris Musées open content). 4794 x 6384 on Commons; the 3840 px thumbnail cropped to the head and shoulders (x 27-73%, y 5-45%), saved 1550 x 1795, quality 82, 680 KB. posM 50% 20%, posD 50% 22% (face centre about 26% from the top). Card: 1300 x 1625 crop round the face from the same file, 480 x 600, eyes about 38% down.",
+      "source": "Commons API extmetadata",
+      "url": "https://commons.wikimedia.org/wiki/File:Hi%C3%A9rodiacre_-_Saint_Athanase_-_PPP4896_-_Petit_Palais.jpg",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Portrait (-2): 'Paintings in the Church of the Theotokos Peribleptos of Ohrid 0211.jpg', painters Michael and Ephtichius (Commons), Public domain; 1667 x 2720; top 2-58% kept, 1667 x 1523. The inscription beside the halo reads ...ΝΑCΙ / Ο ΜΕΓ(ΑΣ), i.e. Athanasios the Great; he wears a bishop's omophorion. Commons places the file in 'Frescos of Saint Athanasius'.",
+      "source": "Commons API; the picture read at full size",
+      "url": "https://commons.wikimedia.org/wiki/File:Paintings_in_the_Church_of_the_Theotokos_Peribleptos_of_Ohrid_0211.jpg",
+      "verified": true,
+      "note": "Commons dates it '14th century'; the page says 'around 1300'."
+    },
+    {
+      "text": "Gallery (-3): 'Athanasius and Cyril of Alexandria (Menologion of Basil II).jpg', Public domain, 1772 x 1189, whole, quality 82.",
+      "source": "Commons API",
+      "url": "https://commons.wikimedia.org/wiki/File:Athanasius_and_Cyril_of_Alexandria_(Menologion_of_Basil_II).jpg",
+      "verified": true,
+      "note": "Which figure is which is not labelled legibly at this size; the caption names both without saying left or right."
+    },
+    {
+      "text": "Gallery (-4): 'Saint Athanasius (17th c, priv.coll).jpg', Central Russia, mid-17th century, 60 x 48 cm, MacDougall's auction; Public domain (PD-Russia-expired / PD-old); 1973 x 2500, saved 1263 x 1600.",
+      "source": "Commons API",
+      "url": "https://commons.wikimedia.org/wiki/File:Saint_Athanasius_(17th_c,_priv.coll).jpg",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Rejected: the Sozopol icon (NEXT-12's pick; worn and flaking at the edges); Chora fresco (CC BY-SA); Velika Hoča and Prizren photos (CC BY); Wellcome engravings (CC BY); Rubens's sketch (dark); the Fethiye mosaic (black-and-white photograph); Hosios Loukas crypt (identity unclear: a monk's hood).",
+      "source": "",
+      "url": "",
+      "verified": true,
+      "note": ""
+    }
+  ],
+  "could_not_verify": [
+    "Who first used the Latin tag 'Athanasius contra mundum'. The oldest form of the idea found is Hooker's English of 1597; the page says 'the oldest form of the idea we found'.",
+    "A public-domain English translation of the Letter to Marcellinus: none found; the page's two lines are our translation from the Greek (TLG text via Documenta Catholica Omnia), marked as such.",
+    "Where he was born: 'most likely in Alexandria' follows the Greek synaxarion and the OCA; no fourth-century source says.",
+    "The year of Letter 80 of Basil: the page says 'in his last years' (the correspondence began in 370 per Robertson).",
+    "The claim, common online, that relics returned from Venice to Cairo in 1973: not checked, not used."
+  ],
+  "checker_2026_09_26": {
+    "by": "one light check (main session's checker), 2026-09-26",
+    "checked": [
+      "Feasts in the texts on disk: USCCB 2026 (2 May), Church of England (2 May, Lesser Festival by indentation), LFF 2022, LCMS, ELCA, 1916 Martyrology, OCA 18 January (with Cyril) and 2 May, Greek synaxarion (2 May as the translation, 'no details'), azbyka (31 January and 15 May), Coptic 7 Pashons (the 20th pope, 'the apostolic', pagan parents, Anba Salama for Ethiopia).",
+      "Robertson's Prolegomena (npnf204): 'highly improbable', 'confused version' (Rufinus's cistern), Spain and the cook with his exclamation mark (Acta Sanctorum, 2 May), 'Not a single miracle', 'no little uncertainty' and the Venice prodigies, 'the golden decade', 'New River'.",
+      "Socrates 1.15 ('nor is it improbable'), 3.14 and Theodoret 3.5 on the Nile flight; Socrates 4.20 to 4.21 on Peter and Damasus; Bell 1924 on Papyrus 1914 (the meat market, the drunken praepositus, 'in part true', 'not probable' that he was himself responsible, 'tarred with the same brush').",
+      "The exile total: Robertson's dates sum to about 17 years 5 months, so the tile (17, and about six months more) and the myth's 'about seventeen and a half' hold.",
+      "The Psalm quiz: title 'Which Psalm are you living right now?' (site/src/lib/quizzes/which-psalm.ts); the four sample needs match the quiz model (P52, P51, P118, P103).",
+      "Rules: capitals, plain sentences, italics, tiles, seo lengths (title 59, description 146); licences read from Commons extmetadata (Petit Palais icon CC0, Ohrid fresco PD, Menologion PD, Russian icon PD-Russia-expired); the hub card looked at downscaled: face centred, eyes at about 38%.",
+      "verify-quotes exit 0 (105 printed, 96 entries); saints-test passes. At a glance unchanged, so measure-sheet was not re-run."
+    ],
+    "changed": [
+      "'Not far' moment: the dialogue with the officer is Theodoret's (Socrates has his attendants answer 'not a great way off'); the sentence now says 'In Theodoret's telling'.",
+      "The charges, Meletians: Bell's full judgement: he thought it 'not probable' that Athanasius was himself responsible for the beatings, but doubted 'whether he took much trouble to prevent such outrages'. The page gave only the first half; it now gives both.",
+      "Contra mundum myth: 'Nor does any ancient writer use the famous Latin tag' (an absolute claim in our voice) became 'Nor did we find ... in any ancient writer', matching the writer's own evidence.",
+      "Circle, Antony: 'Athanasius knew him young' (not in the source, and ambiguous) became 'Athanasius says he saw him many times', as the prologue of the Life says.",
+      "Sources, Pictures: added the missing Russian icon (-4)."
+    ],
+    "left_for_owner": [
+      "Everything the writer flagged: the Petit Palais band (680 KB, cracked gold ground), the Ohrid portrait's identity by inscription, the two lines of our own translation from the Letter to Marcellinus, Bell's verdict printed in 'The charges against him', the date of the Palm Sunday homecoming.",
+      "'Father of Orthodoxy': the Catholic Encyclopedia says he 'earned the characteristic title'; the page says the Encyclopedia 'calls him' that. Close enough; left."
+    ]
+  }
+}
