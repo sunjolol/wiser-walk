@@ -101,6 +101,18 @@ per pair): about 2% of his weekly usage per four pages. He reviews the four live
 Repin's sword painting in Nicholas's gallery; no hub group fits Nicholas; Lotto's heart band on Ignatius; Bell's
 "in part true" on Athanasius; "The hard parts" on Monica. The ideas he asked about: `DIRECTION-2026-09-26.md`.
 
+**2c. BATCH 2 IS LIVE (night of 2026-09-26): Francis of Assisi, Thomas Aquinas, Patrick, Mary of Egypt**, written while
+he slept, at his ask ("I'll review the batch you just finished and the next batch in one pass in the morning"; he has
+small changes and picture swaps for batch 1). Joan of Arc was skipped (died 1431: his call). The home rail now leads
+Nicholas, Augustine, Francis, Aquinas, Patrick. Also live that day: the Compass card wears Raphael's Disputa everywhere
+(`COMPASS_ART` in lib/art.ts; its own quiz page keeps the wheel) and articles end on four quizzes, no games.
+Open taste calls on batch 2: Francis filed under "monks" (a friar); Hallam's "hardly of sane mind" as the last voice
+in his "What others said"; Patrick and Nicholas have no hub group (a "bishops" or "missionaries" group?); Patrick's
+Tiepolo band has a bare-chested sick man at its foot (cropped out of both bands); Mary of Egypt's portrait has the
+usual unclothed Christ Child, small and dark; "The runaway of Alexandria" (she ran TO Alexandria); her myth "She was a
+prostitute" quotes the Golden Legend's "refused no man"; Aquinas's "219 propositions condemned" tile; small scans
+(Cimabue 1104 px, Tiepolo 1115 px). After his review: the rest of the list in his order (Joan is his call).
+
 **2. Then the 19 saints and Bible people, in HIS order (ask for it if he has not sent it).** The list with Wikipedia
 views is in `design/saints-hub/research/NEXT-12.md` (top section "ADDED 2026-09-26" plus the twelve below it): Joan
 of Arc (died 1431, past his line: his call), Nicholas, George, Francis, Thomas Aquinas, Patrick, Catherine of Siena,

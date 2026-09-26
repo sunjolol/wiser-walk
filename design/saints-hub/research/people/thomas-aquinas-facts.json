@@ -1,0 +1,272 @@
+{
+  "subject": "Thomas Aquinas",
+  "slug": "thomas-aquinas",
+  "page": "site/src/data/saints/thomas-aquinas.json",
+  "checked_on": "2026-09-26",
+  "note": "Evidence for the saint page. Every quotation the page prints is in thomas-aquinas.quotes.json and passes verify-quotes.mjs (121 printed, 97 entries). Fetched texts are in design/saints-hub/sources/people/thomas-aquinas/ (gitignored): the Catholic Encyclopedia articles (St. Thomas Aquinas, Thomism, Corpus Christi, Pange Lingua Gloriosi, Adoro Te Devote, Woman, Inquisition, Immaculate Conception, Hesychasm, Greek Church); the Summa in the English Dominican translation from New Advent (I q1, q2, q32, q52, q92, q93; I-II q2, q38; II-II q10, q11, q66, q83, q188; III q27) and Gutenberg 17611 (Prima Pars, for the Prologue and q3); the Latin of I q1 (Corpus Thomisticum); Placid Conway, Saint Thomas Aquinas (1911, archive.org djvu text and a .clean copy with line-break hyphens joined); Roger Bede Vaughan, Life and Labours (abridged 1875, and the full edition vol. 2 of 1872 with the Latin of the Naples canonisation inquiry); Butler's Lives vol. 3 (1866, read for leads only); Edward Caswall, Lyra Catholica (1849 and 1884; the 1884 .clean copy only closes the OCR's spaces before punctuation); Britt, Hymns of the Breviary and Missal (1922); Julian, Dictionary of Hymnology (1907); De Wulf, History of Medieval Philosophy (1909); Lea, History of the Inquisition vol. 1 (1888); Kant, Critique of Pure Reason (Meiklejohn, Gutenberg 4280); OCA (The Orthodox Faith vol. 3: The West, Saint Gregory Palamas; the lives search for Thomas); EWTN (McNamara on the Adoro te); the 'They Didn't Say It' blog on the ship-captain line; Merriam-Webster. Also used from disk: shared/ calendars and BSB; people/gregory-the-great/ (Longfellow's Paradise, Gutenberg 1003); people/nicholas-of-myra/ (Longfellow's Purgatory 20). The early lives of Thomas (William of Tocco, Bernard Gui, Peter Calo) have no public-domain English translation: their stories are told as the Catholic Encyclopedia, Conway and Vaughan retell them, and the page says so.",
+  "life": [
+    {
+      "text": "Born at Rocca Secca in the Kingdom of Naples, 1225 or 1227; died at Fossa Nuova, 7 March 1274. The end of 1225 is usually assigned; Prümmer, on Calo's authority, thinks 1227. Tolomeo of Lucca: at his death there was doubt about his exact age.",
+      "source": "ce-thomas-aquinas.txt, opening and Life",
+      "url": "https://www.newadvent.org/cathen/14663b.htm",
+      "verified": true,
+      "note": "Page: 'at the end of 1225 or in 1227'; 'about 49' at death (Conway: 'only entering upon his fiftieth year')."
+    },
+    {
+      "text": "Landulph, count of Aquino; Theodora, countess of Teano; the family related to the emperors Henry VI and Frederick II. At five sent to Monte Cassino; the child asked 'What is God?'.",
+      "source": "ce-thomas-aquinas.txt",
+      "url": "https://www.newadvent.org/cathen/14663b.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "The family meant him to be abbot of Monte Cassino ('his son should grace the Court, or rule as Lord Abbot of Monte Cassino'). Bartholomew of Capua's canonisation testimony: his father presented him to the monastery as a child.",
+      "source": "conway-1911.clean.txt, chapters 1 and 2",
+      "url": "https://archive.org/details/saintthomasaquin00conwuoft",
+      "verified": true,
+      "note": "Role 'Oblate' rests on this."
+    },
+    {
+      "text": "About 1236 to the University of Naples; received the Dominican habit between 1240 and August 1243 ('The city wondered that such a noble young man should don the garb of poor friar'); mother hurried to Naples; the friars sent him toward Rome.",
+      "source": "ce-thomas-aquinas.txt",
+      "url": "https://www.newadvent.org/cathen/14663b.htm",
+      "verified": true,
+      "note": "Page: 'About 1243'."
+    },
+    {
+      "text": "Captured by his brothers (soldiers under Frederick) near Aquapendente; confined in the fortress of San Giovanni at Rocca Secca nearly two years; the temptress driven out with a brand; books (Scriptures, Aristotle's Metaphysics, the Sentences) through his sister; lowered in a basket into the arms of the Dominicans.",
+      "source": "ce-thomas-aquinas.txt; Butler 1866 vol. 3 (lead) names the brothers Landulph and Reynolds; Vaughan 1875 'Landulf and Reginald'",
+      "url": "https://www.newadvent.org/cathen/14663b.htm",
+      "verified": true,
+      "note": "The page names neither brother (the lives disagree on names); 'tower' in the brief: the sources say fortress, castle or prison cell, so the page says castle."
+    },
+    {
+      "text": "Sisters: Marietta became abbess of St Mary's at Capua; Theodora later a countess; in December 1273 he visited his sister the Countess of San Severino and would hardly speak to her.",
+      "source": "conway-1911.clean.txt, chapters 2 and 8",
+      "url": "https://archive.org/details/saintthomasaquin00conwuoft",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Cologne under Albert (1244 or 1245); 'the dumb Sicilian ox'; the novice who tried to help him; Albert's test; CE's form of Albert's words: 'We call this young man a dumb ox, but his bellowing in doctrine will one day resound throughout the world.' Later: 'It was because I had not yet learned to speak before such a mind as Albert'. The flying-ox joke.",
+      "source": "ce-thomas-aquinas.txt; conway-1911.clean.txt chapter 3",
+      "url": "https://www.newadvent.org/cathen/14663b.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Paris: William of St-Amour's De periculis; Thomas's Contra impugnantes; the book condemned by Alexander IV at Anagni, 5 October 1256; doctorate 'as given by many biographers' 23 October 1257; theme 'The Majesty of Christ', text Psalm 103:13 (Douay; BSB Psalm 104:13); tradition of the contest of humility with Bonaventure.",
+      "source": "ce-thomas-aquinas.txt",
+      "url": "https://www.newadvent.org/cathen/14663b.htm",
+      "verified": true,
+      "note": "The page quotes the verse from the BSB."
+    },
+    {
+      "text": "At Louis IX's table: 'The argument is clinched against the Manichees!'; the prior rebuked him; Louis smiled and had a secretary write it down. Louis told him the evening before of the next day's council business.",
+      "source": "conway-1911.clean.txt, chapter 5",
+      "url": "https://archive.org/details/saintthomasaquin00conwuoft",
+      "verified": true,
+      "note": "Conway gives no year; the page says only 'at the table of King Louis IX' (Louis left Paris for his last crusade in 1270)."
+    },
+    {
+      "text": "1261 to 1265 at Urban IV's side (Rome, Viterbo, Orvieto, Anagni, Perugia...). Urban IV's bull Transiturus, 8 September 1264, ordered Corpus Christi; 'This Office, composed at the request of the pope by the Angelic Doctor'. Hymns: Sacris solemniis, Pange lingua (ending in the Tantum ergo), Verbum supernum (ending in the O salutaris), the sequence Lauda Sion. Neale: the Pange lingua 'contests the second place among those of the Western Church'; Caswall 'has given ... the best version'.",
+      "source": "conway-1911.clean.txt chapter 5; ce-corpus-christi.txt; ce-thomas-aquinas.txt; ce-pange-lingua.txt",
+      "url": "https://www.newadvent.org/cathen/04390b.htm",
+      "verified": true,
+      "note": "Page paraphrase: Neale 'ranked the Pange lingua among the very finest hymns of the Western Church'."
+    },
+    {
+      "text": "1265: the General Chapter of Montpellier assigned him to Rome (Santa Sabina) to direct studies; he drew up the scheme of the Summa, 'which he was not destined to complete even after nine years of labour'. The Prologue: written 'for the instruction of beginners'. Refused the archbishopric of Naples offered by Clement IV in 1265 ('with tears he begged to be excused').",
+      "source": "conway-1911.clean.txt chapter 5; gutenberg-17611-summa-prima-pars.txt, Prologue; ce-thomas-aquinas.txt",
+      "url": "https://www.gutenberg.org/ebooks/17611",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Dictated to four secretaries at once on different subjects, and in his sleep: the testimony of two of them, Reginald of Piperno and Hervey Brito. The candle burnt out in his fingers while dictating on the Trinity. His looks (Calo, via the canonisation deposition): lofty stature, heavy build, complexion 'like the colour of new wheat', large head, slightly bald.",
+      "source": "conway-1911.clean.txt chapter 6; ce-thomas-aquinas.txt",
+      "url": "https://archive.org/details/saintthomasaquin00conwuoft",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Young friar walking to Paris with the master general, asked what he would give to be king of the city: 'I would rather have S. John Chrysostom's treatise on the Gospel of S. Matthew ... than be king of the whole of France.'",
+      "source": "vaughan-1875.clean.txt, chapter on the journey to Paris",
+      "url": "https://archive.org/details/cu31924028987240",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Naples 1273: the crucifix ('Thou hast written well of me, Thomas; what reward wilt thou have?' / 'None other than Thyself, Lord'), seen by three brethren after he finished the treatise on the Eucharist; Conway names Dominic of Caserta and says 'Frequently he had been observed to be raised several cubits in the air'. 6 December 1273: after Mass in the chapel of St Nicholas at Naples he wrote no more; the Summa stopped in the questions on penance (III q90); 'I can do no more'. Vaughan (1872, vol. 2, footnotes) prints the Latin of the Naples inquiry: the witness Bartholomew of Capua, reporting Reginald: 'Raynalde, non possum: quia omnia, quae scripsi, videntur mihi paleae' and 'Omnia, quae scripsi, videntur mihi paleae respectu eorum, quae vidi et revelata sunt mihi' (Boll., Processus, cap. IX, n. 79). Vaughan's English: 'rubbish'. Conway: 'only like a handful of straw'. CE (from another early life, Prümmer p. 43): 'of little value' (modica).",
+      "source": "ce-thomas-aquinas.txt; conway-1911.clean.txt chapter 8; vaughan-1872-v2.clean.txt and vaughan-1875.clean.txt",
+      "url": "https://archive.org/details/lifelaboursofsth02vauguoft",
+      "verified": true,
+      "note": "Who reported the straw line and when: Reginald, sworn to secrecy in Thomas's lifetime; repeated by Bartholomew of Capua at the Naples canonisation inquiry (the process began in 1318, per Conway). The page does not print 1319 for the Naples hearing because no public-domain text on disk gives the year."
+    },
+    {
+      "text": "Last journey: summoned by Gregory X to the Council of Lyon (to open 1 May 1274) with Contra errores Graecorum; left Naples on foot 28 January 1274 with Reginald; struck his head against a fallen tree near Terracina; the herrings at Maenza (castle of his niece Francesca Ceccano), 'It is God who has sent them'; carried to Fossanova, seven miles off, on 10 February; 'This is my rest for ever and ever...'; the monks carrying wood ('Whence comes this honour...'); dictated a commentary on the Song of Songs (Tocco via Conway: 'finish his teaching by the Canticle of Love ...'); the act of faith at the Viaticum; died early in the morning of 7 March 1274; Conway says he recited the Adoro te after the Viaticum.",
+      "source": "ce-thomas-aquinas.txt; conway-1911.clean.txt chapter 8",
+      "url": "https://www.newadvent.org/cathen/14663b.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "After death: 96 miracles attested for the canonisation; the blind subprior John of Ferentino; the girdle kept at Vercelli and, since the suppressions, at Chieri near Turin; canonisation at Avignon, 18 July 1323, John XXII: 'He has wrought as many miracles as he has written Articles', feast assigned to 7 March. Body translated to the Dominican church at Toulouse on 28 January 1369 by order of Urban V; after the Revolution to St Sernin (CE 1912).",
+      "source": "conway-1911.clean.txt chapters 9 and 10; ce-thomas-aquinas.txt",
+      "url": "https://archive.org/details/saintthomasaquin00conwuoft",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "1277: on 7 March, Stephen Tempier condemned 219 propositions, bearing mainly on Averroism, 'but some of which embodied Thomist doctrines' (individuation); Kilwardby at Oxford the same year; withdrawn by Bishop Stephen Borretus (de Bourret) on 13 February 1325. CE Thomism dates the revocation 1324 and gives the words 'that blessed confessor and excellent doctor ...'; Albert 'hastened to Paris to defend his beloved disciple'.",
+      "source": "dewulf-1909.clean.txt; ce-thomism.txt",
+      "url": "https://archive.org/details/historyofmedieva00wulfuoft",
+      "verified": true,
+      "note": "Page follows De Wulf's day and year (February 1325); CE's 1324 is probably the old-style year."
+    },
+    {
+      "text": "Doctor of the Church, Pius V, 1567; Leo XIII, Aeterni Patris, 4 August 1879: 'the prince and master of all Scholastic doctors'; Brief of 4 August 1880: patron of all Catholic universities, academies, colleges and schools. Bessarion: 'the most saintly of learned men and the most learned of saints'. Bucer: 'Take away Thomas and I will destroy the Church'; Leo: 'The hope was vain, but the testimony has its value'. The Summa quotes 19 councils, 41 popes, 52 Fathers; his favourite Father Augustine; about 6000 commentaries on his works (estimate); the Secunda Secundae printed by Peter Schöffer at Mainz, 1467.",
+      "source": "ce-thomas-aquinas.txt",
+      "url": "https://www.newadvent.org/cathen/14663b.htm",
+      "verified": true,
+      "note": ""
+    }
+  ],
+  "hard_topics": [
+    {
+      "text": "Women: Summa I q92 a1 ad 1 (both halves), ad 2 ('woman is naturally subject to man, because in man the discretion of reason predominates'), a3 (the rib: not from his head, not from his feet); I q93 a4 ad 1 (the image of God 'is found both in man and in woman'). CE 1912 'Woman' (Rössler): Aristotle's designation 'must, therefore, be rejected'; 'The untenable medieval definition, \"Femina est mas occasionatus\", also arose under Aristotelian influence.'",
+      "source": "summa-I-q92.txt; summa-I-q93.txt; ce-woman.txt",
+      "url": "https://www.newadvent.org/cathen/15687b.htm",
+      "verified": true,
+      "note": "No public-domain outside critic of I q92 was found (Gage 1893 was checked and mentions Aquinas only on celibacy); the critic quoted is the Catholic Encyclopedia itself."
+    },
+    {
+      "text": "Heretics: Summa II-II q11 a3 (put to death after two admonitions; the forgers comparison); II-II q10 a8 (unbelievers who never received the faith 'are by no means to be compelled to the faith ... because to believe depends on the will'). Lea 1888: 'lays down the rules with merciless precision'. CE 1910 'Inquisition': 'though it cannot be said that his arguments altogether compel conviction'.",
+      "source": "summa-II-II-q11.txt; summa-II-II-q10.txt; lea-1888-v1.clean.txt; ce-inquisition.txt",
+      "url": "https://www.newadvent.org/summa/3011.htm",
+      "verified": true,
+      "note": "The page's line on Vatican II's declaration on religious freedom (Dignitatis Humanae, 1965) is a plain fact, not quoted."
+    },
+    {
+      "text": "Mary's conception: Summa III q27 a2 ad 2 ('the Blessed Virgin did indeed contract original sin, but was cleansed therefrom before her birth from the womb'). CE 1910 'Immaculate Conception': at first in favour in the Sentences commentary, against in the Summa; 'If St. Thomas, St. Bonaventure, and other theologians had known the doctrine in the sense of the definition of 1854, they would have been its strongest defenders instead of being its opponents.'",
+      "source": "summa-III-q27.txt; ce-immaculate-conception.txt",
+      "url": "https://www.newadvent.org/cathen/07674d.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "The Orthodox East: Contra errores Graecorum and the Council of Lyon (CE). CE 'Hesychasm' (Fortescue, 1910): an anti-Palamite work 'Peri ousias kai energeias' in six books 'of which the first two are nothing but translations from St. Thomas's \"Summa contra Gentes\"' (CE gives it to Akindynos; the page names no author); the essence-energies distinction 'fundamentally opposed to the whole conception of God in the Western Scholastic system'. OCA, The Orthodox Faith vol. 3: Barlaam 'educated in the Scholastic spirit prevailing in Western Europe at that time'; councils of 1341, 1347 and 1351 upheld Palamas; the essence and energies in the OCA's words. OCA 'The West' (13th century): 'Thomas Aquinas (c. 1225–1274), the greatest of all the Scholastic teachers'.",
+      "source": "ce-hesychasm.txt; oca-orthodox-faith-palamas.txt; oca-orthodox-faith-the-west-13th.txt",
+      "url": "https://www.oca.org/orthodoxy/the-orthodox-faith/church-history/fourteenth-century/saint-gregory-palamas",
+      "verified": true,
+      "note": "The Byzantine Thomists by name (Demetrios and Prochoros Kydones, Gennadios Scholarios) are left off the page: no public-domain English text on disk tells their story, and modern scholarship gives the six-book treatise to Prochoros Kydones rather than to Akindynos (CE's attribution)."
+    }
+  ],
+  "myths": [
+    {
+      "text": "Angels on a pin: Summa I q52 a3 asks 'Whether several angels can be at the same time in the same place?' and answers 'There are not two angels in the same place.'",
+      "source": "summa-I-q52.txt",
+      "url": "https://www.newadvent.org/summa/1052.htm",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Ship captain: the popular line is a paraphrase first found in Lon Fuller, The Morality of Law (2nd ed., 1964, p. 185), per the 'They Didn't Say It' blog; the real text is I-II q2 a5.",
+      "source": "fauxtations-aquinas-ships.txt; summa-I-II-q2.txt; goodreads-captain.txt",
+      "url": "https://fauxtations.wordpress.com/2024/02/04/st-thomas-aquinas-and-ships/",
+      "verified": true,
+      "note": "Fuller's book was not read directly."
+    },
+    {
+      "text": "Poison: Dante, Purgatory 20: Charles 'Thrust Thomas back to heaven, for amends'. CE and Conway tell of a blow to the head and illness.",
+      "source": "people/nicholas-of-myra/dante-purgatorio-20-longfellow.txt; ce-thomas-aquinas.txt; conway-1911.clean.txt",
+      "url": "https://en.wikisource.org/wiki/Divine_Comedy_(Longfellow_1867)/Volume_2/Canto_20",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Adoro te devote: CE 1907 ('written c. 1260 (?)', 'forms no part of the Office or Mass'); Julian 1907 ('Of the actual date of the composition of this hymn we have no record'; 'never incorporated in the public services'); Neale calls it a hymn 'of S. Thomas Aquinas'; Conway: recited at his death. EWTN (Fr Edward McNamara): 'the earliest extant manuscript hails from about 50 years after his death'; references in Jacopone da Todi 'tend to confirm its authenticity'.",
+      "source": "ce-adoro-te-devote.txt; julian-1907-djvu.txt; conway-1911.clean.txt; ewtn-adoro-te-devote.txt",
+      "url": "https://www.ewtn.com/catholicism/library/adoro-te-devote-4528",
+      "verified": true,
+      "note": "The modern debate (Wilmart 1929; the critical edition of Tocco's life, 1996, whose last redaction includes the hymn) was found only through a search summary and Wikipedia (wiki-adoro-te-LEAD-ONLY.txt); Project MUSE blocked the article. Not on the page."
+    }
+  ],
+  "feasts": [
+    {
+      "text": "28 January: Calendarium Romanum 1969 ('28 S. Thomae de Aquino, presbyteri et Ecclesiae doctoris', memoria) with its note: the dies natalis of three saints falls in Lent, when obligatory memorials cannot be kept, so Thomas was assigned 28 January, the day his body was translated to Toulouse in 1369; USCCB 2026 ('28 Wed Saint Thomas Aquinas, Priest and Doctor of the Church'); Church of England Common Worship ('28 Thomas Aquinas, Priest, Philosopher, Teacher of the Faith, 1274', set like the Lesser Festivals); Episcopal LFF 2022 ('Thomas Aquinas, Friar and Theologian, 1274'); ELCA ('28 Thomas Aquinas, teacher, 1274').",
+      "source": "shared/ calendars",
+      "url": "https://www.usccb.org/resources/2026cal.pdf",
+      "verified": true,
+      "note": "LCMS (lsb-calendar.txt): 24 Timothy, 25 Conversion of Paul, 26 Titus, 27 John Chrysostom; no Aquinas anywhere in the list."
+    },
+    {
+      "text": "7 March: the 1916 Roman Martyrology ('In the monastery of Fossanova, near Terracina, St. Thomas of Aquin, confessor and doctor ...'); the feast set by John XXII at the canonisation (Conway); the Calendarium Romanum 1969's old-calendar table ('7 S. Thomae de Aquino, presbyteri et Eccl. doct.').",
+      "source": "shared/martyrology-1916.txt; shared/calendarium-romanum-1969-ocr.txt; conway-1911.clean.txt",
+      "url": "https://archive.org/details/romanmartyrology00cathuoft",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Orthodox: not on the calendar. The OCA's lives search for THOMAS lists the Apostle, Thomas Sunday, Thomas of Constantinople, Thomas the Fool, Thomas of Mount Maleos, Thomas of Bithynia and a martyr at Damascus: not Aquinas.",
+      "source": "oca-lives-search-thomas.txt",
+      "url": "https://www.oca.org/saints/lives?q=THOMAS",
+      "verified": true,
+      "note": ""
+    }
+  ],
+  "pictures": [
+    {
+      "text": "Band: 'St-thomas-aquinas.jpg', Carlo Crivelli, 1476, National Gallery, London (from the Demidoff altarpiece; Wikidata Q26692562). Commons licence PD-art-old-100-expired. 4004 x 6000 on Commons; the 1920 px thumbnail cropped to the top 1900 px (head, church, sun, book) and saved 1700 x 1682, quality 82, 822 KB. posM 50% 18%, posD 50% 20% (face about 22% from the top).",
+      "source": "Commons API extmetadata and file page wikitext",
+      "url": "https://commons.wikimedia.org/wiki/File:St-thomas-aquinas.jpg",
+      "verified": true,
+      "note": ""
+    },
+    {
+      "text": "Portrait and card: 'Thomas Aquinas by Sandro Botticelli.jpg', 1152 x 1600, Commons licence PD-Art|PD-old-100-1923. Kept as downloaded. The file page gives no date or collection and notes the de.wikipedia original was a photograph of an art print. Card: crop x 160-880, y 88-988 of the portrait, resized to 480 x 600 (eyes about 38% down, head centred).",
+      "source": "Commons API extmetadata and file page wikitext",
+      "url": "https://commons.wikimedia.org/wiki/File:Thomas_Aquinas_by_Sandro_Botticelli.jpg",
+      "verified": true,
+      "note": "The page's caption gives no date or museum for this reason."
+    },
+    {
+      "text": "Gallery 3: 'Gand, Juste de - Berruguete, Pedro - Saint Thomas d'Aquin, MI 651 ; Campana 387.jpg', Justus van Gent (and Pedro Berruguete), Louvre MI 651, 997 x 1500, PD-art|PD-old. Kept as downloaded. One of the Urbino studiolo's famous men (its sibling, Boethius, is already boethius-2.jpg on the site; a different picture).",
+      "source": "Commons API and wikitext",
+      "url": "https://commons.wikimedia.org/wiki/File:Gand,_Juste_de_-_Berruguete,_Pedro_-_Saint_Thomas_d%27Aquin,_MI_651_;_Campana_387.jpg",
+      "verified": true,
+      "note": "The page says 'the 1470s' as the site's Boethius credit does for the series (about 1472-1476)."
+    },
+    {
+      "text": "Gallery 4: 'Velazquez-Oriola.jpg', Diego Velázquez, The Temptation of St Thomas Aquinas, 1632, oil on canvas, 244 x 203 cm, Museo Diocesano de Arte Sacro, Orihuela (Wikidata Q1113846). PD-Art|PD-old-auto-expired. 935 x 1118, kept as downloaded. Looked at: angels clothed, the woman small at the door, a charred brand on the floor; nothing violent.",
+      "source": "Commons API and wikitext",
+      "url": "https://commons.wikimedia.org/wiki/File:Velazquez-Oriola.jpg",
+      "verified": true,
+      "note": ""
+    }
+  ],
+  "could_not_verify": [
+    "The year of the Naples canonisation hearing at which Bartholomew of Capua testified (1319 in modern accounts): Conway gives only that the process began in 1318, so the page says 'the inquiry for his canonisation'.",
+    "A public-domain English translation of William of Tocco's or Bernard Gui's life: none found. Their stories are told through the Catholic Encyclopedia, Conway and Vaughan, and credited to 'the early lives'.",
+    "Who made the Botticelli (date, collection): not on the Commons file page (probably the Abegg-Stiftung panel of about 1481); left off the caption.",
+    "The modern case for and against the Adoro te (Wilmart 1929; the 1996 edition of Tocco): leads only.",
+    "The Byzantine Thomists by name (the Kydones brothers, Scholarios): no public-domain English source on disk; left off.",
+    "Council of Trent placing the Summa on the altar: Leo XIII and the CE say so; no record of the council itself was checked, so the page does not tell it either way."
+  ],
+  "checker_2026_09_26": {
+    "checked": "Every number tile against its source (Conway on the four secretaries and 96 miracles; CE on 52 Fathers, 41 popes, 19 councils and the 6,000 commentaries; De Wulf on the 219 propositions of 7 March 1277 and Kilwardby). Feasts in the calendar texts on disk (Calendarium Romanum 1969 and its note, USCCB 2026, Common Worship, LFF 2022, ELCA; LSB has no entry; 1916 Martyrology on 7 March). Every 'X said' attribution in context (John XXII's two lines at the Mass of 18 July 1323 in Conway; Bessarion, Bucer and Leo XIII's reply, Leo's 'prince and master' in the CE; the OCA, the Episcopal Church). The myths (the straw in Vaughan's Latin and the three translations; angels, ship captain, Dante's poison line, the Adoro te in the CE, Julian and EWTN). The hard sayings against the Summa texts and the CE articles on Woman, Inquisition, Immaculate Conception and Hesychasm. The last journey and death in Conway and the CE (28 January 1274, the tree near Terracina, Maenza, Fossanova 7 miles off on 10 February, the Canticle, Tocco's line, Reginald at the last Communion). Capitals for God throughout; no section marks; italics (italicize.mjs dry run: nothing); seo lengths; every picture's licence re-read in one Commons API call (all PD); the hub card looked at full size.",
+    "changed": [
+      "Prayer intro: the two verses printed are the fourth and fifth of the Pange lingua's six (Caswall's doxology follows), not 'the last two'. Now: 'Two verses ... The first is the fourth verse, the hardest to translate: Neale called Caswall's the best version'. That is where the CE puts Neale's praise (the fourth verse, 'the great crux').",
+      "Hard sayings, The Orthodox East: dropped 'of the 1340s' from the anti-Palamite treatise. The date came from the CE's attribution to Akindynos, which the writer had already found wrong (the work is later); now 'One Greek treatise against the monk Gregory Palamas', which also introduces Palamas before 'anti-Palamite' jargon.",
+      "Myth, Adoro te: 'Probably, but it is argued' picked a side in our voice. Now 'Tradition says so, but it is argued', with both sides left in their own words.",
+      "Fifth Way quotation: 'by whom' capitalised to 'by Whom' (the capitals rule; the being is God).",
+      "The OCA 'The West' page: the URL was the fourteenth-century address that redirects; now the thirteenth-century address it lands on (page and quotes file).",
+      "thomas-aquinas-4.jpg (Velázquez) re-saved at JPEG quality 84, 4:4:4 (it was near quality 100, 754 KB; now 223 KB, same 935 x 1118). Its CREDITS.md row should say re-saved rather than kept as downloaded."
+    ],
+    "left_for_owner": [
+      "The relics: the page says, in the CE's 1912 words, that they were at St Sernin. They went back to the Jacobins church in Toulouse in 1974 (not added: the Jacobins' site was down and nothing on disk says it).",
+      "The number tile '219 propositions condemned at Paris in 1277 ... some of them were his' is kept: it is a fact about his standing, told with its withdrawal on the page. Swap for a tidbit if he reads it as a slight.",
+      "The writer's own notes stand: the soft Botticelli card, the page's length (about 6,200 words), 'castle' not 'tower', the straw's three translations."
+    ]
+  }
+}
