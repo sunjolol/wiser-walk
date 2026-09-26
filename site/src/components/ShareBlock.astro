@@ -196,6 +196,8 @@ const card = {
    * many as the page does (see CategoryStack): none on a flat result, several on a tie.
    */
   ...(view.shape === 'unipolar' ? { lead: view.named.length } : {}),
+  // Each bar's number beside its words, where the page prints one (the gifts).
+  ...(view.shape === 'unipolar' && quiz.unipolarCopy?.showNumbers ? { numbers: true } : {}),
   // Added only for a reading.
   ...(view.shape === 'reading'
     ? { reading: { line: line?.text ?? '', cite: line?.cite ?? '', say: quiz.shareTitle } }
@@ -622,8 +624,9 @@ const card = {
         g.textAlign = 'right';
         g.font = (r.below ? 'italic ' : '') + '600 ' + Math.round(22 * k) + 'px Poppins, system-ui, sans-serif';
         g.fillStyle = P.mute;
-        g.fillText(r.strength, x + w, base);
-        const nameRoom = w - (nx - x) - g.measureText(r.strength).width - 28;
+        const said = data.numbers && r.value > 50 ? r.strength + ' · ' + Math.round((r.value - 50) * 2) : r.strength;
+        g.fillText(said, x + w, base);
+        const nameRoom = w - (nx - x) - g.measureText(said).width - 28;
         g.textAlign = 'left';
 
         // sentence case, as the page sets it: "The gift of faith", never "The Gift Of Faith"

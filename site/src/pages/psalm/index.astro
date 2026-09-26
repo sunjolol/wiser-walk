@@ -1,4 +1,5 @@
 ---
+import { countFact } from '../../lib/quiz-count';
 /**
  * /psalm/: A psalm for every situation. St Athanasius's guide, whole and open.
  *
@@ -210,7 +211,7 @@ const breadcrumbs = [
           <p class="qcard-say">{quiz.tagline}</p>
           <ul class="qcard-facts">
             <li><Icon name="clock" size={13} /> {quiz.minutes} min</li>
-            <li>{SITUATIONS.length} situations</li>
+            <li>{countFact(quiz)}</li>
           </ul>
           <span class="qcard-go go-pill">Start <Icon name="arrow" size={16} /></span>
         </div>

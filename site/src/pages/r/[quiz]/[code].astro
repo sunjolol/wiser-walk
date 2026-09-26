@@ -24,6 +24,7 @@ import { readEnv } from '../../../lib/email/env';
 import { resultCardFor } from '../../../lib/seo';
 import { ACCOUNTS_VISIBLE } from '../../../lib/account/config';
 import { artFor } from '../../../lib/art';
+import { traditionArt } from '../../../lib/tradition-art';
 import { FIGURE_PAGES, FIGURE_PICTURES } from '../../../lib/saints/figures';
 import { READING } from '../../../lib/strategies/reading';
 import { liveGames } from '../../../lib/games';
@@ -171,7 +172,12 @@ const art = quiz ? artFor(quiz.slug) : null;
 const topGroup = view?.shape === 'unipolar' && view.named.length
   ? quiz?.groups.find(g => g.key === view.rows.find(r => r.rank === 1)?.key)
   : undefined;
-const groupBand = topGroup?.band;
+/* The Compass (headlineLeadsWithOutcome, bipolar): the nearest tradition's own picture, the
+   first named where two are level or nothing is close (the owner, 2026-09-25). */
+const outcomeArt = quiz?.headlineLeadsWithOutcome && view?.shape === 'bipolar' && leadSlugs[0]
+  ? traditionArt(leadSlugs[0])
+  : null;
+const groupBand = topGroup?.band ?? outcomeArt ?? undefined;
 const leadPage = quiz?.slug === 'bible-figure' && leadSlugs[0] ? FIGURE_PAGES[leadSlugs[0]] : undefined;
 const leadBand = leadPage
   ? { src: leadPage.band.picture.src, posM: leadPage.band.posM, posD: leadPage.band.posD }
@@ -314,6 +320,17 @@ const kindredCard = (() => {
         ) : view.shape === 'kindred' ? (
           /* The kindred spirit's portrait, name, dates and who they were. */
           <KindredResult quiz={quiz} view={view} part="band" />
+        ) : leadNames.length > 0 && view.shape === 'unipolar' ? (
+          <>
+            {/* A ranking that leads with what it found (the gifts): the quiz's words small above,
+                the names big ("Evangelism and the word of knowledge", at most two, the rest
+                counted), and what came next or level with them in the line under. */}
+            <h1 class="verdict verdict--who verdict--one">
+              <span class="verdict-pre">{leadPre}</span>{' '}
+              <span class="verdict-who">{view.headline}</span>
+            </h1>
+            <p class="lede">{view.summary}</p>
+          </>
         ) : leadNames.length > 0 && quiz.headlineLeadsWithOutcome ? (
           <>
             {/*

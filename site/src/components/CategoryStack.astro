@@ -30,6 +30,13 @@ interface Props {
 const { quiz, view, linked = true, open = false } = Astro.props;
 const rows = [...view.rows].sort((a, b) => a.rank - b.rank);
 const answerOf = (key: string) => quiz.groups.find(g => g.key === key)?.shortAnswer;
+/*
+ * The pull as a number, 0 to 100, where the quiz prints one (unipolarCopy.showNumbers, the
+ * gifts): exactly what the bar draws, (value - 50) x 2, so the words, the bar and the number
+ * can never disagree. A row answered against has no number; its words say so.
+ */
+const showNumbers = Boolean(quiz.unipolarCopy?.showNumbers);
+const pullOf = (value: number) => Math.round(Math.max(0, (value - 50) * 2));
 const NEWTAB = 'M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5';
 
 // Only the top row is emphasised, and only when the result actually supports emphasising
@@ -58,6 +65,7 @@ const leading = view.named.length;
               <span class="tier-rank" aria-hidden="true">{row.rank}</span>
               <span class="tier-name">{row.name}</span>
               <span class="tier-strength">{row.strength}</span>
+              {showNumbers && row.value > 50 && <span class="tier-num">{pullOf(row.value)}</span>}
               <span class="tier-caret" aria-hidden="true"></span>
             </span>
             <span
@@ -71,9 +79,9 @@ const leading = view.named.length;
           <div class="tier-body">
             <p>{answerOf(row.key)}</p>
             <a class="go-pill tier-go" href={groupHref(quiz, row)} target="_blank" rel="noopener">
-              Read the full page on {row.name}
+              Read the full page
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={NEWTAB} /></svg>
-              <span class="sr-only"> (opens in a new tab)</span>
+              <span class="sr-only"> on {row.name} (opens in a new tab)</span>
             </a>
           </div>
         </details>
@@ -86,6 +94,7 @@ const leading = view.named.length;
             {linked ? <a href={groupHref(quiz, row)}>{row.name}</a> : row.name}
           </span>
           <span class="tier-strength">{row.strength}</span>
+          {showNumbers && row.value > 50 && <span class="tier-num">{pullOf(row.value)}</span>}
         </div>
         {/*
           The bar shows the PULL, not the raw score.

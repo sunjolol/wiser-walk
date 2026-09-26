@@ -1,4 +1,5 @@
 ---
+import { countFact } from '../lib/quiz-count';
 /**
  * My results.
  *
@@ -81,18 +82,7 @@ const COMPASS_SAY = 'Six questions that divide Christians, and the tradition tha
  * true word for them (19 gifts), because "7 categories" is the engine's vocabulary. The
  * Psalm quiz counts the situations it can name, as /quizzes/ does: it has no statements.
  */
-const factsFor = (q: Quiz): string[] =>
-  q.slug === compass?.slug
-    ? [`${q.items.length} statements`, `${q.outcomes.length} ${outcomeNounPlural(q)}`]
-    : [
-        q.strategy.shape === 'reading'
-          ? `${SITUATIONS.length} situations`
-          : q.outcomes.length
-            ? `${q.outcomes.length} ${outcomeNounPlural(q)}`
-            : q.groupNounPlural
-              ? `${q.groups.length} ${groupNounPlural(q)}`
-              : `${q.items.length} statements`
-      ];
+const factsFor = (q: Quiz): string[] => [countFact(q)];
 
 /**
  * Each game's room, as the home page draws it: its ghost glyph in the corner, its ink, its
@@ -257,6 +247,9 @@ const games = liveGames();
                  width="1000" height="1255"
                  style={`object-position:${art.objectPosition}${art.colour ? `;${COLOUR_PRINT}` : ''}`} />
           )}
+          {/* The picture of what the reader got (a tradition, a gift, a sin), set by the script on a
+              finished room and drawn in colour over the quiz's own plate. */}
+          <img class="mroom-lead-img" data-role="pic" alt="" hidden decoding="async" />
           {/* A draft says so once, in the corner, as it does on the home page and /quizzes/. */}
           {quiz.status === 'draft' && <span class="mroom-tab">Draft</span>}
           {quiz.slug === compass?.slug && example && (
@@ -269,7 +262,12 @@ const games = liveGames();
 
             {/* Filled in by the script from the shelf, and shown only when there is one. */}
             <div class="mroom-has" data-role="has" hidden>
+              {/* Shaped as the result page's band is (the owner, 2026-09-25: the card "looks
+                  nothing like the actual result"): the quiz's small words, the name big, its
+                  bracket and the next nearest smaller, then the axis words in their inks. */}
+              <p class="mroom-pre" data-role="pre" hidden></p>
               <p class="mroom-verdict" data-role="headline"></p>
+              <p class="mroom-also" data-role="also" hidden></p>
               <p class="mroom-say" data-role="summary"></p>
               <p class="mroom-when" data-role="when"></p>
               <div class="mroom-acts">
@@ -370,6 +368,7 @@ const games = liveGames();
   <script>
     import { getQuiz, resultFor, decodeFor, scoreQuiz, encodeFor } from '../lib/engine/registry';
     import { leadFor } from '../lib/engine/types';
+    import { traditionArt } from '../lib/tradition-art';
     import { clearShelf, readableResults } from '../lib/shelf';
     // The shorter code a link prints, where a quiz has one (engine/links.ts).
     import { publicCodeSync } from '../lib/engine/links';
@@ -502,8 +501,86 @@ const games = liveGames();
            * quiz), the person is the main line and the axis clauses the smaller one under it.
            */
           const lead = leadFor(quiz, view);
-          pick(room, 'headline').textContent = lead ? lead.line : view.headline;
-          pick(room, 'summary').textContent = lead ? view.headline : view.summary;
+          const preEl = pick(room, 'pre');
+          const alsoEl = pick(room, 'also');
+          const sayEl = pick(room, 'summary');
+          preEl.textContent = '';
+          alsoEl.textContent = '';
+          sayEl.textContent = '';
+          /*
+           * As the result page's band draws it. A result that leads with who: the quiz's own words
+           * small ("Closest to", "No close fit. Nearest, loosely:", "Your answers pointed most
+           * to"), then the name big. On the Compass the name's bracket and the next nearest go in
+           * the smaller line under it, since the longest names run past fifty characters.
+           */
+          const oneBig = Boolean(quiz.headlineLeadsWithOutcome) && view.shape === 'bipolar';
+          if (lead) {
+            const warn = 'No close fit.';
+            if (lead.pre.startsWith(warn)) {
+              const b = document.createElement('b');
+              b.className = 'mroom-warn';
+              b.textContent = warn;
+              preEl.append(b, lead.pre.slice(warn.length));
+            } else preEl.textContent = lead.pre;
+            preEl.hidden = false;
+            if (view.shape === 'unipolar') {
+              pick(room, 'headline').textContent = view.headline;
+            } else if (oneBig) {
+              const [first, ...rest] = lead.names;
+              const m = /^(.*?)\s*(\(.*\))$/.exec(first.name);
+              pick(room, 'headline').textContent = m ? m[1] : first.name;
+              const lines = [
+                m ? m[2] : '',
+                rest.length ? (view.state === 'tie' ? 'Level with it: ' : 'Next nearest: ') + rest.map(r => r.name).join(', ') : ''
+              ].filter(Boolean);
+              lines.forEach((line, i) => {
+                if (i) alsoEl.appendChild(document.createElement('br'));
+                alsoEl.append(line);
+              });
+            } else {
+              pick(room, 'headline').textContent = lead.names.map(r => r.name).join(' and ');
+            }
+          } else {
+            preEl.hidden = true;
+            pick(room, 'headline').textContent = view.headline;
+          }
+          alsoEl.hidden = !alsoEl.textContent;
+          // The smaller line: a ranking's summary, or the axis clauses in the rails' two inks.
+          if (lead && view.shape === 'bipolar') {
+            sayEl.classList.add('mroom-axes');
+            view.headlineParts.forEach((part, i) => {
+              const span = document.createElement('span');
+              span.className = 'verdict-part--' + part.side;
+              span.textContent = part.text;
+              sayEl.appendChild(span);
+              if (i < view.headlineParts.length - 1) sayEl.append(', ');
+            });
+          } else {
+            sayEl.classList.remove('mroom-axes');
+            sayEl.textContent = view.summary;
+          }
+
+          /*
+           * The picture of what they got: the nearest tradition's on the Compass, the leading
+           * gift's or sin's where the quiz's groups carry one. Nothing named, nothing drawn.
+           */
+          const art = oneBig
+            ? traditionArt(lead?.names[0]?.slug)
+            : view.shape === 'unipolar' && view.named.length
+              ? quiz.groups.find(g => g.key === view.rows.find(r => r.rank === 1)?.key)?.band ?? null
+              : null;
+          const pic = pick(room, 'pic');
+          if (art) {
+            pic.src = art.src;
+            pic.style.setProperty('--pos-m', art.posM);
+            pic.style.setProperty('--pos-d', art.posD);
+            pic.hidden = false;
+            room.classList.add('has-lead-pic');
+          } else {
+            pic.hidden = true;
+            pic.removeAttribute('src');
+            room.classList.remove('has-lead-pic');
+          }
           pick(room, 'when').textContent = `Taken ${whenWords(latest.at)}`;
           pick(room, 'see').setAttribute('href', `/r/${slug}/${publicCodeSync(quiz, latest.code)}/`);
 

@@ -1,4 +1,5 @@
 ---
+import { countFact } from '../../../lib/quiz-count';
 import Base from '../../../layouts/Base.astro';
 import Hero from '../../../components/Hero.astro';
 import SectionHead from '../../../components/SectionHead.astro';
@@ -23,8 +24,9 @@ import { clip } from '../../../lib/seo';
  * written content get a page, so a quiz without axis essays simply produces none.
  */
 export function getStaticPaths() {
+  // A quiz's page-only groups (the gifts' tongues and interpreting) keep their pages too.
   return QUIZZES.flatMap(q =>
-    q.groups
+    [...q.groups, ...(q.pageOnlyGroups ?? [])]
       .filter(g => g.summary)
       .map(g => ({ params: { quiz: q.slug, axis: g.slug }, props: { group: g } }))
   );
@@ -111,8 +113,10 @@ const passagesTitle = bipolar
  * a headline number invented to fill a row: if an axis carries no chronology, that tile
  * does not appear.
  */
+/* A page-only group (Quiz.pageOnlyGroups) is no longer scored, so it has no statements. */
+const scored = index >= 0;
 const tiles = [
-  { n: statements, label: 'Statements' },
+  ...(scored ? [{ n: statements, label: 'Statements' }] : []),
   ...(history.length ? [{ n: history.length, label: 'Moments' }] : []),
   ...(passages.length ? [{ n: passages.length, label: 'Passages' }] : []),
   // "Recorded acts" is the truth for every group that has not said otherwise. The two that
@@ -268,13 +272,11 @@ const cardSay = bipolar
     (isCompass
       ? `on ${word(quiz.groups.length - 1)} more questions that divide Christians.`
       : `which ${outcomeNoun(quiz)} sits nearest you.`)
-  : `See where ${namedSubject} ranks for you among all ${word(quiz.groups.length)}.`;
+  : scored
+    ? `See where ${namedSubject} ranks for you among all ${word(quiz.groups.length)}.`
+    : `Find which of the ${word(quiz.groups.length)} ${groupNounPlural(quiz)} your answers point to.`;
 /** The second fact, counted the way /quizzes/ counts it: 25 figures, 19 gifts, 14 statements. */
-const cardFact = quiz.outcomes.length
-  ? `${quiz.outcomes.length} ${plural}`
-  : quiz.groupNounPlural
-    ? `${quiz.groups.length} ${groupNounPlural(quiz)}`
-    : `${quiz.items.length} statements`;
+const cardFact = countFact(quiz);
 
 /*
  * WebPage, not Article.
@@ -392,7 +394,7 @@ const breadcrumbs =
       MineNote finds a result, so anyone else meets the page as it was. A two-pole axis marks
       the reader on the map further down instead.
     */}
-    {!bipolar && <MineNote quiz={quiz} kind="axis" index={index} />}
+    {!bipolar && scored && <MineNote quiz={quiz} kind="axis" index={index} />}
 
     {/*
       The answer, first, in the words the question was asked in. See the note above the

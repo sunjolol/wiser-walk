@@ -225,14 +225,14 @@ const PLAIN: Record<string, string> = {
     'People notice it in themselves by the length of the list. You keep following up with the same few people long after everyone else has moved on. People you helped years ago still come to you first when something goes wrong, and you are neither surprised nor particularly flattered.\n\n' +
     'It is most often confused with mercy, and the difference is duration. Mercy goes to whoever is in front of it; shepherding keeps a particular set of people and stays with them for years. It is also confused with holding a job. Ephesians 4:11 is about what Christ gives to His church rather than about who is paid by it, and some of the steadiest shepherding in any congregation is done by people with no title at all.',
   tongues:
-    'The translation quoted here says different kinds of languages where many others say tongues: speaking or praying in a language the speaker has never learnt. At Pentecost “everyone heard them speaking in his own language” (Acts 2:6); to Corinth Paul writes that such a speaker “speaks not to men, but to God, for no one understands” (1 Corinthians 14:2). This page does not say whether those are the same thing. These statements ask whether you have prayed or spoken in words from no language you know, on your own, and at church with an interpretation then given. The row fills only when both are true, because the second is what Paul asks of a church; where nobody interprets he tells the speaker to “keep silent in the assembly, and let him speak to himself and to God” (1 Corinthians 14:27-28), so a row part of the way up is no mark against you. The statements cannot say what those words were. Whether what happened was this gift is for your church and those who lead it to say, not this page. Many Christians believe God still gives this gift today; many believe He gave it only for the time of the apostles.',
+    'The translation quoted here says different kinds of languages where many others say tongues: speaking or praying in a language the speaker has never learnt. At Pentecost “everyone heard them speaking in his own language” (Acts 2:6); to Corinth Paul writes that such a speaker “speaks not to men, but to God, for no one understands” (1 Corinthians 14:2). This page does not say whether those are the same thing. In a church Paul asks for an interpretation, and where nobody interprets he tells the speaker to “keep silent in the assembly, and let him speak to himself and to God” (1 Corinthians 14:27-28). Whether something was this gift is for a church and those who lead it to say, not this page. Many Christians believe God still gives this gift today; many believe He gave it only for the time of the apostles.',
   hospitality:
     'Peter asks hospitality of everyone and speaks of each person’s gift in the next sentence, so coming out low here releases nobody from the first. The word he uses means stranger-loving, and it is the exact opposite of the word English took for the fear of strangers. Paul asks the same of the Romans, “given to hospitality” (Romans 12:13), and Hebrews adds the reason most likely to make a reader open the door: “some have entertained angels without knowing it” (Hebrews 13:2).\n\n' +
     'In an ordinary week it is a place laid before anybody asked for it. It is the house the students end up at, the family who take the new couple home for lunch on their first Sunday, the person who sees a visitor standing alone with a coffee and is beside them within a minute.\n\n' +
     'People notice it by what a full house does to them. You add a seat for whoever turns up rather than keeping to the numbers you planned for. New people end up sitting with you without either of you arranging it. Where somebody else is counting chairs, you are counting how many more will fit.\n\n' +
     'It is most often confused with entertaining, and the difference is who the evening is about. Entertaining is about the host: the room, the food, whether it went well. Hospitality is about the stranger, and it survives a burnt dinner. It is also confused with serving, which is aimed at the job rather than at the person, and Peter adds the hardest clause in the verse for anybody who has both: without grumbling.',
   interpretation:
-    'The translation quoted here says the interpretation of languages: giving a church the meaning of what was said in a language it does not know, so that, in Paul’s words, “the assembly may be built up” (1 Corinthians 14:5). Acts never shows anyone doing it; what the New Testament has is Paul’s instructions to Corinth, below. These statements ask whether you have said what you believed such speech meant, and whether people at church look to you for it. They cannot say whether any meaning given was right. Whether what happened was this gift is for your church and those who lead it to say, not this page. Many Christians believe God still gives this gift today; many believe He gave it only for the time of the apostles.\n\n' +
+    'The translation quoted here says the interpretation of languages: giving a church the meaning of what was said in a language it does not know, so that, in Paul’s words, “the assembly may be built up” (1 Corinthians 14:5). Acts never shows anyone doing it; what the New Testament has is Paul’s instructions to Corinth, below. Whether something was this gift is for a church and those who lead it to say, not this page. Many Christians believe God still gives this gift today; many believe He gave it only for the time of the apostles.\n\n' +
     'Where it happens at all it happens in the seconds after somebody has spoken, and Paul sets the shape of it tightly: two speakers or at most three, in turn, and one person interpreting (1 Corinthians 14:27).\n\n' +
     'It is most often confused with the gift it depends on. Paul treats speaking and interpreting as two gifts and still tells the speaker to pray for the second one (1 Corinthians 14:13), which means he thought one person might hold both. It is also confused with translation. The Greek word is the root of the English word hermeneutics, the study of how texts are understood, and it means giving the sense of a thing rather than swapping one word for another.'
 };
@@ -770,8 +770,17 @@ const GIFTS: Array<[string, string, string]> = [
   ['prophecy', 'prophecy', 'prophecy'],
   ['evangelism', 'evangelism', 'evangelism'],
   ['shepherding', 'shepherding', 'shepherding'],
+  ['hospitality', 'hospitality', 'hospitality']
+];
+
+/**
+ * Taken out of the test on 2026-09-25, the owner's call: "their pages can stay up but they
+ * won't be a result or any of the questions". Five of the fifty-seven statements were about
+ * them, and he found that too many for gifts that anyone who has them already knows about.
+ * Their pages are built from the same fields as every other gift's (Quiz.pageOnlyGroups).
+ */
+const PAGE_ONLY: Array<[string, string, string]> = [
   ['tongues', 'tongues', 'tongues'],
-  ['hospitality', 'hospitality', 'hospitality'],
   ['interpretation', 'interpretation', 'interpreting tongues']
 ];
 
@@ -786,7 +795,68 @@ const GIFTS: Array<[string, string, string]> = [
  * only per-group difference in the whole file is the acts heading on the two gifts the New
  * Testament records no act of, and it is about the LIST, not about the gift.
  */
-const groups: QuizGroup[] = GIFTS.map(([key, slug, name]) => ({
+/**
+ * Each gift's own painting, across the band of its page and of a result that ranks it first, and
+ * on that result's card on /me/ (the owner, 2026-09-25: "the header background should change
+ * based on your result same as our other quizzes"). Public domain; credits in
+ * public/img/CREDITS.md and printed in the band. Nothing violent and no nudity: that ruled out
+ * every Judgment of Solomon, Good Samaritan and Prodigal Son found, and most healings.
+ */
+const BAND: Record<string, NonNullable<QuizGroup['band']>> = {
+  serving: { src: "/img/gifts/serving.jpg", posM: "88% 50%", posD: "60% 50%",
+    alt: "Tintoretto’s painting of Christ kneeling at a basin to wash Peter’s feet while the disciples take off their shoes across a wide tiled hall",
+    credit: "Picture: The Washing of the Feet, Jacopo Tintoretto, about 1548–49. Museo del Prado, Madrid." },
+  teaching: { src: "/img/gifts/teaching.jpg", posM: "68% 50%", posD: "50% 45%",
+    alt: "Henryk Siemiradzki’s painting of Christ seated on a sunlit terrace, teaching Mary as she sits listening at His feet, while Martha stands in the doorway behind",
+    credit: "Picture: Christ in the House of Martha and Mary, Henryk Siemiradzki, 1886. State Russian Museum, St Petersburg." },
+  encouraging: { src: "/img/gifts/encouraging.jpg", posM: "80% 50%", posD: "50% 20%",
+    alt: "Rembrandt’s painting of the aged apostle Paul in his prison cell, pen in hand and letters on his knee, lit by a shaft of light from the window",
+    credit: "Picture: Saint Paul in Prison, Rembrandt, 1627. Staatsgalerie Stuttgart, Stuttgart." },
+  giving: { src: "/img/gifts/giving.jpg", posM: "52% 60%", posD: "50% 62%",
+    alt: "Paulus Lesire’s painting of a poor widow bending over the temple treasury to drop in her coins while Christ, in a red cloak, turns to point her out",
+    credit: "Picture: The Widow’s Mite, Paulus Lesire, about 1628–32. Dordrechts Museum, Dordrecht." },
+  healing: { src: "/img/gifts/healing.jpg", posM: "70% 50%", posD: "50% 62%",
+    alt: "Nicolas Poussin’s painting of Christ touching the eyes of a kneeling blind man outside Jericho while a second blind man gropes toward Him",
+    credit: "Picture: Christ Healing the Blind Men of Jericho, Nicolas Poussin, 1650. Musée du Louvre, Paris." },
+  leading: { src: "/img/gifts/leading.jpg", posM: "43% 50%", posD: "45% 50%",
+    alt: "Jacob de Wit’s painting of Moses standing with outstretched arms among the Israelites in the desert, choosing the seventy elders who will lead the people with him",
+    credit: "Picture: Moses Choosing the Seventy Elders, Jacob de Wit, 1737. Royal Palace Amsterdam, Amsterdam." },
+  mercy: { src: "/img/gifts/mercy.jpg", posM: "58% 60%", posD: "50% 70%",
+    alt: "Nicolas Poussin’s painting of Christ, in a red cloak, pointing to His writing on the ground as the accusers turn away from the kneeling woman",
+    credit: "Picture: Christ and the Woman Taken in Adultery, Nicolas Poussin, 1653. Musée du Louvre, Paris." },
+  knowledge: { src: "/img/gifts/knowledge.jpg", posM: "80% 55%", posD: "50% 42%",
+    alt: "Annibale Carracci’s painting of Christ seated by the well, speaking to the Samaritan woman who has come with her water jar, as the disciples return along the path",
+    credit: "Picture: Christ and the Samaritan Woman, Annibale Carracci, about 1595–97. Museum of Fine Arts, Budapest." },
+  administration: { src: "/img/gifts/administration.jpg", posM: "62% 50%", posD: "50% 50%",
+    alt: "Giovanni Battista Tiepolo’s painting of an aged Pharaoh in a turban handing his signet ring to the young Joseph, in a red cloak, as trumpeters sound behind them",
+    credit: "Picture: Joseph Receiving Pharaoh’s Ring, Giovanni Battista Tiepolo, about 1733–35. Dulwich Picture Gallery, London." },
+  wisdom: { src: "/img/gifts/wisdom.jpg", posM: "80% 50%", posD: "50% 45%",
+    alt: "William Holman Hunt’s painting of the twelve-year-old Jesus, in a striped violet robe, found by Mary among the teachers of the Temple, who sit with their scrolls",
+    credit: "Picture: The Finding of the Saviour in the Temple, William Holman Hunt, 1854–60. Birmingham Museum and Art Gallery, Birmingham." },
+  miracles: { src: "/img/gifts/miracles.jpg", posM: "50% 50%", posD: "50% 75%",
+    alt: "Paolo Veronese’s painting of the wedding feast at Cana, Christ seated at the centre of the long table while servants pour from stone jars and musicians play in front",
+    credit: "Picture: The Wedding at Cana, Paolo Veronese, 1562–63. Musée du Louvre, Paris." },
+  discernment: { src: "/img/gifts/discernment.jpg", posM: "80% 50%", posD: "50% 26%",
+    alt: "Peter Paul Rubens’s painting of Christ, in a red cloak, raising one hand as the Pharisees crowd in with the coin they hoped would trap Him",
+    credit: "Picture: The Tribute Money, Peter Paul Rubens, about 1612. Fine Arts Museums of San Francisco, San Francisco." },
+  faith: { src: "/img/gifts/faith.jpg", posM: "22% 40%", posD: "50% 30%",
+    alt: "Paolo Veronese’s painting of a Roman centurion in armour kneeling before Christ, his soldiers behind him, asking Him only to say the word",
+    credit: "Picture: Jesus and the Centurion, Paolo Veronese, about 1571. Museo del Prado, Madrid." },
+  prophecy: { src: "/img/gifts/prophecy.jpg", posM: "70% 50%", posD: "50% 32%",
+    alt: "Rembrandt’s painting of the old prophet Jeremiah resting his head on his hand in a cave while Jerusalem burns in the distance",
+    credit: "Picture: Jeremiah Lamenting the Destruction of Jerusalem, Rembrandt, 1630. Rijksmuseum, Amsterdam." },
+  evangelism: { src: "/img/gifts/evangelism.jpg", posM: "40% 50%", posD: "50% 48%",
+    alt: "Rembrandt’s painting of Philip speaking over the Ethiopian official, who kneels in a white fur-lined cloak beside his chariot while a servant holds open his book",
+    credit: "Picture: The Baptism of the Eunuch, Rembrandt, 1626. Museum Catharijneconvent, Utrecht." },
+  shepherding: { src: "/img/gifts/shepherding.jpg", posM: "50% 50%", posD: "50% 27%",
+    alt: "Bartolomé Esteban Murillo’s painting of the Christ Child as the Good Shepherd, seated on a rock with a crook, one arm around a lamb, His flock grazing behind",
+    credit: "Picture: The Good Shepherd, Bartolomé Esteban Murillo, about 1660. Museo del Prado, Madrid." },
+  hospitality: { src: "/img/gifts/hospitality.jpg", posM: "25% 50%", posD: "50% 28%",
+    alt: "Francesco Guardi’s painting of Abraham serving bread to three angels at a table beneath a great tree, one angel pointing toward the tent where Sarah waits",
+    credit: "Picture: Abraham Welcoming the Three Angels, Francesco Guardi, 1750s. Cleveland Museum of Art, Cleveland." }
+};
+
+const build = ([key, slug, name]: [string, string, string]): QuizGroup => ({
   key,
   slug,
   name,
@@ -800,100 +870,111 @@ const groups: QuizGroup[] = GIFTS.map(([key, slug, name]) => ({
   quoted: giftSources[key]!,
   quotedFrom: WEBBE,
   acts: giftActs[key]!,
+  ...(BAND[key] ? { band: BAND[key] } : {}),
   ...(WRITTEN_NOT_DONE.includes(key)
     ? {
         actsHeading: 'What Paul writes about it',
         actsKicker: `${giftActs[key]!.length} passages, each cited`
       }
     : {})
-}));
+});
+const groups: QuizGroup[] = GIFTS.map(build);
+const pageOnlyGroups: QuizGroup[] = PAGE_ONLY.map(build);
 
 /**
- * Three per gift, in the order [key, text, direction]. Direction was re-derived from the
+ * Three per gift, in the order [key, text, direction, kind]. Direction was re-derived from the
  * final wording: +1 where agreeing describes the gift's pattern, -1 where agreeing describes
- * its absence. Provenance for every line is in audit/new-quizzes/gifts-all-final.md.
+ * its absence. Provenance for every line is in audit/new-quizzes/gifts-all-final.md; four were
+ * reworded plainly on 2026-09-25 at the owner's request (serving's and shepherding's reverse
+ * statements, leading's "did", hospitality's "did"), each keeping its gift, kind and direction.
  *
  * Each gift has exactly one reverse-keyed item, exactly one statement about what other
  * people bring you or say of you, and one about what you do or what has happened. The
  * reverse-keyed item sits in a different slot from gift to gift so that the running order
  * below never produces a round that is all reverse items.
  */
-const RAW: Array<[string, string, 1 | -1]> = [
-  ['serving', 'When something practical needs doing, I have usually started before anyone asked me to.', 1],
-  ['serving', 'When there is clearing up to do, I am usually still talking to someone.', -1],
-  ['serving', 'People ask me when an errand needs running or a form needs filling in, and I usually say yes.', 1],
+/**
+ * What each statement asks, and how much it counts (2026-09-25). The owner found too many
+ * rows level on a quiz this long, and asked for numbers that rarely tie. Three statements a
+ * gift cannot give fine numbers by themselves, so they are weighed, in whole units, by what
+ * each can see: what other people bring you or say of you counts most, because the frame of
+ * this whole quiz is that the people who watch you serve see more than you do; what you do or
+ * what has happened comes next; the reverse-worded statement counts least, because readers
+ * misread negatives more than anything else. 6 + 5 + 4 = 15 units a gift, so a gift's number
+ * moves in steps of a sixtieth instead of a twelfth. The order of the rows barely changes;
+ * what changes is that two gifts rarely land on the same number.
+ */
+type Kind = 'others' | 'did' | 'rev';
+const WEIGHT: Record<Kind, number> = { others: 6, did: 5, rev: 4 };
 
-  ['teaching', 'People come to me to have something explained, even when they only wanted the short answer.', 1],
-  ['teaching', 'I check whether the other person actually followed me before I move on.', 1],
-  ['teaching', 'I would rather send somebody a good link than sit down and walk them through it.', -1],
+const RAW: Array<[string, string, 1 | -1, Kind]> = [
+  ['serving', 'When something practical needs doing, I have usually started before anyone asked me to.', 1, 'did'],
+  ['serving', 'After a meal or an event, I usually leave the tidying up to other people.', -1, 'rev'],
+  ['serving', 'People ask me when an errand needs running or a form needs filling in, and I usually say yes.', 1, 'others'],
 
-  ['encouraging', 'When a friend is hesitating, I leave them to decide rather than press them.', -1],
-  ['encouraging', 'People come to me when they need a push to do the thing they are avoiding.', 1],
-  ['encouraging', 'I tell people what I think they are capable of, even when they have not asked.', 1],
+  ['teaching', 'People come to me to have something explained, even when they only wanted the short answer.', 1, 'others'],
+  ['teaching', 'I check whether the other person actually followed me before I move on.', 1, 'did'],
+  ['teaching', 'I would rather send somebody a good link than sit down and walk them through it.', -1, 'rev'],
 
-  ['giving', 'I give away things I am still using when somebody needs them more than I do.', 1],
-  ['giving', 'Even when I can afford it, I look for a way to help other than money.', -1],
-  ['giving', 'People tell me when someone they know is going without, and I usually find something to give.', 1],
+  ['encouraging', 'When a friend is hesitating, I leave them to decide rather than press them.', -1, 'rev'],
+  ['encouraging', 'People come to me when they need a push to do the thing they are avoiding.', 1, 'others'],
+  ['encouraging', 'I tell people what I think they are capable of, even when they have not asked.', 1, 'did'],
 
-  ['healing', 'People have asked me to pray for them because someone they know got better after I prayed.', 1],
-  ['healing', 'When somebody is ill, I am more likely to bring them a meal than to pray with them.', -1],
-  ['healing', 'More than once, someone I prayed for has recovered when the people around them did not expect it.', 1],
+  ['giving', 'I give away things I am still using when somebody needs them more than I do.', 1, 'did'],
+  ['giving', 'Even when I can afford it, I look for a way to help other than money.', -1, 'rev'],
+  ['giving', 'People tell me when someone they know is going without, and I usually find something to give.', 1, 'others'],
 
-  ['leading', 'People have put me in charge of things I did not ask to run.', 1],
-  ['leading', 'I end up answering for how the whole thing went, including parts other people did.', 1],
-  ['leading', 'I would rather be told where we are going than be the one to decide it.', -1],
+  ['healing', 'People have asked me to pray for them because someone they know got better after I prayed.', 1, 'others'],
+  ['healing', 'When somebody is ill, I am more likely to bring them a meal than to pray with them.', -1, 'rev'],
+  ['healing', 'More than once, someone I prayed for has recovered when the people around them did not expect it.', 1, 'did'],
 
-  ['mercy', 'I keep my distance from people in distress until I know how to help.', -1],
-  ['mercy', 'When somebody starts crying, I move closer rather than give them room.', 1],
-  ['mercy', 'People turn to me when they are at their lowest, even people I do not know well.', 1],
+  ['leading', 'People have put me in charge of things I did not ask to run.', 1, 'others'],
+  ['leading', 'When a group has no clear direction, I am usually the one who sets it.', 1, 'did'],
+  ['leading', 'I would rather be told where we are going than be the one to decide it.', -1, 'rev'],
 
-  ['knowledge', 'In a discussion I end up quoting the part of the Bible people were trying to remember.', 1],
-  ['knowledge', 'People have asked me how I knew something about them that nobody had told me.', 1],
-  ['knowledge', 'When a question about what Christians believe comes up, I am the one asking rather than answering.', -1],
+  ['mercy', 'I keep my distance from people in distress until I know how to help.', -1, 'rev'],
+  ['mercy', 'When somebody starts crying, I move closer rather than give them room.', 1, 'did'],
+  ['mercy', 'People turn to me when they are at their lowest, even people I do not know well.', 1, 'others'],
 
-  ['administration', 'When plans are loose, I write them down and send them round without being asked.', 1],
-  ['administration', 'When a group makes plans, I leave it to someone else to keep the list.', -1],
-  ['administration', 'People send me the details because they know I will keep track of them.', 1],
+  ['knowledge', 'In a discussion I end up quoting the part of the Bible people were trying to remember.', 1, 'did'],
+  ['knowledge', 'People have asked me how I knew something about them that nobody had told me.', 1, 'others'],
+  ['knowledge', 'When a question about what Christians believe comes up, I am the one asking rather than answering.', -1, 'rev'],
 
-  ['wisdom', 'When two good options are on the table, people ask me which one to take.', 1],
-  ['wisdom', 'In an argument I end up saying what I think the disagreement is actually about.', 1],
-  ['wisdom', 'When a friend asks my advice, I tell them what I would do myself.', -1],
+  ['administration', 'When plans are loose, I write them down and send them round without being asked.', 1, 'did'],
+  ['administration', 'When a group makes plans, I leave it to someone else to keep the list.', -1, 'rev'],
+  ['administration', 'People send me the details because they know I will keep track of them.', 1, 'others'],
 
-  ['miracles', 'People who were there have used the word miracle for something that happened when I prayed.', 1],
-  ['miracles', 'Remarkable answers to prayer are things I hear about from others, not things I have been part of.', -1],
-  ['miracles', 'I have prayed for something the others there thought impossible, and it happened.', 1],
+  ['wisdom', 'When two good options are on the table, people ask me which one to take.', 1, 'others'],
+  ['wisdom', 'In an argument I end up saying what I think the disagreement is actually about.', 1, 'did'],
+  ['wisdom', 'When a friend asks my advice, I tell them what I would do myself.', -1, 'rev'],
 
-  ['discernment', 'I take a new idea as it sounds rather than look into where it came from.', -1],
-  ['discernment', 'I have stopped listening to a speaker or writer I liked because of what they taught about God.', 1],
-  ['discernment', 'I have raised a worry about something said to be from God, and the people I took it to later agreed.', 1],
+  ['miracles', 'People who were there have used the word miracle for something that happened when I prayed.', 1, 'others'],
+  ['miracles', 'Remarkable answers to prayer are things I hear about from others, not things I have been part of.', -1, 'rev'],
+  ['miracles', 'I have prayed for something the others there thought impossible, and it happened.', 1, 'did'],
 
-  ['faith', 'I keep telling people a thing will come right after they have stopped expecting it.', 1],
-  ['faith', 'When the odds look bad, I am among the first to say we should stop.', -1],
-  ['faith', 'When everyone else has given up on something, people ask me whether I still think it will happen.', 1],
+  ['discernment', 'I take a new idea as it sounds rather than look into where it came from.', -1, 'rev'],
+  ['discernment', 'I have stopped listening to a speaker or writer I liked because of what they taught about God.', 1, 'did'],
+  ['discernment', 'I have raised a worry about something said to be from God, and the people I took it to later agreed.', 1, 'others'],
 
-  ['prophecy', 'I leave it to others to say what they believe God is saying.', -1],
-  ['prophecy', 'People have told me that something I said to them was what God wanted them to hear.', 1],
-  ['prophecy', 'I have said something at church that I believed God had given me to say.', 1],
+  ['faith', 'I keep telling people a thing will come right after they have stopped expecting it.', 1, 'did'],
+  ['faith', 'When the odds look bad, I am among the first to say we should stop.', -1, 'rev'],
+  ['faith', 'When everyone else has given up on something, people ask me whether I still think it will happen.', 1, 'others'],
 
-  ['evangelism', 'I end up talking about God with people I have only just met.', 1],
-  ['evangelism', 'People who do not go to church ask me questions about God.', 1],
-  ['evangelism', 'I keep what I believe to myself unless somebody asks me directly.', -1],
+  ['prophecy', 'I leave it to others to say what they believe God is saying.', -1, 'rev'],
+  ['prophecy', 'People have told me that something I said to them was what God wanted them to hear.', 1, 'others'],
+  ['prophecy', 'I have said something at church that I believed God had given me to say.', 1, 'did'],
 
-  ['shepherding', 'I give people what they need at the time and let it end there.', -1],
-  ['shepherding', 'I keep following up with the same few people long after everybody else has moved on.', 1],
-  ['shepherding', 'People I helped years ago still come back to me when something goes wrong.', 1],
+  ['evangelism', 'I end up talking about God with people I have only just met.', 1, 'did'],
+  ['evangelism', 'People who do not go to church ask me questions about God.', 1, 'others'],
+  ['evangelism', 'I keep what I believe to myself unless somebody asks me directly.', -1, 'rev'],
 
-  ['tongues', 'Every word I have ever prayed was one I knew or had been taught.', -1],
-  ['tongues', 'I have prayed in words that belong to no language I know and that nobody taught me.', 1],
-  ['tongues', 'At church I have spoken in words from no language I know, and an interpretation was then given.', 1],
+  ['shepherding', 'Once I have helped someone through a hard patch, I rarely check in on them again.', -1, 'rev'],
+  ['shepherding', 'I keep following up with the same few people long after everybody else has moved on.', 1, 'did'],
+  ['shepherding', 'People I helped years ago still come back to me when something goes wrong.', 1, 'others'],
 
-  ['hospitality', 'I add a seat for whoever turns up rather than keep to the numbers I planned for.', 1],
-  ['hospitality', 'I would rather meet people somewhere out than have them in my home.', -1],
-  ['hospitality', 'When someone new turns up, they usually end up sitting with me.', 1],
-
-  ['interpretation', 'When someone speaks in a language nobody there knows, I have no idea what it means.', -1],
-  ['interpretation', 'People at church look to me for the meaning when someone speaks in a language nobody there knows.', 1],
-  ['interpretation', 'When someone has spoken in a language nobody there knew, I have told the others what I believed it meant.', 1]
+  ['hospitality', 'I often have people round for a meal, including people I have only just met.', 1, 'did'],
+  ['hospitality', 'I would rather meet people somewhere out than have them in my home.', -1, 'rev'],
+  ['hospitality', 'When someone new turns up, they usually end up sitting with me.', 1, 'others']
 ];
 
 const keys = groups.map(g => g.key);
@@ -901,27 +982,28 @@ const PER = 3;
 
 /**
  * The running order. A reader meets one statement at a time, and three in a row about the
- * same gift would announce the gift, so the instrument runs in three rounds of nineteen:
+ * same gift would announce the gift, so the instrument runs in three rounds of seventeen:
  * round r takes each gift's r-th statement, and each round walks the gifts from a different
- * start with a different stride (19 is prime, so every stride visits every gift once). No two
+ * start with a different stride (17 is prime, so every stride visits every gift once). No two
  * statements from one gift are ever adjacent, and the pairs a reader would read as one
  * question asked twice never sit side by side: prophecy with knowledge, wisdom, discernment
  * or encouraging; knowledge with wisdom, discernment or teaching; healing with miracles,
- * faith or mercy; miracles with faith or mercy; tongues with interpretation — and the nine
- * pairs the first edit kept apart. The last statement is not one of the six, so nobody
+ * faith or mercy; miracles with faith or mercy — and the nine pairs the first edit kept
+ * apart. The last statement is not one of the four disputed gifts, so nobody
  * finishes on the contested ground. engine-test.mjs asserts all of it.
  */
-const ROUNDS: Array<[start: number, stride: number]> = [[0, 1], [14, 7], [8, 12]];
+const ROUNDS: Array<[start: number, stride: number]> = [[0, 1], [1, 5], [4, 12]];
 
-const ordered: Array<[string, string, 1 | -1]> = ROUNDS.flatMap(([start, stride], r) =>
+const ordered: Array<[string, string, 1 | -1, Kind]> = ROUNDS.flatMap(([start, stride], r) =>
   keys.map((_, k) => RAW[((start + k * stride) % keys.length) * PER + r]!)
 );
 
-const items: QuizItem[] = ordered.map(([key, text, direction], i) => ({
+const items: QuizItem[] = ordered.map(([key, text, direction, kind], i) => ({
   n: i + 1,
   text,
   group: keys.indexOf(key),
-  direction
+  direction,
+  weight: WEIGHT[kind]
 }));
 
 /**
@@ -941,10 +1023,10 @@ export const giftsFrame = {
     'Scripture gives lists of gifts. It gives no test for finding which are yours. It says the ' +
     'Spirit gives them “to each one as He determines” (1 Corinthians 12:11), and that each ' +
     'is given “for the profit of all” (1 Corinthians 12:7). So this is a ' +
-    'conversation starter, not a verdict: fifty-seven statements cannot see your last ten ' +
+    'conversation starter, not a verdict: fifty-one statements cannot see your last ten ' +
     'years, and the people who have watched you serve can. If you know the lists you will ' +
-    'sometimes see which gift a statement is about, and with a few, such as tongues and ' +
-    'healing, there is no honest way to ask without showing it. That is one more reason to ' +
+    'sometimes see which gift a statement is about, and with a few, such as healing and ' +
+    'miracles, there is no honest way to ask without showing it. That is one more reason to ' +
     'take the result to your pastor or priest and to one or two people who have served ' +
     'alongside you, and ask them whether it is true. Catholic readers usually call the gifts ' +
     'in these lists charisms, and keep “the gifts of the Holy Spirit” for the seven that ' +
@@ -953,27 +1035,17 @@ export const giftsFrame = {
   introShort:
     'Scripture lists gifts and gives no test for finding which are yours; ask your pastor or priest and the people who have watched you serve.',
   result:
-    'This is where your answers pointed. It is not a measurement of what God has given you. ' +
-    'No one is summed up by one row of this page, the list here is not everything Scripture ' +
-    'names, and a self-report can be wrong in both directions, about what you avoid as much ' +
-    'as what you are good at. Some of the everyday patterns here are temperament as much as ' +
-    'gift, and these statements cannot tell the two apart. Where a statement asks what has ' +
-    'happened or what people said, this page does not say what any event was. Some rows ask ' +
-    'about habits and some ask whether a thing has ever happened; one occasion can fill a row ' +
-    'of the second kind, so the order of the rows is not an order of strength. The useful ' +
-    'step is not to believe this page. It is to take it to your pastor or priest, and to ' +
-    'somebody who has served alongside you, and ask whether it matches what they have seen.',
+    'This is where your answers pointed, not a measure of what God has given you. It is here ' +
+    'to show you something you may not have noticed. Take it to your pastor or priest, or to ' +
+    'someone who has served beside you, and ask whether it matches what they have seen.',
   /** What a low row means. Must print wherever a gift is shown below the line. */
   low:
-    '“As each has received a gift, employ it in serving one another” (1 Peter 4:10). A gift ' +
-    'low on this page is something these statements did not find, not a verdict on you. And ' +
-    'some of these are asked of everyone: “Be hospitable to one another without grumbling” ' +
-    '(1 Peter 4:9) comes one verse earlier.',
+    'A low row is something these statements did not find, not a verdict on you.',
   /** Replaces the strategy's flat-state summary for this quiz. */
   flat:
     '“As each has received a gift, employ it in serving one another” (1 Peter 4:10). ' +
-    'Fifty-seven statements found nothing standing out. That is a fact about the ' +
-    'statements, not about you; ask the people who have watched you serve.',
+    'None of your answers leaned far enough toward one gift to name it. Ask the people who ' +
+    'have watched you serve.',
   /** A headline frame, so the largest type on the page is not a bare one-word verdict. */
   headlineLead: 'Your answers pointed most to',
   /*
@@ -996,19 +1068,9 @@ export const giftsFrame = {
    * reads truly in both places, which is why it is one string and not two.
    */
   disputed:
-    'Christians reading the same passages disagree about whether prophecy, healing, miracles, ' +
-    'tongues, their interpretation and the word of knowledge are given today. Paul names all ' +
-    'six in one sentence with the word of wisdom, faith and the discerning of spirits ' +
-    '(1 Corinthians 12:8-10), and Christians disagree about which of the gifts in that ' +
-    'sentence God still gives. Those who believe they are given differ on how eagerly to seek ' +
-    'them: Pentecostal and charismatic Christians seek them openly, while Catholic and ' +
-    'Orthodox teaching receives them with gratitude and warns against seeking them rashly. ' +
-    'This page takes no side: it quotes each passage, asks what has happened and what people ' +
-    'have said, and does not say what any of it was, whether a miracle, a healing, a word from ' +
-    'God or none of these. A reader who believes these gifts are not given today can answer ' +
-    'every statement truthfully, and a row can still fill for that reader, because the ' +
-    'statements ask what happened and not what it was. A high row does not say that you have ' +
-    'that gift, and a low row does not say that you have not.',
+    'Christians disagree about whether prophecy, healing, miracles and the word of knowledge ' +
+    'are given today. This test takes no side: it asks what has happened and what people have ' +
+    'said, not what any of it was.',
   /** Link this to the Compass axis with groupHref(): its slug is `gifts`, its key is `spirit`. */
   disputedLink:
     'The Theology Compass sets that disagreement out in both sides’ own words.',
@@ -1018,9 +1080,7 @@ export const giftsFrame = {
    * six of the disputed rows, which is a fact about the keying and not about the reader.
    */
   scale:
-    'Agree means the sentence is true of you as it is written; disagree means it is not. If a ' +
-    'sentence says a thing has happened and it never has, disagree is an honest answer. Some ' +
-    'sentences say a thing has not happened, so read each one to the end.',
+    'If a sentence says a thing has happened and it never has, disagree is an honest answer.',
   /*
    * The sentence that travels with the six names, on the page and on the card alike.
    *
@@ -1030,9 +1090,9 @@ export const giftsFrame = {
    * row: it is a sentence under the headline, and nothing is attached to a gift.
    */
   sixResult:
-    'Christians disagree about whether prophecy, healing, miracles, tongues, interpreting ' +
-    'tongues and the word of knowledge are given today. A high row records answers about what ' +
-    'has happened and what people have said. It does not say what any of it was.',
+    'Christians disagree about whether prophecy, healing, miracles and the word of knowledge ' +
+    'are given today. A high row records what has happened and what people have said, not ' +
+    'what any of it was.',
   sixShare:
     'Christians disagree about whether some of these gifts are given today. These rows record ' +
     'answers about what has happened and what people said, not what any of it was.'
@@ -1041,21 +1101,21 @@ export const giftsFrame = {
 export const spiritualGifts: Quiz = {
   slug: 'spiritual-gifts',
   title: 'What are your spiritual gifts?',
-  tagline: 'Fifty-seven statements, nineteen gifts, and a conversation to have afterwards.',
+  tagline: 'Fifty-one statements, seventeen gifts, and a conversation to have afterwards.',
   menu: 'Which of the New Testament’s gifts are yours?',
   description:
-    'Nineteen gifts the New Testament names, prophecy, healing and tongues among them, each ' +
-    'in its passage’s own words. Fifty-seven plain statements about what you do and what has ' +
+    'Seventeen gifts the New Testament names, prophecy, healing and miracles among them, each ' +
+    'in its passage’s own words. Fifty-one plain statements about what you do and what has ' +
     'happened. Scripture gives no test for gifts, so take the result to your pastor or priest ' +
     'and to people who know you.',
   /* The third sentence of the search line is said again, in the quiz's own words, in the
      note directly under the band (notes.introShort). Once is enough. */
   intro:
-    'Nineteen gifts the New Testament names, prophecy, healing and tongues among them, each ' +
-    'in its passage’s own words. Fifty-seven plain statements about what you do and what has ' +
+    'Seventeen gifts the New Testament names, prophecy, healing and miracles among them, each ' +
+    'in its passage’s own words. Fifty-one plain statements about what you do and what has ' +
     'happened.',
   icon: 'scroll',
-  minutes: 8,
+  minutes: 10,
   status: 'live',
   /*
    * Kept, and no longer printed anywhere: only a quiz with status 'draft' prints this. It
@@ -1069,6 +1129,7 @@ export const spiritualGifts: Quiz = {
     'English Bible British Edition. Treat the result as a conversation starter, not a verdict.',
   items,
   groups,
+  pageOnlyGroups,
   // The highest-category strategy ranks the groups themselves; it reads no outcomes.
   outcomes: [],
   strategy: category,
@@ -1076,26 +1137,39 @@ export const spiritualGifts: Quiz = {
   groupNoun: 'gift',
   groupNounPlural: 'gifts',
   config: {
-    // Three items per group: raw runs -6..+6, so 13 reachable scores per group. The registry
-    // checks this (items * 4 + 1). 13^19 is about 1.5e21, well past the safe-integer limit,
-    // so makeCodec hands this quiz the wide (BigInt) codec; the Compass, at 13^6, still gets
-    // the narrow one and its live permalinks are produced exactly as before.
-    radix: 13,
-    // Points a gift must clear above no-net-agreement before it is named at all. Each gift has
-    // two forward statements and one reverse, so a reader who agrees with everything scores 67
-    // on all nineteen. At the sins quiz's floor of 10 that reader would be handed two gifts
-    // chosen by the alphabet. At 17 they are told nothing stood out, which is true, and a gift
-    // is named from 75 up: net agreement worth three of the six available points. Every row
-    // named must clear it ITSELF, not merely sit within a rung of one that does.
-    namingFloor: 17,
-    // One rung is the difference between "agree" and "strongly agree" on a single statement.
-    // With nineteen categories that is too little to separate a first from a second, so two
-    // gifts one rung apart are reported as level.
-    tieSteps: 1
+    // Three weighted statements a gift, 6 + 5 + 4 = 15 units: raw runs -30..+30, so 61
+    // reachable scores a gift, a sixtieth apart (registry.ts checks 15 * 4 + 1). 61^17 is far
+    // past the safe-integer limit, so makeCodec hands this quiz the wide (BigInt) codec.
+    radix: 61,
+    // Named from 75 up, as before the weights: net agreement worth half of everything a gift's
+    // three statements can give. Agreeing with every statement scores 62 on every gift, and
+    // strongly agreeing with every one 73, so neither names anything. Every row named must
+    // clear it itself.
+    namingFloor: 24,
+    // Level means the same number (2026-09-25): the numbers are printed now, and two rows a
+    // point apart cannot be "level" beside two different numbers.
+    tieSteps: 0
   },
   shareTitle: 'Where my answers pointed: spiritual gifts',
   codePrefix: 'SG',
   shortLinks: true,
+  // Before 2026-09-25: nineteen gifts, three unweighted statements each (radix 13). Those
+  // codes are sixteen characters and today's twenty-two, so the two cannot be confused; an
+  // old link, short link or saved result opens with tongues and interpreting dropped.
+  legacyCodes: [{
+    prefix: 'SG',
+    radix: 13,
+    keys: [
+      'serving', 'teaching', 'encouraging', 'giving', 'healing', 'leading', 'mercy', 'knowledge',
+      'administration', 'wisdom', 'miracles', 'discernment', 'faith', 'prophecy', 'evangelism',
+      'shepherding', 'tongues', 'hospitality', 'interpretation'
+    ]
+  }],
+  // The big letters are the gift ("Evangelism and the word of knowledge"), with "Your answers
+  // pointed most to" above them, on the page, its title, the share text and /me/ (leadFor).
+  headlineLeadsWithOutcome: true,
+  // Each row opens to its gift's short answer, as the sins' rows do.
+  rankRowsOpen: true,
 
   /**
    * The honest frame, in the engine's generic slots: the intro before a reader starts, the
@@ -1128,7 +1202,7 @@ export const spiritualGifts: Quiz = {
    * way, and never when none is named. Nothing is attached to a row anywhere.
    */
   groupNote: {
-    groups: ['prophecy', 'healing', 'miracles', 'tongues', 'interpretation', 'knowledge'],
+    groups: ['prophecy', 'healing', 'miracles', 'knowledge'],
     result: giftsFrame.sixResult,
     share: giftsFrame.sixShare
   },
@@ -1150,6 +1224,10 @@ export const spiritualGifts: Quiz = {
     },
     headlineLead: giftsFrame.headlineLead,
     flat: giftsFrame.flat,
+    // Two names at most in the big letters; a crowd level with them is counted and listed.
+    headlineMost: 2,
+    // Each row's number beside its words: the owner asked for numbers that rarely tie.
+    showNumbers: true,
     // The top three only. The bottom of a gifts ranking is the part a reader would least
     // want pasted into a group chat, and the caveat that travels with a low row on the page
     // cannot travel with a bar in a text message.

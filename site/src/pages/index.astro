@@ -1,4 +1,5 @@
 ---
+import { countFact } from '../lib/quiz-count';
 /**
  * The home page, planned as one piece (2026-09-20).
  *
@@ -140,8 +141,8 @@ const jsonLd = {
     */}
     <div class="hm-rail" data-rail>
       <div class="hm-rail-track" data-rail-track tabindex="0" role="group" aria-label="More quizzes">
-        {/* The newest quiz leads the rail, straight after the Compass: the Christian Personality
-            Test (2026-09-24). It is the one room in colour: its picture is the eight paintings its
+        {/* The Christian Personality Test leads the rail, straight after the Compass, and stays
+            first (2026-09-24; pinned there by the owner, 2026-09-25). It is the one room in colour: its picture is the eight paintings its
             eight types wear (lib/art.ts), not an engraving, and printing them sepia would hide
             what they are. Title only, as on every room; its facts are its minutes and its
             questions, counted off the test's own item list. */}
@@ -159,8 +160,23 @@ const jsonLd = {
           </a>
         )}
 
-        {/* Then Which early Christian
-            thinks like you? (2026-09-23), with the people it can name counted off the registry.
+        {/* Pinned second, with the Personality Test first (the owner, 2026-09-25): these two lead
+            the rail whatever is added later; after them the rail runs newest to oldest. */}
+        {figures && (
+          <a class="room room--figures" href={quizHref(figures)}>
+            <img src="/img/dore-moses.jpg" alt="Gustave Doré’s engraving of Moses breaking the tablets of the law" loading="lazy" decoding="async" width="820" height="1029" />
+            <div class="room-body">
+              <h3>{figures.title}</h3>
+              <ul class="room-facts">
+                <li><Icon name="clock" size={13} /> {figures.minutes} min</li>
+                <li>{countFact(figures)}</li>
+              </ul>
+              <span class="room-go">Start <Icon name="arrow" size={14} /></span>
+            </div>
+          </a>
+        )}
+
+        {/* Then newest to oldest: Which early Christian thinks like you? (2026-09-23), with the people it can name counted off the registry.
             No line under any rail title (the owner, 2026-09-23): a blurb pushed the title up into
             the brighter part of the plate, and the quiz's own page says it better. Dürer's Jerome,
             the plate lib/art.ts pairs with it, is an engraving of the same family as the Doré
@@ -172,7 +188,7 @@ const jsonLd = {
               <h3>{early.title}</h3>
               <ul class="room-facts">
                 <li><Icon name="clock" size={13} /> {early.minutes} min</li>
-                <li>{early.outcomes.length} early Christians</li>
+                <li>{countFact(early)}</li>
               </ul>
               <span class="room-go">Start <Icon name="arrow" size={14} /></span>
             </div>
@@ -189,35 +205,7 @@ const jsonLd = {
               <h3>{psalm.title}</h3>
               <ul class="room-facts">
                 <li><Icon name="clock" size={13} /> {psalm.minutes} min</li>
-                <li>{SITUATIONS.length} situations</li>
-              </ul>
-              <span class="room-go">Start <Icon name="arrow" size={14} /></span>
-            </div>
-          </a>
-        )}
-
-        {figures && (
-          <a class="room room--figures" href={quizHref(figures)}>
-            <img src="/img/dore-moses.jpg" alt="Gustave Doré’s engraving of Moses breaking the tablets of the law" loading="lazy" decoding="async" width="820" height="1029" />
-            <div class="room-body">
-              <h3>{figures.title}</h3>
-              <ul class="room-facts">
-                <li><Icon name="clock" size={13} /> {figures.minutes} min</li>
-                <li>{figures.outcomes.length} figures</li>
-              </ul>
-              <span class="room-go">Start <Icon name="arrow" size={14} /></span>
-            </div>
-          </a>
-        )}
-
-        {gifts && (
-          <a class="room room--gifts" href={quizHref(gifts)}>
-            <img src="/img/dore-paul.jpg" alt="Gustave Doré’s engraving of Paul preaching to a gathered church at Thessalonica" loading="lazy" decoding="async" width="565" height="696" />
-            <div class="room-body">
-              <h3>{gifts.title}</h3>
-              <ul class="room-facts">
-                <li><Icon name="clock" size={13} /> {gifts.minutes} min</li>
-                <li>{gifts.items.length} statements</li>
+                <li>{countFact(psalm)}</li>
               </ul>
               <span class="room-go">Start <Icon name="arrow" size={14} /></span>
             </div>
@@ -232,7 +220,21 @@ const jsonLd = {
               <h3>{sins.title}</h3>
               <ul class="room-facts">
                 <li><Icon name="clock" size={13} /> {sins.minutes} min</li>
-                <li>{sins.items.length} statements</li>
+                <li>{countFact(sins)}</li>
+              </ul>
+              <span class="room-go">Start <Icon name="arrow" size={14} /></span>
+            </div>
+          </a>
+        )}
+
+        {gifts && (
+          <a class="room room--gifts" href={quizHref(gifts)}>
+            <img src="/img/dore-paul.jpg" alt="Gustave Doré’s engraving of Paul preaching to a gathered church at Thessalonica" loading="lazy" decoding="async" width="565" height="696" />
+            <div class="room-body">
+              <h3>{gifts.title}</h3>
+              <ul class="room-facts">
+                <li><Icon name="clock" size={13} /> {gifts.minutes} min</li>
+                <li>{countFact(gifts)}</li>
               </ul>
               <span class="room-go">Start <Icon name="arrow" size={14} /></span>
             </div>

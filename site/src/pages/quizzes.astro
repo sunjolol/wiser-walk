@@ -1,4 +1,5 @@
 ---
+import { countFact } from '../lib/quiz-count';
 /**
  * The quiz hub, recomposed for the dawn pass (2026-09-21).
  *
@@ -54,14 +55,6 @@ const giftsQuiz = getQuiz('spiritual-gifts');
  * a result can print, including the ones listed beside the one you get, so "78 psalms" would
  * promise a spread of results it does not have.
  */
-const countFact = (q: Quiz): string =>
-  q.strategy.shape === 'reading'
-    ? `${SITUATIONS.length} situations`
-    : q.outcomes.length
-      ? `${q.outcomes.length} ${outcomeNounPlural(q)}`
-      : q.groupNounPlural
-        ? `${q.groups.length} ${groupNounPlural(q)}`
-        : `${q.items.length} statements`;
 
 /** An ink per quiz, so no two rooms read alike: the home page's, kept the same on purpose. */
 const INK: Record<string, string> = {

@@ -50,8 +50,17 @@ await build({
   target: 'node18',
   logLevel: 'silent'
 });
-const { isUniformSheet, centresUniformSheets, groupNoteFor, resultNotes } =
+const { isUniformSheet, centresUniformSheets, groupNoteFor, resultNotes, leadFor } =
   await import(pathToFileURL(OUT_TYPES).href);
+
+// The codec on its own, to write codes in an older shape of a quiz (12c: old gifts links).
+const OUT_CODEC = resolve(ROOT, 'node_modules/.engine-test-codec.mjs');
+await build({
+  entryPoints: [resolve(ROOT, 'src/lib/engine/codec.ts')],
+  outfile: OUT_CODEC, bundle: true, format: 'esm', platform: 'node', target: 'node18', logLevel: 'silent'
+});
+const { makeCodec } = await import(pathToFileURL(OUT_CODEC).href);
+rmSync(OUT_CODEC, { force: true });
 
 /*
  * The Christian Personality Test's strategy, bundled on its own like the other shapes' (section 20
@@ -883,15 +892,32 @@ console.log('12. what are your spiritual gifts?');
   }
 }
 
-// --------------------------------- 12b. nineteen gifts: the instrument's own shape
-console.log('12b. nineteen gifts, fifty-seven statements');
+// --------------------------------- 12b. seventeen gifts: the instrument's own shape
+console.log('12b. seventeen gifts, fifty-one statements');
 {
   const sg = getQuiz('spiritual-gifts');
   const keyOf = i => sg.groups[sg.items[i].group].key;
 
-  if (sg.groups.length !== 19) fail(`expected 19 gifts, got ${sg.groups.length}`);
-  else if (sg.items.length !== 57) fail(`expected 57 statements, got ${sg.items.length}`);
-  else ok('19 gifts, 57 statements');
+  if (sg.groups.length !== 17) fail(`expected 17 gifts, got ${sg.groups.length}`);
+  else if (sg.items.length !== 51) fail(`expected 51 statements, got ${sg.items.length}`);
+  else ok('17 gifts, 51 statements');
+
+  // Tongues and interpreting tongues left the test on 2026-09-25 (the owner's call) and kept
+  // their pages: they are page-only groups, never scored, never asked about.
+  const pageOnly = (sg.pageOnlyGroups ?? []).map(g => g.key).sort().join(',');
+  const asked = sg.items.some(it => /tongue|language nobody|no language I know/i.test(it.text));
+  if (pageOnly !== 'interpretation,tongues') fail('page-only gifts: ' + pageOnly);
+  else if (sg.groups.some(g => g.key === 'tongues' || g.key === 'interpretation')) fail('tongues is still scored');
+  else if (asked) fail('a statement still asks about tongues');
+  else ok('tongues and interpreting tongues keep their pages and are neither scored nor asked about');
+
+  // Weighted: what others bring you 6, what you do 5, the reverse-worded one 4, on every gift.
+  const badWeights = sg.groups.filter((_, i) => {
+    const w = sg.items.filter(it => it.group === i).map(it => `${it.direction}:${it.weight}`).sort().join(',');
+    return w !== '-1:4,1:5,1:6';
+  });
+  if (badWeights.length) fail('gifts not weighted 6/5/4: ' + badWeights.map(g => g.key).join(','));
+  else ok('every gift weighs its statements 6, 5 and 4 (the reverse-worded one least)');
 
   // Three each, one of them reverse-keyed. Two reverse items on one gift would score the
   // reader's caution; none would score their agreeableness.
@@ -924,8 +950,7 @@ console.log('12b. nineteen gifts, fifty-seven statements');
     ['prophecy', 'encouraging'],
     ['knowledge', 'wisdom'], ['knowledge', 'discernment'], ['knowledge', 'teaching'],
     ['healing', 'miracles'], ['healing', 'faith'], ['healing', 'mercy'],
-    ['miracles', 'faith'], ['miracles', 'mercy'],
-    ['tongues', 'interpretation']
+    ['miracles', 'faith'], ['miracles', 'mercy']
   ];
   const banned = new Set(NEVER_ADJACENT.flatMap(([a, b]) => [`${a}|${b}`, `${b}|${a}`]));
   let sameGift = 0, nearPair = [];
@@ -941,8 +966,8 @@ console.log('12b. nineteen gifts, fifty-seven statements');
   // The reader's last impression is not the contested ground.
   const SIX = sg.groupNote.groups;
   const last = keyOf(sg.items.length - 1);
-  if (SIX.includes(last)) fail(`the last statement is ${last}, one of the six`);
-  else ok(`the last statement is ${last}, not one of the six`);
+  if (SIX.includes(last)) fail(`the last statement is ${last}, one of the disputed gifts`);
+  else ok(`the last statement is ${last}, not one of the ${SIX.length} disputed gifts`);
 
   /*
    * NOTHING marks the six out. No badge, no chip, no grouping, no second-class placement —
@@ -956,9 +981,9 @@ console.log('12b. nineteen gifts, fifty-seven statements');
   const marked = sg.groups.filter(g => shape(g) !== plain);
   if (marked.length) fail('gifts carrying a field the other rows do not: ' +
                           marked.map(g => `${g.key} (${shape(g)})`).join('; '));
-  else ok(`all 19 gifts carry the same fields: ${plain}`);
+  else ok(`all ${sg.groups.length} gifts carry the same fields: ${plain}`);
 
-  const headed = sg.groups.filter(g => g.actsHeading).map(g => g.key).sort();
+  const headed = [...sg.groups, ...(sg.pageOnlyGroups ?? [])].filter(g => g.actsHeading).map(g => g.key).sort();
   if (headed.join(',') !== 'interpretation,knowledge') {
     fail('the acts heading is set on: ' + headed.join(',') + ' (expected knowledge and interpretation)');
   } else {
@@ -969,8 +994,8 @@ console.log('12b. nineteen gifts, fifty-seven statements');
   }
 }
 
-// ------------------------- 12c. nineteen gifts at radix 13: the wide codec
-console.log('12c. the wide codec carries nineteen gifts');
+// ------------------------- 12c. seventeen gifts at radix 61: the wide codec
+console.log('12c. the wide codec carries seventeen gifts, and old codes still open');
 {
   const sg = getQuiz('spiritual-gifts');
   const steps = sg.config.radix - 1;
@@ -980,8 +1005,8 @@ console.log('12c. the wide codec carries nineteen gifts');
   // narrow codec's arithmetic would silently drop the low digits — which here means the
   // last few gifts of somebody's result — so this quiz must be on the BigInt codec.
   if (Number.isSafeInteger(Math.pow(sg.config.radix, sg.groups.length))) {
-    fail('13^19 is a safe integer? then this test proves nothing');
-  } else ok('13^19 is past the safe-integer limit, so this quiz needs the wide codec');
+    fail('61^17 is a safe integer? then this test proves nothing');
+  } else ok('61^17 is past the safe-integer limit, so this quiz needs the wide codec');
 
   // Every reachable value in every slot, walked so that no two slots hold the same value.
   let bad = 0, n = 0;
@@ -1006,9 +1031,25 @@ console.log('12c. the wide codec carries nineteen gifts');
   if (cb === ct) fail('two sheets differing only on the last gift encode to the same code');
   else if (decodeFor(sg, ct).join(',') !== tail.join(',')) fail('the last gift did not survive the round trip');
   else ok(`the last gift survives: ${cb} != ${ct}`);
-  if (!bad) ok(`${n} nineteen-gift codes round-trip exactly (length ${cb.length}, prefix ${sg.codePrefix})`);
+  if (!bad) ok(`${n} seventeen-gift codes round-trip exactly (length ${cb.length}, prefix ${sg.codePrefix})`);
 
-  // Junk of exactly the right length must 404, not invent nineteen scores. A wrong URL that
+  /*
+   * A code from before 2026-09-25 (nineteen gifts, radix 13, sixteen characters) still opens:
+   * links, short links and saved results. Tongues and interpreting drop out and every other
+   * gift keeps its value exactly, because a twelfth of the range is five sixtieths.
+   */
+  const OLD = sg.legacyCodes[0];
+  const oldCodec = makeCodec(OLD.radix, OLD.keys.length, OLD.prefix);
+  const oldValues = OLD.keys.map((_, i) => Math.round(((i % 13) * 100) / 12));
+  const oldCode = oldCodec.encode(oldValues);
+  const opened = decodeFor(sg, oldCode);
+  const want = sg.groups.map(g => oldValues[OLD.keys.indexOf(g.key)]);
+  if (oldCode.length === cb.length) fail('an old code is as long as a new one; they could be confused');
+  else if (!opened || opened.join(',') !== want.join(',')) fail(`an old code opened as ${opened} not ${want}`);
+  else if (encodeFor(sg, opened) && decodeFor(sg, encodeFor(sg, opened)).join(',') !== want.join(',')) fail('an old result does not re-encode');
+  else ok(`an old ${oldCode.length}-character code opens (${oldCode}), tongues and interpreting dropped, the rest exact`);
+
+  // Junk of exactly the right length must 404, not invent seventeen scores. A wrong URL that
   // decodes is worse than a wrong URL that fails, because the reader cannot tell.
   const len = cb.length;
   const body = len - sg.codePrefix.length;
@@ -1057,32 +1098,32 @@ console.log('12d. what is named, and what travels with the name');
    * named beside a 75 is the keying being named, not the reader. This is the one the owner
    * was told about tongues: private use alone is +2, +2, -2, which is 67.
    */
-  const near = sg.groups.map((_, i) => (i === idx('serving') ? 75 : i === idx('tongues') ? 67 : 50));
+  const near = sg.groups.map((_, i) => (i === idx('serving') ? 75 : i === idx('prophecy') ? 67 : 50));
   const nearView = resultFor(sg, near);
   if (nearView.named.join(',') !== 'serving') {
     fail('a 67 was named beside a 75: ' + nearView.named.join(','));
   } else ok('a row at 67 is not named jointly with a leader at 75: "' + nearView.headline + '"');
 
-  // ...and the reader who agreed with all fifty-seven is told nothing stood out, which is
-  // true: every row of that sheet is the same 67.
+  // ...and the reader who agreed with all of them is told nothing stood out, which is true:
+  // every row of that sheet is the same number, under the floor.
   const agreed = resultFor(sg, scoreQuiz(sg, sg.items.map(() => 2)));
   if (agreed.state !== 'flat') fail('agreeing with everything gave state ' + agreed.state);
   else if (agreed.named.length) fail('agreeing with everything named ' + agreed.named.join(','));
-  else ok('a reader who agrees with all 57 is flat: "' + agreed.headline + '"');
+  else ok(`a reader who agrees with all ${sg.items.length} is flat: "` + agreed.headline + '"');
 
   // ---- the sentence travels once when one of the six leads
-  const tv = scoreQuiz(sg, max(['tongues']));
-  const tongues = resultFor(sg, tv);
-  if (tongues.named.join(',') !== 'tongues') fail('a tongues sheet named ' + tongues.named.join(','));
-  else if (resultNotes(sg, tongues).length) fail('a gifts result carried an outcome note');
-  else if (groupNoteFor(sg, tongues.named, 'result').join('') !== noteResult) {
-    fail('tongues leading did not carry the sentence');
+  const tv = scoreQuiz(sg, max(['prophecy']));
+  const prophecy = resultFor(sg, tv);
+  if (prophecy.named.join(',') !== 'prophecy') fail('a prophecy sheet named ' + prophecy.named.join(','));
+  else if (resultNotes(sg, prophecy).length) fail('a gifts result carried an outcome note');
+  else if (groupNoteFor(sg, prophecy.named, 'result').join('') !== noteResult) {
+    fail('prophecy leading did not carry the sentence');
   } else if (countIn(share(tv), noteShare) !== 1) {
     fail('the share text did not carry the sentence once:\n' + share(tv));
-  } else ok('tongues leading: the sentence travels once, on the page and in the share text');
+  } else ok('prophecy leading: the sentence travels once, on the page and in the share text');
 
   // ---- once, not twice, when two of the six come out level
-  const pv = scoreQuiz(sg, max(['tongues', 'healing']));
+  const pv = scoreQuiz(sg, max(['prophecy', 'healing']));
   const pair = resultFor(sg, pv);
   if (pair.state !== 'tie' || pair.named.length !== 2) {
     fail(`two of the six gave ${pair.state}, ${pair.named.length} named`);
@@ -1482,7 +1523,7 @@ console.log('15. a sheet with no variation in it');
   else ok(`the centred code ${code} round-trips and pairs for /c/`);
 }
 
-// --------------------------------- 16. level categories: name them all, up to four
+// --------------------------------- 16. level categories: the sins' rule and the gifts'
 console.log('16. a unipolar tie names every category inside the margin');
 {
   const sins = getQuiz('seven-deadly-sins');
@@ -1493,56 +1534,69 @@ console.log('16. a unipolar tie names every category inside the margin');
     keys.includes(quiz.groups[it.group].key) ? (it.direction === 1 ? 2 : -2) : 0);
   const nameOf = (quiz, keys) =>
     keys.map(k => quiz.groups.find(g => g.key === k).name).sort((a, b) => a.localeCompare(b));
+  const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
 
-  // Two, word for word as it read before: the wording of the commonest tie must not move.
+  // The sins: two, word for word as it read before; five is still the flat state.
   const two = resultFor(sins, scoreQuiz(sins, max(sins, ['pride', 'envy'])));
   if (two.state !== 'tie') fail('two level categories gave state ' + two.state);
   else if (two.headline !== 'Envy and pride') fail('two-way headline: ' + two.headline);
   else if (two.summary !== 'Two came out level: envy and pride.') fail('two-way summary: ' + two.summary);
-  else ok(`two level: "${two.headline}" / "${two.summary}"`);
+  else ok(`sins, two level: "${two.headline}" / "${two.summary}"`);
+  const sins5 = resultFor(sins, scoreQuiz(sins, max(sins, ['pride', 'envy', 'wrath', 'sloth', 'greed'])));
+  if (sins5.state !== 'flat') fail('five level sins gave state ' + sins5.state);
+  else ok('sins, five level: still the flat state (their older rule)');
 
-  // Three. The old rule cut this to two and let localeCompare decide which two.
+  /*
+   * The gifts (unipolarCopy.headlineMost = 2, the owner, 2026-09-25): two names at most in the
+   * big letters, the rest counted there and named underneath, and a crowd at the top is never
+   * "no single one stands out".
+   */
+  const g2 = resultFor(sg, scoreQuiz(sg, max(sg, ['serving', 'teaching'])));
+  const n2 = nameOf(sg, ['serving', 'teaching']);
+  if (g2.state !== 'tie' || g2.named.length !== 2) fail(`gifts, two level gave ${g2.state}, ${g2.named.length}`);
+  else if (g2.headline !== cap(`${n2[0]} and ${n2[1]}`)) fail('gifts two-way headline: ' + g2.headline);
+  else if (g2.summary !== 'The two came out level at the top.') fail('gifts two-way summary: ' + g2.summary);
+  else ok(`gifts, two level: "${g2.headline}" / "${g2.summary}"`);
+
   const three = ['serving', 'teaching', 'mercy'];
   const v3 = resultFor(sg, scoreQuiz(sg, max(sg, three)));
   const n3 = nameOf(sg, three);
-  const want3 = `Three came out level: ${n3[0]}, ${n3[1]} and ${n3[2]}.`;
-  if (v3.state !== 'tie') fail('three level categories gave state ' + v3.state);
-  else if (v3.named.length !== 3) fail('three level named ' + v3.named.length + ': ' + v3.named.join(','));
-  else if (v3.summary !== want3) fail(`three-way summary: "${v3.summary}" not "${want3}"`);
-  else if (!n3.every(name => v3.headline.includes(name))) fail('three-way headline: ' + v3.headline);
-  else ok(`three level: "${v3.headline}" / "${v3.summary}"`);
+  if (v3.state !== 'tie' || v3.named.length !== 3) fail(`gifts, three level gave ${v3.state}, ${v3.named.length}`);
+  else if (v3.headline !== cap(`${n3[0]}, ${n3[1]} and 1 more`)) fail('gifts three-way headline: ' + v3.headline);
+  else if (v3.summary !== `Level with them: ${n3[2]}.`) fail('gifts three-way summary: ' + v3.summary);
+  else ok(`gifts, three level: "${v3.headline}" / "${v3.summary}"`);
 
-  // Four, the last size that still reads as a finding.
-  const four = ['serving', 'teaching', 'mercy', 'giving'];
-  const v4 = resultFor(sg, scoreQuiz(sg, max(sg, four)));
-  const n4 = nameOf(sg, four);
-  const want4 = `Four came out level: ${n4[0]}, ${n4[1]}, ${n4[2]} and ${n4[3]}.`;
-  if (v4.state !== 'tie' || v4.named.length !== 4) fail(`four level gave ${v4.state}, ${v4.named.length} named`);
-  else if (v4.summary !== want4) fail(`four-way summary: "${v4.summary}" not "${want4}"`);
-  else ok(`four level: "${v4.summary}"`);
+  const six = ['serving', 'teaching', 'mercy', 'giving', 'leading', 'faith'];
+  const v6 = resultFor(sg, scoreQuiz(sg, max(sg, six)));
+  if (v6.state !== 'tie' || v6.named.length !== 6) fail(`gifts, six level gave ${v6.state}, ${v6.named.length}`);
+  else if (!v6.headline.endsWith(' and 4 more')) fail('gifts six-way headline: ' + v6.headline);
+  else if (v6.summary !== '4 more came out level with them. The bars below show them all.') fail('gifts six-way summary: ' + v6.summary);
+  else ok(`gifts, six level: "${v6.headline}" / "${v6.summary}"`);
 
-  // Five is not a verdict. It is the flat state, in the flat state's own words.
-  const five = ['serving', 'teaching', 'mercy', 'giving', 'leading'];
-  const v5 = resultFor(sg, scoreQuiz(sg, max(sg, five)));
-  if (v5.state !== 'flat') fail('five level categories gave state ' + v5.state);
-  else if (v5.named.length) fail('a flat result named ' + v5.named.join(', '));
-  else if (v5.headline !== 'No single one stands out') fail('five-way headline: ' + v5.headline);
-  else if (v5.summary !== sg.unipolarCopy.flat) fail('five-way summary is not the quiz\'s flat copy');
-  else ok('five level is the flat state: nothing stands out, nothing named');
-
-  // A clear leader is still a clear leader, and still one name.
+  // A clear leader: the name alone in the big letters; the quiz's lead goes above it (leadFor).
   const clear = resultFor(sg, scoreQuiz(sg, max(sg, ['hospitality'])));
-  const hosp = sg.groups.find(g => g.key === 'hospitality').name;
+  const lead = leadFor(sg, clear);
   if (clear.state !== 'clear') fail('one clear leader gave state ' + clear.state);
   else if (clear.named.join(',') !== 'hospitality') fail('a clear result named ' + clear.named.join(','));
-  else if (clear.headline !== `${sg.unipolarCopy.headlineLead} ${hosp}`) fail('clear headline: ' + clear.headline);
-  else ok(`one clear leader: "${clear.headline}"`);
+  else if (clear.headline !== 'Hospitality') fail('clear headline: ' + clear.headline);
+  else if (!lead || lead.line !== `${sg.unipolarCopy.headlineLead} hospitality`) fail('clear lead line: ' + lead?.line);
+  else ok(`gifts, one clear leader: "${clear.headline}", lead "${lead.line}"`);
 
-  // The stack emphasises exactly the rows the headline names, however many that is.
-  const counts = [[two, 2], [v3, 3], [v4, 4], [v5, 0], [clear, 1]];
+  // A weighted sheet rarely ties: one answer apart on one statement is one number apart.
+  const a = sg.items.map(it => (sg.groups[it.group].key === 'serving' ? (it.direction === 1 ? 1 : -1) : 0));
+  const b = a.map((v, i) => (sg.groups[sg.items[i].group].key === 'teaching' ? v : v));
+  const t = sg.items.findIndex(it => sg.groups[it.group].key === 'teaching' && it.weight === 6);
+  const u = sg.items.findIndex(it => sg.groups[it.group].key === 'teaching' && it.weight === 5);
+  b[t] = 1; const c = [...b]; c[t] = 0; c[u] = 1;
+  const vb = scoreQuiz(sg, b), vc = scoreQuiz(sg, c);
+  const ti = sg.groups.findIndex(g => g.key === 'teaching');
+  if (vb[ti] === vc[ti]) fail('agreeing with two different teaching statements gave the same number');
+  else ok(`one agreement with a different statement moves the number (${vb[ti]} vs ${vc[ti]})`);
+
+  const counts = [[two, 2], [g2, 2], [v3, 3], [v6, 6], [clear, 1]];
   const off = counts.filter(([v, want]) => v.named.length !== want);
   if (off.length) fail('named counts: ' + counts.map(([v, w]) => `${v.named.length}/${w}`).join(' '));
-  else ok('the view names 2, 3, 4, 0 and 1 rows to match its own headline');
+  else ok('the view names 2, 2, 3, 6 and 1 rows to match its own headline');
 }
 
 // ------------------------------------------ 17. the shelf: results kept on the device
@@ -2449,7 +2503,7 @@ console.log('20. the Christian Personality Test');
     if (q.shortLinks !== true) wrong.push('no short links');
     if (q.comparable !== false) wrong.push('comparable');
     if (q.hideOutcomeScore !== true) wrong.push('prints scores against people');
-    if (q.icon !== 'sparkle' || q.minutes !== 12) wrong.push(`icon ${q.icon}, ${q.minutes} min`);
+    if (q.icon !== 'sparkle' || q.minutes !== 15) wrong.push(`icon ${q.icon}, ${q.minutes} min`);
     if (q.items.length || q.groups.length) wrong.push('carries engine items or groups');
     if (q.outcomes.map(o => o.slug).join() !== TYPE_KEYS.join() || q.outcomes.some(o => o.name !== TYPES[o.slug].name)) wrong.push('outcomes are not the eight types');
     if (q.outcomeNoun !== 'type' || q.outcomeNounPlural !== 'types' || q.outcomePathBase !== 'personality-type') wrong.push('outcome words');

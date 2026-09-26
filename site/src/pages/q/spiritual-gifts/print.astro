@@ -3,12 +3,14 @@
  * The spiritual gifts test on paper.
  *
  * "Printable spiritual gifts test" is a real search, and what ranks for it is gated behind
- * an email address, sold, or a scan of a photocopy. This is the same 57 statements the quiz
+ * an email address, sold, or a scan of a photocopy. This is the same statements the quiz
  * asks, in the same order, with a five-box row beside each and a scoring key on the last
  * sheet, so a class, a small group or a church can run it with a pen. Nothing on it is a
  * second instrument: the statements, the gifts and the keying are read from the quiz's own
- * data, and the paper score orders the gifts exactly as the online one does (each statement
- * 0 to 4, reversed where the quiz keys it reversed, three statements a gift, 0 to 12).
+ * data. Paper adds each gift's three statements plainly (each 0 to 4, reversed where the quiz
+ * keys it reversed, 0 to 12); the online test weighs them (spiritual-gifts.ts, WEIGHT), which
+ * mostly breaks ties that paper leaves level. Weights are kept off paper on purpose: sums a
+ * class can do in their heads matter more there than a tie-break.
  *
  * It is a page, not a file: it prints from the browser's own print button, and on a screen
  * it reads as any other page here does. Never call it a PDF.
@@ -34,9 +36,9 @@ const key = groups.map((g, gi) => ({
   numbers: items.filter(i => i.group === gi).map(i => ({ n: i.n, reversed: i.direction === -1 }))
 }));
 
-const title = 'Printable spiritual gifts test: all 19 gifts, with the scoring key';
+const title = `Printable spiritual gifts test: all ${groups.length} gifts, with the scoring key`;
 const description =
-  'The 57-statement spiritual gifts test on paper, free, with a scoring key for all 19 gifts. Print it for a class, a small group or a church.';
+  `The ${items.length}-statement spiritual gifts test on paper, free, with a scoring key for all ${groups.length} gifts. Print it for a class, a small group or a church.`;
 
 const breadcrumbs = [
   { name: 'Home', url: '/' },

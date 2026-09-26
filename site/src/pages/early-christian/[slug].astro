@@ -1,4 +1,5 @@
 ---
+import { countFact } from '../../lib/quiz-count';
 /**
  * One early Christian: /early-christian/<slug>/.
  *
@@ -230,7 +231,7 @@ const breadcrumbs = [
           <p class="qcard-say">{quiz.tagline} See where you stand beside {p.short}.</p>
           <ul class="qcard-facts">
             <li><Icon name="clock" size={13} /> {quiz.minutes} min</li>
-            <li>{quiz.outcomes.length} {outcomeNounPlural(quiz)}</li>
+            <li>{countFact(quiz)}</li>
           </ul>
           <span class="qcard-go go-pill">Start <Icon name="arrow" size={16} /></span>
         </div>

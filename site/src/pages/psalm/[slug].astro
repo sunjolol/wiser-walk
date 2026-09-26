@@ -1,4 +1,5 @@
 ---
+import { countFact } from '../../lib/quiz-count';
 /**
  * One psalm, as the Psalm quiz can print it: /psalm/<n>/.
  *
@@ -356,7 +357,7 @@ const breadcrumbs = [
           <p class="qcard-say">{quiz.tagline}</p>
           <ul class="qcard-facts">
             <li><Icon name="clock" size={13} /> {quiz.minutes} min</li>
-            <li>{situationCount} situations</li>
+            <li>{countFact(quiz)}</li>
           </ul>
           <span class="qcard-go go-pill">Start <Icon name="arrow" size={16} /></span>
         </div>

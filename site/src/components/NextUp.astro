@@ -1,4 +1,5 @@
 ---
+import { countFact } from '../lib/quiz-count';
 /**
  * What to do next, drawn as rooms.
  *
@@ -85,14 +86,6 @@ const GAME_LOOK: Record<string, { glyph: string; ghost: 'ask' | 'quote'; ink: 'o
  * ranking names its categories only when it has a true word for them (19 gifts). A reading
  * (the Psalm quiz) counts the situations it can name, as /quizzes/ does.
  */
-const countFact = (q: Quiz): string =>
-  q.strategy.shape === 'reading'
-    ? `${SITUATIONS.length} situations`
-    : q.outcomes.length
-      ? `${q.outcomes.length} ${outcomeNounPlural(q)}`
-      : q.groupNounPlural
-        ? `${q.groups.length} ${groupNounPlural(q)}`
-        : `${q.items.length} statements`;
 
 /*
  * The Compass is introduced in its shared card's words (CompassCard.astro's default `say`), as

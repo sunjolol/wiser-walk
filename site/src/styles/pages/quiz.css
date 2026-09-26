@@ -770,3 +770,13 @@
 @media (min-width: 60rem) {
   .band--aside { grid-template-columns: minmax(0, 1fr) minmax(0, 28rem); column-gap: 1.5rem; }
 }
+
+/* "Start over", beside a start button that reads "Pick up at statement N of M" (a run saved
+   on this device). Quiet, a text button, as the personality test's. */
+.start-over {
+  min-height: 44px; margin: 0; padding: .4rem .5rem; border: 0; background: none; cursor: pointer;
+  font: 600 .74rem/1 var(--ui); letter-spacing: .08em; text-transform: uppercase;
+  color: var(--ink-soft); text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px;
+}
+.start-over:hover { color: var(--accent); }
+.start-over[hidden] { display: none; }

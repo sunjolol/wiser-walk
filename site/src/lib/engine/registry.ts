@@ -118,9 +118,15 @@ function validate(quiz: Quiz): void {
     }
   });
 
-  // The radix must match the items-per-group, or codes decode to unreachable scores.
-  const counts = quiz.groups.map((_, i) => quiz.items.filter(it => it.group === i).length);
+  // The radix must match the items-per-group, or codes decode to unreachable scores. With
+  // weighted statements it is each group's total weight that counts (one unit, one rung each
+  // way per answer point), and every group must carry the same total.
+  const counts = quiz.groups.map((_, i) =>
+    quiz.items.filter(it => it.group === i).reduce((n, it) => n + (it.weight ?? 1), 0));
   const expected = counts[0]! * 4 + 1;
+  if (quiz.items.some(it => it.weight !== undefined) && new Set(counts).size !== 1) {
+    throw new Error(`${where}: weighted groups must carry the same total weight (${counts.join(',')})`);
+  }
   if (new Set(counts).size === 1 && quiz.config.radix !== expected) {
     throw new Error(
       `${where}: radix ${quiz.config.radix} does not match ${counts[0]} items per group (expected ${expected})`

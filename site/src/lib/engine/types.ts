@@ -18,6 +18,13 @@ export interface QuizItem {
   group: number;
   /** Does agreement push toward the group's positive pole? Every group needs both. */
   direction: 1 | -1;
+  /**
+   * How much this statement counts toward its group, in whole units; 1 when omitted. The
+   * gifts weigh what other people bring you above what you do, and a reverse-worded
+   * statement least, because readers misread negatives most (2026-09-25). Every group's
+   * weights must sum the same, and the radix follows from that sum (registry.ts).
+   */
+  weight?: number;
 }
 
 /**
@@ -556,6 +563,15 @@ export interface UnipolarCopy {
   flat?: string;
   /** How many rows the share text prints, highest first. Omit for all of them. */
   shareTop?: number;
+  /**
+   * At most this many names in the headline; any more that came out level are counted
+   * ("Evangelism, healing and 3 more") and listed in the line under it, and a crowd at the
+   * top is never turned into "no single one stands out". Omitted: the older rule (up to four
+   * named, more than four read as flat), which the sins keep.
+   */
+  headlineMost?: number;
+  /** Print each row's pull as a number from 0 to 100 beside its words and bar. */
+  showNumbers?: boolean;
 }
 
 /**
@@ -756,6 +772,18 @@ export interface Quiz {
    * keeps the wheel, the order of the page and the share card.
    */
   headlineLeadsWithOutcome?: boolean;
+  /**
+   * Groups with a reference page of their own that the quiz no longer scores (the gifts'
+   * tongues and interpreting tongues, 2026-09-25: "their pages can stay up but they won't be
+   * a result or any of the questions"). /axis/ builds their pages; nothing else sees them.
+   */
+  pageOnlyGroups?: QuizGroup[];
+  /**
+   * Result codes from an earlier shape of this quiz, still decoded so old links, short links
+   * and saved results open: the old prefix and radix, and the old group keys in order. A key
+   * no longer scored is dropped; a group the old code lacks reads as no net agreement.
+   */
+  legacyCodes?: Array<{ prefix: string; radix: number; keys: string[] }>;
   rankRowsOpen?: boolean;
 
   /*
@@ -851,6 +879,17 @@ export interface Lead {
  * own headline.
  */
 export function leadFor(quiz: Quiz | null | undefined, view: ResultView | null | undefined): Lead | null {
+  /*
+   * A ranking that leads with what it found (the gifts, 2026-09-25): the strategy's headline
+   * already IS the names ("Evangelism and the word of knowledge"), and the quiz's own words
+   * go before them ("Your answers pointed most to"). A flat result keeps its own headline.
+   */
+  if (quiz?.headlineLeadsWithOutcome && view?.shape === 'unipolar') {
+    if (view.state === 'flat' || !view.named.length) return null;
+    const pre = quiz.unipolarCopy?.headlineLead ?? 'Strongest pull:';
+    const names = view.ranked.filter(r => view.named.includes(r.slug));
+    return { pre, names, line: `${pre} ${view.headline.charAt(0).toLowerCase()}${view.headline.slice(1)}`, short: view.headline };
+  }
   if (!(quiz?.resultLeadsWithOutcome || quiz?.headlineLeadsWithOutcome) || view?.shape !== 'bipolar' ||
     view.state === 'central') return null;
   const names = view.ranked.slice(0, view.state === 'near' ? 1 : 2);

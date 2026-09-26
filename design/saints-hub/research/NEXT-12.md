@@ -33,6 +33,22 @@ misquoted"**, and **a sober "Is he a saint?"**. The pages ranking today rarely d
 
 ---
 
+## ADDED 2026-09-26: THE PERSONALITY TEST'S PEOPLE, AND ATHANASIUS FIRST IN LINE FOR "NO DEAD ENDS"
+
+The owner agreed (2026-09-26) to add the seven people the Christian Personality Test shows with no page, plus
+Athanasius (the Psalm quiz's whole premise; already #5 below), to this list. **St Philip Neri (died 1595) stays an
+unlinked mention** in the test: he is past the 1400 line. The owner orders the combined list himself.
+Views: English Wikipedia, humans only, Sep 2025 to Aug 2026 (the same measure as below).
+
+- Mary of Bethany: 81,898 (a Bible person: a figure page like Martha's, joins the hub in Bible order)
+- St Monica: 161,809
+- Abba Arsenius the Great: 13,009
+- St Cuthbert: 144,211
+- St Guthlac of Crowland: 11,652
+- Isaiah: 315,656 (Old Testament: a figure page, never "St")
+- Jeremiah: 260,163 (Old Testament: a figure page, never "St")
+- Athanasius of Alexandria: 234,035 (already #5 of the twelve)
+
 ## (a) The recommended twelve, in build order
 
 The order mixes three things: when the feast brings a spike (publish 6 to 8 weeks ahead so Google has indexed the

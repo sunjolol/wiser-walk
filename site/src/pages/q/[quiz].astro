@@ -546,6 +546,7 @@ const askTopics = kindred
           </li>
         </ul>
         <button class="btn" id="start" type="button" slot="start">Start the quiz</button>
+        <button class="start-over" id="start-over" type="button" hidden slot="start">Start over</button>
       </QuizFoot>
     </div>
 
@@ -639,6 +640,48 @@ const askTopics = kindred
       let timer = 0;
 
       /*
+       * PROGRESS, KEPT ON THIS DEVICE (the owner, 2026-09-25, on the gifts test: "progress is
+       * saved after each answer so if you close the window half way it saves your progress,
+       * right? Same as the personality test"). Every answer writes the sheet to localStorage,
+       * and a later visit's start buttons read "Pick up at statement N of M", with Start over
+       * beside them. The record carries a fingerprint of the statements, so a sheet answered
+       * against different wording is never replayed onto new ones. It never leaves the browser,
+       * and it is removed the moment the run finishes.
+       */
+      const PROGRESS_KEY = 'ww.progress.' + quiz.slug;
+      const sig = quiz.items.length + ':' + quiz.items
+        .map(it => it.text)
+        .join('|')
+        .split('')
+        .reduce((h, c) => (Math.imul(h, 31) + c.charCodeAt(0)) | 0, 7);
+      const saveProgress = () => {
+        try {
+          localStorage.setItem(PROGRESS_KEY, JSON.stringify({ v: 1, sig, at: new Date().toISOString(), sheet }));
+        } catch (e) { /* storage blocked or full: the run goes on, it just cannot be picked up */ }
+      };
+      const clearProgress = () => { try { localStorage.removeItem(PROGRESS_KEY); } catch (e) {} };
+      let saved = null;
+      try {
+        const p = JSON.parse(localStorage.getItem(PROGRESS_KEY) || 'null');
+        if (p && p.v === 1 && p.sig === sig && Array.isArray(p.sheet) && p.sheet.length === quiz.items.length &&
+            p.sheet.some(a => a !== null) &&
+            p.sheet.every(a => a === null || (Number.isInteger(a) && a >= -2 && a <= 2))) saved = p.sheet;
+        else if (p) clearProgress();
+      } catch (e) { saved = null; }
+      /** The first statement without an answer: where a returning reader picks up. */
+      const firstOpen = () => {
+        const i = sheet.findIndex(a => a === null);
+        return i === -1 ? quiz.items.length - 1 : i;
+      };
+      if (saved) {
+        saved.forEach((a, i) => { sheet[i] = a; });
+        const label = `Pick up at statement ${firstOpen() + 1} of ${quiz.items.length}`;
+        [$('start'), ...document.querySelectorAll('[data-start]')].forEach(b => { if (b) b.textContent = label; });
+        const over = $('start-over');
+        if (over) over.hidden = false;
+      }
+
+      /*
        * An invitation: ?with=<their code>.
        *
        * It is only honoured if it actually DECODES for this quiz, so a mangled or foreign
@@ -705,6 +748,7 @@ const askTopics = kindred
 
       function answer(v) {
         sheet[at] = v;
+        saveProgress();
         render();
         // A short beat so the selection is visible, but never a dead control:
         // any later click cancels the pending advance.
@@ -726,6 +770,7 @@ const askTopics = kindred
       async function goToResult(values) {
         if (leaving) return;
         leaving = true;
+        clearProgress();
         const code = encodeFor(quiz, values);
         // A note for the result page, which is served identically to the person who just
         // took the quiz and to anyone they send the link to. Tab-scoped, never sent.
@@ -808,6 +853,8 @@ const askTopics = kindred
       // The button at the foot of the intro, and the one a quiz with `introShort` puts near
       // the top: the same way in.
       const begin = () => {
+        // A saved sheet picks up at its first unanswered statement; a fresh one starts at 1.
+        at = saved ? firstOpen() : 0;
         intro.hidden = true;
         play.hidden = false;
         render();
@@ -815,6 +862,14 @@ const askTopics = kindred
       };
       $('start').addEventListener('click', begin);
       document.querySelectorAll('[data-start]').forEach(b => b.addEventListener('click', begin));
+      $('start-over')?.addEventListener('click', () => {
+        sheet.fill(null);
+        saved = null;
+        clearProgress();
+        [$('start'), ...document.querySelectorAll('[data-start]')].forEach(b => { if (b) b.textContent = 'Start the quiz'; });
+        $('start-over').hidden = true;
+        begin();
+      });
 
       /*
        * "Read this first" opens the fold under it and moves the reader to it. Without this

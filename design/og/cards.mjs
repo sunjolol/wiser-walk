@@ -35,7 +35,7 @@ export const CARDS = {
   'quiz-bible-figure': { v: 'left', tone: 'engraving', img: '/img/dore-moses.jpg', pos: '50% 14%', k: 'Free quiz',
     h: 'Which Bible|character are|you most *like?*', s: '18 statements. 3 minutes. 25 figures.' },
   'quiz-spiritual-gifts': { v: 'left', tone: 'engraving', img: '/img/dore-paul.jpg', pos: '45% 25%', k: 'Free test',
-    h: 'What are your|spiritual *gifts?*', s: 'All 19 gifts the New Testament names. About 8 minutes.' },
+    h: 'What are your|spiritual *gifts?*', s: '51 statements. About 10 minutes.' },
   /* David mourning Absalom: the story behind Psalm 3, the quiz's finished example, and the
      plate the quiz wears on the site (lib/art.ts). */
   'quiz-which-psalm': { v: 'left', tone: 'engraving', img: '/img/figures/david.jpg', pos: '48% 30%', k: 'Free quiz',
@@ -50,7 +50,7 @@ export const CARDS = {
      The kicker is its name, the owner's ruling of 2026-09-24, as the Compass's card carries its
      own. The facts are the home page's: 72 questions, 12 minutes, 8 types. */
   'quiz-personality': { v: 'left', tone: 'painting', img: '/img/personality/mosaic.jpg', pos: '50% 0%', k: 'Christian Personality Test',
-    h: 'Which of eight|types are *you?*', s: '72 questions. 12 minutes. A ten-page portrait.' },
+    h: 'Which of eight|types are *you?*', s: '72 questions. 15 minutes. A ten-page portrait.' },
 
   'game-sounds-like-scripture': { v: 'left', tone: 'night', img: '/img/game-manuscript.jpg', pos: '50% 20%', k: 'Bible game',
     h: 'In the Bible, or does|it only *sound* like it?', s: 'Ten lines, a few seconds each. Harder than you think.' },

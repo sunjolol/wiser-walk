@@ -1,4 +1,5 @@
 ---
+import { traditionArt } from '../../lib/tradition-art';
 import Base from '../../layouts/Base.astro';
 import Hero from '../../components/Hero.astro';
 import SectionHead from '../../components/SectionHead.astro';
@@ -211,6 +212,8 @@ const breadcrumbs = [
   { name: quiz.title, url: quizHref(quiz) },
   { name: tradition.name, url: `/tradition/${tradition.slug}/` }
 ];
+/* The tradition's own picture across the band (lib/tradition-art.ts); the night ground without one. */
+const art = traditionArt(tradition.slug);
 ---
 <Base
   title={title}
@@ -220,7 +223,11 @@ const breadcrumbs = [
 >
   <Hero
     title={tradition.name}
-    kind="night"
+    kind={art ? 'colour' : 'night'}
+    image={art?.src}
+    imageAlt={art?.alt}
+    imagePos={art ? { m: art.posM, d: art.posD } : undefined}
+    credit={art?.credit}
     long
     tiles={[
       { n: quiz.groups.length, label: 'Axes' },

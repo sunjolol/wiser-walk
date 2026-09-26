@@ -10,13 +10,30 @@ import { groupNoteFor, resultNotes } from '../engine/types';
 import type { Quiz, ScoringStrategy, Sheet, UnipolarRow, UnipolarView } from '../engine/types';
 
 function spanOf(quiz: Quiz, group: number): number {
+  // Each statement counts its weight (1 unless the quiz says otherwise) at up to two points.
   let n = 0;
-  for (const item of quiz.items) if (item.group === group) n++;
+  for (const item of quiz.items) if (item.group === group) n += item.weight ?? 1;
   return n * 2;
 }
 
 function codecFor(quiz: Quiz) {
   return makeCodec(quiz.config.radix, quiz.groups.length, quiz.codePrefix ?? '');
+}
+
+/**
+ * A code from an earlier shape of the quiz (Quiz.legacyCodes), read into today's groups by
+ * key: a group no longer scored is dropped, and one the old code lacks reads as 50, no net
+ * agreement. The gifts' old codes (nineteen gifts at radix 13) land exactly on today's grid,
+ * because a thirteenth of the range is five sixtieths.
+ */
+function decodeLegacy(quiz: Quiz, code: string): number[] | null {
+  for (const old of quiz.legacyCodes ?? []) {
+    const values = makeCodec(old.radix, old.keys.length, old.prefix).decode(code);
+    if (!values) continue;
+    const byKey = new Map(old.keys.map((k, i) => [k, values[i]!]));
+    return quiz.groups.map(g => byKey.get(g.key) ?? 50);
+  }
+  return null;
 }
 
 /**
@@ -111,6 +128,7 @@ function joinNames(names: string[]): string {
 
 /** Said in words, because "3 came out level" is an arithmetic result, not a sentence. */
 const HOW_MANY = ['', '', 'Two', 'Three', 'Four'];
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 export const category: ScoringStrategy = {
   id: 'category-highest',
@@ -119,7 +137,7 @@ export const category: ScoringStrategy = {
   score(quiz: Quiz, sheet: Sheet): number[] {
     const raw = new Array(quiz.groups.length).fill(0);
     quiz.items.forEach((item, i) => {
-      raw[item.group] += item.direction * (sheet[i] ?? 0);
+      raw[item.group] += item.direction * (sheet[i] ?? 0) * (item.weight ?? 1);
     });
     return raw.map((r, g) => {
       const span = spanOf(quiz, g);
@@ -171,7 +189,13 @@ export const category: ScoringStrategy = {
      * Five or more level is the flat state, and says so in the flat state's own words.
      * Nothing stood out; a list of five is the instrument admitting that, at length.
      */
-    const flat = flatScores || level.length > MOST_NAMED;
+    /*
+     * A quiz that caps the headline (unipolarCopy.headlineMost, the gifts: the owner, 2026-09-25,
+     * found "no single one stands out" over two bars that said "a lot of this") is flat only
+     * when nothing clears the floor. A crowd level at the top is named, two of them, and counted.
+     */
+    const most = quiz.unipolarCopy?.headlineMost;
+    const flat = flatScores || (!most && level.length > MOST_NAMED);
     const tied = !flat && level.length > 1;
     const names = level.map(r => r.name);
 
@@ -197,10 +221,32 @@ export const category: ScoringStrategy = {
       summary =
         quiz.unipolarCopy?.flat ??
         'Nothing here rose far enough above the rest to name one, so none is named.';
+    } else if (tied && most) {
+      /*
+       * The headline is the names and nothing else (the quiz's lead goes above it, through
+       * leadFor), at most `most` of them; the rest are counted there and named underneath.
+       */
+      state = 'tie';
+      const shown = names.slice(0, most);
+      const extra = names.slice(most);
+      headline = cap(joinNames(extra.length ? [...shown, `${extra.length} more`] : shown));
+      summary = !extra.length
+        ? `The ${HOW_MANY[shown.length]?.toLowerCase() || shown.length} came out level at the top.`
+        : extra.length <= 3
+          ? `Level with them: ${joinNames(extra)}.`
+          : `${extra.length} more came out level with them. The bars below show them all.`;
     } else if (tied) {
       state = 'tie';
       headline = led(joinNames(names));
       summary = `${HOW_MANY[names.length]} came out level: ${joinNames(names)}.`;
+    } else if (most) {
+      state = 'clear';
+      headline = cap(ranked[0]!.name);
+      const rest = ranked.slice(1);
+      const next = rest.filter(r => r.score === rest[0]?.score && r.score - 50 > floor);
+      summary = next.length && next.length <= MOST_NAMED
+        ? `Next: ${joinNames(next.map(r => r.name))}.`
+        : `${cap(ranked[0]!.name)} came out highest.`;
     } else {
       state = 'clear';
       headline = led(ranked[0]!.name);
@@ -243,7 +289,7 @@ export const category: ScoringStrategy = {
   },
 
   encode: (quiz, values) => codecFor(quiz).encode(values),
-  decode: (quiz, code) => codecFor(quiz).decode(code),
+  decode: (quiz, code) => codecFor(quiz).decode(code) ?? decodeLegacy(quiz, code),
 
   shareText(quiz: Quiz, values: number[], origin: string): string {
     const lines = [quiz.shareTitle];

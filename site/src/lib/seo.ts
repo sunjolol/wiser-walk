@@ -83,9 +83,9 @@ export const SEO: Record<string, { title: string; description: string }> = {
       '18 statements about how you act, speak and lead. See which of 25 Bible figures you are most like, from Moses and Esther to Peter and Paul, with the verses.'
   },
   '/q/spiritual-gifts/': {
-    title: 'Spiritual gifts test: free, all 19 gifts, about 8 minutes',
+    title: 'Spiritual gifts test: free, 17 gifts, about 10 minutes',
     description:
-      'A free spiritual gifts test on all 19 gifts the New Testament names, from teaching and mercy to healing, prophecy and tongues. 57 statements, about 8 minutes.'
+      'A free spiritual gifts test on 17 gifts the New Testament names, from teaching and mercy to healing, prophecy and miracles. 51 statements, about 10 minutes.'
   },
   '/data/theology-compass/': {
     title: '18 Christian traditions on six axes: the table, free CSV',
@@ -93,9 +93,9 @@ export const SEO: Record<string, { title: string; description: string }> = {
       'Where 18 Christian traditions stand on grace, the Lord’s Supper, the gifts, Israel and the church, authority and worship, as one table you can read or download.'
   },
   '/q/spiritual-gifts/print/': {
-    title: 'Printable spiritual gifts test: all 19 gifts, with scoring key',
+    title: 'Printable spiritual gifts test: 17 gifts, with scoring key',
     description:
-      'The 57-statement spiritual gifts test on paper, free, with a scoring key for all 19 gifts. Print it for a class, a small group or a church.'
+      'The 51-statement spiritual gifts test on paper, free, with a scoring key for 17 gifts. Print it for a class, a small group or a church.'
   },
   /* Added with the quiz (2026-09-23). People do not search for the quiz's name; they search
      "what psalm should I read" and "a psalm for" whatever they are in. The title keeps the
@@ -121,7 +121,7 @@ export const SEO: Record<string, { title: string; description: string }> = {
   '/q/personality/': {
     title: 'Christian Personality Test: which of 8 types are you? Free',
     description:
-      'A free Christian personality test built on St Gregory the Great. 72 quick choices, about 12 minutes. Then a ten-page portrait of who you are and where you fit.'
+      'A free Christian personality test built on St Gregory the Great. 72 quick choices, about 15 minutes. Then a ten-page portrait of who you are and where you fit.'
   },
   /*
    * Its question hub (2026-09-23): it leads with the question as people ask it, and says what

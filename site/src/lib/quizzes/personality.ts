@@ -40,7 +40,7 @@ export const personality: Quiz = {
   intro:
     'Seventy-two quick choices. Then a ten-page portrait of who you are, what trips you up, and where you fit.',
   icon: 'sparkle',
-  minutes: 12,
+  minutes: 15,
   status: 'live',
   items: [],
   groups: [],

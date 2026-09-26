@@ -1,4 +1,5 @@
 ---
+import { countFact } from '../../lib/quiz-count';
 /**
  * One person from the Bible, as the figure quiz places them.
  *
@@ -75,7 +76,7 @@ const cardSay =
   `Answer ${NUMBER_WORDS[quiz.items.length] ?? quiz.items.length} plain statements about ` +
   `you, none of them about the Bible, and see how near you land to ${figure.name}.`;
 /** The second fact, counted the way /quizzes/ counts it. */
-const cardFact = `${quiz.outcomes.length} ${outcomeNounPlural(quiz)}`;
+const cardFact = countFact(quiz);
 const cardStyle = wayArt
   ? [
       `--img-pos:${wayArt.objectPosition}`,

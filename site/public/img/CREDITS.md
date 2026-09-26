@@ -470,6 +470,55 @@ Each sin's page wears its own painting across the whole band (the owner's note: 
 | gluttony.jpg | Pieter Bruegel the Elder, The Land of Cockaigne, 1567, Alte Pinakothek, Munich | public domain; Commons "Pieter Bruegel d. Ä. (1525-1569) - Das Schlaraffenland - 8940 - Bavarian State Painting Collections.jpg" |
 | lust.jpg | Rembrandt, Joseph Accused by Potiphar's Wife, 1655, Gemäldegalerie, Berlin, cropped to the figures | public domain; Commons "Joseph und Potiphars Frau - Gemäldegalerie Berlin - 5250684.jpg" |
 
+## The spiritual gifts (in `gifts/`, added 2026-09-25)
+
+Each gift's painting, across the band of its page and of a result that ranks it first, and on that result's /me/ card. Credit printed in each gift page's band. No nudity and nothing violent (which ruled out every Judgment of Solomon, Good Samaritan and Prodigal Son found, and most healings). Resized to about 1800 px wide, quality 80 to 84.
+
+| file | what it shows | source |
+|---|---|---|
+| serving.jpg | The Washing of the Feet, Jacopo Tintoretto, about 1548–49. Museo del Prado, Madrid | public domain; Commons "El Lavatorio (Tintoretto).jpg" |
+| teaching.jpg | Christ in the House of Martha and Mary, Henryk Siemiradzki, 1886. State Russian Museum, St Petersburg | public domain; Commons "Semiradsky Christ Martha Maria.jpg" |
+| encouraging.jpg | Saint Paul in Prison, Rembrandt, 1627. Staatsgalerie Stuttgart, Stuttgart | public domain; Commons "1627 Rembrandt Paulus im Gefängnis Staatsgalerie Stuttgart anagoria.JPG" |
+| giving.jpg | The Widow’s Mite, Paulus Lesire, about 1628–32. Dordrechts Museum, Dordrecht | public domain; Commons "Paulus Lesire - De penningen van de arme weduwe - DM-987-644 - Dordrechts Museum.jpg" |
+| healing.jpg | Christ Healing the Blind Men of Jericho, Nicolas Poussin, 1650. Musée du Louvre, Paris | public domain; Commons "Poussin - Les Aveugles de Jéricho, 1650, INV 7281 ; MR 2320.jpg" |
+| leading.jpg | Moses Choosing the Seventy Elders, Jacob de Wit, 1737. Royal Palace Amsterdam, Amsterdam | public domain; Commons "Jacob de Wit - Moses elects the Council of Seventy Elders - Google Art Project.jpg" |
+| mercy.jpg | Christ and the Woman Taken in Adultery, Nicolas Poussin, 1653. Musée du Louvre, Paris | public domain; Commons "Le Christ et la femme adultère - Nicolas Poussin - Louvre - INV 7282.jpg" |
+| knowledge.jpg | Christ and the Samaritan Woman, Annibale Carracci, about 1595–97. Museum of Fine Arts, Budapest | public domain; Commons "Annibale Carracci - Christ and the Samaritan Woman - Google Art Project.jpg" |
+| administration.jpg | Joseph Receiving Pharaoh’s Ring, Giovanni Battista Tiepolo, about 1733–35. Dulwich Picture Gallery, London | public domain; Commons "Tiepolo, Giambattista - Joseph receiving Pharaoh's Ring - Google Art Project.jpg" |
+| wisdom.jpg | The Finding of the Saviour in the Temple, William Holman Hunt, 1854–60. Birmingham Museum and Art Gallery, Birmingham | public domain; Commons "William Holman Hunt - The Finding of the Saviour in the Temple - Google Art Project.jpg" |
+| miracles.jpg | The Wedding at Cana, Paolo Veronese, 1562–63. Musée du Louvre, Paris | public domain; Commons "Les Noces de Cana - Paolo Veronese - Musée du Louvre Peintures INV 142 ; MR 384.jpg" |
+| discernment.jpg | The Tribute Money, Peter Paul Rubens, about 1612. Fine Arts Museums of San Francisco, San Francisco | public domain; Commons "Rubens tribute money.jpg" |
+| faith.jpg | Jesus and the Centurion, Paolo Veronese, about 1571. Museo del Prado, Madrid | public domain; Commons "Jesús y el centurión (El Veronés).jpg" |
+| prophecy.jpg | Jeremiah Lamenting the Destruction of Jerusalem, Rembrandt, 1630. Rijksmuseum, Amsterdam | public domain; Commons "Jeremia treurend over de verwoesting van Jeruzalem Rijksmuseum SK-A-3276.jpeg" |
+| evangelism.jpg | The Baptism of the Eunuch, Rembrandt, 1626. Museum Catharijneconvent, Utrecht | public domain; Commons "Rembrandt, The Baptism of the Eunuch, 1626, Museum Catharijneconvent, Utrecht.jpg" |
+| shepherding.jpg | The Good Shepherd, Bartolomé Esteban Murillo, about 1660. Museo del Prado, Madrid | public domain; Commons "El Buen Pastor.jpg" |
+| hospitality.jpg | Abraham Welcoming the Three Angels, Francesco Guardi, 1750s. Cleveland Museum of Art, Cleveland | public domain; Commons "Francesco Guardi - Abraham Welcoming the Three Angels - 1952.235.4 - Cleveland Museum of Art.tiff" |
+
+## The Theology Compass's traditions (in `traditions/`, added 2026-09-25)
+
+Each tradition's picture, across the band of its page (credit printed there), of a Compass result whose nearest tradition it is, and on that result's /me/ card. Chosen as something a member of that tradition would recognise and be glad to see; nothing mocking, violent or nude. Tanner's The Thankful Poor was tried for the National Baptist page and swapped for his Nicodemus, because its title would print beside a historically Black church. About 1600 to 1800 px wide, quality 80 to 84.
+
+| file | what it shows | source |
+|---|---|---|
+| catholic-roman-and-eastern.jpg | Interior of Saint Peter’s, Rome, Giovanni Paolo Panini, about 1754. National Gallery of Art, Washington | CC0; Commons "Giovanni Paolo Panini, Interior of Saint Peter's, Rome, c. 1754, NGA 50884.jpg" |
+| eastern-orthodox.jpg | Religious Procession, Illarion Pryanishnikov, 1893. State Russian Museum, St Petersburg | public domain; Commons "Illarion Michajlowitsch Prjanischnikow 001.jpg" |
+| lutheran-confessional.jpg | Luther Preaching, predella of the Reformation Altarpiece, Lucas Cranach the Elder and the Younger, 1547. St Mary’s Church, Wittenberg | public domain; Commons "Lucas Cranach d.J. - Reformationsaltar, St. Marien zu Wittenberg, Predella.jpg" |
+| anglican-broad.jpg | Salisbury Cathedral from the Bishop’s Grounds, John Constable, about 1825. The Metropolitan Museum of Art, New York | CC0; Commons "Salisbury Cathedral from the Bishop's Grounds MET DP164837.jpg" |
+| presbyterian-reformed-confessional.jpg | Interior of a Protestant Gothic Church during a Service, Emanuel de Witte, 1669. Rijksmuseum, Amsterdam | public domain; Commons "Interieur van een protestantse, gotische kerk tijdens een dienst Rijksmuseum SK-A-4055.jpeg" |
+| reformed-baptist-1689.jpg | Charles Haddon Spurgeon, Alexander Melville, 1885. National Portrait Gallery, London | public domain; Commons "Charles Haddon Spurgeon by Alexander Melville.jpg" |
+| reformed-charismatic-sovereign-grace-newfrontiers.jpg | The Outpouring of the Holy Spirit, Anthony van Dyck, about 1618–20. Picture Gallery, Sanssouci, Potsdam | public domain; Commons "Dyck, Anthonis van - Pouring of the Holy Ghost - Bildergalerie Sanssouci.jpeg" |
+| southern-baptist-calvinist.jpg | Going to Church, George Henry Durrie, 1853 | public domain; Commons "George Henry Durrie - Going to Church.JPG" |
+| southern-baptist-non-calvinist.jpg | The Light of the World, William Holman Hunt, 1900–04. St Paul’s Cathedral, London | public domain; Commons "Light of the World Hunt.jpg" |
+| national-baptist-nbc-usa-historically-black-baptist.jpg | Nicodemus Visiting Jesus, Henry Ossawa Tanner, 1899. Pennsylvania Academy of the Fine Arts, Philadelphia | public domain; Commons "Nicodemus Visiting Jesus, by Henry Ossawa Tanner.jpg" |
+| bible-church-independent-dispensational.jpg | The Haugeans, Adolph Tidemand, 1848. National Museum, Oslo | public domain; Commons "Adolph Tidemand - Low Church Devotion - Google Art Project.jpg" |
+| calvary-chapel.jpg | On the Sea of Galilee, Vasily Polenov, 1888. State Tretyakov Gallery, Moscow | public domain; Commons "Polenov na tiver ozere.jpg" |
+| churches-of-christ-christian-churches.jpg | The Camp Meeting, Worthington Whittredge, 1874. The Metropolitan Museum of Art, New York | CC0; Commons "The Camp Meeting MET DT228976.jpg" |
+| wesleyan-methodist.jpg | John Wesley Preaching on His Father’s Grave, Currier and Ives. Library of Congress, Washington | public domain; Commons "John Wesley preaching on his fathers grave- in the church yard at Epworth Sunday June 6th 1742 LCCN2002707689.tif" |
+| mainline-protestant-pcusa-elca-umc.jpg | Church at Old Lyme, Childe Hassam, 1905. Buffalo AKG Art Museum, Buffalo | public domain; Commons "Childe Hassam - Church at Old Lyme, Connecticut - 1909-6 - Albright–Knox Art Gallery.tiff" |
+| pentecostal-assemblies-of-god-church-of-god-cogic.jpg | Pentecost, El Greco, about 1600. Museo del Prado, Madrid | public domain; Commons "Pentecostés (El Greco, c. 1600) Prado.jpg" |
+| charismatic-non-denominational.jpg | Pentecost, Juan Bautista Maíno, 1615–20. Museo del Prado, Madrid | public domain; Commons "Maino Pentecostés, 1620-1625. Museo del Prado.jpg" |
+| anabaptist-mennonite-peace-church.jpg | The Mennonite Preacher Anslo and His Wife, Rembrandt, 1641. Gemäldegalerie, Berlin | public domain; Commons "Rembrandt - The Mennonite Preacher Anslo and his Wife - Google Art Project.jpg" |
+
 ## Unsplash (free to use under the Unsplash licence; replace with Envato equivalents at will)
 
 | file | what it shows | Unsplash photo id |
