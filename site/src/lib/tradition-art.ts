@@ -58,7 +58,7 @@ export const TRADITION_ART: Record<string, TraditionArt> = {
     credit: "Picture: Going to Church, George Henry Durrie, 1853."
   },
   'southern-baptist-non-calvinist': {
-    src: '/img/traditions/southern-baptist-non-calvinist-baptism.jpg', posM: "58% 50%", posD: "50% 64%",
+    src: '/img/traditions/southern-baptist-non-calvinist-baptism.jpg', posM: "58% 50%", posD: "50% 60%",
     alt: "Pavel Svinin’s watercolour of a Baptist minister immersing a woman in a river while a crowd watches from a wharf and more candidates in white wait their turn",
     credit: "Picture: A Philadelphia Anabaptist Immersion during a Storm (a Baptist baptism in the Schuylkill River), Pavel Svinin, about 1811–13. The Metropolitan Museum of Art, New York."
   },

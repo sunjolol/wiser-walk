@@ -71,7 +71,9 @@ rules so they don't happen again". `site/scripts/quiz-page-test.mjs` (postbuild)
 **He said:** "set up for the next one where I'll give some notes on the new header backgrounds (small tweaks) then we
 will move on to the 19 saints on our list". So the session opens with his notes, then the saints.
 
-**1. His notes on the new header pictures (small tweaks).** All live on `main`:
+**1. His notes on the new header pictures (small tweaks).** First round DONE 2026-09-26 (`0a65e41`, live): his
+desktop crops for mercy, prophecy, evangelism, shepherding and four traditions; Southern Baptist (non-Calvinist) is now
+Svinin's river baptism (Met, CC0), the file cropped at the right so the minister sits beside the title. All live on `main`:
 - The 18 Theology Compass traditions: `site/src/lib/tradition-art.ts` (src, alt, credit, and `posM` / `posD`, the
   object-position for a phone and for a wide band), files `site/public/img/traditions/<slug>.jpg`. The same picture is
   the band of `/tradition/<slug>/`, of a Compass result whose nearest tradition it is, and of that result's /me/ card.
