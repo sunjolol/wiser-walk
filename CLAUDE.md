@@ -66,7 +66,47 @@ rules so they don't happen again". `site/scripts/quiz-page-test.mjs` (postbuild)
 9. **A special card among cards looks like its siblings**, marked only by an icon and a small tag.
 10. **No placeholder pictures** (a monogram where a face should be is "not acceptable").
 
-## NEXT SESSION STARTS HERE (2026-09-25, night): ALL 24 BIBLE FIGURE PAGES ARE LIVE
+## NEXT SESSION STARTS HERE (after 2026-09-25): HE COMBS THROUGH THE OLDER QUIZZES
+
+**His plan, in his words:** "In the next session I'm going to go through the older quizzes with a fine tooth comb to
+fix issues exactly like the ones I discovered with this quiz" (the Bible figure quiz, "Who in the Bible are you most
+like?", fixed on 2026-09-25). He brings notes quiz by quiz; each is a small, fast fix pushed after the tests. Be
+efficient: find the code, fix, look once at 390 and 1360, push (memory: push-small-changes). The older quizzes:
+the Theology Compass, the seven deadly sins, the spiritual gifts test, Which Psalm, Which early Christian, and the
+Christian Personality Test (newest); the two games too.
+
+**What the figure quiz taught (check every quiz for the same; memory: result-page-lessons):**
+1. Statements must read plainly, on first reading, and not sound overbearing or odd ("People have told me I ask one
+   question too many" was rewritten). Keep each statement's axis and direction (re-derive the sign; run
+   engine-test and, for the figure quiz, sim-figures).
+2. The scale explainer ("The scale runs from strongly disagree...") is gone from every quiz already.
+3. **A result leads with the result.** The big headline is who or what you got ("Closest to Peter"), never a string
+   of descriptors ("Alongside, takes time to decide..."); descriptors go in the smaller line under it. The page
+   title, link-preview title, share text and the My results (/me/) card all follow the same lead: for the figure
+   quiz one rule, `leadFor` in `site/src/lib/engine/types.ts`, feeds them all (switched on per quiz by
+   `resultLeadsWithOutcome`).
+4. The interesting part comes first ("closest on the map" moved above the bars); illustrations and captions that
+   delay it come out (the wheel and "Each arm is one axis..."); no big empty gaps.
+5. No accent lines over result sections ("Measured against 25 figures", "6 axes, the strongest lean first"), no
+   inside-baseball paragraphs ("Neither end of any of these is the better one..."), no keys that explain the
+   instrument ("In the hatched middle..."). Notes that must stay are short and plain (compare the figure quiz's
+   new outcomeScopeNote and OutcomeCards' axisNote).
+6. The save card shows the result (the figure's picture and name, the next closest), not an instrument.
+7. The header picture follows the result where there is one (the figure quiz's band wears the closest figure's
+   painting; Jesus: the Sinai Pantocrator, `FIGURE_PICTURES` in `lib/saints/figures.ts`).
+8. "Worth reading" on every result page is now always three articles (lib/read-next.ts), no kicker: done.
+9. Never the Quran anywhere (his rule, 2026-09-25); Muslims on Abraham's page and the Gospel of Barnabas's
+   Muhammad line are fine to leave. Never a number tile that reads as a slight ("0 signs").
+**The Theology Compass's result page was deliberately left untouched** (it shares these files: every change above
+is behind the figure quiz's own flags). His combing may now ask for the same there; the older rules about it
+(CLAUDE.md "The result page is BUILT") give way to his new notes.
+
+**Open questions he has not answered:** show Jesus's note on the My results card when He is the closest (left off);
+have the email sign-up record "Closest to Peter" instead of the traits line (`site/src/pages/api/subscribe.ts`,
+one line). **Queued after the combing:** Jesus's own figure page (a plan he approves first), the 12 saints
+(`design/saints-hub/research/NEXT-12.md`), then quiz #5 "How You Love".
+
+## (earlier, 2026-09-25 night) ALL 24 BIBLE FIGURE PAGES ARE LIVE
 
 **Done today, all on `main` and live:** every Bible figure but Jesus has a page drawn like a saint's, and every one
 of them is on the Saints hub (47 people). He liked the cost of the first seven ("very impressed with how few resources
