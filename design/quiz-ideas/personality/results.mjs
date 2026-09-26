@@ -446,6 +446,10 @@ export const ANGER = {
       cure: 'When someone wrongs you, remember your own faults first. It takes the heat out of the first minute.' },
     brief: { name: 'Slow and brief', catch: 'slow', hold: 'brief', short: 'Gregory: the nearest to peace of mind.',
       text: 'It takes a lot to anger you, and it does not last. Gregory says this is the one closest to peace of mind. It is worth checking. Ask someone close to you whether they agree.',
+      quote: Q('others both catch them slowly, and part with them quickly. In which same four sorts, the reader sees clearly that the last rather than the first approaches to the excellence of peace of mind', GREGORY_M),
+      // The one of the four Gregory commends (the owner, 2026-09-26): its box is advice, not a cure, and
+      // anger's own speech is left out here, where it read as if Gregory were telling them to keep to it.
+      ideal: true,
       cure: 'Keep it that way. When someone wrongs you, Gregory says, remember your own faults first.' },
     worst: { name: 'Quick and lasting', catch: 'fast', hold: 'long', short: 'Gregory calls this one the worst.',
       text: 'Your anger catches fast and stays long. Gregory did not soften it: of the four, he calls this the worst. But you only need to change one half. Slow the catch, or let go sooner, and you are out of the worst box.',

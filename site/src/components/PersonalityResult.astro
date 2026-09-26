@@ -218,6 +218,9 @@ const grid = (cells: Record<string, Cell>, order: string[], you: string, axisX: 
   rows: [order.slice(0, 2), order.slice(2, 4)].map(row => row.map(k => ({ key: k, ...cells[k]!, you: k === you })))
 });
 const A = R.ANGER.cells[r.anger.cell];
+/* A type's tagline speaks to its own reader ("at your best"). Said of another type, the opposite above all, it
+   must speak of them (the owner, 2026-09-26: people took the opposite's "at your best" as about themselves). */
+const theirs = (s: string) => s.replace(/\byourself\b/g, 'themselves').replace(/\bYourself\b/g, 'Themselves').replace(/\byour\b/g, 'their').replace(/\bYour\b/g, 'Their');
 const angerGrid = grid(R.ANGER.cells, ['reeds', 'brief', 'worst', 'wood'], r.anger.cell, ['Catches quickly', 'Catches slowly'], ['Lets go quickly', 'Lets go slowly']);
 const SP = R.SPEAKER.cells[r.speaker.cell];
 const speakGrid = grid(R.SPEAKER.cells, ['full', 'deep', 'fluent', 'spare'], r.speaker.cell, ['Words come easily', 'Words come hard'], ['Thinks first', 'Speaks first']);
@@ -469,7 +472,7 @@ const isExample = view.code === EXAMPLE_CODE;
                 </p>
               </div>
             </div>
-            <p class="pq-opp-tag">{O.tagline}</p>
+            <p class="pq-opp-tag">{theirs(O.tagline)}</p>
             {/* Then the reader's own side of the pair, named with the reader's type. */}
             {ours && (
               <div class:list={['pq-opp-ours', oursHref && 'pq-opp-ours--link']}>
@@ -492,7 +495,7 @@ const isExample = view.code === EXAMPLE_CODE;
         ) : (
           <>
             <h3>{O.name}</h3>
-            <p>{O.tagline}</p>
+            <p>{theirs(O.tagline)}</p>
           </>
         )}
         <Q q={(OP && OP.quote) || R.BOATS.body} />
@@ -590,9 +593,15 @@ const isExample = view.code === EXAMPLE_CODE;
     <h3 class="pq-sub">{A.name}</h3>
     <p class="pq-big">{A.text}</p>
     <Q q={A.quote} />
-    <p class="pq-muted pq-small">Gregory even wrote down what anger says to people. It sounds reasonable:</p>
-    <Q q={R.ANGER.speech} />
-    <div class="pq-cure"><p class="pq-kicker">Gregory’s cure</p><p>{A.cure}</p></div>
+    {/* The kind Gregory commends (slow and brief) gets his advice straight after his own line on it; anger's
+        speech is for the other three (the owner, 2026-09-26: after it, "Keep it that way" read as keep to it). */}
+    {!A.ideal && (
+      <>
+        <p class="pq-muted pq-small">Gregory even wrote down what anger says to people. It sounds reasonable:</p>
+        <Q q={R.ANGER.speech} />
+      </>
+    )}
+    <div class="pq-cure"><p class="pq-kicker">{A.ideal ? 'Gregory’s advice' : 'Gregory’s cure'}</p><p>{A.cure}</p></div>
   </section>
 
   {/* ---------------------------------------------------------------- 6. speaking */}
@@ -788,7 +797,7 @@ const isExample = view.code === EXAMPLE_CODE;
       {x.art && <img class="pq-ts-img" src={x.art.src} width={x.art.width} height={x.art.height} alt="" style={`object-position:${focusOf(x.key)}`} loading="lazy" decoding="async" />}
       <div class="pq-ts-in">
         <h3>{x.t.name}</h3>
-        <p class="pq-muted">{x.t.tagline}</p>
+        <p class="pq-muted">{x.key === r.type ? x.t.tagline : theirs(x.t.tagline)}</p>
         <p>{x.t.portrait}</p>
         <p><b>Trap:</b> {x.trap}.</p>
         {x.kindred.length > 0 && (
