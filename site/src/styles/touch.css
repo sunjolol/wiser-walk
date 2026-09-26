@@ -22,9 +22,9 @@
 
   /* the rail */
   body .hm-rail { display: grid; grid-template-columns: 1fr auto auto; column-gap: .6rem; row-gap: .2rem; }
-  body .hm-rail-track { grid-column: 1 / -1; margin-bottom: -.6rem; }
+  body .hm-rail-track { grid-column: 1 / -1; margin-bottom: -1.6rem; }
   body .hm-rail::before { display: none; }
-  body .hm-rail::after { width: 1.1rem; bottom: 3.6rem; }
+  body .hm-rail::after { width: 1.1rem; bottom: calc(1.2rem + 46px); }
   body .hm-rail-btn {
     position: static; transform: none; width: 46px; height: 46px; grid-row: 2;
     box-shadow: 0 4px 12px rgba(20, 24, 40, .18);

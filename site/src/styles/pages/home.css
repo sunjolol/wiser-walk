@@ -144,7 +144,7 @@
 .hm-rail-track {
   display: flex; gap: .9rem; overflow-x: auto; overscroll-behavior-x: contain;
   scrollbar-width: none; -webkit-overflow-scrolling: touch;
-  padding: .3rem var(--gut) 1.6rem 0; margin-bottom: -1.2rem; cursor: grab;
+  padding: .3rem var(--gut) 2.6rem 0; margin-bottom: -2.2rem; cursor: grab;
 }
 .hm-rail-track::-webkit-scrollbar { display: none; }
 .hm-rail-track.is-dragging { cursor: grabbing; }
@@ -154,8 +154,10 @@
 .hm-rail .room img { -webkit-user-drag: none; }
 .hm-rail .room--figures, .hm-rail .room--psalm, .hm-rail .room--early { flex-basis: min(84vw, 24rem); }
 /* the fade says there is more; it is only drawn on a side that has more */
+/* flush with the cards (the owner, 2026-09-26): the track's padding above and below the cards
+   is left out, so no pale fade hangs over the sky above them */
 .hm-rail::before, .hm-rail::after {
-  content: ""; position: absolute; top: 0; bottom: 0; width: 4.5rem; z-index: 2; pointer-events: none;
+  content: ""; position: absolute; top: .3rem; bottom: 2.6rem; width: 4.5rem; z-index: 2; pointer-events: none;
   opacity: 0; transition: opacity .2s ease;
 }
 .hm-rail::after { right: 0; background: linear-gradient(90deg, transparent, var(--shell) 88%); }
@@ -334,3 +336,34 @@
 
 /* short copy is balanced, so it never ends on one stranded word */
 .hm-lede, .game p, .hm-trads-say p, .read p { text-wrap: balance; }
+
+/* The Theology Compass, the rail's last room (2026-09-26): Raphael's Disputa in colour, printed
+   like the Personality Test's room, with a pale gold ink (the fresco's gold; no other room is gold). */
+.room--compass { --room-ink: #F2DE9B; background: #1c1b1a; }
+.hm-rail .room--compass { flex-basis: min(84vw, 22rem); }
+.room--compass > img { object-position: 40% 0%; }
+.room--compass::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, rgba(20, 18, 16, 0) 26%, rgba(20, 18, 16, .78) 56%, rgba(20, 18, 16, .95) 76%, rgba(20, 18, 16, .98));
+}
+
+/* ------------------------------------------------------------------ saints (2026-09-26) ---- */
+/* "Discover the saints": faces in colour, name only, narrower than the quiz rooms. */
+.hm-saints { margin-top: 2.6rem; }
+.hm-rail--saints { margin-top: 0; }
+.hm-rail .room--saint { flex: 0 0 min(58vw, 14.5rem); min-height: 19rem; background: #1c1b1a; }
+.room--saint > img { transition: transform .4s ease; }
+.room--saint:hover > img { transform: scale(1.03); }
+.room--saint::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, rgba(20, 18, 16, 0) 52%, rgba(20, 18, 16, .72) 78%, rgba(20, 18, 16, .92));
+}
+.room--saint .room-body { padding: 1rem 1.1rem 1.15rem; }
+.room--saint h3 { font-size: clamp(1.25rem, 5vw, 1.45rem); }
+.room--all h3 { display: inline-flex; align-items: center; gap: .45rem; }
+.room--all { --room-ink: #EADFCB; }
+@media (min-width: 46rem) {
+  .hm-saints { margin-top: 3rem; }
+  .hm-rail .room--saint { min-height: 20.5rem; }
+  .room--saint .room-body { padding: 1.1rem 1.2rem 1.25rem; }
+}

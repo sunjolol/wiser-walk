@@ -27,7 +27,6 @@ import '../styles/pages/home.css';
 import '../styles/pages/reads.css';
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
-import CompassCard from '../components/CompassCard.astro';
 import ReadCard from '../components/ReadCard.astro';
 import { getQuiz, quizHref } from '../lib/engine/registry';
 import { liveGames } from '../lib/games';
@@ -39,6 +38,7 @@ import { SUPPORT_URL, SUPPORT_READY } from '../lib/support';
 import slsMeta from '../games/sounds-like-scripture.meta.json';
 import wsiMeta from '../games/who-said-it.meta.json';
 import { getCollection } from 'astro:content';
+import { HUB } from '../lib/saints/data';
 
 const compass = getQuiz('theology-compass')!;
 const figures = getQuiz('bible-figure');
@@ -49,6 +49,20 @@ const early = getQuiz('which-early-christian');
 const personality = getQuiz('personality');
 const personalityArt = artFor('personality');
 const games = liveGames();
+/*
+ * "Discover the saints" (the owner, 2026-09-26): a rail of faces under the quizzes, the best-known
+ * first (English Wikipedia views, research/wikipedia-views.json), name only, ending on a card for
+ * the whole hub. A picture here overrides the hub's card only where that card is too small or too
+ * wide for a tall rail card.
+ */
+const RAIL_SAINTS = ['nicholas-of-myra', 'augustine-of-hippo', 'jerome', 'benedict-of-nursia', 'monica',
+  'ignatius-of-antioch', 'athanasius-of-alexandria', 'gregory-the-great', 'john-chrysostom',
+  'polycarp-of-smyrna', 'antony-the-great', 'martin-of-tours'];
+const RAIL_PIC: Record<string, { img: string; focus: string }> = {
+  jerome: { img: '/img/saints/jerome-card.jpg', focus: '50% 30%' }
+};
+const railSaints = RAIL_SAINTS.map(slug => HUB.find(p => p.slug === slug)).filter(p => p !== undefined)
+  .map(p => ({ ...p, ...(RAIL_PIC[p.slug] ?? {}) }));
 const sls = games.find(g => g.slug === 'sounds-like-scripture');
 const wsi = games.find(g => g.slug === 'who-said-it');
 
@@ -131,8 +145,9 @@ const jsonLd = {
       <h2 id="hm-quizzes">quizzes</h2>
     </header>
 
-      {/* The flagship: the shared Compass card, the same one every page offers. */}
-      <CompassCard />
+      {/* The Compass card that stood here left the home page (the owner, 2026-09-26: "letting you
+          get to the fun part as quickly as possible"); the Compass is the rail's last room, the
+          oldest quiz, and the headline's button still leads to it. */}
 
     {/*
       The other quizzes stand on a rail, because there will be more than four. Each keeps a
@@ -141,7 +156,7 @@ const jsonLd = {
     */}
     <div class="hm-rail" data-rail>
       <div class="hm-rail-track" data-rail-track tabindex="0" role="group" aria-label="More quizzes">
-        {/* The Christian Personality Test leads the rail, straight after the Compass, and stays
+        {/* The Christian Personality Test leads the rail and stays
             first (2026-09-24; pinned there by the owner, 2026-09-25). It is the one room in colour: its picture is the eight paintings its
             eight types wear (lib/art.ts), not an engraving, and printing them sepia would hide
             what they are. Title only, as on every room; its facts are its minutes and its
@@ -240,9 +255,53 @@ const jsonLd = {
             </div>
           </a>
         )}
+
+        {/* The oldest quiz, so the last room (2026-09-26). Raphael's Disputa, the fresco the Compass's
+            own page already wears: popes, bishops and theologians arguing round one altar. In colour,
+            like the Personality Test's room. */}
+        <a class="room room--compass" href={quizHref(compass)}>
+          <img src="/img/raphael-disputa-right.jpg" alt="Part of Raphael’s fresco La Disputa: bishops and theologians debating beside the altar, one pointing up to heaven" loading="lazy" decoding="async" width="970" height="792" />
+          <div class="room-body">
+            <h3>{compass.title}</h3>
+            <ul class="room-facts">
+              <li><Icon name="clock" size={13} /> {compass.minutes} min</li>
+              <li>{countFact(compass)}</li>
+            </ul>
+            <span class="room-go">Start <Icon name="arrow" size={14} /></span>
+          </div>
+        </a>
       </div>
       <button class="hm-rail-btn hm-rail-btn--prev" type="button" data-rail-prev aria-label="Scroll the quizzes back" hidden><Icon name="arrow" size={18} /></button>
       <button class="hm-rail-btn hm-rail-btn--next" type="button" data-rail-next aria-label="Scroll to more quizzes" hidden><Icon name="arrow" size={18} /></button>
+    </div>
+  </section>
+
+  {/* ------------------------------------------------------------------------ saints */}
+  <section class="hm-saints" aria-labelledby="hm-saints">
+    <header class="hm-head">
+      <h2 id="hm-saints">discover the saints</h2>
+    </header>
+    <div class="hm-rail hm-rail--saints" data-rail>
+      <div class="hm-rail-track" data-rail-track tabindex="0" role="group" aria-label="Saints">
+        {railSaints.map(p => (
+          <a class="room room--saint" href={p.href}>
+            <img src={p.img} alt="" style={`object-position: ${p.focus}`} loading="lazy" decoding="async" width="480" height="600" />
+            <div class="room-body">
+              <h3>{p.name}</h3>
+            </div>
+          </a>
+        ))}
+        {/* The whole hub: a sibling of the faces (four more of them), marked only by its tag and arrow. */}
+        <a class="room room--saint room--all" href="/saints/">
+          <img src="/img/saints-rail-all.jpg" alt="" loading="lazy" decoding="async" width="480" height="600" />
+          <span class="room-tab">All</span>
+          <div class="room-body">
+            <h3>Meet all {HUB.length} <Icon name="arrow" size={18} /></h3>
+          </div>
+        </a>
+      </div>
+      <button class="hm-rail-btn hm-rail-btn--prev" type="button" data-rail-prev aria-label="Scroll the saints back" hidden><Icon name="arrow" size={18} /></button>
+      <button class="hm-rail-btn hm-rail-btn--next" type="button" data-rail-next aria-label="Scroll to more saints" hidden><Icon name="arrow" size={18} /></button>
     </div>
   </section>
 
