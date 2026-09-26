@@ -28,6 +28,7 @@ import { FIGURE_PAGES, FIGURE_PICTURES } from '../../../lib/saints/figures';
 import { READING } from '../../../lib/strategies/reading';
 import { liveGames } from '../../../lib/games';
 import { getCollection } from 'astro:content';
+import { readNextFor } from '../../../lib/read-next';
 // Server only: the whole BSB text of every psalm a reading can print. Never in a client script.
 import bsb from '../../../data/psalms.json';
 // Server only, likewise: every early Christian's lines, portraits and story, for the share card.
@@ -55,12 +56,11 @@ const view = quiz && values ? resultFor(quiz, values) : null;
 /** The code this page's own links print: the one it was opened by, or its public code. */
 const linkCode = quiz && view ? linkCodeFor(quiz, raw, view.code) : '';
 
-// Articles that speak to this quiz, so a result is a doorway rather than a dead end.
-const related = quiz
-  ? (await getCollection('articles'))
-      .filter(a => !a.data.draft && a.data.quizzes?.includes(quiz.slug))
-      .slice(0, 3)
-  : [];
+// Articles that speak to this quiz, so a result is a doorway rather than a dead end. Always
+// three, by the same rule as Read next on the quiz's own page (lib/read-next.ts): its own
+// articles first, then a steady fill. One card alone had filled the whole row (the owner,
+// 2026-09-25: "a GIANT article").
+const related = quiz ? readNextFor(await getCollection('articles'), quiz.slug) : [];
 
 /*
  * Depth is ordered by how hard the reader actually leaned, and the strongest one opens on
@@ -618,7 +618,6 @@ const kindredCard = (() => {
       <section>
         <SectionHead
           title="Worth reading"
-          kicker="Written alongside this quiz"
           href="/articles/"
           more="All articles"
         />
