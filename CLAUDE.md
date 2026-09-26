@@ -101,6 +101,14 @@ per pair): about 2% of his weekly usage per four pages. He reviews the four live
 Repin's sword painting in Nicholas's gallery; no hub group fits Nicholas; Lotto's heart band on Ignatius; Bell's
 "in part true" on Athanasius; "The hard parts" on Monica. The ideas he asked about: `DIRECTION-2026-09-26.md`.
 
+**RESULTS LOG (2026-09-26, his go):** every finished quiz sends one anonymous row to Supabase `quiz_results`
+(Base.astro listens for "ww:finished" -> POST /api/result -> lib/engine/links.ts logResult): quiz, code, the result's
+lead line, the statement answers (statement quizzes only; never the Psalm taps or the 12 private answers), the site
+they came from, phone/tablet/computer. He reads it in Supabase: view `quiz_results_recent` (clickable links) plus three
+saved queries in `site/src/lib/account/quiz-results.sql`, which HE must run once in the SQL editor (until then rows are
+silently not kept). /method/ says so. Known stale check: `npm run test:switches` fails "Keep it on every device" (that
+button text was removed on 2026-09-23), unrelated.
+
 **2c. BATCH 2 IS LIVE (night of 2026-09-26): Francis of Assisi, Thomas Aquinas, Patrick, Mary of Egypt**, written while
 he slept, at his ask ("I'll review the batch you just finished and the next batch in one pass in the morning"; he has
 small changes and picture swaps for batch 1). Joan of Arc was skipped (died 1431: his call). The home rail now leads

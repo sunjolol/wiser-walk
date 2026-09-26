@@ -327,6 +327,40 @@ const navItems = ACCOUNTS_VISIBLE ? NAV.filter(n => n.href !== '/me/') : NAV;
     {breadcrumbLd && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />}
 
     <script is:inline>
+      // The results log (the owner, 2026-09-26; /api/result). The site a visit came from is noted
+      // once, on the first page of the tab's visit, by its name only ("youtube.com"). When a runner
+      // says "ww:finished", one anonymous row goes to the server: the quiz, the result code, the
+      // public answers where the runner gives them, that site, and the kind of screen. keepalive
+      // lets the request outlive the page the runner is leaving.
+      (() => {
+        try {
+          if (!sessionStorage.getItem('ww.from')) {
+            let from = 'direct';
+            try {
+              const host = document.referrer ? new URL(document.referrer).hostname.replace(/^www\./, '') : '';
+              if (host && host !== location.hostname.replace(/^www\./, '')) from = host;
+            } catch (e) {}
+            sessionStorage.setItem('ww.from', from);
+          }
+        } catch (e) {}
+        document.addEventListener('ww:finished', event => {
+          const d = event.detail || {};
+          if (!d.quiz || !d.code) return;
+          let from = null;
+          try { from = sessionStorage.getItem('ww.from'); } catch (e) {}
+          const w = window.innerWidth;
+          const device = w < 736 ? 'phone' : w < 1100 ? 'tablet' : 'computer';
+          try {
+            fetch('/api/result', {
+              method: 'POST', keepalive: true, headers: { 'content-type': 'application/json' },
+              body: JSON.stringify({ quiz: d.quiz, code: d.code, answers: d.answers || null, from, device })
+            }).catch(() => {});
+          } catch (e) {}
+        });
+      })();
+    </script>
+
+    <script is:inline>
       // A result page's address is its result code, and a comparison page's address is two
       // of them. Strip the codes before analytics sees the view, so /r/<quiz>/<code>/ is
       // counted as /r/<quiz>/ and /c/<quiz>/<a>.<b>/ as /c/<quiz>/. No code is ever

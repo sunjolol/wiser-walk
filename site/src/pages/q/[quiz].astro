@@ -789,8 +789,11 @@ const askTopics = kindred
         // this and puts the finish on its queue; with accounts switched off nothing is
         // listening and this page carries none of that code at all. The event is dispatched
         // synchronously, so the queue is written before the navigation below.
+        // The answers ride along for the results log (Base.astro, /api/result): one digit per
+        // statement, blank where one was skipped. The link itself still carries only the scores.
+        const answers = sheet.map(a => (a === null ? '' : String(a))).join(',');
         document.dispatchEvent(
-          new CustomEvent('ww:finished', { detail: { quiz: quiz.slug, code, at } })
+          new CustomEvent('ww:finished', { detail: { quiz: quiz.slug, code, at, answers } })
         );
 
         // An invitation sends you to the two-person page instead, with the inviter first.

@@ -380,6 +380,12 @@ create trigger short_links_cap
   for each row execute function public.short_links_cap();
 
 
+-- 6 ------------------------------------------------------------ quiz_results
+-- The results log (2026-09-26): one anonymous row per finished quiz. Its table,
+-- ceiling, grant and view are in quiz-results.sql beside this file; run that
+-- file too on a new project.
+
+
 -- ============================================================================
 -- The site's own server
 -- ============================================================================

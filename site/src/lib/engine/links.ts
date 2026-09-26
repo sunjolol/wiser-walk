@@ -226,6 +226,42 @@ export async function shortCodeFor(slug: string, full: string, salt = 0): Promis
  * whole failure plan: before the owner runs the SQL, with no key, or with Supabase asleep,
  * every result simply keeps its long link.
  */
+/** One finished result, as the results log keeps it (see pages/api/result.ts). */
+export interface ResultRow {
+  quiz: string;
+  code: string;
+  result: string | null;
+  answers: string | null;
+  cameFrom: string | null;
+  device: string | null;
+}
+
+/**
+ * Keep an anonymous copy of a finished result in the table quiz_results (the owner, 2026-09-26: "I'd like
+ * to be able to see all results that have occurred without needing someone to send me a link"). A row is
+ * the quiz, the result code, the line the result leads with, the public answers where a quiz sends them,
+ * the site the visit came from and the kind of screen. Nobody is named on it. False on anything but a
+ * clean write; a finish never waits on it.
+ */
+export async function logResult(row: ResultRow, env: Env, fetchImpl: Fetcher = fetch): Promise<boolean> {
+  const to = access(env);
+  if (!to) return false;
+  const res = await ask(
+    fetchImpl,
+    `${to.base}/rest/v1/quiz_results`,
+    {
+      method: 'POST',
+      headers: { apikey: to.secret, 'content-type': 'application/json', prefer: 'return=minimal' },
+      body: JSON.stringify({
+        quiz: row.quiz, code: row.code, result: row.result, answers: row.answers,
+        came_from: row.cameFrom, device: row.device
+      })
+    },
+    MINT_TIMEOUT_MS
+  );
+  return !!res && res.status >= 200 && res.status < 300;
+}
+
 export async function mintShortCode(
   quiz: Quiz,
   code: string,
