@@ -96,6 +96,21 @@ const ART: Record<string, QuizArt> = {
 export const artFor = (slug: string): QuizArt | null => ART[slug] ?? null;
 
 /**
+ * The Theology Compass's picture wherever its CARD is offered (the owner, 2026-09-26: the home
+ * rail's room, the shared card, the rooms at the foot of articles and results, /me/): Raphael's
+ * Disputa, popes, bishops and theologians arguing round one altar, in colour. Kept out of ART on
+ * purpose: artFor() also dresses a quiz's own pages, and the Compass's quiz page keeps its wheel.
+ */
+export const COMPASS_ART: QuizArt = {
+  src: '/img/raphael-disputa-right.jpg',
+  alt: 'Part of Raphael’s fresco La Disputa: bishops and theologians debating beside the altar, one pointing up to heaven',
+  objectPosition: '79% 0%',
+  colour: true
+};
+/** The same fresco whole (2:1), for the shared card where it is laid out wide. */
+export const COMPASS_ART_WIDE = '/img/raphael-disputa.jpg';
+
+/**
  * How a card prints a `colour` picture, as an inline style on its <img> (the cards' own sheets
  * set the engravings' sepia, and this undoes it for this one picture): as it is, with no filter,
  * and fading into the card's dark ground from a little above the words. The Personality Test's

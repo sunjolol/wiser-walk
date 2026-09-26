@@ -93,20 +93,13 @@ Svinin's river baptism (Met, CC0), the file cropped at the right so the minister
 - Batch his tweaks into ONE push: Hobby has 10GB of deployment storage and each push stores ~140MB (memory
   vercel-storage-per-deploy). He set a retention policy; the Ignored Build Step may or may not be on.
 
-**2a. BATCH 1 OF THE SAINTS IS WRITTEN AND COMMITTED (2026-09-26; about 2.5M subagent tokens, ~620k a page; pushed with the home page change below, or alone if he says so): Nicholas of Myra, Ignatius of Antioch,
-Athanasius of Alexandria, Monica** (slugs `nicholas-of-myra`, `ignatius-of-antioch`, `athanasius-of-alexandria`,
-`monica`). He was at 86% of his weekly usage: efficient, but "just as good as the ones we've already made". Recipe:
-`design/saints-hub/SAINT-BRIEF.md` (new: one Opus writer per saint writes straight into `site/src/data/saints/` and
-`site/public/img/saints/`, then one light checker per pair). Workflow `wf_263cfc37-e18` (dev server `site-alt`, port
-4343). If cut off: see which of the four JSON files exist and pass verify-quotes; rerun only the missing writers.
-After it: add CREDITS rows (in the writers' reports), link keys on other pages (Antony and Basil's circle cards for
-Athanasius, Polycarp's for Ignatius; Monica's key already links), the Psalm quiz from Athanasius's page, render
-`node design/og/render.mjs site saint-<slug>`, measure, look at 390 and 1360, test, ONE push. Then report the cost.
-
-**2b. HOME PAGE, his idea, my verdict "do it", WAITING FOR HIS GO:** the Compass card leaves the home page and the Compass
-becomes the LAST card of the quiz rail (oldest; the headline button "Find your tradition" still points to it); a
-"Discover the saints" rail (faces, name only, best-known first, ending on a "See all" card) goes under the quizzes;
-then games, then articles (kept: his choice). The ideas he asked about are saved in `DIRECTION-2026-09-26.md`.
+**2a. DONE AND LIVE 2026-09-26 (`290067e`, `c9947d1`): saints batch 1 (Nicholas of Myra, Ignatius of Antioch,
+Athanasius of Alexandria, Monica) and the home page change** (the Compass box gone, the Compass the quiz rail's last
+card, a "discover the saints" rail under the quizzes, rail fades flush with the cards). Recipe for the next batches:
+`design/saints-hub/SAINT-BRIEF.md` and workflow script `saint-pages-batch-1` (one Opus writer per saint, one checker
+per pair): about 2% of his weekly usage per four pages. He reviews the four live and sends notes. His open taste calls:
+Repin's sword painting in Nicholas's gallery; no hub group fits Nicholas; Lotto's heart band on Ignatius; Bell's
+"in part true" on Athanasius; "The hard parts" on Monica. The ideas he asked about: `DIRECTION-2026-09-26.md`.
 
 **2. Then the 19 saints and Bible people, in HIS order (ask for it if he has not sent it).** The list with Wikipedia
 views is in `design/saints-hub/research/NEXT-12.md` (top section "ADDED 2026-09-26" plus the twelve below it): Joan

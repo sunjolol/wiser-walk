@@ -37,15 +37,13 @@ import { countFact } from '../lib/quiz-count';
 import '../styles/pages/me.css';
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
-import CompassWheel from '../components/CompassWheel.astro';
-import { QUIZZES, getQuiz, quizHref, scoreQuiz, resultFor } from '../lib/engine/registry';
+import { QUIZZES, quizHref } from '../lib/engine/registry';
 import { groupNounPlural, outcomeNounPlural } from '../lib/engine/types';
-import type { BipolarView, Quiz } from '../lib/engine/types';
-import { artFor, COLOUR_PRINT } from '../lib/art';
+import type { Quiz } from '../lib/engine/types';
+import { artFor, COLOUR_PRINT, COMPASS_ART } from '../lib/art';
 import { SITUATIONS } from '../lib/strategies/reading';
 import { liveGames } from '../lib/games';
 import { ACCOUNTS_READY, ACCOUNTS_VISIBLE } from '../lib/account/config';
-import audit from '../data/compass-audit.json';
 import slsMeta from '../games/sounds-like-scripture.meta.json';
 import wsiMeta from '../games/who-said-it.meta.json';
 
@@ -56,24 +54,9 @@ const quizzes = [...QUIZZES].sort(
 
 /*
  * The rooms are the same cards the rest of the site offers (the owner, 2026-09-22: the ones
- * here "look totally different"). The Compass is the shared card's twin: the night ground and
- * a real wheel in its corner, the published, audited Eastern Orthodox answer sheet scored by
- * the live engine, exactly as components/CompassCard.astro draws it. It is an example, so it
- * is shown only while the reader has no Compass result of their own: beside a result of
- * theirs it would read as that result (me.css hides it on a finished room).
+ * here "look totally different"). The Compass wears the picture its card wears everywhere
+ * since 2026-09-26, Raphael's Disputa in colour (lib/art.ts COMPASS_ART).
  */
-const compass = getQuiz('theology-compass');
-const EXAMPLE = 'Eastern Orthodox';
-const exampleSheet = (audit.simulations as Array<Record<string, any>>).find(
-  s => s.tradition === EXAMPLE && Array.isArray(s.answers)
-);
-const example = compass && exampleSheet
-  ? (resultFor(compass, scoreQuiz(compass, exampleSheet.answers)) as BipolarView)
-  : null;
-/* Its one sentence is the shared card's too (CompassCard.astro's default `say`), so the Compass
-   is introduced in the same words here as on the home page and /quizzes/. Every other room says
-   its quiz's own tagline, as /quizzes/ does. */
-const COMPASS_SAY = 'Six questions that divide Christians, and the tradition that sits nearest you.';
 
 /**
  * The counted facts on a room, after the minutes: the Compass says what its shared card says
@@ -233,7 +216,7 @@ const games = liveGames();
 
   <section class="me-rooms" id="me-rooms" aria-label="Quizzes">
     {quizzes.map((quiz, i) => {
-      const art = artFor(quiz.slug);
+      const art = quiz.slug === 'theology-compass' ? COMPASS_ART : artFor(quiz.slug);
       const href = quizHref(quiz);
       return (
         <article class:list={['mroom', art ? 'mroom--pic' : 'mroom--plain', `mroom--${quiz.slug}`]} data-quiz={quiz.slug} data-href={href}>
@@ -252,11 +235,6 @@ const games = liveGames();
           <img class="mroom-lead-img" data-role="pic" alt="" hidden decoding="async" />
           {/* A draft says so once, in the corner, as it does on the home page and /quizzes/. */}
           {quiz.status === 'draft' && <span class="mroom-tab">Draft</span>}
-          {quiz.slug === compass?.slug && example && (
-            /* Somebody else's result, so it is hidden from a screen reader: read out on this
-               page, six axes and their leanings would sound like the reader's own. */
-            <div class="mroom-eg" aria-hidden="true"><CompassWheel view={example} /></div>
-          )}
           <div class="mroom-body">
             <h2>{quiz.title}</h2>
 
@@ -282,7 +260,7 @@ const games = liveGames();
 
             {/* What a reader who has not taken it sees, and what everyone sees first. */}
             <div class="mroom-none" data-role="none">
-              <p class="mroom-say">{quiz.slug === compass?.slug ? COMPASS_SAY : quiz.tagline}</p>
+              <p class="mroom-say">{quiz.tagline}</p>
               <ul class="mroom-facts">
                 <li><Icon name="clock" size={13} /> {quiz.minutes} min</li>
                 {factsFor(quiz).map(f => <li>{f}</li>)}

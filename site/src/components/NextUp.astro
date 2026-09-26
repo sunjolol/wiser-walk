@@ -16,9 +16,8 @@ import { countFact } from '../lib/quiz-count';
  *              /quizzes/'s; no line under a title on a picture, the owner, 2026-09-23). A
  *              picture art.ts marks `colour` (the Christian Personality Test's eight
  *              paintings) is printed as it is, never sepia
- *   Compass    no plate: it is an instrument, and it takes the night ground its shared
- *              card (CompassCard.astro) is drawn on, that card's example wheel at its top,
- *              that card's sentence, and Start in the soft blue
+ *   Compass    Raphael's Disputa in colour (lib/art.ts COMPASS_ART), as on the home rail and
+ *              its shared card (the owner, 2026-09-26), with no sentence under its title
  *   a game     the /games/ card: a dark room with its ink in the corner and its giant
  *              faint glyph there (.corner-ghost in kit.css), Play in the game's ink
  *
@@ -40,14 +39,12 @@ import { countFact } from '../lib/quiz-count';
  * everything that travels for the same reason.
  */
 import Icon from './Icon.astro';
-import CompassWheel from './CompassWheel.astro';
-import type { BipolarView, Quiz } from '../lib/engine/types';
+import type { Quiz } from '../lib/engine/types';
 import { groupNounPlural, outcomeNounPlural } from '../lib/engine/types';
 import type { Game } from '../lib/games';
-import { quizHref, scoreQuiz, resultFor } from '../lib/engine/registry';
-import { artFor, COLOUR_PRINT } from '../lib/art';
+import { quizHref } from '../lib/engine/registry';
+import { artFor, COLOUR_PRINT, COMPASS_ART } from '../lib/art';
 import { SITUATIONS } from '../lib/strategies/reading';
-import audit from '../data/compass-audit.json';
 
 export interface Props {
   /** Quizzes to offer, in order. Drafts are dropped here rather than by every caller. */
@@ -66,7 +63,8 @@ const QUIZ_INK: Record<string, string> = {
   'which-psalm': '#BCD6F2',
   'bible-figure': '#EADFCB',
   'spiritual-gifts': '#FFC98F',
-  'seven-deadly-sins': '#F2A596'
+  'seven-deadly-sins': '#F2A596',
+  'theology-compass': '#F2DE9B'
 };
 
 /**
@@ -88,26 +86,10 @@ const GAME_LOOK: Record<string, { glyph: string; ghost: 'ask' | 'quote'; ink: 'o
  */
 
 /*
- * The Compass is introduced in its shared card's words (CompassCard.astro's default `say`), as
- * on the home page, /quizzes/ and /me/, so it reads as the same card wherever it is offered.
  * A quiz on a plate says nothing under its title, as on the home rail and /quizzes/ (the owner,
  * 2026-09-23): a line there pushed the title up into the brighter part of the plate, and the
  * quiz's own page says it better. A quiz with no plate would say its own tagline.
  */
-const COMPASS_SAY = 'Six questions that divide Christians, and the tradition that sits nearest you.';
-
-/*
- * And it wears its shared card's wheel at its top, found and scored exactly as CompassCard.astro
- * finds and scores it. Without it the room was a starry box with nothing in it.
- */
-const EXAMPLE = 'Eastern Orthodox';
-const exampleSheet = (audit.simulations as Array<Record<string, any>>).find(
-  s => s.tradition === EXAMPLE && Array.isArray(s.answers)
-);
-const exampleFor = (q: Quiz): BipolarView | undefined =>
-  q.slug === 'theology-compass' && exampleSheet
-    ? (resultFor(q, scoreQuiz(q, exampleSheet.answers)) as BipolarView)
-    : undefined;
 
 /*
  * A three-word title's last two words tied, the way the home page ties its game's: broken in
@@ -156,19 +138,17 @@ interface Room {
   /** A painting in colour (art.ts `colour`): printed as it is (COLOUR_PRINT), never sepia. */
   imageColour?: boolean;
   ghost?: { glyph: string; kind: 'ask' | 'quote' };
-  /** The Compass's example wheel. */
-  wheel?: BipolarView;
 }
 
 const rooms: Room[] = [
   ...quizzes
     .filter(q => q.status === 'live')
     .map((q): Room => {
-      const art = artFor(q.slug);
+      const art = q.slug === 'theology-compass' ? COMPASS_ART : artFor(q.slug);
       return {
         href: quizHref(q),
         title: tie(q.title),
-        say: art ? undefined : q.slug === 'theology-compass' ? COMPASS_SAY : q.tagline,
+        say: art ? undefined : q.tagline,
         minutes: `${q.minutes} min`,
         facts: [countFact(q)],
         go: 'Start',
@@ -177,8 +157,7 @@ const rooms: Room[] = [
         image: art?.src,
         imagePosition: art?.objectPosition,
         imageLift: art?.lift,
-        imageColour: art?.colour,
-        wheel: exampleFor(q)
+        imageColour: art?.colour
       };
     }),
   ...games.map((g): Room => {
@@ -233,9 +212,6 @@ const roomStyle = (room: Room) =>
             {room.ghost && (
               <span class={`corner-ghost corner-ghost--${room.ghost.kind}`} aria-hidden="true">{room.ghost.glyph}</span>
             )}
-            {/* Somebody else's result, so it is hidden from a screen reader, as on /me/: read
-                out inside the link, six axes and their leanings would sound like the reader's. */}
-            {room.wheel && <div class="nx-eg" aria-hidden="true"><CompassWheel view={room.wheel} /></div>}
             <span class="nx-body">
               <b class="nx-title">{room.title}</b>
               {room.say && <span class="nx-say">{room.say}</span>}

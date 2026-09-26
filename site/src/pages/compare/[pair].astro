@@ -77,10 +77,6 @@ const capital = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 const url = new URL(compareHref(c.slug), Astro.site).href;
 const others = otherComparisons(c);
 
-/* The Compass card at the foot, naming this pair. A reader's result is measured against
-   every tradition on the Compass, these two among them, so "among" is the true word. */
-const compassSay = `See where you land among ${c.labelA}, ${c.labelB} and the ` +
-  `${spell(quiz.outcomes.length - 2)} other traditions.`;
 
 /*
  * WebPage rather than Article, for the reason the axis and tradition templates give: an
@@ -273,7 +269,7 @@ const breadcrumbs = [
 
     {/* The way into the quiz: the one Compass card the whole site uses. */}
     <div class="cmpx-way">
-      <CompassCard level={2} kicker="Your turn" say={compassSay} />
+      <CompassCard level={2} />
     </div>
 
     {others.length > 0 && (

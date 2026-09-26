@@ -71,15 +71,20 @@ const updatedISO = article.data.updated ? iso(article.data.updated) : null;
  * the owner has called "a soup of dullness" — and the foot of an article is the one place
  * on the page where a reader has finished and is deciding whether to stay.
  */
+/*
+ * Quizzes only, no games (the owner, 2026-09-26): the article's own quizzes, then the Compass,
+ * then the two he wants offered most, the Christian Personality Test and the Bible figure quiz,
+ * then whichever of the rest fits a thoughtful reader best, until the row of four is full.
+ */
 const named = article.data.quizzes.map(getQuiz).filter(Boolean);
-const compass = getQuiz('theology-compass');
+const FAVOURED = ['theology-compass', 'personality', 'bible-figure', 'which-psalm', 'which-early-christian', 'spiritual-gifts', 'seven-deadly-sins'];
 const seen = new Set<string>();
-const nextQuizzes = [...named, compass].filter(q => {
-  if (!q || seen.has(q.slug)) return false;
+const nextQuizzes = [...named, ...FAVOURED.map(getQuiz)].filter(q => {
+  if (!q || q.status !== 'live' || seen.has(q.slug)) return false;
   seen.add(q.slug);
   return true;
-}) as NonNullable<ReturnType<typeof getQuiz>>[];
-const nextGames = liveGames();
+}).slice(0, 4) as NonNullable<ReturnType<typeof getQuiz>>[];
+const nextGames: ReturnType<typeof liveGames> = [];
 
 /*
  * And the other articles. Ones sharing a topic with this piece first, then the rest by

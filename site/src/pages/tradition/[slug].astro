@@ -109,9 +109,6 @@ const NUMBER_WORDS = [
   'nineteen', 'twenty'
 ];
 const others = quiz.outcomes.length - 1;
-const compassSay =
-  `See how near you land to the ${searchName} tradition, and to the other ` +
-  `${NUMBER_WORDS[others] ?? others}.`;
 
 /**
  * The title, as many of the six topics as there is room for.
@@ -384,7 +381,7 @@ const art = traditionArt(tradition.slug);
 
     {/* The way back into the quiz: the Compass's own card, the one every page offers it
         with (components/CompassCard.astro), speaking of this tradition by name. */}
-    <CompassCard level={2} kicker="Your turn" say={compassSay} />
+    <CompassCard level={2} />
 
     <CorrectionNote subject={tradition.name} />
   </div>

@@ -90,8 +90,6 @@ const WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eig
   'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen',
   'nineteen', 'twenty'];
 const spell = (n: number) => WORDS[n] ?? String(n);
-const compassSay = `Answer ${spell(quiz.items.length)} statements and see which of the ` +
-  `${spell(quiz.outcomes.length)} traditions sits nearest you.`;
 ---
 <Base
   title="Compare traditions"
@@ -149,7 +147,7 @@ const compassSay = `Answer ${spell(quiz.items.length)} statements and see which 
     )}
 
     <div class="cmpx-way">
-      <CompassCard level={2} kicker="Your turn" say={compassSay} />
+      <CompassCard level={2} />
     </div>
   </div>
 </Base>

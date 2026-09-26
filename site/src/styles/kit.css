@@ -599,37 +599,33 @@ a:hover .go-pill .icon, a.go-pill:hover .icon { transform: translateX(3px); }
 
 /*
  * THE COMPASS CARD (components/CompassCard.astro), one look wherever the Theology Compass is
- * offered. The night ground with its blue glow, a real wheel, the words, the facts and Start.
- * It lays itself out by its own width: wheel over words when narrow, words beside the wheel
- * from 40rem of card. The wheel's top label sits inside its plot, so the plot needs no margin
- * over it; the uneven padding beside it leaves room for the labels that hang outside the
- * circle and about 42px of night above and below the drawing.
+ * offered: since 2026-09-26 the picture the home rail's Compass room wears, Raphael's Disputa in
+ * colour, under a dark scrim, with the title, the facts and Start in a pale gold (the fresco's
+ * gold, the room's ink). It lays itself out by its own width: a tall picture card with the words
+ * at its foot when narrow; from 40rem of card, the whole fresco wide, the words on its left.
  */
 .ccard-wrap { container-type: inline-size; }
-.ccard.dark {
-  --room-ink: var(--blue-soft);
-  display: flex; flex-direction: column; border-radius: 24px; text-decoration: none; color: #fff;
-  background-color: #141a27;
-  background-image: radial-gradient(120% 90% at 85% 10%, rgba(126, 186, 238, .22), transparent 60%), var(--dark-fill-img);
-  background-size: auto, 520px;
+.ccard {
+  --room-ink: #F2DE9B;
+  position: relative; isolation: isolate; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: flex-end; min-height: 24rem;
+  border-radius: 24px; text-decoration: none; color: #fff; background: #1c1b1a;
   box-shadow: 0 10px 30px rgba(20, 24, 40, .16);
   transition: transform .22s ease, box-shadow .22s ease;
 }
-:root[data-theme="dark"] .ccard.dark { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .07), 0 10px 26px rgba(0, 0, 0, .35); }
-.ccard.dark:hover { transform: translateY(-3px); box-shadow: 0 16px 38px rgba(20, 24, 40, .24); }
-.ccard-wheel { order: -1; padding: .5rem 3.4rem 0; }
-.ccard .wheel-plot { max-width: 15.5rem; margin: 0 auto; }
-.ccard .wheel figcaption, .ccard .wheel-cap { display: none; }
-.ccard-body { padding: 1.35rem 1.3rem 1.4rem; }
-.ccard-kicker {
-  margin: 0 0 .25rem; font-family: var(--ui); font-size: var(--fs-label); font-weight: var(--fw-label); letter-spacing: .16em;
-  text-transform: uppercase; color: var(--room-ink);
+:root[data-theme="dark"] .ccard { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .07), 0 10px 26px rgba(0, 0, 0, .35); }
+.ccard:hover { transform: translateY(-3px); box-shadow: 0 16px 38px rgba(20, 24, 40, .24); }
+.ccard-img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+.ccard-img--wide { display: none; object-position: 50% 30%; }
+.ccard::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, rgba(20, 18, 16, 0) 26%, rgba(20, 18, 16, .78) 56%, rgba(20, 18, 16, .95) 76%, rgba(20, 18, 16, .98));
 }
+.ccard-body { padding: 1.35rem 1.3rem 1.4rem; }
 .ccard .ccard-title {
-  margin: 0; font-family: var(--display); font-weight: 400; color: #fff;
+  margin: 0; font-family: var(--display); font-weight: 400; color: #fff; text-shadow: var(--title-lift);
   font-size: clamp(1.55rem, 6.2vw, 1.95rem); line-height: 1.08; letter-spacing: -.012em; text-wrap: balance;
 }
-.ccard .ccard-say { margin: .55rem 0 0; max-width: 26rem; font-size: .95rem; line-height: 1.5; text-wrap: balance; }
 .ccard-facts {
   display: flex; flex-wrap: wrap; gap: .4rem; margin: .95rem 0 0; padding: 0; list-style: none;
   font-family: var(--ui); font-size: var(--fs-tag); font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
@@ -640,16 +636,16 @@ a:hover .go-pill .icon, a.go-pill:hover .icon { transform: translateX(3px); }
 }
 .ccard-go { margin-top: 1.1rem; color: var(--room-ink); }
 @container (min-width: 40rem) {
-  .ccard.dark { flex-direction: row; align-items: center; }
-  .ccard-wheel { order: 1; flex: 0 0 50%; padding: 1.8rem 6.5rem 1.5rem 5.5rem; }
-  .ccard .wheel-plot { max-width: 19rem; }
-  .ccard-body { flex: 1; padding: 2.2rem 0 2.2rem 2.4rem; }
+  .ccard { min-height: 20rem; justify-content: center; }
+  .ccard-img--tall { display: none; }
+  .ccard-img--wide { display: block; }
+  .ccard::after { background: linear-gradient(90deg, rgba(20, 18, 16, .94) 0%, rgba(20, 18, 16, .8) 30%, rgba(20, 18, 16, .2) 62%, rgba(20, 18, 16, 0) 80%); }
+  .ccard-body { padding: 2.2rem 2.4rem; max-width: 26rem; }
   .ccard .ccard-title { font-size: clamp(2rem, 4.7vw, 2.5rem); }
-  .ccard .ccard-say { font-size: 1.02rem; }
 }
-/* under 23rem the three facts only just miss one row, and "18 traditions" fell alone onto a second */
+/* under 23rem the facts only just miss one row */
 @media (max-width: 22.99rem) { .ccard-facts { gap: .3rem; } .ccard-facts li { padding: .36rem .5rem; } }
-@media (prefers-reduced-motion: reduce) { .ccard.dark { transition: none; } .ccard.dark:hover { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .ccard { transition: none; } .ccard:hover { transform: none; } }
 
 /* the feature: a dark half carrying the instrument, a light half carrying the words */
 .feature {

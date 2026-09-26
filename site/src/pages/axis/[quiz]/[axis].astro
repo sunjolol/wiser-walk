@@ -633,7 +633,7 @@ const breadcrumbs =
       plate is the band at the top of this page. Styles: .qcard in pages/reference.css.
     */}
     {isCompass ? (
-      <CompassCard level={2} kicker="Your turn" say={cardSay} />
+      <CompassCard level={2} />
     ) : (
       <div class="qcard-wrap">
         <a class={`qcard qcard--plain qcard--${quiz.slug}`} href={quizHref(quiz)}>

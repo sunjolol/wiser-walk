@@ -341,7 +341,7 @@
    like the Personality Test's room, with a pale gold ink (the fresco's gold; no other room is gold). */
 .room--compass { --room-ink: #F2DE9B; background: #1c1b1a; }
 .hm-rail .room--compass { flex-basis: min(84vw, 22rem); }
-.room--compass > img { object-position: 40% 0%; }
+.room--compass > img { object-position: 79% 0%; }
 .room--compass::after {
   content: ""; position: absolute; inset: 0; z-index: -1;
   background: linear-gradient(180deg, rgba(20, 18, 16, 0) 26%, rgba(20, 18, 16, .78) 56%, rgba(20, 18, 16, .95) 76%, rgba(20, 18, 16, .98));

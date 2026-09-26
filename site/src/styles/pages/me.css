@@ -87,6 +87,8 @@
    eight paintings in colour, printed as they are (me.astro), so the ground under them is a
    neutral dark rather than the plates' brown */
 .mroom--personality { --room-ink: #BFE3AE; background: #1c1b1a; }
+/* the Compass wears Raphael's Disputa in colour since 2026-09-26, with its gold ink */
+.mroom--theology-compass { --room-ink: #F2DE9B; background: #1c1b1a; }
 /* the Thessalonica plate is the palest of the three; printed darker it joins the other two */
 .mroom--spiritual-gifts > img { filter: sepia(.34) contrast(.9) brightness(.88); }
 /* white type on a picture sits on the title lift (kit.css), as on every engraving card */
