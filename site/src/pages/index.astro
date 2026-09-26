@@ -279,8 +279,11 @@ const jsonLd = {
 
   {/* ------------------------------------------------------------------------ saints */}
   <section class="hm-saints" aria-labelledby="hm-saints">
+    {/* "See all": beside the word from a tablet up, under the rail beside its arrows on a phone (the owner,
+        2026-09-26), in the saints' own gold; the count is the hub's, so it keeps up as pages are added. */}
     <header class="hm-head">
       <h2 id="hm-saints">discover the saints</h2>
+      <a class="hm-more go-pill hm-saints-all hm-saints-all--head" href="/saints/">See all {HUB.length} <Icon name="arrow" size={16} /></a>
     </header>
     <div class="hm-rail hm-rail--saints" data-rail>
       <div class="hm-rail-track" data-rail-track tabindex="0" role="group" aria-label="Saints">
@@ -301,6 +304,7 @@ const jsonLd = {
           </div>
         </a>
       </div>
+      <a class="go-pill hm-saints-all hm-saints-all--foot" href="/saints/">See all {HUB.length} <Icon name="arrow" size={16} /></a>
       <button class="hm-rail-btn hm-rail-btn--prev" type="button" data-rail-prev aria-label="Scroll the saints back" hidden><Icon name="arrow" size={18} /></button>
       <button class="hm-rail-btn hm-rail-btn--next" type="button" data-rail-next aria-label="Scroll to more saints" hidden><Icon name="arrow" size={18} /></button>
     </div>

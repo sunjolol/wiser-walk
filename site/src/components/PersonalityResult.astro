@@ -693,7 +693,8 @@ const isExample = view.code === EXAMPLE_CODE;
         <div class="pq-coin-a"><p class="pq-kicker">At its best</p><h3>{V.best}</h3><p>{V.bestText}</p></div>
         <div class="pq-coin-b"><p class="pq-kicker">Its counterfeit</p><h3>{V.fake}</h3><p>{V.warn}</p><p class="pq-src">{V.quote.cite}</p></div>
       </div>
-    ) : <p class="pq-muted">No single quality stands out far enough to name here.</p>}
+    ) : <p class="pq-muted">Your answers keep to the middle on every trait here, so no one quality leads. Ask someone who knows you well which one they see first.</p>}
+    {V && r.virtueLight && <p class="pq-muted pq-small">Your answers lean only lightly here, so hold this loosely.</p>}
     {P && (
       <div class="pq-partner">
         <p class="pq-kicker">Your strength needs a partner</p>

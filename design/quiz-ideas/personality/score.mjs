@@ -156,11 +156,16 @@ export function score(answers, pub = null) {
   const thoughts = pub ? null : thoughtsOf(answers, S, pos);
 
   // 8. Best quality and its counterfeit; strength and its partner.
-  let virtue = null;
+  // The strongest lean that has a quality is named. A third of the scale counts in full (the owner, 2026-09-26:
+  // the old bar of .34 sat just above one third, a lean answers often land on, and his own result fell short by
+  // less than a hundredth). A weaker lean is still named, marked light, so no one is told they have no good quality.
+  let virtue = null, virtueLight = false;
   for (const r of ranked.concat([{ key: 'nerve', value: S.nerve }, { key: 'makeup', value: S.makeup }])
     .sort((a, b) => Math.abs(b.value) - Math.abs(a.value))) {
     const key = r.key + ':' + (r.value < 0 ? 'left' : 'right');
-    if (VIRTUES[key] && Math.abs(r.value) >= 0.34) { virtue = key; break; }
+    if (!VIRTUES[key]) continue;
+    if (Math.abs(r.value) > 0) { virtue = key; virtueLight = Math.abs(r.value) < 0.33; }
+    break;
   }
   // Shown only when the person clearly leans one way (round 3: a weak lean praised "courage" in a man whose
   // whole trouble was finding it).
@@ -185,7 +190,7 @@ export function score(answers, pub = null) {
   const line = { scores: L, lead: lOrder[0], second: lOrder[1], why: why[lOrder[0]], behind };
 
   return { scales: S, type, disposition, secondDisposition, makeup, closeCalls, trap, trapSwapped, trapQuiet, leanings, strongest, balanced,
-    links, anger, speaker, help, thoughts, virtue, partner, line };
+    links, anger, speaker, help, thoughts, virtue, virtueLight, partner, line };
 }
 
 // 7. The eight thoughts (the private page): the private "how often" statements (three quarters), and the person's own

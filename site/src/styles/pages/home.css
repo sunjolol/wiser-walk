@@ -367,3 +367,13 @@
   .hm-rail .room--saint { min-height: 20.5rem; }
   .room--saint .room-body { padding: 1.1rem 1.2rem 1.25rem; }
 }
+
+/* "See all" for the saints (2026-09-26): the saints' gold, not the page's blue or the games' white. Beside the
+   word from a tablet up; on a phone under the rail, on the left of its arrows (touch.css makes the rail a grid). */
+.hm-saints-all { color: #7E6128; }
+:root[data-theme="dark"] .hm-saints-all { color: #E3C584; }
+.hm-saints .hm-saints-all--foot { display: none; }
+@media (max-width: 45.99rem) {
+  .hm-saints .hm-saints-all--head { display: none; }
+  .hm-saints .hm-saints-all--foot { display: inline-flex; grid-row: 2; grid-column: 1; justify-self: start; align-self: center; margin-left: 0; }
+}

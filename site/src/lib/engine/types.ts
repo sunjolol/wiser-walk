@@ -511,6 +511,8 @@ export interface PersonalityReport {
   help: Array<{ key: string; side: 'left' | 'right'; text: string; note: string }>;
   thoughts: PersonalityThoughts | null;
   virtue: string | null;
+  /** The best quality is named from a lean under a third of the scale: said gently on the page. */
+  virtueLight?: boolean;
   partner: 'counsel' | 'fortitude' | null;
   line: { scores: Record<string, number>; lead: string; second: string; why: string[]; behind: number };
 }
