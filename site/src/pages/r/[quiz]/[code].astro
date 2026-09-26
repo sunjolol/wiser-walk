@@ -17,14 +17,14 @@ import KindredResult from '../../../components/KindredResult.astro';
 import PersonalityResult from '../../../components/PersonalityResult.astro';
 import type { KindredData } from '../../../lib/strategies/kindred';
 import { QUIZZES, getQuiz, resultFor, decodeFor, outcomeHref } from '../../../lib/engine/registry';
-import { groupNoteFor, notesFor, outcomeNounPlural, rankWord } from '../../../lib/engine/types';
+import { groupNoteFor, leadFor, notesFor, outcomeNounPlural, rankWord } from '../../../lib/engine/types';
 import { linkCodeFor, resolveCode } from '../../../lib/engine/links';
 import { readEnv } from '../../../lib/email/env';
 // The card a shared link shows: the outcome this result names, where one was drawn.
 import { resultCardFor } from '../../../lib/seo';
 import { ACCOUNTS_VISIBLE } from '../../../lib/account/config';
 import { artFor } from '../../../lib/art';
-import { FIGURE_PAGES } from '../../../lib/saints/figures';
+import { FIGURE_PAGES, FIGURE_PICTURES } from '../../../lib/saints/figures';
 import { READING } from '../../../lib/strategies/reading';
 import { liveGames } from '../../../lib/games';
 import { getCollection } from 'astro:content';
@@ -140,14 +140,10 @@ const headlineNoteGroups = quiz && view ? groupNoteFor(quiz, view.named, 'result
  * list below prints every other card's own (OutcomeCards, notes="all").
  */
 const leads = Boolean(quiz?.resultLeadsWithOutcome) && view?.shape === 'bipolar';
-const leadNames =
-  leads && view?.shape === 'bipolar' && view.state !== 'central'
-    ? view.ranked.slice(0, view.state === 'near' ? 1 : 2)
-    : [];
-const leadPre =
-  view?.state === 'loose' ? 'No close fit. Nearest, loosely:'
-    : view?.state === 'tie' ? 'Jointly closest to'
-    : 'Closest to';
+// The names and the words before them, from the one rule the title and /me/ share (types.ts).
+const lead = leadFor(quiz, view);
+const leadNames = lead?.names ?? [];
+const leadPre = lead?.pre ?? '';
 const leadSlugs = leadNames.map(r => r.slug);
 const headlineNotes =
   quiz && leads ? [...notesFor(quiz, leadSlugs), ...headlineNoteGroups] : headlineNoteGroups;
@@ -168,10 +164,15 @@ const headlineNotes =
  * figure the reader is closest to, its band wears that figure's own painting, the one at the
  * top of the figure's page, in colour and placed as that page places it. Where two are level
  * or nothing is close, the first named. Jesus has no page of His own yet, so a result naming
- * Him keeps the quiz's plate.
+ * Him first wears the Sinai icon of Christ Pantocrator (FIGURE_PICTURES, beside FIGURE_PAGES).
  */
 const art = quiz ? artFor(quiz.slug) : null;
 const leadPage = quiz?.slug === 'bible-figure' && leadSlugs[0] ? FIGURE_PAGES[leadSlugs[0]] : undefined;
+const leadBand = leadPage
+  ? { src: leadPage.band.picture.src, posM: leadPage.band.posM, posD: leadPage.band.posD }
+  : quiz?.slug === 'bible-figure' && leadSlugs[0]
+    ? FIGURE_PICTURES[leadSlugs[0]]?.band
+    : undefined;
 
 /*
  * Where to go once the result has been read. The OTHER quizzes, then the games, as rooms
@@ -244,7 +245,7 @@ const kindredCard = (() => {
 ---
 {quiz && view ? (
   <Base
-    title={`${view.headline} — ${quiz.title}`}
+    title={`${lead ? lead.short : view.headline} — ${quiz.title}`}
     description={description}
     noindex={true}
     ogType="article"
@@ -260,22 +261,22 @@ const kindredCard = (() => {
     {view.shape !== 'personality' && (<header
       class:list={[
         'band', 'band--long', 'band--pic', 'result-band',
-        leadPage ? 'band--photo' : art ? 'band--engraving' : 'band--night',
-        (leadPage || art) && 'band--has-img'
+        leadBand ? 'band--photo' : art ? 'band--engraving' : 'band--night',
+        (leadBand || art) && 'band--has-img'
       ]}
     >
-      {leadPage && (
+      {leadBand && (
         <img
           class="band-img band-img--figure"
-          src={leadPage.band.picture.src}
+          src={leadBand.src}
           alt=""
-          style={`--pos-m:${leadPage.band.posM};--pos-d:${leadPage.band.posD}`}
+          style={`--pos-m:${leadBand.posM};--pos-d:${leadBand.posD}`}
           loading="eager"
           fetchpriority="high"
           decoding="async"
         />
       )}
-      {!leadPage && art && (
+      {!leadBand && art && (
         <img
           class="band-img"
           src={art.src}

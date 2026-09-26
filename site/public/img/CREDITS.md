@@ -431,6 +431,8 @@ long side.
 | daniel-west-card.jpg | The Saints hub card, cut from the same West painting around Daniel's face (box 1820,831 to 2720,1956 of the download), 480 x 600, the owner's choice | as for daniel-west-band.jpg | Public domain |
 | daniel-foster.jpg | Daniel in the Den of Lions, an engraving in Bible Pictures, with brief descriptions by Charles Foster, Philadelphia, 1897. A gallery picture, shown on wide screens only, the owner's choice in place of the Rubens. The scan's grey edges trimmed, resized to 911 x 1200 | `Foster Bible Pictures 0011-1.jpg` (1774 x 2274) | Public domain |
 | joseph-zurbaran-card2.jpg | The Saints hub card, 480 x 600, centred on Joseph's whole head and turban (box 215,15 to 755,690) from joseph-3.jpg, Zurbarán's Joseph (Jacob and His Twelve Sons, 1640s, Auckland Castle), the owner's choice | as for joseph-3.jpg | Public domain |
+| jesus-icon-card.jpg | Christ Pantocrator, encaustic icon of the 6th century, St Catherine's Monastery, Mount Sinai. The figure quiz's save card wherever Jesus is named (He has no figure page yet). Cropped to 1600 x 2000 at x 85 to 1685, y 250 to 2250, His face centred with His eyes 38% from the top, then resized to 480 x 600 | `Spas vsederzhitel sinay.jpg` (2023 x 3774) | Public domain (PD-Art, PD-old-100-expired) |
+| jesus-icon-band.jpg | Christ Pantocrator, encaustic icon of the 6th century, St Catherine's Monastery, Mount Sinai. The figure quiz's result band when Jesus is the closest. The whole icon, with the scan's white margin and worn edge trimmed (x 55 to 1940, y 75 to 3700), resized to 936 x 1800 | `Spas vsederzhitel sinay.jpg` (2023 x 3774) | Public domain (PD-Art, PD-old-100-expired) |
 
 ## Another licence: the Saints hub (`saints/`)
 

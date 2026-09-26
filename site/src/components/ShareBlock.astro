@@ -28,9 +28,9 @@
  * wrong for a visitor is the costlier error.
  */
 import type { BipolarView, Quiz, ResultView } from '../lib/engine/types';
-import { groupNoteFor, isComparable, notesFor, resultNotes } from '../lib/engine/types';
+import { groupNoteFor, isComparable, leadFor, notesFor, resultNotes } from '../lib/engine/types';
 import { artForOutcome } from '../lib/art';
-import { FIGURE_PAGES } from '../lib/saints/figures';
+import { FIGURE_PAGES, FIGURE_PICTURES } from '../lib/saints/figures';
 import { quizHref, inviteHref } from '../lib/engine/registry';
 import { publicCodeSync } from '../lib/engine/links';
 
@@ -110,7 +110,8 @@ const uid = `share-${quiz.slug}-${view.code}`;
  * level or nothing is close; then the next ones on the page's own list, smaller; the axis
  * clauses in one line. Where nobody is named (every axis in the no-position band) it draws the
  * words alone. The picture is the figure page's own card picture (the one the Saints hub
- * shows), or the figure's plate where there is no page (Jesus). No number, anywhere.
+ * shows); for Jesus, who has no page yet, the Sinai icon (FIGURE_PICTURES), never Doré's
+ * crowded plate (the owner, 2026-09-25). No number, anywhere.
  */
 const leadsWho = Boolean(quiz.resultLeadsWithOutcome) && view.shape === 'bipolar';
 const whoCard = (() => {
@@ -118,12 +119,13 @@ const whoCard = (() => {
   if (view.state === 'central') return { central: true, lead: [], next: [], slugs: [] as string[] };
   const person = (slug: string, name: string) => {
     const page = FIGURE_PAGES[slug];
-    const art = page ? null : artForOutcome(quiz.slug, slug);
+    const stand = page ? null : FIGURE_PICTURES[slug]?.card;
+    const art = page || stand ? null : artForOutcome(quiz.slug, slug);
     const who = quiz.outcomes.find(o => o.slug === slug)?.who ?? '';
     return {
       name,
-      img: page?.card.img ?? art?.src ?? null,
-      focus: page ? page.card.focus ?? '50% 25%' : art?.objectPosition ?? '50% 30%',
+      img: page?.card.img ?? stand?.img ?? art?.src ?? null,
+      focus: page ? page.card.focus ?? '50% 25%' : stand?.focus ?? art?.objectPosition ?? '50% 30%',
       line: page?.card.line ?? (who ? who.charAt(0).toUpperCase() + who.slice(1) : '')
     };
   };
@@ -152,6 +154,17 @@ const card = {
    * sheet travel without the person there to say it was theirs. The card says which psalm.
    */
   summary: view.shape === 'reading' ? '' : view.summary,
+  /*
+   * What the system share sheet sends as its text. The summary, except where the result leads
+   * with who: then the same words as the page's headline ("Closest to Peter"), so the text that
+   * travels names the person the way the page does, with the sentence each named one carries
+   * (Jesus's, and the canon notes on Judith and Tobit), since a note goes wherever its name goes.
+   */
+  say: (() => {
+    const lead = leadFor(quiz, view);
+    if (!lead) return view.shape === 'reading' ? '' : view.summary;
+    return [`${lead.line}.`, ...notesFor(quiz, lead.names.map(n => n.slug))].join(' ');
+  })(),
   /*
    * The sentence a named outcome carries, verbatim, drawn under the picture.
    *
@@ -1189,7 +1202,7 @@ const card = {
           files: [new File([b], filename, { type: 'image/png' })],
           title: data.quiz,
           // a reading's summary is the situation, which does not travel (see the card data)
-          text: data.reading ? data.reading.say : data.summary
+          text: data.reading ? data.reading.say : data.say
         });
       } catch (err) {
         if (err && err.name !== 'AbortError') {

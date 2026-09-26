@@ -800,6 +800,42 @@ export function notesFor(quiz: Quiz, slugs: string[]): string[] {
 export const resultNotes = (quiz: Quiz, view: ResultView): string[] =>
   notesFor(quiz, view.named);
 
+/** The person (or two) a result leads with, and the words said before their names. */
+export interface Lead {
+  /** "Closest to", "Jointly closest to", or "No close fit. Nearest, loosely:". */
+  pre: string;
+  names: Ranked[];
+  /** The whole line, as the result page's headline and the /me/ card print it. */
+  line: string;
+  /** The same, shorter, for a page title: "Closest to Daniel and Hannah". */
+  short: string;
+}
+
+/**
+ * WHO a result leads with, where the quiz leads with who (Quiz.resultLeadsWithOutcome: the
+ * figure quiz). One rule for every surface that says it: the result page's headline and its
+ * <title>, the share sheet's text and the result's card on /me/. The nearest one; both where
+ * two are level; both where nothing is close, said so. Null where the quiz does not lead with
+ * who, and where nobody is named (every axis in the no-position band): those keep the engine's
+ * own headline.
+ */
+export function leadFor(quiz: Quiz | null | undefined, view: ResultView | null | undefined): Lead | null {
+  if (!quiz?.resultLeadsWithOutcome || view?.shape !== 'bipolar' || view.state === 'central') return null;
+  const names = view.ranked.slice(0, view.state === 'near' ? 1 : 2);
+  if (!names.length) return null;
+  const who = names.map(r => r.name).join(' and ');
+  const pre =
+    view.state === 'loose' ? 'No close fit. Nearest, loosely:'
+      : view.state === 'tie' ? 'Jointly closest to'
+      : 'Closest to';
+  return {
+    pre,
+    names,
+    line: `${pre} ${who}`,
+    short: view.state === 'loose' ? `Nearest, loosely: ${who}` : `Closest to ${who}`
+  };
+}
+
 /**
  * The sentence that travels with a set of group names, if any of them was printed.
  *

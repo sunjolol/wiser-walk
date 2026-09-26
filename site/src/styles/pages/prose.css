@@ -742,6 +742,8 @@
 .band--pic .verdict-axes .verdict-sep { color: rgba(255, 255, 255, .6); }
 /* the rails, on their own under the list: no wheel above them, so no room kept for one */
 .result-panel--rails { margin: 2rem 0 0; }
+/* and no key to the hatched middle over them: the owner, 2026-09-25, "Remove it also" */
+.result-panel--rails .rails-legend { display: none; }
 
 /*
  * A section head already carries 3rem above it, so the block it announces does

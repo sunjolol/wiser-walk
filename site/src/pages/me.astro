@@ -369,6 +369,7 @@ const games = liveGames();
 
   <script>
     import { getQuiz, resultFor, decodeFor, scoreQuiz, encodeFor } from '../lib/engine/registry';
+    import { leadFor } from '../lib/engine/types';
     import { clearShelf, readableResults } from '../lib/shelf';
     // The shorter code a link prints, where a quiz has one (engine/links.ts).
     import { publicCodeSync } from '../lib/engine/links';
@@ -405,6 +406,13 @@ const games = liveGames();
             }
           );
           localStorage.setItem('ww.shelf.v1', JSON.stringify(rows));
+        }
+        // ?seed=<quiz>:<code> puts that one result on the shelf, to see how a given result reads.
+        if (seed && seed.includes(':')) {
+          const [slug, code] = seed.split(':');
+          localStorage.setItem('ww.shelf.v1', JSON.stringify([
+            { quiz: slug, code: code.toUpperCase(), at: new Date().toISOString() }
+          ]));
         }
       } catch (e) {}
     }
@@ -488,8 +496,14 @@ const games = liveGames();
           const view = resultFor(quiz, values);
           taken++;
 
-          pick(room, 'headline').textContent = view.headline;
-          pick(room, 'summary').textContent = view.summary;
+          /*
+           * Worked out from the stored code every time, never stored as words, so an old result
+           * reads the way the result page reads now. Where the quiz leads with who (the figure
+           * quiz), the person is the main line and the axis clauses the smaller one under it.
+           */
+          const lead = leadFor(quiz, view);
+          pick(room, 'headline').textContent = lead ? lead.line : view.headline;
+          pick(room, 'summary').textContent = lead ? view.headline : view.summary;
           pick(room, 'when').textContent = `Taken ${whenWords(latest.at)}`;
           pick(room, 'see').setAttribute('href', `/r/${slug}/${publicCodeSync(quiz, latest.code)}/`);
 
