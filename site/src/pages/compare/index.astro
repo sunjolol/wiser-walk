@@ -118,7 +118,7 @@ const compassSay = `Answer ${spell(quiz.items.length)} statements and see which 
   <div class="cmpx cmpx--hub">
     {shelves.map(shelf => (
       <section class="cmpx-shelf">
-        <SectionHead title={shelf.title} kicker={shelf.kicker} id={`shelf-${shelf.id}`} />
+        <SectionHead title={shelf.title} id={`shelf-${shelf.id}`} />
         {shelf.id === 'near' && (
           <p class="cmpx-note">
             Landing in the same band is not agreeing: two families can reach one band by
@@ -135,7 +135,7 @@ const compassSay = `Answer ${spell(quiz.items.length)} statements and see which 
 
     {traditions.length > 0 && (
       <section class="cmpx-shelf">
-        <SectionHead title="Or read one on its own" kicker="Every tradition drawn above" />
+        <SectionHead title="Or read one on its own" />
         <ul class="cmpx-trads">
           {traditions.map(t => (
             <li>

@@ -92,16 +92,6 @@ const scopeNote =
 /** No number against an outcome where the quiz forbids it: the rank is said in words. */
 const hideScore = Boolean(quiz?.hideOutcomeScore);
 
-/**
- * The axes on which the READER named no position. On a quiz matched against evidence these
- * are left out of the comparison — an axis where the instrument says the reader claims
- * nothing cannot be used to claim they are like somebody — so the closest card says which
- * they were. Harmless everywhere else: a card only reads this where its outcome carries a
- * mask, and no Compass tradition does.
- */
-const silentAxes =
-  view?.shape === 'bipolar' ? view.rows.filter(r => r.noClaim).map(r => r.name) : [];
-
 /** A gift the reader came out low on needs its caveat beside it, not in a footer. */
 const showLow =
   view?.shape === 'unipolar' && Boolean(quiz?.notes?.low) && view.rows.some(r => r.below);
@@ -145,6 +135,11 @@ const lead = leadFor(quiz, view);
 const leadNames = lead?.names ?? [];
 const leadPre = lead?.pre ?? '';
 const leadSlugs = leadNames.map(r => r.slug);
+/** "Pentecostal (Assemblies of God, ...)" -> the name, and its bracket for the smaller line. */
+const splitName = (name: string) => {
+  const m = /^(.*?)\s*(\(.*\))$/.exec(name);
+  return m ? { main: m[1]!, rest: m[2]! } : { main: name, rest: '' };
+};
 const headlineNotes =
   quiz && leads ? [...notesFor(quiz, leadSlugs), ...headlineNoteGroups] : headlineNoteGroups;
 
@@ -319,6 +314,42 @@ const kindredCard = (() => {
         ) : view.shape === 'kindred' ? (
           /* The kindred spirit's portrait, name, dates and who they were. */
           <KindredResult quiz={quiz} view={view} part="band" />
+        ) : leadNames.length > 0 && quiz.headlineLeadsWithOutcome ? (
+          <>
+            {/*
+              The Compass: ONE tradition in the big letters, whatever the state, so nobody leaves
+              without a result; the words around it say how firm it is. Its bracket ("(broad)",
+              "(Assemblies of God, Church of God, COGIC)") drops to a smaller line, since the
+              longest names run past fifty characters. A tie names the other one level with it;
+              a loose fit says so first, in the warm ink, before the name (the owner: make it
+              "very clear that it's 'loosely' with 'no close fit' so people don't ... run with it").
+            */}
+            <h1 class:list={['verdict', 'verdict--who', 'verdict--one', view.state === 'loose' && 'is-loose']}>
+              {view.state === 'loose' ? (
+                <span class="verdict-pre"><b class="verdict-warn">No close fit.</b> Nearest, loosely:</span>
+              ) : (
+                <span class="verdict-pre">{view.state === 'tie' ? 'Jointly closest to' : 'Closest to'}</span>
+              )}{' '}
+              <span class="verdict-who">{splitName(leadNames[0]!.name).main}</span>
+              {splitName(leadNames[0]!.name).rest && (
+                <span class="verdict-paren">{splitName(leadNames[0]!.name).rest}</span>
+              )}
+              {leadNames.length > 1 && (
+                <span class="verdict-also">
+                  {view.state === 'tie' ? 'Level with it: ' : 'Next nearest: '}{leadNames.slice(1).map(r => r.name).join(', ')}
+                </span>
+              )}
+            </h1>
+            <p class="lede verdict-axes">
+              {view.headlineParts.map((part, i) => (
+                <>
+                  <span class={`verdict-part verdict-part--${part.side}`}>{part.text}</span>
+                  {i < view.headlineParts.length - 1 && <span class="verdict-sep">,</span>}
+                  {i < view.headlineParts.length - 1 && ' '}
+                </>
+              ))}
+            </p>
+          </>
         ) : leadNames.length > 0 ? (
           <>
             {/* Who, in the big letters; the axis clauses under it in the rails' two colours. */}
@@ -528,18 +559,20 @@ const kindredCard = (() => {
           <>
             <SectionHead
               title={outcomeHeading}
-              kicker={leads ? undefined : `Measured against ${quiz.outcomes.length} ${outcomeNounPlural(quiz)}`}
             />
             <p class="tags">
               {view.state === 'loose'
                 ? 'Nothing on the list is a close fit. These are the nearest, and "nearest" is doing a lot of work.'
                 : scopeNote}
+              {/* Each card opens its own page (the owner, 2026-09-25: make that clear, mainly on
+                  a phone). On a touch screen only, as the quiz page rules say; a mouse finds the
+                  cards by their pointer, and the line stays one line on a wide screen. */}
+              <span class="on-touch"> Tap any one to read about it.</span>
             </p>
             <OutcomeCards
               quiz={quiz}
               ranked={view.ranked}
               leading={view.state === 'tie' ? 2 : view.state === 'loose' ? 0 : 1}
-              readerSilent={silentAxes}
               notes={leads ? 'all' : 'leading'}
               notedAbove={leadSlugs}
             />
@@ -571,16 +604,12 @@ const kindredCard = (() => {
           <Fragment>
             <SectionHead
               title={quiz.notes.depthTitle ?? 'Where these differences come from'}
-              kicker={leads ? undefined : `${depthOrder.length} axes, the strongest lean first`}
             />
             {quiz.notes.depthNote && <p class="tags">{quiz.notes.depthNote}</p>}
           </Fragment>
         ) : (
           <Fragment>
-        <SectionHead
-          title="Where these differences come from"
-          kicker={`${depthOrder.length} axes, the strongest lean first`}
-        />
+        <SectionHead title="Where these differences come from" />
         <p class="tags">
           Each one is a real disagreement between Christians who read the same Bible. Both
           cases below are stated by people who hold them.
@@ -630,7 +659,7 @@ const kindredCard = (() => {
     */}
     {(otherQuizzes.length > 0 || games.length > 0) && (
       <section class="nextup">
-        <SectionHead title="Keep going" kicker="Take another, or play one" />
+        <SectionHead title="Keep going" />
         <NextUp quizzes={otherQuizzes} games={games} />
       </section>
     )}

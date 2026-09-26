@@ -273,10 +273,11 @@ body {
 .band--bare .band-in::after { content: ""; display: block; height: 1.53rem; }
 .band h1 {
   font-size: clamp(2.35rem, 10.6vw, 4.4rem); line-height: 1.02; letter-spacing: -.022em;
-  margin: 0 0 .85rem; max-width: 7em;   /* 14ch in DM Serif; em so the measure does not move with the font's zero */
+  margin: 0 0 .85rem; max-width: 12em;   /* wide enough that a short title ("The gift of healing") stays on one line */
 }
-.band.band--long h1 { max-width: 10em; font-size: clamp(2rem, 8.4vw, 3.5rem); }
-.band .lede { max-width: 33rem; margin: 0; font-size: 1.04rem; color: var(--ink-soft); }
+.band.band--long h1 { max-width: 18em; font-size: clamp(2rem, 8.4vw, 3.5rem); }
+/* No early wrap (the owner, 2026-09-25, and 2026-09-23): a cap belongs on real paragraphs, never on a short line. */
+.band .lede { max-width: 56rem; margin: 0; font-size: 1.04rem; color: var(--ink-soft); }
 .band .btn-row { margin: 1.4rem 0 0; }
 .band .btn-row .btn { flex: 1 1 auto; }
 @media (min-width: 30rem) { .band .btn-row .btn { flex: 0 0 auto; } }
@@ -373,7 +374,7 @@ body {
 .band--pic .tile span { color: rgba(255, 255, 255, .76); }
 /* who painted it. One line, small, never a caption dressed up as copy. */
 .band-credit {
-  margin: 1.15rem 0 0; max-width: 30rem; font-size: .76rem; font-style: italic;
+  margin: 1.15rem 0 0; max-width: 42rem; font-size: .76rem; font-style: italic;
   line-height: 1.45; color: rgba(255, 255, 255, .62); text-wrap: pretty;
 }
 
@@ -430,6 +431,8 @@ body {
       linear-gradient(180deg, rgba(20, 17, 13, .12), rgba(20, 17, 13, .3));
   }
 }
+/* the painting is the point of this band, so its line stays on the dark side, clear of it */
+.band--colour .lede { max-width: 34rem; }
 /* its tiles are words, not counts, so they print smaller and never stretch to fill a row */
 .tiles--words .tile { flex: 0 0 auto; }
 .tiles--words .tile b { font-size: 1.12rem; }
@@ -815,7 +818,7 @@ a:hover .go-pill .icon, a.go-pill:hover .icon { transform: translateX(3px); }
 .squiz-s { margin: .4rem 0 0; font-size: .98rem; color: rgba(255, 255, 255, .9); text-wrap: pretty; }  /* never a word alone on its last line */
 /* three classes, so a page's own ".x .go-pill" colour (the saint pages' accent) never wins here */
 .squiz .squiz-b .go-pill { margin-top: 1.1rem; color: #F6D9C5; }
-@media (min-width: 46rem) { .squiz-b { padding: 2.3rem 2.2rem; } }
+@media (min-width: 46rem) { .squiz-b { padding: 2.3rem 2.2rem; max-width: 42rem; } }
 .squizzes { display: grid; gap: .9rem; }
 @media (min-width: 52rem) { .squizzes { grid-template-columns: 1fr 1fr; } .squizzes .squiz-t { font-size: 1.75rem; } }
 .squiz--mosaic > img { object-position: 50% 30%; }

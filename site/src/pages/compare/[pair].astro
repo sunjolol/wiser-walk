@@ -128,11 +128,10 @@ const breadcrumbs = [
     {/* The answer, in the article's own shape: the reader has the point before deciding to
         read on, and a search engine has a passage it can lift whole. */}
     <aside class="inshort" aria-label="In short">
-      <p class="inshort-head">In short</p>
       <p>{c.answer}</p>
     </aside>
 
-    <SectionHead title="Where the two land" kicker={`Six audited axes · same band on ${sameSay}`} />
+    <SectionHead title="Where the two land" />
 
     <div class="panel layered ref-panel ref-panel--quiet cmpx-rails">
       <div class="wash" aria-hidden="true"></div>
@@ -173,7 +172,6 @@ const breadcrumbs = [
         in the same band on 0 of 6" read as a heading arguing with its own kicker. */}
     <SectionHead
       title="What they share"
-      kicker={cmp.sameCount > 0 ? `In the same band on ${sameSay}` : 'What the six rails do not show'}
     />
     <ul class="cmpx-common">
       {c.common.map(line => <li><p>{line}</p></li>)}
@@ -181,7 +179,6 @@ const breadcrumbs = [
 
     <SectionHead
       title="Where they differ"
-      kicker={`${capital(spell(c.differences.length))} of the six axes`}
     />
     <p class="cmpx-note">
       Both sides below are stated the way people who hold them would state them. Landing in
@@ -223,7 +220,7 @@ const breadcrumbs = [
 
     {c.beyond_the_compass.length > 0 && (
       <>
-        <SectionHead title="Beyond the compass" kicker="What the six axes do not measure" />
+        <SectionHead title="Beyond the compass" />
         <p class="cmpx-note">
           The Compass measures six things, not everything. These differences are real and
           sit outside all six.
@@ -239,7 +236,7 @@ const breadcrumbs = [
       </>
     )}
 
-    <SectionHead title="How they came to differ" kicker="The short history" />
+    <SectionHead title="How they came to differ" />
     <div class="panel layered cmpx-story">
       <div class="wash" aria-hidden="true"></div>
       <div class="veil" aria-hidden="true"></div>
@@ -251,7 +248,7 @@ const breadcrumbs = [
     {/* "Walking in", not "On a Sunday": .sect-title is set lowercase across the site, and a
         proper noun printed as "on a sunday" reads as a typing error rather than as a style.
         The phrase people search for is in the kicker above it, which is set in capitals. */}
-    <SectionHead title="Walking in" kicker="What a visitor would notice on a Sunday" />
+    <SectionHead title="Walking in" />
     <div class="cmpx-sunday">
       <p>{c.on_a_sunday}</p>
     </div>
@@ -261,7 +258,7 @@ const breadcrumbs = [
       <p class="cmpx-fact-text">{c.did_you_know}</p>
     </section>
 
-    <SectionHead title="What we read" kicker="Where these positions come from" />
+    <SectionHead title="What we read" />
     <ul class="cmpx-read">
       {c.sources.map(s => (
         <li>
@@ -281,7 +278,7 @@ const breadcrumbs = [
 
     {others.length > 0 && (
       <section class="cmpx-more">
-        <SectionHead title="Other comparisons" kicker="The ones sharing a tradition first" />
+        <SectionHead title="Other comparisons" />
         <div class="cmpx-cards">
           {others.map(o => <CompareCard c={o} />)}
         </div>

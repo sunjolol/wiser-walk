@@ -273,8 +273,7 @@ html.is-locked { overflow: hidden; }
 
 /* ============================================================ St Martin */
 /* "Tap" on a touch screen, "Click" with a mouse */
-.on-touch { display: none; }
-@media (hover: none) and (pointer: coarse) { .on-touch { display: inline; } .on-mouse { display: none; } }
+/* .on-touch / .on-mouse live in site.css (shared with the result page) */
 /* The.spager: previous, the section you are in (tap it for every section), next. Sticky, so the
    whole page is one tap away on a phone. The personality result's.spager, without its progress bar. */
 .spager {

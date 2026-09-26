@@ -1260,8 +1260,14 @@ a { color: var(--accent); text-underline-offset: 2px; }
 @media (min-width: 46rem) { .verdict-part { white-space: nowrap; } }
 .verdict-sep { color: var(--ink-mute); }
 .result-panel { margin: 0 0 2rem; }
+/* no gap above the wheel on a result (the owner, 2026-09-25: "way too much empty space") */
+.result-panel .wheel-plot { margin-top: 0; }
 .outcomes, .depth-section, .share-block { margin: 2.5rem 0 0; }
-.depth-section > .tags, .outcomes > .tags { margin: 0 0 1rem; max-width: var(--measure); }
+/* No measure cap: these are one or two sentences, and a cap broke them early on a wide screen. */
+.depth-section > .tags, .outcomes > .tags { margin: 0 0 1rem; text-wrap: pretty; }
+/* "Tap / Click any one to read about it": the verb follows the device (quiz page rule 8). */
+.on-touch { display: none; }
+@media (hover: none) and (pointer: coarse) { .on-touch { display: inline; } .on-mouse { display: none; } }
 
 /* the all-central disclosure: available, but never presented as the answer */
 .arith { margin-top: 1rem; }
@@ -1363,7 +1369,6 @@ a { color: var(--accent); text-underline-offset: 2px; }
 /* ---- correction intake, on every page that describes somebody's belief ---- */
 .correction {
   font-size: .82rem; color: var(--ink-mute); margin: 2.25rem 0 0;
-  max-width: var(--measure);
 }
 
 /* ------------------------------------------------- the audit changelog (method) ---- */

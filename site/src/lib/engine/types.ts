@@ -748,6 +748,14 @@ export interface Quiz {
    * them, so every other quiz's pages are what they were.
    */
   quietGroupPages?: boolean;
+  /**
+   * The headline alone leads with the nearest outcome, the rest of the result page as it was
+   * (the Compass, 2026-09-25: "Continuationist, firmly synergist, sacramental-leaning" in the
+   * big letters "rather than the actual result"). The page title, share text and /me/ card
+   * follow it through `leadFor`, as the figure quiz's do. Unlike `resultLeadsWithOutcome` it
+   * keeps the wheel, the order of the page and the share card.
+   */
+  headlineLeadsWithOutcome?: boolean;
   rankRowsOpen?: boolean;
 
   /*
@@ -843,7 +851,8 @@ export interface Lead {
  * own headline.
  */
 export function leadFor(quiz: Quiz | null | undefined, view: ResultView | null | undefined): Lead | null {
-  if (!quiz?.resultLeadsWithOutcome || view?.shape !== 'bipolar' || view.state === 'central') return null;
+  if (!(quiz?.resultLeadsWithOutcome || quiz?.headlineLeadsWithOutcome) || view?.shape !== 'bipolar' ||
+    view.state === 'central') return null;
   const names = view.ranked.slice(0, view.state === 'near' ? 1 : 2);
   if (!names.length) return null;
   const who = names.map(r => r.name).join(' and ');

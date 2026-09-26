@@ -460,8 +460,9 @@ console.log('8. generated data files');
   const aside = JSON.parse(readFileSync(resolve(ROOT, 'src/data/compass-audit.json'), 'utf8'));
   const changes = aside.changelog ?? [];
   const disputed = aside.disputed ?? [];
-  if (changes.length !== 89) fail(`compass-audit.json carries ${changes.length} changelog entries, expected 89`);
-  else ok('compass-audit.json carries all 89 changelog entries');
+  // 89 from the audit, and two statement rewrites at the owner's request (2026-09-25).
+  if (changes.length !== 91) fail(`compass-audit.json carries ${changes.length} changelog entries, expected 91`);
+  else ok('compass-audit.json carries all 91 changelog entries');
   if (disputed.length !== 11) fail(`compass-audit.json carries ${disputed.length} disputed entries, expected 11`);
   else ok('compass-audit.json carries all 11 disputed entries');
 

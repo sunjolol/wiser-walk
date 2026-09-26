@@ -72,6 +72,8 @@ export const theologyCompass: Quiz = {
     centerUnits: data.scoring.centerUnits
   },
   shareTitle: 'My Theology Compass',
+  // The result's big letters are the nearest tradition, not the axis words (the owner, 2026-09-25).
+  headlineLeadsWithOutcome: true,
   // People searching say "denomination"; the page had never used the word. One plain sentence
   // says why the quiz says "traditions" instead, which is true and costs nothing.
   notes: {

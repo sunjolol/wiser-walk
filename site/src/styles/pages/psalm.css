@@ -37,7 +37,7 @@
   font-size: clamp(1.25rem, 5vw, 1.5rem); line-height: 1.3; color: var(--ink);
   text-wrap: balance;
 }
-.ps-advice { margin: .85rem 0 0; max-width: var(--measure); font-weight: 600; color: var(--ink); }
+.ps-advice { margin: .85rem 0 0; font-weight: 600; color: var(--ink); }
 .ps-cite, .ps-ref {
   font-family: var(--ui); font-size: var(--fs-label); font-weight: var(--fw-label); letter-spacing: .1em;
   text-transform: uppercase; color: var(--ink-mute); font-style: normal;
@@ -117,7 +117,7 @@
 }
 .ps-note .ps-note-label + p { margin-top: .35rem; }
 
-.ps-greek { margin: 1.4rem 0 0; max-width: var(--measure); font-size: .88rem; color: var(--ink-mute); }
+.ps-greek { margin: 1.4rem 0 0; font-size: .88rem; color: var(--ink-mute); }
 
 .ps-credit {
   margin: 1.6rem 0 0; padding-top: .9rem; border-top: 1px solid var(--rule);

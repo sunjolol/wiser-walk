@@ -19,7 +19,7 @@
 .cmpx p, .cmpx li, .cmpx h2, .cmpx h3, .cmpx h4 { text-wrap: pretty; }
 
 .cmpx-note {
-  margin: -.35rem 0 1.1rem; max-width: 46em;
+  margin: -.35rem 0 1.1rem;
   font-size: .86rem; line-height: 1.55; color: var(--ink-mute);
 }
 

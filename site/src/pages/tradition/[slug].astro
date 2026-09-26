@@ -242,7 +242,8 @@ const breadcrumbs = [
   <div class="ref ref--trad">
     {profile && (
       <section class="tlead">
-        <h2 class="tlead-label">{searchName} in a sentence</h2>
+        {/* kept for search and screen readers, not shown: no accent line over the sentence (2026-09-25) */}
+        <h2 class="tlead-label sr-only">{searchName} in a sentence</h2>
         <p class="tlead-say">{profile.in_a_sentence}</p>
       </section>
     )}
@@ -252,7 +253,6 @@ const breadcrumbs = [
     <aside class="caveat">
       <span class="caveat-mark" aria-hidden="true"><Icon name="compass" size={18} /></span>
       <div>
-        <p class="caveat-label">How to read the six rails below</p>
         <p>
           They are a sketch of where typical adherents land, <strong>not official
           teaching</strong>, and not a claim that everyone agrees.
@@ -262,14 +262,9 @@ const breadcrumbs = [
 
     <div class="feature trad-feature">
       <div class="feature-art dark">
-        <p class="feature-kicker">The sketch, drawn</p>
         <CompassWheel view={view} />
-        <p class="feature-note">
-          Each arm is one axis; length is how far from the centre the sketch sits.
-        </p>
       </div>
       <div class="feature-body">
-        <p class="feature-kicker trad-kicker">In the quiz's own words</p>
         <h3 class="trad-verdict">
           {view.headlineParts.map((part, i) => (
             <><span class={`verdict-part verdict-part--${part.side}`}>{part.text}</span>{i < view.headlineParts.length - 1 && <span class="verdict-sep">, </span>}</>
@@ -296,7 +291,7 @@ const breadcrumbs = [
         {/* The page's substance, in plain visible text. First paragraph set as a lead, the
             rest at reading size: a profile printed entirely in the display face is a wall
             of serif on a phone. */}
-        <SectionHead title="What marks it out" kicker="In plain words" />
+        <SectionHead title="What marks it out" />
         <div class="panel layered tprose">
           <div class="wash" aria-hidden="true"></div>
           <div class="veil" aria-hidden="true"></div>
@@ -307,7 +302,7 @@ const breadcrumbs = [
 
         {profile.did_you_know.length > 0 && (
           <>
-            <SectionHead title="Did you know?" kicker="Worth knowing" />
+            <SectionHead title="Did you know?" />
             <ul class="tfacts">
               {profile.did_you_know.map(fact => (
                 <li class="tfact">
@@ -319,7 +314,7 @@ const breadcrumbs = [
           </>
         )}
 
-        <SectionHead title="Where it came from" kicker="Its roots, and its near relatives" />
+        <SectionHead title="Where it came from" />
         <div class="panel layered tprose tprose--short">
           <div class="wash" aria-hidden="true"></div>
           <div class="veil" aria-hidden="true"></div>
@@ -328,7 +323,7 @@ const breadcrumbs = [
       </>
     )}
 
-    <SectionHead title="Where it sits on all six questions" kicker="Both poles named on every rail" />
+    <SectionHead title="Where it sits on all six questions" />
     <div class="panel layered ref-panel ref-panel--quiet">
       <div class="wash" aria-hidden="true"></div>
       <div class="veil" aria-hidden="true"></div>
@@ -341,7 +336,7 @@ const breadcrumbs = [
 
     {neighbours.length > 0 && (
       <>
-        <SectionHead title="Which traditions are closest?" kicker="Measured across all six" />
+        <SectionHead title="Which traditions are closest?" />
         <p class="ref-note">
           Nearness is not agreement: two families can land in the same band for different
           reasons.
@@ -360,7 +355,7 @@ const breadcrumbs = [
       <>
         {/* What was actually read to place this tradition, in its own confessions and
             standard works, plus two documents a curious reader can open tonight. */}
-        <SectionHead title="What we read" kicker="Sources, and where to go next" />
+        <SectionHead title="What we read" />
         <div class="tread">
           <div class="tread-src">
             <p class="tread-label">Read to place this tradition</p>

@@ -302,7 +302,7 @@
 .keepgoing { margin-top: 1.4rem; padding: 1.4rem 1.15rem 1.5rem; }
 .keepgoing .dark-ghost { font-size: clamp(5rem, 26vw, 9.5rem); right: -.05em; bottom: -.2em; }
 .keepgoing .pnl-title { color: var(--on-dark); }
-.keepgoing > p { max-width: 34rem; margin: 0; color: var(--on-dark-soft); }
+.keepgoing > p { margin: 0; color: var(--on-dark-soft); }
 @media (min-width: 40rem) { .keepgoing { padding: 2rem 1.95rem 2.1rem; } }
 
 .gocards { list-style: none; margin: 1.2rem 0 0; padding: 0; display: grid; gap: .65rem; }
@@ -690,7 +690,7 @@
  * .verdict-part--left and --right to the soft blue and #FFD2B0 on a picture,
  * which is the pair the home page's own headline uses.
  */
-.result-band .lede { max-width: 34rem; }
+.result-band .lede { max-width: 56rem; }
 /*
  * kit.css lifts the two pole inks for a picture band but has no cause to know about the
  * third: a clause that names no pole is drawn in --ink, which is the LIGHT theme's charcoal
@@ -734,6 +734,19 @@
   letter-spacing: .01em; line-height: 1.3; color: rgba(255, 255, 255, .86);
 }
 .verdict--who .verdict-who { display: block; }
+/* The Compass (Quiz.headlineLeadsWithOutcome): one tradition big, its bracket and any second
+   name smaller under it. Tradition names run longer than people's, so the size is calmer. */
+.band.result-band h1.verdict--one { max-width: 18em; font-size: clamp(2.3rem, 9.5vw, 3.5rem); line-height: 1.05; }
+.verdict--one .verdict-paren,
+.verdict--one .verdict-also {
+  display: block; margin-top: .45rem;
+  font-family: var(--ui); font-size: clamp(.95rem, 3.8vw, 1.1rem); font-weight: 600;
+  line-height: 1.35; letter-spacing: 0; color: rgba(255, 255, 255, .9); text-wrap: pretty;
+}
+/* the second name is a separate line, never read as the end of the first name's bracket */
+.verdict--one .verdict-also { margin-top: .9rem; font-weight: 500; color: rgba(255, 255, 255, .78); }
+/* "No close fit." in the warm ink, so a loose result never reads as a verdict */
+.verdict--one .verdict-warn { font-weight: 700; color: #FFD2B0; }
 .verdict-axes { font-weight: 500; }
 .verdict-axes .verdict-part { white-space: normal; }
 .band--pic .verdict-axes .verdict-part--left { color: var(--blue-soft); }
@@ -751,7 +764,7 @@
  * heading inside it, and with no margin of its own it sat flush under the last
  * line of the share block.)
  */
-.sect + .tags { margin: -.45rem 0 1.05rem; max-width: var(--measure); }
+.sect + .tags { margin: -.45rem 0 1.05rem; }
 .outcomes, .depth-section, .share-block { margin-top: 0; }
 
 /*
@@ -760,7 +773,7 @@
  * what something worth opening looks like everywhere else here.
  */
 .result-fold {
-  background: var(--panel); border-radius: var(--r); box-shadow: var(--lift);
+  max-width: none; background: var(--panel); border-radius: var(--r); box-shadow: var(--lift);
   padding: .1rem .3rem; margin-top: 1.1rem;
 }
 .result-fold > summary { padding: .85rem .8rem; }

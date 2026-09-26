@@ -407,13 +407,9 @@
 
 /* an outcome's own sentence, under its card, and only when that card is the closest */
 .outcome-note {
-  margin: .55rem 0 0; padding-left: .2rem; max-width: 42rem;
+  margin: .55rem 0 0; padding-left: .2rem;
   font-size: .88rem; line-height: 1.45; color: var(--ink-soft); text-wrap: pretty;
 }
-/* what the reader was NOT measured on: quieter than the outcome's own sentence, because it
-   is method rather than meaning, but printed beside the result and not in a footer */
-.outcome-axes { margin-top: .4rem; font-size: .84rem; color: var(--ink-mute); }
-
 /*
  * Sentence case, not title case, on a ranked row.
  *

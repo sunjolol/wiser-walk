@@ -50,7 +50,9 @@ const leading = view.named.length;
   <ol class:list={['stack', open && 'stack--open']}>
     {rows.map(row => open && answerOf(row.key) ? (
       <li class:list={['tier', { 'is-leading': row.rank <= leading, 'is-below': row.below }]}>
-        <details class="tier-more">
+        {/* The one the reader is weakest to, or every one level at the top, starts open (the
+            owner, 2026-09-25); on a flat result nothing leads, so nothing opens. */}
+        <details class="tier-more" open={row.rank <= leading}>
           <summary>
             <span class="tier-head">
               <span class="tier-rank" aria-hidden="true">{row.rank}</span>

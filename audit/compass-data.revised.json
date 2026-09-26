@@ -585,7 +585,7 @@
       "index": 1,
       "axis": "grace",
       "direction": -1,
-      "text": "God's choice of who will be saved is not based on anything He foresaw they would do."
+      "text": "God chose who would be saved by His own decision alone, rather than by foreseeing who would believe."
     },
     {
       "index": 2,
@@ -639,7 +639,7 @@
       "index": 10,
       "axis": "kingdom",
       "direction": 1,
-      "text": "God will yet give national Israel its promised land and kingdom on this earth."
+      "text": "God's promises of land and a kingdom to Israel will still be fulfilled for the Jewish people, here on earth."
     },
     {
       "index": 11,
@@ -3241,6 +3241,26 @@
       "after": "45 units, derived from the eighteen published sheets (worst informed-adherent distance 25.5)",
       "why": "The 60-unit threshold had no stated basis and fired for 71% of the reachable score space; an all-Strongly-agree sheet sits 68.6 units from its nearest entry and would have been given one. 45 is about 1.8x the worst distance an informed adherent reaches.",
       "status": "specified, not yet in code"
+    },
+    {
+      "target": "statement:1",
+      "finding_ids": [
+        "owner-2026-09-25"
+      ],
+      "before": "God's choice of who will be saved is not based on anything He foresaw they would do.",
+      "after": "God chose who would be saved by His own decision alone, rather than by foreseeing who would believe.",
+      "why": "The owner could not answer it (2026-09-25): the 'not' inside the sentence made Disagree a double negative. Same claim, stated positively: election by God's decision alone (monergist) against election on foreseen faith (synergist), so direction -1 is unchanged.",
+      "status": "applied to data"
+    },
+    {
+      "target": "statement:10",
+      "finding_ids": [
+        "owner-2026-09-25"
+      ],
+      "before": "God will yet give national Israel its promised land and kingdom on this earth.",
+      "after": "God's promises of land and a kingdom to Israel will still be fulfilled for the Jewish people, here on earth.",
+      "why": "The owner read 'will yet give national Israel' as if Israel were not yet a nation (2026-09-25). Same claim in plain words: a future, earthly fulfilment for the Jewish people (+1) against fulfilment in Christ and the church (-1). 'Literally' stays out, for the reason in the entry above.",
+      "status": "applied to data"
     }
   ],
   "disputed": [
