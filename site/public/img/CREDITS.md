@@ -456,6 +456,20 @@ Added 2026-09-26. The owner chose this photograph for Isaac the Syrian over the 
 | raphael-disputa.jpg | Raphael, The Disputation of the Holy Sacrament ("La Disputa"), 1509 to 1510, fresco, Stanza della Segnatura, Vatican: the debate around the altar, cut 2:1 so both edges fall between figures. The "where they stood" card on /q/which-early-christian/ on phones and tablets (added 2026-09-25) | public domain (PD-Art, PD-old-100-expired); Wikimedia Commons file "Disputa del Sacramento (Rafael).jpg" (3258 x 2349) |
 | raphael-disputa-right.jpg | The same fresco, the right of the altar (the man pointing up, Ambrose, Augustine, a scribe): the same card on wide screens | as above |
 
+## The seven deadly sins' pages (in `sins/`, added 2026-09-25)
+
+Each sin's page wears its own painting across the whole band (the owner's note: one plate for all seven felt "super incomplete"), and a result that ranks that sin first wears it too. Credit printed in each band. Nothing violent and no nudity: a Guercino of Joseph and Potiphar's wife was tried for lust and dropped for its nudity. Resized to 1500 px wide, quality 66 to 78.
+
+| file | what it shows | source |
+|---|---|---|
+| pride.jpg | Pieter Bruegel the Elder, The Tower of Babel, 1563, Kunsthistorisches Museum, Vienna | public domain; Commons "Pieter Bruegel the Elder - The Tower of Babel (Vienna) - Google Art Project - edited.jpg" |
+| envy.jpg | Diego Velázquez, Joseph's Coat Brought to Jacob, 1630, El Escorial (the brothers who envied him, Genesis 37:11) | public domain; Commons "Diego Velázquez 065.jpg" |
+| wrath.jpg | Rembrandt, Balaam and the Ass, 1626, Musée Cognacq-Jay, Paris (Numbers 22:27, "Balaam's anger burned"), cropped top and foot | public domain; Commons "Rembrandt - L'ânesse du prophète Balaam - J 95 - Musée Cognacq-Jay.jpg" |
+| sloth.jpg | Nicolaes Maes, The Idle Servant, 1655, National Gallery, London, cropped top and foot | public domain; Commons "The idle servant.jpg" |
+| greed.jpg | Quentin Matsys, The Moneylender and His Wife, 1514, Louvre | public domain; Commons "Massys Quentin – The Moneylender and his Wife – 1514.jpg" |
+| gluttony.jpg | Pieter Bruegel the Elder, The Land of Cockaigne, 1567, Alte Pinakothek, Munich | public domain; Commons "Pieter Bruegel d. Ä. (1525-1569) - Das Schlaraffenland - 8940 - Bavarian State Painting Collections.jpg" |
+| lust.jpg | Rembrandt, Joseph Accused by Potiphar's Wife, 1655, Gemäldegalerie, Berlin, cropped to the figures | public domain; Commons "Joseph und Potiphars Frau - Gemäldegalerie Berlin - 5250684.jpg" |
+
 ## Unsplash (free to use under the Unsplash licence; replace with Envato equivalents at will)
 
 | file | what it shows | Unsplash photo id |

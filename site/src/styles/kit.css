@@ -412,6 +412,29 @@ body {
   }
 }
 
+/* ---- colour: a painting in colour across the WHOLE band (the seven deadly sins, 2026-09-25).
+ * The owner asked for a picture spanning the entire header, so unlike `painting` it is not
+ * kept whole on one side: it fills the band, dark enough on the words' side for white type
+ * and clear on the far side, where the painting is seen. A phone has no far side, so there
+ * the whole picture is dimmed, heaviest at the foot where the tiles sit. */
+.band--colour { background: #1b1814; }
+.band--colour > .band-img { object-position: var(--pos-m, 50% 40%); }
+.band--colour::after {
+  background: linear-gradient(180deg, rgba(20, 17, 13, .5), rgba(20, 17, 13, .66) 45%, rgba(20, 17, 13, .86));
+}
+@media (min-width: 46rem) {
+  .band--colour > .band-img { object-position: var(--pos-d, 50% 40%); }
+  .band--colour::after {
+    background:
+      linear-gradient(90deg, rgba(20, 17, 13, .9), rgba(20, 17, 13, .74) 38%, rgba(20, 17, 13, .24) 70%, rgba(20, 17, 13, .06)),
+      linear-gradient(180deg, rgba(20, 17, 13, .12), rgba(20, 17, 13, .3));
+  }
+}
+/* its tiles are words, not counts, so they print smaller and never stretch to fill a row */
+.tiles--words .tile { flex: 0 0 auto; }
+.tiles--words .tile b { font-size: 1.12rem; }
+@media (min-width: 40rem) { .tiles--words .tile b { font-size: 1.35rem; } }
+
 /* ---- night: the Compass's own ground, and what a page with no picture of its own wears */
 .band--night {
   background-color: var(--dark-fill); background-image: var(--dark-fill-img); background-size: 520px;

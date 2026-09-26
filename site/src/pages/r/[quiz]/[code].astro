@@ -167,6 +167,16 @@ const headlineNotes =
  * Him first wears the Sinai icon of Christ Pantocrator (FIGURE_PICTURES, beside FIGURE_PAGES).
  */
 const art = quiz ? artFor(quiz.slug) : null;
+/*
+ * A ranking whose groups carry their own paintings (the sins, 2026-09-25) wears the painting
+ * of the one ranked first, across the whole band as that sin's own page does: the owner's
+ * rule that the header picture follows the result. On a flat result nothing leads, so the
+ * quiz's own plate stays.
+ */
+const topGroup = view?.shape === 'unipolar' && view.named.length
+  ? quiz?.groups.find(g => g.key === view.rows.find(r => r.rank === 1)?.key)
+  : undefined;
+const groupBand = topGroup?.band;
 const leadPage = quiz?.slug === 'bible-figure' && leadSlugs[0] ? FIGURE_PAGES[leadSlugs[0]] : undefined;
 const leadBand = leadPage
   ? { src: leadPage.band.picture.src, posM: leadPage.band.posM, posD: leadPage.band.posD }
@@ -261,8 +271,8 @@ const kindredCard = (() => {
     {view.shape !== 'personality' && (<header
       class:list={[
         'band', 'band--long', 'band--pic', 'result-band',
-        leadBand ? 'band--photo' : art ? 'band--engraving' : 'band--night',
-        (leadBand || art) && 'band--has-img'
+        leadBand ? 'band--photo' : groupBand ? 'band--colour' : art ? 'band--engraving' : 'band--night',
+        (leadBand || groupBand || art) && 'band--has-img'
       ]}
     >
       {leadBand && (
@@ -276,7 +286,18 @@ const kindredCard = (() => {
           decoding="async"
         />
       )}
-      {!leadBand && art && (
+      {!leadBand && groupBand && (
+        <img
+          class="band-img"
+          src={groupBand.src}
+          alt=""
+          style={`--pos-m:${groupBand.posM};--pos-d:${groupBand.posD}`}
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+        />
+      )}
+      {!leadBand && !groupBand && art && (
         <img
           class="band-img"
           src={art.src}
@@ -421,7 +442,7 @@ const kindredCard = (() => {
           <RailStack quiz={quiz} view={view} />
         </>
       ) : (
-        <CategoryStack quiz={quiz} view={view} />
+        <CategoryStack quiz={quiz} view={view} open={Boolean(quiz.rankRowsOpen)} />
       )}
     </div>
     )}{/*

@@ -18,10 +18,19 @@ interface Props {
   quiz: Quiz;
   view: UnipolarView;
   linked?: boolean;
+  /**
+   * Each row opens to its group's short answer and a pill to its full page, which opens in a
+   * new tab so the result stays where it is (Quiz.rankRowsOpen, the sins: the owner asked for
+   * "a dropdown option so you can read a brief description of it", 2026-09-25). The key under
+   * the bars goes with it: the rows now say what each one is.
+   */
+  open?: boolean;
 }
 
-const { quiz, view, linked = true } = Astro.props;
+const { quiz, view, linked = true, open = false } = Astro.props;
 const rows = [...view.rows].sort((a, b) => a.rank - b.rank);
+const answerOf = (key: string) => quiz.groups.find(g => g.key === key)?.shortAnswer;
+const NEWTAB = 'M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5';
 
 // Only the top row is emphasised, and only when the result actually supports emphasising
 // one. On a tie every level category leads — two, three or four of them, however many came
@@ -38,8 +47,36 @@ const leading = view.named.length;
     </p>
   )}
 
-  <ol class="stack">
-    {rows.map(row => (
+  <ol class:list={['stack', open && 'stack--open']}>
+    {rows.map(row => open && answerOf(row.key) ? (
+      <li class:list={['tier', { 'is-leading': row.rank <= leading, 'is-below': row.below }]}>
+        <details class="tier-more">
+          <summary>
+            <span class="tier-head">
+              <span class="tier-rank" aria-hidden="true">{row.rank}</span>
+              <span class="tier-name">{row.name}</span>
+              <span class="tier-strength">{row.strength}</span>
+              <span class="tier-caret" aria-hidden="true"></span>
+            </span>
+            <span
+              class="tier-track"
+              role="img"
+              aria-label={`${row.name}: ${row.strength}, ranked ${row.rank} of ${rows.length}.`}
+            >
+              <span class="tier-fill" style={`--v:${Math.max(0, (row.value - 50) * 2)}`}></span>
+            </span>
+          </summary>
+          <div class="tier-body">
+            <p>{answerOf(row.key)}</p>
+            <a class="go-pill tier-go" href={groupHref(quiz, row)} target="_blank" rel="noopener">
+              Read the full page on {row.name}
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={NEWTAB} /></svg>
+              <span class="sr-only"> (opens in a new tab)</span>
+            </a>
+          </div>
+        </details>
+      </li>
+    ) : (
       <li class:list={['tier', { 'is-leading': row.rank <= leading, 'is-below': row.below }]}>
         <div class="tier-head">
           <span class="tier-rank" aria-hidden="true">{row.rank}</span>
@@ -73,9 +110,9 @@ const leading = view.named.length;
     ))}
   </ol>
 
-  <p class="stack-note">
+  {!open && <p class="stack-note">
     Each bar is how far your answers pushed that one above no-net-agreement. An empty bar
     means your answers pulled neither way, not that the answer was zero. These are not
     percentages of you, and they are not shares of a whole — they do not add up to anything.
-  </p>
+  </p>}
 </div>

@@ -1170,6 +1170,30 @@ a { color: var(--accent); text-underline-offset: 2px; }
 
 .stack-note { font-size: .8rem; color: var(--ink-mute); margin: 1.1rem 0 0; }
 
+/* Rows that open to their short answer (CategoryStack `open`, the sins). The whole row is the
+   button: the name, the words and the bar, with a caret at the end of the line. */
+.stack--open { gap: .35rem; }
+.tier-more > summary {
+  display: block; list-style: none; cursor: pointer; border-radius: 12px;
+  padding: .55rem .6rem .6rem; margin: 0 -.6rem; transition: background-color .15s ease;
+}
+.tier-more > summary::-webkit-details-marker { display: none; }
+.tier-more > summary::marker { content: ""; }
+.tier-more > summary:hover { background: color-mix(in srgb, var(--ink) 5%, transparent); }
+.tier-more > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.tier-more .tier-head { align-items: center; }
+.tier-more .tier-track { display: block; }
+.tier-caret {
+  flex: 0 0 auto; width: .5rem; height: .5rem; margin: 0 .15rem 0 .1rem;
+  border-right: 2px solid var(--accent); border-bottom: 2px solid var(--accent);
+  transform: translateY(-2px) rotate(45deg); transition: transform .18s ease;
+}
+.tier-more[open] .tier-caret { transform: translateY(1px) rotate(-135deg); }
+.tier-body { padding: .35rem 0 .9rem; }
+.tier-body p { margin: 0 0 .8rem; font-size: .95rem; line-height: 1.6; color: var(--ink-soft); text-wrap: pretty; }
+.tier-go { color: var(--accent); text-decoration: none; }
+.tier-go svg { flex: 0 0 auto; }
+
 /* ------------------------------------------------- legacy bars (tradition page) ---- */
 
 .bars { list-style: none; margin: 1.5rem 0; padding: 0; display: flex; flex-direction: column; gap: 1.1rem; }

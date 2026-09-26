@@ -96,6 +96,19 @@ export interface QuizGroup {
    */
   actsHeading?: string;
   actsKicker?: string;
+  /**
+   * ---- A group's own page, drawn like a person's (the sins, 2026-09-25) ---------------
+   *
+   * The owner found the sins' pages "super incomplete" beside the saint pages: one plate for
+   * all seven and a lower-case word for a heading. So a group may carry its own picture,
+   * drawn across the whole band in colour (`posM` for a phone, `posD` for a wide screen), a
+   * few facts at a glance printed as the band's tiles (words, not counts), and a title for
+   * search where the name alone says too little ("pride" was the whole <title>). The same
+   * picture is the band of a result that ranks this group first.
+   */
+  title?: string;
+  band?: { src: string; alt: string; posM: string; posD: string; credit: string };
+  glance?: Array<{ n: string; label: string }>;
 }
 
 /**
@@ -726,6 +739,16 @@ export interface Quiz {
    * wheel. The Compass sets nothing, so its result page is what it was.
    */
   resultLeadsWithOutcome?: boolean;
+  /**
+   * The owner's notes on the seven deadly sins (2026-09-25). `quietGroupPages`: the group
+   * pages carry no small accent line over any section title, and the summary is the band's
+   * lede rather than a section of one sentence. `rankRowsOpen`: on the result, each ranked
+   * row opens to its short answer with a pill to its full page (in a new tab), and the key
+   * explaining the bars goes, because the rows now say what each one is. Only the sins set
+   * them, so every other quiz's pages are what they were.
+   */
+  quietGroupPages?: boolean;
+  rankRowsOpen?: boolean;
 
   /*
    * ---- What this quiz calls its own GROUPS -------------------------------------------

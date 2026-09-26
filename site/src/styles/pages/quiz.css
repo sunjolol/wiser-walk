@@ -398,9 +398,10 @@
  * it is a rule for choosing and a reader who meets it underneath has met it too late. It
  * takes the answer row's own top margin, so nothing below it moves.
  */
+/* Centred over the answers (the owner, on the sins quiz, 2026-09-25). */
 .scale-note {
-  margin: 0 0 .7rem; max-width: 44rem;
-  font-size: .72rem; line-height: 1.5; color: var(--ink-mute); text-wrap: pretty;
+  margin: 0 auto .7rem; max-width: 44rem; text-align: center;
+  font-size: .72rem; line-height: 1.5; color: var(--ink-mute); text-wrap: balance;
 }
 @media (min-width: 34rem) { .scale-note { font-size: .78rem; } }
 

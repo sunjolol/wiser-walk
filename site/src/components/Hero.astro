@@ -17,6 +17,9 @@
  *              painting with a headline across its subject is a ruined painting
  *   night      the dark starry ground — the Compass's own, and the fallback for a page with
  *              no picture of its own, so nothing is left on the old pale wash
+ *   colour     a painting in colour ACROSS the whole band, darkened on the words' side (the
+ *              seven deadly sins' pages, 2026-09-25: the owner asked for a picture that spans
+ *              the entire header). `imagePos` places it: a phone's position, then a wide one.
  *
  * With no `kind` at all the old wash is still drawn, because the result page composes the
  * same `.band` markup by hand and must not change.
@@ -52,13 +55,15 @@ export interface Props {
   /** Long titles (an article, a tradition's full name) get a calmer size and a wider measure. */
   long?: boolean;
   /** The picture's treatment. Omit it only where the old wash is wanted. */
-  kind?: 'photo' | 'engraving' | 'painting' | 'night';
+  kind?: 'photo' | 'engraving' | 'painting' | 'night' | 'colour';
   /** Path under public/. A `night` band may have one (it sits dark behind the stars) or none. */
   image?: string;
   /** Decorative by default: a band's picture repeats what the headline already says. */
   imageAlt?: string;
   /** CSS object-position, so a face is not cropped out by the band's shape. */
   imagePosition?: string;
+  /** A phone's object-position and a wide screen's, where one position cannot serve both. */
+  imagePos?: { m: string; d: string };
   /** Brightness for THIS plate, where its printing is unusually light or dark. 1 is as it is. */
   imageLift?: number;
   /** One small line naming the picture. Used by the articles, whose paintings are credited. */
@@ -68,11 +73,12 @@ export interface Props {
 }
 const {
   title, eyebrow, icon, lede, blue, orange, ghost, tiles = [], long = false,
-  kind, image, imageAlt = '', imagePosition, imageLift, credit, eager = true
+  kind, image, imageAlt = '', imagePosition, imagePos, imageLift, credit, eager = true
 } = Astro.props;
 
 const imgStyle = [
   imagePosition ? `object-position:${imagePosition}` : '',
+  imagePos ? `--pos-m:${imagePos.m};--pos-d:${imagePos.d}` : '',
   imageLift ? `--img-lift:${imageLift}` : ''
 ].filter(Boolean).join(';') || undefined;
 
@@ -145,7 +151,8 @@ const aside = asideHtml.trim().length > 0;
     {hasLede && <p class="lede">{lede ?? <Fragment set:html={slotHtml} />}</p>}
     {Astro.slots.has('actions') && <div class="btn-row"><slot name="actions" /></div>}
     {tiles.length > 0 && (
-      <ul class="tiles">
+      /* A colour band's tiles are words (a sin's Latin name, its opposite): smaller than counts. */
+      <ul class:list={['tiles', kind === 'colour' && 'tiles--words']}>
         {tiles.map(t => <li class="tile"><b>{t.n}</b><span>{t.label}</span></li>)}
       </ul>
     )}

@@ -197,16 +197,29 @@ const meansTitle = bipolar
       : `What does ${group.name} look like day to day?`
     : `What is ${group.name}?`;
 
+/*
+ * QUIET GROUP PAGES (Quiz.quietGroupPages: the seven deadly sins, the owner's notes of
+ * 2026-09-25). No small accent line over any section title; the group's own painting across
+ * the whole band with its facts at a glance as the tiles; the name capitalised in the heading
+ * ("pride" read as a mistake); and the one-sentence summary as the band's lede, where it
+ * introduces the page, instead of a section of its own under a heading it did not answer.
+ */
+const quiet = Boolean(quiz.quietGroupPages);
+const own = group.band;
+const k = (kicker: string | undefined) => (quiet ? undefined : kicker);
+
 const heading = bipolar
   ? `${group.name}: ${group.left} or ${group.right}`
   : isGift
     ? giftHeading
-    : group.name;
-const title = bipolar
+    : quiet
+      ? cap(group.name)
+      : group.name;
+const title = group.title ?? (bipolar
   ? heading
   : isGift
     ? (firstRef ? `${giftPhrase}: ${firstRef}` : giftPhrase)
-    : group.name;
+    : group.name);
 
 /*
  * A gift's description, built from that gift's own data so that no two of the nineteen
@@ -291,12 +304,12 @@ const jsonLd = {
   about: bipolar
     ? [{ '@type': 'Thing', name: group.left }, { '@type': 'Thing', name: group.right }]
     : { '@type': 'Thing', name: isGift ? giftHeading : group.name },
-  ...(art
+  ...(own ?? art
     ? {
         primaryImageOfPage: {
           '@type': 'ImageObject',
-          url: new URL(art.src, Astro.site).href,
-          caption: art.alt
+          url: new URL((own ?? art)!.src, Astro.site).href,
+          caption: (own ?? art)!.alt
         }
       }
     : {}),
@@ -326,18 +339,31 @@ const breadcrumbs =
   jsonLd={jsonLd}
   breadcrumbs={breadcrumbs}
 >
-  <Hero
-    title={heading}
-    blue={bipolar ? group.left : undefined}
-    orange={bipolar ? group.right : undefined}
-    kind={art ? 'engraving' : 'night'}
-    image={art?.src}
-    imageAlt={art?.alt}
-    imagePosition={art?.objectPosition}
-    imageLift={art?.lift}
-    long={heading.length > 24}
-    tiles={tiles}
-  />
+  {own ? (
+    <Hero
+      title={heading}
+      kind="colour"
+      image={own.src}
+      imageAlt={own.alt}
+      imagePos={{ m: own.posM, d: own.posD }}
+      lede={quiet ? group.summary : undefined}
+      tiles={group.glance ?? tiles}
+      credit={own.credit}
+    />
+  ) : (
+    <Hero
+      title={heading}
+      blue={bipolar ? group.left : undefined}
+      orange={bipolar ? group.right : undefined}
+      kind={art ? 'engraving' : 'night'}
+      image={art?.src}
+      imageAlt={art?.alt}
+      imagePosition={art?.objectPosition}
+      imageLift={art?.lift}
+      long={heading.length > 24}
+      tiles={tiles}
+    />
+  )}
   {/*
     The band has no lede, on either shape of page.
 
@@ -379,7 +405,7 @@ const breadcrumbs =
         {/* No question written: the kicker would repeat the heading word for word. */}
         <SectionHead
           title={group.question ?? 'The short answer'}
-          kicker={group.question ? 'The short answer' : undefined}
+          kicker={group.question ? k('The short answer') : undefined}
         />
         <div class="panel layered ref-panel answer">
           <div class="wash" aria-hidden="true"></div>
@@ -399,7 +425,7 @@ const breadcrumbs =
       <>
         <SectionHead
           title={mapTitle}
-          kicker={`All ${placed} ${collective} on one rail`}
+          kicker={k(`All ${placed} ${collective} on one rail`)}
         />
         <section class="dark amap-panel" data-you-host="map">
           <div class="dark-ghost" aria-hidden="true">{ghost}</div>
@@ -432,13 +458,15 @@ const breadcrumbs =
       <>
         <SectionHead
           title="Where does the Bible name it?"
-          kicker={group.quotedFrom ?? 'Quoted in full'}
+          kicker={k(group.quotedFrom ?? 'Quoted in full')}
         />
         <section class="dark quoted-panel">
           <div class="dark-ghost" aria-hidden="true">{ghost}</div>
-          <p class="feature-kicker">
-            <Icon name={quiz.icon} size={13} /> {isGift ? "In the list's own words" : "In the Bible's own words"}
-          </p>
+          {!quiet && (
+            <p class="feature-kicker">
+              <Icon name={quiz.icon} size={13} /> {isGift ? "In the list's own words" : "In the Bible's own words"}
+            </p>
+          )}
           <ul class="quoted">
             {quoted.map(q => (
               <li class="quoted-item">
@@ -479,13 +507,13 @@ const breadcrumbs =
           </aside>
         )}
       </>
-    ) : (
+    ) : quiet && own ? null : (
       <>
         {/* A group with two poles is an axis whatever the quiz calls its groups: the figure
             quiz names none, and the engine's fallback word, "category", is not the reader's. */}
         <SectionHead
           title={meansTitle}
-          kicker={`${bipolar ? 'Axis' : capitalise(groupNoun(quiz))} ${index + 1} of ${quiz.groups.length}`}
+          kicker={k(`${bipolar ? 'Axis' : capitalise(groupNoun(quiz))} ${index + 1} of ${quiz.groups.length}`)}
         />
         <div class="panel layered ref-panel">
           <div class="wash" aria-hidden="true"></div>
@@ -511,7 +539,7 @@ const breadcrumbs =
       <>
         <SectionHead
           title="Did you know?"
-          kicker={dyk.length === 1 ? 'One thing worth knowing, with its source' : `${dyk.length} things worth knowing, each with its source`}
+          kicker={k(dyk.length === 1 ? 'One thing worth knowing, with its source' : `${dyk.length} things worth knowing, each with its source`)}
         />
         <div class="panel layered ref-panel ref-panel--quiet dyk-panel">
           <div class="wash" aria-hidden="true"></div>
@@ -547,7 +575,7 @@ const breadcrumbs =
         */}
         <SectionHead
           title={group.actsHeading ?? 'Who did this in the Bible?'}
-          kicker={group.actsKicker ?? `${acts.length} recorded acts, each cited`}
+          kicker={k(group.actsKicker ?? `${acts.length} recorded acts, each cited`)}
         />
         <div class="panel layered ref-panel ref-panel--quiet">
           <div class="wash" aria-hidden="true"></div>
@@ -566,7 +594,7 @@ const breadcrumbs =
 
     {history.length > 0 && (
       <>
-        <SectionHead title={historyTitle} kicker="In order, with dates and sources" />
+        <SectionHead title={historyTitle} kicker={k('In order, with dates and sources')} />
         <div class="panel layered ref-panel ref-panel--tl">
           <div class="wash" aria-hidden="true"></div>
           <div class="veil" aria-hidden="true"></div>
@@ -580,7 +608,7 @@ const breadcrumbs =
         <SectionHead
           id="sources"
           title={passagesTitle}
-          kicker="Argued from by both sides, assigned to neither"
+          kicker={k('Argued from by both sides, assigned to neither')}
         />
         <div class="panel layered ref-panel ref-panel--pg ref-panel--quiet">
           <div class="wash" aria-hidden="true"></div>
@@ -594,7 +622,7 @@ const breadcrumbs =
       <>
         <SectionHead
           title="Further reading"
-          kicker={split ? 'Split by pole, because the books are' : `${reading.length} works`}
+          kicker={k(split ? 'Split by pole, because the books are' : `${reading.length} works`)}
         />
         {split ? (
           <div class="reading">
