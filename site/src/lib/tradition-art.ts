@@ -53,14 +53,14 @@ export const TRADITION_ART: Record<string, TraditionArt> = {
     credit: "Picture: The Outpouring of the Holy Spirit, Anthony van Dyck, about 1618–20. Picture Gallery, Sanssouci, Potsdam."
   },
   'southern-baptist-calvinist': {
-    src: '/img/traditions/southern-baptist-calvinist.jpg', posM: "54% 50%", posD: "50% 50%",
+    src: '/img/traditions/southern-baptist-calvinist.jpg', posM: "54% 50%", posD: "50% 65%",
     alt: "George Henry Durrie’s painting of villagers walking and riding sleighs through the snow to a white steepled country church",
     credit: "Picture: Going to Church, George Henry Durrie, 1853."
   },
   'southern-baptist-non-calvinist': {
-    src: '/img/traditions/southern-baptist-non-calvinist.jpg', posM: "55% 50%", posD: "50% 2%",
-    alt: "William Holman Hunt’s painting of Christ, crowned with thorns and carrying a lantern, knocking at an overgrown door at night",
-    credit: "Picture: The Light of the World, William Holman Hunt, 1900–04. St Paul’s Cathedral, London."
+    src: '/img/traditions/southern-baptist-non-calvinist-baptism.jpg', posM: "58% 50%", posD: "50% 64%",
+    alt: "Pavel Svinin’s watercolour of a Baptist minister immersing a woman in a river while a crowd watches from a wharf and more candidates in white wait their turn",
+    credit: "Picture: A Philadelphia Anabaptist Immersion during a Storm (a Baptist baptism in the Schuylkill River), Pavel Svinin, about 1811–13. The Metropolitan Museum of Art, New York."
   },
   'national-baptist-nbc-usa-historically-black-baptist': {
     src: '/img/traditions/national-baptist-nbc-usa-historically-black-baptist.jpg', posM: "70% 40%", posD: "50% 35%",
@@ -83,7 +83,7 @@ export const TRADITION_ART: Record<string, TraditionArt> = {
     credit: "Picture: The Camp Meeting, Worthington Whittredge, 1874. The Metropolitan Museum of Art, New York."
   },
   'wesleyan-methodist': {
-    src: '/img/traditions/wesleyan-methodist.jpg', posM: "50% 50%", posD: "50% 30%",
+    src: '/img/traditions/wesleyan-methodist.jpg', posM: "50% 50%", posD: "50% 14%",
     alt: "A hand-coloured Currier and Ives print of John Wesley preaching in the Epworth churchyard to a crowd of listeners, some kneeling and weeping",
     credit: "Picture: John Wesley Preaching on His Father’s Grave, Currier and Ives. Library of Congress, Washington."
   },
@@ -93,12 +93,12 @@ export const TRADITION_ART: Record<string, TraditionArt> = {
     credit: "Picture: Church at Old Lyme, Childe Hassam, 1905. Buffalo AKG Art Museum, Buffalo."
   },
   'pentecostal-assemblies-of-god-church-of-god-cogic': {
-    src: '/img/traditions/pentecostal-assemblies-of-god-church-of-god-cogic.jpg', posM: "50% 20%", posD: "50% 22%",
+    src: '/img/traditions/pentecostal-assemblies-of-god-church-of-god-cogic.jpg', posM: "50% 20%", posD: "50% 32%",
     alt: "El Greco’s painting of Pentecost, tongues of fire resting on the heads of Mary and the apostles as the dove of the Holy Spirit shines above them",
     credit: "Picture: Pentecost, El Greco, about 1600. Museo del Prado, Madrid."
   },
   'charismatic-non-denominational': {
-    src: '/img/traditions/charismatic-non-denominational.jpg', posM: "50% 50%", posD: "50% 45%",
+    src: '/img/traditions/charismatic-non-denominational.jpg', posM: "50% 50%", posD: "50% 51%",
     alt: "Juan Bautista Maíno’s painting of Pentecost, the apostles and Mary looking up in wonder as flames fall from the radiant dove above",
     credit: "Picture: Pentecost, Juan Bautista Maíno, 1615–20. Museo del Prado, Madrid."
   },
