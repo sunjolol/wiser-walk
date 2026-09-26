@@ -63,11 +63,13 @@ body = swap(
   '<p class="band-chip"><a class="ww-home" href="/">&larr; Wiser Walk</a></p>'
 );
 /* The game's result screen ends on an empty marker paragraph (its small print was removed on
-   2026-09-22); the live page puts its two onward links in its place. */
+   2026-09-22); the live page puts the way home in its place, a pill under the result's own
+   buttons (the owner, 2026-09-25: he found no way home without the browser's back), and one
+   onward link under that. */
 body = swap(
   body,
   '<p class="small foot" id="footResult"></p>',
-  '<p class="small ww-more"><a href="/q/theology-compass/">Take the Theology Compass</a><span aria-hidden="true"> · </span><a href="/">More from Wiser Walk</a></p>'
+  '<a class="btn ghost ww-home-btn" href="/">Back to Wiser Walk</a><p class="small ww-more"><a href="/q/theology-compass/">Take the Theology Compass</a></p>'
 );
 
 /* The full trail, as every other template publishes one. It used to skip /games/, which is a
@@ -157,16 +159,11 @@ const ogImage = new URL(ogImageFor('/play/sounds-like-scripture/'), Astro.site).
     <style is:inline>
       .ww-home, .ww-more a { color: inherit; text-decoration: none; }
       .ww-home:hover, .ww-more a:hover { text-decoration: underline; }
+      /* the way home, a pill in the game's own ghost style under Play again and the copy pair */
+      .ww-home-btn { margin-top: .6rem; }
       .ww-more { margin: 1.4rem 0 0; text-align: center; }
-      .ww-more a { color: var(--accent); font-weight: 600; white-space: nowrap; }
-      /* Each link stays whole. On the narrowest phones the pair no longer fits on one line, so
-         they stack, centred, and the dot between them goes rather than ending a line. */
-      @media (max-width: 23.99rem) {
-        .ww-more a { display: block; }
-        .ww-more a + span + a { margin-top: .6rem; }
-        .ww-more span { display: none; }
-      }
-      /* on the stage the links sit in the right-hand column under the buttons, left aligned */
+      .ww-more a { color: var(--accent); font-weight: 600; }
+      /* on the stage the link sits in the right-hand column under the buttons, left aligned */
       @media (min-width: 56rem) { #screen-result .ww-more { text-align: left; margin-top: 1.4rem; } }
     </style>
   </head>

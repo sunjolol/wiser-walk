@@ -723,6 +723,27 @@
 .headline-note { margin-top: 1.2rem; }
 
 /*
+ * A result that leads with WHO (Quiz.resultLeadsWithOutcome, the figure quiz). The person's
+ * name is the big letters, "Closest to" a small line above it inside the same heading, and
+ * the axis clauses move down into the lede in the rails' two inks, lifted for the picture.
+ */
+.band.result-band h1.verdict--who { max-width: 14em; font-size: clamp(2.6rem, 11vw, 4.2rem); line-height: 1.02; }
+.verdict--who .verdict-pre {
+  display: block; margin-bottom: .35rem;
+  font-family: var(--ui); font-size: clamp(.8rem, 3.4vw, .95rem); font-weight: 600;
+  letter-spacing: .01em; line-height: 1.3; color: rgba(255, 255, 255, .86);
+}
+.verdict--who .verdict-who { display: block; }
+.verdict-axes { font-weight: 500; }
+.verdict-axes .verdict-part { white-space: normal; }
+.band--pic .verdict-axes .verdict-part--left { color: var(--blue-soft); }
+.band--pic .verdict-axes .verdict-part--right { color: #FFD2B0; }
+.band--pic .verdict-axes .verdict-part--centre { color: #fff; }
+.band--pic .verdict-axes .verdict-sep { color: rgba(255, 255, 255, .6); }
+/* the rails, on their own under the list: no wheel above them, so no room kept for one */
+.result-panel--rails { margin: 2rem 0 0; }
+
+/*
  * A section head already carries 3rem above it, so the block it announces does
  * not need its own 2.5rem on top of that. (Not the email room: it carries its
  * heading inside it, and with no margin of its own it sat flush under the last
@@ -1306,3 +1327,16 @@
 .reads-feed { margin: 1.6rem 0 0; text-align: center; font-size: .92rem; color: var(--ink-2); text-wrap: balance; }
 .reads-feed a { color: var(--accent); font-weight: 600; text-decoration: none; }
 .reads-feed a:hover { text-decoration: underline; }
+
+/* The figure quiz's band wears the painting of the figure the reader is closest to, placed as
+   that figure's own page places it: its phone position, then its wide one. */
+.result-band .band-img--figure { object-position: var(--pos-m, 50% 20%); }
+/* On a wide screen the painting takes the right-hand part of the band, as on the figure's own page
+   (stretched across the whole band it showed a strip of the painting and cut the face off). */
+@media (min-width: 46rem) {
+  .band--pic > .band-img--figure { inset: 0 -2px 0 auto; width: 46%; object-position: var(--pos-d, 50% 20%); }
+  .result-band.band--photo:has(.band-img--figure) { background: #16161c; }
+  .result-band.band--photo:has(.band-img--figure)::after {
+    background: linear-gradient(90deg, #16161c 54.5%, rgba(22, 22, 28, .6) 64%, rgba(22, 22, 28, 0) 82%);
+  }
+}

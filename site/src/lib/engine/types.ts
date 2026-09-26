@@ -715,6 +715,17 @@ export interface Quiz {
    * text and the share card — ranks in words and keeps the bar length, and shows no score.
    */
   hideOutcomeScore?: boolean;
+  /**
+   * THE RESULT LEADS WITH WHO, NOT WITH THE AXES (a bipolar quiz whose outcomes are people).
+   *
+   * The owner, 2026-09-25, on the figure quiz: "Alongside, takes time to decide, quick to
+   * speak up" in the big letters "doesn't tell you your result". Where this is set the result
+   * page's headline is the nearest outcome ("Closest to Peter") with the axis clauses in the
+   * smaller line under it; the outcome list stands above the rails; the wheel and its caption
+   * are not drawn; the two section kickers go; and the share card draws the people, not the
+   * wheel. The Compass sets nothing, so its result page is what it was.
+   */
+  resultLeadsWithOutcome?: boolean;
 
   /*
    * ---- What this quiz calls its own GROUPS -------------------------------------------

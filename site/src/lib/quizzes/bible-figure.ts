@@ -200,10 +200,13 @@ const groups: QuizGroup[] = [
  * into one corner of the space: pace 2 left / 1 right, voice 1/2, lead 2/1, conflict 1/2,
  * doubt 2/1, plan 1/2. Nine statements are keyed -1 and nine +1.
  *
- * Two statements are in a borrowed voice ("People have told me..."), at most one per axis
- * and never the only statement on a pole. There were five, and every one reported a fault:
- * a reader with nobody around to comment on them, or one who denies criticism, disagreed
- * with all five and was moved to one profile (the psychometric audit's finding F2).
+ * One statement is in a borrowed voice ("People have told me...", the pace one), never the
+ * only statement on its pole. There were five, and every one reported a fault: a reader
+ * with nobody around to comment on them, or one who denies criticism, disagreed with all
+ * five and was moved to one profile (the psychometric audit's finding F2). The Reasons one
+ * went on 2026-09-25 with two other rewordings the owner asked for (plain words over
+ * "one question too many", "handing out jobs" and "leave the reasons for later"); each kept
+ * its axis and its sign, re-derived from the new wording.
  */
 const RAW: Array<[string, string, 1 | -1]> = [
   // round one
@@ -211,14 +214,14 @@ const RAW: Array<[string, string, 1 | -1]> = [
   ['voice', 'I often sit through a whole conversation without joining in.', 1],
   ['lead', 'I would rather run the meeting than sit in it.', -1],
   ['conflict', 'When two people I know have argued, I end up passing messages between them.', 1],
-  ['doubt', 'People have told me I ask one question too many.', -1],
+  ['doubt', 'When someone tells me something surprising, I ask how they know before I believe it.', -1],
   ['plan', 'I work out the details when I get there, not before.', 1],
   // round two
   ['pace', 'I take a night to decide things that other people decide on the spot.', 1],
   ['voice', 'People can always tell what I am thinking, because I have already said it.', -1],
-  ['lead', 'I start handing out jobs in a group before anyone has asked me to.', -1],
+  ['lead', 'When a group is stuck on what to do next, I am usually the one who suggests a plan.', -1],
   ['conflict', 'I would rather have the argument now than keep things calm for another week.', -1],
-  ['doubt', 'I follow instructions as given and leave the reasons for later.', 1],
+  ['doubt', 'When I am given instructions, I follow them even if no one has explained why.', 1],
   ['plan', 'I carry things I will probably not need, in case the day goes wrong.', -1],
   // round three
   ['pace', 'People have told me I jumped in before I had the whole picture.', -1],
@@ -445,23 +448,23 @@ export const bibleFigure: FigureQuiz = {
   outcomeNoun: 'figure',
   outcomeNounPlural: 'figures',
   outcomePathBase: 'figure',
+  /* The owner, 2026-09-25: the first version was "WAY too wordy". */
   outcomeScopeNote:
-    `Scored against the ${outcomes.length - 1} people listed here, and Jesus, on the axes of ` +
-    'temperament where the text places them and your own answers name a position. Each place ' +
-    'is an editor’s reading of a few recorded acts, not a measurement, and with three ' +
-    'statements to an axis one changed answer can change the name: read the rails, not the ' +
-    'name. Nearness is not likeness of character, and no number is ever shown against a person.',
+    `Compared with ${outcomes.length - 1} people of the Bible, and Jesus, on the traits where both ` +
+    'their record and your answers lean one way. Each placing is our reading of what they did, ' +
+    'and one changed answer can change the name.',
   hideOutcomeScore: true,
+  // The page and the card lead with the person, not the axes (the owner, 2026-09-25).
+  resultLeadsWithOutcome: true,
 
   /**
    * The result page's per-axis panels. The Compass's own heading says the axes are real
    * disagreements between Christians, which is true there and false here: these are ways
-   * of being, and the page has to say that where the panels open.
+   * of being. The sentence that said so under the heading ("Neither end of any of these is
+   * the better one...") came off on the owner's word, 2026-09-25; each axis's own summary
+   * still says it in the panel.
    */
   notes: {
-    depthTitle: 'What each axis is',
-    depthNote:
-      'Neither end of any of these is the better one. Each panel opens with what that axis ' +
-      'measures; the whole description, and where the figures sit on it, is on the axis page.'
+    depthTitle: 'What each axis is'
   }
 };

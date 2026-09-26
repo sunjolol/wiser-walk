@@ -1215,7 +1215,6 @@ a { color: var(--accent); text-underline-offset: 2px; }
 }
 .scale button:hover { color: var(--accent); }
 .scale button[aria-pressed="true"] { background-image: var(--grad); color: var(--on-grad); }
-.scale-hint { font-size: .8rem; color: var(--ink-mute); margin: .8rem 0 0; }
 .runner-nav { display: flex; gap: .6rem; margin-top: 1.5rem; }
 .runner-nav .btn { font-size: .74rem; padding: .55rem 1.1rem; min-height: 40px; }
 

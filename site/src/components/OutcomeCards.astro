@@ -53,20 +53,18 @@ function axisNote(quiz: Quiz, r: Ranked, silent: string[]): string | null {
   const alsoSilent = silent.filter(name =>
     quiz.groups.some((g, i) => g.name === name && outcome.mask![i] === 'shown')
   );
-  const record = [
-    none.length ? `the text does not show ${list(none)}` : '',
-    both.length ? `the text shows both ends on ${list(both)}` : ''
-  ].filter(Boolean).join(', and ');
-  const clauses = [
-    record ? `for ${outcome.name} ${record}` : '',
-    alsoSilent.length ? `your own answers name no position on ${list(alsoSilent)}` : ''
+  /* In plain words (the owner, 2026-09-25: the first version was too wordy): "Compared on 3
+     of 6 traits. Left out: Pace and Plans, which the Bible does not show for John the Baptist,
+     and Conflict, where your answers did not lean either way." */
+  const parts = [
+    none.length ? `${list(none)}, which the Bible does not show for ${outcome.name}` : '',
+    both.length ? `${list(both)}, where the Bible shows ${outcome.name} both ways` : '',
+    alsoSilent.length ? `${list(alsoSilent)}, where your answers did not lean either way` : ''
   ].filter(Boolean);
-  if (!clauses.length) return null;
+  if (!parts.length) return null;
   const count = r.axes ?? quiz.groups.length;
-  const dropped = none.length + both.length + alsoSilent.length;
-  return `Compared with you on ${count} of the ${quiz.groups.length} axes: ${clauses.join('; ')}. ` +
-    (dropped > 1 ? 'Those are' : 'That is') +
-    ' left out rather than counted as a match in the middle.';
+  return `Compared on ${count} of ${quiz.groups.length} traits. Left out: ` +
+    (parts.length === 2 ? parts.join(', and ') : parts.join('; ')) + '.';
 }
 
 interface Props {
@@ -81,9 +79,19 @@ interface Props {
    * evidence mask, so the Compass's cards are untouched whatever is passed.
    */
   readerSilent?: string[];
+  /**
+   * Which cards carry their outcome's own sentence: the leading ones (the default), or every
+   * card shown, so that a name with a note never appears in the list without it ("Next:
+   * Jesus" on the figure quiz). `notedAbove` names the outcomes whose sentence the page has
+   * already printed under its headline, so it is not said twice a few lines apart.
+   */
+  notes?: 'leading' | 'all';
+  notedAbove?: string[];
 }
 
-const { quiz, ranked, leading = 1, limit = 5, readerSilent = [] } = Astro.props;
+const {
+  quiz, ranked, leading = 1, limit = 5, readerSilent = [], notes = 'leading', notedAbove = []
+} = Astro.props;
 const shown = ranked.slice(0, limit);
 const hideScore = Boolean(quiz.hideOutcomeScore);
 
@@ -93,7 +101,10 @@ const hideScore = Boolean(quiz.hideOutcomeScore);
  * expression that renders nothing still leaves the newline on each side of it, and on a
  * quiz with no notes — the Compass — that is a stray space inside every card in the list.
  */
-const noteFor = (slug: string) => quiz.outcomes.find(o => o.slug === slug)?.note;
+const noteFor = (slug: string, i: number) =>
+  (i < leading || notes === 'all') && !notedAbove.includes(slug)
+    ? quiz.outcomes.find(o => o.slug === slug)?.note
+    : undefined;
 ---
 <ol class="outcomes-list">
   {shown.map((r, i) => (
@@ -109,7 +120,7 @@ const noteFor = (slug: string) => quiz.outcomes.find(o => o.slug === slug)?.note
               : <>{r.score}% match{i < leading && <span class="outcome-tag"> · closest</span>}</>}
           </span>
         </span>
-      {/* tight against the link's close: see noteFor above */}</a>{i < leading && noteFor(r.slug) && <p class="outcome-note">{noteFor(r.slug)}</p>}{i < leading && axisNote(quiz, r, readerSilent) && <p class="outcome-note outcome-axes">{axisNote(quiz, r, readerSilent)}</p>}
+      {/* tight against the link's close: see noteFor above */}</a>{noteFor(r.slug, i) && <p class="outcome-note">{noteFor(r.slug, i)}</p>}{i < leading && axisNote(quiz, r, readerSilent) && <p class="outcome-note outcome-axes">{axisNote(quiz, r, readerSilent)}</p>}
     </li>
   ))}
 </ol>

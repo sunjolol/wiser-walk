@@ -337,7 +337,16 @@ const jsonLd = {
         rail.classList.toggle('has-prev', !prev.hidden);
         rail.classList.toggle('has-next', !next.hidden);
       };
-      const step = dir => track.scrollBy({ left: dir * Math.max(260, track.clientWidth * 0.7), behavior: 'smooth' });
+      // No scroll snap (the owner, 2026-09-25: it jumped away from where a drag stopped), so an
+      // arrow lands on the card edge nearest a page-sized step.
+      const step = dir => {
+        const base = track.getBoundingClientRect().left - track.scrollLeft;
+        const want = track.scrollLeft + dir * Math.max(260, track.clientWidth * 0.7);
+        const edges = [...track.children].map(c => c.getBoundingClientRect().left - base)
+          .filter(x => dir > 0 ? x > track.scrollLeft + 8 : x < track.scrollLeft - 8);
+        const left = edges.length ? edges.reduce((a, b) => Math.abs(b - want) < Math.abs(a - want) ? b : a) : want;
+        track.scrollTo({ left, behavior: 'smooth' });
+      };
       prev.addEventListener('click', () => step(-1));
       next.addEventListener('click', () => step(1));
       track.addEventListener('scroll', sync, { passive: true });

@@ -20,13 +20,13 @@ re-derived from the final wording. Nine are keyed -1 and nine +1; no sign change
 | 2 | I often sit through a whole conversation without joining in. | voice | +1 | Holds it | 10 | **AUDIT** (psychometric F2). Was "I am teased for sitting through…": one of five statements that each reported a fault somebody else had found |
 | 3 | I would rather run the meeting than sit in it. | lead | -1 | Out in front | 10 | Draft A L3, kept by both critics |
 | 4 | When two people I know have argued, I end up passing messages between them. | conflict | +1 | Reconciles | 14 | Draft A C4, plain critic's fix |
-| 5 | People have told me I ask one question too many. | doubt | -1 | Asks why | 10 | Draft A D3, kept by both critics |
+| 5 | When someone tells me something surprising, I ask how they know before I believe it. | doubt | -1 | Asks why | 15 | **OWNER** (2026-09-25): reworded for plain reading. Was "People have told me I ask one question too many." (Draft A D3) |
 | 6 | I work out the details when I get there, not before. | plan | +1 | Meets the day | 11 | First editor, from the second half of A N5 |
 | 7 | I take a night to decide things that other people decide on the spot. | pace | +1 | Weighs first | 14 | Draft A P4, plain critic's fix |
 | 8 | People can always tell what I am thinking, because I have already said it. | voice | -1 | Says it | 14 | Draft B7, kept by both critics |
-| 9 | I start handing out jobs in a group before anyone has asked me to. | lead | -1 | Out in front | 14 | **AUDIT** (psychometric F2, the reviewer's wording). Was "I have been told I take over a group without being asked to" |
+| 9 | When a group is stuck on what to do next, I am usually the one who suggests a plan. | lead | -1 | Out in front | 18 | **OWNER** (2026-09-25): the old line read as overbearing, so nearly everyone disagreed. Was "I start handing out jobs in a group before anyone has asked me to." (psychometric F2) |
 | 10 | I would rather have the argument now than keep things calm for another week. | conflict | -1 | Confronts | 14 | Draft A C2, kept by both critics |
-| 11 | I follow instructions as given and leave the reasons for later. | doubt | +1 | Takes it on trust | 11 | **AUDIT** (psychometric F7; cessationist F4 and evidence B1 on what this pole means). Was "I go along with things without checking them first", which read as gullibility and was the sentence Gethsemane was being matched to |
+| 11 | When I am given instructions, I follow them even if no one has explained why. | doubt | +1 | Takes it on trust | 15 | **OWNER** (2026-09-25): the old line was hard to parse. Was "I follow instructions as given and leave the reasons for later." (psychometric F7) |
 | 12 | I carry things I will probably not need, in case the day goes wrong. | plan | -1 | Plans ahead | 14 | Draft B33, loaded critic's fix |
 | 13 | People have told me I jumped in before I had the whole picture. | pace | -1 | Acts first | 13 | Draft B2, kept by both critics |
 | 14 | I often leave a conversation with an opinion I never said out loud. | voice | +1 | Holds it | 13 | Draft A V4, kept by both critics |

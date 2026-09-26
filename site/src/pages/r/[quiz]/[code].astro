@@ -17,13 +17,14 @@ import KindredResult from '../../../components/KindredResult.astro';
 import PersonalityResult from '../../../components/PersonalityResult.astro';
 import type { KindredData } from '../../../lib/strategies/kindred';
 import { QUIZZES, getQuiz, resultFor, decodeFor, outcomeHref } from '../../../lib/engine/registry';
-import { groupNoteFor, outcomeNounPlural, rankWord } from '../../../lib/engine/types';
+import { groupNoteFor, notesFor, outcomeNounPlural, rankWord } from '../../../lib/engine/types';
 import { linkCodeFor, resolveCode } from '../../../lib/engine/links';
 import { readEnv } from '../../../lib/email/env';
 // The card a shared link shows: the outcome this result names, where one was drawn.
 import { resultCardFor } from '../../../lib/seo';
 import { ACCOUNTS_VISIBLE } from '../../../lib/account/config';
 import { artFor } from '../../../lib/art';
+import { FIGURE_PAGES } from '../../../lib/saints/figures';
 import { READING } from '../../../lib/strategies/reading';
 import { liveGames } from '../../../lib/games';
 import { getCollection } from 'astro:content';
@@ -125,7 +126,31 @@ const folded = Boolean(
  * directly under the same words. It is an array so that "nobody was named" and "no quiz set
  * one" are the same empty case, and never a stray empty box.
  */
-const headlineNotes = quiz && view ? groupNoteFor(quiz, view.named, 'result') : [];
+const headlineNoteGroups = quiz && view ? groupNoteFor(quiz, view.named, 'result') : [];
+
+/*
+ * A result that leads with WHO (Quiz.resultLeadsWithOutcome: the figure quiz). The owner,
+ * 2026-09-25: the axis clauses in the big letters "doesn't tell you your result". So the
+ * headline is the person: the nearest one, both where two are level, both where nothing is
+ * close (said so), and nobody where the reader named no position anywhere, which keeps the
+ * engine's own "Near the center" headline. The axis clauses move into the line under it.
+ *
+ * An outcome's own sentence goes where its name goes (Jesus's, and the canon notes on Judith
+ * and Tobit), so the names printed in the headline carry theirs directly under it, and the
+ * list below prints every other card's own (OutcomeCards, notes="all").
+ */
+const leads = Boolean(quiz?.resultLeadsWithOutcome) && view?.shape === 'bipolar';
+const leadNames =
+  leads && view?.shape === 'bipolar' && view.state !== 'central'
+    ? view.ranked.slice(0, view.state === 'near' ? 1 : 2)
+    : [];
+const leadPre =
+  view?.state === 'loose' ? 'No close fit. Nearest, loosely:'
+    : view?.state === 'tie' ? 'Jointly closest to'
+    : 'Closest to';
+const leadSlugs = leadNames.map(r => r.slug);
+const headlineNotes =
+  quiz && leads ? [...notesFor(quiz, leadSlugs), ...headlineNoteGroups] : headlineNoteGroups;
 
 /*
  * The band's picture: the plate this QUIZ wears on the home page, on /me/ and on its own
@@ -138,8 +163,15 @@ const headlineNotes = quiz && view ? groupNoteFor(quiz, view.named, 'result') : 
  * headline would quietly make that one the answer — and the same rule that forbids a
  * percentage against a person forbids that. A figure's plate belongs on the figure's own
  * page, where the picture's subject is the subject.
+ *
+ * OVERRULED FOR THE FIGURE QUIZ (the owner, 2026-09-25): now that its headline names the
+ * figure the reader is closest to, its band wears that figure's own painting, the one at the
+ * top of the figure's page, in colour and placed as that page places it. Where two are level
+ * or nothing is close, the first named. Jesus has no page of His own yet, so a result naming
+ * Him keeps the quiz's plate.
  */
 const art = quiz ? artFor(quiz.slug) : null;
+const leadPage = quiz?.slug === 'bible-figure' && leadSlugs[0] ? FIGURE_PAGES[leadSlugs[0]] : undefined;
 
 /*
  * Where to go once the result has been read. The OTHER quizzes, then the games, as rooms
@@ -228,11 +260,22 @@ const kindredCard = (() => {
     {view.shape !== 'personality' && (<header
       class:list={[
         'band', 'band--long', 'band--pic', 'result-band',
-        art ? 'band--engraving' : 'band--night',
-        art && 'band--has-img'
+        leadPage ? 'band--photo' : art ? 'band--engraving' : 'band--night',
+        (leadPage || art) && 'band--has-img'
       ]}
     >
-      {art && (
+      {leadPage && (
+        <img
+          class="band-img band-img--figure"
+          src={leadPage.band.picture.src}
+          alt=""
+          style={`--pos-m:${leadPage.band.posM};--pos-d:${leadPage.band.posD}`}
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+        />
+      )}
+      {!leadPage && art && (
         <img
           class="band-img"
           src={art.src}
@@ -254,6 +297,23 @@ const kindredCard = (() => {
         ) : view.shape === 'kindred' ? (
           /* The kindred spirit's portrait, name, dates and who they were. */
           <KindredResult quiz={quiz} view={view} part="band" />
+        ) : leadNames.length > 0 ? (
+          <>
+            {/* Who, in the big letters; the axis clauses under it in the rails' two colours. */}
+            <h1 class="verdict verdict--who">
+              <span class="verdict-pre">{leadPre}</span>{' '}
+              <span class="verdict-who">{leadNames.map(r => r.name).join(' and ')}</span>
+            </h1>
+            <p class="lede verdict-axes">
+              {view.headlineParts.map((part, i) => (
+                <>
+                  <span class={`verdict-part verdict-part--${part.side}`}>{part.text}</span>
+                  {i < view.headlineParts.length - 1 && <span class="verdict-sep">,</span>}
+                  {i < view.headlineParts.length - 1 && ' '}
+                </>
+              ))}
+            </p>
+          </>
         ) : (
           <>
             {/* The first thing a reader sees, in the same two colours as the compass and rails. */}
@@ -349,7 +409,7 @@ const kindredCard = (() => {
         no outcome list or depth panels (each skipped by its own test below).
       */
       <PersonalityResult quiz={quiz} view={view} origin={Astro.site!.origin} linkCode={linkCode} />
-    ) : (
+    ) : leads ? null : (
     <div class="panel layered result-panel">
       <div class="wash" aria-hidden="true"></div>
       <div class="veil" aria-hidden="true"></div>
@@ -446,7 +506,7 @@ const kindredCard = (() => {
           <>
             <SectionHead
               title={outcomeHeading}
-              kicker={`Measured against ${quiz.outcomes.length} ${outcomeNounPlural(quiz)}`}
+              kicker={leads ? undefined : `Measured against ${quiz.outcomes.length} ${outcomeNounPlural(quiz)}`}
             />
             <p class="tags">
               {view.state === 'loose'
@@ -458,10 +518,23 @@ const kindredCard = (() => {
               ranked={view.ranked}
               leading={view.state === 'tie' ? 2 : view.state === 'loose' ? 0 : 1}
               readerSilent={silentAxes}
+              notes={leads ? 'all' : 'leading'}
+              notedAbove={leadSlugs}
             />
           </>
         )}
       </section>
+    )}{/*
+      A result that leads with who has its list first and its rails after it, and no wheel:
+      the owner, 2026-09-25, "this just makes it take that much longer to see the interesting
+      part which is who you're most like". Hung off the list with no whitespace, so every other
+      quiz's page is what it was.
+    */}{leads && view.shape === 'bipolar' && (
+      <div class="panel layered result-panel result-panel--rails">
+        <div class="wash" aria-hidden="true"></div>
+        <div class="veil" aria-hidden="true"></div>
+        <RailStack quiz={quiz} view={view} />
+      </div>
     )}
 
     {view.shape === 'bipolar' && depthOrder.some(r => quiz.groups.find(g => g.slug === r.slug)?.summary) && (
@@ -476,9 +549,9 @@ const kindredCard = (() => {
           <Fragment>
             <SectionHead
               title={quiz.notes.depthTitle ?? 'Where these differences come from'}
-              kicker={`${depthOrder.length} axes, the strongest lean first`}
+              kicker={leads ? undefined : `${depthOrder.length} axes, the strongest lean first`}
             />
-            <p class="tags">{quiz.notes.depthNote}</p>
+            {quiz.notes.depthNote && <p class="tags">{quiz.notes.depthNote}</p>}
           </Fragment>
         ) : (
           <Fragment>

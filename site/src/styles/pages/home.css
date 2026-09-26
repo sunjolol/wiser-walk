@@ -143,14 +143,14 @@
 .hm-rail .room h3 { text-shadow: var(--title-lift); }
 .hm-rail-track {
   display: flex; gap: .9rem; overflow-x: auto; overscroll-behavior-x: contain;
-  scroll-snap-type: x proximity; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch;
   padding: .3rem var(--gut) 1.6rem 0; margin-bottom: -1.2rem; cursor: grab;
 }
 .hm-rail-track::-webkit-scrollbar { display: none; }
-.hm-rail-track.is-dragging { cursor: grabbing; scroll-snap-type: none; }
+.hm-rail-track.is-dragging { cursor: grabbing; }
 .hm-rail-track.is-dragging .room { pointer-events: none; }
 .hm-rail-track:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 24px; }
-.hm-rail .room { flex: 0 0 min(80vw, 20rem); min-height: 25rem; scroll-snap-align: start; user-select: none; -webkit-user-drag: none; }
+.hm-rail .room { flex: 0 0 min(80vw, 20rem); min-height: 25rem; user-select: none; -webkit-user-drag: none; }
 .hm-rail .room img { -webkit-user-drag: none; }
 .hm-rail .room--figures, .hm-rail .room--psalm, .hm-rail .room--early { flex-basis: min(84vw, 24rem); }
 /* the fade says there is more; it is only drawn on a side that has more */

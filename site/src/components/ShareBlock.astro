@@ -28,7 +28,9 @@
  * wrong for a visitor is the costlier error.
  */
 import type { BipolarView, Quiz, ResultView } from '../lib/engine/types';
-import { groupNoteFor, isComparable, resultNotes } from '../lib/engine/types';
+import { groupNoteFor, isComparable, notesFor, resultNotes } from '../lib/engine/types';
+import { artForOutcome } from '../lib/art';
+import { FIGURE_PAGES } from '../lib/saints/figures';
 import { quizHref, inviteHref } from '../lib/engine/registry';
 import { publicCodeSync } from '../lib/engine/links';
 
@@ -101,6 +103,43 @@ const mineHeading = quiz.slug === 'theology-compass' ? 'Share your compass' : 'S
  */
 const uid = `share-${quiz.slug}-${view.code}`;
 
+/*
+ * A result that leads with WHO (Quiz.resultLeadsWithOutcome: the figure quiz) draws the people,
+ * not the wheel (the owner, 2026-09-25: "focus on the Biblical characters you're like rather
+ * than the axis"). The nearest, big, with their picture and their line; both where two are
+ * level or nothing is close; then the next ones on the page's own list, smaller; the axis
+ * clauses in one line. Where nobody is named (every axis in the no-position band) it draws the
+ * words alone. The picture is the figure page's own card picture (the one the Saints hub
+ * shows), or the figure's plate where there is no page (Jesus). No number, anywhere.
+ */
+const leadsWho = Boolean(quiz.resultLeadsWithOutcome) && view.shape === 'bipolar';
+const whoCard = (() => {
+  if (!leadsWho || view.shape !== 'bipolar') return undefined;
+  if (view.state === 'central') return { central: true, lead: [], next: [], slugs: [] as string[] };
+  const person = (slug: string, name: string) => {
+    const page = FIGURE_PAGES[slug];
+    const art = page ? null : artForOutcome(quiz.slug, slug);
+    const who = quiz.outcomes.find(o => o.slug === slug)?.who ?? '';
+    return {
+      name,
+      img: page?.card.img ?? art?.src ?? null,
+      focus: page ? page.card.focus ?? '50% 25%' : art?.objectPosition ?? '50% 30%',
+      line: page?.card.line ?? (who ? who.charAt(0).toUpperCase() + who.slice(1) : '')
+    };
+  };
+  const many = view.state === 'near' ? 1 : 2;
+  // four names in all: one and the next three, or two and the next two
+  const shown = view.ranked.slice(0, 4);
+  return {
+    central: false,
+    pre: view.state === 'loose' ? 'No close fit. Nearest, loosely'
+      : view.state === 'tie' ? 'Jointly closest to' : 'Closest to',
+    lead: shown.slice(0, many).map(r => person(r.slug, r.name)),
+    next: shown.slice(many).map(r => person(r.slug, r.name)),
+    slugs: shown.map(r => r.slug)
+  };
+})();
+
 /** Everything the card needs, and nothing else. */
 const card = {
   quiz: quiz.title,
@@ -125,7 +164,11 @@ const card = {
    * gifts draft names six gifts Christians disagree about, and the card is the surface that
    * travels furthest from the page that explains them.
    */
-  notes: [...resultNotes(quiz, view), ...groupNoteFor(quiz, view.named, 'result')],
+  notes: [
+    // every name the card draws carries its own sentence, and the figure card draws up to four
+    ...(whoCard ? notesFor(quiz, whoCard.slugs) : resultNotes(quiz, view)),
+    ...groupNoteFor(quiz, view.named, 'result')
+  ],
   noClaimSpan: view.shape === 'bipolar' ? (view as BipolarView).noClaimSpan : null,
   rows: view.rows.map(r =>
     'left' in r
@@ -145,7 +188,9 @@ const card = {
     ? { reading: { line: line?.text ?? '', cite: line?.cite ?? '', say: quiz.shareTitle } }
     : {}),
   // Added only for kindred spirits, and only when somebody was named.
-  ...(view.shape === 'kindred' && kindred ? { kindred: { ...kindred, say: quiz.shareTitle } } : {})
+  ...(view.shape === 'kindred' && kindred ? { kindred: { ...kindred, say: quiz.shareTitle } } : {}),
+  // Added only where the result leads with who (the figure quiz).
+  ...(whoCard ? { who: whoCard } : {})
 };
 ---
 <section class="share-block" data-quiz={quiz.slug} data-code={view.code} data-mint={mint ? '' : undefined}>
@@ -777,6 +822,156 @@ const card = {
       }
     }
 
+    /**
+     * The figure quiz's card (data.who): the people, not the wheel. The nearest with their
+     * picture, name and line (two side by side where two are level or nothing is close), the
+     * axis clauses in one line in the rails' two inks, then the next ones on the page's own
+     * list, smaller, each with their picture while there is room for it. The sentences the
+     * names carry (Jesus's; the canon notes on Judith and Tobit) are measured first and set
+     * above the link, and the pictures give way to them, never the other way round.
+     */
+    async function drawWho(g, x, top, w, footY) {
+      const d = data.who;
+      const people = [...d.lead, ...d.next];
+      const faces = await Promise.all(people.map(p => (p.img ? image(p.img).catch(() => null) : null)));
+      const DISPLAY = "px 'Wiser Display', Philosopher, sans-serif";
+      const LABEL = '700 21px Poppins, system-ui, sans-serif';
+
+      /** A picture cut to its box at its focus point, as object-fit: cover and object-position do. */
+      const cover = (img, bx, by, bw, bh, r, focus) => {
+        g.save();
+        g.shadowColor = 'rgba(68,68,68,.16)'; g.shadowBlur = 16; g.shadowOffsetX = 4; g.shadowOffsetY = 5;
+        g.fillStyle = P.shell; roundRect(g, bx, by, bw, bh, r); g.fill();
+        g.restore();
+        if (!img) return;
+        g.save();
+        roundRect(g, bx, by, bw, bh, r); g.clip();
+        const s = Math.max(bw / img.width, bh / img.height);
+        const [fx, fy] = String(focus || '50% 50%').split(' ').map(v => (parseFloat(v) || 50) / 100);
+        g.imageSmoothingEnabled = true; g.imageSmoothingQuality = 'high';
+        g.drawImage(img, bx + (bw - img.width * s) * fx, by + (bh - img.height * s) * (fy ?? .5),
+          img.width * s, img.height * s);
+        g.restore();
+      };
+      /** A display name that shrinks until it takes no more than so many lines. */
+      const fitName = (text, max, size, min, most) => {
+        let lines;
+        do {
+          g.font = size + DISPLAY;
+          lines = unstrand(wrapWords(g, text.split(' '), max));
+          if (lines.length <= most) break;
+          size -= 2;
+        } while (size > min);
+        return { lines: lines.slice(0, most), size };
+      };
+      const setLines = (text, font, max, most) => {
+        g.font = font;
+        return unstrand(wrapWords(g, text.split(' '), max)).slice(0, most);
+      };
+
+      // ---- the sentences the names carry, measured first: they sit above the link
+      const NOTE_FONT = '20px Inter, system-ui, sans-serif', NOTE_LINE = 28, NOTE_BETWEEN = 10, NOTE_GAP = 46;
+      g.font = NOTE_FONT;
+      const noteBlocks = (data.notes || []).map(t => wrapWords(g, t.split(' '), w));
+      const noteRows = noteBlocks.reduce((n, b) => n + b.length, 0);
+      const noteH = noteRows ? noteRows * NOTE_LINE + (noteBlocks.length - 1) * NOTE_BETWEEN + NOTE_GAP : 0;
+      const bottom = footY - noteH;
+
+      // ---- the nearest
+      let y = top + 40;
+      if (d.lead.length === 1) {
+        const p = d.lead[0];
+        const PW = 320, PH = 400;
+        cover(faces[0], x, y, PW, PH, 28, p.focus);
+        const cx = x + PW + 44, cw = x + w - cx;
+        let cy = y + 26;
+        g.fillStyle = P.mute; g.font = LABEL;
+        g.fillText(d.pre.toUpperCase(), cx, cy);
+        const nm = fitName(p.name, cw, 80, 44, 2);
+        g.fillStyle = P.ink; g.font = nm.size + DISPLAY;
+        cy += 6;
+        nm.lines.forEach(l => { cy += Math.round(nm.size * 1.04); g.fillText(l.join(' '), cx, cy); });
+        if (p.line) {
+          cy += 16;
+          const ls = setLines(p.line, '26px Inter, system-ui, sans-serif', cw, 6);
+          g.fillStyle = P.soft;
+          ls.forEach(l => { cy += 38; g.fillText(l.join(' '), cx, cy); });
+        }
+        y = Math.max(y + PH, cy);
+      } else {
+        g.fillStyle = P.mute; g.font = LABEL;
+        y += 6; g.fillText(d.pre.toUpperCase(), x, y);
+        y += 24;
+        const GAP = 36, cw = (w - GAP) / 2, PH = 280;
+        let low = y + PH;
+        d.lead.forEach((p, i) => {
+          const cx = x + i * (cw + GAP);
+          cover(faces[i], cx, y, cw, PH, 26, p.focus);
+          let cy = y + PH + 6;
+          const nm = fitName(p.name, cw, 58, 36, 2);
+          g.fillStyle = P.ink; g.font = nm.size + DISPLAY;
+          nm.lines.forEach(l => { cy += Math.round(nm.size * 1.08); g.fillText(l.join(' '), cx, cy); });
+          if (p.line) {
+            cy += 4;
+            const ls = setLines(p.line, '22px Inter, system-ui, sans-serif', cw, 3);
+            g.fillStyle = P.soft;
+            ls.forEach(l => { cy += 31; g.fillText(l.join(' '), cx, cy); });
+          }
+          low = Math.max(low, cy);
+        });
+        y = low;
+      }
+
+      // ---- the axis clauses, in one line, each in the colour of the pole it names
+      if (data.headline && data.headline.length) {
+        y += 66;
+        g.font = "38px 'Wiser Display', Philosopher, sans-serif";
+        const words = data.headline.flatMap((p, i) => {
+          const text = p.text + (i < data.headline.length - 1 ? ',' : '');
+          return text.split(' ').map(t => ({ t, side: p.side }));
+        });
+        wrapWords(g, words, w).slice(0, 2).forEach((line, n) => {
+          if (n) y += 46;
+          let cx = x;
+          line.forEach(word => {
+            g.fillStyle = ink(word.side);
+            g.fillText(word.t, cx, y);
+            cx += g.measureText(word.t + ' ').width;
+          });
+        });
+      }
+
+      // ---- the next ones, smaller, with their pictures while there is room for them
+      if (d.next.length) {
+        const COLS = 3, GAP = 28, colW = (w - GAP * (COLS - 1)) / COLS;
+        const labelY = y + 72, picTop = labelY + 24;
+        let picH = Math.min(240, bottom - 30 - picTop - 80);
+        if (picH < 80) picH = 0;
+        if (picTop + picH + 50 <= bottom) {
+          g.fillStyle = P.mute; g.font = LABEL;
+          g.fillText('NEXT CLOSEST', x, labelY);
+          d.next.slice(0, COLS).forEach((p, i) => {
+            const cx = x + i * (colW + GAP);
+            if (picH) cover(faces[d.lead.length + i], cx, picTop, colW, picH, 20, p.focus);
+            const nm = fitName(p.name, colW, 36, 26, 2);
+            g.fillStyle = P.ink; g.font = nm.size + DISPLAY;
+            let ny = picTop + picH + (picH ? 4 : 0);
+            nm.lines.forEach(l => { ny += Math.round(nm.size * 1.12); g.fillText(l.join(' '), cx, ny); });
+          });
+        }
+      }
+
+      if (noteRows) {
+        g.fillStyle = P.mute;
+        g.font = NOTE_FONT;
+        let ny = bottom + NOTE_LINE;
+        noteBlocks.forEach(block => {
+          block.forEach(line => { g.fillText(line.join(' '), x, ny); ny += NOTE_LINE; });
+          ny += NOTE_BETWEEN;
+        });
+      }
+    }
+
     let drawn = false;
     /**
      * Drawn on load, not on click.
@@ -819,6 +1014,15 @@ const card = {
 
       if (data.reading) {
         drawReading(g, x, y, w, H - pad - 44);
+        g.fillStyle = P.mute;
+        g.font = '600 22px Poppins, system-ui, sans-serif';
+        g.fillText(data.url.toUpperCase(), x, H - pad - 44);
+        drawn = true;
+        return;
+      }
+
+      if (data.who && !data.who.central) {
+        await drawWho(g, x, y, w, H - pad - 44);
         g.fillStyle = P.mute;
         g.font = '600 22px Poppins, system-ui, sans-serif';
         g.fillText(data.url.toUpperCase(), x, H - pad - 44);
@@ -892,7 +1096,8 @@ const card = {
         : 0;
       const bottom = footY - noteH;
 
-      if (data.shape === 'bipolar') {
+      // not on the figure quiz's card, whose one wordless case (nobody named) is the words alone
+      if (data.shape === 'bipolar' && !data.who) {
         const top = y + 10;
         const LABELS = 104;                 // room for a two-line rim label, top and bottom
         const R = Math.max(120, Math.min(248, (bottom - 58 - top - LABELS * 2) / 2));
