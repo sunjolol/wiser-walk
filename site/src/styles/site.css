@@ -1265,6 +1265,14 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .result-panel { margin: 0 0 2rem; }
 /* no gap above the wheel on a result (the owner, 2026-09-25: "way too much empty space") */
 .result-panel .wheel-plot { margin-top: 0; }
+/* A ranking fills its panel alone: no margin of its own above it, and the panel's top padding
+   matches its bottom, so the room above the first row equals the room below the last (the
+   owner, 2026-09-26, on the gifts result). */
+.result-panel > .stack-block { margin-top: 0; }
+/* another sheet's .stack (a grid with a 1rem top margin) shares the class name; the ranking keeps none */
+.stack-block > .stack { margin-top: 0; }
+.result-panel:has(> .stack-block) { padding-top: 1.4rem; }
+@media (min-width: 40rem) { .result-panel:has(> .stack-block) { padding-top: 2rem; } }
 .outcomes, .depth-section, .share-block { margin: 2.5rem 0 0; }
 /* No measure cap: these are one or two sentences, and a cap broke them early on a wide screen. */
 .depth-section > .tags, .outcomes > .tags { margin: 0 0 1rem; text-wrap: pretty; }
