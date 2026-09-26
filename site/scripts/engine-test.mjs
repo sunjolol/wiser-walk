@@ -964,7 +964,8 @@ console.log('12b. seventeen gifts, fifty-one statements');
   else ok(`none of the ${NEVER_ADJACENT.length} near-pairs is ever adjacent`);
 
   // The reader's last impression is not the contested ground.
-  const SIX = sg.groupNote.groups;
+  // The four gifts Christians disagree about (notes.disputed names them).
+  const SIX = ['prophecy', 'healing', 'miracles', 'knowledge'];
   const last = keyOf(sg.items.length - 1);
   if (SIX.includes(last)) fail(`the last statement is ${last}, one of the disputed gifts`);
   else ok(`the last statement is ${last}, not one of the ${SIX.length} disputed gifts`);
@@ -1081,15 +1082,11 @@ console.log('12c. the wide codec carries seventeen gifts, and old codes still op
 console.log('12d. what is named, and what travels with the name');
 {
   const sg = getQuiz('spiritual-gifts');
-  const SIX = sg.groupNote.groups;
   const idx = key => sg.groups.findIndex(g => g.key === key);
   /** A sheet that maxes these gifts and leaves the rest at no-net-agreement. */
   const max = keys => sg.items.map(it =>
     keys.includes(sg.groups[it.group].key) ? (it.direction === 1 ? 2 : -2) : 0);
   const share = values => shareTextFor(sg, values, 'https://wiserwalk.com');
-  const noteResult = sg.groupNote.result;
-  const noteShare = sg.groupNote.share;
-  const countIn = (text, line) => text.split('\n').filter(l => l === line).length;
 
   /*
    * A row must clear the naming floor ITSELF, not merely sit within a rung of one that does.
@@ -1111,69 +1108,22 @@ console.log('12d. what is named, and what travels with the name');
   else if (agreed.named.length) fail('agreeing with everything named ' + agreed.named.join(','));
   else ok(`a reader who agrees with all ${sg.items.length} is flat: "` + agreed.headline + '"');
 
-  // ---- the sentence travels once when one of the six leads
-  const tv = scoreQuiz(sg, max(['prophecy']));
-  const prophecy = resultFor(sg, tv);
-  if (prophecy.named.join(',') !== 'prophecy') fail('a prophecy sheet named ' + prophecy.named.join(','));
-  else if (resultNotes(sg, prophecy).length) fail('a gifts result carried an outcome note');
-  else if (groupNoteFor(sg, prophecy.named, 'result').join('') !== noteResult) {
-    fail('prophecy leading did not carry the sentence');
-  } else if (countIn(share(tv), noteShare) !== 1) {
-    fail('the share text did not carry the sentence once:\n' + share(tv));
-  } else ok('prophecy leading: the sentence travels once, on the page and in the share text');
-
-  // ---- once, not twice, when two of the six come out level
-  const pv = scoreQuiz(sg, max(['prophecy', 'healing']));
-  const pair = resultFor(sg, pv);
-  if (pair.state !== 'tie' || pair.named.length !== 2) {
-    fail(`two of the six gave ${pair.state}, ${pair.named.length} named`);
-  } else if (groupNoteFor(sg, pair.named, 'result').length !== 1) {
-    fail('two named gifts carried ' + groupNoteFor(sg, pair.named, 'result').length + ' sentences');
-  } else if (countIn(share(pv), noteShare) !== 1) {
-    fail('two named gifts put the sentence in the share text twice:\n' + share(pv));
-  } else ok(`two of the six level ("${pair.headline}"): one sentence, not two`);
-
-  // ---- not at all when none of the six is named or printed
-  const sv = scoreQuiz(sg, max(['serving']));
-  const serving = resultFor(sg, sv);
-  const printed = share(sv).split('\n').slice(1, 1 + sg.unipolarCopy.shareTop);
-  if (serving.named.join(',') !== 'serving') fail('a serving sheet named ' + serving.named.join(','));
-  else if (SIX.some(k => printed.some(l => l.endsWith(' ' + sg.groups[idx(k)].name)))) {
-    fail('one of the six reached the top three of a serving sheet:\n' + printed.join('\n'));
-  } else if (groupNoteFor(sg, serving.named, 'result').length) {
-    fail('serving leading carried the sentence');
-  } else if (share(sv).includes(noteShare)) {
-    fail('serving leading put the sentence in the share text:\n' + share(sv));
-  } else ok('serving leading, none of the six in the top three: no sentence anywhere');
-
   /*
-   * ---- and in the SHARE TEXT when one of the six is second but not named.
-   *
-   * The share text prints the top three, so a gift the page never named by name is still
-   * pasted into a group chat by name — and it is the name travelling that the sentence has
-   * to travel with. Healing at 83 against a leader at 100 is outside the tie margin, so the
-   * page names serving alone and says nothing; the card someone posts says healing.
+   * ---- and NO sentence travels with the disputed gifts' names (the owner, 2026-09-26: it
+   * stood at the top of the result, and "How to read this result" already says it). Not on
+   * the page, not on the card, not in the share text, however the four are named.
    */
-  const second = sg.items.map(it => {
-    const k = sg.groups[it.group].key;
-    if (k === 'serving') return it.direction === 1 ? 2 : -2;
-    if (k === 'healing') return it.direction === 1 ? 2 : 0;
-    return 0;
-  });
-  const secondV = scoreQuiz(sg, second);
-  const secondView = resultFor(sg, secondV);
-  const lines = share(secondV).split('\n');
-  if (secondView.named.join(',') !== 'serving') {
-    fail('the second-place sheet named ' + secondView.named.join(','));
-  } else if (groupNoteFor(sg, secondView.named, 'result').length) {
-    fail('the page carried the sentence for a gift it did not name');
-  } else if (!lines[2].endsWith(' healing')) {
-    fail('healing is not the second row of the share text:\n' + lines.join('\n'));
-  } else if (countIn(share(secondV), noteShare) !== 1) {
-    fail('the share text did not carry the sentence once:\n' + lines.join('\n'));
-  } else if (lines[lines.length - 2] !== noteShare) {
-    fail('the sentence is not the line immediately above the link:\n' + lines.join('\n'));
-  } else ok('healing second in the share text: the sentence travels there and not on the page');
+  for (const keys of [['prophecy'], ['prophecy', 'healing'], ['serving']]) {
+    const v = scoreQuiz(sg, max(keys));
+    const view = resultFor(sg, v);
+    if (sg.groupNote) fail('the gifts quiz still carries a travelling sentence');
+    else if (groupNoteFor(sg, view.named, 'result').length || resultNotes(sg, view).length) {
+      fail(`${keys.join('+')} leading carried a sentence under the headline`);
+    } else if (/Christians disagree/.test(share(v))) {
+      fail(`${keys.join('+')} put the disagreement in the share text:
+` + share(v));
+    } else ok(`${keys.join(' and ')} leading: no sentence under the headline or in the share text`);
+  }
 }
 
 // ------------------------- 13. the gift quotations are verbatim, checked against the text

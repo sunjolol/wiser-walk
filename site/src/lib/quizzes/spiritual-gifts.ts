@@ -1080,22 +1080,7 @@ export const giftsFrame = {
    * six of the disputed rows, which is a fact about the keying and not about the reader.
    */
   scale:
-    'If a sentence says a thing has happened and it never has, disagree is an honest answer.',
-  /*
-   * The sentence that travels with the six names, on the page and on the card alike.
-   *
-   * A sentence printed beside a name on the result page and missing from the picture someone
-   * posts is the fairness problem, not a formatting detail, so both surfaces read it from the
-   * same field. It prints ONCE however many of the six are named, and never as a mark on a
-   * row: it is a sentence under the headline, and nothing is attached to a gift.
-   */
-  sixResult:
-    'Christians disagree about whether prophecy, healing, miracles and the word of knowledge ' +
-    'are given today. A high row records what has happened and what people have said, not ' +
-    'what any of it was.',
-  sixShare:
-    'Christians disagree about whether some of these gifts are given today. These rows record ' +
-    'answers about what has happened and what people said, not what any of it was.'
+    'If a sentence says a thing has happened and it never has, disagree is an honest answer.'
 } as const;
 
 export const spiritualGifts: Quiz = {
@@ -1194,19 +1179,9 @@ export const spiritualGifts: Quiz = {
     // result (2026-09-24). giftsFrame.notScored keeps the words, and the three still go unscored.
   },
 
-  /**
-   * The sentence that travels with six of the nineteen names, wherever a name is printed.
-   *
-   * By group KEY, and the engine resolves the slugs: the rule is the NAME, so it fires when
-   * the headline names one of them and when the share text prints one of them, once either
-   * way, and never when none is named. Nothing is attached to a row anywhere.
-   */
-  groupNote: {
-    groups: ['prophecy', 'healing', 'miracles', 'knowledge'],
-    result: giftsFrame.sixResult,
-    share: giftsFrame.sixShare
-  },
-
+  // No sentence travels with the disputed gifts' names any more (the owner, 2026-09-26: it
+  // stood at the top of the result, and the disagreement is already said once, in "How to read
+  // this result"). notes.disputed carries it there.
   /**
    * The strategy's own words were written for VICES. "Leaned away" beside "Be hospitable to
    * one another" reads as a verdict on the reader, and a bare one-word headline reads as

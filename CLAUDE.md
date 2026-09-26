@@ -66,21 +66,58 @@ rules so they don't happen again". `site/scripts/quiz-page-test.mjs` (postbuild)
 9. **A special card among cards looks like its siblings**, marked only by an icon and a small tag.
 10. **No placeholder pictures** (a monogram where a face should be is "not acceptable").
 
-## COMBING PROGRESS (2026-09-26): SINS, COMPASS AND GIFTS DONE; SAINTS LIST WAITING FOR HIS ORDER
+## NEXT SESSION STARTS HERE (after 2026-09-26): HIS NOTES ON THE NEW HEADERS, THEN THE 19 SAINTS
 
-Live (main `9c67894`): the seven deadly sins (each sin page a painting + Latin/opposite/Dante tiles, result rows
-open to the short answer), the Theology Compass (result leads with ONE tradition, `headlineLeadsWithOutcome`;
-statements 1 and 10 reworded; no kickers on result/axis/tradition/compare; site-wide early-wrap sweep), the
-spiritual gifts (17 gifts, 51 weighted statements 6/5/4, numbers on bars, headline max two names, tongues and
-interpreting tongues page-only, old codes decode via `legacyCodes`), progress saved in the statement runner, every
-card counts questions (`lib/quiz-count.ts`), home rail pins Personality then Bible figure, 17 gift paintings and 18
-tradition pictures (`lib/tradition-art.ts`, also on Compass results and /me/ cards). Still to comb: Which Psalm,
-Which early Christian, the Personality Test, the games. **Saints next:** he is ordering 19 people (the 12 in
-`design/saints-hub/research/NEXT-12.md` plus Mary of Bethany, Monica, Arsenius, Cuthbert, Guthlac, Isaiah, Jeremiah;
-Athanasius is in both; Philip Neri stays an unlinked name in the personality test). Vercel: Hobby has 10GB of
-deployment storage and ~140MB per push (memory vercel-storage-per-deploy): batch pushes.
+**He said:** "set up for the next one where I'll give some notes on the new header backgrounds (small tweaks) then we
+will move on to the 19 saints on our list". So the session opens with his notes, then the saints.
 
-## NEXT SESSION STARTS HERE (after 2026-09-25): HE COMBS THROUGH THE OLDER QUIZZES
+**1. His notes on the new header pictures (small tweaks).** All live on `main`:
+- The 18 Theology Compass traditions: `site/src/lib/tradition-art.ts` (src, alt, credit, and `posM` / `posD`, the
+  object-position for a phone and for a wide band), files `site/public/img/traditions/<slug>.jpg`. The same picture is
+  the band of `/tradition/<slug>/`, of a Compass result whose nearest tradition it is, and of that result's /me/ card.
+- The 17 gifts: `BAND` in `site/src/lib/quizzes/spiritual-gifts.ts`, files `site/public/img/gifts/<key>.jpg`: gift
+  pages, gift results (the top gift) and /me/.
+- The 7 sins: `band` on each group in `site/src/lib/quizzes/seven-deadly-sins.ts`, files `site/public/img/sins/`.
+- Taste calls already flagged to him: Southern Baptist (non-Calvinist) is Hunt's Light of the World, dark in the band;
+  Churches of Christ's camp meeting reads mostly as trees; three traditions wear a Pentecost (El Greco, Maíno, van
+  Dyck); National Baptist is Tanner's Nicodemus (his Thankful Poor was dropped for its title beside a Black church);
+  gifts: wisdom is Hunt's boy Jesus in the Temple, mercy is Poussin's woman taken in adultery, serving's Tintoretto
+  shows bare legs. Credits: `site/public/img/CREDITS.md` (update it with any swap).
+- A swap: fetch from Wikimedia Commons (User-Agent header, 4 s between API calls, retry on 429; the image server now
+  serves thumbnails at 1920 or 3840 wide), public domain or CC0 only, no nudity, nothing violent; ~1600-1800 px,
+  JPEG quality 80-84 (he is an artist and sees heavy compression); a NEW file name if a picture changes (browsers cache
+  /img/ for 7 days). Look at 390 and 1360 (`sh design/tools/shot.sh`; the in-app browser pane does NOT paint these
+  pictures, use headless Chrome). /me/ needs a saved result: `node design/tools/me-shot.mjs <abs-out.png> <width> [m]` sets a shelf over CDP (dev server on 4343).
+- Batch his tweaks into ONE push: Hobby has 10GB of deployment storage and each push stores ~140MB (memory
+  vercel-storage-per-deploy). He set a retention policy; the Ignored Build Step may or may not be on.
+
+**2. Then the 19 saints and Bible people, in HIS order (ask for it if he has not sent it).** The list with Wikipedia
+views is in `design/saints-hub/research/NEXT-12.md` (top section "ADDED 2026-09-26" plus the twelve below it): Joan
+of Arc (died 1431, past his line: his call), Nicholas, George, Francis, Thomas Aquinas, Patrick, Catherine of Siena,
+Isaiah, Ignatius of Antioch, Jeremiah, Athanasius, Monica, Moses the Black, Cuthbert, Perpetua and Felicity, Mary of
+Egypt, Mary of Bethany, Arsenius, Guthlac. St Philip Neri stays an UNLINKED name in the personality test.
+- Saints are built like the 23 live saint pages (`design/saints-hub/README.md`, `tools/promote.mjs`, verify-quotes);
+  Isaiah, Jeremiah and Mary of Bethany are Bible people, built like the figure pages (`design/saints-hub/FIGURE-BRIEF.md`,
+  never "St" for an Old Testament person, the hub in Bible order via `BIBLE_ORDER`).
+- The personality test links a person by its picture key (`lib/person-links.ts`, `hubHref`): give the pages these
+  slugs or the links stay dead: `mary-bethany`, `monica`, `arsenius`, `cuthbert-of-lindisfarne`, `guthlac-of-crowland`,
+  `isaiah`, `jeremiah` (check what hubHref and figure routes need before naming files).
+- His efficiency steer still holds: one Opus writer per person (research and write together), one light check per
+  group, measure each sheet, render each card, look at each page, test, push in batches.
+
+**Still to comb later** (his quiz-by-quiz notes): Which Psalm, Which early Christian, the Personality Test, the games.
+
+**Done 2026-09-25/26 (live, `main`):** the seven deadly sins (paintings + Latin/opposite/Dante tiles, rows open to
+the short answer, top sin open); the Theology Compass (result leads with ONE tradition, `headlineLeadsWithOutcome`;
+statements 1 and 10 reworded, changelog 91; no kickers on result/axis/tradition/compare; site-wide early-wrap sweep);
+the spiritual gifts (17 gifts, 51 statements weighted 6/5/4, numbers on the bars, headline at most two names, tongues
+and interpreting tongues page-only, old codes decode via `legacyCodes`; NO sentence travels with the disputed gifts'
+names any more, his ruling of 2026-09-26: the disagreement is said once, in "How to read this result"); progress saved
+in the statement runner; every card counts its questions (`lib/quiz-count.ts`); home rail pins the Personality Test
+then the Bible figure quiz, the rest newest first; Polycarp's main "In art" is Luyken's etching; the old saint drafts in
+`design/saints-hub/pages/` are deleted.
+
+## (earlier, 2026-09-25) HE COMBS THROUGH THE OLDER QUIZZES
 
 **His plan, in his words:** "In the next session I'm going to go through the older quizzes with a fine tooth comb to
 fix issues exactly like the ones I discovered with this quiz" (the Bible figure quiz, "Who in the Bible are you most
