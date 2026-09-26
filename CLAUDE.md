@@ -101,9 +101,10 @@ Christian Personality Test (newest); the two games too.
 is behind the figure quiz's own flags). His combing may now ask for the same there; the older rules about it
 (CLAUDE.md "The result page is BUILT") give way to his new notes.
 
-**Open questions he has not answered:** show Jesus's note on the My results card when He is the closest (left off);
-have the email sign-up record "Closest to Peter" instead of the traits line (`site/src/pages/api/subscribe.ts`,
-one line). **Queued after the combing:** Jesus's own figure page (a plan he approves first), the 12 saints
+**Settled at the end of the session:** the My results card stays a plain result card, with no note for Jesus ("no
+need to over-do it"); the old mailing-list endpoint (`/api/subscribe`, used by no page since every email box
+starts an account) records "Closest to Peter" too. No email ever sends a reader their result. **Queued after the
+combing:** Jesus's own figure page (a plan he approves first), the 12 saints
 (`design/saints-hub/research/NEXT-12.md`), then quiz #5 "How You Love".
 
 ## (earlier, 2026-09-25 night) ALL 24 BIBLE FIGURE PAGES ARE LIVE

@@ -2,6 +2,7 @@ import type { APIRoute } from 'astro';
 import { getProvider, isConfigured, looksLikeEmail } from '../../lib/email/provider';
 import { readEnv } from '../../lib/email/env';
 import { getQuiz, decodeFor, resultFor } from '../../lib/engine/registry';
+import { leadFor } from '../../lib/engine/types';
 
 /** The only route on the site that talks to anything outside the browser. */
 export const prerender = false;
@@ -71,7 +72,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
     email: email.trim(),
     quiz: quiz?.slug,
     code: result ? result.code : undefined,
-    headline: result?.headline
+    // A quiz that leads with the person records the person ("Closest to Peter"), as its page does.
+    headline: leadFor(quiz, result)?.line ?? result?.headline
   });
 
   if (outcome.ok) {
